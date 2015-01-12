@@ -4,51 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="320">
-    <Grid HorizontalAlignment="Left" Height="300" Margin="10,10,0,0" VerticalAlignment="Top" Width="300">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="12*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="20*"/>
-        </Grid.ColumnDefinitions>
-    </Grid>
+             d:DesignHeight="500" d:DesignWidth="900">
+    <DataGrid Name="_dataGrid" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Height="500" Width="900"/>
 </UserControl>

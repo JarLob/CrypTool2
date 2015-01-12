@@ -22,6 +22,7 @@ using System.Text;
 using System;
 using Cryptool.PluginBase.IO;
 using System.IO;
+using M_138;
 
 namespace Cryptool.Plugins.M_138
 {
@@ -44,6 +45,8 @@ namespace Cryptool.Plugins.M_138
         int _offset;
         int[] _stripNumbers;
         private List<int[]> numStripes = new List<int[]>();
+        public M138Visualisation visualisation;
+        private string[,] visualStripes;
 
 
         #endregion
@@ -88,7 +91,11 @@ namespace Cryptool.Plugins.M_138
         /// </summary>
         public UserControl Presentation
         {
-            get { return null; }
+            get {
+                visualisation = new M138Visualisation();
+                return visualisation;
+            }
+            //get { return null; }
         }
 
         /// <summary>
@@ -119,8 +126,9 @@ namespace Cryptool.Plugins.M_138
                     break;
                 default:
                     GuiLogMessage("Invalid Selection", NotificationLevel.Error);
-                    break; 
+                    return; 
             }
+            visualisation.setStripes(visualStripes);
             OnPropertyChanged("TextOutput");
             ProgressChanged(1, 1);
         }
@@ -243,6 +251,9 @@ namespace Cryptool.Plugins.M_138
         {
             int _textlen = TextNumbers.Length;
             int[] output = new int[_textlen];
+            //NEW
+            visualStripes = new string[_textlen,stripes[0].Length];
+            //
             for (int i = 0; i < _stripNumbers.Length; i++) //Create a List of all used Stripes mapped to numbers instead of characters
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[i]], alphabet));
@@ -255,8 +266,19 @@ namespace Cryptool.Plugins.M_138
                 int _usedStrip = i % _stripNumbers.Length;
                 int[] currentStrip = numStripes[_usedStrip];
                 int isAt = Array.IndexOf(currentStrip, TextNumbers[i]);
+                //NEW
+                for (int j = 0; j < currentStrip.Length; j++)
+                {
+                    visualStripes[i, j] = alphabet[currentStrip[(isAt + j) % currentStrip.Length]].ToString();
+                }
+                //
                 output[i] = currentStrip[(isAt + _offset) % alphabet.Length];
             }
+            //NEW
+            visualisation.setStripes(visualStripes);
+            visualisation.fillArray(_textlen, stripes[0].Length, _stripNumbers);
+            visualisation.setOffset(_offset);
+            //
             TextOutput = MapNumbersIntoTextSpace(output, alphabet);
         }
 
