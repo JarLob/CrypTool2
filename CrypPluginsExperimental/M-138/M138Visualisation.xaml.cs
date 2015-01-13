@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Miscellaneous;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -20,14 +22,21 @@ namespace M_138
     /// </summary>
     public partial class M138Visualisation : UserControl
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         private string[,] stripesFilled;
         private int rows;
         private int columns;
         private string[,] toVisualize;
         private int offset;
+        private List<List<string>> list = new List<List<string>>();
+        DataTable shapedResultsTable = new DataTable();
+        private DataTable _stockResultsTable;
+
         public M138Visualisation()
         {
             InitializeComponent();
+            //_dataGrid.ItemsSource = list;
+            //_dataGrid.ItemsSource = toVisualize;
         }
 
         public void setStripes(string[,] s)
@@ -67,8 +76,30 @@ namespace M_138
             toVisualize[0, 0] = "Stripnumber";
             toVisualize[0, c + 1] = "Row";
             printArray(toVisualize, r + 1, c + 2);
-
-            //_dataGrid.ItemsSource = toVisualize;
+            //List
+            for (int i = 0; i < c + 2; i++)
+            {
+                List<string> l = new List<string>();
+                for (int j = 0; j < r + 1; j++)
+                {
+                    l.Add(toVisualize[j, i]);
+                }
+                list.Add(l);
+            }
+            //Shaped Results Table
+            for (int i = 0; i < c+2; i++)
+            {
+                shapedResultsTable.Columns.Add(toVisualize[0, i], typeof(string));
+            }
+            for (int i = 1; i < r + 1; i++)
+            {
+                List<string> l = new List<string>();
+                for(int j=0; j<c+2; j++) {
+                    l.Add(toVisualize[i,j]);
+                }
+                shapedResultsTable.Rows.Add(l);
+            }
+            StockResultsTable = shapedResultsTable;
         }
 
         private void printArray(string[,] a, int r, int c)
@@ -81,6 +112,21 @@ namespace M_138
                 }
                 Console.Write("\n");
             }
+        }
+
+        public DataTable StockResultsTable
+        {
+            get { return _stockResultsTable; }
+            set
+            {
+                _stockResultsTable = value;
+                OnPropertyChanged("StockResultsTable"); // <--- defo' need this one.
+            }
+        }
+
+        private void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
     }
 }
