@@ -23,6 +23,11 @@ using System;
 using Cryptool.PluginBase.IO;
 using System.IO;
 using M_138;
+using System.Threading;
+using System.Windows.Threading;
+using System.Data;
+using System.Windows.Data;
+using System.Windows;
 
 namespace Cryptool.Plugins.M_138
 {
@@ -36,6 +41,7 @@ namespace Cryptool.Plugins.M_138
         private readonly M_138Settings settings = new M_138Settings();
         enum Commands { Encrypt, Decryp };
         private bool _stopped = true;
+        private string[,] toVisualize;
         private const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private List<string> stripes = new List<string>();
         private int _numberOfStripes = 0;
@@ -128,7 +134,6 @@ namespace Cryptool.Plugins.M_138
                     GuiLogMessage("Invalid Selection", NotificationLevel.Error);
                     return; 
             }
-            visualisation.setStripes(visualStripes);
             OnPropertyChanged("TextOutput");
             ProgressChanged(1, 1);
         }
@@ -274,10 +279,29 @@ namespace Cryptool.Plugins.M_138
                 //
                 output[i] = currentStrip[(isAt + _offset) % alphabet.Length];
             }
+            
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    /*
+                    toVisualize = fillArray(_textlen, stripes[0].Length, _stripNumbers);
+                    Bindng2DArrayToListview2(visualisation._dataGrid, toVisualize);
+                     * */
+                    visualisation.c_dataGrid.ItemsSource = GetBindable2DArray<string>(toVisualize);
+                }
+                catch
+                {
+
+                }
+            });
+             
             //NEW
+            /*
             visualisation.setStripes(visualStripes);
             visualisation.fillArray(_textlen, stripes[0].Length, _stripNumbers);
             visualisation.setOffset(_offset);
+             */
             //
             TextOutput = MapNumbersIntoTextSpace(output, alphabet);
         }
@@ -347,6 +371,152 @@ namespace Cryptool.Plugins.M_138
             }
         }
 
+        public string[,] fillArray(int r, int c, int[] stripes)
+        {
+            toVisualize = new string[r + 1, c + 2];
+            for (int i = 0; i < c; i++) // Fill first Row
+            {
+                toVisualize[0, i] = i.ToString();
+            }
+            for (int i = 0; i < r + 1; i++) // Fill last column
+            {
+                toVisualize[i, c + 1] = i.ToString();
+            }
+            // Fill last Row
+            for (int i = 1; i < r + 1; i++)
+            {
+                toVisualize[i, 0] = (stripes[i - 1] + 1).ToString();
+            }
+            // Fill rest of Array
+            for (int i = 1; i < r + 1; i++)
+            {
+                for (int j = 1; j < c + 1; j++)
+                {
+                    toVisualize[i, j] = visualStripes[i - 1, j - 1];
+                }
+            }
+            toVisualize[0, 0] = "Stripnumber";
+            toVisualize[0, c + 1] = "Row";
+            printArray(toVisualize, r + 1, c + 2);
+            return toVisualize;
+        }
+
+        private void Bindng2DArrayToListview2 (ListView listview, string[,] data)
+        {
+            GridView gv = new GridView();
+            for (int i = 0; i < data.GetLength(1); i++)
+            {
+                GridViewColumn col = new GridViewColumn();
+                col.Header = data[0, i];
+                col.DisplayMemberBinding = new System.Windows.Data.Binding("[" + i + "]");
+                gv.Columns.Add(col);
+            }
+
+            ArrayVisitor arrayVisitor = new ArrayVisitor(data);
+            listview.View = gv;
+            listview.ItemsSource = arrayVisitor;
+        }
+
+        private void printArray(string[,] a, int r, int c)
+        {
+            for (int i = 0; i < r; i++)
+            {
+                for (int j = 0; j < c; j++)
+                {
+                    Console.Write(a[i, j] + "\t");
+                }
+                Console.Write("\n");
+            }
+        }
+
+        public static DataView GetBindable2DArray<T>(T[,] array)
+        {
+            DataTable dataTable = new DataTable();
+            for (int i = 0; i < array.GetLength(1); i++)
+            {
+                dataTable.Columns.Add(i.ToString(), typeof(Ref<T>));
+            }
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                dataTable.Rows.Add(dataRow);
+            }
+            DataView dataView = new DataView(dataTable);
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    int a = i;
+                    int b = j;
+                    Ref<T> refT = new Ref<T>(() => array[a, b], z => { array[a, b] = z; });
+                    dataView[i][j] = refT;
+                }
+            }
+            return dataView;
+        }
+
         #endregion
     }
+    class ArrayVisitor : IEnumerable<string[]>
+    {
+        private string[,] _data;
+
+        public ArrayVisitor()
+        {
+        }
+
+        public ArrayVisitor(string[,] data)
+        {
+            _data = data;
+        }
+
+        public string[,] Data
+        {
+            get { return _data; }
+            set { _data = value; }
+        }
+
+        #region IEnumerable<string[]> Members
+
+        public IEnumerator<string[]> GetEnumerator()
+        {
+            if (_data == null)
+                throw new ArgumentException("Data cannot be null.", "Data");
+
+            int len2d = _data.GetLength(1);
+
+            for (int i = 0; i < _data.GetLength(0); i++)
+            {
+                string[] arr = new string[len2d];
+                for (int j = 0; j < len2d; j++)
+                {
+                    arr[j] = _data[i, j];
+                }
+
+                yield return arr;
+            }
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        #endregion
+    }
+    public class Ref<T>
+    {
+        private readonly Func<T> getter;
+        private readonly Action<T> setter;
+        public Ref(Func<T> getter, Action<T> setter)
+        {
+            this.getter = getter;
+            this.setter = setter;
+        }
+        public T Value { get { return getter(); } set { setter(value); } }
+    } 
 }

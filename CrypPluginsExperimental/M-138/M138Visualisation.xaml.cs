@@ -37,8 +37,17 @@ namespace M_138
             InitializeComponent();
             //_dataGrid.ItemsSource = list;
             //_dataGrid.ItemsSource = toVisualize;
+            //_dataGrid.ItemsSource = shapedResultsTable.Rows;
         }
 
+        private void c_dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            DataGridTextColumn column = e.Column as DataGridTextColumn;
+            Binding binding = column.Binding as Binding;
+            binding.Path = new PropertyPath(binding.Path.Path + ".Value");
+        }
+
+        /*
         public void setStripes(string[,] s)
         {
             stripesFilled = s;
@@ -76,6 +85,7 @@ namespace M_138
             toVisualize[0, 0] = "Stripnumber";
             toVisualize[0, c + 1] = "Row";
             printArray(toVisualize, r + 1, c + 2);
+            
             //List
             for (int i = 0; i < c + 2; i++)
             {
@@ -86,20 +96,40 @@ namespace M_138
                 }
                 list.Add(l);
             }
+            
             //Shaped Results Table
+
             for (int i = 0; i < c+2; i++)
             {
                 shapedResultsTable.Columns.Add(toVisualize[0, i], typeof(string));
             }
             for (int i = 1; i < r + 1; i++)
             {
-                List<string> l = new List<string>();
+                DataRow dr = shapedResultsTable.NewRow();
+                //List<string> l = new List<string>();
                 for(int j=0; j<c+2; j++) {
-                    l.Add(toVisualize[i,j]);
+                    //l.Add(toVisualize[i,j]);
+                    dr[j] = toVisualize[i, j];
                 }
-                shapedResultsTable.Rows.Add(l);
+                shapedResultsTable.Rows.Add(dr);
             }
-            StockResultsTable = shapedResultsTable;
+            //StockResultsTable = shapedResultsTable;
+            Binding2DArrayToListView(toVisualize);
+        }
+
+        private void Binding2DArrayToListView(string[,] data)
+        {
+            GridView gv = new GridView();
+            for (int i = 0; i < data.GetLength(1); i++)
+            {
+                GridViewColumn col = new GridViewColumn();
+                col.Header = data[0,i];
+                col.DisplayMemberBinding = new Binding("[" + i + "]");
+                gv.Columns.Add(col);
+            }
+
+            _dataGrid.View = gv;
+            _dataGrid.ItemsSource = shapedResultsTable.Rows;
         }
 
         private void printArray(string[,] a, int r, int c)
@@ -128,5 +158,11 @@ namespace M_138
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
+
+        private void _dataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+         */
     }
 }
