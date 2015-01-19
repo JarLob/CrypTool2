@@ -41,7 +41,7 @@ namespace WorkspaceManager.Model
     {
         internal const int MaxStrStreamConversionLength = 1048576; //1 MB
 
-        internal PluginModel()
+        public PluginModel()
         {
             ViewState = PluginViewState.Default;
             this.InputConnectors = new List<ConnectorModel>();
