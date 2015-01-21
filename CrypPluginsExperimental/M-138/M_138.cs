@@ -33,8 +33,8 @@ using System.Linq;
 namespace Cryptool.Plugins.M_138
 {
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    [PluginInfo("M-138.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "M_138/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
+    [PluginInfo("M_138.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "M_138/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class M_138 : ICrypComponent
     {
         #region Private Variables
@@ -262,14 +262,14 @@ namespace Cryptool.Plugins.M_138
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet));
             }
-            if (_stripNumbers.Length > 25)
+            /*if (_stripNumbers.Length > 25)
             {
                 GuiLogMessage("Number of stripes used should not exceed 25", NotificationLevel.Warning);
-            }
+            }*/
            
             for(int r=0; r<_rows; r++) {
                 int _usedStrip = r % _stripNumbers.Length;
-                toVisualize[r + 1, 0] = (_stripNumbers[r]+1).ToString(); //Fill first column of Visualisation
+                toVisualize[r + 1, 0] = (_stripNumbers[_usedStrip] + 1).ToString(); //Fill first column of Visualisation
                 toVisualize[r+1, _columns + 1] = (r+1).ToString(); //Fill last column of Visualisation
                 int[] currentStrip = numStripes[_usedStrip];
                 int isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
@@ -345,10 +345,10 @@ namespace Cryptool.Plugins.M_138
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[i]], alphabet));
             }
-            if (_stripNumbers.Length > 25)
+            /*if (_stripNumbers.Length > 25)
             {
                 GuiLogMessage("Number of stripes used should not exceed 25", NotificationLevel.Warning);
-            }
+            }*/
             for (int i = 0; i < _textlen; i++)
             {
                 int _usedStrip = i % _stripNumbers.Length;
