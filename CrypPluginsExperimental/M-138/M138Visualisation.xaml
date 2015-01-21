@@ -4,11 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="900">
-    <DataGrid Name="c_dataGrid"
-          RowHeaderWidth="0"
-          ColumnHeaderHeight="0"
-          AutoGenerateColumns="True"
-          AutoGeneratingColumn="c_dataGrid_AutoGeneratingColumn"/>
+             d:DesignHeight="500" d:DesignWidth="900"
+             >
+    <ListView HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="900" Name="lvwArray">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <DataTemplate.Triggers>
+                    
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 
 </UserControl>
