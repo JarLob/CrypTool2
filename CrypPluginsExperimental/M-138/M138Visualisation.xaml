@@ -6,10 +6,18 @@
              mc:Ignorable="d">
     <Viewbox>
         <ListView HorizontalAlignment="Left" Height="500" Width="950" VerticalAlignment="Top"  Name="lvwArray" FontSize="18">
-        <ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderBrush" Value="Gray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
             <DataTemplate>
                 <DataTemplate.Triggers>
-                    
+
                 </DataTemplate.Triggers>
             </DataTemplate>
         </ListView.ItemTemplate>
