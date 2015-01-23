@@ -51,7 +51,7 @@ namespace Cryptool.Plugins.M_138
         private char _separatorStripes = ',';
         private char _separatorOffset = '/';
         int _offset;
-        int[] _stripNumbers;
+        int[] _stripNumbers = null;
         private List<int[]> numStripes = new List<int[]>();
 
 
@@ -122,6 +122,11 @@ namespace Cryptool.Plugins.M_138
             TextInput = RemoveInvalidChars(TextInput.ToUpper(), alphabet);
             TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet);
             splitKey();
+            if (_offset > alphabet.Length)
+            {
+                GuiLogMessage("Offset "+_offset+" is larger than strip length "+alphabet.Length+" and will be truncated", NotificationLevel.Warning);
+                _offset = _offset % alphabet.Length;
+            }
             switch (settings.ModificationType) {
                 case (int) Commands.Encrypt:
                     Encrypt();
@@ -249,12 +254,10 @@ namespace Cryptool.Plugins.M_138
             return builder.ToString();
         }
 
-        private void Encrypt()
+        private void DeEnCrypt(int deOrEncrypt)
         {
             int _rows = TextNumbers.Length;
-            Console.Write(_rows + " Zeilen \n");
             int _columns = stripes[0].Length;
-            Console.Write(_columns + " Spalten \n");
             int[] output = new int[_rows];
             toVisualize = new String[_rows + 1, _columns + 2];
 
@@ -262,51 +265,48 @@ namespace Cryptool.Plugins.M_138
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet));
             }
-            /*if (_stripNumbers.Length > 25)
-            {
-                GuiLogMessage("Number of stripes used should not exceed 25", NotificationLevel.Warning);
-            }*/
            
             for(int r=0; r<_rows; r++) {
                 int _usedStrip = r % _stripNumbers.Length;
-                toVisualize[r + 1, 0] = (_stripNumbers[_usedStrip] + 1).ToString(); //Fill first column of Visualisation
-                toVisualize[r+1, _columns + 1] = (r+1).ToString(); //Fill last column of Visualisation
+                toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
+                toVisualize[r + 1, 0] = (r+1).ToString(); //Fill first column of Visualisation
                 int[] currentStrip = numStripes[_usedStrip];
                 int isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
                 //NEW
                 for (int c = 0; c < _columns; c++)
                 {
-                    toVisualize[0, c+1] = (c+1).ToString(); //First row of Visualisation
-                    toVisualize[r + 1, c + 1] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                    toVisualize[0, c+2] = c.ToString(); //First row of Visualisation
+                    if (deOrEncrypt == 1)
+                    {
+                        toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                    }
+                    else if (deOrEncrypt == 2)
+                    {
+                        toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                    }
+                    else
+                    {
+                        //This should never happen
+                    }
+                    
                 }
-                output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
-            }
-            toVisualize[0, 0] = "Stripnumber"; ; //Top Left field
-            toVisualize[0, _columns + 1] = "Row"; //Top right field
-
-            /*
-            List<List<string>> l = new List<List<string>>();
-            
-            for (int i = 0; i < _rows+1; i++)
-            {
-                List<string> q = new List<String>();
-                for (int j = 0; j < _columns + 2; j++)
+                switch (deOrEncrypt)
                 {
-                    q.Add(toVisualize[i, j]);
+                    case 1:
+                        output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
+                        break;
+                    case 2:
+                        output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
+                        break;
+                    default:
+                        //This should never happen
+                        break;
                 }
-                l.Add(q);
-            }*/
-            /*
-            Console.Write("als liste-----------------");
-            foreach(List<String> t in l) {
-                foreach (String s in t)
-                {
-                    Console.Write(s+"\t");
-                }
-                Console.Write("\n");
-
+                
             }
-            */
+            toVisualize[0, 1] = "Strip"; ; //Top Left field
+            toVisualize[0, 0] = "Row"; //Top right field
+
             string[] colNames = new string[_columns+2];
             for(int i=0; i<_columns+2; i++) {
                 colNames[i] = toVisualize[0,i];
@@ -318,8 +318,6 @@ namespace Cryptool.Plugins.M_138
                 }
             }
  
-
-            //printArray(toVisualize, _rows + 1, _columns + 2);
             TextOutput = MapNumbersIntoTextSpace(output, alphabet);
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate {
@@ -327,8 +325,6 @@ namespace Cryptool.Plugins.M_138
                 {
                     visualisation.DataContext = this;
                     Binding2DArrayToListView(visualisation.lvwArray, tmpToVis, colNames);
-                    
-                    //visualisation.c_dataGrid.ItemsSource = l;
                 }
                 catch (Exception e)
                 {
@@ -337,26 +333,13 @@ namespace Cryptool.Plugins.M_138
             }, null);
         }
 
+        private void Encrypt()
+        {
+            DeEnCrypt(1);
+        }
         private void Decrypt()
         {
-            int _textlen = TextNumbers.Length;
-            int[] output = new int[_textlen];
-            for (int i = 0; i < _stripNumbers.Length; i++) //Create a List of all used Stripes mapped to numbers instead of characters
-            {
-                numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[i]], alphabet));
-            }
-            /*if (_stripNumbers.Length > 25)
-            {
-                GuiLogMessage("Number of stripes used should not exceed 25", NotificationLevel.Warning);
-            }*/
-            for (int i = 0; i < _textlen; i++)
-            {
-                int _usedStrip = i % _stripNumbers.Length;
-                int[] currentStrip = numStripes[_usedStrip];
-                int isAt = Array.IndexOf(currentStrip, TextNumbers[i]);
-                output[i] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
-            }
-            TextOutput = MapNumbersIntoTextSpace(output, alphabet);
+            DeEnCrypt(2);
         }
 
         private void setSeparator()
@@ -398,7 +381,11 @@ namespace Cryptool.Plugins.M_138
             string[] s1 = splitted[0].Split(_separatorStripes);
             _stripNumbers = new int[s1.Length];
             for ( int i=0; i < s1.Length; i++) {
-                _stripNumbers[i] = Convert.ToInt32(s1[i]) - 1;
+                _stripNumbers[i] = Convert.ToInt32(s1[i]); //-1
+                if (_stripNumbers[i] > stripes.Count)
+                {
+                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count, NotificationLevel.Error);
+                }
             }
         }
         private void Binding2DArrayToListView (ListView listview, string[,] data, string[] columnNames)
@@ -418,44 +405,6 @@ namespace Cryptool.Plugins.M_138
 
             listview.View = gv;
             listview.ItemsSource = dt.Rows;
-        }
-
-        private void printArray(string[,] a, int r, int c)
-        {
-            for (int i = 0; i < r; i++)
-            {
-                for (int j = 0; j < c; j++)
-                {
-                    Console.Write(a[i, j] + "\t");
-                }
-                Console.Write("\n");
-            }
-        }
-
-        public static DataView GetBindable2DArray<T>(T[,] array)
-        {
-            DataTable dataTable = new DataTable();
-            for (int i = 0; i < array.GetLength(1); i++)
-            {
-                dataTable.Columns.Add(i.ToString(), typeof(Ref<T>));
-            }
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                DataRow dataRow = dataTable.NewRow();
-                dataTable.Rows.Add(dataRow);
-            }
-            DataView dataView = new DataView(dataTable);
-            for (int i = 0; i < array.GetLength(0); i++)
-            {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    int a = i;
-                    int b = j;
-                    Ref<T> refT = new Ref<T>(() => array[a, b], z => { array[a, b] = z; });
-                    dataView[i][j] = refT;
-                }
-            }
-            return dataView;
         }
 
         private DataTable Convert2DArrayToDataTable(string[,] data, string[] columnNames)
@@ -495,71 +444,4 @@ namespace Cryptool.Plugins.M_138
 
         #endregion
     }
-    class ArrayVisitor : IEnumerable<string[]>
-    {
-        private string[,] _data;
-
-        public ArrayVisitor()
-        {
-        }
-
-        public ArrayVisitor(string[,] data)
-        {
-            _data = data;
-        }
-
-        public string[,] Data
-        {
-            get { return _data; }
-            set { _data = value; }
-        }
-
-        #region IEnumerable<string[]> Members
-
-        public IEnumerator<string[]> GetEnumerator()
-        {
-            if (_data == null)
-                throw new ArgumentException("Data cannot be null.", "Data");
-
-            int len2d = _data.GetLength(1);
-
-            for (int i = 0; i < _data.GetLength(0); i++)
-            {
-                string[] arr = new string[len2d];
-                for (int j = 0; j < len2d; j++)
-                {
-                    arr[j] = _data[i, j];
-                }
-
-                yield return arr;
-            }
-        }
-
-        #endregion
-
-        #region IEnumerable Members
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        #endregion
-    }
-    public class Ref<T>
-    {
-        private readonly Func<T> getter;
-        private readonly Action<T> setter;
-        public Ref(Func<T> getter, Action<T> setter)
-        {
-            this.getter = getter;
-            this.setter = setter;
-        }
-        public T Value { get { return getter(); } set { setter(value); } }
-    }
-    public class TableToVisualize
-    {
-        public string[,] Zeile { get; set; }
-    }
-
 }
