@@ -70,11 +70,164 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specify the type of attack ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specify the type of attack. ähnelt.
         /// </summary>
         internal static string AttackModeTooltip {
             get {
                 return ResourceManager.GetString("AttackModeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (Binary): 0b ähnelt.
+        /// </summary>
+        internal static string BinaryString {
+            get {
+                return ResourceManager.GetString("BinaryString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die When using the prefix &quot;0b&quot;, ensure the string only contains bit values (0 and 1). ähnelt.
+        /// </summary>
+        internal static string BinaryStringError {
+            get {
+                return ResourceManager.GetString("BinaryStringError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to parse the bit number for {0} variable {1}: {2}. ähnelt.
+        /// </summary>
+        internal static string BitNumberParseError {
+            get {
+                return ResourceManager.GetString("BitNumberParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calling CBMC process...  ähnelt.
+        /// </summary>
+        internal static string CallingCbmcProcessString {
+            get {
+                return ResourceManager.GetString("CallingCbmcProcessString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calling SAT solver process...  ähnelt.
+        /// </summary>
+        internal static string CallingSatSolverString {
+            get {
+                return ResourceManager.GetString("CallingSatSolverString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calling SAT solver at {0} with parameters {1}. ähnelt.
+        /// </summary>
+        internal static string CallingSatSolverWithParametersString {
+            get {
+                return ResourceManager.GetString("CallingSatSolverWithParametersString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the cbmc binary at {0}. ähnelt.
+        /// </summary>
+        internal static string CbmcExeNotFound {
+            get {
+                return ResourceManager.GetString("CbmcExeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CBMC output stream ähnelt.
+        /// </summary>
+        internal static string CbmcOutputStreamCaption {
+            get {
+                return ResourceManager.GetString("CbmcOutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Redirect the output of the CBMC process. ähnelt.
+        /// </summary>
+        internal static string CbmcOutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("CbmcOutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CBMC process returned with an error. ähnelt.
+        /// </summary>
+        internal static string CbmcProcessError {
+            get {
+                return ResourceManager.GetString("CbmcProcessError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Killing CBMC process threw an exception: {0} {1}. ähnelt.
+        /// </summary>
+        internal static string CbmcProcessKillException {
+            get {
+                return ResourceManager.GetString("CbmcProcessKillException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Successfully killed CBMC process. ähnelt.
+        /// </summary>
+        internal static string CbmcProcessKillSuccess {
+            get {
+                return ResourceManager.GetString("CbmcProcessKillSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CBMC process returned successfully after {0} seconds. ähnelt.
+        /// </summary>
+        internal static string CbmcProcessReturnedSuccessfully {
+            get {
+                return ResourceManager.GetString("CbmcProcessReturnedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CBMC process returned with exitcode {0}. ähnelt.
+        /// </summary>
+        internal static string CbmcProcessReturnedWithExitcode {
+            get {
+                return ResourceManager.GetString("CbmcProcessReturnedWithExitcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
+        /// </summary>
+        internal static string CiphertextCaption {
+            get {
+                return ResourceManager.GetString("CiphertextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding of the ciphertext bits returned with an error. ähnelt.
+        /// </summary>
+        internal static string CiphertextEncodingError {
+            get {
+                return ResourceManager.GetString("CiphertextEncodingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the ciphertext. ähnelt.
+        /// </summary>
+        internal static string CiphertextTooltip {
+            get {
+                return ResourceManager.GetString("CiphertextTooltip", resourceCulture);
             }
         }
         
@@ -106,11 +259,74 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choose a file to which the generated CNF will be written ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CNF file not found at {0}. ähnelt.
+        /// </summary>
+        internal static string CnfFileNotFoundError {
+            get {
+                return ResourceManager.GetString("CnfFileNotFoundError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choose filename for saving the resulting CNF. ähnelt.
         /// </summary>
         internal static string CnfFileTooltip {
             get {
                 return ResourceManager.GetString("CnfFileTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die C-Code file not found at {0}. ähnelt.
+        /// </summary>
+        internal static string CodefileNotFoundString {
+            get {
+                return ResourceManager.GetString("CodefileNotFoundString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copying CNF to {0}…  ähnelt.
+        /// </summary>
+        internal static string CopyingCnfString {
+            get {
+                return ResourceManager.GetString("CopyingCnfString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding input bits in CNF…  ähnelt.
+        /// </summary>
+        internal static string EncodingInputBitsString {
+            get {
+                return ResourceManager.GetString("EncodingInputBitsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding output bits in CNF…  ähnelt.
+        /// </summary>
+        internal static string EncodingOutputBitsString {
+            get {
+                return ResourceManager.GetString("EncodingOutputBitsString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die failed ähnelt.
+        /// </summary>
+        internal static string FailedString {
+            get {
+                return ResourceManager.GetString("FailedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die File {0} is very big: {1} bytes. ähnelt.
+        /// </summary>
+        internal static string FileBigWarning {
+            get {
+                return ResourceManager.GetString("FileBigWarning", resourceCulture);
             }
         }
         
@@ -124,7 +340,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the input file ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the input file. ähnelt.
         /// </summary>
         internal static string FileInputTooltip {
             get {
@@ -133,47 +349,173 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Guess bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fix input bits ähnelt.
         /// </summary>
-        internal static string GuessBitsCaption {
+        internal static string FixBitsCaption {
             get {
-                return ResourceManager.GetString("GuessBitsCaption", resourceCulture);
+                return ResourceManager.GetString("FixBitsCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Guess bits options ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fix bits options ähnelt.
         /// </summary>
-        internal static string GuessBitsOptions {
+        internal static string FixBitsOptions {
             get {
-                return ResourceManager.GetString("GuessBitsOptions", resourceCulture);
+                return ResourceManager.GetString("FixBitsOptions", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Check for the option to guess some bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check for the option to fix some bits. ähnelt.
         /// </summary>
-        internal static string GuessBitsTooltip {
+        internal static string FixBitsTooltip {
             get {
-                return ResourceManager.GetString("GuessBitsTooltip", resourceCulture);
+                return ResourceManager.GetString("FixBitsTooltip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Guessed bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fixed bits ähnelt.
         /// </summary>
-        internal static string GuessedBitsCaption {
+        internal static string FixedBitsCaption {
             get {
-                return ResourceManager.GetString("GuessedBitsCaption", resourceCulture);
+                return ResourceManager.GetString("FixedBitsCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Guess some of the input bits ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding fixed bits in CNF... ähnelt.
         /// </summary>
-        internal static string GuessedBitsTooltip {
+        internal static string FixedBitsEncoding {
             get {
-                return ResourceManager.GetString("GuessedBitsTooltip", resourceCulture);
+                return ResourceManager.GetString("FixedBitsEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding of the fixed bits returned with an error. ähnelt.
+        /// </summary>
+        internal static string FixedBitsEncodingError {
+            get {
+                return ResourceManager.GetString("FixedBitsEncodingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Only use the characters &apos;0&apos;, &apos;1&apos; and &apos;*&apos; to fix bits, the character {0} is not allowed. ähnelt.
+        /// </summary>
+        internal static string FixedBitsEncodingHint {
+            get {
+                return ResourceManager.GetString("FixedBitsEncodingHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Something went wrong in the function encodeFixedBitsInCnf (this code should never be reached). ähnelt.
+        /// </summary>
+        internal static string FixedBitsEncodingStrangeError {
+            get {
+                return ResourceManager.GetString("FixedBitsEncodingStrangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving fixed Bits. ähnelt.
+        /// </summary>
+        internal static string FixedBitsError {
+            get {
+                return ResourceManager.GetString("FixedBitsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The amount of fixed bits should be less or equal to the amount of input bits{0}Fixed bits: {1} bits{0}Input bits: {2} bits{0}The fixed bits are truncated to the size of the input bits from least significant bit to most significant bit. ähnelt.
+        /// </summary>
+        internal static string FixedBitsSizeError {
+            get {
+                return ResourceManager.GetString("FixedBitsSizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fix an arbitrary number of input bits. ähnelt.
+        /// </summary>
+        internal static string FixedBitsTooltip {
+            get {
+                return ResourceManager.GetString("FixedBitsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The fix bits option was selected but no bits were fixed. ähnelt.
+        /// </summary>
+        internal static string FixedBitsWarning {
+            get {
+                return ResourceManager.GetString("FixedBitsWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hash encoding returned with an error. ähnelt.
+        /// </summary>
+        internal static string HashEncodingError {
+            get {
+                return ResourceManager.GetString("HashEncodingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die (Hexadecimal): 0x ähnelt.
+        /// </summary>
+        internal static string HexadecimalString {
+            get {
+                return ResourceManager.GetString("HexadecimalString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die When using the prefix &quot;0x&quot;, ensure the string is an even amount of regular hexadecimal characters. ähnelt.
+        /// </summary>
+        internal static string HexStringError {
+            get {
+                return ResourceManager.GetString("HexStringError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input found! ähnelt.
+        /// </summary>
+        internal static string InputFoundString {
+            get {
+                return ResourceManager.GetString("InputFoundString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key-recovery attack: A key was found that fits to the provided plaintext and ciphertext: ähnelt.
+        /// </summary>
+        internal static string InputFoundStringKeyRecovery {
+            get {
+                return ResourceManager.GetString("InputFoundStringKeyRecovery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Preimage attack: An input was found that fits to the provided hash value: ähnelt.
+        /// </summary>
+        internal static string InputFoundStringPreimage {
+            get {
+                return ResourceManager.GetString("InputFoundStringPreimage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Second preimage attack: An input was found that fits to the provided hash value and is different from the provided first preimage: ähnelt.
+        /// </summary>
+        internal static string InputFoundStringSecondPreimage {
+            get {
+                return ResourceManager.GetString("InputFoundStringSecondPreimage", resourceCulture);
             }
         }
         
@@ -187,7 +529,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter hash value for a preimage or second preimage attack (prefix 0x for hexadecimal, 0b for binary) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter hash value for a preimage or second preimage attack (prefix &quot;0x&quot; for hexadecimal, &quot;0b&quot; for binary). ähnelt.
         /// </summary>
         internal static string InputHashValueTooltip {
             get {
@@ -196,7 +538,16 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Second preimage ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving input mapping. ähnelt.
+        /// </summary>
+        internal static string InputMappingError {
+            get {
+                return ResourceManager.GetString("InputMappingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First preimage ähnelt.
         /// </summary>
         internal static string InputMessageCaption {
             get {
@@ -205,7 +556,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Provide a second preimage for a second preimage attack (prefix 0x for hexadecimal, 0b for binary) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Provide a first preimage for a second preimage attack (prefix &quot;0x&quot; for hexadecimal, &quot;0b&quot; for binary). ähnelt.
         /// </summary>
         internal static string InputMessageTooltip {
             get {
@@ -241,11 +592,74 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select how the code is passed to the SAT Attack component ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select how the ANSI-C code is passed to the SAT Attack component. ähnelt.
         /// </summary>
         internal static string InputSelectionTooltip {
             get {
                 return ResourceManager.GetString("InputSelectionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input stream ähnelt.
+        /// </summary>
+        internal static string InputStreamCaption {
+            get {
+                return ResourceManager.GetString("InputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Connect the input stream to a text input component which contains the ANSI-C code of a cryptographic function. ähnelt.
+        /// </summary>
+        internal static string InputStreamTooltip {
+            get {
+                return ResourceManager.GetString("InputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to get the size of input variables. ähnelt.
+        /// </summary>
+        internal static string InputVariablesSizeFailureString {
+            get {
+                return ResourceManager.GetString("InputVariablesSizeFailureString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key-recovery attack ähnelt.
+        /// </summary>
+        internal static string KeyRecoveryAttack {
+            get {
+                return ResourceManager.GetString("KeyRecoveryAttack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key-recovery attack options ähnelt.
+        /// </summary>
+        internal static string KeyRecoveryAttackOptions {
+            get {
+                return ResourceManager.GetString("KeyRecoveryAttackOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to parse the literal for {0} variable {1}:{2}. ähnelt.
+        /// </summary>
+        internal static string LiteralParseError {
+            get {
+                return ResourceManager.GetString("LiteralParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to parse the literal {0}. ähnelt.
+        /// </summary>
+        internal static string LiteralParseError2 {
+            get {
+                return ResourceManager.GetString("LiteralParseError2", resourceCulture);
             }
         }
         
@@ -259,11 +673,29 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Specify the main function name if main() is not the name of the main function ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specify the name of the main function if it is not &quot;main()&quot;. ähnelt.
         /// </summary>
         internal static string MainFunctionTooltip {
             get {
                 return ResourceManager.GetString("MainFunctionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mapping file not found at {0}. ähnelt.
+        /// </summary>
+        internal static string MappingFileNotFoundString {
+            get {
+                return ResourceManager.GetString("MappingFileNotFoundString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The character {0} is not a valid hexadecimal character. ähnelt.
+        /// </summary>
+        internal static string NotAHexCharError {
+            get {
+                return ResourceManager.GetString("NotAHexCharError", resourceCulture);
             }
         }
         
@@ -277,7 +709,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Only translate C code to CNF, do not solve with the Sat solver ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Only translate ANSI-C code to CNF and encode the selected attack; do not solve with the SAT solver. ähnelt.
         /// </summary>
         internal static string OnlyCnfOutputTooltip {
             get {
@@ -286,11 +718,92 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Other attack (placeholder) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving output bits. ähnelt.
         /// </summary>
-        internal static string OtherAttack {
+        internal static string OutputBitsError {
             get {
-                return ResourceManager.GetString("OtherAttack", resourceCulture);
+                return ResourceManager.GetString("OutputBitsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving outuput mapping. ähnelt.
+        /// </summary>
+        internal static string OutputMappingError {
+            get {
+                return ResourceManager.GetString("OutputMappingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ensure the specified output has the correct length{0}Hash value / ciphertext: {1} bits{0}Output: {2} bits. ähnelt.
+        /// </summary>
+        internal static string OutputSizeError {
+            get {
+                return ResourceManager.GetString("OutputSizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output stream ähnelt.
+        /// </summary>
+        internal static string OutputStreamCaption {
+            get {
+                return ResourceManager.GetString("OutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Writes status information and the result of the attack, if the attack was successful. ähnelt.
+        /// </summary>
+        internal static string OutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
+        /// </summary>
+        internal static string PlaintextCaption {
+            get {
+                return ResourceManager.GetString("PlaintextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding of the plaintext bits returned with an error. ähnelt.
+        /// </summary>
+        internal static string PlaintextEncodingError {
+            get {
+                return ResourceManager.GetString("PlaintextEncodingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ensure that the provided plaintext has the prefix &quot;0x&quot; or &quot;0b&quot;. ähnelt.
+        /// </summary>
+        internal static string PlaintextPrefixInfoString {
+            get {
+                return ResourceManager.GetString("PlaintextPrefixInfoString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ensure the specified plaintext has the correct length (the amount of input bits must be larger than the amount of plaintext bits){0}Plaintext: {1} bits{0}Input: {2} bits. ähnelt.
+        /// </summary>
+        internal static string PlaintextSizeError {
+            get {
+                return ResourceManager.GetString("PlaintextSizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the plaintext. ähnelt.
+        /// </summary>
+        internal static string PlaintextTooltip {
+            get {
+                return ResourceManager.GetString("PlaintextTooltip", resourceCulture);
             }
         }
         
@@ -313,6 +826,15 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use the prefix &quot;0x&quot; for hexadecimal value or the prefix &quot;0b&quot; for binary value. ähnelt.
+        /// </summary>
+        internal static string PrefixError {
+            get {
+                return ResourceManager.GetString("PrefixError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Preimage attack ähnelt.
         /// </summary>
         internal static string PreimageAttack {
@@ -331,6 +853,105 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Processing of SAT solver output returned an error. ähnelt.
+        /// </summary>
+        internal static string SatOutputProcessError {
+            get {
+                return ResourceManager.GetString("SatOutputProcessError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Killing SAT solver process threw an exception: {0} {1}. ähnelt.
+        /// </summary>
+        internal static string SatProcessKillException {
+            get {
+                return ResourceManager.GetString("SatProcessKillException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Successfully killed SAT solver process. ähnelt.
+        /// </summary>
+        internal static string SatProcessKillSuccess {
+            get {
+                return ResourceManager.GetString("SatProcessKillSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SAT solver process returned successfully after {0} seconds. ähnelt.
+        /// </summary>
+        internal static string SatProcessReturnedSuccessful {
+            get {
+                return ResourceManager.GetString("SatProcessReturnedSuccessful", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SAT solver process returned after {0} seconds... but failed to find a solution. ähnelt.
+        /// </summary>
+        internal static string SatProcessReturnedUnsat {
+            get {
+                return ResourceManager.GetString("SatProcessReturnedUnsat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the sat solver binary at  {0}. ähnelt.
+        /// </summary>
+        internal static string satSolverExeNotFound {
+            get {
+                return ResourceManager.GetString("satSolverExeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SAT solver output file not found at {0}. ähnelt.
+        /// </summary>
+        internal static string SatSolverOutputFileError {
+            get {
+                return ResourceManager.GetString("SatSolverOutputFileError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First line in SAT solver output file {0} is not &quot;SAT&quot;. ähnelt.
+        /// </summary>
+        internal static string SatSolverOutputFirstLineError {
+            get {
+                return ResourceManager.GetString("SatSolverOutputFirstLineError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SAT solver ähnelt.
+        /// </summary>
+        internal static string SatSolverOutputStreamCaption {
+            get {
+                return ResourceManager.GetString("SatSolverOutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Redirect the output of the SAT solver process. ähnelt.
+        /// </summary>
+        internal static string SatSolverOutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("SatSolverOutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SAT solver process returned with exitcode {0}. ähnelt.
+        /// </summary>
+        internal static string SatSolverReturnedWithExitcode {
+            get {
+                return ResourceManager.GetString("SatSolverReturnedWithExitcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Second preimage attack ähnelt.
         /// </summary>
         internal static string SecondPreimageAttack {
@@ -345,6 +966,114 @@ namespace SATAttack.Properties {
         internal static string SecondPreimageAttackOptions {
             get {
                 return ResourceManager.GetString("SecondPreimageAttackOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding of the second preimage bits returned with an error. ähnelt.
+        /// </summary>
+        internal static string SecondPreimageEncodingError {
+            get {
+                return ResourceManager.GetString("SecondPreimageEncodingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encoding first preimage in CNF…  ähnelt.
+        /// </summary>
+        internal static string SecondPreimageEncodingString {
+            get {
+                return ResourceManager.GetString("SecondPreimageEncodingString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving second preimage bits. ähnelt.
+        /// </summary>
+        internal static string SecondPreimageRetreivingError {
+            get {
+                return ResourceManager.GetString("SecondPreimageRetreivingError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ensure the specified second preimage has the correct length{0}Second preimage: {1} bits{0}Input: {2} bits. ähnelt.
+        /// </summary>
+        internal static string SecondPreimageSizeError {
+            get {
+                return ResourceManager.GetString("SecondPreimageSizeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skipping SAT solver process…  ähnelt.
+        /// </summary>
+        internal static string SkippingSatSolverString {
+            get {
+                return ResourceManager.GetString("SkippingSatSolverString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die successful ähnelt.
+        /// </summary>
+        internal static string SuccessfulString {
+            get {
+                return ResourceManager.GetString("SuccessfulString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die s&apos;.&apos;fff ähnelt.
+        /// </summary>
+        internal static string TimeFormat {
+            get {
+                return ResourceManager.GetString("TimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Variable {0}_{1}:{2} does not appear in the {3} mapping. Is the Variable {0}_{1} used in the ANSI-C code? It will be assigned &quot;false&quot; by default. ähnelt.
+        /// </summary>
+        internal static string UnassignedVariableWarning {
+            get {
+                return ResourceManager.GetString("UnassignedVariableWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Make sure the {0} variable definitions start with {1}_0 and the indices are incremented steadily and each variable is actually used in the code. ähnelt.
+        /// </summary>
+        internal static string VariableDefinitionsError {
+            get {
+                return ResourceManager.GetString("VariableDefinitionsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to parse the variable index for {0} variable {1}:{2}. ähnelt.
+        /// </summary>
+        internal static string VariableIndexParseError {
+            get {
+                return ResourceManager.GetString("VariableIndexParseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to read number of {0} variables. ähnelt.
+        /// </summary>
+        internal static string VariableNumberParsingFailedString {
+            get {
+                return ResourceManager.GetString("VariableNumberParsingFailedString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Failed to read size of {0} variables. ähnelt.
+        /// </summary>
+        internal static string VariableSizeParsingFailedString {
+            get {
+                return ResourceManager.GetString("VariableSizeParsingFailedString", resourceCulture);
             }
         }
     }

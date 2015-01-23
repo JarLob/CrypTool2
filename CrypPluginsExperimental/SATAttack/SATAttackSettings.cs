@@ -30,16 +30,18 @@ namespace Cryptool.Plugins.SATAttack
         private string openFilename;
         private string inputHashValue;
         private string secondPreimage;
+        private string plaintext;
+        private string ciphertext;
         private bool showFileInputSelection = false;
         private bool showPreimageAttackSettings = true;
         private bool showSecondPreimageAttackSettings;
-        private bool showOtherAttackSettings;
+        private bool showKeyRecoveryAttackSettings;
         private string mainFunctionName;
         private string cnfFileName;
         private bool onlyCnfOutput = false;
-        private bool guessBits = false;
-        private bool showGuessBitsSettings = false;
-        private string guessedBits;
+        private bool fixBits = false;
+        private bool showFixBitsSettings = false;
+        private string fixedBits;
 
         #endregion
 
@@ -48,7 +50,7 @@ namespace Cryptool.Plugins.SATAttack
         #region General Settings
 
         [TaskPane("AttackModeCaption", "AttackModeTooltip", null, 1, false, ControlType.ComboBox,
-            new string[] { "PreimageAttack", "SecondPreimageAttack"})]
+            new string[] { "PreimageAttack", "SecondPreimageAttack", "KeyRecoveryAttack"})]
         public int AttackMode
         {
             get
@@ -66,19 +68,19 @@ namespace Cryptool.Plugins.SATAttack
                     {
                         showPreimageAttackSettings = true;
                         showSecondPreimageAttackSettings = false;
-                        showOtherAttackSettings = false;
+                        showKeyRecoveryAttackSettings = false;
                     }
                     else if (attackMode == 1) // Second Preimage Attack
                     {
                         showPreimageAttackSettings = false;
                         showSecondPreimageAttackSettings = true;
-                        showOtherAttackSettings = false;
+                        showKeyRecoveryAttackSettings = false;
                     }
-                    else if (attackMode == 2) // Other Attack
+                    else if (attackMode == 2) // Key Recovery Attack
                     {
                         showPreimageAttackSettings = false;
                         showSecondPreimageAttackSettings = false;
-                        showOtherAttackSettings = true;
+                        showKeyRecoveryAttackSettings = true;
                     }
 
                     UpdateTaskPaneVisibility();
@@ -179,27 +181,27 @@ namespace Cryptool.Plugins.SATAttack
             }        
         }
 
-        [TaskPane("GuessBitsCaption", "GuessBitsTooltip", null, 8, false, ControlType.CheckBox)]
-        public bool GuessBits
+        [TaskPane("FixBitsCaption", "FixBitsTooltip", null, 8, false, ControlType.CheckBox)]
+        public bool FixBits
         {
             get 
             {
-                return guessBits; 
+                return fixBits; 
             }
             set
             {
-                if (value != guessBits)
+                if (value != fixBits)
                 {
-                    guessBits = value;
-                    OnPropertyChanged("GuessBits");
+                    fixBits = value;
+                    OnPropertyChanged("FixBits");
 
-                    if (guessBits == true)
+                    if (fixBits == true)
                     {
-                        showGuessBitsSettings = true;
+                        showFixBitsSettings = true;
                     }
                     else
                     {
-                        showGuessBitsSettings = false;                    
+                        showFixBitsSettings = false;                    
                     }
 
                     UpdateTaskPaneVisibility();
@@ -209,7 +211,7 @@ namespace Cryptool.Plugins.SATAttack
 
         #endregion
 
-        #region Preimage Attack Settings
+        #region Preimage Attack Options
 
         [TaskPane("InputHashValueCaption", "InputHashValueTooltip", "PreimageAttackOptions", 1, false, ControlType.TextBox)]
         public string InputHashValue
@@ -230,7 +232,7 @@ namespace Cryptool.Plugins.SATAttack
 
         #endregion
 
-        #region Second-Preimage Attack Settings
+        #region Second-Preimage Attack Options
 
         [TaskPane("InputMessageCaption", "InputMessageTooltip", "SecondPreimageAttackOptions", 1, false, ControlType.TextBox)]
         public string SecondPreimage
@@ -251,27 +253,64 @@ namespace Cryptool.Plugins.SATAttack
 
         #endregion
 
-        #region Guess Bits Settings
+        #region Key Recovery Attack Options
 
-        [TaskPane("GuessedBitsCaption", "GuessedBitsTooltip", "GuessBitsOptions", 1, false, ControlType.TextBox)]
-        public string GuessedBits
+        [TaskPane("PlaintextCaption", "PlaintextTooltip", "KeyRecoveryAttackOptions", 1, false, ControlType.TextBox)]
+        public string Plaintext
         {
-            get 
+            get
             {
-                return guessedBits;
+                return plaintext;
             }
             set
             {
-                if (value != guessedBits)
+                if (value != plaintext)
                 {
-                    guessedBits = value;
-                    OnPropertyChanged("GuessedBits");
+                    plaintext = value;
+                    OnPropertyChanged("Plaintext");
+                }
+            }
+        }
+
+        [TaskPane("CiphertextCaption", "CiphertextTooltip", "KeyRecoveryAttackOptions", 2, false, ControlType.TextBox)]
+        public string Ciphertext
+        {
+            get
+            {
+                return ciphertext;
+            }
+            set
+            {
+                if (value != ciphertext)
+                {
+                    ciphertext = value;
+                    OnPropertyChanged("Ciphertext");
+                }
+            }
+        }
+
+        #endregion
+
+        #region Fix Bits Settings
+
+        [TaskPane("FixedBitsCaption", "FixedBitsTooltip", "FixBitsOptions", 1, false, ControlType.TextBox)]
+        public string FixedBits
+        {
+            get 
+            {
+                return fixedBits;
+            }
+            set
+            {
+                if (value != fixedBits)
+                {
+                    fixedBits = value;
+                    OnPropertyChanged("FixedBits");
                 }
             }
         
         }
-
-
+        
         #endregion
 
         #endregion
@@ -294,16 +333,22 @@ namespace Cryptool.Plugins.SATAttack
             {
                 settingChanged("InputHashValue", Visibility.Visible);
                 settingChanged("SecondPreimage", Visibility.Collapsed);
+                settingChanged("Plaintext", Visibility.Collapsed);
+                settingChanged("Ciphertext", Visibility.Collapsed);
             }
             else if (showSecondPreimageAttackSettings)
             {
                 settingChanged("InputHashValue", Visibility.Visible);
                 settingChanged("SecondPreimage", Visibility.Visible);
+                settingChanged("Plaintext", Visibility.Collapsed);
+                settingChanged("Ciphertext", Visibility.Collapsed);
             }
-            else if (showOtherAttackSettings)
+            else if (showKeyRecoveryAttackSettings)
             {
                 settingChanged("InputHashValue", Visibility.Collapsed);
                 settingChanged("SecondPreimage", Visibility.Collapsed);
+                settingChanged("Plaintext", Visibility.Visible);
+                settingChanged("Ciphertext", Visibility.Visible);
             }
 
             if (showFileInputSelection)
@@ -315,13 +360,13 @@ namespace Cryptool.Plugins.SATAttack
                 settingChanged("InputFile", Visibility.Collapsed);
             }
 
-            if (showGuessBitsSettings)
+            if (showFixBitsSettings)
             {
-                settingChanged("GuessedBits", Visibility.Visible);
+                settingChanged("FixedBits", Visibility.Visible);
             }
-            else if (!showGuessBitsSettings)
+            else if (!showFixBitsSettings)
             {
-                settingChanged("GuessedBits", Visibility.Collapsed);            
+                settingChanged("FixedBits", Visibility.Collapsed);            
             }
         }
 

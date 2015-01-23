@@ -11,11 +11,12 @@ using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SATAttack.Properties;
 
 namespace Cryptool.Plugins.SATAttack
 {
     [Author("Max Brandi", "max.brandi@rub.de", null, null)]
-    [PluginInfo("SATAttack.Properties.Resources", "PluginCaption", "PluginDescription", "SATAttack/Documentation/doc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("SATAttack.Properties.Resources", "PluginCaption", "PluginDescription", "SATAttack/Documentation/doc.xml", new[] { "SATSolver/Images/sat-race-logo.gif" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class SATAttack : ICrypComponent
     {
@@ -28,27 +29,36 @@ namespace Cryptool.Plugins.SATAttack
         private StringBuilder cbmcOutputString;
         private StringBuilder satSolverOutputString;
         private Encoding encoding = Encoding.UTF8;
-        private string pluginDataPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+        private static string pluginDataPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
             + "\\Data\\SATAttack\\";
-        string codefileName = "codefile.c";
+        private string codefileName = "codefile.c";
+
+        // CBMC output files
+        private static string outputCnfFileName = "output.cnf.txt";
+        private static string inputMappingFileName = "output.inputMapping.txt";
+        private static string outputMappingFileName = "output.outputMapping.txt";
+
+        private string outputCnfFilePath = pluginDataPath + outputCnfFileName;
+        private string inputMappingFilePath = pluginDataPath + inputMappingFileName;
+        private string outputMappingFilePath = pluginDataPath + outputMappingFileName;
 
         private Process cbmcProcess;
         private Process satSolverProcess;
 
         StringBuilder outputStringBuilder = new StringBuilder();
-        
+
         #endregion
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputDataStreamTooltip", false)]
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", false)]
         public ICryptoolStream InputStream
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "CbmcOutputStream", "CbmcOutputStreamTooltip", false)]
+        [PropertyInfo(Direction.OutputData, "CbmcOutputStreamCaption", "CbmcOutputStreamTooltip", false)]
         public ICryptoolStream CbmcOutputStream
         {
             get
@@ -61,7 +71,7 @@ namespace Cryptool.Plugins.SATAttack
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "SatSolverOutputStream", "SatSolverOutputStreamTooltip", false)]
+        [PropertyInfo(Direction.OutputData, "SatSolverOutputStreamCaption", "SatSolverOutputStreamTooltip", false)]
         public ICryptoolStream SatSolverOutputStream
         {
             get
@@ -74,7 +84,7 @@ namespace Cryptool.Plugins.SATAttack
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputDataStreamTooltip", true)]
+        [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
         public ICryptoolStream OutputStream
         {
             get
@@ -89,12 +99,40 @@ namespace Cryptool.Plugins.SATAttack
 
         #endregion
 
+        #region IPlugin Members
+
+        public ISettings Settings
+        {
+            get { return settings; }
+        }
+
+        public UserControl Presentation
+        {
+            get { return null; }
+        }
+
+        public void PreExecution()
+        {
+            if (File.Exists(outputCnfFilePath))
+                File.Delete(outputCnfFilePath);
+
+            if (File.Exists(inputMappingFilePath))
+                File.Delete(inputMappingFilePath);
+
+            if (File.Exists(outputMappingFilePath))
+                File.Delete(outputMappingFilePath);
+        }
+
+        public void PostExecution()
+        {
+        }
+
         public void Execute()
         {
             ProgressChanged(0, 100);
 
-            #region prepare
-            
+            #region preparations
+
             /* reset output string */
             outputStringBuilder = null;
             outputStringBuilder = new StringBuilder();
@@ -125,31 +163,37 @@ namespace Cryptool.Plugins.SATAttack
             if (CallCbmcProcess(codefilePath, cbmcMainFunctionName) != 0)
             {
                 /* write info to output stream */
-                outputStringBuilder.Append("failed!" + Environment.NewLine);
+                outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
                 outputStream = new CStreamWriter();
                 outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                 outputStream.Close();
                 OnPropertyChanged("OutputStream");
 
-                GuiLogMessage("Cbmc process returned with an error.", NotificationLevel.Error);
+                GuiLogMessage(Resources.CbmcProcessError, NotificationLevel.Error);
                 return;
             }
 
             stopwatch.Stop();
             TimeSpan cbmcTime = stopwatch.Elapsed;
 
-            GuiLogMessage(String.Format("Cbmc process returned after {0} seconds.", cbmcTime.ToString("s'.'fff")), NotificationLevel.Info);
+            GuiLogMessage(String.Format(Resources.CbmcProcessReturnedSuccessfully, cbmcTime.ToString(Resources.TimeFormat)), NotificationLevel.Info);
 
             /* write info to output stream */
-            outputStringBuilder.AppendFormat(Environment.NewLine + "Cbmc process returned successfully after {0} seconds." + Environment.NewLine, cbmcTime.ToString("s'.'fff"));
+            outputStringBuilder.AppendFormat(Environment.NewLine + Resources.CbmcProcessReturnedSuccessfully + Environment.NewLine, cbmcTime.ToString(Resources.TimeFormat));
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
 
-            string inputMappingFilePath = "output.inputMapping.txt";
-            string outputMappingFilePath = "output.outputMapping.txt";
-            string outputCnfFilePath = "output.cnf.txt";
+            /* move cbmc files to the plugin's folder */
+            if (File.Exists(outputCnfFileName))
+                File.Move(outputCnfFileName, outputCnfFilePath);
+
+            if (File.Exists(inputMappingFileName))
+                File.Move(inputMappingFileName, inputMappingFilePath);
+
+            if (File.Exists(outputMappingFileName))
+                File.Move(outputMappingFileName, outputMappingFilePath);
 
             #endregion cbmc
 
@@ -157,60 +201,132 @@ namespace Cryptool.Plugins.SATAttack
 
             #region cnf encoding and options
 
-            #region hash encoding
-
-            /* append encoding of the output hash to the cnf */
-            if (encodeHashInCnf(outputMappingFilePath, outputCnfFilePath) != 0)
+            switch (settings.AttackMode)
             {
-                /* write info to output stream */
-                outputStringBuilder.Append("failed!" + Environment.NewLine);
-                outputStream = new CStreamWriter();
-                outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
-                outputStream.Close();
-                OnPropertyChanged("OutputStream");
+                case 0: // preimage attack
+                    {
+                        #region hash encoding
 
-                GuiLogMessage("Hash encoding returned with an error.", NotificationLevel.Error);
-                return;
+                        string hashString = settings.InputHashValue;
+
+                        /* append encoding of the output hash to the cnf */
+                        if (encodeOutputBitsInCnf(hashString, outputMappingFilePath, outputCnfFilePath) != 0)
+                        {
+                            /* write info to output stream */
+                            outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
+                            outputStream = new CStreamWriter();
+                            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+                            outputStream.Close();
+                            OnPropertyChanged("OutputStream");
+
+                            GuiLogMessage(Resources.HashEncodingError, NotificationLevel.Error);
+                            return;
+                        }
+
+                        #endregion
+                        break;
+                    }
+                case 1: // second preimage attack
+                    {
+                        #region hash encoding
+
+                        string hashString = settings.InputHashValue;
+
+                        /* append encoding of the output hash to the cnf */
+                        if (encodeOutputBitsInCnf(hashString, outputMappingFilePath, outputCnfFilePath) != 0)
+                        {
+                            /* write info to output stream */
+                            outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
+                            outputStream = new CStreamWriter();
+                            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+                            outputStream.Close();
+                            OnPropertyChanged("OutputStream");
+
+                            GuiLogMessage(Resources.HashEncodingError, NotificationLevel.Error);
+                            return;
+                        }
+
+                        #endregion
+                        #region second preimage encoding
+
+                        /* append encoding of second preimage */
+                        if (encodeSecondPreimageInCnf(inputMappingFilePath, outputCnfFilePath) != 0)
+                        {
+                            /* write info to output stream */
+                            outputStringBuilder.Append(Resources.FailedString);
+                            outputStream = new CStreamWriter();
+                            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+                            outputStream.Close();
+                            OnPropertyChanged("OutputStream");
+
+                            GuiLogMessage(Resources.SecondPreimageEncodingError, NotificationLevel.Error);
+                            return;
+                        }
+
+                        #endregion
+                        break;
+                    }
+                case 2: // key recovery attack
+                    {
+                        #region ciphertext encoding
+
+                        string ciphertextString = settings.Ciphertext;
+
+                        /* append encoding of the ciphertext to the cnf */
+                        if (encodeOutputBitsInCnf(ciphertextString, outputMappingFilePath, outputCnfFilePath) != 0)
+                        {
+                            /* write info to output stream */
+                            outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
+                            outputStream = new CStreamWriter();
+                            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+                            outputStream.Close();
+                            OnPropertyChanged("OutputStream");
+
+                            GuiLogMessage(Resources.CiphertextEncodingError, NotificationLevel.Error);
+                            return;
+                        }
+
+                        #endregion
+                        #region plaintext encoding
+
+                        string plaintextString = settings.Plaintext;
+
+                        /* append encoding of the plaintext to the cnf */
+                        if (encodePlaintextBitsInCnf(plaintextString, inputMappingFilePath, outputCnfFilePath) != 0)
+                        {
+                            /* write info to output stream */
+                            outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
+                            outputStream = new CStreamWriter();
+                            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+                            outputStream.Close();
+                            OnPropertyChanged("OutputStream");
+
+                            GuiLogMessage(Resources.PlaintextEncodingError, NotificationLevel.Error);
+                            return;
+                        }
+
+                        #endregion
+
+                        break;
+                    }
+                default: break;
             }
 
-            #endregion
+            #region fixed bits encoding
 
-            #region second preimage encoding
-
-            /* append encoding of second preimage */
-            if (settings.AttackMode == 1)
+            /* append encoding of fixed bits to the cnf, if parallelized attack is selected */
+            if (settings.FixBits)
             {
-                if (encodeSecondPreimageInCnf(inputMappingFilePath, outputCnfFilePath) != 0)
+                if (encodeFixedBitsInCnf(inputMappingFilePath, outputCnfFilePath) != 0)
                 {
                     /* write info to output stream */
-                    outputStringBuilder.Append("failed!");
+                    outputStringBuilder.Append(Resources.FailedString + Environment.NewLine);
                     outputStream = new CStreamWriter();
                     outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                     outputStream.Close();
                     OnPropertyChanged("OutputStream");
 
-                    GuiLogMessage("Encoding of the second preimage bits returned with an error.", NotificationLevel.Error);
-                    return;
-                }
-            }
-
-            #endregion
-
-            #region guessed bits encoding
-
-            /* append encoding of guessed bits to the cnf, if parallelized attack is selected */
-            if (settings.GuessBits)
-            {
-                if (encodeGuessedBitsInCnf(inputMappingFilePath, outputCnfFilePath) != 0)
-                {
-                    /* write info to output stream */
-                    outputStringBuilder.Append("failed!" + Environment.NewLine);
-                    outputStream = new CStreamWriter();
-                    outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
-                    outputStream.Close();
-                    OnPropertyChanged("OutputStream");
-
-                    GuiLogMessage("Encoding of the guessed bits returned with an error.", NotificationLevel.Error);
+                    GuiLogMessage(Resources.FixedBitsEncodingError, NotificationLevel.Error);
                     return;
                 }
             }
@@ -222,7 +338,7 @@ namespace Cryptool.Plugins.SATAttack
             if (settings.CnfFileName != "")
             {
                 /* write info to output stream */
-                outputStringBuilder.AppendFormat("Copying CNF to {0}... ", settings.CnfFileName);
+                outputStringBuilder.AppendFormat(Resources.CopyingCnfString, settings.CnfFileName);
                 outputStream = new CStreamWriter();
                 outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                 outputStream.Close();
@@ -231,7 +347,7 @@ namespace Cryptool.Plugins.SATAttack
                 File.Copy(outputCnfFilePath, settings.CnfFileName);
 
                 /* write info to output stream */
-                outputStringBuilder.Append("successful!" + Environment.NewLine);
+                outputStringBuilder.Append(Resources.SuccessfulString + Environment.NewLine);
                 outputStream = new CStreamWriter();
                 outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                 outputStream.Close();
@@ -240,12 +356,12 @@ namespace Cryptool.Plugins.SATAttack
 
             #endregion
 
-            #region only cnf output
+            #region cnf output only
 
             if (settings.OnlyCnfOutput)
             {
                 /* write info to output stream */
-                outputStringBuilder.Append("Skipping Sat solver process..." + Environment.NewLine);
+                outputStringBuilder.Append(Resources.SkippingSatSolverString + Environment.NewLine);
                 outputStream = new CStreamWriter();
                 outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                 outputStream.Close();
@@ -263,6 +379,7 @@ namespace Cryptool.Plugins.SATAttack
 
             #region sat solver
 
+            #region call sat solver
             /* call SAT solver and pass cnf file to it */
             string satSolverOutputFilename = "solver.output.txt";
             string satSolverOutputFilePath = pluginDataPath + satSolverOutputFilename;
@@ -275,39 +392,65 @@ namespace Cryptool.Plugins.SATAttack
                 stopwatch.Stop();
                 satSolverTime = stopwatch.Elapsed;
 
-                GuiLogMessage(String.Format("Sat solver process returned after {0} seconds.", satSolverTime.ToString("s'.'fff")), NotificationLevel.Info);
-
-                GuiLogMessage("Sat solver did not return \"satisfiable\".", NotificationLevel.Info);
+                //GuiLogMessage(String.Format("SatProcessReturnedUnsat", satSolverTime.ToString(Resources.TimeFormat)), NotificationLevel.Info);
 
                 /* write info to output stream */
-                outputStringBuilder.AppendFormat("Sat solver process returned after {0} seconds... but failed to find a solution.", satSolverTime.ToString("s'.'fff") + Environment.NewLine);
+                outputStringBuilder.AppendFormat(Resources.SatProcessReturnedUnsat, satSolverTime.ToString(Resources.TimeFormat) + Environment.NewLine);
                 outputStream = new CStreamWriter();
                 outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
                 outputStream.Close();
                 OnPropertyChanged("OutputStream");
 
-                return;                
+                return;
             }
 
             stopwatch.Stop();
             satSolverTime = stopwatch.Elapsed;
 
-            GuiLogMessage(String.Format("Sat solver process returned after {0} seconds.", satSolverTime.ToString("s'.'fff")), NotificationLevel.Info);
+            //GuiLogMessage(String.Format("SatProcessReturnedSuccessful", satSolverTime.ToString(Resources.TimeFormat)), NotificationLevel.Info);
 
             /* write info to output stream */
-            outputStringBuilder.AppendFormat("Sat solver process returned successfully after {0} seconds." + Environment.NewLine, satSolverTime.ToString("s'.'fff"));
+            outputStringBuilder.AppendFormat(Resources.SatProcessReturnedSuccessful + Environment.NewLine, satSolverTime.ToString(Resources.TimeFormat));
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
+            #endregion
 
-            /* interpret SAT solver output */
-            string outputString = processSatSolverOutput(satSolverOutputFilePath, inputMappingFilePath);
+            #region interpret sat solver output
+
+            #region number of plaintext variables
+            /* if key recovery attack is chosen, determine amount of non key variables such that processSatSolverOutput interprets the number of input variables */
+            int numberOfPlaintextVariables = 0;
+            if (settings.AttackMode == 2)
+            {
+                int sizeOfInputVariables = getSizeOfInputVariables(inputMappingFilePath);
+                if (sizeOfInputVariables == -1)
+                {
+                    GuiLogMessage(Resources.InputVariablesSizeFailureString, NotificationLevel.Error);
+                    return;
+                }
+
+                int sizeOfPlaintextInBit = settings.Plaintext.Substring(0, 2) == "0x" ? (settings.Plaintext.Length - 2) * 4 :
+                    settings.Plaintext.Substring(0, 2) == "0b" ? (settings.Plaintext.Length - 2) :
+                    -1;
+
+                if (sizeOfPlaintextInBit == -1)
+                {
+                    GuiLogMessage(Resources.PlaintextPrefixInfoString, NotificationLevel.Error);
+                    return;
+                }
+
+                numberOfPlaintextVariables = sizeOfPlaintextInBit / sizeOfInputVariables;
+            }
+            #endregion
+
+            string outputString = processSatSolverOutput(satSolverOutputFilePath, inputMappingFilePath, numberOfPlaintextVariables);
 
             if (outputString == null)
             {
-                GuiLogMessage("Processing SAT solver output returned an error.", NotificationLevel.Error);
-                return;  
+                GuiLogMessage(Resources.SatOutputProcessError, NotificationLevel.Error);
+                return;
             }
 
             outputStringBuilder.Append(outputString);
@@ -315,30 +458,11 @@ namespace Cryptool.Plugins.SATAttack
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
-            
+            #endregion
+
             #endregion
 
             ProgressChanged(100, 100);
-        }
-
-        #region IPlugin Members
-
-        public ISettings Settings
-        {
-            get { return settings; }
-        }
-
-        public UserControl Presentation
-        {
-            get { return null; }
-        }
-
-        public void PreExecution()
-        {
-        }
-
-        public void PostExecution()
-        {
         }
 
         public void Stop()
@@ -346,21 +470,21 @@ namespace Cryptool.Plugins.SATAttack
             try
             {
                 cbmcProcess.Kill();
-                GuiLogMessage("Successfully killed Cbmc process.", NotificationLevel.Debug);
+                GuiLogMessage(Resources.CbmcProcessKillSuccess, NotificationLevel.Debug);
             }
             catch (Exception e)
-            { 
-                GuiLogMessage(String.Format("Killing Cbmc process threw an exception:" + Environment.NewLine + "{0}", e), NotificationLevel.Debug); 
+            {
+                GuiLogMessage(String.Format(Resources.CbmcProcessKillException, Environment.NewLine, e), NotificationLevel.Debug);
             }
 
             try
             {
                 satSolverProcess.Kill();
-                GuiLogMessage("Successfully killed Sat solver process.", NotificationLevel.Debug);
+                GuiLogMessage(Resources.SatProcessKillSuccess, NotificationLevel.Debug);
             }
             catch (Exception e)
             {
-                GuiLogMessage(String.Format("Killing Sat solver process threw an exception:" + Environment.NewLine + "{0}", e), NotificationLevel.Debug);
+                GuiLogMessage(String.Format(Resources.SatProcessKillException, Environment.NewLine, e), NotificationLevel.Debug);
             }
         }
 
@@ -479,7 +603,7 @@ namespace Cryptool.Plugins.SATAttack
         /// <summary>
         /// Writes a stream of type ICryptoolStream to a file. The parameter filepath should end with "\\".
         /// </summary>
-        void ReadInputStreamToCodefile(ICryptoolStream inputStream, string path, string filename)
+        void ReadInputStreamToCodefile(ICryptoolStream inputStream, string pluginDataPath, string codefileName)
         {
             using (CStreamReader reader = InputStream.CreateReader())
             {
@@ -487,12 +611,12 @@ namespace Cryptool.Plugins.SATAttack
                 byte[] buffer = new byte[1024];
 
                 /* create directory if not existent */
-                bool dirExists = Directory.Exists(path);
+                bool dirExists = Directory.Exists(pluginDataPath);
 
                 if (!dirExists)
-                    Directory.CreateDirectory(path);
+                    Directory.CreateDirectory(pluginDataPath);
 
-                FileStream fs = File.Open(path + filename, FileMode.Create);
+                FileStream fs = File.Open(pluginDataPath + codefileName, FileMode.Create);
                 BinaryWriter bw = new BinaryWriter(fs);
 
                 while ((bytesRead = reader.Read(buffer)) > 0)
@@ -540,24 +664,29 @@ namespace Cryptool.Plugins.SATAttack
         int CallCbmcProcess(string codefilePath, string mainFunctionName)
         {
             /* write info to output stream */
-            outputStringBuilder.Append("Calling Cbmc process... ");
+            outputStringBuilder.Append(Resources.CallingCbmcProcessString);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
 
-            bool codefileExists = File.Exists(codefilePath);
-
-            if (!codefileExists)
+            if (!File.Exists(codefilePath))
             {
-                GuiLogMessage(String.Format("Codefile not found at {0}.", codefilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.CodefileNotFoundString, codefilePath), NotificationLevel.Error);
                 return 1;
-            }           
-            
-            string cbmcExeFilename = "cbmc.exe";
+            }
 
-            /* build args */
-            string cbmcProcessArgs = "\"" + codefilePath + "\"";
+            string cbmcExeFileName = "cbmc.exe";
+            string cbmcExeFilePath = pluginDataPath + cbmcExeFileName;
+
+            if (!File.Exists(cbmcExeFilePath))
+            {
+                GuiLogMessage(String.Format(Resources.CbmcExeNotFound, cbmcExeFilePath), NotificationLevel.Error);
+                return 1;
+            }
+
+            /* build args, path is changed from MSDOS format to cygwin posix format to supress the MSDOS path format warning */
+            string cbmcProcessArgs = "\"" + "/cygdrive/" + codefilePath.Replace("\\", "/").Replace(":", "") + "\"";
             if (mainFunctionName != "" && mainFunctionName != null)
                 cbmcProcessArgs += " --function " + mainFunctionName;
 
@@ -568,7 +697,7 @@ namespace Cryptool.Plugins.SATAttack
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = pluginDataPath + cbmcExeFilename,
+                    FileName = cbmcExeFilePath,
                     CreateNoWindow = true,
                     Arguments = cbmcProcessArgs,
                     UseShellExecute = false,
@@ -585,11 +714,11 @@ namespace Cryptool.Plugins.SATAttack
             cbmcProcess.BeginErrorReadLine();
             cbmcProcess.WaitForExit();
 
-            GuiLogMessage(String.Format(String.Format("Cbmc process returned with exitcode {0}",
+            GuiLogMessage(String.Format(String.Format(Resources.CbmcProcessReturnedWithExitcode,
                 cbmcProcess.ExitCode)), NotificationLevel.Debug);
-                
+
             //TODO: review cbmc process exitcodes
-            return cbmcProcess.ExitCode;            
+            return cbmcProcess.ExitCode;
         }
 
         /// <summary>
@@ -601,17 +730,17 @@ namespace Cryptool.Plugins.SATAttack
 
             if (!IsHexString(hex)) // check if all characters are hex
             {
-                GuiLogMessage("When using the prefix \"0x\" for the hash value, ensure the hash value is an even amount of regular hex numbers.", NotificationLevel.Error);
+                GuiLogMessage(Resources.HexStringError, NotificationLevel.Error);
                 return null;
             }
             else if (hex.Length % 2 != 0) // hash value must be an even amount of hex values
             {
-                GuiLogMessage("Ensure the hash value is an even amount of regular hexadecimal numbers.", NotificationLevel.Error);
+                GuiLogMessage(Resources.HexStringError, NotificationLevel.Error);
                 return null;
-            }            
+            }
 
             byte[] byteArray = HexStringToByteArray(hex);
-            bitArray = new BitArray(byteArray);            
+            bitArray = new BitArray(byteArray);
 
             return bitArray;
         }
@@ -623,9 +752,9 @@ namespace Cryptool.Plugins.SATAttack
         {
             BitArray bitArray;
 
-            if (!IsBitString(bitstring)) // check if all characters are hex
+            if (!IsBitString(bitstring)) // check if all characters are binary
             {
-                GuiLogMessage("When using the prefix \"0b\", ensure the following string only contains bit values (0 and 1).", NotificationLevel.Error);
+                GuiLogMessage(Resources.BinaryStringError, NotificationLevel.Error);
                 return null;
             }
 
@@ -635,7 +764,7 @@ namespace Cryptool.Plugins.SATAttack
             char[] bits = bitstring.ToCharArray();
             Array.Reverse(bits);
             string reversedBitstring = new string(bits);
-            
+
             Boolean[] hashBools = new Boolean[numberOfBits];
 
             for (int i = 0; i < numberOfBits; i++)
@@ -661,7 +790,7 @@ namespace Cryptool.Plugins.SATAttack
 
             // reverse to obtain the correct bit ordering
             Array.Reverse(data);
-            
+
             string hexString = BitConverter.ToString(data);
 
             /* replace all dashes in hexString (0xab-cd-ef -> 0xabcdef) */
@@ -669,7 +798,7 @@ namespace Cryptool.Plugins.SATAttack
 
             return output;
         }
-        
+
         /// <summary>
         /// Converts a hex string into a byte array.
         /// </summary>
@@ -738,21 +867,30 @@ namespace Cryptool.Plugins.SATAttack
 
             if (!mappingFileExists)
             {
-                GuiLogMessage(String.Format("Mapping file not found at {0}.", mappingFilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.MappingFileNotFoundString, mappingFilePath), NotificationLevel.Error);
                 return null;
             }
-            
-            /* read output mapping file  */
+
+            /* read mapping file  */
             string mappingFileContent = readFileToString(mappingFilePath);
             string[] mappingFileLines = mappingFileContent.Split(Environment.NewLine.ToCharArray());
-                        
+
             string[] infoLine = mappingFileLines[0].Split(' ');        // format: <type> <number of variables> <size of variables>
 
             /* get type of mapping (INPUT or OUTPUT) */
             string variableType = infoLine[0];
 
-            int numberOfVariables = int.Parse(infoLine[1]);     //TODO: change in TryParse with error handling
-            int sizeOfVariables = int.Parse(infoLine[2]);       //TODO: change in TryParse with error handling
+            int numberOfVariables;
+            if (int.TryParse(infoLine[1], out numberOfVariables) == false)
+            {
+                GuiLogMessage(String.Format(Resources.VariableNumberParsingFailedString, variableType), NotificationLevel.Error);
+            }
+
+            int sizeOfVariables;
+            if (int.TryParse(infoLine[2], out sizeOfVariables) == false)
+            {
+                GuiLogMessage(String.Format(Resources.VariableSizeParsingFailedString, variableType), NotificationLevel.Error);
+            }
 
             /* build mapping array */
             int[][] mapping = new int[numberOfVariables][];
@@ -785,38 +923,38 @@ namespace Cryptool.Plugins.SATAttack
 
                     if (int.TryParse(variableNumberAsString, out variableNumber))
                     {
-                        if (mapping[variableNumber] == null)
-                            mapping[variableNumber] = new int[sizeOfVariables];
-
                         if (int.TryParse(bitNumberAsString, out bitNumber))
                         {
                             if (int.TryParse(literalString, out literalValue))
                             {
                                 if (variableNumber < mapping.Length)
                                 {
+                                    if (mapping[variableNumber] == null)
+                                        mapping[variableNumber] = new int[sizeOfVariables];
+
                                     mapping[variableNumber][bitNumber] = literalValue;
                                 }
                                 else
                                 {
-                                    GuiLogMessage(String.Format("Make sure the variable definitions start with {0}_0 respectively, the indices are incremented steadily and each variable is used in the code.", variableType), NotificationLevel.Error);
+                                    GuiLogMessage(String.Format(Resources.VariableDefinitionsError, variableType.ToLower(), variableType), NotificationLevel.Error);
                                     return null;
                                 }
                             }
                             else
                             {
-                                GuiLogMessage(String.Format("Failed to parse the literal for {0} variable {1}: {2}.", variableType, variableString, literalString), NotificationLevel.Error);
+                                GuiLogMessage(String.Format(Resources.LiteralParseError, variableType.ToLower(), variableString, literalString), NotificationLevel.Error);
                                 return null;
                             }
                         }
                         else
                         {
-                            GuiLogMessage(String.Format("Failed to parse the bit number for {0} variable {1}: {2}.", variableType, variableString, bitNumberAsString), NotificationLevel.Error);
+                            GuiLogMessage(String.Format(Resources.BitNumberParseError, variableType.ToLower(), variableString, bitNumberAsString), NotificationLevel.Error);
                             return null;
-                        }                        
+                        }
                     }
                     else
                     {
-                        GuiLogMessage(String.Format("Failed to parse the variable index for {0} variable {1}: {2}.",variableType, variableString, variableNumberAsString), NotificationLevel.Error);
+                        GuiLogMessage(String.Format(Resources.VariableIndexParseError, variableType.ToLower(), variableString, variableNumberAsString), NotificationLevel.Error);
                         return null;
                     }
                 }
@@ -828,21 +966,21 @@ namespace Cryptool.Plugins.SATAttack
                 for (int j = 0; j < mapping[i].Length; j++)
                 {
                     if (mapping[i][j] == 0)
-                        GuiLogMessage(String.Format("Variable {0}_{1}:{2} does not appear in the {0} mapping, is it used in the code? It will be assigned 'false' by default.", variableType, i, j), NotificationLevel.Warning);
-                } 
+                        GuiLogMessage(String.Format(Resources.UnassignedVariableWarning, variableType, i, j, variableType.ToLower()), NotificationLevel.Warning);
+                }
             }
 
             return mapping;
         }
 
         /// <summary>
-        /// Reads the mapping file generated by cbmc and reads the hash value provided by the user in the plugin parameters.
-        /// Opens the cnf file generated by cbmc and appends the encoding of the hash value provided by the user.
+        /// Reads the output mapping file generated by cbmc and reads the output value provided by the user in the plugin parameters.
+        /// Opens the cnf file generated by cbmc and appends the encoding of the output value.
         /// </summary>
-        int encodeHashInCnf(string outputMappingFilePath, string outputCnfFilePath)
+        int encodeOutputBitsInCnf(string outputString, string outputMappingFilePath, string outputCnfFilePath)
         {
             /* write info to output stream */
-            outputStringBuilder.Append("Encoding hash value in CNF... ");
+            outputStringBuilder.Append(Resources.EncodingOutputBitsString);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
@@ -852,59 +990,55 @@ namespace Cryptool.Plugins.SATAttack
             int[][] outputMapping;
             if ((outputMapping = getMapping(outputMappingFilePath)) == null)
             {
-                GuiLogMessage("Error retreiving outuput mapping.", NotificationLevel.Error);
+                GuiLogMessage(Resources.OutputMappingError, NotificationLevel.Error);
                 return 1;
             }
 
-            /* parse input hash value which can be either a binary or hexadecimal value */
-            string inputHashValueString = settings.InputHashValue;
-            string inputHashValueType = inputHashValueString.Substring(0, 2);
-            string inputHashValue = inputHashValueString.Substring(2);
-            
-            BitArray hashBits;
+            /* parse output string which can be either a binary or hexadecimal value */
+            string outputStringFormat = outputString.Substring(0, 2);
+            string outputStringValue = outputString.Substring(2);
 
-            if (inputHashValueType == "0x")
-	        {
-		        /* get the hash value as bit array (ranging from lsb to msb) */
-                if ((hashBits = HexStringToBitArray(inputHashValue)) == null)
-                {
-                    GuiLogMessage("Error retreiving hash bits.", NotificationLevel.Error);
-                    return 1;
-                }                 
-	        }
-            else if (inputHashValueType == "0b")
+            BitArray outputBits;
+
+            if (outputStringFormat == "0x")
             {
-                /* get the hash value as bit array (ranging from lsb to msb) */
-                if ((hashBits = BitStringToBitArray(inputHashValue)) == null)
+                /* get the output string as bit array (ranging from lsb to msb) */
+                if ((outputBits = HexStringToBitArray(outputStringValue)) == null)
                 {
-                    GuiLogMessage("Error retreiving hash bits.", NotificationLevel.Error);
+                    GuiLogMessage(Resources.OutputBitsError, NotificationLevel.Error);
+                    return 1;
+                }
+            }
+            else if (outputStringFormat == "0b")
+            {
+                /* get the output string as bit array (ranging from lsb to msb) */
+                if ((outputBits = BitStringToBitArray(outputStringValue)) == null)
+                {
+                    GuiLogMessage(Resources.OutputBitsError, NotificationLevel.Error);
                     return 1;
                 }
             }
             else
             {
-                GuiLogMessage("Use the prefix \"0x\" for a hexadecimal hash value or the prefix \"0b\" for a binary hash value.", NotificationLevel.Error);
+                GuiLogMessage(Resources.PrefixError, NotificationLevel.Error);
                 return 1;
             }
 
-            /* ensure hash value and output bits have the same size */
+            /* ensure the size of output bits matches the size of hash value / ciphertext */
             int outputMappingLength = 0;
             for (int i = 0; i < outputMapping.Length; i++)
             {
                 outputMappingLength += outputMapping[i].Length;
-            } 
+            }
 
-            if (hashBits.Length != outputMappingLength)
+            if (outputBits.Length != outputMappingLength)
             {
-                GuiLogMessage("Ensure the specified hash value has the correct length." + Environment.NewLine
-                    + String.Format("Hash value: {0} bits", hashBits.Length) + Environment.NewLine
-                    + String.Format("Output: {0} bits", outputMappingLength)
-                    , NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.OutputSizeError, Environment.NewLine, outputBits.Length, outputMappingLength), NotificationLevel.Error);
                 return 1;
             }
 
-            /* build the clauses that encode the hash value */
-            StringBuilder hashEncoding = new StringBuilder();
+            /* build the clauses that encode the output bits */
+            StringBuilder outputBitEncoding = new StringBuilder();
 
             string sign;
             int offset = 0;
@@ -913,12 +1047,12 @@ namespace Cryptool.Plugins.SATAttack
             {
                 for (int j = 0; j < outputMapping[i].Length; j++)
                 {
-                    if (hashBits[offset + j])    // 1
+                    if (outputBits[offset + j])    // 1
                         sign = "";
                     else                    // 0
                         sign = "-";
 
-                    hashEncoding.Append(String.Format("{0}{1} 0" + Environment.NewLine, sign, outputMapping[i][j])); // clause line
+                    outputBitEncoding.Append(String.Format("{0}{1} 0" + Environment.NewLine, sign, outputMapping[i][j])); // clause line
                 }
 
                 offset += outputMapping[i].Length;  // maintain the correct offset in the one dimensional array hashBits
@@ -929,17 +1063,126 @@ namespace Cryptool.Plugins.SATAttack
 
             if (!cnfFileExists)
             {
-                GuiLogMessage(String.Format("CNF file not found at {0}.", outputCnfFilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.CnfFileNotFoundError, outputCnfFilePath), NotificationLevel.Error);
                 return 1;
             }
 
             using (FileStream fs = File.Open(outputCnfFilePath, FileMode.Append))
             {
-                fs.Write(encoding.GetBytes(hashEncoding.ToString()), 0, hashEncoding.Length);            
+                fs.Write(encoding.GetBytes(outputBitEncoding.ToString()), 0, outputBitEncoding.Length);
             }
 
             /* write info to output stream */
-            outputStringBuilder.Append("successful!" + Environment.NewLine);
+            outputStringBuilder.Append(Resources.SuccessfulString + Environment.NewLine);
+            outputStream = new CStreamWriter();
+            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+            outputStream.Close();
+            OnPropertyChanged("OutputStream");
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Reads the input mapping file generated by cbmc and reads the input value provided by the user in the plugin parameters.
+        /// Opens the cnf file generated by cbmc and appends the encoding of the intput value (currently only used to encode the plaintext in a key recovery attack).
+        /// </summary>
+        int encodePlaintextBitsInCnf(string inputString, string inputMappingFilePath, string outputCnfFilePath)
+        {
+            /* write info to output stream */
+            outputStringBuilder.Append(Resources.EncodingInputBitsString);
+            outputStream = new CStreamWriter();
+            outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
+            outputStream.Close();
+            OnPropertyChanged("OutputStream");
+
+            /* get the output literals */
+            int[][] inputMapping;
+            if ((inputMapping = getMapping(inputMappingFilePath)) == null)
+            {
+                GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
+                return 1;
+            }
+
+            /* parse plaintext string which can be either a binary or hexadecimal value */
+            string inputStringFormat = inputString.Substring(0, 2);
+            string inputStringValue = inputString.Substring(2);
+
+            BitArray plaintextBits;
+
+            if (inputStringFormat == "0x")
+            {
+                /* get the plaintext string as bit array (ranging from lsb to msb) */
+                if ((plaintextBits = HexStringToBitArray(inputStringValue)) == null)
+                {
+                    GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
+                    return 1;
+                }
+            }
+            else if (inputStringFormat == "0b")
+            {
+                /* get the plaintext string as bit array (ranging from lsb to msb) */
+                if ((plaintextBits = BitStringToBitArray(inputStringValue)) == null)
+                {
+                    GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
+                    return 1;
+                }
+            }
+            else
+            {
+                GuiLogMessage(Resources.PrefixError, NotificationLevel.Error);
+                return 1;
+            }
+
+            /* ensure the size of input bits is larger than the provided plaintext */
+            int inputMappingLength = 0;
+            for (int i = 0; i < inputMapping.Length; i++)
+            {
+                inputMappingLength += inputMapping[i].Length;
+            }
+
+            if (plaintextBits.Length > inputMappingLength)
+            {
+                GuiLogMessage(String.Format(Resources.PlaintextSizeError, Environment.NewLine, plaintextBits.Length, inputMappingLength), NotificationLevel.Error);
+                return 1;
+            }
+
+            /* build the clauses that encode the input bits */
+            StringBuilder inputBitEncoding = new StringBuilder();
+
+            string sign;
+            int offset = 0;
+
+            for (int i = 0; i < inputMapping.Length; i++)
+            {
+                for (int j = 0; j < inputMapping[i].Length && (offset + j) < plaintextBits.Length; j++)
+                {
+                    if (plaintextBits[offset + j])    // 1
+                        sign = "";
+                    else                    // 0
+                        sign = "-";
+
+                    inputBitEncoding.Append(String.Format("{0}{1} 0" + Environment.NewLine, sign, inputMapping[i][j])); // clause line
+                }
+
+                offset += inputMapping[i].Length;  // maintain the correct offset in the one dimensional array inputBits
+            }
+
+            /* append hash encoding to the cnf */
+            bool cnfFileExists = File.Exists(outputCnfFilePath);
+
+            if (!cnfFileExists)
+            {
+                GuiLogMessage(String.Format(Resources.CnfFileNotFoundError, outputCnfFilePath), NotificationLevel.Error);
+                return 1;
+            }
+
+            using (FileStream fs = File.Open(outputCnfFilePath, FileMode.Append))
+            {
+                fs.Write(encoding.GetBytes(inputBitEncoding.ToString()), 0, inputBitEncoding.Length);
+            }
+
+            /* write info to output stream */
+            outputStringBuilder.Append(Resources.SuccessfulString + Environment.NewLine);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
@@ -957,21 +1200,26 @@ namespace Cryptool.Plugins.SATAttack
         int callSatSolver(string cnfFilePath, string satSolverOutputFilePath)
         {
             /* write info to output stream */
-            outputStringBuilder.Append("Calling Sat solver process... " + Environment.NewLine);
+            outputStringBuilder.Append(Resources.CallingSatSolverString + Environment.NewLine);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
 
-            bool outputCnfFileExists = File.Exists(cnfFilePath);
-
-            if (!outputCnfFileExists)
+            if (!File.Exists(cnfFilePath))
             {
-                GuiLogMessage(String.Format("Cnf file not found @ {0}.", cnfFilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.CnfFileNotFoundError, cnfFilePath), NotificationLevel.Error);
                 return 1;
             }
 
-            string satSolverFilename = "cryptominisat32.exe";
+            string satSolverFileName = "cryptominisat32.exe";
+            string satSolverFilePath = pluginDataPath + satSolverFileName;
+
+            if (!File.Exists(satSolverFilePath))
+            {
+                GuiLogMessage(String.Format(Resources.satSolverExeNotFound, satSolverFilePath), NotificationLevel.Error);
+                return 1;
+            }
 
             /* build args */
             string satSolverProcessArgs = "\"" + cnfFilePath + "\" \"" + satSolverOutputFilePath + "\"";
@@ -980,7 +1228,7 @@ namespace Cryptool.Plugins.SATAttack
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = pluginDataPath + satSolverFilename,
+                    FileName = satSolverFilePath,
                     CreateNoWindow = true,
                     Arguments = satSolverProcessArgs,
                     UseShellExecute = false,
@@ -989,8 +1237,8 @@ namespace Cryptool.Plugins.SATAttack
                 }
             };
 
-            GuiLogMessage(String.Format(String.Format("Calling SAT solver at {0} with parameters {1}",
-                pluginDataPath+satSolverFilename, satSolverProcessArgs)), NotificationLevel.Debug);
+            GuiLogMessage(String.Format(String.Format(Resources.CallingSatSolverWithParametersString,
+                pluginDataPath + satSolverFileName, satSolverProcessArgs)), NotificationLevel.Debug);
 
             satSolverProcess.OutputDataReceived += new DataReceivedEventHandler(SatSolverProcess_OutputDataReceived);
             satSolverProcess.ErrorDataReceived += new DataReceivedEventHandler(SatSolverProcess_ErrorDataReceived);
@@ -1000,11 +1248,39 @@ namespace Cryptool.Plugins.SATAttack
             satSolverProcess.BeginErrorReadLine();
             satSolverProcess.WaitForExit();
 
-            GuiLogMessage(String.Format(String.Format("SAT solver process returned with exitcode {0}",
+            GuiLogMessage(String.Format(String.Format(Resources.SatSolverReturnedWithExitcode,
                 satSolverProcess.ExitCode)), NotificationLevel.Debug);
 
             //TODO: review cmsat exitcodes
             return satSolverProcess.ExitCode;
+        }
+
+        int getSizeOfInputVariables(string inputMappingFilePath)
+        {
+            bool mappingFileExists = File.Exists(inputMappingFilePath);
+
+            if (!mappingFileExists)
+            {
+                GuiLogMessage(String.Format(Resources.MappingFileNotFoundString, inputMappingFilePath), NotificationLevel.Error);
+                return -1;
+            }
+
+            /* read mapping file  */
+            string mappingFileContent = readFileToString(inputMappingFilePath);
+            string[] mappingFileLines = mappingFileContent.Split(Environment.NewLine.ToCharArray());
+
+            string[] infoLine = mappingFileLines[0].Split(' ');        // format: <type> <number of variables> <size of variables>
+
+            /* get type of mapping (INPUT or OUTPUT) */
+            string variableType = infoLine[0];
+
+            int sizeOfVariables = -1;
+            if (int.TryParse(infoLine[2], out sizeOfVariables) == false)
+            {
+                GuiLogMessage(String.Format(Resources.VariableSizeParsingFailedString, variableType), NotificationLevel.Error);
+            }
+
+            return sizeOfVariables;
         }
 
         /// <summary>
@@ -1013,53 +1289,47 @@ namespace Cryptool.Plugins.SATAttack
         /// <param name="satSolverOutputFilePath">Path to the file which contains the literal assignments obtained by the SAT solver</param>
         /// <param name="inputMappingFilePath">Path to the input mapping file obtained by CBMC which maps the input variables to CNF literals</param>
         /// <returns>A string which describes the assignment of the input variables in binary and hexadecimal form</returns>
-        string processSatSolverOutput(string satSolverOutputFilePath, string inputMappingFilePath)
+        string processSatSolverOutput(string satSolverOutputFilePath, string inputMappingFilePath, int numberOfPlaintextVariables = 0)
         {
             bool satSolverOutputFileExists = File.Exists(satSolverOutputFilePath);
 
             if (!satSolverOutputFileExists)
-            { 
-                GuiLogMessage(String.Format("Sat solver output file not found at {0}.", satSolverOutputFilePath), NotificationLevel.Error);
+            {
+                GuiLogMessage(String.Format(Resources.SatSolverOutputFileError, satSolverOutputFilePath), NotificationLevel.Error);
                 return null;
             }
-        
+
             /* read sat solver output file */
             string satSolverOutputFileContent = readFileToString(satSolverOutputFilePath);
 
             string[] lines = satSolverOutputFileContent.Split(Environment.NewLine.ToCharArray());
 
-            int[][] messageBits;
+            int[][] inputBits;
 
             if (lines[0] == "SAT")
             {
                 int[][] inputMapping = getMapping(inputMappingFilePath);
                 if (inputMapping == null)
                 {
-                    GuiLogMessage("Error retreiving input mapping.", NotificationLevel.Error);
-                    return null;                    
-                }
-
-                int numberOfInputBits = 0;
-                for (int i = 0; i < inputMapping.Length; i++)
-                {
-                    numberOfInputBits += inputMapping[i].Length;
+                    GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
+                    return null;
                 }
 
                 string[] inputLiterals = lines[1].Split(' ');
 
-                /* initialize messageBits array with the value -1 */
-                messageBits = new int[inputMapping.Length][];
+                /* initialize inputBits array with the value -1 */
+                inputBits = new int[inputMapping.Length - numberOfPlaintextVariables][];
 
-                for (int i = 0; i < messageBits.Length; i++)
-                { 
-                    messageBits[i] = new int[inputMapping[i].Length];
+                for (int i = 0; i < inputBits.Length; i++)
+                {
+                    inputBits[i] = new int[inputMapping[i].Length];
 
-                    for (int j = 0; j < messageBits[i].Length; j++)
+                    for (int j = 0; j < inputBits[i].Length; j++)
                     {
-                        messageBits[i][j] = -1;
+                        inputBits[i][j] = -1;
                     }
                 }
-                
+
                 int signedLiteralValue;
                 int literalValue;
                 int sign;
@@ -1076,7 +1346,7 @@ namespace Cryptool.Plugins.SATAttack
                             sign = 0;
                             literalValue = Math.Abs(signedLiteralValue);  // get absolute value without sign
                         }
-                        else                // literal looks like "x"
+                        else                            // literal looks like "x"
                         {
                             sign = 1;
                             literalValue = signedLiteralValue;
@@ -1086,32 +1356,32 @@ namespace Cryptool.Plugins.SATAttack
                         int bitPosition = -1;
 
                         /* get the variable number and bit position to which the current literal refers (e.g. variable number = 1 and bit position = 7 for "INPUT_1:7") */
-                        for (int i = 0; i < inputMapping.Length; i++)
+                        for (int i = numberOfPlaintextVariables; i < inputMapping.Length; i++)
                         {
                             bitPosition = Array.IndexOf(inputMapping[i], literalValue);
 
                             if (bitPosition != -1)
                             {
-                                variableNumber = i;
+                                variableNumber = i - numberOfPlaintextVariables;
 
                                 /* assign the sign to the related input bit if it occurs in the input mapping array (literals 1 and 2 will not appear there, since they are given out by cbmc to encode the constant zero and one gates) */
-                                messageBits[variableNumber][bitPosition] = sign;
+                                inputBits[variableNumber][bitPosition] = sign;
 
                                 break;
                             }
-                        }                        
+                        }
                     }
                     else
                     {
-                        GuiLogMessage(String.Format("Failed to parse the literal {0}.", literal), NotificationLevel.Error);
+                        GuiLogMessage(String.Format(Resources.LiteralParseError2, literal), NotificationLevel.Error);
                         return null;
                     }
                 }
             }
             else
             {
-                GuiLogMessage(String.Format("First line in SAT solver output file {0} is not \"SAT\".", satSolverOutputFilePath), NotificationLevel.Error);
-                return null; 
+                GuiLogMessage(String.Format(Resources.SatSolverOutputFirstLineError, satSolverOutputFilePath), NotificationLevel.Error);
+                return null;
             }
 
             StringBuilder messageBitsString = new StringBuilder();
@@ -1119,35 +1389,44 @@ namespace Cryptool.Plugins.SATAttack
             //int separatorCounter = 0;
 
             /* by using insert instead of append, the string shows the lsb on the right and msb on the left */
-            for (int i = 0; i < messageBits.Length; i++)
+            for (int i = 0; i < inputBits.Length; i++)
             {
-                for (int j = 0; j < messageBits[i].Length; j++)
+                for (int j = 0; j < inputBits[i].Length; j++)
                 {
-                    if (messageBits[i][j] == 1)
+                    if (inputBits[i][j] == 1)
                         messageBitsString.Insert(0, "1");
-                    else if (messageBits[i][j] == 0)
+                    else if (inputBits[i][j] == 0)
                         messageBitsString.Insert(0, "0");
-                    else if (messageBits[i][j] == -1)
-                        messageBitsString.Insert(0, "x");   // this means that the related bit can be either 0 or 1, i.e. its value does not matter since it does not affect the output hash value
+                    else if (inputBits[i][j] == -1)
+                        messageBitsString.Insert(0, "x");   // this means the related bit can be either 0 or 1, i.e. its value does not matter since it does not affect the output hash value
                 }
             }
 
-            string messageBitsBinaryString = messageBitsString.ToString();
-            string messageBitsHexString = "";
+            string inputBitsBinaryString = messageBitsString.ToString();
+            string inputBitsHexString = "";
             string inputHexCaption = "";
 
-            if (messageBitsBinaryString.Length % 8 == 0)
+            if (inputBitsBinaryString.Length % 8 == 0)
             {
-                messageBitsHexString = BinaryStringToHexString(messageBitsBinaryString);
-                inputHexCaption = "(Hexadecimal): 0x";
+                inputBitsHexString = BinaryStringToHexString(inputBitsBinaryString) + Environment.NewLine + Environment.NewLine;
+                inputHexCaption = Resources.HexadecimalString;
             }
 
-            string outputString = 
-                Environment.NewLine + "-----------------------------------------" + Environment.NewLine
-                + "Input Message found!" + Environment.NewLine + Environment.NewLine
-                + "(Binary): 0b" + messageBitsBinaryString + Environment.NewLine
-                + inputHexCaption
-                + messageBitsHexString;
+            string inputFoundString;
+
+            if (settings.AttackMode == 0)
+                inputFoundString = Resources.InputFoundStringPreimage;
+            else if (settings.AttackMode == 1)
+                inputFoundString = Resources.InputFoundStringSecondPreimage;
+            else if (settings.AttackMode == 2)
+                inputFoundString = Resources.InputFoundStringKeyRecovery;
+            else
+                inputFoundString = Resources.InputFoundString;
+
+            string outputString = "-----------------------------------------" + Environment.NewLine
+                + inputFoundString + Environment.NewLine + Environment.NewLine
+                + inputHexCaption + inputBitsHexString
+                + Resources.BinaryString + inputBitsBinaryString;
 
             return outputString;
         }
@@ -1165,7 +1444,7 @@ namespace Cryptool.Plugins.SATAttack
 
                 if (fs.Length > 65536) // stop if the mapping file is too big (arbitrary big number) (paranoid)
                 {
-                    GuiLogMessage(String.Format("File {0} is very big: {1} bytes", filepath, fs.Length), NotificationLevel.Warning);
+                    GuiLogMessage(String.Format(Resources.FileBigWarning, filepath, fs.Length), NotificationLevel.Warning);
                 }
 
                 byte[] buffer = new byte[fs.Length];
@@ -1176,105 +1455,166 @@ namespace Cryptool.Plugins.SATAttack
                 }
 
                 return sb.ToString();
-            }        
+            }
         }
 
-        int encodeGuessedBitsInCnf(string inputMappingFilePath, string outputCnfFilePath)
+        /// <summary>
+        /// Converts a bit string into a char array. The first bit in the array is the least significant bit and the last bit in the array is the most significant bit.
+        /// </summary>
+        char[] BitStringToFixedBitsCharArray(string fixedBitsString)
+        {
+            /* reverse bitstring to obtain the correct ordering (original ordering is msb to lsb, we need lsb to msb) */
+            char[] reversedFixedBits = fixedBitsString.ToCharArray();
+            Array.Reverse(reversedFixedBits);
+
+            return reversedFixedBits;
+        }
+
+        /// <summary>
+        /// Converts a hex string into a char array. The first bit in the array is the least significant bit and the last bit in the array is the most significant bit.
+        /// </summary>
+        char[] HexStringToFixedBitsCharArray(string fixedBitsString)
+        {
+            StringBuilder fixedBitsStringBuilder = new StringBuilder();
+            string nibble2bin;
+            
+            foreach (char nibble in fixedBitsString)
+            {
+                if (nibble == '*')
+                {
+                    fixedBitsStringBuilder.Append("****");
+                }
+                else if (IsHexString(nibble.ToString()))
+                {
+                    nibble2bin = Convert.ToString(Convert.ToInt32(nibble.ToString(), 16), 2);                    
+                    fixedBitsStringBuilder.Append(nibble2bin.PadLeft(4, '0'));
+                }
+                else
+                {
+                    GuiLogMessage(String.Format(Resources.NotAHexCharError, nibble), NotificationLevel.Error);
+                    return null;
+                }
+            }
+
+            char[] reversedFixedBits = fixedBitsStringBuilder.ToString().ToCharArray();
+            Array.Reverse(reversedFixedBits);
+
+            return reversedFixedBits;
+        }
+
+        int encodeFixedBitsInCnf(string inputMappingFilePath, string outputCnfFilePath)
         {
             /* write info to output stream */
-            outputStringBuilder.Append("Encoding guessed bits in CNF... ");
+            outputStringBuilder.Append(Resources.FixedBitsEncoding);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
             OnPropertyChanged("OutputStream");
 
-            string guessedBitsString = settings.GuessedBits;
-
-            if (guessedBitsString == "")
+            if (settings.FixedBits.Length <= 2)
             {
-                GuiLogMessage("The guess bits option was selected but no bits where guessed.", NotificationLevel.Warning);
+                GuiLogMessage(Resources.FixedBitsWarning, NotificationLevel.Warning);
+                return 0;
             }
 
-            /* check if guessed bits string only contains 0, 1 or x (the x denotes "don't guess this bit", e.g. "00xx11" means set bit 0 and 1 to false and bit 4 and 5 to true and bits 2 and 3 are not guessed) */
-            foreach (char c in guessedBitsString)
+            string fixedBitsStringFormat = settings.FixedBits.Substring(0, 2);
+            string fixedBitsString = settings.FixedBits.Substring(2);
+
+            char[] fixedBits;
+
+            if (fixedBitsStringFormat == "0x")
             {
-                if (!c.Equals('0') && !c.Equals('1') && !c.Equals('x'))
+                /* get the fixed bits string as bit array (ranging from lsb to msb) */
+                if ((fixedBits = HexStringToFixedBitsCharArray(fixedBitsString)) == null)
                 {
-                    GuiLogMessage(String.Format("Use only the characters 0, 1 and x to guess bits, the character {0} is not allowed.", c), NotificationLevel.Error);
+                    GuiLogMessage(Resources.FixedBitsError, NotificationLevel.Error);
                     return 1;
                 }
             }
+            else if (fixedBitsStringFormat == "0b")
+            {
+                /* get the fixed bits string as bit array (ranging from lsb to msb) */
+                if ((fixedBits = BitStringToFixedBitsCharArray(fixedBitsString)) == null)
+                {
+                    GuiLogMessage(Resources.FixedBitsError, NotificationLevel.Error);
+                    return 1;
+                }
+            }
+            else
+            {
+                GuiLogMessage(Resources.PrefixError, NotificationLevel.Error);
+                return 1;
+            }
 
-            char[] guessedBits = guessedBitsString.ToCharArray();
+            /* check if fixed bits string only contains 0, 1 or * (the '*' means "don't fix this bit", e.g. "0**1" means set lsb to false and msb to true, the other bits are not fixed) */
+            foreach (char c in fixedBits)
+            {
+                if (!c.Equals('0') && !c.Equals('1') && !c.Equals('*'))
+                {
+                    GuiLogMessage(String.Format(Resources.FixedBitsEncodingHint, c), NotificationLevel.Error);
+                    return 1;
+                }
+            }
 
             /* get input mapping */
             int[][] inputMapping = getMapping(inputMappingFilePath);
             if (inputMapping == null)
             {
-                GuiLogMessage("Error retreiving input mapping.", NotificationLevel.Error);
+                GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
                 return 1;
             }
 
-            /* ensure guessed bits are less or equal to the amoung of input bits */
+            /* ensure fixed bits are less or equal to the amoung of input bits */
             int inputMappingLength = 0;
             for (int i = 0; i < inputMapping.Length; i++)
             {
                 inputMappingLength += inputMapping[i].Length;
             }
 
-            if (!(guessedBits.Length <= inputMappingLength))
+            if (!(fixedBits.Length <= inputMappingLength))
             {
-                GuiLogMessage("Ensure the amount of guessed bits is less or equal to the amoung of input bits." + Environment.NewLine
-                    + String.Format("Guessed bits: {0} bits", guessedBits.Length) + Environment.NewLine
-                    + String.Format("Input: {0} bits", inputMappingLength)
-                    , NotificationLevel.Error);
-                return 1;
+                GuiLogMessage(String.Format(Resources.FixedBitsSizeError, Environment.NewLine, fixedBits.Length, inputMappingLength), NotificationLevel.Warning);
             }
 
-            /* build the clauses that encode guessed bits */
-            StringBuilder guessedBitsEncoding = new StringBuilder();
+            /* build the clauses that encode the fixed bits */
+            StringBuilder fixedBitsEncoding = new StringBuilder();
 
-            string sign;
+            string sign = "";
             int offset = 0;
 
-            for (int i = 0; (i < inputMapping.Length) && (offset < guessedBits.Length); i++)
+            for (int i = 0; (i < inputMapping.Length) && (offset < fixedBits.Length); i++)
             {
-                for (int j = 0; (j < inputMapping[i].Length) && (offset + j < guessedBits.Length); j++)
+                for (int j = 0; (j < inputMapping[i].Length) && (offset + j < fixedBits.Length); j++)
                 {
-                    if (guessedBits[offset + j].Equals('0'))
+                    if (fixedBits[offset + j].Equals('0'))
                         sign = "-";
-                    else if (guessedBits[offset + j].Equals('1'))
+                    else if (fixedBits[offset + j].Equals('1'))
                         sign = "";
-                    else if (guessedBits[offset + j].Equals('x'))
+                    else if (fixedBits[offset + j].Equals('*'))
                         continue;
-                    else
-                    {
-                        GuiLogMessage("Something went wrong in the function encodeGuessedBitsInCnf (this code should never be reached).", NotificationLevel.Error);
-                        break;
-                    }
 
-                    guessedBitsEncoding.Append(String.Format("{0}{1} 0" + Environment.NewLine, sign, inputMapping[i][j])); // clause line
+                    fixedBitsEncoding.Append(String.Format("{0}{1} 0" + Environment.NewLine, sign, inputMapping[i][j])); // clause line
                 }
 
-                offset += inputMapping[i].Length; // maintain the correct offset in the one dimensional array guessedBits
+                offset += inputMapping[i].Length; // maintain the correct offset in the one dimensional array fixedBits
             }
 
-            /* append guessed bits encoding to the cnf */
+            /* append fixed bits encoding to the cnf */
             bool cnfFileExists = File.Exists(outputCnfFilePath);
 
             if (!cnfFileExists)
             {
-                GuiLogMessage(String.Format("Cnf file not found at {0}.", outputCnfFilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.CnfFileNotFoundError, outputCnfFilePath), NotificationLevel.Error);
                 return 1;
             }
 
             using (FileStream fs = File.Open(outputCnfFilePath, FileMode.Append))
             {
-                fs.Write(encoding.GetBytes(guessedBitsEncoding.ToString()), 0, guessedBitsEncoding.Length);
+                fs.Write(encoding.GetBytes(fixedBitsEncoding.ToString()), 0, fixedBitsEncoding.Length);
             }
 
             /* write info to output stream */
-            outputStringBuilder.Append("successful!" + Environment.NewLine);
+            outputStringBuilder.Append(Resources.SuccessfulString + Environment.NewLine);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
@@ -1282,11 +1622,11 @@ namespace Cryptool.Plugins.SATAttack
 
             return 0;
         }
-        
+
         int encodeSecondPreimageInCnf(string inputMappingFilePath, string outputCnfFilePath)
         {
             /* write info to output stream */
-            outputStringBuilder.Append("Encoding second preimage in CNF... ");
+            outputStringBuilder.Append(Resources.SecondPreimageEncodingString);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();
@@ -1296,38 +1636,38 @@ namespace Cryptool.Plugins.SATAttack
             int[][] inputMapping = getMapping(inputMappingFilePath);
             if (inputMapping == null)
             {
-                GuiLogMessage("Error retreiving input mapping.", NotificationLevel.Error);
+                GuiLogMessage(Resources.InputMappingError, NotificationLevel.Error);
                 return 1;
             }
 
             /* parse second preimage value which can be either a binary or hexadecimal value */
             string secondPreimageString = settings.SecondPreimage;
-            string secondPreimageType = secondPreimageString.Substring(0, 2);
+            string secondPreimageFormat = secondPreimageString.Substring(0, 2);
             string secondPreimageValue = secondPreimageString.Substring(2);
 
             BitArray secondPreimageBits;
 
-            if (secondPreimageType == "0x")
+            if (secondPreimageFormat == "0x")
             {
                 /* get the second preimage value as bit array (ranging from lsb to msb) */
                 if ((secondPreimageBits = HexStringToBitArray(secondPreimageValue)) == null)
                 {
-                    GuiLogMessage("Error retreiving second preimage bits.", NotificationLevel.Error);
+                    GuiLogMessage(Resources.SecondPreimageRetreivingError, NotificationLevel.Error);
                     return 1;
                 }
             }
-            else if (secondPreimageType == "0b")
+            else if (secondPreimageFormat == "0b")
             {
                 /* get the second preimage value as bit array (ranging from lsb to msb) */
                 if ((secondPreimageBits = BitStringToBitArray(secondPreimageValue)) == null)
                 {
-                    GuiLogMessage("Error retreiving second preimage bits.", NotificationLevel.Error);
+                    GuiLogMessage(Resources.SecondPreimageRetreivingError, NotificationLevel.Error);
                     return 1;
                 }
             }
             else
             {
-                GuiLogMessage("Use the prefix \"0x\" for a hexadecimal hash value or the prefix \"0b\" for a binary second preimage.", NotificationLevel.Error);
+                GuiLogMessage(Resources.PrefixError, NotificationLevel.Error);
                 return 1;
             }
 
@@ -1340,10 +1680,7 @@ namespace Cryptool.Plugins.SATAttack
 
             if (secondPreimageBits.Length != inputMappingLength)
             {
-                GuiLogMessage("Ensure the specified second preimage has the correct length." + Environment.NewLine
-                    + String.Format("Second preimage: {0} bits", secondPreimageBits.Length) + Environment.NewLine
-                    + String.Format("Input: {0} bits", inputMappingLength)
-                    , NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.SecondPreimageSizeError, Environment.NewLine, secondPreimageBits.Length, inputMappingLength), NotificationLevel.Error);
                 return 1;
             }
 
@@ -1375,7 +1712,7 @@ namespace Cryptool.Plugins.SATAttack
 
             if (!cnfFileExists)
             {
-                GuiLogMessage(String.Format("Cnf file not found at {0}.", outputCnfFilePath), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.CnfFileNotFoundError, outputCnfFilePath), NotificationLevel.Error);
                 return 1;
             }
 
@@ -1385,7 +1722,7 @@ namespace Cryptool.Plugins.SATAttack
             }
 
             /* write info to output stream */
-            outputStringBuilder.Append("successful!" + Environment.NewLine);
+            outputStringBuilder.Append(Resources.SuccessfulString + Environment.NewLine);
             outputStream = new CStreamWriter();
             outputStream.Write(encoding.GetBytes(outputStringBuilder.ToString()));
             outputStream.Close();

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">SAT Attack (Hash Function)</title>
+  <summary lang="en">Usage of the <i>SAT Attack</i> component demonstrating a preimage attack on a hash function.</summary>
+  <description lang="en">This template demonstrates how to use the <i>SAT Attack</i> component by performing a preimage attack on the hash function Keccak (SHA-3).</description>
+  <keywords>satsolver, sat, solver, satisfiability, hash, hash function, analyse, attack</keywords>
+
+  <title lang="de">SAT-Angriff (Hashfunktion)</title>
+  <summary lang="de">Benutzung der <i>SAT Attack</i> Komponente, welche einen Preimage Angriff auf eine Hashfunktion zeigt.</summary>
+  <description lang="de">Diese Vorlage zeigt wie die <i>SAT Attack</i> Komponente verwendet werden kann, indem ein Preimage Angriff auf die Hashfunktion Keccak (SHA-3) durchgeführt wird.</description>
+  <keywords lang="de">satsolver, sat, solver, erfüllbarkeit, hash, hashfunktion, analyse, attack, angriff</keywords>
+
+  <icon file="SATAttack.png" />
+  <relevantPlugins>
+    <plugin name="SATAttack" />
+  </relevantPlugins>
+
+</sample>
