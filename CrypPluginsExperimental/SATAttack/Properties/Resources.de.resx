@@ -121,7 +121,7 @@
     <value>Angriffs-Modus</value>
   </data>
   <data name="AttackModeTooltip" xml:space="preserve">
-    <value>Wählen die den Angriffs-Modus aus.</value>
+    <value>Wählen Sie den Angriffs-Modus aus.</value>
   </data>
   <data name="BinaryString" xml:space="preserve">
     <value>(Binär): 0b</value>
@@ -187,7 +187,7 @@
     <value>Wählen Sie eine Datei aus, in der die generierte CNF gespeichert wird.</value>
   </data>
   <data name="CodefileNotFoundString" xml:space="preserve">
-    <value>Datei mit dem Programmcode konnte nicht gefunden werden bei {0}.</value>
+    <value>Die Datei mit dem Programmcode konnte nicht gefunden werden bei {0}.</value>
   </data>
   <data name="CopyingCnfString" xml:space="preserve">
     <value>Kopiert die CNF nach {0}… </value>
@@ -217,7 +217,7 @@
     <value>Optionen zum Festlegen der Bits</value>
   </data>
   <data name="FixBitsTooltip" xml:space="preserve">
-    <value>Ankreuzen um die Optionen für das Festlegen von Bits einzublenden.</value>
+    <value>Ankreuzen, um die Optionen für das Festlegen von Bits einzublenden.</value>
   </data>
   <data name="FixedBitsCaption" xml:space="preserve">
     <value>Festgelegte Bits</value>
@@ -262,7 +262,7 @@
     <value>Hashwert</value>
   </data>
   <data name="InputHashValueTooltip" xml:space="preserve">
-    <value>Geben Sie den Hashwert für einen First Preimage- oder Second Preimage-Angriff ein (Präfix "0x" für hexadezimal, "0b" für binär).</value>
+    <value>Geben Sie den Hashwert für einen First-Preimage- oder Second-Preimage-Angriff ein (Präfix "0x" für hexadezimal, "0b" für binär).</value>
   </data>
   <data name="InputMappingError" xml:space="preserve">
     <value>Fehler beim Abrufen des Eingabe-Mappings.</value>
@@ -411,11 +411,11 @@
   <data name="SecondPreimageEncodingString" xml:space="preserve">
     <value>Kodiert das First-Preimage in der CNF … </value>
   </data>
-  <data name="SecondPreimageRetreivingError" xml:space="preserve">
-    <value>Fehler beim Abrufen der Second Preimage Bits.</value>
+  <data name="SecondPreimageRetrievingError" xml:space="preserve">
+    <value>Fehler beim Abrufen der Second-Preimage-Bits.</value>
   </data>
   <data name="SecondPreimageSizeError" xml:space="preserve">
-    <value>Stellen Sie sicher, dass das angegebene Second-Preimage die korrekte Länge hat{0}Second Preimage: {1} Bits{0}Eingabe: {2} Bits.</value>
+    <value>Stellen Sie sicher, dass das angegebene Second-Preimage die korrekte Länge hat{0}Second-Preimage: {1} Bits{0}Eingabe: {2} Bits.</value>
   </data>
   <data name="SkippingSatSolverString" xml:space="preserve">
     <value>Überpringt SAT-Solver-Prozess… </value>
@@ -451,9 +451,11 @@
     <value>s','fff</value>
   </data>
   <data name="CbmcExeNotFound" xml:space="preserve">
-    <value>Die cbmc Binary konnte nicht gefunden werden bei {0}.</value>
+    <value>Das CBMC-Executable konnte nicht gefunden werden bei
+{0}.</value>
   </data>
   <data name="satSolverExeNotFound" xml:space="preserve">
-    <value>Die Sat Solver Binary konnte nicht gefunden werden bei {0}.</value>
+    <value>Das SAT-Solver-Executable konnte nicht gefunden werden bei
+{0}.</value>
   </data>
 </root>

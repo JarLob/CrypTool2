@@ -1652,7 +1652,7 @@ namespace Cryptool.Plugins.SATAttack
                 /* get the second preimage value as bit array (ranging from lsb to msb) */
                 if ((secondPreimageBits = HexStringToBitArray(secondPreimageValue)) == null)
                 {
-                    GuiLogMessage(Resources.SecondPreimageRetreivingError, NotificationLevel.Error);
+                    GuiLogMessage(Resources.SecondPreimageRetrievingError, NotificationLevel.Error);
                     return 1;
                 }
             }
@@ -1661,7 +1661,7 @@ namespace Cryptool.Plugins.SATAttack
                 /* get the second preimage value as bit array (ranging from lsb to msb) */
                 if ((secondPreimageBits = BitStringToBitArray(secondPreimageValue)) == null)
                 {
-                    GuiLogMessage(Resources.SecondPreimageRetreivingError, NotificationLevel.Error);
+                    GuiLogMessage(Resources.SecondPreimageRetrievingError, NotificationLevel.Error);
                     return 1;
                 }
             }

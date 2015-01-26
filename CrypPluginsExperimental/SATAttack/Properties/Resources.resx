@@ -235,7 +235,7 @@
     <value>Something went wrong in the function encodeFixedBitsInCnf (this code should never be reached).</value>
   </data>
   <data name="FixedBitsError" xml:space="preserve">
-    <value>Error retreiving fixed Bits.</value>
+    <value>Error retrieving fixed Bits.</value>
   </data>
   <data name="FixedBitsSizeError" xml:space="preserve">
     <value>The amount of fixed bits should be less or equal to the amount of input bits{0}Fixed bits: {1} bits{0}Input bits: {2} bits{0}The fixed bits are truncated to the size of the input bits from least significant bit to most significant bit.</value>
@@ -265,7 +265,7 @@
     <value>Enter hash value for a preimage or second preimage attack (prefix "0x" for hexadecimal, "0b" for binary).</value>
   </data>
   <data name="InputMappingError" xml:space="preserve">
-    <value>Error retreiving input mapping.</value>
+    <value>Error retrieving input mapping.</value>
   </data>
   <data name="InputMessageCaption" xml:space="preserve">
     <value>First preimage</value>
@@ -325,10 +325,10 @@
     <value>Only translate ANSI-C code to CNF and encode the selected attack; do not solve with the SAT solver.</value>
   </data>
   <data name="OutputBitsError" xml:space="preserve">
-    <value>Error retreiving output bits.</value>
+    <value>Error retrieving output bits.</value>
   </data>
   <data name="OutputMappingError" xml:space="preserve">
-    <value>Error retreiving outuput mapping.</value>
+    <value>Error retrieving outuput mapping.</value>
   </data>
   <data name="OutputSizeError" xml:space="preserve">
     <value>Ensure the specified output has the correct length{0}Hash value / ciphertext: {1} bits{0}Output: {2} bits.</value>
@@ -411,8 +411,8 @@
   <data name="SecondPreimageEncodingString" xml:space="preserve">
     <value>Encoding first preimage in CNF… </value>
   </data>
-  <data name="SecondPreimageRetreivingError" xml:space="preserve">
-    <value>Error retreiving second preimage bits.</value>
+  <data name="SecondPreimageRetrievingError" xml:space="preserve">
+    <value>Error retrieving second preimage bits.</value>
   </data>
   <data name="SecondPreimageSizeError" xml:space="preserve">
     <value>Ensure the specified second preimage has the correct length{0}Second preimage: {1} bits{0}Input: {2} bits.</value>
@@ -451,9 +451,9 @@
     <value>s'.'fff</value>
   </data>
   <data name="CbmcExeNotFound" xml:space="preserve">
-    <value>Could not find the cbmc binary at {0}.</value>
+    <value>Could not find the cbmc executable at {0}.</value>
   </data>
   <data name="satSolverExeNotFound" xml:space="preserve">
-    <value>Could not find the sat solver binary at  {0}.</value>
+    <value>Could not find the SAT solver executable at {0}.</value>
   </data>
 </root>

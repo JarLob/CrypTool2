@@ -133,7 +133,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the cbmc binary at {0}. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the cbmc executable at {0}. ähnelt.
         /// </summary>
         internal static string CbmcExeNotFound {
             get {
@@ -421,7 +421,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving fixed Bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving fixed Bits. ähnelt.
         /// </summary>
         internal static string FixedBitsError {
             get {
@@ -538,7 +538,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving input mapping. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving input mapping. ähnelt.
         /// </summary>
         internal static string InputMappingError {
             get {
@@ -718,7 +718,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving output bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving output bits. ähnelt.
         /// </summary>
         internal static string OutputBitsError {
             get {
@@ -727,7 +727,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving outuput mapping. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving outuput mapping. ähnelt.
         /// </summary>
         internal static string OutputMappingError {
             get {
@@ -898,7 +898,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the sat solver binary at  {0}. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not find the SAT solver executable at {0}. ähnelt.
         /// </summary>
         internal static string satSolverExeNotFound {
             get {
@@ -988,11 +988,11 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retreiving second preimage bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving second preimage bits. ähnelt.
         /// </summary>
-        internal static string SecondPreimageRetreivingError {
+        internal static string SecondPreimageRetrievingError {
             get {
-                return ResourceManager.GetString("SecondPreimageRetreivingError", resourceCulture);
+                return ResourceManager.GetString("SecondPreimageRetrievingError", resourceCulture);
             }
         }
         
