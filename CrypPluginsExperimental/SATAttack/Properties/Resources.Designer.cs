@@ -727,7 +727,7 @@ namespace SATAttack.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving outuput mapping. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Error retrieving output mapping. ähnelt.
         /// </summary>
         internal static string OutputMappingError {
             get {

@@ -328,7 +328,7 @@
     <value>Error retrieving output bits.</value>
   </data>
   <data name="OutputMappingError" xml:space="preserve">
-    <value>Error retrieving outuput mapping.</value>
+    <value>Error retrieving output mapping.</value>
   </data>
   <data name="OutputSizeError" xml:space="preserve">
     <value>Ensure the specified output has the correct length{0}Hash value / ciphertext: {1} bits{0}Output: {2} bits.</value>
