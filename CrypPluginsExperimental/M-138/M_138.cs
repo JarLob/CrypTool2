@@ -29,6 +29,7 @@ using System.Data;
 using System.Windows.Data;
 using System.Windows;
 using System.Linq;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.M_138
 {
@@ -53,6 +54,8 @@ namespace Cryptool.Plugins.M_138
         int _offset;
         int[] _stripNumbers = null;
         private List<int[]> numStripes = new List<int[]>();
+        private int _invalidChar = 0;
+        private List<string> _ignoredCharacters = new List<string>();
 
 
         #endregion
@@ -111,6 +114,7 @@ namespace Cryptool.Plugins.M_138
             _stopped = false;
             readStripes();
             setSeparator();
+            _invalidChar = settings.InvalidCharacterHandling;
         }
 
         /// <summary>
@@ -119,8 +123,15 @@ namespace Cryptool.Plugins.M_138
         public void Execute()
         {
             ProgressChanged(0, 1);
-            TextInput = RemoveInvalidChars(TextInput.ToUpper(), alphabet);
-            TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet);
+            if (_invalidChar == 0) //Remove
+            {
+                TextInput = RemoveInvalidChars(TextInput.ToUpper(), alphabet);
+            }
+            else
+            {
+                TextInput = TextInput.ToUpper();
+            }
+            TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
             splitKey();
             if (_offset > alphabet.Length)
             {
@@ -232,24 +243,69 @@ namespace Cryptool.Plugins.M_138
             return builder.ToString();
         }
 
-        private int[] MapTextIntoNumberSpace(string text, string alphabet)
+        private int[] MapTextIntoNumberSpace(string text, string alphabet, int inv)
         {
             var numbers = new int[text.Length];
             var position = 0;
-            foreach (char c in text)
+            if (inv == 0)
             {
-                numbers[position] = alphabet.IndexOf(c);
-                position++;
+                foreach (char c in text)
+                {
+                    numbers[position] = alphabet.IndexOf(c);
+                    position++;
+                }
+            }
+            else
+            {
+                foreach (char c in text)
+                {
+                    if(alphabet.Contains(c.ToString())) {
+                        numbers[position] = alphabet.IndexOf(c);
+                    }
+                    else {
+                        numbers[position] = -1;
+                        if(inv==1) {
+                            _ignoredCharacters.Add(c.ToString());
+                        }
+                    }
+                    position++;
+                }
             }
             return numbers;
         }
 
-        private string MapNumbersIntoTextSpace(int[] numbers, string alphabet)
+        private string MapNumbersIntoTextSpace(int[] numbers, string alphabet, int inv)
         {
             var builder = new StringBuilder();
-            foreach (char c in numbers)
+            int counter = 0;
+            if (inv == 0)
             {
-                builder.Append(alphabet[c]);
+                foreach (char c in numbers)
+                {
+                    builder.Append(alphabet[c]);
+                }
+            }
+            else
+            {
+                foreach (char c in numbers)
+                {
+                    if (c == 65535)
+                    {
+                        if (inv == 1)
+                        {
+                            builder.Append(_ignoredCharacters[counter]);
+                            counter++;
+                        }
+                        else
+                        {
+                            builder.Append('?');
+                        }
+                    }
+                    else
+                    {
+                        builder.Append(alphabet[c]);
+                    }
+                }
             }
             return builder.ToString();
         }
@@ -263,7 +319,7 @@ namespace Cryptool.Plugins.M_138
 
             for (int r = 0; r < _stripNumbers.Length; r++) //Create a List of all used Stripes mapped to numbers instead of characters
             {
-                numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet));
+                numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet, _invalidChar));
             }
            
             for(int r=0; r<_rows; r++) {
@@ -271,18 +327,50 @@ namespace Cryptool.Plugins.M_138
                 toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
                 toVisualize[r + 1, 0] = (r+1).ToString(); //Fill first column of Visualisation
                 int[] currentStrip = numStripes[_usedStrip];
-                int isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
+                int isAt;
+                int counter = 0;
+                if (TextNumbers[r] < 0)
+                {
+                    isAt = -1;
+                }
+                else
+                {
+                    isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
+                }
                 //NEW
                 for (int c = 0; c < _columns; c++)
                 {
                     toVisualize[0, c+2] = c.ToString(); //First row of Visualisation
                     if (deOrEncrypt == 1)
                     {
-                        toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                        if (isAt != -1)
+                        {
+                            toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                        }
+//                        else if (_invalidChar==1) {
+//                            toVisualize[r+1, c+2] = _ignoredCharacters[counter];
+//                            counter++;
+//                        }
+                        else
+                        {
+                            toVisualize[r+1, c+2] = "?";
+                        }
                     }
                     else if (deOrEncrypt == 2)
                     {
-                        toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                        if (isAt != -1)
+                        {
+                            toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                        }
+                        else if (_invalidChar == 1)
+                        {
+                            toVisualize[r + 1, c + 2] = _ignoredCharacters[counter];
+                            counter++;
+                        }
+                        else
+                        {
+                            toVisualize[r + 1, c + 2] = "?";
+                        }
                     }
                     else
                     {
@@ -293,10 +381,24 @@ namespace Cryptool.Plugins.M_138
                 switch (deOrEncrypt)
                 {
                     case 1:
-                        output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
+                        if (isAt != -1)
+                        {
+                            output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
+                        }
+                        else
+                        {
+                            output[r] = -1;
+                        }
                         break;
                     case 2:
-                        output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
+                        if (isAt != -1)
+                        {
+                            output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
+                        }
+                        else
+                        {
+                            output[r] = -1;
+                        }
                         break;
                     default:
                         //This should never happen
@@ -318,7 +420,7 @@ namespace Cryptool.Plugins.M_138
                 }
             }
  
-            TextOutput = MapNumbersIntoTextSpace(output, alphabet);
+            TextOutput = MapNumbersIntoTextSpace(output, alphabet, _invalidChar);
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate {
                 try
@@ -393,16 +495,15 @@ namespace Cryptool.Plugins.M_138
             Check2DArrayMatchColumnNames(data, columnNames);
 
             DataTable dt = Convert2DArrayToDataTable(data, columnNames);
-
             GridView gv = new GridView();
             for (int i = 0; i < data.GetLength(1); i++)
             {
                 GridViewColumn col = new GridViewColumn();
                 col.Header = columnNames[i];
                 col.DisplayMemberBinding = new Binding("[" + i + "]");
+                
                 gv.Columns.Add(col);
             }
-
             listview.View = gv;
             listview.ItemsSource = dt.Rows;
         }
@@ -440,6 +541,12 @@ namespace Cryptool.Plugins.M_138
             {
                 throw new Exception("The second dimensional length must equals column names.");
             }
+        }
+
+        private void OnButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+
         }
 
         #endregion

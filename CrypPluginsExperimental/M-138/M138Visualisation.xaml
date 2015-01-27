@@ -14,13 +14,6 @@
                     <Setter Property="VerticalContentAlignment" Value="Stretch" />
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-            <DataTemplate>
-                <DataTemplate.Triggers>
-
-                </DataTemplate.Triggers>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </ListView>
     </Viewbox>
 </UserControl>

@@ -34,5 +34,11 @@ namespace M_138
             binding.Path = new PropertyPath(binding.Path.Path + ".Value");
         }
 
+        private void OnButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+
+        }
+
     }
 }

@@ -27,6 +27,7 @@ namespace Cryptool.Plugins.M_138
         private int _encryptDecrypt = 0;
         private int _separatorStr = 0;
         private int _separatorOff = 0;
+        private int _invalidCharacters = 0;
 
         #endregion
 
@@ -80,6 +81,21 @@ namespace Cryptool.Plugins.M_138
             }
         }
 
+        [TaskPane("InvalidCarCap", "InvalidCarDesDes", null, 0, false, ControlType.ComboBox, new string[] { "delete", "ignore", "replace with '?'" })]
+        public int InvalidCharacterHandling
+        {
+            get
+            {
+                return _invalidCharacters;
+            }
+            set
+            {
+                if (_invalidCharacters != value)
+                {
+                    _invalidCharacters = value;
+                }
+            }
+        }
 
         #endregion
 
