@@ -28,6 +28,7 @@ namespace Cryptool.Plugins.M_138
         private int _separatorStr = 0;
         private int _separatorOff = 0;
         private int _invalidCharacters = 0;
+        private bool _caseSensitive = false;
 
         #endregion
 
@@ -93,6 +94,22 @@ namespace Cryptool.Plugins.M_138
                 if (_invalidCharacters != value)
                 {
                     _invalidCharacters = value;
+                }
+            }
+        }
+
+        [TaskPane("CaseSensitiveCap", "CaseSensitiveDes", null, 0, false, ControlType.CheckBox)]
+        public bool CaseSensitivity
+        {
+            get
+            {
+                return _caseSensitive;
+            }
+            set
+            {
+                if (_caseSensitive != value)
+                {
+                    _caseSensitive = value;
                 }
             }
         }

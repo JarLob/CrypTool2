@@ -45,7 +45,7 @@ namespace Cryptool.Plugins.M_138
         enum Commands { Encrypt, Decryp };
         private bool _stopped = true;
         private string[,] toVisualize;
-        private const string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private List<string> stripes = new List<string>();
         private int _numberOfStripes = 0;
         private int[] TextNumbers;
@@ -56,6 +56,7 @@ namespace Cryptool.Plugins.M_138
         private List<int[]> numStripes = new List<int[]>();
         private int _invalidChar = 0;
         private List<string> _ignoredCharacters = new List<string>();
+        private bool _isCaseSensitive = false;
 
 
         #endregion
@@ -112,9 +113,9 @@ namespace Cryptool.Plugins.M_138
         public void PreExecution()
         {
             _stopped = false;
-            readStripes();
-            setSeparator();
-            _invalidChar = settings.InvalidCharacterHandling;
+            _ignoredCharacters.Clear();
+            toVisualize = null;
+            _isCaseSensitive = settings.CaseSensitivity;
         }
 
         /// <summary>
@@ -123,13 +124,28 @@ namespace Cryptool.Plugins.M_138
         public void Execute()
         {
             ProgressChanged(0, 1);
+            readStripes();
+            setSeparator();
+            _isCaseSensitive = settings.CaseSensitivity;
+            if (_isCaseSensitive)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append(alphabet.ToUpper());
+                sb.Append(alphabet.ToLower());
+                alphabet = sb.ToString();
+            }
+            _invalidChar = settings.InvalidCharacterHandling;
+            if (!_isCaseSensitive)
+            {
+                TextInput = TextInput.ToUpper();
+            }
             if (_invalidChar == 0) //Remove
             {
-                TextInput = RemoveInvalidChars(TextInput.ToUpper(), alphabet);
+                TextInput = RemoveInvalidChars(TextInput, alphabet);
             }
             else
             {
-                TextInput = TextInput.ToUpper();
+                TextInput = TextInput;
             }
             TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
             splitKey();
@@ -216,6 +232,7 @@ namespace Cryptool.Plugins.M_138
         #region Helpers
         private void readStripes()
         {
+            StringBuilder sb = new StringBuilder();
             using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"), FileMode.Open, FileAccess.Read))
             {
                 using (var file = new StreamReader(fileStream))
@@ -223,7 +240,17 @@ namespace Cryptool.Plugins.M_138
                     string line = "";
                     while ((line = file.ReadLine()) != null)
                     {
-                        stripes.Add(line);
+                        if (!_isCaseSensitive)
+                        {
+                            stripes.Add(line);
+                        }
+                        else
+                        {
+                            sb.Append(line.ToUpper());
+                            sb.Append(line.ToLower());
+                            stripes.Add(sb.ToString());
+                            sb.Clear();
+                        }
                     }
                     file.Close();
                 }
