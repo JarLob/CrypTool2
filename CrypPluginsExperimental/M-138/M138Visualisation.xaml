@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Viewbox>
-        <ListView HorizontalAlignment="Left" Height="500" Width="950" VerticalAlignment="Top"  Name="lvwArray" FontSize="18">
+        <ListView HorizontalAlignment="Left" Height="500" Width="950" VerticalAlignment="Top"  Name="lvwArray" FontSize="18" IsHitTestVisible="False">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="Gray" />

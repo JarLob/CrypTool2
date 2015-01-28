@@ -374,13 +374,9 @@ namespace Cryptool.Plugins.M_138
                         {
                             toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
                         }
-//                        else if (_invalidChar==1) {
-//                            toVisualize[r+1, c+2] = _ignoredCharacters[counter];
-//                            counter++;
-//                        }
                         else
                         {
-                            toVisualize[r+1, c+2] = "?";
+                            toVisualize[r+1, c+2] = "?"; //Can't show strips for invalid characters
                         }
                     }
                     else if (deOrEncrypt == 2)
@@ -531,6 +527,11 @@ namespace Cryptool.Plugins.M_138
                 
                 gv.Columns.Add(col);
             }
+            //Testing//
+            gv.AllowsColumnReorder = false;
+            var variableblablabla = gv.Columns;
+            
+            //Testing//
             listview.View = gv;
             listview.ItemsSource = dt.Rows;
         }
