@@ -526,11 +526,16 @@ namespace Cryptool.Plugins.M_138
                 col.DisplayMemberBinding = new Binding("[" + i + "]");
                 
                 gv.Columns.Add(col);
-            }
-            //Testing//
+            }            
             gv.AllowsColumnReorder = false;
+            //Testing
             var variableblablabla = gv.Columns;
-            
+            DataTemplate dataTemplate = (DataTemplate)listview.TryFindResource("blueColumn");
+            DataTemplate dataTemplate2 = (DataTemplate)listview.TryFindResource("blueStyle");
+            if (dataTemplate != null)
+            {
+                variableblablabla[2].CellTemplate = dataTemplate;
+            }
             //Testing//
             listview.View = gv;
             listview.ItemsSource = dt.Rows;
@@ -576,7 +581,7 @@ namespace Cryptool.Plugins.M_138
             e.Handled = true;
 
         }
-
+        
         #endregion
     }
 }

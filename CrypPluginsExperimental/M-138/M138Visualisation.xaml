@@ -6,6 +6,15 @@
              mc:Ignorable="d">
     <Viewbox>
         <ListView HorizontalAlignment="Left" Height="500" Width="950" VerticalAlignment="Top"  Name="lvwArray" FontSize="18" IsHitTestVisible="False">
+            <ListView.ItemTemplate>
+                <DataTemplate x:Name="blueColumn">
+                    <DataTemplate.Resources>
+                        <Style x:Key="blueStyle" x:Name="blueStyle">
+                            <Setter Property="Grid.Background" Value="Blue"/>
+                        </Style>
+                    </DataTemplate.Resources>
+                </DataTemplate>
+            </ListView.ItemTemplate>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="Gray" />
