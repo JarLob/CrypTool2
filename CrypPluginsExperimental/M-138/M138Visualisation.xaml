@@ -5,24 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Viewbox>
-        <ListView HorizontalAlignment="Left" Height="500" Width="950" VerticalAlignment="Top"  Name="lvwArray" FontSize="18" IsHitTestVisible="False">
-            <ListView.ItemTemplate>
-                <DataTemplate x:Name="blueColumn">
-                    <DataTemplate.Resources>
-                        <Style x:Key="blueStyle" x:Name="blueStyle">
-                            <Setter Property="Grid.Background" Value="Blue"/>
-                        </Style>
-                    </DataTemplate.Resources>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="BorderBrush" Value="Gray" />
-                    <Setter Property="BorderThickness" Value="0,0,0,1" />
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <DataGrid HorizontalAlignment="Center" VerticalAlignment="Center" MaxHeight="550" MaxWidth="1500" Name="lvwArray" FontSize="18" BorderThickness="1" GridLinesVisibility="Horizontal" CanUserReorderColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalGridLinesBrush="Black">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="Padding" Value="10" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="MinWidth" Value="30"/>
+                    <Setter Property="MinHeight" Value="30"/>
                 </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+            </DataGrid.CellStyle>
+        </DataGrid>
     </Viewbox>
 </UserControl>

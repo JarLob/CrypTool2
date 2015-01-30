@@ -26,19 +26,5 @@ namespace M_138
         {
             InitializeComponent();
         }
-
-        private void c_dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            DataGridTextColumn column = e.Column as DataGridTextColumn;
-            Binding binding = column.Binding as Binding;
-            binding.Path = new PropertyPath(binding.Path.Path + ".Value");
-        }
-
-        private void OnButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-
-        }
-
     }
 }

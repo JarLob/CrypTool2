@@ -30,6 +30,7 @@ using System.Windows.Data;
 using System.Windows;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.M_138
 {
@@ -513,32 +514,42 @@ namespace Cryptool.Plugins.M_138
                 }
             }
         }
-        private void Binding2DArrayToListView (ListView listview, string[,] data, string[] columnNames)
+        private void Binding2DArrayToListView (DataGrid dataGrid, string[,] data, string[] columnNames)
         {
+            dataGrid.AutoGeneratingColumn += dgvMailingList_AutoGeneratingColumn;
             Check2DArrayMatchColumnNames(data, columnNames);
-
             DataTable dt = Convert2DArrayToDataTable(data, columnNames);
-            GridView gv = new GridView();
-            for (int i = 0; i < data.GetLength(1); i++)
+            dataGrid.ItemsSource = dt.DefaultView;
+ 
+        }
+
+        private void dgvMailingList_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.Header.Equals("0"))
             {
-                GridViewColumn col = new GridViewColumn();
-                col.Header = columnNames[i];
-                col.DisplayMemberBinding = new Binding("[" + i + "]");
-                
-                gv.Columns.Add(col);
-            }            
-            gv.AllowsColumnReorder = false;
-            //Testing
-            var variableblablabla = gv.Columns;
-            DataTemplate dataTemplate = (DataTemplate)listview.TryFindResource("blueColumn");
-            DataTemplate dataTemplate2 = (DataTemplate)listview.TryFindResource("blueStyle");
-            if (dataTemplate != null)
-            {
-                variableblablabla[2].CellTemplate = dataTemplate;
+                e.Column.CellStyle = new Style(typeof(DataGridCell));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.BackgroundProperty, new SolidColorBrush(Colors.Green)));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Bold));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.PaddingProperty, new Thickness(10)));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.VerticalAlignmentProperty, VerticalAlignment.Stretch));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.HorizontalContentAlignmentProperty, HorizontalAlignment.Center));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.MinHeightProperty, Double.Parse("30")));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.MinWidthProperty, Double.Parse("30")));
             }
-            //Testing//
-            listview.View = gv;
-            listview.ItemsSource = dt.Rows;
+            else if (e.Column.Header.Equals(_offset.ToString())) 
+            {
+                e.Column.CellStyle = new Style(typeof(DataGridCell));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.BackgroundProperty, new SolidColorBrush(Colors.Red)));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontWeightProperty, FontWeights.Bold));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.PaddingProperty, new Thickness(10)));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.HorizontalAlignmentProperty, HorizontalAlignment.Stretch));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.VerticalAlignmentProperty, VerticalAlignment.Stretch));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.HorizontalContentAlignmentProperty, HorizontalAlignment.Center));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+            }
+            return;
         }
 
         private DataTable Convert2DArrayToDataTable(string[,] data, string[] columnNames)
@@ -574,12 +585,6 @@ namespace Cryptool.Plugins.M_138
             {
                 throw new Exception("The second dimensional length must equals column names.");
             }
-        }
-
-        private void OnButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-
         }
         
         #endregion
