@@ -45,8 +45,9 @@ namespace Cryptool.Plugins.M_138
         private readonly M138Visualisation visualisation = new M138Visualisation();
         enum Commands { Encrypt, Decryp };
         private bool _stopped = true;
+        List<int> _characterCases;
         private string[,] toVisualize;
-        private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private static string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private List<string> stripes = new List<string>();
         private int _numberOfStripes = 0;
         private int[] TextNumbers;
@@ -114,9 +115,6 @@ namespace Cryptool.Plugins.M_138
         public void PreExecution()
         {
             _stopped = false;
-            _ignoredCharacters.Clear();
-            toVisualize = null;
-            _isCaseSensitive = settings.CaseSensitivity;
         }
 
         /// <summary>
@@ -125,21 +123,34 @@ namespace Cryptool.Plugins.M_138
         public void Execute()
         {
             ProgressChanged(0, 1);
-            readStripes();
-            setSeparator();
+
+            //Case sensitivity
             _isCaseSensitive = settings.CaseSensitivity;
             if (_isCaseSensitive)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append(alphabet.ToUpper());
-                sb.Append(alphabet.ToLower());
-                alphabet = sb.ToString();
+                _characterCases = new List<int>(); //Save Cases of characters. 0 -> Lower case, 1 -> upper case
+                int i = 0;
+                foreach (char c in TextInput.ToArray()) {
+                    if (Char.IsUpper(c))
+                    {
+                        _characterCases.Add(1);
+                    }
+                    else if (Char.IsLower(c))
+                    {
+                        _characterCases.Add(0);
+                    }
+                    else
+                    {
+                        _characterCases.Add(1); //Default is upper. No idea when this should happen. Need to debug
+                        //This should NEVER happen (Well, is a "?" upper case or lover case?)
+                    }
+                    i++;
+                }
             }
+            TextInput = TextInput.ToUpper(); //Just use upper cases internally
+
+            //Invalid character handling
             _invalidChar = settings.InvalidCharacterHandling;
-            if (!_isCaseSensitive)
-            {
-                TextInput = TextInput.ToUpper();
-            }
             if (_invalidChar == 0) //Remove
             {
                 TextInput = RemoveInvalidChars(TextInput, alphabet);
@@ -147,14 +158,21 @@ namespace Cryptool.Plugins.M_138
             else
             {
                 TextInput = TextInput;
+                _ignoredCharacters = new List<string>();
             }
+
+            toVisualize = null;
+            readStripes();
+            setSeparator();
             TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
             splitKey();
+
             if (_offset > alphabet.Length)
             {
                 GuiLogMessage("Offset "+_offset+" is larger than strip length "+alphabet.Length+" and will be truncated", NotificationLevel.Warning);
                 _offset = _offset % alphabet.Length;
             }
+
             switch (settings.ModificationType) {
                 case (int) Commands.Encrypt:
                     Encrypt();
@@ -241,17 +259,7 @@ namespace Cryptool.Plugins.M_138
                     string line = "";
                     while ((line = file.ReadLine()) != null)
                     {
-                        if (!_isCaseSensitive)
-                        {
-                            stripes.Add(line);
-                        }
-                        else
-                        {
-                            sb.Append(line.ToUpper());
-                            sb.Append(line.ToLower());
-                            stripes.Add(sb.ToString());
-                            sb.Clear();
-                        }
+                        stripes.Add(line);
                     }
                     file.Close();
                 }
@@ -352,8 +360,8 @@ namespace Cryptool.Plugins.M_138
            
             for(int r=0; r<_rows; r++) {
                 int _usedStrip = r % _stripNumbers.Length;
+                toVisualize[r + 1, 0] = (r + 1).ToString(); //Fill first column of Visualisation
                 toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
-                toVisualize[r + 1, 0] = (r+1).ToString(); //Fill first column of Visualisation
                 int[] currentStrip = numStripes[_usedStrip];
                 int isAt;
                 int counter = 0;
@@ -365,7 +373,7 @@ namespace Cryptool.Plugins.M_138
                 {
                     isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
                 }
-                //NEW
+                
                 for (int c = 0; c < _columns; c++)
                 {
                     toVisualize[0, c+2] = c.ToString(); //First row of Visualisation
@@ -433,18 +441,41 @@ namespace Cryptool.Plugins.M_138
             toVisualize[0, 1] = "Strip"; ; //Top Left field
             toVisualize[0, 0] = "Row"; //Top right field
 
+            //Column Headers for Visualisation
             string[] colNames = new string[_columns+2];
             for(int i=0; i<_columns+2; i++) {
                 colNames[i] = toVisualize[0,i];
             }
+
             string[,] tmpToVis = new string[_rows, _columns+2];
-            for(int i=0; i<_rows;i++) {
+            for(int i=0; i<(_rows);i++) {
                 for(int j=0; j<_columns+2; j++) {
                     tmpToVis[i,j] = toVisualize[i+1,j];
                 }
             }
  
-            TextOutput = MapNumbersIntoTextSpace(output, alphabet, _invalidChar);
+            String tmpOutput = MapNumbersIntoTextSpace(output, alphabet, _invalidChar);
+            if (_isCaseSensitive)
+            {
+                StringBuilder tmpStringBuilder = new StringBuilder();
+                int i = 0;
+                
+                foreach (char c in tmpOutput.ToArray())
+                {
+                    if (_characterCases[i] == 0)
+                    {
+                        tmpStringBuilder.Append(Char.ToLower(tmpOutput[i]));
+                    }
+                    else
+                    {
+                        tmpStringBuilder.Append(Char.ToUpper(tmpOutput[i]));
+                    }
+                    i++;
+                }
+                tmpOutput = tmpStringBuilder.ToString();
+            }
+
+            TextOutput = tmpOutput;
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate {
                 try
@@ -481,8 +512,6 @@ namespace Cryptool.Plugins.M_138
                 case 2:
                     _separatorStripes = '/';
                     break;
-                default:
-                    break;
             }
 
             switch (settings.SeperatorOffChar)
@@ -507,7 +536,7 @@ namespace Cryptool.Plugins.M_138
             string[] s1 = splitted[0].Split(_separatorStripes);
             _stripNumbers = new int[s1.Length];
             for ( int i=0; i < s1.Length; i++) {
-                _stripNumbers[i] = Convert.ToInt32(s1[i]); //-1
+                _stripNumbers[i] = Convert.ToInt32(s1[i]);
                 if (_stripNumbers[i] > stripes.Count)
                 {
                     GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count, NotificationLevel.Error);
