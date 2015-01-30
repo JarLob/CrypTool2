@@ -50,8 +50,8 @@ namespace Cryptool.Plugins.M_138
             }
         }
 
-        [TaskPane("SeperatorStripCap", "SeperatorStripDes", null, 0, false, ControlType.ComboBox, new string[] {  ",", ".", "/" })]
-        public int SeperatorStripChar
+        [TaskPane("SeparatorStripCap", "SeparatorStripDes", null, 0, false, ControlType.ComboBox, new string[] {  ",", ".", "/" })]
+        public int SeparatorStripChar
         {
             get
             {
@@ -66,8 +66,8 @@ namespace Cryptool.Plugins.M_138
             }
         }
 
-        [TaskPane("SeperatorOffCap", "SeperatorOffDes", null, 0, false, ControlType.ComboBox, new string[] { "/", ",", "." })]
-        public int SeperatorOffChar
+        [TaskPane("SeparatorOffCap", "SeparatorOffDes", null, 0, false, ControlType.ComboBox, new string[] { "/", ",", "." })]
+        public int SeparatorOffChar
         {
             get
             {

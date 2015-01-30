@@ -504,7 +504,7 @@ namespace Cryptool.Plugins.M_138
 
         private void setSeparator()
         {
-            switch (settings.SeperatorStripChar)
+            switch (settings.SeparatorStripChar)
             {
                 case 0:
                     _separatorStripes = ',';
@@ -517,7 +517,7 @@ namespace Cryptool.Plugins.M_138
                     break;
             }
 
-            switch (settings.SeperatorOffChar)
+            switch (settings.SeparatorOffChar)
             {
                 case 0:
                     _separatorOffset = '/';
