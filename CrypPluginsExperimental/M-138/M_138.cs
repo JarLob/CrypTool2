@@ -115,6 +115,7 @@ namespace Cryptool.Plugins.M_138
         public void PreExecution()
         {
             _stopped = false;
+            readStripes();
         }
 
         /// <summary>
@@ -141,8 +142,8 @@ namespace Cryptool.Plugins.M_138
                     }
                     else
                     {
-                        _characterCases.Add(1); //Default is upper. No idea when this should happen. Need to debug
-                        //This should NEVER happen (Well, is a "?" upper case or lover case?)
+                        _characterCases.Add(2);
+                        //Special Characters are neither upper nor lower case
                     }
                     i++;
                 }
@@ -157,12 +158,9 @@ namespace Cryptool.Plugins.M_138
             }
             else
             {
-                TextInput = TextInput;
                 _ignoredCharacters = new List<string>();
             }
 
-            toVisualize = null;
-            readStripes();
             setSeparator();
             TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
             splitKey();
@@ -353,6 +351,7 @@ namespace Cryptool.Plugins.M_138
             int[] output = new int[_rows];
             toVisualize = new String[_rows + 1, _columns + 2];
 
+            numStripes.Clear();
             for (int r = 0; r < _stripNumbers.Length; r++) //Create a List of all used Stripes mapped to numbers instead of characters
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet, _invalidChar));
@@ -466,9 +465,13 @@ namespace Cryptool.Plugins.M_138
                     {
                         tmpStringBuilder.Append(Char.ToLower(tmpOutput[i]));
                     }
-                    else
+                    else if (_characterCases[i] == 1)
                     {
                         tmpStringBuilder.Append(Char.ToUpper(tmpOutput[i]));
+                    }
+                    else
+                    {
+                        tmpStringBuilder.Append(tmpOutput[i]);
                     }
                     i++;
                 }
@@ -534,6 +537,10 @@ namespace Cryptool.Plugins.M_138
             splitted = Key.Split(_separatorOffset);
             _offset = Convert.ToInt32(splitted[1]);
             string[] s1 = splitted[0].Split(_separatorStripes);
+            if (s1[s1.Length - 1].Contains("/") || s1[s1.Length - 1].Contains(",") || s1[s1.Length - 1].Contains(";") || s1[s1.Length - 1].Contains(".") || s1[s1.Length - 1].Equals(""))
+            {
+                return;
+            }
             _stripNumbers = new int[s1.Length];
             for ( int i=0; i < s1.Length; i++) {
                 _stripNumbers[i] = Convert.ToInt32(s1[i]);
