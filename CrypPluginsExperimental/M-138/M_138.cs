@@ -59,6 +59,9 @@ namespace Cryptool.Plugins.M_138
         private int _invalidChar = 0;
         private List<string> _ignoredCharacters = new List<string>();
         private bool _isCaseSensitive = false;
+        string[,] tmpToVis;
+        string[] colNames;
+
 
 
         #endregion
@@ -116,6 +119,17 @@ namespace Cryptool.Plugins.M_138
         {
             _stopped = false;
             readStripes();
+            try
+            {
+                Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    Presentation.Visibility = Visibility.Visible;
+                }, null);
+            }
+            catch (Exception e)
+            {
+            }
+            visualisation.IsVisibleChanged += visibilityHasChanged;
         }
 
         /// <summary>
@@ -208,6 +222,16 @@ namespace Cryptool.Plugins.M_138
         /// </summary>
         public void Initialize()
         {
+            try
+            {
+                Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    Presentation.Visibility = Visibility.Hidden;
+                }, null);
+            }
+            catch (Exception e)
+            {
+            }
         }
 
         /// <summary>
@@ -356,8 +380,9 @@ namespace Cryptool.Plugins.M_138
             {
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet, _invalidChar));
             }
-           
-            for(int r=0; r<_rows; r++) {
+
+            for (int r = 0; r < _rows; r++)
+            {
                 int _usedStrip = r % _stripNumbers.Length;
                 toVisualize[r + 1, 0] = (r + 1).ToString(); //Fill first column of Visualisation
                 toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
@@ -372,10 +397,10 @@ namespace Cryptool.Plugins.M_138
                 {
                     isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
                 }
-                
+
                 for (int c = 0; c < _columns; c++)
                 {
-                    toVisualize[0, c+2] = c.ToString(); //First row of Visualisation
+                    toVisualize[0, c + 2] = c.ToString(); //First row of Visualisation
                     if (deOrEncrypt == 1)
                     {
                         if (isAt != -1)
@@ -384,7 +409,7 @@ namespace Cryptool.Plugins.M_138
                         }
                         else
                         {
-                            toVisualize[r+1, c+2] = "?"; //Can't show strips for invalid characters
+                            toVisualize[r + 1, c + 2] = "?"; //Can't show strips for invalid characters
                         }
                     }
                     else if (deOrEncrypt == 2)
@@ -407,7 +432,7 @@ namespace Cryptool.Plugins.M_138
                     {
                         //This should never happen
                     }
-                    
+
                 }
                 switch (deOrEncrypt)
                 {
@@ -435,30 +460,33 @@ namespace Cryptool.Plugins.M_138
                         //This should never happen
                         break;
                 }
-                
+
             }
             toVisualize[0, 1] = "Strip"; ; //Top Left field
             toVisualize[0, 0] = "Row"; //Top right field
 
             //Column Headers for Visualisation
-            string[] colNames = new string[_columns+2];
-            for(int i=0; i<_columns+2; i++) {
-                colNames[i] = toVisualize[0,i];
+            colNames = new string[_columns + 2];
+            for (int i = 0; i < _columns + 2; i++)
+            {
+                colNames[i] = toVisualize[0, i];
             }
 
-            string[,] tmpToVis = new string[_rows, _columns+2];
-            for(int i=0; i<(_rows);i++) {
-                for(int j=0; j<_columns+2; j++) {
-                    tmpToVis[i,j] = toVisualize[i+1,j];
+            tmpToVis = new string[_rows, _columns + 2];
+            for (int i = 0; i < (_rows); i++)
+            {
+                for (int j = 0; j < _columns + 2; j++)
+                {
+                    tmpToVis[i, j] = toVisualize[i + 1, j];
                 }
             }
- 
+
             String tmpOutput = MapNumbersIntoTextSpace(output, alphabet, _invalidChar);
             if (_isCaseSensitive)
             {
                 StringBuilder tmpStringBuilder = new StringBuilder();
                 int i = 0;
-                
+
                 foreach (char c in tmpOutput.ToArray())
                 {
                     if (_characterCases[i] == 0)
@@ -480,17 +508,41 @@ namespace Cryptool.Plugins.M_138
 
             TextOutput = tmpOutput;
 
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate {
+                        if (visualisation.IsVisible)
+            {
+            UpdateGUI();
+                        }
+        }
+
+        private void UpdateGUI()
+        {
+
                 try
                 {
-                    visualisation.DataContext = this;
-                    Binding2DArrayToListView(visualisation.lvwArray, tmpToVis, colNames);
+                    Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        try
+                        {
+                            //visualisation.DataContext = this;
+                            Binding2DArrayToListView(visualisation.lvwArray, tmpToVis, colNames);
+                        }
+                        catch (Exception e)
+                        {
+                            GuiLogMessage(e.StackTrace, NotificationLevel.Error);
+                        }
+                    }, null);
                 }
                 catch (Exception e)
                 {
-                    GuiLogMessage(e.StackTrace, NotificationLevel.Error);
+                    //Console.WriteLine(e.StackTrace);
+                    //GuiLogMessage(e.StackTrace, NotificationLevel.Error);
                 }
-            }, null);
+            
+        }
+
+        private void visibilityHasChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdateGUI();
         }
 
         private void Encrypt()
