@@ -751,8 +751,7 @@
                                     </dc:ButtonDropDown>
 
                                     <dc:ButtonDropDown Name="p2pButton" ImagePosition="Top" Style="{DynamicResource AppMenuCommandButton}" dc:Ribbon.KeyTip="PP" Height="70"
-                                                   Command="cw:CrypWinCommands.P2P" ToolTip="{Loc Manages_the_integrated_network_connection_}" 
-                                                   Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=cw:MainWindow, AncestorLevel=1}, Path=P2PButtonVisibility}">
+                                                   Command="cw:CrypWinCommands.P2P" ToolTip="{Loc Manages_the_integrated_network_connection_}">
                                         <dc:ButtonDropDown.Image>
                                             <Image Name="P2PIconImageBig" Source="images/peer2peer-connect.png" Height="40" Width="40" RenderTransformOrigin="0.5,0.5">
                                                 <Image.RenderTransform>

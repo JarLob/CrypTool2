@@ -1,0 +1,811 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>voluntLib</name>
+    </assembly>
+    <members>
+        <member name="T:voluntLib.managementLayer.ManagementLayer">
+            <summary>
+              Main class for the ManagementLayer
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.GetWorlds">
+            <summary>
+              Gets the world list.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.OnIncomingState(voluntLib.communicationLayer.messages.messageWithCertificate.PropagateStateMessage,System.Net.IPAddress)">
+            <summary>
+              Called when a remote sends a  calculation state.
+              This method will feed the incoming state to the local stateManager and will send its own state - by using a backoff -
+              if the incoming state was older.
+              If no StateManager exists, it ll create one fromIP the stored job configurations.
+              If the job is not known this does nothing.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="from">From.</param>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.Stop">
+            <summary>
+              Stops this instance by stoping all connected calculationlayer
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.JoinNetworkJob(System.Numerics.BigInteger,voluntLib.common.interfaces.ACalculationTemplate,System.Int32)">
+            <summary>
+              Joins an distributed Job and starts a given number of local worker worker threads, executing a copy of the template.
+            </summary>
+            <param name="jobID"></param>
+            <param name="template"></param>
+            <param name="amountOfWorker"></param>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.OnJobDetailsReceived(System.String,System.Numerics.BigInteger,System.Byte[])">
+            <summary>
+              This Method is meant to be called on incoming JobDetails.
+              It sets the payload and invokes the JobListChanged-event iff
+              the client knows the job (match of world and jobID) and the the known jobs doesn't already have a detail payload
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.ManagementLayer.OnJobCreation(voluntLib.common.NetworkJob)">
+            <summary>
+              This Method is meant to be called in incoming CreateNetworkJob.
+              It adds the new job if no job with an equal jobID within the same world is known and invokes the JobListChanged-Event
+            </summary>
+        </member>
+        <member name="T:voluntLib.managementLayer.localStateManagement.states.ALocalState">
+            <summary>
+              Represents a State of the current Network calculation.
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.ApplyConfig(voluntLib.managementLayer.localStateManagement.states.config.EpochStateConfig)">
+            <summary>
+              Applies a configuration to the current state Object
+              Also calls FinalizeValues on the configuration object
+            </summary>
+            <param name="stateConfig">The state configuration.</param>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.MergeMetaData(voluntLib.managementLayer.localStateManagement.states.ALocalState)">
+            <summary>
+              Merges the meta data.
+            </summary>
+            <param name="candidate">The candidate.</param>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.GetNumberOfCalculatedBlocksInCurrentEpoch">
+            <summary>
+              Gets the cardinality.
+              according to http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.BitMaskIsFinished">
+            <summary>
+              Determines whether all bits within the bitmask are true.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.GetNumberOfCalculatedBlocks">
+            <summary>
+              Gets the number of calculated blocks.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.GetNumberOfBlocks">
+            <summary>
+              Gets the number of blocks.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.IsBlockCalculated(System.Numerics.BigInteger)">
+            <summary>
+              Determines whether the given is calculated.
+            </summary>
+            <param name="blockID">The block identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.EpochState.IsFinished">
+            <summary>
+              Determines whether this instance is finished.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:voluntLib.VoluntLib">
+            <summary>
+              VoluntLib Facade
+            </summary>
+        </member>
+        <member name="M:voluntLib.VoluntLib.#ctor">
+            <summary>
+              Creates a new instance of the <see cref="T:voluntLib.VoluntLib"/> class.
+            </summary>
+        </member>
+        <member name="M:voluntLib.VoluntLib.Start">
+            <summary>
+              Starts this instance.
+            </summary>
+            <exception cref="T:System.NotSupportedException">Thrown, if the object has not been initialized.</exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.Stop">
+            <summary>
+              Stops this instance.
+              Note, that an stopped instance should not be restarted.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.InitAndStart(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+              Initializes this instance with the current configuration properties.
+              After initialization this instance is started.
+            </summary>
+            <param name="caCertificate">The CA Certificate.</param>
+            <param name="ownCertificate">Own Certificate.</param>
+        </member>
+        <member name="M:voluntLib.VoluntLib.AddNetworkBridge(System.String,System.Int32)">
+            <summary>
+              Adds a network bridge.
+            </summary>
+            <param name="networkBridgeIP">The network bridge ip.</param>
+            <param name="networkBridgePort">The network bridge port.</param>
+            <exception cref="T:System.NotSupportedException">Can only add NetworkBridges if not already been initialized</exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.Init(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+              Initializes this instance with the current configuration properties
+            </summary>
+            <param name="caCertificate">The CA Certificate.</param>
+            <param name="ownCertificate">Own Certificate.</param>
+        </member>
+        <member name="M:voluntLib.VoluntLib.Init(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Certificate2,voluntLib.communicationLayer.communicator.MulticastCommunicator)">
+            <summary>
+              Initializes this instance with the current configuration properties
+            </summary>
+            <param name="caCertificate">The CA Certificate.</param>
+            <param name="ownCertificate">Own Certificate.</param>
+            <param name="communicator">A communicator.</param>
+        </member>
+        <member name="M:voluntLib.VoluntLib.StopCalculation(System.Numerics.BigInteger)">
+            <summary>
+              Stops the calculation on the given job.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+        </member>
+        <member name="M:voluntLib.VoluntLib.RefreshWorldList">
+            <summary>
+              Sends an WorldList-Request message to each member of the multicast group.
+              Whenever a response is received, <see cref="E:voluntLib.VoluntLib.WorldsChanged"/> will be invoked.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.RefreshJobList(System.String)">
+            <summary>
+              Sends an JobList-Request message for the given world to each member of the multicast group.
+              Whenever a response is received, <see cref="E:voluntLib.VoluntLib.JobListChanged"/> will be invoked.
+            </summary>
+            <param name="world">The world.</param>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.RequestJobDetails(voluntLib.common.NetworkJob)">
+            <summary>
+              Sends an JobDetail-Request message for the given job to each member of the multicast group.
+              Whenever a response is received, <see cref="E:voluntLib.VoluntLib.JobListChanged"/> will be invoked.
+            </summary>
+            <param name="job">The job.</param>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.JoinNetworkJob(System.Numerics.BigInteger,voluntLib.common.interfaces.ACalculationTemplate,System.Int32)">
+            <summary>
+              Joins a network job.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <param name="template">The template.</param>
+            <param name="amountOfWorker">The amount of worker.</param>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.CreateNetworkJob(System.String,System.String,System.String,System.String,System.Byte[],System.Numerics.BigInteger,System.Numerics.BigInteger)">
+            <summary>
+              Creates a network job.
+            </summary>
+            <param name="world">The world.</param>
+            <param name="jobType">Type of the job.</param>
+            <param name="jobName">Name of the job.</param>
+            <param name="description">The description.</param>
+            <param name="payload">The payload.</param>
+            <param name="numberOfBlocks">The number of blocks.</param>
+            <param name="jobID">The job identifier.</param>
+            <returns>The job identifier of the new job</returns>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.JoinNetworkJob(System.Byte[],voluntLib.common.interfaces.ACalculationTemplate,System.Int32)">
+            <summary>
+              Joins a network job.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <param name="template">The template.</param>
+            <param name="amountOfWorker">The amount of worker.</param>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.CreateNetworkJob(System.String,System.String,System.String,System.String,System.Byte[],System.Numerics.BigInteger,System.Byte[])">
+            <summary>
+              Creates a network job.
+            </summary>
+            <param name="world">The world.</param>
+            <param name="jobType">Type of the job.</param>
+            <param name="jobName">Name of the job.</param>
+            <param name="description">The description.</param>
+            <param name="payload"></param>
+            <param name="numberOfBlocks">The number of blocks.</param>
+            <param name="jobID"></param>
+            <returns>The job identifier of the new job</returns>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.CreateNetworkJob(System.String,System.String,System.String,System.String,System.Byte[],System.Numerics.BigInteger)">
+            <summary>
+              Creates a network job.
+            </summary>
+            <param name="world">The world.</param>
+            <param name="jobType">Type of the job.</param>
+            <param name="jobName">Name of the job.</param>
+            <param name="description">The description.</param>
+            <param name="payload"></param>
+            <param name="numberOfBlocks">The number of blocks.</param>
+            <returns>The job identifier of the new job</returns>
+            <exception cref="T:System.NotSupportedException">
+              Thrown, if the object has not
+              been initialized or not been started.
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetJobByID(System.Numerics.BigInteger)">
+            <summary>
+              Get the job by its identifier.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <returns>
+              The NetworkJob with the given ID or null if the given ID
+              does not match any local job
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetJobsOfWorld(System.String)">
+            <summary>
+              Returns all jobs of the given World
+            </summary>
+            <returns>
+              A list of jobs of the given world or
+              an empty list if no job with the given world is known
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetJobs">
+            <summary>
+              Returns a list of all known jobs.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetResultList(System.Numerics.BigInteger)">
+            <summary>
+              Returns the result list.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <returns>The result list or an empty list the given ID does not match any local job</returns>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetWorkingPeerList(System.Numerics.BigInteger)">
+            <summary>
+              Returns the working peer list.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetWorlds">
+            <summary>
+              Returns the current world list.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetJobByID(System.Byte[])">
+            <summary>
+              Get the job by its identifier.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <returns>
+              The NetworkJob with the given ID or null if the given ID
+              does not match any local job
+            </returns>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetWorkingPeerList(System.Byte[])">
+            <summary>
+              Returns the working peer list.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetResultList(System.Byte[])">
+            <summary>
+              Returns the result list.
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <returns>The result list or an empty list the given ID does not match any local job</returns>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.GetRandom">
+            <returns>A random UInt 128.</returns>
+        </member>
+        <member name="M:voluntLib.VoluntLib.ThrowErrorIfNotInitialized">
+            <summary>
+              Throws if not initialized.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been initialized.
+              Remember to call the init-method
+            </exception>
+        </member>
+        <member name="M:voluntLib.VoluntLib.ThrowErrorIfNotStarted">
+            <summary>
+              Throws if not started.
+            </summary>
+            <exception cref="T:System.NotSupportedException">
+              Object has not been started.
+              Remember to call the start-method
+            </exception>
+        </member>
+        <member name="P:voluntLib.VoluntLib.LocalEndPointIPAddress">
+            <summary>
+              Ip of the localEndPoint, that will be used for receiving packages.
+              Default: All localEndpoints (Ipv6 if Multicast Address is IpV6)
+            </summary>
+        </member>
+        <member name="P:voluntLib.VoluntLib.DefaultEncoding">
+            <summary>
+              Encoding used for description.
+              Default: Encoding.UTF8
+            </summary>
+            <value>
+              The default encoding.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.DefaultStateConfig">
+            <summary>
+              State configuration template for new network jobs.
+              Default: Epochstate with bit mask width of 5000.
+            </summary>
+            <value>
+              The default state configuration.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.WorkingListTimeout">
+            <summary>
+              Specifies the time after which a peer will be removed from the WorkingPeers list.
+              Default: 10 minutes
+            </summary>
+            <value>
+              The working list timeout.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.MaximumBackoffTime">
+            <summary>
+              For many response-messages, VoluntLib waits a random time between 0 and MaximumBackoffTime
+              and sends the response iff none response had occurred.
+              Default: 1 second
+            </summary>
+            <value>
+              The maximum backoff time.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.MulticastGroup">
+            <summary>
+              Multicast Group, that will be used for message exchanging.
+              Default: 224.0.7.1
+            </summary>
+            <value>
+              The multicast group.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.Port">
+            <summary>
+              Receiving Port
+              Default: 13337
+            </summary>
+            <value>
+              The port.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.EnablePersistence">
+            <summary>
+              Gets or sets a value indicating whether the persistence should be enabled within
+              the <see cref="M:voluntLib.VoluntLib.Init(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Certificate2)"/>
+              method.
+              If enabled, the lib will store each NetworkJob, its localState and its resultList
+              in a local File determine by <see cref="P:voluntLib.VoluntLib.LocalStoragePath"/>.
+            </summary>
+            <value>
+              <c>true</c> if persistence should be enabled otherwise, <c>false</c>.
+            </value>
+            <seealso cref="P:voluntLib.VoluntLib.IsPersistenceEnabled"/>
+            <seealso cref="P:voluntLib.VoluntLib.LoadDataFromLocalStorage"/>
+        </member>
+        <member name="P:voluntLib.VoluntLib.LoadDataFromLocalStorage">
+            <summary>
+              Gets or sets a value indicating whether NetworkJobs, their localState and their
+              resultList should be loaded from a local File (determine by <see cref="P:voluntLib.VoluntLib.LocalStoragePath"/>)
+              within the <see cref="M:voluntLib.VoluntLib.Init(System.Security.Cryptography.X509Certificates.X509Certificate2,System.Security.Cryptography.X509Certificates.X509Certificate2)"/> method.
+            </summary>
+            <value>
+              <c>true</c> if NetworkJob, its localState and its resultList should be loaded otherwise, <c>false</c>.
+            </value>
+            <seealso cref="P:voluntLib.VoluntLib.EnablePersistence"/>
+        </member>
+        <member name="P:voluntLib.VoluntLib.LocalStoragePath">
+            <summary>
+              Gets or sets the local storage path.
+              Default: "voluntLibStore.xml"
+              <para> <see cref="P:voluntLib.VoluntLib.EnablePersistence"/> will enable continues persisting. </para>
+              <para> <see cref="P:voluntLib.VoluntLib.LoadDataFromLocalStorage"/> will load the data on start up. </para>
+            </summary>
+            <value>
+              The local storage path.
+            </value>
+            <seealso cref="P:voluntLib.VoluntLib.IsPersistenceEnabled"/>
+        </member>
+        <member name="P:voluntLib.VoluntLib.ClearLocalStorageOnStartUp">
+            <summary>
+              Gets or sets a value indicating whether the local storage should be cleaned on startup
+            </summary>
+            <seealso cref="P:voluntLib.VoluntLib.EnablePersistence"/>
+            <seealso cref="P:voluntLib.VoluntLib.LoadDataFromLocalStorage"/>
+        </member>
+        <member name="P:voluntLib.VoluntLib.IsStarted">
+            <summary>
+              Indicates whether, the lib has been started
+            </summary>
+            <value>
+              <c>true</c> if [is started]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.IsInitialized">
+            <summary>
+              Indicates whether, the lib has been Initialized
+            </summary>
+            <value>
+              <c>true</c> if [is initialized]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:voluntLib.VoluntLib.IsPersistenceEnabled">
+            <summary>
+              Indicating whether persistence is enabled.
+              If enabled, the lib will store each NetworkJob, its localState and its resultList in a local File.
+            </summary>
+            <value>
+              <c>true</c> if persistence is enabled otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="E:voluntLib.VoluntLib.JobProgress">
+            <summary>
+              Occurs whenever a job made progress.
+              It is called with <see cref="T:voluntLib.common.eventArgs.JobProgressEventArgs"/> which contains the JobID of the job,
+              the result list, the number of blocks and the number of calculated blocks.
+            </summary>
+        </member>
+        <member name="E:voluntLib.VoluntLib.JobFinished">
+            <summary>
+              Occurs whenever a job is finished.
+              It is called with <see cref="T:voluntLib.common.eventArgs.JobProgressEventArgs"/> which contains the JobID of the job,
+              the result list, the number of blocks and the number of calculated blocks.
+            </summary>
+        </member>
+        <member name="E:voluntLib.VoluntLib.JobListChanged">
+            <summary>
+              Occurs when the job list has changed.
+              EventArg: propertyChangeEventArgs "JobList"
+            </summary>
+        </member>
+        <member name="E:voluntLib.VoluntLib.WorldsChanged">
+            <summary>
+              Occurs when the world list has changed.
+              EventArg: propertyChangeEventArgs "WorldList"
+            </summary>
+        </member>
+        <member name="E:voluntLib.VoluntLib.TaskStarted">
+            <summary>
+              Occurs whenever a new task has started.
+              It is called with <see cref="T:voluntLib.common.eventArgs.TaskEventArgs"/> which contains the JobID of the corresponding job and the blockID on
+              which the task works.
+            </summary>
+        </member>
+        <member name="E:voluntLib.VoluntLib.TaskProgress">
+            Occurs whenever a new task has made progress.
+            It is called with
+            <see cref="T:voluntLib.common.eventArgs.TaskEventArgs"/>
+            which contains the JobID of the corresponding job, 
+            the blockID on which the task works and an Integer that indicates the task's progress.
+        </member>
+        <member name="E:voluntLib.VoluntLib.TaskStopped">
+            Occurs whenever a new task has made progress.
+            It is called with
+            <see cref="T:voluntLib.common.eventArgs.TaskEventArgs"/>
+            which contains the JobID of the corresponding job, 
+            the blockID on which the task worked and and an Type that indicates whether the has finished or had been stopped.
+        </member>
+        <member name="M:voluntLib.communicationLayer.CertificateService.SignAndAddInformation(voluntLib.communicationLayer.messages.messageWithCertificate.AMessage)">
+            <summary>
+              Signs the message, adds the sendername and the certificate
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.communicationLayer.CertificateService.IsAdmin(voluntLib.communicationLayer.messages.messageWithCertificate.AMessage)">
+            <summary>
+              Determines whether the specified message has been signed by an admin.
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.communicationLayer.CertificateService.ExtractValidCertificate(voluntLib.communicationLayer.messages.messageWithCertificate.AMessage)">
+            <summary>
+              returns a valid certificate or null
+            </summary>
+            <param name="message">The message.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.communicationLayer.CertificateService.IsValidCertificate(System.Security.Cryptography.X509Certificates.X509Certificate2)">
+            <summary>
+              Determines whether the certificate is issued by the given CA.
+            </summary>
+            <param name="certificate">The certificate.</param>
+            <returns></returns> 
+        </member>
+        <member name="M:voluntLib.communicationLayer.CertificateService.ExportOwnCertificate">
+            <summary>
+              Exports the own certificate.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:voluntLib.managementLayer.delayedTasks.ARandomDelayedTask">
+            <summary>
+              A Simple Task, that's waits a random time and then executes its action.
+            </summary>
+        </member>
+        <member name="M:voluntLib.communicationLayer.CommunicationLayer.SignAndSendAPacket(voluntLib.communicationLayer.messages.messageWithCertificate.AMessage,System.Net.IPAddress)">
+            <summary>
+              Adds name and Certificate and then it Signs the packages and calls the SendSignedPacket-Method.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="to">To.</param>
+        </member>
+        <member name="M:voluntLib.communicationLayer.CommunicationLayer.SendASignedPacket(voluntLib.communicationLayer.messages.messageWithCertificate.AMessage,System.Net.IPAddress)">
+            <summary>
+              Sends a signed packet to the communicator associated with the given IPAddress.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="to">To.</param>
+        </member>
+        <member name="P:voluntLib.communicationLayer.CommunicationLayer.JobListExchangeInterval">
+            <summary>
+              Gets or sets the job list exchange interval, used for scheduled JobListExchanges with all TCP clients and each world
+              of the managementLayer
+            </summary>
+            <value>
+              The job list exchange interval.
+            </value>
+        </member>
+        <member name="T:voluntLib.communicationLayer.messageHandler.AMessagesHandler`1">
+            <summary>
+            Abstract MessageHandler.
+            - Deserilizes the incoming bytestream to a MessageObj of Type T
+            - checks the signature and iff valid calls the abstract HandlesValidPacket method
+            
+            Provides Methods to create simple messagehandler classes
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:voluntLib.communicationLayer.communicator.networkBridgeCommunicator.TCPCommunicator">
+            <summary>
+            Abstract class for bidirectional TCP communications. 
+            </summary>
+        </member>
+        <member name="M:voluntLib.communicationLayer.communicator.networkBridgeCommunicator.TCPCommunicator.CloseConnection(System.Net.Sockets.TcpClient)">
+            <summary>
+              Closes the connection in to steps:
+              First: sending a UInt16 0 to indicate, that no message will follow
+              Second: shutdown the socket.
+            </summary>
+            <param name="client">The client.</param>
+        </member>
+        <member name="M:voluntLib.communicationLayer.communicator.networkBridgeCommunicator.TCPCommunicator.BeginReadFromStream(System.Net.Sockets.NetworkStream,System.Net.IPAddress)">
+            <summary>
+              Begins to read messages from the stream.
+              This method waits busy for messages occurring on the networkStream.
+              It will return if:
+              - it cannot read from the stream.
+              - the connections is closed ( ether by sending an 0-sized message or forcely drop the connection)
+              - it times out.
+            </summary>
+            <param name="netStream">The net stream.</param>
+            <param name="remoteIP">The remote IP.</param>
+        </member>
+        <member name="M:voluntLib.communicationLayer.communicator.networkBridgeCommunicator.TCPCommunicator.WriteToStream(System.Byte[],System.Net.Sockets.NetworkStream)">
+            <summary>
+              Writes data to stream.
+              It also adds the size ot the data at the beginning.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="netStream">The net stream.</param>
+        </member>
+        <member name="P:voluntLib.communicationLayer.communicator.networkBridgeCommunicator.TCPCommunicator.WaitForRemoteAnswerMS">
+            <summary>
+              Gets or sets the time that the socket will wait for the remote to answer in ms.
+              Default: 5000 ms
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.#ctor(System.Numerics.BigInteger,voluntLib.common.interfaces.ACalculationTemplate,System.Int32)">
+            <summary>
+              The calculationLayer is responsible for creating and managing Tasks, that are executing the User's given logic.
+              In order to operate a LocalStateManager has to be set, before the Start-Method is called.
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.RegisterLocalStateManager(voluntLib.managementLayer.localStateManagement.LocalStateManager{voluntLib.managementLayer.localStateManagement.states.EpochState})">
+            <summary>
+              Registers the local state manager.
+            </summary>
+            <param name="stateManager">The state manager.</param>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.MergeResults(System.Collections.Generic.IEnumerable{System.Byte[]},System.Collections.Generic.IEnumerable{System.Byte[]})">
+            <summary>
+              Merges two result-lists by calling the MergeResults-Method of the CalculationTemplate
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.Start">
+            <summary>
+              Starts the initial Tasks and binds to the StateHasBeenUpdate in order to update the tasks soon as the local state
+              updates
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.Stop">
+            <summary>
+              Calls every cancellation token and unbinds events
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.UpdateCalculationTasks(System.Object,voluntLib.common.eventArgs.JobProgressEventArgs)">
+            <summary>
+              Stops Worker, that are calculating finished blocks and tries to start new worker until amountOfWorker is reached.
+              Note, that this may not be possible, since for example all Tasks have to operate within the same Epoch.
+            </summary>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.StartCalculationTask">
+            <summary>
+              Reserves a free block, creates a new Task that is executing the DoWork of the WorkerLogic.
+              A CancellationToken for the Task is stored in the RunningWorkers Dictionary
+            </summary>
+            <returns>whether a task has been created</returns>
+        </member>
+        <member name="M:voluntLib.calculationLayer.CalculationLayer.ProcessTaskResults(System.Threading.Tasks.Task{voluntLib.common.interfaces.CalculationResult})">
+            <summary>
+              Meant to be called after a Worker has finished.
+              Removes the block reservation and pushes the merged results to the LocalStateManager.
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.NetworkBridgeManagementLayer.OnJobListRequest(System.String,System.Net.IPAddress)">
+            <summary>
+              Called when job list is requested.
+              In comparison to the base-method this only sends those jobs where the payload is known.
+              Also after the job list has been transmitted, each jobPayload'll be transfered.
+            </summary>
+            <param name="world">The world.</param>
+            <param name="from">From.</param>
+        </member>
+        <member name="T:voluntLib.common.NetworkJob">
+            <summary>
+              Represents a networkJob from above the NetworkCommunicationLayer
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.LocalStateManager`1.IsSuperSetOf(`0)">
+            <summary>
+              Determines whether is a super set of the specified candidate.
+            </summary>
+            <param name="candidate">The candidate.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.LocalStateManager`1.ProcessState(`0)">
+            <summary>
+              Processes the state.
+            </summary>
+            <param name="candidate">The candidate.</param>
+        </member>
+        <member name="T:voluntLib.managementLayer.localStateManagement.states.config.EpochStateConfig">
+            <summary>
+              Represents a configuration container for the epoch state.
+              Contains initalisation information such as  NumberOfBlocks and the bitMaskwith
+            </summary>
+        </member>
+        <member name="M:voluntLib.managementLayer.localStateManagement.states.config.EpochStateConfig.FinalizeValues">
+            <summary>
+              Calculates missing values. This Method is automatically called whenever this object is applied to a state
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.managementLayer.dataStructs.JobContainer.GetJob(System.Numerics.BigInteger)">
+            <summary>
+              Gets the job or null if job not exists
+            </summary>
+            <param name="jobID">The job identifier.</param>
+            <returns></returns>
+        </member>
+        <member name="M:voluntLib.communicationLayer.messageHandler.RequestJobListHandler.HandleValidPacket(voluntLib.communicationLayer.messages.messageWithCertificate.RequestJobListMessage,System.Net.IPAddress)">
+            <summary>
+              Handles the valid packet.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="from">From.</param>
+        </member>
+        <member name="M:voluntLib.communicationLayer.messageHandler.RequestJobDetailHandler.HandleValidPacket(voluntLib.communicationLayer.messages.messageWithCertificate.RequestJobDetailsMessage,System.Net.IPAddress)">
+            <summary>
+              Handles the valid packet.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="from">From.</param>
+        </member>
+        <member name="T:voluntLib.communicationLayer.messageHandler.RequestWorldListHandler">
+            <summary>
+              Handles an incoming RequestWorldList
+            </summary>
+        </member>
+        <member name="M:voluntLib.communicationLayer.messageHandler.RequestWorldListHandler.HandleValidPacket(voluntLib.communicationLayer.messages.messageWithCertificate.RequestWorldListMessage,System.Net.IPAddress)">
+            <summary>
+              Handles the valid packet.
+              Redirects the call to the OnWorldListRequest-method of the ManagementCallback
+            </summary>
+            <param name="message">The message.</param>
+            <param name="from">From.</param>
+        </member>
+    </members>
+</doc>

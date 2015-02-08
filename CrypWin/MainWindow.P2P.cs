@@ -35,7 +35,7 @@ namespace Cryptool.CrypWin
       "P2PButtonVisibility",
       typeof(Visibility),
       typeof(MainWindow),
-      new FrameworkPropertyMetadata(Visibility.Collapsed, FrameworkPropertyMetadataOptions.AffectsRender, null));
+      new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsRender, null));
 
         [TypeConverter(typeof(Visibility))]
         public Visibility P2PButtonVisibility

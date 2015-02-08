@@ -1,11 +1,11 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("P2PEditor")]
+[assembly: AssemblyTitle("CryptCloudManager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
-[assembly: AssemblyProduct("P2PEditor")]
+[assembly: AssemblyProduct("CryptCloudManager")]
 [assembly: AssemblyCopyright("Copyright © Paul Lelgemann - 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

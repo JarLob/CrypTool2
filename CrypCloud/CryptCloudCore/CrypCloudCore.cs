@@ -47,15 +47,17 @@ namespace CrypCloud.Core
             voluntLib.JobListChanged += OnJobListChanged;
         }
 
-        public bool Login(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        public bool Login(X509Certificate2 ownCertificate)
         {
             if (IsRunning)
             {
                 return false;
             }
-            voluntLib.InitAndStart(caCertificate, ownCertificate);
+            var rootCertificat = new X509Certificate2(Properties.Resources.rootCA);
+            voluntLib.InitAndStart(rootCertificat, ownCertificate);
             return true;
         }
+     
         
         public void RefreshJobList()
         {
@@ -119,5 +121,7 @@ namespace CrypCloud.Core
         }
 
         #endregion
+
+      
     }
 }

@@ -497,7 +497,7 @@ namespace Cryptool.CrypWin
         {
             // TODO synchronize instance with editor selection in settings tab
             //removed p2p editor: kopal 04.11.2014
-            //AddEditorDispatched(typeof(P2PEditor.P2PEditor));
+            AddEditorDispatched(typeof(CryptCloud.Manager.CryptCloudManager));
         }
 
         # endregion P2P

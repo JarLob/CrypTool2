@@ -65,7 +65,7 @@ using Orientation = System.Windows.Controls.Orientation;
 using TabControl = System.Windows.Controls.TabControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
-using System.Net.Security;
+using System.Net.Security; 
 
 namespace Cryptool.CrypWin
 {
@@ -1258,34 +1258,40 @@ namespace Cryptool.CrypWin
 
         private void LoadPlugins()
         {
-            Dictionary<string, List<Type>> pluginTypes = new Dictionary<string, List<Type>>();
-            foreach (string interfaceName in interfaceNameList)
+            var pluginTypes = new Dictionary<string, List<Type>>();
+            foreach (var interfaceName in interfaceNameList)
             {
                 pluginTypes.Add(interfaceName, new List<Type>());
             }
 
             PluginList.AddDisabledPluginsToPluginList(Settings.Default.DisabledPlugins);
 
-            foreach (Type pluginType in this.pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies).Values)
+            var loadedPluginAssemblies = pluginManager.LoadTypes(AssemblySigningRequirement.LoadAllAssemblies).Values;
+            foreach (var pluginType in loadedPluginAssemblies.Where(it => !it.IsAbstract))
             {
                 ComponentInformations.AddPlugin(pluginType);
 
                 if (pluginType.GetInterface("IEditor") == null)
-                    PluginList.AddTypeToPluginList(pluginType);
-
-                foreach (string interfaceName in interfaceNameList)
                 {
-                    if (pluginType.GetInterface(interfaceName) != null)
-                    {
-                        pluginTypes[interfaceName].Add(pluginType);
-                        numberOfLoadedTypes++;
-                    }
+                    PluginList.AddTypeToPluginList(pluginType);
+                }
+
+                var type = pluginType;
+                foreach (var interfaceName in interfaceNameList.Where(it => type.GetInterface(it) != null))
+                {
+                    pluginTypes[interfaceName].Add(pluginType);
+                    numberOfLoadedTypes++;
                 }
             }
+
             foreach (var pluginType in pluginTypes)
             {
-                pluginType.Value.Sort((x, y) => x.GetPluginInfoAttribute().Caption.CompareTo(y.GetPluginInfoAttribute().Caption));
+                pluginType.Value.Sort(
+                    (x, y) => String.Compare(x.GetPluginInfoAttribute().Caption, y.GetPluginInfoAttribute().Caption, StringComparison.Ordinal)
+                );
+                    
             }
+
             loadedTypes = pluginTypes;
         }
 
@@ -1510,9 +1516,9 @@ namespace Cryptool.CrypWin
                     try 
                     { 
                         //removed P2P Editor: kopal 04.11.2014
-                        /*if (editorType == typeof(P2PEditor.P2PEditor))
-                            info.Title = P2PEditor.Properties.Resources.P2PEditor_Tab_Caption;
-                        else */if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
+                        if (editorType == typeof(CryptCloud.Manager.CryptCloudManager))
+                            info.Title = CryptCloud.Manager.Properties.Resources.P2PEditor_Tab_Caption;
+                        else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
                             info.Title = WorkspaceManager.Properties.Resources.unnamed_project;
                         else
                             info.Title = editorType.GetPluginInfoAttribute().Caption;
