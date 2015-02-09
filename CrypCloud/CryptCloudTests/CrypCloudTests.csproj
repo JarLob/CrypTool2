@@ -59,9 +59,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UIAutomationProvider" />
-    <Reference Include="voluntLib">
-      <HintPath>..\..\Lib\voluntLib_1.0\voluntLib.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +84,10 @@
     <ProjectReference Include="..\..\LibSource\CertificateLibrary\CertificateLibrary.csproj">
       <Project>{ABA78840-2321-4DD3-91C6-84CC722D794B}</Project>
       <Name>CertificateLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
+      <Project>{00382C7A-8812-483F-8984-5A3612DE5285}</Project>
+      <Name>voluntLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>

@@ -54,10 +54,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BouncyCastle.CryptoExt, Version=1.6.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942" />
-    <Reference Include="CertificateLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CrypBuild\Release\Lib\CertificateLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -78,10 +74,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="voluntLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\voluntLib_1.0\voluntLib.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -114,6 +106,14 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\CertificateLibrary\CertificateLibrary.csproj">
+      <Project>{ABA78840-2321-4DD3-91C6-84CC722D794B}</Project>
+      <Name>CertificateLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
+      <Project>{00382C7A-8812-483F-8984-5A3612DE5285}</Project>
+      <Name>voluntLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\CryptCloudCore\CrypCloudCore.csproj">
       <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>

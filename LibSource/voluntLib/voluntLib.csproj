@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{00382C7A-8812-483F-8984-5A3612DE5285}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>voluntLib</RootNamespace>
+    <AssemblyName>voluntLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NativeCryptography">
+      <HintPath>..\libs\NativeCryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="calculationLayer\CalculationLayer.cs" />
+    <Compile Include="common\interfaces\ACalculationTemplate.cs" />
+    <Compile Include="common\interfaces\AWorker.cs" />
+    <Compile Include="common\interfaces\CalculationResult.cs" />
+    <Compile Include="common\interfaces\ICommunicator.cs" />
+    <Compile Include="common\interfaces\ISerializable.cs" />
+    <Compile Include="common\utils\TaskHelper.cs" />
+    <Compile Include="common\WorkLog.cs" />
+    <Compile Include="common\eventArgs\JobProgressEventArgs.cs" />
+    <Compile Include="common\eventArgs\TaskEventArgs.cs" />
+    <Compile Include="common\interfaces\ICalculationLayer.cs" />
+    <Compile Include="communicationLayer\CertificateService.cs" />
+    <Compile Include="communicationLayer\CommunicationLayer.cs" />
+    <Compile Include="common\interfaces\IMessageHandler.cs" />
+    <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\ReceivingTCPCommunicator.cs" />
+    <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\SendingTCPCommunicator.cs" />
+    <Compile Include="communicationLayer\communicator\FileCommunicator.cs" />
+    <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\TCPCommunicator.cs" />
+    <Compile Include="communicationLayer\messageHandler\DeleteNetworkJobHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\CreateNetworkJobHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\ResponseMessageHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\PropagateStateHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\JoinNetworkJobHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\RequestMessageHandler.cs" />
+    <Compile Include="communicationLayer\messageHandler\AMessagesHandler.cs" />
+    <Compile Include="communicationLayer\messages\commonStructs\NetworkJobPayloadStruct.cs" />
+    <Compile Include="communicationLayer\messages\commonStructs\NetworkJobDiscriptionStruct.cs" />
+    <Compile Include="communicationLayer\messages\commonStructs\HeaderStruct.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\DeleteNetworkJobMessage.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\JoinNetworkJobMessage.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\RequestMessages.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\ResponseJobDetailsMessage.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\ResponseJobListMessage.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\ResponseWorldListMessage.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\CreateNetworkJobMessage.cs" />
+    <Compile Include="common\interfaces\IMessageData.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\PropagateStateMessage.cs" />
+    <Compile Include="communicationLayer\communicator\MulticastCommunicator.cs" />
+    <Compile Include="common\interfaces\ICommunicationLayer.cs" />
+    <Compile Include="communicationLayer\NetworkBridgeCommunicationLayer.cs" />
+    <Compile Include="managementLayer\dataStructs\WorkingPeerList.cs" />
+    <Compile Include="managementLayer\delayedTasks\SendJobDeletionTask.cs" />
+    <Compile Include="managementLayer\delayedTasks\PropagateStateTask.cs" />
+    <Compile Include="managementLayer\localStateManagement\LocalStateManager.cs" />
+    <Compile Include="managementLayer\delayedTasks\SendJobDetailTask.cs" />
+    <Compile Include="managementLayer\delayedTasks\SendJobListTask.cs" />
+    <Compile Include="managementLayer\delayedTasks\SendWorldListTask.cs" />
+    <Compile Include="common\interfaces\IManagementLayerCallback.cs" />
+    <Compile Include="communicationLayer\messages\messageWithCertificate\AMessage.cs" />
+    <Compile Include="managementLayer\dataStructs\JobContainer.cs" />
+    <Compile Include="managementLayer\localStateManagement\states\ALocalState.cs" />
+    <Compile Include="managementLayer\localStateManagement\states\config\EpochStateConfig.cs" />
+    <Compile Include="managementLayer\localStateManagement\states\config\IStateConfig.cs" />
+    <Compile Include="managementLayer\localStateManagement\states\EpochState.cs" />
+    <Compile Include="managementLayer\localStateManagement\states\NullState.cs" />
+    <Compile Include="managementLayer\ManagementLayer.cs" />
+    <Compile Include="managementLayer\dataStructs\TaskContainer.cs" />
+    <Compile Include="common\NetworkJob.cs" />
+    <Compile Include="managementLayer\NetworkBridgeManagementLayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="managementLayer\delayedTasks\ARandomDelayedTask.cs" />
+    <Compile Include="common\utils\SerializationHelper.cs" />
+    <Compile Include="VoluntLib.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="NLog.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

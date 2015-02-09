@@ -112,8 +112,8 @@
 
                 <Label Width="200" Content="{Loc Password_}"/>
                 <PasswordBox Name="PasswordInput" Width="200" 
-                             PasswordChanged="Password_PasswordChanged" 
                              MaxLength="40"/>
+                             <!--PasswordChanged="Password_PasswordChanged" -->                             
                 <Label/>
 
                 <TextBlock Width="200" FontSize="12"
@@ -127,11 +127,11 @@
 
                 <TextBlock Width="200" 
                            FontSize="12"
-                           Name="GetACertificateLabel"
-                           MouseDown="GetACertificateLabel_Click" 
+                           Name="GetACertificateLabel"                           
                            Cursor="Hand" HorizontalAlignment="Center" 
                            IsEnabled="{Binding IsP2PConnecting, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
                            Foreground="{Binding IsP2PConnecting, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+                    <!--MouseDown="GetACertificateLabel_Click" -->
                     <Underline>
                         <ContentControl Content="{Loc Create_a_new_account_}"/>
                     </Underline>
@@ -140,8 +140,8 @@
 
                 <CheckBox Content="{Loc Remember_my_password_}"
                           Width="200"
-                          Name="RememberPasswordCheckbox"
-                          Click="RememberPasswordCheckbox_Click"/>
+                          Name="RememberPasswordCheckbox"/>
+                          <!--Click="RememberPasswordCheckbox_Click"/>-->
                 <Label/>
 
                 <Button Width="200" 
