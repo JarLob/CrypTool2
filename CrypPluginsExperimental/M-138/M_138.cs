@@ -418,11 +418,6 @@ namespace Cryptool.Plugins.M_138
                         {
                             toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
                         }
-                        else if (_invalidChar == 1)
-                        {
-                            toVisualize[r + 1, c + 2] = _ignoredCharacters[counter];
-                            counter++;
-                        }
                         else
                         {
                             toVisualize[r + 1, c + 2] = "?";
