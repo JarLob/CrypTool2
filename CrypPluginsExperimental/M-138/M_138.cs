@@ -118,7 +118,6 @@ namespace Cryptool.Plugins.M_138
         public void PreExecution()
         {
             _stopped = false;
-            readStripes();
             try
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -222,6 +221,7 @@ namespace Cryptool.Plugins.M_138
         /// </summary>
         public void Initialize()
         {
+            readStripes();
             try
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -401,7 +401,7 @@ namespace Cryptool.Plugins.M_138
                 for (int c = 0; c < _columns; c++)
                 {
                     toVisualize[0, c + 2] = c.ToString(); //First row of Visualisation
-                    if (deOrEncrypt == 1)
+                    if (deOrEncrypt == (int) Commands.Encrypt)
                     {
                         if (isAt != -1)
                         {
@@ -412,7 +412,7 @@ namespace Cryptool.Plugins.M_138
                             toVisualize[r + 1, c + 2] = "?"; //Can't show strips for invalid characters
                         }
                     }
-                    else if (deOrEncrypt == 2)
+                    else if (deOrEncrypt == (int) Commands.Decryp)
                     {
                         if (isAt != -1)
                         {
@@ -431,7 +431,7 @@ namespace Cryptool.Plugins.M_138
                 }
                 switch (deOrEncrypt)
                 {
-                    case 1:
+                    case (int) Commands.Encrypt:
                         if (isAt != -1)
                         {
                             output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
@@ -441,7 +441,7 @@ namespace Cryptool.Plugins.M_138
                             output[r] = -1;
                         }
                         break;
-                    case 2:
+                    case (int) Commands.Decryp:
                         if (isAt != -1)
                         {
                             output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
@@ -542,11 +542,11 @@ namespace Cryptool.Plugins.M_138
 
         private void Encrypt()
         {
-            DeEnCrypt(1);
+            DeEnCrypt((int)Commands.Encrypt);
         }
         private void Decrypt()
         {
-            DeEnCrypt(2);
+            DeEnCrypt((int)Commands.Decryp);
         }
 
         private void setSeparator()
@@ -593,7 +593,8 @@ namespace Cryptool.Plugins.M_138
                 _stripNumbers[i] = Convert.ToInt32(s1[i]);
                 if (_stripNumbers[i] > stripes.Count)
                 {
-                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count, NotificationLevel.Error);
+                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count+". Using default strip 1 instead", NotificationLevel.Error);
+                    _stripNumbers[i] = 1;
                 }
             }
         }
