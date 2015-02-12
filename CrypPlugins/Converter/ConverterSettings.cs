@@ -37,7 +37,7 @@ namespace Cryptool.Plugins.Converter
         private OutputTypes converter = OutputTypes.StringType;
 
         private bool numeric = false;
-        private string format;
+        private string format = "";
         private bool formatAmer = false;
         private bool reverseOrder = false;
         private bool BigEndian = false;

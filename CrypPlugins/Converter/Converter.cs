@@ -431,34 +431,118 @@ namespace Cryptool.Plugins.Converter
             #region ConvertFromBigInteger
             else if (input is BigInteger)
             {
-                if (this.settings.Converter == OutputTypes.ByteArrayType)
-                {
-                    Output = ((BigInteger)input).ToByteArray();
-                    return true;
-                }
                 try
                 {
-                    Output = ((BigInteger)input).ToString(this.settings.Format);
-                    return true;
+                    switch (this.settings.Converter)
+                    {
+                        case OutputTypes.ByteArrayType: // BigInteger to byte[]
+                            {
+                                Output = ((BigInteger)input).ToByteArray();
+                                return true;
+                            }
+                        case OutputTypes.IntType: // BigInteger to int
+                            {
+                                Output = (int)((BigInteger)input);
+                                return true;
+                            }
+                        case OutputTypes.ShortType: // BigInteger to short
+                            {
+                                Output = (short)((BigInteger)input);
+                                return true;
+                            }
+                        case OutputTypes.ByteType: // BigInteger to byte
+                            {
+                                Output = (byte)((BigInteger)input);
+                                return true;
+                            }
+                        case OutputTypes.BigIntegerType: // BigInteger to BigInteger
+                            {
+                                Output = (BigInteger)input;
+                                return true;
+                            }
+                        default:
+                            {
+                                string fmt = this.settings.Format.Trim();
+
+                                Match m;
+
+                                m = Regex.Match(fmt, @"^([0-9]+)(?:\(([0-9]+)\))?$");
+                                if (m.Success)
+                                {
+                                    int b = int.Parse(m.Groups[1].Value);
+                                    int l = String.IsNullOrEmpty(m.Groups[2].Value) ? 0 : int.Parse(m.Groups[2].Value);
+                                    if (l > 10000)
+                                        throw new Exception("Maximum size of base " + b + " string exceeded.");
+                                    Output = ((BigInteger)input).ToBaseString(b).PadLeft(l, '0');
+                                    return true;
+                                }
+
+                                m = Regex.Match(this.settings.Format, @"^([bohx#])(?:(?<open>\()?([0-9]+)(?(open)\)))?$", RegexOptions.IgnoreCase);
+                                if (m.Success)
+                                {
+                                    int b = 0;
+                                    string s = "";
+                                    switch (m.Groups[1].Value.ToUpper()[0])
+                                    {
+                                        case 'B': b = 2; s = "binary"; break;
+                                        case 'O': b = 8; s = "octal"; break;
+                                        default: b = 16; s = "hexadecimal"; break;
+                                    }
+                                    int l = String.IsNullOrEmpty(m.Groups[2].Value) ? 0 : int.Parse(m.Groups[2].Value);
+                                    if (l > 10000)
+                                        throw new Exception("Maximum size of " + s + " string exceeded.");
+                                    Output = ((BigInteger)input).ToBaseString(b).PadLeft(l, '0');
+                                    return true;
+                                }
+
+                                Output = ((BigInteger)input).ToString(this.settings.Format);
+                                return true;
+                            }
+                    }
                 }
                 catch (FormatException ex)
                 {
                     ShowFormatErrorMessage(ex);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(ex.Message, NotificationLevel.Error);
                 }
             }
             #endregion
             #region  ConvertFromInt
             else if (input is int)
             {
-                if (this.settings.Converter == OutputTypes.ByteArrayType)
-                {
-                    Output = BitConverter.GetBytes((int)input);
-                    return true;
-                }
                 try
                 {
-                    Output = ((int)input).ToString(this.settings.Format);
-                    return true;
+                    switch (this.settings.Converter)
+                    {
+                        case OutputTypes.BigIntegerType: // int to BigInteger
+                            {
+                                Output = (BigInteger)((int)input);
+                                return true;
+                            }
+                        case OutputTypes.ShortType: // int to short
+                            {
+                                Output = (short)((int)input);
+                                return true;
+                            }
+                        case OutputTypes.ByteType: // int to byte
+                            {
+                                Output = (byte)((int)input);
+                                return true;
+                            }
+                        case OutputTypes.ByteArrayType: // int to byte[]
+                            {
+                                Output = BitConverter.GetBytes((int)input);
+                                return true;
+                            }
+                        default:
+                            {
+                                Output = ((int)input).ToString(this.settings.Format);
+                                return true;
+                            }
+                    }
                 }
                 catch (FormatException ex)
                 {
@@ -735,17 +819,21 @@ namespace Cryptool.Plugins.Converter
                             Output = BigIntegerHelper.ParseExpression(inpString);
                             return true;
                         }
-                        catch (Exception) { }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage("Invalid Big Number input: " + ex.Message, NotificationLevel.Warning);
+                        }
 
                         // remove all non-hex characters and parse as hexstring
                         byte[] result = TryMatchHex(inpString);
                         if (result != null)
                         {
                             Output = ByteArrayToBigInteger(result, settings.Endianness);
+                            GuiLogMessage("Parsing string as hexadecimal number.", NotificationLevel.Warning);
                             return true;
                         }
 
-                        GuiLogMessage("Could not convert input to BigInteger", NotificationLevel.Error);
+                        GuiLogMessage("Could not convert input to BigInteger.", NotificationLevel.Error);
                         return false;
                     }
                 #endregion
