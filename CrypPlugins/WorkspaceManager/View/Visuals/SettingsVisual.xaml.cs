@@ -322,6 +322,8 @@ namespace WorkspaceManager.View.Visuals
         
         private void drawList(EntryGroup entgrou)
         {
+            bool isFirst = true;
+
             foreach (List<ControlEntry> cel in entgrou.entryList)
             {
                 ParameterPanel parameterPanel;
@@ -408,77 +410,43 @@ namespace WorkspaceManager.View.Visuals
                     {
                         if (ce.sfa.VerticalGroup != null)
                         {
-                            if (grouplist.Contains(ce.sfa.VerticalGroup))
+                            bool groupExists = grouplist.Contains(ce.sfa.VerticalGroup);
+                            Grid controlGrid = groupExists ? gridlist[grouplist.IndexOf(ce.sfa.VerticalGroup)] : new Grid();
+
+                            ColumnDefinition coldef1 = new ColumnDefinition();
+                            coldef1.Width = ce.sfa.WidthCol1;
+                            controlGrid.ColumnDefinitions.Add(coldef1);
+
+                            ColumnDefinition coldef2 = new ColumnDefinition();
+                            coldef2.Width = ce.sfa.WidthCol2;
+                            controlGrid.ColumnDefinitions.Add(coldef2);
+                                
+                            title.Text = ce.tpa.Caption;
+                            ce.caption = title;
+                            title.HorizontalAlignment = HorizontalAlignment.Center;
+                            title.VerticalAlignment = VerticalAlignment.Center;
+
+                            Grid.SetColumn(title, controlGrid.ColumnDefinitions.Count - 2);
+
+                            controlGrid.Children.Add(title);
+                            Grid.SetColumn(ce.element, controlGrid.ColumnDefinitions.Count - 1);
+
+                            if (ce.element is ComboBox)
                             {
-
-                                Grid controlGrid = gridlist[grouplist.IndexOf(ce.sfa.VerticalGroup)];
-                                
-                                ColumnDefinition coldef1 = new ColumnDefinition();
-                                coldef1.Width = ce.sfa.WidthCol1;
-                                controlGrid.ColumnDefinitions.Add(coldef1);
-
-                                ColumnDefinition coldef2 = new ColumnDefinition();
-                                coldef2.Width = ce.sfa.WidthCol2;
-                                controlGrid.ColumnDefinitions.Add(coldef2);
-                                
-                                title.Text = ce.tpa.Caption;
-                                ce.caption = title;
-                                title.HorizontalAlignment = HorizontalAlignment.Center;
-
-                                Label space = new Label();
-                                space.Width = 0;
-                                Grid.SetColumn(title, controlGrid.ColumnDefinitions.Count - 2);
-
-                                controlGrid.Children.Add(title);
-                                Grid.SetColumn(ce.element, controlGrid.ColumnDefinitions.Count - 1);
-
-                                if (ce.element is ComboBox)
-                                {
-                                    ComboBox cb = ce.element as ComboBox;
-                                    cb.Width = getComboBoxMaxSize(cb);
-                                    controlGrid.Children.Add(cb);
-                                    controlGrid.MaxWidth += cb.Width;
-                                    controlGrid.MaxWidth += title.DesiredSize.Width; ;
-                                }
-                                else
-                                {
-                                    controlGrid.Children.Add(ce.element);
-                                }
+                                ComboBox cb = ce.element as ComboBox;
+                                cb.Width = getComboBoxMaxSize(cb);
+                                controlGrid.Children.Add(cb);
+                                controlGrid.MaxWidth += cb.Width;
+                                controlGrid.MaxWidth += title.DesiredSize.Width; ;
                             }
                             else
                             {
+                                controlGrid.Children.Add(ce.element);
+                            }
+
+                            if (!groupExists)
+                            {
                                 grouplist.Add(ce.sfa.VerticalGroup);
-
-                                Grid controlGrid = new Grid();
-                                
-                                ColumnDefinition coldef1 = new ColumnDefinition();
-                                coldef1.Width = ce.sfa.WidthCol1;
-                                controlGrid.ColumnDefinitions.Add(coldef1);
-
-                                ColumnDefinition coldef2 = new ColumnDefinition();
-                                coldef2.Width = ce.sfa.WidthCol2;
-                                controlGrid.ColumnDefinitions.Add(coldef2);
-
-                                title.Text = ce.tpa.Caption;
-                                ce.caption = title;
-                                title.HorizontalAlignment = HorizontalAlignment.Center;
-
-                                Grid.SetColumn(title, 0);
-
-                                controlGrid.Children.Add(title);
-                                Grid.SetColumn(ce.element, 1);
-                                if (ce.element is ComboBox)
-                                {
-                                    ComboBox cb = ce.element as ComboBox;
-                                    cb.Width = getComboBoxMaxSize(cb);
-                                    controlGrid.Children.Add(cb);
-                                    controlGrid.MaxWidth += cb.Width;
-                                    controlGrid.MaxWidth += title.DesiredSize.Width;
-                                }
-                                else
-                                {
-                                    controlGrid.Children.Add(ce.element);
-                                }
                                 controlGrid.HorizontalAlignment = HorizontalAlignment.Stretch;
 
                                 Label dummy = new Label();
@@ -541,6 +509,7 @@ namespace WorkspaceManager.View.Visuals
                 bodi.Style = (Style)FindResource("border1");
 
                 testexpander.Content = bodi;
+                if(!isFirst) testexpander.Margin = new Thickness(0,15,0,0);
                 
                 if (isSideBar)
                     myStack.Children.Add(testexpander);
@@ -549,6 +518,8 @@ namespace WorkspaceManager.View.Visuals
 
                 parameterPanel.setMaxSizes(true);
                 noVerticalGroupParameterPanel.setMaxSizes(true);
+
+                isFirst = false;
             }
 
             this.BeginInit();
