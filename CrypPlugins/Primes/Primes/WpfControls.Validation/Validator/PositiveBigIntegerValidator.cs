@@ -24,7 +24,7 @@ namespace Primes.WpfControls.Validation.Validator
 {
     public class PositiveBigIntegerValidator : BigIntegerMinValueValidator
     {
-        public PositiveBigIntegerValidator(object value) : base(value, PrimesBigInteger.ValueOf(0)) { }
-        public PositiveBigIntegerValidator() : base(null, PrimesBigInteger.ValueOf(0)) { }
+        public PositiveBigIntegerValidator(object value) : base(value, PrimesBigInteger.ValueOf(1)) { }
+        public PositiveBigIntegerValidator() : base(null, PrimesBigInteger.ValueOf(1)) { }
     }
 }

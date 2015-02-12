@@ -121,7 +121,7 @@
     <value>Es wird eine ganze Zahl größer oder gleich {0} und kleiner oder gleich {1} erwartet.</value>
   </data>
   <data name="BigIntegerMinValueValidator" xml:space="preserve">
-    <value>Es wird eine positive ganze Zahl größer oder gleich {0} erwartet.</value>
+    <value>Es wird eine ganze Zahl größer oder gleich {0} erwartet.</value>
   </data>
   <data name="BigIntegerValidator" xml:space="preserve">
     <value>Es wird eine ganze Zahl erwartet.</value>

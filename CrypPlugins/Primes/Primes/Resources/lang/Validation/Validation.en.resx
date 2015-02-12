@@ -121,7 +121,7 @@
     <value>A number larger than or equal to {0} and smaller than or equal to {1} is expected.</value>
   </data>
   <data name="BigIntegerMinValueValidator" xml:space="preserve">
-    <value>A positive number larger than {0} is expected.</value>
+    <value>A number larger than or equal to {0} is expected.</value>
   </data>
   <data name="BigIntegerValidator" xml:space="preserve">
     <value>A number is expected.</value>
