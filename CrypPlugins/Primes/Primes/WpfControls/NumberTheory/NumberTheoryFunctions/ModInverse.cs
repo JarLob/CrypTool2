@@ -17,13 +17,15 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
 using System.Threading;
-using Primes.Bignum;
-using Primes.Library;
 using System.Windows;
 using System.Diagnostics;
+using System.Numerics;
+using Primes.WpfControls.Components;
+using Primes.Bignum;
+using Primes.Library;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -38,30 +40,18 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            try
+            for (BigInteger x = m_From; x <= m_To; x++)
             {
-                PrimesBigInteger modulus = m_SecondParameter;
-
-                PrimesBigInteger from = m_From;
-
-                while (from.CompareTo(m_To) <= 0)
+                string msg;
+                try
                 {
-                    string msg;
-                    try
-                    {
-                        PrimesBigInteger result = from.ModInverse(modulus);
-                        msg = result.ToString("D");
-                    }
-                    catch (Exception ex)
-                    {
-                        msg = "-";
-                    }
-                    FireOnMessage(this, from, msg);
-                    from = from.Add(PrimesBigInteger.One);
+                    msg = BigIntegerHelper.ModInverse(x, m_SecondParameter).ToString();
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
+                    msg = "-";
+                }
+                FireOnMessage(this, x, msg);
             }
 
             FireOnStop();

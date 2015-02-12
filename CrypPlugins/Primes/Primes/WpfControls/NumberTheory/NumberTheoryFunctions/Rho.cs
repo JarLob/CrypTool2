@@ -17,12 +17,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.Bignum;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
 using System.Diagnostics;
-using Primes.Library;
 using System.Windows;
+using System.Linq;
+using System.Numerics;
+using Primes.WpfControls.Components;
+using Primes.Bignum;
+using Primes.Library;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -37,21 +40,12 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            for (PrimesBigInteger from = m_From; from.CompareTo(m_To) <= 0; from = from + 1)
+            for (BigInteger x = m_From; x <= m_To; x++)
             {
-                PrimesBigInteger sum = 0;
+                BigInteger sum = 0;
+                Array.ForEach(x.Divisors().ToArray(), delegate(BigInteger i) { sum += i; });
 
-                for (PrimesBigInteger d = 1; d * 2 <= from; d = d + 1)
-                {
-                    if (from.Mod(d).Equals(PrimesBigInteger.Zero))
-                    {
-                        sum = sum + d;
-                        FireOnMessage(this, from, sum.ToString());
-                    }
-                }
-
-                sum = sum + from;
-                FireOnMessage(this, from, sum.ToString());
+                FireOnMessage(this, x, sum.ToString());
             }
 
             FireOnStop();

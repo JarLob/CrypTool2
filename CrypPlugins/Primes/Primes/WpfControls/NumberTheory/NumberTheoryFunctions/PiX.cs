@@ -17,14 +17,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
 using System.Threading;
-using Primes.Bignum;
-using Primes.Library;
 using System.Windows;
 using System.Diagnostics;
+using System.Numerics;
+using Primes.WpfControls.Components;
+using Primes.Bignum;
+using Primes.Library;
 using Primes.Library.Function;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -40,22 +42,9 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
             FireOnStart();
 
             FunctionPiX pix = new FunctionPiX();
-            PrimesBigInteger from = m_From;
-            PrimesBigInteger _counterTmp = PrimesBigInteger.Two;
 
-            while (_counterTmp.CompareTo(from) <= 0)
-            {
-                double result = pix.Execute(_counterTmp.DoubleValue);
-                FireOnMessage(this, from, StringFormat.FormatDoubleToIntString(result));
-                _counterTmp = _counterTmp.Add(PrimesBigInteger.One);
-            }
-
-            while (from.CompareTo(m_To) <= 0)
-            {
-                double result = pix.Execute(from.DoubleValue);
-                FireOnMessage(this, from, StringFormat.FormatDoubleToIntString(result));
-                from = from.Add(PrimesBigInteger.One);
-            }
+            for (BigInteger x = m_From; x <= m_To; x++)
+                FireOnMessage(this, x, ((int)pix.Execute((double)x)).ToString());
 
             FireOnStop();
         }

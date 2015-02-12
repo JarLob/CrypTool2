@@ -17,13 +17,15 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
 using System.Threading;
-using Primes.Bignum;
-using Primes.Library;
 using System.Windows;
 using System.Diagnostics;
+using System.Numerics;
+using Primes.WpfControls.Components;
+using Primes.Bignum;
+using Primes.Library;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -38,22 +40,8 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            try
-            {
-                PrimesBigInteger modulus = m_SecondParameter;
-
-                PrimesBigInteger from = m_From;
-
-                while (from.CompareTo(m_To) <= 0)
-                {
-                    PrimesBigInteger result = (from.Multiply(modulus)).Divide(PrimesBigInteger.GCD(from, modulus));
-                    FireOnMessage(this, from, result.ToString("D"));
-                    from = from.Add(PrimesBigInteger.One);
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            for (BigInteger x = m_From; x <= m_To; x++)
+                FireOnMessage(this, x, x.LCM(m_SecondParameter).ToString());
 
             FireOnStop();
         }

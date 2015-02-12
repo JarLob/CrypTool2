@@ -40,35 +40,24 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            try
+            for (BigInteger x = m_From; x <= m_To; x++)
             {
-                BigInteger second = BigInteger.Parse(m_SecondParameter.ToString());
-                BigInteger from = BigInteger.Parse(m_From.ToString());
-                BigInteger to = BigInteger.Parse(m_To.ToString());
-                BigInteger a, b;
+                string msg;
 
-                for (BigInteger x = from; x <= to; x++)
+                try
                 {
-                    string msg;
-
-                    try
-                    {
-                        BigInteger gcd = BigIntegerHelper.ExtEuclid(x, second, out a, out b);
-                        string sa = a.ToString(); if (a < 0) sa = "(" + sa + ")";
-                        string sb = b.ToString(); if (b < 0) sb = "(" + sb + ")";
-                        if (b < 0) b = -b;
-                        msg = String.Format("{0}*{1} + {2}*{3} = {4}", sa, x, sb, second, gcd);
-                    }
-                    catch (Exception ex)
-                    {
-                        msg = "-";
-                    }
-
-                    FireOnMessage(this, new PrimesBigInteger(x.ToString()), msg);
+                    BigInteger a, b;
+                    BigInteger gcd = BigIntegerHelper.ExtEuclid(x, m_SecondParameter, out a, out b);
+                    string sa = a.ToString(); if (a < 0) sa = "(" + sa + ")";
+                    string sb = b.ToString(); if (b < 0) sb = "(" + sb + ")";
+                    msg = String.Format("{0}*{1} + {2}*{3} = {4}", sa, x, sb, m_SecondParameter, gcd);
                 }
-            }
-            catch (Exception ex)
-            {
+                catch (Exception ex)
+                {
+                    msg = "-";
+                }
+
+                FireOnMessage(this, x, msg);
             }
 
             FireOnStop();

@@ -17,11 +17,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
+using System.Windows;
+using System.Numerics;
+using Primes.WpfControls.Components;
 using Primes.Bignum;
 using Primes.Library;
-using System.Windows;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -36,21 +38,8 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            for (PrimesBigInteger from = m_From; from <= m_To; from = from + 1)
-            {
-                PrimesBigInteger counter = 0;
-
-                for (PrimesBigInteger d = 1; d * 2 <= from; d = d + 1)
-                {
-                    if (from.Mod(d).Equals(PrimesBigInteger.Zero))
-                    {
-                        counter = counter + 1;
-                        FireOnMessage(this, from, counter.ToString());
-                    }
-                }
-                counter = counter + 1;
-                FireOnMessage(this, from, counter.ToString());
-            }
+            for (BigInteger x = m_From; x <= m_To; x++)
+                FireOnMessage(this, x, x.NumberOfDivisors().ToString());
 
             FireOnStop();
         }

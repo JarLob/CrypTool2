@@ -17,11 +17,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows;
+using System.Numerics;
+using Primes.Library;
 using Primes.Bignum;
 using Primes.WpfControls.Components;
-using System.Windows.Controls;
-using Primes.Library;
-using System.Windows;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -35,44 +37,19 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         protected override void DoExecute()
         {
             FireOnStart();
-            PrimesBigInteger from = m_From;
-            while (from.CompareTo(m_To) <= 0)
+
+            for (BigInteger x = m_From; x <= m_To; x++)
             {
-                PrimesBigInteger result = PrimesBigInteger.Zero;
-                PrimesBigInteger k = PrimesBigInteger.One;
-                while (k.CompareTo(from) <= 0)
-                {
-                    if (from.Mod(k).Equals(PrimesBigInteger.Zero))
-                    {
-                        PrimesBigInteger phik = EulerPhi(k);
-                        result = result.Add(phik);
-                        FireOnMessage(this, from, result.ToString());
-                    }
-                    k = k.Add(PrimesBigInteger.One);
-                }
-                FireOnMessage(this, from, result.ToString());
-                from = from.Add(PrimesBigInteger.One);
+                BigInteger result = 0;
+
+                for (BigInteger k = 1; k <= x; k++)
+                    if (x % k == 0)
+                        result += k.Phi();
+
+                FireOnMessage(this, x, result.ToString());
             }
 
             FireOnStop();
-        }
-
-        private PrimesBigInteger EulerPhi(PrimesBigInteger n)
-        {
-            if (n.Equals(PrimesBigInteger.One)) return PrimesBigInteger.One;
-            PrimesBigInteger result = PrimesBigInteger.Zero;
-            PrimesBigInteger k = PrimesBigInteger.One;
-
-            while (k.CompareTo(n) <= 0)
-            {
-                if (PrimesBigInteger.GCD(k, n).Equals(PrimesBigInteger.One))
-                {
-                    result = result.Add(PrimesBigInteger.One);
-                }
-                k = k.Add(PrimesBigInteger.One);
-            }
-
-            return result;
         }
 
         public override string Description

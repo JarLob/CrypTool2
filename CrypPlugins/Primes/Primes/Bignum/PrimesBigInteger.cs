@@ -3483,5 +3483,10 @@ namespace Primes.Bignum
         {
             return BigInteger.Parse(n.ToString());
         }
+
+        public static implicit operator PrimesBigInteger(BigInteger n)
+        {
+            return new PrimesBigInteger(n.ToString());
+        }
     }
 }

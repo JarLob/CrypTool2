@@ -18,13 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
-using Primes.Bignum;
 using System.Windows.Controls;
-using Primes.WpfControls.Components;
-using Primes.Library;
 using System.Diagnostics;
 using System.Resources;
 using System.Reflection;
+using System.Numerics;
+using Primes.WpfControls.Components;
+using Primes.Bignum;
+using Primes.Library;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -61,9 +62,9 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         #region Properties
 
         protected Thread m_Thread;
-        protected PrimesBigInteger m_From;
-        protected PrimesBigInteger m_To;
-        protected PrimesBigInteger m_SecondParameter;
+        protected BigInteger m_From;
+        protected BigInteger m_To;
+        protected BigInteger m_SecondParameter;
 
         #endregion
 
@@ -72,9 +73,9 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         public virtual void Start(PrimesBigInteger from, PrimesBigInteger to, PrimesBigInteger second)
         {
             Stop();
-            m_From = from;
-            m_To = to;
-            m_SecondParameter = second;
+            if (from != null) m_From = from;
+            if (to != null) m_To = to;
+            if (second != null) m_SecondParameter = second;
             m_Thread = new Thread(new ThreadStart(DoExecute));
             m_Thread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
             m_Thread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;

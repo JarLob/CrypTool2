@@ -17,13 +17,15 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Primes.WpfControls.Components;
 using System.Windows.Controls;
 using System.Threading;
-using Primes.Bignum;
-using Primes.Library;
 using System.Windows;
 using System.Diagnostics;
+using System.Numerics;
+using Primes.Bignum;
+using Primes.Library;
+using Primes.WpfControls.Components;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
 {
@@ -39,27 +41,15 @@ namespace Primes.WpfControls.NumberTheory.NumberTheoryFunctions
         {
             FireOnStart();
 
-            PrimesBigInteger from = m_From;
-
-            while (from.CompareTo(m_To) <= 0)
+            for (BigInteger x = m_From; x <= m_To; x++)
             {
-                StringBuilder sbMessage = new StringBuilder("[");
-                PrimesBigInteger d = PrimesBigInteger.One;
-                while (d.CompareTo(from) < 0)
-                {
-                    if (PrimesBigInteger.GCD(d, from).Equals(PrimesBigInteger.One))
-                    {
-                        if (sbMessage.Length > 1)
-                            sbMessage.Append(", ");
-                        sbMessage.Append(d.ToString());
-                        FireOnMessage(this, from, sbMessage.ToString());
-                    }
-                    d = d.Add(PrimesBigInteger.One);
-                }
-                sbMessage.Append("]");
-                FireOnMessage(this, from, sbMessage.ToString());
+                List<string> values = new List<string>();
 
-                from = from.Add(PrimesBigInteger.One);
+                for (BigInteger d = 1; d < x; d++)
+                    if (d.GCD(x) == 1)
+                        values.Add(d.ToString());
+
+                FireOnMessage(this, x, "[" + String.Join(", ", values) + "]");
             }
 
             FireOnStop();
