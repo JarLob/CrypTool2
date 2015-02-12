@@ -52,6 +52,7 @@ namespace Dictionary
       
     private string numberEntries = string.Empty;
 
+    [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Eins")]
     [TaskPane("NumberEntriesCaption", "NumberEntriesTooltip", null, 1, true, ControlType.TextBoxReadOnly)]
     public string NumberEntries
     {
