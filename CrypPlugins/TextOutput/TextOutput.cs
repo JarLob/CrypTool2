@@ -367,6 +367,8 @@ namespace TextOutput
             textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 textOutputPresentation.textBox.Text = null;
+                input = null;
+                setStatusBar();
             }, null);
         }
 
