@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Numerics;
 using System.Security.Cryptography;
 using System.Globalization;
@@ -33,12 +34,75 @@ namespace Cryptool.PluginBase.Miscellaneous
     {
         #region internal stuff of expression parser
 
+        delegate BigInteger FunctionDelegate(BigInteger[] args);
+        delegate BigInteger Function2Delegate(BigInteger a, BigInteger b);
+
+        private struct FunctionInfo
+        {
+            public FunctionDelegate function;
+            public string pattern;
+            public int numargs;
+            public FunctionInfo(FunctionDelegate function, string pattern, int numargs)
+            {
+                this.function = function; this.pattern = pattern; this.numargs = numargs;
+            }
+        }
+
+        private struct OperatorInfo
+        {
+            public Function2Delegate function;
+            public Priority priority;
+            public int numargs;
+            public bool left_associative;
+            public OperatorInfo(Function2Delegate function, int numargs, Priority priority, bool left_associative = true)
+            {
+                this.function = function; this.priority = priority; this.numargs = numargs; this.left_associative = left_associative;
+            }
+        }
+
         private struct TOKEN
         {
-            public enum Ttype { MULTIPLY, DIVIDE, PLUS, MINUS, POW, BRACKETOPEN, BRACKETCLOSE, INTEGER };
+            public enum Ttype { INTEGER, MULTIPLY, DIVIDE, PLUS, MINUS, POW, BRACKETOPEN, BRACKETCLOSE, EXCLAMATION, PERCENT, COMMA, MOD, HASH, FUNCTION };
+            public enum Tfunc { GCD, LCM, MODINV, MODPOW, SQRT, NCR, NPR, NEXTPRIME, PREVPRIME, ISPRIME, PHI, ABS, CROSSSUM, DIVSUM, DIVNUM, PI, PRIME, DLOG };
             public Ttype ttype;
             public BigInteger integer;
+            public Tfunc function;
         }
+
+        static Dictionary<TOKEN.Tfunc, FunctionInfo> prefixFunctions = new Dictionary<TOKEN.Tfunc, FunctionInfo>
+        {   
+            { TOKEN.Tfunc.ABS, new FunctionInfo( args => { return BigInteger.Abs(args[0]); }, "abs", 1 ) },
+            { TOKEN.Tfunc.SQRT, new FunctionInfo( args => { return BigIntegerHelper.Sqrt(args[0]); }, "sqrt", 1 ) },
+            { TOKEN.Tfunc.CROSSSUM, new FunctionInfo( args => { return BigIntegerHelper.CrossSum(args[0],args[1]); }, "crosssum", 2 ) },
+            { TOKEN.Tfunc.GCD, new FunctionInfo( args => { return BigIntegerHelper.GCD(args[0], args[1]); }, "(gcd|ggt)", 2 ) },
+            { TOKEN.Tfunc.LCM, new FunctionInfo( args => { return BigIntegerHelper.LCM(args[0], args[1]); }, "(lcm|kgv)", 2 ) },
+            { TOKEN.Tfunc.MODINV, new FunctionInfo( args => { return BigIntegerHelper.ModInverse(args[0], args[1]); }, "modinv", 2 ) },
+            { TOKEN.Tfunc.MODPOW, new FunctionInfo( args => { return BigInteger.ModPow(args[0], args[1], args[2]); }, "modpow", 3 ) },
+            { TOKEN.Tfunc.DLOG, new FunctionInfo( args => { return BigIntegerHelper.DiscreteLogarithm(args[0],args[1],args[2]); }, "dlog", 3 ) },
+            { TOKEN.Tfunc.NPR, new FunctionInfo( args => { return BigIntegerHelper.nPr(args[0], args[1]); }, "npr", 2 ) },
+            { TOKEN.Tfunc.NCR, new FunctionInfo( args => { return BigIntegerHelper.nCr(args[0], args[1]); }, "ncr", 2 ) },
+            { TOKEN.Tfunc.PHI, new FunctionInfo( args => { return BigIntegerHelper.Phi(args[0]); }, "phi", 1 ) },
+            { TOKEN.Tfunc.DIVSUM, new FunctionInfo( args => { return BigIntegerHelper.SumOfDivisors(args[0]); }, "divsum", 1 ) },
+            { TOKEN.Tfunc.DIVNUM, new FunctionInfo( args => { return BigIntegerHelper.NumberOfDivisors(args[0]); }, "divnum", 1 ) },
+            { TOKEN.Tfunc.PI, new FunctionInfo( args => { return BigIntegerHelper.NumberOfPrimes(args[0]); }, "pi", 1 ) },
+            { TOKEN.Tfunc.PRIME, new FunctionInfo( args => { return BigIntegerHelper.PrimeNumber(args[0]); }, "prime", 1 ) },
+            { TOKEN.Tfunc.NEXTPRIME, new FunctionInfo( args => { return BigIntegerHelper.NextProbablePrime(args[0]); }, "nextprime", 1 ) },
+            { TOKEN.Tfunc.PREVPRIME, new FunctionInfo( args => { return BigIntegerHelper.PreviousProbablePrime(args[0]); }, "prevprime", 1 ) },
+            { TOKEN.Tfunc.ISPRIME, new FunctionInfo( args => { return BigIntegerHelper.IsProbablePrime(args[0])?1:0; }, "isprime", 1 ) },
+        };
+
+        static Dictionary<TOKEN.Ttype, OperatorInfo> infixOperators = new Dictionary<TOKEN.Ttype, OperatorInfo>
+        {   
+            { TOKEN.Ttype.PLUS, new OperatorInfo( (a,b) => { return a + b; }, 2, Priority.ADD ) },
+            { TOKEN.Ttype.MINUS, new OperatorInfo( (a,b) => { return a - b; }, 2, Priority.SUB ) },
+            { TOKEN.Ttype.MULTIPLY, new OperatorInfo( (a,b) => { return a * b; }, 2, Priority.MULT ) },
+            { TOKEN.Ttype.DIVIDE, new OperatorInfo( (a,b) => { return a / b; }, 2, Priority.DIV ) },
+            { TOKEN.Ttype.POW, new OperatorInfo( (a,b) => { return BigIntegerHelper.Pow(a,b); }, 2, Priority.POW, false ) },
+            { TOKEN.Ttype.EXCLAMATION, new OperatorInfo( (a,b) => { return BigIntegerHelper.Factorial(a); }, 1, Priority.FACTORIAL ) },
+            { TOKEN.Ttype.MOD, new OperatorInfo( (a,b) => { return a % b; }, 2, Priority.MOD ) },
+            { TOKEN.Ttype.PERCENT, new OperatorInfo( (a,b) => { return a % b; }, 2, Priority.MOD ) },
+            { TOKEN.Ttype.HASH, new OperatorInfo( (a,b) => { return BigIntegerHelper.Primorial(a); }, 1, Priority.FACTORIAL ) },
+        };
 
         private static Stack<TOKEN> Scan(string expr)
         {
@@ -67,8 +131,16 @@ namespace Cryptool.PluginBase.Miscellaneous
                     startIndex = 1;
                     break;
                 case '*':
-                    t.ttype = TOKEN.Ttype.MULTIPLY;
-                    startIndex = 1;
+                    if (expr.Length > 1 && expr[1] == '*')
+                    {
+                        t.ttype = TOKEN.Ttype.POW;
+                        startIndex = 2;
+                    }
+                    else
+                    {
+                        t.ttype = TOKEN.Ttype.MULTIPLY;
+                        startIndex = 1;
+                    }
                     break;
                 case '/':
                     t.ttype = TOKEN.Ttype.DIVIDE;
@@ -78,148 +150,189 @@ namespace Cryptool.PluginBase.Miscellaneous
                     t.ttype = TOKEN.Ttype.POW;
                     startIndex = 1;
                     break;
-                case 'h':
-                case 'H':
-                case '#':
-                case 'X':
-                case 'x':
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                case 'A':
-                case 'a':
-                case 'B':
-                case 'b':
-                case 'C':
-                case 'c':
-                case 'D':
-                case 'd':
-                case 'E':
-                case 'e':
-                case 'F':
-                case 'f':
-                    if (expr[0] == '#' || expr[0] == 'H' || expr[0] == 'h' || expr[0] == 'X' || expr[0] == 'x')
-                    {
-                        int length = 1;
-                        for (; length < expr.Length; length++)
-                            if (!(expr[length] >= '0' && expr[length] <= '9') &&
-                                expr[length] != 'A' && expr[length] != 'a' && 
-                                expr[length] != 'B' && expr[length] != 'b' && 
-                                expr[length] != 'C' && expr[length] != 'c' && 
-                                expr[length] != 'D' && expr[length] != 'd' && 
-                                expr[length] != 'E' && expr[length] != 'e' && 
-                                expr[length] != 'F' && expr[length] != 'f')
-                                break;
-                        t.integer =  BigInteger.Parse(expr.Substring(1, length-1), NumberStyles.AllowHexSpecifier);
-                        t.ttype = TOKEN.Ttype.INTEGER;
-                        startIndex = length;
-                    }
-                    else
-                    {                        
-                        int length = 1;
-                        for (; length < expr.Length; length++)
-                            if (!(expr[length] >= '0' && expr[length] <= '9'))
-                                break;
-                        t.integer = BigInteger.Parse(expr.Substring(0, length));
-                        t.ttype = TOKEN.Ttype.INTEGER;
-                        startIndex = length;
-                    }
+                case '!':
+                    t.ttype = TOKEN.Ttype.EXCLAMATION;
+                    startIndex = 1;
                     break;
+                case '%':
+                    t.ttype = TOKEN.Ttype.PERCENT;
+                    startIndex = 1;
+                    break;
+                case ',':
+                    t.ttype = TOKEN.Ttype.COMMA;
+                    startIndex = 1;
+                    break;
+                    
                 default:
-                    throw new Exception("Expression parsing failed at character " + expr[0]);
+
+                    Match m;
+                    bool found = false;
+                    foreach (var f in prefixFunctions)
+                    {
+                        m = Regex.Match(expr, "^" + f.Value.pattern, RegexOptions.IgnoreCase);
+                        if (m.Success)
+                        {
+                            t.ttype = TOKEN.Ttype.FUNCTION;
+                            t.function = f.Key;
+                            startIndex = m.Length;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) break;
+
+                    if (Regex.IsMatch(expr, "^mod", RegexOptions.IgnoreCase))
+                    {
+                        t.ttype = TOKEN.Ttype.MOD;
+                        startIndex = 3;
+                        break;
+                    }
+
+                    // try to parse as hexadecimal, decimal, octal or binary number
+                    
+                    m = Regex.Match(expr, @"^([0-9a-z]+)\(([0-9]+)\)", RegexOptions.IgnoreCase);
+                    if (m.Success)
+                    {
+                        int basis = int.Parse(m.Groups[2].Value);
+                        t.integer = Parse(m.Groups[1].Value, basis);
+                        t.ttype = TOKEN.Ttype.INTEGER;
+                        startIndex = m.Groups[0].Value.Length;
+                        break;
+                    }
+
+                    m = Regex.Match(expr, @"^[#hx]([0-9a-f]+)", RegexOptions.IgnoreCase);
+                    if (m.Success)
+                    {
+                        //t.integer = BigInteger.Parse(m.Groups[1].Value, NumberStyles.AllowHexSpecifier);
+                        t.integer = BigIntegerHelper.Parse(m.Groups[1].Value,16);
+                        t.ttype = TOKEN.Ttype.INTEGER;
+                        startIndex = m.Groups[0].Value.Length;
+                        break;
+                    }
+
+                    m = Regex.Match(expr, @"^([0-9]+)");
+                    if (m.Success)
+                    {
+                        t.integer = BigInteger.Parse(m.Groups[1].Value);
+                        t.ttype = TOKEN.Ttype.INTEGER;
+                        startIndex = m.Groups[0].Value.Length;
+                        break;
+                    }
+
+                    m = Regex.Match(expr, @"^o([0-7]+)", RegexOptions.IgnoreCase);
+                    if (m.Success)
+                    {
+                        t.integer = BigIntegerHelper.Parse(m.Groups[1].Value,8);
+                        t.ttype = TOKEN.Ttype.INTEGER;
+                        startIndex = m.Groups[0].Value.Length;
+                        break;
+                    }
+
+                    m = Regex.Match(expr, @"^b([01]+)", RegexOptions.IgnoreCase);
+                    if (m.Success)
+                    {
+                        t.integer = BigIntegerHelper.Parse(m.Groups[1].Value,2);
+                        t.ttype = TOKEN.Ttype.INTEGER;
+                        startIndex = m.Groups[0].Value.Length;
+                        break;
+                    }
+
+                    if(expr[0]=='#') {
+                        t.ttype = TOKEN.Ttype.HASH;
+                        startIndex = 1;
+                        break;
+                    }
+
+                    throw new ParseException("parsing failed at character " + expr[0]);
             }
             Stack<TOKEN> st = Scan(expr.Substring(startIndex));
             st.Push(t);
             return st;
         }
 
-        private enum Priority { ALL, POW, MULTDIV, ADDSUB };
+        private enum Priority { ALL=0, ADD, SUB, MULT, DIV, MOD, POW, FACTORIAL, SIGN };
 
-        private static BigInteger Parse(Stack<TOKEN> stack, Priority priority, bool endbracket)
+        private static void ConsumeToken(Stack<TOKEN> stack, TOKEN.Ttype ttype, string errmsg)
         {
-            if (stack.Count == 0)
-                throw new Exception("Expression Parsing Error.");
-            int minus = 1;
+            if (stack.Count==0 || stack.Peek().ttype != ttype) 
+                throw new ParseException(errmsg);
+            stack.Pop();
+        }
+
+        private static BigInteger[] ParseArguments(Stack<TOKEN> stack, int count = -1)
+        {
+            List<BigInteger> arguments = new List<BigInteger>();
+
+            ConsumeToken(stack, TOKEN.Ttype.BRACKETOPEN, "opening bracket expected");
+
+            while (stack.Count > 0 && stack.Peek().ttype != TOKEN.Ttype.BRACKETCLOSE)
+            {
+                if (arguments.Count > 0)
+                    ConsumeToken(stack, TOKEN.Ttype.COMMA, "comma expected");
+                arguments.Add(Parse(stack, Priority.ALL));
+            }
+
+            ConsumeToken(stack, TOKEN.Ttype.BRACKETCLOSE, "closing bracket expected");
+
+            if (count >= 0 && arguments.Count != count)
+                throw new ParseException("unexpected number of arguments");
+
+            return arguments.ToArray();
+        }
+
+        private static BigInteger Parse(Stack<TOKEN> stack, Priority priority)
+        {
             BigInteger v = 0;
-            TOKEN t = stack.Pop();  //get -, +, integer or bracket
 
-            if (t.ttype == TOKEN.Ttype.MINUS)
+            if (stack.Count == 0)
+                throw new ParseException("empty stack");
+
+            TOKEN t = stack.Pop();
+
+            // Parse prefix operators
+            switch (t.ttype)
             {
-                minus = -1;
-                t = stack.Pop();    //get integer or bracket
-            }
-            else if (t.ttype == TOKEN.Ttype.PLUS)
-            {
-                minus = 1;
-                t = stack.Pop();    //get integer or bracket
+                case TOKEN.Ttype.MINUS:
+                    v = -Parse(stack, Priority.SIGN);
+                    break;
+                case TOKEN.Ttype.PLUS:
+                    v = Parse(stack, Priority.SIGN);
+                    break;
+                case TOKEN.Ttype.INTEGER:
+                    v = t.integer;
+                    break;
+                case TOKEN.Ttype.BRACKETOPEN:
+                    v = Parse(stack, Priority.ALL);
+                    ConsumeToken(stack, TOKEN.Ttype.BRACKETCLOSE, "closing bracket expected");
+                    break;
+                case TOKEN.Ttype.FUNCTION:
+                    FunctionInfo fi = prefixFunctions[t.function];
+                    v = fi.function(ParseArguments(stack, fi.numargs));
+                    break;
+                default:
+                    throw new ParseException("unexpected prefix");
             }
 
-            if (t.ttype == TOKEN.Ttype.INTEGER)
-            {
-                v = minus * t.integer;
-            }
-            else if (t.ttype == TOKEN.Ttype.BRACKETOPEN)
-            {
-                v = minus * Parse(stack, Priority.ALL, true);
-                stack.Pop();    //pop the closing bracket
-            }
-
+            // Parse infix operators
             while (stack.Count != 0)
             {
-                switch (stack.Peek().ttype) //next operator
-                {
-                    case TOKEN.Ttype.PLUS:
-                        if (priority == Priority.MULTDIV || priority == Priority.POW)
-                            return v;
-                        stack.Pop();
-                        v = v + Parse(stack, Priority.ADDSUB, endbracket);
-                        break;
-                    case TOKEN.Ttype.MINUS:
-                        if (priority == Priority.MULTDIV || priority == Priority.POW)
-                            return v;
-                        stack.Pop();
-                        v = v - Parse(stack, Priority.ADDSUB, endbracket);
-                        break;
-                    case TOKEN.Ttype.MULTIPLY:
-                        if (priority == Priority.POW)
-                            return v;
-                        stack.Pop();
-                        v = v * Parse(stack, Priority.MULTDIV, endbracket);
-                        break;
-                    case TOKEN.Ttype.DIVIDE:
-                        if (priority == Priority.POW)
-                            return v;
-                        stack.Pop();
-                        v = v / Parse(stack, Priority.MULTDIV, endbracket);
-                        break;
-                    case TOKEN.Ttype.POW:
-                        stack.Pop();
-                        v = BigIntegerHelper.Pow(v, Parse(stack, Priority.POW, endbracket));
-                        break;
-                    case TOKEN.Ttype.BRACKETCLOSE:
-                        if (endbracket)
-                            return v;
-                        else
-                            throw new Exception("Expression Parsing Error (closing bracket misplaced).");
-                    default:
-                        throw new Exception("Expression Parsing Error.");
-                }
+                TOKEN.Ttype ttype = stack.Peek().ttype;
+
+                if (ttype == TOKEN.Ttype.BRACKETCLOSE || ttype == TOKEN.Ttype.COMMA)
+                    break;
+
+                OperatorInfo io = infixOperators[ttype];
+                if ((priority > io.priority) || (priority == io.priority && io.left_associative)) return v;
+                stack.Pop();
+                BigInteger b = (io.numargs == 2) ? Parse(stack, io.priority) : 0;
+                v = io.function(v, b);
             }
-            if (endbracket)
-                throw new Exception("Expression Parsing Error (closing bracket missing).");
 
             return v;
         }
 
         #endregion
-
+        
         /*         
          * Parses a math expression (example: (2+2)^(17-5) ) 
          * and returns a BigInteger based on this expression
@@ -228,9 +341,73 @@ namespace Cryptool.PluginBase.Miscellaneous
          */
         public static BigInteger ParseExpression(string expr)
         {
-            Stack<TOKEN> stack = Scan(expr);
-            BigInteger i = Parse(stack, Priority.ALL, false);
+            Stack<TOKEN> stack;
+            BigInteger i=0;
+
+            try
+            {
+                stack = Scan(expr);
+
+                if (stack.Count > 0)
+                    i = Parse(stack, Priority.ALL);
+
+                if (stack.Count != 0)
+                    throw new ParseException("unexpected remainder on stack");
+            }
+            catch (ParseException ex)
+            {
+                throw new Exception(string.Format("Parsing error ({0})", ex.Message));
+            }
+
             return i;
+        }
+
+        static string digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+        public static BigInteger Parse(string expr, int basis)
+        {
+            if (basis < 2)
+                throw new Exception(string.Format("Illegal base {0} (must be >=2).", basis));
+
+            BigInteger result = 0;
+
+            foreach (var c in expr)
+            {
+                int d = digits.IndexOf(c.ToString().ToLower());
+                if (d < 0 || d >= basis)
+                    throw new Exception(string.Format("Unexpected character '{0}' in base {1} expression.", c, basis));
+                result = result * basis + d;
+            }
+
+            return result;
+        }
+
+        public static string ToBaseString(this BigInteger n, int basis)
+        {
+            if (basis < 2)
+                throw new Exception(string.Format("Illegal base {0} (must be >=2).", basis));
+
+            string result = "";
+
+            int sign = (n < 0) ? -1 : 1;
+            if(n<0) n = -n;
+
+            do
+            {
+                try
+                {
+                    result = digits[(int)(n % basis)] + result;
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    throw new Exception(string.Format("Can't convert input to base {0}.", basis));
+                }
+                n /= basis;
+            } while (n != 0);
+
+            if(sign==-1) result = "-" + result;
+
+            return result;
         }
 
         public static BigInteger Pow(BigInteger b, BigInteger e)
@@ -516,19 +693,15 @@ namespace Cryptool.PluginBase.Miscellaneous
 
             // b = a^t mod p
             BigInteger b = BigInteger.ModPow(a, t, thisVal);
-            bool result = false;
 
             if (b == 1)         // a^t mod p = 1
-                result = true;
+                return true;
 
             BigInteger p_sub1 = thisVal - 1;
-            for (int j = 0; result == false && j < s; j++)
+            for (int j = 0; j < s; j++)
             {
                 if (b == p_sub1)         // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
-                {
-                    result = true;
-                    break;
-                }
+                    return true;
 
                 b = (b * b) % thisVal;
             }
@@ -539,7 +712,7 @@ namespace Cryptool.PluginBase.Miscellaneous
                 result = LucasStrongTestHelper(thisVal);
             */
 
-            return result;
+            return false;
         }
 
 
@@ -598,6 +771,23 @@ namespace Cryptool.PluginBase.Miscellaneous
             return result;
         }
 
+        public static BigInteger Primorial(this BigInteger n)
+        {
+            if (n < 0) throw new ArithmeticException("The primorial of a negative number is not defined");
+
+            BigInteger result = 1;
+            BigInteger counter = n;
+
+            while (counter > 1)
+            {
+                counter = counter.PreviousProbablePrime();
+                result *= counter;
+                counter--;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Calculates the number of unordered subsets with r objects of a set with n objects.
         /// </summary>
@@ -642,6 +832,24 @@ namespace Cryptool.PluginBase.Miscellaneous
         }
 
         /// <summary>
+        /// Calculates the cross sum of the given number in its expansion in base b
+        /// </summary>
+        public static BigInteger CrossSum(this BigInteger n, BigInteger b)
+        {
+            if (b < 2) throw new ArithmeticException("The base must be >= 2");
+
+            BigInteger result = 0;
+
+            while (n > 0)
+            {
+                result += n % b;
+                n /= b;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Returns the minimum of a set of BigIntegers
         /// </summary>
         public static BigInteger Min(BigInteger n, params BigInteger[] values)
@@ -679,6 +887,9 @@ namespace Cryptool.PluginBase.Miscellaneous
         {
             if( n<0 )
                 throw (new ArithmeticException("Square root of negative number does not exist!"));
+
+            if (n == 0) 
+                return 0;
 
             BigInteger x = n >> (n.BitCount() / 2);     // select starting value
             BigInteger lastx;
@@ -814,6 +1025,22 @@ namespace Cryptool.PluginBase.Miscellaneous
             return result;
         }
 
+        public static BigInteger SumOfDivisors(this BigInteger n)
+        {
+            return Divisors(n.Factorize()).Aggregate(BigInteger.Add);
+        }
+
+        public static BigInteger NumberOfDivisors(this BigInteger n)
+        {
+            Dictionary<BigInteger, long> factors = n.Factorize();
+            BigInteger result = 1;
+
+            foreach (var f in factors.Keys)
+                result *= factors[f] + 1;
+
+            return result;
+        }
+
         public static BigInteger Phi(this BigInteger n)
         {
             if (n == 0) return 0;
@@ -826,12 +1053,93 @@ namespace Cryptool.PluginBase.Miscellaneous
 
             foreach (var f in factors.Keys)
             {
-                if(f>0)
+                if (f > 0)
                     if (factors[f] > 0)
-                        phi *= (f-1) * BigInteger.Pow(f,(int)factors[f] - 1);
+                        phi *= (f - 1) * BigInteger.Pow(f, (int)factors[f] - 1);
             }
 
             return phi;
         }
+
+        public static BigInteger NumberOfPrimes(BigInteger n)
+        {
+            BigInteger count = 0;
+
+            for (BigInteger i = 2; i <= n; i = NextProbablePrime(i + 1))
+                count++;
+
+            return count;
+        }
+
+        public static BigInteger PrimeNumber(BigInteger n)
+        {
+            BigInteger prime = 2;
+
+            for (BigInteger i = 0; i < n; i++)
+                prime = NextProbablePrime(prime + 1);
+
+            return prime;
+        }        
+        
+        /// <summary>
+        /// Baby-step giant-step algorithm by Daniel Shanks
+        /// </summary>
+        public static BigInteger DiscreteLogarithm(this BigInteger residue, BigInteger basis, BigInteger modulus)
+        {
+            Dictionary<BigInteger, BigInteger> hashtab = new Dictionary<BigInteger, BigInteger>();
+
+            BigInteger m = modulus.Sqrt() + 1;
+            BigInteger v;
+
+            try
+            {
+                // baby-steps
+                v = (residue * basis) % modulus;
+                for (BigInteger j = 1; j <= m; j++)
+                {
+                    if (hashtab.ContainsKey(v)) break;
+                    hashtab.Add(v, j);
+                    v = (v * basis) % modulus;
+                }
+            }
+            catch (OutOfMemoryException ex)
+            {
+                m = hashtab.Count;
+            }
+
+            BigInteger M = (modulus + m - 1) / m;
+
+            // giant-steps
+            BigInteger g_m = BigInteger.ModPow(basis, m, modulus);
+            v = g_m;
+            for (BigInteger i = 1; i <= M; i++)
+            {
+                if (hashtab.ContainsKey(v))
+                    return i * m - hashtab[v];
+
+                v = (v * g_m) % modulus;
+
+                if (v == g_m) break;
+            }
+
+            throw new ArithmeticException(string.Format("Input base {0} is not a generator of the residue class {1} modulo {2}.", basis, residue, modulus));
+        }
+    }
+}
+
+public class ParseException : Exception
+{
+    public ParseException()
+    {
+    }
+
+    public ParseException(string message)
+        : base(message)
+    {
+    }
+
+    public ParseException(string message, Exception inner)
+        : base(message, inner)
+    {
     }
 }
