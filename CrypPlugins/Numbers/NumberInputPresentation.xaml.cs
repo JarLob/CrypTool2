@@ -47,7 +47,10 @@ namespace Cryptool.Plugins.Numbers
 
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        if (!"01234567890+-*/^ ()AaBbCcDdEeFf#HhXx".Contains(e.Text))
+        char c = e.Text.ToUpper()[0];
+
+        //if (!"01234567890+-*/^ ()AaBbCcDdEeFf#HhXxOo".Contains(e.Text))
+        if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || "+-*/^ ()#!%,".Contains(c)))
         {
             e.Handled = true;
         }

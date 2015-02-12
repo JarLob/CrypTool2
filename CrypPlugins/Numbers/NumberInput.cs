@@ -251,6 +251,8 @@ namespace Cryptool.Plugins.Numbers
 
         public void Execute()
         {
+            ProgressChanged(0.0, 1.0);
+
             try
             {
                 NumberOutput = GetNumber();
