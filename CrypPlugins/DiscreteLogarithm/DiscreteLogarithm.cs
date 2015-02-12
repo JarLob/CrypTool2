@@ -170,6 +170,7 @@ namespace Cryptool.Plugins.DiscreteLogarithm
             else
                 GuiLogMessage("Input base is not a generator of the given residue class", NotificationLevel.Error);
         }
+
         /// <summary>
         /// Baby-step giant-step algorithm by Daniel Shanks
         /// </summary>
@@ -184,7 +185,7 @@ namespace Cryptool.Plugins.DiscreteLogarithm
             try
             {
                 // baby-steps
-                v = inputValue * inputBase;
+                v = (inputValue * inputBase) % inputMod;
                 for (BigInteger j = 1; j <= m; j++)
                 {
                     if (!running) return;
