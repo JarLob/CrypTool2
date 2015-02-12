@@ -139,13 +139,13 @@
     <value>Lattice-based cryptography\ LWE</value>
   </data>
   <data name="FL_P_merkle" xml:space="preserve">
-    <value>Lattice-based cryptanalysis\ Merkle-Hellmann Knapsack</value>
+    <value>Lattice-based cryptanalysis\ Merkle-Hellman Knapsack</value>
   </data>
   <data name="FL_P_next" xml:space="preserve">
-    <value>Closest Vector Problem\ Find closest vector</value>
+    <value>Closest Vector Problem (CVP)\ Find closest vector</value>
   </data>
   <data name="FL_P__RSA" xml:space="preserve">
-    <value>Lattice-based cryptanalysis\ RSA (Coppersmith's Attack)</value>
+    <value>Lattice-based cryptanalysis\ RSA (Coppersmith's attack)</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Lattice-based cryptography</value>

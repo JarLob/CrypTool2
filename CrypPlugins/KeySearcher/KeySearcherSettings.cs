@@ -400,7 +400,7 @@ namespace KeySearcher
                         deviceSettings[OpenCLDevice].mode = value;
                     else
                         keysearcher.GuiLogMessage(
-                            "Using \"High Load\" is disabled. Please check your CrypTool 2.0 settings.", NotificationLevel.Error);
+                            "Using \"High Load\" is disabled. Please check your CrypTool 2 settings.", NotificationLevel.Error);
 
                     OnPropertyChanged("OpenCLMode");
                 }

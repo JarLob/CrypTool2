@@ -88,7 +88,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice-based cryptanalysis\ RSA (Coppersmith&apos;s Attack) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice-based cryptanalysis\ RSA (Coppersmith&apos;s attack) ähnelt.
         /// </summary>
         internal static string FL_P__RSA {
             get {
@@ -133,7 +133,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice-based cryptanalysis\ Merkle-Hellmann Knapsack ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Lattice-based cryptanalysis\ Merkle-Hellman Knapsack ähnelt.
         /// </summary>
         internal static string FL_P_merkle {
             get {
@@ -142,7 +142,7 @@ namespace LatticeCrypto.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Closest Vector Problem\ Find closest vector ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Closest Vector Problem (CVP)\ Find closest vector ähnelt.
         /// </summary>
         internal static string FL_P_next {
             get {

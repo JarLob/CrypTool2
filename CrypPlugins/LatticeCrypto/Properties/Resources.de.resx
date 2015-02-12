@@ -139,13 +139,13 @@
     <value>Gitterbasierte Verschlüsselungssysteme\ LWE</value>
   </data>
   <data name="FL_P_merkle" xml:space="preserve">
-    <value>Gitterbasierte Angriffe \ Merkle-Hellmann Knapsack</value>
+    <value>Gitterbasierte Angriffe\ Merkle-Hellman Knapsack</value>
   </data>
   <data name="FL_P_next" xml:space="preserve">
-    <value>Nächster Vektor Problem\ Finde nächsten Vektor</value>
+    <value>Nächster Vektor Problem (CVP)\ Finde nächsten Vektor</value>
   </data>
   <data name="FL_P__RSA" xml:space="preserve">
-    <value>Gitterbasierte Angriffe \ RSA (Angriff auf stereotype Nachrichten)</value>
+    <value>Gitterbasierte Angriffe\ RSA (Angriff auf stereotype Nachrichten)</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Gitterbasierte Kryptographie</value>
