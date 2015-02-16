@@ -246,4 +246,7 @@
   <data name="OperationList16" xml:space="preserve">
     <value>Distinct</value>
   </data>
+  <data name="OperationList17" xml:space="preserve">
+    <value>Levenshtein Distance</value>
+  </data>
 </root>

@@ -42,6 +42,8 @@
 		<item><b>Block:</b> Formats the given string into blocks (using the setting "Block size") after removing all whitespace characters</item>
 		<item><b>Reverse:</b> Reverses the given text of the first text input</item>
     <item><b>Password Replace:</b> Adds a password in front or tail of the string and removes all occuring characters of this password in the rest of the string</item>
+    <item><b>Distinct:</b> Removes all double occurences of same symbols from the string</item>
+    <item><b>Levenshtein Distance:</b> Calculates the Levenshtein Distance of two given strings</item>
     </enum>
   </usage>
 
@@ -64,6 +66,8 @@
 		<item><b>Block:</b> Formatiert den eingegangenen Text in Blöcke (unter Nutzung der Einstellung "Blockgröße"), nachdem alle Leerzeichen (Whitespaces) entfernt wurden</item>
 		<item><b>Umkehren:</b> Kehrt die Zeichenkette des ersten Texteingangs um</item>
     <item><b>Passwortersetzung:</b>Fügt einem Text ein Passwort am Anfang oder Ende hinzu und entfernt alle Zeichen des Passwortes aus dem restlichen Text</item>
+    <item><b>Eindeutig:</b> Entfernt alle doppelten Vorkommen von gleichen Symbolen aus dem Text</item>
+    <item><b>Levenshtein-Distanz:</b> Berechnet die Levenshtein-Distanz von zwei gegeben Texten</item>
     </enum>    
   </usage>
   
@@ -80,6 +84,14 @@
       <link lang="de-DE" url="http://de.wikipedia.org/wiki/Zeichenkette"/>
       <caption lang="de-DE">Zeichenkette</caption>
     </linkReference>
+    <linkReference>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Levenshtein_distance"/>
+      <caption lang="de-DE">Levenshtein Distance</caption>
+      <link lang="en" url="http://de.wikipedia.org/wiki/Levenshtein-Distanz"/>
+      <caption lang="de-DE">Levenshtein-Distanz</caption>
+    </linkReference>
+
+
   </references>
   
 </documentation>

@@ -75,7 +75,7 @@ namespace StringOperations
         }        
 
         [TaskPane("OperationCaption", "OperationCaptionToolTip", null, 1, false, ControlType.ComboBox,
-            new[] { "OperationList1", "OperationList2", "OperationList3", "OperationList4", "OperationList5", "OperationList6", "OperationList7", "OperationList8", "OperationList9", "OperationList10", "OperationList11", "OperationList12", "OperationList13", "OperationList14", "OperationList15", "OperationList16" })]
+            new[] { "OperationList1", "OperationList2", "OperationList3", "OperationList4", "OperationList5", "OperationList6", "OperationList7", "OperationList8", "OperationList9", "OperationList10", "OperationList11", "OperationList12", "OperationList13", "OperationList14", "OperationList15", "OperationList16","OperationList17" })]
         public StringOperationType Operation
         {
             get
@@ -230,6 +230,7 @@ namespace StringOperations
         Block,
         Reverse,
         Sort,
-        Distinct
+        Distinct,
+        LevenshteinDistance
     }
 }

@@ -214,6 +214,10 @@ namespace StringOperations
                         _outputString = builder.ToString();
                         OnPropertyChanged("OutputString");
                         break;
+                    case StringOperationType.LevenshteinDistance:
+                        _outputValue = LevenshteinDistance(_string1, _string2);
+                        OnPropertyChanged("OutputValue");
+                        break;
                 }
                 ProgressChanged(1, 1);
             }
@@ -221,6 +225,85 @@ namespace StringOperations
             {
                 GuiLogMessage(String.Format(Resources.StringOperations_Execute_Could_not_execute_operation___0______1_, ((StringOperationType)(_settings).Operation), ex.Message), NotificationLevel.Error);
             }
+        }
+
+        /// <summary>
+        /// Calculates the Levenshtein distance of 2 given strings
+        /// Source from Wikipedia: http://en.wikipedia.org/wiki/Levenshtein_distance#Iterative_with_two_matrix_rows
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        private int LevenshteinDistance(string s, string t)
+        {
+            // degenerate cases
+            if (s == t)
+            {
+                return 0;
+            }
+            if (string.IsNullOrEmpty(s) || s.Length == 0)
+            {
+                return t.Length;
+            }
+            if (string.IsNullOrEmpty(t) || t.Length == 0)
+            {
+                return s.Length;
+            }
+
+            // create two work vectors of integer distances
+            var v0 = new int[t.Length + 1];
+            var v1 = new int[t.Length + 1];
+
+            // initialize v0 (the previous row of distances)
+            // this row is A[0][i]: edit distance for an empty s
+            // the distance is just the number of characters to delete from t
+            for (var i = 0; i < v0.Length; i++){
+                v0[i] = i;
+            }
+
+            for (var i = 0; i < s.Length; i++)
+            {
+                // calculate v1 (current row distances) from the previous row v0
+
+                // first element of v1 is A[i+1][0]
+                //   edit distance is delete (i+1) chars from s to match empty t
+                v1[0] = i + 1;
+
+                // use formula to fill in the rest of the row
+                for (var j = 0; j < t.Length; j++)
+                {
+                    var cost = (s[i] == t[j]) ? 0 : 1;
+                    v1[j + 1] = Minimum(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
+                }
+
+                // copy v1 (current row) to v0 (previous row) for next iteration
+                for (var j = 0; j < v0.Length; j++){
+                    v0[j] = v1[j];
+                }
+            }
+
+            return v1[t.Length];
+        }
+
+        /// <summary>
+        /// Returns the minimum of 3 ints
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        private int Minimum(int a, int b, int c)
+        {
+            var x = a;
+            if (b < x)
+            {
+                x = b;
+            }
+            if (c < x)
+            {
+                x = c;
+            }
+            return x;
         }
 
         public void PostExecution()
