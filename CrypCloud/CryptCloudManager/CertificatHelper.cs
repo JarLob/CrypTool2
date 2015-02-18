@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.X509Certificates; 
 
-namespace CryptCloud.Manager
+namespace CrypCloud.Manager
 {
     public class CertificatHelper
     {
@@ -25,7 +25,6 @@ namespace CryptCloud.Manager
 
         public static List<string> GetNamesOfKnownCertificats()
         {
-             
             if ( ! CertificatDirectoryExists())
             {
                 return new List<string>();
@@ -33,7 +32,7 @@ namespace CryptCloud.Manager
 
             var files = Directory.GetFiles(DefaultUserCertificatDir, "*" + CertFileExtention);
             var usernames = files.Select(FullPathToFilename);
-            return usernames.ToList();
+            return usernames.ToList(); 
         } 
 
         public static X509Certificate2 LoadPrivateCertificat(string name, string password)

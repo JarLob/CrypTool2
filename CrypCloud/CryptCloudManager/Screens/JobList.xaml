@@ -1,149 +1,80 @@
-﻿<UserControl x:Class="CryptCloud.Manager.Screens.JobList"
+﻿<UserControl x:Class="CrypCloud.Manager.Screens.JobList"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
              mc:Ignorable="d" 
-             d:DesignHeight="218" d:DesignWidth="416">
+             d:DesignHeight="218" d:DesignWidth="500">
     
-        <Grid>
-            <ListView Background="Transparent" x:Name="JobListBox" KeyUp="JobListBoxKeyUp">
-                <ListView.View>
-                    <GridView AllowsColumnReorder="True">
-                        <GridViewColumn Header="{Loc Name_ColumnHeader_}">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Label Content="{Binding Name}" FontSize="16" Grid.Row="0"/>
-                                        <Grid Grid.Row="1" Visibility="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource TrueToVisibleOrCollapsedConverter}}">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="75" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Grid.Column="0">
-                                                <Label Content="{Loc Author_}" FontSize="10" Height="23" />
-                                                <Label Content="{Loc Workspace_}" FontSize="10" Height="23" />
-                                                <Label Content="{Loc Downloads_}" FontSize="10" Height="23" />
-                                                <Label Content="{Loc Participants_}" FontSize="10" Height="23" />
-                                                <Label Content="{Loc Start_date_}" FontSize="10" Height="23" />
-                                                <Label Content="{Loc Description_}" FontSize="10" Height="23" />
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="1">
-                                                <Label Content="{Binding Owner}" Height="23" FontSize="10" />
-                                                <Label Content="{Binding FileName}" Height="23" FontSize="10" />
-                                                <Label Content="{Binding Downloads}" Height="23" FontSize="10" />
-                                                <Label Content="{Binding Status.Participants, FallbackValue=-}" Height="23" FontSize="10" />
-                                                <Label Content="{Binding Status.StartDate, Converter={StaticResource UtcDateTimeToLocalConverter}, FallbackValue=-}" Height="23" FontSize="10" />
-                                                <Label FontSize="10">
-                                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" />
-                                                </Label>
-                                            </StackPanel>
-                                        </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        
-                        <GridViewColumn Header="{Loc Status_ColumnHeader_}">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <Ellipse VerticalAlignment="Center" Fill="{Binding Status.CurrentStatus, Converter={StaticResource StatusToColorConverter}}" Height="18" Width="18" StrokeThickness="1" Stroke="DarkGray" Margin="0,5,105,5" HorizontalAlignment="Right" />
-                                        <ProgressBar VerticalAlignment="Center" Value="{Binding Status.Progress}" Maximum="1" Width="100" Height="20" HorizontalAlignment="Right" />
-                                    </Grid>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        
-                        <GridViewColumn Header="{Loc CreationDate_ColumnHeader_}">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label FontSize="16" HorizontalAlignment="Right" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="True">
-                                <Setter Property="Background" Value="#89CFF0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                        <EventSetter Event="MouseDoubleClick" Handler="ParticipateItemHandler"/>
-                        <Setter Property="VerticalContentAlignment" Value="Top"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType='{x:Type ListViewItem}'>
-                                    <Border BorderThickness="0,0,0,1"
-                                            BorderBrush="White" 
-                                            Background="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBoxItem, AncestorLevel=1}, Path=Background}">
-                                        <GridViewRowPresenter Content="{TemplateBinding Content}" 
-                                                              Columns="{TemplateBinding GridView.ColumnCollection}" />
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListView.ItemContainerStyle>
-            </ListView>
-            
-            <!-- bottom controls -->
-            <Grid DataContext="{Binding SelectedItem,ElementName=JobListBox}">
-                <Button Content="{Loc ParticipateButton_}"
-                        HorizontalAlignment="Right"
-                        Margin="0,0,2,6"
-                        Name="ParticipateButton" 
-                        Width="75"
-                        Height="23" 
-                        VerticalAlignment="Bottom"
-                        Click="ParticipateButtonClick" />
-                
-                <Button Content="{Loc RefreshButton_}"
+    
+    <Grid HorizontalAlignment="Center" Width="500">
+        
+        <Border Visibility="Hidden"  Height="30" Name="MessageBox" CornerRadius="5" BorderThickness="3" BorderBrush="Gold">
+            <Grid>
+                <Grid.Background>
+                    <SolidColorBrush Color="Khaki"/>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Name="Erroricon" Width="25" Grid.Row="1" Source="..\..\images\error.png" Visibility="Hidden" HorizontalAlignment="Left"/>
+                <TextBlock Name="MessageLabel" Foreground="Red" Margin="35,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+            </Grid>
+        </Border>
+
+        <ListView  ScrollViewer.HorizontalScrollBarVisibility="Disabled" x:Name="JobListBox" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Creator" DisplayMemberBinding="{Binding Creator}" Width="100" />
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100" />
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" Width="100" />
+                    <GridViewColumn Header="" Width="200" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Width="75" Margin="0,5,0,5">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Image Source="../Images/open.png" Width="10"  Margin="-5,0,5,0"/>
+                                            <TextBlock>Open</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                    
+                                    <Button Width="75" Margin="30,5,0,5">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <Image Source="../Images/delete.png" Width="10"  Margin="-5,0,5,0"/>
+                                            <TextBlock>Delete</TextBlock>
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListViewItem></ListViewItem>
+        </ListView>
+
+        <!-- bottom controls -->
+        <Grid VerticalAlignment="Bottom" >
+            <Button Content="Refresh"
                         Click="RefreshButtonClick"
-                        Margin="2,0,0,6" 
+                        Margin="5,5,0,5" 
                         Name="RefreshButton" 
                         Height="23"
                         VerticalAlignment="Bottom" 
                         HorizontalAlignment="Left"
                         Width="75" />
-                
-                <Button Content="{Loc DeleteButton_}" 
-                        Click="DeleteButtonClick"
-                        Margin="0,0,81,6"
-                        Name="DeleteButton"
-                        HorizontalAlignment="Right"
-                        Width="75"
-                        Height="23" 
-                        VerticalAlignment="Bottom" />
-                
-                <Button Content="{Loc NewButton_}" 
+
+            <Button Content="New" 
                         Height="23"
-                        HorizontalAlignment="Left"
-                        Margin="81,0,0,6"
+                        HorizontalAlignment="Right"
+                        Margin="0,5,5,5"
                         Name="NewButton" 
                         VerticalAlignment="Bottom"
                         Width="75"
                         Click="NewButton_Click" />
-                
-                <Button Content="{Loc DisconnectButton_}" 
-                        Height="23" 
-                        HorizontalAlignment="Left"
-                        Margin="160,0,0,6"
-                        Name="DisconnectButton" 
-                        VerticalAlignment="Bottom" 
-                        Width="75"
-                        Click="DisconnectButton_Click" />
-            </Grid>
+
         </Grid>
+    </Grid>
 </UserControl>

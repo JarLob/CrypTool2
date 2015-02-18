@@ -1,48 +1,41 @@
 ﻿using System;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls; 
-using System.Windows.Media; 
-using System.Windows.Threading; 
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
+using CrypCloud.Core;
+using CrypCloud.Manager.Controller;
+using Cryptool.PluginBase;
+using Cryptool.PluginBase.Attributes;
 
-namespace CryptCloud.Manager.Screens
+namespace CrypCloud.Manager.Screens
 {
+    [Localization("CrypCloud.Manager.Properties.Resources")]
     public partial class Login : UserControl
-    {
+    { 
+        public LoginController Controller { get; set; }
+
         public Login()
         {
-            InitializeComponent(); 
-        } 
-
-        public void SetSuggestetUsernames(List<string> usernames)
+            InitializeComponent();
+        }
+     
+        public void SetSuggestetUsernames(List<string> namesOfKnownCertificats)
         {
-            foreach (var username in usernames)
+            foreach (var username in namesOfKnownCertificats)
             {
-                UsernamesListBox.Items.Add(username);
+                UsernameInput.Items.Add(username);
             }
-        } 
+        }
 
         private void LoginButtonClick(object sender, RoutedEventArgs e)
         {
-            if ( ! ValidLoginData(UsernameInput.Text, PasswordInput.Password))
-            {
-                ShowMessage("no. NONONONONONONONONONO! ", true);
-            }
+            Controller.UserWantsToLogIn(UsernameInput.Text, PasswordInput.Password);
         }
 
-        private void ForgotPasswordLabel_Click(object sender, RoutedEventArgs e)
-        {
-            // CryptCloudManagerPresentation.ShowForgotPasswordView();
-        }
-
-        private void Username_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            PopupUsernames.IsOpen = false;
-        }
-      
-   
-        private void ShowMessage(string message, bool error = false)
+        public void ShowMessage(string message, bool error = false)
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -63,29 +56,17 @@ namespace CryptCloud.Manager.Screens
             }, null);
         }
 
-
-        private void UsernamesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void Show()
         {
-            UsernameInput.Text = (string)UsernamesListBox.SelectedItem;
-            PasswordInput.Password = "";
+            Visibility = Visibility.Visible;
         }
 
-        private void PopupUsernames_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        public void Hide()
         {
-            PopupUsernames.IsOpen = false;
+            Visibility = Visibility.Collapsed;
         }
 
 
-        public event Func<string, string, bool> LoginClicked;
-
-        protected virtual bool ValidLoginData(string name, string password)
-        {
-            var handler = LoginClicked;
-            if (handler != null)
-            {
-                return handler.Invoke(name, password);
-            }
-            return false;
-        }
     }
+     
 }

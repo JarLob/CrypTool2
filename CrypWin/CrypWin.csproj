@@ -478,9 +478,9 @@
     <Resource Include="images\Open32.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrypCloud\CryptCloudManager\CryptCloudManager.csproj">
+    <ProjectReference Include="..\CrypCloud\CryptCloudManager\CrypCloudManager.csproj">
       <Project>{AEA1242F-467D-47F7-9A24-B55584BF0419}</Project>
-      <Name>CryptCloudManager</Name>
+      <Name>CrypCloudManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
       <Project>{FF5D473C-0716-4D3E-9078-2EBD979F94C6}</Project>

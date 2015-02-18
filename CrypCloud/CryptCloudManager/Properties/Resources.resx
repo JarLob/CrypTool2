@@ -139,4 +139,31 @@
   <data name="P2PEditor_Tab_Caption" xml:space="preserve">
     <value>Hi ich bin zu faul, die resources richtig zu machen.</value>
   </data>
+  <data name="JobList_NoActiveJobs" xml:space="preserve">
+    <value>Currently there is no active job.</value>
+  </data>
+  <data name="JobCreate_Name" xml:space="preserve">
+    <value>Name :</value>
+  </data>
+  <data name="JobCreate_Type" xml:space="preserve">
+    <value>Job Type :</value>
+  </data>
+  <data name="JobCreate_BackToList" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="JobCreate_Discription" xml:space="preserve">
+    <value>Discription :</value>
+  </data>
+  <data name="JobCreate_Publish" xml:space="preserve">
+    <value>Publish Job</value>
+  </data>
+  <data name="JobCreate_WorkspacePath" xml:space="preserve">
+    <value>Workspace :</value>
+  </data>
+  <data name="JobList_DeleteJob" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="JobList_OpenJob" xml:space="preserve">
+    <value>Open</value>
+  </data>
 </root>

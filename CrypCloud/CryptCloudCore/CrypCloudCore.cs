@@ -1,11 +1,13 @@
-﻿using System; 
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using CrypCloud.Core.CloudComponent;
 using CrypCloud.Core.utils;
-using voluntLib; 
+using voluntLib;
+using voluntLib.common;
 using voluntLib.common.interfaces;
 using WorkspaceManager.Model;
 
@@ -74,9 +76,9 @@ namespace CrypCloud.Core
             voluntLib.StopCalculation(jobId);
         }
 
-        public void GetJobs()
+        public List<NetworkJob> GetJobs()
         {
-            voluntLib.GetJobsOfWorld(DefaultWorld);
+           return voluntLib.GetJobsOfWorld(DefaultWorld);
         }
 
         public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)

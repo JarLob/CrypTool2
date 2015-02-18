@@ -1,4 +1,4 @@
-﻿using CryptCloud.Manager;
+﻿using CrypCloud.Manager;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CrypCloudTests
@@ -40,7 +40,7 @@ namespace CrypCloudTests
         }
 
         [TestMethod]
-        public void CertificatIsKnown_knownCertificat()
+        public void CertificatIsUnknown_knownCertificat()
         {
             var userCertificatIsKnown = CertificatHelper.UserCertificatIsUnknown("alice");
 
