@@ -1,4 +1,5 @@
-﻿using CrypCloud.Manager;
+﻿ 
+using CrypCloud.Manager;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CrypCloudTests
@@ -6,7 +7,7 @@ namespace CrypCloudTests
     [TestClass]
     public class CertificatHelperTest
     {
-        //[Ignore] // depends on enviroment
+        [Ignore] // depends on enviroment
         [TestMethod]
         public void GetNamesOfKnownCertificats()
         {
@@ -14,8 +15,8 @@ namespace CrypCloudTests
             Assert.AreEqual(2, userNames.Count);
             Assert.AreEqual("alice", userNames[0]);
             Assert.AreEqual("bob", userNames[1]);
-        } 
-
+        }
+        [Ignore] // depends on enviroment
         [TestMethod]
         public void LoadCertificateFromFile_invalidPassword()
         {
@@ -23,7 +24,7 @@ namespace CrypCloudTests
             Assert.IsNull(certificat); 
             
         }
-
+        [Ignore] // depends on enviroment
         [TestMethod]
         public void LoadCertificateFromFile_validPassword()
         {
@@ -38,7 +39,7 @@ namespace CrypCloudTests
 
             Assert.IsTrue(userCertificatIsKnown);
         }
-
+        [Ignore] // depends on enviroment
         [TestMethod]
         public void CertificatIsUnknown_knownCertificat()
         {

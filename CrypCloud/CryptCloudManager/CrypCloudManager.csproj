@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AEA1242F-467D-47F7-9A24-B55584BF0419}</ProjectGuid>
+    <ProjectGuid>{9925A476-C298-4224-BF66-A18688202E64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CrypCloud.Manager</RootNamespace>

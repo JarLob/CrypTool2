@@ -479,7 +479,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrypCloud\CryptCloudManager\CrypCloudManager.csproj">
-      <Project>{AEA1242F-467D-47F7-9A24-B55584BF0419}</Project>
+      <Project>{9925A476-C298-4224-BF66-A18688202E64}</Project>
       <Name>CrypCloudManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
