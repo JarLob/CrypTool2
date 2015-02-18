@@ -67,7 +67,7 @@
 		<item><b>Umkehren:</b> Kehrt die Zeichenkette des ersten Texteingangs um</item>
     <item><b>Passwortersetzung:</b>Fügt einem Text ein Passwort am Anfang oder Ende hinzu und entfernt alle Zeichen des Passwortes aus dem restlichen Text</item>
     <item><b>Eindeutig:</b> Entfernt alle doppelten Vorkommen von gleichen Symbolen aus dem Text</item>
-    <item><b>Levenshtein-Distanz:</b> Berechnet die Levenshtein-Distanz von zwei gegeben Texten</item>
+    <item><b>Levenshtein-Distanz:</b> Berechnet die Levenshtein-Distanz von zwei gegebenen Texten</item>
     </enum>    
   </usage>
   
