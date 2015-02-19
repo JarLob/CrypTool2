@@ -478,14 +478,17 @@
     <Resource Include="images\Open32.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrypCloud\CryptCloudManager\CrypCloudManager.csproj">
+    <ProjectReference Include="..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
+      <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
+      <Name>CrypCloudCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypCloud\CrypCloudManager\CrypCloudManager.csproj">
       <Project>{9925A476-C298-4224-BF66-A18688202E64}</Project>
       <Name>CrypCloudManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">
       <Project>{FF5D473C-0716-4D3E-9078-2EBD979F94C6}</Project>
       <Name>CrypCore</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>

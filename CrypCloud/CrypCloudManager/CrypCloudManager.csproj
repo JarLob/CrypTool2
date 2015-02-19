@@ -133,7 +133,7 @@
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>
       <Name>WorkspaceManagerModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CryptCloudCore\CrypCloudCore.csproj">
+    <ProjectReference Include="..\CrypCloudCore\CrypCloudCore.csproj">
       <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
       <Name>CrypCloudCore</Name>
     </ProjectReference>
