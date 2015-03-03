@@ -18,56 +18,60 @@ using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 using CrypCloud.Core;
-using CrypCloud.Manager.Controller; 
+using CrypCloud.Manager.Services;
+using CrypCloud.Manager.ViewModels;
 using Cryptool.Core; 
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor;
-using voluntLib;
+using Cryptool.PluginBase.Editor; 
 
 namespace CrypCloud.Manager
-{ 
+{
+    public enum ScreenPaths { Login, JobList, JobCreation, Wed, Thu, Fri };
+
     [TabColor("orange")]
     [EditorInfo("CrypCloud", false, true, false, false, true)]
-    [Author("Paul Lelgemann", "lelgemann@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("CrypCloudManager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/DetailedDescription/Description.xaml", "CrypCloudManager/images/icon.png")]
+    [Author("Christopher Konze", "c.konze@uni.de", "Universität Kassel", "")]
+    [PluginInfo("CrypCloudManager.Properties.Resources", "PluginCaption", "PluginTooltip", 
+        "CrypCloudManager/DetailedDescription/Description.xaml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
-    { 
-        private readonly LoginController loginController;
-        private readonly JobListController jobListController;
-        private readonly JobCreationController jobCreationController;
-
+    {
+        private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
 
         public CrypCloudManager()
         {
             var crypCloudPresentation = new CrypCloudPresentation();
-            loginController = new LoginController(this, crypCloudPresentation.Login);
-            jobListController = new JobListController(this, crypCloudPresentation.JobList);
-            jobCreationController = new JobCreationController(this, crypCloudPresentation.JobCreation);
-
-
             Presentation = crypCloudPresentation;
+            AddScreensToNavigator(crypCloudPresentation);
+        }
+
+        private void AddScreensToNavigator(CrypCloudPresentation crypCloudPresentation)
+        {
+            //viewmodels are created in the xaml file due to autocomplete and typesafty reasons
+            var loginVm = (ScreenViewModel) crypCloudPresentation.Login.DataContext;
+            screenNavigator.AddScreenWithPath(loginVm, ScreenPaths.Login);
+
+            var jobListVm = (ScreenViewModel) crypCloudPresentation.JobList.DataContext;
+            screenNavigator.AddScreenWithPath(jobListVm, ScreenPaths.JobList);
+
+            var jobCreateVm = (ScreenViewModel)crypCloudPresentation.JobCreation.DataContext;
+            screenNavigator.AddScreenWithPath(jobCreateVm, ScreenPaths.JobCreation);
         }
 
         public void New()
         {
-            loginController.Activate();
-        }
-        
-        public void OpenJobListView()
-        {
-            jobCreationController.Deactivate();
-            loginController.Deactivate();
-            jobListController.Activate();
-        }
+            if (! CertificatHelper.DoesDirectoryExists())
+            {
+                CertificatHelper.CreateDirectory();
+            }
+            if (! WorkspaceHelper.DoesDirectoryExists())
+            {
+                WorkspaceHelper.CreateDirectory();
+            }
 
-        public void OpenJobCreationView()
-        {
-            loginController.Deactivate();
-            jobListController.Deactivate();
-            jobCreationController.Activate();
+            screenNavigator.ShowScreenWithPath(CrypCloudCore.Instance.IsRunning ? ScreenPaths.JobList
+                                                                                : ScreenPaths.Login);
         }
-
 
         public void GuiLogMessage(string message, NotificationLevel notificationLevel)
         {
@@ -79,10 +83,10 @@ namespace CrypCloud.Manager
             var guiLogEvent = new GuiLogEventArgs(message, this, notificationLevel) { Title = "-" };
             OnGuiLogNotificationOccured(this, guiLogEvent);
         }
-
+        
         public void Open(string fileName)
         {
-            GuiLogMessage("CryptCloudManager: Open(" + fileName + ")", NotificationLevel.Debug);
+            GuiLogMessage("CryptCloudManager: OpenFileDialog(" + fileName + ")", NotificationLevel.Debug);
             if (OnFileLoaded != null)
             {
                 OnFileLoaded(this, fileName);
@@ -270,5 +274,6 @@ namespace CrypCloud.Manager
 
         #endregion
 
-    }
+    } 
+   
 }

@@ -1514,10 +1514,9 @@ namespace Cryptool.CrypWin
                     TabInfo info = new TabInfo();
 
                     try 
-                    { 
-                        //removed P2P Editor: kopal 04.11.2014
+                    {  
                         if (editorType == typeof(CrypCloud.Manager.CrypCloudManager))
-                            info.Title = CrypCloud.Manager.Properties.Resources.P2PEditor_Tab_Caption;
+                            info.Title = CrypCloud.Manager.Properties.Resources.Tab_Caption;
                         else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
                             info.Title = WorkspaceManager.Properties.Resources.unnamed_project;
                         else

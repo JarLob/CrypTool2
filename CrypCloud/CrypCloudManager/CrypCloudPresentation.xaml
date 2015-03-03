@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:screens="clr-namespace:CrypCloud.Manager.Screens"
-             mc:Ignorable="d" d:DesignHeight="278" d:DesignWidth="652">
+             xmlns:screens="clr-namespace:CrypCloud.Manager.Screens" 
+             mc:Ignorable="d" d:DesignHeight="278" d:DesignWidth="652"> 
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -22,8 +22,9 @@
             </RadialGradientBrush>
         </Grid.Background>
 
-        <screens:Login x:Name="Login" Visibility="Hidden"/>
-        <screens:JobList x:Name="JobList" Visibility="Hidden"/>
-        <screens:JobCreation x:Name="JobCreation" Visibility="Hidden"/>
+        <screens:Login x:Name="Login" />
+        <screens:JobList x:Name="JobList"/> 
+        <screens:JobCreation x:Name="JobCreation"/>
+
     </Grid>
 </UserControl>

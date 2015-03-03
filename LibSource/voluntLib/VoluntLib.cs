@@ -198,15 +198,16 @@ namespace voluntLib
 
         #endregion
 
+        public string CertificateName { get; private set; }
+
         #region internal Members
 
         private readonly Random randomGen = new Random();
         private readonly List<SendingTCPCommunicator> tcpCommunicatorToAdd = new List<SendingTCPCommunicator>();
-        private string certificateName;
         private ReceivingTCPCommunicator receivingTCPCom;
+
         protected CommunicationLayer CommunicationLayer { get; private set; }
         protected ManagementLayer ManagementLayer { get; private set; }
-
         protected NetworkBridgeCommunicationLayer NetworkBridgeCommunicationLayer { get; private set; }
         protected NetworkBridgeManagementLayer NetworkBridgeManagementLayer { get; private set; }
 
@@ -322,11 +323,11 @@ namespace voluntLib
         public virtual void Init(X509Certificate2 caCertificate, X509Certificate2 ownCertificate, MulticastCommunicator communicator)
         {
             if (ownCertificate.SubjectName.Name != null)
-                certificateName = ownCertificate.SubjectName.Name.Split('=').Last();
+                CertificateName = ownCertificate.SubjectName.Name.Split('=').Last();
 
             ManagementLayer = new ManagementLayer
             {
-                CertificateName = certificateName,
+                CertificateName = CertificateName,
                 MaximumBackoffTime = MaximumBackoffTime
             };
 
@@ -484,7 +485,7 @@ namespace voluntLib
                 StateConfig = copyOfDefaultStateConfig,
                 JobDescription = DefaultEncoding.GetBytes(description),
                 JobPayload = payload,
-                Creator = certificateName
+                Creator = CertificateName
             };
 
             ManagementLayer.CreateNetworkJob(job);

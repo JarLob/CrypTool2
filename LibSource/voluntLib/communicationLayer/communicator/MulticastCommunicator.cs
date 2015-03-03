@@ -106,8 +106,14 @@ namespace voluntLib.communicationLayer.communicator
             {
                 var ip = new IPEndPoint(LocalInterface, port);
                 var receivedBytes = client.EndReceive(asyncResult, ref ip);
-                Console.Out.WriteLine(lastOutboundPackets.Count);
-                if (!lastOutboundPackets.Any(bytes => bytes.SequenceEqual(receivedBytes)))
+
+                var allreadyHandeld = false;
+                lock (lastOutboundPackets)
+                {
+                    allreadyHandeld = lastOutboundPackets.Any(bytes => bytes.SequenceEqual(receivedBytes)); 
+                }
+
+                if ( ! allreadyHandeld)
                 {
                     CommunicationLayer.HandleIncomingMessages(receivedBytes, IPAddress.Broadcast);
                 }
@@ -125,7 +131,11 @@ namespace voluntLib.communicationLayer.communicator
         {
             var bytes = data.Serialize();
 
-            lastOutboundPackets.Add(bytes);
+            lock (lastOutboundPackets)
+            {
+                lastOutboundPackets.Add(bytes);
+            }
+
             if (lastOutboundPackets.Count >= 5)
             {
                 lastOutboundPackets.Remove(lastOutboundPackets.First());

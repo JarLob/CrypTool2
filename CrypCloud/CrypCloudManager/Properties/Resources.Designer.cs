@@ -61,6 +61,87 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Back ähnelt.
+        /// </summary>
+        public static string _BackToList {
+            get {
+                return ResourceManager.GetString("_BackToList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
+        /// </summary>
+        public static string _DeleteJob {
+            get {
+                return ResourceManager.GetString("_DeleteJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Discription : ähnelt.
+        /// </summary>
+        public static string _Discription {
+            get {
+                return ResourceManager.GetString("_Discription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name : ähnelt.
+        /// </summary>
+        public static string _Name {
+            get {
+                return ResourceManager.GetString("_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Currently there is no active job. ähnelt.
+        /// </summary>
+        public static string _NoActiveJobs {
+            get {
+                return ResourceManager.GetString("_NoActiveJobs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open ähnelt.
+        /// </summary>
+        public static string _OpenJob {
+            get {
+                return ResourceManager.GetString("_OpenJob", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Publish Job ähnelt.
+        /// </summary>
+        public static string _Publish {
+            get {
+                return ResourceManager.GetString("_Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job Type : ähnelt.
+        /// </summary>
+        public static string _Type {
+            get {
+                return ResourceManager.GetString("_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Workspace : ähnelt.
+        /// </summary>
+        public static string _WorkspacePath {
+            get {
+                return ResourceManager.GetString("_WorkspacePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap account {
@@ -77,6 +158,15 @@ namespace CrypCloud.Manager.Properties {
             get {
                 object obj = ResourceManager.GetObject("connected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new account ähnelt.
+        /// </summary>
+        public static string Create_a_new_account_ {
+            get {
+                return ResourceManager.GetString("Create_a_new_account_", resourceCulture);
             }
         }
         
@@ -121,92 +211,11 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Back ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud ähnelt.
         /// </summary>
-        public static string JobCreate_BackToList {
+        public static string Tab_Caption {
             get {
-                return ResourceManager.GetString("JobCreate_BackToList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Discription : ähnelt.
-        /// </summary>
-        public static string JobCreate_Discription {
-            get {
-                return ResourceManager.GetString("JobCreate_Discription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Name : ähnelt.
-        /// </summary>
-        public static string JobCreate_Name {
-            get {
-                return ResourceManager.GetString("JobCreate_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Publish Job ähnelt.
-        /// </summary>
-        public static string JobCreate_Publish {
-            get {
-                return ResourceManager.GetString("JobCreate_Publish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Job Type : ähnelt.
-        /// </summary>
-        public static string JobCreate_Type {
-            get {
-                return ResourceManager.GetString("JobCreate_Type", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Workspace : ähnelt.
-        /// </summary>
-        public static string JobCreate_WorkspacePath {
-            get {
-                return ResourceManager.GetString("JobCreate_WorkspacePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
-        /// </summary>
-        public static string JobList_DeleteJob {
-            get {
-                return ResourceManager.GetString("JobList_DeleteJob", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Currently there is no active job. ähnelt.
-        /// </summary>
-        public static string JobList_NoActiveJobs {
-            get {
-                return ResourceManager.GetString("JobList_NoActiveJobs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open ähnelt.
-        /// </summary>
-        public static string JobList_OpenJob {
-            get {
-                return ResourceManager.GetString("JobList_OpenJob", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hi ich bin zu faul, die resources richtig zu machen. ähnelt.
-        /// </summary>
-        public static string P2PEditor_Tab_Caption {
-            get {
-                return ResourceManager.GetString("P2PEditor_Tab_Caption", resourceCulture);
+                return ResourceManager.GetString("Tab_Caption", resourceCulture);
             }
         }
     }

@@ -80,11 +80,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CertificatHelper.cs" />
-    <Compile Include="Controller\Controller.cs" />
-    <Compile Include="Controller\JobListController.cs" />
-    <Compile Include="Controller\JobCreationController.cs" />
-    <Compile Include="Controller\LoginController.cs" />
     <Compile Include="CrypCloudManager.cs" />
     <Compile Include="CrypCloudPresentation.xaml.cs">
       <DependentUpon>CrypCloudPresentation.xaml</DependentUpon>
@@ -95,6 +90,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter .cs" />
     <Compile Include="Screens\JobCreation.xaml.cs">
       <DependentUpon>JobCreation.xaml</DependentUpon>
     </Compile>
@@ -104,8 +101,15 @@
     <Compile Include="Screens\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Screens\ScreenOps.cs" />
-    <Compile Include="ViewModel\NetworkJobVM.cs" />
+    <Compile Include="Services\CertificatHelper.cs" />
+    <Compile Include="Services\ScreenNavigator.cs" />
+    <Compile Include="Services\WorkspaceHelper.cs" />
+    <Compile Include="ViewModels\Base\ScreenViewModel.cs" />
+    <Compile Include="ViewModels\Helper\RelayCommand.cs" />
+    <Compile Include="ViewModels\JobCreationVM.cs" />
+    <Compile Include="ViewModels\JobListVM.cs" />
+    <Compile Include="ViewModels\LoginVM.cs" />
+    <Compile Include="ViewModels\Pocos\NetworkJobItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypCore\CrypCore.csproj">
@@ -183,6 +187,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Screens\Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Screens\Styles\ProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\account.png" />
@@ -202,7 +214,9 @@
     <Resource Include="Images\delete.png" />
     <Resource Include="Images\open.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\download.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

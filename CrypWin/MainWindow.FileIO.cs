@@ -55,7 +55,7 @@ namespace Cryptool.CrypWin
             }
         }
 
-        internal void OpenProjectInGuiThread(string fileName)
+        public void OpenProjectInGuiThread(string fileName)
         {
             this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {

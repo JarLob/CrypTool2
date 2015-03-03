@@ -59,7 +59,12 @@ namespace CrypCloud.Core
             voluntLib.InitAndStart(rootCertificat, ownCertificate);
             return true;
         }
-     
+
+        //TODO add admin names/move function over to voluntlib
+        public bool UserCanDeleteJob(NetworkJob job)
+        {
+           return job.Creator.Equals(voluntLib.CertificateName);
+        }
         
         public void RefreshJobList()
         {
@@ -78,23 +83,50 @@ namespace CrypCloud.Core
 
         public List<NetworkJob> GetJobs()
         {
+            if ( ! voluntLib.IsStarted)
+            {
+                return new List<NetworkJob>();
+            }
+
            return voluntLib.GetJobsOfWorld(DefaultWorld);
+        }
+
+        public bool JobHasWorkspace(BigInteger jobId)
+        {
+            var job = voluntLib.GetJobByID(jobId);
+            return job != null && job.HasPayload();
+        }
+
+        public void DownloadWorkspaceOfJob(BigInteger jobId)
+        {
+            var job = voluntLib.GetJobByID(jobId);
+            if (job == null) 
+                return;
+
+            voluntLib.RequestJobDetails(job);
         }
 
         public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
-            if (job == null)
-            {
+            if (job == null || !job.HasPayload())
                 return null;
-            }
+
             var workspaceOfJob = PayloadSerialization.Deserialize(job.JobPayload);
             var cloudComonents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudComponent);
             foreach (var cloudComonent in cloudComonents)
             {
-                ((ACloudComponent)cloudComonent.Plugin).JobID = jobId;
+                ((ACloudComponent) cloudComonent.Plugin).JobID = jobId;
             }
             return workspaceOfJob;
+        }
+
+        public void DeleteJob(BigInteger jobId)
+        {
+            if (UserCanDeleteJob(voluntLib.GetJobByID(jobId)))
+            {
+                voluntLib.DeleteNetworkJob(jobId);
+            }
         }
 
         public bool CreateJob(string jobType, string jobName, string jobDescription, WorkspaceModel workspaceModel, BigInteger numberOfBlocks)
@@ -109,8 +141,18 @@ namespace CrypCloud.Core
 
         private static bool HasACloudComponent(WorkspaceModel workspaceModel)
         {
-            return workspaceModel.GetAllPluginModels().Any(pluginModel => pluginModel.Plugin is ACloudComponent);
+            try
+            {
+                return workspaceModel.GetAllPluginModels().Any(pluginModel => pluginModel.Plugin is ACloudComponent);
+            }
+            catch
+            {
+                return false;
+            }
         }
+
+   
+
 
         #region events 
 
@@ -124,6 +166,5 @@ namespace CrypCloud.Core
 
         #endregion
 
-      
     }
 }

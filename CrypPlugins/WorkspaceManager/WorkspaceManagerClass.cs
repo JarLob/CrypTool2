@@ -65,11 +65,12 @@ namespace WorkspaceManager
         /// <summary>
         /// Create a new Instance of the Editor
         /// </summary>
-        public WorkspaceManagerClass()
+        public WorkspaceManagerClass() : this(new WorkspaceModel()){}
+        public WorkspaceManagerClass(WorkspaceModel workspaceModel)
         {
             this.SelectedPluginsList = new ObservableCollection<ComponentVisual>();
             Settings = new WorkspaceManagerSettings(this);
-            WorkspaceModel = new WorkspaceModel();
+            WorkspaceModel = workspaceModel;
             WorkspaceModel.OnGuiLogNotificationOccured += this.GuiLogNotificationOccured;
             WorkspaceModel.MyEditor = this;
             WorkspaceSpaceEditorView = new EditorVisual(WorkspaceModel);
@@ -107,9 +108,7 @@ namespace WorkspaceManager
         }
 
         public event EventHandler executeEvent;     //Event for BinSettingsVisual to notice when executing, to disable settings that may not be changed during execution       
-
-
-
+        
         #region IEditor Members
 
         /// <summary>

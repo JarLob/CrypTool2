@@ -1,7 +1,14 @@
 ﻿<UserControl x:Class="CrypCloud.Manager.Screens.Login"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Grid>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
+             xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter">
+    
+    <UserControl.DataContext>
+        <viewModels:LoginVM />
+    </UserControl.DataContext>
+
+    <Grid Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15,15,15,15">
                 <Label Content="{Loc CrypTool_2_0_}" FontSize="20" HorizontalContentAlignment="Center" Width="200"/>
@@ -63,10 +70,11 @@
 
                         </Ellipse.RenderTransform>
                     </Ellipse>
-                </Grid>
-
+                </Grid> 
+                
                 <!-- messageBox -->
-                <Border Visibility="Hidden" Name="MessageBox" CornerRadius="5" BorderThickness="3" BorderBrush="Gold">
+                <Border CornerRadius="5" BorderThickness="3" BorderBrush="Gold" 
+                        Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" >
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="Khaki"/>
@@ -75,20 +83,27 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Image Name="Erroricon" Width="25" Grid.Row="1" Source="..\..\images\error.png" Visibility="Hidden" HorizontalAlignment="Left"/>
-                        <TextBlock Name="MessageLabel" Foreground="Red" Margin="35,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+                        
+                        <Image Name="Erroricon" Width="25" Grid.Row="1" Source="..\..\images\error.png" HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="35,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
                     </Grid>
                 </Border>
 
+                
                 <Label Width="200" Content="{Loc Username_}"/>
                 <Grid Width="200">
-                    <ComboBox Width="200" Name="UsernameInput" HorizontalAlignment="Left" IsEditable="True" IsTextSearchEnabled="True"></ComboBox>
+                    <ComboBox Width="200" 
+                              Name="UsernameInput" 
+                              HorizontalAlignment="Left" 
+                              IsEditable="True" 
+                              IsTextSearchEnabled="True"
+                              ItemsSource="{Binding Path=AvailableCertificates}"
+                              Text="{Binding Path=Username}"></ComboBox>
                 </Grid>
 
                 <Label Width="200" Content="{Loc Password_}"/>
-                    <PasswordBox Name="PasswordInput" Width="200" MaxLength="40"/>     
-                
-                <Label/>
+                    <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />     
+                <Label/> 
 
                 <TextBlock Width="200" FontSize="12"
                            Name="ForgotPasswordLabel"  
@@ -101,10 +116,7 @@
                 <TextBlock Width="200" 
                            FontSize="12"
                            Name="GetACertificateLabel"                           
-                           Cursor="Hand" HorizontalAlignment="Center" 
-                           IsEnabled="{Binding IsP2PConnecting, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" 
-                           Foreground="{Binding IsP2PConnecting, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
-                    <!--MouseDown="GetACertificateLabel_Click" -->
+                           Cursor="Hand" HorizontalAlignment="Center">
                     <Underline>
                         <ContentControl Content="{Loc Create_a_new_account_}"/>
                     </Underline>
@@ -115,8 +127,7 @@
                         Name="ConnectButton" 
                         IsDefault="True" 
                         Content="{Loc ConnectButton_}" 
-                        Height="38" FontSize="20"
-                        Click="LoginButtonClick" />
+                        Height="38" FontSize="20" Command="{Binding Path=LoginCommand}" IsEnabled="True" />
 
             </StackPanel>
         </ScrollViewer>
