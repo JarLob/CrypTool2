@@ -11,10 +11,8 @@
         <ResourceDictionary>
             <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Colors.xaml" />
-                <ResourceDictionary Source="Styles/Button.xaml" />
-                <ResourceDictionary Source="Styles/ProgressBar.xaml" />
+            <ResourceDictionary.MergedDictionaries> 
+                <ResourceDictionary Source="Styles/Button.xaml" /> 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

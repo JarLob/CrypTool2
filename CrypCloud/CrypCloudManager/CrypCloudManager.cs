@@ -37,6 +37,7 @@ namespace CrypCloud.Manager
     public class CrypCloudManager : IEditor
     {
         private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
+      //  public event OpenTabHandler OnOpenTab;
 
         public CrypCloudManager()
         {
