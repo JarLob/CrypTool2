@@ -106,7 +106,8 @@ namespace Cryptool.Plugins.M_138
         /// </summary>
         public UserControl Presentation
         {
-            get {
+            get
+            {
                 return visualisation;
             }
             //get { return null; }
@@ -128,7 +129,6 @@ namespace Cryptool.Plugins.M_138
             catch (Exception e)
             {
             }
-            visualisation.IsVisibleChanged += visibilityHasChanged;
         }
 
         /// <summary>
@@ -144,7 +144,8 @@ namespace Cryptool.Plugins.M_138
             {
                 _characterCases = new List<int>(); //Save Cases of characters. 0 -> Lower case, 1 -> upper case
                 int i = 0;
-                foreach (char c in TextInput.ToArray()) {
+                foreach (char c in TextInput.ToArray())
+                {
                     if (Char.IsUpper(c))
                     {
                         _characterCases.Add(1);
@@ -180,20 +181,21 @@ namespace Cryptool.Plugins.M_138
 
             if (_offset > alphabet.Length)
             {
-                GuiLogMessage("Offset "+_offset+" is larger than strip length "+alphabet.Length+" and will be truncated", NotificationLevel.Warning);
+                GuiLogMessage("Offset " + _offset + " is larger than strip length " + alphabet.Length + " and will be truncated", NotificationLevel.Warning);
                 _offset = _offset % alphabet.Length;
             }
 
-            switch (settings.ModificationType) {
-                case (int) Commands.Encrypt:
+            switch (settings.ModificationType)
+            {
+                case (int)Commands.Encrypt:
                     Encrypt();
                     break;
-                case (int) Commands.Decryp:
+                case (int)Commands.Decryp:
                     Decrypt();
                     break;
                 default:
                     GuiLogMessage("Invalid Selection", NotificationLevel.Error);
-                    return; 
+                    return;
             }
             OnPropertyChanged("TextOutput");
             ProgressChanged(1, 1);
@@ -232,6 +234,7 @@ namespace Cryptool.Plugins.M_138
             catch (Exception e)
             {
             }
+            visualisation.IsVisibleChanged += visibilityHasChanged;
         }
 
         /// <summary>
@@ -317,12 +320,15 @@ namespace Cryptool.Plugins.M_138
             {
                 foreach (char c in text)
                 {
-                    if(alphabet.Contains(c.ToString())) {
+                    if (alphabet.Contains(c.ToString()))
+                    {
                         numbers[position] = alphabet.IndexOf(c);
                     }
-                    else {
+                    else
+                    {
                         numbers[position] = -1;
-                        if(inv==1) {
+                        if (inv == 1)
+                        {
                             _ignoredCharacters.Add(c.ToString());
                         }
                     }
@@ -401,7 +407,7 @@ namespace Cryptool.Plugins.M_138
                 for (int c = 0; c < _columns; c++)
                 {
                     toVisualize[0, c + 2] = c.ToString(); //First row of Visualisation
-                    if (deOrEncrypt == (int) Commands.Encrypt)
+                    if (deOrEncrypt == (int)Commands.Encrypt)
                     {
                         if (isAt != -1)
                         {
@@ -412,7 +418,7 @@ namespace Cryptool.Plugins.M_138
                             toVisualize[r + 1, c + 2] = "?"; //Can't show strips for invalid characters
                         }
                     }
-                    else if (deOrEncrypt == (int) Commands.Decryp)
+                    else if (deOrEncrypt == (int)Commands.Decryp)
                     {
                         if (isAt != -1)
                         {
@@ -431,7 +437,7 @@ namespace Cryptool.Plugins.M_138
                 }
                 switch (deOrEncrypt)
                 {
-                    case (int) Commands.Encrypt:
+                    case (int)Commands.Encrypt:
                         if (isAt != -1)
                         {
                             output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
@@ -441,7 +447,7 @@ namespace Cryptool.Plugins.M_138
                             output[r] = -1;
                         }
                         break;
-                    case (int) Commands.Decryp:
+                    case (int)Commands.Decryp:
                         if (isAt != -1)
                         {
                             output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
@@ -503,41 +509,41 @@ namespace Cryptool.Plugins.M_138
 
             TextOutput = tmpOutput;
 
-                        if (visualisation.IsVisible)
+            if (visualisation.IsVisible)
             {
-            UpdateGUI();
-                        }
+                UpdateGUI();
+            }
         }
 
         private void UpdateGUI()
         {
 
-                try
+            try
+            {
+                Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    try
                     {
-                        try
-                        {
-                            //visualisation.DataContext = this;
-                            Binding2DArrayToListView(visualisation.lvwArray, tmpToVis, colNames);
-                        }
-                        catch (Exception e)
-                        {
-                            GuiLogMessage(e.StackTrace, NotificationLevel.Error);
-                        }
-                    }, null);
-                }
-                catch (Exception e)
-                {
-                    //Console.WriteLine(e.StackTrace);
-                    //GuiLogMessage(e.StackTrace, NotificationLevel.Error);
-                }
-            
+                        Binding2DArrayToListView(visualisation.lvwArray, tmpToVis, colNames);
+                    }
+                    catch (Exception e)
+                    {
+                        //GuiLogMessage(e.StackTrace, NotificationLevel.Error);
+                    }
+                }, null);
+            }
+            catch (Exception e)
+            {
+            }
+
         }
 
         private void visibilityHasChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            UpdateGUI();
+            if (visualisation.IsVisible)
+            {
+                UpdateGUI();
+            }
         }
 
         private void Encrypt()
@@ -589,22 +595,23 @@ namespace Cryptool.Plugins.M_138
                 return;
             }
             _stripNumbers = new int[s1.Length];
-            for ( int i=0; i < s1.Length; i++) {
+            for (int i = 0; i < s1.Length; i++)
+            {
                 _stripNumbers[i] = Convert.ToInt32(s1[i]);
                 if (_stripNumbers[i] > stripes.Count)
                 {
-                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count+". Using default strip 1 instead", NotificationLevel.Error);
+                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count + ". Using default strip 1 instead", NotificationLevel.Error);
                     _stripNumbers[i] = 1;
                 }
             }
         }
-        private void Binding2DArrayToListView (DataGrid dataGrid, string[,] data, string[] columnNames)
+        private void Binding2DArrayToListView(DataGrid dataGrid, string[,] data, string[] columnNames)
         {
             dataGrid.AutoGeneratingColumn += dgvMailingList_AutoGeneratingColumn;
             Check2DArrayMatchColumnNames(data, columnNames);
             DataTable dt = Convert2DArrayToDataTable(data, columnNames);
             dataGrid.ItemsSource = dt.DefaultView;
- 
+
         }
 
         private void dgvMailingList_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -622,7 +629,7 @@ namespace Cryptool.Plugins.M_138
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.MinHeightProperty, Double.Parse("30")));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.MinWidthProperty, Double.Parse("30")));
             }
-            else if (e.Column.Header.Equals(_offset.ToString())) 
+            else if (e.Column.Header.Equals(_offset.ToString()))
             {
                 e.Column.CellStyle = new Style(typeof(DataGridCell));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.BackgroundProperty, new SolidColorBrush(Colors.Red)));
@@ -670,7 +677,7 @@ namespace Cryptool.Plugins.M_138
                 throw new Exception("The second dimensional length must equals column names.");
             }
         }
-        
+
         #endregion
     }
 }
