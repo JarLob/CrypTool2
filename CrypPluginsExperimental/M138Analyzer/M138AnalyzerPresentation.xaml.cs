@@ -14,11 +14,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace M138Analyzer
+namespace Cryptool.M138Analyzer
 {
     /// <summary>
     /// Interaktionslogik für M138AnalyzerPresentation.xaml
     /// </summary>
+    [PluginBase.Attributes.Localization("Cryptool.M138Analyzer.Properties.Resources")]
     public partial class M138AnalyzerPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();

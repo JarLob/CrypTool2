@@ -24,7 +24,6 @@ using System;
 using Cryptool.PluginBase.IO;
 using System.Windows.Threading;
 using System.Threading;
-using M138Analyzer;
 using System.Linq;
 using System.Collections.ObjectModel;
 
