@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.Numbers
                 }
                 catch (Exception ex)
                 {
-                    _presentation.StatusBar.Content = (ex is OutOfMemoryException || ex is OverflowException) ? "Overflow" : "Not a number";
+                    _presentation.StatusBar.Content = (ex is OutOfMemoryException || ex is OverflowException) ? "Overflow" : (ex is TimeoutException) ? "Timeout" : "Not a number";
                     return;
                 }
 
@@ -150,7 +150,7 @@ namespace Cryptool.Plugins.Numbers
             if (!finished)
             {
                 workerThread.Abort();
-                throw new OverflowException();
+                throw new TimeoutException();
             }
 
             if (status == 1)
@@ -249,13 +249,37 @@ namespace Cryptool.Plugins.Numbers
             _running = true;
         }
 
+        Thread thread = null;
         public void Execute()
+        {
+            try
+            {
+                if (thread != null && thread.IsAlive)
+                    thread.Abort();
+            }
+            catch (Exception ex)
+            {
+            }
+            thread = new Thread(() => Execute2());
+            thread.IsBackground = true;
+            thread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
+            thread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+            thread.Start();
+
+            //thread.Join();
+        }
+
+        public void Execute2()
         {
             ProgressChanged(0.0, 1.0);
 
             try
             {
                 NumberOutput = GetNumber();
+            }
+            catch (ThreadAbortException ex)
+            {
+                return;
             }
             catch (Exception ex)
             {
@@ -274,6 +298,8 @@ namespace Cryptool.Plugins.Numbers
         public void Stop()
         {
             _running = false;
+            if (thread != null && thread.IsAlive)
+                thread.Abort();
         }
 
         public void Initialize()
