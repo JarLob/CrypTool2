@@ -130,22 +130,22 @@
     <value>Found IC</value>
   </data>
   <data name="InputCipherCaption" xml:space="preserve">
-    <value>Cipher Input</value>
+    <value>Ciphertext Input</value>
   </data>
   <data name="InputCipherTooltip" xml:space="preserve">
-    <value>Enter your cipher here</value>
+    <value>Enter the ciphertext here.</value>
   </data>
   <data name="InputKeylengthCaption" xml:space="preserve">
     <value>Keylength Input</value>
   </data>
   <data name="InputKeylengthTooltip" xml:space="preserve">
-    <value>Enter the assumed keylength from the autokorrelationfunction here</value>
+    <value>Enter the assumed keylength from the autocorrelation function here.</value>
   </data>
   <data name="InputCorpusCaption" xml:space="preserve">
     <value>Text corpus Input</value>
   </data>
   <data name="InputCorpusTooltip" xml:space="preserve">
-    <value>Enter your sample text here or choose a language from the task-pane</value>
+    <value>Enter your sample text here or choose a language from the task-pane.</value>
   </data>
   <data name="LanguageCaption" xml:space="preserve">
     <value>Expected Language</value>
@@ -163,7 +163,7 @@
     <value>Spanish</value>
   </data>
   <data name="LanguageTooltip" xml:space="preserve">
-    <value>Select the language you expect the plaintext to be.</value>
+    <value>Select the expected language of the plaintext.</value>
   </data>
   <data name="ModusCaption" xml:space="preserve">
     <value>Modus</value>
@@ -175,7 +175,7 @@
     <value>Vigenère</value>
   </data>
   <data name="ModusTooltip" xml:space="preserve">
-    <value>Select the modus you want to work with</value>
+    <value>Select the modus you want to work with.</value>
   </data>
   <data name="OutputKeyCaption" xml:space="preserve">
     <value>Key Output</value>
@@ -193,6 +193,6 @@
     <value>External alphabet input</value>
   </data>
   <data name="InputAlphabetTooltip" xml:space="preserve">
-    <value>Input a string containing the alhabet which should be used by Vigenère. If no alphabet is provided on this input, the internal alphabet will be used.</value>
+    <value>Input a string containing the alphabet which should be used by Vigenère. If no alphabet is provided on this input, the internal alphabet will be used.</value>
   </data>
 </root>
