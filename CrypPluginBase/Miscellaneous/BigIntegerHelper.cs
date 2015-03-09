@@ -371,6 +371,35 @@ namespace Cryptool.PluginBase.Miscellaneous
 
             BigInteger result = 0;
 
+            //int numdigits = Math.Min(1000, expr.Length / 2);
+            //BigInteger multibasis = BigInteger.Pow(basis, numdigits);
+
+            BigInteger multibasis = basis;
+            int numdigits = 1;
+            while (numdigits < expr.Length/2 && multibasis < limit)
+            {
+                multibasis *= basis;
+                numdigits++;
+            }
+
+            int t = expr.Length % numdigits;
+            if (t == 0) t = numdigits;
+            for (int f = 0; f < expr.Length; t += numdigits)
+            {
+                result = result * multibasis + Parse2(expr.Substring(f, t-f), basis);
+                f = t;
+            }
+
+            return result;
+        }
+
+        public static BigInteger Parse2(string expr, int basis)
+        {
+            if (basis < 2)
+                throw new Exception(string.Format("Illegal base {0} (must be >=2).", basis));
+
+            BigInteger result = 0;
+
             foreach (var c in expr)
             {
                 int d = digits.IndexOf(c.ToString().ToLower());
@@ -382,32 +411,82 @@ namespace Cryptool.PluginBase.Miscellaneous
             return result;
         }
 
+        static private BigInteger limit = BigInteger.Pow(10, 100);
+
         public static string ToBaseString(this BigInteger n, int basis)
         {
             if (basis < 2)
                 throw new Exception(string.Format("Illegal base {0} (must be >=2).", basis));
 
-            string result = "";
+            StringBuilder result = new StringBuilder();
 
             int sign = (n < 0) ? -1 : 1;
-            if(n<0) n = -n;
+            n = BigInteger.Abs(n);
+
+            BigInteger multibasis = basis;
+            int exp = 1;
+            while (multibasis < n && multibasis < limit)
+            {
+                multibasis *= basis;
+                exp++;
+            }
 
             do
             {
                 try
                 {
-                    result = digits[(int)(n % basis)] + result;
+                    //result.Insert(0, digits[(int)(n % basis)]);
+                    ////result.Append(digits[(int)(n % basis)]);
+                    //result = digits[(int)(n % basis)] + result;
+                    result.Insert(0, ToBaseString_NumDigits(n % multibasis,basis,(n<multibasis)?-1:exp));
+                    n /= multibasis;
                 }
                 catch (IndexOutOfRangeException ex)
                 {
                     throw new Exception(string.Format("Can't convert input to base {0}.", basis));
                 }
-                n /= basis;
+                //n /= basis;
             } while (n != 0);
 
-            if(sign==-1) result = "-" + result;
+            //if (sign == -1) result = "-" + result;
+            if (sign == -1) result.Insert(0, '-');
+            //if (sign == -1) result.Append('-');
 
-            return result;
+            //char[] chars = new char[result.Length];
+            //result.CopyTo(0, chars, 0, chars.Length);
+            //Array.Reverse(chars);
+            //return new string(chars);
+
+            return result.ToString();
+        }
+
+        public static string ToBaseString_NumDigits(this BigInteger n, int basis, int numdigits)
+        {
+            if (basis < 2)
+                throw new Exception(string.Format("Illegal base {0} (must be >=2).", basis));
+
+            StringBuilder result = new StringBuilder();
+
+            int sign = (n < 0) ? -1 : 1;
+            n = BigInteger.Abs(n);
+
+            try
+            {
+                for (int i = 0; ; i++)
+                {
+                    result.Insert(0, digits[(int)(n % basis)]);
+                    n /= basis;
+                    if ((numdigits < 0 && n == 0) || i == numdigits - 1) break;
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                throw new Exception(string.Format("Can't convert input to base {0}.", basis));
+            }
+
+            if (sign == -1) result.Insert(0, '-');
+
+            return result.ToString();
         }
 
         public static BigInteger Pow(BigInteger b, BigInteger e)
@@ -758,6 +837,7 @@ namespace Cryptool.PluginBase.Miscellaneous
         public static BigInteger Factorial(this BigInteger n)
         {
             if (n < 0) throw new ArithmeticException("The factorial of a negative number is not defined");
+            if (n > 1000000000) throw new OverflowException();
 
             BigInteger result = 1;
             BigInteger counter = n;
