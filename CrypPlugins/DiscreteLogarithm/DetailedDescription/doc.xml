@@ -7,15 +7,15 @@
   <introduction lang="en">
     This component can be used to calculate the discrete logarithm of any number based on a given modulo $N$ and base $b$.
     <newline/>
-    It uses David Shanks' baby-step giant-step algorithm, whose time and memory complexity is $O(sqrt(N))$.
-    Please note that the running time of the component may still be very long for big $N$.
+    It uses David Shanks' baby-step giant-step algorithm, whose time and memory complexity is O(sqrt(N)).
+    Please note that the running time of the component may still be very long for big N.
   </introduction>
 
   <introduction lang="de-DE">
     Diese Komponente berechnet den diskreten Logarithmus einer beliebigen Zahl (falls er existiert) bezüglich einem gegebenen Modul $N$ und einer gegebenen Basis $b$.
     <newline/>
-    Sie verwendet den Babystep-Giantstep-Algorithmus von Daniel Shanks, dessen Laufzeitkomplexität und Speicherbedarf $O(sqrt(N))$ beträgt.
-    Beachten Sie, dass für sehr große Werte für $N$ die Laufzeit auch sehr groß sein wird.
+    Sie verwendet den Babystep-Giantstep-Algorithmus von Daniel Shanks, dessen Laufzeitkomplexität und Speicherbedarf O(sqrt(N)) beträgt.
+    Beachten Sie, dass für sehr große Werte für N die Laufzeit auch sehr groß sein wird.
   </introduction>
 
   <usage lang="en">
@@ -26,7 +26,7 @@
     Calculation of a power y:  y = b^x mod N (b, N fix; x = independent variable)<newline/>
     Inverse function: Calculation of the exponent x:  x = log_b (y) mod N  (b, n fix; y = dependent variable)<newline/>
     <newline/>
-    Example with b=2 und N=11:<newline/>
+    Example with b=2 and N=11:<newline/>
     y = 3 = 2^8 mod 11<newline/>
     x = 8 = log_2 (3) mod 11<newline/>
   </usage>
