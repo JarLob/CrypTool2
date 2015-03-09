@@ -72,8 +72,10 @@ namespace TextOutput
             {
                 try
                 {
+                    Progress(0, 1);
                     input = value;
                     if (input != null) ShowInPresentation(input);
+                    Progress(1, 1);
                     OnPropertyChanged("Input");
                 }
                 catch(Exception ex)
@@ -139,14 +141,41 @@ namespace TextOutput
 
         private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines")
+            if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines" || e.PropertyName == "ShowDigits")
             {
-                textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setStatusBar();
-                }, null);
-                
+                setStatusBar();
+                //textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                //{
+                //    setStatusBar();
+                //}, null);
             }
+        }
+
+        Thread statusBarThread = null;
+        private void setStatusBar()
+        {
+            try
+            {
+                if (statusBarThread != null && statusBarThread.IsAlive)
+                    statusBarThread.Abort();
+            }
+            catch (Exception ex)
+            {
+            }
+
+            statusBarThread = new Thread(() => setStatusBar_invoke());
+            statusBarThread.IsBackground = true;
+            statusBarThread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
+            statusBarThread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+            statusBarThread.Start();
+        }
+
+        private void setStatusBar_invoke()
+        {
+            textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                setStatusBar_orig();
+            }, null);
         }
 
         private byte[] ConvertStreamToByteArray( ICryptoolStream stream )
@@ -181,6 +210,13 @@ namespace TextOutput
 
         private void ShowInPresentation(object value)
         {
+            //textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            //{
+            //    if (!settings.Append)
+            //        textOutputPresentation.textBox.Text = null;
+            //    clearStatusBar();
+            //}, null);
+
             if (value == null) return;
 
             string fillValue;
@@ -208,6 +244,11 @@ namespace TextOutput
                     s.Add((obj == null ? "null" : obj.ToString()));
 
                 fillValue = String.Join("\n",s);
+            }
+            else if (value is BigInteger)
+            {
+                //fillValue = BigIntegerHelper.ToBaseString((BigInteger)value, 10);
+                fillValue = value.ToString();   // ~ 2x faster than ToBaseString
             }
             else
             {
@@ -264,57 +305,79 @@ namespace TextOutput
             }
         }
 
-        void setStatusBar()
+        void clearStatusBar()
+        {
+            textOutputPresentation.labelBytes.Content = "";
+        }
+
+        void setStatusBar_orig()
         {
             // create status line string
+            textOutputPresentation.labelBytes.Content = "...";
+
             string s = textOutputPresentation.textBox.Text;
             string label = "";
 
-            if (Input is string)
+            if (settings.ShowDigits)
             {
-                var value = Input as string;
-                if(Regex.IsMatch(value, @"^-?\d+$"))
+                if (Input is string)
                 {
+                    var value = Input as string;
+                    if (Regex.IsMatch(value, @"^-?\d+$"))
+                    {
+                        try
+                        {
+                            input = BigIntegerHelper.Parse(value, 10);
+                        }
+                        catch (Exception)
+                        {
+                            //wtf ?
+                        }
+                    }
+                }
+
+                if (Input is Int16) input = (BigInteger)(int)(Int16)Input;
+                else if (Input is Int32) input = (BigInteger)(int)(Int32)Input;
+                else if (Input is byte) input = (BigInteger)(byte)Input;
+
+                if (Input is BigInteger)
+                {
+                    int digits = 0;
+                    int bits;
                     try
                     {
-                        input = BigInteger.Parse(value);
+                        BigInteger number = (BigInteger)input;
+                        double log2 = BigInteger.Log(BigInteger.Abs(number),2.0);
+                        if (log2 < 10000000)
+                        {
+                            bits = number.BitCount();
+                        }
+                        else
+                        {
+                            bits = (int)System.Math.Ceiling(log2);
+                            //bits = (int)(System.Math.Ceiling(log / System.Math.Log(2, 10)));
+                            //digits = (int)(System.Math.Ceiling(log) + 0.5);
+                            //digits = BigInteger.Abs(number).ToString().Length;
+                        }
+                        digits = s.Length;
+                        if (number < 0) digits--;
                     }
                     catch (Exception)
                     {
-                        //wtf ?
+                        digits = 0;
+                        bits = 0;
                     }
+                    string digitText = (digits == 1) ? Properties.Resources.Digit : Properties.Resources.Digits;
+                    string bitText = (bits == 1) ? Properties.Resources.Bit : Properties.Resources.Bits;
+                    label = string.Format(" {0:#,0} {1}, {2:#,0} {3}", digits, digitText, bits, bitText);
+                    textOutputPresentation.labelBytes.Content = label;
+                    return;
                 }
-            }
-
-            if (Input is Int16) input = (BigInteger)(int)(Int16)Input;
-            else if (Input is Int32) input = (BigInteger)(int)(Int32)Input;
-
-            if (Input is BigInteger)
-            {
-                int digits = 0;
-                int bits;
-                try
-                {
-                    BigInteger number = (BigInteger)input;
-                    bits = number.BitCount();
-                    digits = BigInteger.Abs(number).ToString().Length;
-                }
-                catch (Exception)
-                {
-                    digits = 0;
-                    bits = 0;
-                }
-                string digitText = (digits == 1) ? Properties.Resources.Digit : Properties.Resources.Digits;
-                string bitText = (bits == 1) ? Properties.Resources.Bit : Properties.Resources.Bits;
-                label = string.Format(" {0:#,0} {1}, {2} {3}", digits, digitText, bits, bitText);
-                textOutputPresentation.labelBytes.Content = label;
-                return;
             }
 
             if (settings.ShowChars)
             {
                 int chars = (s == null) ? 0 : s.Length;
-                //int bytes = Encoding.UTF8.GetBytes(textOutputPresentation.textBox.Text).Length;
                 string entity = (chars == 1) ? Properties.Resources.Char : Properties.Resources.Chars;
                 label += string.Format(" {0:#,0} " + entity, chars);
             }
@@ -360,6 +423,8 @@ namespace TextOutput
 
         public void Stop()
         {
+            if (statusBarThread != null && statusBarThread.IsAlive)
+                statusBarThread.Abort();
         }
 
         public void PreExecution()
@@ -367,8 +432,8 @@ namespace TextOutput
             textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 textOutputPresentation.textBox.Text = null;
-                input = null;
-                setStatusBar();
+                //input = null;
+                clearStatusBar();
             }, null);
         }
 

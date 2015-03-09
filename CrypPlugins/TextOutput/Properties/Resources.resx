@@ -195,4 +195,10 @@
   <data name="Digits" xml:space="preserve">
     <value>decimal digits</value>
   </data>
+  <data name="ShowDigitsCaption" xml:space="preserve">
+    <value>Number of digits and bits</value>
+  </data>
+  <data name="ShowDigitsTooltip" xml:space="preserve">
+    <value>With this checkbox enabled, the number of decimal digits and bits of the input is displayed in the status line of the component, provided the input consists only of digits.</value>
+  </data>
 </root>

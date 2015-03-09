@@ -192,4 +192,10 @@
   <data name="Digits" xml:space="preserve">
     <value>Dezimalziffern</value>
   </data>
+  <data name="ShowDigitsCaption" xml:space="preserve">
+    <value>Anzahl der Ziffern und Bits</value>
+  </data>
+  <data name="ShowDigitsTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen aktiviert ist, wird die Anzahl der Ziffern und Bits der Eingabe in der Statuszeile der Komponente angezeigt, falls die Eingabe nur aus Ziffern besteht.</value>
+  </data>
 </root>

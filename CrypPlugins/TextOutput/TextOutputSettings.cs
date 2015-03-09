@@ -30,14 +30,12 @@ namespace TextOutput
 
     const int maxmaxLength = int.MaxValue;
     private int maxLength = 65536; //64kB
-    private TextOutput myTextOutput;
 
     #endregion
 
     public TextOutputSettings(TextOutput textOutput)
     {
       if (textOutput == null) throw new ArgumentException("textOutput");
-      myTextOutput = textOutput;
     }
 
     #region settings
@@ -63,7 +61,6 @@ namespace TextOutput
     }
 
     private bool append = false;
-    [ContextMenu( "AppendCaption", "AppendTooltip", 1, ContextMenuControlType.CheckBox, null)]
     [TaskPane("AppendCaption", "AppendTooltip", "", 1, false, ControlType.CheckBox, "", null)]
     public bool Append
     {
@@ -94,7 +91,6 @@ namespace TextOutput
     }
 
     private bool showChars = true;
-    [ContextMenu("ShowCharsCaption", "ShowCharsTooltip", 3, ContextMenuControlType.CheckBox, null)]
     [TaskPane("ShowCharsCaption", "ShowCharsTooltip", "ShowCharsGroup", 3, true, ControlType.CheckBox, "", null)]
     public bool ShowChars
     {
@@ -110,7 +106,6 @@ namespace TextOutput
     }
 
     private bool showLines = true;
-    [ContextMenu("ShowLinesCaption", "ShowLinesTooltip", 4, ContextMenuControlType.CheckBox, null)]
     [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 4, true, ControlType.CheckBox, "", null)]
     public bool ShowLines
     {
@@ -121,6 +116,21 @@ namespace TextOutput
             {
                 showLines = value;
                 OnPropertyChanged("ShowLines");
+            }
+        }
+    }
+
+    private bool showDigits = false;
+    [TaskPane("ShowDigitsCaption", "ShowDigitsTooltip", "ShowCharsGroup", 5, true, ControlType.CheckBox, "", null)]
+    public bool ShowDigits
+    {
+        get { return showDigits; }
+        set
+        {
+            if (value != showDigits)
+            {
+                showDigits = value;
+                OnPropertyChanged("ShowDigits");
             }
         }
     }
