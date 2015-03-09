@@ -25,14 +25,18 @@ namespace Cryptool.M138Analyzer
     {
         #region Private Variables
         private int _analyticMode = 0;
-        
+        private int _language = 0;
+        private int _keyLength = 25;
+        private int _minOffset = 1;
+        private int _maxOffset = 26;
+        private string _retries;
 
         #endregion
 
         #region TaskPane Settings
 
-        [TaskPane("AnalyticModeCap", "AnalyticModeDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes" })]
-        public int AnalyticMode
+        [TaskPane("MathodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes" })]
+        public int Method
         {
             get
             {
@@ -43,6 +47,86 @@ namespace Cryptool.M138Analyzer
                 if (_analyticMode != value)
                 {
                     _analyticMode = value;
+                }
+            }
+        }
+
+        [TaskPane("LanguageCap", "LanguageDes", null, 0, false, ControlType.ComboBox, new string[] { "EnglishDes", "GermanDes" })]
+        public int LanguageSelection
+        {
+            get
+            {
+                return _language;
+            }
+            set
+            {
+                if (_language != value)
+                {
+                    _language = value;
+                }
+            }
+        }
+
+        [TaskPane("KeyLengthCap", "KeyLengthDes", null, 0, false, ControlType.TextBox)]
+        public int KeyLengthUserSelection
+        {
+            get
+            {
+                return _keyLength;
+            }
+            set
+            {
+                if (_keyLength != value)
+                {
+                    _keyLength = value;
+                }
+            }
+        }
+
+        [TaskPane("MinOffsetCap", "MinOffsetDes", null, 0, false, ControlType.TextBox)]
+        public int MinOffsetUserSelection
+        {
+            get
+            {
+                return _minOffset;
+            }
+            set
+            {
+                if (_minOffset != value)
+                {
+                    _minOffset = value;
+                }
+            }
+        }
+
+        [TaskPane("MaxOffsetCap", "MaxOffsetDes", null, 0, false, ControlType.TextBox)]
+        public int MaxOffsetUserSelection
+        {
+            get
+            {
+                return _maxOffset;
+            }
+            set
+            {
+                if (_maxOffset != value)
+                {
+                    _maxOffset = value;
+                }
+            }
+        }
+
+        [TaskPane("HillClimbRestartsCap", "HillClimbRestartsDes", null, 0, false, ControlType.TextBox)]
+        public string HillClimbRestarts
+        {
+            get
+            {
+                return _retries;
+            }
+            set 
+            {
+                if (_retries != value)
+                {
+                    _retries = value;
                 }
             }
         }

@@ -55,6 +55,10 @@ namespace Cryptool.M138Analyzer
         private bool _isStopped = true;
         private DateTime _startTime;
         private DateTime _endTime;
+        private int _selectedLanguage = 0;
+        private int MinOffsetUserSelect;
+        private int MaxOffsetUserSelect;
+        private int SelectedLanguage;
 
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
@@ -62,6 +66,9 @@ namespace Cryptool.M138Analyzer
         private int[] CiphertextNumbers;
         private int[] PlaintextNumbers;
         private int KeyLength = 25; //Default key for M138
+        private int RetryCounter;
+        private int MaxRetriesNecesary;
+        private double BestCostValueOfAllKeys = double.MinValue;
 
         private M138AnalyzerPresentation _presentation = new M138AnalyzerPresentation();
 
@@ -134,6 +141,12 @@ namespace Cryptool.M138Analyzer
             ProgressChanged(0, 1);
             _isStopped = false;
 
+            // Clear presentation
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                ((M138AnalyzerPresentation)Presentation).BestList.Clear();
+            }, null);
+
             //if (Ciphertext != null)
             //{
             //    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
@@ -142,7 +155,7 @@ namespace Cryptool.M138Analyzer
             //{
             //    PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
             //}
-            Attack = settings.AnalyticMode;
+            getUserSelections();
 
 
             switch (Attack)
@@ -166,6 +179,8 @@ namespace Cryptool.M138Analyzer
                     } //Ciphertext and Plaintext have the same length
                     Ciphertext = Ciphertext.ToUpper();
                     Plaintext = Plaintext.ToUpper();
+                    ResultText = Plaintext;
+                    OnPropertyChanged("ResultText");
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
                     PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
                     int _textLength = Plaintext.Length;
@@ -178,6 +193,7 @@ namespace Cryptool.M138Analyzer
                     //TextLength should be at least 25
                     for (int i = 0; i < KeyLength; i++)
                     {
+                        ProgressChanged(i, KeyLength);
                         _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
@@ -201,12 +217,8 @@ namespace Cryptool.M138Analyzer
                         return;
                     }
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-
-                    // Clear presentation
-                    Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        ((M138AnalyzerPresentation)Presentation).BestList.Clear();
-                    }, null);
+                    RetryCounter = 0;
+                    _selectedLanguage = settings.LanguageSelection;
 
                     int _restartNtimes;
                     int _tmpTextLength = CiphertextNumbers.Length;
@@ -243,10 +255,15 @@ namespace Cryptool.M138Analyzer
                         QUADGRAMMULTIPLIER = 6;
                         DIVISOR = 7;
                     }
-
+                    if (settings.HillClimbRestarts != null)
+                    {
+                        _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
+                    }
                     int len = Alphabet.Length; //Length of a strip equals Alphabet Length (By Definition)
+                    MaxRetriesNecesary = _restartNtimes * len;
+
                     UpdateDisplayStart();
-                    for (int i = 1; i < len; i++)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++)
                     {
                         UpdateDisplayEnd(i);
                         HillClimb(CiphertextNumbers, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes);
@@ -255,9 +272,11 @@ namespace Cryptool.M138Analyzer
                             return;
                         }
                     }
-                    UpdateDisplayEnd(KeyOffsetList[0]);
-                    CalculatedKey = string.Join(", ", BestKeyList[0]);
-                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, BestKeyList[0], KeyOffsetList[0], StripList), Alphabet);
+                    ResultEntry re = _presentation.BestList.First();
+                    UpdateDisplayEnd(re.Offset);
+                    int[] _tmpKey = re.Key.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+                    CalculatedKey = string.Join(", ", _tmpKey);
+                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey, re.Offset, StripList), Alphabet);
                     OnPropertyChanged("CalculatedKey");
                     OnPropertyChanged("ResultText");
                     break;
@@ -448,42 +467,6 @@ namespace Cryptool.M138Analyzer
                                 _localBestKeyCost = _costValue;
                                 _localBestKey = _copykey;
 
-                                /*
-                                if (BestKeyList.Count == 0) //BestList is empty, only happens once
-                                {
-                                    BestKeyList.Add(_trimKey); //Add Trimkey because that has been used to decrpt
-                                    BestKeyValues.Insert(0, _localBestKeyCost); //Store corresponding cost value
-                                    KeyOffsetList.Add(_keyOffset); //Corresponding offset for the key
-                                    BestKeyValues.RemoveAt(BestListLength);
-                                    break;
-                                }
-                                else
-                                { //There are already elements in the bestlist
-                                    int _tmpBestlistCount = BestKeyList.Count;
-                                    for (int k = 0; k < _tmpBestlistCount; k++)
-                                    { //go through bestlist until end of bestlist is reached or bestlist is full
-                                        if (ArraysEqual(BestKeyList[k], _trimKey))
-                                        {
-                                            break; //Key is already in bestlist
-                                        }
-                                        if (_localBestKeyCost > BestKeyValues[k])
-                                        { //Current Key is better than key on position k
-                                            BestKeyList.Insert(k, _trimKey);
-                                            BestKeyValues.Insert(k, _localBestKeyCost);
-                                            KeyOffsetList.Insert(k, _keyOffset);
-                                            BestKeyValues.RemoveAt(BestListLength);
-                                            break;
-                                        }
-                                    }
-                                }
-                                // Cut bestlist if it becomes too long
-                                if (BestKeyList.Count > BestListLength)
-                                {
-                                    BestKeyList.RemoveAt(BestListLength);
-                                    KeyOffsetList.RemoveAt(BestListLength);
-                                }
-                                 */
-
                                 //Fill Bestlist if necessary (Could be that all Keys found in a different run already ahve been better and there's no need to save this crap
                                 _foundBetterKey = true;
                                 if (_greedy)
@@ -499,6 +482,8 @@ namespace Cryptool.M138Analyzer
                 var _endTime = DateTime.Now;
                 Console.WriteLine("Keys per second: " + (_keyCount / (_endTime - _startTime).TotalSeconds));
                 _restarts--;
+                RetryCounter++;
+                ProgressChanged(RetryCounter, MaxRetriesNecesary);
 
                 if (_localBestKeyCost > _globalBestKeyCost) //Found a better Key then the best key found so far
                 {
@@ -510,45 +495,15 @@ namespace Cryptool.M138Analyzer
                     {
                         _trimKey[z] = _globalBestKey[z];
                     }
-                    /*
-                    if (BestKeyList.Count == 0) //BestList is empty, only happens once
-                    {
-                        BestKeyList.Add(_trimKey); //Add Trimkey because that has been used to decrpt
-                        BestKeyValues.Insert(0, _localBestKeyCost); //Store corresponding cost value
-                        KeyOffsetList.Add(_keyOffset); //Corresponding offset for the key
-                        BestKeyValues.RemoveAt(BestListLength);
-                        break;
-                    }
-                    else
-                    { //There are already elements in the bestlist
-                        int _tmpBestlistCount = BestKeyList.Count;
-                        for (int k = 0; k < _tmpBestlistCount; k++)
-                        { //go through bestlist until end of bestlist is reached or bestlist is full
-                            if (ArraysEqual(BestKeyList[k], _trimKey))
-                            {
-                                break; //Key is already in bestlist
-                            }
-                            if (_localBestKeyCost > BestKeyValues[k])
-                            { //Current Key is better than key on position k
-                                BestKeyList.Insert(k, _trimKey);
-                                BestKeyValues.Insert(k, _localBestKeyCost);
-                                KeyOffsetList.Insert(k, _keyOffset);
-                                BestKeyValues.RemoveAt(BestListLength);
-                                break;
-                            }
-                        }
-                    }
-                    // Cut bestlist if it becomes too long
-                    if (BestKeyList.Count > BestListLength)
-                    {
-                        BestKeyList.RemoveAt(BestListLength);
-                        KeyOffsetList.RemoveAt(BestListLength);
-                    }
-                     */
-                    //AddNewBestListEntry(_globalBestKey, _globalBestKeyCost, CiphertextNumbers, _keyOffset);
                     AddNewBestListEntry(_trimKey, _globalBestKeyCost, CiphertextNumbers, _keyOffset);
+                    if (_globalBestKeyCost > BestCostValueOfAllKeys)
+                    {
+                        //New Best key over all offsetz found, update output
+                        ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _trimKey, _keyOffset, StripList), Alphabet);
+                        OnPropertyChanged("ResultText");
+                        BestCostValueOfAllKeys = _globalBestKeyCost;
+                    }
                 }
-                //ProgressChanged((KeyLength - settings.FromKeylength) * totalrestarts + totalrestarts - restarts, (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts);
             }
 
             return true;
@@ -624,7 +579,7 @@ namespace Cryptool.M138Analyzer
                 _enumerableStriplist = PermuteAllKeys(_enumerableStriplist);
                 _allPossibleKeysForThisOffst = _enumerableStriplist as List<List<int>>;
             }
-            
+
             return _allPossibleKeysForThisOffst;
         }
 
@@ -880,6 +835,15 @@ namespace Cryptool.M138Analyzer
 
             }, null);
 
+        }
+
+        private void getUserSelections()
+        {
+            KeyLength = settings.KeyLengthUserSelection;
+            MaxOffsetUserSelect = settings.MaxOffsetUserSelection;
+            MinOffsetUserSelect = settings.MinOffsetUserSelection;
+            SelectedLanguage = settings.LanguageSelection;
+            Attack = settings.Method;
         }
         #endregion
     }
