@@ -19,6 +19,9 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using Cryptool.PluginBase.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Numerics;
 
 namespace WorkspaceManagerModel.Model.Tools
 {
@@ -42,7 +45,7 @@ namespace WorkspaceManagerModel.Model.Tools
         /// <summary>
         /// This number is the number of characters after a linebreak is put into data representation string
         /// </summary>
-        private const int LineBreakCharacterAmount = 76;
+        private const int LineBreakCharacterAmount = 760;
 
 
         /// <summary>
@@ -52,11 +55,27 @@ namespace WorkspaceManagerModel.Model.Tools
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        static Thread workerThread;
         public static string GetDataPresentationString(object data)
         {
             try
             {
-                var str = ConvertDataPresentation(data);
+                if (workerThread != null && workerThread.IsAlive)
+                    workerThread.Abort();
+
+                string str = "";
+                workerThread = new Thread(() => str = ConvertDataPresentation(data));
+
+                workerThread.Start();
+
+                bool finished = workerThread.Join(TimeSpan.FromMilliseconds(1000));
+                if (!finished)
+                {
+                    workerThread.Abort();
+                    throw new TimeoutException();
+                }
+
+                //var str = ConvertDataPresentation(data);
                 if (str.Length > MaximumCharactersToShow)
                 {
                     str = str.Substring(0, MaximumCharactersToShow) + "...";
@@ -71,7 +90,7 @@ namespace WorkspaceManagerModel.Model.Tools
                         //remove spaces at the beginning of a new line
                         if (!(str[index] == ' ' && lastBreak == 0))
                         {
-                            output.Append(str[index]);                            
+                            output.Append(str[index]);
                             //we found a line break so we memorize that
                             if (str[index] == '\r' || str[index] == '\n')
                             {
@@ -86,24 +105,29 @@ namespace WorkspaceManagerModel.Model.Tools
                         //we only make a break at spaces 
                         if (index > 0 && lastBreak >= LineBreakCharacterAmount && str[index] == ' ')
                         {
-                            output.Remove(output.Length-1, 1);
+                            output.Remove(output.Length - 1, 1);
                             output.Append("\r\n");
                             lastBreak = 0;
-                        } 
+                        }
                         //or if lastBreak >= (LineBreakCharacterAmount + 5%)
                         else if (index > 0 && lastBreak >= LineBreakCharacterAmount * 1.05)
                         {
                             output.Append("\r\n");
                             lastBreak = 0;
-                        } 
+                        }
                     }
                     return output.ToString().Trim();
                 }
                 return str.Trim();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return string.Format("Exception during creation of data representation: {0}",ex.Message);
+                return string.Format("Exception during creation of data representation: {0}", ex.Message);
+            }
+            finally
+            {
+                if (workerThread != null && workerThread.IsAlive)
+                    workerThread.Abort();
             }
         }
 
@@ -117,6 +141,17 @@ namespace WorkspaceManagerModel.Model.Tools
             if (data is string)
             {
                 return data.ToString();
+            }
+
+            if (data is BigInteger)
+            {
+                var n = (BigInteger)data;
+                double log = BigInteger.Log10(n);
+                if (log > MaximumCharactersToShow+10)
+                {
+                    n /= BigInteger.Pow(10, (int)(log - MaximumCharactersToShow));
+                }
+                return n.ToString();
             }
 
             var value = data as byte[];
