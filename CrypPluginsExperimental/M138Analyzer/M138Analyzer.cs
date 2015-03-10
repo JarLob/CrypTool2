@@ -59,6 +59,10 @@ namespace Cryptool.M138Analyzer
         private int MinOffsetUserSelect;
         private int MaxOffsetUserSelect;
         private int SelectedLanguage;
+        private double KeysPerSecondCurrent = 0;
+        private double KeysPerSecondAverage = 0;
+        private double AverageTimePerRestart = 0;
+        private bool fastConverge = false;
 
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
@@ -255,7 +259,7 @@ namespace Cryptool.M138Analyzer
                         QUADGRAMMULTIPLIER = 6;
                         DIVISOR = 7;
                     }
-                    if (settings.HillClimbRestarts != null)
+                    if (settings.HillClimbRestarts != null & settings.HillClimbRestarts.Length > 0)
                     {
                         _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
                     }
@@ -263,19 +267,27 @@ namespace Cryptool.M138Analyzer
                     MaxRetriesNecesary = _restartNtimes * len;
 
                     UpdateDisplayStart();
+
+                    var _estimatedEndTime = DateTime.Now;
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++)
                     {
-                        UpdateDisplayEnd(i);
-                        HillClimb(CiphertextNumbers, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes);
+                        var _startTime = DateTime.Now;
+                        UpdateDisplayEnd(i, _estimatedEndTime);
+                        HillClimb(CiphertextNumbers, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge);
                         if (_isStopped)
                         {
                             return;
                         }
+                        var _endTime = DateTime.Now;
+                        var _elapsedTime = _endTime - _startTime;
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - i));
+                        UpdateDisplayEnd(i, _estimatedEndTime);
                     }
                     ResultEntry re = _presentation.BestList.First();
-                    UpdateDisplayEnd(re.Offset);
-                    int[] _tmpKey = re.Key.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
-                    CalculatedKey = string.Join(", ", _tmpKey);
+                    UpdateDisplayEnd(re.Offset, DateTime.Now);
+                    string _tmpKeyStrips = re.Key.Split('/')[0];
+                    int[] _tmpKey = _tmpKeyStrips.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+                    CalculatedKey = re.Key;
                     ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey, re.Offset, StripList), Alphabet);
                     OnPropertyChanged("CalculatedKey");
                     OnPropertyChanged("ResultText");
@@ -309,6 +321,9 @@ namespace Cryptool.M138Analyzer
         public void Stop()
         {
             _isStopped = true;
+            KeysPerSecondCurrent = 0;
+            KeysPerSecondAverage = 0;
+            AverageTimePerRestart = 0;
         }
 
         /// <summary>
@@ -359,7 +374,7 @@ namespace Cryptool.M138Analyzer
 
         #region Helpers
 
-        private bool HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, double[, ,] _ngrams3, double[, , ,] _ngrams4, int _restarts = 10, bool _greedy = false, int[] _startKey = null)
+        private bool HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, double[, ,] _ngrams3, double[, , ,] _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null)
         {
 
             int _numberOfStrips = _stripes.Count; //Anzahl verfuegbarer Streifen
@@ -469,7 +484,7 @@ namespace Cryptool.M138Analyzer
 
                                 //Fill Bestlist if necessary (Could be that all Keys found in a different run already ahve been better and there's no need to save this crap
                                 _foundBetterKey = true;
-                                if (_greedy)
+                                if (_fastConverge)
                                 {
                                     _runkey = _localBestKey;
                                 }
@@ -478,11 +493,14 @@ namespace Cryptool.M138Analyzer
                     }
                     _runkey = _localBestKey;
                 } while (_foundBetterKey);
-                UpdateDisplayEnd(_keyOffset);
                 var _endTime = DateTime.Now;
-                Console.WriteLine("Keys per second: " + (_keyCount / (_endTime - _startTime).TotalSeconds));
+                var _timeForOneRestart = (_endTime - _startTime);
+                KeysPerSecondCurrent = _keyCount / _timeForOneRestart.TotalSeconds;
+                KeysPerSecondAverage = (RetryCounter * KeysPerSecondAverage + KeysPerSecondCurrent) / (RetryCounter + 1);
+                UpdateKeysPerSecond((int)KeysPerSecondCurrent, (int)KeysPerSecondAverage);
                 _restarts--;
                 RetryCounter++;
+                //UpdateDisplayEnd(_keyOffset, _calcualtedEndTime);
                 ProgressChanged(RetryCounter, MaxRetriesNecesary);
 
                 if (_localBestKeyCost > _globalBestKeyCost) //Found a better Key then the best key found so far
@@ -782,17 +800,25 @@ namespace Cryptool.M138Analyzer
             }, null);
         }
 
-        private void UpdateDisplayEnd(int _offset)
+        private void UpdateDisplayEnd(int _offset, DateTime _estimatedEnd)
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 _endTime = DateTime.Now;
                 var elapsedtime = _endTime.Subtract(_startTime);
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((M138AnalyzerPresentation)Presentation).endTime.Content = "" + _endTime;
+                ((M138AnalyzerPresentation)Presentation).endTime.Content = "" + _estimatedEnd;
                 ((M138AnalyzerPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
                 ((M138AnalyzerPresentation)Presentation).currentAnalysedKeylength.Content = "" + _offset;
+            }, null);
+        }
 
+        private void UpdateKeysPerSecond(int _current, int _average)
+        {
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                ((M138AnalyzerPresentation)Presentation).keysPerSecondAverageLabel.Content = _average;
+                ((M138AnalyzerPresentation)Presentation).keysPerSecondCurrentLabel.Content = _current;
             }, null);
         }
 
@@ -800,7 +826,7 @@ namespace Cryptool.M138Analyzer
         {
             ResultEntry entry = new ResultEntry
             {
-                Key = string.Join(", ", key),
+                Key = string.Join(", ", key) + " / " + offset,
                 Text = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, key, offset, StripList), Alphabet),
                 Value = value,
                 Offset = offset
@@ -844,6 +870,7 @@ namespace Cryptool.M138Analyzer
             MinOffsetUserSelect = settings.MinOffsetUserSelection;
             SelectedLanguage = settings.LanguageSelection;
             Attack = settings.Method;
+            fastConverge = settings.FastConverge;
         }
         #endregion
     }

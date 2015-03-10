@@ -30,6 +30,7 @@ namespace Cryptool.M138Analyzer
         private int _minOffset = 1;
         private int _maxOffset = 26;
         private string _retries;
+        private bool _fastConverge = false;
 
         #endregion
 
@@ -122,11 +123,27 @@ namespace Cryptool.M138Analyzer
             {
                 return _retries;
             }
-            set 
+            set
             {
                 if (_retries != value)
                 {
                     _retries = value;
+                }
+            }
+        }
+
+        [TaskPane("FastConvergeCap", "FastConvergeDes", null, 0, false, ControlType.CheckBox)]
+        public bool FastConverge
+        {
+            get
+            {
+                return _fastConverge;
+            }
+            set
+            {
+                if (_fastConverge != value)
+                {
+                    _fastConverge = value;
                 }
             }
         }
