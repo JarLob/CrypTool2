@@ -58,7 +58,6 @@ namespace Cryptool.M138Analyzer
         private int _selectedLanguage = 0;
         private int MinOffsetUserSelect;
         private int MaxOffsetUserSelect;
-        private int SelectedLanguage;
         private double KeysPerSecondCurrent = 0;
         private double KeysPerSecondAverage = 0;
         private double AverageTimePerRestart = 0;
@@ -170,6 +169,9 @@ namespace Cryptool.M138Analyzer
                         GuiLogMessage("Please provide Ciphertext and Plaintext to perform a known plaintext attack", NotificationLevel.Error);
                         return;
                     }
+
+                    Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), Alphabet);
+                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet);
                     if (Plaintext.Length != Ciphertext.Length)
                     {
                         if (Plaintext.Length > Ciphertext.Length)
@@ -181,8 +183,6 @@ namespace Cryptool.M138Analyzer
                             Ciphertext.Remove(Plaintext.Length);
                         }
                     } //Ciphertext and Plaintext have the same length
-                    Ciphertext = Ciphertext.ToUpper();
-                    Plaintext = Plaintext.ToUpper();
                     ResultText = Plaintext;
                     OnPropertyChanged("ResultText");
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
@@ -195,12 +195,16 @@ namespace Cryptool.M138Analyzer
                     int _numberOfKeysForThisOffset;
                     //Call Known Plaintext Attack
                     //TextLength should be at least 25
-                    for (int i = 0; i < KeyLength; i++)
+                    StringBuilder AllPossibleKeysAsString = new StringBuilder();
+                    var _estimatedEndTime = DateTime.Now;
+                    for (int i = 0; i < KeyLength; i++) //Go Over Keylength (Try all possible offsets)
                     {
+                        var _startTime = DateTime.Now;
                         ProgressChanged(i, KeyLength);
                         _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
+                            /*
                             _numberOfKeysForThisOffset = _keysForOffset.Count;
                             for (int z = 0; z < _numberOfKeysForThisOffset; z++)
                             {
@@ -208,9 +212,35 @@ namespace Cryptool.M138Analyzer
                                 _allKeys.Add(_keysForOffset[z]);
                                 _allKeysReadable.Add("Offset: " + i + ", Strips: " + string.Join(", ", _keysForOffset[z]));
                             }
+                             */
+                            StringBuilder sb = new StringBuilder();
+                            sb.Append("Key for Offset " + i + ": ");
+                            int _cachedKeyLength = _keysForOffset.Count;
+                            for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
+                            {
+                                
+                                sb.Append("[");
+                                sb.Append(string.Join(",", _keysForOffset[_keyLocation].ToArray()));
+                                sb.Append("]");
+                                if (_keyLocation != _cachedKeyLength - 1)
+                                {
+                                    sb.Append(";");
+                                }
+                                else
+                                {
+                                    sb.Append("\n");
+                                }
+                            }
+                            AddNewBestListEntryKnownPlaintext(sb.ToString().Split(':')[1], i);
+                            AllPossibleKeysAsString.Append(sb);
                         }
+                        var _endTime = DateTime.Now;
+                        var _elapsedTime = _endTime - _startTime;
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - i));
+                        UpdateDisplayEnd(i, _estimatedEndTime);
                     }
-                    CalculatedKey = string.Join("\n", _allKeysReadable);
+                    //CalculatedKey = string.Join("\n", _allKeysReadable);
+                    CalculatedKey = AllPossibleKeysAsString.ToString();
                     OnPropertyChanged("CalculatedKey");
                     break;
 
@@ -259,6 +289,20 @@ namespace Cryptool.M138Analyzer
                         QUADGRAMMULTIPLIER = 6;
                         DIVISOR = 7;
                     }
+                    switch (_selectedLanguage)
+                    {
+                        case 0: //English
+                            Trigrams = Load3Grams(Alphabet);
+                            Quadgrams = Load4Grams(Alphabet);
+                            break;
+                        case 1: //German
+                            Quadgrams = LoadGerman4Grams(Alphabet);
+                            TRIGRAMMULTIPLIER = 0;
+                            QUADGRAMMULTIPLIER = 1;
+                            DIVISOR = 1;
+                            break;
+                    }
+
                     if (settings.HillClimbRestarts != null & settings.HillClimbRestarts.Length > 0)
                     {
                         _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
@@ -268,7 +312,7 @@ namespace Cryptool.M138Analyzer
 
                     UpdateDisplayStart();
 
-                    var _estimatedEndTime = DateTime.Now;
+                    _estimatedEndTime = DateTime.Now;
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++)
                     {
                         var _startTime = DateTime.Now;
@@ -536,7 +580,7 @@ namespace Cryptool.M138Analyzer
             List<List<int>> _workingStrips = new List<List<int>>();
             List<List<int>> _possibleStrips = new List<List<int>>();
 
-            for (int location = 0; location < _textLength; location++)
+            for (int location = 0; location < _textLength; location++) //Go over the whole text
             {
                 List<int> _possibleStripsForThisLocation = new List<int>();
                 p = PlaintextNumbers[location];
@@ -546,6 +590,7 @@ namespace Cryptool.M138Analyzer
                     //Test each strip for this offset
                     _currentStrip = StripList[testStripNumber];
                     isAt = Array.IndexOf(_currentStrip, p);
+                    int _tmpTestBla = (isAt + _offset) % _stripLength;
                     if (_currentStrip[(isAt + _offset) % _stripLength] == c)
                     {
                         _possibleStripsForThisLocation.Add(testStripNumber);
@@ -560,6 +605,10 @@ namespace Cryptool.M138Analyzer
             //Now there should be a non-empty list of Strips with working offsets for each position
             for (int location = 0; location < KeyLength; location++)
             {
+                if (location >= _textLength)
+                {
+                    break;
+                }
                 //Make advantage of the period and check which strips still work
                 int tmp = location + KeyLength;
                 List<int> _possibleStripsForThisLocation = new List<int>();
@@ -576,29 +625,38 @@ namespace Cryptool.M138Analyzer
                 _workingStrips.Add(_possibleStripsForThisLocation); //In Working Strips we should now have KeyLength Elements of Lists that each hold possible strips for their location
                 //Now make this to a list of Lists that holds all possible keys
             }
-            List<List<int>> _allPossibleKeysForThisOffst = new List<List<int>>();
+
+            //List<List<int>> _allPossibleKeysForThisOffset = new List<List<int>>();
+            /*
             int _numberOfPossibleKeys = 1;
             for (int i = 0; i < KeyLength; i++)
             {
+                if (i >= _textLength)
+                {
+                    break;
+                }
                 _numberOfPossibleKeys = _numberOfPossibleKeys * _workingStrips[i].Count;
             }
             if (_numberOfPossibleKeys == 1)
             {
-                List<int> _tmpList = new List<int>();
-                for (int z = 0; z < KeyLength; z++)
-                {
-                    _tmpList.Add(_workingStrips[z][0]);
-                }
-                _allPossibleKeysForThisOffst.Add(_tmpList);
+             * */
+            //List<int> _tmpList = new List<int>();
+            //for (int z = 0; z < KeyLength; z++)
+            //{
+            //    _tmpList.Add(_workingStrips[z][0]);
+            //}
+            //_allPossibleKeysForThisOffset.Add(_tmpList);
+            /*
             }
             else
             {
                 IEnumerable<IEnumerable<int>> _enumerableStriplist = _workingStrips;
                 _enumerableStriplist = PermuteAllKeys(_enumerableStriplist);
-                _allPossibleKeysForThisOffst = _enumerableStriplist as List<List<int>>;
+                _allPossibleKeysForThisOffset = _enumerableStriplist as List<List<int>>;
             }
-
-            return _allPossibleKeysForThisOffst;
+            */
+            //return _allPossibleKeysForThisOffset;
+            return _workingStrips;
         }
 
         IEnumerable<IEnumerable<int>> PermuteAllKeys(IEnumerable<IEnumerable<int>> sequences)
@@ -756,6 +814,33 @@ namespace Cryptool.M138Analyzer
             }
         }
 
+
+        private double[, , ,] LoadGerman4Grams(string _a)
+        {
+            int _tmpAlphabetLength = Alphabet.Length;
+            double[, , ,] Quadgrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
+            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "de-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
+            {
+                using (BinaryReader reader = new BinaryReader(fileStream))
+                {
+                    for (int i = 0; i < _tmpAlphabetLength; i++)
+                    {
+                        for (int j = 0; j < _tmpAlphabetLength; j++)
+                        {
+                            for (int k = 0; k < _tmpAlphabetLength; k++)
+                            {
+                                for (int l = 0; l < _tmpAlphabetLength; l++)
+                                {
+                                    byte[] bytes = reader.ReadBytes(8);
+                                    Quadgrams[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
+                                }
+                            }
+                        }
+                    }
+                }
+                return Quadgrams;
+            }
+        }
         private List<int[]> LoadStripes(string alphabet)
         {
             List<int[]> _tmpStripes = new List<int[]>();
@@ -863,14 +948,62 @@ namespace Cryptool.M138Analyzer
 
         }
 
+        private void AddNewBestListEntryKnownPlaintext(string key, int offset)
+        {
+            ResultEntry entry = new ResultEntry
+            {
+                Key = key,
+                Text = "",
+                Value = offset,
+            };
+
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    _presentation.BestList.Add(entry);
+                    _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList);
+                    //if (_presentation.BestList.Count > BestListLength)
+                    //{
+                    //    _presentation.BestList.RemoveAt(BestListLength);
+                    //}
+                    int z = 0;
+                    foreach (ResultEntry r in _presentation.BestList)
+                    {
+                        r.Ranking = z;
+                        z++;
+                    }
+                    _presentation.ListView.DataContext = _presentation.BestList;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+                }
+
+            }, null);
+
+        }
+
         private void getUserSelections()
         {
             KeyLength = settings.KeyLengthUserSelection;
             MaxOffsetUserSelect = settings.MaxOffsetUserSelection;
             MinOffsetUserSelect = settings.MinOffsetUserSelection;
-            SelectedLanguage = settings.LanguageSelection;
             Attack = settings.Method;
             fastConverge = settings.FastConverge;
+        }
+
+        private string RemoveInvalidChars(string text, string alphabet)
+        {
+            var builder = new StringBuilder();
+            foreach (char c in text)
+            {
+                if (alphabet.Contains(c.ToString()))
+                {
+                    builder.Append(c);
+                }
+            }
+            return builder.ToString();
         }
         #endregion
     }
