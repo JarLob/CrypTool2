@@ -1,24 +1,30 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Numerics;
+using System.Threading.Tasks;
+using System.Windows.Documents;
+using System.Windows.Media;
 using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
+using Cryptool.PluginBase;
 using voluntLib.common;
+using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager.ViewModels
 {
     public class JobListVM : ScreenViewModel
     {
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
-        private readonly Collection<BigInteger> downloadingJobs = new Collection<BigInteger>();
-        
+        public CrypCloudManager Manager { get; set; }
+
         public ObservableCollection<NetworkJobItem> RunningJobs { get; set; }
         public RelayCommand RefreshJobListCommand { get; set; }
         public RelayCommand CreateNewJobCommand { get; set; }
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
-        public RelayCommand DownloadWorkspaceCommand { get; set; }
+        public RelayCommand DownloadWorkspaceCommand { get; set; } 
 
         public JobListVM()
         {
@@ -26,42 +32,27 @@ namespace CrypCloud.Manager.ViewModels
             RefreshJobListCommand = new RelayCommand(it => RefreshJobs());
             OpenJobCommand = new RelayCommand(OpenJob);
             DeleteJobCommand = new RelayCommand(DeleteJob);
-            DownloadWorkspaceCommand = new RelayCommand(DownloadWorkspace);
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
-            crypCloudCore.JobListChanged += RunInUiContext(OnJobListUpdate);
-            OnJobListUpdate();
+            crypCloudCore.JobListChanged += RunInUiContext(UpdateJobList);
+            UpdateJobList();
         }
         
-        private void OnJobListUpdate()
+        private void UpdateJobList()
         {
             RunningJobs.Clear();
             var jobs = crypCloudCore.GetJobs();
             jobs.ForEach(it => RunningJobs.Add(ConvertToListItem(it)));
-
-            //remove downloaded jobs from locale cache
-            jobs.FindAll(it => downloadingJobs.Contains(it.JobID) && it.HasPayload())
-                .ForEach(it => downloadingJobs.Remove(it.JobID));
         }
 
         private void OpenJobCreation()
         {
             Navigator.ShowScreenWithPath(ScreenPaths.JobCreation);
-        }
+        } 
 
         private void RefreshJobs()
         {
-            crypCloudCore.RefreshJobList();
-        }
-
-        private void DownloadWorkspace(object it)
-        {
-            var jobItem = it as NetworkJobItem;
-            if (jobItem == null) return; // shoudnt happen anyways
-
-            crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id); 
-            downloadingJobs.Add(jobItem.Id);
-            OnJobListUpdate();
+            crypCloudCore.RefreshJobList(); 
         }
 
         private void OpenJob(object it)
@@ -69,10 +60,26 @@ namespace CrypCloud.Manager.ViewModels
             var jobItem = it as NetworkJobItem;
             if (jobItem == null) return; // shoudnt happen anyways
 
-            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(jobItem.Id);
-            WorkspaceHelper.SaveWorkspaceForJobId(workspaceModel, jobItem.Id);
+            crypCloudCore.JobListChanged += WaitForWorkspaceAndOpenIt(jobItem.Id);
+            crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id);
         }
 
+        private Action WaitForWorkspaceAndOpenIt(BigInteger id)
+        {
+            Action waitForWorkspace = null;
+            waitForWorkspace = (() =>
+            {
+                var workspaceModel = crypCloudCore.GetWorkspaceOfJob(id);
+                if (workspaceModel == null) 
+                    return;
+                
+                crypCloudCore.JobListChanged -= waitForWorkspace;
+                RunInUiContext(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
+            });
+
+            return waitForWorkspace;
+        }
+        
         private void DeleteJob(object it)
         {
             var jobItem = it as NetworkJobItem;
@@ -93,7 +100,6 @@ namespace CrypCloud.Manager.ViewModels
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),
-                DownloadingWorkspace = downloadingJobs.Contains(job.JobID)
             };
           
             return item;

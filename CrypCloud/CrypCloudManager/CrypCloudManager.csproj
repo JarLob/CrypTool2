@@ -66,6 +66,7 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -92,6 +93,9 @@
     </Compile>
     <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter .cs" />
+    <Compile Include="Screens\CreateAccount.xaml.cs">
+      <DependentUpon>CreateAccount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Screens\JobCreation.xaml.cs">
       <DependentUpon>JobCreation.xaml</DependentUpon>
     </Compile>
@@ -101,15 +105,21 @@
     <Compile Include="Screens\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\CertificatHelper.cs" />
+    <Compile Include="Screens\ResetPassword.xaml.cs">
+      <DependentUpon>ResetPassword.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\CertificateHelper.cs" />
     <Compile Include="Services\ScreenNavigator.cs" />
     <Compile Include="Services\WorkspaceHelper.cs" />
     <Compile Include="ViewModels\Base\ScreenViewModel.cs" />
     <Compile Include="ViewModels\Helper\RelayCommand.cs" />
     <Compile Include="ViewModels\JobCreationVM.cs" />
     <Compile Include="ViewModels\JobListVM.cs" />
+    <Compile Include="ViewModels\CreateAccountVM.cs" />
+    <Compile Include="ViewModels\ResetPasswordVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
     <Compile Include="ViewModels\Pocos\NetworkJobItem.cs" />
+    <Compile Include="ViewModels\Helper\SecureStringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypCore\CrypCore.csproj">
@@ -171,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Screens\CreateAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\JobCreation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -183,13 +197,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Screens\ResetPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Screens\Styles\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\account.png" />
     <Resource Include="Images\connected.png" />
     <Resource Include="Images\disconnected.png" />
     <Resource Include="Images\earth.jpg" />
@@ -200,14 +217,25 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\delete.png" />
-    <Resource Include="Images\open.png" />
+    <Resource Include="Images\ButtonIcons\folder-open-o.png" />
+    <Resource Include="Images\ButtonIcons\external-link.png" />
+    <Resource Include="Images\ButtonIcons\trash-o.png" />
+    <Resource Include="Images\ButtonIcons\refresh.png" />
+    <Resource Include="Images\ButtonIcons\plus.png" />
+    <Resource Include="Images\ButtonIcons\check_16.png" />
+    <Resource Include="Images\ButtonIcons\cloud-upload_32.png" />
+    <Resource Include="Images\ButtonIcons\chevron-left_32.png" />
+    <Resource Include="Images\ButtonIcons\angle-double-right_16.png" />
+    <Resource Include="Images\ButtonIcons\forward.png" />
+    <Resource Include="Images\ButtonIcons\chevron-right.png" />
+    <Content Include="Images\ButtonIcons\license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\download.png" />
+    <Folder Include="Screens\UIElements\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

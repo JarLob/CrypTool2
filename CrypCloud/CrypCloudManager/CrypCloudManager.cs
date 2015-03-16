@@ -17,17 +17,20 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels;
 using Cryptool.Core; 
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
-using Cryptool.PluginBase.Editor; 
+using Cryptool.PluginBase.Editor;
+using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager
 {
-    public enum ScreenPaths { Login, JobList, JobCreation, Wed, Thu, Fri };
+    public enum ScreenPaths { Login, JobList, JobCreation, ResetPassword, CreateAccount, ConfirmAccount };
 
     [TabColor("orange")]
     [EditorInfo("CrypCloud", false, true, false, false, true)]
@@ -36,14 +39,16 @@ namespace CrypCloud.Manager
         "CrypCloudManager/DetailedDescription/Description.xaml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
     {
-        private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
-      //  public event OpenTabHandler OnOpenTab;
+        private readonly ScreenNavigator screenNavigator = new ScreenNavigator(); 
 
         public CrypCloudManager()
         {
             var crypCloudPresentation = new CrypCloudPresentation();
             Presentation = crypCloudPresentation;
             AddScreensToNavigator(crypCloudPresentation);
+
+            var jobListVM = (JobListVM) crypCloudPresentation.JobList.DataContext;
+            jobListVM.Manager = this;
         }
 
         private void AddScreensToNavigator(CrypCloudPresentation crypCloudPresentation)
@@ -57,15 +62,29 @@ namespace CrypCloud.Manager
 
             var jobCreateVm = (ScreenViewModel)crypCloudPresentation.JobCreation.DataContext;
             screenNavigator.AddScreenWithPath(jobCreateVm, ScreenPaths.JobCreation);
+
+            var createAccountVm = (ScreenViewModel)crypCloudPresentation.CreateAccount.DataContext;
+            screenNavigator.AddScreenWithPath(createAccountVm, ScreenPaths.CreateAccount);
+
+            var resetPasswordVm = (ScreenViewModel)crypCloudPresentation.ResetPassword.DataContext;
+            screenNavigator.AddScreenWithPath(resetPasswordVm, ScreenPaths.ResetPassword);
+        }
+
+        public void OpenWorkspaceInNewTab(WorkspaceModel model)
+        {
+            if (OnOpenEditor == null) return; // cant open tab 
+
+            var currentManager = (WorkspaceManager.WorkspaceManagerClass)OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), null);
+            currentManager.Open(model);
         }
 
         public void New()
         {
-            if (! CertificatHelper.DoesDirectoryExists())
+            if (!CertificateHelper.DoesDirectoryExists())
             {
-                CertificatHelper.CreateDirectory();
+                CertificateHelper.CreateDirectory();
             }
-            if (! WorkspaceHelper.DoesDirectoryExists())
+            if (!WorkspaceHelper.DoesDirectoryExists())
             {
                 WorkspaceHelper.CreateDirectory();
             }

@@ -55,12 +55,12 @@ namespace CrypCloud.Core
             {
                 return false;
             }
-            var rootCertificat = new X509Certificate2(Properties.Resources.rootCA);
-            voluntLib.InitAndStart(rootCertificat, ownCertificate);
+            var rootCertificate = new X509Certificate2(Properties.Resources.rootCA);
+            voluntLib.InitAndStart(rootCertificate, ownCertificate);
             return true;
         }
 
-        //TODO add admin names/move function over to voluntlib
+        //TODO @ckonze add admin names/move function over to voluntlib
         public bool UserCanDeleteJob(NetworkJob job)
         {
            return job.Creator.Equals(voluntLib.CertificateName);
@@ -103,6 +103,12 @@ namespace CrypCloud.Core
             if (job == null) 
                 return;
 
+            if (job.HasPayload())
+            {
+                OnJobListChanged(this, null);
+                return;
+            }
+
             voluntLib.RequestJobDetails(job);
         }
 
@@ -113,10 +119,10 @@ namespace CrypCloud.Core
                 return null;
 
             var workspaceOfJob = PayloadSerialization.Deserialize(job.JobPayload);
-            var cloudComonents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudComponent);
-            foreach (var cloudComonent in cloudComonents)
+            var cloudComponents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudComponent);
+            foreach (var cloudComponent in cloudComponents)
             {
-                ((ACloudComponent) cloudComonent.Plugin).JobID = jobId;
+                ((ACloudComponent) cloudComponent.Plugin).JobID = jobId;
             }
             return workspaceOfJob;
         }
@@ -131,12 +137,11 @@ namespace CrypCloud.Core
 
         public bool CreateJob(string jobType, string jobName, string jobDescription, WorkspaceModel workspaceModel, BigInteger numberOfBlocks)
         {
-            if (HasACloudComponent(workspaceModel))
-            {
-                var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, PayloadSerialization.Serialize(workspaceModel), numberOfBlocks);
-                return jobID != -1;
-            }
-            return false;
+            if (!HasACloudComponent(workspaceModel)) 
+                return false;
+
+            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, PayloadSerialization.Serialize(workspaceModel), numberOfBlocks);
+            return jobID != -1;
         }
 
         private static bool HasACloudComponent(WorkspaceModel workspaceModel)

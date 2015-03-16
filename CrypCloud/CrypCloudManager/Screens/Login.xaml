@@ -3,6 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
              xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
+            <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     
     <UserControl.DataContext>
         <viewModels:LoginVM />
@@ -92,42 +102,35 @@
                 
                 <Label Width="200" Content="{Loc Username_}"/>
                 <Grid Width="200">
-                    <ComboBox Width="200" 
-                              Name="UsernameInput" 
-                              HorizontalAlignment="Left" 
-                              IsEditable="True" 
-                              IsTextSearchEnabled="True"
-                              ItemsSource="{Binding Path=AvailableCertificates}"
-                              Text="{Binding Path=Username}"></ComboBox>
+                    <ComboBox Text="{Binding Path=Username}" ItemsSource="{Binding Path=AvailableCertificates}"
+                              Name="UsernameInput" HorizontalAlignment="Left" IsEditable="True" IsTextSearchEnabled="True" Width="200">
+                    </ComboBox>
                 </Grid>
 
-                <Label Width="200" Content="{Loc Password_}"/>
+                <Label Content="{Loc Password_}" Width="200"/>
                     <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />     
-                <Label/> 
+                <Label/>
 
-                <TextBlock Width="200" FontSize="12"
-                           Name="ForgotPasswordLabel"  
-                           Cursor="Hand" HorizontalAlignment="Center">
+                <TextBlock  Width="200" FontSize="12" Name="ForgotPasswordLabel" Cursor="Hand" HorizontalAlignment="Center">
+                      <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding Path=ResetPasswordCommand}" MouseAction="LeftClick" />
+                     </TextBlock.InputBindings>
                     <Underline>
                         <ContentControl Content="{Loc Forgot_Password_}"/>
                     </Underline>
                 </TextBlock>
 
-                <TextBlock Width="200" 
-                           FontSize="12"
-                           Name="GetACertificateLabel"                           
-                           Cursor="Hand" HorizontalAlignment="Center">
+                <TextBlock    Width="200" FontSize="12" Name="GetACertificateLabel" Cursor="Hand" HorizontalAlignment="Center">
+                    <TextBlock.InputBindings>
+                        <MouseBinding Command="{Binding Path=CreateNewAccountCommand}" MouseAction="LeftClick" />
+                     </TextBlock.InputBindings>
                     <Underline>
-                        <ContentControl Content="{Loc Create_a_new_account_}"/>
+                        <ContentControl  Content="{Loc Create_a_new_account_}"/>
                     </Underline>
                 </TextBlock>
                 <Label/>
- 
-                <Button Width="200" 
-                        Name="ConnectButton" 
-                        IsDefault="True" 
-                        Content="{Loc ConnectButton_}" 
-                        Height="38" FontSize="20" Command="{Binding Path=LoginCommand}" IsEnabled="True" />
+
+                <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc ConnectButton_}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
 
             </StackPanel>
         </ScrollViewer>

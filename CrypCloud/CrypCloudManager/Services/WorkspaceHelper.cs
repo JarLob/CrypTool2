@@ -11,7 +11,7 @@ namespace CrypCloud.Manager.Services
 {
     class WorkspaceHelper
     {
-        public static readonly string DefaultUserCachedWorkspaceDir = CertificatHelper.CreatePathInAppdata("CryptCloud", "Workspaces");
+        public static readonly string DefaultUserCachedWorkspaceDir = CertificateHelper.CreatePathInAppdata("CryptCloud", "Workspaces");
 
         private const string FileDialogExtention = ".cwm";
         private const string FileDialogFilter = "Workspace (.cwm)|*.cwm";
@@ -21,7 +21,7 @@ namespace CrypCloud.Manager.Services
             Directory.CreateDirectory(DefaultUserCachedWorkspaceDir);
         }
 
-        public static bool DoesDirectoryExists()
+        public static bool DoesDirectoryExists() 
         {
             return Directory.Exists(DefaultUserCachedWorkspaceDir);
         }
@@ -35,20 +35,7 @@ namespace CrypCloud.Manager.Services
                 return dialog.FileName;
             }
             return "";
-        }
-
-        public static void SaveWorkspaceForJobId(WorkspaceModel workspaceModel, BigInteger jobId)
-        {
-            var pathToWorkspace = CreatePathToWorkspace(jobId);
-            if ( ! File.Exists(pathToWorkspace))
-            {
-                XMLSerialization.XMLSerialization.Serialize(workspaceModel, pathToWorkspace, compress: true);
-            }
-        }
-
-        public static string CreatePathToWorkspace(BigInteger jobId)
-        {
-            return DefaultUserCachedWorkspaceDir + Path.DirectorySeparatorChar + jobId.ToString() + FileDialogExtention;
-        }
+        } 
+  
     }
 }

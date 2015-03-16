@@ -11,11 +11,12 @@ namespace CrypCloud.Core.utils
             {
                 using (var streamWriter = new StreamWriter(stream))
                 {
-                    XMLSerialization.XMLSerialization.Serialize(workspaceModel, streamWriter);
+                    var persistantModel = new ModelPersistance().GetPersistantModel(workspaceModel);
+                    XMLSerialization.XMLSerialization.Serialize(persistantModel, streamWriter);
                 }
                 return stream.ToArray();
             }
-        }
+        } 
 
         public static WorkspaceModel Deserialize(byte[] jobPayload)
         {
@@ -24,7 +25,7 @@ namespace CrypCloud.Core.utils
                 stream.Write(jobPayload, 0, jobPayload.Length);
                 using (var streamWriter = new StreamWriter(stream))
                 {
-                    return (WorkspaceModel) XMLSerialization.XMLSerialization.Deserialize(streamWriter);
+                    return new ModelPersistance().loadModel(streamWriter);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿ 
+using CertificateLibrary.Certificates;
 using CrypCloud.Manager;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,43 +10,36 @@ namespace CrypCloudTests
     {
         [Ignore] // depends on enviroment
         [TestMethod]
-        public void GetNamesOfKnownCertificats()
+        public void GetNamesOfKnownCertificates()
         {
-            var userNames = CertificatHelper.GetNamesOfKnownCertificats();
+            var userNames = CertificateHelper.GetNamesOfKnownCertificates();
             Assert.AreEqual(2, userNames.Count);
             Assert.AreEqual("alice", userNames[0]);
             Assert.AreEqual("bob", userNames[1]);
         }
-        [Ignore] // depends on enviroment
-        [TestMethod]
-        public void LoadCertificateFromFile_invalidPassword()
-        {
-           // var certificat = CertificatHelper.LoadPrivateCertificat("alice", "terminato2r5");
-           // Assert.IsNull(certificat); 
-            
-        }
-        [Ignore] // depends on enviroment
-        [TestMethod]
-        public void LoadCertificateFromFile_validPassword()
-        {
-          //  var certificat = CertificatHelper.LoadPrivateCertificat("alice", "terminator5");
-          //  Assert.IsNotNull(certificat);
-        }
 
         [TestMethod]
-        public void CertificatIsKnown_unknownCertificat()
+        public void CertificateIsKnown_unknownCertificate()
         {
-            var userCertificatIsKnown = CertificatHelper.UserCertificatIsUnknown("alfred J._Kwack");
+            var userCertificateIsKnown = CertificateHelper.UserCertificateIsUnknown("alfred J._Kwack");
 
-            Assert.IsTrue(userCertificatIsKnown);
+            Assert.IsTrue(userCertificateIsKnown);
         }
-        [Ignore] // depends on enviroment
+        [Ignore] // depends on environment
         [TestMethod]
-        public void CertificatIsUnknown_knownCertificat()
+        public void CertificateIsUnknown_knownCertificate()
         {
-            var userCertificatIsKnown = CertificatHelper.UserCertificatIsUnknown("alice");
+            var userCertificateIsKnown = CertificateHelper.UserCertificateIsUnknown("alice");
 
-            Assert.IsFalse(userCertificatIsKnown);
+            Assert.IsFalse(userCertificateIsKnown);
+        }    
+        
+        [TestMethod]
+        public void CertificateServices_WontCrash()
+        {
+            CertificateServices.GetCertificateCount(CertificateHelper.DefaultUserCertificateDir);
         }
+
+
     }
 }

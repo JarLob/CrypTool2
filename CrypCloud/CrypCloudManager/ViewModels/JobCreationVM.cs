@@ -22,6 +22,9 @@ namespace CrypCloud.Manager.ViewModels
 
         public JobCreationVM()
         {
+            Description = "";
+            Name = "";
+
             BackToListCmd = new RelayCommand(it => ShowListView());
             CreateNewJobCmd = new RelayCommand(it => CreateNewJob());
             SelectWorkspaceFromFilesystemCmd = new RelayCommand(it => SelectWorkspaceFromFilesystem());

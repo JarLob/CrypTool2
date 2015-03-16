@@ -21,41 +21,26 @@
         <viewModels:JobListVM />
     </UserControl.DataContext>
 
-    <Grid Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" HorizontalAlignment="Center" Width="610">
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" HorizontalAlignment="Center" Width="630">
+        <Label Content="Current Jobs" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
+        
         <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RunningJobs}" x:Name="JobListView">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Creator" DisplayMemberBinding="{Binding Creator}" Width="100" />
                     <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100" />
                     <GridViewColumn Header="Progress" DisplayMemberBinding="{Binding NumberOfBlocks}" Width="200" /> 
+                    
                     <GridViewColumn Header="" Width="110" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel  Orientation="Horizontal">
-                                    <Button Visibility="{Binding Path=HasWorkspace, Converter={StaticResource hide}}"
-                                            Command="{Binding DataContext.DownloadWorkspaceCommand, ElementName=JobListView}" 
-                                            CommandParameter="{Binding}" DataContext="{Binding}"
-                                            Width="95" Margin="0,5,0,5">
-                                        
-                                        <StackPanel Orientation="Horizontal" >
-                                            <StackPanel Visibility="{Binding Path=IsDownloading, Converter={StaticResource hide}}" Orientation="Horizontal">
-                                                <Image Source="../Images/download.png" Width="15"  Margin="0,0,5,0"/>
-                                                <TextBlock>Download</TextBlock>
-                                            </StackPanel> 
-                                            
-                                            <StackPanel Visibility="{Binding Path=IsDownloading, Converter={StaticResource show}}" Orientation="Horizontal">
-                                                <ProgressBar Height="15" Width="90" IsIndeterminate="True"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Button>
-                                    
-                                    <Button  Visibility="{Binding Path=HasWorkspace, Converter={StaticResource show}}"
-                                             Command="{Binding DataContext.OpenJobCommand, ElementName=JobListView}" 
+                                    <Button Command="{Binding DataContext.OpenJobCommand, ElementName=JobListView}" 
                                              CommandParameter="{Binding}" DataContext="{Binding}"
-                                             Width="75" Margin="0,5,0,5">
-                                        <StackPanel Orientation="Horizontal" >
-                                            <Image Source="../Images/open.png" Width="10"  Margin="-5,0,5,0"/>
-                                            <TextBlock>Open</TextBlock>
+                                             Width="80" Margin="10, 5" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="../Images/ButtonIcons/external-link.png" Width="16" />
+                                            <Label Content="Open" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -63,44 +48,43 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>   
                     
-                    <GridViewColumn Header="" Width="100" >
+                    <GridViewColumn Header="" Width="110" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel  Orientation="Horizontal">
                                     <Button Visibility="{Binding Path=UserCanDeleteJob, Converter={StaticResource show}}" 
                                             Command="{Binding DataContext.DeleteJobCommand, ElementName=JobListView}" 
                                             CommandParameter="{Binding}" DataContext="{Binding}"
-                                            Width="75" Margin="5,5,0,5">
-                                        <StackPanel Orientation="Horizontal" >
-                                            <Image Source="../Images/delete.png" Width="10"  Margin="-5,0,5,0"/>
-                                            <TextBlock>Delete</TextBlock>
+                                            Width="80" Margin="10, 5" >
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="../Images/ButtonIcons/trash-o.png" Width="16" />
+                                            <Label Content="Delete" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
                 </GridView> 
             </ListView.View> 
-        </ListView>
+        </ListView> 
         
         <!-- bottom controls -->
         <Grid VerticalAlignment="Bottom" >
-            <Button Content="Refresh" Command="{Binding Path=RefreshJobListCommand}"
-                    VerticalAlignment="Bottom" 
-                    HorizontalAlignment="Left" 
-                    Margin="5,5,0,5"  
-                    Height="23"
-                    Width="75"/>
-
-            <Button Content="New" Command="{Binding Path=CreateNewJobCommand}" 
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Margin="0,5,5,5"  
-                    Height="23"
-                    Width="75"/>
+            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="100" Height="30">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
+                    <Label Content="{Loc _Refresh}" />
+                </StackPanel>
+            </Button>
+ 
+            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="100" Height="30">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/ButtonIcons/plus.png"  Width="16" />
+                    <Label Content="{Loc _New}" />
+                </StackPanel>
+            </Button>
 
         </Grid>
-    </Grid>
+    </StackPanel>
 </UserControl>

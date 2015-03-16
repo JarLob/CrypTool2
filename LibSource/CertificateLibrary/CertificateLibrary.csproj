@@ -135,6 +135,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\paporator_ssl.crt" />
+    <None Include="Resources\paporator_tls_certificate.crt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

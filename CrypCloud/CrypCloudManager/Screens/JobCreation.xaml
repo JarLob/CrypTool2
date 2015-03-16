@@ -7,12 +7,22 @@
              xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
+            <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Button.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <UserControl.DataContext>
         <viewModels:JobCreationVM />
     </UserControl.DataContext>
 
-    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" 
-                VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Label Content="Create a new job" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
         
         <!-- errorBox -->
         <Border Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}"
@@ -43,7 +53,7 @@
                 <RowDefinition Height="100" />
                 <RowDefinition Height="28" />
             </Grid.RowDefinitions>
-
+            
             <Label Content="{Loc _Name}" Grid.Row="0" Grid.Column="0" /> 
             <Label Content="{Loc _WorkspacePath}" Grid.Row="1" Grid.Column="0" />
             <Label Content="{Loc _Discription}" Grid.Row="2" Grid.Column="0" />
@@ -51,17 +61,31 @@
             <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Height="24" />
             <Grid Grid.Row="1" Grid.Column="1" Height="24">
                 <TextBox Text="{Binding Path=LocalFilePath, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,55,0" IsReadOnly="True" />
-                <Button Content="..." Command="{Binding Path=SelectWorkspaceFromFilesystemCmd}" HorizontalAlignment="Right" Width="55" />
+                <Button Command="{Binding Path=SelectWorkspaceFromFilesystemCmd}" HorizontalAlignment="Right" Width="55">
+                    <StackPanel Orientation="Horizontal" >
+                        <Image Source="../Images/ButtonIcons/folder-open-o.png" Width="16" />
+                    </StackPanel>
+                </Button> 
             </Grid>
-            <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True"
-                     VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" />
-
-            <Button Content="{Loc _BackToList}" Command="{Binding Path=BackToListCmd}"
-                    HorizontalAlignment="Left" Width="80" Grid.Row="3" Grid.Column="1" Height="24" />
-
-            <Button Content="{Loc _Publish}" Command="{Binding Path=CreateNewJobCmd}"
-                    HorizontalAlignment="Right" Width="80" Grid.Row="3" Grid.Column="1" Height="24" />
+            <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="1" />
         </Grid>
-
+        
+        <Grid>
+            <Button Command="{Binding Path=BackToListCmd}" HorizontalAlignment="Left" Width="85" Height="30" >
+                <StackPanel Orientation="Horizontal" >
+                    <Image Source="../Images/ButtonIcons/chevron-left_32.png" Width="16" />
+                    <Label Content="{Loc _Back}" />
+                </StackPanel>
+            </Button> 
+             
+            <Button Command="{Binding Path=CreateNewJobCmd}" HorizontalAlignment="Right" Width="85" Height="30">
+                <StackPanel Orientation="Horizontal" >
+                    <Image Source="../Images/ButtonIcons/cloud-upload_32.png"  Width="16" />
+                    <Label Content="{Loc _Upload}" />
+                </StackPanel>
+            </Button>
+            
+        </Grid>
+        
     </StackPanel>
 </UserControl>

@@ -12,6 +12,7 @@ namespace CrypCloud.Manager.Services
         {
             screens.Add(path, screenModel);
             screenModel.Navigator = this;
+            screenModel.IsActive = false;
         }
 
         public void ShowScreenWithPath(ScreenPaths path)
@@ -25,8 +26,7 @@ namespace CrypCloud.Manager.Services
             {
                 screenViewModel.Value.IsActive = false;
             }
-
-            screens.All(it => it.Value.IsActive = false);
+             
             screens[path].IsActive = true;
         }
 
