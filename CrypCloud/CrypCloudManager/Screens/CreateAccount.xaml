@@ -92,7 +92,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="Please_enter_the_verification_code_"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
                 <Label Content="verification_code_" Target="{Binding ElementName=VerificationCode}" Grid.Row="1" Grid.Column="0" />
-                <TextBox Text="{Binding Path=Username}" Grid.Row="1" Grid.Column="1" Height="24" MaxLength="40"/>
+                <TextBox Text="{Binding Path=VerificationCode}" Grid.Row="1" Grid.Column="1" Height="24" MaxLength="40"/>
                 <Button Command="{Binding Path=VerificationCommand}"  Grid.Row="1" Grid.Column="2" Width="80" Height="30">
                     <StackPanel Orientation="Horizontal" >
                         <Image Source="../Images/ButtonIcons/check_16.png" Width="16" />
