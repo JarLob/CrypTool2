@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CaseSensitiveCap" xml:space="preserve">
+    <value>Case Sensitivity</value>
+  </data>
+  <data name="CaseSensitiveDes" xml:space="preserve">
+    <value>Select whether the device should work case sensitive or not.</value>
+  </data>
   <data name="DecryptSelection" xml:space="preserve">
     <value>Decrypt</value>
   </data>
@@ -129,26 +135,35 @@
   <data name="EncryptSelection" xml:space="preserve">
     <value>Encrypt</value>
   </data>
+  <data name="InvalidCarCap" xml:space="preserve">
+    <value>Invalid Character Handling</value>
+  </data>
+  <data name="InvalidCarDes" xml:space="preserve">
+    <value>Select how invalid characters that are not supported by the used strips should be handled.</value>
+  </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Key</value>
   </data>
   <data name="KeyDescription" xml:space="preserve">
-    <value>Connect the Key to be used. Format should be "Stripe 1, Stripe 2,..., Stripe n / offset. Separators can be defined in the component</value>
+    <value>Connect the Key to be used. Format should be "Stripe 1, Stripe 2,..., Stripe n / offset. Separators can be defined in the component.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138</value>
   </data>
-  <data name="SeperatorOffCap" xml:space="preserve">
+  <data name="PluginCaptionTooltip" xml:space="preserve">
+    <value>The M-138, a Strip-Cipher from the early 20th century.</value>
+  </data>
+  <data name="SeparatorOffsetCap" xml:space="preserve">
     <value>Separator for offset</value>
   </data>
-  <data name="SeperatorOffDes" xml:space="preserve">
-    <value>Separator that is used to separate the stripes from the offset</value>
+  <data name="SeparatorOffsetDes" xml:space="preserve">
+    <value>Separator that is used to separate the stripes from the offset.</value>
   </data>
-  <data name="SeperatorStripCap" xml:space="preserve">
+  <data name="SeparatorStripCap" xml:space="preserve">
     <value>Separator for stripes</value>
   </data>
-  <data name="SeperatorStripDes" xml:space="preserve">
-    <value>Separator that is used to separate the different stripes used from each other</value>
+  <data name="SeparatorStripDes" xml:space="preserve">
+    <value>Separator that is used to separate the different stripes used from each other.</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
     <value>Text Input</value>
@@ -160,6 +175,6 @@
     <value>Text Output</value>
   </data>
   <data name="TextOutputDescription" xml:space="preserve">
-    <value>The resulting ciphertext/plaintext</value>
+    <value>The resulting ciphertext/plaintext.</value>
   </data>
 </root>

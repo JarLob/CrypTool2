@@ -117,31 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Copy_all" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Copy_key" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Copy_line" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Copy_text" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Copy_value" xml:space="preserve">
-    <value />
+  <data name="CiphertextInputDes" xml:space="preserve">
+    <value>Ciphertext</value>
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
-    <value>Current analyzed Keylength</value>
+    <value>Current analyzed offset</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Elapsed Time</value>
+  </data>
+  <data name="EndLabel" xml:space="preserve">
+    <value>Estimated End Time</value>
+  </data>
+  <data name="FastConvergeCap" xml:space="preserve">
+    <value>Fast Converge</value>
+  </data>
+  <data name="FastConvergeDes" xml:space="preserve">
+    <value>Select whether "Fast Converge" should be used. Explanation can be found in the manual.</value>
+  </data>
+  <data name="HillClimbRestartsCap" xml:space="preserve">
+    <value>Restarts for Hill-Climbing</value>
+  </data>
+  <data name="HillClimbRestartsDes" xml:space="preserve">
+    <value>Set the number of restarts Hill-Climbing should do for each offset.</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyLengthCap" xml:space="preserve">
+    <value>Keylength</value>
+  </data>
+  <data name="KeyLengthDes" xml:space="preserve">
+    <value>Set the Keylength that should be used in the Analysis.</value>
   </data>
   <data name="KeyLengthHeader" xml:space="preserve">
     <value>Offset</value>
+  </data>
+  <data name="KeyOutputDes" xml:space="preserve">
+    <value>Calculated Key</value>
+  </data>
+  <data name="KeysPerSecondAverageLabel" xml:space="preserve">
+    <value>Average Keys/Sec</value>
+  </data>
+  <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
+    <value>Current Keys/Sec</value>
+  </data>
+  <data name="LanguageCap" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LanguageDes" xml:space="preserve">
+    <value>Select the Language the Plaintext is most likely written in.</value>
+  </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Facts</value>
+  </data>
+  <data name="MaxOffsetCap" xml:space="preserve">
+    <value>Maximum Offset</value>
+  </data>
+  <data name="MaxOffsetDes" xml:space="preserve">
+    <value>Set the maximum offset to be analyzed.</value>
+  </data>
+  <data name="MethodCap" xml:space="preserve">
+    <value>Method</value>
+  </data>
+  <data name="MethodDes" xml:space="preserve">
+    <value>Select the Method that should be used to attack the Cipher</value>
+  </data>
+  <data name="MinOffsetCap" xml:space="preserve">
+    <value>Minimum Offset</value>
+  </data>
+  <data name="MinOffsetDes" xml:space="preserve">
+    <value>Set the minimum offset to be analyzed</value>
+  </data>
+  <data name="PlaintextInputDes" xml:space="preserve">
+    <value>Plaintext</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analyzer</value>
   </data>
   <data name="PluginTooltoip" xml:space="preserve">
     <value>A selection of attacks on the M-138</value>
+  </data>
+  <data name="ResultTextDes" xml:space="preserve">
+    <value>Resulting Plaintext</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Start Time</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Plaintext</value>
+  </data>
+  <data name="TopTelL" xml:space="preserve">
+    <value>Bestlist of Keys</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Value</value>
   </data>
 </root>

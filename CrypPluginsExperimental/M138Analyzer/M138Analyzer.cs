@@ -74,7 +74,14 @@ namespace Cryptool.M138Analyzer
         private double BestCostValueOfAllKeys = double.MinValue;
 
         private M138AnalyzerPresentation _presentation = new M138AnalyzerPresentation();
-
+        #endregion
+        #region Constructor
+        public M138Analyzer()
+        {
+            settings = new M138AnalyzerSettings();
+            settings.UpdateTaskPaneVisibility();
+            settings.PropertyChanged += new PropertyChangedEventHandler(settings_PropertyChanged);
+        }
         #endregion
 
         #region Data Properties
@@ -197,22 +204,13 @@ namespace Cryptool.M138Analyzer
                     //TextLength should be at least 25
                     StringBuilder AllPossibleKeysAsString = new StringBuilder();
                     var _estimatedEndTime = DateTime.Now;
-                    for (int i = 0; i < KeyLength; i++) //Go Over Keylength (Try all possible offsets)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++) //Go Over Keylength (Try all possible offsets)
                     {
                         var _startTime = DateTime.Now;
-                        ProgressChanged(i, KeyLength);
+                        ProgressChanged(i, MaxOffsetUserSelect);
                         _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
-                            /*
-                            _numberOfKeysForThisOffset = _keysForOffset.Count;
-                            for (int z = 0; z < _numberOfKeysForThisOffset; z++)
-                            {
-                                _listOfOffsets.Add(i);
-                                _allKeys.Add(_keysForOffset[z]);
-                                _allKeysReadable.Add("Offset: " + i + ", Strips: " + string.Join(", ", _keysForOffset[z]));
-                            }
-                             */
                             StringBuilder sb = new StringBuilder();
                             sb.Append("Key for Offset " + i + ": ");
                             int _cachedKeyLength = _keysForOffset.Count;
@@ -239,7 +237,6 @@ namespace Cryptool.M138Analyzer
                         _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - i));
                         UpdateDisplayEnd(i, _estimatedEndTime);
                     }
-                    //CalculatedKey = string.Join("\n", _allKeysReadable);
                     CalculatedKey = AllPossibleKeysAsString.ToString();
                     OnPropertyChanged("CalculatedKey");
                     break;
@@ -625,37 +622,6 @@ namespace Cryptool.M138Analyzer
                 _workingStrips.Add(_possibleStripsForThisLocation); //In Working Strips we should now have KeyLength Elements of Lists that each hold possible strips for their location
                 //Now make this to a list of Lists that holds all possible keys
             }
-
-            //List<List<int>> _allPossibleKeysForThisOffset = new List<List<int>>();
-            /*
-            int _numberOfPossibleKeys = 1;
-            for (int i = 0; i < KeyLength; i++)
-            {
-                if (i >= _textLength)
-                {
-                    break;
-                }
-                _numberOfPossibleKeys = _numberOfPossibleKeys * _workingStrips[i].Count;
-            }
-            if (_numberOfPossibleKeys == 1)
-            {
-             * */
-            //List<int> _tmpList = new List<int>();
-            //for (int z = 0; z < KeyLength; z++)
-            //{
-            //    _tmpList.Add(_workingStrips[z][0]);
-            //}
-            //_allPossibleKeysForThisOffset.Add(_tmpList);
-            /*
-            }
-            else
-            {
-                IEnumerable<IEnumerable<int>> _enumerableStriplist = _workingStrips;
-                _enumerableStriplist = PermuteAllKeys(_enumerableStriplist);
-                _allPossibleKeysForThisOffset = _enumerableStriplist as List<List<int>>;
-            }
-            */
-            //return _allPossibleKeysForThisOffset;
             return _workingStrips;
         }
 
@@ -1004,6 +970,23 @@ namespace Cryptool.M138Analyzer
                 }
             }
             return builder.ToString();
+        }
+
+        private void settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            try
+            {
+                switch (e.PropertyName)
+                {
+                    case "Method":
+                        settings.UpdateTaskPaneVisibility();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception during settings_PropertyChanged: {0}", ex), NotificationLevel.Error);
+            }
         }
         #endregion
     }

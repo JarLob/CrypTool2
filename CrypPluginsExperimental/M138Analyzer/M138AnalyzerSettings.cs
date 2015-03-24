@@ -17,6 +17,7 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Windows;
 
 namespace Cryptool.M138Analyzer
 {
@@ -36,7 +37,7 @@ namespace Cryptool.M138Analyzer
 
         #region TaskPane Settings
 
-        [TaskPane("MathodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes" })]
+        [TaskPane("MethodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes" })]
         public int Method
         {
             get
@@ -52,7 +53,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("LanguageCap", "LanguageDes", null, 0, false, ControlType.ComboBox, new string[] { "EnglishDes", "GermanDes" })]
+        [TaskPane("LanguageCap", "LanguageDes", null, 4, false, ControlType.ComboBox, new string[] { "EnglishDes", "GermanDes" })]
         public int LanguageSelection
         {
             get
@@ -68,7 +69,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("KeyLengthCap", "KeyLengthDes", null, 0, false, ControlType.TextBox)]
+        [TaskPane("KeyLengthCap", "KeyLengthDes", null, 1, false, ControlType.TextBox)]
         public int KeyLengthUserSelection
         {
             get
@@ -84,7 +85,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("MinOffsetCap", "MinOffsetDes", null, 0, false, ControlType.TextBox)]
+        [TaskPane("MinOffsetCap", "MinOffsetDes", null, 2, false, ControlType.TextBox)]
         public int MinOffsetUserSelection
         {
             get
@@ -100,7 +101,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("MaxOffsetCap", "MaxOffsetDes", null, 0, false, ControlType.TextBox)]
+        [TaskPane("MaxOffsetCap", "MaxOffsetDes", null, 3, false, ControlType.TextBox)]
         public int MaxOffsetUserSelection
         {
             get
@@ -116,7 +117,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("HillClimbRestartsCap", "HillClimbRestartsDes", null, 0, false, ControlType.TextBox)]
+        [TaskPane("HillClimbRestartsCap", "HillClimbRestartsDes", null, 5, false, ControlType.TextBox)]
         public string HillClimbRestarts
         {
             get
@@ -132,7 +133,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("FastConvergeCap", "FastConvergeDes", null, 0, false, ControlType.CheckBox)]
+        [TaskPane("FastConvergeCap", "FastConvergeDes", null, 6, false, ControlType.CheckBox)]
         public bool FastConverge
         {
             get
@@ -151,8 +152,38 @@ namespace Cryptool.M138Analyzer
         #endregion
 
         #region Events
+        public void UpdateTaskPaneVisibility()
+        {
+            if (_analyticMode == 0)
+            {
+                //Known Plaintext
+                SettingChanged("LanguageSelection", Visibility.Hidden);
+                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                SettingChanged("HillClimbRestarts", Visibility.Hidden);
+                SettingChanged("FastConverge", Visibility.Hidden);
+            }
+            else
+            {
+                //Hill Climbing
+                SettingChanged("LanguageSelection", Visibility.Visible);
+                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                SettingChanged("HillClimbRestarts", Visibility.Visible);
+                SettingChanged("FastConverge", Visibility.Visible);
+            }
+        }
+        private void SettingChanged(string setting, Visibility vis)
+        {
+            if (TaskPaneAttributeChanged != null)
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(setting, vis)));
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
+
 
         private void OnPropertyChanged(string propertyName)
         {
