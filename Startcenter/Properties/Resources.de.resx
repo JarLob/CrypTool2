@@ -204,4 +204,10 @@
   <data name="CrypTutorials" xml:space="preserve">
     <value>Schauen Sie sich Videos über CrypTool 2 an</value>
   </data>
+  <data name="CTBookFilename" xml:space="preserve">
+    <value>CrypToolScript-de.pdf</value>
+  </data>
+  <data name="Open_the_ct_book_" xml:space="preserve">
+    <value>Öffne das CrypTool-Buch</value>
+  </data>
 </root>

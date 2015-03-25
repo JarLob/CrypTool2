@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -54,26 +55,33 @@
                 <Image Source="/Startcenter;component/help32.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Loc Read_the_online_documentation_}" VerticalAlignment="Center" TextWrapping="Wrap"/>        
+        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Loc Read_the_online_documentation_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
 
-        <Button Grid.Column="0" Grid.Row="4" Click="ConnectButton_Click" Name="DistCompButton">
+        <Button Grid.Column="0" Grid.Row="4" Click="BookButton_Click">
+            <Button.Content>
+                <Image Source="/Startcenter;component/book.png" />
+            </Button.Content>
+        </Button>
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Loc Open_the_ct_book_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+
+        <Button Grid.Column="0" Grid.Row="5" Click="ConnectButton_Click" Name="DistCompButton">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/peer2peer-disconnect.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Loc Connect_to_the_distributed_computing_platform_}" VerticalAlignment="Center" Name="DistCompLabel" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Loc Connect_to_the_distributed_computing_platform_}" VerticalAlignment="Center" Name="DistCompLabel" TextWrapping="Wrap"/>
 
-        <Button Grid.Column="0" Grid.Row="5" Click="WebpageButton_Click">
+        <Button Grid.Column="0" Grid.Row="6" Click="WebpageButton_Click">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/browser.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
-        <Button Grid.Column="0" Grid.Row="6" Click="FacebookButton_Click">
+        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Visit_the_official_CrypTool_2_0_website_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <Button Grid.Column="0" Grid.Row="7" Click="FacebookButton_Click">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/facebook.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="6" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="7" Text="{Loc Follow_us_on_Facebook_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
     </Grid>
 </UserControl>

@@ -1,8 +1,10 @@
 ﻿ 
+using System.IO;
 using System.Windows;
 using System.Windows.Controls; 
 using Cryptool.CrypTutorials;  
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.IO;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
 
 namespace Startcenter
@@ -55,6 +57,11 @@ namespace Startcenter
         private void FacebookButton_Click(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://www.facebook.de/cryptool20");
+        }
+
+        private void BookButton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, Properties.Resources.CTBookFilename));
         }
     }
 }
