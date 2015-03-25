@@ -51,7 +51,7 @@ namespace Startcenter
 
         private void WebpageButton_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.cryptool2.vs.uni-due.de");
+            System.Diagnostics.Process.Start("https://www.cryptool.org/cryptool2");
         }
 
         private void FacebookButton_Click(object sender, RoutedEventArgs e)
