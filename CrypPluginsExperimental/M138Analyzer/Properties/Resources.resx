@@ -189,6 +189,9 @@
   <data name="MinOffsetDes" xml:space="preserve">
     <value>Set the minimum offset to be analyzed</value>
   </data>
+  <data name="PartKnowPlainDes" xml:space="preserve">
+    <value>Partially Known Plaintext</value>
+  </data>
   <data name="PlaintextInputDes" xml:space="preserve">
     <value>Plaintext</value>
   </data>

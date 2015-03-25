@@ -204,10 +204,10 @@ namespace Cryptool.M138Analyzer
                     //TextLength should be at least 25
                     StringBuilder AllPossibleKeysAsString = new StringBuilder();
                     var _estimatedEndTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++) //Go Over Keylength (Try all possible offsets)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect+1; i++) //Go Over Keylength (Try all possible offsets)
                     {
                         var _startTime = DateTime.Now;
-                        ProgressChanged(i, MaxOffsetUserSelect);
+                        ProgressChanged(i, MaxOffsetUserSelect+1);
                         _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
@@ -216,7 +216,7 @@ namespace Cryptool.M138Analyzer
                             int _cachedKeyLength = _keysForOffset.Count;
                             for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
                             {
-                                
+
                                 sb.Append("[");
                                 sb.Append(string.Join(",", _keysForOffset[_keyLocation].ToArray()));
                                 sb.Append("]");
@@ -234,7 +234,7 @@ namespace Cryptool.M138Analyzer
                         }
                         var _endTime = DateTime.Now;
                         var _elapsedTime = _endTime - _startTime;
-                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - i));
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
                         UpdateDisplayEnd(i, _estimatedEndTime);
                     }
                     CalculatedKey = AllPossibleKeysAsString.ToString();
@@ -310,7 +310,7 @@ namespace Cryptool.M138Analyzer
                     UpdateDisplayStart();
 
                     _estimatedEndTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect; i++)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect+1; i++)
                     {
                         var _startTime = DateTime.Now;
                         UpdateDisplayEnd(i, _estimatedEndTime);
@@ -335,8 +335,51 @@ namespace Cryptool.M138Analyzer
                     break;
 
                 case 2:
+                    if (Plaintext == null || Plaintext.Length == 0)
+                    {
+                        GuiLogMessage("Please provide a Plaintext for a Partially Known Plaintext attack", NotificationLevel.Error);
+                        return;
+                    }
+                    else
+                    {
+                        PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
+                    }
+                    if (Ciphertext == null || Ciphertext.Length == 0)
+                    {
+                        GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
+                        return;
+                    }
+                    else
+                    {
+                        CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
+                    }
+                    int _lengthOfPlaintext = PlaintextNumbers.Length;
+                    if (CiphertextNumbers.Length < _lengthOfPlaintext)
+                    {
+                        GuiLogMessage("For a Partially Known Plaintext attack, the length of the known Ciphertext needs to be larger than the length of the known Plaintext. Otherwise, please perform a known Plaintext attack", NotificationLevel.Error);
+                        return;
+                    }
+                    int[] _tmpCipherText = new int[_lengthOfPlaintext];
+                    for (int i = 0; i < _lengthOfPlaintext; i++)
+                    {
+                        _tmpCipherText[i] = CiphertextNumbers[i];
+                    }
 
-                    break;
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
+                    {
+                        var _startTime = DateTime.Now;
+                        ProgressChanged(i, MaxOffsetUserSelect + 1);
+                        _keysForOffset = KnownPlaintextAttack(i, _lengthOfPlaintext, StripList.Count, StripList[0].Length);
+                        if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
+                        {
+                            
+                        }
+                        var _endTime = DateTime.Now;
+                        var _elapsedTime = _endTime - _startTime;
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
+                        UpdateDisplayEnd(i, _estimatedEndTime);
+                    }
+                        break;
 
                 case 3:
                     break;

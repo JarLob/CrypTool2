@@ -37,7 +37,7 @@ namespace Cryptool.M138Analyzer
 
         #region TaskPane Settings
 
-        [TaskPane("MethodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes" })]
+        [TaskPane("MethodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes", "PartKnowPlainDes" })]
         public int Method
         {
             get
@@ -164,7 +164,7 @@ namespace Cryptool.M138Analyzer
                 SettingChanged("HillClimbRestarts", Visibility.Hidden);
                 SettingChanged("FastConverge", Visibility.Hidden);
             }
-            else
+            else if(_analyticMode == 1)
             {
                 //Hill Climbing
                 SettingChanged("LanguageSelection", Visibility.Visible);
@@ -173,6 +173,19 @@ namespace Cryptool.M138Analyzer
                 SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
                 SettingChanged("HillClimbRestarts", Visibility.Visible);
                 SettingChanged("FastConverge", Visibility.Visible);
+            }
+            else if (_analyticMode == 2)
+            {
+                SettingChanged("LanguageSelection", Visibility.Visible);
+                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                SettingChanged("HillClimbRestarts", Visibility.Visible);
+                SettingChanged("FastConverge", Visibility.Visible);
+            }
+            else
+            {
+                //Nope, this should not be possible
             }
         }
         private void SettingChanged(string setting, Visibility vis)

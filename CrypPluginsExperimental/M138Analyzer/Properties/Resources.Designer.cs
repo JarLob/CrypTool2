@@ -277,6 +277,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Partially Known Plaintext ähnelt.
+        /// </summary>
+        internal static string PartKnowPlainDes {
+            get {
+                return ResourceManager.GetString("PartKnowPlainDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
         /// </summary>
         internal static string PlaintextInputDes {
