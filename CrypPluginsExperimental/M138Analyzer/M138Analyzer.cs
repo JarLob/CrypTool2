@@ -300,7 +300,7 @@ namespace Cryptool.M138Analyzer
                             break;
                     }
 
-                    if (settings.HillClimbRestarts != null & settings.HillClimbRestarts.Length > 0)
+                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts) && settings.HillClimbRestarts.Length > 0)
                     {
                         _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
                     }
@@ -335,7 +335,7 @@ namespace Cryptool.M138Analyzer
                     break;
 
                 case 2:
-                    if (Plaintext == null || Plaintext.Length == 0)
+                    if (String.IsNullOrEmpty(Plaintext))
                     {
                         GuiLogMessage("Please provide a Plaintext for a Partially Known Plaintext attack", NotificationLevel.Error);
                         return;
@@ -344,7 +344,7 @@ namespace Cryptool.M138Analyzer
                     {
                         PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
                     }
-                    if (Ciphertext == null || Ciphertext.Length == 0)
+                    if (String.IsNullOrEmpty(Ciphertext))
                     {
                         GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
                         return;
