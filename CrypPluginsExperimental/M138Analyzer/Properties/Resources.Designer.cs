@@ -70,6 +70,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext to be used. ähnelt.
+        /// </summary>
+        internal static string CiphertextInputDescription {
+            get {
+                return ResourceManager.GetString("CiphertextInputDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Current analyzed offset ähnelt.
         /// </summary>
         internal static string CurrentAnalysedKeylengthLabel {
@@ -97,6 +106,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die English ähnelt.
+        /// </summary>
+        internal static string EnglishDes {
+            get {
+                return ResourceManager.GetString("EnglishDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fast Converge ähnelt.
         /// </summary>
         internal static string FastConvergeCap {
@@ -111,6 +129,24 @@ namespace Cryptool.M138Analyzer.Properties {
         internal static string FastConvergeDes {
             get {
                 return ResourceManager.GetString("FastConvergeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die German ähnelt.
+        /// </summary>
+        internal static string GermanDes {
+            get {
+                return ResourceManager.GetString("GermanDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hill climbing ähnelt.
+        /// </summary>
+        internal static string HillClimbingDes {
+            get {
+                return ResourceManager.GetString("HillClimbingDes", resourceCulture);
             }
         }
         
@@ -178,6 +214,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best key found. ähnelt.
+        /// </summary>
+        internal static string KeyOutputDescription {
+            get {
+                return ResourceManager.GetString("KeyOutputDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Average keys/sec ähnelt.
         /// </summary>
         internal static string KeysPerSecondAverageLabel {
@@ -192,6 +237,15 @@ namespace Cryptool.M138Analyzer.Properties {
         internal static string KeysPerSecondCurrentLabel {
             get {
                 return ResourceManager.GetString("KeysPerSecondCurrentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Known plaintext ähnelt.
+        /// </summary>
+        internal static string KnownPlaintextDes {
+            get {
+                return ResourceManager.GetString("KnownPlaintextDes", resourceCulture);
             }
         }
         
@@ -295,6 +349,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Known plaintext to be used. ähnelt.
+        /// </summary>
+        internal static string PlaintextInputDescription {
+            get {
+                return ResourceManager.GetString("PlaintextInputDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die M-138 Analyzer ähnelt.
         /// </summary>
         internal static string PluginCaption {
@@ -318,6 +381,15 @@ namespace Cryptool.M138Analyzer.Properties {
         internal static string ResultTextDes {
             get {
                 return ResourceManager.GetString("ResultTextDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting plaintext using the best found key. ähnelt.
+        /// </summary>
+        internal static string ResultTextDescription {
+            get {
+                return ResourceManager.GetString("ResultTextDescription", resourceCulture);
             }
         }
         

@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.M_138
             }
         }
 
-        [TaskPane("InvalidCarCap", "InvalidCarDesDes", null, 0, false, ControlType.ComboBox, new string[] { "delete", "ignore", "replace with '?'" })]
+        [TaskPane("InvalidCarCap", "InvalidCarDesDes", null, 0, false, ControlType.ComboBox, new string[] { "DeleteSel", "IgnoreSel", "ReplaceSel" })]
         public int InvalidCharacterHandling
         {
             get

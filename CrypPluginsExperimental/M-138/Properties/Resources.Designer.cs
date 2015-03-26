@@ -88,6 +88,15 @@ namespace M_138.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
+        /// </summary>
+        internal static string DeleteSel {
+            get {
+                return ResourceManager.GetString("DeleteSel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt / Decrypt ähnelt.
         /// </summary>
         internal static string EncryptDeryptCap {
@@ -111,6 +120,15 @@ namespace M_138.Properties {
         internal static string EncryptSelection {
             get {
                 return ResourceManager.GetString("EncryptSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ignore ähnelt.
+        /// </summary>
+        internal static string IgnoreSel {
+            get {
+                return ResourceManager.GetString("IgnoreSel", resourceCulture);
             }
         }
         
@@ -169,20 +187,29 @@ namespace M_138.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Replace by &apos;?&apos; ähnelt.
+        /// </summary>
+        internal static string ReplaceSel {
+            get {
+                return ResourceManager.GetString("ReplaceSel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Separator for offset ähnelt.
         /// </summary>
-        internal static string SeparatorOffsetCap {
+        internal static string SeparatorOffCap {
             get {
-                return ResourceManager.GetString("SeparatorOffsetCap", resourceCulture);
+                return ResourceManager.GetString("SeparatorOffCap", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the strips from the offset. ähnelt.
         /// </summary>
-        internal static string SeparatorOffsetDes {
+        internal static string SeparatorOffDes {
             get {
-                return ResourceManager.GetString("SeparatorOffsetDes", resourceCulture);
+                return ResourceManager.GetString("SeparatorOffDes", resourceCulture);
             }
         }
         

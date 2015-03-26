@@ -120,6 +120,9 @@
   <data name="CiphertextInputDes" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
+  <data name="CiphertextInputDescription" xml:space="preserve">
+    <value>Ciphertext to be used.</value>
+  </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Current analyzed offset</value>
   </data>
@@ -129,11 +132,20 @@
   <data name="EndLabel" xml:space="preserve">
     <value>Estimated end time</value>
   </data>
+  <data name="EnglishDes" xml:space="preserve">
+    <value>English</value>
+  </data>
   <data name="FastConvergeCap" xml:space="preserve">
     <value>Fast Converge</value>
   </data>
   <data name="FastConvergeDes" xml:space="preserve">
     <value>Select whether "Fast Converge" should be used. Explanation can be found in the manual.</value>
+  </data>
+  <data name="GermanDes" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="HillClimbingDes" xml:space="preserve">
+    <value>Hill climbing</value>
   </data>
   <data name="HillClimbRestartsCap" xml:space="preserve">
     <value>Number of restarts for hill climbing</value>
@@ -156,11 +168,17 @@
   <data name="KeyOutputDes" xml:space="preserve">
     <value>Calculated key</value>
   </data>
+  <data name="KeyOutputDescription" xml:space="preserve">
+    <value>Best key found.</value>
+  </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
     <value>Average keys/sec</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
     <value>Current keys/sec</value>
+  </data>
+  <data name="KnownPlaintextDes" xml:space="preserve">
+    <value>Known plaintext</value>
   </data>
   <data name="LanguageCap" xml:space="preserve">
     <value>Language</value>
@@ -195,6 +213,9 @@
   <data name="PlaintextInputDes" xml:space="preserve">
     <value>Plaintext</value>
   </data>
+  <data name="PlaintextInputDescription" xml:space="preserve">
+    <value>Known plaintext to be used.</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analyzer</value>
   </data>
@@ -203,6 +224,9 @@
   </data>
   <data name="ResultTextDes" xml:space="preserve">
     <value>Resulting plaintext</value>
+  </data>
+  <data name="ResultTextDescription" xml:space="preserve">
+    <value>Resulting plaintext using the best found key.</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Start time</value>

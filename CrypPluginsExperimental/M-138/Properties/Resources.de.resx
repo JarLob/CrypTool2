@@ -126,6 +126,9 @@
   <data name="DecryptSelection" xml:space="preserve">
     <value>Entschlüsseln</value>
   </data>
+  <data name="DeleteSel" xml:space="preserve">
+    <value>Loeschen</value>
+  </data>
   <data name="EncryptDeryptCap" xml:space="preserve">
     <value>Entschlüsseln /Verschlüsseln</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="EncryptSelection" xml:space="preserve">
     <value>Verschlüsseln</value>
+  </data>
+  <data name="IgnoreSel" xml:space="preserve">
+    <value>Ignorieren</value>
   </data>
   <data name="InvalidCarCap" xml:space="preserve">
     <value>Behandlung unbekannter Zeichen.</value>
@@ -145,7 +151,7 @@
     <value>Schlüssel</value>
   </data>
   <data name="KeyDescription" xml:space="preserve">
-    <value>Verbinde hier den Schlüssel, der genutzt werden soll. Der Schlüssel muss in folgendem Format angegeben werden: Streifen 1, Streifen 2,...,Streifen 25 / Offset. Die Zeichen zur Trennung der Streifen und des Offsets können in den Einstellungen definiert werden</value>
+    <value>Schlüssel, der genutzt werden soll. Der Schlüssel muss in folgendem Format angegeben werden: Streifen 1, Streifen 2,...,Streifen 25 / Offset. Die Zeichen zur Trennung der Streifen und des Offsets können in den Einstellungen definiert werden</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138</value>
@@ -153,10 +159,13 @@
   <data name="PluginCaptionTooltip" xml:space="preserve">
     <value>Die M-138, eine Polyalphabetische Verschlüsselung der Amerikaner aus dem frühen 20. Jahrhundert.</value>
   </data>
-  <data name="SeparatorOffsetCap" xml:space="preserve">
+  <data name="ReplaceSel" xml:space="preserve">
+    <value>Ersetzen durch '?'</value>
+  </data>
+  <data name="SeparatorOffCap" xml:space="preserve">
     <value>Offset Trennzeichen</value>
   </data>
-  <data name="SeparatorOffsetDes" xml:space="preserve">
+  <data name="SeparatorOffDes" xml:space="preserve">
     <value>Zeichen, das genutzt wird, um den Offset von den Streifen zu trennen.</value>
   </data>
   <data name="SeparatorStripCap" xml:space="preserve">

@@ -87,14 +87,14 @@ namespace Cryptool.M138Analyzer
         #region Data Properties
 
         //Inputs
-        [PropertyInfo(Direction.InputData, "PlaintextInputDes", "Input tooltip description")]
+        [PropertyInfo(Direction.InputData, "PlaintextInputDes", "PlaintextInputDescription", "Input tooltip description")]
         public string Plaintext
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "CiphertextInputDes", "Input tooltip description")]
+        [PropertyInfo(Direction.InputData, "CiphertextInputDes", "CiphertextInputDescription", "Input tooltip description")]
         public string Ciphertext
         {
             get;
@@ -102,14 +102,14 @@ namespace Cryptool.M138Analyzer
         }
 
         //Outputs
-        [PropertyInfo(Direction.OutputData, "ResultTextDes", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "ResultTextDes", "ResultTextDescription", "Output tooltip description")]
         public string ResultText
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "KeyOutputDes", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "KeyOutputDes", "KeyOutputDescription", "Output tooltip description")]
         public string CalculatedKey
         {
             get;

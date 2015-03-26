@@ -120,6 +120,9 @@
   <data name="CiphertextInputDes" xml:space="preserve">
     <value>Geheimtext</value>
   </data>
+  <data name="CiphertextInputDescription" xml:space="preserve">
+    <value>Geheimtext. der verwendet werden soll.</value>
+  </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Aktuell analysierter offset</value>
   </data>
@@ -129,17 +132,26 @@
   <data name="EndLabel" xml:space="preserve">
     <value>Geschätzte Endzeit</value>
   </data>
+  <data name="EnglishDes" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
   <data name="FastConvergeCap" xml:space="preserve">
     <value>Schnelle Konvergierung</value>
   </data>
   <data name="FastConvergeDes" xml:space="preserve">
     <value>Auswahl, ob die schnelle Konvergierung aktiviert werden soll. Erklärung siehe Hilfe.</value>
   </data>
+  <data name="GermanDes" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
+  <data name="HillClimbingDes" xml:space="preserve">
+    <value>Hill-Climbing</value>
+  </data>
   <data name="HillClimbRestartsCap" xml:space="preserve">
     <value>Neustarts für Hill-Climbing</value>
   </data>
   <data name="HillClimbRestartsDes" xml:space="preserve">
-    <value>Anzahl der Neustarts, die im HillßClimbing ausgeführt werden sollen, angeben</value>
+    <value>Anzahl der Neustarts, die im Hill-Climbing ausgeführt werden sollen, angeben</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Schlüssel</value>
@@ -156,11 +168,17 @@
   <data name="KeyOutputDes" xml:space="preserve">
     <value>Berechneter Schlüssel</value>
   </data>
+  <data name="KeyOutputDescription" xml:space="preserve">
+    <value>Bester gefundener Schlüssel.</value>
+  </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
     <value>Durchschnittliche Schlüssel/Sekunde</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
     <value>Altuelle Schlüssel/Sekunde</value>
+  </data>
+  <data name="KnownPlaintextDes" xml:space="preserve">
+    <value>Bekannter Klartext</value>
   </data>
   <data name="LanguageCap" xml:space="preserve">
     <value>Sprache</value>
@@ -195,6 +213,9 @@
   <data name="PlaintextInputDes" xml:space="preserve">
     <value>Klartext</value>
   </data>
+  <data name="PlaintextInputDescription" xml:space="preserve">
+    <value>Bekannter Klartext, der verwendet erden soll.</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analysewerkyeug</value>
   </data>
@@ -204,13 +225,16 @@
   <data name="ResultTextDes" xml:space="preserve">
     <value>Resultierender Klartext</value>
   </data>
+  <data name="ResultTextDescription" xml:space="preserve">
+    <value>Resultierender Klartext unter Benutzung des besten, gefundenen Schlüssels.</value>
+  </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Startzeit</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Klartext</value>
   </data>
-  <data name="TopTelL" xml:space="preserve">
+  <data name="TopTenL" xml:space="preserve">
     <value>Bestenliste der Schlüssel</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
