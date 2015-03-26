@@ -145,25 +145,25 @@
     <value>Key</value>
   </data>
   <data name="KeyDescription" xml:space="preserve">
-    <value>Connect the Key to be used. Format should be "Stripe 1, Stripe 2,..., Stripe n / offset. Separators can be defined in the component.</value>
+    <value>Key to be used for en-/decryption. Format should be "Strip_1, Strip_2,...,Strip_n / offset". Separator can be defined in the plugin's settings.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138</value>
   </data>
   <data name="PluginCaptionTooltip" xml:space="preserve">
-    <value>The M-138, a Strip-Cipher from the early 20th century.</value>
+    <value>M-138, a strip cipher from the early 20th century.</value>
   </data>
   <data name="SeparatorOffsetCap" xml:space="preserve">
     <value>Separator for offset</value>
   </data>
   <data name="SeparatorOffsetDes" xml:space="preserve">
-    <value>Separator that is used to separate the stripes from the offset.</value>
+    <value>Separator that is used to separate the strips from the offset.</value>
   </data>
   <data name="SeparatorStripCap" xml:space="preserve">
     <value>Separator for stripes</value>
   </data>
   <data name="SeparatorStripDes" xml:space="preserve">
-    <value>Separator that is used to separate the different stripes used from each other.</value>
+    <value>Separator that is used to separate the different strips used from each other.</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
     <value>Text Input</value>

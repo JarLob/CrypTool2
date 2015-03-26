@@ -124,10 +124,10 @@
     <value>Current analyzed offset</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
-    <value>Elapsed Time</value>
+    <value>Elapsed time</value>
   </data>
   <data name="EndLabel" xml:space="preserve">
-    <value>Estimated End Time</value>
+    <value>Estimated end time</value>
   </data>
   <data name="FastConvergeCap" xml:space="preserve">
     <value>Fast Converge</value>
@@ -136,10 +136,10 @@
     <value>Select whether "Fast Converge" should be used. Explanation can be found in the manual.</value>
   </data>
   <data name="HillClimbRestartsCap" xml:space="preserve">
-    <value>Restarts for Hill-Climbing</value>
+    <value>Number of restarts for hill climbing</value>
   </data>
   <data name="HillClimbRestartsDes" xml:space="preserve">
-    <value>Set the number of restarts Hill-Climbing should do for each offset.</value>
+    <value>Set the number of restarts hill climbing should do for each offset.</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Key</value>
@@ -148,31 +148,31 @@
     <value>Keylength</value>
   </data>
   <data name="KeyLengthDes" xml:space="preserve">
-    <value>Set the Keylength that should be used in the Analysis.</value>
+    <value>Set the keylength to be used for analysis.</value>
   </data>
   <data name="KeyLengthHeader" xml:space="preserve">
     <value>Offset</value>
   </data>
   <data name="KeyOutputDes" xml:space="preserve">
-    <value>Calculated Key</value>
+    <value>Calculated key</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
-    <value>Average Keys/Sec</value>
+    <value>Average keys/sec</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
-    <value>Current Keys/Sec</value>
+    <value>Current keys/sec</value>
   </data>
   <data name="LanguageCap" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="LanguageDes" xml:space="preserve">
-    <value>Select the Language the Plaintext is most likely written in.</value>
+    <value>Select the language the plaintext is most likely written in.</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Facts</value>
   </data>
   <data name="MaxOffsetCap" xml:space="preserve">
-    <value>Maximum Offset</value>
+    <value>Maximum offset</value>
   </data>
   <data name="MaxOffsetDes" xml:space="preserve">
     <value>Set the maximum offset to be analyzed.</value>
@@ -181,10 +181,10 @@
     <value>Method</value>
   </data>
   <data name="MethodDes" xml:space="preserve">
-    <value>Select the Method that should be used to attack the Cipher</value>
+    <value>Select the method that should be used to attack the cipher.</value>
   </data>
   <data name="MinOffsetCap" xml:space="preserve">
-    <value>Minimum Offset</value>
+    <value>Minimum offset</value>
   </data>
   <data name="MinOffsetDes" xml:space="preserve">
     <value>Set the minimum offset to be analyzed</value>
@@ -202,16 +202,16 @@
     <value>A selection of attacks on the M-138</value>
   </data>
   <data name="ResultTextDes" xml:space="preserve">
-    <value>Resulting Plaintext</value>
+    <value>Resulting plaintext</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
-    <value>Start Time</value>
+    <value>Start time</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Plaintext</value>
   </data>
-  <data name="TopTelL" xml:space="preserve">
-    <value>Bestlist of Keys</value>
+  <data name="TopTenL" xml:space="preserve">
+    <value>Top ranking keys</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Value</value>

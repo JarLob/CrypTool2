@@ -79,7 +79,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed Time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed time ähnelt.
         /// </summary>
         internal static string ElapsedLabel {
             get {
@@ -88,7 +88,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Estimated End Time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Estimated end time ähnelt.
         /// </summary>
         internal static string EndLabel {
             get {
@@ -115,7 +115,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Restarts for Hill-Climbing ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of restarts for hill climbing ähnelt.
         /// </summary>
         internal static string HillClimbRestartsCap {
             get {
@@ -124,7 +124,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set the number of restarts Hill-Climbing should do for each offset. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set the number of restarts hill climbing should do for each offset. ähnelt.
         /// </summary>
         internal static string HillClimbRestartsDes {
             get {
@@ -151,7 +151,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set the Keylength that should be used in the Analysis. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set the keylength to be used for analysis. ähnelt.
         /// </summary>
         internal static string KeyLengthDes {
             get {
@@ -169,7 +169,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculated Key ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculated key ähnelt.
         /// </summary>
         internal static string KeyOutputDes {
             get {
@@ -178,7 +178,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Average Keys/Sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Average keys/sec ähnelt.
         /// </summary>
         internal static string KeysPerSecondAverageLabel {
             get {
@@ -187,7 +187,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Keys/Sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current keys/sec ähnelt.
         /// </summary>
         internal static string KeysPerSecondCurrentLabel {
             get {
@@ -205,7 +205,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the Language the Plaintext is most likely written in. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the language the plaintext is most likely written in. ähnelt.
         /// </summary>
         internal static string LanguageDes {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum Offset ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Maximum offset ähnelt.
         /// </summary>
         internal static string MaxOffsetCap {
             get {
@@ -250,7 +250,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the Method that should be used to attack the Cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the method that should be used to attack the cipher. ähnelt.
         /// </summary>
         internal static string MethodDes {
             get {
@@ -259,7 +259,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Minimum Offset ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Minimum offset ähnelt.
         /// </summary>
         internal static string MinOffsetCap {
             get {
@@ -313,7 +313,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting Plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting plaintext ähnelt.
         /// </summary>
         internal static string ResultTextDes {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start Time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start time ähnelt.
         /// </summary>
         internal static string StartLabel {
             get {
@@ -340,11 +340,11 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Bestlist of Keys ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Top ranking keys ähnelt.
         /// </summary>
-        internal static string TopTelL {
+        internal static string TopTenL {
             get {
-                return ResourceManager.GetString("TopTelL", resourceCulture);
+                return ResourceManager.GetString("TopTenL", resourceCulture);
             }
         }
         

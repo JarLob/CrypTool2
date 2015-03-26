@@ -142,7 +142,7 @@ namespace M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Connect the Key to be used. Format should be &quot;Stripe 1, Stripe 2,..., Stripe n / offset. Separators can be defined in the component. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key to be used for en-/decryption. Format should be &quot;Strip_1, Strip_2,...,Strip_n / offset&quot;. Separator can be defined in the plugin&apos;s settings. ähnelt.
         /// </summary>
         internal static string KeyDescription {
             get {
@@ -160,7 +160,7 @@ namespace M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The M-138, a Strip-Cipher from the early 20th century. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die M-138, a strip cipher from the early 20th century. ähnelt.
         /// </summary>
         internal static string PluginCaptionTooltip {
             get {
@@ -178,7 +178,7 @@ namespace M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the stripes from the offset. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the strips from the offset. ähnelt.
         /// </summary>
         internal static string SeparatorOffsetDes {
             get {
@@ -196,7 +196,7 @@ namespace M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the different stripes used from each other. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the different strips used from each other. ähnelt.
         /// </summary>
         internal static string SeparatorStripDes {
             get {
