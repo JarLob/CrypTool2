@@ -1957,16 +1957,7 @@ namespace Cryptool.CrypWin
                 this.Title = windowTitle;
             }, null);
         }
-
-        private void SelectedPluginChanged(object sender, PluginChangedEventArgs pce)
-        {
-            if (!listPluginsAlreadyInitialized.Contains(pce.SelectedPlugin))
-            {
-                listPluginsAlreadyInitialized.Add(pce.SelectedPlugin);
-                pce.SelectedPlugin.Initialize();
-            }
-        }
-
+        
         private Type GetDefaultEditor()
         {
             return GetEditor(Settings.Default.defaultEditor);
@@ -2190,7 +2181,6 @@ namespace Cryptool.CrypWin
             if (lastEditor != null)
             {
                 //lastEditor.OnGuiLogNotificationOccured -= OnGuiLogNotificationOccured;
-                lastEditor.OnSelectedPluginChanged -= SelectedPluginChanged;
                 lastEditor.OnOpenProjectFile -= OpenProjectFileEvent;
 
                 //save tab state of the old editor.. but not maximized:
@@ -2215,7 +2205,6 @@ namespace Cryptool.CrypWin
             if (ActiveEditor != null && ActivePlugin == ActiveEditor)
             {
                 //ActiveEditor.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
-                ActiveEditor.OnSelectedPluginChanged += SelectedPluginChanged;
                 ActiveEditor.OnOpenProjectFile += OpenProjectFileEvent;
                 ShowEditorSpecificPanels(ActiveEditor);
             }
