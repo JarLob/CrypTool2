@@ -205,15 +205,15 @@
     <value>Start this entry</value>
   </data>
   <data name="Follow_us_on_Facebook_" xml:space="preserve">
-    <value>Like us on Facebook</value>
+    <value>Visit us on Facebook.</value>
   </data>
   <data name="CrypTutorials" xml:space="preserve">
-    <value>Watch videos about CrypTool 2</value>
+    <value>Watch videos about CrypTool 2.</value>
   </data>
   <data name="CTBookFilename" xml:space="preserve">
     <value>CrypToolScript-en.pdf</value>
   </data>
   <data name="Open_the_ct_book_" xml:space="preserve">
-    <value>Open the CrypTool Book</value>
+    <value>Open the CrypTool Book.</value>
   </data>
 </root>
