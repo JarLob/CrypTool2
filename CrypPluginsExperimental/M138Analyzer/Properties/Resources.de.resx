@@ -121,7 +121,7 @@
     <value>Geheimtext</value>
   </data>
   <data name="CiphertextInputDescription" xml:space="preserve">
-    <value>Geheimtext. der verwendet werden soll.</value>
+    <value>Geheimtext, der analysiert werden soll.</value>
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Aktuell analysierter offset</value>
@@ -175,7 +175,7 @@
     <value>Durchschnittliche Schlüssel/Sekunde</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
-    <value>Altuelle Schlüssel/Sekunde</value>
+    <value>Aktuelle Schlüssel/Sekunde</value>
   </data>
   <data name="KnownPlaintextDes" xml:space="preserve">
     <value>Bekannter Klartext</value>
@@ -208,7 +208,7 @@
     <value>Minimaler Offset, der analysiert werden soll.</value>
   </data>
   <data name="PartKnowPlainDes" xml:space="preserve">
-    <value>Partially Known-Plaintext</value>
+    <value>Teilweise bekannter Klartext</value>
   </data>
   <data name="PlaintextInputDes" xml:space="preserve">
     <value>Klartext</value>
@@ -217,7 +217,7 @@
     <value>Bekannter Klartext, der verwendet erden soll.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>M-138 Analysewerkyeug</value>
+    <value>M-138 Analysewerkzeug</value>
   </data>
   <data name="PluginTooltoip" xml:space="preserve">
     <value>Eine Auswahl von möglichen Angriffen auf die M-138</value>
@@ -239,5 +239,8 @@
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>
+  </data>
+  <data name="KnownPlaintextDescription" xml:space="preserve">
+    <value>Bekannter Klartext, der verwendet werden soll.</value>
   </data>
 </root>

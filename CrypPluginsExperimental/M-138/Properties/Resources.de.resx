@@ -130,7 +130,7 @@
     <value>Loeschen</value>
   </data>
   <data name="EncryptDeryptCap" xml:space="preserve">
-    <value>Entschlüsseln /Verschlüsseln</value>
+    <value>Entschlüsseln / Verschlüsseln</value>
   </data>
   <data name="EncryptDeryptDes" xml:space="preserve">
     <value>Wähle aus, ob der eingegebene Text Ver- oder Entschlüsselt werden soll.</value>
@@ -151,13 +151,16 @@
     <value>Schlüssel</value>
   </data>
   <data name="KeyDescription" xml:space="preserve">
-    <value>Schlüssel, der genutzt werden soll. Der Schlüssel muss in folgendem Format angegeben werden: Streifen 1, Streifen 2,...,Streifen 25 / Offset. Die Zeichen zur Trennung der Streifen und des Offsets können in den Einstellungen definiert werden</value>
+    <value>Der zu nutzende Schlüssel muss in folgendem Format angegeben
+werden: Streifen 1, Streifen 2, ... , Streifen 25 / Offset. Die Zeichen
+zur Trennung der Streifen und des Offsets können in den Einstellungen
+definiert werden.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138</value>
   </data>
   <data name="PluginCaptionTooltip" xml:space="preserve">
-    <value>Die M-138, eine Polyalphabetische Verschlüsselung der Amerikaner aus dem frühen 20. Jahrhundert.</value>
+    <value>M-138, eine polyalphabetische Verschlüsselung der USA aus dem frühen 20. Jahrhundert.</value>
   </data>
   <data name="ReplaceSel" xml:space="preserve">
     <value>Ersetzen durch '?'</value>

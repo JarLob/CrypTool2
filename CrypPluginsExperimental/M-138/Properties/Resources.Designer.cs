@@ -205,7 +205,7 @@ namespace M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the strips from the offset. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator used to separate the strips from the offset. ähnelt.
         /// </summary>
         internal static string SeparatorOffDes {
             get {

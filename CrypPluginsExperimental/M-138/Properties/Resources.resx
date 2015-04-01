@@ -166,7 +166,7 @@
     <value>Separator for offset</value>
   </data>
   <data name="SeparatorOffDes" xml:space="preserve">
-    <value>Separator that is used to separate the strips from the offset.</value>
+    <value>Separator used to separate the strips from the offset.</value>
   </data>
   <data name="SeparatorStripCap" xml:space="preserve">
     <value>Separator for stripes</value>

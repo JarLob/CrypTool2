@@ -156,22 +156,14 @@ namespace Cryptool.M138Analyzer
             {
                 ((M138AnalyzerPresentation)Presentation).BestList.Clear();
             }, null);
-
-            //if (Ciphertext != null)
-            //{
-            //    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-            //}
-            //if (Plaintext != null)
-            //{
-            //    PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
-            //}
+            // Get Settings
             getUserSelections();
 
 
             switch (Attack)
             {
                 case 0: //Known Plaintext
-                    if (Ciphertext == null || Plaintext == null)
+                    if (String.IsNullOrEmpty(Ciphertext) || String.IsNullOrEmpty(Plaintext))
                     {
                         GuiLogMessage("Please provide Ciphertext and Plaintext to perform a known plaintext attack", NotificationLevel.Error);
                         return;
@@ -212,24 +204,25 @@ namespace Cryptool.M138Analyzer
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
                             StringBuilder sb = new StringBuilder();
-                            sb.Append("Key for Offset " + i + ": ");
+                            //sb.Append("Key for Offset " + i + ": ");
                             int _cachedKeyLength = _keysForOffset.Count;
                             for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
                             {
 
                                 sb.Append("[");
-                                sb.Append(string.Join(",", _keysForOffset[_keyLocation].ToArray()));
+                                sb.Append(string.Join("|", _keysForOffset[_keyLocation].ToArray()));
                                 sb.Append("]");
                                 if (_keyLocation != _cachedKeyLength - 1)
                                 {
-                                    sb.Append(";");
+                                    sb.Append(",");
                                 }
                                 else
                                 {
+                                    sb.Append(" / " + i);
                                     sb.Append("\n");
                                 }
                             }
-                            AddNewBestListEntryKnownPlaintext(sb.ToString().Split(':')[1], i);
+                            AddNewBestListEntryKnownPlaintext(sb.ToString().Split('/')[0], i);
                             AllPossibleKeysAsString.Append(sb);
                         }
                         var _endTime = DateTime.Now;
@@ -242,7 +235,7 @@ namespace Cryptool.M138Analyzer
                     break;
 
                 case 1: //Hill Climbing
-                    if (Ciphertext == null)
+                    if (String.IsNullOrEmpty(Ciphertext))
                     {
                         GuiLogMessage("Please provide a ciphertext to perform Hill Climbing", NotificationLevel.Error);
                         return;
@@ -300,7 +293,7 @@ namespace Cryptool.M138Analyzer
                             break;
                     }
 
-                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts) && settings.HillClimbRestarts.Length > 0)
+                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts))
                     {
                         _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
                     }
@@ -334,7 +327,7 @@ namespace Cryptool.M138Analyzer
                     OnPropertyChanged("ResultText");
                     break;
 
-                case 2:
+                case 2: //Partially Known Plaintext
                     if (String.IsNullOrEmpty(Plaintext))
                     {
                         GuiLogMessage("Please provide a Plaintext for a Partially Known Plaintext attack", NotificationLevel.Error);
@@ -344,6 +337,7 @@ namespace Cryptool.M138Analyzer
                     {
                         PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
                     }
+                    int _lengthOfPlaintext = PlaintextNumbers.Length;
                     if (String.IsNullOrEmpty(Ciphertext))
                     {
                         GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
@@ -351,19 +345,20 @@ namespace Cryptool.M138Analyzer
                     }
                     else
                     {
-                        CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
+                        if (Ciphertext.Length < _lengthOfPlaintext)
+                        {
+                            GuiLogMessage("For a Partially Known Plaintext attack, the length of the known Ciphertext needs to be larger than the length of the known Plaintext. Otherwise, please perform a known Plaintext attack", NotificationLevel.Error);
+                            return;
+                        }
+                        CiphertextNumbers= new int[_lengthOfPlaintext];
+                        int[] _tmpCipherText = MapTextIntoNumberSpace(Ciphertext, Alphabet);
+                        for (int i = 0; i < _lengthOfPlaintext; i++)
+                        {
+                            CiphertextNumbers[i] = _tmpCipherText[i];
+                        }
+                        
                     }
-                    int _lengthOfPlaintext = PlaintextNumbers.Length;
-                    if (CiphertextNumbers.Length < _lengthOfPlaintext)
-                    {
-                        GuiLogMessage("For a Partially Known Plaintext attack, the length of the known Ciphertext needs to be larger than the length of the known Plaintext. Otherwise, please perform a known Plaintext attack", NotificationLevel.Error);
-                        return;
-                    }
-                    int[] _tmpCipherText = new int[_lengthOfPlaintext];
-                    for (int i = 0; i < _lengthOfPlaintext; i++)
-                    {
-                        _tmpCipherText[i] = CiphertextNumbers[i];
-                    }
+                    
 
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
                     {
@@ -372,7 +367,30 @@ namespace Cryptool.M138Analyzer
                         _keysForOffset = KnownPlaintextAttack(i, _lengthOfPlaintext, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
                         {
-                            
+                            int _numPosKeys = 1;
+                            foreach (List<int> l in _keysForOffset) {
+                                _numPosKeys = _numPosKeys * l.Count;
+                            }
+                            if (_numPosKeys > 1000)
+                            {
+                                //too much to do hill climbing on every possible key
+                            }
+                            else
+                            {
+                                //Do Hill Climbing with given Startkey
+                                int listLength = _keysForOffset.Count;
+                                int[] counters = new int[listLength];
+                                for (int _tmpCount = 0; _tmpCount < listLength; _tmpCount++)
+                                {
+                                    counters[_tmpCount] = 1;
+                                }
+                                for(int _tmpCount = 0; _tmpCount < _numPosKeys; _tmpCount++)
+                                {
+                                    int[] _tempKey = new int[KeyLength];
+
+                                }
+
+                            }
                         }
                         var _endTime = DateTime.Now;
                         var _elapsedTime = _endTime - _startTime;
@@ -547,6 +565,11 @@ namespace Cryptool.M138Analyzer
                             int _tmpElement = _copykey[i];
                             _copykey[i] = _copykey[j];
                             _copykey[j] = _tmpElement;
+
+                            //TEST
+                            _tmpElement = _copykey[Mod(i + 7, _keyLength)];
+                            _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
+                            _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
                             //TODO: Swap more elements at one time?
 
                             int[] _trimKey = new int[_keyLength]; //First n (25) Elements of runkey that will actually be used for en/decryption
@@ -664,6 +687,35 @@ namespace Cryptool.M138Analyzer
                 }
                 _workingStrips.Add(_possibleStripsForThisLocation); //In Working Strips we should now have KeyLength Elements of Lists that each hold possible strips for their location
                 //Now make this to a list of Lists that holds all possible keys
+            }
+            //Prevent strips from appearing twice in a key
+            int _tmpCount = _workingStrips.Count; //Size of the list
+            bool _stripWasKicked = true;
+            while (_stripWasKicked)
+            {
+                _stripWasKicked = false;
+                for (int i = 0; i < _tmpCount; i++) //Iterate over the List
+                {
+                    if (_workingStrips[i].Count == 1)
+                    {
+                        int _analyzedStrip = _workingStrips[i][0];
+                        foreach (List<int> l in _workingStrips)
+                        {
+                            if (l != _workingStrips[i]) //Don't compare Location with itself
+                            {
+                                if(l.Contains(_analyzedStrip)) 
+                                {
+                                    l.Remove(_analyzedStrip);
+                                    if (l.Count == 0)
+                                    {
+                                        return null;
+                                    }
+                                    _stripWasKicked = true;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             return _workingStrips;
         }
@@ -962,7 +1014,7 @@ namespace Cryptool.M138Analyzer
             ResultEntry entry = new ResultEntry
             {
                 Key = key,
-                Text = "",
+                Text = Plaintext,
                 Value = offset,
             };
 

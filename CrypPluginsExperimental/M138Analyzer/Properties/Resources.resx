@@ -136,10 +136,10 @@
     <value>English</value>
   </data>
   <data name="FastConvergeCap" xml:space="preserve">
-    <value>Fast Converge</value>
+    <value>Fast converge</value>
   </data>
   <data name="FastConvergeDes" xml:space="preserve">
-    <value>Select whether "Fast Converge" should be used. Explanation can be found in the manual.</value>
+    <value>Select whether "Fast converge" should be used. Explanation can be found in the manual.</value>
   </data>
   <data name="GermanDes" xml:space="preserve">
     <value>German</value>
