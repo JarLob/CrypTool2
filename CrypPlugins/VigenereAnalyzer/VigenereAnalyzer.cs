@@ -32,7 +32,7 @@ namespace Cryptool.VigenereAnalyzer
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String keyString, String plaintextString);
 
-    [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Uni Duisburg", "https://www.ais.uni-kassel.de")]
+    [Author("Nils Kopal", "Nils.Kopal@Uni-Kassel.de", "Uni Kassel", "https://www.ais.uni-kassel.de")]
     [PluginInfo("Cryptool.VigenereAnalyzer.Properties.Resources",
     "PluginCaption", "PluginTooltip", "", "VigenereAnalyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
@@ -156,7 +156,7 @@ namespace Cryptool.VigenereAnalyzer
             for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
             {
                 UpdateDisplayEnd(keylength);
-                HillclimbVigenere(ciphertext, keylength, _quadgrams, _settings.Restarts, _settings.Greedy);
+                HillclimbVigenere(ciphertext, keylength, _quadgrams, _settings.Restarts, _settings.FastConverge);
                 if (_stopped)
                 {                    
                     return;
@@ -227,8 +227,8 @@ namespace Cryptool.VigenereAnalyzer
         /// <param name="keylength"></param>
         /// <param name="ngrams4"></param>
         /// <param name="restarts"></param>
-        /// <param name="greedy"></param>
-        private void HillclimbVigenere(int[] ciphertext, int keylength, double[, , ,] ngrams4, int restarts = 10, bool greedy = false)
+        /// <param name="fastConverge"></param>
+        private void HillclimbVigenere(int[] ciphertext, int keylength, double[, , ,] ngrams4, int restarts = 10, bool fastConverge = false)
         {
             var globalbestkeycost = double.MinValue;
             var bestkey = new int[keylength];
@@ -271,7 +271,7 @@ namespace Cryptool.VigenereAnalyzer
                                 bestkeycost = costvalue;
                                 bestkey = copykey;
                                 foundbetter = true;
-                                if (greedy)
+                                if (fastConverge)
                                 {
                                     runkey = bestkey;
                                 }                          

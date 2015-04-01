@@ -144,12 +144,6 @@
   <data name="FromKeylengthTooltip" xml:space="preserve">
     <value>Analyse the given Ciphertext and start from this keylength.</value>
   </data>
-  <data name="GreedyCaption" xml:space="preserve">
-    <value>Greedy</value>
-  </data>
-  <data name="GreedyTooltip" xml:space="preserve">
-    <value>Do a greedy hillclimbing or not.</value>
-  </data>
   <data name="KeyStyleCaption" xml:space="preserve">
     <value>Keystyle</value>
   </data>
@@ -239,5 +233,11 @@
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Current analyzed keylength:</value>
+  </data>
+  <data name="FastConvergeCaption" xml:space="preserve">
+    <value>Fast converge</value>
+  </data>
+  <data name="FastConvergeTooltip" xml:space="preserve">
+    <value>If selected, the hillclimbing algorithm jumps to every improvement. Otherwise it jumps to the best possible improvement.</value>
   </data>
 </root>

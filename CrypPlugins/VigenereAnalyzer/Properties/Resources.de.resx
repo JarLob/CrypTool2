@@ -147,17 +147,17 @@
   <data name="EndLabel" xml:space="preserve">
     <value>Endzeit:</value>
   </data>
+  <data name="FastConvergeCaption" xml:space="preserve">
+    <value>Schnelleres Konvergieren</value>
+  </data>
+  <data name="FastConvergeTooltip" xml:space="preserve">
+    <value>Wenn angewählt, wird beim Hillclimbing jede Verbesserung ausgewählt. Ansonsten wird die maximal mögliche Verbesserung ausgewählt.</value>
+  </data>
   <data name="FromKeylengthCaption" xml:space="preserve">
     <value>Analyse von Schlüssellänge:</value>
   </data>
   <data name="FromKeylengthTooltip" xml:space="preserve">
     <value>Analysiere den gegebenen Geheimtext und beginne mit dieser Schlüssellänge.</value>
-  </data>
-  <data name="GreedyCaption" xml:space="preserve">
-    <value>Greedy</value>
-  </data>
-  <data name="GreedyTooltip" xml:space="preserve">
-    <value>"Greedy-Hillclimbing"</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Bester Schlüssel</value>

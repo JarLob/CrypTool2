@@ -52,7 +52,7 @@ namespace Cryptool.VigenereAnalyzer
         private int _fromKeylength;
         private int _toKeyLength = 20;
         private Language _language = Language.Englisch;
-        private bool _greedy;
+        private bool _fastConverge;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
 
@@ -148,19 +148,19 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("GreedyCaption", "GreedyTooltip", null, 6, false, ControlType.CheckBox)]
-        public bool Greedy
+        [TaskPane("FastConvergeCaption", "FastConvergeTooltip", null, 6, false, ControlType.CheckBox)]
+        public bool FastConverge
         {
             get
             {
-                return _greedy;
+                return _fastConverge;
             }
             set
             {
-                if (value != _greedy)
+                if (value != _fastConverge)
                 {
-                    _greedy = value;
-                    OnPropertyChanged("Greedy");
+                    _fastConverge = value;
+                    OnPropertyChanged("FastConverge");
                 }
             }
         }
