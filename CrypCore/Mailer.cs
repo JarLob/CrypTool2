@@ -36,7 +36,7 @@ namespace Cryptool.Core
 
             var client = new WebClient();
             client.Headers["User-Agent"] = "CrypTool";
-            var stream = client.OpenWrite("http://www.cryptool.org/cgi/ct2devmail");
+            var stream = client.OpenWrite("https://www.cryptool.org/cgi/ct2devmail");
 
             string postMessage = string.Format("action={0}&title={1}&text={2}", Uri.EscapeDataString(action), Uri.EscapeDataString(title), Uri.EscapeDataString(text));
             if (!string.IsNullOrWhiteSpace(sender))
