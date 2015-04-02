@@ -126,24 +126,22 @@ Giu oxmpckgshn Ewbyhqigooal Ullulwo Jrefitk kafsrr xm vwa Adlz 1854 rxwpgspd giw
 Zij Vgpyüywafoscw swe „IBHC“, lrx Xarl „kpkeaivzv“. Zqrx Gwykec-Vutobzwybvurah nicvczhüajhpv qkr Pypx. Ole wnakh Wcoyxenmxtrn aob vlrm Pgiouj-Zpusudtüjvithtk icl hpp Sudtüjvit „N“. „G“ mon vic hrkpm Sxgpfzexy aq Lopzwjvw. Iz ikvowzmpet vav vuwbrt Fqwzwedbwj lvv dc ikvowzpüdvedjlvq Xmkzio, xsw „r“, xm 0 Kpmcoiv, ry fhyafe „J“. Dwn hnhmbr Hyybkxlee vaa Jfltüfyihm, ved „N“, ikp lvu itszi Xouldwata qd Dpxugfan, wv ghrkypzhfb qgw vqwmeh Zwekyhr lry Xarlid, gak „a“, cd cipa Fiewziy. Duk „a“ ezuh mvt „S“ (ocwlp Watatch). Hif jvenli Khiudme gia Filhümkiwv („E“) nazjflqrhx qg 4, „Q“ yx 24 Vtwhtvq. Hqr Binmulthbmjo uhw väpnwpyf Fffhkpishra qkw Pypxpv bwcqeqx evkhal tit „D“, dwi mivxma Hyybkxleef zmj Vgpyüywafk:</defaultvalue>
     </inputBox>
 
-    <comboBox plugin="VigenereAutokeyAnalyser" property="Language" defaultValue="0" width="20%" alignment="Left">
+    <comboBox plugin="Vigenère Analyzer" property="Language" defaultValue="1" width="20%" alignment="Left">
       <description lang="en">Language of the cleartext message:</description>
       <description lang="de">Sprache der Klartext-Nachricht:</description>
       <item content="English" lang="en"/>
       <item content="German" lang="en"/>
-      <item content="French" lang="en"/>
-      <item content="Spanish" lang="en"/>
       <item content="Englisch" lang="de"/>
       <item content="Deutsch" lang="de"/>
-      <item content="Französisch" lang="de"/>
-      <item content="Spanisch" lang="de"/>
     </comboBox>
 
-    <comboBox plugin="VigenereAutokeyAnalyser;Vigenere" property="Modus" defaultValue="1" width="20%" alignment="Left">
+    <comboBox plugin="Vigenère Analyzer;Vigenere" property="Mode" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Vigenère mode:</description>
       <description lang="de">Vigenère Modus:</description>
-      <item content="Autokey" lang="en"/>
-      <item content="Classic" lang="en"/>
+      <item content="Classic Vigenère" lang="en"/>
+      <item content="Vigenère-Autokey" lang="en"/>
+      <item content="Klassischer Vigenère" lang="de"/>
+      <item content="Vigenère-Selbstschlüssel-Verfahren" lang="de"/>
     </comboBox>
     
     <sampleViewer image="Vigenere" file="Cryptanalysis\Classic\Vigenere_Analyser.cwm">
@@ -162,7 +160,7 @@ Zij Vgpyüywafoscw swe „IBHC“, lrx Xarl „kpkeaivzv“. Zqrx Gwykec-Vutobzw
         <description lang="de">Geheimtext:</description>
       </inputBox>
       
-      <presentation plugin="VigenereAutokeyAnalyser" alignment="Stretch" width="30%" group="OutputGroup">
+      <presentation plugin="Vigenère Analyzer" alignment="Stretch" width="30%" group="OutputGroup">
         <description lang="en">Analysis:</description>
         <description lang="de">Analyse:</description>
       </presentation>

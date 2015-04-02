@@ -499,10 +499,6 @@
       <Project>{B2F7104B-C302-409A-B6C7-3A74B6E5C5A1}</Project>
       <Name>Twofish</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrypPlugins\VigenereAutokeyAnalyser\VigenereAutokeyAnalyser.csproj">
-      <Project>{7186387E-0469-42C3-96A9-F9AFFB656419}</Project>
-      <Name>VigenereAutokeyAnalyser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\Vigenere\Vigenere.csproj">
       <Project>{6F44863A-B9EE-4371-90BD-7FDF849DD2C4}</Project>
       <Name>Vigenere</Name>

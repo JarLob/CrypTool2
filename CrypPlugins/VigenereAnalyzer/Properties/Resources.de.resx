@@ -184,6 +184,9 @@ wurde.</value>
   <data name="LanguageTooltip" xml:space="preserve">
     <value>Benutze diese Sprache für die Quadgramm-Bewertung.</value>
   </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analyse</value>
+  </data>
   <data name="ModeCaption" xml:space="preserve">
     <value>Modus</value>
   </data>
@@ -228,6 +231,9 @@ durchgeführt werden sollen.</value>
   </data>
   <data name="ToKeylengthTooltip" xml:space="preserve">
     <value>Analysiere bis einschließlich dieser Schlüssellänge.</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestenliste</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>

@@ -259,6 +259,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis ähnelt.
+        /// </summary>
+        public static string LocalLabel {
+            get {
+                return ResourceManager.GetString("LocalLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Mode ähnelt.
         /// </summary>
         public static string ModeCaption {
@@ -381,6 +390,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string ToKeylengthTooltip {
             get {
                 return ResourceManager.GetString("ToKeylengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bestlist ähnelt.
+        /// </summary>
+        public static string TopTenLabel {
+            get {
+                return ResourceManager.GetString("TopTenLabel", resourceCulture);
             }
         }
         

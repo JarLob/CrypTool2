@@ -52,7 +52,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0">
-                        <Label Name="topTenLabel" Content="{Loc TopTenLabel}" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="50" />
+                        <Label Name="topTenLabel" Content="{Loc TopTenLabel}" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="100" />
                     </Border>
                     <ListView Name="ListView" Background="#AFE2FFCE" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="10" Grid.Column="1" Height="250">
 

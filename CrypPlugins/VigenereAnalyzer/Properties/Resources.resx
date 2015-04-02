@@ -240,4 +240,10 @@
   <data name="FastConvergeTooltip" xml:space="preserve">
     <value>If selected, the hillclimbing algorithm jumps to every improvement. Otherwise it jumps to the best possible improvement.</value>
   </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestlist</value>
+  </data>
 </root>
