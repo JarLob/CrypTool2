@@ -74,7 +74,7 @@ namespace Cryptool.Vigenere
 
         #region Private variables
         private int selectedAction = 0;
-        private int selectedModus = 1;
+        private int _selectedMode = 1;
         private string upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private string lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
         private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -234,16 +234,16 @@ namespace Cryptool.Vigenere
         #region Algorithm settings properties (visible in the Settings pane)
 
         [PropertySaveOrder(3)]
-        [TaskPane("ModusCaption", "ModusTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ModusList1", "ModusList2" })]
-        public int Modus
+        [TaskPane("ModeCaption", "ModeTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ModeList1", "ModeList2" })]
+        public int Mode
         {
-            get { return this.selectedModus; }
+            get { return this._selectedMode; }
             set
             {
-                if (value != selectedModus)
+                if (value != _selectedMode)
                 {
-                    this.selectedModus = value;
-                    OnPropertyChanged("Modus");                    
+                    this._selectedMode = value;
+                    OnPropertyChanged("Mode");                    
                 }
             }
         }

@@ -147,10 +147,10 @@
   <data name="InputStringTooltip" xml:space="preserve">
     <value>Input a string to be processed by the Vigenère cipher</value>
   </data>
-  <data name="ModusCaption" xml:space="preserve">
-    <value>Modus</value>
+  <data name="ModeCaption" xml:space="preserve">
+    <value>Mode</value>
   </data>
-  <data name="ModusTooltip" xml:space="preserve">
+  <data name="ModeTooltip" xml:space="preserve">
     <value>Select the Algorithm action</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
@@ -195,10 +195,10 @@
   <data name="ActionList2" xml:space="preserve">
     <value>Decrypt</value>
   </data>
-  <data name="ModusList1" xml:space="preserve">
+  <data name="ModeList1" xml:space="preserve">
     <value>Autokey</value>
   </data>
-  <data name="ModusList2" xml:space="preserve">
+  <data name="ModeList2" xml:space="preserve">
     <value>Classic</value>
   </data>
   <data name="UnknownSymbolHandlingList1" xml:space="preserve">

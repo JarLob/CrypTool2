@@ -147,10 +147,10 @@
   <data name="InputStringTooltip" xml:space="preserve">
     <value>Geben Sie den Text ein, der mit dem Vigenère-Verfahren ver-/entschlüsselt werden soll.</value>
   </data>
-  <data name="ModusCaption" xml:space="preserve">
+  <data name="ModeCaption" xml:space="preserve">
     <value>Modus</value>
   </data>
-  <data name="ModusTooltip" xml:space="preserve">
+  <data name="ModeTooltip" xml:space="preserve">
     <value>Wählen Sie die Betriebsart des Plugins.</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
@@ -195,10 +195,10 @@
   <data name="ActionList2" xml:space="preserve">
     <value>Entschlüsselung</value>
   </data>
-  <data name="ModusList1" xml:space="preserve">
+  <data name="ModeList1" xml:space="preserve">
     <value>Selbstschlüssel-Verfahren (Autokey)</value>
   </data>
-  <data name="ModusList2" xml:space="preserve">
+  <data name="ModeList2" xml:space="preserve">
     <value>Klassisch</value>
   </data>
   <data name="UnknownSymbolHandlingList1" xml:space="preserve">

@@ -388,9 +388,9 @@ namespace Cryptool.Vigenere
 
         public void Execute()
         {
-           switch (settings.Modus)
+           switch (settings.Mode)
            {
-               //Autokey Modus
+               //Autokey Mode
                case 0:
 
                     switch (settings.Action)
@@ -406,7 +406,7 @@ namespace Cryptool.Vigenere
                     }
                     break;
 
-               //Classic Modus
+               //Classic Mode
                case 1:
 
                     switch (settings.Action)
