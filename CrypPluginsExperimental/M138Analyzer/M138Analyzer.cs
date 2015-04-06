@@ -196,10 +196,10 @@ namespace Cryptool.M138Analyzer
                     //TextLength should be at least 25
                     StringBuilder AllPossibleKeysAsString = new StringBuilder();
                     var _estimatedEndTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect+1; i++) //Go Over Keylength (Try all possible offsets)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Go Over Keylength (Try all possible offsets)
                     {
                         var _startTime = DateTime.Now;
-                        ProgressChanged(i, MaxOffsetUserSelect+1);
+                        ProgressChanged(i, MaxOffsetUserSelect + 1);
                         _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
@@ -303,7 +303,7 @@ namespace Cryptool.M138Analyzer
                     UpdateDisplayStart();
 
                     _estimatedEndTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect+1; i++)
+                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++)
                     {
                         var _startTime = DateTime.Now;
                         UpdateDisplayEnd(i, _estimatedEndTime);
@@ -343,23 +343,31 @@ namespace Cryptool.M138Analyzer
                         GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
                         return;
                     }
-                    else
+                    if (Ciphertext.Length < _lengthOfPlaintext)
                     {
-                        if (Ciphertext.Length < _lengthOfPlaintext)
-                        {
-                            GuiLogMessage("For a Partially Known Plaintext attack, the length of the known Ciphertext needs to be larger than the length of the known Plaintext. Otherwise, please perform a known Plaintext attack", NotificationLevel.Error);
-                            return;
-                        }
-                        CiphertextNumbers= new int[_lengthOfPlaintext];
-                        int[] _tmpCipherText = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-                        for (int i = 0; i < _lengthOfPlaintext; i++)
-                        {
-                            CiphertextNumbers[i] = _tmpCipherText[i];
-                        }
-                        
+                        GuiLogMessage("For a partially-known plaintext attack, the length of the known ciphertext needs to be larger than the length of the known plaintext. Otherwise, please perform a known-plaintext attack", NotificationLevel.Error);
+                        return;
                     }
-                    
-
+                    CiphertextNumbers = new int[_lengthOfPlaintext];
+                    int[] _tmpCipherText = MapTextIntoNumberSpace(Ciphertext, Alphabet);
+                    for (int i = 0; i < _lengthOfPlaintext; i++)
+                    {
+                        CiphertextNumbers[i] = _tmpCipherText[i];
+                    }
+                    switch (_selectedLanguage)
+                    {
+                        case 0: //English
+                            Trigrams = Load3Grams(Alphabet);
+                            Quadgrams = Load4Grams(Alphabet);
+                            break;
+                        case 1: //German
+                            Quadgrams = LoadGerman4Grams(Alphabet);
+                            TRIGRAMMULTIPLIER = 0;
+                            QUADGRAMMULTIPLIER = 1;
+                            DIVISOR = 1;
+                            break;
+                    }
+                    UpdateDisplayStart();
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
                     {
                         var _startTime = DateTime.Now;
@@ -368,11 +376,15 @@ namespace Cryptool.M138Analyzer
                         if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
                         {
                             int _numPosKeys = 1;
-                            foreach (List<int> l in _keysForOffset) {
+                            foreach (List<int> l in _keysForOffset)
+                            {
                                 _numPosKeys = _numPosKeys * l.Count;
                             }
                             if (_numPosKeys > 1000)
                             {
+                                //Go through Keylist. Eliminate largest List, Remove from List of fixed locations. Check whether still more than 1000 possibilities.
+                                //if yes, delete next
+                                //if no, repeat
                                 //too much to do hill climbing on every possible key
                             }
                             else
@@ -380,24 +392,64 @@ namespace Cryptool.M138Analyzer
                                 //Do Hill Climbing with given Startkey
                                 int listLength = _keysForOffset.Count;
                                 int[] counters = new int[listLength];
+                                int[] _tmplistLen = new int[listLength];
                                 for (int _tmpCount = 0; _tmpCount < listLength; _tmpCount++)
                                 {
-                                    counters[_tmpCount] = 1;
+                                    counters[_tmpCount] = 0;
+                                    _tmplistLen[_tmpCount] = _keysForOffset[_tmpCount].Count - 1;
                                 }
-                                for(int _tmpCount = 0; _tmpCount < _numPosKeys; _tmpCount++)
+                                bool increaseNext = false;
+                                for (int _tmpCount = 0; _tmpCount < _numPosKeys; _tmpCount++)
                                 {
+                                    //Generate all possible keys
                                     int[] _tempKey = new int[KeyLength];
+
+                                    for (int _tmpCount2 = 0; _tmpCount2 < listLength; _tmpCount2++)
+                                    {
+                                        if (increaseNext)
+                                        {
+                                            counters[_tmpCount2]++;
+                                            if (counters[_tmpCount2] > _tmplistLen[_tmpCount2])
+                                            {
+                                                increaseNext = true;
+                                                counters[_tmpCount2] = 0;
+                                            }
+                                            else
+                                            {
+                                                increaseNext = false;
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                        _tempKey[_tmpCount2] = _keysForOffset[_tmpCount2][counters[_tmpCount2]];
+                                    }
+                                    //Create Bestlist
+                                    int[] _plainText = Decrypt(_tmpCipherText, _tempKey, i, StripList);
+                                    double _costValue = ((TRIGRAMMULTIPLIER * CalculateTrigramCost(Trigrams, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(Quadgrams, _plainText))) / DIVISOR;
+                                    AddNewBestListEntry(_tempKey, _costValue, _tmpCipherText, i);
+                                    increaseNext = true;
+                                    var _endTime = DateTime.Now;
+                                    var _elapsedTime = _endTime - _startTime;
+                                    _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
+                                    UpdateDisplayEnd(i, _estimatedEndTime);
 
                                 }
 
                             }
                         }
-                        var _endTime = DateTime.Now;
-                        var _elapsedTime = _endTime - _startTime;
-                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
-                        UpdateDisplayEnd(i, _estimatedEndTime);
+                        UpdateDisplayEnd(MaxOffsetUserSelect, DateTime.Now);
                     }
-                        break;
+                    ResultEntry re2 = _presentation.BestList.First();
+                    UpdateDisplayEnd(re2.Offset, DateTime.Now);
+                    string _tmpKeyStrips2 = re2.Key.Split('/')[0];
+                    int[] _tmpKey2 = _tmpKeyStrips2.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+                    CalculatedKey = re2.Key;
+                    ResultText = MapNumbersIntoTextSpace(Decrypt(_tmpCipherText, _tmpKey2, re2.Offset, StripList), Alphabet);
+                    OnPropertyChanged("CalculatedKey");
+                    OnPropertyChanged("ResultText");
+                    break;
 
                 case 3:
                     break;
@@ -703,7 +755,7 @@ namespace Cryptool.M138Analyzer
                         {
                             if (l != _workingStrips[i]) //Don't compare Location with itself
                             {
-                                if(l.Contains(_analyzedStrip)) 
+                                if (l.Contains(_analyzedStrip))
                                 {
                                     l.Remove(_analyzedStrip);
                                     if (l.Count == 0)
@@ -973,7 +1025,7 @@ namespace Cryptool.M138Analyzer
             ResultEntry entry = new ResultEntry
             {
                 Key = string.Join(", ", key) + " / " + offset,
-                Text = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, key, offset, StripList), Alphabet),
+                Text = MapNumbersIntoTextSpace(Decrypt(ciphertext, key, offset, StripList), Alphabet),
                 Value = value,
                 Offset = offset
             };
