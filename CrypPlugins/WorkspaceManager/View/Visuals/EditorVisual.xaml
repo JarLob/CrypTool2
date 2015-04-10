@@ -15,124 +15,105 @@
              DataContext="{Binding RelativeSource={x:Static RelativeSource.Self}}" ToolTip="{Loc NewWorkspaceTooltip}"
              PreviewKeyDown="PreviewKeyDownHandler">
 
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{x:Static local:EditorVisual.AlignLeft}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.AlignRight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.AlignTop}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.AlignBottom}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.MoveLeft}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.MoveRight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.MoveUp}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.MoveDown}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.SpreadHorizontal}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.SpreadVertical}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.BiggestWidth}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.SmallestWidth}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.BiggestHeight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+        <CommandBinding Command="{x:Static local:EditorVisual.SmallestHeight}" Executed="LayoutCommandExecuted" CanExecute="LayoutCommandCanExecute" />
+    </UserControl.CommandBindings>
 
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Click="ContextMenuClick2" Header="Align Left" Tag="alignleft"><!--IsEnabled="{Binding Path=HasSeveralSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}*/"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.AlignLeft}" Header="Align Left">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_left.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Left</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Align Right" Tag="alignright"><!-- IsEnabled="{Binding Path=HasSeveralSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.AlignRight}" Header="Align Right">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_right.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Right</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Align Top" Tag="aligntop"><!-- IsEnabled="{Binding Path=HasSeveralSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.AlignTop}" Header="Align Top">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_top.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Up</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Align Bottom" Tag="alignbottom"><!-- IsEnabled="{Binding Path=HasSeveralSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.AlignBottom}" Header="Align Bottom">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_bottom.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Down</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
+            
             <Separator/>
-            <MenuItem Click="ContextMenuClick2" Header="Move Left" Tag="moveleft"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+
+            <MenuItem Command="{x:Static local:EditorVisual.MoveLeft}" Header="Move Left">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_left.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+Left</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Move Right" Tag="moveright"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.MoveRight}" Header="Move Right">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_right.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+Right</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Move Up" Tag="moveup"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.MoveUp}" Header="Move Up">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_up.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+Up</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Move Down" Tag="movedown"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.MoveDown}" Header="Move Down">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_down.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+Down</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
+
             <Separator/>
-            <MenuItem Click="ContextMenuClick2" Header="Spread Horizontal" Tag="spreadhorizontal"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+
+            <MenuItem Command="{x:Static local:EditorVisual.SpreadHorizontal}" Header="Spread Horizontal">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/space_horizontal.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+X</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Spread Vertical" Tag="spreadvertical"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.SpreadVertical}" Header="Spread Vertical">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/space_vertical.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+Y</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
+
             <Separator/>
-            <MenuItem Click="ContextMenuClick2" Header="Biggest Width" Tag="biggestwidth"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+
+            <MenuItem Command="{x:Static local:EditorVisual.BiggestWidth}" Header="Biggest Width">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_maxwidth.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+W</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Smallest Width" Tag="smallestwidth"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.SmallestWidth}" Header="Smallest Width">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minwidth.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+W</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Biggest Height" Tag="biggestheight"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.BiggestHeight}" Header="Biggest Height">
                 <MenuItem.Icon>
-                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_maxheight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
+                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_maxHeight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+Shift+H</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
-            <MenuItem Click="ContextMenuClick2" Header="Smallest Height" Tag="smallestheight"><!-- IsEnabled="{Binding Path=HasSelectedItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"> -->
+            <MenuItem Command="{x:Static local:EditorVisual.SmallestHeight}" Header="Smallest Height">
                 <MenuItem.Icon>
-                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minheight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
+                    <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minHeight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
-                <MenuItem.ToolTip>
-                    <ToolTip DataContext="{Binding}">Ctrl+H</ToolTip>
-                </MenuItem.ToolTip>
             </MenuItem>
+
         </ContextMenu>
     </UserControl.ContextMenu>
 

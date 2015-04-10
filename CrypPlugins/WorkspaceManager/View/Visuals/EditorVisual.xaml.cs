@@ -1384,41 +1384,85 @@ namespace WorkspaceManager.View.Visuals
 
         #region Event Handler
 
+        public static RoutedCommand AlignLeft = new RoutedCommand("AlignLeft", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Left, ModifierKeys.Control) });
+        public static RoutedCommand AlignRight = new RoutedCommand("AlignRight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Right, ModifierKeys.Control) });
+        public static RoutedCommand AlignTop = new RoutedCommand("AlignTop", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Up, ModifierKeys.Control) });
+        public static RoutedCommand AlignBottom = new RoutedCommand("AlignBottom", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Down, ModifierKeys.Control) });
+        public static RoutedCommand MoveLeft = new RoutedCommand("MoveLeft", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Left, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand MoveRight = new RoutedCommand("MoveRight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Right, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand MoveUp = new RoutedCommand("MoveUp", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Up, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand MoveDown = new RoutedCommand("MoveDown", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Down, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand SpreadHorizontal = new RoutedCommand("SpreadHorizontal", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.X, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand SpreadVertical = new RoutedCommand("SpreadVertical", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.Y, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand BiggestWidth = new RoutedCommand("BiggestWidth", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.W, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand SmallestWidth = new RoutedCommand("SmallestWidth", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.W, ModifierKeys.Control) });
+        public static RoutedCommand BiggestHeight = new RoutedCommand("BiggestHeight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.H, ModifierKeys.Control | ModifierKeys.Shift) });
+        public static RoutedCommand SmallestHeight = new RoutedCommand("SmallestHeight", typeof(RoutedCommand), new InputGestureCollection() { new KeyGesture(Key.H, ModifierKeys.Control) });
+
+        private void LayoutCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            if (!MyEditor.isExecuting() && SelectedItems != null)
+            {
+                int n = SelectedItems.OfType<ComponentVisual>().Count();
+                string name = ((RoutedCommand)e.Command).Name;
+                if (name.StartsWith("Align"))
+                    e.CanExecute = n > 1;
+                else if (name.StartsWith("Spread"))
+                    e.CanExecute = n > 2;
+                else if (name.StartsWith("Move"))
+                    e.CanExecute = n > 0;
+                else
+                    e.CanExecute = n > 1;
+            }
+            else
+            {
+                e.CanExecute = false;
+            }
+        }
+
+        private void LayoutCommandExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            var name = ((RoutedCommand)e.Command).Name;
+            List<Operation> list = DoSelectionOperation(name);
+
+            if (list != null && list.Count > 0)
+                this.Model.ModifyModel(new MultiOperation(list));
+        }
+
         private List<Operation> DoSelectionOperation(string operation)
         {
             if (SelectedItems == null) return null;
             var components = SelectedItems.OfType<ComponentVisual>().ToList();
-            if (components.Count() == 0) return null;
 
             switch (operation)
             {
-                case "alignleft":
+                case "AlignLeft":
                     return Selection_Align(components, Direction.Left);
-                case "alignright":
+                case "AlignRight":
                     return Selection_Align(components, Direction.Right);
-                case "aligntop":
+                case "AlignTop":
                     return Selection_Align(components, Direction.Top);
-                case "alignbottom":
+                case "AlignBottom":
                     return Selection_Align(components, Direction.Bottom);
-                case "moveleft":
+                case "MoveLeft":
                     return Selection_Move(components, Direction.Left);
-                case "moveright":
+                case "MoveRight":
                     return Selection_Move(components, Direction.Right);
-                case "moveup":
+                case "MoveUp":
                     return Selection_Move(components, Direction.Top);
-                case "movedown":
+                case "MoveDown":
                     return Selection_Move(components, Direction.Bottom);
-                case "spreadhorizontal":
+                case "SpreadHorizontal":
                     return Selection_Spread(components, Orientation.Horizontal);
-                case "spreadvertical":
+                case "SpreadVertical":
                     return Selection_Spread(components, Orientation.Vertical);
-                case "biggestwidth":
+                case "BiggestWidth":
                     return Selection_UniformSize(components, Orientation.Horizontal, true);
-                case "smallestwidth":
+                case "SmallestWidth":
                     return Selection_UniformSize(components, Orientation.Horizontal, false);
-                case "biggestheight":
+                case "BiggestHeight":
                     return Selection_UniformSize(components, Orientation.Vertical, true);
-                case "smallestheight":
+                case "SmallestHeight":
                     return Selection_UniformSize(components, Orientation.Vertical, false);
             }
 
@@ -1427,12 +1471,12 @@ namespace WorkspaceManager.View.Visuals
 
         private void ContextMenuClick2(object sender, RoutedEventArgs e)
         {
-            MenuItem item = (MenuItem)sender;
+            //MenuItem item = (MenuItem)sender;
 
-            List<Operation> list = DoSelectionOperation((string)item.Tag);
+            //List<Operation> list = DoSelectionOperation((string)item.Tag);
 
-            if (list != null && list.Count > 0)
-                this.Model.ModifyModel(new MultiOperation(list));
+            //if (list != null && list.Count > 0)
+            //    this.Model.ModifyModel(new MultiOperation(list));
         }
 
         private void ComponentPositionDeltaChanged(object sender, PositionDeltaChangedArgs e)
@@ -2020,29 +2064,30 @@ namespace WorkspaceManager.View.Visuals
         {
             List<Operation> list = new List<Operation>();
 
-            switch (direction)
-            {
-                case Direction.Top:
-                    double ymin = components.Select(p => p.Position.Y).Min();
-                    if (ymin > 0)
+            if (components.Count >= 1)
+                switch (direction)
+                {
+                    case Direction.Top:
+                        double ymin = components.Select(p => p.Position.Y).Min();
+                        if (ymin > 0)
+                            foreach (var element in components)
+                                list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, element.Position.Y - 1)));
+                        break;
+                    case Direction.Bottom:
                         foreach (var element in components)
-                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, element.Position.Y - 1)));
-                    break;
-                case Direction.Bottom:
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, element.Position.Y + 1)));
-                    break;
-                case Direction.Left:
-                    double xmin = components.Select(p => p.Position.X).Min();
-                    if (xmin > 0)
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, element.Position.Y + 1)));
+                        break;
+                    case Direction.Left:
+                        double xmin = components.Select(p => p.Position.X).Min();
+                        if (xmin > 0)
+                            foreach (var element in components)
+                                list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X - 1, element.Position.Y)));
+                        break;
+                    case Direction.Right:
                         foreach (var element in components)
-                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X - 1, element.Position.Y)));
-                    break;
-                case Direction.Right:
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X + 1, element.Position.Y)));
-                    break;
-            }
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X + 1, element.Position.Y)));
+                        break;
+                }
 
             return list;
         }
@@ -2051,29 +2096,30 @@ namespace WorkspaceManager.View.Visuals
         {
             List<Operation> list = new List<Operation>();
 
-            switch (align)
-            {
-                case Direction.Top:
-                    double ymin = components.Select(p => p.Position.Y).Min();
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, ymin)));
-                    break;
-                case Direction.Bottom:
-                    double ymax = components.Select(p => p.Position.Y + p.ActualHeight).Max();
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, ymax - element.ActualHeight)));
-                    break;
-                case Direction.Left:
-                    double xmin = components.Select(p => p.Position.X).Min();
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(xmin, element.Position.Y)));
-                    break;
-                case Direction.Right:
-                    double xmax = components.Select(p => p.Position.X + p.ActualWidth).Max();
-                    foreach (var element in components)
-                        list.Add(new MoveModelElementOperation(element.Model, new Point(xmax - element.ActualWidth, element.Position.Y)));
-                    break;
-            }
+            if (components.Count >= 2)
+                switch (align)
+                {
+                    case Direction.Top:
+                        double ymin = components.Select(p => p.Position.Y).Min();
+                        foreach (var element in components)
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, ymin)));
+                        break;
+                    case Direction.Bottom:
+                        double ymax = components.Select(p => p.Position.Y + p.ActualHeight).Max();
+                        foreach (var element in components)
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, ymax - element.ActualHeight)));
+                        break;
+                    case Direction.Left:
+                        double xmin = components.Select(p => p.Position.X).Min();
+                        foreach (var element in components)
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(xmin, element.Position.Y)));
+                        break;
+                    case Direction.Right:
+                        double xmax = components.Select(p => p.Position.X + p.ActualWidth).Max();
+                        foreach (var element in components)
+                            list.Add(new MoveModelElementOperation(element.Model, new Point(xmax - element.ActualWidth, element.Position.Y)));
+                        break;
+                }
 
             return list;
         }
@@ -2082,41 +2128,42 @@ namespace WorkspaceManager.View.Visuals
         {
             List<Operation> list = new List<Operation>();
 
-            switch (orientation)
-            {
-                case Orientation.Horizontal:
-                    if (components.Count > 1)
-                    {
-                        double width = components.Select(p => p.ActualWidth).Sum();
-                        double xmin = components.Select(p => p.Position.X).Min();
-                        double xmax = components.Select(p => p.Position.X + p.ActualWidth).Max();
-                        double delta = (xmax - xmin - width) / (components.Count - 1);
-                        components.Sort((p1, p2) => p1.Position.X.CompareTo(p2.Position.X));
-                        double x = xmin;
-                        foreach (var element in components)
+            if (components.Count >= 3)
+                switch (orientation)
+                {
+                    case Orientation.Horizontal:
+                        if (components.Count > 1)
                         {
-                            list.Add(new MoveModelElementOperation(element.Model, new Point(x, element.Position.Y)));
-                            x += element.ActualWidth + delta;
+                            double width = components.Select(p => p.ActualWidth).Sum();
+                            double xmin = components.Select(p => p.Position.X).Min();
+                            double xmax = components.Select(p => p.Position.X + p.ActualWidth).Max();
+                            double delta = (xmax - xmin - width) / (components.Count - 1);
+                            components.Sort((p1, p2) => p1.Position.X.CompareTo(p2.Position.X));
+                            double x = xmin;
+                            foreach (var element in components)
+                            {
+                                list.Add(new MoveModelElementOperation(element.Model, new Point(x, element.Position.Y)));
+                                x += element.ActualWidth + delta;
+                            }
                         }
-                    }
-                    break;
-                case Orientation.Vertical:
-                    if (components.Count > 1)
-                    {
-                        double width = components.Select(p => p.ActualHeight).Sum();
-                        double ymin = components.Select(p => p.Position.Y).Min();
-                        double ymax = components.Select(p => p.Position.Y + p.ActualHeight).Max();
-                        double delta = (ymax - ymin - width) / (components.Count - 1);
-                        components.Sort((p1, p2) => p1.Position.Y.CompareTo(p2.Position.Y));
-                        double y = ymin;
-                        foreach (var element in components)
+                        break;
+                    case Orientation.Vertical:
+                        if (components.Count > 1)
                         {
-                            list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, y)));
-                            y += element.ActualHeight + delta;
+                            double height = components.Select(p => p.ActualHeight).Sum();
+                            double ymin = components.Select(p => p.Position.Y).Min();
+                            double ymax = components.Select(p => p.Position.Y + p.ActualHeight).Max();
+                            double delta = (ymax - ymin - height) / (components.Count - 1);
+                            components.Sort((p1, p2) => p1.Position.Y.CompareTo(p2.Position.Y));
+                            double y = ymin;
+                            foreach (var element in components)
+                            {
+                                list.Add(new MoveModelElementOperation(element.Model, new Point(element.Position.X, y)));
+                                y += element.ActualHeight + delta;
+                            }
                         }
-                    }
-                    break;
-            }
+                        break;
+                }
 
             return list;
         }
@@ -2125,33 +2172,47 @@ namespace WorkspaceManager.View.Visuals
         {
             List<Operation> list = new List<Operation>();
 
-            switch (orientation)
-            {
-                case Orientation.Horizontal:
-                    double width = maximize ? components.Select(p => p.WindowWidth).Max() : components.Select(p => p.WindowWidth).Min();
-                    foreach (var element in components)
-                        list.Add(new ResizeModelElementOperation(element.Model, width, element.WindowHeight));
-                    break;                
-                case Orientation.Vertical:
-                    double height = maximize ? components.Select(p => p.WindowHeight).Max() : components.Select(p => p.WindowHeight).Min();
-                    foreach (var element in components)
-                        list.Add(new ResizeModelElementOperation(element.Model, element.WindowWidth, height));
-                    break;
-            }
+            if (components.Count >= 2)
+                switch (orientation)
+                {
+                    case Orientation.Horizontal:
+                        double width = maximize ? components.Select(p => p.WindowWidth).Max() : components.Select(p => p.WindowWidth).Min();
+                        foreach (var element in components)
+                            list.Add(new ResizeModelElementOperation(element.Model, width, element.WindowHeight));
+                        break;
+                    case Orientation.Vertical:
+                        double height = maximize ? components.Select(p => p.WindowHeight).Max() : components.Select(p => p.WindowHeight).Min();
+                        foreach (var element in components)
+                            list.Add(new ResizeModelElementOperation(element.Model, element.WindowWidth, height));
+                        break;
+                }
 
             return list;
         }
 
         private void PreviewKeyDownHandler(object sender, KeyEventArgs e)
         {
-            if (MyEditor.isExecuting()) return;
-            if (SelectedItems == null) return;
-            var components = SelectedItems.OfType<ComponentVisual>().ToList();
-            if (components.Count() == 0) return;
-
             bool ctrl = (Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None;
             bool shift = (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.None;
             bool alt = (Keyboard.Modifiers & ModifierKeys.Alt) != ModifierKeys.None;
+
+            if (ctrl && !shift && !alt)
+            {
+                // select all components
+                if (e.Key == Key.A)
+                {
+                    if (e.OriginalSource is EditorVisual)
+                    {
+                        SelectedItems = VisualsHelper.Visuals.OfType<ComponentVisual>().ToArray();
+                        e.Handled = true;
+                        return;
+                    }
+                }
+            }
+
+            if (MyEditor.isExecuting()) return;
+            if (SelectedItems == null) return;
+            var components = SelectedItems.OfType<ComponentVisual>().ToList();
 
             List<Operation> list = null;
 
