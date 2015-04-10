@@ -85,7 +85,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
                 var indexHtml = TagReplacer.ReplaceLanguageSwitchs(Properties.Resources.TemplateEditorIndex, lang);
                 indexHtml = TagReplacer.ReplaceInstallVersionSwitchs(indexHtml, AssemblyHelper.InstallationType);
-                var languageSelectionCode = GenerateIndexLanguageSelectionCode(AvailableLanguages, lang);
+                var languageSelectionCode = GenerateEditorLanguageSelectionCode(AvailableLanguages, lang);
                 indexHtml = TagReplacer.ReplaceLanguageSelectionTag(indexHtml, languageSelectionCode);
                 var editorListCode = GenerateEditorListCode(DocPages.FindAll(x => x is EditorDocumentationPage).Select(x => (EditorDocumentationPage)x), lang);
                 indexHtml = TagReplacer.ReplaceEditorList(indexHtml, editorListCode);
@@ -104,7 +104,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
                 var commonHtml = TagReplacer.ReplaceLanguageSwitchs(Properties.Resources.TemplateCommonIndex, lang);
-                var languageSelectionCode = GenerateTemplatesPageLanguageSelectionCode(AvailableLanguages, lang);
+                var languageSelectionCode = GenerateCommonLanguageSelectionCode(AvailableLanguages, lang);
                 commonHtml = TagReplacer.ReplaceLanguageSelectionTag(commonHtml, languageSelectionCode);
                 var commonListCode = GenerateCommonListCode(DocPages.FindAll(x => x is CommonDocumentationPage).Select(x => (CommonDocumentationPage)x), lang);
                 commonHtml = TagReplacer.ReplaceCommonList(commonHtml, commonListCode);
@@ -501,6 +501,46 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 else
                 {
                     codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetTemplatesIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
+                }
+                codeBuilder.AppendLine("|");
+            }
+
+            return codeBuilder.ToString();
+        }
+
+        private static string GenerateEditorLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
+        {
+            var codeBuilder = new StringBuilder();
+
+            foreach (var availableLanguage in availableLanguages)
+            {
+                if (availableLanguage == lang)
+                {
+                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
+                }
+                else
+                {
+                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetEditorIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
+                }
+                codeBuilder.AppendLine("|");
+            }
+
+            return codeBuilder.ToString();
+        }
+
+        private static string GenerateCommonLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
+        {
+            var codeBuilder = new StringBuilder();
+
+            foreach (var availableLanguage in availableLanguages)
+            {
+                if (availableLanguage == lang)
+                {
+                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
+                }
+                else
+                {
+                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetCommonIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
                 }
                 codeBuilder.AppendLine("|");
             }
