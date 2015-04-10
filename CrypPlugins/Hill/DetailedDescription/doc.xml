@@ -9,10 +9,10 @@
     It is a polygraphic substitution cipher based on linear algebra.
     <newline/>
     <newline/>
-    The Hill cipher uses an invertible $n x n$ matrix as key. The elements of the matrix are numbers from 0 to 25.
-    For encrypting a text, the text is split into blocks of $n$ characters.
-    Each block can be interpreted as an $n$-dimensional vector by replacing the letters in a block with numbers: A=0, B=1, ..., Z=25.
-    This vector is multiplied with the matrix and the resulting vector modulo 26 is translated back into a block of $n$ characters.
+    The Hill cipher uses an invertible n x n matrix as key. The elements of the matrix are numbers from 0 to 25.
+    For encrypting a text, the text is split into blocks of n characters.
+    Each block can be interpreted as an n-dimensional vector by replacing the letters in a block with numbers: A=0, B=1, ..., Z=25.
+    This vector is multiplied with the matrix and the resulting vector modulo 26 is translated back into a block of n characters.
     This is repeated for all blocks of the plaintext, and the ciphertext is then the concatenation of the encrypted blocks.
     <newline/>
     <newline/>
@@ -24,10 +24,10 @@
     Sie ist eine polygraphische Substitutions-Chiffre und beruht auf Prinzipien der linearen Algebra.
     <newline/>
     <newline/>
-    Die Hill-Chiffre verwendet eine invertierbare $n x n$-Matrix als Schlüssel, deren Elemente Zahlen von 0 bis 25 sind.
-    Um einen Text zu verschlüsseln, wird dieser fortlaufend in Blöcke mit je $n$ Buchstaben aufgeteilt.
-    Jeder Block kann nun als ein $n$-elementiger Vektor aufgefasst werden, indem die Buchstaben durch Zahlen ersetzt werden: A=0, B=1, ..., Z=25.
-    Dieser Vektor wird mit der Matrix multipliziert und der resultierende Vektor modulo 26 wird wieder in einen Block von $n$ Buchstaben übersetzt.
+    Die Hill-Chiffre verwendet eine invertierbare n x n-Matrix als Schlüssel, deren Elemente Zahlen von 0 bis 25 sind.
+    Um einen Text zu verschlüsseln, wird dieser fortlaufend in Blöcke mit je n Buchstaben aufgeteilt.
+    Jeder Block kann nun als ein n-elementiger Vektor aufgefasst werden, indem die Buchstaben durch Zahlen ersetzt werden: A=0, B=1, ..., Z=25.
+    Dieser Vektor wird mit der Matrix multipliziert und der resultierende Vektor modulo 26 wird wieder in einen Block von n Buchstaben übersetzt.
     Dies wird für alle Blöcke des Klartextes wiederholt, und die Aneinanderreihung der so verschlüsselten Blöcke ergibt den Geheimtext.
     <newline/>
     <newline/>

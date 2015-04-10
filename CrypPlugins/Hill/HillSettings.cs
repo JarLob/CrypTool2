@@ -79,7 +79,7 @@ namespace Cryptool.Plugins.Hill
         }
 
         [TaskPane("MatrixStringCaption", "MatrixStringTooltip", null, 3, false, ControlType.TextBox)]
-        public string MatrixString
+        public string Matrix
         {
             get
             {
@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.Hill
                 if (value != matrixString)
                 {
                     this.matrixString = value;
-                    OnPropertyChanged("MatrixString");
+                    OnPropertyChanged("Matrix");
                 }
             }
         }

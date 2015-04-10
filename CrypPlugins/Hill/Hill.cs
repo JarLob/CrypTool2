@@ -85,9 +85,9 @@ namespace Cryptool.Plugins.Hill
             if (Matrix == null)
             {
                 // get matrix from settings
-                s = settings.MatrixString.Split(',');
+                s = settings.Matrix.Split(',');
                 dim = (int)Math.Sqrt(s.Length);
-                matelements = new BigInteger[dim];
+                matelements = new BigInteger[dim*dim];
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Cryptool.Plugins.Hill
                 return false;
             }
 
-            if (dim * dim != Matrix.Length)
+            if (dim * dim != matelements.Length)
             {
                 GuiLogMessage("The number of elements in the matrix definition must be a square number!", NotificationLevel.Error);
                 return false;
@@ -138,7 +138,7 @@ namespace Cryptool.Plugins.Hill
 
                 try
                 {
-                    for (i = 0; i < dim; i++)
+                    for (i = 0; i < matelements.Length; i++)
                         matelements[i] = BigInteger.Parse(s[i]);
                 }
                 catch (Exception ex)
@@ -155,14 +155,16 @@ namespace Cryptool.Plugins.Hill
                 for (int x = 0; x < mat.Dimension; x++)
                     mat[x, y] = matelements[++k];
 
-            inv = mat.invert();
-            
-            if (inv == null)
+            try
             {
-                GuiLogMessage("The matrix "+mat+" is not invertible.", NotificationLevel.Error);
+                inv = mat.invert();
+            }
+            catch (ArithmeticException ex)
+            {
+                GuiLogMessage("The matrix " + mat + " is not invertible.", NotificationLevel.Error);
                 return false;
             }
-        
+
             return true;
         }
 
@@ -196,6 +198,9 @@ namespace Cryptool.Plugins.Hill
 
         public void PostExecution()
         {
+            Input = null;
+            Output = null;
+            Matrix = null;
         }
 
         public void Stop()
