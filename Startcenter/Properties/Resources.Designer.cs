@@ -205,15 +205,6 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
-        /// </summary>
-        internal static string PluginDescriptionURL {
-            get {
-                return ResourceManager.GetString("PluginDescriptionURL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Access the main functions in the Startcenter ähnelt.
         /// </summary>
         internal static string PluginTooltip {
