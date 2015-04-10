@@ -8,44 +8,48 @@ namespace Cryptool.PluginBase.Miscellaneous
 {
     public class ModMatrix
     {
-        private int dimension;
-        private BigInteger modulus;
         private BigInteger[,] m;
 
-        public ModMatrix(int d, BigInteger mod)
+        public ModMatrix(int dimension, BigInteger modulus)
         {
-            dimension = d;
-            modulus = mod;
-            m = new BigInteger[dimension, dimension];
+            if (dimension < 0) throw new ArithmeticException("Matrix dimension must be >= 0.");
+            if (modulus < 2) throw new ArithmeticException("Matrix modulus must be >= 2.");
+
+            Dimension = dimension;
+            Modulus = modulus;
+            m = new BigInteger[Dimension, Dimension];
+
             UnitMatrix();
         }
 
         public ModMatrix(ModMatrix mat)
         {
-            dimension = mat.Dimension;
-            modulus = mat.Modulus;
-            m = new BigInteger[dimension, dimension];
+            Dimension = mat.Dimension;
+            Modulus = mat.Modulus;
+            m = new BigInteger[Dimension, Dimension];
 
-            for (int y = 0; y < dimension; y++)
-                for (int x = 0; x < dimension; x++)
+            for (int y = 0; y < Dimension; y++)
+                for (int x = 0; x < Dimension; x++)
                     m[x, y] = mat[x, y];
         }
         
         public void setElements(string values, string alphabet)
         {
-            for (int y = 0; y < dimension; y++)
-                for (int x = 0; x < dimension; x++)
-                    m[x, y] = alphabet.IndexOf(values[x * dimension + y]);
+            for (int y = 0; y < Dimension; y++)
+                for (int x = 0; x < Dimension; x++)
+                    m[x, y] = alphabet.IndexOf(values[x * Dimension + y]);
         }
 
         public int Dimension
         {
-            get { return dimension; }
+            get;
+            private set;
         }
 
         public BigInteger Modulus
         {
-            get { return modulus; }
+            get;
+            private set;
         }
 
         public BigInteger this[int x, int y]
@@ -56,62 +60,71 @@ namespace Cryptool.PluginBase.Miscellaneous
             }
             set
             {
-                m[x, y] = value % modulus;
+                m[x, y] = value % Modulus;
             }
         }
 
         public void UnitMatrix()
         {
-            for (int i = 0; i < dimension; i++)
-                for (int j = 0; j < dimension; j++)
+            for (int i = 0; i < Dimension; i++)
+                for (int j = 0; j < Dimension; j++)
                     m[i, j] = (i == j) ? 1 : 0;
+        }
+        
+        public BigInteger det()
+        {
+            if (Dimension == 0) return 1;
+
+            BigInteger d = 0;
+            int s=1;
+
+            for (int i = 0; i < Dimension; i++)
+            {
+                d += s * m[i, 0] * this.minor(i, 0);
+                s = -s;
+            }
+
+            d = ((d % Modulus) + Modulus) % Modulus;
+
+            return d;
+        }
+
+        public BigInteger minor(int x, int y)
+        {
+            return submatrix(x, y).det();
+        }
+
+        public ModMatrix submatrix(int x, int y)
+        {
+            ModMatrix submatrix = new ModMatrix(Dimension - 1, Modulus);
+
+            for (int xx = 0, xi = 0; xx < Dimension; xx++)
+            {
+                if (xx == x) continue;
+                for (int yy = 0, yi=0; yy < Dimension; yy++)
+                {
+                    if (yy == y) continue;
+                    submatrix[xi, yi] = m[xx, yy];
+                    yi++;
+                }
+                xi++;
+            }
+
+            return submatrix;
         }
 
         public ModMatrix invert()
         {
-            ModMatrix mm = new ModMatrix(this);
-            ModMatrix mi = new ModMatrix(dimension, modulus);
+            ModMatrix mi = new ModMatrix(Dimension, Modulus);
 
-            BigInteger g = 0, tmp, inv;
+            BigInteger di = BigIntegerHelper.ModInverse(det(), Modulus);
 
-            for (int y = 0; y < dimension; y++)
-            {
-                // find row with invertible leading value
-                int yy;
-                for (yy = y; yy < dimension; yy++)
+            for (int y = 0; y < Dimension; y++)
+                for (int x = 0; x < Dimension; x++)
                 {
-                    g = mm[y, yy].GCD(modulus);
-                    if (g == 1) break;
+                    int sign = 1 - 2 * ((x + y) % 2);       // sign = (-1) ^ (x+y)
+                    mi[x, y] = (((sign * di * minor(y, x)) % Modulus) + Modulus) % Modulus;
                 }
-                if (g != 1) return null;
-
-                // swap rows y and yy
-                for (int x = 0; x < dimension; x++)
-                {
-                    tmp = mm[x, y]; mm[x, y] = mm[x, yy]; mm[x, yy] = tmp;
-                    tmp = mi[x, y]; mi[x, y] = mi[x, yy]; mi[x, yy] = tmp;
-                }
-
-                // normalize rows
-                inv = BigIntegerHelper.ModInverse(mm[y, y], modulus);
-                for (int x = 0; x < dimension; x++)
-                {
-                    mm[x, y] = (mm[x, y] * inv) % modulus;
-                    mi[x, y] = (mi[x, y] * inv) % modulus;
-                }
-
-                for (yy = 0; yy < dimension; yy++)
-                {
-                    if (yy == y) continue;
-                    tmp = (modulus - mm[y, yy]) % modulus;
-
-                    for (int x = 0; x < dimension; x++)
-                    {
-                        mm[x, yy] = (mm[x, yy] + tmp * mm[x, y]) % modulus;
-                        mi[x, yy] = (mi[x, yy] + tmp * mi[x, y]) % modulus;
-                    }
-                }
-            }
 
             return mi;
         }
@@ -143,7 +156,7 @@ namespace Cryptool.PluginBase.Miscellaneous
                     for (int i = 0; i < result.Dimension; i++)
                     {
                         result[x, y] += matA[i, y] * matB[x, i];
-                        result[x, y] %= result.Modulus;
+                        result[x, y] = ((result[x, y] % result.Modulus) + result.Modulus) % result.Modulus;
                     }
                 }
 
@@ -163,7 +176,7 @@ namespace Cryptool.PluginBase.Miscellaneous
                 for (int i = 0; i < mat.Dimension; i++)
                 {
                     result[y] += mat[i, y] * vector[i];
-                    result[y] %= mat.Modulus;
+                    result[y] = ((result[y] % mat.Modulus) + mat.Modulus) % mat.Modulus;
                 }
             }
 
