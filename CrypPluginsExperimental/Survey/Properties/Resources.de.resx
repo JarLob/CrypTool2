@@ -136,9 +136,12 @@
     <value>Neues Projekt hiervon erstellen und öffnen.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>s</value>
+    <value>Survey</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Fehler beim Laden der Vorlage!</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Survey</value>
   </data>
 </root>
