@@ -91,6 +91,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.de.Designer.cs">
+      <DependentUpon>Resources.de.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter .cs" />
     <Compile Include="Screens\CreateAccount.xaml.cs">
@@ -219,6 +224,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ButtonIcons\folder-open-o.png" />
@@ -232,6 +242,7 @@
     <Resource Include="Images\ButtonIcons\angle-double-right_16.png" />
     <Resource Include="Images\ButtonIcons\forward.png" />
     <Resource Include="Images\ButtonIcons\chevron-right.png" />
+    <Resource Include="DetailedDescription\doc.xml" />
     <Content Include="Images\ButtonIcons\license.txt" />
   </ItemGroup>
   <ItemGroup>

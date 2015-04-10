@@ -137,39 +137,39 @@
     <value>CrypCloud</value>
   </data>
   <data name="_NoActiveJobs" xml:space="preserve">
-    <value>Currently there is no active job.</value>
+    <value>Momentan ist kein aktiver Job vorhanden.</value>
   </data>
   <data name="_Name" xml:space="preserve">
     <value>Name :</value>
   </data>
   <data name="_Type" xml:space="preserve">
-    <value>Job Type :</value>
+    <value>Job-Typ :</value>
   </data>
   <data name="_BackToList" xml:space="preserve">
-    <value>Back</value>
+    <value>Zurück</value>
   </data>
   <data name="_Discription" xml:space="preserve">
-    <value>Description :</value>
+    <value>Beschreibung :</value>
   </data>
   <data name="_Publish" xml:space="preserve">
-    <value>Publish Job</value>
+    <value>Job veröffentlichen</value>
   </data>
   <data name="_WorkspacePath" xml:space="preserve">
-    <value>Workspace :</value>
+    <value>Arbeitsbereich :</value>
   </data>
   <data name="_DeleteJob" xml:space="preserve">
-    <value>Delete</value>
+    <value>Löschen</value>
   </data>
   <data name="_OpenJob" xml:space="preserve">
-    <value>Open</value>
+    <value>Öffnen</value>
   </data>
   <data name="Create_a_new_account_" xml:space="preserve">
-    <value>Create a new account</value>
+    <value>Neuen Account erstellen</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>CrypCloudManager</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Editor that enables Peer-to-peer features for CrypTool 2</value>
+    <value>Editor mit Peer-to-peer-Features für CrypTool 2</value>
   </data>
 </root>
