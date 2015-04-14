@@ -124,7 +124,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select whether &quot;Fast converge&quot; should be used. Explanation can be found in the manual. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select whether &quot;Fast converge&quot; should be used. Explanation can be found in the online help. ähnelt.
         /// </summary>
         internal static string FastConvergeDes {
             get {

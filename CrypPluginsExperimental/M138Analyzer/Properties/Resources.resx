@@ -139,7 +139,7 @@
     <value>Fast converge</value>
   </data>
   <data name="FastConvergeDes" xml:space="preserve">
-    <value>Select whether "Fast converge" should be used. Explanation can be found in the manual.</value>
+    <value>Select whether "Fast converge" should be used. Explanation can be found in the online help.</value>
   </data>
   <data name="GermanDes" xml:space="preserve">
     <value>German</value>

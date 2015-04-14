@@ -354,6 +354,37 @@ namespace Cryptool.M138Analyzer
                     {
                         CiphertextNumbers[i] = _tmpCipherText[i];
                     }
+
+                    _tmpTextLength = _tmpCipherText.Length;
+
+                    if (_tmpTextLength < 100) //0-99, focus on trigrams
+                    {
+                        _restartNtimes = 35;
+                        TRIGRAMMULTIPLIER = 4;
+                        QUADGRAMMULTIPLIER = 1;
+                        DIVISOR = 5;
+                    }
+                    else if (_tmpTextLength < 200) //100-199, evenly use tri- and quadgrams
+                    {
+                        _restartNtimes = 25;
+                        TRIGRAMMULTIPLIER = 3;
+                        QUADGRAMMULTIPLIER = 3;
+                        DIVISOR = 6;
+                    }
+                    else if (_tmpTextLength < 300) //200-299 focus more on quadgrams
+                    {
+                        _restartNtimes = 17;
+                        TRIGRAMMULTIPLIER = 2;
+                        QUADGRAMMULTIPLIER = 4;
+                        DIVISOR = 6;
+                    }
+                    else
+                    { // >=300 Use mainly quadgrams
+                        _restartNtimes = 10;
+                        TRIGRAMMULTIPLIER = 1;
+                        QUADGRAMMULTIPLIER = 6;
+                        DIVISOR = 7;
+                    }
                     switch (_selectedLanguage)
                     {
                         case 0: //English
@@ -367,10 +398,17 @@ namespace Cryptool.M138Analyzer
                             DIVISOR = 1;
                             break;
                     }
+
+                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts))
+                    {
+                        _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
+                    }
+
                     UpdateDisplayStart();
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
                     {
                         var _startTime = DateTime.Now;
+                        int countOnlyOne = 0;
                         ProgressChanged(i, MaxOffsetUserSelect + 1);
                         _keysForOffset = KnownPlaintextAttack(i, _lengthOfPlaintext, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
@@ -379,6 +417,10 @@ namespace Cryptool.M138Analyzer
                             foreach (List<int> l in _keysForOffset)
                             {
                                 _numPosKeys = _numPosKeys * l.Count;
+                                if (l.Count == 1)
+                                {
+                                    countOnlyOne++;
+                                }
                             }
                             if (_numPosKeys > 1000)
                             {
@@ -386,6 +428,32 @@ namespace Cryptool.M138Analyzer
                                 //if yes, delete next
                                 //if no, repeat
                                 //too much to do hill climbing on every possible key
+                                if (countOnlyOne > 15)
+                                {
+                                    int[] _tempKey = new int[KeyLength];
+                                    int[] _fixesPositions = new int[KeyLength];
+                                    int _i = 0;
+                                    foreach (List<int> l in _keysForOffset)
+                                    {
+                                        if (l.Count == 1)
+                                        {
+                                            _tempKey[i] = l[0];
+                                            _fixesPositions[i] = 1;
+                                        }
+                                        else
+                                        {
+                                            _tempKey[i] = 0;
+                                            _fixesPositions[i] = 0;
+                                        }
+                                        i++;
+                                    }
+                                    HillClimb(_tmpCipherText, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge, _tempKey, _fixesPositions);
+                                }
+                                else
+                                {
+                                    //Not Yet Implemented
+                                }
+
                             }
                             else
                             {
@@ -528,7 +596,7 @@ namespace Cryptool.M138Analyzer
 
         #region Helpers
 
-        private bool HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, double[, ,] _ngrams3, double[, , ,] _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null)
+        private bool HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, double[, ,] _ngrams3, double[, , ,] _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
         {
 
             int _numberOfStrips = _stripes.Count; //Anzahl verfuegbarer Streifen
@@ -614,15 +682,45 @@ namespace Cryptool.M138Analyzer
                                 _copykey[k] = _runkey[k];
                             }
                             //Swap 2 Elements in copykey
-                            int _tmpElement = _copykey[i];
-                            _copykey[i] = _copykey[j];
-                            _copykey[j] = _tmpElement;
+                            if (_fixedPos == null)
+                            {
+                                int _tmpElement = _copykey[i];
+                                _copykey[i] = _copykey[j];
+                                _copykey[j] = _tmpElement;
 
-                            //TEST
-                            _tmpElement = _copykey[Mod(i + 7, _keyLength)];
-                            _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
-                            _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
-                            //TODO: Swap more elements at one time?
+                                //TEST
+                                _tmpElement = _copykey[Mod(i + 7, _keyLength)];
+                                _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
+                                _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
+                                //TODO: Swap more elements at one time?
+                            }
+                            else
+                            {
+                                if (_fixedPos[i] == 1 & _fixedPos[j] == 1)
+                                {
+                                    continue;
+                                }
+                                else if (_fixedPos[i] == 1)
+                                {
+                                    continue;
+                                }
+                                else if (_fixedPos[j] == 1)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    int _tmpElement = _copykey[i];
+                                    _copykey[i] = _copykey[j];
+                                    _copykey[j] = _tmpElement;
+
+                                    //TEST
+                                    _tmpElement = _copykey[Mod(i + 7, _keyLength)];
+                                    _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
+                                    _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
+                                    //TODO: Swap more elements at one time?
+                                }
+                            }
 
                             int[] _trimKey = new int[_keyLength]; //First n (25) Elements of runkey that will actually be used for en/decryption
                             for (int k = 0; k < _keyLength; k++)
