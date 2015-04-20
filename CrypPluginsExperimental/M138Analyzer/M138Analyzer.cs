@@ -452,6 +452,7 @@ namespace Cryptool.M138Analyzer
                                 else
                                 {
                                     //Not Yet Implemented
+                                    return;
                                 }
 
                             }

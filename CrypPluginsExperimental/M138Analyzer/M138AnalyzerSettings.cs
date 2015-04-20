@@ -29,7 +29,7 @@ namespace Cryptool.M138Analyzer
         private int _language = 0;
         private int _keyLength = 25;
         private int _minOffset = 1;
-        private int _maxOffset = 26;
+        private int _maxOffset = 25;
         private string _retries;
         private bool _fastConverge = false;
 
