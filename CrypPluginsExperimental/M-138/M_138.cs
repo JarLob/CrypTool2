@@ -387,9 +387,10 @@ namespace Cryptool.Plugins.M_138
                 numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet, _invalidChar));
             }
 
+            int r_counter = 0;
             for (int r = 0; r < _rows; r++)
             {
-                int _usedStrip = r % _stripNumbers.Length;
+                int _usedStrip = r_counter % _stripNumbers.Length;
                 toVisualize[r + 1, 0] = (r + 1).ToString(); //Fill first column of Visualisation
                 toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
                 int[] currentStrip = numStripes[_usedStrip];
@@ -412,6 +413,7 @@ namespace Cryptool.Plugins.M_138
                         if (isAt != -1)
                         {
                             toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                            r_counter++;
                         }
                         else
                         {
@@ -423,6 +425,7 @@ namespace Cryptool.Plugins.M_138
                         if (isAt != -1)
                         {
                             toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
+                            r_counter++;
                         }
                         else
                         {
