@@ -422,7 +422,7 @@ namespace Cryptool.M138Analyzer
                                     countOnlyOne++;
                                 }
                             }
-                            if (_numPosKeys > 1000)
+                            if (_numPosKeys > 50000 || _numPosKeys < 0)
                             {
                                 //Go through Keylist. Eliminate largest List, Remove from List of fixed locations. Check whether still more than 1000 possibilities.
                                 //if yes, delete next
@@ -437,15 +437,15 @@ namespace Cryptool.M138Analyzer
                                     {
                                         if (l.Count == 1)
                                         {
-                                            _tempKey[i] = l[0];
-                                            _fixesPositions[i] = 1;
+                                            _tempKey[_i] = l[0];
+                                            _fixesPositions[_i] = 1;
                                         }
                                         else
                                         {
-                                            _tempKey[i] = 0;
-                                            _fixesPositions[i] = 0;
+                                            _tempKey[_i] = 0;
+                                            _fixesPositions[_i] = 0;
                                         }
-                                        i++;
+                                        _i++;
                                     }
                                     HillClimb(_tmpCipherText, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge, _tempKey, _fixesPositions);
                                 }
@@ -696,15 +696,15 @@ namespace Cryptool.M138Analyzer
                             }
                             else
                             {
-                                if (_fixedPos[i] == 1 & _fixedPos[j] == 1)
+                                //if (_fixedPos[i] == 1 & _fixedPos[j] == 1)
+                                //{
+                                //    continue;
+                                //}
+                                if (_fixedPos[i] == 1)
                                 {
                                     continue;
                                 }
-                                else if (_fixedPos[i] == 1)
-                                {
-                                    continue;
-                                }
-                                else if (_fixedPos[j] == 1)
+                                else if (j<25 && _fixedPos[j] == 1)
                                 {
                                     continue;
                                 }
