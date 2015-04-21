@@ -209,9 +209,15 @@ namespace Cryptool.M138Analyzer
                             for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
                             {
 
-                                sb.Append("[");
+                                if (_keysForOffset[_keyLocation].Count > 1)
+                                {
+                                    sb.Append("[");
+                                }
                                 sb.Append(string.Join("|", _keysForOffset[_keyLocation].ToArray()));
-                                sb.Append("]");
+                                if (_keysForOffset[_keyLocation].Count > 1)
+                                {
+                                    sb.Append("]");
+                                }
                                 if (_keyLocation != _cachedKeyLength - 1)
                                 {
                                     sb.Append(",");
