@@ -62,6 +62,7 @@ namespace Cryptool.M138Analyzer
         private double KeysPerSecondAverage = 0;
         private double AverageTimePerRestart = 0;
         private bool fastConverge = false;
+        double[] unigrams;
 
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
@@ -196,6 +197,8 @@ namespace Cryptool.M138Analyzer
                     //TextLength should be at least 25
                     StringBuilder AllPossibleKeysAsString = new StringBuilder();
                     var _estimatedEndTime = DateTime.Now;
+                    UpdateDisplayStart();
+                    var _globalStartTime = DateTime.Now;
                     for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Go Over Keylength (Try all possible offsets)
                     {
                         var _startTime = DateTime.Now;
@@ -233,7 +236,7 @@ namespace Cryptool.M138Analyzer
                         }
                         var _endTime = DateTime.Now;
                         var _elapsedTime = _endTime - _startTime;
-                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
+                        _estimatedEndTime = _globalStartTime.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
                         UpdateDisplayEnd(i, _estimatedEndTime);
                     }
                     CalculatedKey = AllPossibleKeysAsString.ToString();
@@ -268,8 +271,8 @@ namespace Cryptool.M138Analyzer
                     {
                         _restartNtimes = 25;
                         TRIGRAMMULTIPLIER = 3;
-                        QUADGRAMMULTIPLIER = 3;
-                        DIVISOR = 6;
+                        QUADGRAMMULTIPLIER = 4;
+                        DIVISOR = 7;
                     }
                     else if (_tmpTextLength < 300) //200-299 focus more on quadgrams
                     {
@@ -281,20 +284,25 @@ namespace Cryptool.M138Analyzer
                     else
                     { // >=300 Use mainly quadgrams
                         _restartNtimes = 10;
-                        TRIGRAMMULTIPLIER = 1;
+                        TRIGRAMMULTIPLIER = 2;
                         QUADGRAMMULTIPLIER = 6;
-                        DIVISOR = 7;
+                        DIVISOR = 8;
                     }
                     switch (_selectedLanguage)
                     {
                         case 0: //English
                             Trigrams = Load3Grams(Alphabet);
                             Quadgrams = Load4Grams(Alphabet);
+                            unigrams = new double[] { 0.08167, 0.01492, 0.02781, 0.04253, 0.12701, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978, 0.02306, 0.0015, 0.01974, 0.00074 };
+                            //Occurance of letters in english language. Source: Wikipedia
+                            //http://de.wikipedia.org/wiki/Buchstabenhäufigkeit
                             break;
                         case 1: //German
                             Quadgrams = LoadGerman4Grams(Alphabet);
                             TRIGRAMMULTIPLIER = 0;
                             QUADGRAMMULTIPLIER = 1;
+                            unigrams = new double[] { 0.0651, 0.0189, 0.0306, 0.0508, 0.174, 0.0166, 0.0301, 0.0476, 0.0755, 0.0027, 0.0121, 0.0344, 0.0253, 0.0978, 0.0251, 0.0079, 0.0002, 0.07, 0.0727, 0.0615, 0.0435, 0.0067, 0.0189, 0.0003, 0.0004, 0.0113 };
+                            //Occurance of letters in german language. Source: Wikipedia
                             DIVISOR = 1;
                             break;
                     }
@@ -396,12 +404,17 @@ namespace Cryptool.M138Analyzer
                         case 0: //English
                             Trigrams = Load3Grams(Alphabet);
                             Quadgrams = Load4Grams(Alphabet);
+                            unigrams = new double[] { 0.08167, 0.01492, 0.02781, 0.04253, 0.12701, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978, 0.02306, 0.0015, 0.01974, 0.00074 };
+                            //Occurance of letters in english language. Source: Wikipedia
+                            //http://de.wikipedia.org/wiki/Buchstabenhäufigkeit
                             break;
                         case 1: //German
                             Quadgrams = LoadGerman4Grams(Alphabet);
                             TRIGRAMMULTIPLIER = 0;
                             QUADGRAMMULTIPLIER = 1;
                             DIVISOR = 1;
+                            unigrams = new double[] { 0.0651, 0.0189, 0.0306, 0.0508, 0.174, 0.0166, 0.0301, 0.0476, 0.0755, 0.0027, 0.0121, 0.0344, 0.0253, 0.0978, 0.0251, 0.0079, 0.0002, 0.07, 0.0727, 0.0615, 0.0435, 0.0067, 0.0189, 0.0003, 0.0004, 0.0113 };
+                            //Occurance of letters in german language. Source: Wikipedia
                             break;
                     }
 
@@ -428,13 +441,13 @@ namespace Cryptool.M138Analyzer
                                     countOnlyOne++;
                                 }
                             }
-                            if (_numPosKeys > 50000 || _numPosKeys < 0)
+                            if (_numPosKeys > 100000 || _numPosKeys < 0)
                             {
                                 //Go through Keylist. Eliminate largest List, Remove from List of fixed locations. Check whether still more than 1000 possibilities.
                                 //if yes, delete next
                                 //if no, repeat
                                 //too much to do hill climbing on every possible key
-                                if (countOnlyOne > 15)
+                                if (countOnlyOne > 10)
                                 {
                                     int[] _tempKey = new int[KeyLength];
                                     int[] _fixesPositions = new int[KeyLength];
@@ -711,7 +724,7 @@ namespace Cryptool.M138Analyzer
                                 {
                                     continue;
                                 }
-                                else if (j<25 && _fixedPos[j] == 1)
+                                else if (j < 25 && _fixedPos[j] == 1)
                                 {
                                     continue;
                                 }
@@ -736,7 +749,7 @@ namespace Cryptool.M138Analyzer
                             }
 
                             int[] _plainText = Decrypt(_cipherText, _trimKey, _keyOffset, _stripes);
-                            double _costValue = ((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR;
+                            double _costValue = (((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR) * UnigramCost(_plainText, _selectedLanguage);
                             //TODO: Improve cost Function
 
                             _keyCount++;
@@ -875,6 +888,26 @@ namespace Cryptool.M138Analyzer
                 }
             }
             return _workingStrips;
+        }
+
+        private double UnigramCost(int[] text, int lang)
+        {
+            double cost = 0;
+            int[] occur = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+            foreach (char c in text)
+            {
+                occur[c]++;
+            }
+
+            int texlen = text.Length;
+            for (int i = 0; i < 26; i++)
+            {
+                double reloccur = (double)occur[i] / (double)texlen;
+                cost += Math.Abs(reloccur);
+            }
+
+            return cost;
         }
 
         IEnumerable<IEnumerable<int>> PermuteAllKeys(IEnumerable<IEnumerable<int>> sequences)

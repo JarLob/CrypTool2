@@ -138,6 +138,17 @@ namespace Cryptool.Plugins.M_138
         {
             ProgressChanged(0, 1);
 
+            //Invalid character handling
+            _invalidChar = settings.InvalidCharacterHandling;
+            if (_invalidChar == 0) //Remove
+            {
+                TextInput = RemoveInvalidChars(TextInput, alphabet);
+            }
+            else
+            {
+                _ignoredCharacters = new List<string>();
+            }
+
             //Case sensitivity
             _isCaseSensitive = settings.CaseSensitivity;
             if (_isCaseSensitive)
@@ -163,17 +174,6 @@ namespace Cryptool.Plugins.M_138
                 }
             }
             TextInput = TextInput.ToUpper(); //Just use upper cases internally
-
-            //Invalid character handling
-            _invalidChar = settings.InvalidCharacterHandling;
-            if (_invalidChar == 0) //Remove
-            {
-                TextInput = RemoveInvalidChars(TextInput, alphabet);
-            }
-            else
-            {
-                _ignoredCharacters = new List<string>();
-            }
 
             setSeparator();
             TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
@@ -296,7 +296,7 @@ namespace Cryptool.Plugins.M_138
             var builder = new StringBuilder();
             foreach (char c in text)
             {
-                if (alphabet.Contains(c.ToString()))
+                if (alphabet.Contains(c.ToString()) | alphabet.Contains(c.ToString().ToUpper()))
                 {
                     builder.Append(c);
                 }
