@@ -904,10 +904,10 @@ namespace Cryptool.M138Analyzer
             for (int i = 0; i < 26; i++)
             {
                 double reloccur = (double)occur[i] / (double)texlen;
-                cost += Math.Abs(reloccur);
+                cost += (Math.Abs(reloccur)-unigrams[i]);
             }
 
-            return cost;
+            return cost*cost;
         }
 
         IEnumerable<IEnumerable<int>> PermuteAllKeys(IEnumerable<IEnumerable<int>> sequences)
