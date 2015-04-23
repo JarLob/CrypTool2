@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace CrypCloud.Core.CloudComponent
 {
@@ -11,14 +12,71 @@ namespace CrypCloud.Core.CloudComponent
     {
         private readonly CrypCloudCore cryptCloudCore = CrypCloudCore.Instance;
         private readonly CalculationTemplate calculationTemplate;
+        private CancellationTokenSource offlineCancellation;
+
+        /// <summary>
+        /// Number Of Blocks that should be calculated.
+        /// Has to be set before starting
+        /// </summary>
+        public BigInteger NumberOfBlocks { get; set; }
+
+        /// <summary>
+        /// JobId of bound networkjob.
+        /// If its -1 its not bound to any networkjob
+        /// </summary>
+        public BigInteger JobID { get; set; }
+
+        public List<byte[]> CurrentBestlist { get; private set; }
 
         protected ACloudComponent()
         {
-            calculationTemplate = new CalculationTemplate(this); 
+            NumberOfBlocks = 0;
+            JobID = -1;
+            calculationTemplate = new CalculationTemplate(this);
+            CurrentBestlist = new List<byte[]>();
         }
 
-        public BigInteger JobID { get; set; }
-      
+        public void Stop()
+        {
+            if (IsOnline()) 
+                cryptCloudCore.StopLocalCalculation(JobID);
+            else 
+                offlineCancellation.Cancel(false);
+
+            StopLocal();
+        }
+
+        public void PreExecution()
+        {
+            PreExecutionLocal();
+
+            if (IsOnline())
+                cryptCloudCore.StartLocalCalculation(JobID, calculationTemplate);
+            else
+                StartOfflineCalculation();
+        }
+         
+        private void StartOfflineCalculation()
+        {
+            offlineCancellation = new CancellationTokenSource();
+            for (var i = 0; i < NumberOfBlocks && !offlineCancellation.IsCancellationRequested; i++)
+            {
+                var block = CalculateBlock(i, offlineCancellation.Token);
+                CurrentBestlist = MergeBlockResults(CurrentBestlist, new List<byte[]>(block));
+            }
+        }
+        
+        /// <summary>
+        /// Determine if this component is linked to a Networkjob
+        /// </summary>
+        /// <returns></returns>
+        public bool IsOnline()
+        {
+            return JobID != -1;
+        }
+
+        #region abstract member
+
         /// <summary>
         /// Represents the logic for calculation a single "cloud" block
         /// </summary>
@@ -33,20 +91,6 @@ namespace CrypCloud.Core.CloudComponent
         /// <returns></returns>
         public abstract List<byte[]> MergeBlockResults(IEnumerable<byte[]> oldResultList, IEnumerable<byte[]> newResultList);
 
-        #region proxy methodes 
-
-        public void Stop()
-        {
-            cryptCloudCore.StopLocalCalculation(JobID);
-            StopLocal();
-        }
-
-        public void PreExecution()
-        {
-            PreExecutionLocal();
-            cryptCloudCore.StartLocalCalculation(JobID, calculationTemplate);
-        }
-
         /// <summary>
         /// Will be called once before local Calculation is started. May be used to set up data used for execution.
         /// </summary>
@@ -59,8 +103,8 @@ namespace CrypCloud.Core.CloudComponent
 
         #endregion
 
-        #region abstract member 
-        
+        #region abstract member of ICrypComponent
+
         public abstract ISettings Settings { get; }
         public abstract UserControl Presentation { get; } 
 
@@ -69,10 +113,19 @@ namespace CrypCloud.Core.CloudComponent
         public abstract void PostExecution();
         public abstract void Dispose();
          
-        public abstract event PropertyChangedEventHandler PropertyChanged;
-        public abstract event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public abstract event PropertyChangedEventHandler PropertyChanged; 
         public abstract event StatusChangedEventHandler OnPluginStatusChanged;
         public abstract event PluginProgressChangedEventHandler OnPluginProgressChanged;
+
+        #endregion
+
+        #region logger
+
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        protected void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+        }
 
         #endregion
     }

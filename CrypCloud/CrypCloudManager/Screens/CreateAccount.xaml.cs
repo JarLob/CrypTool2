@@ -15,9 +15,8 @@ using CrypCloud.Manager.ViewModels;
 
 namespace CrypCloud.Manager.Screens
 {
-    /// <summary>
-    /// Interaktionslogik für CreateAccountView.xaml
-    /// </summary>
+
+    [Cryptool.PluginBase.Attributes.Localization("CrypCloud.Manager.Properties.Resources")]
     public partial class CreateAccount : UserControl
     {
         public CreateAccount()

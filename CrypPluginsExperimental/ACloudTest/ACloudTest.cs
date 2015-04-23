@@ -29,6 +29,7 @@ namespace Cryptool.Plugins.ACloudTest
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ACloudTest : ACloudComponent
     {
+
         #region Private Variables
          
         private readonly ACloudTestSettings settings = new ACloudTestSettings();
@@ -45,6 +46,11 @@ namespace Cryptool.Plugins.ACloudTest
             get { return null; }
         }
 
+        public override void Initialize()
+        {
+            NumberOfBlocks = 1000;
+        }
+
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "Input name", "Input tooltip description")]
@@ -54,33 +60,10 @@ namespace Cryptool.Plugins.ACloudTest
         public int SomeOutput {get; set;}
 
         #endregion
-         
-        public override void StopLocal()
-        {
-        }
-
-        public override void Execute()
-        {
-        }
-
-        public override void Initialize()
-        {
-        }
-
-        public override void PostExecution()
-        {
-        }
-
-        public override void Dispose()
-        {
-        }
-       
-        public override void PreExecutionLocal()
-        {
-        }
 
         public override List<byte[]> CalculateBlock(BigInteger blockId, CancellationToken cancelToken)
         {
+            GuiLogMessage("ERROR: " + blockId, NotificationLevel.Error);
             return new List<byte[]>();
         }
 
@@ -90,7 +73,28 @@ namespace Cryptool.Plugins.ACloudTest
         }
 
 
-        public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public override void StopLocal()
+        {
+        }
+
+        public override void Execute()
+        {
+        }
+
+        
+        public override void PostExecution()
+        {
+        }
+
+        public override void Dispose()
+        {
+        }
+
+        public override void PreExecutionLocal()
+        {
+            Initialize();
+        }
+         
         public override event StatusChangedEventHandler OnPluginStatusChanged;
         public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
         public override event PropertyChangedEventHandler PropertyChanged;

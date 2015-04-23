@@ -781,7 +781,7 @@ namespace CertificateLibrary.Certificates
 
                 // Check the CertificateVersion
                 int certVersion = Int32.Parse(GetExtensionValue(peerCertificate, PAPObjectIdentifier.CertificateVersion));
-                if (certVersion < PeerCertificate.CERTIFICATE_VERSION)
+                if (certVersion < PeerCertificate.CertificateVersion)
                 {
                     if (!silent)
                     {

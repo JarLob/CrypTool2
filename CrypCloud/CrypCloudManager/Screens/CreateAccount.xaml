@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter"
-             xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels" 
+             xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
+             xmlns:properties="clr-namespace:CrypCloud.Manager.Properties"
              mc:Ignorable="d" d:DesignWidth="500">
 
     <UserControl.Resources>
@@ -20,7 +21,7 @@
     </UserControl.DataContext>
 
     <StackPanel Width="500" Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
-        <Label Content="Create a new account" FontSize="14" HorizontalAlignment="Center" Margin="30" />
+        <Label Content="{Loc _CreateAccount_Title}" FontSize="14" HorizontalAlignment="Center" Margin="30" />
       
         <!--  enter account data -->
        <StackPanel  Visibility="{Binding Path=ShowInputDialog, Converter={converter:BoolToVisibilityConverter}}">
@@ -36,12 +37,12 @@
                         <RowDefinition Height="28" /> 
                         <RowDefinition Height="28" /> 
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Please_enter_the_data_below_"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Loc _CreateAccount_enterAccountData}"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
 
-                    <Label Content="Username_" Target="{Binding ElementName=UsernameField}" Grid.Row="1" Grid.Column="0" />
-                    <Label Content="Email_" Target="{Binding ElementName=EmailField}" Grid.Row="2" Grid.Column="0" />
-                    <Label Content="Password_" Target="{Binding ElementName=PasswordField}" Grid.Row="3" Grid.Column="0" />
-                    <Label Content="Confirm_" Target="{Binding ElementName=ConfirmField}" Grid.Row="4" Grid.Column="0" />
+                <Label Content="{Loc _Username_label}" Target="{Binding ElementName=UsernameField}" Grid.Row="1" Grid.Column="0" />
+                <Label Content="{Loc _Email_label}" Target="{Binding ElementName=EmailField}" Grid.Row="2" Grid.Column="0" />
+                <Label Content="{Loc _Password_label}" Target="{Binding ElementName=PasswordField}" Grid.Row="3" Grid.Column="0" />
+                <Label Content="{Loc _Password_confirm_label}" Target="{Binding ElementName=ConfirmField}" Grid.Row="4" Grid.Column="0" />
 
                     <TextBox x:Name="UsernameField"     Text="{Binding Path=Username}"              Grid.Row="1" Grid.Column="1" Height="24" MaxLength="40"/>
                     <TextBox x:Name="EmailField"        Text="{Binding Path=Email}"                 Grid.Row="2" Grid.Column="1" Height="24" MaxLength="60"/>
@@ -52,20 +53,20 @@
                     <Button Command="{Binding Path=BackCommand}" HorizontalAlignment="Left" Width="80" Height="30" >
                         <StackPanel Orientation="Horizontal" >
                             <Image Source="../Images/ButtonIcons/chevron-left_32.png" Width="16" />
-                            <Label Content="{Loc _Back}" />
+                        <Label Content="{Loc _BackBtn}" />
                         </StackPanel>
                     </Button>
 
                     <Button Name="RequestButton" Command="{Binding Path=RequestCommand}" Margin="0,0,100,0" HorizontalAlignment="Right" Width="80" Height="30">
                         <StackPanel Orientation="Horizontal" >
-                        <Label Content="{Loc _Create}" />
+                        <Label Content="{Loc _NextBtn}" />
                         <Image Source="../Images/ButtonIcons/chevron-right.png" Width="16" />
                     </StackPanel>
                     </Button>
                     
                     <Button Command="{Binding Path=GoToVerification}"  HorizontalAlignment="Right" Width="80" Height="30">
                     <StackPanel Orientation="Horizontal" >
-                        <Label Content="{Loc _Verify}" />
+                        <Label Content="{Loc _VerifyBtn}" />
                         <Image Source="../Images/ButtonIcons/forward.png" Width="16" />
                     </StackPanel>
                     </Button>
@@ -75,7 +76,7 @@
         <!-- wait dialog -->
         <StackPanel Visibility="{Binding Path=ShowWaitDialog, Converter={converter:BoolToVisibilityConverter}}" 
                     VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Connection to server. Please wait" FontSize="14" HorizontalAlignment="Center" Margin="30" />
+            <Label Content="{Loc _Connecting_label}" FontSize="14" HorizontalAlignment="Center" Margin="30" />
         </StackPanel>
         
         <!--  enter verification code -->
@@ -90,13 +91,13 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="30"/> 
                 </Grid.RowDefinitions>
-                <TextBlock Text="Please_enter_the_verification_code_"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
-                <Label Content="verification_code_" Target="{Binding ElementName=VerificationCode}" Grid.Row="1" Grid.Column="0" />
+                <TextBlock Text="{Loc _enterVerificationCode}"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
+                <Label Content="{Loc _verificationCode_label}" Target="{Binding ElementName=VerificationCode}" Grid.Row="1" Grid.Column="0" />
                 <TextBox Text="{Binding Path=VerificationCode}" Grid.Row="1" Grid.Column="1" Height="24" MaxLength="40"/>
                 <Button Command="{Binding Path=VerificationCommand}"  Grid.Row="1" Grid.Column="2" Width="80" Height="30">
                     <StackPanel Orientation="Horizontal" >
                         <Image Source="../Images/ButtonIcons/check_16.png" Width="16" />
-                        <Label Content="{Loc _Verify}" />
+                        <Label Content="{Loc _VerifyBtn}" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -105,13 +106,13 @@
         <!-- error dialog -->
         <StackPanel Visibility="{Binding Path=ShowErrorDialog, Converter={converter:BoolToVisibilityConverter}}"
                          VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30" >
-            
-            <Label FontSize="16" HorizontalContentAlignment="Center">Something went wrong :(</Label>
+
+            <Label FontSize="16" HorizontalContentAlignment="Center" Content="{Loc _ConnectingError}" />
             <TextBlock Text="{Binding Path=ErrorMessage}" Margin="15,15,15,15" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
             <Button  Command="{Binding Path=BackCommand}"  Height="30" Width="80">
                 <StackPanel Orientation="Horizontal" >
                     <Image Source="../Images/ButtonIcons/chevron-left_32.png" Width="16" />
-                    <Label Content="{Loc Back}" />
+                    <Label Content="{Loc _BackBtn}" />
                 </StackPanel>
             </Button>
         </StackPanel>
@@ -119,8 +120,8 @@
         <!-- success dialog -->
         <StackPanel Visibility="{Binding Path=ShowSuccessDialog, Converter={converter:BoolToVisibilityConverter}}" 
                          VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
-            <Label FontSize="16" HorizontalContentAlignment="Center">Account successfully requested</Label>
-            <TextBlock Text="Your_new_account_was_requested_successfully" Margin="15,15,15,15" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
+            <Label FontSize="16" HorizontalContentAlignment="Center" Content="{Loc _CreateAccount_successHeader}" />
+            <TextBlock Text="{Loc _CreateAccount_successText}" Margin="15,15,15,15" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
             <Button Command="{Binding Path=BackCommand}" Height="30" Width="80">
                 <StackPanel Orientation="Horizontal" >
                     <Image Source="../Images/ButtonIcons/check_16.png" Width="16" />

@@ -11,20 +11,8 @@ namespace CrypCloud.Manager.Services
 {
     class WorkspaceHelper
     {
-        public static readonly string DefaultUserCachedWorkspaceDir = CertificateHelper.CreatePathInAppdata("CryptCloud", "Workspaces");
-
         private const string FileDialogExtention = ".cwm";
         private const string FileDialogFilter = "Workspace (.cwm)|*.cwm";
-
-        public static void CreateDirectory()
-        {
-            Directory.CreateDirectory(DefaultUserCachedWorkspaceDir);
-        }
-
-        public static bool DoesDirectoryExists() 
-        {
-            return Directory.Exists(DefaultUserCachedWorkspaceDir);
-        }
 
         public static string OpenFilePickerAndReturnPath()
         {

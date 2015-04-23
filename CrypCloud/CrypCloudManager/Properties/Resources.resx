@@ -136,40 +136,133 @@
   <data name="Tab_Caption" xml:space="preserve">
     <value>CrypCloud</value>
   </data>
-  <data name="_NoActiveJobs" xml:space="preserve">
-    <value>Currently there is no active job.</value>
+  <data name="_Password_label" xml:space="preserve">
+    <value>Password: </value>
   </data>
-  <data name="_Name" xml:space="preserve">
-    <value>Name :</value>
+  <data name="_Email_label" xml:space="preserve">
+    <value>Email: </value>
   </data>
   <data name="_Type" xml:space="preserve">
     <value>Job Type :</value>
   </data>
-  <data name="_BackToList" xml:space="preserve">
+  <data name="_BackBtn" xml:space="preserve">
     <value>Back</value>
   </data>
-  <data name="_Discription" xml:space="preserve">
-    <value>Description :</value>
-  </data>
-  <data name="_Publish" xml:space="preserve">
-    <value>Publish Job</value>
+  <data name="_AbortBtn" xml:space="preserve">
+    <value>Abort</value>
   </data>
   <data name="_WorkspacePath" xml:space="preserve">
     <value>Workspace :</value>
   </data>
-  <data name="_DeleteJob" xml:space="preserve">
+  <data name="_NextBtn" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="_Password_confirm_label" xml:space="preserve">
+    <value>Confirm: </value>
+  </data>
+  <data name="_ConnectingError" xml:space="preserve">
+    <value>Something went wrong :(</value>
+  </data>
+  <data name="_Connecting_label" xml:space="preserve">
+    <value>Connection to server. Please wait</value>
+  </data>
+  <data name="_CreateAccount_enterAccountData" xml:space="preserve">
+    <value>Please enter your account data below.</value>
+  </data>
+  <data name="_CreateAccount_successHeader" xml:space="preserve">
+    <value>Account successfully requested</value>
+  </data>
+  <data name="_CreateAccount_successText" xml:space="preserve">
+    <value>Your new account was requested successfully.</value>
+  </data>
+  <data name="_CreateAccount_Title" xml:space="preserve">
+    <value>Create a new account </value>
+  </data>
+  <data name="_CreateJob_Description_label" xml:space="preserve">
+    <value>Description: </value>
+  </data>
+  <data name="_CreateJob_Header" xml:space="preserve">
+    <value>Create a new job</value>
+  </data>
+  <data name="_CreateJob_Name_label" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="_CreateJob_uploadBtn" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="_CreateJob_WorkspacePath_label" xml:space="preserve">
+    <value>Path to workspace: </value>
+  </data>
+  <data name="_enterVerificationCode" xml:space="preserve">
+    <value>Please enter the verification code.</value>
+  </data>
+  <data name="_JobList_btn_createNew" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="_JobList_btn_delete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="_OpenJob" xml:space="preserve">
+  <data name="_JobList_btn_open" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="Create_a_new_account_" xml:space="preserve">
+  <data name="_JobList_btn_refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="_JobList_col_Creator" xml:space="preserve">
+    <value>Creator</value>
+  </data>
+  <data name="_JobList_col_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="_JobList_col_Progress" xml:space="preserve">
+    <value>Progress</value>
+  </data>
+  <data name="_JobList_Header" xml:space="preserve">
+    <value>Current Jobs</value>
+  </data>
+  <data name="_Login_btn_connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="_Login_header" xml:space="preserve">
+    <value>CrypCloud</value>
+  </data>
+  <data name="_Login_link_createNewAccount" xml:space="preserve">
     <value>Create a new account</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>CrypCloudManager</value>
+    <value>CrypCloud</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Editor that enables Peer-to-peer features for CrypTool 2</value>
+    <value>A P2P based volunteer cloud solution</value>
+  </data>
+  <data name="_Login_link_ForgotPassword" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="_Login_subheader" xml:space="preserve">
+    <value>A P2P based volunteer cloud solution</value>
+  </data>
+  <data name="_ResetPW_enterData" xml:space="preserve">
+    <value>Enter your account data below to reset your password.</value>
+  </data>
+  <data name="_ResetPW_enterVerificationData" xml:space="preserve">
+    <value>We have send an verification email to the email address of the account. Please enter the verification code and your new password below.</value>
+  </data>
+  <data name="_ResetPW_Header" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="_ResetPW_successHeader" xml:space="preserve">
+    <value>Password Reset Successful</value>
+  </data>
+  <data name="_ResetPW_successText" xml:space="preserve">
+    <value>Your password has been reset. You may now login with your new password.</value>
+  </data>
+  <data name="_verificationCode_label" xml:space="preserve">
+    <value>Verification Code: </value>
+  </data>
+  <data name="_VerifyBtn" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="_Username_label" xml:space="preserve">
+    <value>Name: </value>
   </data>
 </root>

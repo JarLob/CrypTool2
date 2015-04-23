@@ -21,15 +21,15 @@
         <viewModels:JobListVM />
     </UserControl.DataContext>
 
-    <StackPanel Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" HorizontalAlignment="Center" Width="630">
-        <Label Content="Current Jobs" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
-        
-        <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RunningJobs}" x:Name="JobListView">
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" HorizontalAlignment="Center" Width="630" Height="600">
+        <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
+
+        <ListView ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Path=RunningJobs}" Height="470" x:Name="JobListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Creator" DisplayMemberBinding="{Binding Creator}" Width="100" />
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="100" />
-                    <GridViewColumn Header="Progress" DisplayMemberBinding="{Binding NumberOfBlocks}" Width="200" /> 
+                    <GridViewColumn Header="{Loc _JobList_col_Creator}" DisplayMemberBinding="{Binding Creator}" Width="100" />
+                    <GridViewColumn Header="{Loc _JobList_col_Name}" DisplayMemberBinding="{Binding Name}" Width="100" />
+                    <GridViewColumn Header="{Loc _JobList_col_Progress}" DisplayMemberBinding="{Binding NumberOfBlocks}" Width="200" /> 
                     
                     <GridViewColumn Header="" Width="110" >
                         <GridViewColumn.CellTemplate>
@@ -40,7 +40,7 @@
                                              Width="80" Margin="10, 5" >
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="../Images/ButtonIcons/external-link.png" Width="16" />
-                                            <Label Content="Open" />
+                                            <Label Content="{Loc _JobList_btn_open}" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -58,7 +58,7 @@
                                             Width="80" Margin="10, 5" >
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="../Images/ButtonIcons/trash-o.png" Width="16" />
-                                            <Label Content="Delete" />
+                                            <Label Content="{Loc _JobList_btn_delete}" />
                                         </StackPanel>
                                     </Button>
                                 </StackPanel>
@@ -71,17 +71,17 @@
         
         <!-- bottom controls -->
         <Grid VerticalAlignment="Bottom" >
-            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="100" Height="30">
+            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5"  Width="100" Height="30">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
-                    <Label Content="{Loc _Refresh}" />
+                    <Label Content="{Loc _JobList_btn_refresh}" />
                 </StackPanel>
             </Button>
- 
+            
             <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="100" Height="30">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/plus.png"  Width="16" />
-                    <Label Content="{Loc _New}" />
+                    <Label Content="{Loc _JobList_btn_createNew}" />
                 </StackPanel>
             </Button>
 

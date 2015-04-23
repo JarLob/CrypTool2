@@ -21,8 +21,8 @@
     <Grid Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15,15,15,15">
-                <Label Content="{Loc CrypTool_2_0_}" FontSize="20" HorizontalContentAlignment="Center" Width="200"/>
-                <Label Content="{Loc Distributed_Computing_Platform_}" FontSize="13" HorizontalContentAlignment="Center" Width="200"/>
+                <Label Content="{Loc _Login_header}" FontSize="20" HorizontalContentAlignment="Center" Width="200"/>
+                <Label Content="{Loc _Login_subheader}" FontSize="13" HorizontalContentAlignment="Center" Width="250"/>
 
                 <!-- earth -->
                 <Grid Width="250" Height="200">
@@ -99,15 +99,15 @@
                     </Grid>
                 </Border>
 
-                
-                <Label Width="200" Content="{Loc Username_}"/>
+
+                <Label Width="200" Content="{Loc _Username_label}"/>
                 <Grid Width="200">
                     <ComboBox Text="{Binding Path=Username}" ItemsSource="{Binding Path=AvailableCertificates}"
                               Name="UsernameInput" HorizontalAlignment="Left" IsEditable="True" IsTextSearchEnabled="True" Width="200">
                     </ComboBox>
                 </Grid>
 
-                <Label Content="{Loc Password_}" Width="200"/>
+                <Label Content="{Loc _Password_label}" Width="200"/>
                     <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />     
                 <Label/>
 
@@ -116,7 +116,7 @@
                         <MouseBinding Command="{Binding Path=ResetPasswordCommand}" MouseAction="LeftClick" />
                      </TextBlock.InputBindings>
                     <Underline>
-                        <ContentControl Content="{Loc Forgot_Password_}"/>
+                        <ContentControl Content="{Loc _Login_link_ForgotPassword}"/>
                     </Underline>
                 </TextBlock>
 
@@ -125,12 +125,12 @@
                         <MouseBinding Command="{Binding Path=CreateNewAccountCommand}" MouseAction="LeftClick" />
                      </TextBlock.InputBindings>
                     <Underline>
-                        <ContentControl  Content="{Loc Create_a_new_account_}"/>
+                        <ContentControl  Content="{Loc _Login_link_createNewAccount}"/>
                     </Underline>
                 </TextBlock>
                 <Label/>
 
-                <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc ConnectButton_}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
+                <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc _Login_btn_connect}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
 
             </StackPanel>
         </ScrollViewer>

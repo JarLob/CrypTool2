@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PeersAtPlay.CertificateLibrary.Certificates;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PeersAtPlay.CertificateLibrary.Network
 {

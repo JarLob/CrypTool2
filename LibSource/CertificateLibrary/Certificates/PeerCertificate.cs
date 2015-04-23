@@ -14,12 +14,9 @@ namespace PeersAtPlay.CertificateLibrary.Certificates
 
         #region Static readonly
 
-
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        public static readonly string DEFAULT_USER_CERTIFICATE_DIRECTORY = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PeersAtPlay" + Path.DirectorySeparatorChar + "Certificates" + Path.DirectorySeparatorChar);
-
-        public static readonly int CERTIFICATE_VERSION = 1;
+        public static readonly string DefaultUserCertificateDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "Certificates" + Path.DirectorySeparatorChar);
+        public static readonly int CertificateVersion = 1;
 
         #endregion
 
@@ -239,7 +236,7 @@ namespace PeersAtPlay.CertificateLibrary.Certificates
         /// <exception cref="X509CertificateFormatException">If X509 certificate does not contain the right values</exception>
         public void LoadPkcs12FromAppData(string serial, string password)
         {
-            string appDataCertificate = DEFAULT_USER_CERTIFICATE_DIRECTORY + serial + ".p12";
+            string appDataCertificate = DefaultUserCertificateDirectory + serial + ".p12";
             FileStream stream = null;
 
             try
@@ -359,13 +356,13 @@ namespace PeersAtPlay.CertificateLibrary.Certificates
                 throw new CertificateException("No peer certificate loaded");
             }
 
-            string appDataCertificate = DEFAULT_USER_CERTIFICATE_DIRECTORY + this.PeerX509.SerialNumber.ToString() + ".p12";
+            string appDataCertificate = DefaultUserCertificateDirectory + Avatar + ".p12";
             FileStream stream = null;
             try
             {
-                if (!Directory.Exists(DEFAULT_USER_CERTIFICATE_DIRECTORY))
+                if (!Directory.Exists(DefaultUserCertificateDirectory))
                 {
-                    Directory.CreateDirectory(DEFAULT_USER_CERTIFICATE_DIRECTORY);
+                    Directory.CreateDirectory(DefaultUserCertificateDirectory);
                 }
                 stream = new FileStream(appDataCertificate, FileMode.Create, FileAccess.Write);
                 SaveAsPkcs12(stream);
@@ -404,12 +401,12 @@ namespace PeersAtPlay.CertificateLibrary.Certificates
             FileStream stream = null;
             try
             {
-                if (!Directory.Exists(DEFAULT_USER_CERTIFICATE_DIRECTORY))
+                if (!Directory.Exists(DefaultUserCertificateDirectory))
                 {
-                    Directory.CreateDirectory(DEFAULT_USER_CERTIFICATE_DIRECTORY);
+                    Directory.CreateDirectory(DefaultUserCertificateDirectory);
                 }
 
-                string appDataCertificate = DEFAULT_USER_CERTIFICATE_DIRECTORY + this.PeerX509.SerialNumber.ToString() + ".crt";
+                string appDataCertificate = DefaultUserCertificateDirectory + this.PeerX509.SerialNumber.ToString() + ".crt";
                 stream = new FileStream(appDataCertificate, FileMode.Create, FileAccess.Write);
                 SaveAsCrt(stream);
             }

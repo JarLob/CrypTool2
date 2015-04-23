@@ -33,7 +33,7 @@ namespace CrypCloud.Manager
     public enum ScreenPaths { Login, JobList, JobCreation, ResetPassword, CreateAccount, ConfirmAccount };
 
     [TabColor("orange")]
-    [EditorInfo("CrypCloud", false, true, false, false, true)]
+    [EditorInfo("CrypCloud", true, false, false, false)]
     [Author("Christopher Konze", "c.konze@uni.de", "Universität Kassel", "")]
     [PluginInfo("CrypCloud.Manager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/DetailedDescription/doc.xml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
@@ -53,19 +53,19 @@ namespace CrypCloud.Manager
         private void AddScreensToNavigator(CrypCloudPresentation crypCloudPresentation)
         {
             //viewmodels are created in the xaml file due to autocomplete and typesafty reasons
-            var loginVm = (ScreenViewModel) crypCloudPresentation.Login.DataContext;
+            var loginVm = (BaseViewModel) crypCloudPresentation.Login.DataContext;
             screenNavigator.AddScreenWithPath(loginVm, ScreenPaths.Login);
 
-            var jobListVm = (ScreenViewModel) crypCloudPresentation.JobList.DataContext;
+            var jobListVm = (BaseViewModel) crypCloudPresentation.JobList.DataContext;
             screenNavigator.AddScreenWithPath(jobListVm, ScreenPaths.JobList);
 
-            var jobCreateVm = (ScreenViewModel)crypCloudPresentation.JobCreation.DataContext;
+            var jobCreateVm = (BaseViewModel)crypCloudPresentation.JobCreation.DataContext;
             screenNavigator.AddScreenWithPath(jobCreateVm, ScreenPaths.JobCreation);
 
-            var createAccountVm = (ScreenViewModel)crypCloudPresentation.CreateAccount.DataContext;
+            var createAccountVm = (BaseViewModel)crypCloudPresentation.CreateAccount.DataContext;
             screenNavigator.AddScreenWithPath(createAccountVm, ScreenPaths.CreateAccount);
 
-            var resetPasswordVm = (ScreenViewModel)crypCloudPresentation.ResetPassword.DataContext;
+            var resetPasswordVm = (BaseViewModel)crypCloudPresentation.ResetPassword.DataContext;
             screenNavigator.AddScreenWithPath(resetPasswordVm, ScreenPaths.ResetPassword);
         }
 
@@ -83,11 +83,7 @@ namespace CrypCloud.Manager
             {
                 CertificateHelper.CreateDirectory();
             }
-            if (!WorkspaceHelper.DoesDirectoryExists())
-            {
-                WorkspaceHelper.CreateDirectory();
-            }
-
+       
             screenNavigator.ShowScreenWithPath(CrypCloudCore.Instance.IsRunning ? ScreenPaths.JobList
                                                                                 : ScreenPaths.Login);
         }

@@ -6,13 +6,13 @@ namespace CrypCloud.Manager.Services
 {
     public class ScreenNavigator
     {
-        private readonly Dictionary<ScreenPaths, ScreenViewModel> screens = new Dictionary<ScreenPaths, ScreenViewModel>();
+        private readonly Dictionary<ScreenPaths, BaseViewModel> screens = new Dictionary<ScreenPaths, BaseViewModel>();
 
-        public void AddScreenWithPath(ScreenViewModel screenModel, ScreenPaths path)
+        public void AddScreenWithPath(BaseViewModel baseModel, ScreenPaths path)
         {
-            screens.Add(path, screenModel);
-            screenModel.Navigator = this;
-            screenModel.IsActive = false;
+            screens.Add(path, baseModel);
+            baseModel.Navigator = this;
+            baseModel.IsActive = false;
         }
 
         public void ShowScreenWithPath(ScreenPaths path)

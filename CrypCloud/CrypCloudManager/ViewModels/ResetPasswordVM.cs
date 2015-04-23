@@ -1,39 +1,106 @@
-﻿using System; 
-using System.Numerics;
+﻿using System;
 using System.Security;
-using CrypCloud.Core; 
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
-using WorkspaceManager.Model;
+using PeersAtPlay.CertificateLibrary.Network;
+using PeersAtPlay.CertificateLibrary.Util;
 
 namespace CrypCloud.Manager.ViewModels
 {
-    public class ResetPassword : ScreenViewModel
+    public class ResetPasswordVM : VerificationBaseVM
     {
-      
         public String Name { get; set; }
+        public String Email { get; set; }
 
-        public RelayCommand VerifyCommand { get; set; }
-        public RelayCommand BackCommand { get; set; } 
-        public RelayCommand ResetRequestCommand { get; set; }
+        public String VerificationCode { get; set; } 
+        public SecureString Password { get; set; }
+        public SecureString PasswordConfirm { get; set; } 
 
-        public ResetPassword()
+        public ResetPasswordVM()
         {
-            ResetRequestCommand = new RelayCommand(it => ResetAccount());
-            BackCommand = new RelayCommand(it => Navigator.ShowScreenWithPath(ScreenPaths.Login));
-            VerifyCommand = new RelayCommand(it => VerifyAccount());
+            RequestCommand = new RelayCommand(it => ResetPassword());
+            VerificationCommand = new RelayCommand(it => VerifyReset()); 
         }
 
-        private void ResetAccount()
+        private void ResetPassword()
         {
-            //TODO
+            var validName = Verification.IsValidAvatar(Name);
+            var validEmail = Verification.IsValidEmailAddress(Email);
+            if (!validName && !validEmail)
+            {
+                ErrorMessage = "Please enter ether a Name or an Email";
+                return;
+            }
+
+            var request = new PasswordReset();
+            if (validName)
+                request.Avatar = Name;
+
+            if (validEmail)
+                request.Email = Email;
+
+            CAServerHelper.ResetPassword(request, ShowVerification, HandleRequestProcessingError, ErrorHandler);
+
+            ShowInputDialog = false;
+            ShowWaitDialog = true;
         }
 
-        private void VerifyAccount()
+        private void VerifyReset()
         {
-            //TODO 
+            if ( ! ValidatePassword()) 
+                return;
+
+            var request = new PasswordResetVerification(Password.ToUnsecuredString(), VerificationCode);
+            CAServerHelper.VerifyPasswordReset(request, OnCertificateReceived, HandleVerificationProcessingError, ErrorHandler);
+
+            ShowVerificationDialog = false;
+            ShowWaitDialog = true;
         }
- 
-    
+
+        private void OnCertificateReceived(CertificateReceivedEventArgs arg)
+        {
+            CertificateHelper.StoreCertificate(arg.Certificate, arg.Password, arg.Certificate.Avatar);
+            ShowSuccessMessage();
+        }
+
+        private bool ValidatePassword()
+        {
+            if ( ! Verification.IsValidPassword(Password.ToUnsecuredString()))
+            {
+                ShowMessageBox("Invalid Password.");
+                return false;
+            }
+
+            if ( ! Password.IsEqualTo(PasswordConfirm))
+            {
+                ShowMessageBox("Passwords are not equal");
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private void HandleRequestProcessingError(ProcessingErrorEventArgs error)
+        {
+            var errorMessage = "Invalid request: " + error.Type;
+
+            if (error.Type.Equals(ErrorType.NoCertificateFound))
+                errorMessage = "No such user found";
+
+            ErrorHandler(errorMessage);
+        }
+
+        private void HandleVerificationProcessingError(ProcessingErrorEventArgs error)
+        {
+            var errorMessage = "Invalid request: " + error.Type;
+
+            if (error.Type.Equals(ErrorType.NoCertificateFound))
+                errorMessage = "Verification code is ether expired or wrong";
+
+            ErrorHandler(errorMessage);
+        }
+
+  
     }
 }

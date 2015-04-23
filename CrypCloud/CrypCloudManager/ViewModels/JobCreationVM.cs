@@ -7,7 +7,7 @@ using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager.ViewModels
 {
-    public class JobCreationVM : ScreenViewModel
+    public class JobCreationVM : BaseViewModel
     {
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
 

@@ -136,40 +136,133 @@
   <data name="Tab_Caption" xml:space="preserve">
     <value>CrypCloud</value>
   </data>
-  <data name="_NoActiveJobs" xml:space="preserve">
-    <value>Momentan ist kein aktiver Job vorhanden.</value>
+  <data name="_Password_label" xml:space="preserve">
+    <value>Passwort: </value>
   </data>
-  <data name="_Name" xml:space="preserve">
-    <value>Name :</value>
+  <data name="_Email_label" xml:space="preserve">
+    <value>Email: </value>
   </data>
   <data name="_Type" xml:space="preserve">
-    <value>Job-Typ :</value>
+    <value>Art der Aufgabe:</value>
   </data>
-  <data name="_BackToList" xml:space="preserve">
+  <data name="_BackBtn" xml:space="preserve">
     <value>Zurück</value>
   </data>
-  <data name="_Discription" xml:space="preserve">
-    <value>Beschreibung :</value>
-  </data>
-  <data name="_Publish" xml:space="preserve">
-    <value>Job veröffentlichen</value>
+  <data name="_AbortBtn" xml:space="preserve">
+    <value>Abbrechen</value>
   </data>
   <data name="_WorkspacePath" xml:space="preserve">
-    <value>Arbeitsbereich :</value>
+    <value>Workspace:</value>
   </data>
-  <data name="_DeleteJob" xml:space="preserve">
+  <data name="_NextBtn" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="_Password_confirm_label" xml:space="preserve">
+    <value>Bestätigen</value>
+  </data>
+  <data name="_ConnectingError" xml:space="preserve">
+    <value>Verbindung zum Server nicht  möglich.</value>
+  </data>
+  <data name="_Connecting_label" xml:space="preserve">
+    <value>Die Verbindung zum Server wird aufgebaut. Bitte warten Sie.</value>
+  </data>
+  <data name="_CreateAccount_enterAccountData" xml:space="preserve">
+    <value>Bitte geben Sie Ihre Accountdaten ein.</value>
+  </data>
+  <data name="_CreateAccount_successHeader" xml:space="preserve">
+    <value>Erstellung erfolgreich!</value>
+  </data>
+  <data name="_CreateAccount_successText" xml:space="preserve">
+    <value>Ihr Account wurde erfolgreich erstellt.</value>
+  </data>
+  <data name="_CreateAccount_Title" xml:space="preserve">
+    <value>Neuen Account erstellen</value>
+  </data>
+  <data name="_CreateJob_Description_label" xml:space="preserve">
+    <value>Beschreibung: </value>
+  </data>
+  <data name="_CreateJob_Header" xml:space="preserve">
+    <value>Neue Aufgabe erstellen</value>
+  </data>
+  <data name="_CreateJob_Name_label" xml:space="preserve">
+    <value>Name: </value>
+  </data>
+  <data name="_CreateJob_uploadBtn" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="_CreateJob_WorkspacePath_label" xml:space="preserve">
+    <value>Workspace Pfad:</value>
+  </data>
+  <data name="_enterVerificationCode" xml:space="preserve">
+    <value>Bitte geben sie den Verifizierungscode ein.</value>
+  </data>
+  <data name="_JobList_btn_createNew" xml:space="preserve">
+    <value>Neu</value>
+  </data>
+  <data name="_JobList_btn_delete" xml:space="preserve">
     <value>Löschen</value>
   </data>
-  <data name="_OpenJob" xml:space="preserve">
+  <data name="_JobList_btn_open" xml:space="preserve">
     <value>Öffnen</value>
   </data>
-  <data name="Create_a_new_account_" xml:space="preserve">
+  <data name="_JobList_btn_refresh" xml:space="preserve">
+    <value>Aktualisieren</value>
+  </data>
+  <data name="_JobList_col_Creator" xml:space="preserve">
+    <value>Ersteller</value>
+  </data>
+  <data name="_JobList_col_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="_JobList_col_Progress" xml:space="preserve">
+    <value>Fortschritt</value>
+  </data>
+  <data name="_JobList_Header" xml:space="preserve">
+    <value>Aktuelle Aufgaben</value>
+  </data>
+  <data name="_Login_btn_connect" xml:space="preserve">
+    <value>Verbinden</value>
+  </data>
+  <data name="_Login_header" xml:space="preserve">
+    <value>CrypCloud</value>
+  </data>
+  <data name="_Login_link_createNewAccount" xml:space="preserve">
     <value>Neuen Account erstellen</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>CrypCloudManager</value>
+    <value>CrypCloud</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Editor mit Peer-to-peer-Features für CrypTool 2</value>
+    <value>Eine P2P basierte Volunteer-cloud</value>
+  </data>
+  <data name="_Login_link_ForgotPassword" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
+  <data name="_Login_subheader" xml:space="preserve">
+    <value>Eine P2P basierte Volunteer-cloud</value>
+  </data>
+  <data name="_ResetPW_enterData" xml:space="preserve">
+    <value>Geben Sie Ihre Accountdaten an um Ihr Passwort zurückzusetzen.</value>
+  </data>
+  <data name="_ResetPW_enterVerificationData" xml:space="preserve">
+    <value>Ein Verifizierungscode wurde an die Email-Addresse Ihres Accounts verschickt. Bitte geben Sie den Code und ihr neues Passwort ein.</value>
+  </data>
+  <data name="_ResetPW_Header" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="_ResetPW_successHeader" xml:space="preserve">
+    <value>Zurücksetzen Erfolgreich!</value>
+  </data>
+  <data name="_ResetPW_successText" xml:space="preserve">
+    <value>Ihr Passwort wurde zurückgesetzt. Sie können sich nun mit Ihrem neuen Passwort anmelden.</value>
+  </data>
+  <data name="_verificationCode_label" xml:space="preserve">
+    <value>Verifizierungscode:</value>
+  </data>
+  <data name="_VerifyBtn" xml:space="preserve">
+    <value>Bestätigt</value>
+  </data>
+  <data name="_Username_label" xml:space="preserve">
+    <value>Name: </value>
   </data>
 </root>

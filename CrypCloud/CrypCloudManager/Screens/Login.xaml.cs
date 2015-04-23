@@ -1,12 +1,12 @@
 ﻿
 using System.Windows;
 using System.Windows.Controls;
-using CrypCloud.Manager.ViewModels;
-using Cryptool.PluginBase.Attributes;
+using CrypCloud.Manager.ViewModels; 
 
 namespace CrypCloud.Manager.Screens
 {
-    [Localization("CrypCloud.Manager.Properties.Resources")]
+
+    [Cryptool.PluginBase.Attributes.Localization("CrypCloud.Manager.Properties.Resources")]
     public partial class Login : UserControl
     { 
         public Login()

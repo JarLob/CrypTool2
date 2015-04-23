@@ -14,7 +14,7 @@ using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager.ViewModels
 {
-    public class JobListVM : ScreenViewModel
+    public class JobListVM : BaseViewModel
     {
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
         public CrypCloudManager Manager { get; set; }
@@ -74,7 +74,7 @@ namespace CrypCloud.Manager.ViewModels
                     return;
                 
                 crypCloudCore.JobListChanged -= waitForWorkspace;
-                RunInUiContext(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
+                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
             });
 
             return waitForWorkspace;

@@ -443,7 +443,7 @@ namespace CertificateLibrary.Network
         /// <summary>
         /// Sends the verification code to the server to verify the email address.
         /// <para>The code has been sent to the users email address.</para>
-        /// <para>Can trigger: CertificateReceived, CertificateAuthorizationRequired, InvalidEmailVerification, ServerErrorOccurred, NewProtocolVersion, ServerDisconnected</para>
+        /// <para>Can trigger: EmailVerified, CertificateReceived, CertificateAuthorizationRequired, InvalidEmailVerification, ServerErrorOccurred, NewProtocolVersion, ServerDisconnected</para>
         /// </summary>
         /// <param name="emailVerification">The EmailVerification object</param>
         /// <exception cref="ArgumentNullException"></exception>

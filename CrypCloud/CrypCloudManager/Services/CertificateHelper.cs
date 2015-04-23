@@ -4,28 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using X509Certificate = Org.BouncyCastle.X509.X509Certificate;
+using PeersAtPlay.CertificateLibrary.Certificates;
 
 namespace CrypCloud.Manager
 {
     public class CertificateHelper
     {
-        public static readonly string DefaultUserCertificateDir = CreatePathInAppdata("CryptCloud", "Certificates");
-        private const string CertFileExtention = ".pfx";
-
-        #region directory
-
-        public static void CreateDirectory()
-        {
-            Directory.CreateDirectory(DefaultUserCertificateDir);
-        }
-
-        public static bool DoesDirectoryExists()
-        {
-            return Directory.Exists(DefaultUserCertificateDir);
-        }
-
-        #endregion
+        public static readonly string DefaultUserCertificateDir = PeerCertificate.DefaultUserCertificateDirectory;
+        private const string CertFileExtention = ".p12";
 
         public static List<string> GetNamesOfKnownCertificates()
         {
@@ -43,7 +29,7 @@ namespace CrypCloud.Manager
         {
             try
             { 
-                return  new X509Certificate2(CreatePathToUserCertificate(name), password);
+                return new X509Certificate2(CreatePathToUserCertificate(name), password);
             }
             catch (Exception)
             {
@@ -51,13 +37,17 @@ namespace CrypCloud.Manager
             }
         }
 
-        public static void StoreCertificate(X509Certificate certificate, string password, string avatar)
+        public static Boolean StoreCertificate(PeerCertificate certificate, string password, string avatar)
         {
-            var x509Certificate2 = new X509Certificate2();
-            x509Certificate2.Import(certificate.GetEncoded(), password, X509KeyStorageFlags.Exportable);
-            var export = x509Certificate2.Export(X509ContentType.Pfx, password);
-
-            File.WriteAllBytes(DefaultUserCertificateDir + avatar + CertFileExtention, export);
+            try
+            {
+                certificate.SavePkcs12ToAppData(password);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static bool UserCertificateIsUnknown(string username)
@@ -67,18 +57,21 @@ namespace CrypCloud.Manager
 
         #region pathHelper
 
+        public static void CreateDirectory()
+        {
+            Directory.CreateDirectory(DefaultUserCertificateDir);
+        }
+
+        public static bool DoesDirectoryExists()
+        {
+            return Directory.Exists(DefaultUserCertificateDir);
+        }
+
         private static string FullPathToFilename(string fullPath)
         {
             return fullPath.Replace(DefaultUserCertificateDir, "").Replace(CertFileExtention, "").Replace("\\", "");
         }
-
-        public static string CreatePathInAppdata(params string[] folders)
-        {
-            var pathToAppdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var pathInAppdata = folders.Aggregate("", (current, folder) => current + (folder + Path.DirectorySeparatorChar));
-            return Path.Combine(pathToAppdata, pathInAppdata);
-        }
-
+ 
         private static string CreatePathToUserCertificate(string username)
         {
            
@@ -86,7 +79,6 @@ namespace CrypCloud.Manager
         }
 
         #endregion
-
          
     }
 }

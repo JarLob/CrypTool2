@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security;
-using CertificateLibrary.Certificates;
 using CertificateLibrary.Network;
 using CrypCloud.Core;
+using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
+using PeersAtPlay.CertificateLibrary.Network;
 
 namespace CrypCloud.Manager.ViewModels
 {
-    public class LoginVM : ScreenViewModel
+    public class LoginVM : BaseViewModel
     {
         public List<string> AvailableCertificates { get; set; }
 
@@ -22,36 +23,69 @@ namespace CrypCloud.Manager.ViewModels
         public LoginVM()
         {
             AvailableCertificates = new List<string>(CertificateHelper.GetNamesOfKnownCertificates());
-            LoginCommand = new RelayCommand(it => TryLogin());
             CreateNewAccountCommand = new RelayCommand(it => Navigator.ShowScreenWithPath(ScreenPaths.CreateAccount));
             ResetPasswordCommand = new RelayCommand(it => Navigator.ShowScreenWithPath(ScreenPaths.ResetPassword));
+
+            LoginCommand = new RelayCommand(it => GetCertificateAndLogin());
         }
 
-        private void TryLogin()
+        /// <summary>
+        /// Is called when the user clicks the login button
+        /// </summary>
+        private void GetCertificateAndLogin()
         {
             if (CertificateHelper.UserCertificateIsUnknown(Username))
-            {
-                ErrorMessage = "Certificate for user: " + Username + " is not known"; 
-                return;
-            }
+                LoadRemoteCertificateAndLogin();
+            else
+                LoadLocalCertificateAndLogin();
+        }
 
+        #region local certificate
+
+        private void LoadLocalCertificateAndLogin()
+        {
             var certificate = CertificateHelper.LoadPrivateCertificate(Username, Password);
             if (certificate == null)
             {
-                ErrorMessage = "Unable to open certificate of " + Username; 
+                ErrorMessage = "Unable to open certificate of " + Username;
                 return;
             }
 
-            var loginSuccessful = CrypCloudCore.Instance.Login(certificate);
-            if (loginSuccessful)
+            if (CrypCloudCore.Instance.Login(certificate))
             {
                 CrypCloudCore.Instance.RefreshJobList();
                 Navigator.ShowScreenWithPath(ScreenPaths.JobList);
             }
-
             ErrorMessage = "";
-            RaisePropertyChanged("ErrorMessage");
         }
+
+        #endregion
+
+        #region remote certificate
+
+        private void LoadRemoteCertificateAndLogin()
+        {
+            var errorAction = new Action<string>(msg => ErrorMessage = msg);  
+            var request = new CertificateRequest(Username, null, Password.ToUnsecuredString());
+
+            CAServerHelper.RequestCertificate(request, OnCertificateReceived, HandleProcessingError, errorAction);
+        }
+
+        private void OnCertificateReceived(CertificateReceivedEventArgs arg)
+        {
+            CertificateHelper.StoreCertificate(arg.Certificate, arg.Password, arg.Certificate.Avatar);
+            LoadLocalCertificateAndLogin();
+        }
+
+        private void HandleProcessingError(ProcessingErrorEventArgs arg)
+        {
+            if (arg.Type.Equals(ErrorType.CertificateNotYetAuthorized))
+                ErrorMessage = "Certificate has not been authorized. Please try again later";
+            else
+                ErrorMessage = "Unable to get Certificate for user: " + Username;
+        }
+
+        #endregion
 
     }
 }

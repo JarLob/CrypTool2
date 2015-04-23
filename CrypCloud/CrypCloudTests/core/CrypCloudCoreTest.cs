@@ -220,8 +220,7 @@ namespace CrypCloudTests
         }
 
         internal class DummyCloudPlugin : ACloudComponent
-        {
-            public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        { 
 
             public override ISettings Settings
             {
