@@ -277,7 +277,11 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                                 var image = BitmapFrame.Create(new Uri(string.Format("pack://application:,,,/{0};component/{1}", 
                                     srcAtt.Value.Substring(0, sIndex), srcAtt.Value.Substring(sIndex + 1))));
                                 var filename = string.Format("{0}_{1}", entityDocumentationPage.Name, Path.GetFileNameWithoutExtension(srcAtt.Value));
-                                result.Append(ConvertImageSource(image, filename, entityDocumentationPage));
+                                var img = ConvertImageSource(image, filename, entityDocumentationPage);
+                                var caption = ((XElement)node).Attribute("caption");
+                                if (caption != null)
+                                    img = string.Format("<table><caption align=\"bottom\">{0}</caption><tr><td>{1}</td></tr></table>", caption.Value, img );
+                                result.Append(img);
                             }
                             break;
                         case "newline":
