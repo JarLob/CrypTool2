@@ -320,6 +320,8 @@
     <Resource Include="DetailedDescription\Images\zoom.png" />
     <Resource Include="DetailedDescription\Images\suggestionlist.png" />
     <Resource Include="DetailedDescription\Images\textandimage.png" />
+    <Resource Include="DetailedDescription\Images\layouthelpers_de.png" />
+    <Resource Include="DetailedDescription\Images\layouthelpers_en.png" />
     <Content Include="View\Images\Bak\WorkspaceManagerIcon.png" />
     <Content Include="View\Images\Bak\WorkspaceManagerIcon_Nils.png" />
     <Content Include="View\Images\Bak\WorkspaceManagerIcon_orig.ico" />

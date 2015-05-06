@@ -516,4 +516,46 @@
   <data name="Global_Progressbar" xml:space="preserve">
     <value>Global Progressbar</value>
   </data>
+  <data name="CompLayout_AlignBottom" xml:space="preserve">
+    <value>Align Bottom</value>
+  </data>
+  <data name="CompLayout_AlignLeft" xml:space="preserve">
+    <value>Align Left</value>
+  </data>
+  <data name="CompLayout_AlignRight" xml:space="preserve">
+    <value>Align Right</value>
+  </data>
+  <data name="CompLayout_AlignTop" xml:space="preserve">
+    <value>Align Top</value>
+  </data>
+  <data name="CompLayout_BiggestHeight" xml:space="preserve">
+    <value>Biggest Height</value>
+  </data>
+  <data name="CompLayout_BiggestWidth" xml:space="preserve">
+    <value>Biggest Width</value>
+  </data>
+  <data name="CompLayout_MoveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="CompLayout_MoveLeft" xml:space="preserve">
+    <value>Move Left</value>
+  </data>
+  <data name="CompLayout_MoveRight" xml:space="preserve">
+    <value>Move Right</value>
+  </data>
+  <data name="CompLayout_MoveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="CompLayout_SmallestHeight" xml:space="preserve">
+    <value>Smallest Height</value>
+  </data>
+  <data name="CompLayout_SmallestWidth" xml:space="preserve">
+    <value>Smallest Width</value>
+  </data>
+  <data name="CompLayout_SpreadHorizontal" xml:space="preserve">
+    <value>Spread Horizontal</value>
+  </data>
+  <data name="CompLayout_SpreadVertical" xml:space="preserve">
+    <value>Spread Vertical</value>
+  </data>
 </root>

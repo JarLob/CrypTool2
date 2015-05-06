@@ -34,22 +34,22 @@
 
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem Command="{x:Static local:EditorVisual.AlignLeft}" Header="Align Left">
+            <MenuItem Command="{x:Static local:EditorVisual.AlignLeft}" Header="{Loc CompLayout_AlignLeft}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_left.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.AlignRight}" Header="Align Right">
+            <MenuItem Command="{x:Static local:EditorVisual.AlignRight}" Header="{Loc CompLayout_AlignRight}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_right.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.AlignTop}" Header="Align Top">
+            <MenuItem Command="{x:Static local:EditorVisual.AlignTop}" Header="{Loc CompLayout_AlignTop}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_top.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.AlignBottom}" Header="Align Bottom">
+            <MenuItem Command="{x:Static local:EditorVisual.AlignBottom}" Header="{Loc CompLayout_AlignBottom}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/align_bottom.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
@@ -57,22 +57,22 @@
             
             <Separator/>
 
-            <MenuItem Command="{x:Static local:EditorVisual.MoveLeft}" Header="Move Left">
+            <MenuItem Command="{x:Static local:EditorVisual.MoveLeft}" Header="{Loc CompLayout_MoveLeft}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_left.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.MoveRight}" Header="Move Right">
+            <MenuItem Command="{x:Static local:EditorVisual.MoveRight}" Header="{Loc CompLayout_MoveRight}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_right.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.MoveUp}" Header="Move Up">
+            <MenuItem Command="{x:Static local:EditorVisual.MoveUp}" Header="{Loc CompLayout_MoveUp}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_up.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.MoveDown}" Header="Move Down">
+            <MenuItem Command="{x:Static local:EditorVisual.MoveDown}" Header="{Loc CompLayout_MoveDown}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/move_down.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
@@ -80,12 +80,12 @@
 
             <Separator/>
 
-            <MenuItem Command="{x:Static local:EditorVisual.SpreadHorizontal}" Header="Spread Horizontal">
+            <MenuItem Command="{x:Static local:EditorVisual.SpreadHorizontal}" Header="{Loc CompLayout_SpreadHorizontal}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/space_horizontal.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.SpreadVertical}" Header="Spread Vertical">
+            <MenuItem Command="{x:Static local:EditorVisual.SpreadVertical}" Header="{Loc CompLayout_SpreadVertical}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/space_vertical.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
@@ -93,22 +93,22 @@
 
             <Separator/>
 
-            <MenuItem Command="{x:Static local:EditorVisual.BiggestWidth}" Header="Biggest Width">
+            <MenuItem Command="{x:Static local:EditorVisual.BiggestWidth}" Header="{Loc CompLayout_BiggestWidth}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_maxwidth.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.SmallestWidth}" Header="Smallest Width">
+            <MenuItem Command="{x:Static local:EditorVisual.SmallestWidth}" Header="{Loc CompLayout_SmallestWidth}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minwidth.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.BiggestHeight}" Header="Biggest Height">
+            <MenuItem Command="{x:Static local:EditorVisual.BiggestHeight}" Header="{Loc CompLayout_BiggestHeight}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_maxHeight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Command="{x:Static local:EditorVisual.SmallestHeight}" Header="Smallest Height">
+            <MenuItem Command="{x:Static local:EditorVisual.SmallestHeight}" Header="{Loc CompLayout_SmallestHeight}">
                 <MenuItem.Icon>
                     <Image Width="18" Height="18" Source="/WorkspaceManager;component/View/Images/ComponentIcons/size_minHeight.png" HorizontalAlignment="Center" SnapsToDevicePixels="True"></Image>
                 </MenuItem.Icon>
