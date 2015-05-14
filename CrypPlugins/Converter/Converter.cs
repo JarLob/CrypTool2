@@ -30,10 +30,10 @@ using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.Converter
 {
-    public enum OutputTypes { StringType = 0, IntType, ShortType, ByteType, DoubleType, BigIntegerType, ByteArrayType, CryptoolStreamType, BooleanType };
+    public enum OutputTypes { StringType = 0, IntType, ShortType, ByteType, DoubleType, BigIntegerType, ByteArrayType, CryptoolStreamType, BooleanType, UIntArrayType };
     
     [Author("Raoul Falk, Dennis Nolte", "falk@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
-    [PluginInfo("Converter.Properties.Resources", "PluginCaption", "PluginTooltip", "Converter/DetailedDescription/doc.xml", "Converter/icons/icon.png", "Converter/icons/tostring.png", "Converter/icons/toint.png", "Converter/icons/toshort.png", "Converter/icons/tobyte.png", "Converter/icons/todouble.png", "Converter/icons/tobig.png", /*"Converter/icons/tointarray.png",*/ "Converter/icons/tobytearray.png", "Converter/icons/tocryptoolstream.png", "Converter/icons/toboolean.png")]
+    [PluginInfo("Converter.Properties.Resources", "PluginCaption", "PluginTooltip", "Converter/DetailedDescription/doc.xml", "Converter/icons/icon.png", "Converter/icons/tostring.png", "Converter/icons/toint.png", "Converter/icons/toshort.png", "Converter/icons/tobyte.png", "Converter/icons/todouble.png", "Converter/icons/tobig.png", "Converter/icons/tobytearray.png", "Converter/icons/tocryptoolstream.png", "Converter/icons/toboolean.png", "Converter/icons/tointarray.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     class Converter : ICrypComponent
     {
@@ -80,8 +80,6 @@ namespace Cryptool.Plugins.Converter
                 }
             }
         }
-
-
 
         [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip", true)]
         public object Output
@@ -226,6 +224,146 @@ namespace Cryptool.Plugins.Converter
             return Convert.ToDouble(s, culture.NumberFormat);
         }
 
+        private uint[] StringToIntArray(string s)
+        {
+            List<uint> result = new List<uint>();
+            uint numberbase = (uint)settings.Digits.Length;
+
+            if (s.Length % settings.DigitsGroup != 0)
+            {
+                GuiLogMessage("Length of input is not a multiple of digits block size.", NotificationLevel.Warning);
+            }
+
+            for (int i = 0; i < s.Length; i += settings.DigitsGroup)
+            {
+                uint n = 0;
+                int size = Math.Min(s.Length - i, settings.DigitsGroup);
+
+                for (int j = 0; j < size; j++)
+                {
+                    int ofs = (settings.DigitsEndianness==0) ? j : size - 1 - j;
+                    int d = settings.Digits.IndexOf(s[i + ofs]);
+                    if (d < 0)
+                    {
+                        GuiLogMessage("Illegal digit '" + s[i + ofs] + "' in input detected", NotificationLevel.Error);
+                        return null;
+                    }
+                    n = (n * numberbase) + (uint)d;
+                }
+
+                result.Add(n);
+            }
+
+            return result.ToArray();
+        }
+
+        private uint[] ByteArrayToIntArray(byte[] buffer)
+        {
+            List<uint> result = new List<uint>();
+            uint numberbase = (uint)settings.DigitsBase;
+
+            if (buffer.Length % settings.DigitsGroup != 0)
+            {
+                GuiLogMessage("Length of input is not a multiple of digits block size.", NotificationLevel.Warning);
+            }
+
+            for (int i = 0; i < buffer.Length; i += settings.DigitsGroup)
+            {
+                uint n = 0;
+                int size = Math.Min(buffer.Length - i, settings.DigitsGroup);
+
+                for (int j = 0; j < size; j++)
+                {
+                    int ofs = (settings.DigitsEndianness == 0) ? j : size - 1 - j;
+                    int d = (int)buffer[i + ofs] - settings.DigitsOffset;
+                    if (d < 0)
+                    {
+                        GuiLogMessage("Illegal value '" + buffer[i + ofs] + "' in input detected", NotificationLevel.Error);
+                        return null;
+                    }
+                    n = (n * numberbase) + (uint)d;
+                }
+
+                result.Add(n);
+            }
+
+            return result.ToArray();
+        }
+
+        private string IntArrayToString(uint[] u)
+        {
+            uint numberbase = (uint)settings.Digits.Length;
+            BigInteger maxnumber = BigInteger.Pow(numberbase, settings.DigitsGroup);
+
+            if (maxnumber > uint.MaxValue)
+            {
+                GuiLogMessage("The setting allows numbers that are bigger than the capacity of UInt.", NotificationLevel.Error);
+                return null;
+            }
+
+            char[] result = new char[settings.DigitsGroup * u.Length];
+            int i = 0;
+
+            foreach (uint n in u)
+            {
+                uint x = n;
+
+                if (x >= maxnumber)
+                {
+                    GuiLogMessage("The numbers in the input array must be smaller than " + maxnumber + ". " + x + " is too big to be converted.", NotificationLevel.Warning);
+                    x %= (uint)maxnumber;
+                }
+
+                for (int j = 0; j < settings.DigitsGroup; j++)
+                {
+                    int ofs = !(settings.DigitsEndianness == 0) ? j : settings.DigitsGroup - 1 - j;
+                    result[i + ofs] = settings.Digits[(int)(x % numberbase)];
+                    x /= numberbase;
+                }
+
+                i += settings.DigitsGroup;
+            }
+
+            return new string(result);
+        }
+
+        private byte[] IntArrayToByteArray(uint[] u)
+        {
+            uint numberbase = (uint)settings.DigitsBase;
+            BigInteger maxnumber = BigInteger.Pow(numberbase, settings.DigitsGroup);
+
+            if (maxnumber-1 > uint.MaxValue)
+            {
+                GuiLogMessage("The setting allows numbers that are bigger than the capacity of UInt.", NotificationLevel.Error);
+                return null;
+            }
+
+            byte[] result = new byte[settings.DigitsGroup * u.Length];
+            int i = 0;
+
+            foreach (uint n in u)
+            {
+                uint x = n;
+
+                if (x >= maxnumber)
+                {
+                    GuiLogMessage("The numbers in the input array must be smaller than " + maxnumber + ". " + x + " is too big to be converted.", NotificationLevel.Warning);
+                    x %= (uint)maxnumber;
+                }
+
+                for (int j = 0; j < settings.DigitsGroup; j++)
+                {
+                    int ofs = !(settings.DigitsEndianness == 0) ? j : settings.DigitsGroup - 1 - j;
+                    result[i + ofs] = (byte)(settings.DigitsOffset + (int)(x % numberbase));
+                    x /= numberbase;
+                }
+
+                i += settings.DigitsGroup;
+            }
+
+            return result;
+        }
+
         private Type GetType(OutputTypes t)
         {
             switch (t)
@@ -236,8 +374,9 @@ namespace Cryptool.Plugins.Converter
                 case OutputTypes.ByteType: return typeof(byte);
                 case OutputTypes.DoubleType: return typeof(double);
                 case OutputTypes.BigIntegerType: return typeof(BigInteger);
-                //case OutputTypes.IntArrayType: return typeof(int[]);
+                case OutputTypes.UIntArrayType: return typeof(uint[]);
                 case OutputTypes.ByteArrayType: return typeof(byte[]);
+                case OutputTypes.BooleanType: return typeof(Boolean);
                 case OutputTypes.CryptoolStreamType: return typeof(ICryptoolStream);
                 default: return null;
             }
@@ -344,6 +483,19 @@ namespace Cryptool.Plugins.Converter
                             break;
                         }
 
+                    case OutputTypes.UIntArrayType:
+                        {
+                            byte[] buffer = ICryptoolStreamToByteArray((ICryptoolStream)input);
+
+                            uint[] result = (settings.DigitsDefinition == 1)
+                                ? ByteArrayToIntArray(buffer)
+                                : StringToIntArray( GetStringForEncoding(buffer, settings.InputEncoding) );
+
+                            if (result == null) return false;
+                            Output = result;
+                            break;
+                        }
+
                     default:
                         GuiLogMessage("Conversion from " + input.GetType() + " to " + GetType(settings.Converter) + " is not implemented", NotificationLevel.Error);
                         return false;
@@ -352,11 +504,55 @@ namespace Cryptool.Plugins.Converter
                 return true;
             }
             #endregion
-            #region ConvertFromIntArray
-            else if (input is int[])
+            #region ConvertFromUIntArray
+            else if (input is uint[])
             {
-                GuiLogMessage("Conversion from int[] to the chosen type is not implemented", NotificationLevel.Error);
-                return false;
+                switch (this.settings.Converter)
+                {
+                    case OutputTypes.UIntArrayType: // uint[] to uint[]
+                        {
+                            Output = (uint[])input;
+                            return true;
+                        }
+
+                    case OutputTypes.StringType:    // uint[] to string
+                        {
+                            string result = (settings.DigitsDefinition == 1)
+                                ? GetStringForEncoding(IntArrayToByteArray((uint[])input), settings.InputEncoding)
+                                : IntArrayToString((uint[])input);
+
+                            if (result == null) return false;
+                            Output = result;
+                            return true;
+                        }
+
+                    case OutputTypes.ByteArrayType:    // uint[] to byte[]
+                        {
+                            byte[] result = (settings.DigitsDefinition == 1)
+                                ? IntArrayToByteArray((uint[])input)
+                                : GetBytesForEncoding(IntArrayToString((uint[])input), settings.InputEncoding);
+
+                            if (result == null) return false;
+                            Output = result;
+                            return true;
+                        }
+
+                    case OutputTypes.CryptoolStreamType:    // uint[] to CryptoolStream
+                        {
+                            byte[] result = (settings.DigitsDefinition==1)
+                                ? IntArrayToByteArray((uint[])input)
+                                : GetBytesForEncoding(IntArrayToString((uint[])input), settings.InputEncoding);
+
+                            if (result == null) return false;
+                            var stream = new CStreamWriter(result);
+                            Output = stream;
+                            return true;
+                        }
+
+                    default:
+                        GuiLogMessage("Conversion from UInt[] to the chosen type is not implemented", NotificationLevel.Error);
+                        return false;
+                }
             }
             #endregion
             #region ConvertFromByteArray
@@ -423,6 +619,18 @@ namespace Cryptool.Plugins.Converter
                     case OutputTypes.ByteArrayType: // byte[] to byte[]
                         {
                             Output = (byte[])input;
+                            return true;
+                        }
+                    case OutputTypes.UIntArrayType: // byte[] to uint[]
+                        {
+                            byte[] buffer = (byte[])input;
+
+                            uint[] result = (settings.DigitsDefinition == 1)
+                                ? ByteArrayToIntArray(buffer)
+                                : StringToIntArray(GetStringForEncoding(buffer, settings.InputEncoding));
+
+                            if (result == null) return false;
+                            Output = result;
                             return true;
                         }
                 }
@@ -894,6 +1102,18 @@ namespace Cryptool.Plugins.Converter
                             GuiLogMessage("Conversion from " + input.GetType().Name + " to CryptoolStream is not yet implemented", NotificationLevel.Error);
                             return false;
                         }
+                    }
+                #endregion
+                #region ConvertToUIntArray
+                case OutputTypes.UIntArrayType: // byte[] to uint[]
+                    {
+                        uint[] result = (settings.DigitsDefinition == 1)
+                            ? ByteArrayToIntArray(GetBytesForEncoding(inpString, settings.InputEncoding))
+                            : StringToIntArray(inpString);
+
+                        if (result == null) return false;
+                        Output = result;
+                        return true;
                     }
                 #endregion
                 #region ConvertToAnythingLeft

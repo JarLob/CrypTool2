@@ -42,6 +42,13 @@ namespace Cryptool.Plugins.Converter
         private bool reverseOrder = false;
         private bool BigEndian = false;
 
+        private int digitsdefinition = 0;   // 0 = get value of input digit from the digits string, 1 = from its byte value (minus digitsoffset)
+        private int digitsbase = 256;
+        private int digitsoffset = 0;
+        private string digits = "0123456789ABCDEF";
+        private int digitsgroup = 8;
+        private int digitsEndianness = 0; // 0==LittleEndian, 1=BigEndian
+
         private EncodingTypes inputencoding = EncodingTypes.UTF8;
         private EncodingTypes outputencoding = EncodingTypes.UTF8;
         private PresentationFormat presentation = PresentationFormat.Text;
@@ -62,7 +69,7 @@ namespace Cryptool.Plugins.Converter
 
         #region taskpane
 
-        [TaskPane("ConverterCaption", "ConverterTooltip", null, 1, true, ControlType.ComboBox, new string[] { "TypesList1", "TypesList2", "TypesList3", "TypesList4", "TypesList5", "TypesList6", "TypesList7", "TypesList8", "TypesList9" })]
+        [TaskPane("ConverterCaption", "ConverterTooltip", null, 1, true, ControlType.ComboBox, new string[] { "TypesList1", "TypesList2", "TypesList3", "TypesList4", "TypesList5", "TypesList6", "TypesList7", "TypesList8", "TypesList9", "TypesList10" })]
         public OutputTypes Converter
         {
             get { return this.converter; }
@@ -202,6 +209,91 @@ namespace Cryptool.Plugins.Converter
             }
         }
 
+        [TaskPane("DigitsDefinitionCaption", "DigitsDefinitionTooltip", "DigitsGroup", 9, true, ControlType.ComboBox, new string[] { "DigitsDefinitionList1", "DigitsDefinitionList2" })]
+        public int DigitsDefinition
+        {
+            get { return this.digitsdefinition; }
+            set
+            {
+                if (value != this.digitsdefinition)
+                {
+                    this.digitsdefinition = value;
+                    UpdateTaskPaneVisibility();
+                    OnPropertyChanged("DigitsDefinition");
+                }
+            }
+        }
+
+        [TaskPane("DigitsOffsetCaption", "DigitsOffsetTooltip", "DigitsGroup", 10, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, 255)]
+        public int DigitsOffset
+        {
+            get { return this.digitsoffset; }
+            set
+            {
+                if (value != this.digitsoffset)
+                {
+                    this.digitsoffset = value;
+                    OnPropertyChanged("DigitsOffset");
+                }
+            }
+        }
+
+        [TaskPane("DigitsBaseCaption", "DigitsBaseTooltip", "DigitsGroup", 11, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 2, 256)]
+        public int DigitsBase
+        {
+            get { return this.digitsbase; }
+            set
+            {
+                if (value != this.digitsbase)
+                {
+                    this.digitsbase = value;
+                    OnPropertyChanged("DigitsBase");
+                }
+            }
+        }
+
+        [TaskPane("DigitsCaption", "DigitsTooltip", "DigitsGroup", 12, true, ControlType.TextBox)]
+        public string Digits
+        {
+            get { return this.digits; }
+            set
+            {
+                if (value != this.digits)
+                {
+                    this.digits = value;
+                    OnPropertyChanged("Digits");
+                }
+            }
+        }
+
+        [TaskPane("DigitsGroupCaption", "DigitsGroupTooltip", "DigitsGroup", 13, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int DigitsGroup
+        {
+            get { return this.digitsgroup; }
+            set
+            {
+                if (value != this.digitsgroup)
+                {
+                    this.digitsgroup = value;
+                    OnPropertyChanged("DigitsGroup");
+                }
+            }
+        }
+
+        [TaskPane("DigitsEndiannessCaption", "DigitsEndiannessTooltip", "DigitsGroup", 14, true, ControlType.ComboBox, new string[] { "EndiannessList1", "EndiannessList2" })]
+        public int DigitsEndianness
+        {
+            get { return this.digitsEndianness; }
+            set
+            {
+                if (value != this.digitsEndianness)
+                {
+                    this.digitsEndianness = value;
+                    OnPropertyChanged("DigitsEndianness");
+                }
+            }
+        }
+
         private void settingChanged(string setting, Visibility vis)
         {
             TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(setting, vis)));
@@ -229,6 +321,21 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Visible);
+                        settingChanged("DigitsGroup", Visibility.Visible);
+                        settingChanged("DigitsBigEndian", Visibility.Visible);
+                        if (DigitsDefinition == 0)
+                        {
+                            settingChanged("Digits", Visibility.Visible);
+                            settingChanged("DigitsBase", Visibility.Collapsed);
+                            settingChanged("DigitsOffset", Visibility.Collapsed);
+                        }
+                        else
+                        {
+                            settingChanged("Digits", Visibility.Collapsed);
+                            settingChanged("DigitsBase", Visibility.Visible);
+                            settingChanged("DigitsOffset", Visibility.Visible);
+                        }
                         break;
                     }
                 case OutputTypes.IntType:
@@ -241,6 +348,12 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Visible);
+                        settingChanged("DigitsByteValue", Visibility.Collapsed);
+                        settingChanged("Digits", Visibility.Collapsed);
+                        settingChanged("DigitsGroup", Visibility.Collapsed);
+                        settingChanged("DigitsBase", Visibility.Collapsed);
+                        settingChanged("DigitsOffset", Visibility.Collapsed);
+                        settingChanged("DigitsBigEndian", Visibility.Collapsed);
                         break;
                     }
                 case OutputTypes.ShortType:
@@ -253,6 +366,12 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Visible);
+                        settingChanged("DigitsByteValue", Visibility.Collapsed);
+                        settingChanged("Digits", Visibility.Collapsed);
+                        settingChanged("DigitsGroup", Visibility.Collapsed);
+                        settingChanged("DigitsBase", Visibility.Collapsed);
+                        settingChanged("DigitsOffset", Visibility.Collapsed);
+                        settingChanged("DigitsBigEndian", Visibility.Collapsed);
                         break;
                     }
                 case OutputTypes.ByteType:
@@ -265,6 +384,12 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Collapsed);
+                        settingChanged("Digits", Visibility.Collapsed);
+                        settingChanged("DigitsGroup", Visibility.Collapsed);
+                        settingChanged("DigitsBase", Visibility.Collapsed);
+                        settingChanged("DigitsOffset", Visibility.Collapsed);
+                        settingChanged("DigitsBigEndian", Visibility.Collapsed);
                         break;
                     }
                 case OutputTypes.DoubleType:
@@ -277,6 +402,12 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Visible);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Collapsed);
+                        settingChanged("Digits", Visibility.Collapsed);
+                        settingChanged("DigitsGroup", Visibility.Collapsed);
+                        settingChanged("DigitsBase", Visibility.Collapsed);
+                        settingChanged("DigitsOffset", Visibility.Collapsed);
+                        settingChanged("DigitsBigEndian", Visibility.Collapsed);
                         break;
                     }
                 case OutputTypes.BigIntegerType:
@@ -289,19 +420,41 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Collapsed);
                         settingChanged("Endianness", Visibility.Visible);
+                        settingChanged("DigitsByteValue", Visibility.Collapsed);
+                        settingChanged("Digits", Visibility.Collapsed);
+                        settingChanged("DigitsGroup", Visibility.Collapsed);
+                        settingChanged("DigitsBase", Visibility.Collapsed);
+                        settingChanged("DigitsOffset", Visibility.Collapsed);
+                        settingChanged("DigitsBigEndian", Visibility.Collapsed);
                         break;
                     }
-                //case OutputTypes.IntArrayType:
-                //    {
-                //        settingChanged("Numeric", Visibility.Collapsed);
-                //        settingChanged("InputEncoding", Visibility.Visible);
-                //        settingChanged("OutputEncoding", Visibility.Collapsed);
-                //        settingChanged("PresentationFormatSetting", Visibility.Collapsed);
-                //        settingChanged("FormatAmer", Visibility.Collapsed);
-                //        settingChanged("ReverseOrder", Visibility.Collapsed);
-                //        settingChanged("Endianness", Visibility.Collapsed);
-                //        break;
-                //    }
+                case OutputTypes.UIntArrayType:
+                    {
+                        settingChanged("Numeric", Visibility.Collapsed);
+                        settingChanged("Format", Visibility.Collapsed);
+                        settingChanged("InputEncoding", Visibility.Visible);
+                        settingChanged("OutputEncoding", Visibility.Collapsed);
+                        settingChanged("PresentationFormatSetting", Visibility.Collapsed);
+                        settingChanged("FormatAmer", Visibility.Collapsed);
+                        settingChanged("ReverseOrder", Visibility.Collapsed);
+                        settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Visible);
+                        settingChanged("DigitsGroup", Visibility.Visible);
+                        settingChanged("DigitsBigEndian", Visibility.Visible);
+                        if (DigitsDefinition == 0)
+                        {
+                            settingChanged("Digits", Visibility.Visible);
+                            settingChanged("DigitsBase", Visibility.Collapsed);
+                            settingChanged("DigitsOffset", Visibility.Collapsed);
+                        }
+                        else
+                        {
+                            settingChanged("Digits", Visibility.Collapsed);
+                            settingChanged("DigitsBase", Visibility.Visible);
+                            settingChanged("DigitsOffset", Visibility.Visible);
+                        }
+                        break;
+                    }
                 case OutputTypes.ByteArrayType:
                     {
                         settingChanged("Numeric", Visibility.Visible);
@@ -312,6 +465,21 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Visible);
                         settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Visible);
+                        settingChanged("DigitsGroup", Visibility.Visible);
+                        settingChanged("DigitsBigEndian", Visibility.Visible);
+                        if (DigitsDefinition == 0)
+                        {
+                            settingChanged("Digits", Visibility.Visible);
+                            settingChanged("DigitsBase", Visibility.Collapsed);
+                            settingChanged("DigitsOffset", Visibility.Collapsed);
+                        }
+                        else
+                        {
+                            settingChanged("Digits", Visibility.Collapsed);
+                            settingChanged("DigitsBase", Visibility.Visible);
+                            settingChanged("DigitsOffset", Visibility.Visible);
+                        }
                         break;
                     }
                 case OutputTypes.CryptoolStreamType:
@@ -324,6 +492,21 @@ namespace Cryptool.Plugins.Converter
                         settingChanged("FormatAmer", Visibility.Collapsed);
                         settingChanged("ReverseOrder", Visibility.Visible);
                         settingChanged("Endianness", Visibility.Collapsed);
+                        settingChanged("DigitsByteValue", Visibility.Visible);
+                        settingChanged("DigitsGroup", Visibility.Visible);
+                        settingChanged("DigitsBigEndian", Visibility.Visible);
+                        if (DigitsDefinition == 0)
+                        {
+                            settingChanged("Digits", Visibility.Visible);
+                            settingChanged("DigitsBase", Visibility.Collapsed);
+                            settingChanged("DigitsOffset", Visibility.Collapsed);
+                        }
+                        else
+                        {
+                            settingChanged("Digits", Visibility.Collapsed);
+                            settingChanged("DigitsBase", Visibility.Visible);
+                            settingChanged("DigitsOffset", Visibility.Visible);
+                        }
                         break;
                     }
             }

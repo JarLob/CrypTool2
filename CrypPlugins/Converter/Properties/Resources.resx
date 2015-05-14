@@ -264,4 +264,52 @@
   <data name="TypesList9" xml:space="preserve">
     <value>bool</value>
   </data>
+  <data name="DigitsCaption" xml:space="preserve">
+    <value>Digits</value>
+  </data>
+  <data name="DigitsGroupCaption" xml:space="preserve">
+    <value>Digits Group Size</value>
+  </data>
+  <data name="DigitsGroupTooltip" xml:space="preserve">
+    <value>Enter the size of the digit groups into which to divide the datastream.</value>
+  </data>
+  <data name="DigitsTooltip" xml:space="preserve">
+    <value>Enter the digits the datastream consists of.</value>
+  </data>
+  <data name="TypesList10" xml:space="preserve">
+    <value>uint[]</value>
+  </data>
+  <data name="DigitsBaseCaption" xml:space="preserve">
+    <value>Number Base</value>
+  </data>
+  <data name="DigitsBaseTooltip" xml:space="preserve">
+    <value>Enter the number base to use for the conversion from/to UInt[]</value>
+  </data>
+  <data name="DigitsDefinitionCaption" xml:space="preserve">
+    <value>Define Digits as</value>
+  </data>
+  <data name="DigitsDefinitionList1" xml:space="preserve">
+    <value>String of Digits</value>
+  </data>
+  <data name="DigitsDefinitionList2" xml:space="preserve">
+    <value>Byte Interval</value>
+  </data>
+  <data name="DigitsDefinitionTooltip" xml:space="preserve">
+    <value>Specify how you want to define the digits for converting from/to UInt[]: either as a sequence of arbitrary characters or as an interval of consecutive byte values.</value>
+  </data>
+  <data name="DigitsEndiannessCaption" xml:space="preserve">
+    <value>Endianness</value>
+  </data>
+  <data name="DigitsEndiannessTooltip" xml:space="preserve">
+    <value>Specify the endianness when converting from/to UInt[].</value>
+  </data>
+  <data name="DigitsGroup" xml:space="preserve">
+    <value>Digits for UInt[]</value>
+  </data>
+  <data name="DigitsOffsetCaption" xml:space="preserve">
+    <value>Byte Offset</value>
+  </data>
+  <data name="DigitsOffsetTooltip" xml:space="preserve">
+    <value>Enter the offset of the byte value that corresponds to the digit "zero".</value>
+  </data>
 </root>
