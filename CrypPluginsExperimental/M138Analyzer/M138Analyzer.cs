@@ -470,6 +470,7 @@ namespace Cryptool.M138Analyzer
                                 }
                                 else
                                 {
+                                    GuiLogMessage("Too many possible keys found. Handling not yet implemented, please try a Ciphertext-Only Attack", NotificationLevel.Error);
                                     //Not Yet Implemented
                                     return;
                                 }
@@ -709,9 +710,9 @@ namespace Cryptool.M138Analyzer
                                 _copykey[j] = _tmpElement;
 
                                 //TEST
-                                _tmpElement = _copykey[Mod(i + 7, _keyLength)];
-                                _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
-                                _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
+                                //_tmpElement = _copykey[Mod(i + 7, _keyLength)];
+                                //_copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
+                                //_copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
                                 //TODO: Swap more elements at one time?
                             }
                             else

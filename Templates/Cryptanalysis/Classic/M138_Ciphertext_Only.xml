@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">M-138 Ciphertext only Attack</title>
+  <summary lang="en">Cryptanalysis of the <i>M-138</i> using a Ciphertext only Attack</summary>
+  <description lang="en">This template shows the cryptanalysis of the <i>M-138</i> using a Ciphertext only attack.</description>
+  <keywords>M-138, Hill-Climbing, Ciphertext only</keywords>
+
+  <title lang="de">Ciphertext-Only Angriff auf M-138</title>
+  <summary lang="de">Kryptoanalyse der <i>M-138</i> mit Hilfe eines Ciphertext-Only Angriffs</summary>
+  <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>M-138</i> mit einem Ciphertext-Only Angriff.</description>
+  <keywords lang="de">M-138, Hill-Climbing, Ciphertext-Only, Geheimtext</keywords>
+
+  <icon file="M138.png" />
+
+  <relevantPlugins>
+    <plugin name="M138Analyzer" />
+  </relevantPlugins>
+
+</sample>
