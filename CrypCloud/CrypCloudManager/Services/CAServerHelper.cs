@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CertificateLibrary.Network;
+using Cryptool.PluginBase.Miscellaneous;
 using PeersAtPlay.CertificateLibrary.Network;
 
 namespace CrypCloud.Manager.Services
@@ -49,7 +50,7 @@ namespace CrypCloud.Manager.Services
 
             certificateClient.InvalidCertificateRegistration += (sender, arg) => processingError(arg);
             certificateClient.InvalidEmailVerification += (sender, arg) => processingError(arg);
-            certificateClient.EmailVerificationRequired += delegate { successAction(); };
+            certificateClient.EmailVerificationRequired += delegate { successAction(); }; 
 
             TryAsyncCommunication(() => certificateClient.RegisterCertificate(request), errorHandler);
         }
@@ -68,7 +69,12 @@ namespace CrypCloud.Manager.Services
 
         private static CertificateClient GetACertificateClient(Action<string> errorHandler)
         {
-            var certificateClient = new CertificateClient();
+            var certificateClient = new CertificateClient
+            {
+                ProgramName = AssemblyHelper.ProductName,
+                ProgramVersion = AssemblyHelper.BuildType + " " + AssemblyHelper.Version + " " + AssemblyHelper.InstallationType 
+            };
+
             certificateClient.ServerErrorOccurred += delegate { errorHandler("Internal Server Error Occurred"); };
             certificateClient.ServerDisconnected += delegate { errorHandler("Server Disconnected"); };
             certificateClient.NewProtocolVersion += delegate { errorHandler("Deprecated Protocol Version"); };

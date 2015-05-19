@@ -13,8 +13,7 @@ namespace CrypCloud.Manager.ViewModels
 
         public string Name { get; set; }
         public string LocalFilePath { get; set; }
-        public string Description { get; set; }
-        public BigInteger NumberOfBlocks { get; set; }
+        public string Description { get; set; }  
 
         public RelayCommand BackToListCmd { get; set; }
         public RelayCommand CreateNewJobCmd { get; set; }
@@ -50,7 +49,7 @@ namespace CrypCloud.Manager.ViewModels
                 return;
             }
 
-            var jobHasBeenCreated = crypCloudCore.CreateJob("CryptoolJob", Name, Description, workspaceModel, NumberOfBlocks);
+            var jobHasBeenCreated = crypCloudCore.CreateJob("CryptoolJob", Name, Description, workspaceModel);
             if (jobHasBeenCreated)
             {
                 Navigator.ShowScreenWithPath(ScreenPaths.JobList); 

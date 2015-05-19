@@ -23,13 +23,17 @@ using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using NLog;
+using NLog.Config;
 using voluntLib.common;
 using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
 using voluntLib.communicationLayer;
 using voluntLib.communicationLayer.communicator;
 using voluntLib.communicationLayer.communicator.networkBridgeCommunicator;
+using voluntLib.logging;
 using voluntLib.managementLayer;
+using voluntLib.managementLayer.localStateManagement;
+using voluntLib.managementLayer.localStateManagement.states;
 using voluntLib.managementLayer.localStateManagement.states.config;
 
 #endregion
@@ -42,7 +46,7 @@ namespace voluntLib
     public class VoluntLib
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-
+        
         private const int DefaultWorkingListTimeout = 10*60000;
         private const int DefaultMaximumBackoffTime = 1000;
         private const int DefaultPort = 13337;
@@ -164,6 +168,15 @@ namespace voluntLib
 
         #endregion Persistence Configuration
 
+        /// <summary>
+        ///   Sets the mode for logging
+        ///   LogMode.NLogConfig: uses the nlog config file to determin the log targets
+        ///   LogMode.EventBased: invokes the ApplicationLog-event 
+        ///   Default: LogMode.NLogConfig;
+        /// </summary> 
+        public LogMode LogMode { get; set; }
+
+
         #endregion
 
         #region State Properties
@@ -228,6 +241,7 @@ namespace voluntLib
             LocalEndPointIPAddress = null;
             IsStarted = false;
             IsInitialized = false;
+            LogMode = LogMode.NLogConfig;
         }
 
         #region start and stop
@@ -334,38 +348,75 @@ namespace voluntLib
             CommunicationLayer = new CommunicationLayer(ManagementLayer, caCertificate, ownCertificate, communicator);
 
             //adding outbounding NetworkBridges
-            IsNetworkBridge = tcpCommunicatorToAdd.Capacity > 0;
-            foreach (var tcpCom in tcpCommunicatorToAdd)
-            {
-                CommunicationLayer.AddCommunicator(tcpCom.RemoteNetworkBridgeIP, tcpCom);
-            }
+            if (tcpCommunicatorToAdd.Capacity > 0) 
+                SetupNetworkBridgeCommunicators();
 
             ManagementLayer.NetworkCommunicationLayer = CommunicationLayer;
             ManagementLayer.WorkingPeers.RemoveAfterMS = WorkingListTimeout;
 
             //file communicator
             if (LoadDataFromLocalStorage || EnablePersistence || ClearLocalStorageOnStartUp)
-            {
-                var fileCom = new FileCommunicator(LocalStoragePath, LoadDataFromLocalStorage, EnablePersistence, ClearLocalStorageOnStartUp);
-                var fileComLayer = new CommunicationLayer(ManagementLayer, caCertificate, ownCertificate, fileCom);
-
-                ManagementLayer.FileCommunicationLayer = fileComLayer;
-                fileCom.Start();
-                IsPersistenceEnabled = EnablePersistence;
-            }
+                SetupFileCommunicator(caCertificate, ownCertificate);
 
             //adding NATFree NetworkBridge
             if (receivingTCPCom != null)
-            {
-                NetworkBridgeManagementLayer = new NetworkBridgeManagementLayer(ManagementLayer);
-                NetworkBridgeCommunicationLayer = new NetworkBridgeCommunicationLayer(NetworkBridgeManagementLayer, caCertificate,
-                    ownCertificate, receivingTCPCom);
-                NetworkBridgeManagementLayer.NetworkCommunicationLayer = NetworkBridgeCommunicationLayer;
-                IsNATFreeNetworkBridge = true;
-                IsNetworkBridge = true;
-            }
+                SetupNATFreeNetworkBridge(caCertificate, ownCertificate);
+            
+            if (LogMode == LogMode.EventBased)
+                EnableEventBasedLogging();
 
-            // register public events
+            RegisterPublicEvents();
+            IsInitialized = true;
+        }
+     
+
+        private void EnableEventBasedLogging()
+        {
+            const string targetName = "eventBasedTarget";
+
+            var config = new LoggingConfiguration();
+            var eventBasedTarget = new EventBasedTarget();
+            var logRule = new LoggingRule("*", LogLevel.Debug, eventBasedTarget);
+
+            config.AddTarget(targetName, eventBasedTarget);
+            config.LoggingRules.Add(logRule);
+
+            LogManager.Configuration = config;
+            eventBasedTarget.ApplicationLog += OnApplicationLog;
+        }
+
+        #region init-Helper
+        private void SetupNATFreeNetworkBridge(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        {
+            NetworkBridgeManagementLayer = new NetworkBridgeManagementLayer(ManagementLayer);
+            NetworkBridgeCommunicationLayer = new NetworkBridgeCommunicationLayer(NetworkBridgeManagementLayer, caCertificate,
+                ownCertificate, receivingTCPCom);
+            NetworkBridgeManagementLayer.NetworkCommunicationLayer = NetworkBridgeCommunicationLayer;
+            IsNATFreeNetworkBridge = true;
+            IsNetworkBridge = true;
+        }
+
+        private void SetupNetworkBridgeCommunicators()
+        {
+            IsNetworkBridge = true;
+            foreach (var tcpCom in tcpCommunicatorToAdd)
+            {
+                CommunicationLayer.AddCommunicator(tcpCom.RemoteNetworkBridgeIP, tcpCom);
+            }
+        }
+
+        private void SetupFileCommunicator(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        {
+            var fileCom = new FileCommunicator(LocalStoragePath, LoadDataFromLocalStorage, EnablePersistence,ClearLocalStorageOnStartUp);
+            var fileComLayer = new CommunicationLayer(ManagementLayer, caCertificate, ownCertificate, fileCom);
+
+            ManagementLayer.FileCommunicationLayer = fileComLayer;
+            fileCom.Start();
+            IsPersistenceEnabled = EnablePersistence;
+        }
+
+        private void RegisterPublicEvents()
+        {
             ManagementLayer.JobListChanged += OnJobListChanged;
             ManagementLayer.WorldListChanged += OnWorldListChanged;
             ManagementLayer.JobFinished += OnJobFinished;
@@ -373,9 +424,9 @@ namespace voluntLib
             ManagementLayer.TaskStarted += OnTaskStarted;
             ManagementLayer.TaskProgress += OnTaskProgress;
             ManagementLayer.TaskStopped += OnTaskStopped;
-
-            IsInitialized = true;
         }
+
+        #endregion
 
         #endregion
 
@@ -576,7 +627,7 @@ namespace voluntLib
         {
             ThrowErrorIfNotInitialized();
             var job = ManagementLayer.Jobs.GetJob(jobID);
-            return job == null || job.IsDeleted ? null : job; // FROM Nils: fixed, added job == null 19.03.2014
+            return job == null || job.IsDeleted ? null : job;
         }
 
         /// <summary>
@@ -607,6 +658,16 @@ namespace voluntLib
         {
             ThrowErrorIfNotInitialized();
             return ManagementLayer.Jobs.GetJobs().FindAll(job => !job.IsDeleted);
+        }
+
+      
+        public virtual BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
+        {
+            ThrowErrorIfNotInitialized();
+
+            LocalStateManager<EpochState> stateManager;
+            ManagementLayer.LocalStates.TryGetValue(jobID, out stateManager);
+            return stateManager != null ? stateManager.LocalState.NumberOfCalculatedBlocks : new BigInteger(0);
         }
 
         /// <summary>
@@ -745,14 +806,26 @@ namespace voluntLib
         /// the blockID on which the task works and an Integer that indicates the task's progress.
         public event EventHandler<TaskEventArgs> TaskProgress;
 
-        /// Occurs whenever a new task has made progress.
+        /// Occurs whenever a new task has made progress.   
         /// It is called with
         /// <see cref="TaskEventArgs" />
         /// which contains the JobID of the corresponding job, 
         /// the blockID on which the task worked and and an Type that indicates whether the has finished or had been stopped.
         public event EventHandler<TaskEventArgs> TaskStopped;
 
+
+        /// <summary> 
+        /// Set LogMode to LogMode.EventBased to enable
+        /// </summary>
+        public event EventHandler<LogEventInfoArg> ApplicationLog;
+
         #region invoker
+
+        protected virtual void OnApplicationLog(object sender, LogEventInfoArg logEventInfoArg)
+        {
+            var handler = ApplicationLog;
+            if (handler != null) handler(this, logEventInfoArg);
+        }
 
         private void OnTaskStarted(object sender, TaskEventArgs e)
         {
@@ -818,7 +891,7 @@ namespace voluntLib
         }
 
         #endregion
-
+        
         #endregion public events
 
         #region Helper

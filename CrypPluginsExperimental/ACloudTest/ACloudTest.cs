@@ -14,8 +14,10 @@
    limitations under the License.
 */
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Windows.Controls;
@@ -33,8 +35,11 @@ namespace Cryptool.Plugins.ACloudTest
         #region Private Variables
          
         private readonly ACloudTestSettings settings = new ACloudTestSettings();
+        private string someOutput;
 
         #endregion
+
+        public ACloudTest(): base(1000){}
 
         public override ISettings Settings
         {
@@ -48,28 +53,48 @@ namespace Cryptool.Plugins.ACloudTest
 
         public override void Initialize()
         {
-            NumberOfBlocks = 1000;
         }
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Input name", "Input tooltip description")]
-        public int SomeInput {get; set;} 
-        
         [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public int SomeOutput {get; set;}
+        public string SomeOutput
+        {
+            get { return someOutput; }
+            set
+            {
+                if (value != someOutput)
+                {
+                    this.someOutput = value;
+                    OnPropertyChanged("SomeOutput");
+                }
+            }
+        }
 
         #endregion
 
         public override List<byte[]> CalculateBlock(BigInteger blockId, CancellationToken cancelToken)
         {
-            GuiLogMessage("ERROR: " + blockId, NotificationLevel.Error);
-            return new List<byte[]>();
+            var rnd = new Random(123457);
+            var results = new List<byte[]> {blockId.ToByteArray()};
+            for (var i = 0; i < 4; i++)
+            {
+                cancelToken.ThrowIfCancellationRequested();
+                Thread.Sleep(rnd.Next(1, 3) * 500);
+            }
+
+            GuiLogMessage("calculatedBlock: " + blockId, NotificationLevel.Error);
+            return results;
         }
 
         public override List<byte[]> MergeBlockResults(IEnumerable<byte[]> oldResultList, IEnumerable<byte[]> newResultList)
         {
-            return new List<byte[]>();
+            var newlist = oldResultList.Concat(newResultList).ToList();
+            newlist.Sort((bytes, bytes1) => bytes1[0] - bytes[0]);
+            var mergeBlockResults = newlist.Take(10).ToList();
+            SomeOutput = mergeBlockResults.Aggregate("", (_, it) =>  _ + " " + it[0]);
+            
+            return mergeBlockResults; 
         }
 
 
@@ -94,9 +119,18 @@ namespace Cryptool.Plugins.ACloudTest
         {
             Initialize();
         }
-         
-        public override event StatusChangedEventHandler OnPluginStatusChanged;
-        public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
+
         public override event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+        public override event StatusChangedEventHandler OnPluginStatusChanged;
+        public override event PluginProgressChangedEventHandler OnPluginProgressChanged; 
+
+      
     }
 }

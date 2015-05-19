@@ -130,17 +130,15 @@ namespace CrypCloudTests
             var jobType = "jobtype";
             var jobName = "jobName";
             var jobDescription = "jobDescription";
-            var numberOfBlocks = 1;
-            var workspaceModel = CreateValidWorkspaceModel();
+            var workspaceModel = CreateValidWorkspaceModel(1);
 
-            bool creationSucessful = cryptCloudCore.CreateJob(jobType, jobName, jobDescription, workspaceModel,
-                numberOfBlocks);
+            bool creationSucessful = cryptCloudCore.CreateJob(jobType, jobName, jobDescription, workspaceModel);
 
             Assert.IsTrue(creationSucessful);
             A.CallTo(
                 () =>
                     voluntLib.CreateNetworkJob(cryptCloudCore.DefaultWorld, jobType, jobName, jobDescription,
-                        A<Byte[]>._, numberOfBlocks)).MustHaveHappened();
+                        A<Byte[]>._, 1)).MustHaveHappened();
 
         }
 
@@ -149,7 +147,7 @@ namespace CrypCloudTests
         {
             var workspaceModel = new WorkspaceModel();
 
-            bool creationSucessful = cryptCloudCore.CreateJob("", "", "", workspaceModel, 0);
+            bool creationSucessful = cryptCloudCore.CreateJob("", "", "", workspaceModel);
 
             Assert.IsFalse(creationSucessful);
             A.CallTo(
@@ -189,7 +187,7 @@ namespace CrypCloudTests
         public void GetWorkspace_shouldInjectJobIDIntoComponents()
         {
             var jobID = 1;
-            var workspaceModel = CreateValidWorkspaceModel();
+            var workspaceModel = CreateValidWorkspaceModel(1);
             FakeNetworkJobInVoluntLib(jobID, workspaceModel);
 
             var returnedWorkspace = cryptCloudCore.GetWorkspaceOfJob(jobID);
@@ -205,10 +203,10 @@ namespace CrypCloudTests
         [TestMethod]
         public void ContainsCloudComponent()
         {
-            var workspaceModel = CreateValidWorkspaceModel();
+            var workspaceModel = CreateValidWorkspaceModel(1);
             Assert.IsTrue(workspaceModel.GetAllPluginModels().Any(it => it.Plugin is ACloudComponent), "ACloudComponent");
         }
-
+ 
         #endregion
 
         #region helperd
@@ -220,7 +218,11 @@ namespace CrypCloudTests
         }
 
         internal class DummyCloudPlugin : ACloudComponent
-        { 
+        {
+            public DummyCloudPlugin(BigInteger numOfblocks)
+                : base(numOfblocks)
+            { 
+            }
 
             public override ISettings Settings
             {
@@ -273,10 +275,10 @@ namespace CrypCloudTests
             public override event PropertyChangedEventHandler PropertyChanged;
         }
 
-        public static WorkspaceModel CreateValidWorkspaceModel()
+        public static WorkspaceModel CreateValidWorkspaceModel(BigInteger numOfblocks)
         {
             var workspaceModel = new WorkspaceModel();
-            var componentMock = new DummyCloudPlugin();
+            var componentMock = new DummyCloudPlugin(numOfblocks);
             var pluginModel = new PluginModel();
             var accessor = new PrivateObject(pluginModel);
             accessor.SetFieldOrProperty("Plugin", componentMock);

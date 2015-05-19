@@ -17,7 +17,7 @@ namespace PeersAtPlay.CertificateLibrary.Util
 
         public static bool IsValidOrganisationalUnit(string ou)
         {
-            return ! String.Empty.Equals(ou);
+            return ! String.Empty.Equals(ou); 
         }
 
         public static bool IsValidEmailAddress(string email)
@@ -33,23 +33,24 @@ namespace PeersAtPlay.CertificateLibrary.Util
 
         public static bool IsValidPassword(string password)
         {
-            return !String.Empty.Equals(password) && password.Length <= 40;
+            return !String.IsNullOrEmpty(password) && password.Length <= 40;
         }
 
 
         public static bool IsValidAvatar(string avatar)
         {
-            return !String.Empty.Equals(avatar) && avatar.Length <= 40;
+
+            return !String.IsNullOrEmpty(avatar) && avatar.Length <= 40;
         }
 
         public static bool IsValidWorld(string world)
         {
-            return !String.Empty.Equals(world) && world.Length <= 40;
+            return !String.IsNullOrEmpty(world) && world.Length <= 40;
         }
 
         public static bool IsValidCode(string code)
         {
-            return !String.Empty.Equals(code) && code.Length <= 40;
+            return !String.IsNullOrEmpty(code) && code.Length <= 40;
         }
     }
 }

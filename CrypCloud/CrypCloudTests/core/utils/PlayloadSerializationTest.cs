@@ -28,18 +28,6 @@ namespace CrypCloudTests.utils
             var model = PayloadSerialization.Deserialize(result);
 
             Assert.AreEqual(model.Zoom, workspaceModel.Zoom);
-        }
-
-        [TestMethod]
-        [Ignore]//cant test due to pluginmodel's assembly load
-        public void SerializationAndDeserialization_onWorkspaceWithACC()
-        {
-            var workspaceModel = CrypCloudCoreTest.CreateValidWorkspaceModel(); 
-
-            var model = PayloadSerialization.Deserialize(PayloadSerialization.Serialize(workspaceModel));
-
-            Assert.AreEqual(1, model.GetAllPluginModels().Count);
-            Assert.IsTrue(model.GetAllPluginModels()[0].Plugin is ACloudComponent);
-        }
+        } 
     }
 }

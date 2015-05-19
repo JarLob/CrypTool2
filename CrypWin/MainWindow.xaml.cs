@@ -65,7 +65,8 @@ using Orientation = System.Windows.Controls.Orientation;
 using TabControl = System.Windows.Controls.TabControl;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
-using System.Net.Security; 
+using System.Net.Security;
+using CrypCloud.Core;
 
 namespace Cryptool.CrypWin
 {
@@ -564,7 +565,11 @@ namespace Cryptool.CrypWin
                 //GuiLogMessage(string.Format("Error occured while loading certificates: {0}", ex), NotificationLevel.Error);
                 GuiLogMessage(string.Format("Error while initializing the certificate callback: {0}", ex), NotificationLevel.Error);
             }
+
+            InitCould();
         }
+
+      
 
         private void LoadIndividualComponentConnectionStatistics()
         {

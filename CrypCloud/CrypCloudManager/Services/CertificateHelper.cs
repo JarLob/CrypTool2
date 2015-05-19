@@ -10,6 +10,7 @@ namespace CrypCloud.Manager
 {
     public class CertificateHelper
     {
+        
         public static readonly string DefaultUserCertificateDir = PeerCertificate.DefaultUserCertificateDirectory;
         private const string CertFileExtention = ".p12";
 

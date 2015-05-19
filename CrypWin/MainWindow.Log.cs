@@ -41,18 +41,12 @@ namespace Cryptool.CrypWin
         #region PluginManager events
         void pluginManager_OnExceptionOccured(object sender, PluginManagerEventArgs args)
         {
-            OnGuiLogNotificationOccured(Resource.pluginManager, new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Error));
-
-            //this.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-            //  new GuiLogNotificationDelegate(OnGuiLogNotificationOccuredTS), Resource.pluginManager, new object[] { new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Error) });
+            OnGuiLogNotificationOccured(Resource.pluginManager, new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Error)); 
         }
 
         void pluginManager_OnDebugMessageOccured(object sender, PluginManagerEventArgs args)
         {
-            OnGuiLogNotificationOccured(Resource.pluginManager, new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Debug));
-
-            //this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal,
-            //  new GuiLogNotificationDelegate(OnGuiLogNotificationOccuredTS), Resource.pluginManager, new object[] { new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Debug) });
+            OnGuiLogNotificationOccured(Resource.pluginManager, new GuiLogEventArgs(args.Exception.Message, null, NotificationLevel.Debug)); 
         }
 
         void pluginManager_OnPluginLoaded(object sender, PluginLoadedEventArgs args)
@@ -71,30 +65,17 @@ namespace Cryptool.CrypWin
 
         public void OnGuiLogNotificationOccured(object sender, GuiLogEventArgs arg)
         {
-            if (!silent)
-            {
-                if (!this.Dispatcher.CheckAccess())
-                {
-                    this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.SystemIdle,
-                        new GuiLogNotificationDelegate(OnGuiLogNotificationOccuredTS), sender, new object[] { arg });
-                }
-                else
-                {
-                    OnGuiLogNotificationOccuredTS(sender, arg);
-                }
-            }
-        }
+            if (silent) 
+                return;
 
-        void OnShowPluginDescription(object sender)
-        {
-            try
+            if (Dispatcher.CheckAccess())
             {
-                if (ActiveEditor != null)
-                    ActiveEditor.ShowSelectedEntityHelp();
+                OnGuiLogNotificationOccuredTS(sender, arg);
             }
-            catch (Exception ex)
+            else
             {
-                GuiLogMessage(ex.Message, NotificationLevel.Error);
+                var guiLogDelegate = new GuiLogNotificationDelegate(OnGuiLogNotificationOccuredTS);
+                Dispatcher.BeginInvoke(DispatcherPriority.SystemIdle, guiLogDelegate, sender, arg);
             }
         }
 

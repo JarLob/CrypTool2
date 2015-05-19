@@ -35,6 +35,7 @@ namespace CrypCloud.Manager.ViewModels
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += RunInUiContext(UpdateJobList);
+            crypCloudCore.JobStateChanged += RunInUiContext(UpdateJobList);
             UpdateJobList();
         }
         
@@ -96,7 +97,8 @@ namespace CrypCloud.Manager.ViewModels
             {
                 Name = job.JobName,
                 Creator = job.Creator,
-                NumberOfBlocks = job.StateConfig.NumberOfBlocks,
+                TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
+                FinishedNumberOfBlocks = crypCloudCore.GetProgressOfJob(job.JobID),
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),

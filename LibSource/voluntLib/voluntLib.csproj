@@ -99,6 +99,9 @@
     <Compile Include="communicationLayer\communicator\MulticastCommunicator.cs" />
     <Compile Include="common\interfaces\ICommunicationLayer.cs" />
     <Compile Include="communicationLayer\NetworkBridgeCommunicationLayer.cs" />
+    <Compile Include="logging\EventBasedTarget.cs" />
+    <Compile Include="logging\LogEventInfoArg.cs" />
+    <Compile Include="logging\LogMode.cs" />
     <Compile Include="managementLayer\dataStructs\WorkingPeerList.cs" />
     <Compile Include="managementLayer\delayedTasks\SendJobDeletionTask.cs" />
     <Compile Include="managementLayer\delayedTasks\PropagateStateTask.cs" />
@@ -129,6 +132,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -580,10 +580,6 @@
     <Resource Include="images\MyFiles16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\peer2peer-connect.png" />
-    <Resource Include="images\peer2peer-disconnect.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="images\balloon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -696,6 +692,12 @@
   <ItemGroup>
     <Resource Include="Resources\hw.png" />
     <Resource Include="Resources\xm.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cloud-connected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\cloud-disconnected.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

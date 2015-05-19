@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Numerics;
 using System.Threading;
@@ -13,12 +14,20 @@ namespace CrypCloud.Core.CloudComponent
         private readonly CrypCloudCore cryptCloudCore = CrypCloudCore.Instance;
         private readonly CalculationTemplate calculationTemplate;
         private CancellationTokenSource offlineCancellation;
+        
+        protected ACloudComponent(BigInteger numberOfBlocks)
+        {
+            NumberOfBlocks = numberOfBlocks;
+            JobID = -1;
+            calculationTemplate = new CalculationTemplate(this);
+            CurrentBestlist = new List<byte[]>();
+        }
 
         /// <summary>
         /// Number Of Blocks that should be calculated.
         /// Has to be set before starting
         /// </summary>
-        public BigInteger NumberOfBlocks { get; set; }
+        public BigInteger NumberOfBlocks { get; protected set; }
 
         /// <summary>
         /// JobId of bound networkjob.
@@ -27,15 +36,7 @@ namespace CrypCloud.Core.CloudComponent
         public BigInteger JobID { get; set; }
 
         public List<byte[]> CurrentBestlist { get; private set; }
-
-        protected ACloudComponent()
-        {
-            NumberOfBlocks = 0;
-            JobID = -1;
-            calculationTemplate = new CalculationTemplate(this);
-            CurrentBestlist = new List<byte[]>();
-        }
-
+       
         public void Stop()
         {
             if (IsOnline()) 
@@ -48,11 +49,13 @@ namespace CrypCloud.Core.CloudComponent
 
         public void PreExecution()
         {
+
+            GuiLogMessage("preEx isOnline: " + IsOnline(), NotificationLevel.Error);
             PreExecutionLocal();
 
-            if (IsOnline())
+            if (IsOnline()) 
                 cryptCloudCore.StartLocalCalculation(JobID, calculationTemplate);
-            else
+            else 
                 StartOfflineCalculation();
         }
          

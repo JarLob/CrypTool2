@@ -22,17 +22,23 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
+using CrypCloud.Core;
 
 namespace Cryptool.CrypWin
 {
     public partial class MainWindow
     {
-        private bool _reconnect = false;
-        private bool _reconnecting = false;  
-
+      
         public static readonly DependencyProperty P2PButtonVisibilityProperty = 
             DependencyProperty.Register("P2PButtonVisibility",typeof(Visibility),typeof(MainWindow),
                 new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsRender, null));
+
+        private void InitCould()
+        {
+            CrypCloudCore.Instance.ApplicationLog += OnGuiLogNotificationOccured;
+            CrypCloudCore.Instance.ConnectionStateChanged += UpdateIcons;
+            UpdateIcons(connected: false);
+        }
 
         [TypeConverter(typeof(Visibility))]
         public Visibility P2PButtonVisibility
@@ -47,47 +53,15 @@ namespace Cryptool.CrypWin
             }
         }
 
-        //TODO @ckonze remove
-        public bool P2PIconImageRotating{get;set;}
-
-        private bool p2PIconImageGray = false;
-        public bool P2PIconImageGray
-        {
-            get
-            {
-                return p2PIconImageGray;
-            }
-            set
-            {
-                p2PIconImageGray = value;
-                UpdateIcons();
-            }
-        }
-
-        private void UpdateIcons()
+        private void UpdateIcons(bool connected)
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
             {
-                if (p2PIconImageGray)
-                {
-                    SetP2PImages("p2pconnectIcon", Properties.Resources.cryptool);
-                }
-                else
-                {
-                    SetP2PImages("p2pdisconnectIcon", Properties.Resources.cryptoolP2P);
-                }
+                var iconSource = connected ? "cloudConnected" : "cloudDisconnected";
+                P2PIconImageBig.Source = (ImageSource)FindResource(iconSource);
+                P2PIconImageSmall.Source = (ImageSource)FindResource(iconSource);
             }, null);
         }
-
-        private void SetP2PImages(string iconSource, Icon notificationIcon)
-        {
-            P2PIconImageBig.Source = (ImageSource) FindResource(iconSource);
-            P2PIconImageSmall.Source = (ImageSource) FindResource(iconSource);
-
-            try
-            {
-                notifyIcon.Icon = notificationIcon;
-            } catch {}
-        }
+ 
     }
 }

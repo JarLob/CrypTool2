@@ -6,10 +6,14 @@ using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using CrypCloud.Core.CloudComponent;
 using CrypCloud.Core.utils;
+using Cryptool.PluginBase;
 using voluntLib;
 using voluntLib.common;
 using voluntLib.common.interfaces;
+using voluntLib.logging;
 using WorkspaceManager.Model;
+using NLog;
+using voluntLib.common.eventArgs;
 
 namespace CrypCloud.Core
 {
@@ -46,8 +50,11 @@ namespace CrypCloud.Core
         {
             AmountOfWorker = 2;
             voluntLib = new VoluntLib();
+            voluntLib.LogMode = global::voluntLib.logging.LogMode.EventBased;
             voluntLib.JobListChanged += OnJobListChanged;
-        }
+            voluntLib.JobProgress += OnJobStateChanged;
+            voluntLib.ApplicationLog += ConvertVoluntLibToCtLogs;
+        }  
 
         public bool Login(X509Certificate2 ownCertificate)
         {
@@ -57,6 +64,7 @@ namespace CrypCloud.Core
             }
             var rootCertificate = new X509Certificate2(Properties.Resources.rootCA);
             voluntLib.InitAndStart(rootCertificate, ownCertificate);
+            OnConnectionStateChanged(true);
             return true;
         }
 
@@ -90,6 +98,16 @@ namespace CrypCloud.Core
 
            return voluntLib.GetJobsOfWorld(DefaultWorld);
         }
+        
+        public BigInteger GetProgressOfJob(BigInteger jobID)
+        {
+            if ( ! voluntLib.IsStarted)
+            {
+                return new BigInteger(0);
+            }
+
+           return voluntLib.GetCalculatedBlocksOfJob(jobID);
+        }
 
         public bool JobHasWorkspace(BigInteger jobId)
         {
@@ -118,7 +136,16 @@ namespace CrypCloud.Core
             if (job == null || !job.HasPayload())
                 return null;
 
-            var workspaceOfJob = PayloadSerialization.Deserialize(job.JobPayload);
+            WorkspaceModel workspaceOfJob;
+            try
+            {
+                workspaceOfJob = PayloadSerialization.Deserialize(job.JobPayload);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
             var cloudComponents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudComponent);
             foreach (var cloudComponent in cloudComponents)
             {
@@ -135,41 +162,85 @@ namespace CrypCloud.Core
             }
         }
 
-        public bool CreateJob(string jobType, string jobName, string jobDescription, WorkspaceModel workspaceModel, BigInteger numberOfBlocks)
+        public bool CreateJob(string jobType, string jobName, string jobDescription, WorkspaceModel workspaceModel)
         {
-            if (!HasACloudComponent(workspaceModel)) 
-                return false;
+            var cloudComponent = GetCloudComponent(workspaceModel);
+            if (cloudComponent == null) return false;
 
-            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, PayloadSerialization.Serialize(workspaceModel), numberOfBlocks);
+            var numberOfBlocks = cloudComponent.NumberOfBlocks;
+            var serialize = PayloadSerialization.Serialize(workspaceModel);
+
+            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, serialize, numberOfBlocks);
             return jobID != -1;
         }
 
-        private static bool HasACloudComponent(WorkspaceModel workspaceModel)
+        private static ACloudComponent GetCloudComponent(WorkspaceModel workspaceModel)
         {
             try
             {
-                return workspaceModel.GetAllPluginModels().Any(pluginModel => pluginModel.Plugin is ACloudComponent);
+                var cloudModel = workspaceModel.GetAllPluginModels().First(pluginModel => pluginModel.Plugin is ACloudComponent);
+                return cloudModel.Plugin as ACloudComponent;
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
-   
+        #region events  
 
-
-        #region events 
+        public event EventHandler<GuiLogEventArgs> ApplicationLog;
+        public event Action<bool> ConnectionStateChanged;
 
         public event Action JobListChanged;
+        public event Action JobStateChanged;
 
+        protected virtual void OnConnectionStateChanged(bool connected)
+        {
+            Action<bool> handler = ConnectionStateChanged;
+            if (handler != null) handler(connected);
+        }
+      
         protected virtual void OnJobListChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             var handler = JobListChanged;
             if (handler != null) handler();
         }
 
+        protected virtual void OnJobStateChanged(object sender, JobProgressEventArgs jobProgressEventArgs)
+        {
+            var handler = JobStateChanged;
+            if (handler != null) handler();
+        }
+
+        protected virtual void OnApplicationLog(object sender, GuiLogEventArgs arg)
+        {
+            var handler = ApplicationLog;
+            if (handler != null) handler(this, arg);
+        }
+
+
+        private void ConvertVoluntLibToCtLogs(object sender, LogEventInfoArg logEvent)
+        {
+            var notificationLevel = GetNotificationLevel(logEvent);
+            var message = "(" + logEvent.Location + "): " + logEvent.Message;
+            OnApplicationLog(sender, new GuiLogEventArgs(message, null, notificationLevel));
+        }
+
+        private static NotificationLevel GetNotificationLevel(LogEventInfoArg logEvent)
+        {
+            var notificationLevel = NotificationLevel.Info;
+            if (logEvent.Level >= LogLevel.Error)
+                notificationLevel = NotificationLevel.Error;
+            if (logEvent.Level == LogLevel.Warn)
+                notificationLevel = NotificationLevel.Warning;
+            if (logEvent.Level < LogLevel.Info)
+                notificationLevel = NotificationLevel.Debug;
+            return notificationLevel;
+        }
+
         #endregion
 
+       
     }
 }

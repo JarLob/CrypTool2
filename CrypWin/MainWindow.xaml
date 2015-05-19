@@ -457,8 +457,8 @@
         <BitmapImage x:Key="NoUpdate" UriSource="images/noUpdate.png"/>
         <BitmapImage x:Key="UpdateReady" UriSource="images/updateReady.png"/>
         <BitmapImage x:Key="cryptoolIcon" UriSource="images/cryptool.ico"/>
-        <BitmapImage x:Key="p2pconnectIcon" UriSource="images/peer2peer-connect.png"/>
-        <BitmapImage x:Key="p2pdisconnectIcon" UriSource="images/peer2peer-disconnect.png"/>
+        <BitmapImage x:Key="cloudConnected" UriSource="images/cloud-connected.png"/>
+        <BitmapImage x:Key="cloudDisconnected" UriSource="images/cloud-disconnected.png"/>
         <con:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></con:BooleanToVisibilityConverter>
 
         <Storyboard x:Key="P2PBigIconImageRotateStoryboard">
@@ -753,18 +753,10 @@
                                     <dc:ButtonDropDown Name="p2pButton" ImagePosition="Top" Style="{DynamicResource AppMenuCommandButton}" dc:Ribbon.KeyTip="PP" Height="70"
                                                    Command="cw:CrypWinCommands.P2P" ToolTip="{Loc Manages_the_integrated_network_connection_}">
                                         <dc:ButtonDropDown.Image>
-                                            <Image Name="P2PIconImageBig" Source="images/peer2peer-connect.png" Height="40" Width="40" RenderTransformOrigin="0.5,0.5">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform x:Name="P2PBigIconImageRotate"/>
-                                                </Image.RenderTransform>
-                                            </Image>
+                                            <Image Name="P2PIconImageBig" Source="images/cloud-connected.png"  Height="40" Width="40" />
                                         </dc:ButtonDropDown.Image>
                                         <dc:ButtonDropDown.ImageSmall>
-                                            <Image Name="P2PIconImageSmall" Source="images/peer2peer-connect.png" Height="16" Width="16" RenderTransformOrigin="0.5,0.5">
-                                                <Image.RenderTransform>
-                                                    <RotateTransform x:Name="P2PSmallIconImageRotate"/>
-                                                </Image.RenderTransform>
-                                            </Image>
+                                            <Image Name="P2PIconImageSmall" Source="images/cloud-connected.png" Height="16" Width="16"/>
                                         </dc:ButtonDropDown.ImageSmall>
                                     </dc:ButtonDropDown>
 

@@ -241,6 +241,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job ID ähnelt.
+        /// </summary>
+        public static string _JobList_col_Id {
+            get {
+                return ResourceManager.GetString("_JobList_col_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
         /// </summary>
         public static string _JobList_col_Name {
@@ -445,16 +454,6 @@ namespace CrypCloud.Manager.Properties {
         public static System.Drawing.Bitmap disconnected {
             get {
                 object obj = ResourceManager.GetObject("disconnected", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap earth {
-            get {
-                object obj = ResourceManager.GetObject("earth", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
