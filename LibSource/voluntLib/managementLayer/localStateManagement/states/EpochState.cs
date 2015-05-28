@@ -86,13 +86,13 @@ namespace voluntLib.managementLayer.localStateManagement.states
                 return StateRelation.Equal;
             }
 
-            var thisORCandidate = new BitArray(BitMask).Or(candidateAsEpochState.BitMask);
-            if (AreEqual(thisORCandidate, BitMask))
+            var thisOrCandidate = new BitArray(BitMask).Or(candidateAsEpochState.BitMask);
+            if (AreEqual(thisOrCandidate, BitMask))
             {
                 return StateRelation.IsSuperSet;
             }
 
-            if (AreEqual(thisORCandidate, candidateAsEpochState.BitMask))
+            if (AreEqual(thisOrCandidate, candidateAsEpochState.BitMask))
             {
                 return StateRelation.IsProperSubset;
             }
@@ -206,9 +206,6 @@ namespace voluntLib.managementLayer.localStateManagement.states
                 Logger.Info("Finished");
             }
         }
-        
-
-
 
         #region helper
 
@@ -246,7 +243,14 @@ namespace voluntLib.managementLayer.localStateManagement.states
         public override string ToString()
         {
             var str = "\tEpochNumber: " + EpochNumber + " Bitmask: ";
-            return BitMask.Cast<bool>().Aggregate(str, (current, bit) => current + (bit ? "1" : "0"));
+            try
+            {
+                return BitMask.Cast<bool>().Aggregate(str, (current, bit) => current + (bit ? "1" : "0"));
+            }
+            catch (Exception)
+            {
+                return str;
+            }
         }
 
 
