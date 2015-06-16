@@ -6,15 +6,62 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">    
+    The M-138 is a device used by the US military forces in the middle of the 20th century. It's also known as CSP-845 and was invented by Colonel Parker Hitt
+    in 1916. <newline/>
+    The M-138 offers a periodic polyalphabetic encryption. It contains an aluminium or plastic frame and a set of paper strips that can be put into the frame.
+    The frame can hold 25 strips at a time.
+    Each strip contains the alphabet in a random order. To encrypt a text, the strips are put into the frame so in the first column the cleartext can be read.
+    After that, the user has to choose an offset so in the corresponding column the ciphertext can be read. In case a text is longer than 25 characters,
+    the same stips will be reused after 25 characters and the order of the strips is not changed during an encryption. Due to that, the key contains the 25
+    used strips in the correct order and the chosen offset. The implementation in CrypTool 2 features a set of strips that were provided by cryptologist
+    Klaus Schmeh since the original set of strips was not published. In this case, a set of 100 strips exists, which leads to a keyspace of 2^166 which
+    makes a brute force attack on the encryption unpractical.
   </introduction>
 
   <introduction lang="de-DE">    
   </introduction>
-
+Die M-138 ist ein Verschlüsselungswerkzeug, das in der Mitte des 20. Jahrhunderts von den amerikanischen Streitkräften eingesetzt wurde.  Sie wurde 1916 von
+Colonel Parker Hitt erfunden und ist auch als CSP-845 bekammt. <newline/>
+Die M-138 verwendet eine polzalphabetische Verschlüsselung. Sie besteht aus einem Aluminium- oder Plastikrahmen und einem Satz Papierstreifen, die in den
+Rahmen eingeschoben werden können. In den Rahmen passen untereinander 25 Streifen. Jeder Streifen enthält das Alphabet, wobei die Buchstaben zufällig angeordnet 
+sind. Um einen Text zu verschlüsseln werden die Streifen so in den Rahmen geschoben, dass man in der ersten Spalte den Klartext ablesen kann. Danach kann
+der Benutzer einen Offset auswählen. In dieser Spalte wird dann der Geheimtext abgelesen. Ist der Text länger als 25 Buchstaben, so werden die Streifen in
+der selben Reihenfolge für die darauffolgenden Buchstaben verwendet. Der Schlüssel besteht somit aus den 25 verwendeten Streifen in der richtigen Reihenfolge
+und dem gewählten Offset. Die Implementierung in CrypTool2 verwendet einen von dem Kryptologen Klaus Schmeh entworfenen Streifensatz, da die originalen Streifen
+nicht bekannt sind. In diesem Fall existieren 100 verschiedene Streifen, was bedeutet, dass die Schlüsselraumgröße 2^166 beträgt. Damit ist ein
+Brute-Force Angriff auf die Verschlüsselung nicht sinnvoll.
   <usage lang="en">
   </usage>
 
   <usage lang="de-DE">
+    Die Komponente hat 2 Eingänge, 1 Ausgang und 5 Einstellmöglichkeiten. Als Eingänge müssen der Komponente der zu ver- oder entschlüsselnde Text
+    und der zu verwendende Schlüssel übergeben werden. Dem Ausgang übergibt die Komponente den resultierenden Klar- oder Geheimtext.
+    Der Schlüssel muss dabei im Format "Streifen, Streifen,...,Streifen / Offset" angegeben werden. Welche Zeichen genutzt werden, um innerhalb des Schlüssels
+    die Streifen von dem Offset und die Streifen untereinander zu trennen, kann vom Benutzer in der Komponente eingestellt werden. Dazu werden die Einstellungen
+    "Offset Trennyeichen" und "Streifen Trennzeichen" verwendet. Der Benutzer hat die Auswahl zwischen "/", ";" und ",". Dabei muss darauf geachtet werden, dass
+    für die Trennungen nicht dieselben Zeichen verwendet werden, da die Komponente den Schlüssel ansonsten nicht richtig verarbeiten kann, da es nicht möglich
+    ist, die Streifen eindeutig von dem Offset zu trennen. Eine weitere Einstellung ist die Behandlung von unbekannten Zeichen. Diese legt fest, wie die
+    Komponente beim Ver- und Entschlüsseln mit Zeichen, die nicht zum auf den Streifen verwendeten Alphabet gehören, umgehen soll. Die möglichen Einstellungen
+    sind "Löschen", "Ignorieren" und "Durch ? ersetzen". Wählt der Benutzer "Ignorieren" oder "Durch ? ersetzen", so werden die unbekannten Zeichen beim
+    Ver- und Entschlüsseln nicht beachtet. Im resultierenden Text werden diese Zeichen dann entweder wieder in den Text eingefügt, oder an ihrer Stelle werden
+    "?" in den Text eingefügt. Wählt der Benutzer "Löschen", so werden alle unbekannten Zeichen aus dem Text entfernt. Der resultierende Text kann in diesem
+    fall also kürzer sein als das Original. Es ist wahrscheinlich, dass zu verschlüsselnde Texte so angepasst wurden, dass sie nur auf den Streifen
+    vorhandene Buchstaben enthielten, als die M-138 im Einsatz war. Desweiteren kann der Benutzer festlegen, ob Groß- und Kleinschreibung beachtet werden 
+    sollen oder nicht. Wird
+    diese Checkbox ausgewählt, so wird die Groß- und Kleinschreibung des eingegebenen Textes auch auf den ausgegebenen Text angewendet. Wird die Option
+    nicht ausgewählt, so wird der Text komplett in Großbuchstaben umgewandelt. Dies ist wahrscheinlich die Einstellung, die der originalen M-138 entspricht.
+    Letztendlich muss der Benutzer außerdem einstellen, ob der eingegebene Text mithilfe des gegebenen Schlüssels ver- oder entschlüsselt werden soll. 
+     <newline/>
+    Die Implementierung der M-138 in CrypTool entspricht nicht zu 100% dem originalen Vorbild. Dies liegt einerseits daran, dass bis heute nicht alle
+    Informationen über das Werkzeug bekannt sind. So wurde zum Beispiel ein Streifensatz, den der Krzptologe Klaus Schmeh erstellt hat, genutzt, da die 
+    originalen Streifen nicht bekannt sind. Somit ist es nicht möglich, originale Nachrichten mit Hilfe dieser Komponente zu entschlüsseln.
+    Außerdem ist es mit dieser Komponente möglich, zum Beispiel einen kürzeren Schlüssel als im Original zu verwenden. Während in der M-138 zuerst 25 und
+    in einer späteren Version 30 Streifen als Schlüssel verwendet wurden, ist es in der Komponente möglich, auch kürzere oder längere Schlüssel zu benutzen.
+    In diesem Fall wird zwar eine Warnung ausgegeben, allerdings funktioniert das Ver- und Entschlüsseln trotzdem. Mehr Informationen zur M-138 finden sich
+    unter anderem im Blog von Klaus Schmeh unter http://scienceblogs.de/klausis-krypto-kolumne/m-138-challenge/
+    <newline/>
+    Challenges, die unter Verwendung des in der Komponente verwendeten Streifensatzes gelöst werden können, finden sich auf MisteryTwister, wenn man nach
+    M-138 sucht: https://www.mysterytwisterc3.org 
   </usage>
   
   <presentation lang="en">
