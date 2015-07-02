@@ -36,12 +36,13 @@
                     <Label Name="startLabel" Content="{Loc StartLabel}" Grid.Column="1" />
                     <Label Name="startTime" Style="{StaticResource ValueRow1}" Grid.Column="1" Margin="120,0,0,0" />
                     <Label Name="endLabel" Content="{Loc EndLabel}" HorizontalAlignment="Left" Grid.Column="2" />
+                    <Label Name="speedLabel" Content="{Loc SpeedLabel}" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" />
                     <Label Name="endTime" Style="{StaticResource ValueRow2}" Grid.Column="2" Margin="120,0,0,0"/>
                     <Label Name="elapsedLabel" Content="{Loc ElapsedLabel}" Grid.Column="1" Grid.Row="1" />
                     <Label Name="elapsedTime" Style="{StaticResource ValueRow1}" Grid.Column="1" Grid.Row="1" Margin="120,0,0,0" />
-                    <Label Content="{Loc RemainingLabel}" Grid.Column="2" Grid.Row="1" Visibility="Hidden" />
                     <Label Name="timeLeft" Style="{StaticResource ValueRow2}" Grid.Column="2" Grid.Row="1" Margin="120,0,0,0" />
                     <Label Content="{Loc CurrentAnalysedKeylengthLabel}" Grid.Column="2" Grid.Row="2"/>
+                    <Label Name="currentSpeed" Style="{StaticResource ValueRow2}" Margin="120,0,0,0" Grid.Column="2" Grid.Row="1" />
                     <Label Name="currentAnalysedKeylength" Style="{StaticResource ValueRow2}" Margin="230,0,0,0" Grid.Column="2" Grid.Row="2" />
                 </Grid>
             </Border>

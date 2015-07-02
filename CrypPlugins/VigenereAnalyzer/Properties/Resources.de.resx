@@ -220,6 +220,9 @@ Hillclimbing.</value>
     <value>Anzahl der Neustarts, die während des Hillclimbings
 durchgeführt werden sollen.</value>
   </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Schlüssel/Sekunde:</value>
+  </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Startzeit:</value>
   </data>

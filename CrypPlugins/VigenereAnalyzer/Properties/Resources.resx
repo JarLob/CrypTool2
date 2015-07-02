@@ -246,4 +246,7 @@
   <data name="TopTenLabel" xml:space="preserve">
     <value>Bestlist</value>
   </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Keys/second:</value>
+  </data>
 </root>

@@ -238,6 +238,9 @@ namespace Cryptool.VigenereAnalyzer
             var random = new Random(Guid.NewGuid().GetHashCode());
             var totalrestarts = restarts;
 
+            var lasttime = DateTime.Now;
+            var keys = 0;
+
             while (restarts > 0)
             {
                 //generate random key:
@@ -265,6 +268,7 @@ namespace Cryptool.VigenereAnalyzer
                             copykey[i] = j;
                             var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, copykey, numvigalphabet) :
                                 DecryptAutokeyOwnAlphabet(ciphertext, copykey, numvigalphabet);
+                            keys++;
                             var costvalue = CalculateQuadgramCost(ngrams4, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(ngrams4, copykey) : 0);
                             if (costvalue > bestkeycost)
                             {
@@ -279,6 +283,24 @@ namespace Cryptool.VigenereAnalyzer
                             if (_stopped)
                             {
                                 return;
+                            }
+                            if (DateTime.Now >= lasttime.AddMilliseconds(1000))
+                            {
+                                var keys_dispatcher = keys;
+                                Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                {
+                                    try
+                                    {
+                                        _presentation.currentSpeed.Content = keys_dispatcher;
+                                    }
+                                    // ReSharper disable once EmptyGeneralCatchClause
+                                    catch (Exception)
+                                    {
+                                        //wtf?
+                                    }
+                                }, null);
+                                keys = 0;
+                                lasttime = DateTime.Now;
                             }
                         }
                     }

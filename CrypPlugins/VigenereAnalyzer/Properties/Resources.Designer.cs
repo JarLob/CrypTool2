@@ -358,6 +358,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keys/second: ähnelt.
+        /// </summary>
+        public static string SpeedLabel {
+            get {
+                return ResourceManager.GetString("SpeedLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Start Time: ähnelt.
         /// </summary>
         public static string StartLabel {
