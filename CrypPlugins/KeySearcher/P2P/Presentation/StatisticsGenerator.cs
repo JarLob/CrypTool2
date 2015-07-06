@@ -39,7 +39,7 @@ namespace KeySearcher.P2P.Presentation
 
             var keyPattern = new KeyPattern.KeyPattern(keySearcher.ControlMaster.GetKeyPattern())
                                  {WildcardKey = settings.Key};
-            var keysPerChunk = Math.Pow(2, settings.ChunkSize);
+            var keysPerChunk = Math.Pow(2, settings.NumberOfBlocks);
             var keyPatternPool = new KeyPatternPool(keyPattern, new BigInteger(keysPerChunk));
 
             TotalAmountOfChunks = keyPatternPool.Length;

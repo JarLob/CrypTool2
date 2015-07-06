@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.ACloudTest
 
         #endregion
 
-        public ACloudTest(): base(1000){}
+        public ACloudTest(): base(){}
 
         public override ISettings Settings
         {
@@ -49,6 +49,7 @@ namespace Cryptool.Plugins.ACloudTest
         public override UserControl Presentation
         {
             get { return null; }
+            set {  }
         }
 
         public override void Initialize()

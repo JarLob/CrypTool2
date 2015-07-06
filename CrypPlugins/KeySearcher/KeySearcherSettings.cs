@@ -63,9 +63,6 @@ namespace KeySearcher
             for (int i = -1; i < Environment.ProcessorCount; i++)
                 CoresAvailable.Add((i + 1).ToString());
             CoresUsed = Environment.ProcessorCount - 1;
-
-            chunkSize = 21;
-
             KeyManager = new SimpleKeyManager("");
         }
 
@@ -144,11 +141,7 @@ namespace KeySearcher
         [TaskPane( "UsePeerToPeerCaption", "UsePeerToPeerTooltip", "GroupPeerToPeer", 0, false, ControlType.CheckBox)]
         public bool UsePeerToPeer
         {
-            get
-            {
-                UsePeerToPeer = false;
-                return false;
-            }
+            get { return usePeerToPeer; }
             set
             {
                 if (value != usePeerToPeer)
@@ -159,74 +152,18 @@ namespace KeySearcher
             }
         }
 
-        private bool autoconnectPeerToPeer;
-        [TaskPane( "AutoconnectPeerToPeerCaption", "AutoconnectPeerToPeerTooltip", "GroupPeerToPeer", 1, false, ControlType.CheckBox)]
-        public bool AutoconnectPeerToPeer
+        private int numberOfBlocks;
+        [TaskPane( "ChunkSizeCaption", "ChunkSizeTooltip", "GroupPeerToPeer", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 128)]
+        public int NumberOfBlocks
         {
-            get { return autoconnectPeerToPeer; }
+            get { return numberOfBlocks; }
             set
             {
-                if (value != autoconnectPeerToPeer)
+                if (value != numberOfBlocks)
                 {
-                    autoconnectPeerToPeer = value;
-                    OnPropertyChanged("AutoconnectPeerToPeer");
+                    numberOfBlocks = value;
+                    OnPropertyChanged("NumberOfBlocks"); 
                 }
-            }
-        }
-
-        private bool verbosePeerToPeerDisplay;
-        [TaskPane( "VerbosePeerToPeerDisplayCaption", "VerbosePeerToPeerDisplayTooltip", "GroupPeerToPeer", 2, true, ControlType.CheckBox)]
-        public bool VerbosePeerToPeerDisplay
-        {
-            get { return verbosePeerToPeerDisplay; }
-            set
-            {
-                if (value != verbosePeerToPeerDisplay)
-                {
-                    verbosePeerToPeerDisplay = value;
-                    OnPropertyChanged("VerbosePeerToPeerDisplay");
-                }
-            }
-        }
-
-        private int chunkSize;
-        [TaskPane( "ChunkSizeCaption", "ChunkSizeTooltip", "GroupPeerToPeer", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 1000)]
-        public int ChunkSize
-        {
-            get { return chunkSize; }
-            set
-            {
-                if (value != chunkSize)
-                {
-                    chunkSize = value;
-                    OnPropertyChanged("ChunkSize");
-                }
-            }
-        }
-
-        [TaskPane( "StatusKeyButtonCaption", "StatusKeyButtonTooltip", "GroupPeerToPeer", 4, true, ControlType.Button)]
-        public void StatusKeyButton()
-        {
-            if (!keysearcher.IsKeySearcherRunning)
-            {
-                keysearcher.GuiLogMessage(Resources.KeySearcher_must_be_running_to_copy_the_status_key_, NotificationLevel.Error);
-                return;
-            }
-
-            var generator = new StorageKeyGenerator(keysearcher, this);
-            var statusKey = generator.GenerateStatusKey();
-
-            try
-            {
-                Clipboard.SetDataObject(statusKey, true);
-                keysearcher.GuiLogMessage(string.Format(Resources.Status_key___0___has_been_copied_to_clipboard_, statusKey),
-                          NotificationLevel.Info);
-            }
-            catch(ExternalException e)
-            {
-                // TODO: externalize
-                keysearcher.GuiLogMessage(string.Format("Accessing clipboard has failed, please try again later: {0}", e.Message), NotificationLevel.Error);
-                return;
             }
         }
 

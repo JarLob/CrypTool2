@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Xml.Linq;
 using Cryptool.PluginBase;
 using System.IO;
+using System.Xml;
 using Cryptool.PluginBase.Miscellaneous;
 using WorkspaceManagerModel.Properties;
 
@@ -63,6 +64,14 @@ namespace WorkspaceManager.Model
             PersistantModel persistantModel = (PersistantModel)XMLSerialization.XMLSerialization.Deserialize(writer);
             WorkspaceModel workspacemodel = persistantModel.WorkspaceModel;
             restoreSettings(persistantModel, workspacemodel);
+            return workspacemodel;
+        }
+
+        public WorkspaceModel loadModel(XmlDocument filename)
+        {
+            PersistantModel persistantModel = (PersistantModel)XMLSerialization.XMLSerialization.Deserialize(filename);
+            WorkspaceModel workspacemodel = persistantModel.WorkspaceModel;
+            restoreSettings(persistantModel, workspacemodel); 
             return workspacemodel;
         }
 
@@ -374,6 +383,7 @@ namespace WorkspaceManager.Model
             }
         }
 
+      
     }
 
     /// <summary>

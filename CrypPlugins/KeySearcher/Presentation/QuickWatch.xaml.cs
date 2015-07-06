@@ -50,7 +50,6 @@ namespace KeySearcherPresentation
             set
             {
                 SetValue(IsOpenCLEnabledProperty, value);
-                P2PQuickWatchPresentation.IsOpenCLEnabled = value;
                 LocalQuickWatchPresentation.IsOpenCLEnabled = value;
             }
         }
@@ -59,10 +58,7 @@ namespace KeySearcherPresentation
         {
             get
             {
-                if (IsP2PEnabled)
-                    return P2PQuickWatchPresentation.OpenCLPresentation;
-                else
-                    return LocalQuickWatchPresentation.OpenCLPresentation;
+               return LocalQuickWatchPresentation.OpenCLPresentation;
             }
         }
 

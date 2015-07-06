@@ -138,7 +138,10 @@ namespace voluntLib.communicationLayer.communicator
 
             if (lastOutboundPackets.Count >= 5)
             {
-                lastOutboundPackets.Remove(lastOutboundPackets.First());
+                lock (lastOutboundPackets)
+                {
+                    lastOutboundPackets.Remove(lastOutboundPackets.First());
+                }
             }
 
             try
@@ -146,7 +149,7 @@ namespace voluntLib.communicationLayer.communicator
                 sender.Send(bytes, bytes.Length, new IPEndPoint(multicastIP, port));
             } catch (Exception e)
             {
-                Logger.Error(e.Message);
+                Logger.Error(e.Message + " message-length: " + bytes.Length + " message-type: " + data.Header.MessageType);
             }
         }
 

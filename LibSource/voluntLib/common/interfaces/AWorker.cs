@@ -12,7 +12,7 @@ public abstract class AWorker
 {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public byte[] JobID { get; set; }
-        public abstract CalculationResult DoWork(byte[] jobPayload, BigInteger blockID, CancellationToken cancelToken);
+        public abstract CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken);
 
         public event EventHandler<TaskEventArgs> ProgressChanged;
 

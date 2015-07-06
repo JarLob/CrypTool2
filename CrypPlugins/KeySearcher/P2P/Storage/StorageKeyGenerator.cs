@@ -23,7 +23,7 @@ namespace KeySearcher.P2P.Storage
 
             // Add simple data
             var rawIdentifier = "P2PJOB";
-            rawIdentifier += settings.ChunkSize + settings.Key;
+            rawIdentifier += settings.NumberOfBlocks + settings.Key;
             rawIdentifier += keySearcher.ControlMaster.GetType();
             rawIdentifier += keySearcher.CostMaster.GetType();
             rawIdentifier += bytesToUse;

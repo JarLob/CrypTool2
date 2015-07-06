@@ -24,32 +24,24 @@ namespace KeySearcherPresentation.Controls
         {
             InitializeComponent();
         }
-
-        public static readonly DependencyProperty IsOpenCLEnabledProperty =
-            DependencyProperty.Register("IsOpenCLEnabled",
-                        typeof(Boolean),
-                        typeof(P2PQuickWatchPresentation), new PropertyMetadata(false));
-
-        public Boolean IsOpenCLEnabled
-        {
-            get { return (Boolean)GetValue(IsOpenCLEnabledProperty); }
-            set { SetValue(IsOpenCLEnabledProperty, value); }
-        }
-
+        
         public void UpdateSettings(KeySearcher.KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
         {
-            IsVerboseEnabled = keySearcherSettings.VerbosePeerToPeerDisplay;
+            IsVerboseEnabled = false;
 
-            if (keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.ChunkSize == 0)
+            if (keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.NumberOfBlocks == 0)
             {
                 return;
             }
 
-            var keyPattern = new KeyPattern(keySearcher.ControlMaster.GetKeyPattern())
-                                 {WildcardKey = keySearcherSettings.Key};
-            var keysPerChunk = Math.Pow(2, keySearcherSettings.ChunkSize);
-            var keyPatternPool = new KeyPatternPool(keyPattern, new BigInteger(keysPerChunk));
+            var keyPattern = new KeyPattern(keySearcher.ControlMaster.GetKeyPattern()) {WildcardKey = keySearcherSettings.Key};
+            var keysPerChunk = keyPattern.size() / BigInteger.Pow(2, keySearcherSettings.NumberOfBlocks);
+            if (keysPerChunk < 1)
+            {
+                keySearcherSettings.NumberOfBlocks = (int) BigInteger.Log(keyPattern.size(), 2);
+            }
 
+            var keyPatternPool = new KeyPatternPool(keyPattern, keysPerChunk);
             if (keyPatternPool.Length > 9999999999)
             {
                 TotalAmountOfChunks.Content = keyPatternPool.Length.ToString().Substring(0, 10) + "...";
@@ -58,19 +50,11 @@ namespace KeySearcherPresentation.Controls
             {
                 TotalAmountOfChunks.Content = keyPatternPool.Length;
             }
-
             KeysPerChunk.Content = keysPerChunk;
-            TestedBits.Content = Math.Ceiling(Math.Log((double) keyPatternPool.Length*keysPerChunk, 2));
+
+            TestedBits.Content = Math.Ceiling(Math.Log((double) BigInteger.Multiply(keyPatternPool.Length, keysPerChunk), 2));
         }
 
-        private QuickWatch ParentQuickWatch
-        {
-            get { return (QuickWatch)((Grid)((Grid)Parent).Parent).Parent; }
-        }
-
-        private void SwitchView(object sender, RoutedEventArgs e)
-        {
-            ParentQuickWatch.ShowStatistics = true;
-        }
+        
     }
 }

@@ -146,10 +146,10 @@ namespace CrypCloud.Core
                 return null;
             }
 
-            var cloudComponents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudComponent);
+            var cloudComponents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
             foreach (var cloudComponent in cloudComponents)
             {
-                ((ACloudComponent) cloudComponent.Plugin).JobID = jobId;
+                ((ACloudCompatible)cloudComponent.Plugin).JobID = jobId;
             }
             return workspaceOfJob;
         }
@@ -174,12 +174,12 @@ namespace CrypCloud.Core
             return jobID != -1;
         }
 
-        private static ACloudComponent GetCloudComponent(WorkspaceModel workspaceModel)
+        private static ACloudCompatible GetCloudComponent(WorkspaceModel workspaceModel)
         {
             try
             {
-                var cloudModel = workspaceModel.GetAllPluginModels().First(pluginModel => pluginModel.Plugin is ACloudComponent);
-                return cloudModel.Plugin as ACloudComponent;
+                var cloudModel = workspaceModel.GetAllPluginModels().First(pluginModel => pluginModel.Plugin is ACloudCompatible);
+                return cloudModel.Plugin as ACloudCompatible;
             }
             catch
             {
@@ -193,7 +193,7 @@ namespace CrypCloud.Core
         public event Action<bool> ConnectionStateChanged;
 
         public event Action JobListChanged;
-        public event Action JobStateChanged;
+        public event Action<JobProgressEventArgs> JobStateChanged;
 
         protected virtual void OnConnectionStateChanged(bool connected)
         {
@@ -210,7 +210,7 @@ namespace CrypCloud.Core
         protected virtual void OnJobStateChanged(object sender, JobProgressEventArgs jobProgressEventArgs)
         {
             var handler = JobStateChanged;
-            if (handler != null) handler();
+            if (handler != null) handler(jobProgressEventArgs);
         }
 
         protected virtual void OnApplicationLog(object sender, GuiLogEventArgs arg)

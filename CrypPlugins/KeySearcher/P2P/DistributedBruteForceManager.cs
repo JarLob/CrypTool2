@@ -47,9 +47,9 @@ namespace KeySearcher.P2P
             _keyPoolTreePresentation = keyPoolTreePresentation;
 
             // TODO when setting is still default (21), it is only displayed as 21 - but the settings-instance contains 0 for that key!
-            if (settings.ChunkSize == 0)
+            if (settings.NumberOfBlocks == 0)
             {
-                settings.ChunkSize = 21;
+                settings.NumberOfBlocks = 3;
             }
 
             StopWatch = new Stopwatch();
@@ -57,7 +57,7 @@ namespace KeySearcher.P2P
             status.IsCurrentProgressIndeterminate = true;
 
             keyGenerator = new StorageKeyGenerator(keySearcher, settings);
-            patternPool = new KeyPatternPool(keyPattern, new BigInteger(Math.Pow(2, settings.ChunkSize)));
+            patternPool = new KeyPatternPool(keyPattern, new BigInteger(Math.Pow(2, settings.NumberOfBlocks)));
             StatisticsGenerator = new StatisticsGenerator(status, quickWatch, keySearcher, settings, this);
             quickWatch.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(UpdateStatusContainerInQuickWatch));
 

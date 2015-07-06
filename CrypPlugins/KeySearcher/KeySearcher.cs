@@ -31,6 +31,8 @@ using System.Threading;
 using System.Windows.Threading;
 using Cryptool.PluginBase.IO;
 using System.Numerics;
+using CrypCloud.Core.CloudComponent;
+using KeySearcher.CrypCloud;
 using KeySearcher.Helper;
 using KeySearcher.KeyPattern;
 using KeySearcher.P2P;
@@ -48,7 +50,7 @@ namespace KeySearcher
     [Author("Sven Rech, Nils Kopal, Raoul Falk, Dennis Nolte", "rech@cryptool.org", "Uni Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("KeySearcher.Properties.Resources", "PluginCaption", "PluginTooltip", "KeySearcher/DetailedDescription/doc.xml", "KeySearcher/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
-    public class KeySearcher : ICrypComponent
+    public class KeySearcher : ACloudCompatible
     {
         /// <summary>
         /// used for creating the UserStatistics
@@ -78,7 +80,6 @@ namespace KeySearcher
         // GUI
         private readonly P2PQuickWatchPresentation p2PQuickWatchPresentation;
         private readonly LocalQuickWatchPresentation localQuickWatchPresentation;
-        private readonly KeyPoolTreePresentation keyPoolTreePresentation;
 
         private HashSet<string> alreadyIntegratedNodes = new HashSet<string>();
 
@@ -110,6 +111,7 @@ namespace KeySearcher
 
         internal bool update;
 
+
         #region IControlEncryption + IControlCost + InputFields
 
         #region IControlEncryption Members
@@ -137,6 +139,8 @@ namespace KeySearcher
                     controlMaster = null;
             }
         }
+
+
 
         #endregion
 
@@ -230,6 +234,7 @@ namespace KeySearcher
             private set
             {
                 top1ValueKey = value;
+                top1Key = value.keya;
                 top1FullPlaintext = sender.Decrypt(this.encryptedData, value.keya, this.initVector);
 
                 OnPropertyChanged("Top1Message");
@@ -239,21 +244,25 @@ namespace KeySearcher
         }
 
         [PropertyInfo(Direction.OutputData, "Top1MessageCaption", "Top1MessageTooltip")]
-        public virtual byte[] Top1Message
+        public byte[] Top1Message
         {
-            get { return top1FullPlaintext; }
-        }
-        [PropertyInfo(Direction.OutputData, "Top1KeyCaption", "Top1KeyTooltip")]
-        public virtual byte[] Top1Key
-        {
-            get
+            get { return top1FullPlaintext;  }
+            private set
             {
-                if (top1ValueKey.key != null)
-                {
-                    return top1ValueKey.keya;
-                }
-                else
-                    return null;
+                top1FullPlaintext = value;
+                OnPropertyChanged("Top1Message");
+            }
+        }
+
+        private byte[] top1Key;
+        [PropertyInfo(Direction.OutputData, "Top1KeyCaption", "Top1KeyTooltip")]
+        public byte[] Top1Key
+        {
+            get { return top1Key; }
+            private set
+            {
+                top1Key = value;
+                OnPropertyChanged("Top1Key");
             }
         }
 
@@ -261,9 +270,9 @@ namespace KeySearcher
 
         #region IPlugin Members
 
-        public event StatusChangedEventHandler OnPluginStatusChanged;
-        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
+        public override event StatusChangedEventHandler OnPluginStatusChanged;
+        public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         private KeySearcherSettings settings;
         private AutoResetEvent connectResetEvent;
@@ -318,9 +327,7 @@ namespace KeySearcher
                 Presentation = new QuickWatch();
                 localQuickWatchPresentation = ((QuickWatch)Presentation).LocalQuickWatchPresentation;
                 p2PQuickWatchPresentation = ((QuickWatch)Presentation).P2PQuickWatchPresentation;
-                p2PQuickWatchPresentation.UpdateSettings(this, settings);
-
-                keyPoolTreePresentation = ((QuickWatch)Presentation).StatisticsPresentation.KeyPoolTreePresentation;
+                p2PQuickWatchPresentation.UpdateSettings(this, settings); 
 
                 settings.PropertyChanged += SettingsPropertyChanged;
                 ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
@@ -346,24 +353,24 @@ namespace KeySearcher
             p2PQuickWatchPresentation.UpdateSettings(this, settings);
         }
 
-        public ISettings Settings
+        public override ISettings Settings
         {
             get { return settings; }
         }
 
-        public UserControl Presentation
+        public override UserControl Presentation
         {
             get;
-            private set;
+            set;
         }
 
-        public void PreExecution()
+        public override void PreExecution()
         {
             update = false;
         }
 
         // because Encryption PlugIns were changed radical, the new StartPoint is here - Arnie 2010.01.12
-        public virtual void Execute()
+        public override void Execute()
         {
             IsKeySearcherFinished = false;
             try
@@ -388,23 +395,27 @@ namespace KeySearcher
             }
         }
 
-        public void PostExecution()
+        public override void PostExecution()
         {
         }
 
-        public void Stop()
+        public override void Stop()
         {
             IsKeySearcherRunning = false;
             stop = true;
             waitForExternalClientToFinish.Set();
+            if (cloudKeySearcher != null)
+            {
+                cloudKeySearcher.Stop();
+            }
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
         }
 
@@ -928,33 +939,8 @@ namespace KeySearcher
             // set short ciphertext
             Array.Copy(dataInput, omitBlocks * blockSize, dataOutput, 0, dataOutput.Length);
         }
-
-        private void BruteForceWithPeerToPeerSystem()
-        {
-            if (!update)
-            {
-                GuiLogMessage(Resources.Launching_p2p_based_bruteforce_logic___, NotificationLevel.Info);
-
-                //DistributedBruteforceManager calculation
-                try
-                {
-                    distributedBruteForceManager = new DistributedBruteForceManager(this, pattern, settings,
-                                                                                    keyQualityHelper,
-                                                                                    p2PQuickWatchPresentation, keyPoolTreePresentation);
-                    distributedBruteForceManager.Execute();
-                } 
-                catch (KeySearcherStopException)
-                {
-                    update = true;
-                    return;
-                }
-            }
-            else
-            {
-                GuiLogMessage(Resources.Keysearcher_Fullstop__Please_Update_your_Version_, NotificationLevel.Error);
-                Thread.Sleep(3000);
-            }
-        }
+        
+       
 
         internal LinkedList<ValueKey> BruteForceWithLocalSystem(KeyPattern.KeyPattern pattern, bool redirectResultsToStatisticsGenerator = false)
         {
@@ -1434,12 +1420,13 @@ namespace KeySearcher
         private int cMachines = 0;
         private DateTime memTime = DateTime.UtcNow;
         private BigInteger memKeys = 0;
+
         /// <summary>
         /// Initialisation for fixed and current values every utime/30 minutes
         /// </summary>
         public void InitialiseInformationQuickwatch()
         {
-            if (Pattern == null || !Pattern.testWildcardKey(settings.Key) || settings.ChunkSize == 0)
+            if (Pattern == null || !Pattern.testWildcardKey(settings.Key) || settings.NumberOfBlocks == 0)
             {
                 return;
             }
@@ -1449,7 +1436,7 @@ namespace KeySearcher
             int interval = settings.UpdateTime > 0 ? settings.UpdateTime : 30;
             var now = DateTime.UtcNow;
             var keyPattern = Pattern;
-            var keysPerChunk = Math.Pow(2, settings.ChunkSize);
+            var keysPerChunk = Math.Pow(2, settings.NumberOfBlocks);
             var keyPatternPool = new KeyPatternPool(keyPattern, new BigInteger(keysPerChunk));
 
             //---Aggregate----
@@ -1475,7 +1462,7 @@ namespace KeySearcher
             //if we have two time values to compare
             if(memory)
             {
-                var keysnow = calculatedChunks()*(BigInteger) Math.Pow(2, settings.ChunkSize);
+                var keysnow = calculatedChunks()*(BigInteger) Math.Pow(2, settings.NumberOfBlocks);
                 var timenow = DateTime.UtcNow;
 
                 var difftime = (BigInteger) timenow.Subtract(memTime).TotalSeconds;
@@ -1490,7 +1477,7 @@ namespace KeySearcher
             }
             else
             {
-                memKeys = calculatedChunks() * (BigInteger)Math.Pow(2, settings.ChunkSize);
+                memKeys = calculatedChunks() * (BigInteger)Math.Pow(2, settings.NumberOfBlocks);
                 memTime = DateTime.UtcNow;
                 memory = true;
             }
@@ -1628,7 +1615,7 @@ namespace KeySearcher
             {
                 var diffFromStart = DateTime.UtcNow.ToLocalTime().Subtract(startDate);
                 var calcChunks = calculatedChunks();
-                var calcKeys = calcChunks*(BigInteger) Math.Pow(2, settings.ChunkSize);
+                var calcKeys = calcChunks*(BigInteger) Math.Pow(2, settings.NumberOfBlocks);
                 ((QuickWatch)Presentation).StatisticsPresentation.Statistics = statistic;
                 ((QuickWatch)Presentation).StatisticsPresentation.MachineHierarchy = machineHierarchy;
                 ((QuickWatch)Presentation).StatisticsPresentation.Days = diffFromStart.Days.ToString();
@@ -1744,7 +1731,15 @@ namespace KeySearcher
                     else
                     {
                         //else make a new entry
-                        machineHierarchy.Add(mid, new MachInfo() { Sum = Maschines[mid].Count, Hostname = Maschines[mid].Hostname, Users = "| " + avatar + " | ", Date = Maschines[mid].Date, Current = Maschines[mid].Current, Dead = Maschines[mid].Dead });
+                        machineHierarchy.Add(mid, new MachInfo
+                        {
+                            Sum = Maschines[mid].Count,
+                            Hostname = Maschines[mid].Hostname,
+                            Users = "| " + avatar + " | ",
+                            Date = Maschines[mid].Date,
+                            Current = Maschines[mid].Current,
+                            Dead = Maschines[mid].Dead
+                        });
                     }
                 }
             }
@@ -1935,7 +1930,7 @@ namespace KeySearcher
 
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)
         {
@@ -1989,7 +1984,7 @@ namespace KeySearcher
             public byte[] keya;
             public string user { get; set; }
             public DateTime time { get; set; }
-            public long maschid { get; set; }
+            public long maschid { get; set; } 
             public string maschname { get; set; }
         };
 
@@ -2029,5 +2024,68 @@ namespace KeySearcher
 
             return res;
         }
+
+        #region cloud key searcher
+
+        private CloudKeySearcher cloudKeySearcher;
+
+        private void BruteForceWithPeerToPeerSystem()
+        {
+            byte[] optimizedInitVector;
+            var optimizedCryp = OptimizedCryp(out optimizedInitVector);
+
+            var jobDataContainer = new JobDataContainer
+            {
+                JobId = JobID,
+                BytesToUse = bytesToUse,
+                InitVector = optimizedInitVector,
+                Cryp = optimizedCryp,
+                CryptoAlgorithm = ControlMaster,
+                CostAlgorithm = CostMaster,
+                NumberOfBlocks = BigInteger.Pow(2, settings.NumberOfBlocks)
+            };
+
+            if (cloudKeySearcher != null)
+            {
+                cloudKeySearcher.Stop();
+            }
+
+            cloudKeySearcher = new CloudKeySearcher(jobDataContainer, Pattern, p2PQuickWatchPresentation, this);
+            cloudKeySearcher.Start();
+        }
+
+        private byte[] OptimizedCryp(out byte[] optimizedInitVector)
+        {
+            byte[] optimizedCryp; 
+
+            SkipBlocks(encryptedData, initVector, CostMaster.GetBytesOffset(), out optimizedCryp, out optimizedInitVector);
+            if (optimizedCryp == null || optimizedCryp.Length > 0)
+            {
+                optimizedCryp = encryptedData;
+            }
+
+            if (optimizedInitVector == null || optimizedInitVector.Length > 0)
+            {
+                optimizedInitVector = initVector;
+            }
+            return optimizedCryp;
+        }
+
+        public void SetTop1Entry(KeyResultEntry result)
+        { 
+            Top1Message = sender.Decrypt(this.encryptedData, result.KeyBytes, this.initVector);
+            Top1Key = result.KeyBytes;
+        }
+
+        public override BigInteger NumberOfBlocks
+        {
+            get
+            {
+                return BigInteger.Pow(2, settings.NumberOfBlocks);
+            }
+        }
+
+        #endregion
+       
     }
 }

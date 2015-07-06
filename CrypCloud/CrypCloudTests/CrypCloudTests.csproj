@@ -90,6 +90,10 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CrypPlugins\KeySearcher\KeySearcher.csproj">
+      <Project>{0579E099-66B2-43C3-B8A0-43CAE4895E68}</Project>
+      <Name>KeySearcher</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\LibSource\CertificateLibrary\CertificateLibrary.csproj">
       <Project>{ABA78840-2321-4DD3-91C6-84CC722D794B}</Project>
       <Name>CertificateLibrary</Name>

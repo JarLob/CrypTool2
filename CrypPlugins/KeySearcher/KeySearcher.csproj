@@ -85,15 +85,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrypCloud\CloudKeySearcher.cs" />
     <Compile Include="Converter\TimeSpanToStringConverter.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
     <Compile Include="Converter\LongToSizeMetricString.cs" />
     <Compile Include="Converter\TrueToVisibleOrCollapsedConverter.cs" />
     <Compile Include="Converter\FalseToVisibleConverter.cs" />
     <Compile Include="Converter\TrueToVisibleConverter.cs" />
+    <Compile Include="CrypCloud\Worker.cs" />
+    <Compile Include="CrypCloud\CalculationTemplate.cs" />
+    <Compile Include="CrypCloud\model\KeyResultEntry.cs" />
+    <Compile Include="CrypCloud\model\StatusContainer.cs" />
     <Compile Include="Helper\KeyQualityHelper.cs" />
     <Compile Include="Helper\MachineName.cs" />
     <Compile Include="Information.cs" />
+    <Compile Include="CrypCloud\model\JobDataContainer.cs" />
     <Compile Include="KeyPattern\ListKeyMovement.cs" />
     <Compile Include="KeyPattern\KeyPattern.cs" />
     <Compile Include="KeyPattern\KeyPatternPool.cs" />
@@ -141,6 +147,7 @@
     <Compile Include="Presentation\Controls\KeyPoolTreePresentation.xaml.cs">
       <DependentUpon>KeyPoolTreePresentation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Converter\ByteArrayToHexStringConverter.cs" />
     <Compile Include="Presentation\QuickWatch.xaml.cs">
       <DependentUpon>QuickWatch.xaml</DependentUpon>
     </Compile>
@@ -163,6 +170,10 @@
     <Compile Include="Server\Server.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
+      <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
+      <Name>CrypCloudCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
@@ -172,6 +183,10 @@
       <Project>{FD4214D8-FFB9-406F-9202-BB5EC0645E8F}</Project>
       <Name>KeyTextBox</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
+      <Project>{00382C7A-8812-483F-8984-5A3612DE5285}</Project>
+      <Name>voluntLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\CostFunction\CostFunction.csproj">
       <Project>{3C72FF93-48C2-4929-B3B2-83F165AAE636}</Project>

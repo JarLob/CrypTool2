@@ -35,7 +35,7 @@ namespace CrypCloud.Manager.ViewModels
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += RunInUiContext(UpdateJobList);
-            crypCloudCore.JobStateChanged += RunInUiContext(UpdateJobList);
+            crypCloudCore.JobStateChanged += (it) => RunInUiContext(UpdateJobList);
             UpdateJobList();
         }
         

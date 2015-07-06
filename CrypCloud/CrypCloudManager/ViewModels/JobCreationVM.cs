@@ -1,4 +1,5 @@
-﻿using System; 
+﻿using System;
+using System.IO;
 using System.Numerics; 
 using CrypCloud.Core; 
 using CrypCloud.Manager.Services;
@@ -64,8 +65,7 @@ namespace CrypCloud.Manager.ViewModels
         {
             try
             {
-                var pModel = (PersistantModel)XMLSerialization.XMLSerialization.Deserialize(filePath, true);
-                return pModel.WorkspaceModel;
+                return new ModelPersistance().loadModel(filePath);
             }
             catch (Exception)
             {

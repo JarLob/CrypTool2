@@ -13,12 +13,12 @@ namespace CrypCloud.Core.CloudComponent
             this.cloudComponent = cloudComponent;
         }
 
-        public override CalculationResult DoWork(byte[] jobPayload, BigInteger blockID, CancellationToken cancelToken)
+        public override CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken)
         {
             return new CalculationResult
             {
-                BlockID = blockID,
-                LocalResults = cloudComponent.CalculateBlock(blockID, cancelToken)
+                BlockID = blockId,
+                LocalResults = cloudComponent.CalculateBlock(blockId, cancelToken)
             };
         }
     } 

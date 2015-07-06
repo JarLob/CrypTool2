@@ -219,8 +219,8 @@ namespace CrypCloudTests
 
         internal class DummyCloudPlugin : ACloudComponent
         {
-            public DummyCloudPlugin(BigInteger numOfblocks)
-                : base(numOfblocks)
+            public DummyCloudPlugin()
+                : base()
             { 
             }
 
@@ -232,6 +232,7 @@ namespace CrypCloudTests
             public override UserControl Presentation
             {
                 get { return null; }
+                set {  }
             }
 
             public override List<byte[]> CalculateBlock(BigInteger blockId, CancellationToken cancelToken)
@@ -278,7 +279,7 @@ namespace CrypCloudTests
         public static WorkspaceModel CreateValidWorkspaceModel(BigInteger numOfblocks)
         {
             var workspaceModel = new WorkspaceModel();
-            var componentMock = new DummyCloudPlugin(numOfblocks);
+            var componentMock = new DummyCloudPlugin();
             var pluginModel = new PluginModel();
             var accessor = new PrivateObject(pluginModel);
             accessor.SetFieldOrProperty("Plugin", componentMock);

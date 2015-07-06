@@ -9,35 +9,21 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace CrypCloud.Core.CloudComponent
 {
-    public abstract class ACloudComponent : ICrypComponent
+    public abstract class ACloudComponent : ACloudCompatible
     {
         private readonly CrypCloudCore cryptCloudCore = CrypCloudCore.Instance;
         private readonly CalculationTemplate calculationTemplate;
         private CancellationTokenSource offlineCancellation;
         
-        protected ACloudComponent(BigInteger numberOfBlocks)
+        protected ACloudComponent()
         {
-            NumberOfBlocks = numberOfBlocks;
-            JobID = -1;
             calculationTemplate = new CalculationTemplate(this);
             CurrentBestlist = new List<byte[]>();
-        }
-
-        /// <summary>
-        /// Number Of Blocks that should be calculated.
-        /// Has to be set before starting
-        /// </summary>
-        public BigInteger NumberOfBlocks { get; protected set; }
-
-        /// <summary>
-        /// JobId of bound networkjob.
-        /// If its -1 its not bound to any networkjob
-        /// </summary>
-        public BigInteger JobID { get; set; }
+        } 
 
         public List<byte[]> CurrentBestlist { get; private set; }
        
-        public void Stop()
+        public override void Stop()
         {
             if (IsOnline()) 
                 cryptCloudCore.StopLocalCalculation(JobID);
@@ -47,7 +33,7 @@ namespace CrypCloud.Core.CloudComponent
             StopLocal();
         }
 
-        public void PreExecution()
+        public override void PreExecution()
         {
 
             GuiLogMessage("preEx isOnline: " + IsOnline(), NotificationLevel.Error);
@@ -69,14 +55,7 @@ namespace CrypCloud.Core.CloudComponent
             }
         }
         
-        /// <summary>
-        /// Determine if this component is linked to a Networkjob
-        /// </summary>
-        /// <returns></returns>
-        public bool IsOnline()
-        {
-            return JobID != -1;
-        }
+     
 
         #region abstract member
 
@@ -105,26 +84,11 @@ namespace CrypCloud.Core.CloudComponent
         public abstract void StopLocal();
 
         #endregion
-
-        #region abstract member of ICrypComponent
-
-        public abstract ISettings Settings { get; }
-        public abstract UserControl Presentation { get; } 
-
-        public abstract void Execute();
-        public abstract void Initialize();
-        public abstract void PostExecution();
-        public abstract void Dispose();
          
-        public abstract event PropertyChangedEventHandler PropertyChanged; 
-        public abstract event StatusChangedEventHandler OnPluginStatusChanged;
-        public abstract event PluginProgressChangedEventHandler OnPluginProgressChanged;
-
-        #endregion
 
         #region logger
 
-        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
         protected void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
