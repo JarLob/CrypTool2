@@ -22,8 +22,10 @@ namespace Startcenter
     public partial class RSSViewer : UserControl
     {
         private List<RssItem> _rssItems;
-        //private const string RSSUrl = "https://www.cryptool.org/trac/CrypTool2/timeline?ticket=on&changeset=on&wiki=on&max=50&authors=&daysback=90&format=rss";
-        private const string RSSUrl = "http://www.facebook.com/feeds/page.php?id=243959195696509&format=rss20";
+        private const string RSSUrl = "https://www.cryptool.org/trac/CrypTool2/timeline?ticket=on&changeset=on&wiki=on&max=50&authors=&daysback=90&format=rss";
+        //private const string RSSUrl = "http://www.facebook.com/feeds/page.php?id=243959195696509&format=rss20";
+        //Thx to facebook... they shut down RSS... instead you should use THEIR api with json and get a session token... 
+        //thus, we reactivated obtaining the news from the svn
 
         public static readonly DependencyProperty IsUpdatingProperty =
             DependencyProperty.Register("IsUpdating",
