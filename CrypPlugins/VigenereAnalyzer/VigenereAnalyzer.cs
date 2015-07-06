@@ -257,28 +257,28 @@ namespace Cryptool.VigenereAnalyzer
                     //permutate key:                     
                     for (var i = 0; i < keylength; i++)
                     {
-                        for (int j = 0; j < alphabetlength; j++)
+                        for (var j = 0; j < alphabetlength; j++)
                         {
-                            //copy key
-                            var copykey = new int[keylength];
-                            for (int k = 0; k < keylength; k++)
-                            {
-                                copykey[k] = runkey[k];
-                            }
-                            copykey[i] = j;
-                            var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, copykey, numvigalphabet) :
-                                DecryptAutokeyOwnAlphabet(ciphertext, copykey, numvigalphabet);
+                            var oldLetter = runkey[i];
+                            runkey[i] = j;
+                            var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) :
+                                DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
                             keys++;
-                            var costvalue = CalculateQuadgramCost(ngrams4, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(ngrams4, copykey) : 0);
+                            var costvalue = CalculateQuadgramCost(ngrams4, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(ngrams4, runkey) : 0);
                             if (costvalue > bestkeycost)
                             {
                                 bestkeycost = costvalue;
-                                bestkey = copykey;
+                                bestkey = (int[]) runkey.Clone();
                                 foundbetter = true;
                                 if (fastConverge)
                                 {
                                     runkey = bestkey;
-                                }                          
+                                }
+                            }
+                            else
+                            {
+                                //reset key
+                                runkey[i] = oldLetter;
                             }
                             if (_stopped)
                             {
@@ -286,12 +286,12 @@ namespace Cryptool.VigenereAnalyzer
                             }
                             if (DateTime.Now >= lasttime.AddMilliseconds(1000))
                             {
-                                var keys_dispatcher = keys;
+                                var keysDispatcher = keys;
                                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                 {
                                     try
                                     {
-                                        _presentation.currentSpeed.Content = keys_dispatcher;
+                                        _presentation.currentSpeed.Content = keysDispatcher;
                                     }
                                     // ReSharper disable once EmptyGeneralCatchClause
                                     catch (Exception)
@@ -304,8 +304,9 @@ namespace Cryptool.VigenereAnalyzer
                             }
                         }
                     }
-                    runkey = bestkey;
+                    runkey = (int[])bestkey.Clone();
                 } while (foundbetter);
+
                 UpdateDisplayEnd(keylength);
                 restarts--;
                 if (bestkeycost > globalbestkeycost)
@@ -314,7 +315,21 @@ namespace Cryptool.VigenereAnalyzer
                     AddNewBestListEntry(bestkey, globalbestkeycost, ciphertext);
                 }
                 ProgressChanged((keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts, (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts);
-            }         
+            }
+            var keysDispatcher2 = keys;
+            var lasttimeDispatcher2 = lasttime;
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    _presentation.currentSpeed.Content = Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds,0);
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch (Exception)
+                {
+                    //wtf?
+                }
+            }, null);
         }
 
         /// <summary>
