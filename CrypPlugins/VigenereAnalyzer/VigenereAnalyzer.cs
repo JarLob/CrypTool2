@@ -143,7 +143,7 @@ namespace Cryptool.VigenereAnalyzer
             if (_settings.ToKeyLength > RemoveInvalidChars(Ciphertext,Alphabet).Length)
             {
                 _settings.ToKeyLength = RemoveInvalidChars(Ciphertext, Alphabet).Length;
-                GuiLogMessage("Max tested keylength can not be longer than the ciphertext. Set max tested keylength to ciphertext length.",NotificationLevel.Warning);
+                GuiLogMessage("Max tested keylength can not be longer than the plaintext. Set max tested keylength to plaintext length.",NotificationLevel.Warning);
             }
             if (_settings.ToKeyLength < _settings.FromKeylength)
             {
@@ -156,7 +156,7 @@ namespace Cryptool.VigenereAnalyzer
             for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
             {
                 UpdateDisplayEnd(keylength);
-                HillclimbVigenere(ciphertext, keylength, _quadgrams, _settings.Restarts, _settings.FastConverge);
+                HillclimbVigenere(ciphertext, keylength, _quadgrams, _settings.Restarts);
                 if (_stopped)
                 {                    
                     return;
@@ -227,8 +227,7 @@ namespace Cryptool.VigenereAnalyzer
         /// <param name="keylength"></param>
         /// <param name="ngrams4"></param>
         /// <param name="restarts"></param>
-        /// <param name="fastConverge"></param>
-        private void HillclimbVigenere(int[] ciphertext, int keylength, double[, , ,] ngrams4, int restarts = 10, bool fastConverge = false)
+        private void HillclimbVigenere(int[] ciphertext, int keylength, double[, , ,] ngrams4, int restarts = 100)
         {
             var globalbestkeycost = double.MinValue;
             var bestkey = new int[keylength];
@@ -251,6 +250,9 @@ namespace Cryptool.VigenereAnalyzer
                 }
                 bool foundbetter;
                 var bestkeycost = double.MinValue;
+
+                var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) :
+                               DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
                 do
                 {
                     foundbetter = false;
@@ -261,29 +263,29 @@ namespace Cryptool.VigenereAnalyzer
                         {
                             var oldLetter = runkey[i];
                             runkey[i] = j;
-                            var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) :
-                                DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+                            plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext) : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
                             keys++;
                             var costvalue = CalculateQuadgramCost(ngrams4, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(ngrams4, runkey) : 0);
                             if (costvalue > bestkeycost)
                             {
                                 bestkeycost = costvalue;
                                 bestkey = (int[]) runkey.Clone();
-                                foundbetter = true;
-                                if (fastConverge)
-                                {
-                                    runkey = bestkey;
-                                }
+                                foundbetter = true;                                
                             }
                             else
                             {
                                 //reset key
                                 runkey[i] = oldLetter;
+                                if (j == alphabetlength - 1)
+                                {
+                                    plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext) : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+                                }
                             }
                             if (_stopped)
                             {
                                 return;
                             }
+                            //print keys/sec in the ui
                             if (DateTime.Now >= lasttime.AddMilliseconds(1000))
                             {
                                 var keysDispatcher = keys;
@@ -291,7 +293,7 @@ namespace Cryptool.VigenereAnalyzer
                                 {
                                     try
                                     {
-                                        _presentation.currentSpeed.Content = keysDispatcher;
+                                        _presentation.currentSpeed.Content = string.Format("{0:0,0}", keysDispatcher);
                                     }
                                     // ReSharper disable once EmptyGeneralCatchClause
                                     catch (Exception)
@@ -316,13 +318,14 @@ namespace Cryptool.VigenereAnalyzer
                 }
                 ProgressChanged((keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts, (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts);
             }
+            //We update finally the keys/second of the ui
             var keysDispatcher2 = keys;
             var lasttimeDispatcher2 = lasttime;
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 try
                 {
-                    _presentation.currentSpeed.Content = Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds,0);
+                    _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception)
@@ -390,7 +393,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         /// <summary>
-        /// Decrypts the given ciphertext using the given key and an own alphabet
+        /// Decrypts the given plaintext using the given key and an own alphabet
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <param name="key"></param>
@@ -415,7 +418,33 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         /// <summary>
-        /// Decrypts the given ciphertext using the given key and an own alphabet
+        /// Decrypts the given plaintext using the given key and an own alphabet in place of the given plaintext exchanging only the symbol defined by the offset
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <param name="key"></param>
+        /// <param name="alphabet"></param>
+        /// <param name="offset"></param>
+        /// <param name="oldciphertext"></param>
+        /// <returns></returns>
+        public static int[] DecryptVigenereOwnAlphabetInPlace(int[] plaintext, int[] key, int[] alphabet, int offset, int[] oldciphertext)
+        {
+            var plaintextlength = plaintext.Length; // improves the speed because length has not to be calculated in the loop
+            var keylength = key.Length; // improves the speed because length has not to be calculated in the loop
+            var alphabetlength = alphabet.Length; // improves the speed because length has not to be calculated in the loop
+            var lookup = new int[alphabetlength]; // improves the speed because length has not to be calculated in the loop
+            for (var position = 0; position < alphabetlength; position++)
+            {
+                lookup[alphabet[position]] = position;
+            }
+            for (var position = offset; position < plaintextlength; position += keylength)
+            {
+                plaintext[position] = alphabet[(lookup[oldciphertext[position]] - lookup[key[position % keylength]] + alphabetlength) % alphabetlength];
+            }
+            return plaintext;
+        }
+
+        /// <summary>
+        /// Decrypts the given plaintext using the given key and an own alphabet
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <param name="key"></param>
@@ -439,6 +468,37 @@ namespace Cryptool.VigenereAnalyzer
             for (var position = keylength; position < plaintextlength; position++)
             {
                 plaintext[position] = alphabet[(lookup[ciphertext[position]] - lookup[plaintext[position - keylength]] + alphabetlength) % alphabetlength];
+            }
+            return plaintext;
+        }
+
+        /// <summary>
+        /// Decrypts the given plaintext using the given key and an own alphabet in place of the given plaintext exchanging only the symbol defined by the offset
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <param name="key"></param>
+        /// <param name="alphabet"></param>
+        /// <param name="offset"></param>
+        /// <param name="oldciphertext"></param>
+        /// <returns></returns>
+        public static int[] DecryptAutokeyOwnAlphabetInPlace(int[] plaintext, int[] key, int[] alphabet, int offset, int[] oldciphertext)
+        {
+            var plaintextlength = plaintext.Length; // improves the speed because length has not to be calculated in the loop
+
+            var keylength = key.Length; // improves the speed because length has not to be calculated in the loop
+            var alphabetlength = alphabet.Length; // improves the speed because length has not to be calculated in the loop
+            var lookup = new int[alphabetlength]; // improves the speed because length has not to be calculated in the loop
+            for (var position = 0; position < alphabetlength; position++)
+            {
+                lookup[alphabet[position]] = position;
+            }
+            for (var position = offset; position < keylength; position+=keylength)
+            {
+                plaintext[position] = alphabet[(lookup[oldciphertext[position]] - lookup[key[position % keylength]] + alphabetlength) % alphabetlength];
+            }
+            for (var position = keylength + offset; position < plaintextlength; position+=keylength)
+            {
+                plaintext[position] = alphabet[(lookup[oldciphertext[position]] - lookup[plaintext[position - keylength]] + alphabetlength) % alphabetlength];
             }
             return plaintext;
         }

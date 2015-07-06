@@ -148,23 +148,6 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("FastConvergeCaption", "FastConvergeTooltip", null, 6, false, ControlType.CheckBox)]
-        public bool FastConverge
-        {
-            get
-            {
-                return _fastConverge;
-            }
-            set
-            {
-                if (value != _fastConverge)
-                {
-                    _fastConverge = value;
-                    OnPropertyChanged("FastConverge");
-                }
-            }
-        }
-
         [TaskPane("KeyStyleCaption", "KeyStyleTooltip", null, 7, false, ControlType.ComboBox, new string[] { "Random", "NaturalLanguage" })]
         public KeyStyle KeyStyle
         {
