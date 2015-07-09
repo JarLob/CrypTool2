@@ -27,8 +27,7 @@ using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
 using voluntLib.common.utils;
 using voluntLib.communicationLayer.messages.messageWithCertificate;
-using voluntLib.managementLayer.dataStructs;
-using voluntLib.managementLayer.delayedTasks;
+using voluntLib.managementLayer.dataStructs; 
 using voluntLib.managementLayer.localStateManagement;
 using voluntLib.managementLayer.localStateManagement.states;
 
@@ -84,10 +83,10 @@ namespace voluntLib.managementLayer
         /// <param name="from">From.</param>
         public virtual void OnIncomingState(PropagateStateMessage message, IPAddress from)
         {
-            var jobID = message.Header.JobID;
+            var jobId = message.Header.JobID;
             var worldName = message.Header.WorldName;
           
-            var job = Jobs.GetJob(jobID);
+            var job = Jobs.GetJob(jobId);
             if (job == null) //ignor unknown jobs
             {
                 return;
@@ -99,35 +98,26 @@ namespace voluntLib.managementLayer
                 return;
             }
 
-            CreateOwnManagerIfNoneIsPresent(jobID, worldName);
-            var localStateManager = LocalStates[jobID];
-            var incomingState = CreateIncomingState(message, localStateManager, jobID);
+            var localStateManager = GetOrCreateStateManager(job.JobID, job); 
+            var incomingState = CreateIncomingState(message, localStateManager, jobId);
             if (IncomingStateIsOlder(localStateManager, incomingState))
             {
-                RespondWithOwnState(jobID, worldName, localStateManager.LocalState);
+                RespondWithOwnState(jobId, worldName, localStateManager.LocalState);
             } 
             else
             {
-                ProcessUsefulStates(jobID, incomingState);
+                ProcessUsefulStates(jobId, incomingState);
             }
 
             //add to working peer list
             WorkingPeers.AddOrUpdate(message);
-        }
+        } 
 
         private void ProcessUsefulStates(BigInteger jobID, EpochState incomingState)
         {
             var localStateManager = LocalStates[jobID];
             taskContainer.GetPropagateStateTask(jobID).StopTimer();
             localStateManager.ProcessState(incomingState);
-        }
-
-        private void CreateOwnManagerIfNoneIsPresent(BigInteger jobID, string worldName)
-        {
-            if ( ! LocalStates.ContainsKey(jobID))
-            {
-                CreateConfiguredStateManager(jobID, worldName);
-            }
         }
 
         private static bool IncomingStateIsOlder(LocalStateManager<EpochState> localStateManager, EpochState incomingState)
@@ -168,7 +158,7 @@ namespace voluntLib.managementLayer
                 NetworkCommunicationLayer.RequestJobDetails(jobID, job.World, IPAddress.Any);
             }
 
-            var stateManager = CreateStateManager(jobID, job);
+            var stateManager = GetOrCreateStateManager(jobID, job);
             CreateCalculationLayer(jobID, template, amountOfWorker, stateManager);
 
             NetworkCommunicationLayer.JoinNetworkJob(jobID, job.World, IPAddress.Any);
@@ -184,7 +174,7 @@ namespace voluntLib.managementLayer
             stateManager.CalculationLayer = calculationLayer;
         }
 
-        private LocalStateManager<EpochState> CreateStateManager(BigInteger jobID, NetworkJob job)
+        private LocalStateManager<EpochState> GetOrCreateStateManager(BigInteger jobID, NetworkJob job)
         {
             //create state
             if ( ! LocalStates.ContainsKey(jobID))

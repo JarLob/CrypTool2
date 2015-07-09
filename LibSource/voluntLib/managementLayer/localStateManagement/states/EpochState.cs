@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.Remoting.Messaging;
 using NLog;
 using voluntLib.common.utils;
 using voluntLib.managementLayer.localStateManagement.states.config;
@@ -254,6 +255,11 @@ namespace voluntLib.managementLayer.localStateManagement.states
         }
 
 
+        /// <summary>
+        ///   Gets the cardinality.
+        ///   according to http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
+        /// </summary>
+        /// <returns></returns>
         private static Int32 GetCardinality(BitArray a)
         {
             var ints = new Int32[(a.Count >> 5) + 1];
@@ -279,13 +285,8 @@ namespace voluntLib.managementLayer.localStateManagement.states
             return count;
         }
 
-        /// <summary>
-        ///   Gets the cardinality.
-        ///   according to http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
-        /// </summary>
-        /// <returns></returns>
         public Int32 GetNumberOfCalculatedBlocksInCurrentEpoch()
-        {
+        {           
             return GetCardinality(BitMask);
         }
 

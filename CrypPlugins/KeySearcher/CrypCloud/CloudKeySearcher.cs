@@ -38,7 +38,7 @@ namespace KeySearcher
         }
 
      
-        private void JobStateChanged(JobProgressEventArgs progress)
+        private void JobStateChanged(object sender, JobProgressEventArgs progress)
         {
             if (progress.JobId != jobId) return;
 

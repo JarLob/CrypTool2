@@ -53,9 +53,9 @@ namespace CrypCloud.Manager.ViewModels
 
        
 
-        protected Action RunInUiContext(Action action)
+        protected void RunInUiContext(Action action)
         {
-            return () => UiContext.StartNew(action);
+            UiContext.StartNew(action);
         }
 
         #region messageBox

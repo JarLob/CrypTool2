@@ -13,8 +13,8 @@ namespace KeySearcherConverter
             {
                 return "-";
             }
-            //Hacked: we had an error here. Please fix me :-)
-            return "";
+
+            return ((DateTime)value).ToString("g", Thread.CurrentThread.CurrentCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

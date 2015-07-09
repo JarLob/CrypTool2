@@ -125,8 +125,11 @@ namespace voluntLib.communicationLayer.communicator
             {
                 var createNode = jobNode.SelectSingleNode(MessageType.CreateNetworkJob.ToString());
                 if (createNode != null)
-                    comLayer.HandleIncomingMessages(Convert.FromBase64String(createNode.InnerText), IPAddress.None);
+                    comLayer.HandleIncomingMessages(Convert.FromBase64String(createNode.InnerText), IPAddress.None); 
                 
+                var deleteNode = jobNode.SelectSingleNode(MessageType.DeleteNetworkJob.ToString());
+                if (deleteNode != null)
+                    comLayer.HandleIncomingMessages(Convert.FromBase64String(deleteNode.InnerText), IPAddress.None);
 
                 var stateNode = jobNode.SelectSingleNode(MessageType.PropagateState.ToString());
                 if (stateNode != null)

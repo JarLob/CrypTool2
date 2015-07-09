@@ -61,7 +61,7 @@
                         --> 
                         
                         <Label Content="{Loc JobID_}" Grid.Column="1" />
-                        <Label Content="{Binding JobID, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" HorizontalAlignment="Center" Grid.ColumnSpan="3" Style="{StaticResource ValueRow}" />
+                        <Label Content="{Binding JobID, FallbackValue=-}" HorizontalAlignment="Center" Grid.ColumnSpan="3" Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Start_}" Grid.Column="1" Grid.Row="1"  />
                         <Label Content="{Binding StartDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueRow}" />

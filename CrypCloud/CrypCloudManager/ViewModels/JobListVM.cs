@@ -10,6 +10,7 @@ using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
 using Cryptool.PluginBase;
 using voluntLib.common;
+using voluntLib.common.eventArgs;
 using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager.ViewModels
@@ -34,11 +35,16 @@ namespace CrypCloud.Manager.ViewModels
             DeleteJobCommand = new RelayCommand(DeleteJob);
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
-            crypCloudCore.JobListChanged += RunInUiContext(UpdateJobList);
-            crypCloudCore.JobStateChanged += delegate { RunInUiContext(UpdateJobList); };
+            crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
+            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
+        }
+
+        protected override void HasBeenActivated()
+        {
+            base.HasBeenActivated();
             UpdateJobList();
         }
-        
+
         private void UpdateJobList()
         {
             RunningJobs.Clear();
@@ -66,18 +72,17 @@ namespace CrypCloud.Manager.ViewModels
             crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id);
         }
 
-        private Action WaitForWorkspaceAndOpenIt(BigInteger id)
+        private EventHandler WaitForWorkspaceAndOpenIt(BigInteger id)
         {
-            Action waitForWorkspace = null;
-            waitForWorkspace = (() =>
+            EventHandler waitForWorkspace = null;
+            waitForWorkspace = (s, e) =>
             {
                 var workspaceModel = crypCloudCore.GetWorkspaceOfJob(id);
-                if (workspaceModel == null) 
-                    return;
+                if (workspaceModel == null) return;
                 
                 crypCloudCore.JobListChanged -= waitForWorkspace;
                 UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
-            });
+            };
 
             return waitForWorkspace;
         }

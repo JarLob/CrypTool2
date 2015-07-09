@@ -194,8 +194,8 @@ namespace CrypCloud.Core
         public event EventHandler<GuiLogEventArgs> ApplicationLog;
         public event Action<bool> ConnectionStateChanged;
 
-        public event Action JobListChanged;
-        public event Action<JobProgressEventArgs> JobStateChanged;
+        public event EventHandler JobListChanged;
+        public event EventHandler<JobProgressEventArgs> JobStateChanged;
 
         protected virtual void OnConnectionStateChanged(bool connected)
         {
@@ -206,13 +206,13 @@ namespace CrypCloud.Core
         protected virtual void OnJobListChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             var handler = JobListChanged;
-            if (handler != null) handler();
+            if (handler != null) handler(sender, propertyChangedEventArgs);
         }
 
         protected virtual void OnJobStateChanged(object sender, JobProgressEventArgs jobProgressEventArgs)
         {
             var handler = JobStateChanged;
-            if (handler != null) handler(jobProgressEventArgs);
+            if (handler != null) handler(sender, jobProgressEventArgs);
         }
 
         protected virtual void OnApplicationLog(object sender, GuiLogEventArgs arg)
