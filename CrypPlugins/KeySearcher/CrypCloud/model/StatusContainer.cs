@@ -12,8 +12,9 @@ namespace KeySearcher.CrypCloud
     public class StatusContainer : INotifyPropertyChanged
     {
         private BigInteger localFinishedChunks;
+        private BigInteger localAbortChunks;
         private String localFinishedChunksSession = "(0)";
-        private BigInteger currentChunk;
+        private String currentChunk;
         private double progressOfCurrentChunk;
         private bool isCurrentProgressIndeterminate;
         private double globalProgress;
@@ -40,7 +41,9 @@ namespace KeySearcher.CrypCloud
         private long sentBytesByLinkManager;
         private long receivedBytesByLinkManager;
         private long totalBytesByLinkManager;
-        public BigInteger JobID;
+        private BigInteger jobID;
+        private TimeSpan avgTimePerChunk;
+
 
         public StatusContainer()
         {
@@ -71,6 +74,7 @@ namespace KeySearcher.CrypCloud
                 OnPropertyChanged("CurrentOperation");
             }
         }
+        
         public BigInteger LocalFinishedChunks
         {
             get { return localFinishedChunks; }
@@ -80,6 +84,27 @@ namespace KeySearcher.CrypCloud
                 OnPropertyChanged("LocalFinishedChunks");
             }
         }
+
+        public BigInteger LocalAbortChunks
+        {
+            get { return localAbortChunks; }
+            set
+            {
+                localAbortChunks = value;
+                OnPropertyChanged("LocalAbortChunks");
+            }
+        }
+
+        public BigInteger JobID
+        {
+            get { return jobID; }
+            set
+            {
+                jobID = value;
+                OnPropertyChanged("JobID");
+            }
+        }
+
         public String LocalFinishedChunksSession
         {
             get { return localFinishedChunksSession; }
@@ -88,8 +113,9 @@ namespace KeySearcher.CrypCloud
                 localFinishedChunksSession = value;
                 OnPropertyChanged("LocalFinishedChunksSession");
             }
-        }
-        public BigInteger CurrentChunk
+        } 
+
+        public String CurrentChunk
         {
             get { return currentChunk; }
             set
@@ -162,6 +188,16 @@ namespace KeySearcher.CrypCloud
             {
                 elapsedTime = value;
                 OnPropertyChanged("ElapsedTime");
+            }
+        }
+        
+        public TimeSpan AvgTimePerChunk
+        {
+            get { return avgTimePerChunk; }
+            set
+            {
+                avgTimePerChunk = value;
+                OnPropertyChanged("AvgTimePerChunk");
             }
         }
 

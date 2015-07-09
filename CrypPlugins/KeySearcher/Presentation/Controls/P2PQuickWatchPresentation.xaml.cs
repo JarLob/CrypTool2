@@ -28,8 +28,7 @@ namespace KeySearcherPresentation.Controls
         public void UpdateSettings(KeySearcher.KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
         {
             IsVerboseEnabled = false;
-
-            if (keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.NumberOfBlocks == 0)
+            if (CannotUpdateView(keySearcher, keySearcherSettings))
             {
                 return;
             }
@@ -51,10 +50,11 @@ namespace KeySearcherPresentation.Controls
                 TotalAmountOfChunks.Content = keyPatternPool.Length;
             }
             KeysPerChunk.Content = keysPerChunk;
-
-            TestedBits.Content = Math.Ceiling(Math.Log((double) BigInteger.Multiply(keyPatternPool.Length, keysPerChunk), 2));
         }
 
-        
+        private static bool CannotUpdateView(KeySearcher.KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
+        {
+            return keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.NumberOfBlocks == 0;
+        }
     }
 }
