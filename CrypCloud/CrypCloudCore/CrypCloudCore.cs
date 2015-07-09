@@ -54,6 +54,8 @@ namespace CrypCloud.Core
             voluntLib.JobListChanged += OnJobListChanged;
             voluntLib.JobProgress += OnJobStateChanged;
             voluntLib.ApplicationLog += ConvertVoluntLibToCtLogs;
+            voluntLib.EnablePersistence = true;
+            voluntLib.LoadDataFromLocalStorage = true;
         }  
 
         public bool Login(X509Certificate2 ownCertificate)
