@@ -4,8 +4,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using System.Collections.ObjectModel;
-using KeySearcher.P2P.Storage;
+using System.Collections.ObjectModel; 
 using KeySearcher.Properties;
 using KeyTextBox;
 using OpenCLNet;
@@ -137,6 +136,8 @@ namespace KeySearcher
             }
         }
 
+        #region crypcloud
+
         private bool usePeerToPeer;
         [TaskPane( "UsePeerToPeerCaption", "UsePeerToPeerTooltip", "GroupPeerToPeer", 0, false, ControlType.CheckBox)]
         public bool UsePeerToPeer
@@ -166,6 +167,8 @@ namespace KeySearcher
                 }
             }
         }
+
+        #endregion
 
         private string evaluationHost;
         [TaskPane( "EvaluationHostCaption", "EvaluationHostTooltip", "GroupEvaluation", 0, false, ControlType.TextBox)]
@@ -359,54 +362,6 @@ namespace KeySearcher
             }
         }
 
-        #endregion
-
-        #region external client
-
-        private bool useExternalClient = false;
-        [TaskPane( "UseExternalClientCaption", "UseExternalClientTooltip", "GroupExternalClient", 1, false, ControlType.CheckBox)]
-        public bool UseExternalClient
-        {
-            get { return useExternalClient; }
-            set
-            {
-                if (value != useExternalClient)
-                {
-                    useExternalClient = value;
-                    OnPropertyChanged("UseExternalClient");
-                }
-            }
-        }
-
-        private int port = 6234;
-        [TaskPane( "PortCaption", "PortTooltip", "GroupExternalClient", 2, false, ControlType.TextBox)]
-        public int Port
-        {
-            get { return port; }
-            set
-            {
-                if (value != port)
-                {
-                    port = value;
-                    OnPropertyChanged("Port");
-                }
-            }
-        }
-
-        private String externalClientPassword = "";
-        [TaskPane( "ExternalClientPasswordCaption", "ExternalClientPasswordTooltip", "GroupExternalClient", 3, false, ControlType.TextBoxHidden)]
-        public String ExternalClientPassword
-        {
-            get { return externalClientPassword; }
-            set
-            {
-                if (value != externalClientPassword)
-                {
-                    externalClientPassword = value;
-                    OnPropertyChanged("ExternalClientPassword");
-                }
-            }
-        }
         #endregion
 
         #region Statistic

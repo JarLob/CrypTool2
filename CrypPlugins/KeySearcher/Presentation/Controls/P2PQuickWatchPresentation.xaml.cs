@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using KeySearcher;
 using KeySearcher.KeyPattern;
 using System.Globalization;
+using System.Threading.Tasks;
+using CrypCloud.Core;
+using KeySearcher.CrypCloud;
+using voluntLib.common;
 
 namespace KeySearcherPresentation.Controls
 {
@@ -17,16 +22,23 @@ namespace KeySearcherPresentation.Controls
             get { return (Boolean)GetValue(IsVerboseEnabledProperty); }
             set { SetValue(IsVerboseEnabledProperty, value); }
         }
-
+        
         public NumberFormatInfo nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
 
+        public TaskFactory UiContext { get; set; }
+        public P2PPresentationVM ViewModel { get; set; }
+     
         public P2PQuickWatchPresentation()
         {
             InitializeComponent();
+            ViewModel = DataContext as P2PPresentationVM;
+            UiContext = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
         }
-        
+
+
         public void UpdateSettings(KeySearcher.KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
         {
+
             IsVerboseEnabled = false;
             if (CannotUpdateView(keySearcher, keySearcherSettings))
             {
@@ -41,20 +53,29 @@ namespace KeySearcherPresentation.Controls
             }
 
             var keyPatternPool = new KeyPatternPool(keyPattern, keysPerChunk);
-            if (keyPatternPool.Length > 9999999999)
+            ViewModel.TotalAmountOfChunks = keyPatternPool.Length;
+            ViewModel.KeysPerBlock = keysPerChunk;
+            ViewModel.JobID = keySearcher.JobID;
+
+            if (CrypCloudCore.Instance.IsRunning)
             {
-                TotalAmountOfChunks.Content = keyPatternPool.Length.ToString().Substring(0, 10) + "...";
+                var networkJobs = CrypCloudCore.Instance.GetJobs();
+                var networkJob = networkJobs.Find(it => it.JobID == keySearcher.JobID);
+                if (networkJob != null)
+                {
+                    ViewModel.JobName = networkJob.JobName;   
+                }
             }
-            else
-            {
-                TotalAmountOfChunks.Content = keyPatternPool.Length;
-            }
-            KeysPerChunk.Content = keysPerChunk;
         }
 
         private static bool CannotUpdateView(KeySearcher.KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
         {
             return keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.NumberOfBlocks == 0;
+        }
+
+        private void P2PQuickWatch_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

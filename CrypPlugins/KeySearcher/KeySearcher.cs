@@ -35,11 +35,6 @@ using CrypCloud.Core.CloudComponent;
 using KeySearcher.CrypCloud;
 using KeySearcher.Helper;
 using KeySearcher.KeyPattern;
-using KeySearcher.P2P;
-using KeySearcher.P2P.Exceptions;
-using KeySearcher.P2P.Tree;
-using KeySearcher.Presentation;
-using KeySearcher.Presentation.Controls;
 using KeySearcherPresentation;
 using KeySearcherPresentation.Controls;
 using KeySearcher.Properties;
@@ -57,6 +52,7 @@ namespace KeySearcher
         /// </summary>
         private Dictionary<string, Dictionary<long, Information>> statistic;
         private Dictionary<long, MachInfo> machineHierarchy;
+
         /// <summary>
         /// used for creating the TopList
         /// </summary>
@@ -268,17 +264,7 @@ namespace KeySearcher
 
         #endregion
 
-        #region IPlugin Members
-
-        public override event StatusChangedEventHandler OnPluginStatusChanged;
-        public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
-
-        private KeySearcherSettings settings;
-        private AutoResetEvent connectResetEvent;
-
-        #region external client variables
-        private CryptoolServer cryptoolServer;
+     #region external client variables 
         private KeySearcherOpenCLCode externalKeySearcherOpenCLCode;
         private IKeyTranslator externalKeyTranslator;
         private BigInteger externalKeysProcessed;
@@ -306,19 +292,20 @@ namespace KeySearcher
             try
             {
                 IsKeySearcherRunning = false;
-
                 username = "";
                 maschineid = 0;
 
                 if (OpenCL.NumberOfPlatforms > 0)
                 {
-                    oclManager = new OpenCLManager();
-                    oclManager.AttemptUseBinaries = false;
-                    oclManager.AttemptUseSource = true;
-                    oclManager.RequireImageSupport = false;
                     var directoryName = Path.Combine(DirectoryHelper.DirectoryLocalTemp, "KeySearcher");
-                    oclManager.BinaryPath = Path.Combine(directoryName, "openclbin");
-                    oclManager.BuildOptions = "-cl-opt-disable";
+                    oclManager = new OpenCLManager
+                    {
+                        AttemptUseBinaries = false,
+                        AttemptUseSource = true,
+                        RequireImageSupport = false,
+                        BinaryPath = Path.Combine(directoryName, "openclbin"),
+                        BuildOptions = "-cl-opt-disable"
+                    };
                     oclManager.CreateDefaultContext(0, DeviceType.ALL);
                 }
 
@@ -327,11 +314,9 @@ namespace KeySearcher
                 Presentation = new QuickWatch();
                 localQuickWatchPresentation = ((QuickWatch)Presentation).LocalQuickWatchPresentation;
                 p2PQuickWatchPresentation = ((QuickWatch)Presentation).P2PQuickWatchPresentation;
-                p2PQuickWatchPresentation.UpdateSettings(this, settings); 
-
+              
                 settings.PropertyChanged += SettingsPropertyChanged;
                 ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
-
                 localBruteForceStopwatch = new Stopwatch();
             }
             catch (Exception ex)
@@ -352,6 +337,17 @@ namespace KeySearcher
             ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
             p2PQuickWatchPresentation.UpdateSettings(this, settings);
         }
+
+        #region IPlugin Members
+
+        public override event StatusChangedEventHandler OnPluginStatusChanged;
+        public override event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
+
+        private KeySearcherSettings settings;
+        private AutoResetEvent connectResetEvent;
+
+    
 
         public override ISettings Settings
         {
@@ -412,7 +408,7 @@ namespace KeySearcher
 
         public override void Initialize()
         {
-            
+            p2PQuickWatchPresentation.UpdateSettings(this, settings);
         }
 
         public override void Dispose()
@@ -647,10 +643,9 @@ namespace KeySearcher
         {
             bool finish = false;
             for (int count = 0; count < 256 * 256; count++)
-            {
-                byte[] keya = keyTranslator.GetKey();
+            {byte[] keya = keyTranslator.GetKey();
 
-                if (!decryptAndCalculate(sender, bytesToUse, keya, keyTranslator))
+                if ( ! decryptAndCalculate(sender, bytesToUse, keya, keyTranslator))
                     throw new Exception("Bruteforcing not possible!");
 
                 finish = !keyTranslator.NextKey();
@@ -660,61 +655,9 @@ namespace KeySearcher
             return finish;
         }
 
-        private IKeyTranslator ShareKeys(KeyPattern.KeyPattern[] patterns, int threadid, BigInteger[] keysLeft, IKeyTranslator keyTranslator, Stack threadStack)
-        {
-            BigInteger size;
-            if (maxThread == threadid && threadStack.Count != 0)
-            {
-                try
-                {
-                    maxThreadMutex.WaitOne();
-                    if (maxThread == threadid && threadStack.Count != 0)
-                    {
-                        KeyPattern.KeyPattern[] split = patterns[threadid].split();
-                        if (split != null)
-                        {
-                            patterns[threadid] = split[0];
-                            keyTranslator = ControlMaster.GetKeyTranslator();
-                            keyTranslator.SetKeys(patterns[threadid]);
-
-                            ThreadStackElement elem = (ThreadStackElement)threadStack.Pop();
-                            patterns[elem.threadid] = split[1];
-                            elem.ev.Set();    //wake the other thread up                                    
-                            size = patterns[threadid].size();
-                            keysLeft[threadid] = size;
-                        }
-                        maxThread = -1;
-                    }
-                }
-                finally
-                {
-                    maxThreadMutex.ReleaseMutex();
-                }
-            }
-            return keyTranslator;
-        }
-
-        private void WaitForNewPattern(KeyPattern.KeyPattern[] patterns, int threadid, Stack threadStack)
-        {
-            ThreadStackElement el = new ThreadStackElement();
-            el.ev = new AutoResetEvent(false);
-            el.threadid = threadid;
-            patterns[threadid] = null;
-            threadStack.Push(el);
-            GuiLogMessage("Thread waiting for new keys.", NotificationLevel.Debug);
-            el.ev.WaitOne();
-            if (!stop)
-            {
-                GuiLogMessage("Thread waking up with new keys.", NotificationLevel.Debug);
-            }
-        }
-
-        #region bruteforce methods
-
         private bool decryptAndCalculate(IControlEncryption sender, int bytesToUse, byte[] keya, IKeyTranslator keyTranslator)
         {
             ValueKey valueKey = new ValueKey();
-
             try
             {
                 if (this.encryptedDataOptimized != null && this.encryptedDataOptimized.Length > 0)
@@ -766,6 +709,58 @@ namespace KeySearcher
             }
             return true;
         }
+        private IKeyTranslator ShareKeys(KeyPattern.KeyPattern[] patterns, int threadid, BigInteger[] keysLeft, IKeyTranslator keyTranslator, Stack threadStack)
+        {
+            BigInteger size;
+            if (maxThread == threadid && threadStack.Count != 0)
+            {
+                try
+                {
+                    maxThreadMutex.WaitOne();
+                    if (maxThread == threadid && threadStack.Count != 0)
+                    {
+                        KeyPattern.KeyPattern[] split = patterns[threadid].split();
+                        if (split != null)
+                        {
+                            patterns[threadid] = split[0];
+                            keyTranslator = ControlMaster.GetKeyTranslator();
+                            keyTranslator.SetKeys(patterns[threadid]);
+
+                            ThreadStackElement elem = (ThreadStackElement)threadStack.Pop();
+                            patterns[elem.threadid] = split[1];
+                            elem.ev.Set();    //wake the other thread up                                    
+                            size = patterns[threadid].size();
+                            keysLeft[threadid] = size;
+                        }
+                        maxThread = -1;
+                    }
+                }
+                finally
+                {
+                    maxThreadMutex.ReleaseMutex();
+                }
+            }
+            return keyTranslator;
+        }
+
+        private void WaitForNewPattern(KeyPattern.KeyPattern[] patterns, int threadid, Stack threadStack)
+        {
+            ThreadStackElement el = new ThreadStackElement();
+            el.ev = new AutoResetEvent(false);
+            el.threadid = threadid;
+            patterns[threadid] = null;
+            threadStack.Push(el);
+            GuiLogMessage("Thread waiting for new keys.", NotificationLevel.Debug);
+            el.ev.WaitOne();
+            if (!stop)
+            {
+                GuiLogMessage("Thread waking up with new keys.", NotificationLevel.Debug);
+            }
+        }
+
+        #region bruteforce methods
+
+      
 
         #endregion
 
@@ -789,8 +784,7 @@ namespace KeySearcher
         internal LinkedList<ValueKey> costList = new LinkedList<ValueKey>();
         private int bytesToUse;
         private IControlEncryption sender;
-        private DateTime beginBruteforcing;
-        private DistributedBruteForceManager distributedBruteForceManager;
+        private DateTime beginBruteforcing; 
         private BigInteger keysInThisChunk;
 
         // main entry point to the KeySearcher
@@ -838,52 +832,20 @@ namespace KeySearcher
                 return null;
             }
 
-            Thread serverThread = null;
             try
             {
-                if (settings.UseExternalClient)
-                {
-                    GuiLogMessage(Resources.Waiting_for_external_client_, NotificationLevel.Info);
-                    if (cryptoolServer != null)
-                    {
-
-                    }
-                    cryptoolServer = new CryptoolServer();
-                    waitingExternalClients.Clear();
-                    cryptoolServer.Port = settings.Port;
-                    cryptoolServer.OnJobCompleted += cryptoolServer_OnJobCompleted;
-                    cryptoolServer.OnClientAuth = cryptoolServer_OnClientAuth;
-                    cryptoolServer.OnClientDisconnected += cryptoolServer_OnClientDisconnected;
-                    cryptoolServer.OnClientRequestedJob += cryptoolServer_OnClientRequestedJob;
-                    cryptoolServer.OnErrorLog += cryptoolServer_OnErrorLog;
-                    serverThread = new Thread(new ThreadStart(delegate
-                                                                      {
-                                                                          cryptoolServer.Run();
-                                                                      }));
-                    serverThread.Start();
-                }
-
                 if (settings.UsePeerToPeer)
                 {
                     BruteForceWithPeerToPeerSystem();
                     return null;
                 }
-
-                return BruteForceWithLocalSystem(pattern);
             }
-            finally
+            catch (Exception ex)
             {
-                if (serverThread != null)
-                {
-                    //stop server here!
-                    cryptoolServer.Shutdown();
-                    cryptoolServer.OnJobCompleted -= cryptoolServer_OnJobCompleted;
-                    cryptoolServer.OnClientAuth = null;
-                    cryptoolServer.OnClientDisconnected -= cryptoolServer_OnClientDisconnected;
-                    cryptoolServer.OnClientRequestedJob -= cryptoolServer_OnClientRequestedJob;
-                    cryptoolServer.OnErrorLog -= cryptoolServer_OnErrorLog;
-                }
+                GuiLogMessage(ex.Message, NotificationLevel.Error);
+                return null;
             }
+            return BruteForceWithLocalSystem(pattern);
         }
 
         /// <summary>
@@ -893,7 +855,8 @@ namespace KeySearcher
         /// The modification of the input data requires the random access property which is true for
         /// ECB, CBC or CFB, but not for OFB. Decryption will fail without note for OFB!
         /// </summary>
-        private void SkipBlocks(byte[] dataInput, byte[] ivInput, int bytesOffset, out byte[] dataOutput, out byte[] ivOutput)
+        private void SkipBlocks(byte[] dataInput, byte[] ivInput, int bytesOffset, out byte[] dataOutput,
+            out byte[] ivOutput)
         {
             // nothing to do
             if (bytesOffset == 0)
@@ -907,21 +870,25 @@ namespace KeySearcher
             if (dataInput.Length - bytesOffset <= 0)
             {
                 // TODO: externalize
-                GuiLogMessage(string.Format("Ignoring BytesOffset as it is greater or equal to input data: {0}>={1}", bytesOffset, dataInput.Length), NotificationLevel.Warning);
+                GuiLogMessage(
+                    string.Format("Ignoring BytesOffset as it is greater or equal to input data: {0}>={1}", bytesOffset,
+                        dataInput.Length), NotificationLevel.Warning);
                 dataOutput = dataInput;
                 ivOutput = ivInput;
                 return;
             }
 
-            int blockSize = sender.GetBlockSize(); // may throw exception if sender does not support this
+            var blockSize = sender.GetBlockSize(); // may throw exception if sender does not support this
 
-            if (bytesOffset % blockSize != 0)
+            if (bytesOffset%blockSize != 0)
             {
                 // TODO: externalize
-                GuiLogMessage(string.Format("BytesOffset {0} is not a multiple of cipher blocksize {1}, will skip less bytes", bytesOffset, blockSize), NotificationLevel.Warning);
+                GuiLogMessage(
+                    string.Format("BytesOffset {0} is not a multiple of cipher blocksize {1}, will skip less bytes",
+                        bytesOffset, blockSize), NotificationLevel.Warning);
             }
 
-            int omitBlocks = bytesOffset / blockSize;
+            var omitBlocks = bytesOffset/blockSize;
             if (omitBlocks == 0) // no cut-off? nothing to do
             {
                 dataOutput = dataInput;
@@ -929,25 +896,24 @@ namespace KeySearcher
                 return;
             }
 
-            dataOutput = new byte[dataInput.Length - (omitBlocks * blockSize)];
+            dataOutput = new byte[dataInput.Length - (omitBlocks*blockSize)];
             ivOutput = new byte[blockSize];
 
             // set predecessor block (current-1) of new ciphertext as IV
-            int offsetPredecessorBlock = (omitBlocks - 1) * blockSize;
+            var offsetPredecessorBlock = (omitBlocks - 1)*blockSize;
             Array.Copy(dataInput, offsetPredecessorBlock, ivOutput, 0, blockSize);
 
             // set short ciphertext
-            Array.Copy(dataInput, omitBlocks * blockSize, dataOutput, 0, dataOutput.Length);
+            Array.Copy(dataInput, omitBlocks*blockSize, dataOutput, 0, dataOutput.Length);
         }
-        
-       
+
 
         internal LinkedList<ValueKey> BruteForceWithLocalSystem(KeyPattern.KeyPattern pattern, bool redirectResultsToStatisticsGenerator = false)
         {
-            ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
             {
                 openCLPresentationMutex.WaitOne();
-                ((QuickWatch)Presentation).OpenCLPresentation.AmountOfDevices = 0;
+                ((QuickWatch) Presentation).OpenCLPresentation.AmountOfDevices = 0;
                 openCLPresentationMutex.ReleaseMutex();
             }, null);
 
@@ -958,311 +924,150 @@ namespace KeySearcher
             }
 
             keysInThisChunk = pattern.size();
-
-            if (settings.UseExternalClient)
+            var patterns = splitPatternForThreads(pattern);
+            if (patterns == null || patterns.Length == 0)
             {
-                GuiLogMessage(Resources.Only_using_external_client_to_bruteforce_, NotificationLevel.Info);
-                lock (this)
-                {
-                    externalKeySearcherOpenCLCode = new KeySearcherOpenCLCode(this, this.encryptedDataOptimized, this.initVectorOptimized, sender, CostMaster,
-                                                                              256*256*256*64);
-                    externalKeysProcessed = 0;
-                    externalKeyTranslator = ControlMaster.GetKeyTranslator();
-                    externalKeyTranslator.SetKeys(pattern);
-                    currentExternalJobGuid = Guid.NewGuid();
-                    foreach (var client in waitingExternalClients)
-                    {
-                        AssignJobToClient(client, externalKeySearcherOpenCLCode.CreateOpenCLBruteForceCode(externalKeyTranslator));
-                    }
-                    waitingExternalClients.Clear();
-                    externalClientJobsAvailable = true;
-                }
-                waitForExternalClientToFinish.Reset();
-                waitForExternalClientToFinish.WaitOne();
-                lock (this)
-                {
-                    externalClientJobsAvailable = false;
-                }
+                GuiLogMessage(Resources.No_ressources_to_BruteForce_available__Check_the_KeySearcher_settings_,
+                    NotificationLevel.Error);
+                throw new Exception("No ressources to BruteForce available. Check the KeySearcher settings!");
             }
-            else
+
+            var doneKeysA = new BigInteger[patterns.Length];
+            var openCLDoneKeysA = new BigInteger[patterns.Length];
+            var keycounters = new BigInteger[patterns.Length];
+            var keysleft = new BigInteger[patterns.Length];
+            var threadStack = Stack.Synchronized(new Stack());
+            threadsStopEvents = ArrayList.Synchronized(new ArrayList());
+
+            StartThreads(sender, bytesToUse, patterns, doneKeysA, openCLDoneKeysA, keycounters, keysleft, threadStack);
+
+            var lastTime = DateTime.Now;
+
+            //update message:
+            BigInteger totalDoneKeys = 0;
+
+            while (!stop)
             {
-                KeyPattern.KeyPattern[] patterns = splitPatternForThreads(pattern);
-                if (patterns == null || patterns.Length == 0)
+                Thread.Sleep(1000);
+
+                updateToplist();
+                
+                #region calculate global counters from local counters
+
+                var doneKeys = doneKeysA.Aggregate<BigInteger, BigInteger>(0, (current, dk) => current + dk);
+                var openCLdoneKeys = openCLDoneKeysA.Aggregate<BigInteger, BigInteger>(0, (current, dk) => current + dk);
+                var keycounter = keycounters.Aggregate<BigInteger, BigInteger>(0, (current, kc) => current + kc);
+
+                #endregion
+
+                if (keycounter > keysInThisChunk)
+                    GuiLogMessage(Resources.There_must_be_an_error__because_we_bruteforced_too_much_keys___, NotificationLevel.Error);
+
+                #region determination of the thread with most keys
+
+                if (keysInThisChunk - keycounter > 1000)
                 {
-                    GuiLogMessage(Resources.No_ressources_to_BruteForce_available__Check_the_KeySearcher_settings_, NotificationLevel.Error);
-                    throw new Exception("No ressources to BruteForce available. Check the KeySearcher settings!");
+                    try
+                    {
+                        maxThreadMutex.WaitOne();
+                        BigInteger max = 0;
+                        var id = -1;
+                        for (var i = 0; i < patterns.Length; i++)
+                            if (keysleft[i] != null && keysleft[i] > max)
+                            {
+                                max = keysleft[i];
+                                id = i;
+                            }
+                        maxThread = id;
+                    }
+                    finally
+                    {
+                        maxThreadMutex.ReleaseMutex();
+                    }
                 }
 
-                BigInteger[] doneKeysA = new BigInteger[patterns.Length];
-                BigInteger[] openCLDoneKeysA = new BigInteger[patterns.Length];
-                BigInteger[] keycounters = new BigInteger[patterns.Length];
-                BigInteger[] keysleft = new BigInteger[patterns.Length];
-                Stack threadStack = Stack.Synchronized(new Stack());
-                threadsStopEvents = ArrayList.Synchronized(new ArrayList());
-                StartThreads(sender, bytesToUse, patterns, doneKeysA, openCLDoneKeysA, keycounters, keysleft, threadStack);
+                #endregion
 
-                DateTime lastTime = DateTime.Now;
+                var keysPerSecond = (long) ((long) doneKeys/(DateTime.Now - lastTime).TotalSeconds);
+                var openCLKeysPerSecond = (long) ((long) openCLdoneKeys/(DateTime.Now - lastTime).TotalSeconds);
+                totalDoneKeys += doneKeys;
+                lastTime = DateTime.Now;
 
-                //update message:
-                BigInteger totalDoneKeys = 0;
+                showProgress(costList, keysInThisChunk, keycounter, keysPerSecond);
+                
 
-                while (!stop)
-                {
-                    Thread.Sleep(1000);
-
-                    updateToplist();
-
-                    #region calculate global counters from local counters
-
-                    BigInteger keycounter = 0;
-                    BigInteger doneKeys = 0;
-                    BigInteger openCLdoneKeys = 0;
-
-                    foreach (BigInteger dk in doneKeysA) doneKeys += dk;
-                    foreach (BigInteger dk in openCLDoneKeysA) openCLdoneKeys += dk;
-                    foreach (BigInteger kc in keycounters) keycounter += kc;
-
-                    #endregion
-
-                    if (keycounter > keysInThisChunk)
-                        GuiLogMessage(Resources.There_must_be_an_error__because_we_bruteforced_too_much_keys___, NotificationLevel.Error);
-
-                    #region determination of the thread with most keys
-                    if (keysInThisChunk - keycounter > 1000)
+                //show OpenCL keys/sec:
+                var ratio = (double) openCLdoneKeys/(double) doneKeys;
+                ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                    (SendOrPostCallback) delegate
                     {
-                        try
-                        {
-                            maxThreadMutex.WaitOne();
-                            BigInteger max = 0;
-                            int id = -1;
-                            for (int i = 0; i < patterns.Length; i++)
-                                if (keysleft[i] != null && keysleft[i] > max)
-                                {
-                                    max = keysleft[i];
-                                    id = i;
-                                }
-                            maxThread = id;
-                        }
-                        finally
-                        {
-                            maxThreadMutex.ReleaseMutex();
-                        }
-                    }
-                    #endregion
-
-                    long keysPerSecond = (long)((long)doneKeys / (DateTime.Now - lastTime).TotalSeconds);
-                    long openCLKeysPerSecond = (long)((long)openCLdoneKeys / (DateTime.Now - lastTime).TotalSeconds);
-                    totalDoneKeys += doneKeys;
-                    lastTime = DateTime.Now;
-
-                    if (redirectResultsToStatisticsGenerator)
-                    {
-                        distributedBruteForceManager.StatisticsGenerator.ShowProgress(costList, keysInThisChunk, keycounter, keysPerSecond);
-                    }
-                    else
-                    {
-                        showProgress(costList, keysInThisChunk, keycounter, keysPerSecond);
-                    }
-
-                    //show OpenCL keys/sec:
-                    var ratio = (double)openCLdoneKeys / (double)doneKeys;
-                    ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        ((QuickWatch)Presentation).OpenCLPresentation.keysPerSecondOpenCL.Content = String.Format("{0:N}", openCLKeysPerSecond);
-                        ((QuickWatch)Presentation).OpenCLPresentation.keysPerSecondCPU.Content = String.Format("{0:N}", (keysPerSecond - openCLKeysPerSecond));
-                        ((QuickWatch)Presentation).OpenCLPresentation.ratio.Content = String.Format("{0:P}", ratio);
+                        ((QuickWatch) Presentation).OpenCLPresentation.keysPerSecondOpenCL.Content =
+                            string.Format("{0:N}", openCLKeysPerSecond);
+                        ((QuickWatch) Presentation).OpenCLPresentation.keysPerSecondCPU.Content = string.Format(
+                            "{0:N}", (keysPerSecond - openCLKeysPerSecond));
+                        ((QuickWatch) Presentation).OpenCLPresentation.ratio.Content = string.Format("{0:P}", ratio);
                     }, null);
 
+                #region set doneKeys to 0
 
-                    #region set doneKeys to 0
+                doneKeys = 0;
+                openCLdoneKeys = 0;
 
-                    doneKeys = 0;
-                    openCLdoneKeys = 0;
+                for (var i = 0; i < doneKeysA.Length; i++) doneKeysA[i] = 0;
+                for (var i = 0; i < openCLDoneKeysA.Length; i++) openCLDoneKeysA[i] = 0;
 
-                    for (int i = 0; i < doneKeysA.Length; i++) doneKeysA[i] = 0;
-                    for (int i = 0; i < openCLDoneKeysA.Length; i++) openCLDoneKeysA[i] = 0;
+                #endregion
 
-                    #endregion
+                if (keycounter >= keysInThisChunk)
+                    break;
 
-                    if (keycounter >= keysInThisChunk)
-                        break;
-                }//end while
+            } //end while
 
-                long totalKeysPerSecond = (long)((long)totalDoneKeys / localBruteForceStopwatch.Elapsed.TotalSeconds);
-                showProgress(costList, 1, 1, totalKeysPerSecond);
+            var totalKeysPerSecond = (long) ((long) totalDoneKeys/localBruteForceStopwatch.Elapsed.TotalSeconds);
+            showProgress(costList, 1, 1, totalKeysPerSecond);
 
-                //wake up all sleeping threads, so they can stop:
-                while (threadStack.Count != 0)
-                    ((ThreadStackElement)threadStack.Pop()).ev.Set();
-
-                //wait until all threads finished:
-                foreach (AutoResetEvent stopEvent in threadsStopEvents)
-                {
-                    stopEvent.WaitOne();
-                }
-
-                if (!stop && !redirectResultsToStatisticsGenerator)
-                    ProgressChanged(1, 1);
-
+            //wake up all sleeping threads, so they can stop:
+            while (threadStack.Count != 0)
+                ((ThreadStackElement) threadStack.Pop()).ev.Set();
+             
+            //wait until all threads finished:
+            foreach (AutoResetEvent stopEvent in threadsStopEvents)
+            {
+                stopEvent.WaitOne();
             }
 
-            TimeSpan bruteforcingTime = DateTime.Now.Subtract(beginBruteforcing);
-            StringBuilder sbBFTime = new StringBuilder();
+            if (!stop && !redirectResultsToStatisticsGenerator)
+                ProgressChanged(1, 1);
+
+
+            var bruteforcingTime = DateTime.Now.Subtract(beginBruteforcing);
+            var sbBFTime = new StringBuilder();
             if (bruteforcingTime.Days > 0)
-                sbBFTime.Append(bruteforcingTime.Days.ToString() + Resources._days_);
+                sbBFTime.Append(bruteforcingTime.Days + Resources._days_);
             if (bruteforcingTime.Hours > 0)
             {
                 if (bruteforcingTime.Hours <= 9)
                     sbBFTime.Append("0");
-                sbBFTime.Append(bruteforcingTime.Hours.ToString() + ":");
+                sbBFTime.Append(bruteforcingTime.Hours + ":");
             }
             if (bruteforcingTime.Minutes <= 9)
                 sbBFTime.Append("0");
-            sbBFTime.Append(bruteforcingTime.Minutes.ToString() + ":");
+            sbBFTime.Append(bruteforcingTime.Minutes + ":");
             if (bruteforcingTime.Seconds <= 9)
                 sbBFTime.Append("0");
-            sbBFTime.Append(bruteforcingTime.Seconds.ToString() + "-");
+            sbBFTime.Append(bruteforcingTime.Seconds + "-");
             if (bruteforcingTime.Milliseconds <= 9)
                 sbBFTime.Append("00");
             if (bruteforcingTime.Milliseconds <= 99)
                 sbBFTime.Append("0");
             sbBFTime.Append(bruteforcingTime.Milliseconds.ToString());
 
-            GuiLogMessage(Resources.Ended_bruteforcing_pattern__ + pattern.getKey() + Resources.___Bruteforcing_TimeSpan__ + sbBFTime.ToString(), NotificationLevel.Debug);
+            GuiLogMessage(
+                Resources.Ended_bruteforcing_pattern__ + pattern.getKey() + Resources.___Bruteforcing_TimeSpan__ +
+                sbBFTime, NotificationLevel.Debug);
 
             return costList;
         }
-
-        #region External Client
-
-        void cryptoolServer_OnClientDisconnected(EndPoint client)
-        {
-            GuiLogMessage(Resources.Client_disconnected_, NotificationLevel.Info);
-            lock (this)
-            {
-                waitingExternalClients.Remove(client);
-            }
-        }
-
-        bool cryptoolServer_OnClientAuth(System.Net.EndPoint client, string name, string password)
-        {
-            if(settings.ExternalClientPassword.Length == 0 ||
-                settings.ExternalClientPassword == password)
-            {
-                GuiLogMessage(string.Format(Resources.Client__0__connected_, name), NotificationLevel.Info);
-                return true;
-            }
-            GuiLogMessage(string.Format(Resources.Client__0__tried_to_auth_with_invalid_password, name), NotificationLevel.Info);
-            return false;
-        }
-
-        private void AssignJobToClient(EndPoint client, string src)
-        {
-            JobInput j = new JobInput();
-            j.Guid = currentExternalJobGuid.ToString();
-            j.Src = src;
-            var key = externalKeyTranslator.GetKey();
-            j.Key = key;
-            j.LargerThen = (costMaster.GetRelationOperator() == RelationOperator.LargerThen);
-            j.Size = externalKeyTranslator.GetOpenCLBatchSize();
-            j.ResultSize = 10;
-            GuiLogMessage(string.Format(Resources.Assigning_new_job_with_Guid__0__to_client_, j.Guid), NotificationLevel.Info);
-            cryptoolServer.SendJob(j, client);
-            assignTime = DateTime.Now;
-        }
-
-        void cryptoolServer_OnJobCompleted(System.Net.EndPoint client, JobResult jr, String clientName)
-        {
-            GuiLogMessage(string.Format(Resources.Client_returned_result_of_job_with_Guid__0__, jr.Guid), NotificationLevel.Info);
-            lock (this)
-            {
-                if (!jr.Guid.Equals(currentExternalJobGuid.ToString()))
-                {
-                    GuiLogMessage(string.Format(Resources.Received_late_job_result_0_from_client_1, jr.Guid, client), NotificationLevel.Warning);
-                    return;
-                }
-
-                // Set new guid. Will prevent concurrent clients
-                // from supplying old results for new chunks.
-                currentExternalJobGuid = Guid.NewGuid();
-            }
-
-           var id = -1;
-
-            String hostname = MachineName.MachineNameToUse + "/" + clientName;
-            ExternalClientHostname = hostname;
-            ExternaClientId = id;
-
-            //check:
-            var op = this.costMaster.GetRelationOperator();
-            foreach (var res in jr.ResultList)
-            {
-                float cost = res.Key;
-                if (((op == RelationOperator.LargerThen) && (cost > value_threshold))
-                    || (op == RelationOperator.LessThen) && (cost < value_threshold))
-                {
-                    ValueKey valueKey = new ValueKey { value = cost, key = externalKeyTranslator.GetKeyRepresentation(res.Value) };
-                    valueKey.keya = externalKeyTranslator.GetKeyFromRepresentation(valueKey.key);
-                    valueKey.decryption = sender.Decrypt(this.encryptedDataOptimized, valueKey.keya, this.initVectorOptimized, bytesToUse);
-
-                    EnhanceUserName(ref valueKey);
-
-                    // special treatment for external client
-                    valueKey.maschid = id;
-                    valueKey.maschname = hostname;
-
-                    valuequeue.Enqueue(valueKey);
-                }
-            }
-            updateToplist();
-
-            //progress:
-            externalKeyTranslator.NextOpenCLBatch();
-            int progress = externalKeyTranslator.GetProgress();
-            externalKeysProcessed += progress;
-            int keysPerSec = (int)(progress / (DateTime.Now - assignTime).TotalSeconds);
-
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                                                                    {
-                                                                                        if (!((QuickWatch)Presentation).IsP2PEnabled)
-                                                                                            showProgress(costList, keysInThisChunk, externalKeysProcessed, keysPerSec);
-                                                                                        else
-                                                                                            distributedBruteForceManager.StatisticsGenerator.ShowProgress(costList,
-                                                                                                             keysInThisChunk, externalKeysProcessed, keysPerSec);
-                                                                                    }, null);
-
-            if (externalKeysProcessed == keysInThisChunk)
-            {
-                waitForExternalClientToFinish.Set();
-                lock (this)
-                {
-                    externalClientJobsAvailable = false;
-                }
-            }
-        }
-
-        void cryptoolServer_OnErrorLog(string str)
-        {
-            GuiLogMessage(str, NotificationLevel.Error);
-        }
-
-        void cryptoolServer_OnClientRequestedJob(EndPoint ipep)
-        {
-            lock (this)
-            {
-                if(externalClientJobsAvailable)
-                {
-                    AssignJobToClient(ipep, externalKeySearcherOpenCLCode.CreateOpenCLBruteForceCode(externalKeyTranslator));
-                }
-                else
-                {
-                    waitingExternalClients.Add(ipep);
-                }
-            }
-        
-        }
-
-        #endregion
 
         private void SetStartDate()
         {
@@ -1439,39 +1244,11 @@ namespace KeySearcher
             var keysPerChunk = Math.Pow(2, settings.NumberOfBlocks);
             var keyPatternPool = new KeyPatternPool(keyPattern, new BigInteger(keysPerChunk));
 
-            //---Aggregate----
-            ((QuickWatch)Presentation).StatisticsPresentation.TotalBlocks = keyPatternPool.Length;
-            ((QuickWatch)Presentation).StatisticsPresentation.TotalKeys = new BigInteger(keysPerChunk) * keyPatternPool.Length;    
-            ((QuickWatch)Presentation).StatisticsPresentation.Days = now.ToLocalTime().Subtract(startDate).Days.ToString();
-            //-----------------
-            //---Current Section----
-            if (!settings.DisableUpdate)
-            {
-                var cc = ((QuickWatch) Presentation).CurrentCulture;
-                ((QuickWatch) Presentation).StatisticsPresentation.UpdateTime = now;
-                ((QuickWatch)Presentation).StatisticsPresentation.NextUpdateTime = now.ToLocalTime().AddMinutes(interval).ToString("g", cc);
-            }
-            else
-            {
-                ((QuickWatch) Presentation).StatisticsPresentation.UpdateTime = now;
-                ((QuickWatch)Presentation).StatisticsPresentation.NextUpdateTime = "-";
-            }
-            ((QuickWatch) Presentation).StatisticsPresentation.CurrentUsers = cUsers;
-            ((QuickWatch)Presentation).StatisticsPresentation.CurrentMachines = cMachines;
-
             //if we have two time values to compare
             if(memory)
             {
                 var keysnow = calculatedChunks()*(BigInteger) Math.Pow(2, settings.NumberOfBlocks);
                 var timenow = DateTime.UtcNow;
-
-                var difftime = (BigInteger) timenow.Subtract(memTime).TotalSeconds;
-                var diffkeys = keysnow - memKeys;
-
-                if ((difftime > 0) && (diffkeys > 0))
-                {
-                   ((QuickWatch) Presentation).StatisticsPresentation.SetCurrentRate = diffkeys / difftime;
-                }
                 memKeys = keysnow;
                 memTime = timenow;
             }
@@ -1480,9 +1257,7 @@ namespace KeySearcher
                 memKeys = calculatedChunks() * (BigInteger)Math.Pow(2, settings.NumberOfBlocks);
                 memTime = DateTime.UtcNow;
                 memory = true;
-            }
-            //-----------
-            UpdateStatisticsPresentation();
+            } 
         }
 
         /// <summary>
@@ -1530,116 +1305,7 @@ namespace KeySearcher
             }
         }
         
-        /// <summary>
-        /// Integration of Statistic/Key Results into the calculation
-        /// </summary>
-        internal void IntegrateNewResults(LinkedList<ValueKey> updatedCostList, Dictionary<string, Dictionary<long, Information>> updatedStatistics, string dataIdentifier, NodeBase nodeToUpdate)
-        {
-            foreach (var valueKey in updatedCostList)
-            {
-                if (keyQualityHelper.IsBetter(valueKey.value, value_threshold))
-                {
-                    valuequeue.Enqueue(valueKey);
-                }
-            }
-
-            //Only every initialisation the code past this point is in use
-            if (statisticInitialized)
-                return;
-
-            //Check if this node was already integrated
-            var nodeID = "from " + nodeToUpdate.From + " to " + nodeToUpdate.To;
-            if (alreadyIntegratedNodes.Contains(nodeID))
-                return;
-
-            foreach (string avname in updatedStatistics.Keys)
-            {
-                //Taking the dictionary in this avatarname
-                Dictionary<long, Information> MaschCount = updatedStatistics[avname];
-                
-                //If the avatarname already exists in the statistics
-                if (statistic.ContainsKey(avname))
-                {
-                    foreach (long id in MaschCount.Keys)
-                    {
-                        //Get the statistic machine count for this avatarname
-                        Dictionary<long, Information> statMaschCount = statistic[avname];
-
-                        //If the id of the machine already exists for this avatarname add the values
-                        if (statMaschCount.ContainsKey(id))
-                        {
-                            statMaschCount[id].Count = statMaschCount[id].Count + MaschCount[id].Count;
-                            statMaschCount[id].Hostname = MaschCount[id].Hostname;
-                            statMaschCount[id].Date = MaschCount[id].Date;
-                            statistic[avname] = statMaschCount;
-                        }
-                        else
-                        {
-                            //add a new id,information value for this avatarname
-                            statistic[avname].Add(id, MaschCount[id]);
-                        }
-                    }
-                }
-                else
-                {
-                    //add the maschinecount dictionary to this avatarname
-                    statistic[avname] = MaschCount;
-                }
-                //Order the machines in the statistics
-                statistic[avname] = statistic[avname].OrderByDescending((x) => x.Value.Count).ToDictionary(x => x.Key, y => y.Value);
-            }
-            //Order the users in the statistics
-            statistic = statistic.OrderByDescending((x) => x.Value.Sum((z) => z.Value.Count)).ToDictionary(x => x.Key,y => y.Value);
-
-            //Creating the machineview of the statistics
-            GenerateMaschineStats();
-
-            //The following Method can be used to write a local csv file with the user/maschine statistics.
-            WriteStatistics(dataIdentifier);
-
-            //Update the statistic presentation values
-            UpdateStatisticsPresentation();
-            
-            updateToplist();
-
-            //Remember the integration of this node to avoid too high values
-            alreadyIntegratedNodes.Add(nodeID);
-        }
-
-        /// <summary>
-        /// Update the statistic presentation information and user/machine values
-        /// </summary>
-        internal void UpdateStatisticsPresentation()
-        {
-            try
-            {
-                var diffFromStart = DateTime.UtcNow.ToLocalTime().Subtract(startDate);
-                var calcChunks = calculatedChunks();
-                var calcKeys = calcChunks*(BigInteger) Math.Pow(2, settings.NumberOfBlocks);
-                ((QuickWatch)Presentation).StatisticsPresentation.Statistics = statistic;
-                ((QuickWatch)Presentation).StatisticsPresentation.MachineHierarchy = machineHierarchy;
-                ((QuickWatch)Presentation).StatisticsPresentation.Days = diffFromStart.Days.ToString();
-                ((QuickWatch)Presentation).StatisticsPresentation.CalculatedBlocks = calcChunks;
-                ((QuickWatch)Presentation).StatisticsPresentation.CalculatedKeys = calcKeys;
-                ((QuickWatch)Presentation).StatisticsPresentation.Percent = (double)calcChunks;
-                ((QuickWatch)Presentation).StatisticsPresentation.Users = statistic.Keys.Count;
-                ((QuickWatch)Presentation).StatisticsPresentation.Machines = machineHierarchy.Keys.Count;
-                if ((BigInteger)diffFromStart.TotalSeconds > 0)
-                {
-                    ((QuickWatch)Presentation).StatisticsPresentation.SetRate = calcKeys / (BigInteger)diffFromStart.TotalSeconds;
-                }
-                if (statistic.Count > 0)
-                {
-                    ((QuickWatch)Presentation).StatisticsPresentation.BeeUsers = statistic.Keys.First();
-                    ((QuickWatch)Presentation).StatisticsPresentation.BeeMachines = machineHierarchy[machineHierarchy.Keys.First()].Hostname;
-                }
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(string.Format("Error when trying to update statistic: {0}", ex.Message), NotificationLevel.Error);
-            }
-        }
-
+      
         /// <summary>
         /// Write the user statistics to an external csv-document
         /// </summary>

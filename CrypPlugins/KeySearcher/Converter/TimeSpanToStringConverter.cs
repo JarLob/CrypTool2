@@ -15,7 +15,7 @@ namespace KeySearcherConverter
 
             var timeSpan = (TimeSpan) value;
 
-            if (timeSpan == new TimeSpan(-1))
+            if (timeSpan == new TimeSpan(-1) || timeSpan.Ticks == 0)
                 return "~";
 
             var seconds = timeSpan.Seconds;

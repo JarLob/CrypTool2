@@ -33,7 +33,7 @@ namespace CrypCloud.Core
       
         #endregion
 
-        private readonly VoluntLib voluntLib;
+        private VoluntLib voluntLib;
 
         #region properties
 
@@ -49,14 +49,26 @@ namespace CrypCloud.Core
         protected CrypCloudCore()
         {
             AmountOfWorker = 2;
-            voluntLib = new VoluntLib();
-            voluntLib.LogMode = global::voluntLib.logging.LogMode.EventBased;
-            voluntLib.JobListChanged += OnJobListChanged;
-            voluntLib.JobProgress += OnJobStateChanged;
-            voluntLib.ApplicationLog += ConvertVoluntLibToCtLogs;
-            voluntLib.EnablePersistence = true;
-            voluntLib.LoadDataFromLocalStorage = true;
-        }  
+            voluntLib = InitVoluntLib();
+        }
+
+        private VoluntLib InitVoluntLib()
+        {
+            var vlib = new VoluntLib
+            {
+                LogMode = global::voluntLib.logging.LogMode.EventBased,
+                EnablePersistence = true,
+                LoadDataFromLocalStorage = true
+            };
+            vlib.JobListChanged += OnJobListChanged;
+            vlib.JobProgress += OnJobStateChanged;
+            vlib.TaskStarted += OnTaskHasStarted;
+            vlib.TaskStopped += OnTaskHasStopped;
+            vlib.TaskProgress += OnTaskProgress;
+            vlib.JobFinished += OnJobFinished;
+            vlib.ApplicationLog += ConvertVoluntLibToCtLogs;
+            return vlib;
+        }
 
         public bool Login(X509Certificate2 ownCertificate)
         {
@@ -68,6 +80,18 @@ namespace CrypCloud.Core
             voluntLib.InitAndStart(rootCertificate, ownCertificate);
             OnConnectionStateChanged(true);
             return true;
+        }
+
+
+        public void Logout()
+        {
+            if ( ! IsRunning)
+            {
+                return;
+            }
+
+            voluntLib.Stop();
+            voluntLib = InitVoluntLib();
         }
 
         //TODO @ckonze add admin names/move function over to voluntlib
@@ -193,9 +217,37 @@ namespace CrypCloud.Core
 
         public event EventHandler<GuiLogEventArgs> ApplicationLog;
         public event Action<bool> ConnectionStateChanged;
-
         public event EventHandler JobListChanged;
         public event EventHandler<JobProgressEventArgs> JobStateChanged;
+
+        public event EventHandler<TaskEventArgs> TaskHasStarted;
+        public event EventHandler<TaskEventArgs> TaskHasStopped;
+        public event EventHandler<TaskEventArgs> TaskProgress;
+        public event EventHandler<JobProgressEventArgs> JobFinished;
+
+        protected virtual void OnTaskHasStarted(object sender, TaskEventArgs taskEventArgs)
+        {
+            var handler = TaskHasStarted;
+            if (handler != null) handler(this, taskEventArgs);
+        }
+
+        protected virtual void OnTaskHasStopped(object sender, TaskEventArgs taskEventArgs)
+        {
+            var handler = TaskHasStopped;
+            if (handler != null) handler(this, taskEventArgs);
+        }
+
+        protected virtual void OnTaskProgress(object sender, TaskEventArgs taskEventArgs)
+        {
+            var handler = TaskProgress;
+            if (handler != null) handler(this, taskEventArgs);
+        }
+
+        protected virtual void OnJobFinished(object sender, JobProgressEventArgs jobProgressEventArgs)
+        {
+            var handler = JobFinished;
+            if (handler != null) handler(this, jobProgressEventArgs);
+        }
 
         protected virtual void OnConnectionStateChanged(bool connected)
         {
@@ -229,6 +281,7 @@ namespace CrypCloud.Core
             OnApplicationLog(sender, new GuiLogEventArgs(message, null, notificationLevel));
         }
 
+    
         private static NotificationLevel GetNotificationLevel(LogEventInfoArg logEvent)
         {
             var notificationLevel = NotificationLevel.Info;
@@ -243,6 +296,5 @@ namespace CrypCloud.Core
 
         #endregion
 
-       
     }
 }

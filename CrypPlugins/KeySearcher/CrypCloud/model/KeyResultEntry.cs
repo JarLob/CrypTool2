@@ -27,11 +27,7 @@ namespace KeySearcher.CrypCloud
 
         public int CompareTo(object obj)
         {
-            var entry = (KeyResultEntry)obj;
-            if (Math.Abs(entry.Costs - Costs) < 0.01f)
-            {
-                return 0;
-            }
+            var entry = (KeyResultEntry)obj;             
             return (entry.Costs > Costs) ? -1 : 1;
         }
 

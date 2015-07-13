@@ -85,6 +85,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\BigIntegerToHexStringConverter.cs" />
+    <Compile Include="Converter\ByteArrayToUtf8StringConverter.cs" />
+    <Compile Include="Converter\ListToStringConverter.cs" />
     <Compile Include="CrypCloud\CloudKeySearcher.cs" />
     <Compile Include="Converter\TimeSpanToStringConverter.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
@@ -92,10 +95,13 @@
     <Compile Include="Converter\TrueToVisibleOrCollapsedConverter.cs" />
     <Compile Include="Converter\FalseToVisibleConverter.cs" />
     <Compile Include="Converter\TrueToVisibleConverter.cs" />
-    <Compile Include="CrypCloud\Worker.cs" />
-    <Compile Include="CrypCloud\CalculationTemplate.cs" />
+    <Compile Include="CrypCloud\calculation\Worker.cs" />
+    <Compile Include="CrypCloud\calculation\CalculationTemplate.cs" />
     <Compile Include="CrypCloud\model\KeyResultEntry.cs" />
-    <Compile Include="CrypCloud\model\StatusContainer.cs" />
+    <Compile Include="CrypCloud\model\P2PPresentationVM.cs" />
+    <Compile Include="CrypCloud\statistics\BigIntExtensions.cs" />
+    <Compile Include="CrypCloud\statistics\CricularBuffer.cs" />
+    <Compile Include="CrypCloud\statistics\SpeedStatistics.cs" />
     <Compile Include="Helper\KeyQualityHelper.cs" />
     <Compile Include="Helper\MachineName.cs" />
     <Compile Include="Information.cs" />
@@ -113,14 +119,6 @@
     <Compile Include="OpenCL\KeySearcherOpenCLSubbatchOptimizer.cs" />
     <Compile Include="KeyTranslators\ByteArrayKeyTranslator.cs" />
     <Compile Include="OpenCL\KeySearcherOpenCLCode.cs" />
-    <Compile Include="P2P\Exceptions\InvalidDataException.cs" />
-    <Compile Include="P2P\Helper\ConnectionHelper.cs" />
-    <Compile Include="P2P\Helper\DatabaseStatistics.cs" />
-    <Compile Include="P2P\Helper\WidthConverter.cs" />
-    <Compile Include="P2P\Presentation\StatisticsGenerator.cs" />
-    <Compile Include="P2P\Presentation\StatusContainer.cs" />
-    <Compile Include="P2P\Exceptions\KeySearcherStopException.cs" />
-    <Compile Include="P2P\Storage\StatusUpdater.cs" />
     <Compile Include="Presentation\Controls\OpenCLPresentation.xaml.cs">
       <DependentUpon>OpenCLPresentation.xaml</DependentUpon>
     </Compile>
@@ -128,26 +126,10 @@
       <DependentUpon>LocalQuickWatchPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="KeySearcherSettings.cs" />
-    <Compile Include="P2P\Exceptions\AlreadyCalculatedException.cs" />
-    <Compile Include="P2P\Exceptions\ReservationRemovedException.cs" />
-    <Compile Include="P2P\Exceptions\UpdateFailedException.cs" />
-    <Compile Include="P2P\Storage\StorageKeyGenerator.cs" />
-    <Compile Include="P2P\Tree\KeyPoolTree.cs" />
-    <Compile Include="P2P\Tree\Leaf.cs" />
-    <Compile Include="P2P\Tree\Node.cs" />
-    <Compile Include="P2P\Tree\NodeBase.cs" />
-    <Compile Include="P2P\Tree\NodeFactory.cs" />
-    <Compile Include="P2P\DistributedBruteForceManager.cs" />
     <Compile Include="Presentation\Controls\P2PQuickWatchPresentation.xaml.cs">
       <DependentUpon>P2PQuickWatchPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Controls\StatisticsPresentation.xaml.cs">
-      <DependentUpon>StatisticsPresentation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Controls\KeyPoolTreePresentation.xaml.cs">
-      <DependentUpon>KeyPoolTreePresentation.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Converter\ByteArrayToHexStringConverter.cs" />
+    <Compile Include="Converter\ByteArrayToHexStringConverter.cs" />
     <Compile Include="Presentation\QuickWatch.xaml.cs">
       <DependentUpon>QuickWatch.xaml</DependentUpon>
     </Compile>
@@ -164,10 +146,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResultEntry.cs" />
-    <Compile Include="Server\Job.cs" />
-    <Compile Include="Server\Opcodes.cs" />
-    <Compile Include="Server\PlatformIndependentWrapper.cs" />
-    <Compile Include="Server\Server.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
@@ -219,14 +197,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Controls\StatisticsPresentation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Presentation\Controls\KeyPoolTreePresentation.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Presentation\QuickWatch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -255,14 +225,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Server\.svn\prop-base\" />
-    <Folder Include="Server\.svn\props\" />
-    <Folder Include="Server\.svn\text-base\" />
-    <Folder Include="Server\.svn\tmp\prop-base\" />
-    <Folder Include="Server\.svn\tmp\props\" />
-    <Folder Include="Server\.svn\tmp\text-base\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

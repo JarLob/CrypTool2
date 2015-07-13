@@ -14,7 +14,14 @@ namespace KeySearcherConverter
                 return "-";
             }
 
-            return ((DateTime)value).ToString("g", Thread.CurrentThread.CurrentCulture);
+            var dateTime = (DateTime)value;
+
+            if (dateTime.Ticks == 0)
+            {
+                return "~";
+            }
+
+            return dateTime.ToString("g", Thread.CurrentThread.CurrentCulture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

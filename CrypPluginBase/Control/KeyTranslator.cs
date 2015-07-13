@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 
 namespace Cryptool.PluginBase.Control
@@ -53,6 +54,8 @@ namespace Cryptool.PluginBase.Control
         ///  This is used for iterating over the keys.
         /// </summary>
         /// <returns>if there are keys left</returns>
+        /// 
+        [TargetedPatchingOptOut("performance critical")]
         bool NextKey();
 
         /// <summary>
