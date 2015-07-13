@@ -656,7 +656,7 @@
     <value>Überpringe f</value>
   </data>
   <data name="PresNextStep" xml:space="preserve">
-    <value>Überspringe Step</value>
+    <value>Überspringe Schritt</value>
   </data>
   <data name="PresOldState" xml:space="preserve">
     <value>Alter State</value>
@@ -671,7 +671,7 @@
     <value>State</value>
   </data>
   <data name="PresOutputLengthError" xml:space="preserve">
-    <value>Die angegebene Ausgabelänge wird nicht von der Präsentation unterstützt. Bitte eine Ausgabelänge wählen die kleiner oder gleich der ausgewählten Bit Rate ist.</value>
+    <value>Die angegebene Ausgabelänge wird nicht von der Präsentation unterstützt. Bitte eine Ausgabelänge wählen, die kleiner oder gleich der ausgewählten Bit Rate ist.</value>
   </data>
   <data name="PresStateSizeError" xml:space="preserve">
     <value>Die ausgewählte Größe für den State wird nicht von der Präsentation unterstützt. Bitte eine State Größe von mindestens 200 Bit auswählen.</value>

@@ -489,7 +489,7 @@
     <newline/> <newline/>
     <b>Parameter-Leiste:</b>
     <newline/> <newline/> 
-    Zum Justieren der Einstellungen von Komponenten bietet der CWM auf der rechten Seite des aktuellen Arbeitsbereiches die so genannte "Parameter-Leiste" an (siehe Abbildung 14). Diese kann sowohl ein- als auch ausgeblendet werden (mit Hilfe der Schaltfläche oberhalb der Leiste), so wie in der Breite verändert werden. Ihr Inhalt entspricht Einstellungsansicht der Komponente, die gerade den Fokus hat.
+    Zum Justieren der Einstellungen von Komponenten bietet der CWM auf der rechten Seite des aktuellen Arbeitsbereiches die so genannte "Parameter-Leiste" an (siehe Abbildung 14). Diese kann sowohl ein- als auch ausgeblendet werden (mit Hilfe der Schaltfläche oberhalb der Leiste), so wie in der Breite verändert werden. Ihr Inhalt entspricht der Einstellungsansicht der Komponente, die gerade den Fokus hat.
     <newline/> <newline/>
     <img src="WorkspaceManager/DetailedDescription/Images/parameters.png" caption="Abbildung 14" />    
     <newline/> <newline/>

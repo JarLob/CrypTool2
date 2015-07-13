@@ -340,7 +340,7 @@ namespace Cryptool.LFSR.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Period of LFSR ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Period of LFSR:  ähnelt.
         /// </summary>
         public static string PeriodCaption {
             get {

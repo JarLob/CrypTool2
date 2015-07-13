@@ -190,7 +190,7 @@
     <value>Wenn dieses Kontrollkästchen aktiviert ist, wird der momentane Zustand ausgegeben.</value>
   </data>
   <data name="PeriodCaption" xml:space="preserve">
-    <value>Periode des LFSR</value>
+    <value>Periode des LFSR: </value>
   </data>
   <data name="PeriodTooltip" xml:space="preserve">
     <value>Die berechnete Periode des LFSR</value>
@@ -253,7 +253,7 @@
     <value>Takteigenschaften</value>
   </data>
   <data name="ClockingBitGroup" xml:space="preserve">
-    <value>zusätzliches Ausgabebit</value>
+    <value>Zusätzliches Ausgabebit</value>
   </data>
   <data name="Feedback_polynomial" xml:space="preserve">
     <value>Generatorpolynom</value>
