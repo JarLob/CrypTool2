@@ -18,14 +18,16 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
+using FleißnerGrilleGenerator;
 using System.Windows.Threading;
 using System.Threading;
-
+using System.Windows.Media;
+using FleißnerGrilleGenerator.Properties;
 
 namespace Cryptool.Plugins.FleißnerGrilleGenerator
 {
     [Author("Robert Rauer", "robert_rauer@yahoo.de", "Universität Kassel", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.FleißnerGrilleGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrilleGenerator/userdoc.xml",
+    [PluginInfo("FleißnerGrilleGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrilleGenerator/DetailedDescription/doc.xml",
         new[] { "FleißnerGrilleGenerator/Images/FleißnerGrilleGenerator.png" })]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class FleißnerGrilleGenerator : ICrypComponent
@@ -53,7 +55,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             Presentation = myPresentation;
             myPresentation.fireEnd += new EventHandler(presentation_finished);
             myPresentation.updateProgress += new EventHandler(update_progress);
-            this.settings.PropertyChanged += settings_OnPropertyChange;
             this.settings.LogMessage += FleißnerGrilleGenerator_LogMessage;
         }
 
@@ -71,11 +72,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             ProgressChanged(1, 1);
 
             running = false;
-        }
-
-        private void settings_OnPropertyChange(object sender, PropertyChangedEventArgs e)
-        {
-            myPresentation.UpdateSpeed(this.settings.PresentationSpeed);
         }
 
         /// <summary>
@@ -184,7 +180,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             }
             else
             {
-                FleißnerGrilleGenerator_LogMessage("InputString ist empty or null", NotificationLevel.Error);
+                FleißnerGrilleGenerator_LogMessage(Resources.INPUTSTRING_EMPTY , NotificationLevel.Error);
                 OutputString = null;
                 return;
             }
@@ -245,7 +241,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             }
             else
             {
-                OutputString = generateRandomGrille();
+                OutputString = generateNotRandomGrille();
             }
         }
 
@@ -254,6 +250,22 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             int[,] grille = fillGrille(); 
             grille = setHolesRandomToGrille(grille);
             string grilleString = getGrilleString(grille);
+            return grilleString;
+        }
+
+        private string generateNotRandomGrille()
+        {
+            string grilleString;
+            if (settings.grille != null)
+            {
+                grilleString = getGrilleString(settings.grille);
+            }
+            else 
+            {
+                int[,] grille = fillGrille();
+                grille = setHolesRandomToGrille(grille);
+                grilleString = getGrilleString(grille);
+            }
             return grilleString;
         }
 
@@ -326,11 +338,25 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             int inputLength = _inputString.Length;
             if (Math.Sqrt(inputLength) - (int)Math.Sqrt(inputLength) == 0)
             {
-                return (int)Math.Sqrt(inputLength);
+                if ((int)Math.Sqrt(inputLength) % 2 == 0) //Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength);
+                }
+                else 
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
             }
             else
             {
-                return (int)Math.Sqrt(inputLength) + 1;
+                if (((int)Math.Sqrt(inputLength) + 1) % 2 == 0) // Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
+                else
+                {
+                    return (int)Math.Sqrt(inputLength) + 2;
+                }
             }
         }
 
@@ -360,9 +386,9 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
         private string getGrilleString(int[,] grille)
         {
             string result = "";
-            for (int y = 0; y < grille.GetLength(0); y++) //columnwise
+            for (int x = 0; x < grille.GetLength(0); x++) //columnwise
             {
-                for (int x = 0; x < grille.GetLength(0); x++) //rowwise
+                for (int y = 0; y < grille.GetLength(0); y++) //rowwise
                 {
                     if (grille[x, y]  == 1)
                     {
@@ -373,10 +399,10 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                         result = result + "0";
                     }
                 }
-                if (y != grille.GetLength(0) - 1)
-                {
+                //if (y != grille.GetLength(0) - 1)
+                //{
                     result = result + "\n";
-                }
+                //}
             }
             return result;
         }

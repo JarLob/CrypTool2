@@ -49,7 +49,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             PresentationDisabled = new DisabledBool();
 
             settings = (FleißnerGrilleGeneratorSettings)myGenerator.Settings;
-            speed = settings.PresentationSpeed;
             InitializeComponent();
             init(myGenerator);
             timer = new DispatcherTimer();
@@ -65,11 +64,25 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             int inputLength = input.Length;
             if (Math.Sqrt(inputLength) - (int)Math.Sqrt(inputLength) == 0)
             {
-                return (int)Math.Sqrt(inputLength);
+                if ((int)Math.Sqrt(inputLength) % 2 == 0) //Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength);
+                }
+                else
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
             }
             else
             {
-                return (int)Math.Sqrt(inputLength) + 1;
+                if (((int)Math.Sqrt(inputLength) + 1) % 2 == 0) // Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
+                else
+                {
+                    return (int)Math.Sqrt(inputLength) + 2;
+                }
             }
         }
 
@@ -87,6 +100,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
 
         private void init(FleißnerGrilleGenerator myGenerator)
         {
+            clickCounter = 0;
             string input = myGenerator.InputString;
             //cleaning the display for new presentation
             try
@@ -97,7 +111,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                 setDescribeLabels(myGenerator);
             }
             catch { }
-            canvasControlPanel.Visibility = Visibility.Visible;
             if (input != null) //input is not empty
             {
                 fillGrille(input);
@@ -280,35 +293,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
         #endregion
 
         #region misc
-        /// <summary>
-        /// getter of the speed the visualisation is running
-        /// </summary>
-        /// <param name="speed"></param>
-        public void UpdateSpeed(int speed)
-        {
-            this.speed = speed;
-            mainStory.Pause();
-            mainStory.SetSpeedRatio(speed / 100);
-            mainStory.Resume();
-            /*
-            mainStory2.Pause();
-            mainStory2.SetSpeedRatio(speed / 100);
-            mainStory2.Resume();
-            mainStory3.Pause();
-            mainStory3.SetSpeedRatio(speed / 100);
-            mainStory3.Resume();*/
-
-            if (aniClock != null)
-            {
-                foreach (Clock cl in aniClock)
-                {
-                    cl.Controller.Pause();
-                    cl.Controller.SpeedRatio = (speed / 100);
-                    cl.Controller.Resume();
-                }
-            }
-
-        }
 
         public void timerTick(object sender, EventArgs e)
         {
@@ -316,17 +300,10 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             {
                 if (Convert.ToDouble(mainStory.GetCurrentProgress().ToString()) != 1)
                     myupdateprogress(Convert.ToInt32(Convert.ToDouble(mainStory.GetCurrentProgress().ToString()) * 1000));
-                /*else if (Convert.ToDouble(mainStory2.GetCurrentProgress().ToString()) != 1)
-                    myupdateprogress(Convert.ToInt32(Convert.ToDouble(mainStory2.GetCurrentProgress().ToString()) * 1000) + 1000);
-                else if (Convert.ToDouble(mainStory3.GetCurrentProgress().ToString()) != 1)
-                    myupdateprogress(Convert.ToInt32(Convert.ToDouble(mainStory3.GetCurrentProgress().ToString()) * 1000) + 2000);
-                */
             }
             catch (Exception)
             {
-
             }
-
         }
 
         private void myupdateprogress(int value)
@@ -346,7 +323,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                 grilleWrapPanel.Children.Clear();
                 grilleWrapPanel.Children.RemoveRange(0, grilleWrapPanel.Children.Count);
                 grille = null;
-                canvasControlPanel.Visibility = Visibility.Hidden;
                 progress = 0;
                 //TODO: MainStory
                 mainStory.Stop();
@@ -356,46 +332,11 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                     cl.Controller.Stop();
                 }
                 aniClock.Clear();
-
                 Stop = true;
                 fireEnd(this, EventArgs.Empty);
             }, null);
         }
         #endregion
-
-        #endregion
-
-        #region controlPanel
-        private void buttonPlay_Click(object sender, RoutedEventArgs e)
-        {
-            mainStory.Begin(this, true);
-        }
-
-        private void buttonBreak_Click(object sender, RoutedEventArgs e)
-        {
-            mainStory.Pause(this);
-        }
-
-        private void buttonSpeed_Click(object sender, RoutedEventArgs e)
-        {
-            // Makes the storyboard progress three times as fast as normal.
-            mainStory.SetSpeedRatio(this, 3);
-        }
-
-        private void buttonStop_Click(object sender, RoutedEventArgs e)
-        {
-            mainStory.Stop(this);
-        }
-
-        private void buttonResume_Click(object sender, RoutedEventArgs e)
-        {
-            mainStory.Resume(this);
-        }
-
-        private void buttonFillPeriod_Click(object sender, RoutedEventArgs e)
-        {
-            mainStory.SkipToFill(this);
-        }
 
         #endregion
 
@@ -407,7 +348,6 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             {
                 btn.Content = "1";
                 btn.Background = Brushes.Red;
-
                 int x = 0;
                 int y = 0;
                 //get x, y
@@ -416,8 +356,8 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                 {
                     if (Object.ReferenceEquals(actualBtn, btn))
                     {
-                        x = count % grille.GetLength(0);
-                        y = (count - x) / grille.GetLength(0);
+                        y = count % grille.GetLength(0);
+                        x = (count - y) / grille.GetLength(0);
                         break;
                     }
                     else
@@ -431,13 +371,63 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
                     grille[x, y].Content = "0";
                     grille[x, y].IsEnabled = false;
                 }
-                RotateGrille();
+                RotateGrille();          
                 clickCounter++;
+                if (clickCounter == (grille.GetLength(0) * grille.GetLength(1)) / 4)
+                {
+                    settings.grille = grilleToGeneratorSettings(grille);
+                }
             }
             else 
             {
                 btn.Content = "0";
+                btn.Background = Brushes.White;
+                int x = 0;
+                int y = 0;
+                //get x, y
+                int count = 0;
+                foreach (Button actualBtn in grilleWrapPanel.Children)
+                {
+                    if (Object.ReferenceEquals(actualBtn, btn))
+                    {
+                        y = count % grille.GetLength(0);
+                        x = (count - y) / grille.GetLength(0);
+                        break;
+                    }
+                    else
+                    {
+                        count++;
+                    }
+                }
+                for (int rotate = 0; rotate < 3; rotate++)
+                {
+                    RotateGrille();
+                    grille[x, y].Content = "0";
+                    grille[x, y].IsEnabled = true;
+                }
+                RotateGrille();
+                clickCounter--;
             }
+        }
+
+        private int[,] grilleToGeneratorSettings(Button[,] grille)
+        {
+            int[,] grilleInt = new int[grille.GetLength(0), grille.GetLength(1)];
+            for (int x = 0; x < grille.GetLength(0); x++) 
+            {
+                for (int y = 0; y < grille.GetLength(1); y++) 
+                {
+                    if (grille[x, y].Content.Equals("0"))
+                    {
+                        grilleInt[x, y] = 0;
+                    }
+                    else 
+                    {
+                        grilleInt[x, y] = 1;
+                    }
+                }
+            }
+            return grilleInt;
         }
     }
 

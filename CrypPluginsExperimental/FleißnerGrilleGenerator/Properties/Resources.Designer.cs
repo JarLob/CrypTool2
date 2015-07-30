@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
+namespace FleißnerGrilleGenerator.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.FleißnerGrilleGenerator.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FleißnerGrilleGenerator.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,79 +61,52 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die generate Grille ähnelt.
         /// </summary>
-        internal static string ActionList1 {
+        internal static string ActionRandomCaption {
             get {
-                return ResourceManager.GetString("ActionList1", resourceCulture);
+                return ResourceManager.GetString("ActionRandomCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die random ähnelt.
         /// </summary>
-        internal static string ActionList2 {
+        internal static string ActionRandomList1 {
             get {
-                return ResourceManager.GetString("ActionList2", resourceCulture);
+                return ResourceManager.GetString("ActionRandomList1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Random ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die not random ähnelt.
         /// </summary>
-        internal static string ActionList3 {
+        internal static string ActionRandomList2 {
             get {
-                return ResourceManager.GetString("ActionList3", resourceCulture);
+                return ResourceManager.GetString("ActionRandomList2", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Not Random ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die generate Grille random or not random ähnelt.
         /// </summary>
-        internal static string ActionList4 {
+        internal static string ActionRandomTooltip {
             get {
-                return ResourceManager.GetString("ActionList4", resourceCulture);
+                return ResourceManager.GetString("ActionRandomTooltip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Mode ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;InputString is empty or null&quot; ähnelt.
         /// </summary>
-        internal static string ActionModeCaption {
+        internal static string INPUTSTRING_EMPTY {
             get {
-                return ResourceManager.GetString("ActionModeCaption", resourceCulture);
+                return ResourceManager.GetString("INPUTSTRING_EMPTY", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the Algorithm action ähnelt.
-        /// </summary>
-        internal static string ActionModeTooltip {
-            get {
-                return ResourceManager.GetString("ActionModeTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Rotate ähnelt.
-        /// </summary>
-        internal static string ActionRotateCaption {
-            get {
-                return ResourceManager.GetString("ActionRotateCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Direction of rotation grille ähnelt.
-        /// </summary>
-        internal static string ActionRotateTooltip {
-            get {
-                return ResourceManager.GetString("ActionRotateTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Eingabe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die input ähnelt.
         /// </summary>
         internal static string InputStringCaption {
             get {
@@ -142,7 +115,16 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ausgabe ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot; letters.&quot; ähnelt.
+        /// </summary>
+        internal static string LETTERS {
+            get {
+                return ResourceManager.GetString("LETTERS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die output ähnelt.
         /// </summary>
         internal static string OutputStringCaption {
             get {
@@ -160,7 +142,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Classic alphabet transpositions cipher ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die help Fleißner Grille to generate a Grille ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
@@ -169,11 +151,11 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Grille Generator ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;The text has a length of &quot; ähnelt.
         /// </summary>
-        internal static string StencilStringCaption {
+        internal static string THE_TEXT_HAS {
             get {
-                return ResourceManager.GetString("StencilStringCaption", resourceCulture);
+                return ResourceManager.GetString("THE_TEXT_HAS", resourceCulture);
             }
         }
     }

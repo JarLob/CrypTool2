@@ -10,27 +10,7 @@
             <Label Canvas.Left="47" Canvas.Top="30" Content="" Height="45" Name="describeLabel" FontSize="32" FontFamily="Arial" />
             <Label Canvas.Left="47" Canvas.Top="90" Content="" Height="45" Name="describe2Label" FontSize="32" FontFamily="Arial" />
             <Label Canvas.Left="47" Canvas.Top="180" Content="Grille: " Height="45" Name="grilleLabel" FontSize="32" FontFamily="Arial" Width="850" />
-            <WrapPanel Canvas.Left="50" Canvas.Top="225" Height="850" Name="grilleWrapPanel" Width="850"></WrapPanel>
-            <Canvas Height="40" Name="canvasControlPanel" Width="240" Canvas.Left="660" Canvas.Top="1100">
-                <Button Canvas.Left="0" Click="buttonPlay_Click" Height="40" Name="buttonPlay" Width="40">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/Play.png" />
-                </Button>
-                <Button Canvas.Left="40" Click="buttonBreak_Click" Height="40" Name="buttonBreak" Width="40">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/Break.png" />
-                </Button>
-                <Button Canvas.Left="80" Click="buttonResume_Click" Height="40" Name="buttonResume" Width="40">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/Resume.png" />
-                </Button>
-                <Button Canvas.Left="120" Click="buttonSpeed_Click" Height="40" Name="buttonSpeed" Width="40" Canvas.Top="0">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/Speed.png" />
-                </Button>
-                <Button Canvas.Left="160" Click="buttonFillPeriod_Click" Height="40" Name="buttonFillPeriod" Width="40">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/FillPeriod.png" />
-                </Button>
-                <Button Canvas.Left="200" Click="buttonStop_Click" Height="40" Name="buttonStop" Width="40">
-                    <Image Source="/FleißnerGrilleGenerator;component/Images/Stop.png" />
-                </Button>
-            </Canvas>          
+            <WrapPanel Canvas.Left="50" Canvas.Top="225" Height="850" Name="grilleWrapPanel" Width="850"></WrapPanel>                 
         </Canvas>    
     </Grid>
 </UserControl>

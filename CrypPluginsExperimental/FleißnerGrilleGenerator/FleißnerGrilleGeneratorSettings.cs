@@ -27,6 +27,7 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
 
         private String stencilString = "010101000010001000010010000001000100";
         private int Presentation_Speed = 100;
+        private int[,] grille_Random;
         /// <summary>
         /// We use this delegate to send log messages from the settings class to the Fleißner plugin
         /// </summary>
@@ -171,30 +172,8 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
 
         #region TaskPane Settings
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        //[TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        //public int SomeParameter
-        //{
-        //    get
-        //    {
-        //        return someParameter;
-        //    }
-        //    set
-        //    {
-        //        if (someParameter != value)
-        //        {
-        //            someParameter = value;
-        //            // HOWTO: MUST be called every time a property value changes with correct parameter name
-        //            OnPropertyChanged("SomeParameter");
-        //        }
-        //    }
-        //}
-
-        [PropertySaveOrder(5)]
-        [TaskPane("ActionRotateCaption", "ActionRotateTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList3", "ActionList4" })]
+        [PropertySaveOrder(1)]
+        [TaskPane("ActionRandomCaption", "ActionRandomTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionRandomList1", "ActionRandomList2" })]
         public FleißnerGeneratorRandom ActionRandom
         {
             get
@@ -211,17 +190,15 @@ namespace Cryptool.Plugins.FleißnerGrilleGenerator
             }
         }
 
-        [PropertySaveOrder(8)]
-        [TaskPane("PresentationSpeedCaption", "PresentationSpeedTooltip", "PresentationGroup", 6, true, ControlType.Slider, 1, 1000)]
-        public int PresentationSpeed
+        public int[,] grille
         {
-            get { return (int)Presentation_Speed; }
+            get { return (int[,])grille_Random; }
             set
             {
-                if ((value) != Presentation_Speed)
+                if ((value) != grille_Random)
                 {
-                    this.Presentation_Speed = value;
-                    OnPropertyChanged("PresentationSpeed");
+                    this.grille_Random = value;
+                    OnPropertyChanged("Grille");
                 }
             }
         }

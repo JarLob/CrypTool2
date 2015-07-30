@@ -117,43 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionList1" xml:space="preserve">
-    <value>Encrypt</value>
+  <data name="ActionRandomCaption" xml:space="preserve">
+    <value>generate Grille</value>
   </data>
-  <data name="ActionList2" xml:space="preserve">
-    <value>Decrypt</value>
+  <data name="ActionRandomList1" xml:space="preserve">
+    <value>random</value>
   </data>
-  <data name="ActionList3" xml:space="preserve">
-    <value>Random</value>
+  <data name="ActionRandomList2" xml:space="preserve">
+    <value>not random</value>
   </data>
-  <data name="ActionList4" xml:space="preserve">
-    <value>Not Random</value>
-  </data>
-  <data name="ActionModeCaption" xml:space="preserve">
-    <value>Mode</value>
-  </data>
-  <data name="ActionModeTooltip" xml:space="preserve">
-    <value>Select the Algorithm action</value>
-  </data>
-  <data name="ActionRotateCaption" xml:space="preserve">
-    <value>Rotate</value>
-  </data>
-  <data name="ActionRotateTooltip" xml:space="preserve">
-    <value>Direction of rotation grille</value>
+  <data name="ActionRandomTooltip" xml:space="preserve">
+    <value>generate Grille random or not random</value>
   </data>
   <data name="InputStringCaption" xml:space="preserve">
-    <value>Eingabe</value>
+    <value>input</value>
+  </data>
+  <data name="INPUTSTRING_EMPTY" xml:space="preserve">
+    <value>"InputString is empty or null"</value>
+  </data>
+  <data name="LETTERS" xml:space="preserve">
+    <value>" letters."</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
-    <value>Ausgabe</value>
+    <value>output</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Fleißner Grille Generator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Classic alphabet transpositions cipher</value>
+    <value>help Fleißner Grille to generate a Grille</value>
   </data>
-  <data name="StencilStringCaption" xml:space="preserve">
-    <value>Grille Generator</value>
+  <data name="THE_TEXT_HAS" xml:space="preserve">
+    <value>"The text has a length of "</value>
   </data>
 </root>
