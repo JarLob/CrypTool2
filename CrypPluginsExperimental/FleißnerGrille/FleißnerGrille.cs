@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Robert Rauer
+   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,11 +21,12 @@ using System.Windows.Threading;
 using System.Threading;
 using System;
 using System.Text;
+using FleißnerGrille.Properties;
 
 namespace Cryptool.Plugins.FleißnerGrille
 {
     [Author("Robert Rauer", "robert_rauer@yahoo.de", "Universität Kassel", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.FleißnerGrille.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrille/userdoc.xml",
+    [PluginInfo("FleißnerGrille.Properties.Resources", "PluginCaption", "PluginTooltip", "FleißnerGrille/DetailedDescription/doc.xml",
         new[] { "FleißnerGrille/Images/FleißnerGrille.png" })]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class FleißnerGrille : ICrypComponent
@@ -38,6 +39,8 @@ namespace Cryptool.Plugins.FleißnerGrille
         private bool stopped = false;
         private string output;
         private bool isPlayMode = false;
+        private static Random _random = new Random();
+        private string randomStr = "";
 
         private struct koord
         {
@@ -57,6 +60,7 @@ namespace Cryptool.Plugins.FleißnerGrille
             this.settings = new FleißnerGrilleSettings();
             myPresentation = new FleißnerGrillePresentation(this);
             Presentation = myPresentation;
+            this.settings.PropertyChanged += myPresentation.settings_OnPropertyChange;
             myPresentation.fireEnd += new EventHandler(presentation_finished);
             myPresentation.updateProgress += new EventHandler(update_progress);
             this.settings.PropertyChanged += settings_OnPropertyChange;
@@ -103,15 +107,18 @@ namespace Cryptool.Plugins.FleißnerGrille
         public string InputString
         {
             get 
-            {
-                
+            {             
                 if (_inputString!=null &&_inputString.Length > this.settings.StencilString.Length) //grille is smaller than inputString
                 {
-                    int min = minGrille(_inputString);
-                    this.settings.OnLogMessage("FAILURE:\n" +
-                            "Grille from user: \n" +
-                            "\"" + this.settings.StencilString + "\" (With a " + (int)Math.Sqrt(this.settings.StencilString.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
-                            "there must be at least a " + min + " x " + min + " grille", NotificationLevel.Info);
+                    int min = getGrilleSize(_inputString);
+                    //this.settings.OnLogMessage("FAILURE:\n" +
+                    //        "Grille from user: \n" +
+                    //        "\"" + this.settings.StencilString + "\" (With a " + (int)Math.Sqrt(this.settings.StencilString.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
+                    //        "there must be at least a " + min + " x " + min + " grille", NotificationLevel.Info);
+                    this.settings.OnLogMessage(Resources.FAILURE + "\n" + Resources.GRILLE_FROM_USER + "\n \"" +
+                        this.settings.StencilString + "\"" + Resources.With_A +
+                        (int)Math.Sqrt(this.settings.StencilString.Length) + Resources.SQUARE_GRILLE +
+                        _inputString + "\n " + Resources.THERE_MUST_BE + min + " x " + min + Resources.GRILLE, NotificationLevel.Info);
                 }
                 return _inputString;            
             }
@@ -119,11 +126,11 @@ namespace Cryptool.Plugins.FleißnerGrille
             {
                 if (value.Length > this.settings.StencilString.Length) //grille is smaller than inputString
                 {
-                    int min = minGrille(value);
-                    this.settings.OnLogMessage("FAILURE:\n" +
-                            "Grille from user: \n" +
-                            "\"" + this.settings.StencilString + "\" (With a " + (int)Math.Sqrt(this.settings.StencilString.Length) + " square grille) is smaller than the length of " + value + "\n" +
-                            "there must be at least a " + min + " x " + min + " grille", NotificationLevel.Info);
+                    int min = getGrilleSize(value);
+                    this.settings.OnLogMessage(Resources.FAILURE + "\n" + Resources.GRILLE_FROM_USER + "\n \"" +
+                        this.settings.StencilString + "\"" + Resources.With_A + 
+                        (int)Math.Sqrt(this.settings.StencilString.Length) + Resources.SQUARE_GRILLE + 
+                        value + "\n " + Resources.THERE_MUST_BE  + min + " x " + min + Resources.GRILLE, NotificationLevel.Info);
                 }
                 else
                 {
@@ -162,11 +169,15 @@ namespace Cryptool.Plugins.FleißnerGrille
                 {
                     if (_stencilString.Length < _inputString.Length) //grille is smaller than inputString
                     {
-                        int min = minGrille(_inputString);
-                        this.settings.OnLogMessage("FAILURE:\n" +
-                            "Grille from user: \n" +
-                            "\"" + _stencilString + "\" (With a " + (int)Math.Sqrt(_stencilString.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
-                            "there must be at least a " + min + " x " + min + " grille", NotificationLevel.Info);
+                        int min = getGrilleSize(_inputString);
+                        //this.settings.OnLogMessage("FAILURE:\n" +
+                        //    "Grille from user: \n" +
+                        //    "\"" + _stencilString + "\" (With a " + (int)Math.Sqrt(_stencilString.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
+                        //    "there must be at least a " + min + " x " + min + " grille", NotificationLevel.Info);
+                        this.settings.OnLogMessage(Resources.FAILURE + "\n" + Resources.GRILLE_FROM_USER + "\n \"" +
+                        this.settings.StencilString + "\"" + Resources.With_A +
+                        (int)Math.Sqrt(this.settings.StencilString.Length) + Resources.SQUARE_GRILLE +
+                        _inputString + "\n " + Resources.THERE_MUST_BE + min + " x " + min + Resources.GRILLE, NotificationLevel.Info);
                     }                                     
                 }
                 return this.settings.StencilString;            
@@ -177,11 +188,15 @@ namespace Cryptool.Plugins.FleißnerGrille
                 {
                     if (value.Length < _inputString.Length) //grille is smaller than inputString
                     {
-                        int min = minGrille(_inputString);
-                        this.settings.OnLogMessage("FAILURE:\n"+
-                            "Grille from user: \n"+
-                            "\"" + value + "\" (With a " + (int)Math.Sqrt(value.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
-                            "there must be at least a " + min + " x " + min +" grille", NotificationLevel.Info);
+                        int min = getGrilleSize(_inputString);
+                        //this.settings.OnLogMessage("FAILURE:\n"+
+                        //    "Grille from user: \n"+
+                        //    "\"" + value + "\" (With a " + (int)Math.Sqrt(value.Length) + " square grille) is smaller than the length of " + _inputString + "\n" +
+                        //    "there must be at least a " + min + " x " + min +" grille", NotificationLevel.Info);
+                        this.settings.OnLogMessage(Resources.FAILURE + "\n" + Resources.GRILLE_FROM_USER + "\n \"" +
+                        this.settings.StencilString + "\"" + Resources.With_A +
+                        (int)Math.Sqrt(this.settings.StencilString.Length) + Resources.SQUARE_GRILLE +
+                        _inputString + "\n " + Resources.THERE_MUST_BE + min + " x " + min + Resources.GRILLE, NotificationLevel.Info);
                     }
                     else
                     {
@@ -193,18 +208,31 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
         }
 
-        private int minGrille(string input) 
+        private int getGrilleSize(string input) 
         {
-            int min;
-            if (Math.Sqrt(input.Length) - (int)Math.Sqrt(input.Length) > 0) // sqrt from length is odd
+            int inputLength = input.Length;
+            if (Math.Sqrt(inputLength) - (int)Math.Sqrt(inputLength) == 0)
             {
-                min = ((int)Math.Sqrt(input.Length)) + 1;
+                if ((int)Math.Sqrt(inputLength) % 2 == 0) //Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength);
+                }
+                else
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
             }
-            else // sqrt from lenght is even
+            else
             {
-                min = (int)Math.Sqrt(input.Length);
+                if (((int)Math.Sqrt(inputLength) + 1) % 2 == 0) // Die Anzahl der gesamten Felder ist durch 4 teilbar
+                {
+                    return (int)Math.Sqrt(inputLength) + 1;
+                }
+                else
+                {
+                    return (int)Math.Sqrt(inputLength) + 2;
+                }
             }
-            return min;
         }
 
         #endregion
@@ -260,7 +288,7 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
             else 
             {
-                FleißnerStencil_LogMessage("InputString ist empty or null", NotificationLevel.Error);
+                FleißnerStencil_LogMessage(Resources.INPUTSTRING_IS_EMPTY, NotificationLevel.Error);
                 OutputString = null;
                 return;
             }
@@ -275,7 +303,7 @@ namespace Cryptool.Plugins.FleißnerGrille
                     else { encrypt = false; }
                     if (settings.ActionRotate == 0) { rotate = false; }
                     else { rotate = true; }
-                    myPresentation.main(settings.StringToStencil(StencilString), InputString, encrypt, rotate, this);
+                    myPresentation.main(settings.StringToStencil(StencilString), InputString + randomStr, encrypt, rotate, this);
                 }
                , null);
             }
@@ -353,25 +381,25 @@ namespace Cryptool.Plugins.FleißnerGrille
                 Execute();
             }
         }
-        /// <summary>
-        /// fill Matrix with 00 ... nn
-        /// </summary>
-        private koord[,] generateStecil(int n)
-        {
-            koord[,] stencil = new koord[n, n];
-            for (int i = 0; i < n; ++i)
-            {
-                for (int j = 0; j < n; ++j)
-                {
-                    stencil[i, j].k_i = i;
-                    stencil[i, j].k_j = j;
-                }
-            }
-            return stencil;
-        }
+        ///// <summary>
+        ///// fill Matrix with 00 ... nn
+        ///// </summary>
+        //private koord[,] generateStecil(int n)
+        //{
+        //    koord[,] stencil = new koord[n, n];
+        //    for (int i = 0; i < n; ++i)
+        //    {
+        //        for (int j = 0; j < n; ++j)
+        //        {
+        //            stencil[i, j].k_i = i;
+        //            stencil[i, j].k_j = j;
+        //        }
+        //    }
+        //    return stencil;
+        //}
         /// <summary>
         // rotate a 2-dimensional Array
-        public bool[,] RotateStencil(bool[,] stencil, bool right)
+        public bool[,] RotateStencil(bool[,] stencil, bool rot)
         {
             int stencilLength = (int) Math.Sqrt(stencil.Length);
             bool[,] ret = null;
@@ -391,7 +419,7 @@ namespace Cryptool.Plugins.FleißnerGrille
         }
 
         /// <summary>
-        // rotate a 2-dimensional Array
+        // rotate right a 2-dimensional Array
         public bool[,] rotate(bool[,] stencil)
         {
             int stencilLength = (int)Math.Sqrt(stencil.Length);
@@ -405,42 +433,18 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
             return ret;
         }
-        /// <summary>
-        /// mark Fields in Matrix with -1-1
-        /// </summary>
-        private bool[,] markFieldInStencil(bool[,] stencil, koord point)
-        {
-            for (int i = 0; i < 4; i++ )
-            {
-                // HOWTO: Set Field unvisible
-                if (i == 0) // set hole in Stecil
-                {
-                    stencil[point.k_i, point.k_j] = true;
-                }
-                else 
-                {
-                    stencil[point.k_i, point.k_j] = false;
-                }
-                if (settings.ActionRotate == FleißnerGrilleSettings.FleißnerRotate.Right) //right
-                {
-                    stencil = RotateStencil(stencil, true);
-                }
-                else 
-                {
-                    stencil = RotateStencil(stencil, false);
-                }
-            } 
-            return stencil;
-        }
+
         /// <summary>
         /// write plaintext with the FleißnerStencil in a Matrix
         /// </summary>        
         public char[,] EncryptedMatrix(bool[,] stencil, string plaintext)
         {
+            int count = 0;
             int x=0;
             int stencilLength = (int) Math.Sqrt(StencilString.Length);
             char[,] encrypted = new char[stencilLength, stencilLength];
             bool right;
+            randomStr = "";
             if (settings.ActionRotate == FleißnerGrilleSettings.FleißnerRotate.Right)
             {
                 right = true;
@@ -462,18 +466,54 @@ namespace Cryptool.Plugins.FleißnerGrille
                             if (x - 1 < plaintext.Length-1)
                             {
                                 encrypted[i, j] = plaintext[x]; // write on this position the current plaintext letter in the encryptMatrix
+                                count++;
                             }
                             else 
                             {
-                                encrypted[i, j] = '#';
+                                char c;
+                                if (settings.ActionRandom == 0) { c = generateRandomBigLetter(); }
+                                else if ((int)settings.ActionRandom == 1) { c= generateRandomLowerLetter(); }
+                                else { c = generateRandomBigLowerLetter(); }
+                                encrypted[i, j] = c;
+                                count++;
+                                randomStr = randomStr + encrypted[i, j];
                             }
                             x++;
                         }
                     }
                 }
-                stencil = RotateStencil(stencil, right);
+                stencil = RotateStencil(stencil, true);
             }
             return encrypted;
+        }
+
+        private char generateRandomBigLetter()
+        {
+            int num = _random.Next(0, 26); // Zero to 25
+            char let = (char)('A' + num);
+            return let;
+        }
+
+        private char generateRandomLowerLetter()
+        {
+            int num = _random.Next(0, 26); // Zero to 25
+            char let = (char)('a' + num);
+            return let;
+        }
+
+        private char generateRandomBigLowerLetter()
+        {
+            char let;
+            int num = _random.Next(0, 2); // Zero to 25
+            if (num == 0)
+            {
+                let = generateRandomBigLetter();
+            }
+            else 
+            {
+                let = generateRandomLowerLetter();
+            }
+            return let;
         }
         /// <summary>
         /// fill 2-dimensional char Array with String rowwise
@@ -497,7 +537,7 @@ namespace Cryptool.Plugins.FleißnerGrille
         /// <summary>
         /// decrypt the ciphertext with a FleißnerStencil
         /// </summary>
-        private string Decrypt(string ciphertext)
+        public string Decrypt(string ciphertext)
         {
             int stencilLength = (int)Math.Sqrt(settings.StencilString.Length);
             bool[,] stencil = settings.StringToStencil(settings.StencilString);
@@ -521,7 +561,7 @@ namespace Cryptool.Plugins.FleißnerGrille
                 }
                 else 
                 {
-                    stencil = RotateStencil(stencil, false);
+                    stencil = RotateStencil(stencil, true);
                 }
                 
             }

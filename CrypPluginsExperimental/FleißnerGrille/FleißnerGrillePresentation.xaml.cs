@@ -78,6 +78,7 @@ namespace Cryptool.Plugins.FleißnerGrille
         private Storyboard moveStory = new Storyboard();
         private Storyboard translationStoryboard;
         private ColorAnimation markOrangeColorAnimation;
+        private ColorAnimation markOrangeTableColorAnimation;
         private SolidColorBrush brushOrange;
         private SolidColorBrush brushTransparent;
         private DoubleAnimation daRemoveLetter;
@@ -89,13 +90,12 @@ namespace Cryptool.Plugins.FleißnerGrille
         private DispatcherTimer timer;
         public int progress;                // progress variable to update the plugin status
         private List<Clock> aniClock = new List<Clock>();
-        private int speed = 100;          // animation speed
+        private double speed = 1;          // animation speed
         int moveDuration = 5000;
         int rotateDuration = 3000;
-        int colorDuration = 100;
-        int unvisibleDurationInput = 100;
-        int markLetterImg = 100;
-        int visibleDurationOutput = 100;
+        int colorDuration = 500;
+        int unvisibleDurationInput = 500;
+        int visibleDurationOutput = 500;
         bool[,] stencil1;
         bool[,] stencil2;
         bool[,] stencil3;
@@ -138,27 +138,52 @@ namespace Cryptool.Plugins.FleißnerGrille
             //outputWrap.Visibility = Visibility.Visible;
             NameScope.SetNameScope(this, new NameScope());
             int stencilEmptySize = howManyEmty(stencil);
-            moveStencilCanvas(0, "AnimatedTranslateTransform", input);
-            rotateStencil(stencil, rotateMode());      
-            for (int i = 0; i < input.Length; i++)
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
             {
-                TextBlock inputTxtBlock = reina[i];
-                string inputText = inputTxtBlock.Text;
-                //1
-                colorLetterInput(inputTxtBlock, i, stencilEmptySize);
-                //4
-                removeLetterInput(inputTxtBlock, i, stencilEmptySize);
-                colorLetterInField(stencil, i, stencilEmptySize);
+                moveStencilCanvas(0, "AnimatedTranslateTransform", input, myFleißner);
+                rotateStencil(stencil, rotateMode(), myFleißner);
+                for (int i = 0; i < input.Length; i++)
+                {
+                    TextBlock inputTxtBlock = reina[i];
+                    string inputText = inputTxtBlock.Text;
+                    //1
+                    colorLetterInput(inputTxtBlock, i, stencilEmptySize, myFleißner);
+                    //4
+                    removeLetterInput(inputTxtBlock, i, stencilEmptySize, myFleißner);
+                    colorLetterInField(stencil, i, stencilEmptySize, myFleißner);                  
+                }
+                //6
+                for (int i = 0; i < outputWrap.Children.Count; i++)
+                {
+                    visibleOutput(i, stencilEmptySize, myFleißner);
+                } 
             }
-            //6
-            for (int i = 0; i < outputWrap.Children.Count; i++)
+            else //decryption
             {
-                visibleOutput(i, stencilEmptySize);
-            } 
+                for (int i = 0; i < input.Length; i++)
+                {
+                    TextBlock inputTxtBlock = reina[i];
+                    string inputText = inputTxtBlock.Text;
+                    //1
+                    colorLetterInput(inputTxtBlock, i, stencilEmptySize, myFleißner);
+                    //4
+                    removeLetterInput(inputTxtBlock, i, stencilEmptySize, myFleißner);
+                    colorLetterInField(stencil, i, stencilEmptySize, myFleißner);
+                }
+                moveStencilCanvas(2, "AnimatedTranslateTransform", input, myFleißner);
+                rotateStencil(stencil, rotateMode(), myFleißner);
+                for (int i = 0; i < input.Length; i++)
+                {
+                    colorLetterInField(stencil, i, stencilEmptySize, myFleißner);
+                    visibleOutput(i, stencilEmptySize, myFleißner);
+                }
+            }
+            
             mainStory.Begin(this);
+            mainStory.SetSpeedRatio(speed);
         }
 
-        private void moveStencilCanvas(int pos, string name, string input)
+        private void moveStencilCanvas(int pos, string name, string input, FleißnerGrille myFleißner)
         {
             #region auskommentiert
             ////this.Margin = new Thickness(20);
@@ -244,32 +269,62 @@ namespace Cryptool.Plugins.FleißnerGrille
             // animate the TranslateTransform.
             DoubleAnimationUsingKeyFrames moveXAnimation
                 = new DoubleAnimationUsingKeyFrames();
-            moveXAnimation.Duration = TimeSpan.FromMilliseconds(getAllDuration(input.Length)); //dauer Animation
+            moveXAnimation.Duration = TimeSpan.FromMilliseconds(getAllDuration(input.Length, myFleißner)); //dauer Animation
 
             double leftWrap = Canvas.GetLeft(fieldWrapPanel);
             double topWrap = Canvas.GetTop(fieldWrapPanel);
             double left = Canvas.GetLeft(moveCanvas);
             double top = Canvas.GetTop(moveCanvas);
-
-            double pause = moveDuration + 3 * rotateDuration + input.Length * (colorDuration + colorDuration + unvisibleDurationInput + colorDuration + unvisibleDurationInput);
-            // Animate from the starting position to 500 
-            // over the first second using linear 
-            // interpolation.
-            moveXAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    leftWrap-left,//900, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(moveDuration))) // KeyTime  //bis dauer
-                );
-            moveXAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    leftWrap-left,//900, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
-                );
-            moveXAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    0, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause+moveDuration))) // KeyTime  //bis dauer
-                );
+            double pause;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                pause = moveDuration + 3 * rotateDuration + input.Length * (colorDuration + colorDuration + unvisibleDurationInput + colorDuration + unvisibleDurationInput);
+                // Animate from the starting position to 500 
+                // over the first second using linear 
+                // interpolation.
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        leftWrap - left,//900, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(moveDuration))) // KeyTime  //bis dauer
+                    );
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        leftWrap - left,//900, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
+                    );
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        0, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause + moveDuration))) // KeyTime  //bis dauer
+                    );
+            }
+            else 
+            {
+                pause = input.Length * 2 * colorDuration + moveDuration + 3 * rotateDuration + input.Length * colorDuration;
+                // Animate from the starting position to 500 
+                // over the first second using linear 
+                // interpolation.
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        0,//900, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(input.Length * 2 * colorDuration))) // KeyTime  //bis dauer
+                    );
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        leftWrap - left,//900, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(input.Length * 2 * colorDuration + moveDuration))) // KeyTime  //bis dauer
+                    );
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        leftWrap - left,//900, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
+                    );
+                moveXAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        0, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause + moveDuration))) // KeyTime  //bis dauer
+                    );
+            }
             // Set the animation to target the X property 
             // of the object named "AnimatedTranslateTransform."
             Storyboard.SetTargetName(moveXAnimation, name);
@@ -281,28 +336,56 @@ namespace Cryptool.Plugins.FleißnerGrille
             // animate the TranslateTransform.
             DoubleAnimationUsingKeyFrames moveYAnimation
                 = new DoubleAnimationUsingKeyFrames();
-            moveYAnimation.Duration = TimeSpan.FromMilliseconds(getAllDuration(input.Length)); //dauer Animation
+            moveYAnimation.Duration = TimeSpan.FromMilliseconds(getAllDuration(input.Length, myFleißner)); //dauer Animation
 
-            
 
-            // Animate from the starting position to 500 
-            // over the first second using linear 
-            // interpolation.
-            moveYAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(moveDuration))) // KeyTime  //bis dauer
-                );
-            moveYAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
-                );
-            moveYAnimation.KeyFrames.Add(
-                new LinearDoubleKeyFrame(
-                    0, // Target value (KeyValue)
-                    KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause+moveDuration))) // KeyTime  //bis dauer
-                );
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                // Animate from the starting position to 500 
+                // over the first second using linear 
+                // interpolation.
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(moveDuration))) // KeyTime  //bis dauer
+                    );
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
+                    );
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        0, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause + moveDuration))) // KeyTime  //bis dauer
+                    );
+            }
+            else 
+            {
+                // Animate from the starting position to 500 
+                // over the first second using linear 
+                // interpolation.
+                moveYAnimation.KeyFrames.Add(
+                   new LinearDoubleKeyFrame(
+                       0,//900, // Target value (KeyValue)
+                       KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(input.Length * 2 * colorDuration))) // KeyTime  //bis dauer
+                   );
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(input.Length * 2 * colorDuration + moveDuration))) // KeyTime  //bis dauer
+                    );
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        topWrap - top - (top / Math.Sqrt(input.Length)),//-320, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause))) // KeyTime  //bis dauer
+                    );
+                moveYAnimation.KeyFrames.Add(
+                    new LinearDoubleKeyFrame(
+                        0, // Target value (KeyValue)
+                        KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(pause + moveDuration))) // KeyTime  //bis dauer
+                    );
+            }
             // Set the animation to target the X property 
             // of the object named "AnimatedTranslateTransform."
             Storyboard.SetTargetName(moveYAnimation, name);
@@ -329,12 +412,12 @@ namespace Cryptool.Plugins.FleißnerGrille
                );
         }
 
-        private void rotateStencil(bool[,] stencil, bool rotate) 
+        private void rotateStencil(bool[,] stencil, bool rotate, FleißnerGrille myFleißner) 
         {
-            rotateStencilCanvas("RotateStencilCanvas", stencil, rotate);
+            rotateStencilCanvas("RotateStencilCanvas", stencil, rotate, myFleißner);
         }
 
-        private void rotateStencilCanvas(string name, bool[,] stencil, bool rotate)
+        private void rotateStencilCanvas(string name, bool[,] stencil, bool rotate, FleißnerGrille myFleißner)
         {
             // Create a TranslateTransform to  
             // rotate the Canvas.
@@ -350,10 +433,17 @@ namespace Cryptool.Plugins.FleißnerGrille
             DoubleAnimationUsingKeyFrames translationRotateAnimation
                 = new DoubleAnimationUsingKeyFrames();
             int count = stencil.GetLength(0) * stencil.GetLength(0);
-            double allDuration = getAllDuration(count);
+            double allDuration = getAllDuration(count, myFleißner);
             translationRotateAnimation.Duration = TimeSpan.FromMilliseconds(allDuration);  //dauer
-            translationRotateAnimation.BeginTime = TimeSpan.FromMilliseconds(moveDuration+1);
-            double[] startPoints = getStartPoints(stencil);
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                translationRotateAnimation.BeginTime = TimeSpan.FromMilliseconds(moveDuration + 1);
+            }
+            else 
+            {
+                translationRotateAnimation.BeginTime = TimeSpan.FromMilliseconds(1);
+            }
+            double[] startPoints = getStartPoints(stencil, myFleißner);
 
             if (rotateMode())  //right
             {
@@ -381,21 +471,35 @@ namespace Cryptool.Plugins.FleißnerGrille
 
         }
 
-        private double[] getStartPoints(bool[,] stencil)
+        private double[] getStartPoints(bool[,] stencil, FleißnerGrille myFleißner)
         {
             int stencilEmptySize = howManyEmty(stencil);
             int round = stencilEmptySize;
             double[] startPoints = new double[3];
             for (int i = 1; i < 4; i++)
             {
-                startPoints[i - 1] = certainDuration(0, i * stencilEmptySize, stencilEmptySize);  
+                if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+                {
+                    startPoints[i - 1] = certainDuration(0, i * stencilEmptySize, stencilEmptySize);
+                }
+                else 
+                {
+                    startPoints[i - 1] = certainDurationD(3, i * stencilEmptySize, stencilEmptySize);
+                }
             }
             return startPoints;
         }
 
-        private double getAllDuration(int count) 
+        private double getAllDuration(int count, FleißnerGrille myFleißner) 
         {
-            return (moveDuration + 3 * rotateDuration + count * (colorDuration + colorDuration + unvisibleDurationInput + colorDuration + unvisibleDurationInput) + moveDuration);
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                return (moveDuration + 3 * rotateDuration + count * (colorDuration + colorDuration + unvisibleDurationInput + colorDuration + unvisibleDurationInput) + moveDuration);
+            }
+            else 
+            {
+                return (count * (colorDuration + colorDuration) + moveDuration + 3 * rotateDuration + count * (colorDuration) + moveDuration);
+            }
         }
 
         private int howManyEmty(bool[,] stencil)
@@ -436,6 +540,12 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
             catch { }
             canvasControlPanel.Visibility = Visibility.Visible;
+            buttonPlay.IsEnabled = true;
+            buttonBreak.IsEnabled = true;
+            buttonFillPeriod.IsEnabled = true;
+            buttonResume.IsEnabled = true;
+            buttonSpeed.IsEnabled = true;
+            buttonStop.IsEnabled = true;
             if (input != null)
             {
                 reina = new TextBlock[input.Length];
@@ -453,7 +563,7 @@ namespace Cryptool.Plugins.FleißnerGrille
                 drawStencil(stencil, this.stencilCanvas);
                 generateOrder(myFleißner);
                 string ilabel = (string)this.inputLabel.Content;
-                if (encrypt == true)
+                if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt)
                 {
                     inputLabel.Content = ilabel + " Plaintext";
                 }
@@ -462,6 +572,31 @@ namespace Cryptool.Plugins.FleißnerGrille
                     inputLabel.Content = ilabel + " Ciphertext";
                 }
             }
+        }
+
+        private void initHelper()
+        {
+            try
+            {
+                mainmain.Children.Remove(fieldWrapPanel);
+                mainmain.Children.Remove(moveCanvas);
+                mainmain.Children.Remove(inputWrap);
+                mainmain.Children.Remove(outputWrap);
+                mainmain.Children.Add(fieldWrapPanel);
+                mainmain.Children.Add(inputWrap);
+                mainmain.Children.Add(outputWrap);
+                mainmain.Children.Add(moveCanvas);
+                moveCanvas.Children.Add(stencilCanvas);
+
+            }
+            catch { }
+            canvasControlPanel.Visibility = Visibility.Visible;
+            buttonPlay.IsEnabled = true;
+            buttonBreak.IsEnabled = true;
+            buttonFillPeriod.IsEnabled = true;
+            buttonResume.IsEnabled = true;
+            buttonSpeed.IsEnabled = true;
+            buttonStop.IsEnabled = true;
         }
 
         //füllt wrap with text
@@ -485,6 +620,7 @@ namespace Cryptool.Plugins.FleißnerGrille
         {
             reTablea1 = new Hashtable();
             char[,] encrypted = myFleißner.EncryptedMatrix(stencil, input);
+            string decrypted = myFleißner.Decrypt(input);
             int inputSize = input.Length; //length of the alphabet
             int stencilLength = (int)Math.Sqrt(stencil.Length);
             reTablea = new TextBlock[stencil.GetLength(0), stencil.GetLength(1)];
@@ -497,11 +633,22 @@ namespace Cryptool.Plugins.FleißnerGrille
             {
                 for (int j = 0; j < stencil.GetLength(1); j++) //fülle j-te Zeile
                 {
-                    TextBlock t = newTableTextBlock(encrypted[i,j].ToString(), textBoxHeight, textBoxWidth);
+                    TextBlock t;
+                    TextBlock output;
+                    if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt)
+                    {
+                        t = newTableTextBlock(encrypted[i, j].ToString(), textBoxHeight, textBoxWidth);
+                        output = newTextBlock(encrypted[i, j].ToString());
+                    }
+                    else 
+                    {
+                        t = newTableTextBlock(input[count].ToString(), textBoxHeight, textBoxWidth);
+                        output = newTextBlock(decrypted[count].ToString());
+                    }
                     reTablea1[count] = t; //fill hashTable
-                    reTablea[i, j] = t;                 
+                    reTablea[i, j] = t;
                     fieldWrapPanel.Children.Add(t);
-                    TextBlock output = newTextBlock(encrypted[i, j].ToString());
+                    
                     reoutah[i, j] = output;
                     outputWrap.Children.Add(output); //zeilenweise
                     count++;
@@ -660,10 +807,19 @@ namespace Cryptool.Plugins.FleißnerGrille
 
         #region loadAnimations
         //1
-        private void colorLetterInput(TextBlock txtBlock, int i, int stencilEmptySize)
+        private void colorLetterInput(TextBlock txtBlock, int i, int stencilEmptySize, FleißnerGrille myFleißner)
         {
-            double duration = certainDuration(1, i, stencilEmptySize);
-            colorTextBlock(txtBlock, i, "myAnimatedBrushLetter", duration);
+            double duration;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                duration = certainDuration(1, i, stencilEmptySize);
+                colorTextBlock(txtBlock, i, "myAnimatedBrushLetter", duration);
+            }
+            else 
+            {
+                duration = certainDurationD(0, i, stencilEmptySize);
+                colorTextBlock(txtBlock, i, "myAnimatedBrushLetter", duration);
+            }
         }
 
         //2
@@ -675,16 +831,36 @@ namespace Cryptool.Plugins.FleißnerGrille
         //    return myFleißner.RotateStencil(stencil);
         //}
         //4
-        private void removeLetterInput(TextBlock txtBlock, int i, int stencilEmptySize)
+        private void removeLetterInput(TextBlock txtBlock, int i, int stencilEmptySize, FleißnerGrille myFleißner)
         {
-            double duration = certainDuration(4, i, stencilEmptySize);
-            removeTextBlock(txtBlock, i, "RemoveInputTextblock", duration);
+            double duration;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                duration = certainDuration(4, i, stencilEmptySize);
+                removeTextBlock(txtBlock, i, "RemoveInputTextblock", duration);
+            }
+            else 
+            {
+                duration = certainDurationD(1, i, stencilEmptySize);
+                removeTextBlock(txtBlock, i, "RemoveInputTextblock", duration);
+            }
         }
 
-        private void colorLetterInField(bool[,] stencil, int i, int stencilEmptySize)
+        private void colorLetterInField(bool[,] stencil, int i, int stencilEmptySize, FleißnerGrille myFleißner)
         {
-            double duration = certainDuration(4, i,stencilEmptySize);
-            findetTextBlock1(i, duration);
+            double duration;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                duration = certainDuration(4, i, stencilEmptySize);
+                findetTextBlock1(i, duration, myFleißner);
+            }
+            else 
+            {
+                duration = certainDurationD(1, i, stencilEmptySize);
+                int x = (int) (i/stencil.GetLength(0));
+                int y = i%stencil.GetLength(0);
+                visibleTableTextBlock(reTablea[x, y], x, y, "myAnimatedTable", duration, i);
+            }
         }
 
         private void findetTextBlock(bool[,] stencil, int stelle, double duration)
@@ -707,20 +883,40 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
             //return null;
         }
-        private void findetTextBlock1(int stelle, double duration)
+        private void findetTextBlock1(int stelle, double duration, FleißnerGrille myFleißner)
         {
             visibleTableTextBlock1((TextBlock) reTablea1[order[stelle]], "myAnimatedTable", duration, stelle);
         }
         //5
-        private void colorLetterInField(bool[,] stencil, string p)
+        private void colorLetterInField2(bool[,] stencil, int i, int stencilEmptySize, FleißnerGrille myFleißner)
         {
-
+            double duration;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                duration = certainDuration(4, i, stencilEmptySize);
+                findetTextBlock1(i, duration, myFleißner);
+            }
+            else
+            {
+                duration = certainDurationD(4, i, stencilEmptySize);
+                colorTableTextBlock((TextBlock)reTablea1[order[i]], "myAnimatedBrushTable", duration, i);
+            }
         }
+
         //6
-        private void visibleOutput(int round, int stencilEmptySize)
+        private void visibleOutput(int round, int stencilEmptySize, FleißnerGrille myFleißner)
         {
-            double duration = certainDuration(6, round, stencilEmptySize);
-            visibleOutputTextBlock(round, "myAnimatedOutput", duration);
+            double duration;
+            if (myFleißner.settings.ActionMode == FleißnerGrilleSettings.FleißnerMode.Encrypt) //encryption
+            {
+                duration = certainDuration(6, round, stencilEmptySize);
+                visibleOutputTextBlock(round, "myAnimatedOutput", duration);
+            }
+            else 
+            {
+                duration = certainDurationD(5, round, stencilEmptySize);
+                visibleOutputTextBlock(round, "myAnimatedOutput", duration);
+            }
         }  
 
         private void colorTextBlock(TextBlock txtBlock, int pos, string name, double duration)
@@ -745,6 +941,20 @@ namespace Cryptool.Plugins.FleißnerGrille
             RegisterControl<TextBlock>(txtBlock.Name, txtBlock);
             Storyboard.SetTargetName(daRemoveLetter, txtBlock.Name);
             Storyboard.SetTargetProperty(daRemoveLetter, new PropertyPath("(Opacity)"));
+        }
+
+
+        private void colorTableTextBlock(TextBlock textBlock, string name, double duration, int stelle)
+        {
+            markOrangeTableColorAnimation = new ColorAnimation(Colors.Transparent, Colors.Orange, new Duration(TimeSpan.FromMilliseconds(colorDuration)));
+            markOrangeTableColorAnimation.BeginTime = TimeSpan.FromMilliseconds(duration);
+            brushOrange = new SolidColorBrush();
+            brushOrange.Color = Colors.Transparent;
+            this.RegisterName(name + stelle, brushOrange);
+            textBlock.Background = brushOrange;
+            mainStory.Children.Add(markOrangeColorAnimation);
+            Storyboard.SetTargetName(markOrangeTableColorAnimation, name + stelle);
+            Storyboard.SetTargetProperty(markOrangeTableColorAnimation, new PropertyPath(SolidColorBrush.ColorProperty));
         }
 
         private void visibleTableTextBlock(TextBlock txtBlock, int x, int y, string name, double duration, int stelle)
@@ -840,6 +1050,49 @@ namespace Cryptool.Plugins.FleißnerGrille
                     return 0;
             }
         }
+
+
+        private double certainDurationD(int i, int round, int stencilEmptySize)
+        {
+            double rotate = round / stencilEmptySize;
+            rotate = Math.Floor(rotate);
+            int roundOld = stencilEmptySize * 4;
+            switch (i)
+            {
+                //mark Letter input
+                case 0:
+                    return ((round+1) * colorDuration + round * colorDuration);
+                //set Letter in Table visible
+                case 1:
+                    return ((round+1) * colorDuration + (round+1) * colorDuration);
+                //move stencil
+                case 2:
+                    return ((round + 1) * colorDuration + (round + 1) * colorDuration + moveDuration);
+                //rotate stencil
+                case 3:
+                    if (rotate == 0) 
+                    {
+                        rotate--;
+                    }
+                    return (roundOld * colorDuration + roundOld * colorDuration + moveDuration + (rotate - 1) * rotateDuration + round * colorDuration);
+                //mark Letter in Table
+                    //TODO: 4 und 5
+                case 4:
+                    return (roundOld * colorDuration + roundOld * colorDuration + moveDuration + (rotate - 1) * rotateDuration + (round + 1) * colorDuration);
+                //visible output
+                case 5:
+                    return (roundOld * colorDuration + roundOld * colorDuration + moveDuration + (rotate) * rotateDuration + (round + 1) * colorDuration);
+                default:
+                    return 0;
+            }
+        }
+
+        //private void speeder() 
+        //{
+        //    colorDuration = colorDuration * speed;
+        //    moveDuration = moveDuration * speed;
+        //    rotateDuration = rotateDuration * speed;
+        //}
 
         #endregion
 
@@ -1016,6 +1269,32 @@ namespace Cryptool.Plugins.FleißnerGrille
                 fireEnd(this, EventArgs.Empty);
             }, null);
         }
+
+        public void settings_OnPropertyChange(object sender, PropertyChangedEventArgs e)
+        {
+            FleißnerGrilleSettings settings = sender as FleißnerGrilleSettings;
+
+            if (e.PropertyName == "PresentationSpeed")
+            {
+
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    //Debug.Text = "" + settings.PresentationSpeed;
+                    speed = settings.PresentationSpeed;
+                    mainStory.Pause();
+                    //storyboard.Pause();
+
+                    mainStory.SetSpeedRatio(speed);
+                    //storyboard.SetSpeedRatio(speed);
+
+                    mainStory.Resume();
+                    //storyboard.Resume();
+
+
+                }, null);
+
+            }
+        }
         #endregion
 
         #endregion
@@ -1023,23 +1302,34 @@ namespace Cryptool.Plugins.FleißnerGrille
         #region controlPanel
         private void buttonPlay_Click(object sender, RoutedEventArgs e)
         {
-            mainStory.Begin(this, true);
+            mainStory.Begin(this,true);
         }
 
         private void buttonBreak_Click(object sender, RoutedEventArgs e)
         {
             mainStory.Pause(this);
+            buttonPlay.Visibility = Visibility.Hidden;
         }
 
         private void buttonSpeed_Click(object sender, RoutedEventArgs e)
         {
             // Makes the storyboard progress three times as fast as normal.
-            mainStory.SetSpeedRatio(this, 3);
+            if (speed > 10 )
+            {
+                speed = speed - 10;
+                //speeder();
+                mainStory.SetSpeedRatio(this, speed);
+            }
+            else if (speed == 10) 
+            { 
+                //maximum Speed 
+            }
         }
 
         private void buttonStop_Click(object sender, RoutedEventArgs e)
         {
             mainStory.Stop(this);
+            buttonPlay.Visibility = Visibility.Visible;
         }
 
         private void buttonResume_Click(object sender, RoutedEventArgs e)
@@ -1050,6 +1340,7 @@ namespace Cryptool.Plugins.FleißnerGrille
         private void buttonFillPeriod_Click(object sender, RoutedEventArgs e)
         {
             mainStory.SkipToFill(this);
+            buttonPlay.Visibility = Visibility.Visible;
         }
 
         #endregion

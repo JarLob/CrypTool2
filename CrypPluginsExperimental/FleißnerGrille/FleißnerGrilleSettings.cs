@@ -17,6 +17,7 @@ using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using FleißnerGrille.Properties;
 
 namespace Cryptool.Plugins.FleißnerGrille
 {
@@ -32,6 +33,7 @@ namespace Cryptool.Plugins.FleißnerGrille
 
         public enum FleißnerMode { Encrypt = 0, Decrypt = 1 };
         public enum FleißnerRotate { Left = 0, Right = 1 };
+        public enum RandomLetter { Big = 0, Lower = 1, BigLower = 2 };
 
         /// <summary>
         /// Feuern, wenn ein neuer Text im Statusbar angezeigt werden soll.
@@ -44,8 +46,9 @@ namespace Cryptool.Plugins.FleißnerGrille
 
         private FleißnerMode selectedModeAction = FleißnerMode.Encrypt;
         private FleißnerRotate selectedRotateAction = FleißnerRotate.Left;
+        private RandomLetter selectedRandomAction = RandomLetter.Big;
         private int textSize = 3;
-        private int Presentation_Speed = 100;
+        private int Presentation_Speed = 1;
         private String stencilString = "010101000010001000010010000001000100";
         private bool[,] stencil;
 
@@ -64,6 +67,12 @@ namespace Cryptool.Plugins.FleißnerGrille
         {
             get { return selectedModeAction; }
             set { selectedModeAction = value; }
+        }
+
+        public RandomLetter myRandomLetter
+        {
+            get { return selectedRandomAction; }
+            set { selectedRandomAction = value; }
         }
 
         public FleißnerRotate myFleißnerRotate
@@ -192,11 +201,9 @@ namespace Cryptool.Plugins.FleißnerGrille
         // rotate a 2-dimensional Array
         public bool[,] RotateStencil(bool[,] stencil, bool right)
         {
-
             int stencilLength = (int)Math.Sqrt(stencil.Length);
-
             bool[,] ret = null;
-            if (right)
+            if (ActionRotate == FleißnerGrilleSettings.FleißnerRotate.Right)
             {
                 ret = rotate(stencil);
             }
@@ -230,30 +237,8 @@ namespace Cryptool.Plugins.FleißnerGrille
 
         #region Algorithm settings properties (visible in the Settings pane)
 
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        /*[TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
-        {
-            get
-            {
-                return someParameter;
-            }
-            set
-            {
-                if (someParameter != value)
-                {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
-                }
-            }
-        }*/
-
-        [PropertySaveOrder(4)]
-        [TaskPane("ActionModeCaption", "ActionModeTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
+        [PropertySaveOrder(1)]
+        [TaskPane("ActionModeCaption", "ActionModeTooltip", "ActionSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "ActionModeList1", "ActionModeList2" })]
         public FleißnerMode ActionMode
         {
             get
@@ -270,8 +255,8 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
         }
 
-        [PropertySaveOrder(5)]
-        [TaskPane("ActionRotateCaption", "ActionRotateTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList3", "ActionList4" })]
+        [PropertySaveOrder(2)]
+        [TaskPane("ActionRotateCaption", "ActionRotateTooltip", "ActionSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "ActionRotateList1", "ActionRotateList2" })]
         public FleißnerRotate ActionRotate
         {
             get
@@ -288,23 +273,30 @@ namespace Cryptool.Plugins.FleißnerGrille
             }
         }
 
-        //[PropertySaveOrder(5)]
-        //[TaskPane("ShiftValueCaption", "ShiftValueTooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, -1, 30)] 
-        //public int TextSize
-        //{
-        //    get { return textSize; }
-        //    set
-        //    {
-        //        SetKeyByValue(value);
-        //    }
-        //}
+        [PropertySaveOrder(3)]
+        [TaskPane("ActionRandomCaption", "ActionRandomTooltip", "ActionSettingsGroup", 1, false, ControlType.ComboBox, new string[] { "ActionRandomList1", "ActionRandomList2", "ActionRandomList3" })]
+        public RandomLetter ActionRandom
+        {
+            get
+            {
+                return this.selectedRandomAction;
+            }
+            set
+            {
+                if (value != selectedRandomAction)
+                {
+                    this.selectedRandomAction = value;
+                    OnPropertyChanged("ActionRandom");
+                }
+            }
+        }
 
         #endregion
 
         #region Stencil settings
 
-        [PropertySaveOrder(7)]
-        [TaskPane("StencilStringCaption", "StencilStringTooltip", "StencilGroup", 4, false, ControlType.TextBox, "")]
+        //[PropertySaveOrder(7)]
+        //[TaskPane(null, "GrilleStringTooltip", "GrilleGroup", 4, false, ControlType.TextBox, "")]
         public string StencilString
         {
             get { return this.stencilString; }
@@ -316,24 +308,24 @@ namespace Cryptool.Plugins.FleißnerGrille
                 //string a = removeEqualChars(value);
                 if (value.Length == 0) // cannot accept empty alphabets
                 {
-                    OnLogMessage("Ignoring empty stencil from user! Using previous stencil: \n\"" + stencilString + "\" (With a" + (int) Math.Sqrt(stencilString.Length) + " square Stencil)", NotificationLevel.Info);
+                    OnLogMessage(Resources.IGNORING_EMPTY+ "\n \"" + stencilString + "\"" + Resources.With_A + (int)Math.Sqrt(stencilString.Length) + Resources.SQUARE_GRILLE1, NotificationLevel.Info);
                 }
                 else if (isCorrectStencil(value))
                 {
                     //if(value.Length<) //TODO: stencil is korrect but text is longer
                     //{
-                    
+
                     //}
                     this.stencilString = value;
                     //SetKeyByValue(shiftValue); //re-evaluate if the shiftvalue is still within the range
-                    OnLogMessage("Accepted new Stencil from user: \n\"" + stencilString + "\" (With a " + (int) Math.Sqrt(stencilString.Length) + " square stencil)", NotificationLevel.Info);
+                    OnLogMessage(Resources.ACCEPTED_NEW + "\n\"" + stencilString + "\"" + Resources.With_A + (int)Math.Sqrt(stencilString.Length) + Resources.SQUARE_GRILLE1, NotificationLevel.Info);
                     OnPropertyChanged("StencilString");
                 }
             }
         }
 
-        [PropertySaveOrder(8)]
-        [TaskPane("PresentationSpeedCaption", "PresentationSpeedTooltip", "PresentationGroup", 6, true, ControlType.Slider, 1, 1000)]
+        [PropertySaveOrder(4)]
+        [TaskPane("PresentationSpeedCaption", "PresentationSpeedTooltip", "PresentationGroup", 6, true, ControlType.Slider, 1, 100)]
         public int PresentationSpeed
         {
             get { return (int)Presentation_Speed; }

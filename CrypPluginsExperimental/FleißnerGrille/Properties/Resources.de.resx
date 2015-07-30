@@ -118,102 +118,102 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ACCEPTED_NEW" xml:space="preserve">
-    <value>"Accepted new Stencil from user:"</value>
+    <value>"Akzeptiere neue Schablone vom Benutzer: "</value>
   </data>
   <data name="ActionModeCaption" xml:space="preserve">
-    <value>Mode</value>
+    <value>Modus</value>
   </data>
   <data name="ActionModeList1" xml:space="preserve">
-    <value>Encrypt</value>
+    <value>Verschlüsseln</value>
   </data>
   <data name="ActionModeList2" xml:space="preserve">
-    <value>Decrypt</value>
+    <value>Entschlüsseln</value>
   </data>
   <data name="ActionModeTooltip" xml:space="preserve">
-    <value>Select the algorithm action</value>
+    <value>wähle den Modus des Algorithmus</value>
   </data>
   <data name="ActionRandomCaption" xml:space="preserve">
-    <value>Random Letter</value>
+    <value>Zufällige Buchstaben</value>
   </data>
   <data name="ActionRandomList1" xml:space="preserve">
-    <value>Big Letter</value>
+    <value>Großbuchstaben</value>
   </data>
   <data name="ActionRandomList2" xml:space="preserve">
-    <value>Lower Letter</value>
+    <value>Kleinbuchstaben</value>
   </data>
   <data name="ActionRandomList3" xml:space="preserve">
-    <value>Big and Lower Letter</value>
+    <value>Groß- und Kleinbuchstaben</value>
   </data>
   <data name="ActionRandomTooltip" xml:space="preserve">
-    <value>fill remaining fields of the grille with random letters</value>
+    <value>fülle die restlichen Felder der Schablone mit zufälligen Buchstaben</value>
   </data>
   <data name="ActionRotateCaption" xml:space="preserve">
-    <value>Rotate</value>
+    <value>Rotieren</value>
   </data>
   <data name="ActionRotateList1" xml:space="preserve">
-    <value>Left</value>
+    <value>Links</value>
   </data>
   <data name="ActionRotateList2" xml:space="preserve">
-    <value>Right</value>
+    <value>Rechts</value>
   </data>
   <data name="ActionRotateTooltip" xml:space="preserve">
-    <value>direction of rotation grille</value>
+    <value>Richtung der Rotation der Schablone</value>
   </data>
   <data name="ActionSettingsGroup" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
   </data>
   <data name="GRILLE" xml:space="preserve">
-    <value>" grille"</value>
+    <value>" Schablone"</value>
   </data>
   <data name="GrilleGroup" xml:space="preserve">
-    <value>Grille</value>
+    <value>Schablone</value>
   </data>
   <data name="GrilleStringTooltip" xml:space="preserve">
-    <value>actual grille from algorithm</value>
+    <value>aktuelle Schablone vom Algorithmus</value>
   </data>
   <data name="IGNORING_EMPTY" xml:space="preserve">
-    <value>"Ignoring empty stencil from user! Using previous stencil:"</value>
+    <value>"Ignoriere leere Schablone vom Benutzer! Benutze vorherige Schablone:"</value>
   </data>
   <data name="InputStringCaption" xml:space="preserve">
-    <value>input</value>
+    <value>Eingabe</value>
   </data>
   <data name="INPUTSTRING_IS_EMPTY" xml:space="preserve">
-    <value>"InputString ist empty or null"</value>
+    <value>"Eingabetext ist leer oder null"</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
-    <value>output</value>
+    <value>Ausgabe</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Fleißner Grille</value>
+    <value>Fleißnersche Schablone</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Fleißner Grille - Classic transposition cipher with a grille</value>
+    <value>Fleißnersche Schablone - Klassisches Transpositions Verschlüsselungsverfahren mittels einer Schablone</value>
   </data>
   <data name="PresentationGroup" xml:space="preserve">
-    <value>Presentation</value>
+    <value>Präsentation</value>
   </data>
   <data name="PresentationSpeedCaption" xml:space="preserve">
-    <value>speed</value>
+    <value>Geschwindigkeit</value>
   </data>
   <data name="PresentationSpeedTooltip" xml:space="preserve">
-    <value>adjusting the speed of the presentation</value>
+    <value>einstellen der Geschwindigkeit von der Präsentation</value>
   </data>
   <data name="SQUARE_GRILLE" xml:space="preserve">
-    <value>" square grille) is smaller than the length of "</value>
+    <value>" quadratischen Schablone) ist kleiner als die Länge von "</value>
   </data>
   <data name="SQUARE_GRILLE1" xml:space="preserve">
-    <value>" square Stencil)"</value>
+    <value>" quadratischen Schablone)"</value>
   </data>
   <data name="THERE_MUST_BE" xml:space="preserve">
     <value>"there must be at least a "</value>
   </data>
   <data name="With_A" xml:space="preserve">
-    <value>" (With a "</value>
+    <value>" (Mit einer "</value>
   </data>
   <data name="FAILURE" xml:space="preserve">
-    <value>"FAILURE:"</value>
+    <value>"FEHLER:"</value>
   </data>
   <data name="GRILLE_FROM_USER" xml:space="preserve">
-    <value>Grille from user:</value>
+    <value>"Schablone vom Benutzer:"</value>
   </data>
 </root>
