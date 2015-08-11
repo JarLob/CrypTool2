@@ -524,7 +524,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Logout failed. Please stop all running Jobs. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Logout failed. Please stop all running jobs. ähnelt.
         /// </summary>
         public static string Stop_Running_Jobs_Before_Logout {
             get {

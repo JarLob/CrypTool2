@@ -266,7 +266,7 @@
     <value>Job ID</value>
   </data>
   <data name="Stop_Running_Jobs_Before_Logout" xml:space="preserve">
-    <value>Logout failed. Please stop all running Jobs.</value>
+    <value>Logout failed. Please stop all running jobs.</value>
   </data>
   <data name="_JobList_bitmask" xml:space="preserve">
     <value>Bitmask:</value>
