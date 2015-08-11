@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -82,8 +83,7 @@ namespace CrypCloud.Core
             OnConnectionStateChanged(true);
             return true;
         }
-
-
+        
         public void Logout()
         {
             if ( ! IsRunning)
@@ -98,7 +98,14 @@ namespace CrypCloud.Core
         {
             return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
         }
- 
+        
+        
+        public Bitmap GetJobStateVisualization(BigInteger jobId)
+        {
+            return voluntLib.GetVisualizationOfJobState(jobId);
+        }
+
+
 
 
         //TODO @ckonze add admin names/move function over to voluntlib

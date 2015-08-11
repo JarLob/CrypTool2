@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Text;
+using System.Windows.Media.Imaging;
 using voluntLib.common;
 
 namespace CrypCloud.Manager.ViewModels.Pocos
@@ -17,6 +19,8 @@ namespace CrypCloud.Manager.ViewModels.Pocos
 
         public string Creator { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public BitmapSource Visualization{ get; set; }
         public bool UserCanDeleteJob { get; set; }
         public bool HasWorkspace { get; set; }
         public bool DownloadingWorkspace { get; set; }

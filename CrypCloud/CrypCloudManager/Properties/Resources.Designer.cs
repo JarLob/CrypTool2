@@ -196,6 +196,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bitmask: ähnelt.
+        /// </summary>
+        public static string _JobList_bitmask {
+            get {
+                return ResourceManager.GetString("_JobList_bitmask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add ähnelt.
         /// </summary>
         public static string _JobList_btn_createNew {
@@ -273,6 +282,24 @@ namespace CrypCloud.Manager.Properties {
         public static string _JobList_Header {
             get {
                 return ResourceManager.GetString("_JobList_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Description: ähnelt.
+        /// </summary>
+        public static string _JobList_jobDescription {
+            get {
+                return ResourceManager.GetString("_JobList_jobDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Name: ähnelt.
+        /// </summary>
+        public static string _JobList_jobName {
+            get {
+                return ResourceManager.GetString("_JobList_jobName", resourceCulture);
             }
         }
         

@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Numerics;
+using System.Text;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using CrypCloud.Core;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
@@ -107,22 +112,39 @@ namespace CrypCloud.Manager.ViewModels
         #region helper
 
         private NetworkJobItem ConvertToListItem(NetworkJob job)
-        {
+        { 
             var item = new NetworkJobItem
             {
                 Name = job.JobName,
+                Description = Encoding.UTF8.GetString(job.JobDescription),
                 Creator = job.Creator,
                 TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
                 FinishedNumberOfBlocks = crypCloudCore.GetProgressOfJob(job.JobID),
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
-                HasWorkspace = job.HasPayload(),
+                HasWorkspace = job.HasPayload()
             };
           
+            
+            var jobStateVisualization = crypCloudCore.GetJobStateVisualization(job.JobID);
+            if (jobStateVisualization != null)
+            {
+                item.Visualization = Bitmap2BitmapImage(jobStateVisualization);
+            }
+
             return item;
         }
 
+        private BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
+        {
+           
 
+           return Imaging.CreateBitmapSourceFromHBitmap(
+                           new Bitmap(bitmap, 200, 200).GetHbitmap(),
+                           IntPtr.Zero,
+                           Int32Rect.Empty,
+                           BitmapSizeOptions.FromWidthAndHeight(200,200)); 
+        }
         #endregion
     }
 }

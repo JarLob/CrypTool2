@@ -15,8 +15,10 @@
 #region
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -947,5 +949,51 @@ namespace voluntLib
         }
 
         #endregion
+
+        #region visualization
+        
+        public Bitmap GetVisualizationOfJobState(BigInteger jobId)
+        {
+            ThrowErrorIfNotStarted();
+            var job = GetJobByID(jobId);
+            if (job == null || ! ManagementLayer.LocalStates.ContainsKey(jobId))
+            {
+                return null;
+            }
+
+            var stateManager = ManagementLayer.LocalStates[jobId];
+            var bitMask = stateManager.LocalState.BitMask;
+            return CreateImageForEpochBitmask(bitMask);
+        }
+
+        private static Bitmap CreateImageForEpochBitmask(BitArray bitMask)
+        {
+            //we wanna have a sqrt(length) x sqrt(length) image
+            var dimension = (int) Math.Ceiling(Math.Sqrt(bitMask.Length));
+            var bitmap = new Bitmap(dimension, dimension);
+
+            var x = 0;
+            var y = 0;
+            foreach (bool bit in bitMask)
+            {
+                bitmap.SetPixel(x, y, bit ? Color.Black : Color.White);
+                x++;
+                if (x >= dimension)
+                {
+                    x = 0;
+                    y++;
+                }
+            }
+
+            while (x < dimension)
+            {
+                bitmap.SetPixel(x, y, Color.Gray);
+                x++;
+            }
+            return bitmap;
+        }
+
+        #endregion
+
     }
 }
