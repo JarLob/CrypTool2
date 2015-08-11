@@ -23,16 +23,44 @@
         <viewModels:JobListVM />
     </UserControl.DataContext>
 
-    <StackPanel Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" HorizontalAlignment="Center" Width="1030" Height="600">
-        <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={StaticResource show}}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="30">
+        <!-- bottom controls -->
+        <Grid >
+            <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
+            <Button Command="{Binding Path=LogOutCommand}" HorizontalAlignment="Right" Margin="5" Width="100" Height="30">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="../Images/ButtonIcons/sign-out.png"  Width="16" />
+                    <Label Content="{Loc _JobList_btn_logout}" />
+                </StackPanel>
+            </Button>
+
+        </Grid>
+        
+        <!-- errorBox -->
+        <Border Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}"
+               CornerRadius="5" BorderThickness="3" BorderBrush="Gold">
+            <Grid>
+                <Grid.Background>
+                    <SolidColorBrush Color="Khaki" />
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Name="Erroricon" Width="25" Grid.Row="1" Source="..\..\images\error.png"
+                       HorizontalAlignment="Left" />
+                <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="35,0,0,0" Grid.Row="1"
+                           Grid.ColumnSpan="2" TextWrapping="Wrap" />
+            </Grid>
+        </Border>
 
         <ListView ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Path=RunningJobs}" Height="470" x:Name="JobListView">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="{Loc _JobList_col_Id}" DisplayMemberBinding="{Binding PrintableID}" Width="240" />
+                    <GridViewColumn Header="{Loc _JobList_col_Id}" DisplayMemberBinding="{Binding PrintableID}" Width="250" />
                     <GridViewColumn Header="{Loc  _JobList_col_Name}" DisplayMemberBinding="{Binding Name}" Width="100" />
                     <GridViewColumn Header="{Loc  _JobList_col_Creator}" DisplayMemberBinding="{Binding Creator}" Width="100" />
-                    <GridViewColumn Header="{Loc _JobList_col_Progress}" Width="360" >
+                    <GridViewColumn Header="{Loc _JobList_col_Progress}" Width="330" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -81,7 +109,12 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
-            </ListView.View> 
+            </ListView.View>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="FontFamily" Value="Courier New" />
+                </Style>
+            </ListView.ItemContainerStyle> 
         </ListView>
 
         <!-- bottom controls -->

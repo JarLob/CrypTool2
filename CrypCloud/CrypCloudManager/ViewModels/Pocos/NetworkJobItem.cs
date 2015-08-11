@@ -9,6 +9,8 @@ namespace CrypCloud.Manager.ViewModels.Pocos
 {
     public class NetworkJobItem
     {
+        private const int LenghtJobid = 32;
+
         public BigInteger Id { get; set; }
         public BigInteger TotalNumberOfBlocks { get; set; }
         public BigInteger FinishedNumberOfBlocks { get; set; }
@@ -21,7 +23,12 @@ namespace CrypCloud.Manager.ViewModels.Pocos
 
         public string PrintableID
         {
-            get { return Id.ToString("X"); }
+            get
+            {
+                var idAsHexString = Id.ToString("X");
+                return idAsHexString.Length == LenghtJobid ? idAsHexString 
+                                                           : idAsHexString.PadLeft(LenghtJobid, '0');
+            }
             set {}
         }
 

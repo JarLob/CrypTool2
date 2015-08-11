@@ -110,14 +110,19 @@ namespace voluntLib.communicationLayer.communicator
                 var allreadyHandeld = false;
                 lock (lastOutboundPackets)
                 {
-                    allreadyHandeld = lastOutboundPackets.Any(bytes => bytes.SequenceEqual(receivedBytes)); 
+                    allreadyHandeld = lastOutboundPackets.Any(bytes => bytes.SequenceEqual(receivedBytes));
                 }
 
-                if ( ! allreadyHandeld)
+                if (!allreadyHandeld)
                 {
                     CommunicationLayer.HandleIncomingMessages(receivedBytes, IPAddress.Broadcast);
                 }
-            } finally
+            }
+            catch (Exception e)
+            {
+                Logger.Warn("could not receive inbound package: " +  e.Message);
+            }
+            finally
             {
                 StartReceive();
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
@@ -89,10 +90,16 @@ namespace CrypCloud.Core
             {
                 return;
             }
-
             voluntLib.Stop();
             voluntLib = InitVoluntLib();
         }
+        
+        public bool IsPartizipationOnJob()
+        {
+            return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
+        }
+ 
+
 
         //TODO @ckonze add admin names/move function over to voluntlib
         public bool UserCanDeleteJob(NetworkJob job)

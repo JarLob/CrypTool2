@@ -265,4 +265,7 @@
   <data name="_JobList_col_Id" xml:space="preserve">
     <value>Job ID</value>
   </data>
+  <data name="Stop_Running_Jobs_Before_Logout" xml:space="preserve">
+    <value>Ausloggen fehlgeschlagen! Bitte beenden sie alle laufenden Berechnungen.</value>
+  </data>
 </root>

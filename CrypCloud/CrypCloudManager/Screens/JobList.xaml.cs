@@ -9,6 +9,5 @@ namespace CrypCloud.Manager.Screens
         {
             InitializeComponent();
         }
-      
     }
 }

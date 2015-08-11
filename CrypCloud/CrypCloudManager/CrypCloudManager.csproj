@@ -233,6 +233,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\ButtonIcons\sign-out.png" />
     <Resource Include="Images\disconnected.png" />
     <Resource Include="Images\connected.png" />
     <Resource Include="Images\icon.png" />

@@ -1,42 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Numerics;
-using System.Threading.Tasks;
-using System.Windows.Documents;
-using System.Windows.Media;
 using CrypCloud.Core;
-using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
-using Cryptool.PluginBase;
 using voluntLib.common;
-using voluntLib.common.eventArgs;
-using WorkspaceManager.Model;
 
 namespace CrypCloud.Manager.ViewModels
 {
     public class JobListVM : BaseViewModel
     {
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
-        public CrypCloudManager Manager { get; set; }
+        public CrypCloudManager Manager { get; set; } 
 
         public ObservableCollection<NetworkJobItem> RunningJobs { get; set; }
         public RelayCommand RefreshJobListCommand { get; set; }
         public RelayCommand CreateNewJobCommand { get; set; }
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
-        public RelayCommand DownloadWorkspaceCommand { get; set; } 
+        public RelayCommand DownloadWorkspaceCommand { get; set; }
+        public RelayCommand LogOutCommand { get; set; } 
 
         public JobListVM()
         {
             CreateNewJobCommand = new RelayCommand(it => OpenJobCreation());
             RefreshJobListCommand = new RelayCommand(it => RefreshJobs());
+            LogOutCommand = new RelayCommand(it => Logout());
             OpenJobCommand = new RelayCommand(OpenJob);
             DeleteJobCommand = new RelayCommand(DeleteJob);
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
             crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
+        }
+
+        private void Logout()
+        {
+            if (crypCloudCore.IsPartizipationOnJob())
+            {
+                ErrorMessage = CrypCloud.Manager.Properties.Resources.Stop_Running_Jobs_Before_Logout;
+                return;
+            }
+            
+            ErrorMessage = "";
+            crypCloudCore.Logout();
+            Navigator.ShowScreenWithPath(ScreenPaths.Login);
         }
 
         protected override void HasBeenActivated()

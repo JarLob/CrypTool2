@@ -273,7 +273,9 @@ namespace voluntLib
         public virtual void Stop()
         {
             ThrowErrorIfNotStarted();
+
             CommunicationLayer.Stop();
+
             ManagementLayer.Stop();
             IsStarted = false;
 
@@ -700,6 +702,19 @@ namespace voluntLib
             ThrowErrorIfNotInitialized();
             return ManagementLayer.WorkingPeers.WorklogByJobID(jobID);
         }
+
+        /// <exception cref="System.NotSupportedException">
+        ///   Object has not been initialized.
+        ///   Remember to call the init-method
+        /// </exception>
+        public virtual Dictionary<BigInteger, int> GetCurrentRunningWorkersPerJob()
+        {
+            ThrowErrorIfNotInitialized();
+            var localStates = ManagementLayer.LocalStates.Values;
+            var runningStates = localStates.Where(state => state.CalculationLayer != null && state.CalculationLayer.NumberOfRunningWorker > 0);
+            return runningStates.ToDictionary(state => state.JobID, state => state.CalculationLayer.NumberOfRunningWorker);
+        }
+
 
         /// <summary>
         ///   Returns the current world list.
