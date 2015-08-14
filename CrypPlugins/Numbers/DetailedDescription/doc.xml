@@ -8,12 +8,43 @@
   </introduction>
 
   <usage lang="en">
-    The <b>NumberInput</b> component can be used to enter numbers in decimal form (for example 1746) or in hexadecimal form
-    (for example #0A10FF or h0A10FF or x0A10FF &#8211; with prefix '#', 'x' or 'h'). The user may also
-    enter the number as an arithmetic expression (for example 127 + 56 * 2^100). If the number is described as arithmetic
-    expression the component uses mathematical rules to create a number from the expression. The <b>NumberOperations</b> component supports
-    addition, subtraction, division, multiplication, exponentiation and the calculation of the greatest common divisior of
-    two numbers.<newline /><newline />
+    
+    The <b>NumberInput</b> component can be used to enter numbers in number systems on an arbitrary base.
+    The standard way is to enter the number in decimal form (for example 1746).
+    If the number should be interpreted as a binary, octal or hexadecimal number, the number must be prefixed with an indicating character, for example as <b>#</b>0A10FF or <b>h</b>0A10FF or <b>x</b>0A10FF &#8211;
+    with prefixes '#', 'h', 'H', 'x' or 'X' if the input is in hexadecimal form, as <b>o</b>777 with prefixes 'o' or 'O' if the input is in octal form, and as <b>b</b>1100101 with prefixes 'b' or 'B' if the input is in binary form.
+    Other number systems can be used by appending the base in brackets to the input number, for example 1002(3) will be interpreted as a ternary number and the component will output the number 29 (27+2).
+    Depending on the chosen base, the component uses as digits the characters from 0 to 9 and A to Z. Thus these 36 digits allow as input all numbers in all number systems on bases from 2 to 36.
+    If the chosen base is greater than 36, only those numbers, that consist of the 36 digits, can be entered. The input Z(40) in the number system on base 40 corresponds to the decimal number 35. However, the decimal number 36 can not be entered
+    in the number system on base 40, as there is no digit for it.
+    <newline /><newline />
+    
+    The user may also enter the number as an arithmetic expression (for example 127 + 56 * 2^100). If the number is described as arithmetic
+    expression the component uses mathematical rules to create a number from the expression. The component supports
+    addition, subtraction, division, multiplication, exponentiation and the following functions:
+    <list>
+      <item>gcd(a,b) - the greatest common divisor of a and b</item>
+      <item>lcm(a,b) - the least common multiple of a and b</item>
+      <item>abs(n) - the absolute value of n</item>
+      <item>sqrt(n) - the integer part of the square root of n</item>
+      <item>n! - the faculty of n</item>
+      <item>crosssum(n,b) - the sum of the digits of n, where n is represented in base b</item>
+      <item>modinv(n,m) - the inverse of n modulo m</item>
+      <item>modpow(a,b,m) - the residue modulo m of the b-th power of a</item>
+      <item>dlog(a,b,m) - the discrete logarithm of a with base b in the residue class with m elements</item>
+      <item>npr(n,k) - the number of unordered subsets with k elements of a set with n elements</item>
+      <item>ncr(n,k) - the number of ordered subsets with k elements of a set with n elements</item>
+      <item>phi(n) - the number of numbers smaller than n that are coprime to n</item>
+      <item>divsum(n) - the sum of all divisors of n</item>
+      <item>divnum(n) - the number of all divisors of n</item>
+      <item>pi(n) - the number of prime numbers smaller than or equal to n</item>
+      <item>prime(n) - the n-th prime number, where prime(0)=2</item>
+      <item>nextprime(n) - the smallest prime number greater than or equal to n</item>
+      <item>prevprime(n) - the biggest prime number smaller than or equal to n</item>
+      <item>isprime(n) - equals 1, if n is prime; otherwise 0</item>
+    </list>
+    <newline />
+    
     To use <b>NumberInput</b> or <b>NumberOperations</b> just drag it onto the workspace. The
     <b>NumberInput</b> component does not have any settings. To enter a number use the presentation of the "NumberInput". The
     number will be available on one single output. <b>NumberOperations</b> offers settings to select the operation which
@@ -35,11 +66,43 @@
   </introduction>
 
   <usage lang="de-DE">
-    Die Zahleneingabe kann genutzt werden, um ganze Zahlen entweder in dezimaler Form (z.B. 1746) oder hexadezimaler Form (z.B. #0A10FF oder h0A10FF oder x0A10FF &#8211; mit vorgestelltem '#', 'x' oder 'h')
-    einzugeben oder diese als arithmetische Ausdrücke zu beschreiben (z.B. 127 + 56 * 2^100). Bei der Eingabe als arithmetischer Ausdruck wird dieser durch Anwendung der mathematischen Gesetze (Assoziativ-, Kommutativ-, und Distributivgesetz)
+    Die Zahleneingabe kann genutzt werden, um ganze Zahlen in einem beliebigen Zahlensystem einzugeben. Im Normalfall wird die Zahl als Dezimalzahl angegeben (z.B. 1746). Soll die Zahl als Binär-, Oktal- oder Hexadezimalzahl interpretiert werden,
+    so kann dies durch das Voranstellen eines Präfixes signalisiert werden, z.B. in hexadezimaler Form <b>#</b>0A10FF oder <b>h</b>0A10FF oder <b>x</b>0A10FF &#8211; mit vorangestelltem '#', 'X', 'x', 'H' oder 'h',
+    in oktaler Form z.B. <b>o</b>777 mit vorangestelltem 'O' oder 'o' und in binärer Form z.B. <b>b</b>1100101 mit vorangestelltem 'B' oder 'b'. Andere Zahlensysteme können angegeben werden, indem der zu interpretierenden Ziffernfolge die Basis in 
+    Klammern angefügt wird: die Zeichenfolge 1002(3) wird somit als Zahl im Dreiersystem interpretiert und die Komponente gibt daher die Zahl 29 (27+2) aus.
+    Als Ziffern werden, abhängig von der gewählten Basis, die Ziffern 0 bis 9 und die Buchstaben 'A' bis 'Z' verwendet. Die maximal 36 Ziffern erlauben daher die Eingabe beliebiger Zahlen in allen Zahlensystemen mit Basen von 2 bis 36.
+    Bei Zahlensystemen mit einer größeren Basis als 36 können nur Zahlen eingegeben werden, die aus den 36 Ziffern bestehen. So entspricht z.B. die Eingabe Z(40) im Zahlensystem mit der Basis 40 der Dezimalzahl 35. Die Dezimalzahl 36 kann allerdings
+    nicht im Zahlensystem mit der Basis 40 eingegeben werden, da die entsprechende Ziffer nicht existiert.
+    <newline /><newline />
+    
+    Außerdem können Zahlen als arithmetische Ausdrücke eingegeben werden (z.B. 127 + 56 * 2^100). 
+    Bei der Eingabe als arithmetischer Ausdruck wird dieser durch Anwendung der mathematischen Gesetze (Assoziativ-, Kommutativ-, und Distributivgesetz)
     in eine ganze Zahl ausgewertet.<newline /><newline />
-    Die Rechenoperationen unterstützen die Addition, die Subtraktion, die Multiplikation, die Division, das Potenzieren und die Berechnung des kleinsten gemeinsamen Teilers zweier Zahlen. <newline /><newline />
-    Die Zahleneingabe wird einfach auf die Arbeitsfläche gezogen. Sie verfügt über keine Einstellmöglichkeiten. Die Zahlen können über ihre Präsentation eingegeben werden. Ein einziger Ausgang leitet die eingegebene Zahl innerhalb des Arbeitsbereiches
+    Die Rechenoperationen unterstützen neben Addition, Subtraktion, Multiplikation, ganzzahliger Division und Potenzieren noch die folgenden Funktionen:
+    <list>
+      <item>gcd(a,b) - der größte gemeinsame Teiler von a und b (greatest common divisor)</item>
+      <item>lcm(a,b) - das kleinste gemeinsame Vielfache von a und b (least common multiple)</item>
+      <item>abs(n) - der Absolutbetrag von n</item>
+      <item>sqrt(n) - der ganzzahlige Anteil der Wurzel aus n</item>
+      <item>n! - die Fakultät von n</item>
+      <item>crosssum(n,b) - die Quersumme von n in der Darstellung von n in der Basis b</item>
+      <item>modinv(n,m) - die Inverse von n modulo m</item>
+      <item>modpow(a,b,m) - der Rest modulo m der b-ten Potenz von a</item>
+      <item>dlog(a,b,m) - der diskrete Logarithmus von a zur Basis b in der Restklasse mit m Elementen</item>
+      <item>npr(n,k) - Anzahl der Möglichkeiten, aus einer n-elementigen Menge k-elementige geordnete Teilmengen zu bilden</item>
+      <item>ncr(n,k) - Anzahl der Möglichkeiten, aus einer n-elementigen Menge k-elementige ungeordnete Teilmengen zu bilden</item>
+      <item>phi(n) - die Anzahl der zu n teilerfremden Zahlen, die kleiner als n sind</item>
+      <item>divsum(n) - die Summe aller Teiler von n</item>
+      <item>divnum(n) - die Anzahl der Teiler von n</item>
+      <item>pi(n) - die Anzahl der Primzahlen kleiner oder gleich n</item>
+      <item>prime(n) - die n-te Primzahl, wobei prime(0)=2</item>
+      <item>nextprime(n) - die kleinste Primzahl größer oder gleich n</item>
+      <item>prevprime(n) - die größte Primzahl kleiner oder gleich n</item>
+      <item>isprime(n) - ergibt 1, wenn n prim ist; sonst 0</item>
+    </list>
+    <newline />
+    
+    Die Zahleneingabe wird einfach auf die Arbeitsfläche gezogen. Sie verfügt über keine Einstellungmöglichkeiten. Die Zahlen können über ihre Präsentation eingegeben werden. Ein einziger Ausgang leitet die eingegebene Zahl innerhalb des Arbeitsbereiches
     weiter.<newline /><newline />
     Die Rechenoperation verfügt über eine Einstellung, in der ihre auszuführende Operation eingestellt werden kann. Sie besitzt drei Eingänge und einen Ausgang. Die zwei ersten Eingänge nehmen die Operanden für die
     eingestellte Operation entgegen. Mittels des dritten Eingangs kann eine weitere Zahl angegeben werden, die modulo des Ergebnisses der Operation gerechnet werden soll. Der einzige Ausgang leitet das Endergebnis innerhalb des Arbeitsplatzes weiter.
