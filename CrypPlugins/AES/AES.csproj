@@ -56,6 +56,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="crypto, Version=1.8.5630.41261, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\git\cramer-shoup-plugin\lib\crypto.dll</HintPath>
+    </Reference>
     <Reference Include="NativeCryptography">
       <HintPath>..\..\Lib\NativeCryptography.dll</HintPath>
       <Private>false</Private>

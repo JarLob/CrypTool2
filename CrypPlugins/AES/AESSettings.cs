@@ -170,8 +170,8 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
         }
 
-        [ContextMenu("ModeCaption", "ModeTooltip", 5, ContextMenuControlType.ComboBox, null, new String[] { "ModeList1", "ModeList2", "ModeList3", "ModeList4" })]
-        [TaskPane("ModeCaption", "ModeTooltip", null, 5, false, ControlType.ComboBox, new String[] { "ModeList1", "ModeList2", "ModeList3", "ModeList4" })]
+        [ContextMenu("ModeCaption", "ModeTooltip", 5, ContextMenuControlType.ComboBox, null, new String[] { "ModeList1", "ModeList2", "ModeList3", "ModeList4", "ModeList5" })]
+        [TaskPane("ModeCaption", "ModeTooltip", null, 5, false, ControlType.ComboBox, new String[] { "ModeList1", "ModeList2", "ModeList3", "ModeList4", "ModeList5" })]
         public int Mode
         {
             get { return this.mode; }
@@ -229,7 +229,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+
         }
 
         protected void OnPropertyChanged(string name)

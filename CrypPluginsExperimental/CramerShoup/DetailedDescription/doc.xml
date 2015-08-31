@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">
+    Cramer-Shoup is an asymmetric key encryption algorithm based on ElGamal.
+    Cramer-Shoup was presented by Ronald Cramer and Victor Shoup in 1998.
+    It was the first efficient cryptosystem against adaptive chosen ciphertext attacks.
+    In comparison to ElGamal, Cramer-Shoup is extend to ensure non-mallebility even against a resourceful attacker.
+    The difference between ensure an increase of the ciphertext's size (two to three times).
+  </introduction>
+
+  <introduction lang="de-DE">
+    Cramer-Shoup ist ein asymmetrisches Verschlüsselungsverfahren basierend auf ElGamal dem Verschlüsselungsschema.
+    Das Verfahren ist das erste asymmetrisches Verfahren, das gegenüber von Chosen Chiffretext Attacks (CCA) sicher ist ohne Random Oracle Model.
+    Bei einem CCA-sicheren Verfahren kann der Angreifer den Chiffretext entschlüsseln lassen.
+    Jedoch ist es nicht möglich während der Entschlüsselungsanfrage, den Chiffretext anhand gewonnener Informationen zu entschlüsseln.
+    Ein Random Oracle Model wird in der Kryptographie genutzt um (ideale) Hashfunktion zumodullieren.
+    Dabei kann es zu Problem führen, wenn eine reale Hashfunktion verwendet wird.
+    Dieses Verfahren wurde von Ronald Cramer und Victor Shoup im Jahr 1998 vorgestellt.
+    Die Unterschied zwischen Cramer-Shoup und ElGamal sind Erweiterung des Chiffretext um Verifizierung, dadurch kommt ein drei mal so länger Chiffretext zustande.
+  </introduction>
+
+  <usage lang="en">
+    Cramer-Shoup plugin is based on three components.
+    The different components are needed to build a cryptosystem based on the KEM/DEM paradigma.
+    This paradigma is developed to create hybrid encryption scheme.
+    The asymmetric part are need to generate a random key and send to generator of public/private key.
+    The key can be used for symmetric encryption scheme.
+    <section headline="Cramer Shoup Key Generator">
+      Generator is used to generate public/private key based on a chosen elliptic curve. 
+      Recommended elliptic is curve25519. 
+      The output is split in two part, public key and private key.
+    </section>
+    <section headline="Cramer Shoup Encaps">
+      The Cramer Shoup Encaps generates a key and a ciphertext based on public key and chosen hash-function.
+      The public key is an input and the hash-function can be chosen via settings.
+    </section>
+    <section headline="Cramer Shoup Decaps">
+      Cramer Shoup Decaps is used to extracted the key from the ciphertext.
+      The hash-function must same as in the encaps mode.
+    </section>
+  </usage>
+
+  <usage lang="de-DE">
+    Das Cramer Shoup Plugin ist nach dem KEM/DEM Hybrid Paradigma aufgebaut.
+    Dies Paradigma definiert eine Variante, wie man kombinierte Verschlüsselungssytem aufbauen kann.
+    KEM ist der asymmetrische Teil, dieser berechnet ein Schlüssel und den passende Chiffretext.
+    Anschließend lässt sich mit dem Chiffretext und dem geheimen Schlüssel der Schlüssel berechnen.
+    DEM ist der symmetrische Teil, der mit Hilfe von dem Schlüssel Daten verschlüsseln kann.
+    Das Cramer Shoup Plugin besteht aus drei Komponenten.
+    <section headline="Cramer Shoup Key Generator">
+      Wählen Sie in den Einstellung der Komponente eine elliptische Kurve.
+      Die Ausgabe besteht aus dem geheime Schlüssel und öffentlich Schlüssel.
+      Der geheime Schlüssel wird für die Komponente Cramer Shoup Decaps benötigt und der öffentliche Schlüssel wird für die Komponente Cramer Shoup Encaps benötigt.
+    </section>
+    <section headline="Cramer Shoup Encaps">
+      Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
+      Die Eingabe besteht nur aus dem öffentlich Schlüssel generiert in der Komponente Cramer Shoup Key Generator.
+      Die Ausgabe besteht aus einem zufälligen Schlüssel und der Chiffretext, der benötigt wird in der Komponente Cramer Shoup Decaps.
+    </section>
+    <section headline="Cramer Shoup Decaps">
+      Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
+      Die Hashfunktion muss mit der Hashfunktion der Komponente Cramer Shoup Encaps übereinstimmen.
+      Die Eingabe besteht aus dem geheime Schlüssel und dem Chiffretext.
+      Die Ausgabe ist der generierte Schlüssel.
+    </section>
+  </usage>
+  
+  <presentation lang="en">
+  </presentation>
+  
+  <presentation lang="de-DE">
+  </presentation>
+  
+  <references>
+    <linkReference id="wikipedia">
+      <link url="https://en.wikipedia.org/wiki/Cramer%E2%80%93Shoup_cryptosystem" lang="en" />
+      <caption lang="en">Cramer-Shoup cryptosystem (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Cramer-Shoup-Kryptosystem" lang="de-DE" />
+      <caption lang="de-DE">Cramer-Shoup-Kryptosystem (Wikipedia)</caption>
+    </linkReference>
+  </references>
+</documentation>

@@ -253,4 +253,7 @@
   <data name="ModeList4" xml:space="preserve">
     <value>Output Feedback (OFB)</value>
   </data>
+  <data name="ModeList5" xml:space="preserve">
+    <value>EAX</value>
+  </data>
 </root>

@@ -29,6 +29,9 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.Control;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Modes;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Cryptool.Plugins.Cryptography.Encryption
 {
@@ -54,7 +57,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         void settings_OnPluginStatusChanged(IPlugin sender, StatusEventArgs args)
         {
-          if (OnPluginStatusChanged != null) OnPluginStatusChanged(this, args);
+            if (OnPluginStatusChanged != null) OnPluginStatusChanged(this, args);
         }
 
         public ISettings Settings
@@ -74,10 +77,10 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public byte[] InputKey
         {
             get { return this.inputKey; }
-            set 
-            { 
-              this.inputKey = value;
-              OnPropertyChanged("InputKey");
+            set
+            {
+                this.inputKey = value;
+                OnPropertyChanged("InputKey");
             }
         }
 
@@ -85,21 +88,21 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public byte[] InputIV
         {
             get { return this.inputIV; }
-            set 
-            { 
-              this.inputIV = value;
-              OnPropertyChanged("InputIV");
+            set
+            {
+                this.inputIV = value;
+                OnPropertyChanged("InputIV");
             }
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
         public ICryptoolStream OutputStream
         {
-            get 
+            get
             {
                 return outputStreamWriter;
             }
-            set 
+            set
             {
                 // empty
             }
@@ -139,7 +142,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
             //check for a valid key
             if (this.inputKey == null)
-            {                
+            {
                 //create a trivial key 
                 inputKey = new byte[16];
                 // write a warning to the ouside word
@@ -172,7 +175,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             {
                 //create a trivial IV
                 inputIV = new byte[alg.BlockSize / 8];
-                if( settings.Mode!=0 )  // ECB needs no IV, thus no warning if IV misses
+                if (settings.Mode != 0)  // ECB needs no IV, thus no warning if IV misses
                     GuiLogMessage("NOTE: No IV provided. Using 0x000..00!", NotificationLevel.Info);
             }
 
@@ -198,7 +201,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             return this.stop;
         }
-                
+
         private void process(int action)
         {
             //Encrypt/Decrypt Stream
@@ -246,7 +249,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     if (action == 0)
                         inputdata = BlockCipherHelper.AppendPadding(InputStream, settings.padmap[settings.Padding], p_alg.BlockSize / 8);
 
-                    ICryptoTransform encrypt = p_alg.CreateEncryptor(p_alg.Key,p_alg.IV);
+                    ICryptoTransform encrypt = p_alg.CreateEncryptor(p_alg.Key, p_alg.IV);
 
                     byte[] IV = new byte[p_alg.IV.Length];
                     Array.Copy(p_alg.IV, IV, p_alg.IV.Length);
@@ -271,6 +274,29 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
                     encrypt.Dispose();
                     outputStreamWriter.Write(outputData, 0, validBytes);
+                    inbytes = inputdata.Length;
+                }
+                else if (settings.Mode == 4)
+                {
+                    if (action == 0)
+                        inputdata = BlockCipherHelper.AppendPadding(InputStream, settings.padmap[settings.Padding], p_alg.BlockSize / 8);
+
+                    byte[] tmpInput = BlockCipherHelper.StreamToByteArray(inputdata);
+
+                    var cipher = new AesEngine();
+                    var eaxCipher = new EaxBlockCipher(cipher);
+                    var keyParameter = new KeyParameter(p_alg.Key);
+                    var parameter = new ParametersWithIV(keyParameter, p_alg.IV);
+                    eaxCipher.Init((action == 0) ? true : false, parameter);
+
+                    byte[] datOut = new byte[eaxCipher.GetOutputSize(tmpInput.Length)];
+                    int outOff = eaxCipher.ProcessBytes(tmpInput, 0, tmpInput.Length, datOut, 0);
+                    outOff += eaxCipher.DoFinal(datOut, outOff);
+
+                    int validBytes = (int)eaxCipher.GetOutputSize(tmpInput.Length);
+                    if (action == 1)
+                        validBytes = BlockCipherHelper.StripPadding(datOut, validBytes, settings.padmap[settings.Padding], p_alg.BlockSize / 8);
+                    outputStreamWriter.Write(datOut, 0, validBytes);
                     inbytes = inputdata.Length;
                 }
                 else
@@ -357,7 +383,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             //Encrypt Stream
             process(0);
         }
-       
+
         public void Decrypt()
         {
             //Decrypt Stream
@@ -369,7 +395,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public System.Windows.Controls.UserControl Presentation
         {
-          get { return null; }
+            get { return null; }
         }
 
         public void Initialize()
@@ -379,45 +405,45 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public void Dispose()
         {
-          try
-          {
-            stop = false;
-            inputKey = null;
-            inputIV = null;
-
-            if (outputStreamWriter != null)
+            try
             {
-                outputStreamWriter.Dispose();
-                outputStreamWriter = null;
-            }
+                stop = false;
+                inputKey = null;
+                inputIV = null;
 
-            if (p_crypto_stream != null)
-            {
-              p_crypto_stream.Flush();
-              p_crypto_stream.Close();
-              p_crypto_stream = null;
+                if (outputStreamWriter != null)
+                {
+                    outputStreamWriter.Dispose();
+                    outputStreamWriter = null;
+                }
+
+                if (p_crypto_stream != null)
+                {
+                    p_crypto_stream.Flush();
+                    p_crypto_stream.Close();
+                    p_crypto_stream = null;
+                }
             }
-          }
-          catch (Exception ex)
-          {          
-             GuiLogMessage(ex.Message, NotificationLevel.Error);
-          }
-          this.stop = false;
+            catch (Exception ex)
+            {
+                GuiLogMessage(ex.Message, NotificationLevel.Error);
+            }
+            this.stop = false;
         }
 
         public void Stop()
         {
-          this.stop = true;
+            this.stop = true;
         }
 
         public void PostExecution()
         {
-          Dispose();
+            Dispose();
         }
 
         public void PreExecution()
         {
-          Dispose();
+            Dispose();
         }
 
         #endregion
@@ -428,29 +454,29 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public void OnPropertyChanged(string name)
         {
-          EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
-          //if (PropertyChanged != null)
-          //{
-          //  PropertyChanged(this, new PropertyChangedEventArgs(name));
-          //}
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+            //if (PropertyChanged != null)
+            //{
+            //  PropertyChanged(this, new PropertyChangedEventArgs(name));
+            //}
         }
 
         #endregion
 
         #region IPlugin Members
 
-        public event StatusChangedEventHandler OnPluginStatusChanged;        
+        public event StatusChangedEventHandler OnPluginStatusChanged;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
-          EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         private void ProgressChanged(double value, double max)
         {
-          EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
         #endregion
@@ -459,13 +485,13 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         [PropertyInfo(Direction.ControlSlave, "ControlSlaveCaption", "ControlSlaveTooltip")]
         public IControlEncryption ControlSlave
         {
-          get 
-          {
-              if (controlSlave == null)
-                  controlSlave = new AESControl(this);
-              return controlSlave; 
-          }
-        }     
+            get
+            {
+                if (controlSlave == null)
+                    controlSlave = new AESControl(this);
+                return controlSlave;
+            }
+        }
     }
 
     public class AESControl : IControlEncryption
@@ -475,18 +501,18 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         private AES plugin;
         private AESSettings settings;
-     
+
         public AESControl(AES plugin)
         {
             this.plugin = plugin;
             this.settings = (AESSettings)plugin.Settings;
-            plugin.Settings.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
-                                                   {
-                                                       if (e.PropertyName == "Keysize")
-                                                       {
-                                                           FireKeyPatternChanged();
-                                                       }
-                                                   };
+            plugin.Settings.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
+            {
+                if (e.PropertyName == "Keysize")
+                {
+                    FireKeyPatternChanged();
+                }
+            };
         }
 
         private void FireKeyPatternChanged()
@@ -618,7 +644,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                 if (blocks == 0)
                 {
                     if (!useIV)
-                        decryptionCode = AddOpenCLBlockDecryption(decryptionCode, decryptionLength%16);
+                        decryptionCode = AddOpenCLBlockDecryption(decryptionCode, decryptionLength % 16);
                     else
                         decryptionCode = AddOpenCLBlockDecryptionWithIV(decryptionCode, decryptionLength % 16);
                 }
@@ -633,7 +659,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         private string AddOpenCLBlockDecryption(string decryptionCode, int size)
         {
-            decryptionCode += "AES_decrypt(inn, block, &(key)); \n " 
+            decryptionCode += "AES_decrypt(inn, block, &(key)); \n "
                               + string.Format("for (int i = 0; i < {0}; i++) \n ", size)
                               + "{ \n unsigned char c = block[i]; \n "
                               + "$$COSTFUNCTIONCALCULATE$$ \n } \n";
@@ -647,11 +673,11 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                 case 0: //ECB
                     return AddOpenCLBlockDecryption(decryptionCode, size);
                 case 1: //CBC
-                    decryptionCode += "AES_decrypt(inn, block, &(key)); \n " 
+                    decryptionCode += "AES_decrypt(inn, block, &(key)); \n "
                               + string.Format("for (int i = 0; i < {0}; i++) \n ", size)
                               + "{ \n unsigned char c = block[i] ^ IV[i]; \n "
                               + "$$COSTFUNCTIONCALCULATE$$ \n } \n";
-            return decryptionCode;
+                    return decryptionCode;
                     break;
                 case 2: //CFB
                     throw new NotImplementedException("CFB for OpenCL is not implemented!"); //not supported
@@ -664,7 +690,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             decryptionCode += string.Format("AES_decrypt((inn+{0}*16), block, &(key)); \n ", block)
                               + string.Format("for (int i = 0; i < {0}; i++) \n {{ \n ", size);
-            switch (((AESSettings) plugin.Settings).Mode)
+            switch (((AESSettings)plugin.Settings).Mode)
             {
                 case 0: //ECB
                     decryptionCode += "unsigned char c = block[i]; \n";
