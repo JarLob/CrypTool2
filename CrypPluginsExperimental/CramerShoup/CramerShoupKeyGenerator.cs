@@ -10,7 +10,7 @@ using System;
 namespace Cryptool.Plugins.CramerShoup
 {
     [Author("Jan Jansen", "jan.jansen-n22@rub.de", "Ruhr Uni-Bochum", "http://cits.rub.de/")]
-    [PluginInfo("PluginKeyCaption2", "PluginKeyTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/CSKey.png"})]
+    [PluginInfo("CramerShoup.Properties.Resources", "PluginKeyCaption", "PluginKeyTooltip", "CramerShoup/DetailedDescription/doc.xml", new[] { "CramerShoup/Images/CSKey.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernAsymmetric)]
     public class CramerShoupKeyGenerator : ICrypComponent
     {

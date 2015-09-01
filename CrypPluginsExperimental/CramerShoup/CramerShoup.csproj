@@ -44,7 +44,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
-    <OutputPath>..\..\svn\trunk\CrypBuild\Debug\CrypPlugins\</OutputPath>
+    <OutputPath>..\..\CrypBuild\Debug\CrypPlugins\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DebugSymbols>true</DebugSymbols>
@@ -53,9 +53,9 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="crypto, Version=1.8.5630.41261, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5567.27624, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\crypto.dll</HintPath>
+      <HintPath>..\..\Lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
