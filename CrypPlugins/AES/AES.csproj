@@ -56,9 +56,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="crypto, Version=1.8.5630.41261, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="BouncyCastle.CryptoExt, Version=1.6.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\git\cramer-shoup-plugin\lib\crypto.dll</HintPath>
+      <HintPath>..\..\Lib\BouncyCastle.CryptoExt.dll</HintPath>
     </Reference>
     <Reference Include="NativeCryptography">
       <HintPath>..\..\Lib\NativeCryptography.dll</HintPath>
