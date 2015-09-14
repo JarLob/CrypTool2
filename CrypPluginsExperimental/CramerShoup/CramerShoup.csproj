@@ -133,11 +133,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\CSDecaps.png" />
-    <Resource Include="Images\CSEncaps.png" />
-    <Resource Include="Images\CSKey.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Images\CS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

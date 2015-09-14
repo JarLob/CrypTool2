@@ -11,7 +11,7 @@
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Cramer-Shoup</i>-Chiffre mit AES.</description>
   <keywords lang="de">asymmetrisch</keywords>
 
-  <icon file="CS.png" />
+  <icon file="RSA.png" />
 
   <relevantPlugins>
     <plugin name="CramerShoupKeyGenerator" />
