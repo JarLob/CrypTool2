@@ -47,7 +47,7 @@ namespace Cryptool.PluginBase.Miscellaneous
             {
                 if (node is XText)
                 {
-                    var line = ((XText) node).Value;
+                    var line = ((XText)node).Value;
                     line = new Regex(@"\s*[\r\n]+\s*").Replace(line, " ");
                     if (isNewLine) line = line.TrimStart();
                     isNewLine = false;
@@ -113,6 +113,63 @@ namespace Cryptool.PluginBase.Miscellaneous
                 return span.Inlines.First();
 
             return span;
+        }
+
+        public static string ConvertFormattedXElementToString(XElement xelement, bool isNewLine = true)
+        {
+            string result = "";
+
+            foreach (var node in xelement.Nodes())
+            {
+                if (node is XText)
+                {
+                    var line = ((XText)node).Value;
+                    line = new Regex(@"\s*[\r\n]+\s*").Replace(line, " ");
+                    if (isNewLine) line = line.TrimStart();
+                    isNewLine = false;
+                    result += line;
+                }
+                else if (node is XElement)
+                {
+                    isNewLine = false;
+                    var nodeName = ((XElement)node).Name.ToString();
+                    switch (nodeName)
+                    {
+                        case "b":
+                        case "i":
+                        case "u":
+                            var nodeRep = ConvertFormattedXElementToString((XElement)node, isNewLine);
+                            result += nodeRep;
+                            break;
+                        case "newline":
+                            result += Environment.NewLine;
+                            isNewLine = true;
+                            break;
+                        case "external":
+                            var reference = ((XElement)node).Attribute("ref");
+                            if (reference != null)
+                            {
+                                string linkText = ConvertFormattedXElementToString((XElement)node, isNewLine);
+                                if (String.IsNullOrEmpty(linkText)) linkText = reference.Value;
+                                result += linkText;
+                            }
+                            break;
+                        case "pluginRef":
+                            var plugin = ((XElement)node).Attribute("plugin");
+                            if (plugin != null)
+                            {
+                                string linkText = ConvertFormattedXElementToString((XElement)node, isNewLine);
+                                if (String.IsNullOrEmpty(linkText)) linkText = plugin.Value;
+                                result += linkText;
+                            }
+                            break;
+                        default:
+                            continue;
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

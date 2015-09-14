@@ -107,9 +107,9 @@ namespace Cryptool.PluginBase
                         iconFile = Path.Combine(file.Directory.FullName, xml.Element("icon").Attribute("file").Value);
                     }
 
-                    CopyText = (titleElement != null ? (titleElement.Value + Environment.NewLine) : "") + 
-                        (summaryElement != null ? (summaryElement.Value + Environment.NewLine) : "") +
-                        (descriptionElement != null ? descriptionElement.Value : "");
+                    CopyText = (titleElement != null ? (titleElement.Value + Environment.NewLine + Environment.NewLine) : "") +
+                        (summaryElement != null ? (summaryElement.Value + Environment.NewLine + Environment.NewLine) : "") +
+                        (descriptionElement != null ? XMLHelper.ConvertFormattedXElementToString(descriptionElement) : "");
                 }
                 catch (Exception)
                 {
