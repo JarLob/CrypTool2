@@ -15,5 +15,16 @@ namespace Cryptool.Plugins.CramerShoup.lib
 
         //Verify
         public ECPoint V { get; set; }// kC+kaD
+
+        public override string ToString()
+        {
+            var str = String.Format("U1x : {0}\n", U1.XCoord.ToBigInteger());
+            str += String.Format("U1y : {0}\n", U1.YCoord.ToBigInteger());
+            str += String.Format("U2x : {0}\n", U2.XCoord.ToBigInteger());
+            str += String.Format("U2y : {0}\n", U2.YCoord.ToBigInteger());
+            str += String.Format("Vx : {0}\n", V.XCoord.ToBigInteger());
+            str += String.Format("Vy : {0}\n", V.YCoord.ToBigInteger());
+            return str;
+        }
     }
 }

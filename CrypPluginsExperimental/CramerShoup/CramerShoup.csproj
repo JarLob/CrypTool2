@@ -82,8 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CramerShoupSettings.cs" />
-    <Compile Include="DecapsCramerShoup.cs" />
-    <Compile Include="EncapsCramerShoup.cs" />
+    <Compile Include="CramerShoup.cs" />
     <Compile Include="CramerShoupKeyGenerator.cs" />
     <Compile Include="CramerShoupKeyGeneratorSettings.cs" />
     <Compile Include="lib\CipherText.cs" />
@@ -137,7 +136,9 @@
     <Resource Include="Images\CSDecaps.png" />
     <Resource Include="Images\CSEncaps.png" />
     <Resource Include="Images\CSKey.png" />
-    <Content Include="lib\crypto.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\CS.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -16,11 +16,11 @@ namespace Cryptool.Plugins.CramerShoup.lib
 
         public override string ToString()
         {
-            var str = String.Format("X1:{0}\n", X1);
-            str += String.Format("X2:{0}\n", X2);
-            str += String.Format("Y1:{0}\n", Y1);
-            str += String.Format("Y2:{0}\n", Y2);
-            str += String.Format("Z:{0}\n", Z);
+            var str = String.Format("X1 : {0}\n", X1);
+            str += String.Format("X2 : {0}\n", X2);
+            str += String.Format("Y1 : {0}\n", Y1);
+            str += String.Format("Y2 : {0}\n", Y2);
+            str += String.Format("Z : {0}\n", Z);
             return str;
         }
     }

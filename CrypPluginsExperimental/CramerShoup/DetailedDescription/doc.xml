@@ -31,15 +31,18 @@
     The asymmetric part are need to generate a random key and send to generator of public/private key.
     The key can be used for symmetric encryption scheme.
     <section headline="Cramer Shoup Key Generator">
-      Generator is used to generate public/private key based on a chosen elliptic curve. 
-      Recommended elliptic is curve25519. 
+      Generator is used to generate public/private key based on a chosen elliptic curve.
+      Recommended elliptic is curve25519.
       The output is split in two part, public key and private key.
     </section>
-    <section headline="Cramer Shoup Encaps">
+    <newline/>
+    <newline/>
+    The AES component has the two operation modes "Encaps" and "Decaps". You can switch between the modes in the settings of the component.
+    <section headline="Encaps">
       The Cramer Shoup Encaps generates a key and a ciphertext based on public key and chosen hash-function.
       The public key is an input and the hash-function can be chosen via settings.
     </section>
-    <section headline="Cramer Shoup Decaps">
+    <section headline="Decaps">
       Cramer Shoup Decaps is used to extracted the key from the ciphertext.
       The hash-function must same as in the encaps mode.
     </section>
@@ -57,12 +60,15 @@
       Die Ausgabe besteht aus dem geheime Schlüssel und öffentlich Schlüssel.
       Der geheime Schlüssel wird für die Komponente Cramer Shoup Decaps benötigt und der öffentliche Schlüssel wird für die Komponente Cramer Shoup Encaps benötigt.
     </section>
-    <section headline="Cramer Shoup Encaps">
+    <newline/>
+    <newline/>
+    Die Komponente hat die zwei Betriebsarten "Encaps" und "Decaps", zwischen denen in den Einstellungen der Komponente umgeschaltet werden kann.
+    <section headline="Encaps">
       Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
       Die Eingabe besteht nur aus dem öffentlich Schlüssel generiert in der Komponente Cramer Shoup Key Generator.
       Die Ausgabe besteht aus einem zufälligen Schlüssel und der Chiffretext, der benötigt wird in der Komponente Cramer Shoup Decaps.
     </section>
-    <section headline="Cramer Shoup Decaps">
+    <section headline="Decaps">
       Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
       Die Hashfunktion muss mit der Hashfunktion der Komponente Cramer Shoup Encaps übereinstimmen.
       Die Eingabe besteht aus dem geheime Schlüssel und dem Chiffretext.

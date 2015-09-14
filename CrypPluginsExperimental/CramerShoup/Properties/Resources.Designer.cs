@@ -61,7 +61,7 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key Size.
+        ///   Looks up a localized string similar to Action.
         /// </summary>
         internal static string ActionCaption {
             get {
@@ -70,11 +70,20 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select a key size (128, 256, 512).
+        ///   Looks up a localized string similar to Encaps.
         /// </summary>
-        internal static string ActionTooltip {
+        internal static string ActionList1 {
             get {
-                return ResourceManager.GetString("ActionTooltip", resourceCulture);
+                return ResourceManager.GetString("ActionList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decaps.
+        /// </summary>
+        internal static string ActionList2 {
+            get {
+                return ResourceManager.GetString("ActionList2", resourceCulture);
             }
         }
         
@@ -151,6 +160,24 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key Size.
+        /// </summary>
+        internal static string KeySizeCaption {
+            get {
+                return ResourceManager.GetString("KeySizeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a key size (128, 256, 512).
+        /// </summary>
+        internal static string KeySizeTooltip {
+            get {
+                return ResourceManager.GetString("KeySizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chiffre text.
         /// </summary>
         internal static string OutputChiffreTextCaption {
@@ -165,15 +192,6 @@ namespace CramerShoup.Properties {
         internal static string OutputChiffreTextTooltip {
             get {
                 return ResourceManager.GetString("OutputChiffreTextTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Key.
-        /// </summary>
-        internal static string OutputKey2Caption {
-            get {
-                return ResourceManager.GetString("OutputKey2Caption", resourceCulture);
             }
         }
         
@@ -241,38 +259,11 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Decaps.
+        ///   Looks up a localized string similar to Cramer Shoup.
         /// </summary>
-        internal static string PluginDecapsCaption {
+        internal static string PluginCaption {
             get {
-                return ResourceManager.GetString("PluginDecapsCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Decaps.
-        /// </summary>
-        internal static string PluginDecapsTooltip {
-            get {
-                return ResourceManager.GetString("PluginDecapsTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Encaps.
-        /// </summary>
-        internal static string PluginEncapsCaption {
-            get {
-                return ResourceManager.GetString("PluginEncapsCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Encaps.
-        /// </summary>
-        internal static string PluginEncapsTooltip {
-            get {
-                return ResourceManager.GetString("PluginEncapsTooltip", resourceCulture);
+                return ResourceManager.GetString("PluginCaption", resourceCulture);
             }
         }
         
@@ -291,6 +282,15 @@ namespace CramerShoup.Properties {
         internal static string PluginKeyTooltip {
             get {
                 return ResourceManager.GetString("PluginKeyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cramer Shoup.
+        /// </summary>
+        internal static string PluginTooltip {
+            get {
+                return ResourceManager.GetString("PluginTooltip", resourceCulture);
             }
         }
     }

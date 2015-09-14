@@ -22,13 +22,14 @@ using Cryptool.Plugins.CramerShoup.lib;
 using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Digests;
+using System;
 
 namespace Cryptool.Plugins.CramerShoup
 {
     [Author("Jan Jansen", "jan.jansen-n22@rub.de", "Ruhr Uni-Bochum", "http://cits.rub.de/")]
-    [PluginInfo("CramerShoup.Properties.Resources", "PluginEncapsCaption", "PluginEncapsTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/CSEncaps.png" })]
+    [PluginInfo("CramerShoup.Properties.Resources", "PluginCaption", "PluginTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/CS.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernAsymmetric)]
-    public class EncapsCramerShoup : ICrypComponent
+    public class CramerShoup : ICrypComponent
     {
         #region Private Variables
 
@@ -44,7 +45,18 @@ namespace Cryptool.Plugins.CramerShoup
         /// You can add more input properties of other type if needed.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputPublCaption", "InputPublTooltip")]
-        public ECCramerShoupPublicParameter Parameter
+        public ECCramerShoupParameter Parameter
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// HOWTO: Output interface to write the output data.
+        /// You can add more output properties ot other type if needed.
+        /// </summary>
+        [PropertyInfo(Direction.InputData, "InputChiffreTextCaption", "InputChiffreTextTooltip")]
+        public ECCramerShoupCipherText InputChiffreText
         {
             get;
             set;
@@ -65,7 +77,7 @@ namespace Cryptool.Plugins.CramerShoup
         /// HOWTO: Output interface to write the output data.
         /// You can add more output properties ot other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "OutputKey2Caption", "OutputKey2Tooltip")]
+        [PropertyInfo(Direction.OutputData, "OutputKeyCaption", "OutputKeyTooltip")]
         public byte[] Key
         {
             get;
@@ -104,39 +116,63 @@ namespace Cryptool.Plugins.CramerShoup
         /// </summary>
         public void Execute()
         {
+            ProgressChanged(0, 1);
             SecureRandom random = new SecureRandom();
             var engine = new ECCramerShoupEngine();
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
-            ProgressChanged(0, 1);
-
-            if (Parameter != null)
+            IDigest digest = null;
+            switch (settings.KeySize)
             {
-                IDigest digest = null;
-                switch (settings.Action)
+                case 0:
+                    digest = new RipeMD128Digest();
+                    break;
+                case 1:
+                    digest = new Sha256Digest();
+                    break;
+                case 2:
+                    digest = new Sha512Digest();
+                    break;
+
+            }
+            if (settings.Action == 0)
+            {
+                var parameter = Parameter as ECCramerShoupPublicParameter;
+                if (parameter != null)
                 {
-                    case 0:
-                        digest = new RipeMD128Digest();
-                        break;
-                    case 1:
-                        digest = new Sha256Digest();
-                        break;
-                    case 2:
-                        digest = new Sha512Digest();
-                        break;
+                    ProgressChanged(0.33, 1);
+                    var output = engine.Encaps(parameter, random, digest);
+
+                    ProgressChanged(0.66, 1);
+                    OutputChiffreText = output.Item1;
+
+                    Key = output.Item2;
+
+                    OnPropertyChanged("OutputChiffreText");
+                    OnPropertyChanged("Key");
+                    // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
+                    ProgressChanged(1, 1);
                 }
+                else 
+                {
+                    throw new Exception("Empty or Wrong Parameter!");
+                }
+            }
+            else
+            {
+                var parameter = Parameter as ECCramerShoupPrivateParameter;
+                if (parameter != null && InputChiffreText != null)
+                {
+                    ProgressChanged(0.33, 1);
+                    Key = engine.Decaps(parameter, InputChiffreText, digest);
 
-                ProgressChanged(0.33, 1);
-                var output = engine.Encaps(Parameter, random, digest);
-
-                ProgressChanged(0.66, 1);
-                OutputChiffreText = output.Item1;
-
-                Key = output.Item2;
-
-                OnPropertyChanged("OutputChiffreText");
-                OnPropertyChanged("Key");
-                // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
-                ProgressChanged(1, 1);
+                    ProgressChanged(0.66, 1);
+                    OnPropertyChanged("Key");
+                    // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
+                    ProgressChanged(1, 1);
+                }
+                else
+                {
+                    throw new Exception("Empty or Wrong Parameter!");
+                }
             }
         }
 

@@ -12,8 +12,8 @@ namespace Cryptool.Plugins.CramerShoup
     {
         #region Private Variables
 
+        private int keysize = 0;
         private int action = 0;
-        private int someParameter = 32;
 
         #endregion
 
@@ -27,15 +27,32 @@ namespace Cryptool.Plugins.CramerShoup
         /// <summary>
         /// Getter/Setter for the source of the Key Data
         /// </summary>
-        [TaskPane("ActionCaption", "ActionTooltip", null, 1, false, ControlType.ComboBox, new string[] { "128", "256", "512" })]
+        [TaskPane("KeySizeCaption", "KeySizeTooltip", null, 1, false, ControlType.ComboBox, new string[] { "128", "256", "512" })]
+        public int KeySize
+        {
+            get { return this.keysize; }
+            set
+            {
+                if (value != keysize)
+                {
+                    this.keysize = value;
+
+                    OnPropertyChanged("KeySize");
+                }
+            }
+        }
+        /// <summary>
+        /// Getter/Setter for the source of the Key Data
+        /// </summary>
+        [TaskPane("ActionCaption", "ActionTooltip", null, 2, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
         public int Action
         {
-            get { return this.action; }
+            get { return action; }
             set
             {
                 if (value != action)
                 {
-                    this.action = value;
+                    action = value;
 
                     OnPropertyChanged("Action");
                 }
