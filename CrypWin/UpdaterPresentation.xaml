@@ -69,7 +69,8 @@
                 <ListView Name="ChangelogList" ItemsSource="{Binding}" AlternationCount="2" ItemContainerStyle="{StaticResource alternatingWithBinding}" Background="#00000000" ScrollViewer.CanContentScroll="False">
                     <ListView.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Click="MenuItem_Click_1" IsEnabled="True" Header="Copy" InputGestureText="Ctrl+C" />
+                            <MenuItem Click="MenuItem_Click_1" IsEnabled="True" Name="Copy" Header="{Loc Copy_this_row_to_clipboard}" />
+                            <MenuItem Click="MenuItem_Click_1" IsEnabled="True" Name="CopyAll" Header="{Loc Copy_everything_to_clipboard}" />
                         </ContextMenu>
                     </ListView.ContextMenu>
                     <ListView.View>
@@ -90,7 +91,7 @@
                     <HtmlTextBlock:HtmlTextBlock Name="ChangelogText" TextWrapping="Wrap" Margin="5,0,5,0">
                         <HtmlTextBlock:HtmlTextBlock.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Click="MenuItem_Click_2" IsEnabled="True" Header="Copy" InputGestureText="Ctrl+C" />
+                                <MenuItem Click="MenuItem_Click_2" IsEnabled="True" Header="Copy" />
                             </ContextMenu>
                         </HtmlTextBlock:HtmlTextBlock.ContextMenu>
                     </HtmlTextBlock:HtmlTextBlock>

@@ -153,10 +153,22 @@ namespace Cryptool.CrypWin
         
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            if (ChangelogList.SelectedItem != null)
+            switch (((MenuItem)sender).Name)
             {
-                var rssItem = (RssItem)ChangelogList.SelectedItem;
-                Clipboard.SetData(DataFormats.Text, rssItem);
+                case "Copy":
+                    if (ChangelogList.SelectedItem != null)
+                    {
+                        var rssItem = (RssItem)ChangelogList.SelectedItem;
+                        Clipboard.SetData(DataFormats.Text, rssItem);
+                    }
+                    break;
+                case "CopyAll":
+                    List<RssItem> rssItems = new List<RssItem>();
+                    foreach (var item in ChangelogList.Items)
+                        rssItems.Add((RssItem)item);
+                    string sep = Environment.NewLine + new String('-', 80) + Environment.NewLine;
+                    Clipboard.SetData(DataFormats.Text, String.Join(sep, rssItems));
+                    break;
             }
         }
 
