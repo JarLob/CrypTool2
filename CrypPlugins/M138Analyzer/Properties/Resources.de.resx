@@ -124,7 +124,7 @@
     <value>Geheimtext, der analysiert werden soll.</value>
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
-    <value>Aktuell analysierter offset</value>
+    <value>Aktuell analysierter Offset</value>
   </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Vergangene Zeit</value>
@@ -172,10 +172,10 @@
     <value>Bester gefundener Schlüssel.</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
-    <value>Durchschnittliche Schlüssel/Sekunde</value>
+    <value>Durchschnittliche Schlüssel / Sekunde</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
-    <value>Aktuelle Schlüssel/Sekunde</value>
+    <value>Aktuelle Schlüssel / Sekunde</value>
   </data>
   <data name="KnownPlaintextDes" xml:space="preserve">
     <value>Bekannter Klartext</value>

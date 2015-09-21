@@ -223,7 +223,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Average keys/sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Average keys / sec ähnelt.
         /// </summary>
         internal static string KeysPerSecondAverageLabel {
             get {
@@ -232,7 +232,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current keys/sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current keys / sec ähnelt.
         /// </summary>
         internal static string KeysPerSecondCurrentLabel {
             get {

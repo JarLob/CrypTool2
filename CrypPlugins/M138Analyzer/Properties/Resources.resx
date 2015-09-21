@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CiphertextInputDes" xml:space="preserve">
-    <value>Ciphertext</value>
-  </data>
   <data name="CiphertextInputDescription" xml:space="preserve">
     <value>Ciphertext to be used.</value>
   </data>
@@ -172,10 +169,10 @@
     <value>Best key found.</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
-    <value>Average keys/sec</value>
+    <value>Average keys / sec</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
-    <value>Current keys/sec</value>
+    <value>Current keys / sec</value>
   </data>
   <data name="KnownPlaintextDes" xml:space="preserve">
     <value>Known plaintext</value>
@@ -239,5 +236,8 @@
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Value</value>
+  </data>
+  <data name="CiphertextInputDes" xml:space="preserve">
+    <value>Ciphertext</value>
   </data>
 </root>
