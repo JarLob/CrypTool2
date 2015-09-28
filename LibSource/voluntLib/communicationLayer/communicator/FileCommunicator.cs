@@ -139,8 +139,8 @@ namespace voluntLib.communicationLayer.communicator
         }
 
         public void Stop()
-        {
-/* since we are stateless, we dont have to do anything on stop */
+        { 
+            /* since we are stateless, we dont have to do anything on stop */
         }
 
         private void CreateFileIfNecessary()

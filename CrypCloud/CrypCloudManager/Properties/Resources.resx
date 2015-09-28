@@ -277,4 +277,7 @@
   <data name="_JobList_jobName" xml:space="preserve">
     <value>Name:</value>
   </data>
+  <data name="_JobList_btn_logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
 </root>

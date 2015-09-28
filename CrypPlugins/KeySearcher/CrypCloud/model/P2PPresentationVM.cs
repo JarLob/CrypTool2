@@ -65,15 +65,20 @@ namespace KeySearcher.CrypCloud
 
         public void StartedLocalCalculation(BigInteger blockId)
         {
+            if (CurrentChunks.Contains(blockId)) return;
+
             CurrentChunks.Add(blockId);
             OnPropertyChanged("CurrentChunks");
         }
       
         public void EndedLocalCalculation(TaskEventArgs taskArgs)
         {
-            var itemInList = CurrentChunks.First(it => it == taskArgs.BlockID);
-            CurrentChunks.Remove(itemInList);
-            OnPropertyChanged("CurrentChunks");
+            var itemInList = CurrentChunks.FirstOrDefault(it => it == taskArgs.BlockID);
+            if (itemInList != default(BigInteger))
+            {
+                CurrentChunks.Remove(itemInList);
+                OnPropertyChanged("CurrentChunks");
+            }
 
             if (taskArgs.Type == TaskEventArgType.Finished)
             {

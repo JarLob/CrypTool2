@@ -61,13 +61,16 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0"
+            <ListView ItemsSource="{Binding RunningJobs}"
+                      SelectedItem="{Binding SelectedJob, Mode=TwoWay}"
+                      Grid.Column="0"
+                      Height="470" x:Name="JobListView"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                      ItemsSource="{Binding Path=RunningJobs}"
-                      Height="470" x:Name="JobListView">
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="{Loc  _JobList_col_Date}" DisplayMemberBinding="{Binding CreationDate}"
+                                        Width="150" />
                         <GridViewColumn Header="{Loc _JobList_col_Id}" DisplayMemberBinding="{Binding PrintableID}"
                                         Width="250" />
                         <GridViewColumn Header="{Loc  _JobList_col_Name}" DisplayMemberBinding="{Binding Name}"
@@ -131,22 +134,33 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
-
-            <StackPanel Grid.Column="2" Background="White" >
-                <Label Content="{Loc _JobList_jobName}" />
-                <TextBlock Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}"></TextBlock>
-                
-                <Label Content="{Loc _JobList_jobDescription}" />
-                <TextBlock Text="{Binding ElementName=JobListView, Path=SelectedItem.Description}"></TextBlock>
-                
-                <Label Content="{Loc _JobList_bitmask}" />
-                <Image Width="200" Height="200" 
-                       Source="{Binding ElementName=JobListView, Path=SelectedItem.Visualization}">
-                    
-                </Image>
-                
-            </StackPanel>
             
+            <StackPanel Grid.Column="2" Background="White" >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition />
+                        <RowDefinition Height="*" MaxHeight="200" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}"></TextBlock>
+
+                    <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />
+                    <TextBlock TextWrapping="Wrap" Width="200"  Grid.Column="1" Grid.Row="2" Text="{Binding ElementName=JobListView, Path=SelectedItem.Description}"></TextBlock>
+
+                </Grid>
+
+                <Label FontWeight="Bold" Content="{Loc _JobList_bitmask}"  />
+                <Border BorderThickness="1" Width="200" BorderBrush="#FF000000" VerticalAlignment="Top">
+                    <Image  Width="200" Height="200" Source="{Binding ElementName=JobListView, Path=SelectedItem.Visualization}" />
+                </Border>
+
+            </StackPanel>
         </Grid>
 
         <!-- bottom controls -->

@@ -2,37 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using CrypCloud.Core.CloudComponent;
+using CrypCloud.Core.Properties;
 using CrypCloud.Core.utils;
 using Cryptool.PluginBase;
+using NLog;
 using voluntLib;
 using voluntLib.common;
+using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
 using voluntLib.logging;
 using WorkspaceManager.Model;
-using NLog;
-using voluntLib.common.eventArgs;
 
 namespace CrypCloud.Core
 {
     public class CrypCloudCore
     {
         public string DefaultWorld = "CryptCloud";
-      
+
         #region singleton
 
         private static CrypCloudCore instance;
-       
+
         public static CrypCloudCore Instance
         {
             get { return instance ?? (instance = new CrypCloudCore()); }
         }
 
-      
         #endregion
 
         private VoluntLib voluntLib;
@@ -41,7 +40,7 @@ namespace CrypCloud.Core
 
         public bool IsRunning
         {
-            get { return voluntLib.IsStarted; } 
+            get { return voluntLib.IsStarted; }
         }
 
         public int AmountOfWorker { get; private set; }
@@ -58,7 +57,7 @@ namespace CrypCloud.Core
         {
             var vlib = new VoluntLib
             {
-                LogMode = global::voluntLib.logging.LogMode.EventBased,
+                LogMode = LogMode.EventBased,
                 EnablePersistence = true,
                 LoadDataFromLocalStorage = true
             };
@@ -78,42 +77,55 @@ namespace CrypCloud.Core
             {
                 return false;
             }
-            var rootCertificate = new X509Certificate2(Properties.Resources.rootCA);
+            var rootCertificate = new X509Certificate2(Resources.rootCA);
             voluntLib.InitAndStart(rootCertificate, ownCertificate);
             OnConnectionStateChanged(true);
             return true;
         }
-        
+
         public void Logout()
         {
-            if ( ! IsRunning)
+            if (!IsRunning)
             {
                 return;
             }
-            voluntLib.Stop();
-            voluntLib = InitVoluntLib();
+
+            try
+            {
+                voluntLib.ApplicationLog -= ConvertVoluntLibToCtLogs;
+                voluntLib.JobListChanged -= OnJobListChanged;
+                voluntLib.JobProgress -= OnJobStateChanged;
+                voluntLib.TaskStarted -= OnTaskHasStarted;
+                voluntLib.TaskStopped -= OnTaskHasStopped;
+                voluntLib.TaskProgress -= OnTaskProgress;
+                voluntLib.JobFinished -= OnJobFinished;
+
+                voluntLib.Stop();
+                OnConnectionStateChanged(false);
+            }
+            finally
+            {
+                voluntLib = InitVoluntLib();  
+            }
+
         }
-        
+
         public bool IsPartizipationOnJob()
         {
             return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
         }
-        
-        
+
         public Bitmap GetJobStateVisualization(BigInteger jobId)
         {
             return voluntLib.GetVisualizationOfJobState(jobId);
         }
 
-
-
-
         //TODO @ckonze add admin names/move function over to voluntlib
         public bool UserCanDeleteJob(NetworkJob job)
         {
-           return job.Creator.Equals(voluntLib.CertificateName);
+            return job.Creator.Equals(voluntLib.CertificateName);
         }
-        
+
         public void RefreshJobList()
         {
             voluntLib.RefreshJobList(DefaultWorld);
@@ -131,22 +143,22 @@ namespace CrypCloud.Core
 
         public List<NetworkJob> GetJobs()
         {
-            if ( ! voluntLib.IsStarted)
+            if (!voluntLib.IsStarted)
             {
                 return new List<NetworkJob>();
             }
 
-           return voluntLib.GetJobsOfWorld(DefaultWorld);
+            return voluntLib.GetJobsOfWorld(DefaultWorld);
         }
-        
+
         public BigInteger GetProgressOfJob(BigInteger jobID)
         {
-            if ( ! voluntLib.IsStarted)
+            if (!voluntLib.IsStarted)
             {
                 return new BigInteger(0);
             }
 
-           return voluntLib.GetCalculatedBlocksOfJob(jobID);
+            return voluntLib.GetCalculatedBlocksOfJob(jobID);
         }
 
         public bool JobHasWorkspace(BigInteger jobId)
@@ -158,7 +170,7 @@ namespace CrypCloud.Core
         public void DownloadWorkspaceOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
-            if (job == null) 
+            if (job == null)
                 return;
 
             if (job.HasPayload())
@@ -172,27 +184,59 @@ namespace CrypCloud.Core
 
         public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)
         {
-            var job = voluntLib.GetJobByID(jobId);
-            if (job == null || !job.HasPayload())
-                return null;
-
-            WorkspaceModel workspaceOfJob;
-            try
-            {
-                workspaceOfJob = PayloadSerialization.Deserialize(job.JobPayload);
-            }
-            catch (Exception e)
+            var payloadOfJob = GetPayloadOfJob(jobId);
+            if (payloadOfJob == null)
             {
                 return null;
             }
-
-            var cloudComponents = workspaceOfJob.GetAllPluginModels().Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
+            
+            var cloudComponents = payloadOfJob.WorkspaceModel.GetAllPluginModels()
+                .Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
             foreach (var cloudComponent in cloudComponents)
             {
-                ((ACloudCompatible)cloudComponent.Plugin).JobID = jobId;
+                ((ACloudCompatible) cloudComponent.Plugin).JobID = jobId;
             }
-            return workspaceOfJob;
+
+            return payloadOfJob.WorkspaceModel;
         }
+
+        public DateTime GetCreationDateOfJob(BigInteger jobId)
+        {
+            var payloadOfJob = GetPayloadOfJob(jobId);
+            if (payloadOfJob == null)
+            {
+                return new DateTime(0);
+            }
+
+            return payloadOfJob.CreationTime;
+        }
+
+
+        private readonly Dictionary<BigInteger, JobPayload> jobPayloadCache = new Dictionary<BigInteger, JobPayload>();
+        private JobPayload GetPayloadOfJob(BigInteger jobId)
+        {
+            var job = voluntLib.GetJobByID(jobId);
+            if (job == null || !job.HasPayload() || job.IsDeleted)
+            {
+                return null;
+            }
+             
+            if ( ! jobPayloadCache.ContainsKey(jobId))
+            {
+                try
+                {
+                    var jobPayload = new JobPayload().Deserialize(job.JobPayload);
+                    jobPayloadCache.Add(jobId, jobPayload);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+
+            return jobPayloadCache[jobId];
+        }
+
 
         public void DeleteJob(BigInteger jobId)
         {
@@ -208,9 +252,16 @@ namespace CrypCloud.Core
             if (cloudComponent == null) return false;
 
             var numberOfBlocks = cloudComponent.NumberOfBlocks;
-            var serialize = PayloadSerialization.Serialize(workspaceModel);
+            var jobPayload = new JobPayload
+            {
+                WorkspaceModel = workspaceModel,
+                CreationTime = DateTime.Now
+            };
 
-            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, serialize, numberOfBlocks);
+            var serialize = jobPayload.Serialize();
+
+            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, serialize,
+                numberOfBlocks);
             return jobID != -1;
         }
 
@@ -218,7 +269,8 @@ namespace CrypCloud.Core
         {
             try
             {
-                var cloudModel = workspaceModel.GetAllPluginModels().First(pluginModel => pluginModel.Plugin is ACloudCompatible);
+                var cloudModel =
+                    workspaceModel.GetAllPluginModels().First(pluginModel => pluginModel.Plugin is ACloudCompatible);
                 return cloudModel.Plugin as ACloudCompatible;
             }
             catch
@@ -265,10 +317,10 @@ namespace CrypCloud.Core
 
         protected virtual void OnConnectionStateChanged(bool connected)
         {
-            Action<bool> handler = ConnectionStateChanged;
+            var handler = ConnectionStateChanged;
             if (handler != null) handler(connected);
         }
-      
+
         protected virtual void OnJobListChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             var handler = JobListChanged;
@@ -291,14 +343,21 @@ namespace CrypCloud.Core
         private void ConvertVoluntLibToCtLogs(object sender, LogEventInfoArg logEvent)
         {
             var notificationLevel = GetNotificationLevel(logEvent);
+
+            if (notificationLevel == NotificationLevel.Debug || notificationLevel == NotificationLevel.Info)
+            {
+                return;
+            }
+
             var message = "(" + logEvent.Location + "): " + logEvent.Message;
             OnApplicationLog(sender, new GuiLogEventArgs(message, null, notificationLevel));
         }
 
-    
+
         private static NotificationLevel GetNotificationLevel(LogEventInfoArg logEvent)
         {
             var notificationLevel = NotificationLevel.Info;
+
             if (logEvent.Level >= LogLevel.Error)
                 notificationLevel = NotificationLevel.Error;
             if (logEvent.Level == LogLevel.Warn)
@@ -309,6 +368,5 @@ namespace CrypCloud.Core
         }
 
         #endregion
-
     }
 }

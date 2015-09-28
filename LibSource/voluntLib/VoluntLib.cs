@@ -275,7 +275,6 @@ namespace voluntLib
         public virtual void Stop()
         {
             ThrowErrorIfNotStarted();
-
             CommunicationLayer.Stop();
 
             ManagementLayer.Stop();
@@ -962,7 +961,7 @@ namespace voluntLib
             }
 
             var stateManager = ManagementLayer.LocalStates[jobId];
-            var bitMask = stateManager.LocalState.BitMask;
+            var bitMask = stateManager.LocalState.GetCopyOfBitmask();
             return CreateImageForEpochBitmask(bitMask);
         }
 
@@ -987,7 +986,7 @@ namespace voluntLib
 
             while (x < dimension)
             {
-                bitmap.SetPixel(x, y, Color.Gray);
+                bitmap.SetPixel(x, dimension - 1, Color.Gray);
                 x++;
             }
             return bitmap;

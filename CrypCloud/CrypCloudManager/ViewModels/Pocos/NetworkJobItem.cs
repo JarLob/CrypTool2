@@ -18,6 +18,7 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         public BigInteger FinishedNumberOfBlocks { get; set; }
 
         public string Creator { get; set; }
+        public DateTime CreationDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public BitmapSource Visualization{ get; set; }
@@ -40,6 +41,11 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         {
             get
             {
+                if (TotalNumberOfBlocks == 0)
+                {
+                    return "";
+                }
+
                 var tmp = BigInteger.Multiply(FinishedNumberOfBlocks, 100);
                 var progress = BigInteger.Divide(tmp, TotalNumberOfBlocks);
                 return progress.ToString();

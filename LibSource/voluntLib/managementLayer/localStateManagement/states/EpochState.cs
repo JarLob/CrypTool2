@@ -66,6 +66,11 @@ namespace voluntLib.managementLayer.localStateManagement.states
             EpochNumber = 0;
             BitMask = new BitArray(config.BitMaskWidth, false);
         }
+
+        public BitArray GetCopyOfBitmask()
+        {
+           return new BitArray(BitMask);
+        }
     
         public override StateRelation CompareWith(ALocalState candidate)
         {
@@ -246,7 +251,7 @@ namespace voluntLib.managementLayer.localStateManagement.states
             var str = "\tEpochNumber: " + EpochNumber + " Bitmask: ";
             try
             {
-                return BitMask.Cast<bool>().Aggregate(str, (current, bit) => current + (bit ? "1" : "0"));
+                return GetCopyOfBitmask().Cast<bool>().Aggregate(str, (current, bit) => current + (bit ? "1" : "0"));
             }
             catch (Exception)
             {

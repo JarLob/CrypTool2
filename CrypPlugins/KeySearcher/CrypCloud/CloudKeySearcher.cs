@@ -110,7 +110,10 @@ namespace KeySearcher
 
         public void Stop()
         {
-            CrypCloudCore.Instance.StopLocalCalculation(jobId);
+            try
+            {
+                CrypCloudCore.Instance.StopLocalCalculation(jobId);
+            } catch(Exception e){}
         }
     }
 }

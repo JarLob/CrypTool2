@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Windows;
@@ -19,13 +20,26 @@ namespace CrypCloud.Manager.ViewModels
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
         public CrypCloudManager Manager { get; set; } 
 
-        public ObservableCollection<NetworkJobItem> RunningJobs { get; set; }
+        public ObservableCollection<NetworkJobItem> RunningJobs { get; set; } 
+        private NetworkJobItem selectedJob;
+        public NetworkJobItem SelectedJob
+        {
+            get { return selectedJob; }
+            set
+            {
+                if (selectedJob == value)
+                    return;
+
+                selectedJob = value;
+            }
+        }
         public RelayCommand RefreshJobListCommand { get; set; }
         public RelayCommand CreateNewJobCommand { get; set; }
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
         public RelayCommand DownloadWorkspaceCommand { get; set; }
         public RelayCommand LogOutCommand { get; set; } 
+         
 
         public JobListVM()
         {
@@ -37,33 +51,45 @@ namespace CrypCloud.Manager.ViewModels
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
-            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
+            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList); 
         }
-
-        private void Logout()
-        {
-            if (crypCloudCore.IsPartizipationOnJob())
-            {
-                ErrorMessage = CrypCloud.Manager.Properties.Resources.Stop_Running_Jobs_Before_Logout;
-                return;
-            }
-            
-            ErrorMessage = "";
-            crypCloudCore.Logout();
-            Navigator.ShowScreenWithPath(ScreenPaths.Login);
-        }
-
+    
         protected override void HasBeenActivated()
         {
-            base.HasBeenActivated();
+            base.HasBeenActivated(); 
             UpdateJobList();
+            if (RunningJobs.Count > 0)
+            {
+                selectedJob = RunningJobs.First();
+                RaisePropertyChanged("SelectedJob");
+            }
         }
 
         private void UpdateJobList()
         {
+            BigInteger selectedID = new BigInteger(0);
+            if (SelectedJob != null)
+            {
+                selectedID = selectedJob.Id;
+            }
+
             RunningJobs.Clear();
             var jobs = crypCloudCore.GetJobs();
             jobs.ForEach(it => RunningJobs.Add(ConvertToListItem(it)));
+
+            SetSelectionByJobId(selectedID);
+        }
+
+        private void SetSelectionByJobId(BigInteger selectedID)
+        {
+            if (selectedID == 0) return;
+
+            var newSelectedJob = RunningJobs.FirstOrDefault(networkJobItem => networkJobItem.Id == selectedID);
+            if (newSelectedJob != null)
+            {
+                selectedJob = newSelectedJob;
+                RaisePropertyChanged("SelectedJob");
+            }
         }
 
         private void OpenJobCreation()
@@ -76,6 +102,21 @@ namespace CrypCloud.Manager.ViewModels
             UpdateJobList();
             crypCloudCore.RefreshJobList(); 
         }
+
+        private void Logout()
+        {
+            if (crypCloudCore.IsPartizipationOnJob())
+            {
+                ErrorMessage = CrypCloud.Manager.Properties.Resources.Stop_Running_Jobs_Before_Logout;
+                return;
+            }
+
+            ErrorMessage = "";
+            crypCloudCore.Logout();
+            Navigator.ShowScreenWithPath(ScreenPaths.Login);
+        }
+
+        #region open job
 
         private void OpenJob(object it)
         {
@@ -100,7 +141,9 @@ namespace CrypCloud.Manager.ViewModels
 
             return waitForWorkspace;
         }
-        
+
+        #endregion
+
         private void DeleteJob(object it)
         {
             var jobItem = it as NetworkJobItem;
@@ -122,9 +165,14 @@ namespace CrypCloud.Manager.ViewModels
                 FinishedNumberOfBlocks = crypCloudCore.GetProgressOfJob(job.JobID),
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
-                HasWorkspace = job.HasPayload()
+                HasWorkspace = job.HasPayload(),
+                CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID)
             };
-          
+
+            if (item.HasWorkspace)
+            {
+               
+            }
             
             var jobStateVisualization = crypCloudCore.GetJobStateVisualization(job.JobID);
             if (jobStateVisualization != null)
@@ -137,14 +185,24 @@ namespace CrypCloud.Manager.ViewModels
 
         private BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
         {
-           
-
-           return Imaging.CreateBitmapSourceFromHBitmap(
-                           new Bitmap(bitmap, 200, 200).GetHbitmap(),
+            return Imaging.CreateBitmapSourceFromHBitmap(
+                    ResizeBitmap(bitmap, 200, 200).GetHbitmap(),
                            IntPtr.Zero,
                            Int32Rect.Empty,
                            BitmapSizeOptions.FromWidthAndHeight(200,200)); 
         }
+
+        private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
+        {
+            Bitmap result = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(result))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.DrawImage(sourceBMP, 0, 0, width, height);
+            }
+            return result;
+        }
+
         #endregion
     }
 }
