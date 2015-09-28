@@ -38,7 +38,8 @@ namespace CrypCloud.Manager
     [PluginInfo("CrypCloud.Manager.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypCloudManager/DetailedDescription/doc.xml", "CrypCloudManager/images/icon.png")]
     public class CrypCloudManager : IEditor
     {
-        private readonly ScreenNavigator screenNavigator = new ScreenNavigator(); 
+        private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
+        public static string DefaultTabName = "CrypCloud Project";
 
         public CrypCloudManager()
         {
@@ -73,7 +74,12 @@ namespace CrypCloud.Manager
         {
             if (OnOpenEditor == null) return; // cant open tab 
 
-            var currentManager = (WorkspaceManager.WorkspaceManagerClass)OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), null);
+            var tabInfo = new TabInfo()
+            {
+                Title = DefaultTabName
+            };
+
+            var currentManager = (WorkspaceManager.WorkspaceManagerClass)OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), tabInfo);
             currentManager.Open(model);
         }
 

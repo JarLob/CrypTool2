@@ -280,4 +280,10 @@
   <data name="_JobList_btn_logout" xml:space="preserve">
     <value>Logout</value>
   </data>
+  <data name="AmountOfWorker_Settings" xml:space="preserve">
+    <value>Amount of Workers</value>
+  </data>
+  <data name="CrypCloudSettings" xml:space="preserve">
+    <value>CrypCloud Settings</value>
+  </data>
 </root>

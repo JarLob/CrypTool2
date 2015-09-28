@@ -475,12 +475,30 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Amount of Workers ähnelt.
+        /// </summary>
+        public static string AmountOfWorker_Settings {
+            get {
+                return ResourceManager.GetString("AmountOfWorker_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap connected {
             get {
                 object obj = ResourceManager.GetObject("connected", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud Settings ähnelt.
+        /// </summary>
+        public static string CrypCloudSettings {
+            get {
+                return ResourceManager.GetString("CrypCloudSettings", resourceCulture);
             }
         }
         

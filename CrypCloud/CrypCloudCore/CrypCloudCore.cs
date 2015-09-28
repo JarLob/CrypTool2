@@ -43,7 +43,7 @@ namespace CrypCloud.Core
             get { return voluntLib.IsStarted; }
         }
 
-        public int AmountOfWorker { get; private set; }
+        public int AmountOfWorker { get; set; }
 
         #endregion
 

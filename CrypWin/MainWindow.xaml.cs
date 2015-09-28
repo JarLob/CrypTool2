@@ -67,6 +67,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using System.Net.Security;
 using CrypCloud.Core;
+using CrypCloud.Manager;
 
 namespace Cryptool.CrypWin
 {
@@ -1492,122 +1493,140 @@ namespace Cryptool.CrypWin
             return hasOpenedProject;
         }
 
+
         private bool ReopenLastTabs(List<StoredTab> lastOpenedTabs)
         {
             var hasOpenedProject = false;
-
             foreach (var lastOpenedTab in lastOpenedTabs)
             {
                 if (lastOpenedTab is EditorFileStoredTab)
                 {
-                    var file = ((EditorFileStoredTab) lastOpenedTab).Filename;
-                    if (File.Exists(file))
-                    {
-                        this.OpenProject(file, null);
-                        OpenTab(ActiveEditor, lastOpenedTab.Info, null);
-                        hasOpenedProject = true;
-                    }
-                    else
-                    {
-                        GuiLogMessage(string.Format(Properties.Resources.FileLost, file), NotificationLevel.Error);
-                    }
+                    hasOpenedProject = OpenLastEditorFileStoredTab(lastOpenedTab);
                 }
                 else if (lastOpenedTab is EditorTypeStoredTab)
                 {
-                    var editorType = ((EditorTypeStoredTab) lastOpenedTab).EditorType;
-                    var editor = AddEditorDispatched(editorType);
-                    TabInfo info = new TabInfo();
-
-                    try 
-                    {  
-                        if (editorType == typeof(CrypCloud.Manager.CrypCloudManager))
-                            info.Title = CrypCloud.Manager.Properties.Resources.Tab_Caption;
-                        else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
-                            info.Title = WorkspaceManager.Properties.Resources.unnamed_project;
-                        else
-                            info.Title = editorType.GetPluginInfoAttribute().Caption;
-                    }
-                    catch (Exception ex)
-                    {
-                        info = lastOpenedTab.Info;
-                    }
-
-                    OpenTab(editor, info, null);     //rename
+                    OpenLastEditorTypeStoredTab(lastOpenedTab);
                 }
                 else if (lastOpenedTab is CommonTypeStoredTab)
                 {
-                    object tabContent = null;
-                    TabInfo info = new TabInfo();
-
-                    var type = ((CommonTypeStoredTab) lastOpenedTab).Type;
-
-                    if (type == typeof(OnlineHelpTab))
-                    {
-                        tabContent = OnlineHelpTab.GetSingleton(this);
-                        info.Title = Properties.Resources.Online_Help;
-                    }
-                    else if (type == typeof(SettingsPresentation))
-                    {
-                        tabContent = SettingsPresentation.GetSingleton();
-                        info.Title = Properties.Resources.Settings;
-                    }
-                    else if (type == typeof(UpdaterPresentation))
-                    {
-                        tabContent = UpdaterPresentation.GetSingleton();
-                        info.Title = Properties.Resources.CrypTool_2_0_Update;
-                    }
-                    else if (type == typeof(SystemInfos))
-                    {
-                        tabContent = systemInfos;
-                        info.Title = Properties.Resources.System_Infos;
-                    }
-                    else if (type == typeof(LicensesTab))
-                    {
-                        tabContent = licenses;
-                        info.Title = Properties.Resources.Licenses;
-                    } 
-                    else if (typeof(ICrypTutorial).IsAssignableFrom(type))
-                    {
-                        var constructorInfo = type.GetConstructor(new Type[0]);
-                        if (constructorInfo != null)
-                            tabContent = constructorInfo.Invoke(new object[0]);
-                        info.Title = type.GetPluginInfoAttribute().Caption;
-                        info.Icon = type.GetImage(0).Source;
-                        info.Tooltip = new Span(new Run(type.GetPluginInfoAttribute().ToolTip));
-                    }
-                    else if(type != null)
-                    {
-                        try
-                        {
-                            var constructorInfo = type.GetConstructor(new Type[0]);
-                            if (constructorInfo != null)
-                                tabContent = constructorInfo.Invoke(new object[0]);
-                        }
-                        catch (Exception ex)
-                        {
-                            GuiLogMessage(string.Format(Properties.Resources.Couldnt_create_tab_of_Type, type.Name, ex.Message), NotificationLevel.Error);
-                        }
-
-                        try
-                        {
-                            info.Title = type.GetPluginInfoAttribute().Caption;
-                        }
-                        catch (Exception ex)
-                        {
-                            info = lastOpenedTab.Info;
-                        }
-                    }
-
-                    if (tabContent != null && info != null)
-                    {
-                        OpenTab(tabContent, info, null);
-                    }
+                    OpenLastCommonTypeStoredTab(lastOpenedTab);
                 }
             }
-
             return hasOpenedProject;
         }
 
+        private bool OpenLastEditorFileStoredTab(StoredTab lastOpenedTab)
+        {
+            var file = ((EditorFileStoredTab)lastOpenedTab).Filename;
+            if (File.Exists(file))
+            {
+                this.OpenProject(file, null);
+                OpenTab(ActiveEditor, lastOpenedTab.Info, null);
+                return true;
+            }
+
+            GuiLogMessage(string.Format(Properties.Resources.FileLost, file), NotificationLevel.Error);
+            return false;
+        }
+
+        private void OpenLastEditorTypeStoredTab(StoredTab lastOpenedTab)
+        {
+            if (lastOpenedTab.Info.Title.Contains(CrypCloudManager.DefaultTabName))
+            {
+                return;
+            }
+
+            var editorType = ((EditorTypeStoredTab)lastOpenedTab).EditorType;
+            var editor = AddEditorDispatched(editorType);
+
+            TabInfo info = new TabInfo();
+            try
+            {
+                if (editorType == typeof(CrypCloud.Manager.CrypCloudManager))
+                    info.Title = CrypCloud.Manager.Properties.Resources.Tab_Caption;
+                else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
+                    info.Title = WorkspaceManager.Properties.Resources.unnamed_project;
+                else
+                    info.Title = editorType.GetPluginInfoAttribute().Caption;
+            }
+            catch (Exception ex)
+            {
+                info = lastOpenedTab.Info;
+            }
+
+            OpenTab(editor, info, null); //rename
+        }
+
+        private void OpenLastCommonTypeStoredTab(StoredTab lastOpenedTab)
+        {
+            object tabContent = null;
+            TabInfo info = new TabInfo();
+
+            var type = ((CommonTypeStoredTab)lastOpenedTab).Type;
+
+            if (type == typeof(OnlineHelpTab))
+            {
+                tabContent = OnlineHelpTab.GetSingleton(this);
+                info.Title = Properties.Resources.Online_Help;
+            }
+            else if (type == typeof(SettingsPresentation))
+            {
+                tabContent = SettingsPresentation.GetSingleton();
+                info.Title = Properties.Resources.Settings;
+            }
+            else if (type == typeof(UpdaterPresentation))
+            {
+                tabContent = UpdaterPresentation.GetSingleton();
+                info.Title = Properties.Resources.CrypTool_2_0_Update;
+            }
+            else if (type == typeof(SystemInfos))
+            {
+                tabContent = systemInfos;
+                info.Title = Properties.Resources.System_Infos;
+            }
+            else if (type == typeof(LicensesTab))
+            {
+                tabContent = licenses;
+                info.Title = Properties.Resources.Licenses;
+            }
+            else if (typeof(ICrypTutorial).IsAssignableFrom(type))
+            {
+                var constructorInfo = type.GetConstructor(new Type[0]);
+                if (constructorInfo != null)
+                    tabContent = constructorInfo.Invoke(new object[0]);
+                info.Title = type.GetPluginInfoAttribute().Caption;
+                info.Icon = type.GetImage(0).Source;
+                info.Tooltip = new Span(new Run(type.GetPluginInfoAttribute().ToolTip));
+            }
+            else if (type != null)
+            {
+                try
+                {
+                    var constructorInfo = type.GetConstructor(new Type[0]);
+                    if (constructorInfo != null)
+                        tabContent = constructorInfo.Invoke(new object[0]);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(string.Format(Properties.Resources.Couldnt_create_tab_of_Type, type.Name, ex.Message),
+                        NotificationLevel.Error);
+                }
+
+                try
+                {
+                    info.Title = type.GetPluginInfoAttribute().Caption;
+                }
+                catch (Exception ex)
+                {
+                    info = lastOpenedTab.Info;
+                }
+            }
+
+            if (tabContent != null && info != null)
+            {
+                OpenTab(tabContent, info, null);
+            }
+        }
         private void FileLoadedOnStartup(IEditor editor, string filename)
         {
             // Switch to "Play"-state, if parameter is given

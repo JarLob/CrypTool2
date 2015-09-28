@@ -279,6 +279,12 @@ Berechnungen.</value>
     <value>Name:</value>
   </data>
   <data name="_JobList_btn_logout" xml:space="preserve">
-    <value>Ausloggen</value>
+    <value>Abmelden</value>
+  </data>
+  <data name="AmountOfWorker_Settings" xml:space="preserve">
+    <value>Anzahl der Arbeitsthreads</value>
+  </data>
+  <data name="CrypCloudSettings" xml:space="preserve">
+    <value>CrypCloud Einstellungen</value>
   </data>
 </root>
