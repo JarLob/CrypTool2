@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
@@ -59,7 +60,8 @@ namespace CrypCloud.Core
             {
                 LogMode = LogMode.EventBased,
                 EnablePersistence = true,
-                LoadDataFromLocalStorage = true
+                LoadDataFromLocalStorage = true,
+                LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml")
             };
             vlib.JobListChanged += OnJobListChanged;
             vlib.JobProgress += OnJobStateChanged;
