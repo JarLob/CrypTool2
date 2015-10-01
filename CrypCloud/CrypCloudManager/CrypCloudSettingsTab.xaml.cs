@@ -1,12 +1,12 @@
 ﻿ 
 using System;
+using System.Configuration;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CrypCloud.Core;
 using Cryptool.PluginBase.Attributes; 
-
 namespace CrypCloud.Manager
 {
     /// <summary>
@@ -17,21 +17,19 @@ namespace CrypCloud.Manager
     {
         private int minvalue = 1;
         private readonly int maxvalue = Environment.ProcessorCount - 1;
-        private readonly int startvalue = CrypCloudCore.Instance.AmountOfWorker;
-
+        private readonly int startvalue;
         public CrypCloudSettingsTab(Style settingsStyle)
         {
+            startvalue = Settings.Default.amountOfWorker;
+            CrypCloudCore.Instance.AmountOfWorker = startvalue; 
             Resources.Add("settingsStyle", settingsStyle);
-            InitializeComponent();
-
-            NUDTextBox.Text = startvalue.ToString();
+            InitializeComponent(); 
+            NUDTextBox.Text = startvalue.ToString(); 
         }
 
         private void NUDButtonUP_Click(object sender, RoutedEventArgs e)
         {
-            int number;
-            if (NUDTextBox.Text != "") number = Convert.ToInt32(NUDTextBox.Text);
-            else number = 0;
+            var number = NUDTextBox.Text != "" ? Convert.ToInt32(NUDTextBox.Text) : 0;
             if (number < maxvalue)
                 NUDTextBox.Text = Convert.ToString(number + 1);
         }
@@ -79,7 +77,10 @@ namespace CrypCloud.Manager
             if (number > maxvalue) NUDTextBox.Text = maxvalue.ToString();
             if (number < minvalue) NUDTextBox.Text = minvalue.ToString();
             NUDTextBox.SelectionStart = NUDTextBox.Text.Length;
-            CrypCloudCore.Instance.AmountOfWorker = number;
+
+            Settings.Default.amountOfWorker = number;
+            Settings.Default.Save();
+            CrypCloudCore.Instance.AmountOfWorker = number; 
         }
 
     }
