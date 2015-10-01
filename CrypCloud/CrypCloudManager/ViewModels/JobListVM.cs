@@ -48,6 +48,7 @@ namespace CrypCloud.Manager.ViewModels
             LogOutCommand = new RelayCommand(it => Logout());
             OpenJobCommand = new RelayCommand(OpenJob);
             DeleteJobCommand = new RelayCommand(DeleteJob);
+            DownloadWorkspaceCommand = new RelayCommand(DownloadJob);
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
@@ -118,28 +119,28 @@ namespace CrypCloud.Manager.ViewModels
 
         #region open job
 
+        private void DownloadJob(object it)
+        {
+            var jobItem = it as NetworkJobItem;
+            if (jobItem == null) return; // shoudnt happen anyways
+
+            crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id);
+        }
+
+
         private void OpenJob(object it)
         {
             var jobItem = it as NetworkJobItem;
             if (jobItem == null) return; // shoudnt happen anyways
 
-            crypCloudCore.JobListChanged += WaitForWorkspaceAndOpenIt(jobItem.Id);
-            crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id);
-        }
-
-        private EventHandler WaitForWorkspaceAndOpenIt(BigInteger id)
-        {
-            EventHandler waitForWorkspace = null;
-            waitForWorkspace = (s, e) =>
+            if ( ! jobItem.HasWorkspace)
             {
-                var workspaceModel = crypCloudCore.GetWorkspaceOfJob(id);
-                if (workspaceModel == null) return;
-                
-                crypCloudCore.JobListChanged -= waitForWorkspace;
-                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
-            };
+                ErrorMessage = "Cannot open job, without downloding it first";
+                return;
+            }
 
-            return waitForWorkspace;
+            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(jobItem.Id);
+            UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
         }
 
         #endregion
@@ -166,7 +167,9 @@ namespace CrypCloud.Manager.ViewModels
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),
-                CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID)
+                CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID),
+                Epoch = crypCloudCore.GetEpochOfJob(job),
+                MaxEpoch = job.StateConfig.MaximumEpoch
             };
 
             if (item.HasWorkspace)

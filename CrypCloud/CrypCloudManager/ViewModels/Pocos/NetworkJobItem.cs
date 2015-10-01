@@ -21,6 +21,7 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         public DateTime CreationDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public BigInteger Epoch { get; set; }
         public BitmapSource Visualization{ get; set; }
         public bool UserCanDeleteJob { get; set; }
         public bool HasWorkspace { get; set; }
@@ -53,6 +54,15 @@ namespace CrypCloud.Manager.ViewModels.Pocos
             set{} //for binding only
         }
 
+        public string EpochProgress
+        {
+            get
+            {
+                return Epoch + "/" + MaxEpoch;
+            }
+            set{} //for binding only
+        }
+
         public string ProgressTotal
         {
             get
@@ -60,6 +70,8 @@ namespace CrypCloud.Manager.ViewModels.Pocos
                 return FinishedNumberOfBlocks + "/" + TotalNumberOfBlocks;
             }
             set { } //for binding only
-        }  
+        }
+
+        public BigInteger MaxEpoch { get; set; }
     }
 }

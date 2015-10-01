@@ -287,4 +287,13 @@ Berechnungen.</value>
   <data name="CrypCloudSettings" xml:space="preserve">
     <value>CrypCloud Einstellungen</value>
   </data>
+  <data name="_JobList_btn_download" xml:space="preserve">
+    <value>Laden</value>
+  </data>
+  <data name="_JobList_col_Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="_JobList_EpochProgress" xml:space="preserve">
+    <value>Epoche:</value>
+  </data>
 </root>

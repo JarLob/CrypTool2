@@ -731,6 +731,19 @@ namespace voluntLib
             return ManagementLayer.Worlds;
         }
 
+        public EpochState GetStateOfJob(BigInteger jobId)
+        {
+            ThrowErrorIfNotInitialized();
+            var localStates = ManagementLayer.LocalStates.Values;
+            var localStateManager = localStates.FirstOrDefault(state => state.JobID == jobId);
+            if (localStateManager != null)
+            {
+                return localStateManager.LocalState;
+            }
+
+            return null;
+        }
+
         #region jobID overloads
 
         /// <summary>
@@ -995,5 +1008,6 @@ namespace voluntLib
 
         #endregion
 
+        
     }
 }

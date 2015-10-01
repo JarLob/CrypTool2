@@ -16,6 +16,7 @@ using voluntLib.common;
 using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
 using voluntLib.logging;
+using voluntLib.managementLayer.localStateManagement.states;
 using WorkspaceManager.Model;
 
 namespace CrypCloud.Core
@@ -370,5 +371,11 @@ namespace CrypCloud.Core
         }
 
         #endregion
+
+        public BigInteger GetEpochOfJob(NetworkJob job)
+        {
+            var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
+            return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
+        }
     }
 }

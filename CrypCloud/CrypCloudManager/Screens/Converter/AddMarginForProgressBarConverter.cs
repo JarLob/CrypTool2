@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace CrypCloud.Manager.Screens.Converter
 {
-    public class StringNullOrEmptyToVisibilityConverter : System.Windows.Markup.MarkupExtension, IValueConverter
+    public class AddMarginForProgressBarConverter : MarkupExtension, IValueConverter
     {
-        public StringNullOrEmptyToVisibilityConverter()
+        public AddMarginForProgressBarConverter()
         {
         }
 
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
+            int val = System.Convert.ToInt32(value);
+            return val - 50;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return null;
+            return 0;
         }
 
         public override object ProvideValue(IServiceProvider serviceProvider)

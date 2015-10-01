@@ -97,6 +97,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Screens\Converter\InvertBoolConverter.cs" />
+    <Compile Include="Screens\Converter\AddMarginForProgressBarConverter.cs" />
     <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter .cs" />
     <Compile Include="Screens\CreateAccount.xaml.cs">
@@ -263,13 +265,13 @@
     <Resource Include="Images\ButtonIcons\forward.png" />
     <Resource Include="Images\ButtonIcons\chevron-right.png" />
     <Resource Include="DetailedDescription\doc.xml" />
+    <Resource Include="Images\ButtonIcons\download.png" />
     <Content Include="Images\ButtonIcons\license.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\UIElements\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

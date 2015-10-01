@@ -223,6 +223,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Load ähnelt.
+        /// </summary>
+        public static string _JobList_btn_download {
+            get {
+                return ResourceManager.GetString("_JobList_btn_download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Logout ähnelt.
         /// </summary>
         public static string _JobList_btn_logout {
@@ -259,6 +268,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Date ähnelt.
+        /// </summary>
+        public static string _JobList_col_Date {
+            get {
+                return ResourceManager.GetString("_JobList_col_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Job ID ähnelt.
         /// </summary>
         public static string _JobList_col_Id {
@@ -282,6 +300,15 @@ namespace CrypCloud.Manager.Properties {
         public static string _JobList_col_Progress {
             get {
                 return ResourceManager.GetString("_JobList_col_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Epoch: ähnelt.
+        /// </summary>
+        public static string _JobList_EpochProgress {
+            get {
+                return ResourceManager.GetString("_JobList_EpochProgress", resourceCulture);
             }
         }
         
