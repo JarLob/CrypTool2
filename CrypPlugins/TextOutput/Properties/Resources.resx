@@ -201,13 +201,22 @@
   <data name="ShowDigitsTooltip" xml:space="preserve">
     <value>With this checkbox enabled, the number of decimal digits and bits of the input is displayed in the status line of the component, provided the input consists only of digits.</value>
   </data>
-  <data name="ShowChangesCaption" xml:space="preserve">
-    <value>Show Changes</value>
+  <data name="ChangesGroup" xml:space="preserve">
+    <value>Changes</value>
   </data>
-  <data name="ShowChangesGroup" xml:space="preserve">
-    <value>Show Changes</value>
+  <data name="DontShow" xml:space="preserve">
+    <value>Don't show</value>
+  </data>
+  <data name="ShowChangesCaption" xml:space="preserve">
+    <value>Show changes</value>
   </data>
   <data name="ShowChangesTooltip" xml:space="preserve">
-    <value>Shows the changes of the Textoutput between two executions.</value>
+    <value>Show the changes of the Textoutput between two executions.</value>
+  </data>
+  <data name="ShowInsertsAndDeletions" xml:space="preserve">
+    <value>Show inserts and deletions</value>
+  </data>
+  <data name="ShowOnlyDifferences" xml:space="preserve">
+    <value>Show only differences</value>
   </data>
 </root>

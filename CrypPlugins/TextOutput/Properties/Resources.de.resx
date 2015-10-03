@@ -198,13 +198,22 @@
   <data name="ShowDigitsTooltip" xml:space="preserve">
     <value>Wenn dieses Kontrollkästchen aktiviert ist, wird die Anzahl der Ziffern und Bits der Eingabe in der Statuszeile der Komponente angezeigt, falls die Eingabe nur aus Ziffern besteht.</value>
   </data>
-  <data name="ShowChangesCaption" xml:space="preserve">
-    <value>Zeige Änderungen</value>
+  <data name="ChangesGroup" xml:space="preserve">
+    <value>Änderungen</value>
   </data>
-  <data name="ShowChangesGroup" xml:space="preserve">
+  <data name="ShowChangesCaption" xml:space="preserve">
     <value>Zeige Änderungen</value>
   </data>
   <data name="ShowChangesTooltip" xml:space="preserve">
     <value>Zeigt die Änderungen der Textausgabe zwischen zwei Ausführungen.</value>
+  </data>
+  <data name="DontShow" xml:space="preserve">
+    <value>Nicht anzeigen</value>
+  </data>
+  <data name="ShowInsertsAndDeletions" xml:space="preserve">
+    <value>Zeige Einfügungen und Löschungen</value>
+  </data>
+  <data name="ShowOnlyDifferences" xml:space="preserve">
+    <value>Zeige nur Unterschiede</value>
   </data>
 </root>

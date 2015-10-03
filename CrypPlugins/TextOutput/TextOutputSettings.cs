@@ -135,9 +135,9 @@ namespace TextOutput
         }
     }
 
-    private bool showChanges = false;
-    [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ShowChangesGroup", 6, true, ControlType.CheckBox, "", null)]
-    public bool ShowChanges
+    private int showChanges = 0;
+    [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ChangesGroup", 6, true, ControlType.ComboBox, new string[] {"DontShow", "ShowOnlyDifferences", "ShowInsertsAndDeletions"})]
+    public int ShowChanges
     {
         get { return showChanges; }
         set

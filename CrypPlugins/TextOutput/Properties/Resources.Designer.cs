@@ -133,6 +133,15 @@ namespace TextOutput.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes ähnelt.
+        /// </summary>
+        internal static string ChangesGroup {
+            get {
+                return ResourceManager.GetString("ChangesGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die character ähnelt.
         /// </summary>
         internal static string Char {
@@ -165,6 +174,15 @@ namespace TextOutput.Properties {
         internal static string Digits {
             get {
                 return ResourceManager.GetString("Digits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Don&apos;t show ähnelt.
+        /// </summary>
+        internal static string DontShow {
+            get {
+                return ResourceManager.GetString("DontShow", resourceCulture);
             }
         }
         
@@ -250,7 +268,7 @@ namespace TextOutput.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Changes ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show changes ähnelt.
         /// </summary>
         internal static string ShowChangesCaption {
             get {
@@ -259,16 +277,7 @@ namespace TextOutput.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show Changes ähnelt.
-        /// </summary>
-        internal static string ShowChangesGroup {
-            get {
-                return ResourceManager.GetString("ShowChangesGroup", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the changes of the Textoutput between two executions. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show the changes of the Textoutput between two executions. ähnelt.
         /// </summary>
         internal static string ShowChangesTooltip {
             get {
@@ -322,6 +331,15 @@ namespace TextOutput.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show inserts and deletions ähnelt.
+        /// </summary>
+        internal static string ShowInsertsAndDeletions {
+            get {
+                return ResourceManager.GetString("ShowInsertsAndDeletions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Number of lines ähnelt.
         /// </summary>
         internal static string ShowLinesCaption {
@@ -336,6 +354,15 @@ namespace TextOutput.Properties {
         internal static string ShowLinesTooltip {
             get {
                 return ResourceManager.GetString("ShowLinesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show only differences ähnelt.
+        /// </summary>
+        internal static string ShowOnlyDifferences {
+            get {
+                return ResourceManager.GetString("ShowOnlyDifferences", resourceCulture);
             }
         }
     }

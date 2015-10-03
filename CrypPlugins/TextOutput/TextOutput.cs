@@ -266,11 +266,10 @@ namespace TextOutput
             
             Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {                
-                string oldtext = String.Empty;
+                string oldtext = (CurrentValue == null ? String.Empty : CurrentValue);
                 string newtext = String.Empty;
                 if (settings.Append)
                 {
-                    oldtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
                     // append line breaks only if not first line
                     if (!string.IsNullOrEmpty(oldtext))
                     {
@@ -283,14 +282,13 @@ namespace TextOutput
                 }
                 else
                 {
-                    oldtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
                     textOutputPresentation.textBox.Document = new FlowDocument();
                     fillValue = fillValue.Replace("\n", "");
                     textOutputPresentation.textBox.AppendText(fillValue);
                     newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
                 }
 
-                if (settings.ShowChanges)
+                if (settings.ShowChanges > 0)
                 {
                     var diff = new diff_match_patch();
                     var diffs = diff.diff_main(oldtext, newtext, true);
@@ -306,9 +304,26 @@ namespace TextOutput
                                 para.Inlines.Add(new Run(d.text));
                                 break;
                             case Operation.INSERT:
-                                Run run = new Run(d.text);
-                                run.Background = new SolidColorBrush(Colors.LightBlue);
-                                para.Inlines.Add(run);
+                                if (settings.ShowChanges == 1)
+                                {
+                                    var run = new Run(d.text);
+                                    run.Background = new SolidColorBrush(Colors.LightBlue);
+                                    para.Inlines.Add(run);
+                                }
+                                else if (settings.ShowChanges == 2)
+                                {
+                                    var run = new Run(d.text);
+                                    run.Background = new SolidColorBrush(Colors.LightGreen);
+                                    para.Inlines.Add(run);
+                                }
+                                break;
+                            case Operation.DELETE:
+                                if (settings.ShowChanges == 2 && d.text.Trim().Length > 0)
+                                {
+                                    var run = new Run(d.text);
+                                    run.Background = new SolidColorBrush(Color.FromRgb((byte)0xF3, (byte)0x6D, (byte)0x74));
+                                    para.Inlines.Add(run);
+                                }
                                 break;
                         }
                     }
