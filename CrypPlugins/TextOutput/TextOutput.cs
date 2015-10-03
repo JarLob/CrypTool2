@@ -31,6 +31,9 @@ using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Numerics;
+using System.Windows.Documents;
+using DiffMatchPatch;
+using System.Windows.Media;
 
 namespace TextOutput
 {
@@ -243,7 +246,7 @@ namespace TextOutput
                 foreach (var obj in enumerable)
                     s.Add((obj == null ? "null" : obj.ToString()));
 
-                fillValue = String.Join("\n",s);
+                fillValue = String.Join("\r",s);
             }
             else if (value is BigInteger)
             {
@@ -259,34 +262,60 @@ namespace TextOutput
             {
                 AddMessage("WARNING - String is too large (" + (fillValue.Length / 1024).ToString("0.00") + " kB), output will be truncated to " + (settings.MaxLength / 1024).ToString("0.00") + "kB", NotificationLevel.Warning);
                 fillValue = fillValue.Substring(0, settings.MaxLength);
-            }
+            }            
             
             Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
+            {                
+                string oldtext = String.Empty;
+                string newtext = String.Empty;
                 if (settings.Append)
                 {
+                    oldtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
                     // append line breaks only if not first line
-                    if (!string.IsNullOrEmpty(textOutputPresentation.textBox.Text))
+                    if (!string.IsNullOrEmpty(oldtext))
                     {
                         for (int i = 0; i < settings.AppendBreaks; i++)
-                            textOutputPresentation.textBox.AppendText("\n");
-                    }
+                            textOutputPresentation.textBox.AppendText("\r");
+                    }                    
                     textOutputPresentation.textBox.AppendText(fillValue);
-
                     textOutputPresentation.textBox.ScrollToEnd();
+                    newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
                 }
                 else
                 {
-                    textOutputPresentation.textBox.Text = fillValue;
+                    oldtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
+                    textOutputPresentation.textBox.Document = new FlowDocument();
+                    fillValue = fillValue.Replace("\n", "");
+                    textOutputPresentation.textBox.AppendText(fillValue);
+                    newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
                 }
 
-                if (textOutputPresentation.textBox.Text.Length > settings.MaxLength)
+                if (settings.ShowChanges)
                 {
-                    GuiLogMessage("Text exceeds size limit. Truncating text...", NotificationLevel.Warning);
-                    textOutputPresentation.textBox.Text = textOutputPresentation.textBox.Text.Substring(0, settings.MaxLength);
+                    var diff = new diff_match_patch();
+                    var diffs = diff.diff_main(oldtext, newtext, true);
+                    diff.diff_cleanupSemanticLossless(diffs);
+
+                    textOutputPresentation.textBox.Document = new FlowDocument();
+                    var para = new Paragraph();
+                    foreach (var d in diffs)
+                    {
+                        switch (d.operation)
+                        {
+                            case Operation.EQUAL:
+                                para.Inlines.Add(new Run(d.text));
+                                break;
+                            case Operation.INSERT:
+                                Run run = new Run(d.text);
+                                run.Background = new SolidColorBrush(Colors.LightBlue);
+                                para.Inlines.Add(run);
+                                break;
+                        }
+                    }
+                    textOutputPresentation.textBox.Document.Blocks.Add(para);
                 }
 
-                CurrentValue = textOutputPresentation.textBox.Text;
+                CurrentValue = newtext;
                 setStatusBar();
 
             }, fillValue);
@@ -315,7 +344,7 @@ namespace TextOutput
             // create status line string
             textOutputPresentation.labelBytes.Content = "...";
 
-            string s = textOutputPresentation.textBox.Text;
+            string currentText = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
             string label = "";
 
             if (settings.ShowDigits)
@@ -359,7 +388,7 @@ namespace TextOutput
                             //digits = (int)(System.Math.Ceiling(log) + 0.5);
                             //digits = BigInteger.Abs(number).ToString().Length;
                         }
-                        digits = s.Length;
+                        digits = currentText.Length;
                         if (number < 0) digits--;
                     }
                     catch (Exception)
@@ -377,7 +406,8 @@ namespace TextOutput
 
             if (settings.ShowChars)
             {
-                int chars = (s == null) ? 0 : s.Length;
+                currentText = currentText.Replace("\r", "\r\n");
+                int chars = (currentText == null) ? 0 : currentText.Length - 3;
                 string entity = (chars == 1) ? Properties.Resources.Char : Properties.Resources.Chars;
                 label += string.Format(" {0:#,0} " + entity, chars);
             }
@@ -385,10 +415,10 @@ namespace TextOutput
             if (settings.ShowLines)
             {
                 int lines = 0;
-                if (s != null && s.Length > 0)
+                if (currentText != null && currentText.Length > 0)
                 {
-                    lines = new Regex("\n", RegexOptions.Multiline).Matches(s).Count;
-                    if (s[s.Length - 1] != '\n') lines++;
+                    lines = new Regex(System.Environment.NewLine, RegexOptions.Multiline).Matches(currentText).Count;
+                    if (currentText[currentText.Length - 1] != '\n') lines++;
                 }
                 string entity = (lines == 1) ? Properties.Resources.Line : Properties.Resources.Lines;
                 if (label != "") label += ", ";
@@ -431,7 +461,7 @@ namespace TextOutput
         {
             textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                textOutputPresentation.textBox.Text = null;
+                textOutputPresentation.textBox.Document = new FlowDocument();
                 //input = null;
                 clearStatusBar();
             }, null);

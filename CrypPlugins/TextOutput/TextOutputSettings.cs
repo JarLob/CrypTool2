@@ -135,6 +135,21 @@ namespace TextOutput
         }
     }
 
+    private bool showChanges = false;
+    [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ShowChangesGroup", 6, true, ControlType.CheckBox, "", null)]
+    public bool ShowChanges
+    {
+        get { return showChanges; }
+        set
+        {
+            if (value != showChanges)
+            {
+                showChanges = value;
+                OnPropertyChanged("ShowChanges");
+            }
+        }
+    }
+
     # endregion settings
 
     #region INotifyPropertyChanged Members
