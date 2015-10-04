@@ -17,7 +17,7 @@
     </UserControl.Resources>
     
     <UserControl.DataContext>
-        <viewModels:CreateAccountVM/>
+        <viewModels:CreateAccountVM IsActive="True" ShowErrorDialog="True" ShowInputDialog="True" ShowSuccessDialog="True" ShowVerificationDialog="True" ShowWaitDialog="True"/>
     </UserControl.DataContext>
 
     <StackPanel Width="500" Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
@@ -50,21 +50,21 @@
                     <PasswordBox x:Name="ConfirmField"  PasswordChanged="PasswordConfirmBoxChanged" Grid.Row="4" Grid.Column="1" Height="24" MaxLength="40"/>
                 </Grid>
                 <Grid>
-                    <Button Command="{Binding Path=BackCommand}" HorizontalAlignment="Left" Width="80" Height="30" >
+                <Button Command="{Binding Path=BackCommand}" HorizontalAlignment="Left" Width="100" Height="30" >
                         <StackPanel Orientation="Horizontal" >
                             <Image Source="../Images/ButtonIcons/chevron-left_32.png" Width="16" />
                         <Label Content="{Loc _BackBtn}" />
                         </StackPanel>
                     </Button>
 
-                    <Button Name="RequestButton" Command="{Binding Path=RequestCommand}" Margin="0,0,100,0" HorizontalAlignment="Right" Width="80" Height="30">
+                <Button Name="RequestButton" Command="{Binding Path=RequestCommand}" Margin="0,0,60,0" HorizontalAlignment="Right" Width="100" Height="30">
                         <StackPanel Orientation="Horizontal" >
                         <Label Content="{Loc _NextBtn}" />
                         <Image Source="../Images/ButtonIcons/chevron-right.png" Width="16" />
                     </StackPanel>
                     </Button>
                     
-                    <Button Command="{Binding Path=GoToVerification}"  HorizontalAlignment="Right" Width="80" Height="30">
+                    <Button Command="{Binding Path=GoToVerification}"  HorizontalAlignment="Right" Width="100" Height="30" Margin="0,0,-45,0">
                     <StackPanel Orientation="Horizontal" >
                         <Label Content="{Loc _VerifyBtn}" />
                         <Image Source="../Images/ButtonIcons/forward.png" Width="16" />
@@ -94,7 +94,7 @@
                 <TextBlock Text="{Loc _enterVerificationCode}"  Grid.Row="0"  Grid.ColumnSpan="2" FlowDirection="LeftToRight" HorizontalAlignment="Center"/>
                 <Label Content="{Loc _verificationCode_label}" Target="{Binding ElementName=VerificationCode}" Grid.Row="1" Grid.Column="0" />
                 <TextBox Text="{Binding Path=VerificationCode}" Grid.Row="1" Grid.Column="1" Height="24" MaxLength="40"/>
-                <Button Command="{Binding Path=VerificationCommand}"  Grid.Row="1" Grid.Column="2" Width="80" Height="30">
+                <Button Command="{Binding Path=VerificationCommand}"  Grid.Row="1" Grid.Column="2" Width="100" Height="30" Margin="10,0,-10,1">
                     <StackPanel Orientation="Horizontal" >
                         <Image Source="../Images/ButtonIcons/check_16.png" Width="16" />
                         <Label Content="{Loc _VerifyBtn}" />

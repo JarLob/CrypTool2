@@ -242,7 +242,7 @@
     <value>Enter your account data below to reset your password.</value>
   </data>
   <data name="_ResetPW_enterVerificationData" xml:space="preserve">
-    <value>We have send an verification email to the email address of the account. Please enter the verification code and your new password below.</value>
+    <value>We have send an verification email to the email address of the account. </value>
   </data>
   <data name="_ResetPW_Header" xml:space="preserve">
     <value>Reset Password</value>
@@ -281,10 +281,10 @@
     <value>Logout</value>
   </data>
   <data name="AmountOfWorker_Settings" xml:space="preserve">
-    <value>Amount of Workers</value>
+    <value>Amount of workers</value>
   </data>
   <data name="CrypCloudSettings" xml:space="preserve">
-    <value>CrypCloud Settings</value>
+    <value>CrypCloud settings</value>
   </data>
   <data name="_JobList_btn_download" xml:space="preserve">
     <value>Load</value>
@@ -294,5 +294,8 @@
   </data>
   <data name="_JobList_EpochProgress" xml:space="preserve">
     <value>Epoch:</value>
+  </data>
+  <data name="_ResetPW_enterVerificationData_2" xml:space="preserve">
+    <value>Please enter the verification code and your new password below.</value>
   </data>
 </root>

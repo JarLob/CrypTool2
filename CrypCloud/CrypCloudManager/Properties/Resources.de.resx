@@ -242,7 +242,7 @@
     <value>Geben Sie Ihre Accountdaten an um Ihr Passwort zurückzusetzen.</value>
   </data>
   <data name="_ResetPW_enterVerificationData" xml:space="preserve">
-    <value>Ein Verifizierungscode wurde an die Email-Addresse Ihres Accounts verschickt. Bitte geben Sie den Code und ihr neues Passwort ein.</value>
+    <value>Ein Verifizierungscode wurde an die Email-Addresse Ihres Accounts verschickt.</value>
   </data>
   <data name="_ResetPW_Header" xml:space="preserve">
     <value>Passwort zurücksetzen</value>
@@ -285,7 +285,7 @@ Berechnungen.</value>
     <value>Anzahl der Arbeitsthreads</value>
   </data>
   <data name="CrypCloudSettings" xml:space="preserve">
-    <value>CrypCloud Einstellungen</value>
+    <value>CrypCloud-Einstellungen</value>
   </data>
   <data name="_JobList_btn_download" xml:space="preserve">
     <value>Laden</value>
@@ -295,5 +295,8 @@ Berechnungen.</value>
   </data>
   <data name="_JobList_EpochProgress" xml:space="preserve">
     <value>Epoche:</value>
+  </data>
+  <data name="_ResetPW_enterVerificationData_2" xml:space="preserve">
+    <value>Bitte geben Sie den Code und ihr neues Passwort ein.</value>
   </data>
 </root>

@@ -421,11 +421,20 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die We have send an verification email to the email address of the account. Please enter the verification code and your new password below. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die We have send an verification email to the email address of the account.  ähnelt.
         /// </summary>
         public static string _ResetPW_enterVerificationData {
             get {
                 return ResourceManager.GetString("_ResetPW_enterVerificationData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please enter the verification code and your new password below. ähnelt.
+        /// </summary>
+        public static string _ResetPW_enterVerificationData_2 {
+            get {
+                return ResourceManager.GetString("_ResetPW_enterVerificationData_2", resourceCulture);
             }
         }
         
@@ -502,7 +511,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Amount of Workers ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Amount of workers ähnelt.
         /// </summary>
         public static string AmountOfWorker_Settings {
             get {
@@ -521,7 +530,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud Settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die CrypCloud settings ähnelt.
         /// </summary>
         public static string CrypCloudSettings {
             get {
