@@ -136,7 +136,7 @@ namespace TextOutput
     }
 
     private int showChanges = 0;
-    [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ChangesGroup", 6, true, ControlType.ComboBox, new string[] {"DontShow", "ShowOnlyDifferences", "ShowInsertsAndDeletions"})]
+    [TaskPane("ShowChangesCaption", "ShowChangesTooltip", "ChangesGroup", 6, true, ControlType.ComboBox, new string[] {"DontShow", "ShowOnlyDifferences", "ShowInsertsAndDeletions", "ShowChangedSymbols"})]
     public int ShowChanges
     {
         get { return showChanges; }

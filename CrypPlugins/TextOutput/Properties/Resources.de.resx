@@ -216,4 +216,7 @@
   <data name="ShowOnlyDifferences" xml:space="preserve">
     <value>Zeige nur Unterschiede</value>
   </data>
+  <data name="ShowChangedSymbols" xml:space="preserve">
+    <value>Zeige unterschiedliche Symbole</value>
+  </data>
 </root>

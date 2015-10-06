@@ -288,7 +288,7 @@ namespace TextOutput
                     newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
                 }
 
-                if (settings.ShowChanges > 0)
+                if (settings.ShowChanges == 1 || settings.ShowChanges == 2)
                 {
                     var diff = new diff_match_patch();
                     var diffs = diff.diff_main(oldtext, newtext, true);
@@ -329,7 +329,23 @@ namespace TextOutput
                     }
                     textOutputPresentation.textBox.Document.Blocks.Add(para);
                 }
-
+                else if(settings.ShowChanges == 3)
+                {
+                    textOutputPresentation.textBox.Document = new FlowDocument();
+                    var para = new Paragraph();
+                    var position = 0;
+                    while (position < newtext.Length)
+                    {
+                        var run = new Run("" + newtext[position]);
+                        if (position > oldtext.Length || (position < oldtext.Length && oldtext[position] != newtext[position]))
+                        {
+                            run.Background = new SolidColorBrush(Colors.LightBlue);
+                        }
+                        para.Inlines.Add(run);
+                        position++;
+                    }
+                    textOutputPresentation.textBox.Document.Blocks.Add(para);
+                }
                 CurrentValue = newtext;
                 setStatusBar();
 

@@ -219,4 +219,7 @@
   <data name="ShowOnlyDifferences" xml:space="preserve">
     <value>Show only differences</value>
   </data>
+  <data name="ShowChangedSymbols" xml:space="preserve">
+    <value>Show different symbols</value>
+  </data>
 </root>
