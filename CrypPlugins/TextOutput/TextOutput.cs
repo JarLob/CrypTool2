@@ -337,7 +337,7 @@ namespace TextOutput
                     while (position < newtext.Length)
                     {
                         var run = new Run("" + newtext[position]);
-                        if (position > oldtext.Length || (position < oldtext.Length && oldtext[position] != newtext[position]))
+                        if (oldtext.Length == 0 || position > oldtext.Length || (position < oldtext.Length && oldtext[position] != newtext[position]))
                         {
                             run.Background = new SolidColorBrush(Colors.LightBlue);
                         }
