@@ -15,6 +15,7 @@ using voluntLib;
 using voluntLib.common;
 using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
+using voluntLib.communicationLayer;
 using voluntLib.logging;
 using voluntLib.managementLayer.localStateManagement.states;
 using WorkspaceManager.Model;
@@ -57,12 +58,21 @@ namespace CrypCloud.Core
 
         private VoluntLib InitVoluntLib()
         {
+            var adminCertificates = Resources.adminCertificates.Replace("\r","") ;
+            var adminList = adminCertificates.Split('\n').ToList();
+            
+            var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
+            var bannedList = bannedCertificates.Split('\n').ToList();
+
             var vlib = new VoluntLib
             {
                 LogMode = LogMode.EventBased,
                 EnablePersistence = true,
                 LoadDataFromLocalStorage = true,
+                AdminCertificateList = adminList,
+                BannedCertificateList = bannedList,
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml")
+
             };
             vlib.JobListChanged += OnJobListChanged;
             vlib.JobProgress += OnJobStateChanged;
@@ -80,6 +90,7 @@ namespace CrypCloud.Core
             {
                 return false;
             }
+
             var rootCertificate = new X509Certificate2(Resources.rootCA);
             voluntLib.InitAndStart(rootCertificate, ownCertificate);
             OnConnectionStateChanged(true);
@@ -122,11 +133,26 @@ namespace CrypCloud.Core
         {
             return voluntLib.GetVisualizationOfJobState(jobId);
         }
-
-        //TODO @ckonze add admin names/move function over to voluntlib
+         
         public bool UserCanDeleteJob(NetworkJob job)
         {
-            return job.Creator.Equals(voluntLib.CertificateName);
+            return voluntLib.CanUserDeleteJob(job);
+        }
+
+
+        public bool IsBannedCertificate(X509Certificate2 certificate)
+        {
+
+            var rootCertificate = new X509Certificate2(Resources.rootCA);
+            var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
+            var bannedList = bannedCertificates.Split('\n').ToList();
+
+            var certificateService = new CertificateService(rootCertificate, certificate)
+            {
+                BannedCertificateList = bannedList
+            };
+
+            return certificateService.IsBannedCertificate(certificate);
         }
 
         public void RefreshJobList()
@@ -377,5 +403,7 @@ namespace CrypCloud.Core
             var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
             return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
         }
+
+       
     }
 }

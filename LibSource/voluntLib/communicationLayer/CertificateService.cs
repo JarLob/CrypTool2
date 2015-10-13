@@ -43,16 +43,18 @@ namespace voluntLib.communicationLayer
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly X509Certificate2 caCertificate;
         private readonly RSACryptoServiceProvider csProvider;
-        private readonly X509Certificate2 ownCertificate;
+        public X509Certificate2 OwnCertificate { get; private set; }
 
         public string OwnName { get; private set; }
+        public List<string> AdminCertificateList { get; set; }
+        public List<string> BannedCertificateList { get; set; }
 
         #endregion
 
         public CertificateService(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
         {
             this.caCertificate = caCertificate;
-            this.ownCertificate = ownCertificate;
+            OwnCertificate = ownCertificate;
 
             if ( ! IsValidCertificate(ownCertificate))
                 throw new InvalidDataException("ownCertificate is not valid");
@@ -72,8 +74,12 @@ namespace voluntLib.communicationLayer
                 }) {PersistKeyInCsp = true};
             }
 
-            if (ownCertificate.SubjectName.Name != null)
-                OwnName = ownCertificate.SubjectName.Name.Split('=').Last();
+            OwnName = GetSubjectNameFromCertificate(ownCertificate);
+        }
+
+        private static string GetSubjectNameFromCertificate(X509Certificate2 cert)
+        {
+            return cert.SubjectName.Name != null ? cert.SubjectName.Name.Split('=').Last() : "";
         }
 
         public CertificateValidationState VerifySignature(AMessage message)
@@ -82,7 +88,9 @@ namespace voluntLib.communicationLayer
             var senderCertificate = ExtractValidCertificate(message);
             if (senderCertificate == null)
                 return CertificateValidationState.Invalid;
-            
+
+            if (IsBannedCertificate(senderCertificate))
+                return CertificateValidationState.Invalid; 
 
             //extract signature and replace with empty signature
             var originalSignature = message.Header.SignatureData;
@@ -90,6 +98,7 @@ namespace voluntLib.communicationLayer
             message.ClearSignature();
             var data = message.Serialize();
             message.Header.SignatureData = originalSignature;
+
 
             // Verify the signature with the hash
             var provider = (RSACryptoServiceProvider) senderCertificate.PublicKey.Key;
@@ -133,7 +142,32 @@ namespace voluntLib.communicationLayer
             if (senderCertificate == null)
                 return false;
 
-            //TODO waahaahahahahahaa add logic?
+            return IsAdminCertificate(senderCertificate);
+        }
+
+        public bool IsAdminCertificate(X509Certificate2 senderCertificate)
+        {
+            //by name
+            var senderName = GetSubjectNameFromCertificate(senderCertificate);
+            if (AdminCertificateList.Contains("N:" + senderName))
+                return true;
+
+            //by serial number
+            if (AdminCertificateList.Contains("SN:" + senderCertificate.SerialNumber))
+                return true;
+            return false;
+        }
+        
+        public bool IsBannedCertificate(X509Certificate2 senderCertificate)
+        {
+            //by name
+            var senderName = GetSubjectNameFromCertificate(senderCertificate);
+            if (BannedCertificateList.Contains("N:" + senderName))
+                return true;
+
+            //by serial number
+            if (BannedCertificateList.Contains("SN:" + senderCertificate.SerialNumber))
+                return true;
             return false;
         }
 
@@ -184,7 +218,7 @@ namespace voluntLib.communicationLayer
         /// <returns></returns>
         private byte[] ExportOwnCertificate()
         {
-            return ownCertificate.Export(X509ContentType.Cert);
+            return OwnCertificate.Export(X509ContentType.Cert);
         }
 
         #endregion

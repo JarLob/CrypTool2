@@ -101,6 +101,12 @@
   <ItemGroup>
     <None Include="rootCA.crt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="adminCertificates.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="bannedCertificates.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

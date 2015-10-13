@@ -63,11 +63,10 @@ namespace voluntLib.communicationLayer
 
         #endregion
 
-        public CommunicationLayer(IManagementLayerCallback managementCallback, X509Certificate2 caCertificate, X509Certificate2 ownCertificate,
-            ICommunicator communicator)
+        public CommunicationLayer(IManagementLayerCallback managementCallback, CertificateService certificateHandler, ICommunicator communicator)
         {
+            this.certificateHandler = certificateHandler;
             this.managementCallback = managementCallback;
-            certificateHandler = new CertificateService(caCertificate, ownCertificate);
             communicator.RegisterCommunicationLayer(this);
             communicators.Add(IPAddress.Broadcast, communicator);
             JobListExchangeInterval = DefaultJobListExchangeInterval;

@@ -179,6 +179,41 @@ namespace voluntLib
         /// </summary> 
         public LogMode LogMode { get; set; }
 
+        /// <summary>
+        /// A list containing all certificate ids or usernames that are considerd to have admin privileges
+        /// An entry for the certificate with the subjectname hans has be N:hans
+        /// An entry for the certificate with the serialnumeber 1234 has be SN:1234
+        /// </summary>
+        public List<string> AdminCertificateList
+        {
+            get { return adminCertificateList; }
+            set
+            {
+                adminCertificateList = value;
+                if (CertificateService != null)
+                {
+                    CertificateService.AdminCertificateList = adminCertificateList;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// A list containing all certificate ids or usernames that are banned within the current network
+        /// An entry for the certificate with the subjectname hans has be N:hans
+        /// An entry for the certificate with the serialnumeber 1234 has be SN:1234
+        /// </summary>
+        public List<string> BannedCertificateList
+        {
+            get { return bannedCertificateList; }
+            set
+            {
+                bannedCertificateList = value;
+                if (CertificateService != null)
+                {
+                    CertificateService.BannedCertificateList = bannedCertificateList;
+                }
+            }
+        }
 
         #endregion
 
@@ -227,6 +262,11 @@ namespace voluntLib
         protected NetworkBridgeCommunicationLayer NetworkBridgeCommunicationLayer { get; private set; }
         protected NetworkBridgeManagementLayer NetworkBridgeManagementLayer { get; private set; }
 
+        protected CertificateService CertificateService;
+
+        private List<string> adminCertificateList = new List<string>();
+        private List<string> bannedCertificateList = new List<string>();
+
         #endregion internal Members
 
         /// <summary>
@@ -244,6 +284,7 @@ namespace voluntLib
             LocalEndPointIPAddress = null;
             IsStarted = false;
             IsInitialized = false;
+            AdminCertificateList = new List<string>();
             LogMode = LogMode.NLogConfig;
         }
 
@@ -349,7 +390,13 @@ namespace voluntLib
                 MaximumBackoffTime = MaximumBackoffTime
             };
 
-            CommunicationLayer = new CommunicationLayer(ManagementLayer, caCertificate, ownCertificate, communicator);
+            CertificateService = new CertificateService(caCertificate, ownCertificate)
+            {
+                AdminCertificateList = AdminCertificateList,
+                BannedCertificateList = BannedCertificateList
+            };
+
+            CommunicationLayer = new CommunicationLayer(ManagementLayer, CertificateService, communicator);
 
             //adding outbounding NetworkBridges
             if (tcpCommunicatorToAdd.Capacity > 0) 
@@ -360,11 +407,11 @@ namespace voluntLib
 
             //file communicator
             if (LoadDataFromLocalStorage || EnablePersistence || ClearLocalStorageOnStartUp)
-                SetupFileCommunicator(caCertificate, ownCertificate);
+                SetupFileCommunicator(CertificateService);
 
             //adding NATFree NetworkBridge
             if (receivingTCPCom != null)
-                SetupNATFreeNetworkBridge(caCertificate, ownCertificate);
+                SetupNATFreeNetworkBridge(CertificateService);
             
             if (LogMode == LogMode.EventBased)
                 EnableEventBasedLogging();
@@ -390,11 +437,10 @@ namespace voluntLib
         }
 
         #region init-Helper
-        private void SetupNATFreeNetworkBridge(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        private void SetupNATFreeNetworkBridge(CertificateService certificateService)
         {
             NetworkBridgeManagementLayer = new NetworkBridgeManagementLayer(ManagementLayer);
-            NetworkBridgeCommunicationLayer = new NetworkBridgeCommunicationLayer(NetworkBridgeManagementLayer, caCertificate,
-                ownCertificate, receivingTCPCom);
+            NetworkBridgeCommunicationLayer = new NetworkBridgeCommunicationLayer(NetworkBridgeManagementLayer, certificateService, receivingTCPCom);
             NetworkBridgeManagementLayer.NetworkCommunicationLayer = NetworkBridgeCommunicationLayer;
             IsNATFreeNetworkBridge = true;
             IsNetworkBridge = true;
@@ -409,10 +455,10 @@ namespace voluntLib
             }
         }
 
-        private void SetupFileCommunicator(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        private void SetupFileCommunicator(CertificateService certificateService)
         {
             var fileCom = new FileCommunicator(LocalStoragePath, LoadDataFromLocalStorage, EnablePersistence,ClearLocalStorageOnStartUp);
-            var fileComLayer = new CommunicationLayer(ManagementLayer, caCertificate, ownCertificate, fileCom);
+            var fileComLayer = new CommunicationLayer(ManagementLayer, certificateService, fileCom);
 
             ManagementLayer.FileCommunicationLayer = fileComLayer;
             fileCom.Start();
@@ -1008,6 +1054,16 @@ namespace voluntLib
 
         #endregion
 
-        
+        public bool CanUserDeleteJob(NetworkJob job)
+        {
+            ThrowErrorIfNotInitialized();
+            return job.Creator.Equals(CertificateName) || CertificateService.IsAdminCertificate(CertificateService.OwnCertificate);
+        }
+
+        public bool IsCertificateBanned(X509Certificate2 certificate)
+        {
+            ThrowErrorIfNotInitialized();
+            return CertificateService.IsBannedCertificate(certificate);
+        }
     }
 }

@@ -27,9 +27,8 @@ namespace voluntLib.communicationLayer
     {
         private readonly ICommunicator communicator;
 
-        public NetworkBridgeCommunicationLayer(IManagementLayerCallback managementCallback, X509Certificate2 caCertificate,
-            X509Certificate2 ownCertificate, ICommunicator communicator) :
-                base(managementCallback, caCertificate, ownCertificate, communicator)
+        public NetworkBridgeCommunicationLayer(IManagementLayerCallback managementCallback, CertificateService certService, ICommunicator communicator) :
+            base(managementCallback, certService, communicator)
         {
             this.communicator = communicator;
         }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security;
-using CertificateLibrary.Network;
 using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
@@ -11,15 +10,6 @@ namespace CrypCloud.Manager.ViewModels
 {
     public class LoginVM : BaseViewModel
     {
-        public List<string> AvailableCertificates { get; set; }
-
-        public string Username { get; set; }
-        public SecureString Password { private get; set; }
-
-        public RelayCommand LoginCommand { get; set; }
-        public RelayCommand CreateNewAccountCommand { get; set; }
-        public RelayCommand ResetPasswordCommand { get; set; }
-
         public LoginVM()
         {
             AvailableCertificates = new List<string>(CertificateHelper.GetNamesOfKnownCertificates());
@@ -29,8 +19,17 @@ namespace CrypCloud.Manager.ViewModels
             LoginCommand = new RelayCommand(it => GetCertificateAndLogin());
         }
 
+        public List<string> AvailableCertificates { get; set; }
+
+        public string Username { get; set; }
+        public SecureString Password { private get; set; }
+
+        public RelayCommand LoginCommand { get; set; }
+        public RelayCommand CreateNewAccountCommand { get; set; }
+        public RelayCommand ResetPasswordCommand { get; set; }
+
         /// <summary>
-        /// Is called when the user clicks the login button
+        ///     Is called when the user clicks the login button
         /// </summary>
         private void GetCertificateAndLogin()
         {
@@ -51,11 +50,20 @@ namespace CrypCloud.Manager.ViewModels
                 return;
             }
 
+            if (CrypCloudCore.Instance.IsBannedCertificate(certificate))
+            {
+                ErrorMessage = "Your Certificate has been banned";
+                return;  
+            }
+
+
             if (CrypCloudCore.Instance.Login(certificate))
             {
                 CrypCloudCore.Instance.RefreshJobList();
                 Navigator.ShowScreenWithPath(ScreenPaths.JobList);
             }
+
+
             ErrorMessage = "";
         }
 
@@ -65,7 +73,7 @@ namespace CrypCloud.Manager.ViewModels
 
         private void LoadRemoteCertificateAndLogin()
         {
-            var errorAction = new Action<string>(msg => ErrorMessage = msg);  
+            var errorAction = new Action<string>(msg => ErrorMessage = msg);
             var request = new CertificateRequest(Username, null, Password.ToUnsecuredString());
 
             CAServerHelper.RequestCertificate(request, OnCertificateReceived, HandleProcessingError, errorAction);
@@ -86,6 +94,5 @@ namespace CrypCloud.Manager.ViewModels
         }
 
         #endregion
-
     }
 }
