@@ -37,7 +37,7 @@ namespace WorkspaceManager.Model
 
         }
 
-        private byte[] data = null;
+        internal byte[] data = null;
 
         /// <summary>
         /// Instantiate a new TextModel
@@ -96,9 +96,7 @@ namespace WorkspaceManager.Model
             {
                 var memoryStream = new MemoryStream();
                 var textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
-                textRange.Save(memoryStream, System.Windows.DataFormats.XamlPackage);
-
-                data = new byte[memoryStream.Length];
+                textRange.Save(memoryStream, System.Windows.DataFormats.XamlPackage);                
                 data = memoryStream.ToArray();
                 memoryStream.Close();
             }

@@ -24,6 +24,9 @@ using System.IO;
 using System.Xml;
 using Cryptool.PluginBase.Miscellaneous;
 using WorkspaceManagerModel.Properties;
+using System.Windows.Documents;
+using System.Windows;
+using System.Text;
 
 namespace WorkspaceManager.Model
 {
@@ -113,6 +116,42 @@ namespace WorkspaceManager.Model
                         plugin.Plugin.GetType().GetMethod("Initialize").Invoke(plugin.Plugin, null);
                         plugin.SettingesHaveChanges = false;
                     }
+                }
+            }
+            //Replace memo fields
+            foreach (var textmodel in workspacemodel.AllTextModels)
+            {
+                //create flowdocument out of data in xaml package format
+                var flowDocument = new FlowDocument();
+                var textRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
+                using (var memoryStream = new MemoryStream(textmodel.data))
+                {                    
+                    textRange.Load(memoryStream, System.Windows.DataFormats.XamlPackage);
+                }
+                //get content from textRange in RTF format
+                string rtf = null;
+                using (var memoryStream = new MemoryStream())
+                {
+                    textRange.Save(memoryStream, DataFormats.Rtf);
+                    memoryStream.Position = 0;
+                    rtf = Encoding.UTF8.GetString(memoryStream.ToArray());
+                }
+                //replace all keys with corresponding values
+                foreach (var key in replacements.Keys)
+                {
+                    rtf = rtf.Replace(key, replacements[key]);
+                }
+                //create new textRange with replaced values
+                using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(rtf)))
+                {
+                    textRange.Load(memoryStream, DataFormats.Rtf);
+                }
+                //convert back to xaml package format
+                using (var memoryStream = new MemoryStream())
+                {
+                    textRange.Save(memoryStream, System.Windows.DataFormats.XamlPackage);
+                    textmodel.data = memoryStream.ToArray();
+                    memoryStream.Close();
                 }
             }
         }       
