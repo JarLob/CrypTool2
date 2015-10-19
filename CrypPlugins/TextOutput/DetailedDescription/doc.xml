@@ -39,6 +39,26 @@
     When the data on the input is updated, the normal behaviour of the component is to replace the displayed text with the new text.
     You can change this by activating the checkbox <i>Append text input</i> in the settings. Updated data will then be appended to the current text.
     The appended text is separated from the present text by an adjustable number of line breaks.
+    <newline/>
+    <newline/>
+    You can furthermore use the setting 'Show changes' to compare the texts of two executions of the component. Here the component offers three modes of comparation: 'Show only differences', 'Show inserts and deletions', and 'Show different symbols'.
+    With 'Show only differences', the text changes are marked blue using a unixlike diff algorithm. With 'Show inserts and deletions', the text inserts are marked green and the text deletions are marked red. With 'Show different symbols', a one by one comparision of the texts is done. Here, each changed symbol is marked blue.
+    <newline/>
+    <newline/>
+    <b>'Show only differences' example:</b><newline/>
+    First component run shows: The quick brown fox jumps over the lazy dog.<newline/>
+    We change 'quick' to 'QUICK'.<newline/>
+    Second component run shows: The <font background="66CCFF">QUICK</font> brown fox jumps over the lazy dog.<newline/>
+    <newline/>
+    <b>'Show inserts and deletions' example:</b><newline/>
+    First component run shows: The quick brown fox jumps over the lazy dog.<newline/>
+    We change 'quick' to 'QUICK'.<newline/>
+    Second component run shows: The <font background="993300">quick</font><font background="66CC33">QUICK</font> brown fox jumps over the lazy dog.<newline/>
+    <newline/>
+    <b>'Show different symbols' example:</b><newline/>
+    First component run shows: 11010110110101010101001<newline/>
+    We change the text to: 11111111110101010101001<newline/>
+    Second component run shows: 111<font background="66CCFF">1</font>1<font background="66CCFF">1</font>11<font background="66CCFF">1</font>10101010101001
   </usage>
 
   <usage lang="de-DE">
@@ -65,6 +85,27 @@
     Wenn die am Eingang anliegenden Daten aktualisiert werden, so wird der bis dahin angezeigte Text normalerweise durch den neuen Text ersetzt.
     In den Einstellungen kann man dieses Verhalten ändern. Aktivieren Sie das Kontrollkästchen <i>Eingabe anfügen</i>, damit die neu anliegenden Daten an den bisherigen Text angehängt werden.
     Sie können angeben, durch wie viele Zeilenumbrüche der neue Text vom bestehenden Text getrennt werden soll.
+    <newline/>
+    <newline/>
+    Sie können außerdem die "Zeige Änderungen"-Einstellung nutzen, um Texte zweier Ausführungen der Komponente miteinander zu vergleichen.
+    Hier bietet die Komponente drei Modi: "Zeige nur Unterschiede", "Zeige Einfügungen und Löschungen" und "Zeige unterschiedliche Symbole".
+    Bei "Zeige nur Unterschiede" werden alle Textänderungen mit einem Unix-artigen "Diff"-Algorithmus verglichen. Bei "Zeige Einfügungen und Löschungen" werden Einfügungen grün und Löschungen rot markiert. Bei "Zeige unterschiedliche Symbole" wird ein symbolweiser Vergleich der Texte durchgeführt. Jedes geänderte Symbol wird blau markiert.
+    <newline/>
+    <newline/>
+    <b>"Zeige nur Unterschiede"-Beispiel:</b><newline/>
+    Die erste Ausführung der Komponente zeigt: Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.<newline/>
+    Sie ändern "komplett" zu "KOMPLETT".<newline/>
+    Die zweite Ausführung der Komponente zeigt: Franz jagt im <font background="66CCFF">KOMPLETT</font> verwahrlosten Taxi quer durch Bayern. <newline/>
+    <newline/>
+    <b>"Zeige Einfügungen und Löschungen"-Beispiel:</b><newline/>
+    Die erste Ausführung der Komponente zeigt: Franz jagt im komplett verwahrlosten Taxi quer durch Bayern.<newline/>
+    Sie ändern "komplett" zu "KOMPLETT".<newline/>
+    Die zweite Ausführung der Komponente zeigt: Franz jagt im <font background="993300">komplett</font><font background="66CC33">KOMPLETT</font> verwahrlosten Taxi quer durch Bayern.<newline/>
+    <newline/>
+    <b>"Zeige unterschiedliche Symbole"-Beispiel:</b><newline/>
+    Die erste Ausführung der Komponente zeigt: 11010110110101010101001<newline/>
+    Sie ändern den Text zu: 11111111110101010101001<newline/>
+    Die zweite Ausführung der Komponente zeigt: 111<font background="66CCFF">1</font>1<font background="66CCFF">1</font>11<font background="66CCFF">1</font>10101010101001
   </usage>
 
   <presentation lang="en">

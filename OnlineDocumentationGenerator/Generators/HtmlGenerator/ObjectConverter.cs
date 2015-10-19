@@ -252,8 +252,18 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                         case "b":
                         case "i":
                         case "u":
-                            var nodeRep = ConvertXElement((XElement)node, entityDocumentationPage);
-                            result.Append(string.Format("<{0}>{1}</{0}>", nodeName, nodeRep));
+                            {
+                                var nodeRep = ConvertXElement((XElement)node, entityDocumentationPage);
+                                result.Append(string.Format("<{0}>{1}</{0}>", nodeName, nodeRep));
+                            }
+                            break;
+                        case "font":
+                            {
+                                var nodeRep = ConvertXElement((XElement)node, entityDocumentationPage);
+                                var colorAtt = ((XElement)node).Attribute("color");
+                                var backgroundAtt = ((XElement)node).Attribute("background");                                
+                                result.Append(string.Format("<span style=\"color:{0};background-color:{1}\">{2}</span>", (colorAtt == null ? "black" : colorAtt.Value),(backgroundAtt == null ? "white" : backgroundAtt.Value), nodeRep));
+                            }
                             break;
                         case "ref":
                             var idAtt = ((XElement)node).Attribute("id");
