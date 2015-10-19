@@ -48,23 +48,30 @@ namespace Cryptool.CrypWin
 
         private void MainCryptoolWindow_StateChanged(object sender, EventArgs e)
         {
-            if (WindowState == WindowState.Minimized)
+            try
             {
-                if (closingCausedMinimization)
+                if (WindowState == WindowState.Minimized)
                 {
-                    ShowInTaskbar = false;
-                    notifyIcon.ShowBalloonTip(1000 * 5, Properties.Resources.Information, Properties.Resources.Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_, ToolTipIcon.Info);
-                    oldPriority = Process.GetCurrentProcess().PriorityClass;
-                    Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
+                    if (closingCausedMinimization)
+                    {
+                        ShowInTaskbar = false;
+                        notifyIcon.ShowBalloonTip(1000 * 5, Properties.Resources.Information, Properties.Resources.Cryptool_2_0_has_been_backgrounded_due_to_running_tasks_, ToolTipIcon.Info);
+                        oldPriority = Process.GetCurrentProcess().PriorityClass;
+                        Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.Idle;
+                    }
+                    closingCausedMinimization = false;
                 }
-                closingCausedMinimization = false;
+                else
+                {
+                    oldWindowState = WindowState;
+                    ShowInTaskbar = true;
+                    Visibility = Visibility.Visible;
+                    Process.GetCurrentProcess().PriorityClass = oldPriority;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                oldWindowState = WindowState;
-                ShowInTaskbar = true;
-                Visibility = Visibility.Visible;
-                Process.GetCurrentProcess().PriorityClass = oldPriority;
+                GuiLogMessage(string.Format("Error during StateChange event of CrypTool 2 Window: {0}", ex.Message), NotificationLevel.Error);
             }
         }
 
