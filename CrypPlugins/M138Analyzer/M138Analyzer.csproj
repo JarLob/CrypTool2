@@ -124,6 +124,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icon.png" />
     <Content Include="stripes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

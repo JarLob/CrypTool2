@@ -18,7 +18,7 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.M_138
+namespace Cryptool.M_138
 {
     public class M_138Settings : ISettings
     {

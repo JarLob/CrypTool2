@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace M_138
+namespace Cryptool.M_138
 {
     /// <summary>
     /// Interaktionslogik für M138Visualisation.xaml

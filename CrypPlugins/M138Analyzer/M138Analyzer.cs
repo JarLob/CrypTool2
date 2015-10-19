@@ -30,12 +30,8 @@ using System.Collections.ObjectModel;
 
 namespace Cryptool.M138Analyzer
 {
-    // HOWTO: Change author name, email address, organization and URL.
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Cryptool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltoip", "M138Analyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [PluginInfo("Cryptool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltoip", "M138Analyzer/userdoc.xml", "M138Analyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class M138Analyzer : ICrypComponent
     {

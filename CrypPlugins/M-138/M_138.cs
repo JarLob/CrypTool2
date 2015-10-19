@@ -22,7 +22,6 @@ using System.Text;
 using System;
 using Cryptool.PluginBase.IO;
 using System.IO;
-using M_138;
 using System.Threading;
 using System.Windows.Threading;
 using System.Data;
@@ -32,10 +31,10 @@ using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.M_138
+namespace Cryptool.M_138
 {
-    [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    [PluginInfo("M_138.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "M_138/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
+    [PluginInfo("Cryptool.M_138.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "M-138/userdoc.xml", "M-138/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class M_138 : ICrypComponent
     {
