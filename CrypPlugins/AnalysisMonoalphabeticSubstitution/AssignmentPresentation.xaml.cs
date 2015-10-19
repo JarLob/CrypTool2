@@ -146,7 +146,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 {
                     Clipboard.SetText("");
                 }
-                catch (Exception ex)
+                catch (Exception ex2)
                 {
                     //wtf?
                     //we saw a problem, that CLIPBRD_E_CANT_OPEN was thrown

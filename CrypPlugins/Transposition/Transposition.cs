@@ -45,7 +45,7 @@ namespace Transposition
             this.settings = new TranspositionSettings();
             myPresentation = new TranspositionPresentation();
             Presentation = myPresentation;
-            
+            myPresentation.Transposition = this;
             myPresentation.feuerEnde += new EventHandler(presentation_finished);
             myPresentation.updateProgress += new EventHandler(update_progress);
             this.settings.PropertyChanged += settings_OnPropertyChange;
@@ -275,10 +275,17 @@ namespace Transposition
             {
                     Transposition_LogMessage(Read_in_matrix.GetLength(0) +" " + Read_in_matrix.GetLength(1) +" " + Input.Length  , NotificationLevel.Debug);        
                     Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                   {
-                       myPresentation.main(Read_in_matrix, Permuted_matrix, key, Keyword, InputToCharacterArray, this.output, this.settings.Permutation, this.settings.ReadIn, this.settings.ReadOut, this.settings.Action, this.settings.Number, this.settings.PresentationSpeed);
-                   }
-                   , null);
+                    {
+                       try
+                       {
+                           myPresentation.main(Read_in_matrix, Permuted_matrix, key, Keyword, InputToCharacterArray, this.output, this.settings.Permutation, this.settings.ReadIn, this.settings.ReadOut, this.settings.Action, this.settings.Number, this.settings.PresentationSpeed);
+                       }
+                       catch (Exception ex)
+                       {
+                           Transposition_LogMessage(string.Format("Exception during run of Transposition Presentation: {0}", ex.Message), NotificationLevel.Error);
+                       }
+                    }
+                    , null);
 
                 //ars.WaitOne();
             }

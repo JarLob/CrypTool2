@@ -41,10 +41,7 @@ namespace Transposition
             progressTimer.Interval = TimeSpan.FromMilliseconds(1);
 
             dispo = new DispatcherTimer();
-            dispo.Interval = new TimeSpan(0, 0, 0, 0, 5); // Intervall festlegen, hier 100 ms
-            
-
-            
+            dispo.Interval = new TimeSpan(0, 0, 0, 0, 5); // Intervall festlegen, hier 100 ms                       
         }
         /// <summary>
         /// making the presentation scalable
@@ -190,16 +187,7 @@ namespace Transposition
             }
             catch { }
             mainGrid.Children.Add(mywrap2);
-            
-            #region animation declarations
-            
-
-
-
-
-            #endregion
-
-
+                       
             //setting all vaiables to starting position, depending on the input and options
             if (act == 0)
             {
@@ -1212,36 +1200,43 @@ namespace Transposition
         {   //resetting the grid
 
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                                                                 {
-            outPut.Visibility = Visibility.Hidden;
-            Stack.Visibility = Visibility.Visible;
-                outPut.Text = "";
-                progress = 0;
-                progressTimer.Stop();
-                mainStory1.Stop();
-                mainStory2.Stop();
-                mainStory3.Stop();
-                mainStory1.Children.Clear();
-                mainStory2.Children.Clear();
-                mainStory3.Children.Clear();
-                                                                                            
+            {
+                try
+                {
+                    outPut.Visibility = Visibility.Hidden;
+                    Stack.Visibility = Visibility.Visible;
+                    outPut.Text = "";
+                    progress = 0;
+                    progressTimer.Stop();
+                    mainStory1.Stop();
+                    mainStory2.Stop();
+                    mainStory3.Stop();
+                    mainStory1.Children.Clear();
+                    mainStory2.Children.Clear();
+                    mainStory3.Children.Clear();
+
                     foreach (Clock cl in aniClock)
                     {
                         cl.Controller.Stop();
                     }
                     aniClock.Clear();
-                
-                myGrid.Children.Clear();
-                myGrid.ColumnDefinitions.Clear();
-                myGrid.RowDefinitions.Clear();
-                mywrap1.Children.Clear();
-                mywrap2.Children.Clear();
-                outcount = 0;
-                textBox2.Clear();
-                Stop = true;
-                feuerEnde(this, EventArgs.Empty);
 
-                                                                                 }, null);
+                    myGrid.Children.Clear();
+                    myGrid.ColumnDefinitions.Clear();
+                    myGrid.RowDefinitions.Clear();
+                    mywrap1.Children.Clear();
+                    mywrap2.Children.Clear();
+                    outcount = 0;
+                    textBox2.Clear();
+                    Stop = true;
+                    feuerEnde(this, EventArgs.Empty);
+                }
+                catch (Exception ex)
+                {
+                    this.Transposition.Transposition_LogMessage(string.Format("Exception during run of my_Stop of Transposition Presentation: {0}", ex.Message), NotificationLevel.Error);                    
+                }
+
+            }, null);
         }
         #region eventhandler
 
@@ -1713,5 +1708,7 @@ namespace Transposition
             updateProgress(this, EventArgs.Empty);
         }
         #endregion
+
+        public Transposition Transposition { get; set; }
     }
 }
