@@ -54,7 +54,10 @@ namespace voluntLib.managementLayer.delayedTasks
             if (currentTask != null)
             {
                 cancellationToken.Cancel();
-                currentTask.Dispose();
+                if (currentTask.IsCanceled || currentTask.IsFaulted || currentTask.IsCompleted)
+                {
+                    currentTask.Dispose();
+                }
             }
 
             if (max <= 0)
