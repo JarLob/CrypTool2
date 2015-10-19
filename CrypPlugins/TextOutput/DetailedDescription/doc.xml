@@ -41,8 +41,8 @@
     The appended text is separated from the present text by an adjustable number of line breaks.
     <newline/>
     <newline/>
-    You can furthermore use the setting 'Show changes' to compare the texts of two executions of the component. Here the component offers three modes of comparation: 'Show only differences', 'Show inserts and deletions', and 'Show different symbols'.
-    With 'Show only differences', the text changes are marked blue using a unixlike diff algorithm. With 'Show inserts and deletions', the text inserts are marked green and the text deletions are marked red. With 'Show different symbols', a one by one comparision of the texts is done. Here, each changed symbol is marked blue.
+    You can furthermore use the setting 'Show changes' to compare the texts of two executions of the component. Here the component offers three modes of comparison: 'Show only differences', 'Show inserts and deletions', and 'Show different symbols'.
+    With 'Show only differences', the text changes are marked blue using a unix-like diff algorithm. With 'Show inserts and deletions', the text inserts are marked green and the text deletions are marked red. With 'Show different symbols', a one by one comparision of the texts is done. Here, each changed symbol is marked blue.
     <newline/>
     <newline/>
     <b>'Show only differences' example:</b><newline/>
@@ -87,7 +87,7 @@
     Sie können angeben, durch wie viele Zeilenumbrüche der neue Text vom bestehenden Text getrennt werden soll.
     <newline/>
     <newline/>
-    Sie können außerdem die "Zeige Änderungen"-Einstellung nutzen, um Texte zweier Ausführungen der Komponente miteinander zu vergleichen.
+    Sie können außerdem die Einstellung "Zeige Änderungen" nutzen, um Texte zweier Ausführungen der Komponente miteinander zu vergleichen.
     Hier bietet die Komponente drei Modi: "Zeige nur Unterschiede", "Zeige Einfügungen und Löschungen" und "Zeige unterschiedliche Symbole".
     Bei "Zeige nur Unterschiede" werden alle Textänderungen mit einem Unix-artigen "Diff"-Algorithmus verglichen. Bei "Zeige Einfügungen und Löschungen" werden Einfügungen grün und Löschungen rot markiert. Bei "Zeige unterschiedliche Symbole" wird ein symbolweiser Vergleich der Texte durchgeführt. Jedes geänderte Symbol wird blau markiert.
     <newline/>
