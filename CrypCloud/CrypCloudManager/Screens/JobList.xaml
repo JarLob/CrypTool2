@@ -205,7 +205,7 @@
 
         <!-- bottom controls -->
         <Grid VerticalAlignment="Bottom">
-            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="100"
+            <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="110"
                     Height="30">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
@@ -213,7 +213,7 @@
                 </StackPanel>
             </Button>
 
-            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="100"
+            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="110"
                     Height="30">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/plus.png" Width="16" />

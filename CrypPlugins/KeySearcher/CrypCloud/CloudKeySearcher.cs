@@ -13,21 +13,30 @@ using CrypCloud.Core;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
 using KeySearcher.CrypCloud;
+using KeySearcher.CrypCloud.statistics;
 using KeySearcher.KeyPattern;
 using KeySearcherPresentation.Controls;
 using voluntLib.common;
 using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
+using Timer = System.Timers.Timer;
 
 namespace KeySearcher
 {
     internal class CloudKeySearcher 
     {
+        public int UpdateInterval = 2000;
+
         private readonly KeySearcher keySearcher;
         private readonly CalculationTemplate calculationTemplate;
         private readonly BigInteger jobId;
         private readonly P2PPresentationVM viewModel; 
         private readonly TaskFactory uiContext;
+        
+        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics();
+        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics();
+
+        private Timer updateTimer;
 
         public CloudKeySearcher(JobDataContainer jobDataContainer, KeyPattern.KeyPattern pattern, P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
         {
@@ -42,18 +51,37 @@ namespace KeySearcher
 
             uiContext = presentation.UiContext;
             viewModel = presentation.ViewModel;
-
+            viewModel.GlobalSpeedStatistics = globalSpeedStatistics;
+            viewModel.LocalSpeedStatistics = localSpeedStatistics;
 
             RunInUiContext(() =>
             {
                 viewModel.JobID = jobId; 
                 UpdatePresentation(presentation, keySearcher);
             });
+
+        }
+
+
+        private void UpdateKeyPerSecond(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            var globalApproximateKeysPerSecond = globalSpeedStatistics.ApproximateKeysPerSecond();
+            var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
+            RunInUiContext(() =>
+            {
+                viewModel.UpdateGlobalSpeed(globalApproximateKeysPerSecond);
+                viewModel.UpdateLocalSpeed(localApproximateKeysPerSecond);
+            });
         }
 
         private void TaskProgress(object sender, TaskEventArgs e)
         {
-           // throw new NotImplementedException();
+           localSpeedStatistics.AddEntry(e.TaskProgress);
+           var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
+           RunInUiContext(() =>
+           { 
+               viewModel.UpdateLocalSpeed(localApproximateKeysPerSecond);
+           });
         }
 
         private void NewTaskStarted(object sender, TaskEventArgs taskArgs)
@@ -80,7 +108,7 @@ namespace KeySearcher
 
             var keyResultEntries = progress.ResultList.Select(it => new KeyResultEntry(it)).ToList();
             keyResultEntries.Sort();
-
+             
             RunInUiContext(
                 () => viewModel.BlockHasBeenFinished(progress, keyResultEntries)
             ); 
@@ -91,7 +119,6 @@ namespace KeySearcher
             } 
         }
 
-      
 
         private void UpdatePresentation(P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
         {
@@ -106,10 +133,21 @@ namespace KeySearcher
         public void Start()
         { 
             CrypCloudCore.Instance.StartLocalCalculation(jobId, calculationTemplate);
+
+            updateTimer = new Timer(UpdateInterval);
+            updateTimer.Elapsed += UpdateKeyPerSecond;
+            updateTimer.Interval = UpdateInterval;
+            updateTimer.Enabled = true;  
         }
 
         public void Stop()
         {
+            try
+            {
+                updateTimer.Enabled = false;
+                updateTimer.Stop(); 
+            } catch (Exception){}
+
             try
             {
                 CrypCloudCore.Instance.StopLocalCalculation(jobId);

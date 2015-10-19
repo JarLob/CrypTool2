@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -6,41 +7,61 @@ using System.Text;
 
 namespace KeySearcher.CrypCloud.statistics
 {
-    class SpeedStatistics
+    public class SpeedStatistics
     {
-        public TimeSpan LatestAvgTime { get; set; }
-        public BigInteger LatestKeysPerSecond { get; set; }
-    
-        private DateTime lastTick = DateTime.Now;
-        private readonly CricularBuffer<long> buffer = new CricularBuffer<long>(10);
+        public static int MinutesUntilEntryInvalidates = 30;
 
-        public void Tick(BigInteger keysPerBlock)
+        private DateTime statisticsStartTime = DateTime.UtcNow;
+        private readonly List<SpeedStatisticsEntry> calculations = new List<SpeedStatisticsEntry>();
+
+        public void AddEntry(BigInteger numberOfKeysCalculated)
         {
-            var timeSpan = DateTime.Now.Subtract(lastTick);
-            buffer.Enqueue(timeSpan.Ticks);
-            LatestAvgTime = CalculateAvgTime(buffer);
+            var entry = new SpeedStatisticsEntry
+            {
+                NumberOfKeysInBlock = numberOfKeysCalculated,
+                InvalidatesAt = DateTime.UtcNow.AddMinutes(MinutesUntilEntryInvalidates)
+            };
 
-            LatestKeysPerSecond = CalculateGlobalKeyPerSecond(LatestAvgTime, keysPerBlock);
-
-            lastTick = DateTime.Now;
-        }
-
-        private static TimeSpan CalculateAvgTime(CricularBuffer<long> cricularBuffer)
-        {
-            var average = cricularBuffer.Average();
-            return TimeSpan.FromTicks(Convert.ToInt64(average));
+            lock (this)
+            {
+                calculations.Add(entry);
+            }
         }
 
 
-        private static BigInteger CalculateGlobalKeyPerSecond(TimeSpan avgTickTime, BigInteger keysPerBlock)
+        /// <summary>
+        /// Approximates the speed of the calcuation by constructing the avg of all entrys received within the last 30 minutes
+        /// </summary>
+        /// <returns></returns>
+        public BigInteger ApproximateKeysPerSecond()
         {
-            if (avgTickTime.Ticks == 0) return 0;
+            BigInteger calculatedKeys;
+            lock (this)
+            {
+                calculations.RemoveAll(it => it.InvalidatesAt < DateTime.UtcNow);
+                calculatedKeys = calculations.Aggregate(new BigInteger(0), (prev, it) => prev + it.NumberOfKeysInBlock);
+            }
 
-            var timeTick = avgTickTime.Ticks;
-            var keyPerTick = keysPerBlock.DivideAndReturnDouble(new BigInteger(timeTick));
-            return new BigInteger(keyPerTick * TimeSpan.TicksPerSecond);
+            var seconds = MinutesUntilEntryInvalidates*60;
+            if (statisticsStartTime.AddMinutes(MinutesUntilEntryInvalidates) > DateTime.UtcNow)
+            {
+                var timeSpan = (DateTime.UtcNow - statisticsStartTime);
+                seconds = (int) timeSpan.TotalSeconds;
+            }
+
+            if (seconds == 0)
+            {
+                return 0;
+            }
+            return calculatedKeys / seconds;
         }
-         
-
     }
+
+    internal class SpeedStatisticsEntry
+    {
+        public DateTime InvalidatesAt { get; set; }
+
+        public BigInteger NumberOfKeysInBlock { get; set; }
+    }
+
 }

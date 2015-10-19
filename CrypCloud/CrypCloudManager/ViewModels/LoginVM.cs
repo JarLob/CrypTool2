@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
@@ -10,6 +13,15 @@ namespace CrypCloud.Manager.ViewModels
 {
     public class LoginVM : BaseViewModel
     {
+        public List<string> AvailableCertificates { get; set; }
+        public string Username { get; set; }
+        public SecureString Password { private get; set; }
+        
+        public RelayCommand RememberPasswordCommand { get; set; }
+        public RelayCommand LoginCommand { get; set; }
+        public RelayCommand CreateNewAccountCommand { get; set; }
+        public RelayCommand ResetPasswordCommand { get; set; }
+
         public LoginVM()
         {
             AvailableCertificates = new List<string>(CertificateHelper.GetNamesOfKnownCertificates());
@@ -18,15 +30,6 @@ namespace CrypCloud.Manager.ViewModels
 
             LoginCommand = new RelayCommand(it => GetCertificateAndLogin());
         }
-
-        public List<string> AvailableCertificates { get; set; }
-
-        public string Username { get; set; }
-        public SecureString Password { private get; set; }
-
-        public RelayCommand LoginCommand { get; set; }
-        public RelayCommand CreateNewAccountCommand { get; set; }
-        public RelayCommand ResetPasswordCommand { get; set; }
 
         /// <summary>
         ///     Is called when the user clicks the login button

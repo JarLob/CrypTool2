@@ -2,9 +2,10 @@
              xmlns:Converter="clr-namespace:KeySearcherConverter" xmlns:Controls="clr-namespace:KeySearcherPresentation.Controls"
              xmlns:con="clr-namespace:KeySearcher.Converter"
              xmlns:crypCloud="clr-namespace:KeySearcher.CrypCloud"
-             mc:Ignorable="d" x:Name="P2PQuickWatch" Loaded="P2PQuickWatch_Loaded"> 
+             x:Name="P2PQuickWatch" Loaded="P2PQuickWatch_Loaded"> 
 
     <UserControl.Resources>
+        <con:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter"/> 
         <con:ByteArrayToHexStringConverter x:Key="ByteArrayToHexStringConverter"/> 
         <con:BigIntegerToHexStringConverter x:Key="BigIntegerToHexStringConverter" />
         <con:ByteArrayToUtf8StringConverter x:Key="ByteArrayToUtf8StringConverter" />
@@ -23,7 +24,7 @@
         <crypCloud:P2PPresentationVM/>
     </UserControl.DataContext>
     
-    <Viewbox Height="371">
+    <Viewbox>
 		<Grid Width="646" >
             <StackPanel>
                 <!-- static -->
@@ -35,8 +36,8 @@
                         </Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200*" />
+                            <ColumnDefinition Width="200*" /> 
 						</Grid.ColumnDefinitions>
                         <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Grid.RowSpan="3" Grid.Column="0" Background="#FF5C5CFF">
                             <Label Content="{Loc Static_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
@@ -48,25 +49,25 @@
                         <Label Content="{Binding JobID, FallbackValue=-, Converter={StaticResource BigIntegerToHexStringConverter}}" Grid.Column="2" Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Total_Chunks_}" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" />
-                        <Label Content="{Binding TotalAmountOfChunks, FallbackValue=-}" Grid.Row="2" Name="TotalAmountOfChunks" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource ValueRow}" />
+                        <Label Content="{Binding TotalAmountOfChunks, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Row="2" Name="TotalAmountOfChunks" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Keys_Per_Chunk_}" VerticalAlignment="Center" Grid.Row="2"  Grid.Column="2" />
-                        <Label Content="{Binding KeysPerBlock, FallbackValue=-}" Name="KeysPerChunk" Grid.Row="2"  VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource ValueRow}" />
+                        <Label Content="{Binding KeysPerBlock, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Name="KeysPerChunk" Grid.Row="2"  VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource ValueRow}" />
 					</Grid>
 				</Border>
-
+                
                 <!-- global -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
                     <Grid Height="78" Background="#AFAAE1E8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="*" /> 
-                            <ColumnDefinition Width="*" /> 
+                            <ColumnDefinition Width="200*" />
+                            <ColumnDefinition Width="200*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
-                            <RowDefinition Height="26" /> 
+                            <RowDefinition Height="26" />
                         </Grid.RowDefinitions>
                         <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF099BA7" Grid.Column="0" Grid.RowSpan="99">
                             <Label Content="Global" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
@@ -75,14 +76,14 @@
                         <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="0" />
                         <Label Content="{Binding AvgTimePerChunkGlobal, FallbackValue=-,Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="0" Style="{StaticResource ValueRow}" />
 
-                        <Label Content="{Loc keys_per_sec}" Grid.Column="2" Grid.Row="0" />
-                        <Label Content="{Binding KeysPerSecondGlobal, FallbackValue=-}" Grid.Column="2" Grid.Row="0" Style="{StaticResource ValueRow}" />
-                        
-                        
+                        <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="0" />
+                        <Label Content="{Binding KeysPerSecondGlobal, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="0" Style="{StaticResource ValueRow}" />
+
+
 
                         <Label Content="{Loc End_}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
                         <Label Content="{Binding EstimatedFinishDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" Grid.Column="1" Style="{StaticResource ValueRow}" Grid.Row="1" />
-                       
+
                         <Label Content="{Loc Remaining_}" Grid.Column="2" Grid.Row="1" />
                         <Label Content="{Binding RemainingTimeTotal, FallbackValue=-, Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
@@ -98,42 +99,41 @@
                 <!-- local -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
                     <Grid Height="78" Background="#AFFFD4C1">
-						<Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />  
-						</Grid.ColumnDefinitions>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="26" />
+                            <ColumnDefinition Width="200*" />
+                            <ColumnDefinition Width="200*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
-						</Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
+                        </Grid.RowDefinitions>
                         <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FFE56B00" Grid.Column="0" Grid.RowSpan="99">
                             <Label Content="{Loc Local_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
                         </Border>
-                        
+
                         <Label Content="{Loc Finished_Chunks_}" Grid.Column="1" Grid.Row="0" />
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" ToolTip="{Loc Finished_Chunks_Tooltip}">
-                            <Label Content="{Binding LocalFinishedChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" /> 
+                            <Label Content="{Binding LocalFinishedChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" />
                         </StackPanel>
 
                         <Label Content="{Loc Abort_Chunks_}" Grid.Column="2" Grid.Row="0" />
                         <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" ToolTip="{Loc Finished_Chunks_Tooltip}">
-                            <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" /> 
+                            <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" />
                         </StackPanel>
-                        
+
                         <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="1" />
                         <Label Content="{Binding AvgTimePerChunk, FallbackValue=-,  Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
-                        <Label Content="{Loc keys_per_sec}" Grid.Column="2" Grid.Row="1" />
-                        <Label Content="{Binding KeysPerSecond, FallbackValue=-}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
-                        
+                        <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="1" />
+                        <Label Content="{Binding KeysPerSecond, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
+
                         <Label Content="{Loc Current_Chunk_}" Grid.Column="1" Grid.Row="3" />
                         <Label Content="{Binding CurrentChunks, FallbackValue=-, Converter={StaticResource ListToStringConverter}}" Grid.Column="1" Grid.Row="3" Style="{StaticResource ValueRow}" />
 
                     </Grid>
-				</Border>
-                
+                </Border>
                 <!-- top ten -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
                     <Grid>
@@ -178,9 +178,8 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                    </Grid>                    
-                </Border>   
-                
+                    </Grid>
+                </Border>
             </StackPanel>
 		</Grid>
 	</Viewbox>

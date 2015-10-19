@@ -5,6 +5,7 @@ using System.Numerics;
 using System.Runtime;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Windows.Input;
 using Cryptool.PluginBase.Control;
 using KeySearcher.CrypCloud;
 using KeySearcher.KeyPattern;
@@ -30,7 +31,7 @@ namespace KeySearcher
         public override CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken)
         {
             var keySet = GetKeySetForBlock(blockId);
-            var bestKeys = FindBestKeysInBlock(keySet, cancelToken);
+            var bestKeys = FindBestKeysInBlock(keySet, cancelToken, blockId);
             return CreateCalculationResult(blockId, bestKeys);
         }
 
@@ -46,14 +47,14 @@ namespace KeySearcher
         #region find best keys in block
 
 
-        private IEnumerable<KeyResultEntry> FindBestKeysInBlock(IKeyTranslator keyTranslator, CancellationToken cancelToken)
+        private IEnumerable<KeyResultEntry> FindBestKeysInBlock(IKeyTranslator keyTranslator, CancellationToken cancelToken, BigInteger blockId)
         {
             var controlEncryption = jobData.CryptoAlgorithm;
             var costAlgorithm = jobData.CostAlgorithm;
             var ciphertext = jobData.Cryp;
             var initVector = jobData.InitVector;
             var bytesToUse = jobData.BytesToUse;
-
+             
             var top10Keys = InitTop10Keys();
             var index = 0;
             while (keyTranslator.NextKey())
@@ -71,8 +72,11 @@ namespace KeySearcher
                 if (index%100000 == 0)
                 {
                     cancelToken.ThrowIfCancellationRequested();
+                    OnProgressChanged(blockId, 100000);
                 }
             }
+
+            OnProgressChanged(blockId, index % 100000);
             return top10Keys;
         }
         

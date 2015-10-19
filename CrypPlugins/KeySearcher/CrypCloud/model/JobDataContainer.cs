@@ -12,5 +12,6 @@ namespace KeySearcher
         public int BytesToUse { get; set; }
         public byte[] InitVector { get; set; } 
         public BigInteger NumberOfBlocks { get; set; }
+
     }
 }

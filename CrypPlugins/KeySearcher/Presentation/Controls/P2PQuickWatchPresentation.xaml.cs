@@ -33,6 +33,7 @@ namespace KeySearcherPresentation.Controls
             InitializeComponent();
             ViewModel = DataContext as P2PPresentationVM;
             UiContext = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            ViewModel.UiContext = UiContext;
         }
 
 

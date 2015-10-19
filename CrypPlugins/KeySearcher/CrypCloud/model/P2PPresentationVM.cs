@@ -21,7 +21,6 @@ namespace KeySearcher.CrypCloud
 {
     public class P2PPresentationVM : INotifyPropertyChanged
     {
-
         private String jobName;
         private String jobDesc;
         private BigInteger jobID;
@@ -43,24 +42,26 @@ namespace KeySearcher.CrypCloud
         private TimeSpan remainingTime;
         private TimeSpan remainingTimeTotal;
         private DateTime estimatedFinishDate;
+        private BigInteger numberOfLeftBlocks = -1;
+
+        public SpeedStatistics GlobalSpeedStatistics { get; set; }
+        public SpeedStatistics LocalSpeedStatistics { get; set; }
+
+        public TaskFactory UiContext { get; set; }
 
         public ObservableCollection<BigInteger> CurrentChunks { get; set; } 
         public ObservableCollection<KeyResultEntry> TopList { get; set; }
 
-
-        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics();
-        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics(); 
 
         public P2PPresentationVM()
         {
             CurrentOperation = "Idle";
             AvgTimePerChunk = new TimeSpan(0);
             TopList = new ObservableCollection<KeyResultEntry>();
-            CurrentChunks = new ObservableCollection<BigInteger>();
+            CurrentChunks = new ObservableCollection<BigInteger>(); 
+           
         }
-
-       
-         
+ 
         #region local calculation
 
         public void StartedLocalCalculation(BigInteger blockId)
@@ -80,12 +81,14 @@ namespace KeySearcher.CrypCloud
                 OnPropertyChanged("CurrentChunks");
             }
 
-            if (taskArgs.Type == TaskEventArgType.Finished)
+            if (itemInList == 0 && CurrentChunks.Contains(0))
             {
-                localSpeedStatistics.Tick(KeysPerBlock); 
-                AvgTimePerChunk = localSpeedStatistics.LatestAvgTime;
-                KeysPerSecond = localSpeedStatistics.LatestKeysPerSecond;
-
+                CurrentChunks.Remove(0);
+                OnPropertyChanged("CurrentChunks");
+            }
+            
+           if (taskArgs.Type == TaskEventArgType.Finished)
+            {
                 LocalFinishedChunks++;
             }
             else 
@@ -98,21 +101,41 @@ namespace KeySearcher.CrypCloud
         
         public void BlockHasBeenFinished(JobProgressEventArgs progress, List<KeyResultEntry> keyResultEntries)
         {
-            globalSpeedStatistics.Tick(KeysPerBlock);
-            AvgTimePerChunkGlobal = globalSpeedStatistics.LatestAvgTime;
-            KeysPerSecondGlobal = globalSpeedStatistics.LatestKeysPerSecond;
-          
+            GlobalSpeedStatistics.AddEntry(KeysPerBlock); 
             GlobalProgress = 100 * progress.NumberOfCalculatedBlocks.DivideAndReturnDouble(progress.NumberOfBlocks);
+            numberOfLeftBlocks = progress.NumberOfBlocks - progress.NumberOfCalculatedBlocks;
+            FillTopList(keyResultEntries);
+        }
 
-            var numberOfLeftBlocks = progress.NumberOfBlocks - progress.NumberOfCalculatedBlocks;
-            var remainingTicks = (long) (AvgTimePerChunkGlobal.Ticks * numberOfLeftBlocks);
+        public void UpdateGlobalSpeed(BigInteger keysPerSecond)
+        {
+            KeysPerSecondGlobal = keysPerSecond;
+            if (keysPerSecond != 0)
+            {
+                var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(KeysPerSecondGlobal));
+                AvgTimePerChunkGlobal = TimeSpan.FromSeconds(timePerBlock);
+            }
+
+            if(numberOfLeftBlocks == -1) return;
+
+            var remainingTicks = (long)(AvgTimePerChunkGlobal.Ticks * numberOfLeftBlocks);
 
             RemainingTimeTotal = new TimeSpan(remainingTicks);
             EstimatedFinishDate = DateTime.Now.Add(RemainingTimeTotal);
+        }
 
-            FillTopList(keyResultEntries);
-        } 
-    
+
+        public void UpdateLocalSpeed(BigInteger localApproximateKeysPerSecond)
+        {
+            KeysPerSecond = localApproximateKeysPerSecond;
+            if (keysPerSecond != 0)
+            {
+                var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(localApproximateKeysPerSecond));
+                AvgTimePerChunk = TimeSpan.FromSeconds(timePerBlock);
+            }
+        }
+
+
         private void FillTopList(List<KeyResultEntry> keyResultEntries)
         {
             TopList.Clear();
@@ -303,7 +326,6 @@ namespace KeySearcher.CrypCloud
             }
         }
 
-
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -321,6 +343,6 @@ namespace KeySearcher.CrypCloud
 
         #endregion
 
-      
+       
     }
 }
