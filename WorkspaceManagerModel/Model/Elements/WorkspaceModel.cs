@@ -26,6 +26,9 @@ using WorkspaceManager.Model.Tools;
 using Cryptool.PluginBase.Editor;
 using WorkspaceManagerModel.Model.Operations;
 using Cryptool.PluginBase;
+using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace WorkspaceManager.Model
 {
@@ -748,7 +751,64 @@ namespace WorkspaceManager.Model
             foreach (PluginModel pluginModel in AllPluginModels)
             {
                 pluginModel.Plugin.Dispose();
+            }            
+        }
+
+        /// <summary>
+        /// Returns the hash value (SHA-256) of this workspace
+        /// To compute the hash we use
+        /// - Settings of all plugins
+        /// - Connection between all plugins
+        /// 
+        /// We furthermore sort all values before hashing to avoid different 
+        /// hashes based on random order of the values
+        /// </summary>
+        /// <returns>SHA256 Hash Value</returns>
+        public byte[] ComputeWorkspaceHash()
+        {           
+            var stream = new MemoryStream();
+            //Add all setting values for hashing
+            var pluginModels = GetAllPluginModels().ToArray();
+            Array.Sort(pluginModels, delegate (PluginModel a, PluginModel b)
+            {
+                return a.PluginTypeName.CompareTo(b.PluginTypeName);
+            });
+            foreach (PluginModel pluginModel in pluginModels)
+            {
+                if (pluginModel.Plugin.Settings != null)
+                {
+                    var propertyInfos = pluginModel.Plugin.Settings.GetType().GetProperties();
+                    Array.Sort(propertyInfos, delegate(PropertyInfo a, PropertyInfo b)
+                    {
+                        return a.Name.CompareTo(b.Name);
+                    });
+                    foreach (PropertyInfo propertyInfo in propertyInfos)
+                    {
+                        DontSaveAttribute[] dontSave = (DontSaveAttribute[])propertyInfo.GetCustomAttributes(typeof(DontSaveAttribute), false);
+                        if (propertyInfo.CanWrite && dontSave.Length == 0)
+                        {
+                            var value = ASCIIEncoding.ASCII.GetBytes("" + propertyInfo.GetValue(pluginModel.Plugin.Settings, null));
+                            stream.Write(value, 0, value.Length);
+                        }
+                    }
+                }        
             }
+            //Add all connection infos for hashing
+            //Connection info is: "FromPluginname.Connectorname->ToPluginname.Connectorname"
+            var connectionModels = GetAllConnectionModels().ToArray();
+            Array.Sort(connectionModels, delegate(ConnectionModel a, ConnectionModel b)
+            {
+                return a.From.PluginModel.PluginTypeName.CompareTo(b.From.PluginModel.PluginTypeName);
+            });
+            foreach (ConnectionModel connectionModel in connectionModels)
+            {
+                var value = ASCIIEncoding.ASCII.GetBytes(connectionModel.From.PluginModel.PluginTypeName + "." + connectionModel.From.PropertyName + "->" + connectionModel.To.PluginModel.PluginTypeName + connectionModel.To.PropertyName);
+                stream.Write(value, 0, value.Length);
+            }
+            var sha256 = SHA256Managed.Create();
+            var hash = sha256.ComputeHash(stream.ToArray());
+            stream.Close();
+            return hash;
         }
     }
 

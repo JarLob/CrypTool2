@@ -56,7 +56,7 @@ namespace WorkspaceManager.Model
         private int imageIndex = 0;
         [NonSerialized]
         private PluginModelState state = PluginModelState.Normal;
-        private string PluginTypeName = null;
+        internal string PluginTypeName = null;
         private string PluginTypeAssemblyName = null;
         [NonSerialized] 
         internal bool SettingesHaveChanges = false;
