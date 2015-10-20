@@ -249,6 +249,7 @@ namespace voluntLib.managementLayer.localStateManagement.states
         public override string ToString()
         {
             var str = "\tEpochNumber: " + EpochNumber + " Bitmask: ";
+            
             try
             {
                 return GetCopyOfBitmask().Cast<bool>().Aggregate(str, (current, bit) => current + (bit ? "1" : "0"));

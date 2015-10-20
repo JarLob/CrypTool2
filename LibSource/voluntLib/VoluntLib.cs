@@ -412,7 +412,7 @@ namespace voluntLib
             //adding NATFree NetworkBridge
             if (receivingTCPCom != null)
                 SetupNATFreeNetworkBridge(CertificateService);
-            
+
             if (LogMode == LogMode.EventBased)
                 EnableEventBasedLogging();
 
@@ -427,7 +427,7 @@ namespace voluntLib
 
             var config = new LoggingConfiguration();
             var eventBasedTarget = new EventBasedTarget();
-            var logRule = new LoggingRule("*", LogLevel.Debug, eventBasedTarget);
+            var logRule = new LoggingRule("*", LogLevel.Warn, eventBasedTarget);
 
             config.AddTarget(targetName, eventBasedTarget);
             config.LoggingRules.Add(logRule);

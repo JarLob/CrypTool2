@@ -73,9 +73,7 @@ namespace voluntLib.managementLayer.localStateManagement
                 LocalState = candidate;
             }
             var stateRelation = candidate.CompareWith(LocalState);
-            logger.Debug("<IsSuperSetOf> LocalState: " + LocalState);
-            logger.Debug("<IsSuperSetOf> Canidate: " + candidate);
-            logger.Debug("<IsSuperSetOf> StateRelation: " + stateRelation);
+
 
             return stateRelation == StateRelation.IsProperSubset;
         }
@@ -97,9 +95,13 @@ namespace voluntLib.managementLayer.localStateManagement
             }
 
             var stateRelation = candidate.CompareWith(LocalState);
-            logger.Debug("<ProcessState> LocalState: " + LocalState);
-            logger.Debug("<ProcessState> Canidate: " + candidate);
-            logger.Debug("<ProcessState> StateRelation: " + stateRelation);
+
+            if (logger.IsDebugEnabled)
+            {
+                logger.Debug("<ProcessState> LocalState: " + LocalState);
+                logger.Debug("<ProcessState> Canidate: " + candidate);
+                logger.Debug("<ProcessState> StateRelation: " + stateRelation);
+            }
 
             if (stateRelation == StateRelation.OutOfSync)
             {
@@ -168,7 +170,7 @@ namespace voluntLib.managementLayer.localStateManagement
 
         private void OnStateHasBeenUpdated()
         {
-            logger.Debug("Fire StateHasBeenUpdated: " + LocalState);
+            logger.Debug("Fire StateHasBeenUpdated");
             var handler = StateHasBeenUpdated;
             if (handler != null)
             {

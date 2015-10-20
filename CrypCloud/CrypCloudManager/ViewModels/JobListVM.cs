@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -186,21 +187,34 @@ namespace CrypCloud.Manager.ViewModels
             return item;
         }
 
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
+
         private BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
         {
-            return Imaging.CreateBitmapSourceFromHBitmap(
-                    ResizeBitmap(bitmap, 200, 200).GetHbitmap(),
-                           IntPtr.Zero,
-                           Int32Rect.Empty,
-                           BitmapSizeOptions.FromWidthAndHeight(200,200)); 
+            using (var resizedBitmap = ResizeBitmap(bitmap, 200, 200))
+            {
+                var hBitmap = resizedBitmap.GetHbitmap();
+                try
+                {
+                    return Imaging.CreateBitmapSourceFromHBitmap(hBitmap,
+                                IntPtr.Zero, 
+                                Int32Rect.Empty,
+                                BitmapSizeOptions.FromWidthAndHeight(200, 200));
+                }
+                finally
+                {
+                    DeleteObject(hBitmap);
+                }
+            }
         }
 
         private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
         {
-            Bitmap result = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(result))
+            var result = new Bitmap(width, height);
+            using (var g = Graphics.FromImage(result))
             {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.InterpolationMode = InterpolationMode.NearestNeighbor;
                 g.DrawImage(sourceBMP, 0, 0, width, height);
             }
             return result;
