@@ -183,7 +183,7 @@ namespace voluntLib.calculationLayer
             var freeBlockID = localStateManager.LocalState.GetFreeBlock(runningWorkers.Keys.ToList());
             if (freeBlockID == -1)
             {
-                Logger.Warn("Could not start worker. No free block");
+                Logger.Info("Could not start worker. No free block");
                 return false;
             }
 

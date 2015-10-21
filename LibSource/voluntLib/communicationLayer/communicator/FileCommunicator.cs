@@ -20,6 +20,7 @@ using System.Net;
 using System.Numerics;
 using System.Xml;
 using System.Xml.Linq;
+using NLog;
 using voluntLib.common.interfaces;
 using voluntLib.communicationLayer.messages.messageWithCertificate;
 
@@ -29,6 +30,8 @@ namespace voluntLib.communicationLayer.communicator
 {
     public class FileCommunicator : ICommunicator
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         #region private members
 
         private const string RootElement = "voluntLibStore";
@@ -114,28 +117,36 @@ namespace voluntLib.communicationLayer.communicator
             if (!loadOnStart)
                 return;
 
-            var doc = new XmlDocument();
-            doc.Load(filePath);
-            var nodes = doc.SelectNodes("//" + JobElement);
-            if (nodes == null) 
-                return;
-
-            //push messages to comLayer
-            foreach (XmlNode jobNode in nodes)
+            try
             {
-                var createNode = jobNode.SelectSingleNode(MessageType.CreateNetworkJob.ToString());
-                if (createNode != null)
-                    comLayer.HandleIncomingMessages(Convert.FromBase64String(createNode.InnerText), IPAddress.None); 
-                
-                var deleteNode = jobNode.SelectSingleNode(MessageType.DeleteNetworkJob.ToString());
-                if (deleteNode != null)
-                    comLayer.HandleIncomingMessages(Convert.FromBase64String(deleteNode.InnerText), IPAddress.None);
+                var doc = new XmlDocument();
+                doc.Load(filePath);
+                var nodes = doc.SelectNodes("//" + JobElement);
+                if (nodes == null)
+                    return;
 
-                var stateNode = jobNode.SelectSingleNode(MessageType.PropagateState.ToString());
-                if (stateNode != null)
-                    comLayer.HandleIncomingMessages(Convert.FromBase64String(stateNode.InnerText), IPAddress.None);
-                
+                //push messages to comLayer
+                foreach (XmlNode jobNode in nodes)
+                {
+                    var createNode = jobNode.SelectSingleNode(MessageType.CreateNetworkJob.ToString());
+                    if (createNode != null)
+                        comLayer.HandleIncomingMessages(Convert.FromBase64String(createNode.InnerText), IPAddress.None);
+
+                    var deleteNode = jobNode.SelectSingleNode(MessageType.DeleteNetworkJob.ToString());
+                    if (deleteNode != null)
+                        comLayer.HandleIncomingMessages(Convert.FromBase64String(deleteNode.InnerText), IPAddress.None);
+
+                    var stateNode = jobNode.SelectSingleNode(MessageType.PropagateState.ToString());
+                    if (stateNode != null)
+                        comLayer.HandleIncomingMessages(Convert.FromBase64String(stateNode.InnerText), IPAddress.None);
+
+                }
             }
+            catch (Exception e)
+            {
+                logger.Warn("Could not read from local storage. file may be corrupted Error:" + e.GetBaseException());
+            }
+        
         }
 
         public void Stop()

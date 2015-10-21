@@ -77,6 +77,8 @@ namespace voluntLib.managementLayer.localStateManagement.states.config
                     BitMaskWidth = (int) NumberOfBlocks;
                 }
 
+                if (BitMaskWidth == 0) return false;
+
                 BigInteger remainder;
                 MaximumEpoch = BigInteger.DivRem(NumberOfBlocks, BitMaskWidth, out remainder);
                 if (remainder != 0)
