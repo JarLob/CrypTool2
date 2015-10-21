@@ -6,7 +6,7 @@
              xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter"
              xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
              xmlns:properties="clr-namespace:CrypCloud.Manager.Properties"
-             mc:Ignorable="d" d:DesignWidth="500">
+             mc:Ignorable="d" d:DesignWidth="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
     <UserControl.Resources>
         <ResourceDictionary>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter">
+             xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -16,11 +16,11 @@
     </UserControl.Resources>
     
     <UserControl.DataContext>
-        <viewModels:LoginVM />
+        <viewModels:LoginVM  IsActive="True" />
     </UserControl.DataContext>
 
     <Grid Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,-200,0,0">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15,15,15,15">
                 <Label Content="{Loc _Login_header}" FontSize="20" HorizontalContentAlignment="Center" Width="200"/>
                 <Label Content="{Loc _Login_subheader}" FontSize="13" HorizontalContentAlignment="Center" Width="250"/>

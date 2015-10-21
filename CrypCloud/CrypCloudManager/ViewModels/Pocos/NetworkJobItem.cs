@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -67,7 +68,11 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         {
             get
             {
-                return FinishedNumberOfBlocks + "/" + TotalNumberOfBlocks;
+                var doneBlocks = FinishedNumberOfBlocks.ToString("N0", new CultureInfo("de-DE"));
+                var totalBlocks = TotalNumberOfBlocks.ToString("N0", new CultureInfo("de-DE"));
+                var logBlocks = BigInteger.Log(TotalNumberOfBlocks, 2);
+
+                return string.Format("{0} / {1} ({2} bits)", doneBlocks, totalBlocks, logBlocks);
             }
             set { } //for binding only
         }

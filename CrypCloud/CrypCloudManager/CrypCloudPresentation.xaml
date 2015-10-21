@@ -14,21 +14,23 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <StackPanel>
-        <StackPanel.Background>
+    
+  
+    
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.Background>
             <RadialGradientBrush RadiusX="1.1" RadiusY="2.8" Center="0.524,1.2" GradientOrigin="0.524,1.2">
                 <GradientStop Color="#add3f5" Offset="0.0" />
                 <GradientStop Color="#293955" Offset="1" />
             </RadialGradientBrush>
-        </StackPanel.Background>
+        </Grid.Background>
 
         <screens:Login x:Name="Login" />
-        <screens:JobList x:Name="JobList" />
+        <screens:JobList x:Name="JobList"   />
         <screens:JobCreation x:Name="JobCreation" />
         <screens:CreateAccount x:Name="CreateAccount" />
         <screens:ResetPassword x:Name="ResetPassword" />
 
-    </StackPanel>
+    </Grid>
 
 </UserControl>

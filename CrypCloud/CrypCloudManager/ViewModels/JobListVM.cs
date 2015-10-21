@@ -39,8 +39,8 @@ namespace CrypCloud.Manager.ViewModels
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
         public RelayCommand DownloadWorkspaceCommand { get; set; }
-        public RelayCommand LogOutCommand { get; set; } 
-         
+        public RelayCommand LogOutCommand { get; set; }
+        public RelayCommand DoubleClickOnEntryCommand { get; set; }
 
         public JobListVM()
         {
@@ -50,12 +50,16 @@ namespace CrypCloud.Manager.ViewModels
             OpenJobCommand = new RelayCommand(OpenJob);
             DeleteJobCommand = new RelayCommand(DeleteJob);
             DownloadWorkspaceCommand = new RelayCommand(DownloadJob);
+            DoubleClickOnEntryCommand = new RelayCommand(DoubleClickOnEntry);
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
             crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList); 
         }
+
+
     
+
         protected override void HasBeenActivated()
         {
             base.HasBeenActivated(); 
@@ -119,6 +123,19 @@ namespace CrypCloud.Manager.ViewModels
         }
 
         #region open job
+        private void DoubleClickOnEntry(object job)
+        {
+            if (selectedJob == null) return; // shoudnt happen anyways
+
+            if (selectedJob.HasWorkspace)
+            {
+                OpenJob(selectedJob);
+            }
+            else
+            {
+                DownloadJob(selectedJob);
+            }
+        }
 
         private void DownloadJob(object it)
         {

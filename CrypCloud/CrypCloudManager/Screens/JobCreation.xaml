@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:converter="clr-namespace:CrypCloud.Manager.Screens.Converter"
-             xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels"
+             xmlns:viewModels="clr-namespace:CrypCloud.Manager.ViewModels" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -18,10 +18,10 @@
     </UserControl.Resources>
     
     <UserControl.DataContext>
-        <viewModels:JobCreationVM />
+        <viewModels:JobCreationVM  IsActive="True" />
     </UserControl.DataContext>
 
-    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center">
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-50,0,0">
         <Label Content="{Loc _CreateJob_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
         
         <!-- errorBox -->
@@ -58,7 +58,7 @@
             <Label Content="{Loc _CreateJob_WorkspacePath_label}" Grid.Row="1" Grid.Column="0"/>
             <Label Content="{Loc _CreateJob_Description_label}" Grid.Row="2" Grid.Column="0" />
             
-            <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" Height="24" />
+            <TextBox Text="{Binding Name}" MaxLength="12" Grid.Row="0" Grid.Column="1" Height="24" />
             <Grid Grid.Row="1" Grid.Column="1" Height="24">
                 <TextBox Text="{Binding Path=LocalFilePath, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,55,0" IsReadOnly="True" />
                 <Button Command="{Binding Path=SelectWorkspaceFromFilesystemCmd}" HorizontalAlignment="Right" Width="55">
@@ -67,7 +67,7 @@
                     </StackPanel>
                 </Button> 
             </Grid>
-            <TextBox Text="{Binding Description}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="1" />
+            <TextBox Text="{Binding Description}" MaxLength="255" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="1" />
         </Grid>
         
         <Grid>
