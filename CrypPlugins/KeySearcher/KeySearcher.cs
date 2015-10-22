@@ -293,7 +293,7 @@ namespace KeySearcher
             {
                 IsKeySearcherRunning = false;
                 username = "";
-                maschineid = 0;
+                maschineid = 0; 
 
                 if (OpenCL.NumberOfPlatforms > 0)
                 {
@@ -314,10 +314,15 @@ namespace KeySearcher
                 Presentation = new QuickWatch();
                 localQuickWatchPresentation = ((QuickWatch)Presentation).LocalQuickWatchPresentation;
                 p2PQuickWatchPresentation = ((QuickWatch)Presentation).P2PQuickWatchPresentation;
-              
+               
                 settings.PropertyChanged += SettingsPropertyChanged;
                 ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
                 localBruteForceStopwatch = new Stopwatch();
+                if (JobID != 0)
+                {
+                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+                } 
+
             }
             catch (Exception ex)
             {
@@ -336,6 +341,8 @@ namespace KeySearcher
             ((QuickWatch)Presentation).IsP2PEnabled = settings.UsePeerToPeer;
             ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
             p2PQuickWatchPresentation.UpdateSettings(this, settings);
+
+          
         }
 
         #region IPlugin Members
@@ -353,7 +360,7 @@ namespace KeySearcher
         {
             get { return settings; }
         }
-
+         
         public override UserControl Presentation
         {
             get;
@@ -362,7 +369,12 @@ namespace KeySearcher
 
         public override void PreExecution()
         {
-            update = false;
+            update = false; 
+            
+            if (JobID != 0)
+            {
+                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+            } 
         }
 
         // because Encryption PlugIns were changed radical, the new StartPoint is here - Arnie 2010.01.12
@@ -401,14 +413,20 @@ namespace KeySearcher
             stop = true;
             waitForExternalClientToFinish.Set();
             if (cloudKeySearcher != null)
-            {
+            { 
                 cloudKeySearcher.Stop();
             }
         }
-
+         
         public override void Initialize()
-        {
+        { 
             p2PQuickWatchPresentation.UpdateSettings(this, settings);
+            
+            if (JobID != 0)
+            {
+                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+            } 
+              
         }
 
         public override void Dispose()

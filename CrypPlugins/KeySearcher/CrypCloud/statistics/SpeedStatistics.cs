@@ -9,7 +9,12 @@ namespace KeySearcher.CrypCloud.statistics
 {
     public class SpeedStatistics
     {
-        public static int MinutesUntilEntryInvalidates = 30;
+        public int MinutesUntilEntryInvalidates = 30;
+
+        public SpeedStatistics(int minutesTillInvalidate)
+        {
+            MinutesUntilEntryInvalidates = minutesTillInvalidate;
+        }
 
         private DateTime statisticsStartTime = DateTime.UtcNow;
         private readonly List<SpeedStatisticsEntry> calculations = new List<SpeedStatisticsEntry>();

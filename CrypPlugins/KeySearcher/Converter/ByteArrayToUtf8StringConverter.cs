@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 
 namespace KeySearcher.Converter
@@ -15,7 +16,7 @@ namespace KeySearcher.Converter
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var bytes = (byte[])value;
-            return Encoding.UTF8.GetString(bytes);
+            return Regex.Replace(Encoding.UTF8.GetString(bytes), @"\r\n?|\n", "").Replace(" ", ""); 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

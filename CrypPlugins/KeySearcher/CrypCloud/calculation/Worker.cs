@@ -72,11 +72,16 @@ namespace KeySearcher
                 if (index%100000 == 0)
                 {
                     cancelToken.ThrowIfCancellationRequested();
-                    OnProgressChanged(blockId, 100000);
+                    if (index % 500000 == 0)
+                    {
+                        OnProgressChanged(blockId, 500000);
+                    }
                 }
+                
+               
             }
 
-            OnProgressChanged(blockId, index % 100000);
+            OnProgressChanged(blockId, index % 500000);
             return top10Keys;
         }
         

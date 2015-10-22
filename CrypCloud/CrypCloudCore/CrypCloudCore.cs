@@ -178,6 +178,16 @@ namespace CrypCloud.Core
             }
 
             return voluntLib.GetJobsOfWorld(DefaultWorld);
+        } 
+        
+        public NetworkJob GetJobsById(BigInteger jobid)
+        {
+            if (!voluntLib.IsStarted)
+            {
+                return new NetworkJob(jobid);
+            }
+
+            return voluntLib.GetJobByID(jobid);
         }
 
         public BigInteger GetProgressOfJob(BigInteger jobID)

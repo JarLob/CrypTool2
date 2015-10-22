@@ -13,7 +13,9 @@ using System.Windows.Threading;
 using CrypCloud.Core;
 using Cryptool.PluginBase;
 using KeySearcher.CrypCloud.statistics;
+using KeySearcher.KeyPattern;
 using KeySearcherPresentation.Controls;
+using voluntLib.common;
 using voluntLib.common.eventArgs;
 using Timer = System.Timers.Timer;
 
@@ -34,7 +36,7 @@ namespace KeySearcher.CrypCloud
         private BigInteger localFinishedChunks;
         private BigInteger localAbortChunks;
         private BigInteger keysPerSecond;
-        private String currentOperation;
+        private String currentOperation = "idle";
         private TimeSpan avgTimePerChunk;
 
         private DateTime startDate;
@@ -42,7 +44,7 @@ namespace KeySearcher.CrypCloud
         private TimeSpan remainingTime;
         private TimeSpan remainingTimeTotal;
         private DateTime estimatedFinishDate;
-        private BigInteger numberOfLeftBlocks = -1;
+        private BigInteger numberOfLeftBlocks;
 
         public SpeedStatistics GlobalSpeedStatistics { get; set; }
         public SpeedStatistics LocalSpeedStatistics { get; set; }
@@ -61,7 +63,50 @@ namespace KeySearcher.CrypCloud
             CurrentChunks = new ObservableCollection<BigInteger>(); 
            
         }
- 
+        public void UpdateStaticView(BigInteger jobId, KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
+        { 
+            if (!CrypCloudCore.Instance.IsRunning) return;
+             
+            var job = CrypCloudCore.Instance.GetJobsById(jobId);
+            if(job == null) return;
+
+            JobName = job.JobName;
+
+            if (job.StateConfig.NumberOfBlocks != 0)
+            {
+                var progress = 100*CrypCloudCore.Instance.GetProgressOfJob(jobId).DivideAndReturnDouble(job.StateConfig.NumberOfBlocks);
+                GlobalProgress = progress;
+            }
+
+        }
+
+        public void UpdateSettings(KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
+        {
+            if (CannotUpdateView(keySearcher, keySearcherSettings))
+            {
+                return;
+            }
+
+            var keyPattern = new KeyPattern.KeyPattern(keySearcher.ControlMaster.GetKeyPattern()) { WildcardKey = keySearcherSettings.Key };
+            var keysPerChunk = keyPattern.size() / BigInteger.Pow(2, keySearcherSettings.NumberOfBlocks);
+            if (keysPerChunk < 1)
+            {
+                keySearcherSettings.NumberOfBlocks = (int)BigInteger.Log(keyPattern.size(), 2);
+            }
+
+            var keyPatternPool = new KeyPatternPool(keyPattern, keysPerChunk);
+
+            TotalAmountOfChunks = keyPatternPool.Length;
+            KeysPerBlock = keysPerChunk;
+            JobID = keySearcher.JobID;
+           
+        }
+        
+        private static bool CannotUpdateView(KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
+        {
+            return keySearcher.Pattern == null || !keySearcher.Pattern.testWildcardKey(keySearcherSettings.Key) || keySearcherSettings.NumberOfBlocks == 0;
+        }
+
         #region local calculation
 
         public void StartedLocalCalculation(BigInteger blockId)
@@ -343,6 +388,6 @@ namespace KeySearcher.CrypCloud
 
         #endregion
 
-       
+      
     }
 }

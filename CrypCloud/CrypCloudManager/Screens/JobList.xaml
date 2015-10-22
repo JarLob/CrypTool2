@@ -96,8 +96,6 @@
                       x:Name="JobListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
                       MouseDoubleClick="JobListView_OnMouseDoubleClick">
-
-
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>

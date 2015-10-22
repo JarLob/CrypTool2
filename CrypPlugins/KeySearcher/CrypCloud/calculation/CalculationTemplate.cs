@@ -23,8 +23,12 @@ namespace KeySearcher
 
         public override List<KeyResultEntry> MergeResults(IEnumerable<KeyResultEntry> oldResultList, IEnumerable<KeyResultEntry> newResultList)
         {
-            var results = newResultList.Concat(oldResultList).ToList();
-            results.Sort();
+            var results = newResultList
+                .Concat(oldResultList)
+                .Distinct()
+                .ToList();
+
+            results.Sort(); 
             return results.Take(10).ToList();
         }
     }

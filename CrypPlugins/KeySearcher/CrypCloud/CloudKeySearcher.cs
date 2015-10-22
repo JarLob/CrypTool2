@@ -33,8 +33,8 @@ namespace KeySearcher
         private readonly P2PPresentationVM viewModel; 
         private readonly TaskFactory uiContext;
         
-        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics();
-        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics();
+        private readonly SpeedStatistics globalSpeedStatistics = new SpeedStatistics(30);
+        private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics(5);
 
         private Timer updateTimer;
 
@@ -92,21 +92,21 @@ namespace KeySearcher
                 () => viewModel.StartedLocalCalculation(taskArgs.BlockID)
             );
         }
-        
+         
         private void TaskEnded(object sender, TaskEventArgs taskArgs)
         {
             if (new BigInteger(taskArgs.JobID) != jobId) return;
 
             RunInUiContext(
-                () => viewModel.EndedLocalCalculation(taskArgs)
+                () => viewModel.EndedLocalCalculation(taskArgs) 
             );
-        }
+        } 
 
         private void JobStateChanged(object sender, JobProgressEventArgs progress)
         {
             if (progress.JobId != jobId) return;
 
-            var keyResultEntries = progress.ResultList.Select(it => new KeyResultEntry(it)).ToList();
+            var keyResultEntries = progress.ResultList.Select(it => new KeyResultEntry(it)).Distinct().ToList();
             keyResultEntries.Sort();
              
             RunInUiContext(

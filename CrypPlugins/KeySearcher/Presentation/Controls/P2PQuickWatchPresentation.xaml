@@ -2,15 +2,15 @@
              xmlns:Converter="clr-namespace:KeySearcherConverter" xmlns:Controls="clr-namespace:KeySearcherPresentation.Controls"
              xmlns:con="clr-namespace:KeySearcher.Converter"
              xmlns:crypCloud="clr-namespace:KeySearcher.CrypCloud"
-             x:Name="P2PQuickWatch" Loaded="P2PQuickWatch_Loaded"> 
+             x:Name="P2PQuickWatch" Loaded="P2PQuickWatch_Loaded">
 
     <UserControl.Resources>
-        <con:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter"/> 
-        <con:ByteArrayToHexStringConverter x:Key="ByteArrayToHexStringConverter"/> 
+        <con:BigIntegerToStringConverter x:Key="BigIntegerToStringConverter"/>
+        <con:ByteArrayToHexStringConverter x:Key="ByteArrayToHexStringConverter"/>
         <con:BigIntegerToHexStringConverter x:Key="BigIntegerToHexStringConverter" />
         <con:ByteArrayToUtf8StringConverter x:Key="ByteArrayToUtf8StringConverter" />
-        <con:ListToStringConverter x:Key="ListToStringConverter" /> 
-        <Converter:DateTimeConverter x:Key="DateTimeConverter" />
+        <con:ListToStringConverter x:Key="ListToStringConverter" />
+        <Converter:DateTimeConverter x:Key="DateTimeConverter" /> 
         <Converter:TimeSpanToStringConverter x:Key="TimeSpanToStringConverter" />
         <RotateTransform x:Key="HeaderRotate" Angle="270" />
         <Style x:Key="ValueRow">
@@ -23,28 +23,28 @@
     <UserControl.DataContext>
         <crypCloud:P2PPresentationVM/>
     </UserControl.DataContext>
-    
+
     <Viewbox>
-		<Grid Width="646" >
+        <Grid Width="646" >
             <StackPanel>
                 <!-- static -->
                 <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-					<Grid Height="60" Background="#AFE2E2FF">
+                    <Grid Height="60" Background="#AFE2E2FF">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
-						<Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
                             <ColumnDefinition Width="200*" />
-                            <ColumnDefinition Width="200*" /> 
-						</Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200*" />
+                        </Grid.ColumnDefinitions>
                         <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Grid.RowSpan="3" Grid.Column="0" Background="#FF5C5CFF">
                             <Label Content="{Loc Static_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" />
                         </Border>
                         <Label Content="{Loc JobName}" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1" />
                         <Label Content="{Binding JobName, FallbackValue=-}" Grid.Row="0" VerticalAlignment="Center" Grid.Column="1" Style="{StaticResource ValueRow}" />
-                        
+
                         <Label Content="{Loc JobID_}" Grid.Column="2" />
                         <Label Content="{Binding JobID, FallbackValue=-, Converter={StaticResource BigIntegerToHexStringConverter}}" Grid.Column="2" Style="{StaticResource ValueRow}" />
 
@@ -53,9 +53,9 @@
 
                         <Label Content="{Loc Keys_Per_Chunk_}" VerticalAlignment="Center" Grid.Row="2"  Grid.Column="2" />
                         <Label Content="{Binding KeysPerBlock, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Name="KeysPerChunk" Grid.Row="2"  VerticalAlignment="Center" Grid.Column="2" Style="{StaticResource ValueRow}" />
-					</Grid>
-				</Border>
-                
+                    </Grid>
+                </Border>
+
                 <!-- global -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
                     <Grid Height="78" Background="#AFAAE1E8">
@@ -114,14 +114,11 @@
                         </Border>
 
                         <Label Content="{Loc Finished_Chunks_}" Grid.Column="1" Grid.Row="0" />
-                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" ToolTip="{Loc Finished_Chunks_Tooltip}">
-                            <Label Content="{Binding LocalFinishedChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" />
-                        </StackPanel>
+                        <Label Content="{Binding LocalFinishedChunks,  FallbackValue=-}" Grid.Column="1" Grid.Row="0" Style="{StaticResource ValueRow}" />
+                       
 
-                        <Label Content="{Loc Abort_Chunks_}" Grid.Column="2" Grid.Row="0" />
-                        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" ToolTip="{Loc Finished_Chunks_Tooltip}">
-                            <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}" HorizontalContentAlignment="Right" Padding="5,5,5,5" />
-                        </StackPanel>
+                        <Label Content="{Loc Abort_Chunks_}" Grid.Column="2" Grid.Row="0" /> 
+                        <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}"  Grid.Column="2" Grid.Row="0"  Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="1" />
                         <Label Content="{Binding AvgTimePerChunk, FallbackValue=-,  Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
@@ -130,7 +127,9 @@
                         <Label Content="{Binding KeysPerSecond, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Current_Chunk_}" Grid.Column="1" Grid.Row="3" />
-                        <Label Content="{Binding CurrentChunks, FallbackValue=-, Converter={StaticResource ListToStringConverter}}" Grid.Column="1" Grid.Row="3" Style="{StaticResource ValueRow}" />
+                        <Label Content="{Binding CurrentChunks, FallbackValue=~, Converter={StaticResource ListToStringConverter}}"  HorizontalContentAlignment="Left" 
+                               Margin="150,0, 0,0"
+                               Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
 
                     </Grid>
                 </Border>
@@ -138,49 +137,32 @@
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="150" />
+                            <RowDefinition Height="200" />
                             <RowDefinition Height="3" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="13*" />
+                            <ColumnDefinition Width="141*"/>
                         </Grid.ColumnDefinitions>
-                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.ColumnSpan="99" Margin="0,0,616,-2">
+                        <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Margin="0,0,0,1" Grid.RowSpan="2">
                             <Label Content="{Loc Top_Ten_}" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="50" />
                         </Border>
+                        
                         <ListView Name="ToplistView" Background="#AFE2FFCE" ItemsSource="{Binding TopList}" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
                                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                  Height="150" Grid.Column="1" Grid.RowSpan="2">
-                            <ListView.View>
-                                <GridView>
-
-                                    <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Path=Costs}">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Text" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn Header="Key" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label />
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+                                  Height="200" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,2,0,1">
+                            <ListView.View> 
+                                <GridView> 
+                                    <GridViewColumn Header="Value" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>
+                                    <GridViewColumn Header="Text" Width="300" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}"/>
+                                    <GridViewColumn Header="Key" Width="250" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
                     </Grid>
                 </Border>
             </StackPanel>
-		</Grid>
-	</Viewbox>
+        </Grid>
+    </Viewbox>
 </UserControl>
