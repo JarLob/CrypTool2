@@ -20,7 +20,7 @@
     </UserControl.DataContext>
 
     <Grid Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,-200,0,0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="15,15,15,15">
                 <Label Content="{Loc _Login_header}" FontSize="20" HorizontalContentAlignment="Center" Width="200"/>
                 <Label Content="{Loc _Login_subheader}" FontSize="13" HorizontalContentAlignment="Center" Width="250"/>

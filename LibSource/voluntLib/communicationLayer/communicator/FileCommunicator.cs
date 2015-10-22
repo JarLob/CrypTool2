@@ -144,7 +144,7 @@ namespace voluntLib.communicationLayer.communicator
             }
             catch (Exception e)
             {
-                logger.Warn("Could not read from local storage. file may be corrupted Error:" + e.GetBaseException());
+                logger.Warn("Could not read from local storage. File may be corrupted. Error:" + e.GetBaseException());
             }
         
         }

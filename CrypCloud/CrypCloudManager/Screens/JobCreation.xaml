@@ -21,7 +21,7 @@
         <viewModels:JobCreationVM  IsActive="True" />
     </UserControl.DataContext>
 
-    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,-50,0,0">
+    <StackPanel Visibility="{Binding Path=IsActive, Converter={converter:BoolToVisibilityConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center">
         <Label Content="{Loc _CreateJob_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
         
         <!-- errorBox -->
