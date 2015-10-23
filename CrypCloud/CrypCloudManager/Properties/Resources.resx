@@ -298,4 +298,10 @@
   <data name="_ResetPW_enterVerificationData_2" xml:space="preserve">
     <value>Please enter the verification code and your new password below.</value>
   </data>
+  <data name="_Confirm_Job_Deletion_Text" xml:space="preserve">
+    <value>The job will be permanently removed from the cloud. The result and progress will be lost. Are you sure? </value>
+  </data>
+  <data name="_Confirm_Job_Deletion_Title" xml:space="preserve">
+    <value>Confirm job deletion.</value>
+  </data>
 </root>

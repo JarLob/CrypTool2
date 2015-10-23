@@ -79,6 +79,24 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The job will be permanently removed from the cloud. The result and progress will be lost. Are you sure?  ähnelt.
+        /// </summary>
+        public static string _Confirm_Job_Deletion_Text {
+            get {
+                return ResourceManager.GetString("_Confirm_Job_Deletion_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Confirm job deletion. ähnelt.
+        /// </summary>
+        public static string _Confirm_Job_Deletion_Title {
+            get {
+                return ResourceManager.GetString("_Confirm_Job_Deletion_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connection to server. Please wait ähnelt.
         /// </summary>
         public static string _Connecting_label {

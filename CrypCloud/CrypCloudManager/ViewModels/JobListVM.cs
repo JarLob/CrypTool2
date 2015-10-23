@@ -7,12 +7,15 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using CrypCloud.Core;
+using CrypCloud.Manager.Properties;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
 using voluntLib.common;
+using MessageBox = System.Windows.MessageBox;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -167,8 +170,12 @@ namespace CrypCloud.Manager.ViewModels
         {
             var jobItem = it as NetworkJobItem;
             if (jobItem == null) return; // shoudnt happen anyways
-               
-            crypCloudCore.DeleteJob(jobItem.Id);
+
+            var confirmResult = MessageBox.Show(Resources._Confirm_Job_Deletion_Text, Resources._Confirm_Job_Deletion_Title, MessageBoxButton.YesNo);
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                crypCloudCore.DeleteJob(jobItem.Id);
+            }
         }
 
         #region helper
