@@ -39,6 +39,11 @@ namespace CrypCloud.Core.CloudComponent
             GuiLogMessage("preEx isOnline: " + IsOnline(), NotificationLevel.Error);
             PreExecutionLocal();
 
+            if (WorkspaceHasBeenModified())
+            {
+                GuiLogMessage("Could not start calculation. Workspace has been modified.", NotificationLevel.Error);
+            }
+
             if (IsOnline()) 
                 cryptCloudCore.StartLocalCalculation(JobID, calculationTemplate);
             else 

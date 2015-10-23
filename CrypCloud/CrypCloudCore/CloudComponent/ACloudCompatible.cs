@@ -36,6 +36,18 @@ namespace CrypCloud.Core.CloudComponent
             return JobID != -1;
         }
 
+        public Func<byte[]> ComputeWorkspaceHash { get; set; }
+        public byte[] ValidWorkspaceHash { get; set; }
+
+        public bool WorkspaceHasBeenModified()
+        {
+            if (ValidWorkspaceHash == null) return false;
+
+            var computedWorkspaceHash = ComputeWorkspaceHash();
+            var workspaceHasBeenModified = !ValidWorkspaceHash.SequenceEqual(computedWorkspaceHash);
+            return workspaceHasBeenModified;
+        }
+
         public abstract event PropertyChangedEventHandler PropertyChanged;
         public abstract void Dispose();
         public abstract event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;

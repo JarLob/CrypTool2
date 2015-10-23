@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Threading;
 using CrypCloud.Core;
+using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.Miscellaneous;
 using KeySearcher.CrypCloud;
@@ -50,7 +51,7 @@ namespace KeySearcher
             calculationTemplate = new CalculationTemplate(jobDataContainer, pattern);
 
             uiContext = presentation.UiContext;
-            viewModel = presentation.ViewModel;
+            viewModel = presentation.ViewModel; 
             viewModel.GlobalSpeedStatistics = globalSpeedStatistics;
             viewModel.LocalSpeedStatistics = localSpeedStatistics;
 
@@ -59,7 +60,6 @@ namespace KeySearcher
                 viewModel.JobID = jobId; 
                 UpdatePresentation(presentation, keySearcher);
             });
-
         }
 
 
@@ -76,6 +76,8 @@ namespace KeySearcher
 
         private void TaskProgress(object sender, TaskEventArgs e)
         {
+             if (new BigInteger(e.JobID) != jobId) return;
+
            localSpeedStatistics.AddEntry(e.TaskProgress);
            var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
            RunInUiContext(() =>
@@ -87,6 +89,19 @@ namespace KeySearcher
         private void NewTaskStarted(object sender, TaskEventArgs taskArgs)
         {
             if (new BigInteger(taskArgs.JobID) != jobId) return;
+
+            if (keySearcher.WorkspaceHasBeenModified())
+            {
+                try
+                {
+                    CrypCloudCore.Instance.StopLocalCalculation(jobId);
+                }
+                finally
+                {
+                    keySearcher.GuiLogMessage("Calculation has been aborted due to changes in the workplace.", NotificationLevel.Error);
+                }
+                return;
+            }
 
             RunInUiContext(
                 () => viewModel.StartedLocalCalculation(taskArgs.BlockID)
@@ -121,17 +136,23 @@ namespace KeySearcher
 
 
         private void UpdatePresentation(P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
-        {
+        { 
             presentation.UpdateSettings(keySearcher, (KeySearcherSettings)keySearcher.Settings); ;
         }
 
         protected void RunInUiContext(Action action)
-        {
+        { 
             uiContext.StartNew(action);
         }
 
         public void Start()
-        { 
+        {
+            if (keySearcher.WorkspaceHasBeenModified())
+            {
+                keySearcher.GuiLogMessage("Calculation can not be started since the workspace was changed.", NotificationLevel.Error);
+                return;
+            }
+
             CrypCloudCore.Instance.StartLocalCalculation(jobId, calculationTemplate);
 
             updateTimer = new Timer(UpdateInterval);

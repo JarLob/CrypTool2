@@ -228,15 +228,19 @@ namespace CrypCloud.Core
             {
                 return null;
             }
-            
-            var cloudComponents = payloadOfJob.WorkspaceModel.GetAllPluginModels()
+
+            var workspaceOfJob = payloadOfJob.WorkspaceModel;
+
+            var cloudComponents = workspaceOfJob.GetAllPluginModels()
                 .Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
             foreach (var cloudComponent in cloudComponents)
             {
                 ((ACloudCompatible) cloudComponent.Plugin).JobID = jobId;
+                ((ACloudCompatible) cloudComponent.Plugin).ComputeWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash;
+                ((ACloudCompatible) cloudComponent.Plugin).ValidWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash();
             }
-
-            return payloadOfJob.WorkspaceModel;
+             
+            return workspaceOfJob; 
         }
 
         public DateTime GetCreationDateOfJob(BigInteger jobId)
@@ -252,7 +256,7 @@ namespace CrypCloud.Core
 
 
         private readonly Dictionary<BigInteger, JobPayload> jobPayloadCache = new Dictionary<BigInteger, JobPayload>();
-        private JobPayload GetPayloadOfJob(BigInteger jobId)
+        public JobPayload GetPayloadOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
             if (job == null || !job.HasPayload() || job.IsDeleted)
