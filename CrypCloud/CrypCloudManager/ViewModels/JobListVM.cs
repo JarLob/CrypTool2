@@ -57,7 +57,9 @@ namespace CrypCloud.Manager.ViewModels
 
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
-            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList); 
+            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
+
+           
         }
 
 
@@ -194,7 +196,7 @@ namespace CrypCloud.Manager.ViewModels
                 HasWorkspace = job.HasPayload(),
                 CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID),
                 Epoch = crypCloudCore.GetEpochOfJob(job),
-                MaxEpoch = job.StateConfig.MaximumEpoch
+                MaxEpoch = job.StateConfig.MaximumEpoch, 
             };
 
             if (item.HasWorkspace)

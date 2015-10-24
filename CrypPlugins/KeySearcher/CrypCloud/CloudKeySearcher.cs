@@ -59,6 +59,7 @@ namespace KeySearcher
             {
                 viewModel.JobID = jobId; 
                 UpdatePresentation(presentation, keySearcher);
+                keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
             });
         }
 
@@ -92,14 +93,8 @@ namespace KeySearcher
 
             if (keySearcher.WorkspaceHasBeenModified())
             {
-                try
-                {
-                    CrypCloudCore.Instance.StopLocalCalculation(jobId);
-                }
-                finally
-                {
-                    keySearcher.GuiLogMessage("Calculation has been aborted due to changes in the workplace.", NotificationLevel.Error);
-                }
+                CrypCloudCore.Instance.StopLocalCalculation(jobId);
+                keySearcher.GuiLogMessage("Calculation has been aborted due to changes in the workplace.", NotificationLevel.Error);
                 return;
             }
 
@@ -123,10 +118,13 @@ namespace KeySearcher
 
             var keyResultEntries = progress.ResultList.Select(it => new KeyResultEntry(it)).Distinct().ToList();
             keyResultEntries.Sort();
-             
-            RunInUiContext(
-                () => viewModel.BlockHasBeenFinished(progress, keyResultEntries)
-            ); 
+
+            RunInUiContext(() =>
+            {
+                viewModel.BlockHasBeenFinished(progress, keyResultEntries);
+                keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
+            }); 
+
             
             if (keyResultEntries.Count > 0)
             {

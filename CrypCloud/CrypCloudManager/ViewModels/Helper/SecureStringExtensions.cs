@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -40,6 +41,13 @@ namespace CrypCloud.Manager.ViewModels.Helper
         public static string ToUnsecuredString(this SecureString secString)
         {
             return new System.Net.NetworkCredential(string.Empty, secString).Password;
+        }
+        public static SecureString FromString(this SecureString secString, string from)
+        {
+            secString.Clear();
+            Array.ForEach(from.ToArray(), secString.AppendChar);
+            secString.MakeReadOnly();
+            return secString;
         }
 
     }

@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <UserControl.DataContext>
         <viewModels:LoginVM  IsActive="True" />
     </UserControl.DataContext>
@@ -27,9 +27,7 @@
 
                 <!-- earth -->
                 <Image Width="300" Source="../Images/cloud_300.png" Margin="0,30"/>
-                            
- 
-                
+
                 <!-- messageBox -->
                 <Border CornerRadius="5" BorderThickness="3" BorderBrush="Gold" 
                         Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" >
@@ -41,8 +39,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        
-                         <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="35,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
+
+                        <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="35,0,0,0" Grid.Row="1" Grid.ColumnSpan="2" TextWrapping="Wrap"/>
                     </Grid>
                 </Border>
 
@@ -55,13 +53,20 @@
                 </Grid>
 
                 <Label Content="{Loc _Password_label}" Width="200"/>
-                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />     
+                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />
+                <Label/>
+
+                <Grid Width="200" Height="30">
+                    <CheckBox Content="{Loc _Remember_Me}" IsChecked="{Binding RememberPassword}" Width="190" 
+                              Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,5" RenderTransformOrigin="1,0.933" />
+                </Grid>
+
                 <Label/>
 
                 <TextBlock  Width="200" FontSize="12" Name="ForgotPasswordLabel" Cursor="Hand" HorizontalAlignment="Center">
-                      <TextBlock.InputBindings>
+                    <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding Path=ResetPasswordCommand}" MouseAction="LeftClick" />
-                     </TextBlock.InputBindings>
+                    </TextBlock.InputBindings>
                     <Underline>
                         <ContentControl Content="{Loc _Login_link_ForgotPassword}"/>
                     </Underline>
@@ -70,7 +75,7 @@
                 <TextBlock    Width="200" FontSize="12" Name="GetACertificateLabel" Cursor="Hand" HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding Path=CreateNewAccountCommand}" MouseAction="LeftClick" />
-                     </TextBlock.InputBindings>
+                    </TextBlock.InputBindings>
                     <Underline>
                         <ContentControl  Content="{Loc _Login_link_createNewAccount}"/>
                     </Underline>

@@ -16,8 +16,7 @@ namespace CrypCloud.Manager.ViewModels.Pocos
 
         public BigInteger Id { get; set; }
         public BigInteger TotalNumberOfBlocks { get; set; }
-        public BigInteger FinishedNumberOfBlocks { get; set; }
-
+        public BigInteger FinishedNumberOfBlocks { get; set; } 
         public string Creator { get; set; }
         public DateTime CreationDate { get; set; }
         public string Name { get; set; }

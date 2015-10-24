@@ -34,5 +34,29 @@ namespace CrypCloud.Manager {
                 this["amountOfWorker"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string rememberedUsername {
+            get {
+                return ((string)(this["rememberedUsername"]));
+            }
+            set {
+                this["rememberedUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string rememberedPassword {
+            get {
+                return ((string)(this["rememberedPassword"]));
+            }
+            set {
+                this["rememberedPassword"] = value;
+            }
+        }
     }
 }
