@@ -12,16 +12,23 @@ namespace CrypCloud.Manager.Screens
 
     [Cryptool.PluginBase.Attributes.Localization("CrypCloud.Manager.Properties.Resources")]
     public partial class Login : UserControl
-    { 
+
+    {  
         public Login()
         {
             InitializeComponent();
+
+            var rememberedUsername = Settings.Default.rememberedUsername;
+            if (!string.IsNullOrEmpty(rememberedUsername))
+            {
+                SecredPasswordInput.Password = "**********";
+            }
         }
 
         //prevents memory leaking of the sequre password imput
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (DataContext != null)
+            if (DataContext != null && !SecredPasswordInput.Password.Equals("**********"))
             {
                 ((LoginVM)DataContext).Password = ((PasswordBox)sender).SecurePassword;
             }

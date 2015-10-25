@@ -190,7 +190,7 @@ namespace CrypCloud.Manager.ViewModels
                 Description = Encoding.UTF8.GetString(job.JobDescription),
                 Creator = job.Creator,
                 TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
-                FinishedNumberOfBlocks = crypCloudCore.GetProgressOfJob(job.JobID),
+                FinishedNumberOfBlocks = crypCloudCore.GetCalculatedBlocksOfJob(job.JobID),
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),

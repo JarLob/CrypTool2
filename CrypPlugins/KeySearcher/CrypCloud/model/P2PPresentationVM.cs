@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -34,6 +35,7 @@ namespace KeySearcher.CrypCloud
         private TimeSpan avgTimePerChunkGlobal;
 
         private BigInteger localFinishedChunks;
+        private BigInteger finishedNumberOfBlocks;
         private BigInteger localAbortChunks;
         private BigInteger keysPerSecond;
         private String currentOperation = "idle";
@@ -74,8 +76,10 @@ namespace KeySearcher.CrypCloud
 
             if (job.StateConfig.NumberOfBlocks != 0)
             {
-                var progress = 100*CrypCloudCore.Instance.GetProgressOfJob(jobId).DivideAndReturnDouble(job.StateConfig.NumberOfBlocks);
+                FinishedNumberOfBlocks = CrypCloudCore.Instance.GetCalculatedBlocksOfJob(jobId);
+                var progress = 100 * finishedNumberOfBlocks.DivideAndReturnDouble(job.StateConfig.NumberOfBlocks);
                 GlobalProgress = progress;
+                OnPropertyChanged("GlobalProgressString"); 
             }
 
         }
@@ -99,7 +103,7 @@ namespace KeySearcher.CrypCloud
             TotalAmountOfChunks = keyPatternPool.Length;
             KeysPerBlock = keysPerChunk;
             JobID = keySearcher.JobID;
-           
+            
         }
         
         private static bool CannotUpdateView(KeySearcher keySearcher, KeySearcherSettings keySearcherSettings)
@@ -139,17 +143,20 @@ namespace KeySearcher.CrypCloud
             else 
             {
                 LocalAbortChunks++;
-            } 
+            }  
         } 
      
-        #endregion
+        #endregion 
         
         public void BlockHasBeenFinished(JobProgressEventArgs progress, List<KeyResultEntry> keyResultEntries)
         {
+            FinishedNumberOfBlocks = CrypCloudCore.Instance.GetCalculatedBlocksOfJob(JobID);
             GlobalSpeedStatistics.AddEntry(KeysPerBlock); 
             GlobalProgress = 100 * progress.NumberOfCalculatedBlocks.DivideAndReturnDouble(progress.NumberOfBlocks);
             numberOfLeftBlocks = progress.NumberOfBlocks - progress.NumberOfCalculatedBlocks;
             FillTopList(keyResultEntries);
+
+            OnPropertyChanged("GlobalProgressString"); 
         }
 
         public void UpdateGlobalSpeed(BigInteger keysPerSecond)
@@ -248,7 +255,7 @@ namespace KeySearcher.CrypCloud
                 OnPropertyChanged("JobID");
             }
         }
-
+     
      
         public double GlobalProgress
         {
@@ -359,7 +366,30 @@ namespace KeySearcher.CrypCloud
                 OnPropertyChanged("KeysPerBlock");
             }
         }
-        
+        public BigInteger FinishedNumberOfBlocks
+        {
+            get { return finishedNumberOfBlocks; }
+            set
+            {
+                finishedNumberOfBlocks = value;
+                OnPropertyChanged("FinishedNumberOfBlocks");
+            }
+        }
+
+        public string GlobalProgressString
+        {
+            get
+            {
+                if (TotalAmountOfChunks == 0) return "~";
+
+                var doneBlocks = FinishedNumberOfBlocks.ToString("N0", new CultureInfo("de-DE"));
+                var totalBlocks = TotalAmountOfChunks.ToString("N0", new CultureInfo("de-DE"));
+                var logBlocks = BigInteger.Log(TotalAmountOfChunks, 2);
+
+                return string.Format("{0} / {1} ({2} bits)", doneBlocks, totalBlocks, logBlocks);
+            }
+            set { } //for binding only
+        }
         
         public BigInteger KeysPerSecondGlobal
         {

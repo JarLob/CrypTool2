@@ -10,7 +10,7 @@
             <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Button.xaml" />
+                <ResourceDictionary Source="Styles/Button.xaml" /> 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -53,7 +53,7 @@
                 </Grid>
 
                 <Label Content="{Loc _Password_label}" Width="200"/>
-                <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />
+                <PasswordBox Name="SecredPasswordInput" PasswordChanged="PasswordBox_PasswordChanged" Width="200" MaxLength="40" />
                 <Label/>
 
                 <Grid Width="200" Height="30">

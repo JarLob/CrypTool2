@@ -18,6 +18,7 @@ using voluntLib.common.interfaces;
 using voluntLib.communicationLayer;
 using voluntLib.logging;
 using voluntLib.managementLayer.localStateManagement.states;
+using voluntLib.managementLayer.localStateManagement.states.config;
 using WorkspaceManager.Model;
 
 namespace CrypCloud.Core
@@ -64,8 +65,12 @@ namespace CrypCloud.Core
             var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
             var bannedList = bannedCertificates.Split('\n').ToList();
 
+            var state = new EpochStateConfig() { BitMaskWidth = 1024 * 16 };
+            state.FinalizeValues();
+
             var vlib = new VoluntLib
             {
+                DefaultStateConfig = state,
                 LogMode = LogMode.EventBased,
                 EnablePersistence = true,
                 LoadDataFromLocalStorage = true,
@@ -74,13 +79,29 @@ namespace CrypCloud.Core
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml")
 
             };
-            vlib.JobListChanged += OnJobListChanged;
-            vlib.JobProgress += OnJobStateChanged;
-            vlib.TaskStarted += OnTaskHasStarted;
-            vlib.TaskStopped += OnTaskHasStopped;
-            vlib.TaskProgress += OnTaskProgress;
-            vlib.JobFinished += OnJobFinished;
-            vlib.ApplicationLog += ConvertVoluntLibToCtLogs;
+
+
+            try
+            {
+                vlib.ApplicationLog -= ConvertVoluntLibToCtLogs;
+                vlib.JobFinished -= OnJobFinished;
+                vlib.TaskProgress -= OnTaskProgress;
+                vlib.TaskStopped -= OnTaskHasStopped;
+                vlib.TaskStarted -= OnTaskHasStarted;
+                vlib.JobProgress -= OnJobStateChanged;
+                vlib.JobListChanged -= OnJobListChanged;
+            }
+            finally
+            {
+                vlib.JobListChanged += OnJobListChanged;
+                vlib.JobProgress += OnJobStateChanged;
+                vlib.TaskStarted += OnTaskHasStarted;
+                vlib.TaskStopped += OnTaskHasStopped;
+                vlib.TaskProgress += OnTaskProgress;
+                vlib.JobFinished += OnJobFinished;
+                vlib.ApplicationLog += ConvertVoluntLibToCtLogs;
+            }
+
             return vlib;
         }
 
@@ -106,13 +127,13 @@ namespace CrypCloud.Core
 
             try
             {
-                voluntLib.ApplicationLog -= ConvertVoluntLibToCtLogs;
                 voluntLib.JobListChanged -= OnJobListChanged;
                 voluntLib.JobProgress -= OnJobStateChanged;
                 voluntLib.TaskStarted -= OnTaskHasStarted;
                 voluntLib.TaskStopped -= OnTaskHasStopped;
                 voluntLib.TaskProgress -= OnTaskProgress;
                 voluntLib.JobFinished -= OnJobFinished;
+                voluntLib.ApplicationLog -= ConvertVoluntLibToCtLogs;
 
                 voluntLib.Stop();
                 OnConnectionStateChanged(false);
@@ -190,7 +211,7 @@ namespace CrypCloud.Core
             return voluntLib.GetJobByID(jobid);
         }
 
-        public BigInteger GetProgressOfJob(BigInteger jobID)
+        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
         {
             if (!voluntLib.IsStarted)
             {

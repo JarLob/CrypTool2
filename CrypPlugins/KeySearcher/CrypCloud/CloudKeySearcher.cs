@@ -42,10 +42,21 @@ namespace KeySearcher
         public CloudKeySearcher(JobDataContainer jobDataContainer, KeyPattern.KeyPattern pattern, P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
         {
             this.keySearcher = keySearcher;
-            CrypCloudCore.Instance.JobStateChanged += JobStateChanged; 
-            CrypCloudCore.Instance.TaskHasStarted += NewTaskStarted;
-            CrypCloudCore.Instance.TaskHasStopped += TaskEnded;
-            CrypCloudCore.Instance.TaskProgress += TaskProgress;
+
+            try
+            {
+                CrypCloudCore.Instance.TaskProgress -= TaskProgress;
+                CrypCloudCore.Instance.TaskHasStopped -= TaskEnded;
+                CrypCloudCore.Instance.TaskHasStarted -= NewTaskStarted;
+                CrypCloudCore.Instance.JobStateChanged -= JobStateChanged;
+            }
+            finally
+            {
+                CrypCloudCore.Instance.JobStateChanged += JobStateChanged;
+                CrypCloudCore.Instance.TaskHasStarted += NewTaskStarted;
+                CrypCloudCore.Instance.TaskHasStopped += TaskEnded;
+                CrypCloudCore.Instance.TaskProgress += TaskProgress;
+            }
 
             jobId = jobDataContainer.JobId;
             calculationTemplate = new CalculationTemplate(jobDataContainer, pattern);
@@ -169,8 +180,18 @@ namespace KeySearcher
 
             try
             {
+                CrypCloudCore.Instance.TaskProgress -= TaskProgress;
+                CrypCloudCore.Instance.TaskHasStopped -= TaskEnded;
+                CrypCloudCore.Instance.TaskHasStarted -= NewTaskStarted;
+                CrypCloudCore.Instance.JobStateChanged -= JobStateChanged;
+            }
+            catch (Exception e) { }
+
+            try
+            {
                 CrypCloudCore.Instance.StopLocalCalculation(jobId);
-            } catch(Exception e){}
+            }
+            catch (Exception e) { }
         }
     }
 }
