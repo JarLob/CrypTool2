@@ -659,7 +659,7 @@
     <value>Zoom</value>
   </data>
   <data name="Do_you_want_to_save_the_changes_you_made_in_the_project" xml:space="preserve">
-    <value>Do you want to save the changes you made in the project "{0}" ?</value>
+    <value>Do you want to save the changes you made in the project in the file "{0}" ?</value>
   </data>
   <data name="Do_you_want_to_save_your_new_project" xml:space="preserve">
     <value>Do you want to save your new project?</value>

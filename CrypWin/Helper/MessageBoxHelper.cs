@@ -50,9 +50,9 @@ namespace Cryptool.CrypWin.Helper
     {
         if (projectFilename != "" && projectFilename != null)
         {
-            string filename = System.IO.Path.GetFileNameWithoutExtension(projectFilename);
-            
-            return MessageBox.Show(string.Format(Properties.Resources.Do_you_want_to_save_the_changes_you_made_in_the_project, filename ), Properties.Resources.Unsaved_changes, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                string filename = System.IO.Path.GetFileName(projectFilename);
+
+                return MessageBox.Show(string.Format(Properties.Resources.Do_you_want_to_save_the_changes_you_made_in_the_project, filename ), Properties.Resources.Unsaved_changes, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
         }
         else
             return MessageBox.Show(Properties.Resources.Do_you_want_to_save_your_new_project, Properties.Resources.Unsaved_changes, MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
