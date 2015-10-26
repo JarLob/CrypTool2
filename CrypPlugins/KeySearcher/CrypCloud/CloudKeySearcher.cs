@@ -59,7 +59,7 @@ namespace KeySearcher
             }
 
             jobId = jobDataContainer.JobId;
-            calculationTemplate = new CalculationTemplate(jobDataContainer, pattern);
+            calculationTemplate = new CalculationTemplate(jobDataContainer, pattern, SortAscending());
 
             uiContext = presentation.UiContext;
             viewModel = presentation.ViewModel; 
@@ -127,20 +127,36 @@ namespace KeySearcher
         {
             if (progress.JobId != jobId) return;
 
-            var keyResultEntries = progress.ResultList.Select(it => new KeyResultEntry(it)).Distinct().ToList();
-            keyResultEntries.Sort();
-
+            var keyResultList = ExtractResultList(progress);
             RunInUiContext(() =>
             {
-                viewModel.BlockHasBeenFinished(progress, keyResultEntries);
+                viewModel.BlockHasBeenFinished(progress, keyResultList.ToList());
                 keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
-            }); 
+            });
 
-            
-            if (keyResultEntries.Count > 0)
+            if (keyResultList.Any())
             {
-                keySearcher.SetTop1Entry(keyResultEntries[0]);
+                keySearcher.SetTop1Entry(keyResultList.First());
             } 
+        }
+
+        private List<KeyResultEntry> ExtractResultList(JobProgressEventArgs progress)
+        {
+            IEnumerable<KeyResultEntry> keyResultEntries = progress.ResultList
+                .Distinct()
+                .Select(it => new KeyResultEntry(it));
+
+            keyResultEntries = SortAscending()
+                ? keyResultEntries.OrderBy(it => it)
+                : keyResultEntries.OrderByDescending(it => it);
+
+            var keyResultList = keyResultEntries.ToList();
+            return keyResultList;
+        }
+
+        private bool SortAscending()
+        {
+            return keySearcher.CostMaster.GetRelationOperator().Equals(RelationOperator.LessThen);
         }
 
 
@@ -172,6 +188,10 @@ namespace KeySearcher
 
         public void Stop()
         {
+
+            viewModel.CurrentChunks.Clear();
+            viewModel.OnPropertyChanged("CurrentChunks");
+
             try
             {
                 updateTimer.Enabled = false;

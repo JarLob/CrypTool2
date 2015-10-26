@@ -12,9 +12,11 @@ namespace KeySearcher
 {
     internal class CalculationTemplate : ACalculationTemplate<KeyResultEntry>
     {
+        private readonly bool sortAscending;
 
-        public CalculationTemplate(JobDataContainer jobData, KeyPattern.KeyPattern pattern)
+        public CalculationTemplate(JobDataContainer jobData, KeyPattern.KeyPattern pattern, bool sortAscending)
         {
+            this.sortAscending = sortAscending;
             var keysPerChunk = pattern.size() / jobData.NumberOfBlocks;
             var keyPool = new KeyPatternPool(pattern, keysPerChunk);
             WorkerLogic = new Worker(jobData, keyPool);
@@ -25,10 +27,12 @@ namespace KeySearcher
         {
             var results = newResultList
                 .Concat(oldResultList)
-                .Distinct()
-                .ToList();
+                .Distinct();
 
-            results.Sort(); 
+            results = sortAscending 
+                ? results.OrderBy(it => it) 
+                : results.OrderByDescending(it => it); 
+
             return results.Take(10).ToList();
         }
     }

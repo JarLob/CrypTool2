@@ -28,7 +28,7 @@ namespace KeySearcherPresentation.Controls
         public TaskFactory UiContext { get; set; }
         public P2PPresentationVM ViewModel { get; set; }
      
-        public P2PQuickWatchPresentation()
+        public P2PQuickWatchPresentation() 
         {
             InitializeComponent();
             ViewModel = DataContext as P2PPresentationVM;

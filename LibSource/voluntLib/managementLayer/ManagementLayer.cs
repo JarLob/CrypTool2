@@ -398,6 +398,15 @@ namespace voluntLib.managementLayer
             //call self
             OnJobDeletion(message, IPAddress.Any);
         }
+        public EpochState GetStateByJobId(BigInteger jobId)
+        {
+            var localStates = LocalStates.Values;
+            var localStateManager = localStates.FirstOrDefault(state => state.JobID == jobId);
+
+            return localStateManager != null 
+                ? localStateManager.LocalState 
+                : null;
+        }
 
         #endregion
 
@@ -570,5 +579,7 @@ namespace voluntLib.managementLayer
         }
 
         #endregion
+
+      
     }
 }

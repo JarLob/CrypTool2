@@ -22,7 +22,7 @@ using voluntLib.managementLayer.localStateManagement.states.config;
 using WorkspaceManager.Model;
 
 namespace CrypCloud.Core
-{
+{ 
     public class CrypCloudCore
     {
         public string DefaultWorld = "CryptCloud";
@@ -436,7 +436,9 @@ namespace CrypCloud.Core
         public BigInteger GetEpochOfJob(NetworkJob job)
         {
             var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
-            return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
+            return (stateOfJob != null) 
+                ? stateOfJob.EpochNumber 
+                : 0;
         }
 
        

@@ -54,15 +54,7 @@ namespace CrypCloud.Manager.ViewModels.Pocos
             set{} //for binding only
         }
 
-        public string EpochProgress
-        {
-            get
-            {
-                return Epoch + "/" + MaxEpoch;
-            }
-            set{} //for binding only
-        }
-
+   
         public string ProgressTotal
         {
             get
@@ -77,5 +69,13 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         }
 
         public BigInteger MaxEpoch { get; set; }
+
+        public double EpochProgress { get; set; }
+
+        public string EpochProgressAsString
+        {
+            get { return Epoch + "/" + MaxEpoch; }
+            set { }
+        }
     }
 }

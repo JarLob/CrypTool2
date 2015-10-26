@@ -198,7 +198,12 @@ namespace KeySearcher.CrypCloud
 
         public String JobName
         {
-            get { return jobName; }
+            get
+            {
+                if (jobName == null || jobName.Length < 25) return jobName;
+
+                return jobName.Substring(0, 25) + "...";
+            }
             set
             {
                 jobName = value;
@@ -408,7 +413,7 @@ namespace KeySearcher.CrypCloud
         [field: NonSerialized]
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void OnPropertyChanged(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
             {

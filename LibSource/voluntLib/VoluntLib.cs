@@ -38,6 +38,7 @@ using voluntLib.managementLayer;
 using voluntLib.managementLayer.localStateManagement;
 using voluntLib.managementLayer.localStateManagement.states;
 using voluntLib.managementLayer.localStateManagement.states.config;
+using voluntLib.utilities;
 
 #endregion
 
@@ -780,14 +781,7 @@ namespace voluntLib
         public EpochState GetStateOfJob(BigInteger jobId)
         {
             ThrowErrorIfNotInitialized();
-            var localStates = ManagementLayer.LocalStates.Values;
-            var localStateManager = localStates.FirstOrDefault(state => state.JobID == jobId);
-            if (localStateManager != null)
-            {
-                return localStateManager.LocalState;
-            }
-
-            return null;
+            return ManagementLayer.GetStateByJobId(jobId);
         }
 
         #region jobID overloads
@@ -1021,35 +1015,7 @@ namespace voluntLib
             }
 
             var stateManager = ManagementLayer.LocalStates[jobId];
-            var bitMask = stateManager.LocalState.GetCopyOfBitmask();
-            return CreateImageForEpochBitmask(bitMask);
-        }
-
-        private static Bitmap CreateImageForEpochBitmask(BitArray bitMask)
-        {
-            //we wanna have a sqrt(length) x sqrt(length) image
-            var dimension = (int) Math.Ceiling(Math.Sqrt(bitMask.Length));
-            var bitmap = new Bitmap(dimension, dimension);
-
-            var x = 0;
-            var y = 0;
-            foreach (bool bit in bitMask)
-            {
-                bitmap.SetPixel(x, y, bit ? Color.Black : Color.White);
-                x++;
-                if (x >= dimension)
-                {
-                    x = 0;
-                    y++;
-                }
-            }
-
-            while (x < dimension)
-            {
-                bitmap.SetPixel(x, dimension - 1, Color.Gray);
-                x++;
-            }
-            return bitmap;
+            return EpochStateVisualization.CreateImage(stateManager.LocalState);
         }
 
         #endregion

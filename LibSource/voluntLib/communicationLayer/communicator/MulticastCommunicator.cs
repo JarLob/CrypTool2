@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using NLog;
 using voluntLib.common.interfaces;
@@ -73,9 +74,26 @@ namespace voluntLib.communicationLayer.communicator
             client = new UdpClient(multicastIP.AddressFamily);
             client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             client.Client.Bind(new IPEndPoint(LocalInterface, port));
-            client.JoinMulticastGroup(multicastIP);
+
+            // join multicast group on all available unicastAddressToJoin because windows/c# multicast sucks
+            var unicastAddressToJoin = NetworkInterface.GetAllNetworkInterfaces()
+                .Where(inferface => inferface.OperationalStatus == OperationalStatus.Up)
+                .Where(inferface => inferface.Supports(NetworkInterfaceComponent.IPv4))
+                .Select(inferface => inferface.GetIPProperties().UnicastAddresses)
+                .Select(FindUnicastForInnerNetwork)
+                .Where(unicast => unicast != null);
+
+            foreach (var unicast in unicastAddressToJoin)
+            {
+                client.JoinMulticastGroup(multicastIP, unicast.Address);
+            } 
 
             StartReceive();
+        }
+
+        private static UnicastIPAddressInformation FindUnicastForInnerNetwork(UnicastIPAddressInformationCollection unicasts)
+        {
+            return unicasts.FirstOrDefault(unicast => unicast.Address.AddressFamily == AddressFamily.InterNetwork);
         }
 
         public void Stop()

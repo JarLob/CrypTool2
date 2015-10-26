@@ -110,7 +110,7 @@
                         <GridViewColumn x:Name="PrintableID" Header="{Loc _JobList_col_Id}"
                                         DisplayMemberBinding="{Binding PrintableID}" Width="250" />
                         <GridViewColumn x:Name="Name" Header="{Loc  _JobList_col_Name}"
-                                        DisplayMemberBinding="{Binding Name}" Width="100" />
+                                        DisplayMemberBinding="{Binding Name}" Width="250" />
                         <GridViewColumn x:Name="Creator" Header="{Loc  _JobList_col_Creator}"
                                         DisplayMemberBinding="{Binding Creator}" Width="100" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
@@ -197,8 +197,8 @@
                     <ColumnDefinition Width="200" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="5" />
-                    <RowDefinition Height="25" />
+                    <RowDefinition  Height="5"/>
+                    <RowDefinition Height="25*" MaxHeight="50" />
                     <RowDefinition Height="25" />
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="25" />
@@ -208,14 +208,15 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
-                <TextBlock Grid.Column="1" Grid.Row="1"
+                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap"
                            Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}" />
 
                 <Label Grid.Column="0"  Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
-                <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" Maximum="{Binding ElementName=JobListView, Path=SelectedItem.MaxEpoch}"
-                             Value="{Binding ElementName=JobListView, Path=SelectedItem.Epoch}"  Width="200"
+                <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" 
+                             Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" 
+                             Width="200"
                              Height="25" />
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}"
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 

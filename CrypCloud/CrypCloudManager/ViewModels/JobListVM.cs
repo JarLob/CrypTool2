@@ -14,6 +14,7 @@ using CrypCloud.Core;
 using CrypCloud.Manager.Properties;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
+using KeySearcher.CrypCloud.statistics;
 using voluntLib.common;
 using MessageBox = System.Windows.MessageBox;
 
@@ -183,7 +184,13 @@ namespace CrypCloud.Manager.ViewModels
         #region helper
 
         private NetworkJobItem ConvertToListItem(NetworkJob job)
-        { 
+        {
+            var epochProgress = 0;
+            if (job.StateConfig.MaximumEpoch != 0)
+            {
+                epochProgress = (int) (100 * crypCloudCore.GetEpochOfJob(job).DivideAndReturnDouble(job.StateConfig.MaximumEpoch));
+            } 
+
             var item = new NetworkJobItem
             {
                 Name = job.JobName,
@@ -195,8 +202,9 @@ namespace CrypCloud.Manager.ViewModels
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),
                 CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID),
+                MaxEpoch = job.StateConfig.MaximumEpoch,
                 Epoch = crypCloudCore.GetEpochOfJob(job),
-                MaxEpoch = job.StateConfig.MaximumEpoch, 
+                EpochProgress = epochProgress
             };
 
             if (item.HasWorkspace)

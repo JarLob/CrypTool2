@@ -125,6 +125,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="managementLayer\delayedTasks\ARandomDelayedTask.cs" />
     <Compile Include="common\utils\SerializationHelper.cs" />
+    <Compile Include="utilities\EpochStateVisualization.cs" />
     <Compile Include="VoluntLib.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -138,6 +138,7 @@
     </Compile>
     <Compile Include="ViewModels\Base\VerificationBaseVM.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Helper\BigIntExtensions.cs" />
     <Compile Include="ViewModels\Helper\RelayCommand.cs" />
     <Compile Include="ViewModels\JobCreationVM.cs" />
     <Compile Include="ViewModels\JobListVM.cs" />
