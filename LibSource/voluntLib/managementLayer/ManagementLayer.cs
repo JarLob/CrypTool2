@@ -138,6 +138,7 @@ namespace voluntLib.managementLayer
             var calculationsLayers = LocalStates.Values.Select(stateManager => stateManager.CalculationLayer);
             var activeCalcLayers = calculationsLayers.Where(calculationLayer => calculationLayer != null && calculationLayer.IsStarted);
 
+           
             foreach (var calculationLayer in activeCalcLayers)
             {
                 calculationLayer.Stop();

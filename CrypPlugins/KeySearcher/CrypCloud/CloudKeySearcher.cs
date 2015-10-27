@@ -143,8 +143,8 @@ namespace KeySearcher
         private List<KeyResultEntry> ExtractResultList(JobProgressEventArgs progress)
         {
             IEnumerable<KeyResultEntry> keyResultEntries = progress.ResultList
-                .Distinct()
-                .Select(it => new KeyResultEntry(it));
+                .Select(it => new KeyResultEntry(it))
+                .Distinct();  
 
             keyResultEntries = SortAscending()
                 ? keyResultEntries.OrderBy(it => it)

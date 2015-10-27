@@ -26,8 +26,8 @@ namespace KeySearcher
         public override List<KeyResultEntry> MergeResults(IEnumerable<KeyResultEntry> oldResultList, IEnumerable<KeyResultEntry> newResultList)
         {
             var results = newResultList
-                .Concat(oldResultList)
-                .Distinct();
+                .Concat(oldResultList) 
+                .Distinct(); 
 
             results = sortAscending 
                 ? results.OrderBy(it => it) 

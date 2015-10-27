@@ -15,9 +15,14 @@
 #region
 
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Numerics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using NLog;
@@ -32,6 +37,8 @@ namespace voluntLib.communicationLayer.communicator
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
+        public const int WriteInterval = 10000;
+
         #region private members
 
         private const string RootElement = "voluntLibStore";
@@ -43,6 +50,10 @@ namespace voluntLib.communicationLayer.communicator
         private readonly bool loadOnStart;
 
         private ICommunicationLayer comLayer;
+
+        private readonly List<AMessage> writeCache = new List<AMessage>();
+        private CancellationTokenSource writeTaskCancleToken;
+        private Task writeTask;
 
         #endregion
 
@@ -64,12 +75,34 @@ namespace voluntLib.communicationLayer.communicator
             if (!enablePersistence)
                 return;
 
-            var doc = new XmlDocument();
-            doc.Load(filePath);
-            var jobNode = FindOrCreateJobNode(doc, data.Header.JobID);
-            var selectSingleNode = CreateOrSelectSingleNode(((MessageType) data.Header.MessageType).ToString(), jobNode, doc);
-            selectSingleNode.InnerText = Convert.ToBase64String(data.Serialize());
-            doc.Save(filePath);
+            lock (writeCache)
+            {
+                writeCache.Add(data);
+            }
+
+        }
+        private void WriteCacheToLocalStore(CancellationToken token)
+        {
+            while ( ! token.IsCancellationRequested)
+            {
+                var doc = new XmlDocument();
+                doc.Load(filePath);
+
+                lock (writeCache)
+                { 
+                    foreach (var data in writeCache)
+                    {
+                        var jobNode = FindOrCreateJobNode(doc, data.Header.JobID);
+                        var selectSingleNode = CreateOrSelectSingleNode(((MessageType)data.Header.MessageType).ToString(), jobNode, doc);
+                        selectSingleNode.InnerText = Convert.ToBase64String(data.Serialize());
+                    }
+                    writeCache.Clear();
+                }
+
+                doc.Save(filePath);
+
+                token.WaitHandle.WaitOne(WriteInterval);
+            }
         }
 
         #region helper
@@ -114,9 +147,20 @@ namespace voluntLib.communicationLayer.communicator
         {
             CreateFileIfNecessary();
 
-            if (!loadOnStart)
-                return;
+            if (loadOnStart) LoadInitialData();
 
+            writeTaskCancleToken = new CancellationTokenSource();
+            writeTask = new Task(
+                () => WriteCacheToLocalStore(writeTaskCancleToken.Token),
+                writeTaskCancleToken.Token, 
+                TaskCreationOptions.LongRunning
+             );
+            writeTask.Start();
+        }
+
+     
+        private void LoadInitialData()
+        {
             try
             {
                 var doc = new XmlDocument();
@@ -139,19 +183,20 @@ namespace voluntLib.communicationLayer.communicator
                     var stateNode = jobNode.SelectSingleNode(MessageType.PropagateState.ToString());
                     if (stateNode != null)
                         comLayer.HandleIncomingMessages(Convert.FromBase64String(stateNode.InnerText), IPAddress.None);
-
                 }
             }
             catch (Exception e)
             {
                 logger.Warn("Could not read from local storage. File may be corrupted. Error:" + e.GetBaseException());
             }
-        
         }
 
         public void Stop()
-        { 
-            /* since we are stateless, we dont have to do anything on stop */
+        {
+            if (writeTaskCancleToken != null && ! writeTaskCancleToken.IsCancellationRequested)
+            {
+                writeTaskCancleToken.Cancel();
+            }
         }
 
         private void CreateFileIfNecessary()

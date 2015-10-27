@@ -134,7 +134,11 @@ namespace CrypCloud.Core
                 voluntLib.TaskProgress -= OnTaskProgress;
                 voluntLib.JobFinished -= OnJobFinished;
                 voluntLib.ApplicationLog -= ConvertVoluntLibToCtLogs;
+            }
+            catch (Exception e) { }
 
+            try
+            {
                 voluntLib.Stop();
                 OnConnectionStateChanged(false);
             }

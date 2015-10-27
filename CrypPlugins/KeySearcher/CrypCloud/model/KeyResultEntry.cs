@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using voluntLib.common.interfaces;
@@ -20,17 +21,23 @@ namespace KeySearcher.CrypCloud
         public byte[] KeyBytes { get; set; }
         public byte[] Decryption { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            return GetHashCode().Equals(obj.GetHashCode());
+        }
+
+        public override int GetHashCode()
+        {
+            return KeyBytes.Aggregate(KeyBytes.Length, (current, t) => unchecked(current*314159 + t));
+        }
+
         #region IComparable
 
         public int CompareTo(object obj)
         {
+            if (Equals(obj)) return 0;
+
             var entry = (KeyResultEntry) obj;
-
-            if (KeyBytes.SequenceEqual(entry.KeyBytes))
-            {
-                return 0;
-            }
-
             var epsilon = .000001;
             if (Costs - entry.Costs > epsilon)
             {
@@ -41,6 +48,8 @@ namespace KeySearcher.CrypCloud
         }
 
         #endregion IComparable
+
+        
 
         public override string ToString()
         {

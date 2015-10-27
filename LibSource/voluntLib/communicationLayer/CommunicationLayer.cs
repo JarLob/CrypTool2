@@ -246,7 +246,7 @@ namespace voluntLib.communicationLayer
         public virtual void Stop()
         {
             communicators.Values.ToList().ForEach(com => com.Stop());
-
+ 
             //stop timer
             if (jobListExchangeTimer != null)
             {

@@ -259,6 +259,8 @@ namespace voluntLib
         private ReceivingTCPCommunicator receivingTCPCom;
 
         protected CommunicationLayer CommunicationLayer { get; private set; }
+        protected CommunicationLayer FileComLayer { get; private set; }
+
         protected ManagementLayer ManagementLayer { get; private set; }
         protected NetworkBridgeCommunicationLayer NetworkBridgeCommunicationLayer { get; private set; }
         protected NetworkBridgeManagementLayer NetworkBridgeManagementLayer { get; private set; }
@@ -319,6 +321,8 @@ namespace voluntLib
         {
             ThrowErrorIfNotStarted();
             CommunicationLayer.Stop();
+
+            if (FileComLayer != null) FileComLayer.Stop();
 
             ManagementLayer.Stop();
             IsStarted = false;
@@ -459,9 +463,9 @@ namespace voluntLib
         private void SetupFileCommunicator(CertificateService certificateService)
         {
             var fileCom = new FileCommunicator(LocalStoragePath, LoadDataFromLocalStorage, EnablePersistence,ClearLocalStorageOnStartUp);
-            var fileComLayer = new CommunicationLayer(ManagementLayer, certificateService, fileCom);
+            FileComLayer = new CommunicationLayer(ManagementLayer, certificateService, fileCom);
 
-            ManagementLayer.FileCommunicationLayer = fileComLayer;
+            ManagementLayer.FileCommunicationLayer = FileComLayer;
             fileCom.Start();
             IsPersistenceEnabled = EnablePersistence;
         }

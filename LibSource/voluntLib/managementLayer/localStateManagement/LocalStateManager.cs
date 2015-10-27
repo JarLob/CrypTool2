@@ -124,9 +124,12 @@ namespace voluntLib.managementLayer.localStateManagement
         {
             if (CanMergeStates)
             {
+                lock (this)
+                {
+                    LocalState.MergeMetaData(candidate);
+                    LocalState.ResultList = CalculationLayer.MergeResults(candidate.ResultList, LocalState.ResultList);
+                }
 
-                LocalState.MergeMetaData(candidate);
-                LocalState.ResultList = CalculationLayer.MergeResults(candidate.ResultList, LocalState.ResultList);
                 OnStateHasBeenMerged();
                 OnStateHasBeenUpdated();
                 
