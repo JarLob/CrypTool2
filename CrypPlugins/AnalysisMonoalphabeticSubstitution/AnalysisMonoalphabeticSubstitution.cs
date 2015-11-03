@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Windows.Threading;
 using System.Threading;
 using AnalysisMonoalphabeticSubstitution.Properties;
+using ManagedCuda;
 
 namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 {
@@ -35,7 +36,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
     delegate double CalculateFitness(Text plaintext);
     delegate void UpdateKeyDisplay(KeyCandidate keyCan);
 
-    [Author("Andreas Grüner", "Andreas.Gruener@web.de", "Humboldt University Berlin", "http://www.hu-berlin.de")]
+    [Author("Andreas Grüner, Cordian Henkel", "Andreas.Gruener@web.de, Cordian.Henkel@yahoo.de", "Humboldt University Berlin, Universität Kassel", "http://www.hu-berlin.de, https://www.ais.uni-kassel.de")]
     [PluginInfo("AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
@@ -57,8 +58,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private List<KeyCandidate> keyCandidates;
 
         // Statistics
-        private TimeSpan total_time = new TimeSpan();
-        private TimeSpan currun_time;
+        private TimeSpan total_time = new TimeSpan();       /*NEVER USED. WHAT TO DO ? */
+        private TimeSpan currun_time;                      /*NEVER USED. WHAT TO DO ? */
 
         // Input property variables
         private String ciphertext;
@@ -79,6 +80,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         // Attackers
         private DictionaryAttacker dicAttacker;
         private GeneticAttacker genAttacker;
+        private HillclimbingAttacker hillAttacker;
+
+        // Test for CUDA
+        private bool cudaAvailable;
 
         #endregion
 
@@ -139,8 +144,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
         public void Execute()
         {
+
             this.genAttacker = new GeneticAttacker();
             this.dicAttacker = new DictionaryAttacker();
+            this.hillAttacker = new HillclimbingAttacker();
 
             String alpha = "";
             Boolean inputOK = true;
@@ -222,8 +229,6 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 this.cText = null;
             }
 
-
-
             // PTAlphabet correct?
             if (this.ptAlphabet == null)
             {
@@ -260,6 +265,22 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 inputOK = false;
             }
 
+            //Check if Cuda is Available (Device & Driver).
+            cudaAvailable = true;
+            CudaContext chtxt = new CudaContext();
+
+            if (CudaContext.GetDeviceCount() != 0 && CudaContext.GetDriverVersion() != null)
+            {
+                Console.WriteLine("" + CudaContext.GetDriverVersion());
+                cudaAvailable = true;
+            }
+            else
+            {
+                cudaAvailable = false;
+            }
+            chtxt.Dispose();
+
+
             // If input incorrect return otherwise execute analysis
             lock (this.stopFlag)
             {
@@ -268,8 +289,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     return;
                 }
             }
-            
-            
+
+
             if (inputOK == false)
             {
                 inputOK = true;
@@ -281,16 +302,44 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 //this.masPresentation.DisableGUI();
                 this.masPresentation.UpdateOutputFromUserChoice = this.UpdateOutput;
                 this.keyCandidates = new List<KeyCandidate>();
-                if (this.langDic == null)
+               
+                /*Algorith
+                 * 0 = Hillclimbing CPU
+                 * 1 = Hillclimbing GPU
+                 * 2 = Genetic & Dictionary */
+                if (settings.ChooseAlgorithm == 0)
                 {
-                    AnalyzeGenetic();
+                    AnalyzeHillclimbingCPU();
                 }
-                else
+                else if (settings.ChooseAlgorithm == 1)
                 {
-                    AnalyzeDictionary();
-                    AnalyzeGenetic();
+               
+                    if (cudaAvailable)
+                    {
+                        AnalyzeHillclimbingGPU();
+                    }
+                    else
+                    {
+                        GuiLogMessage(Resources.no_cuda, NotificationLevel.Error);
+                        return;   
+                    }
                 }
-                //this.masPresentation.EnableGUI();
+                else if (settings.ChooseAlgorithm == 2)
+                {
+
+                    if (this.langDic == null)
+                    {
+                        AnalyzeGenetic();
+                    }
+                    else
+                    {
+                        AnalyzeDictionary();
+                        AnalyzeGenetic();
+                    }
+                    //this.masPresentation.EnableGUI();
+
+                }
+               
                 this.UpdateDisplayEnd();                
             }
             //set final plugin progress to 100%:
@@ -313,6 +362,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         {
             this.dicAttacker.StopFlag = true;
             this.genAttacker.StopFlag = true;
+            this.hillAttacker.StopFlag = true;
             this.langDic.StopFlag = true;
             lock(this.stopFlag)
             {
@@ -327,6 +377,117 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
         public void Dispose()
         {
+        }
+
+
+        public void AnalyzeHillclimbingCPU()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            lock (this.stopFlag)
+            {
+                if (this.stopFlag.Stop == true)
+                {
+                    return;
+                }
+            }
+
+            // Initialize analyzer
+            this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
+            this.hillAttacker.Restarts = settings.Restarts;
+            if (settings.Alphabet == 0) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyz";
+            if (settings.Alphabet == 1) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyzäüöß";
+
+            this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
+            this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
+
+
+            // Start attack
+            lock (this.stopFlag)
+            {
+                if (this.stopFlag.Stop == true)
+                {
+                    return;
+                }
+            }
+
+            this.hillAttacker.ExecuteOnCPU();
+
+            watch.Stop();
+
+            //Output Performance
+            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
+            GuiLogMessage(Resources.hill_attack_finished + curTime, NotificationLevel.Info);
+            GuiLogMessage(Resources.hill_attack_testedkeys + hillAttacker.TotalKeys.ToString("#,##0"), NotificationLevel.Info);
+
+            //Calculate total seconds needed for hillclimbing
+            int seconds = watch.Elapsed.Seconds;
+            int minutes = watch.Elapsed.Minutes;
+            for (int i = 0; i < minutes; i++)
+            {
+                seconds = seconds + 60;
+            }
+            // finishing calculation in under one second is possible due to great algorithm ; )
+            if (seconds == 0) seconds = 1;
+            //Output Perforamce: Keys / Second
+            long keysPerSecond = hillAttacker.TotalKeys / seconds;
+            GuiLogMessage(Resources.hill_attack_keyspersecond + keysPerSecond.ToString("#,##0"), NotificationLevel.Info);
+        }
+
+        public void AnalyzeHillclimbingGPU()
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            lock (this.stopFlag)
+            {
+                if (this.stopFlag.Stop == true)
+                {
+                    return;
+                }
+            }
+
+            // Initialize analyzer
+            this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
+            this.hillAttacker.Restarts = settings.Restarts;
+            if (settings.Alphabet == 0) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyz";
+            if (settings.Alphabet == 1) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyzäüöß";
+
+            this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
+            this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
+
+            // Start attack
+            lock (this.stopFlag)
+            {
+                if (this.stopFlag.Stop == true)
+                {
+                    return;
+                }
+            }
+
+            this.hillAttacker.ExecuteOnGPU();
+
+            watch.Stop();
+
+            //Output Performance
+            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
+            GuiLogMessage(Resources.hill_attack_finished + curTime, NotificationLevel.Info);
+            GuiLogMessage(Resources.hill_attack_testedkeys + hillAttacker.TotalKeys.ToString("#,##0"), NotificationLevel.Info);
+
+            //Calculate overall seconds needed for computing:
+            int seconds = watch.Elapsed.Seconds;
+            int minutes = watch.Elapsed.Minutes;
+            for (int i = 0; i < minutes; i++)
+            {
+                seconds = seconds + 60;
+            }
+
+            // finishing calculation in under one second is possible due to great algorithm ; )
+            if (seconds == 0) seconds = 1;
+            //Output Perforamce: Keys / Second
+            long keysPerSecond = hillAttacker.TotalKeys / seconds;
+            GuiLogMessage(Resources.hill_attack_keyspersecond + keysPerSecond.ToString("#,##0"), NotificationLevel.Info);
         }
 
         private void AnalyzeDictionary()
@@ -470,6 +631,14 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                             update = true;
                         }
                     }
+                    if (keyCan.HillAttack == true)
+                    {
+                        if (keyCanAlreadyInList.HillAttack == false)
+                        {
+                            keyCanAlreadyInList.HillAttack = true;
+                            update = true;
+                        }
+                    }
                 }
 
                 // Display output
@@ -509,6 +678,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                                     {
                                         entry.Attack = Resources.GenAttackDisplay + ", " + Resources.DicAttackDisplay;
                                     }
+                                    else if (keyCandidate.HillAttack == true)
+                                    {
+                                        entry.Attack = Resources.HillAttackDisplay;
+                                    }
 
                                     double f = Math.Log10(Math.Abs(keyCandidate.Fitness));
                                     entry.Value = string.Format("{0:0.00000} ", f);
@@ -529,7 +702,6 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             }
         }  
         
-
         private void UpdateDisplayStart()
         {
              ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate{

@@ -142,17 +142,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             }
             catch (Exception ex)
             {
-                try
-                {
-                    Clipboard.SetText("");
-                }
-                catch (Exception ex2)
-                {
-                    //wtf?
-                    //we saw a problem, that CLIPBRD_E_CANT_OPEN was thrown
-                    //we can not do anything then. so, at this point we do nothing....
-                    //see correpsonding ticket: https://www.cryptool.org/trac/CrypTool2/ticket/876
-                }
+                Clipboard.SetText("");
             }
         }
 

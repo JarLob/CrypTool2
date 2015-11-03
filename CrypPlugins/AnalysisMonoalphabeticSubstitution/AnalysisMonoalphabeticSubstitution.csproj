@@ -53,6 +53,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ManagedCuda">
+      <HintPath>..\..\Lib\ManagedCuda.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -85,6 +88,7 @@
       <DependentUpon>AssignmentPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="DictionaryAttacker.cs" />
+    <Compile Include="HillclimbingAttacker.cs" />
     <Compile Include="KeyCandidate.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Properties\Resources.de1.Designer.cs">
@@ -108,6 +112,10 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Substitution\Substitution.csproj">
+      <Project>{C2DE271E-BAC1-48A8-9D06-432F4978DC94}</Project>
+      <Name>Substitution</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +172,9 @@
     <None Include="en-small.dic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="AnalyseMonoalphabeticSubstitution_kernel.ptx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Documentation\doc.xml">
@@ -172,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

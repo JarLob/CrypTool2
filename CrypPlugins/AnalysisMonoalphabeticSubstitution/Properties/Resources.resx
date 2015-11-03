@@ -354,4 +354,43 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Copy value</value>
   </data>
+  <data name="HillAttackDisplay" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="hill_attack_finished" xml:space="preserve">
+    <value>Hillclimbing attack finished in: </value>
+  </data>
+  <data name="hill_attack_testedkeys" xml:space="preserve">
+    <value>Number of tested keys with hillclimbing attack: </value>
+  </data>
+  <data name="hill_attack_keyspersecond" xml:space="preserve">
+    <value>Tested keys with hillclimbing per second: </value>
+  </data>
+  <data name="ChooseAlgorithmCaption" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="ChooseAlgorithmList1" xml:space="preserve">
+    <value>Hillclimbing CPU</value>
+  </data>
+  <data name="ChooseAlgorithmList2" xml:space="preserve">
+    <value>Hillclimbing GPU</value>
+  </data>
+  <data name="ChooseAlgorithmList3" xml:space="preserve">
+    <value>Dictionary &amp; Genetic</value>
+  </data>
+  <data name="ChooseAlgorithmTooltip" xml:space="preserve">
+    <value>Choose the algorithm which should be used.</value>
+  </data>
+  <data name="RestartsCaption" xml:space="preserve">
+    <value>Amount of restarts (Hillclimbing only)</value>
+  </data>
+  <data name="RestartsTooltip" xml:space="preserve">
+    <value>Choose how often the hillclimbing algorithm should start over.</value>
+  </data>
+  <data name="SelectAlgorithmGroup" xml:space="preserve">
+    <value>Attacktype</value>
+  </data>
+  <data name="no_cuda" xml:space="preserve">
+    <value>Cudadevice or Cudadriver not found.</value>
+  </data>
 </root>

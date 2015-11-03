@@ -31,6 +31,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private bool hasChanges = false;
         private int alphabet = 0;
         private int treatmentInvalidChars = 0;
+        private int chooseAlgorithm = 0;
+        private int restarts = 10;
 
         #endregion
 
@@ -61,6 +63,34 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 treatmentInvalidChars = value;
                 OnPropertyChanged("TreatmentInvalidChars");
+            }
+        }
+
+        [TaskPane("ChooseAlgorithmCaption", "ChooseAlgorithmTooltip", "SelectAlgorithmGroup", 3, false, ControlType.ComboBox, new string[] { "ChooseAlgorithmList1", "ChooseAlgorithmList2", "ChooseAlgorithmList3" })]
+        public int ChooseAlgorithm
+        {
+            get { return chooseAlgorithm; }
+            set
+            {
+                chooseAlgorithm = value;
+                OnPropertyChanged("ChooseAlgorithm");
+            }
+        }
+
+        [TaskPane("RestartsCaption", "RestartsTooltip", null, 4, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
+        public int Restarts
+        {
+            get
+            {
+                return restarts;
+            }
+            set
+            {
+                if (value != restarts)
+                {
+                    restarts = value;
+                    OnPropertyChanged("Restarts");
+                }
             }
         }
 

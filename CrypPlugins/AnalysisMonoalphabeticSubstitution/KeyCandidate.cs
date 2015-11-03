@@ -13,6 +13,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private String key_string;
         private bool genAttack;
         private bool dicAttack;
+        private bool hillAttack;
 
         public String Key_string
         {
@@ -48,6 +49,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         {
             get { return this.dicAttack; }
             set { this.dicAttack = value; }
+        }
+
+        public Boolean HillAttack
+        {
+            get { return this.hillAttack; }
+            set { this.hillAttack = value; }
         }
 
         public KeyCandidate(int[] key, double fitness, String plaintext, String key_string)
