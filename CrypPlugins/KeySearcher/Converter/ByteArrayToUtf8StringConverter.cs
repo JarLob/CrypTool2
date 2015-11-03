@@ -16,9 +16,9 @@ namespace KeySearcher.Converter
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var bytes = (byte[])value;
-            return Regex.Replace(Encoding.UTF8.GetString(bytes), @"\r\n?|\n", "").Replace(" ", ""); 
+            return Regex.Replace(Encoding.UTF8.GetString(bytes), @"\r\n?|\n", ""); 
         }
-
+         
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();

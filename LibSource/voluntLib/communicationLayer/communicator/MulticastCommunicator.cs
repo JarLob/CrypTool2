@@ -32,6 +32,7 @@ namespace voluntLib.communicationLayer.communicator
     {
         #region private member
 
+
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private readonly List<byte[]> lastOutboundPackets;
         private readonly IPAddress multicastIP;

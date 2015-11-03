@@ -151,9 +151,9 @@ namespace voluntLib.managementLayer
         /// <param name="jobID"></param>
         /// <param name="template"></param>
         /// <param name="amountOfWorker"></param>
-        public void JoinNetworkJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
+        public bool JoinNetworkJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
         {
-            var job = Jobs.GetJob(jobID);
+            var job = Jobs.GetJob(jobID); 
             if (job.JobPayload == null)
             {
                 NetworkCommunicationLayer.RequestJobDetails(jobID, job.World, IPAddress.Any);
@@ -161,11 +161,16 @@ namespace voluntLib.managementLayer
 
             var stateManager = GetOrCreateStateManager(jobID, job);
             CreateCalculationLayer(jobID, template, amountOfWorker, stateManager);
-
             NetworkCommunicationLayer.JoinNetworkJob(jobID, job.World, IPAddress.Any);
+
+            if (stateManager.LocalState.IsFinished())
+            {
+                return false;
+            }
 
             AddOwnWorklog(jobID);
             WaitForNetworkToSyncState(stateManager, job);
+            return true;
         }
 
         private static void CreateCalculationLayer(BigInteger jobID, ACalculationTemplate template, int amountOfWorker, LocalStateManager<EpochState> stateManager)

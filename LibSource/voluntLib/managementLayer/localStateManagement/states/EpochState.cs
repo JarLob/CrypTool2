@@ -145,6 +145,8 @@ namespace voluntLib.managementLayer.localStateManagement.states
 
         public override BigInteger GetFreeBlock(List<BigInteger> workingOnSet)
         {
+            if (IsFinished()) return -1;
+
             lock (this)
             {
                 var amountOfZeros = config.BitMaskWidth - GetNumberOfCalculatedBlocksInCurrentEpoch();

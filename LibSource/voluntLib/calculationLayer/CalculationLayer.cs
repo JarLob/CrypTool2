@@ -99,11 +99,11 @@ namespace voluntLib.calculationLayer
         /// </summary>
         public bool Start()
         {
-            if (localStateManager == null)
-                return false;
+            if (localStateManager == null) return false;
+            if (localStateManager.LocalState.IsFinished()) return false;
 
             var i = 0;
-            while (i++ < amountOfWorker && StartCalculationTask()) {}
+            while (i < amountOfWorker && StartCalculationTask()) {}
 
             Logger.Info("Started" + (i - 1) + "Worker");
             localStateManager.StateHasBeenUpdated += UpdateCalculationTasks;

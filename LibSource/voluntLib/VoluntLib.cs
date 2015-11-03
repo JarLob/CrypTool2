@@ -552,10 +552,10 @@ namespace voluntLib
         ///   Thrown, if the object has not
         ///   been initialized or not been started.
         /// </exception>
-        public virtual void JoinNetworkJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
+        public virtual bool JoinNetworkJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
         {
             ThrowErrorIfNotStarted();
-            ManagementLayer.JoinNetworkJob(jobID, template, amountOfWorker);
+            return ManagementLayer.JoinNetworkJob(jobID, template, amountOfWorker);
         }
 
         /// <summary>

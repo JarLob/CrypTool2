@@ -18,6 +18,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -36,6 +37,7 @@ namespace voluntLib.communicationLayer.communicator
     public class FileCommunicator : ICommunicator
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static readonly int BUFFER_SIZE = 64 * 1024; //64kB
 
         public const int WriteInterval = 10000;
 
@@ -141,6 +143,7 @@ namespace voluntLib.communicationLayer.communicator
 
         #endregion
 
+    
         #region start stop
 
         public void Start()

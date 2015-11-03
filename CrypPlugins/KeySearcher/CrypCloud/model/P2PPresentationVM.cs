@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System; 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Numerics;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
-using System.Windows.Threading;
-using CrypCloud.Core;
-using Cryptool.PluginBase;
+using System.Numerics; 
+using System.Threading.Tasks; 
+using CrypCloud.Core; 
 using KeySearcher.CrypCloud.statistics;
-using KeySearcher.KeyPattern;
-using KeySearcherPresentation.Controls;
-using voluntLib.common;
-using voluntLib.common.eventArgs;
-using Timer = System.Timers.Timer;
+using KeySearcher.KeyPattern; 
+using voluntLib.common.eventArgs; 
 
 namespace KeySearcher.CrypCloud
 {
@@ -118,25 +109,41 @@ namespace KeySearcher.CrypCloud
             if (CurrentChunks.Contains(blockId)) return;
 
             CurrentChunks.Add(blockId);
+
+            lock (this)
+            {
+                if (CurrentChunks.Count > CrypCloudCore.Instance.AmountOfWorker)
+                {
+                    var tasksToRemove = CurrentChunks.Take(CurrentChunks.Count - CrypCloudCore.Instance.AmountOfWorker);
+                    foreach (var bigInteger in tasksToRemove)
+                    {
+                        CurrentChunks.Remove(bigInteger);
+                    }
+                }
+            }
+           
+
             OnPropertyChanged("CurrentChunks");
         }
       
         public void EndedLocalCalculation(TaskEventArgs taskArgs)
         {
-            var itemInList = CurrentChunks.FirstOrDefault(it => it == taskArgs.BlockID);
-            if (itemInList != default(BigInteger))
+            lock (this)
             {
-                CurrentChunks.Remove(itemInList);
-                OnPropertyChanged("CurrentChunks");
-            }
+                var itemInList = CurrentChunks.FirstOrDefault(it => it == taskArgs.BlockID);
+                if (itemInList != default(BigInteger))
+                {
+                    CurrentChunks.Remove(itemInList);
+                }
 
-            if (itemInList == 0 && CurrentChunks.Contains(0))
-            {
-                CurrentChunks.Remove(0);
-                OnPropertyChanged("CurrentChunks");
+                if (itemInList == 0 && CurrentChunks.Contains(0))
+                {
+                    CurrentChunks.Remove(0);
+                }
             }
-            
-           if (taskArgs.Type == TaskEventArgType.Finished)
+            OnPropertyChanged("CurrentChunks");
+
+            if (taskArgs.Type == TaskEventArgType.Finished)
             {
                 LocalFinishedChunks++;
             }
@@ -150,7 +157,7 @@ namespace KeySearcher.CrypCloud
         
         public void BlockHasBeenFinished(JobProgressEventArgs progress, List<KeyResultEntry> keyResultEntries)
         {
-            FinishedNumberOfBlocks = CrypCloudCore.Instance.GetCalculatedBlocksOfJob(JobID);
+            FinishedNumberOfBlocks = progress.NumberOfCalculatedBlocks;
             GlobalSpeedStatistics.AddEntry(KeysPerBlock); 
             GlobalProgress = 100 * progress.NumberOfCalculatedBlocks.DivideAndReturnDouble(progress.NumberOfBlocks);
             numberOfLeftBlocks = progress.NumberOfBlocks - progress.NumberOfCalculatedBlocks;

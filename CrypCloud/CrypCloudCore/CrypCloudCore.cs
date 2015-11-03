@@ -16,6 +16,7 @@ using voluntLib.common;
 using voluntLib.common.eventArgs;
 using voluntLib.common.interfaces;
 using voluntLib.communicationLayer;
+using voluntLib.communicationLayer.messages.commonStructs;
 using voluntLib.logging;
 using voluntLib.managementLayer.localStateManagement.states;
 using voluntLib.managementLayer.localStateManagement.states.config;
@@ -39,7 +40,8 @@ namespace CrypCloud.Core
         #endregion
 
         private VoluntLib voluntLib;
-
+        private readonly Dictionary<BigInteger, JobPayload> jobPayloadCache = new Dictionary<BigInteger, JobPayload>();
+      
         #region properties
 
         public bool IsRunning
@@ -77,9 +79,7 @@ namespace CrypCloud.Core
                 AdminCertificateList = adminList,
                 BannedCertificateList = bannedList,
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml")
-
             };
-
 
             try
             {
@@ -104,6 +104,8 @@ namespace CrypCloud.Core
 
             return vlib;
         }
+
+        #region login/Logout/start/stop
 
         public bool Login(X509Certificate2 ownCertificate)
         {
@@ -148,23 +150,159 @@ namespace CrypCloud.Core
             }
 
         }
-
-        public bool IsPartizipationOnJob()
+        public void StartLocalCalculation(BigInteger jobId, ACalculationTemplate template)
         {
-            return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
+            voluntLib.JoinNetworkJob(jobId, template, AmountOfWorker);
         }
 
+        public void StopLocalCalculation(BigInteger jobId)
+        {
+            voluntLib.StopCalculation(jobId);
+        }
+        #endregion
+        
+
+        #region job information
+
+        public List<NetworkJob> GetJobs()
+        {
+            if (!voluntLib.IsStarted)
+            {
+                return new List<NetworkJob>();
+            }
+
+            return voluntLib.GetJobsOfWorld(DefaultWorld);
+        }
+
+        public NetworkJob GetJobsById(BigInteger jobid)
+        {
+            if (!voluntLib.IsStarted)
+            {
+                return new NetworkJob(jobid);
+            }
+
+            return voluntLib.GetJobByID(jobid);
+        }
+
+        public NetworkJobData GetJobDataById(BigInteger jobId)
+        {
+            if (!voluntLib.IsStarted) return null;
+
+            return new NetworkJobData
+            {
+                Job = voluntLib.GetJobByID(jobId),
+                HasWorkspace = () => JobHasWorkspace(jobId),
+                CalculatedBlocks = () => GetCalculatedBlocksOfJob(jobId),
+                Workspace = () => GetWorkspaceOfJob(jobId),
+                CreationDate = () => GetCreationDateOfJob(jobId),
+                Payload = () => GetPayloadOfJob(jobId),
+                GetCurrentTopList = () => GetToplistOfJob(jobId)
+            };
+        }
+
+        private List<byte[]> GetToplistOfJob(BigInteger jobId)
+        {
+            if (!voluntLib.IsStarted) return new List<byte[]>();
+
+            var job = voluntLib.GetJobByID(jobId);
+            if (job == null) return new List<byte[]>();
+
+            var stateOfJob = voluntLib.GetStateOfJob(jobId);
+            if (stateOfJob == null) return  new List<byte[]>();
+
+            return new List<byte[]>(stateOfJob.ResultList);
+        }
+
+        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
+        {
+            if (!voluntLib.IsStarted)
+            {
+                return new BigInteger(0);
+            }
+
+            return voluntLib.GetCalculatedBlocksOfJob(jobID);
+        }
+
+        public bool JobHasWorkspace(BigInteger jobId)
+        {
+            var job = voluntLib.GetJobByID(jobId);
+            return job != null && job.HasPayload();
+        }
+
+        public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)
+        {
+            var payloadOfJob = GetPayloadOfJob(jobId);
+            if (payloadOfJob == null)
+            {
+                return null;
+            }
+
+            var workspaceOfJob = payloadOfJob.WorkspaceModel;
+
+            var cloudComponents = workspaceOfJob.GetAllPluginModels()
+                .Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
+            foreach (var cloudComponent in cloudComponents)
+            {
+                ((ACloudCompatible)cloudComponent.Plugin).JobID = jobId;
+                ((ACloudCompatible)cloudComponent.Plugin).ComputeWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash;
+                ((ACloudCompatible)cloudComponent.Plugin).ValidWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash();
+            }
+
+            return workspaceOfJob;
+        }
+
+        public DateTime GetCreationDateOfJob(BigInteger jobId)
+        {
+            var payloadOfJob = GetPayloadOfJob(jobId);
+            if (payloadOfJob == null)
+            {
+                return new DateTime(0);
+            }
+
+            return payloadOfJob.CreationTime;
+        }
+
+
+        public JobPayload GetPayloadOfJob(BigInteger jobId)
+        {
+            var job = voluntLib.GetJobByID(jobId);
+            if (job == null || !job.HasPayload() || job.IsDeleted)
+            {
+                return null;
+            }
+
+            if (!jobPayloadCache.ContainsKey(jobId))
+            {
+                try
+                {
+                    var jobPayload = new JobPayload().Deserialize(job.JobPayload);
+                    jobPayloadCache.Add(jobId, jobPayload);
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
+            }
+
+            return jobPayloadCache[jobId];
+        }
         public Bitmap GetJobStateVisualization(BigInteger jobId)
         {
             return voluntLib.GetVisualizationOfJobState(jobId);
         }
-         
+
         public bool UserCanDeleteJob(NetworkJob job)
         {
             return voluntLib.CanUserDeleteJob(job);
         }
 
+        #endregion
 
+        public bool IsPartizipationOnJob()
+        {
+            return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
+        }
+  
         public bool IsBannedCertificate(X509Certificate2 certificate)
         {
 
@@ -185,52 +323,7 @@ namespace CrypCloud.Core
             voluntLib.RefreshJobList(DefaultWorld);
         }
 
-        public void StartLocalCalculation(BigInteger jobId, ACalculationTemplate template)
-        {
-            voluntLib.JoinNetworkJob(jobId, template, AmountOfWorker);
-        }
-
-        public void StopLocalCalculation(BigInteger jobId)
-        {
-            voluntLib.StopCalculation(jobId);
-        }
-
-        public List<NetworkJob> GetJobs()
-        {
-            if (!voluntLib.IsStarted)
-            {
-                return new List<NetworkJob>();
-            }
-
-            return voluntLib.GetJobsOfWorld(DefaultWorld);
-        } 
-        
-        public NetworkJob GetJobsById(BigInteger jobid)
-        {
-            if (!voluntLib.IsStarted)
-            {
-                return new NetworkJob(jobid);
-            }
-
-            return voluntLib.GetJobByID(jobid);
-        }
-
-        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
-        {
-            if (!voluntLib.IsStarted)
-            {
-                return new BigInteger(0);
-            }
-
-            return voluntLib.GetCalculatedBlocksOfJob(jobID);
-        }
-
-        public bool JobHasWorkspace(BigInteger jobId)
-        {
-            var job = voluntLib.GetJobByID(jobId);
-            return job != null && job.HasPayload();
-        }
-
+     
         public void DownloadWorkspaceOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
@@ -245,66 +338,6 @@ namespace CrypCloud.Core
 
             voluntLib.RequestJobDetails(job);
         }
-
-        public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)
-        {
-            var payloadOfJob = GetPayloadOfJob(jobId);
-            if (payloadOfJob == null)
-            {
-                return null;
-            }
-
-            var workspaceOfJob = payloadOfJob.WorkspaceModel;
-
-            var cloudComponents = workspaceOfJob.GetAllPluginModels()
-                .Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
-            foreach (var cloudComponent in cloudComponents)
-            {
-                ((ACloudCompatible) cloudComponent.Plugin).JobID = jobId;
-                ((ACloudCompatible) cloudComponent.Plugin).ComputeWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash;
-                ((ACloudCompatible) cloudComponent.Plugin).ValidWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash();
-            }
-             
-            return workspaceOfJob; 
-        }
-
-        public DateTime GetCreationDateOfJob(BigInteger jobId)
-        {
-            var payloadOfJob = GetPayloadOfJob(jobId);
-            if (payloadOfJob == null)
-            {
-                return new DateTime(0);
-            }
-
-            return payloadOfJob.CreationTime;
-        }
-
-
-        private readonly Dictionary<BigInteger, JobPayload> jobPayloadCache = new Dictionary<BigInteger, JobPayload>();
-        public JobPayload GetPayloadOfJob(BigInteger jobId)
-        {
-            var job = voluntLib.GetJobByID(jobId);
-            if (job == null || !job.HasPayload() || job.IsDeleted)
-            {
-                return null;
-            }
-             
-            if ( ! jobPayloadCache.ContainsKey(jobId))
-            {
-                try
-                {
-                    var jobPayload = new JobPayload().Deserialize(job.JobPayload);
-                    jobPayloadCache.Add(jobId, jobPayload);
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
-            }
-
-            return jobPayloadCache[jobId];
-        }
-
 
         public void DeleteJob(BigInteger jobId)
         {
@@ -445,6 +478,18 @@ namespace CrypCloud.Core
                 : 0;
         }
 
-       
+
+      
+    }
+
+    public class NetworkJobData
+    {
+        public NetworkJob Job { get; set; }
+        public Func<BigInteger> CalculatedBlocks { get; set; }
+        public Func<bool> HasWorkspace { get; set; }
+        public Func<WorkspaceModel> Workspace { get; set; }
+        public Func<DateTime> CreationDate { get; set; }
+        public Func<JobPayload> Payload { get; set; }
+        public Func<List<byte[]>> GetCurrentTopList { get; set; }
     }
 }

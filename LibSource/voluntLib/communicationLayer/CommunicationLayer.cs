@@ -16,6 +16,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Numerics;
@@ -206,6 +208,11 @@ namespace voluntLib.communicationLayer
             }
         }
 
+        #region zip
+
+      
+
+        #endregion
         #endregion
 
         public void AddCommunicator(IPAddress triggeringIP, ICommunicator communicator)

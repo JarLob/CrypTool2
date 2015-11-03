@@ -1,25 +1,17 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+using System; 
+using System.Collections.Generic; 
 using System.Linq;
-using System.Numerics;
-using System.Threading;
+using System.Numerics; 
 using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Threading;
+using System.Timers; 
 using CrypCloud.Core;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control;
-using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.PluginBase.Control; 
 using KeySearcher.CrypCloud;
-using KeySearcher.CrypCloud.statistics;
-using KeySearcher.KeyPattern;
+using KeySearcher.CrypCloud.statistics; 
 using KeySearcherPresentation.Controls;
 using voluntLib.common;
-using voluntLib.common.eventArgs;
-using voluntLib.common.interfaces;
+using voluntLib.common.eventArgs; 
 using Timer = System.Timers.Timer;
 
 namespace KeySearcher
@@ -66,12 +58,24 @@ namespace KeySearcher
             viewModel.GlobalSpeedStatistics = globalSpeedStatistics;
             viewModel.LocalSpeedStatistics = localSpeedStatistics;
 
-            RunInUiContext(() =>
+            try
             {
-                viewModel.JobID = jobId; 
-                UpdatePresentation(presentation, keySearcher);
-                keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
-            });
+                var jobData = CrypCloudCore.Instance.GetJobDataById(jobId);
+                var jobProgressEventArgs = new JobProgressEventArgs(jobId,
+                    jobData.GetCurrentTopList(),
+                    jobData.Job.StateConfig.NumberOfBlocks,
+                    jobData.CalculatedBlocks()
+                );
+
+                RunInUiContext(() =>
+                {
+                    viewModel.JobID = jobId;
+                    UpdatePresentation(presentation, keySearcher);
+                    keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
+                    JobStateChanged(null, jobProgressEventArgs);
+                });
+            }
+            catch (Exception e) { }
         }
 
 
@@ -121,7 +125,7 @@ namespace KeySearcher
             RunInUiContext(
                 () => viewModel.EndedLocalCalculation(taskArgs) 
             );
-        } 
+        }
 
         private void JobStateChanged(object sender, JobProgressEventArgs progress)
         {
