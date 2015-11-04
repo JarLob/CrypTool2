@@ -102,10 +102,16 @@ namespace voluntLib.calculationLayer
             if (localStateManager == null) return false;
             if (localStateManager.LocalState.IsFinished()) return false;
 
-            var i = 0;
-            while (i < amountOfWorker && StartCalculationTask()) {}
-
-            Logger.Info("Started" + (i - 1) + "Worker");
+            int i;
+            for (i = 0; i < amountOfWorker;i++)
+            {
+                //returns false if start is not possible
+                if (!StartCalculationTask())
+                {
+                    break;
+                }
+            }
+            Logger.Info("Started " + (i - 1) + " workers");
             localStateManager.StateHasBeenUpdated += UpdateCalculationTasks;
             IsStarted = true;
             return true;

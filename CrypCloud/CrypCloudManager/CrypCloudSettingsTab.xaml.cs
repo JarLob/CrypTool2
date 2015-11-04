@@ -16,7 +16,7 @@ namespace CrypCloud.Manager
     public partial class CrypCloudSettingsTab : UserControl
     {
         private int minvalue = 1;
-        private readonly int maxvalue = Environment.ProcessorCount - 1;
+        private readonly int maxvalue = Environment.ProcessorCount;
         private readonly int startvalue;
         public CrypCloudSettingsTab(Style settingsStyle)
         {
