@@ -245,6 +245,7 @@ namespace KeySearcher
         #region OpenCL
 
         [TaskPane( "NoOpenCLCaption", "NoOpenCLTooltip", "GroupOpenCL", 1, false, ControlType.TextBoxReadOnly)]
+        [DontSave]
         public string NoOpenCL
         {
             get { return Resources.No_OpenCL_Device_available_; }
