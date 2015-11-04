@@ -40,7 +40,7 @@ namespace voluntLib.communicationLayer.communicator
 
         private UdpClient client;
         private bool hasStopped;
-        private UdpClient sender;
+        private List<Socket> senders = new List<Socket>();
 
         #endregion
 
@@ -68,9 +68,8 @@ namespace voluntLib.communicationLayer.communicator
 
         public virtual void Start()
         {
-            hasStopped = false;
-            sender = new UdpClient(0, multicastIP.AddressFamily) {MulticastLoopback = true};
-            sender.JoinMulticastGroup(multicastIP);
+            hasStopped = false;            
+            //sender.JoinMulticastGroup(multicastIP);
 
             client = new UdpClient(multicastIP.AddressFamily);
             client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
@@ -79,7 +78,6 @@ namespace voluntLib.communicationLayer.communicator
             // join multicast group on all available unicastAddressToJoin because windows/c# multicast sucks
             var unicastAddressToJoin = NetworkInterface.GetAllNetworkInterfaces()
                 .Where(inferface => inferface.OperationalStatus == OperationalStatus.Up)
-                .Where(inferface => inferface.Supports(NetworkInterfaceComponent.IPv4))
                 .Select(inferface => inferface.GetIPProperties().UnicastAddresses)
                 .Select(FindUnicastForInnerNetwork)
                 .Where(unicast => unicast != null);
@@ -87,8 +85,19 @@ namespace voluntLib.communicationLayer.communicator
             foreach (var unicast in unicastAddressToJoin)
             {
                 client.JoinMulticastGroup(multicastIP, unicast.Address);
-            } 
+            }
 
+            //create send socket for each network interface
+            foreach (IPAddress localIp in Dns.GetHostAddresses(Dns.GetHostName()).Where(i => i.AddressFamily == AddressFamily.InterNetwork))
+            {
+                var sendSocket = new Socket(localIp.AddressFamily, SocketType.Dgram, ProtocolType.Udp);                
+                sendSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership, new MulticastOption(multicastIP, localIp));
+                sendSocket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 255);
+                sendSocket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                sendSocket.MulticastLoopback = true;
+                sendSocket.Bind(new IPEndPoint(localIp, port));
+                senders.Add(sendSocket);                                
+            }
             StartReceive();
         }
 
@@ -99,11 +108,26 @@ namespace voluntLib.communicationLayer.communicator
 
         public void Stop()
         {
-            sender.DropMulticastGroup(multicastIP);
-            sender.Close();
+            foreach (var sender in senders)
+            {
+                try
+                {
+                    sender.Close();
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("Could not close sending socket:" + e.Message);
+                }
+            }
 
-            client.DropMulticastGroup(multicastIP);
-            client.Close();
+            try
+            {
+                client.DropMulticastGroup(multicastIP);
+                client.Close();
+            }catch (Exception e)
+            {
+                Logger.Error("Could not close receiving socket:" + e.Message);
+            }
             hasStopped = true;
         }
 
@@ -168,12 +192,17 @@ namespace voluntLib.communicationLayer.communicator
                 }
             }
 
-            try
+            foreach (var socket in senders)
             {
-                sender.Send(bytes, bytes.Length, new IPEndPoint(multicastIP, port));
-            } catch (Exception e)
-            {
-                Logger.Error(e.Message + " message-length: " + bytes.Length + " message-type: " + data.Header.MessageType);
+                try
+                {
+                    var ipep = new IPEndPoint(multicastIP, port);
+                    socket.SendTo(bytes, ipep);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e.Message + " message-length: " + bytes.Length + " message-type: " + data.Header.MessageType);
+                }
             }
         }
 
