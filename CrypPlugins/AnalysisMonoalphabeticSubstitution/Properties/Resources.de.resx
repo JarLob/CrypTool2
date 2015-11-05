@@ -379,7 +379,7 @@
     <value>Hillclimbing GPU</value>
   </data>
   <data name="ChooseAlgorithmList3" xml:space="preserve">
-    <value>Wörterbuch &amp; Generisch</value>
+    <value>Wörterbuch &amp; Genetisch</value>
   </data>
   <data name="ChooseAlgorithmTooltip" xml:space="preserve">
     <value>Wähle einen Algorithmus mit dem die Dechiffrierung durchgeführt werden soll.</value>

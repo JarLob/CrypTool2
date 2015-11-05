@@ -730,7 +730,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             if (alphabet.Length == 30) filename = "de-4gram-nocs.bin";
 
             _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            using (var fileStream = new FileStream(Path.Combine(filename), FileMode.Open, FileAccess.Read))
+
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new BinaryReader(fileStream))
                 {
