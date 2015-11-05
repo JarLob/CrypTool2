@@ -177,10 +177,19 @@ namespace KeySearcher.CrypCloud
 
             if(numberOfLeftBlocks == -1) return;
 
-            var remainingTicks = (long)(AvgTimePerChunkGlobal.Ticks * numberOfLeftBlocks);
+            try
+            {
+                var remainingSeconds = (double)((numberOfLeftBlocks * KeysPerBlock) / keysPerSecond);
+                RemainingTimeTotal = TimeSpan.FromSeconds(remainingSeconds);
+                EstimatedFinishDate = DateTime.Now.Add(RemainingTimeTotal);
+            }
+            catch (Exception e)
+            {
+                RemainingTimeTotal = TimeSpan.MaxValue;
+                EstimatedFinishDate = DateTime.MaxValue;
+            }
 
-            RemainingTimeTotal = new TimeSpan(remainingTicks);
-            EstimatedFinishDate = DateTime.Now.Add(RemainingTimeTotal);
+
         }
 
 

@@ -97,7 +97,7 @@ namespace KeySearcher
             var defaultCosts = relationOperator == RelationOperator.LargerThen ? double.MinValue : double.MaxValue;
             for (var i = 0; i < 10; i ++)
             {
-                top10Keys.Add(new KeyResultEntry {Costs = defaultCosts, Decryption = new byte[1], KeyBytes = new byte[1]});
+                top10Keys.Add(new KeyResultEntry { Costs = defaultCosts, Decryption = new byte[1], KeyBytes = new byte[1]});
             }
             return top10Keys;
         }
@@ -109,19 +109,21 @@ namespace KeySearcher
                 return fst - snd > Epsilon;
             }
             return fst - snd < Epsilon;
-        }
-     
-        private static List<KeyResultEntry> CreateNewTopList(List<KeyResultEntry> top10Keys, double costs,
+        } 
+        
+        private List<KeyResultEntry> CreateNewTopList(List<KeyResultEntry> top10Keys, double costs,
             byte[] decryption, byte[] key)
         {
             var copyOfKey = new byte[key.Length];
             key.CopyTo(copyOfKey, 0);
             var item = new KeyResultEntry {Costs = costs, KeyBytes = copyOfKey, Decryption = decryption};
-
             top10Keys.Add(item);
-            top10Keys.Sort();
-            top10Keys = top10Keys.GetRange(0, 10);
-            return top10Keys;
+
+            var orderByDescending = (relationOperator == RelationOperator.LessThen) 
+                ? top10Keys.OrderBy(it => it)
+                : top10Keys.OrderByDescending(it => it);
+
+            return orderByDescending.Take(10).ToList();
         } 
 
         private static CalculationResult CreateCalculationResult(BigInteger blockId,
