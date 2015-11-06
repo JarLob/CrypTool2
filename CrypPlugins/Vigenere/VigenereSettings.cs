@@ -171,6 +171,7 @@ namespace Cryptool.Vigenere
             try
             {
                 int[] offset = new int[value.Length];
+
                 if (this.CaseSensitiveAlphabet)
                 {
                     for (int i = 0; i < value.Length; i++)
@@ -181,6 +182,7 @@ namespace Cryptool.Vigenere
                     for (int i = 0; i < value.Length; i++)
                         offset[i] = alphabet.ToUpper().IndexOf(char.ToUpper(value[i]));
                 }
+
                 for (int i = 0; i < offset.Length; i++)
                 {
                     if (offset[i] >= 0)
@@ -210,24 +212,12 @@ namespace Cryptool.Vigenere
 
         private string charArrayToString(char[] chars)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var c in chars)
-            {
-                sb.Append(c);
-            }
-            return sb.ToString();
+            return new string(chars);
         }
 
         private string intArrayToString(int[] ints)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var i in ints)
-            {
-                sb.Append(i);
-                sb.Append(',');
-            }
-            if (sb.Length > 0) sb.Remove(sb.Length - 1, 1);
-            return sb.ToString();
+            return string.Join(",", ints);
         }
         #endregion
 
@@ -247,7 +237,6 @@ namespace Cryptool.Vigenere
                 }
             }
         }
-
 
         [PropertySaveOrder(4)]
         [TaskPane("ActionCaption", "ActionTooltip", null, 2, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
