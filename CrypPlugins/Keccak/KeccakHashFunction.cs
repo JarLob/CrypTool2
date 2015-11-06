@@ -16,26 +16,28 @@ namespace Cryptool.Plugins.Keccak
     public static class KeccakHashFunction
     {
 
-        public static byte[] Hash(byte[] input, int outputLength, int rate, int capacity, ref KeccakPres pres, Keccak plugin)
+        public static byte[] Hash(byte[] input, int outputLength, int rate, int capacity, ref KeccakPres pres, Keccak plugin, String suffixBits)
         {
-            #if _DEBUG_
+#if _DEBUG_
             Console.WriteLine("#Keccak: running Keccak with the following parameters:");
-            Console.WriteLine(
-                "#Keccak: output length\t{0} bits\n" +
-                "#Keccak: state size\t{1} bits\n" +
-                "#Keccak: bit rate\t\t{2} bits\n" +
-                "#Keccak: capacity\t\t{3} bits\n\n"
-                , outputLength, rate + capacity, rate, capacity);
-            #endif
+            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "output length", outputLength));
+            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "state size", rate + capacity));
+            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "bit rate", rate));
+            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "capacity", capacity));
+            Console.WriteLine();
+#endif
 
             /* map each bit of the input to a byte */
-            byte[] inputInBits = ByteArrayToBitArray(input);
+            byte[] inputInBitsWithoutSuffix = ByteArrayToBitArray(input);
+
+            /* append domain separation suffix bits */
+            byte[] inputInBits = appendSuffixBits(suffixBits, inputInBitsWithoutSuffix);
 
             /* for presentation: estimate number of keccak-f executions */
             int progressionSteps = (int)Math.Ceiling((double)(inputInBits.Length + 8) / rate) + ((int)Math.Ceiling((double)outputLength / rate) - 1);
 
             /* create sponge instance */
-            Sponge sponge = new Sponge(rate, capacity, ref pres, plugin, progressionSteps);            
+            Sponge sponge = new Sponge(rate, capacity, ref pres, plugin, progressionSteps);
 
             /* absorb input */
             sponge.Absorb(inputInBits);
@@ -47,13 +49,50 @@ namespace Cryptool.Plugins.Keccak
             /* reverse 'bit to byte' mapping */
             byte[] output = BitArrayToByteArray(outputInBits);
 
-            #if _DEBUG_
+#if _DEBUG_
             Console.WriteLine("#Keccak: successfully hashed {0} input bits to {1} output bits!", inputInBits.Length, outputInBits.Length);
             Console.WriteLine("#Keccak: all work is done!");
-            #endif
-           
+#endif
+
 
             return output;
+        }
+
+        private static byte[] appendSuffixBits(string suffixBits, byte[] inputInBitsWithoutSuffix)
+        {
+            if (suffixBits.Length == 0)
+                return inputInBitsWithoutSuffix;
+
+            int newSize = inputInBitsWithoutSuffix.Length + suffixBits.Length;
+            byte[] inputInBits = new byte[newSize];
+
+            if (inputInBitsWithoutSuffix.Length > 0)
+                Array.Copy(inputInBitsWithoutSuffix, inputInBits, inputInBitsWithoutSuffix.Length);
+
+            char[] suffixBitsArray = suffixBits.ToCharArray();
+            for (int i = 0; i < suffixBitsArray.Length; i++)
+            {
+                byte b = suffixBitsArray[i] == '1' ? (byte)0x01 : (byte)0x00;
+                inputInBits[inputInBitsWithoutSuffix.Length + i] = b;
+            }
+
+
+            //int indexOfLastOne = inputInBitsWithoutSuffix.Contains((byte)0x01) ?
+            //    Array.LastIndexOf(inputInBitsWithoutSuffix, (byte)0x01) : -1;
+            //int size = indexOfLastOne + 1 + suffixBits.Length;
+            //byte[] inputInBits = new byte[size];
+
+            //if (size != suffixBits.Length)
+            //    Array.Copy(inputInBitsWithoutSuffix, inputInBits, inputInBitsWithoutSuffix.Length);
+
+            //char[] suffixBitsArray = suffixBits.ToCharArray();
+            //for (int i = 0; i < suffixBitsArray.Length; i++)
+            //{
+            //    byte b = suffixBitsArray[i] == '1' ? (byte)0x01 : (byte)0x00;
+            //    inputInBits[indexOfLastOne + 1 + i] = b;
+            //}          
+
+            return inputInBits;
         }
 
         #region helper methods
@@ -122,7 +161,7 @@ namespace Cryptool.Plugins.Keccak
                 j++;
                 if (j % laneSize == 0)
                 {
-                    hex.Append("\n");
+                    hex.Append(Environment.NewLine);
                 }
             }
 
@@ -147,7 +186,7 @@ namespace Cryptool.Plugins.Keccak
             {
                 if (i % laneSize == 0)
                 {
-                    binaryBytes.AppendFormat("\n{0:00}: ", i / laneSize);
+                    binaryBytes.AppendFormat(Environment.NewLine + "{0:00}: ", i / laneSize);
                 }
 
                 for (int j = 0; j < 8; j++)
@@ -191,7 +230,7 @@ namespace Cryptool.Plugins.Keccak
                     j++;
                     if (j % laneSize == 0)
                     {
-                        hex.Append("\n");
+                        hex.Append(Environment.NewLine);
                     }
                 }
 
@@ -212,7 +251,7 @@ namespace Cryptool.Plugins.Keccak
                     /* append line break at the end of a lane */
                     if (i != 0 && i % laneSize == 0)
                     {
-                        binaryBytes.Append("\n");
+                        binaryBytes.Append(Environment.NewLine);
                     }
 
                     for (int j = 0; j < 8; j++)

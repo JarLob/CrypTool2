@@ -161,6 +161,7 @@ namespace Cryptool.Plugins.Keccak
                     pres.buttonSkipIntro.Visibility = Visibility.Visible;
 
                     pres.imgIntroFirstPage.Visibility = Visibility.Visible;
+                    pres.labelIntroPresentation.Visibility = Visibility.Visible;
                 }, null);
 
                 AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
@@ -172,7 +173,8 @@ namespace Cryptool.Plugins.Keccak
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden;
+                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden; 
+                        pres.labelIntroPresentation.Visibility = Visibility.Hidden;
 
                         pres.textBlockParametersNotSupported.Text = Resources.PresOutputLengthError;
                         pres.textBlockParametersNotSupported.Visibility = Visibility.Visible;
@@ -184,7 +186,8 @@ namespace Cryptool.Plugins.Keccak
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden;
+                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden; 
+                        pres.labelIntroPresentation.Visibility = Visibility.Hidden;
 
                         pres.textBlockParametersNotSupported.Text = Resources.PresStateSizeError;
                         pres.textBlockParametersNotSupported.Visibility = Visibility.Visible;
@@ -200,6 +203,7 @@ namespace Cryptool.Plugins.Keccak
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         pres.imgIntroFirstPage.Visibility = Visibility.Hidden;
+                        pres.labelIntroPresentation.Visibility = Visibility.Hidden;
                         pres.labelIntroIntroduction.Visibility = Visibility.Visible;
                     }, null);
 
@@ -318,7 +322,8 @@ namespace Cryptool.Plugins.Keccak
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         pres.labelIntroIterationAmount.Content = "";
-                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden;
+                        pres.imgIntroFirstPage.Visibility = Visibility.Hidden; 
+                        pres.labelIntroPresentation.Visibility = Visibility.Hidden;
                         pres.imgIntroIntroduction.Visibility = Visibility.Hidden;
                         pres.imgIntroSpongeInit.Visibility = Visibility.Hidden;
                         pres.imgIntroSpongeAbsorb.Visibility = Visibility.Hidden;
@@ -337,7 +342,7 @@ namespace Cryptool.Plugins.Keccak
             #endregion
 
             /* hash input */
-            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this);
+            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this, settings.SuffixBits);
 
             /* write output */
             OutputStreamwriter.Write(output);
@@ -387,7 +392,29 @@ namespace Cryptool.Plugins.Keccak
             bool stateSizeOk = (settings.GetStateSize() == settings.Rate + settings.Capacity);
             bool outputLengthOk = settings.OutputLength % 8 == 0;
             bool outputLengthTruncated = settings.OutputLengthTruncated();
-            
+            bool suffixBitsValid = true;
+            bool suffixBitsLengthOk = true;
+
+            if ((settings.SuffixBits).Length > 8)
+                suffixBitsLengthOk = false;
+
+            foreach (char c in settings.SuffixBits)
+            {
+                if (c != '0' && c != '1')
+                    suffixBitsValid = false;
+            }
+
+            if (!suffixBitsLengthOk)
+            {
+                GuiLogMessage(Resources.SuffixBitsTooLongError, NotificationLevel.Error);
+                execute = false;
+            }
+
+            if (!suffixBitsValid)
+            {
+                GuiLogMessage(Resources.SuffixBitsInvalidError, NotificationLevel.Error);
+                execute = false;
+            }
 
             if (stateSizeOk && outputLengthOk)
             {
@@ -444,7 +471,6 @@ namespace Cryptool.Plugins.Keccak
         /// </summary>
         public void Initialize()
         {
-            settings.UpdateTaskPaneVisibility();
         }
 
         /// <summary>

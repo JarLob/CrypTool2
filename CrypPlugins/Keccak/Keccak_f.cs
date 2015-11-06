@@ -110,12 +110,12 @@ namespace Cryptool.Plugins.Keccak
 
             for (int i = 0; i < rounds; i++)
             {
-                #if _VERBOSE_
-                Console.WriteLine("\nRound {0}", i + 1);
+#if _VERBOSE_
+                Console.WriteLine(Environment.NewLine + "Round {0}", i + 1);
                 Console.WriteLine("State before Keccak-f[{0}]", z * 25);
                 KeccakHashFunction.PrintBits(state, z);
                 KeccakHashFunction.PrintBytes(state, z);
-                #endif
+#endif
 
                 if (pres.IsVisible && !pres.skipPresentation && !pres.skipPermutation)
                 {
@@ -367,7 +367,7 @@ namespace Cryptool.Plugins.Keccak
             }
 
             #if _DEBUG_
-            Console.WriteLine("\n#Keccak-f: state after permutation");
+            Console.WriteLine(Environment.NewLine + "#Keccak-f: state after permutation");
             KeccakHashFunction.PrintBits(state, z);
             KeccakHashFunction.PrintBytes(state, z);
             #endif
