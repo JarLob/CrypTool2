@@ -626,8 +626,7 @@
     <value>Vergrößerung</value>
   </data>
   <data name="Do_you_want_to_save_the_changes_you_made_in_the_project" xml:space="preserve">
-    <value>Wollen Sie die im Projekt vorgenommenen Änderungen in der
-Datei "{0}" speichern?</value>
+    <value>Wollen Sie die im Projekt vorgenommenen Änderungen in der Datei "{0}" speichern?</value>
   </data>
   <data name="Do_you_want_to_save_your_new_project" xml:space="preserve">
     <value>Wollen Sie Ihr neues Projekt speichern?</value>
