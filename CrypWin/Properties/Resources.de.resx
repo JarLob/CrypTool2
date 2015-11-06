@@ -626,10 +626,11 @@
     <value>Vergrößerung</value>
   </data>
   <data name="Do_you_want_to_save_the_changes_you_made_in_the_project" xml:space="preserve">
-    <value>Wollen Sie die vorgenommenen Änderungen im Projekt in der Datei "{0}" speichern?</value>
+    <value>Wollen Sie die im Projekt vorgenommenen Änderungen in der
+Datei "{0}" speichern?</value>
   </data>
   <data name="Do_you_want_to_save_your_new_project" xml:space="preserve">
-    <value>Wollen Sie ihr neues Projekt speichern?</value>
+    <value>Wollen Sie Ihr neues Projekt speichern?</value>
   </data>
   <data name="GeneratingWaitMessage" xml:space="preserve">
     <value>Bitte warten... Dokumentation wird erzeugt.</value>
