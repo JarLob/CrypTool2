@@ -18,6 +18,7 @@ namespace WordPatterns
     {
         private Case caseSelection = Case.Insensitive;
         private string separators = "";
+        private bool homophonic = false;
 
         [TaskPane("CaseSelectionCaption", "CaseSelectionTooltip", null, 1, false, ControlType.ComboBox, new string[] { "CaseSelectionList1", "CaseSelectionList2" })]
         public Case CaseSelection
@@ -31,8 +32,37 @@ namespace WordPatterns
                     OnPropertyChanged("CaseSelection");
                 }
             }
-        }        
-        
+        }
+
+        [TaskPane("HomophonicCaption", "HomophonicTooltip", null, 2, false, ControlType.CheckBox)]
+        public bool Homophonic
+        {
+            get { return homophonic; }
+            set
+            {
+                if (homophonic != value)
+                {
+                    homophonic = value;
+                    OnPropertyChanged("Homophonic");
+                }
+            }
+        }
+
+        bool sort = false;
+        //[TaskPane("SortCaption", "SortTooltip", null, 2, false, ControlType.CheckBox)]
+        public bool Sort
+        {
+            get { return sort; }
+            set
+            {
+                if (sort != value)
+                {
+                    sort = value;
+                    OnPropertyChanged("Sort");
+                }
+            }
+        }
+
         /// <summary>
         /// Separator characters used to split the input
         /// </summary>

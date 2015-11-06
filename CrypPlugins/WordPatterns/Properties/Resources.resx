@@ -159,4 +159,10 @@
   <data name="SeparatorsSettingTooltip" xml:space="preserve">
     <value>The separator characters are deleted from the input word and do not contribute to the resulting pattern.</value>
   </data>
+  <data name="HomophonicCaption" xml:space="preserve">
+    <value>Allow Homophones</value>
+  </data>
+  <data name="HomophonicTooltip" xml:space="preserve">
+    <value>Activate this checkbox, if different characters of the pattern can stand for the same plaintext character.</value>
+  </data>
 </root>
