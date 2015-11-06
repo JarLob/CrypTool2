@@ -38,8 +38,6 @@ namespace SigabaKnownPlaintext
 {
 
     [Author("Julian Weyers", "weyers@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-
-
     //[PluginInfo("SIGABA-Widerspruchsbeweis", "", "SigabaPhaseI/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [PluginInfo("SigabaKnownPlaintext.Properties.Resources", "PluginCaption", "PluginToolTip",
         "Enigma/DetailedDescription/doc.xml",

@@ -28,13 +28,8 @@ using Cryptool.PluginBase.Control;
 
 namespace Sigaba
 {
-    // HOWTO: Change author name, email address, organization and URL.
     [Author("Julian Weyers", "weyers@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Sigaba.Properties.Resources", "PluginCaption", "PluginToolTip", "Enigma/DetailedDescription/doc.xml",
-      "Sigaba/Images/Icon.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [PluginInfo("Sigaba.Properties.Resources", "PluginCaption", "PluginToolTip", "Enigma/DetailedDescription/doc.xml", "Sigaba/Images/Icon.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class Sigaba : ICrypComponent
     {
@@ -42,10 +37,11 @@ namespace Sigaba
         public readonly SigabaCore _core;
         public readonly SigabaCoreFast _fastCore;
 
+        public static bool verbose = false;
+
         #region Constructor 
         public Sigaba()
         {
-            
             SigabaPresentation sigpa = new SigabaPresentation(this,_settings);
             Presentation = sigpa;
             this._settings.PropertyChanged += sigpa.settings_OnPropertyChange;
@@ -61,7 +57,6 @@ namespace Sigaba
 
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
         private string[] _keys;
 
         #endregion
@@ -69,8 +64,6 @@ namespace Sigaba
         #region Data Properties
 
         /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
         /// </summary>
         [PropertyInfo(Direction.InputData, "(De)Cipher", "Sets the (De)Cipher as input")]
         public string InputString
@@ -80,8 +73,6 @@ namespace Sigaba
         }
 
         /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
         /// </summary>
         [PropertyInfo(Direction.OutputData, "(De)Cipher", "Sets the (De)Cipher as output")]
         public string OutputString
@@ -130,16 +121,12 @@ namespace Sigaba
                 _keys[1] = _settings.IndexKey;
                 _keys[2] = _settings.ControlKey;
             }
-           
         }
 
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
         /// 
-        
-
-        
         public void Execute()
         {
             ProgressChanged(0, 1);
@@ -147,12 +134,8 @@ namespace Sigaba
             _settings.CipherKey = _keys[0].ToUpper();
             _settings.IndexKey = _keys[1].ToUpper();
             _settings.ControlKey = _keys[2].ToUpper();
-            
-            
 
             _core.SetKeys();
-
-            
 
             if(!Presentation.IsVisible)
             {
@@ -163,11 +146,8 @@ namespace Sigaba
             }
             else
             {
-                
                 OutputString = postFormatOutput(_core.EncryptPresentation(preFormatInput(InputString)));
             }
-
-            
 
             OnPropertyChanged("OutputString");
 
@@ -193,8 +173,7 @@ namespace Sigaba
         /// </summary>
         public void Stop()
         {
-            _core.stop();   
-            
+            _core.stop();
         }
 
         /// <summary>
@@ -213,8 +192,6 @@ namespace Sigaba
 
         public void changeSettings(string setting, object value)
         {
-
-
             if (setting.Equals("CipherKey")) _settings.CipherKey = (string)value;
             else if (setting.Equals("ControlKey")) _settings.ControlKey = (string)value;
             else if (setting.Equals("IndexKey")) _settings.IndexKey = (string)value;
@@ -256,7 +233,6 @@ namespace Sigaba
             else if (setting.Equals("IndexRotor3Reverse")) _settings.IndexRotor3Reverse = (bool)value;
             else if (setting.Equals("IndexRotor4Reverse")) _settings.IndexRotor4Reverse = (bool)value;
             else if (setting.Equals("IndexRotor5Reverse")) _settings.IndexRotor5Reverse = (bool)value;
-            
         }
 
         #endregion
@@ -331,7 +307,6 @@ namespace Sigaba
             }
 
             return result.ToString().ToUpper();
-
         }
 
         public string postFormatOutput(string text)
@@ -339,7 +314,6 @@ namespace Sigaba
             StringBuilder workstring = new StringBuilder(text);
             foreach (UnknownToken token in unknownList)
             {
-                
                 workstring.Insert(token.position, token.text);
             }
 
@@ -383,7 +357,6 @@ namespace Sigaba
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
-            
         }
 
         private void ProgressChanged(double value, double max)
@@ -404,7 +377,6 @@ namespace Sigaba
                 return controlSlave;
             }
         }
-
     }
 
     public class SigabaControl : IControlSigabaEncryption
@@ -428,14 +400,11 @@ namespace Sigaba
 
         public string Decrypt(string ciphertext)
         {
-            String s = "";
-            s = (string)plugin._core.Encrypt(ciphertext)[0];
-            return s;
+            return (string)plugin._core.Encrypt(ciphertext)[0];
         }
 
         public byte[] DecryptFast(byte[] ciphertext, int[] a, byte[] positions)
         {
-
             return plugin._fastCore.Encrypt(ciphertext, a, positions);
         }
 
@@ -495,10 +464,11 @@ namespace Sigaba
                 OnStatusChanged(this, true);
         }
 
-        public RotorByte[] CipherRotors ()
+        public RotorByte[] CipherRotors()
         {
             return plugin._fastCore.CipherRotors;
         }
+
         public void changeSettings(string setting, object value)
         {
             plugin.changeSettings(setting, value);
@@ -508,8 +478,6 @@ namespace Sigaba
 
         public void Dispose()
         {
-
         }
     }
-
 }

@@ -118,88 +118,88 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Choose the mode of opertation</value>
+    <value>Choose the mode of operation</value>
   </data>
-  <data name="AnalysisUseRotorICaption" xml:space="preserve">
-    <value>Use code wheel 01</value>
+  <data name="AnalysisUseRotor1Caption" xml:space="preserve">
+    <value>Code rotor 1</value>
   </data>
-  <data name="AnalysisUseRotorIICaption" xml:space="preserve">
-    <value>Use code wheel 02</value>
+  <data name="AnalysisUseRotor2Caption" xml:space="preserve">
+    <value>Code rotor 2</value>
   </data>
-  <data name="AnalysisUseRotorIIICaption" xml:space="preserve">
-    <value>Use code wheel 03</value>
+  <data name="AnalysisUseRotor3Caption" xml:space="preserve">
+    <value>Code rotor 3</value>
   </data>
-  <data name="AnalysisUseRotorIVCaption" xml:space="preserve">
-    <value>Use code wheel 04</value>
+  <data name="AnalysisUseRotor4Caption" xml:space="preserve">
+    <value>Code rotor 4</value>
   </data>
-  <data name="AnalysisUseRotorIXCaption" xml:space="preserve">
-    <value>Use code wheel 09</value>
+  <data name="AnalysisUseRotor9Caption" xml:space="preserve">
+    <value>Code rotor 9</value>
   </data>
-  <data name="AnalysisUseRotorVCaption" xml:space="preserve">
-    <value>Use code wheel 05</value>
+  <data name="AnalysisUseRotor5Caption" xml:space="preserve">
+    <value>Code rotor 5</value>
   </data>
-  <data name="AnalysisUseRotorVICaption" xml:space="preserve">
-    <value>Use code wheel 06</value>
+  <data name="AnalysisUseRotor6Caption" xml:space="preserve">
+    <value>Code rotor 6</value>
   </data>
-  <data name="AnalysisUseRotorVIICaption" xml:space="preserve">
-    <value>Use code wheel 07</value>
+  <data name="AnalysisUseRotor7Caption" xml:space="preserve">
+    <value>Code rotor 7</value>
   </data>
-  <data name="AnalysisUseRotorVIIICaption" xml:space="preserve">
-    <value>Use code wheel 08</value>
+  <data name="AnalysisUseRotor8Caption" xml:space="preserve">
+    <value>Code rotor 8</value>
   </data>
-  <data name="AnalysisUseRotorXCaption" xml:space="preserve">
-    <value>Use code wheel 10</value>
+  <data name="AnalysisUseRotor10Caption" xml:space="preserve">
+    <value>Code rotor 10</value>
   </data>
   <data name="AnalyzeCipherRotors1Caption" xml:space="preserve">
-    <value>Show cipher wheel 1 analyse options</value>
+    <value>Cipher rotor 1</value>
   </data>
-  <data name="AnalyzeCipherrotors2caption" xml:space="preserve">
-    <value>Show cipher wheel 2 analyse options</value>
+  <data name="AnalyzeCipherRotors2Caption" xml:space="preserve">
+    <value>Cipher rotor 2</value>
   </data>
   <data name="AnalyzeCipherRotors3Caption" xml:space="preserve">
-    <value>Show cipher wheel 3 analyse options</value>
+    <value>Cipher rotor 3</value>
   </data>
   <data name="AnalyzeCipherRotors4Caption" xml:space="preserve">
-    <value>Show cipher wheel 4 analyse options</value>
+    <value>Cipher rotor 4</value>
   </data>
-  <data name="AnalyzeCipherrotors5caption" xml:space="preserve">
-    <value>Show cipher wheel 5 analyse options</value>
+  <data name="AnalyzeCipherRotors5Caption" xml:space="preserve">
+    <value>Cipher rotor 5</value>
   </data>
   <data name="AnalyzeControlRotors1Caption" xml:space="preserve">
-    <value>Show control wheel 1 analyse options</value>
+    <value>Conrol rotor 1</value>
   </data>
-  <data name="AnalyzeControlrotors2caption" xml:space="preserve">
-    <value>Show control wheel 2 analyse options</value>
+  <data name="AnalyzeControlRotors2Caption" xml:space="preserve">
+    <value>Conrol rotor 2</value>
   </data>
   <data name="AnalyzeControlRotors3Caption" xml:space="preserve">
-    <value>Show control wheel 3 analyse options</value>
+    <value>Conrol rotor 3</value>
   </data>
   <data name="AnalyzeControlRotors4Caption" xml:space="preserve">
-    <value>Show control wheel 4 analyse options</value>
+    <value>Conrol rotor 4</value>
   </data>
-  <data name="AnalyzeControlrotors5caption" xml:space="preserve">
-    <value>Show control wheel 5 analyse options</value>
+  <data name="AnalyzeControlRotors5Caption" xml:space="preserve">
+    <value>Conrol rotor 5</value>
   </data>
   <data name="AnalyzeIndexRotors1Caption" xml:space="preserve">
-    <value>Show index wheel 1 analyse options</value>
+    <value>Index rotor 1</value>
   </data>
-  <data name="AnalyzeIndexrotors2caption" xml:space="preserve">
-    <value>Show index wheel 2 analyse options</value>
+  <data name="AnalyzeIndexRotors2Caption" xml:space="preserve">
+    <value>Index rotor 2</value>
   </data>
   <data name="AnalyzeIndexRotors3Caption" xml:space="preserve">
-    <value>Show index wheel 3 analyse options</value>
+    <value>Index rotor 3</value>
   </data>
   <data name="AnalyzeIndexRotors4Caption" xml:space="preserve">
-    <value>Show index wheel 4 analyse options</value>
+    <value>Index rotor 4</value>
   </data>
-  <data name="AnalyzeIndexrotors5caption" xml:space="preserve">
-    <value>Show index wheel 5 analyse options</value>
+  <data name="AnalyzeIndexRotors5Caption" xml:space="preserve">
+    <value>Index rotor 5</value>
   </data>
   <data name="CalculateKeypaceCaption" xml:space="preserve">
-    <value>Calculate keyspace</value>
+    <value>Calculate</value>
   </data>
   <data name="CalculateKeypaceTooltip" xml:space="preserve">
-    <value>Calculates the keyspace of the actual settings</value>
+    <value>Calculates the keyspace of the current settings</value>
   </data>
   <data name="CaseHandlingCaption" xml:space="preserve">
     <value>Case handling</value>
@@ -217,19 +217,19 @@
     <value>What should be done with upper and lower case letters?</value>
   </data>
   <data name="Cipher1AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for cipher wheel  1</value>
+    <value>Choose cipher rotor 1 from</value>
   </data>
   <data name="Cipher2AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for cipher wheel  2</value>
+    <value>Choose cipher rotor 2 from</value>
   </data>
   <data name="Cipher3AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for cipher wheel  3</value>
+    <value>Choose cipher rotor 3 from</value>
   </data>
   <data name="Cipher4AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for cipher wheel  4</value>
+    <value>Choose cipher rotor 4 from</value>
   </data>
   <data name="Cipher5AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for cipher wheel  5</value>
+    <value>Choose cipher rotor 5 from</value>
   </data>
   <data name="CipherGroup" xml:space="preserve">
     <value>Alphabet maze</value>
@@ -243,7 +243,7 @@
   <data name="CipherRotor1Caption" xml:space="preserve">
     <value>Cipher rotor 1 (most left)</value>
   </data>
-  <data name="CipherRotor1From" xml:space="preserve">
+  <data name="CipherRotor1FromCaption" xml:space="preserve">
     <value>Cipher rotor 1: From</value>
   </data>
   <data name="CipherRotor1ReverseCaption" xml:space="preserve">
@@ -367,79 +367,7 @@
     <value>Defines the type of the fith index rotor</value>
   </data>
   <data name="KeyspaceCaption" xml:space="preserve">
-    <value>Keyspace</value>
-  </data>
-  <data name="LetterA" xml:space="preserve">
-    <value>A</value>
-  </data>
-  <data name="LetterB" xml:space="preserve">
-    <value>B</value>
-  </data>
-  <data name="LetterC" xml:space="preserve">
-    <value>C</value>
-  </data>
-  <data name="LetterD" xml:space="preserve">
-    <value>D</value>
-  </data>
-  <data name="LetterF" xml:space="preserve">
-    <value>F</value>
-  </data>
-  <data name="LetterG" xml:space="preserve">
-    <value>G</value>
-  </data>
-  <data name="LetterH" xml:space="preserve">
-    <value>H</value>
-  </data>
-  <data name="LetterI" xml:space="preserve">
-    <value>I</value>
-  </data>
-  <data name="LetterJ" xml:space="preserve">
-    <value>J</value>
-  </data>
-  <data name="LetterK" xml:space="preserve">
-    <value>K</value>
-  </data>
-  <data name="LetterM" xml:space="preserve">
-    <value>M</value>
-  </data>
-  <data name="LetterN" xml:space="preserve">
-    <value>N</value>
-  </data>
-  <data name="LetterO" xml:space="preserve">
-    <value>O</value>
-  </data>
-  <data name="LetterP" xml:space="preserve">
-    <value>P</value>
-  </data>
-  <data name="LetterQ" xml:space="preserve">
-    <value>Q</value>
-  </data>
-  <data name="LetterR" xml:space="preserve">
-    <value>R</value>
-  </data>
-  <data name="LetterS" xml:space="preserve">
-    <value>S</value>
-  </data>
-  <data name="LetterT" xml:space="preserve">
-    <value>T</value>
-  </data>
-  <data name="LetterU" xml:space="preserve">
-    <value>U</value>
-  </data>
-  <data name="LetterV" xml:space="preserve">
-    <value>V</value>
-  </data>
-  <data name="LetterW" xml:space="preserve">
-    <value>W</value>
-  </data>
-  <data name="LetterX" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="LetterY" xml:space="preserve">
-    <value>Y</value>
-  </data>
-  <data name="LetterZ" xml:space="preserve">
-    <value>Z</value>
+    <value>Keyspace: </value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>SigabaBruteforce</value>
@@ -472,7 +400,7 @@
     <value>Replace with 'X'</value>
   </data>
   <data name="UnknownSymbolHandlingTooltip" xml:space="preserve">
-    <value>What should be done with encountered characters at the input which are not in the alphabet?</value>
+    <value>What should be done with input characters that are not in the alphabet?</value>
   </data>
   <data name="CipherKeyHeader" xml:space="preserve">
     <value>Cipher key</value>
@@ -481,19 +409,19 @@
     <value>Cipher wheels</value>
   </data>
   <data name="Control1AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for control wheel  1</value>
+    <value>Choose control rotor 1 from</value>
   </data>
   <data name="Control2AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for control wheel  2</value>
+    <value>Choose control rotor 2 from</value>
   </data>
   <data name="Control3AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for control wheel  3</value>
+    <value>Choose control rotor 3 from</value>
   </data>
   <data name="Control4AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for control wheel  4</value>
+    <value>Choose control rotor 4 from</value>
   </data>
   <data name="Control5AnalysisOptionsGroup" xml:space="preserve">
-    <value>Choice for control wheel  5</value>
+    <value>Choose control rotor 5 from</value>
   </data>
   <data name="ControlKeyHeader" xml:space="preserve">
     <value>Control key</value>
@@ -507,20 +435,20 @@
   <data name="EndLabel" xml:space="preserve">
     <value>End:</value>
   </data>
-  <data name="IndexAnalysisUseRotorICaption" xml:space="preserve">
-    <value>Use index wheel 10</value>
+  <data name="IndexAnalysisUseRotor1Caption" xml:space="preserve">
+    <value>Index rotor 1</value>
   </data>
-  <data name="IndexAnalysisUseRotorIICaption" xml:space="preserve">
-    <value>Use index wheel 20</value>
+  <data name="IndexAnalysisUseRotor2Caption" xml:space="preserve">
+    <value>Index rotor 2</value>
   </data>
-  <data name="IndexAnalysisUseRotorIIICaption" xml:space="preserve">
-    <value>Use index wheel 30</value>
+  <data name="IndexAnalysisUseRotor3Caption" xml:space="preserve">
+    <value>Index rotor 3</value>
   </data>
-  <data name="IndexAnalysisUseRotorIVCaption" xml:space="preserve">
-    <value>Use index wheel 40</value>
+  <data name="IndexAnalysisUseRotor4Caption" xml:space="preserve">
+    <value>Index rotor 4</value>
   </data>
-  <data name="IndexAnalysisUseRotorVCaption" xml:space="preserve">
-    <value>Use index wheel 50</value>
+  <data name="IndexAnalysisUseRotor5Caption" xml:space="preserve">
+    <value>Index rotor 5</value>
   </data>
   <data name="IndexKeyHeader" xml:space="preserve">
     <value>Index key</value>
@@ -530,12 +458,6 @@
   </data>
   <data name="Keys_secLabel" xml:space="preserve">
     <value>Keys/Second:</value>
-  </data>
-  <data name="LetterE" xml:space="preserve">
-    <value>E</value>
-  </data>
-  <data name="LetterL" xml:space="preserve">
-    <value>L</value>
   </data>
   <data name="RemainingLabel" xml:space="preserve">
     <value>Remaining:</value>
@@ -550,21 +472,183 @@
     <value>Value</value>
   </data>
   <data name="RevCaption" xml:space="preserve">
-    <value>Use reverse position</value>
+    <value>Rotor orientation</value>
   </data>
-  <data name="normalCaption" xml:space="preserve">
+  <data name="OriNormalCaption" xml:space="preserve">
     <value>normal</value>
   </data>
-  <data name="reverseCaption" xml:space="preserve">
+  <data name="OriReverseCaption" xml:space="preserve">
     <value>reverse</value>
   </data>
-  <data name="undefinedCaption" xml:space="preserve">
-    <value>undefined</value>
+  <data name="OriBothCaption" xml:space="preserve">
+    <value>both</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Main</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
     <value>Top Ten</value>
+  </data>
+  <data name="CipherRotor3FromCaption" xml:space="preserve">
+    <value>Cipher rotor 3: From</value>
+  </data>
+  <data name="CipherRotor4FromCaption" xml:space="preserve">
+    <value>Cipher rotor 4: From</value>
+  </data>
+  <data name="CipherRotor5FromCaption" xml:space="preserve">
+    <value>Cipher rotor 5: From</value>
+  </data>
+  <data name="ControlRotor1FromCaption" xml:space="preserve">
+    <value>Control rotor 1: From</value>
+  </data>
+  <data name="ControlRotor2FromCaption" xml:space="preserve">
+    <value>Control rotor 2: From</value>
+  </data>
+  <data name="ControlRotor3FromCaption" xml:space="preserve">
+    <value>Control rotor 3: From</value>
+  </data>
+  <data name="ControlRotor4FromCaption" xml:space="preserve">
+    <value>Control rotor 4: From</value>
+  </data>
+  <data name="ControlRotor5FromCaption" xml:space="preserve">
+    <value>Control rotor 5: From</value>
+  </data>
+  <data name="FromTooltip" xml:space="preserve">
+    <value>Select the first letter of the search interval</value>
+  </data>
+  <data name="IndexRotor1FromCaption" xml:space="preserve">
+    <value>Index rotor 1: From</value>
+  </data>
+  <data name="IndexRotor2FromCaption" xml:space="preserve">
+    <value>Index rotor 2: From</value>
+  </data>
+  <data name="IndexRotor3FromCaption" xml:space="preserve">
+    <value>Index rotor 3: From</value>
+  </data>
+  <data name="IndexRotor4FromCaption" xml:space="preserve">
+    <value>Index rotor 4: From</value>
+  </data>
+  <data name="IndexRotor5FromCaption" xml:space="preserve">
+    <value>Index rotor 5: From</value>
+  </data>
+  <data name="PositionOptionsGroup" xml:space="preserve">
+    <value>Rotor start positions</value>
+  </data>
+  <data name="RotorAnalysisGroup" xml:space="preserve">
+    <value>Show analysis options for</value>
+  </data>
+  <data name="ToTooltip" xml:space="preserve">
+    <value>Select the last letter of the search interval</value>
+  </data>
+  <data name="AnalyzeRotorsTooltip" xml:space="preserve">
+    <value>Show/hide options for this rotor.</value>
+  </data>
+  <data name="Cipher10AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 10.</value>
+  </data>
+  <data name="Cipher1AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 1.</value>
+  </data>
+  <data name="Cipher2AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 2.</value>
+  </data>
+  <data name="Cipher3AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 3.</value>
+  </data>
+  <data name="Cipher4AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 4.</value>
+  </data>
+  <data name="Cipher5AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 5.</value>
+  </data>
+  <data name="Cipher6AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 6.</value>
+  </data>
+  <data name="Cipher7AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 7.</value>
+  </data>
+  <data name="Cipher8AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 8.</value>
+  </data>
+  <data name="Cipher9AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as cipher rotor 9.</value>
+  </data>
+  <data name="Control10AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 10.</value>
+  </data>
+  <data name="Control1AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 1.</value>
+  </data>
+  <data name="Control2AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 2.</value>
+  </data>
+  <data name="Control3AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 3.</value>
+  </data>
+  <data name="Control4AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 4.</value>
+  </data>
+  <data name="Control5AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 5.</value>
+  </data>
+  <data name="Control6AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 6.</value>
+  </data>
+  <data name="Control7AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 7.</value>
+  </data>
+  <data name="Control8AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 8.</value>
+  </data>
+  <data name="Control9AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as control rotor 9.</value>
+  </data>
+  <data name="Index1AnalysisOptionsGroup" xml:space="preserve">
+    <value>Choose index rotor 1 from</value>
+  </data>
+  <data name="Index1AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as index rotor 1.</value>
+  </data>
+  <data name="Index2AnalysisOptionsGroup" xml:space="preserve">
+    <value>Choose index rotor 2 from</value>
+  </data>
+  <data name="Index2AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as index rotor 2.</value>
+  </data>
+  <data name="Index3AnalysisOptionsGroup" xml:space="preserve">
+    <value>Choose index rotor 3 from</value>
+  </data>
+  <data name="Index3AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as index rotor 3.</value>
+  </data>
+  <data name="Index4AnalysisOptionsGroup" xml:space="preserve">
+    <value>Choose index rotor 4 from</value>
+  </data>
+  <data name="Index4AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as index rotor 4.</value>
+  </data>
+  <data name="Index5AnalysisOptionsGroup" xml:space="preserve">
+    <value>Choose index rotor 5 from</value>
+  </data>
+  <data name="Index5AnalysisUseRotorTooltip" xml:space="preserve">
+    <value>Try this rotor as index rotor 5.</value>
+  </data>
+  <data name="InputCaption" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InputTooltip" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="KeyspaceTooltip" xml:space="preserve">
+    <value>Calculate the size of the key space (in bits) resulting from the given settings.</value>
+  </data>
+  <data name="OutputCaption" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="OutputTooltip" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="RevTooltip" xml:space="preserve">
+    <value>Choose the orientation(s) in which to use this rotor.</value>
   </data>
 </root>

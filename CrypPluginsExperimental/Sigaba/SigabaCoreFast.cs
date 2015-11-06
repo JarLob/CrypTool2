@@ -25,8 +25,6 @@ namespace Sigaba
             return CipherRotors.Aggregate(c, (current, rotor) => rotor.DeCiph(current));
         }
 
-
-
         public byte[] Encrypt(byte[] cipher, int[] types, byte[] positions)
         {
             

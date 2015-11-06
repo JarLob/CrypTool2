@@ -55,23 +55,24 @@ namespace Sigaba
 
         public RotorByte(byte[] subalpha, int position, Boolean reverse)
         {
-            var subalphaCount = subalpha.Count();
+            var N = subalpha.Count();
+
             Reverse = reverse;
             Position = position;
 
-            RotSubMat = new byte[subalphaCount, subalphaCount];
-            RotSubMatBack = new byte[subalphaCount, subalphaCount];
-            RotSubMatRev = new byte[subalphaCount, subalphaCount];
-            RotSubMatRevBack = new byte[subalphaCount, subalphaCount];
+            RotSubMat = new byte[N, N];
+            RotSubMatBack = new byte[N, N];
+            RotSubMatRev = new byte[N, N];
+            RotSubMatRevBack = new byte[N, N];
 
-            for (int i = 0; i < subalphaCount; i++)
+            for (int i = 0; i < N; i++)
             {
-                for (int j = 0; j < subalphaCount; j++)
+                for (int j = 0; j < N; j++)
                 {
-                    RotSubMat[i, j] = (byte)((((subalpha[(i + j) % subalphaCount])) - i + subalphaCount) % subalphaCount);
-                    RotSubMatBack[i, j] = (byte)(((Array.IndexOf(subalpha, (char)((((j + i)) % subalphaCount)))) - i + subalphaCount) % subalphaCount);
-                    RotSubMatRev[i, j] = (byte)(((i - Array.IndexOf(subalpha, (char)((((i - j + subalphaCount) % subalphaCount))))) + subalphaCount) % subalphaCount);
-                    RotSubMatRevBack[i, j] = (byte)((i - (subalpha[((i - j) + subalphaCount) % subalphaCount]) + subalphaCount) % subalphaCount);
+                    RotSubMat[i, j] = (byte)((((subalpha[(i + j) % N])) - i + N) % N);
+                    RotSubMatBack[i, j] = (byte)(((Array.IndexOf(subalpha, (char)((((j + i)) % N)))) - i + N) % N);
+                    RotSubMatRev[i, j] = (byte)(((i - Array.IndexOf(subalpha, (char)((((i - j + N) % N))))) + N) % N);
+                    RotSubMatRevBack[i, j] = (byte)((i - (subalpha[((i - j) + N) % N]) + N) % N);
                 }
             }
         }
@@ -79,6 +80,7 @@ namespace Sigaba
         public RotorByte(char[] subalpha, byte position, Boolean reverse)
         {
             var subalphaCount = subalpha.Count();
+
             Reverse = reverse;
             Position = position;
 
