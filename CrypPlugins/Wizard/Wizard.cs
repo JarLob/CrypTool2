@@ -13,7 +13,7 @@ using Cryptool.PluginBase.Editor;
 namespace Wizard
 {
     [TabColor("royalblue")]
-    [EditorInfo("wizard", true, false, false, false)]
+    [EditorInfo("wizard", true, false, false, true, false, false)]
     [Author("Simone Sauer", "sauer@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Wizard.Properties.Resources", "PluginCaption", "PluginTooltip", "Wizard/DetailedDescription/doc.xml", "Wizard/wizard.png")]
     public class Wizard : IEditor

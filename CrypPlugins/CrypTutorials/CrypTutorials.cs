@@ -11,7 +11,7 @@ using Vlc.DotNet.Core;
 namespace Cryptool.CrypTutorials
 {
     [TabColor("Black")]
-    [EditorInfo("cryptutorials", true, false, false, false, true)]
+    [EditorInfo("cryptutorials", true, true, false, true, false, false)]
     [Author("Nils Kopal", "kopal@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Cryptool.CrypTutorials.Properties.Resources", "PluginCaption", "PluginTooltip", "CrypTutorials/DetailedDescription/doc.xml",
         "CrypTutorials/icon.png")]

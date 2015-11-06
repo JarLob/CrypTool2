@@ -14,7 +14,7 @@ using Survey.communication;
 
 namespace Survey {
     [TabColor("royalblue")]
-    [EditorInfo("SurveyModel", true, false, false, false)]
+    [EditorInfo("SurveyModel", true, false, false, true, false, false)]
     [Author("Christopher Konze", "konze@cryptool.org", "Universität Kassel", "http://www.ais.uni-kassel.de")]
     [PluginInfo("Survey.Properties.Resources", "PluginCaption", "PluginTooltip", "Survey/DetailedDescription/doc.xml", "Survey/survey.png")]
     public class Survey : IEditor {

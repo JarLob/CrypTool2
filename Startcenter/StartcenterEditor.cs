@@ -13,7 +13,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace StartCenter
 {
     [TabColor("LightSeaGreen")]
-    [EditorInfo("startcenter", false, false, false, false, true)]
+    [EditorInfo("startcenter", false, true, false, true, false, false)]
     [Author("Sven Rech", "rech@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("Startcenter.Properties.Resources", "PluginCaption", "PluginTooltip", "Startcenter/DetailedDescription/doc.xml", "Startcenter/startcenter.png")]
     public class StartcenterEditor : IEditor

@@ -102,6 +102,7 @@ namespace Cryptool.CrypWin
         private System.Windows.Forms.Timer hasChangesCheckTimer;
         private X509Certificate serverTlsCertificate1;
         private X509Certificate serverTlsCertificate2;
+        private EditorTypePanelManager.EditorTypePanelProperties defaultPanelProperties = new EditorTypePanelManager.EditorTypePanelProperties(true,false,false);
 
         private Dictionary<IEditor, string> editorToFileMap = new Dictionary<IEditor, string>();
         private string ProjectFileName
@@ -186,6 +187,15 @@ namespace Cryptool.CrypWin
                 }
 
                 return null;
+            }
+        }
+
+        private EditorTypePanelManager.EditorTypePanelProperties ActivePanelProperties
+        {
+            get
+            {
+                IEditor editor = ActiveEditor;
+                return editor != null ? editorTypePanelManager.GetEditorTypePanelProperties(editor.GetType()) : defaultPanelProperties;
             }
         }
 
@@ -438,16 +448,16 @@ namespace Cryptool.CrypWin
             this.demoController = new DemoController(this);
             this.InitializeComponent();
 
-            if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.SettingVisibility) == System.Windows.Visibility.Visible)
-            {
-                SettingBTN.IsChecked = true;
-                dockWindowAlgorithmSettings.Open();
-            }
-            else
-            {
-                SettingBTN.IsChecked = false;
-                dockWindowAlgorithmSettings.Close();
-            }
+            //if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.SettingVisibility) == System.Windows.Visibility.Visible)
+            //{
+            //    SettingBTN.IsChecked = true;
+            //    dockWindowAlgorithmSettings.Open();
+            //}
+            //else
+            //{
+            SettingBTN.IsChecked = false;
+            dockWindowAlgorithmSettings.Close();
+            //}
 
             if ((System.Windows.Visibility)Enum.Parse(typeof(System.Windows.Visibility), Properties.Settings.Default.PluginVisibility) == System.Windows.Visibility.Visible)
             {
@@ -2185,16 +2195,7 @@ namespace Cryptool.CrypWin
 
         private int RunningWorkspaces()
         {
-            var count = 0;
-            foreach (var editor in editorToFileMap.Keys)
-            {
-                if (editor.CanStop)
-                {
-                    count++;
-                }
-            }
-
-            return count;
+            return editorToFileMap.Keys.Where(e => e.CanStop).Count();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -2208,30 +2209,30 @@ namespace Cryptool.CrypWin
                 lastEditor.OnOpenProjectFile -= OpenProjectFileEvent;
 
                 //save tab state of the old editor.. but not maximized:
-                var prop = editorTypePanelManager.GetEditorTypePanelProperties(lastEditor.GetType());
-                if (prop.ShowMaximized)     //currently maximized
-                {
-                    prop.ShowMaximized = false;
-                    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), prop);
-                }
-                else
-                {
-                    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
-                    {
-                        ShowComponentPanel = PluginBTN.IsChecked,
-                        ShowLogPanel = LogBTN.IsChecked,
-                        ShowSettingsPanel = SettingBTN.IsChecked,
-                        ShowMaximized = false
-                    });
-                }
+                //var prop = editorTypePanelManager.GetEditorTypePanelProperties(lastEditor.GetType());
+                //if (prop.ShowMaximized)     //currently maximized
+                //{
+                //    prop.ShowMaximized = false;
+                //    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), prop);
+                //}
+                //else
+                //{
+                //    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
+                //    {
+                //        ShowComponentPanel = PluginBTN.IsChecked,
+                //        ShowLogPanel = LogBTN.IsChecked,
+                //        ShowSettingsPanel = SettingBTN.IsChecked,
+                //        ShowMaximized = false
+                //    });
+                //}
             }
 
             if (ActiveEditor != null && ActivePlugin == ActiveEditor)
             {
                 //ActiveEditor.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
                 ActiveEditor.OnOpenProjectFile += OpenProjectFileEvent;
-                ShowEditorSpecificPanels(ActiveEditor);
             }
+            ShowEditorSpecificPanels(ActiveEditor);
 
             if (ActivePlugin != null)
             {
@@ -2251,21 +2252,35 @@ namespace Cryptool.CrypWin
         {
             try
             {
-                var panelProperties = editorTypePanelManager.GetEditorTypePanelProperties(editor.GetType());
+                var panelProperties = (editor == null) ? defaultPanelProperties : editorTypePanelManager.GetEditorTypePanelProperties(editor.GetType());
 
-                if (!panelProperties.ShowMaximized)
+                LogBTN.IsChecked = panelProperties.ShowLogPanel;
+                LogBTN_Checked(LogBTN, null);
+                PluginBTN.IsChecked = panelProperties.ShowComponentPanel;
+                PluginBTN_Checked(PluginBTN, null);
+                SettingBTN.IsChecked = panelProperties.ShowSettingsPanel;
+                SettingBTN_Checked(SettingBTN, null);
+
+                if (ActiveEditor is WorkspaceManager.WorkspaceManagerClass)
                 {
-                    LogBTN.IsChecked = panelProperties.ShowLogPanel;
-                    LogBTN_Checked(LogBTN, null);
-                    PluginBTN.IsChecked = panelProperties.ShowComponentPanel;
-                    PluginBTN_Checked(PluginBTN, null);
-                    SettingBTN.IsChecked = panelProperties.ShowSettingsPanel;
-                    SettingBTN_Checked(SettingBTN, null);
+                    var presentation = (WorkspaceManager.View.Visuals.EditorVisual)((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation;
+                    presentation.IsSettingsOpen = panelProperties.ShowSettingsPanel;
+                    //var presentation = ((WorkspaceManager.View.Visuals.EditorVisual))(((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation);
                 }
-                else
-                {
-                    MaximizeTab();
-                }
+
+                //if (!panelProperties.ShowMaximized)
+                //{
+                //    LogBTN.IsChecked = panelProperties.ShowLogPanel;
+                //    LogBTN_Checked(LogBTN, null);
+                //    PluginBTN.IsChecked = panelProperties.ShowComponentPanel;
+                //    PluginBTN_Checked(PluginBTN, null);
+                //    SettingBTN.IsChecked = panelProperties.ShowSettingsPanel;
+                //    SettingBTN_Checked(SettingBTN, null);
+                //}
+                //else
+                //{
+                //    MaximizeTab();
+                //}
             }
             catch (Exception)
             {
@@ -2410,17 +2425,21 @@ namespace Cryptool.CrypWin
             Visibility v = ((ButtonDropDown)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed;
             Properties.Settings.Default.SettingVisibility = v.ToString();
             SaveSettingsSavely();
-            if (v == Visibility.Visible)
-                dockWindowAlgorithmSettings.Open();
-            else
-                dockWindowAlgorithmSettings.Close();
+            
+            //if (v == Visibility.Visible)
+            //    dockWindowAlgorithmSettings.Open();
+            //else
+            dockWindowAlgorithmSettings.Close();
         }
 
         private void LogBTN_Checked(object sender, RoutedEventArgs e)
         {
+            ActivePanelProperties.ShowLogPanel = ((ButtonDropDown)sender).IsChecked;
+
             Visibility v = ((ButtonDropDown)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed;
             Properties.Settings.Default.LogVisibility = v.ToString();
             SaveSettingsSavely();
+            
             if (v == Visibility.Visible)
                 dockWindowLogMessages.Open();
             else
@@ -2429,10 +2448,10 @@ namespace Cryptool.CrypWin
 
         private void PluginBTN_Checked(object sender, RoutedEventArgs e)
         {
-
             Visibility v = ((ButtonDropDown)sender).IsChecked ? Visibility.Visible : Visibility.Collapsed;
             Properties.Settings.Default.PluginVisibility = v.ToString();
             SaveSettingsSavely();
+            
             if (v == Visibility.Visible)
                 dockWindowNaviPaneAlgorithms.Open();
             else
@@ -2441,42 +2460,51 @@ namespace Cryptool.CrypWin
 
         private void statusBar_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (LogBTN.IsChecked)
-                LogBTN.IsChecked = false;
-            else
-                LogBTN.IsChecked = true;
-
+            LogBTN.IsChecked = !LogBTN.IsChecked;
             LogBTN_Checked(LogBTN, null);
         }
 
-
         void doHandleMaxTab() 
         {
-            if (LogBTN.IsChecked || SettingBTN.IsChecked || PluginBTN.IsChecked)
+            //if (ActiveEditor != null)
             {
-                MaximizeTab();
+                var prop = (ActiveEditor==null) ? defaultPanelProperties : editorTypePanelManager.GetEditorTypePanelProperties(ActiveEditor.GetType());
+                if (ActiveEditor is WorkspaceManager.WorkspaceManagerClass)
+                    prop.ShowSettingsPanel = ((WorkspaceManager.View.Visuals.EditorVisual)((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation).IsSettingsOpen;
+                if (prop.IsMaximized) prop.Minimize(); else prop.Maximize();
+                ShowEditorSpecificPanels(ActiveEditor);
             }
-            else
-            {
-                //Normalize tab:
-                if (ActiveEditor != null)
-                {
-                    var prop = editorTypePanelManager.GetEditorTypePanelProperties(ActiveEditor.GetType());
-                    prop.ShowMaximized = false;
-                    editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), prop);
-                    ShowEditorSpecificPanels(ActiveEditor);
-                }
-                else
-                {
-                    LogBTN.IsChecked = true;
-                    SettingBTN.IsChecked = true;
-                    PluginBTN.IsChecked = true;
+            //else
+            //{
+            //    if (LogBTN.IsChecked)
+            //    {
+            //        MaximizeTab();
+            //    }
+            //    else
+            //    {
+            //        MinimizeTab();
+            //    }
+            //}
 
-                    LogBTN_Checked(LogBTN, null);
-                    SettingBTN_Checked(SettingBTN, null);
-                    PluginBTN_Checked(PluginBTN, null);
-                }
-            }
+            //if (LogBTN.IsChecked || SettingBTN.IsChecked || PluginBTN.IsChecked)
+            //{
+            //    MaximizeTab();
+            //}
+            //else
+            //{
+            //    //Normalize tab:
+            //    if (ActiveEditor != null)
+            //    {
+            //        var prop = editorTypePanelManager.GetEditorTypePanelProperties(ActiveEditor.GetType());
+            //        prop.ShowMaximized = false;
+            //        editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), prop);
+            //        ShowEditorSpecificPanels(ActiveEditor);
+            //    }
+            //    else
+            //    {
+            //        MinimizeTab();
+            //    }
+            //}
         }
 
         void handleMaximizeTab(object sender, EventArgs e)
@@ -2486,17 +2514,17 @@ namespace Cryptool.CrypWin
 
         private void MaximizeTab()
         {
-            if (ActiveEditor != null)
-            {
-                //save status before maximizing, so it can be restored later:
-                editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
-                                                                                                {
-                                                                                                    ShowComponentPanel = PluginBTN.IsChecked,
-                                                                                                    ShowLogPanel = LogBTN.IsChecked,
-                                                                                                    ShowSettingsPanel = SettingBTN.IsChecked,
-                                                                                                    ShowMaximized = true
-                                                                                                });
-            }
+            //if (ActiveEditor != null)
+            //{
+            //    //save status before maximizing, so it can be restored later:
+            //    editorTypePanelManager.SetEditorTypePanelProperties(ActiveEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
+            //                                                                                    {
+            //                                                                                        ShowComponentPanel = PluginBTN.IsChecked,
+            //                                                                                        ShowLogPanel = LogBTN.IsChecked,
+            //                                                                                        ShowSettingsPanel = SettingBTN.IsChecked,
+            //                                                                                        ShowMaximized = true
+            //                                                                                    });
+            //}
 
             LogBTN.IsChecked = false;
             SettingBTN.IsChecked = false;
@@ -2510,8 +2538,8 @@ namespace Cryptool.CrypWin
         private void MinimizeTab()
         {
             LogBTN.IsChecked = true;
-            SettingBTN.IsChecked = true;
-            PluginBTN.IsChecked = true;
+            SettingBTN.IsChecked = false;
+            PluginBTN.IsChecked = false;
 
             LogBTN_Checked(LogBTN, null);
             SettingBTN_Checked(SettingBTN, null);
