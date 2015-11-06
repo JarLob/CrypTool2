@@ -160,9 +160,9 @@
     <value>Die Trennzeichen werden aus dem Eingabewort gelöscht und tragen somit nicht zum Suchmuster bei.</value>
   </data>
   <data name="HomophonicCaption" xml:space="preserve">
-    <value>erlaube Homophone </value>
+    <value>Erlaube Homophone </value>
   </data>
   <data name="HomophonicTooltip" xml:space="preserve">
-    <value>Aktivieren Sie dieses Kontrollkästchen, wenn verschiedene Zeichen des Suchmusters für das selbe Klartextzeichen stehen dürfen.</value>
+    <value>Aktivieren Sie dieses Kontrollkästchen, wenn verschiedene Zeichen des Suchmusters für dasselbe Klartextzeichen stehen dürfen.</value>
   </data>
 </root>
