@@ -197,10 +197,6 @@ namespace WorkspaceManager.Model
             pluginModel.RepeatStart = false;
             pluginModel.generateConnectors();
             pluginModel.Plugin.Initialize();
-            if (pluginModel.Plugin.Settings != null)
-            {
-                pluginModel.Plugin.Settings.Initialize();
-            }
             pluginModel.Plugin.OnGuiLogNotificationOccured += this.GuiLogMessage;
             pluginModel.Plugin.OnPluginProgressChanged += pluginModel.PluginProgressChanged;
             pluginModel.Plugin.OnPluginStatusChanged += pluginModel.PluginStatusChanged;
@@ -252,10 +248,6 @@ namespace WorkspaceManager.Model
                 this.AllConnectorModels.Add(connectorModel);
             }
             pluginModel.Plugin.Initialize();
-            if (pluginModel.Plugin.Settings != null)
-            {
-                pluginModel.Plugin.Settings.Initialize();
-            }
         }
        
         /// <summary>
@@ -805,6 +797,17 @@ namespace WorkspaceManager.Model
             var hash = sha256.ComputeHash(stream.ToArray());
             stream.Close();
             return hash;
+        }
+
+        public void InitializeSettings()
+        {
+            foreach (var pluginModel in GetAllPluginModels().ToArray())
+            {
+                if (pluginModel.Plugin.Settings != null)
+                {
+                    pluginModel.Plugin.Settings.Initialize();
+                }
+            }
         }
     }
 

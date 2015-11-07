@@ -271,11 +271,7 @@ namespace WorkspaceManager.Model
             {
                 try
                 {
-                    pluginModel.Plugin.Initialize();
-                    if (pluginModel.Plugin.Settings != null)
-                    {
-                        pluginModel.Plugin.Settings.Initialize();
-                    }
+                    pluginModel.Plugin.Initialize();                    
                     pluginModel.PercentageFinished = 0;
                 }
                 catch (Exception ex)
