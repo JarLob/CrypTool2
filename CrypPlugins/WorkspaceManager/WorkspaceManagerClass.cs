@@ -85,6 +85,17 @@ namespace WorkspaceManager
 
         private void OnSampleLoaded(string filename)
         {
+            //We initialize the settings after all other loading procedures have been finsihed, thus, settings, that are set
+            //to invisible, are not shown in the settings bar
+            try
+            {
+                WorkspaceModel.InitializeSettings();
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(String.Format("Error during initialization of settings: {0}", ex.Message), NotificationLevel.Error);
+            }
+
             if (OnFileLoaded != null)
                 OnFileLoaded.Invoke(this, filename);
         }
@@ -204,7 +215,7 @@ namespace WorkspaceManager
                 HandleTemplateLoadingDispatcher(dispatcherOp, fileName);
                 WorkspaceModel.UpdateableView = this.WorkspaceSpaceEditorView;
                 this.OnProjectTitleChanged.Invoke(this, System.IO.Path.GetFileName(fileName));
-                WorkspaceModel.MyEditor = this;
+                WorkspaceModel.MyEditor = this;                
                 WorkspaceModel.UndoRedoManager.ClearStacks();
             }
             catch (Exception ex)

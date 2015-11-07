@@ -54,22 +54,20 @@ namespace WorkspaceManager.View.Visuals
             noSettings = false;
             this.isSideBar = isSideBar;
             this.Resources.Add("isSideBarResource", this.isSideBar);
-
-
+            
             this.bcv = bcv;
             this.plugin = plugin;
             entgrou = new EntryGroup();
             this.entgrou = createContentSettings(plugin);
 
-
-
             if (entgrou.entryList.Count != 0)
             {
                 ((WorkspaceManagerClass)bcv.Model.WorkspaceModel.MyEditor).executeEvent += new EventHandler(excuteEventHandler);
 
-                if (plugin.Settings != null && plugin.Settings.GetTaskPaneAttributeChanged() != null)
+                var taskPaneAttributeChanged = plugin.Settings.GetTaskPaneAttributeChanged();
+                if (plugin.Settings != null && taskPaneAttributeChanged != null)
                 {
-                    plugin.Settings.GetTaskPaneAttributeChanged().AddEventHandler(plugin.Settings, new TaskPaneAttributeChangedHandler(myTaskPaneAttributeChangedHandler));
+                    taskPaneAttributeChanged.AddEventHandler(plugin.Settings, new TaskPaneAttributeChangedHandler(myTaskPaneAttributeChangedHandler));
                 }
 
                 InitializeComponent();
@@ -196,10 +194,7 @@ namespace WorkspaceManager.View.Visuals
         private void myTaskPaneAttributeChangedHandler(Object sender, TaskPaneAttributeChangedEventArgs args)
         {
 
-            plugin.Settings.GetTaskPaneAttributeChanged();
-
-
-
+            //plugin.Settings.GetTaskPaneAttributeChanged();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 foreach (List<ControlEntry> cel in entgrou.entryList)
@@ -209,18 +204,12 @@ namespace WorkspaceManager.View.Visuals
 
                     foreach (ControlEntry ce in cel)
                     {
-
                         foreach (TaskPaneAttribteContainer tpac in args.ListTaskPaneAttributeContainer)
                         {
                             if (ce.tpa.PropertyName == tpac.Property)
                             {
-
-                                
                                 ce.element.Visibility = tpac.Visibility;
                                 ce.caption.Visibility = tpac.Visibility;
-                                
-
-
                             }
                             if (ce.element.Visibility == System.Windows.Visibility.Visible)
                             {
@@ -228,12 +217,10 @@ namespace WorkspaceManager.View.Visuals
                             }
                         }
 
-
                     }
                     if (allinvisble)
                     {
                         entgrou.gorupPanel[entgrou.entryList.IndexOf(cel)].Visibility = System.Windows.Visibility.Collapsed;
-
                     }
                 }
             }, null);

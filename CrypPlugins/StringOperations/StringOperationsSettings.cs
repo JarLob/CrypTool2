@@ -41,17 +41,6 @@ namespace StringOperations
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
-        }
-
-        #endregion
-
-        public StringOperationsSettings()
-        {
-            foreach (StringOperationType name in Enum.GetValues(typeof(StringOperationType)))
-            {
-                _operationVisibility[name] = new List<string>();
-            }
             _operationList.Add("String1");
             _operationList.Add("String2");
             _operationList.Add("String3");
@@ -63,15 +52,25 @@ namespace StringOperations
             _operationVisibility[StringOperationType.CompareTo].Add("String2");
             _operationVisibility[StringOperationType.Concatenate].Add("String2");
             _operationVisibility[StringOperationType.Equals].Add("String2");
-            _operationVisibility[StringOperationType.IndexOf].Add("String2");            
+            _operationVisibility[StringOperationType.IndexOf].Add("String2");
             _operationVisibility[StringOperationType.RegexReplace].Add("String2");
             _operationVisibility[StringOperationType.RegexReplace].Add("String3");
             _operationVisibility[StringOperationType.Replace].Add("String2");
             _operationVisibility[StringOperationType.Replace].Add("String3");
             _operationVisibility[StringOperationType.Sort].Add("Order");
             _operationVisibility[StringOperationType.Substring].Add("Value1");
-            _operationVisibility[StringOperationType.Substring].Add("Value2");                       
+            _operationVisibility[StringOperationType.Substring].Add("Value2");
             UpdateTaskPaneVisibility();
+        }
+
+        #endregion
+
+        public StringOperationsSettings()
+        {
+            foreach (StringOperationType name in Enum.GetValues(typeof(StringOperationType)))
+            {
+                _operationVisibility[name] = new List<string>();
+            }           
         }        
 
         [TaskPane("OperationCaption", "OperationCaptionToolTip", null, 1, false, ControlType.ComboBox,

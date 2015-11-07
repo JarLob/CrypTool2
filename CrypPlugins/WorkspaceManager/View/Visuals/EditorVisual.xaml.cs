@@ -820,12 +820,7 @@ namespace WorkspaceManager.View.Visuals
             bind.ConverterParameter = bin;
             bind.Converter = new SelectionChangedConverter();
             bin.SetBinding(ComponentVisual.IsSelectedProperty, bind);
-            bin.PositionDeltaChanged += new EventHandler<PositionDeltaChangedArgs>(ComponentPositionDeltaChanged);
-
-            if (mode == 0)
-            {
-
-            }
+            bin.PositionDeltaChanged += new EventHandler<PositionDeltaChangedArgs>(ComponentPositionDeltaChanged);           
 
             if (mode == 1)
             {
@@ -835,6 +830,13 @@ namespace WorkspaceManager.View.Visuals
             }
 
             VisualCollection.Add(bin);
+
+            //We initialize the settings after all other procedures have been finsihed, thus, settings, that are set
+            //to invisible, are not shown in the settings bar
+            if (pluginModel.Plugin.Settings != null)
+            {
+                pluginModel.Plugin.Settings.Initialize();
+            }
         }
 
         public DispatcherOperation Load(WorkspaceModel model, bool isPaste = false)

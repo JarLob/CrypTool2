@@ -379,7 +379,7 @@ namespace Cryptool.Plugins.ImageProcessor
 
         public void Initialize()
         {
-
+            UpdateTaskPaneVisibility();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
