@@ -134,8 +134,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             //Variables for CUDA
             //totalthreads
-            CudaDeviceVariable<long> vector_totalThreads = new CudaDeviceVariable<long>(1);
-            vector_totalThreads.CopyToDevice(totalThreads);
+            //CudaDeviceVariable<long> vector_totalThreads = new CudaDeviceVariable<long>(1);
+            //vector_totalThreads.CopyToDevice(totalThreads);
 
             //Runkey: Copy Data to Device when calling Kernel.
             CudaDeviceVariable<int> vector_runkey = new CudaDeviceVariable<int>(alphabet.Length);
@@ -145,8 +145,8 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             vector_ciphertext.CopyToDevice(ciphertextForCuda);
 
             //Textlength
-            CudaDeviceVariable<int> vector_textLength = new CudaDeviceVariable<int>(1);
-            vector_textLength.CopyToDevice(textLength);
+            //CudaDeviceVariable<int> vector_textLength = new CudaDeviceVariable<int>(1);
+            //vector_textLength.CopyToDevice(textLength);
 
             //Costfunction
             CudaDeviceVariable<double> vector_quadgrams = new CudaDeviceVariable<double>(d_singleDimQuadgrams.Length);
@@ -173,9 +173,9 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     {
                         foundbetter = false;
                         //Check all Transformations of i,j in CUDA.
-                        double[] cuda_out = CudaHillClimb(vector_totalThreads, vector_ciphertext, vector_textLength,
-                            runkey, vector_runkey, vector_quadgrams, vector_cudaout);
-                        cntxt.Synchronize();
+                        double[] cuda_out = CudaHillClimb(totalThreads, vector_ciphertext, textLength,
+                        runkey, vector_runkey, vector_quadgrams, vector_cudaout);
+                        //cntxt.Synchronize();
 
                         totalKeys = totalKeys + totalThreads; //Amount of tested keys tested.
 
@@ -218,9 +218,9 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             finally
             {
                 //Free CudaMemory
-                vector_totalThreads.Dispose();
+                //vector_totalThreads.Dispose();
                 vector_ciphertext.Dispose();
-                vector_textLength.Dispose();
+                //vector_textLength.Dispose();
                 vector_quadgrams.Dispose();
                 vector_runkey.Dispose();
                 vector_cudaout.Dispose();
@@ -781,11 +781,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             //Load the CudaFunction
             if (alphabet.Length == 26)//Algorithm for english version
             {
-                MajorKernel = new CudaKernel("_Z9kernelENGPlPiS0_S0_PdS1_", cumodule, cntxt);
+                MajorKernel = new CudaKernel("_Z9kernelENGlPiiS_PdS0_", cumodule, cntxt);
             }
             else if (alphabet.Length == 30)//Algorithm for german version
             {
-                MajorKernel = new CudaKernel("_Z9kernelGERPlPiS0_S0_PdS1_", cumodule, cntxt);
+                MajorKernel = new CudaKernel("_Z9kernelGERlPiiS_PdS0_", cumodule, cntxt);
             }
             MajorKernel.BlockDimensions = blocksize;
             MajorKernel.GridDimensions = gridsize;
@@ -853,18 +853,18 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /*CUDAHILLCLIMBING CALL KERNEL:
          * 
          *                  TotlThreads                Ciphertext         Textlength            RunKey         CudaVar-Runkey       SingleDim.Quadgrams           CudaOutput            returntype*/
-        static Func<CudaDeviceVariable<long>, CudaDeviceVariable<int>, CudaDeviceVariable<int>, int[], CudaDeviceVariable<int>, CudaDeviceVariable<double>, CudaDeviceVariable<double>, double[]>
+        static Func<long, CudaDeviceVariable<int>, int, int[], CudaDeviceVariable<int>, CudaDeviceVariable<double>, CudaDeviceVariable<double>, double[]>
 
-            CudaHillClimb = (vector_totalThreads, vector_ciphertext, vector_textLength, runkey, vector_runkey, vector_quadgrams, vector_cudaout) =>
+            CudaHillClimb = (totalThreads, vector_ciphertext, textlength, runkey, vector_runkey, vector_quadgrams, vector_cudaout) =>
             {
                 //Dynamic Input
                 vector_runkey.CopyToDevice(runkey);
 
                 //Run cuda method
-                MajorKernel.Run(vector_totalThreads.DevicePointer, vector_ciphertext.DevicePointer, vector_textLength.DevicePointer,
+                MajorKernel.Run(totalThreads, vector_ciphertext.DevicePointer, textlength,
                     vector_runkey.DevicePointer, vector_quadgrams.DevicePointer, vector_cudaout.DevicePointer);
 
-                double[] _out = new double[vector_totalThreads[0]];
+                double[] _out = new double[totalThreads];
 
                 // copy return to host
                 vector_cudaout.CopyToHost(_out);

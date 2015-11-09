@@ -5,7 +5,7 @@
 #include <curand_kernel.h>
 
 
-__global__ void kernelENG(long* totalThreads, int* ciphertext, int* textLength, int* runkey,
+__global__ void kernelENG(long totalThreads, int* ciphertext, int textLength, int* runkey,
 						double* quadgrams, double* cuda_out)
 {
 	int x = blockIdx.x*blockDim.x+threadIdx.x;
@@ -15,10 +15,12 @@ __global__ void kernelENG(long* totalThreads, int* ciphertext, int* textLength, 
 	int plaintext[1000];	// 10000Must have constant Value, [textLength[0]] not possible. IMPORTANT: There wont be more then 10k Symbols loaded into kernel. Handeled in c# Code (HillclimbingAttacker).
 	int i = index / 26;		// With i and j the Algorithm Computes the Chiddkey(K*). See the Modifyblock 
 	int j = index % 26;
+	
 
 	int temp;
 	double costvalue = 0;
 	int threadKey[26];
+
 
 	for (int k = 0; k < 26; k++)
 	{
@@ -31,13 +33,13 @@ __global__ void kernelENG(long* totalThreads, int* ciphertext, int* textLength, 
 	threadKey[j] = temp;
 
 	//Plain = cipher, K*
-	for (int k = 0; k < textLength[0]; k++)
+	for (int k = 0; k < textLength; k++)
 	{
 		plaintext[k] = threadKey[ciphertext[k]];
 	}
 
 	//Costfunction
-	int end = textLength[0]-3;
+	int end = textLength -3;
 	for (int k = 0; k < end; k++)
 	{
 		costvalue +=  quadgrams[plaintext[k] + (plaintext[k + 1] * 26) +
@@ -45,14 +47,14 @@ __global__ void kernelENG(long* totalThreads, int* ciphertext, int* textLength, 
 	}
 
 	//Output Return the Costvalue for each Thread
-	for (int k = 0; k < totalThreads[0]; k++)
+	for (int k = 0; k < totalThreads; k++)
 	{
 		cuda_out[index] = costvalue;
 	}
 
 }
 
-__global__ void kernelGER(long* totalThreads, int* ciphertext, int* textLength, int* runkey,
+__global__ void kernelGER(long totalThreads, int* ciphertext, int textLength, int* runkey,
 						double* quadgrams, double* cuda_out)
 {
 	int x = blockIdx.x*blockDim.x+threadIdx.x;
@@ -77,13 +79,13 @@ __global__ void kernelGER(long* totalThreads, int* ciphertext, int* textLength, 
 	threadKey[j] = temp;
 
 	//Plain = cipher, K*
-	for (int k = 0; k < textLength[0]; k++)
+	for (int k = 0; k < textLength; k++)
 	{
 		plaintext[k] = threadKey[ciphertext[k]];
 	}
 
 	//Costfunction
-	int end = textLength[0]-3;	
+	int end = textLength -3;	
 	for (int k = 0; k < end; k++)
 	{
 		costvalue +=  quadgrams[plaintext[k] + (plaintext[k + 1] * 30) +
@@ -91,7 +93,7 @@ __global__ void kernelGER(long* totalThreads, int* ciphertext, int* textLength, 
 	}
 
 	//Output Return the Costvalue for each Thread
-	for (int k = 0; k < totalThreads[0]; k++)
+	for (int k = 0; k < totalThreads; k++)
 	{
 		cuda_out[index] = costvalue;
 	}

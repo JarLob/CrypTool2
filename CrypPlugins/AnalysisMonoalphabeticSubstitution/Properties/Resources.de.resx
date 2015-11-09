@@ -361,13 +361,13 @@
     <value>H</value>
   </data>
   <data name="hill_attack_finished" xml:space="preserve">
-    <value>Der hillclimbing Angriff wurde beendet in: </value>
+    <value>Der Hillclimbing-Angriff wurde beendet in:</value>
   </data>
   <data name="hill_attack_testedkeys" xml:space="preserve">
-    <value>Anzahl der getesteten Schlüssel durch den hillclimbing Angriff: </value>
+    <value>Anzahl der getesteten Schlüssel durch den Hillclimbing-Angriff</value>
   </data>
   <data name="hill_attack_keyspersecond" xml:space="preserve">
-    <value>Durch hillclimbing getestete Schlüssel pro Sekunde: </value>
+    <value>Durch Hillclimbing getestete Schlüssel pro Sekunde:</value>
   </data>
   <data name="ChooseAlgorithmCaption" xml:space="preserve">
     <value>Algorithmen</value>
@@ -382,18 +382,19 @@
     <value>Wörterbuch &amp; Genetisch</value>
   </data>
   <data name="ChooseAlgorithmTooltip" xml:space="preserve">
-    <value>Wähle einen Algorithmus mit dem die Dechiffrierung durchgeführt werden soll.</value>
+    <value>Algorithmus, mit dem die Entschlüsselung durchgeführt
+werden soll.</value>
   </data>
   <data name="RestartsCaption" xml:space="preserve">
     <value>Anzahl von Neustarts (Hillclimbing)</value>
   </data>
   <data name="RestartsTooltip" xml:space="preserve">
-    <value>Wähle wie oft der Hillclimbingalgorithmus von vorn beginnen soll.</value>
+    <value>Wie oft soll der Hillclimbingalgorithmus von vorn beginnen?</value>
   </data>
   <data name="SelectAlgorithmGroup" xml:space="preserve">
     <value>Art des Angriffs</value>
   </data>
   <data name="no_cuda" xml:space="preserve">
-    <value>Kein cudafähiges Gerät oder fehlender Treiber.</value>
+    <value>Keine CUDA-fähige Grafikkarte oder fehlender Treiber.</value>
   </data>
 </root>

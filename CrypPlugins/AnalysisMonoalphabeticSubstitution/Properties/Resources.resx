@@ -388,9 +388,9 @@
     <value>Choose how often the hillclimbing algorithm should start over.</value>
   </data>
   <data name="SelectAlgorithmGroup" xml:space="preserve">
-    <value>Attacktype</value>
+    <value>Attack type</value>
   </data>
   <data name="no_cuda" xml:space="preserve">
-    <value>Cudadevice or Cudadriver not found.</value>
+    <value>No CUDA-enabled device or CUDA driver found.</value>
   </data>
 </root>

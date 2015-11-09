@@ -267,19 +267,26 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             //Check if Cuda is Available (Device & Driver).
             cudaAvailable = true;
-            CudaContext chtxt = new CudaContext();
+            try
+            {
+                CudaContext chtxt = new CudaContext();
 
-            if (CudaContext.GetDeviceCount() != 0 && CudaContext.GetDriverVersion() != null)
-            {
-                Console.WriteLine("" + CudaContext.GetDriverVersion());
-                cudaAvailable = true;
+                if (CudaContext.GetDeviceCount() != 0 && CudaContext.GetDriverVersion() != null)
+                {
+                    Console.WriteLine("" + CudaContext.GetDriverVersion());
+                    cudaAvailable = true;
+                }
+                else
+                {
+                    cudaAvailable = false;
+                }
+                chtxt.Dispose();
             }
-            else
+            catch (Exception ex)
             {
+                //CUDA does not work; Exception is also thrown when there is no CUDA installed
                 cudaAvailable = false;
             }
-            chtxt.Dispose();
-
 
             // If input incorrect return otherwise execute analysis
             lock (this.stopFlag)
