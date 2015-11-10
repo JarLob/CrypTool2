@@ -33,6 +33,13 @@ namespace Cryptool.VigenereAnalyzer
         German = 1
     };
 
+    public enum CostFunction
+    {
+        Trigrams = 0,
+        Quadgrams = 1,
+        Both = 2
+    }
+
     public enum UnknownSymbolHandlingMode
     {
         Ignore = 0,
@@ -55,6 +62,7 @@ namespace Cryptool.VigenereAnalyzer
         private bool _fastConverge;
         private int _restarts = 50;
         private KeyStyle _keyStyle;
+        private CostFunction _costFunction = CostFunction.Quadgrams;
 
         public void Initialize()
         {
@@ -144,6 +152,23 @@ namespace Cryptool.VigenereAnalyzer
                 {
                     _language = value;
                     OnPropertyChanged("Language");
+                }
+            }
+        }
+
+        [TaskPane("CostFunction", "CostFunctionTooltio", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both" })]
+        public CostFunction CostFunction
+        {
+            get
+            {
+                return _costFunction;
+            }
+            set
+            {
+                if (value != _costFunction)
+                {
+                    _costFunction = value;
+                    OnPropertyChanged("CostFunction");
                 }
             }
         }

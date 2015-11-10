@@ -38,11 +38,12 @@ namespace Cryptool.VigenereAnalyzer
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class VigenereAnalyzer : ICrypComponent
     {
-        private const int MaxBestListEntries = 20;
+        private const int MaxBestListEntries = 100;
         private readonly AssignmentPresentation _presentation = new AssignmentPresentation();
         private string _plaintext;
         private string _key;
         private readonly VigenereAnalyzerSettings _settings = new VigenereAnalyzerSettings();
+        private double[,,] _trigrams;
         private double[,,,] _quadgrams;
         private bool _stopped;
         private DateTime _startTime;
@@ -82,18 +83,21 @@ namespace Cryptool.VigenereAnalyzer
         
         public void PreExecution()
         {
-            if (_settings.Language == Language.Englisch)
+            if (_settings.Language == Language.German)
             {
-                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            }
-            else if (_settings.Language == Language.German)
-            {
+                Load3Grams("de-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
                 Load4Grams("de-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÜÖß");
             }
-            else
+            else if (_settings.Language == Language.Englisch)
             {
+                Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
                 Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             }            
+            else
+            {
+                Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");                
+            }
             VigenereAlphabet = Alphabet;
         }
 
@@ -156,7 +160,7 @@ namespace Cryptool.VigenereAnalyzer
             for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
             {
                 UpdateDisplayEnd(keylength);
-                HillclimbVigenere(ciphertext, keylength, _quadgrams, _settings.Restarts);
+                HillclimbVigenere(ciphertext, keylength, _settings.Restarts);
                 if (_stopped)
                 {                    
                     return;
@@ -225,9 +229,8 @@ namespace Cryptool.VigenereAnalyzer
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <param name="keylength"></param>
-        /// <param name="ngrams4"></param>
         /// <param name="restarts"></param>
-        private void HillclimbVigenere(int[] ciphertext, int keylength, double[, , ,] ngrams4, int restarts = 100)
+        private void HillclimbVigenere(int[] ciphertext, int keylength, int restarts = 100)
         {
             var globalbestkeycost = double.MinValue;
             var bestkey = new int[keylength];
@@ -265,7 +268,22 @@ namespace Cryptool.VigenereAnalyzer
                             runkey[i] = j;
                             plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext) : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
                             keys++;
-                            var costvalue = CalculateQuadgramCost(ngrams4, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(ngrams4, runkey) : 0);
+                            var costvalue = 0.0;
+                            switch (_settings.CostFunction)
+                            {
+                                case CostFunction.Trigrams:
+                                    costvalue = CalculateTrigramCost(_trigrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateTrigramCost(_trigrams, runkey) : 0);
+                                    break;
+                                case CostFunction.Quadgrams:
+                                    costvalue = CalculateQuadgramCost(_quadgrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(_quadgrams, runkey) : 0);
+                                    break;
+                                case CostFunction.Both:
+                                    var tri = CalculateTrigramCost(_trigrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateTrigramCost(_trigrams, runkey) : 0);
+                                    var quad = CalculateQuadgramCost(_quadgrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(_quadgrams, runkey) : 0);
+                                    costvalue += (0.5 * tri + 0.5 * quad);
+                                    break;
+                            }                            
+                            
                             if (costvalue > bestkeycost)
                             {
                                 bestkeycost = costvalue;
@@ -504,6 +522,24 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         /// <summary>
+        /// Calculate cost value based on 3-grams
+        /// </summary>
+        /// <param name="ngrams3"></param>
+        /// <param name="plaintext"></param>
+        /// <returns></returns>
+        public static double CalculateTrigramCost(double[, ,] ngrams3, int[] plaintext)
+        {
+            double value = 0;
+            var end = plaintext.Length - 2;
+
+            for (var i = 0; i < end; i++)
+            {
+                value += ngrams3[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
+            }
+            return value;
+        }
+
+        /// <summary>
         /// Calculate cost value based on 4-grams
         /// </summary>
         /// <param name="ngrams4"></param>
@@ -574,6 +610,32 @@ namespace Cryptool.VigenereAnalyzer
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Load 3Gram file
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="alphabet"></param>
+        private void Load3Grams(string filename, string alphabet)
+        {
+            _trigrams = new double[alphabet.Length, alphabet.Length, alphabet.Length];
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new BinaryReader(fileStream))
+                {
+                    for (int i = 0; i < alphabet.Length; i++)
+                    {
+                        for (int j = 0; j < alphabet.Length; j++)
+                        {
+                            for (int k = 0; k < alphabet.Length; k++)
+                            {                                
+                                    var bytes = reader.ReadBytes(8);
+                                    _trigrams[i, j, k] = BitConverter.ToDouble(bytes, 0);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Load 4Gram file

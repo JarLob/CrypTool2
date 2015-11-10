@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Both" xml:space="preserve">
+    <value>Trigramme + Quagramme</value>
+  </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Kopiere Wert</value>
   </data>
+  <data name="CostFunction" xml:space="preserve">
+    <value>Kostenfunktion</value>
+  </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Aktuell analysierte Schlüssellänge:</value>
   </data>
@@ -146,6 +152,9 @@
   </data>
   <data name="EndLabel" xml:space="preserve">
     <value>Endzeit:</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Englisch</value>
   </data>
   <data name="FastConvergeCaption" xml:space="preserve">
     <value>Schnelleres Konvergieren</value>
@@ -158,6 +167,9 @@
   </data>
   <data name="FromKeylengthTooltip" xml:space="preserve">
     <value>Analysiere den gegebenen Geheimtext und beginne mit dieser Schlüssellänge.</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>Deutsch</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Bester Schlüssel</value>
@@ -210,6 +222,9 @@ wurde.</value>
     <value>Kryptoanalyse des Vigenère-Verfahrens mittels
 Hillclimbing.</value>
   </data>
+  <data name="Quadgrams" xml:space="preserve">
+    <value>Quadgramme</value>
+  </data>
   <data name="Random" xml:space="preserve">
     <value>Zufällig</value>
   </data>
@@ -237,6 +252,9 @@ durchgeführt werden sollen.</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
     <value>Bestenliste</value>
+  </data>
+  <data name="Trigrams" xml:space="preserve">
+    <value>Trigramme</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>

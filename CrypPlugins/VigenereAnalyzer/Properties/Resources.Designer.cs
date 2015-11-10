@@ -61,6 +61,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trigrams + Quadgrams ähnelt.
+        /// </summary>
+        public static string Both {
+            get {
+                return ResourceManager.GetString("Both", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
         /// </summary>
         public static string CiphertextCaption {
@@ -124,6 +133,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cost Function ähnelt.
+        /// </summary>
+        public static string CostFunction {
+            get {
+                return ResourceManager.GetString("CostFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Current analyzed keylength: ähnelt.
         /// </summary>
         public static string CurrentAnalysedKeylengthLabel {
@@ -147,6 +165,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string EndLabel {
             get {
                 return ResourceManager.GetString("EndLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die English ähnelt.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
             }
         }
         
@@ -183,6 +210,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string FromKeylengthTooltip {
             get {
                 return ResourceManager.GetString("FromKeylengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die German ähnelt.
+        /// </summary>
+        public static string German {
+            get {
+                return ResourceManager.GetString("German", resourceCulture);
             }
         }
         
@@ -331,6 +367,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Quadgrams ähnelt.
+        /// </summary>
+        public static string Quadgrams {
+            get {
+                return ResourceManager.GetString("Quadgrams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Random ähnelt.
         /// </summary>
         public static string Random {
@@ -408,6 +453,15 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string TopTenLabel {
             get {
                 return ResourceManager.GetString("TopTenLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trigrams ähnelt.
+        /// </summary>
+        public static string Trigrams {
+            get {
+                return ResourceManager.GetString("Trigrams", resourceCulture);
             }
         }
         

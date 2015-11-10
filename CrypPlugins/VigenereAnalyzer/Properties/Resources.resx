@@ -249,4 +249,22 @@
   <data name="SpeedLabel" xml:space="preserve">
     <value>Keys/second:</value>
   </data>
+  <data name="Both" xml:space="preserve">
+    <value>Trigrams + Quadgrams</value>
+  </data>
+  <data name="CostFunction" xml:space="preserve">
+    <value>Cost Function</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="Quadgrams" xml:space="preserve">
+    <value>Quadgrams</value>
+  </data>
+  <data name="Trigrams" xml:space="preserve">
+    <value>Trigrams</value>
+  </data>
 </root>
