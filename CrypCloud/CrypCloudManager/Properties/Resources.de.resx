@@ -299,4 +299,10 @@ Berechnungen.</value>
   <data name="_ResetPW_enterVerificationData_2" xml:space="preserve">
     <value>Bitte geben Sie den Code und ihr neues Passwort ein.</value>
   </data>
+  <data name="Remember_me" xml:space="preserve">
+    <value>Login speichern</value>
+  </data>
+  <data name="_JobList_LoggedInAs" xml:space="preserve">
+    <value>eingeloggt als:</value>
+  </data>
 </root>

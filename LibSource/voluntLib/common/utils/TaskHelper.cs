@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace voluntLib.common.utils
 {
-    internal class TaskHelper
+    public class TaskHelper
     {
         public static Task Delay(int milliseconds)
         {

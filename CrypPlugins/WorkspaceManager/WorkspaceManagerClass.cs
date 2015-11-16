@@ -658,6 +658,7 @@ namespace WorkspaceManager
         }
 
         public bool ReadOnly { get; set; }
+        public bool HasBeenClosed { get; set; }
 
         #endregion
 

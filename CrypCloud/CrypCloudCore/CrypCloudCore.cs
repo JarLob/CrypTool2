@@ -26,7 +26,7 @@ namespace CrypCloud.Core
 { 
     public class CrypCloudCore
     {
-        public string DefaultWorld = "CryptCloud";
+        public string DefaultWorld = "CrypCloud";
 
         #region singleton
 
@@ -479,7 +479,10 @@ namespace CrypCloud.Core
         }
 
 
-      
+        public string  GetUsername()
+        {
+            return voluntLib.CertificateName;
+        }
     }
 
     public class NetworkJobData

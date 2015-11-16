@@ -16,6 +16,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -70,7 +71,7 @@ namespace CrypCloud.Manager
             screenNavigator.AddScreenWithPath(resetPasswordVm, ScreenPaths.ResetPassword);
         }
 
-        public void OpenWorkspaceInNewTab(WorkspaceModel model)
+        public void OpenWorkspaceInNewTab(WorkspaceModel model, BigInteger jobId)
         {
             if (OnOpenEditor == null) return; // cant open tab 
 
@@ -79,8 +80,8 @@ namespace CrypCloud.Manager
                 Title = DefaultTabName
             };
 
-            var currentManager = (WorkspaceManager.WorkspaceManagerClass)OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), tabInfo);
-            currentManager.Open(model);
+            var currentManager = OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), tabInfo);
+            ((WorkspaceManager.WorkspaceManagerClass)currentManager).Open(model);
         }
 
         public void New()
@@ -261,6 +262,7 @@ namespace CrypCloud.Manager
         }
 
         public bool ReadOnly { get; set; }
+        public bool HasBeenClosed { get; set; }
 
         public PluginManager PluginManager
         {

@@ -92,6 +92,8 @@ namespace Wizard
             
         }
 
+        public bool HasBeenClosed { get; set; }
+
         public PluginManager PluginManager
         { get; set; }
 

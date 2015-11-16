@@ -304,4 +304,10 @@
   <data name="_Confirm_Job_Deletion_Title" xml:space="preserve">
     <value>Confirm job deletion.</value>
   </data>
+  <data name="Remember_me" xml:space="preserve">
+    <value>remember me</value>
+  </data>
+  <data name="_JobList_LoggedInAs" xml:space="preserve">
+    <value>logged in as:</value>
+  </data>
 </root>

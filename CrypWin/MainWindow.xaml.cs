@@ -1718,8 +1718,7 @@ namespace Cryptool.CrypWin
             }
 
             editor.OnOpenTab += OpenTab;
-            editor.OnOpenEditor += OpenEditor;
-
+            editor.OnOpenEditor += OpenEditor; 
             editor.OnProjectTitleChanged += EditorProjectTitleChanged;
             
             OpenTab(editor, new TabInfo(){Title = editor.GetType().Name, Icon = editor.GetImage(0).Source}, null);
@@ -1731,6 +1730,7 @@ namespace Cryptool.CrypWin
             editor.Presentation.Focus();
         }
 
+       
         private IEditor OpenEditor(Type editorType, TabInfo info)
         {
             var editor = AddEditorDispatched(editorType);

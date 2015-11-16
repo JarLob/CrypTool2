@@ -19,7 +19,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
+ 
+    
     <UserControl.DataContext>
         <viewModels:JobListVM  IsActive="True" />
     </UserControl.DataContext>
@@ -27,10 +28,10 @@
     <!-- Visibility="{Binding IsActive, Converter={converter:BoolToVisibilityConverter}, FallbackValue=Visible, TargetNullValue=Visible}"-->
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25" 
          Visibility="{Binding IsActive, Converter={converter:BoolToVisibilityConverter}, FallbackValue=Visible, TargetNullValue=Visible}" >
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="1" />
+            <RowDefinition Height="25" />
             <RowDefinition Height="500*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
@@ -38,6 +39,13 @@
         <!-- top controls -->
         <Grid Grid.Row="0">
             <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="5" />
+            <Label Content="{Loc _JobList_LoggedInAs}" FontSize="14" HorizontalContentAlignment="Right"
+                   HorizontalAlignment="Right" Margin="0,10,217,10" Width="204" />
+            
+            <Label Content="{Binding Path=Username}" FontSize="14" 
+                   HorizontalContentAlignment="Left" HorizontalAlignment="Right"
+                   Margin="0,10,109,10" Width="108" />
+
             <Button Command="{Binding Path=LogOutCommand}" HorizontalAlignment="Right" Margin="5" Width="100"
                     Height="30">
                 <StackPanel Orientation="Horizontal">
@@ -48,23 +56,10 @@
 
         </Grid>
 
-        <!-- errorBox -->
-        <Border Grid.Row="1"
-                Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}"
-                CornerRadius="5" BorderThickness="3" BorderBrush="Gold">
-            <Grid>
-                <Grid.Background>
-                    <SolidColorBrush Color="Khaki" />
-                </Grid.Background>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Image Name="Erroricon" Width="25" Grid.Row="1"
-                       HorizontalAlignment="Left" />
-                <TextBlock Text="{Binding Path=ErrorMessage}" Foreground="Red" Margin="35,0,0,0" Grid.Row="1"
-                           Grid.ColumnSpan="2" TextWrapping="Wrap" />
-            </Grid>
+        <!-- errorBox    -->
+
+        <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="Wrap" />
         </Border>
 
         <Grid Grid.Row="2"  Margin="5" VerticalAlignment="Stretch">
@@ -192,48 +187,48 @@
             <!-- aside -->
             <ScrollViewer Grid.Row="0" Grid.Column="2" VerticalScrollBarVisibility="Auto">
                 <Grid  Background="White">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="200" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition  Height="5"/>
-                    <RowDefinition Height="25*" MaxHeight="50" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="220" />
-                    <RowDefinition Height="25" />
-                    <RowDefinition Height="*" MaxHeight="200" />
-                </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="200" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="5"/>
+                        <RowDefinition Height="25*" MaxHeight="50" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="220" />
+                        <RowDefinition Height="25" />
+                        <RowDefinition Height="*" MaxHeight="200" />
+                    </Grid.RowDefinitions>
 
-                <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
+                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
                     <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap"
                            Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}" />
 
-                <Label Grid.Column="0"  Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
-                <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" 
+                    <Label Grid.Column="0"  Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
+                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" 
                              Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" 
                              Width="200"
                              Height="25" />
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}"
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}"
                            HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 
-                <Label Grid.Column="0" Grid.Row="4" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
-                <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"  BorderThickness="1" Margin="10" Width="199" Height="199" BorderBrush="#FF000000"
+                    <Label Grid.Column="0" Grid.Row="4" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"  BorderThickness="1" Margin="10" Width="199" Height="199" BorderBrush="#FF000000"
                         VerticalAlignment="Top">
-                    <Image Width="200" Height="200"
+                        <Image Width="200" Height="200"
                            Source="{Binding ElementName=JobListView, Path=SelectedItem.Visualization}" />
-                </Border>
+                    </Border>
 
-                <Label Grid.Column="0" Grid.Row="6" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />
-                <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Width="200" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"
+                    <Label Grid.Column="0" Grid.Row="6" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />
+                    <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Width="200" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"
                            Text="{Binding ElementName=JobListView, Path=SelectedItem.Description}" />
 
-                
-            </Grid>
-                </ScrollViewer>
+
+                </Grid>
+            </ScrollViewer>
         </Grid>
 
         <!-- bottom controls -->

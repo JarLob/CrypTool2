@@ -156,6 +156,8 @@ namespace Cryptool.CrypTutorials
             set { }
         }
 
+        public bool HasBeenClosed { get; set; }
+
         public PluginManager PluginManager
         {
             get { return null; }

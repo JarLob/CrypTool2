@@ -44,6 +44,8 @@ namespace Survey {
         #region properties
         // see also section "things we cant do"
 
+        public bool HasBeenClosed { get; set; }
+
         /// <summary>
         /// Gets or sets the plugin manager.
         /// </summary>

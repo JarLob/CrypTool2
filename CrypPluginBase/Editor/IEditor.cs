@@ -17,6 +17,7 @@
 using System;
 using Cryptool.Core;
 using System.Collections.Generic;
+using System.Security.RightsManagement;
 using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.PluginBase.Editor
@@ -27,7 +28,7 @@ namespace Cryptool.PluginBase.Editor
         event ProjectTitleChangedHandler OnProjectTitleChanged;
         event OpenProjectFileHandler OnOpenProjectFile;
         event OpenTabHandler OnOpenTab;
-        event OpenEditorHandler OnOpenEditor;
+        event OpenEditorHandler OnOpenEditor; 
         event FileLoadedHandler OnFileLoaded;
 
         void New();
@@ -71,6 +72,8 @@ namespace Cryptool.PluginBase.Editor
         /// </summary>
         bool ReadOnly { get; set; }
 
-        PluginManager PluginManager { get; set; } 
+        bool HasBeenClosed { get; set; }
+
+        PluginManager PluginManager { get; set; }
     }
 }

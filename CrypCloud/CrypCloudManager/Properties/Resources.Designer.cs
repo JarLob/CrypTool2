@@ -358,6 +358,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die logged in as: ähnelt.
+        /// </summary>
+        public static string _JobList_LoggedInAs {
+            get {
+                return ResourceManager.GetString("_JobList_LoggedInAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Connect ähnelt.
         /// </summary>
         public static string _Login_btn_connect {
@@ -601,6 +610,15 @@ namespace CrypCloud.Manager.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die remember me ähnelt.
+        /// </summary>
+        public static string Remember_me {
+            get {
+                return ResourceManager.GetString("Remember_me", resourceCulture);
             }
         }
         

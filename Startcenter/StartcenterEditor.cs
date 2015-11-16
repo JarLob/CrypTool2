@@ -68,6 +68,7 @@ namespace StartCenter
             
         }
 
+        public bool HasBeenClosed { get; set; }
         public PluginManager PluginManager { get; set; }
 
         public event SelectedPluginChangedHandler OnSelectedPluginChanged;

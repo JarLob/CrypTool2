@@ -120,6 +120,8 @@ namespace Cryptool.CrypWin.Helper
         {
             this.Editor = parent;
             InitializeComponent();
+
+            this.Editor.HasBeenClosed = false;
         }
 
         public CTTabItem(TabInfo info)
@@ -132,8 +134,12 @@ namespace Cryptool.CrypWin.Helper
 
         public void Close()
         {
-            if (OnClose != null)
+            if (OnClose != null) 
                 OnClose();
+
+            this.Editor.HasBeenClosed = true;
+
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

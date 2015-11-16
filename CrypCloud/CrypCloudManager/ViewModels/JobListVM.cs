@@ -17,6 +17,7 @@ using CrypCloud.Manager.ViewModels.Pocos;
 using KeySearcher.CrypCloud.statistics;
 using voluntLib.common;
 using MessageBox = System.Windows.MessageBox;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -45,6 +46,7 @@ namespace CrypCloud.Manager.ViewModels
         public RelayCommand DownloadWorkspaceCommand { get; set; }
         public RelayCommand LogOutCommand { get; set; }
         public RelayCommand DoubleClickOnEntryCommand { get; set; }
+        public string Username { get; set; }
 
         public JobListVM()
         {
@@ -59,12 +61,8 @@ namespace CrypCloud.Manager.ViewModels
             RunningJobs = new ObservableCollection<NetworkJobItem>();
             crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
             crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
-
            
         }
-
-
-    
 
         protected override void HasBeenActivated()
         {
@@ -75,6 +73,9 @@ namespace CrypCloud.Manager.ViewModels
                 selectedJob = RunningJobs.First();
                 RaisePropertyChanged("SelectedJob");
             }
+
+            Username = CrypCloudCore.Instance.GetUsername();
+            RaisePropertyChanged("Username");
         }
 
         private void UpdateJobList()
@@ -164,7 +165,15 @@ namespace CrypCloud.Manager.ViewModels
             }
 
             var workspaceModel = crypCloudCore.GetWorkspaceOfJob(jobItem.Id);
-            UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel));
+            var workspaceEditor = workspaceModel.MyEditor;
+            if (workspaceEditor == null || workspaceEditor.HasBeenClosed)
+            {
+                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel, jobItem.Id));
+            }
+            else
+            {
+                ErrorMessage = "Workspace is already open.";
+            }
         }
 
         #endregion
