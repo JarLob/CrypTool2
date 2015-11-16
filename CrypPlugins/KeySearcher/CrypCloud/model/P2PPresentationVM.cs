@@ -38,6 +38,8 @@ namespace KeySearcher.CrypCloud
         private TimeSpan remainingTimeTotal;
         private DateTime estimatedFinishDate;
         private BigInteger numberOfLeftBlocks;
+        private BigInteger localThroughputInBytes;
+        private BigInteger globalThroughputInBytes;
 
         public SpeedStatistics GlobalSpeedStatistics { get; set; }
         public SpeedStatistics LocalSpeedStatistics { get; set; }
@@ -72,6 +74,7 @@ namespace KeySearcher.CrypCloud
                 GlobalProgress = progress;
                 OnPropertyChanged("GlobalProgressString"); 
             }
+             
 
         }
 
@@ -173,6 +176,7 @@ namespace KeySearcher.CrypCloud
             {
                 var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(KeysPerSecondGlobal));
                 AvgTimePerChunkGlobal = TimeSpan.FromSeconds(timePerBlock);
+                GlobalThroughputInBytes = keysPerSecond * BytesToUse;
             }
 
             if(numberOfLeftBlocks == -1) return;
@@ -188,8 +192,6 @@ namespace KeySearcher.CrypCloud
                 RemainingTimeTotal = TimeSpan.MaxValue;
                 EstimatedFinishDate = DateTime.MaxValue;
             }
-
-
         }
 
 
@@ -200,6 +202,7 @@ namespace KeySearcher.CrypCloud
             {
                 var timePerBlock = (KeysPerBlock.DivideAndReturnDouble(localApproximateKeysPerSecond));
                 AvgTimePerChunk = TimeSpan.FromSeconds(timePerBlock);
+                LocalThroughputInBytes = KeysPerSecond * BytesToUse;
             }
         }
 
@@ -385,6 +388,7 @@ namespace KeySearcher.CrypCloud
             {
                 keysPerBlock = value;
                 OnPropertyChanged("KeysPerBlock");
+                OnPropertyChanged("Dataspace");
             }
         }
         public BigInteger FinishedNumberOfBlocks
@@ -405,9 +409,8 @@ namespace KeySearcher.CrypCloud
 
                 var doneBlocks = FinishedNumberOfBlocks.ToString("N0", new CultureInfo("de-DE"));
                 var totalBlocks = TotalAmountOfChunks.ToString("N0", new CultureInfo("de-DE"));
-                var logBlocks = BigInteger.Log(TotalAmountOfChunks, 2);
 
-                return string.Format("{0} / {1} ({2} bits)", doneBlocks, totalBlocks, logBlocks);
+                return string.Format("{0} / {1}", doneBlocks, totalBlocks);
             }
             set { } //for binding only
         }
@@ -420,6 +423,68 @@ namespace KeySearcher.CrypCloud
                 keysPerSecondGlobal = value;
                 OnPropertyChanged("KeysPerSecondGlobal");
             }
+        }
+        
+        public String Dataspace
+        {
+            get { return BytesToString(KeysPerBlock*TotalAmountOfChunks); }
+            set {}
+        }
+
+        public int BytesToUse { get; set; }
+
+      
+        public BigInteger GlobalThroughputInBytes
+        {
+            get { return globalThroughputInBytes; }
+            set
+            {
+                globalThroughputInBytes = value;
+                OnPropertyChanged("GlobalThroughputInBytes");
+                OnPropertyChanged("GlobalThroughput");
+            }
+        }
+        public BigInteger LocalThroughputInBytes
+        {
+            get { return localThroughputInBytes; }
+            set
+            {
+                localThroughputInBytes = value;
+                OnPropertyChanged("LocalThroughputInBytes");
+                OnPropertyChanged("LocalThroughput");
+            }
+        }
+
+        public string LocalThroughput
+        {
+            get
+            {
+                if (LocalThroughputInBytes == 0) return "~";
+                return BytesToString(LocalThroughputInBytes) + "/sec";
+            }
+            set { } //for binding only
+        }
+      
+        public string GlobalThroughput
+        {
+            get
+            {
+                if (GlobalThroughputInBytes == 0) return "~";
+                return BytesToString(GlobalThroughputInBytes) + "/sec";
+            }
+            set { } //for binding only
+        }
+
+
+        public static string BytesToString(BigInteger byteCount)
+        {
+            string[] suf = { "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "HB"}; 
+            if (byteCount == 0) return "~";
+
+            var bytes = BigInteger.Abs(byteCount);
+            var place = Convert.ToInt32(Math.Floor(BigInteger.Log(bytes, 1024)));
+            var num = bytes.DivideAndReturnDouble(new BigInteger(Math.Pow(1024, place)));
+            return "" + Math.Round(num, 2) + " " + suf[place];
         }
 
         #endregion

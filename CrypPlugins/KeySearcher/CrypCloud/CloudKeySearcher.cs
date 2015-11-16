@@ -77,8 +77,7 @@ namespace KeySearcher
             }
             catch (Exception e) { }
         }
-
-
+        
         private void UpdateKeyPerSecond(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             var globalApproximateKeysPerSecond = globalSpeedStatistics.ApproximateKeysPerSecond();
@@ -92,7 +91,7 @@ namespace KeySearcher
 
         private void TaskProgress(object sender, TaskEventArgs e)
         {
-             if (new BigInteger(e.JobID) != jobId) return;
+           if (new BigInteger(e.JobID) != jobId) return;
 
            localSpeedStatistics.AddEntry(e.TaskProgress);
            var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
@@ -117,7 +116,7 @@ namespace KeySearcher
                 () => viewModel.StartedLocalCalculation(taskArgs.BlockID)
             );
         }
-         
+
         private void TaskEnded(object sender, TaskEventArgs taskArgs)
         {
             if (new BigInteger(taskArgs.JobID) != jobId) return;
@@ -165,7 +164,7 @@ namespace KeySearcher
 
 
         private void UpdatePresentation(P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
-        { 
+        {
             presentation.UpdateSettings(keySearcher, (KeySearcherSettings)keySearcher.Settings); ;
         }
 

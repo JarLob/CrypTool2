@@ -104,6 +104,7 @@
     <Compile Include="CrypCloud\statistics\BigIntExtensions.cs" />
     <Compile Include="CrypCloud\statistics\CricularBuffer.cs" />
     <Compile Include="CrypCloud\statistics\SpeedStatistics.cs" />
+    <Compile Include="Helper\BigIntExtensions.cs" />
     <Compile Include="Helper\KeyQualityHelper.cs" />
     <Compile Include="Helper\MachineName.cs" />
     <Compile Include="Information.cs" />

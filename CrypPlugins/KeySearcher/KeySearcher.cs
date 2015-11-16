@@ -264,7 +264,7 @@ namespace KeySearcher
 
         #endregion
 
-     #region external client variables 
+        #region external client variables 
         private KeySearcherOpenCLCode externalKeySearcherOpenCLCode;
         private IKeyTranslator externalKeyTranslator;
         private BigInteger externalKeysProcessed;
@@ -340,9 +340,7 @@ namespace KeySearcher
         {
             ((QuickWatch)Presentation).IsP2PEnabled = settings.UsePeerToPeer;
             ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
-            p2PQuickWatchPresentation.UpdateSettings(this, settings);
-
-          
+            p2PQuickWatchPresentation.UpdateSettings(this, settings); 
         }
 
         #region IPlugin Members
@@ -352,9 +350,7 @@ namespace KeySearcher
         public override event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
         private KeySearcherSettings settings;
-        private AutoResetEvent connectResetEvent;
-
-    
+        private AutoResetEvent connectResetEvent; 
 
         public override ISettings Settings
         {
@@ -1728,6 +1724,8 @@ namespace KeySearcher
                 CostAlgorithm = CostMaster,
                 NumberOfBlocks = BigInteger.Pow(2, settings.NumberOfBlocks)
             };
+
+            p2PQuickWatchPresentation.ViewModel.BytesToUse = bytesToUse;
 
             if (cloudKeySearcher != null)
             {

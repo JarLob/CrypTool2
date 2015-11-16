@@ -58,13 +58,14 @@
 
                 <!-- global -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                    <Grid Height="78" Background="#AFAAE1E8">
+                    <Grid Height="104" Background="#AFAAE1E8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
                             <ColumnDefinition Width="200*" />
                             <ColumnDefinition Width="200*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
@@ -78,16 +79,20 @@
 
                         <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="0" />
                         <Label Content="{Binding KeysPerSecondGlobal, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="0" Style="{StaticResource ValueRow}" />
+  
+                        <Label Content="{Loc Dataspace}" Grid.Column="1" Grid.Row="1" />
+                        <Label Content="{Binding Dataspace}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
+                        <Label Content="{Loc global_throughput_sec}" Grid.Column="2" Grid.Row="1" />
+                        <Label Content="{Binding GlobalThroughput}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
+                        <Label Content="{Loc End_}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" />
+                        <Label Content="{Binding EstimatedFinishDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" Grid.Column="1" Style="{StaticResource ValueRow}" Grid.Row="2" />
 
-                        <Label Content="{Loc End_}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" />
-                        <Label Content="{Binding EstimatedFinishDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}" Grid.Column="1" Style="{StaticResource ValueRow}" Grid.Row="1" />
+                        <Label Content="{Loc Remaining_}" Grid.Column="2" Grid.Row="2" />
+                        <Label Content="{Binding RemainingTimeTotal, FallbackValue=-, Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
 
-                        <Label Content="{Loc Remaining_}" Grid.Column="2" Grid.Row="1" />
-                        <Label Content="{Binding RemainingTimeTotal, FallbackValue=-, Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
-
-                        <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2">
+                        <Grid  Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3">
                             <ProgressBar Value="{Binding GlobalProgress, FallbackValue=0}" Maximum="100" />
                             <Viewbox>
                                 <Label Content="{Binding GlobalProgressString, FallbackValue=~}" HorizontalAlignment="Center" />
@@ -130,6 +135,9 @@
                         <Label Content="{Binding CurrentChunks, FallbackValue=~, Converter={StaticResource ListToStringConverter}}"  HorizontalContentAlignment="Left" 
                                Margin="150,0, 0,0"
                                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
+
+                        <Label Content="{Loc local_throughput_sec}" Grid.Column="2" Grid.Row="2" />
+                        <Label Content="{Binding LocalThroughput}" Grid.Column="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
 
                     </Grid>
                 </Border>
