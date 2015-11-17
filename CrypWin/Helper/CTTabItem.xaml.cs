@@ -136,10 +136,10 @@ namespace Cryptool.CrypWin.Helper
         {
             if (OnClose != null) 
                 OnClose();
-
-            this.Editor.HasBeenClosed = true;
-
-
+            if (this.Editor != null)
+            {
+                this.Editor.HasBeenClosed = true;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

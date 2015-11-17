@@ -139,6 +139,7 @@ namespace TextOutput
             settings.PropertyChanged += settings_OnPropertyChanged;
 
             textOutputPresentation = new TextOutputPresentation();
+            textOutputPresentation._textOutput = this;
             setStatusBar();
         }
 
@@ -211,14 +212,12 @@ namespace TextOutput
             return truncatedByteArray;
         }
 
-        private void ShowInPresentation(object value)
+        internal void ShowInPresentation(object value)
         {
-            //textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            //{
-            //    if (!settings.Append)
-            //        textOutputPresentation.textBox.Text = null;
-            //    clearStatusBar();
-            //}, null);
+            if (!Presentation.IsVisible)
+            {
+                return;
+            }
 
             if (value == null) return;
 
@@ -250,7 +249,6 @@ namespace TextOutput
             }
             else if (value is BigInteger)
             {
-                //fillValue = BigIntegerHelper.ToBaseString((BigInteger)value, 10);
                 fillValue = value.ToString();   // ~ 2x faster than ToBaseString
             }
             else
@@ -262,108 +260,137 @@ namespace TextOutput
             {
                 AddMessage("WARNING - String is too large (" + (fillValue.Length / 1024).ToString("0.00") + " kB), output will be truncated to " + (settings.MaxLength / 1024).ToString("0.00") + "kB", NotificationLevel.Warning);
                 fillValue = fillValue.Substring(0, settings.MaxLength);
-            }            
-            
-            Presentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {                
-                string oldtext = (CurrentValue == null ? String.Empty : CurrentValue);
-                string newtext = String.Empty;
-                if (settings.Append)
-                {
-                    // append line breaks only if not first line
-                    if (!string.IsNullOrEmpty(oldtext))
-                    {
-                        for (int i = 0; i < settings.AppendBreaks; i++)
-                            textOutputPresentation.textBox.AppendText("\r");
-                    }                    
-                    textOutputPresentation.textBox.AppendText(fillValue);
-                    textOutputPresentation.textBox.ScrollToEnd();
-                    newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
-                }
-                else
-                {
-                    textOutputPresentation.textBox.Document = new FlowDocument();
-                    fillValue = fillValue.Replace("\n", "");
-                    textOutputPresentation.textBox.AppendText(fillValue);
-                    newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;                    
-                }
+            }
 
-                if (settings.ShowChanges == 1 || settings.ShowChanges == 2)
-                {
-                    var diff = new diff_match_patch();
-                    var diffs = diff.diff_main(oldtext, newtext, true);
-                    diff.diff_cleanupSemanticLossless(diffs);
-
-                    textOutputPresentation.textBox.Document = new FlowDocument();
-                    var para = new Paragraph();
-                    foreach (var d in diffs)
-                    {
-                        switch (d.operation)
-                        {
-                            case Operation.EQUAL:
-                                para.Inlines.Add(new Run(d.text));
-                                break;
-                            case Operation.INSERT:
-                                if (settings.ShowChanges == 1)
-                                {
-                                    var run = new Run(d.text);
-                                    run.Background = new SolidColorBrush(Colors.LightBlue);
-                                    para.Inlines.Add(run);
-                                }
-                                else if (settings.ShowChanges == 2)
-                                {
-                                    var run = new Run(d.text);
-                                    run.Background = new SolidColorBrush(Colors.LightGreen);
-                                    para.Inlines.Add(run);
-                                }
-                                break;
-                            case Operation.DELETE:
-                                if (settings.ShowChanges == 2 && d.text.Trim().Length > 0)
-                                {
-                                    var run = new Run(d.text);
-                                    run.Background = new SolidColorBrush(Color.FromRgb((byte)0xF3, (byte)0x6D, (byte)0x74));
-                                    para.Inlines.Add(run);
-                                }
-                                break;
-                        }
-                    }
-                    textOutputPresentation.textBox.Document.Blocks.Add(para);
-                }
-                else if(settings.ShowChanges == 3)
-                {
-                    textOutputPresentation.textBox.Document = new FlowDocument();
-                    var para = new Paragraph();
-                    var position = 0;
-                    while (position < newtext.Length)
-                    {
-                        var run = new Run("" + newtext[position]);
-                        if (oldtext.Length == 0 || position > oldtext.Length || (position < oldtext.Length && oldtext[position] != newtext[position]))
-                        {
-                            run.Background = new SolidColorBrush(Colors.LightBlue);
-                        }
-                        para.Inlines.Add(run);
-                        position++;
-                    }
-                    textOutputPresentation.textBox.Document.Blocks.Add(para);
-                }
-                CurrentValue = newtext;
-                setStatusBar();
-
-            }, fillValue);
-
-            //if the presentation is visible we wait some ms to avoid a "hanging" of the application
-            if (Presentation.IsVisible)
+            //Check if we are in the UI thread
+            if (Thread.CurrentThread == Application.Current.Dispatcher.Thread)
             {
+                //we are in the UI thread, thus we can directly call
+                UpdateTextControls(fillValue);
+            }
+            else
+            {
+                //we are not in the UI thread, thus we have to get into
+                Presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
+                {                    
+                    UpdateTextControls(fillValue);
+                }, fillValue);
                 try
                 {
-                    Thread.Sleep(5);
+                    //we give the others component some time to work with the UI thread
+                    Thread.Sleep(20);
                 }
                 catch (Exception ex)
                 {
-                    GuiLogMessage(String.Format("Error during Thread.Sleep of TextOutput: {0}", ex.Message), NotificationLevel.Warning);
+                    //wtf?
                 }
             }
         }
+
+        private void UpdateTextControls(string fillValue)
+        {
+            if (!Presentation.IsVisible)
+            {
+                return;
+            }
+            string oldtext = (CurrentValue == null ? String.Empty : CurrentValue);
+            string newtext = String.Empty;
+            if (settings.Append)
+            {
+                // append line breaks only if not first line
+                if (!string.IsNullOrEmpty(oldtext))
+                {
+                    for (int i = 0; i < settings.AppendBreaks; i++)
+                        textOutputPresentation.textBox.AppendText("\r");
+                }
+                textOutputPresentation.textBox.AppendText(fillValue);
+                textOutputPresentation.textBox.ScrollToEnd();
+                newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
+            }
+            else
+            {
+                textOutputPresentation.textBox.Document.Blocks.Clear();
+                fillValue = fillValue.Replace("\n", "");
+                textOutputPresentation.textBox.AppendText(fillValue);
+                newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
+            }
+
+            if (settings.ShowChanges == 1 || settings.ShowChanges == 2)
+            {
+                var diff = new diff_match_patch();
+                var diffs = diff.diff_main(oldtext, newtext, true);
+                diff.diff_cleanupSemanticLossless(diffs);
+
+                if (textOutputPresentation.textBox.Document == null)
+                {
+                    textOutputPresentation.textBox.Document = new FlowDocument();
+                }
+                else
+                {
+                    textOutputPresentation.textBox.Document.Blocks.Clear();
+                }
+                var para = new Paragraph();
+                foreach (var d in diffs)
+                {
+                    switch (d.operation)
+                    {
+                        case Operation.EQUAL:
+                            para.Inlines.Add(new Run(d.text));
+                            break;
+                        case Operation.INSERT:
+                            if (settings.ShowChanges == 1)
+                            {
+                                var run = new Run(d.text);
+                                run.Background = new SolidColorBrush(Colors.LightBlue);
+                                para.Inlines.Add(run);
+                            }
+                            else if (settings.ShowChanges == 2)
+                            {
+                                var run = new Run(d.text);
+                                run.Background = new SolidColorBrush(Colors.LightGreen);
+                                para.Inlines.Add(run);
+                            }
+                            break;
+                        case Operation.DELETE:
+                            if (settings.ShowChanges == 2 && d.text.Trim().Length > 0)
+                            {
+                                var run = new Run(d.text);
+                                run.Background = new SolidColorBrush(Color.FromRgb((byte)0xF3, (byte)0x6D, (byte)0x74));
+                                para.Inlines.Add(run);
+                            }
+                            break;
+                    }
+                }
+                textOutputPresentation.textBox.Document.Blocks.Add(para);
+            }
+            else if (settings.ShowChanges == 3)
+            {
+                if (textOutputPresentation.textBox.Document == null)
+                {
+                    textOutputPresentation.textBox.Document = new FlowDocument();
+                }
+                else
+                {
+                    textOutputPresentation.textBox.Document.Blocks.Clear();
+                }
+                var para = new Paragraph();
+                var position = 0;
+                while (position < newtext.Length)
+                {
+                    var run = new Run("" + newtext[position]);
+                    if (oldtext.Length == 0 || position > oldtext.Length || (position < oldtext.Length && oldtext[position] != newtext[position]))
+                    {
+                        run.Background = new SolidColorBrush(Colors.LightBlue);
+                    }
+                    para.Inlines.Add(run);
+                    position++;
+                }
+                textOutputPresentation.textBox.Document.Blocks.Add(para);
+            }
+            CurrentValue = newtext;
+            setStatusBar();
+        }
+
 
         void clearStatusBar()
         {

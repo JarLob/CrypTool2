@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Properties="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase"
     Height="Auto" Width="Auto" Margin="0" MinHeight="30" MinWidth="100">
-    <Grid>
+    <Grid IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="*" />

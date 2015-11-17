@@ -37,11 +37,21 @@ namespace TextOutput
   [TabColor("pink")]
   public partial class TextOutputPresentation : UserControl
   {
-    public TextOutputPresentation()
-    {
-      InitializeComponent();
-      this.Width = double.NaN;
-      this.Height = double.NaN;
-    }
+      public TextOutput _textOutput = null;
+
+      public TextOutputPresentation()
+      {
+          InitializeComponent();
+          this.Width = double.NaN;
+          this.Height = double.NaN;
+      }
+
+      private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+      {
+          if (_textOutput != null && ((bool)args.NewValue))
+          {
+              _textOutput.ShowInPresentation(_textOutput.Input);
+          }
+      }
   }
 }
