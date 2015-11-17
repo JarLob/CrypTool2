@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Both" xml:space="preserve">
-    <value>Trigramme + Quagramme</value>
+    <value>Trigramme + 4-Gramme</value>
   </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>
@@ -223,7 +223,7 @@ wurde.</value>
 Hillclimbing.</value>
   </data>
   <data name="Quadgrams" xml:space="preserve">
-    <value>Quadgramme</value>
+    <value>4-Gramme</value>
   </data>
   <data name="Random" xml:space="preserve">
     <value>Zufällig</value>

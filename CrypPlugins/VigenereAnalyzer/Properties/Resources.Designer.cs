@@ -61,7 +61,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Trigrams + Quadgrams ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trigrams + 4-grams ähnelt.
         /// </summary>
         public static string Both {
             get {
@@ -133,7 +133,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Cost Function ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cost function ähnelt.
         /// </summary>
         public static string CostFunction {
             get {
@@ -367,7 +367,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Quadgrams ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4-grams ähnelt.
         /// </summary>
         public static string Quadgrams {
             get {

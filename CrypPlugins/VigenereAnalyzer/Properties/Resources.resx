@@ -250,10 +250,10 @@
     <value>Keys/second:</value>
   </data>
   <data name="Both" xml:space="preserve">
-    <value>Trigrams + Quadgrams</value>
+    <value>Trigrams + 4-grams</value>
   </data>
   <data name="CostFunction" xml:space="preserve">
-    <value>Cost Function</value>
+    <value>Cost function</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
@@ -262,7 +262,7 @@
     <value>German</value>
   </data>
   <data name="Quadgrams" xml:space="preserve">
-    <value>Quadgrams</value>
+    <value>4-grams</value>
   </data>
   <data name="Trigrams" xml:space="preserve">
     <value>Trigrams</value>

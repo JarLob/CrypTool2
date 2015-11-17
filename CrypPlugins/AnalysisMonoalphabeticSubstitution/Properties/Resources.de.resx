@@ -389,7 +389,7 @@ werden soll.</value>
     <value>Anzahl von Neustarts (Hillclimbing)</value>
   </data>
   <data name="RestartsTooltip" xml:space="preserve">
-    <value>Wie oft soll der Hillclimbingalgorithmus von vorn beginnen?</value>
+    <value>Wie oft soll der Hillclimbing-Algorithmus von vorn beginnen?</value>
   </data>
   <data name="SelectAlgorithmGroup" xml:space="preserve">
     <value>Art des Angriffs</value>

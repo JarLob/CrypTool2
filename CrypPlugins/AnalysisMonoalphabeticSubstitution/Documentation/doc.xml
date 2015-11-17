@@ -79,8 +79,8 @@
     <section headline="Hillclimbing Angriff">
       Dieser Angriff benutzt den sogenannten Bergsteiger-Algorithmus (Hill-Climbing). Der Angriff startet mit einem zufällig gewählten Schlüssel.
       Dieser Schlüssel wird anschließend in einer definierten Vorgehensweise verändert. Der so neu erzeugte Schlüssel
-      wird dann mit einer Kostenfunktion bewertet. Falls der neue Schlüssel von Kostenfunktion besser bewertet wird,
-      wird von nun an der neue Schlüssel verwendet. Dies geschieht so lange, bis kein besserer Schlüssel mehr gefunden wurde.
+      wird dann mit einer Kostenfunktion bewertet. Falls der neue Schlüssel besser bewertet wird,
+      wird von nun an der neue Schlüssel verwendet. Dies geschieht so lange, bis man keinen besseren Schlüssel mehr findet.
       Die GPU-Version dieses Angriffs verwendet die Grafikkarte des Computers, falls diese kompatibel ist mit NVIDIA-CUDA.
     </section>
 
