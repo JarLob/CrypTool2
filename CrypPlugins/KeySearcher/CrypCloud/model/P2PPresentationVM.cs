@@ -427,7 +427,11 @@ namespace KeySearcher.CrypCloud
         
         public String Dataspace
         {
-            get { return BytesToString(KeysPerBlock*TotalAmountOfChunks); }
+            get
+            {
+                var dataspace = KeysPerBlock * TotalAmountOfChunks * BytesToUse;
+                return BytesToString(dataspace);
+            }
             set {}
         }
 
@@ -484,7 +488,7 @@ namespace KeySearcher.CrypCloud
             var bytes = BigInteger.Abs(byteCount);
             var place = Convert.ToInt32(Math.Floor(BigInteger.Log(bytes, 1024)));
             var num = bytes.DivideAndReturnDouble(new BigInteger(Math.Pow(1024, place)));
-            return "" + Math.Round(num, 2) + " " + suf[place];
+            return "" + Math.Round(num, 3) + " " + suf[place];
         }
 
         #endregion

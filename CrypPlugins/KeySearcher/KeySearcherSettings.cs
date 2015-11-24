@@ -139,7 +139,7 @@ namespace KeySearcher
         #region crypcloud
 
         private bool usePeerToPeer;
-        [TaskPane( "UsePeerToPeerCaption", "UsePeerToPeerTooltip", "GroupPeerToPeer", 0, false, ControlType.CheckBox)]
+        [TaskPane("settings__caption_useNetwork", "settings__tooltip_useNetwork", "GroupPeerToPeer", 0, false, ControlType.CheckBox)]
         public bool UsePeerToPeer
         {
             get { return usePeerToPeer; }
@@ -154,7 +154,7 @@ namespace KeySearcher
         }
 
         private int numberOfBlocks;
-        [TaskPane( "ChunkSizeCaption", "ChunkSizeTooltip", "GroupPeerToPeer", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 128)]
+        [TaskPane("settings__caption_numberOfBlocks", "settings__tooltip_numberOfBlocks", "GroupPeerToPeer", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 128)]
         public int NumberOfBlocks
         {
             get { return numberOfBlocks; }

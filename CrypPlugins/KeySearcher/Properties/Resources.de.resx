@@ -790,4 +790,22 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Kopiere Wert</value>
   </data>
+  <data name="Abort_Chunks_" xml:space="preserve">
+    <value>Abgebrochende Blöcke:</value>
+  </data>
+  <data name="Avg_Time_Per_Chunk" xml:space="preserve">
+    <value>Zeit pro Block:</value>
+  </data>
+  <data name="global_throughput_sec" xml:space="preserve">
+    <value>Durchsatz / sek:</value>
+  </data>
+  <data name="JobID_" xml:space="preserve">
+    <value>ID:</value>
+  </data>
+  <data name="JobName" xml:space="preserve">
+    <value>Job:</value>
+  </data>
+  <data name="local_throughput_sec" xml:space="preserve">
+    <value>Durchsatz / sek:</value>
+  </data>
 </root>

@@ -175,8 +175,18 @@
     </UserControl.Resources>
 
     <Grid>
-        <ComboBox x:Name="SlotBox" Width="45" Height="45" Style="{StaticResource ResourceKey=ComboBoxStyle}" ItemsSource="{Binding Path=Types}" SelectedItem="{Binding Path=SelectedType, Mode= TwoWay}"></ComboBox>
-        <Button Width="13" Height="13" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="3" Background="Red" Click="ClickHandler" Opacity="0.6" Style="{StaticResource ResourceKey=OperationBasicStyle}">
+        <ComboBox x:Name="SlotBox" Width="45" Height="45" Style="{StaticResource ResourceKey=ComboBoxStyle}" 
+                  ItemsSource="{Binding Path=Types}" SelectedItem="{Binding Path=SelectedType, Mode= TwoWay}"
+                  ToolTip="{Binding Path=SelectedType.ToolTip}">
+            <ComboBox.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Control.ToolTip" Value="{Binding ToolTip}" />
+                </Style>
+            </ComboBox.ItemContainerStyle>
+        </ComboBox>
+        
+        <Button Width="13" Height="13" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="3" Background="Red" Click="ClickHandler" Opacity="0.6" 
+                Style="{StaticResource ResourceKey=OperationBasicStyle}">
             <ContentPresenter Content="{StaticResource ResourceKey=Cross}"></ContentPresenter>
         </Button>
     </Grid>

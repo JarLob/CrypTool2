@@ -103,13 +103,14 @@
 
                 <!-- local -->
                 <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
-                    <Grid Height="78" Background="#AFFFD4C1">
+                    <Grid Height="104" Background="#AFFFD4C1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="26" />
                             <ColumnDefinition Width="200*" />
                             <ColumnDefinition Width="200*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
                             <RowDefinition Height="26" />
@@ -125,19 +126,21 @@
                         <Label Content="{Loc Abort_Chunks_}" Grid.Column="2" Grid.Row="0" /> 
                         <Label Content="{Binding LocalAbortChunks,  FallbackValue=-}"  Grid.Column="2" Grid.Row="0"  Style="{StaticResource ValueRow}" />
 
+                        <Label Content="{Loc local_throughput_sec}" Grid.Column="1" Grid.Row="2" />
+                        <Label Content="{Binding LocalThroughput}" Grid.Column="1" Grid.Row="2" Style="{StaticResource ValueRow}" />
+                        
                         <Label Content="{Loc Avg_Time_Per_Chunk}" Grid.Column="1" Grid.Row="1" />
                         <Label Content="{Binding AvgTimePerChunk, FallbackValue=-,  Converter={StaticResource TimeSpanToStringConverter}}" Grid.Column="1" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
                         <Label Content="{Loc Keys_Sec_}" Grid.Column="2" Grid.Row="1" />
                         <Label Content="{Binding KeysPerSecond, FallbackValue=-, Converter={StaticResource BigIntegerToStringConverter}}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ValueRow}" />
 
+                        
                         <Label Content="{Loc Current_Chunk_}" Grid.Column="1" Grid.Row="3" />
                         <Label Content="{Binding CurrentChunks, FallbackValue=~, Converter={StaticResource ListToStringConverter}}"  HorizontalContentAlignment="Left" 
                                Margin="150,0, 0,0"
-                               Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
+                               Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Style="{StaticResource ValueRow}" />
 
-                        <Label Content="{Loc local_throughput_sec}" Grid.Column="2" Grid.Row="2" />
-                        <Label Content="{Binding LocalThroughput}" Grid.Column="2" Grid.Row="2" Style="{StaticResource ValueRow}" />
 
                     </Grid>
                 </Border>

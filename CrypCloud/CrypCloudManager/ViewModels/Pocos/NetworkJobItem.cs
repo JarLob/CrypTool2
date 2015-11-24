@@ -38,6 +38,49 @@ namespace CrypCloud.Manager.ViewModels.Pocos
             set {}
         }
 
+
+        private sealed class IdEqualityComparer : IEqualityComparer<NetworkJobItem>
+        {
+            public bool Equals(NetworkJobItem x, NetworkJobItem y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (ReferenceEquals(x, null)) return false;
+                if (ReferenceEquals(y, null)) return false;
+                if (x.GetType() != y.GetType()) return false;
+                return x.Id.Equals(y.Id);
+            }
+
+            public int GetHashCode(NetworkJobItem obj)
+            {
+                return obj.Id.GetHashCode();
+            }
+        }
+
+        private static readonly IEqualityComparer<NetworkJobItem> IdComparerInstance = new IdEqualityComparer();
+
+        public static IEqualityComparer<NetworkJobItem> IdComparer
+        {
+            get { return IdComparerInstance; }
+        }
+
+        protected bool Equals(NetworkJobItem other)
+        {
+            return Id.Equals(other.Id);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((NetworkJobItem) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
         public string ProgressPercentage
         {
             get

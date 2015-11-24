@@ -213,12 +213,6 @@
   <data name="AutoconnectPeerToPeerTooltip" xml:space="preserve">
     <value>Establish a connection to the network if the workspace is started without the background connection being active.</value>
   </data>
-  <data name="ChunkSizeCaption" xml:space="preserve">
-    <value>Chunk size</value>
-  </data>
-  <data name="ChunkSizeTooltip" xml:space="preserve">
-    <value>Amount of keys, that will be calculated by one peer at a time. This value is the exponent of the power of two used for the chunk size.</value>
-  </data>
   <data name="StatusKeyButtonCaption" xml:space="preserve">
     <value>Copy status key</value>
   </data>
@@ -612,12 +606,6 @@
   <data name="UseExternalClientTooltip" xml:space="preserve">
     <value>If checked, external clients are allowed to connect to this CrypTool 2 instance to support the bruteforce process (this is not the same as p2p-distributed computing).</value>
   </data>
-  <data name="UsePeerToPeerCaption" xml:space="preserve">
-    <value>Use peer-to-peer network</value>
-  </data>
-  <data name="UsePeerToPeerTooltip" xml:space="preserve">
-    <value>Distributes the operation on available peers by using the built-in peer-to-peer network.</value>
-  </data>
   <data name="EvaluationUserCaption" xml:space="preserve">
     <value>User</value>
   </data>
@@ -788,5 +776,35 @@
   </data>
   <data name="Copy_value" xml:space="preserve">
     <value>Copy value</value>
+  </data>
+  <data name="Abort_Chunks_" xml:space="preserve">
+    <value>Aborted chunks:</value>
+  </data>
+  <data name="Avg_Time_Per_Chunk" xml:space="preserve">
+    <value>Avg. time per chunk:</value>
+  </data>
+  <data name="global_throughput_sec" xml:space="preserve">
+    <value>Throughput / sec:</value>
+  </data>
+  <data name="JobID_" xml:space="preserve">
+    <value>ID:</value>
+  </data>
+  <data name="JobName" xml:space="preserve">
+    <value>Job:</value>
+  </data>
+  <data name="local_throughput_sec" xml:space="preserve">
+    <value>Throughput / sec:</value>
+  </data>
+  <data name="settings__caption_numberOfChunks" xml:space="preserve">
+    <value>Number of chunks (log)</value>
+  </data>
+  <data name="settings__caption_useNetwork" xml:space="preserve">
+    <value>Enable CrypCloud</value>
+  </data>
+  <data name="settings__tooltip_numberOfChunks" xml:space="preserve">
+    <value>To distribute the Calculation, it will be splitted into independed chunks.</value>
+  </data>
+  <data name="settings__tooltip_useNetwork" xml:space="preserve">
+    <value>Use internal network 'CrypCloud' to distribution this workspace.</value>
   </data>
 </root>

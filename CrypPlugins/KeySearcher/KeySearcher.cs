@@ -16,7 +16,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -34,7 +33,6 @@ using System.Numerics;
 using CrypCloud.Core.CloudComponent;
 using KeySearcher.CrypCloud;
 using KeySearcher.Helper;
-using KeySearcher.KeyPattern;
 using KeySearcherPresentation;
 using KeySearcherPresentation.Controls;
 using KeySearcher.Properties;
@@ -57,31 +55,26 @@ namespace KeySearcher
         /// used for creating the TopList
         /// </summary>
         private Queue valuequeue;
-        private double value_threshold;
+        private double valueThreshold;
+
         /// <summary>
         /// the thread with the most keys left
         /// </summary>
         private int maxThread;
         private readonly Mutex maxThreadMutex = new Mutex();
         private ArrayList threadsStopEvents;
+        public bool IsKeySearcherRunning; 
 
-        public bool IsKeySearcherRunning;
-        private KeyQualityHelper keyQualityHelper;
-
-        private DateTime defaultstart = DateTime.MinValue;
+        private readonly DateTime defaultstart = DateTime.MinValue;
         private string username;
-        private long maschineid;
-        private bool statisticInitialized = false;
+        private readonly long maschineid;
         
         // GUI
         private readonly P2PQuickWatchPresentation p2PQuickWatchPresentation;
         private readonly LocalQuickWatchPresentation localQuickWatchPresentation;
 
-        private HashSet<string> alreadyIntegratedNodes = new HashSet<string>();
-
-        private OpenCLManager oclManager = null;
-        private Mutex openCLPresentationMutex = new Mutex();
-
+        private readonly Mutex openClPresentationMutex = new Mutex();
+        private readonly OpenCLManager oclManager;
         private readonly Stopwatch localBruteForceStopwatch;
 
         private KeyPattern.KeyPattern pattern;
@@ -149,8 +142,7 @@ namespace KeySearcher
             get { return costMaster; }
             set
             {
-                costMaster = value;
-                keyQualityHelper = new KeyQualityHelper(costMaster);
+                costMaster = value; 
             }
         }
 
@@ -277,10 +269,12 @@ namespace KeySearcher
         private AutoResetEvent waitForExternalClientToFinish = new AutoResetEvent(false);
         private DateTime assignTime;
         private bool externalClientJobsAvailable = false;
+
         /// <summary>
         /// id of the client which calculated the last pattern
         /// </summary>
         public Int64 ExternaClientId { get; private set; }
+
         /// <summary>
         /// Hostname of the client which calculated the last pattern
         /// </summary>
@@ -288,9 +282,9 @@ namespace KeySearcher
         #endregion
 
         public KeySearcher()
-        {
+        { 
             try
-            {
+            { 
                 IsKeySearcherRunning = false;
                 username = "";
                 maschineid = 0; 
@@ -473,9 +467,9 @@ namespace KeySearcher
 
                 ((QuickWatch)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    openCLPresentationMutex.WaitOne();
+                    openClPresentationMutex.WaitOne();
                     ((QuickWatch)Presentation).OpenCLPresentation.AmountOfDevices++;
-                    openCLPresentationMutex.ReleaseMutex();
+                    openClPresentationMutex.ReleaseMutex();
                 }, null);
                 Thread.CurrentThread.Priority = ThreadPriority.AboveNormal;
             }
@@ -516,9 +510,9 @@ namespace KeySearcher
                                 {
                                     GuiLogMessage(string.Format("Using OpenCL failed: {0}", ex.Message), NotificationLevel.Error);
                                     UpdateQuickwatchSettings();
-                                    openCLPresentationMutex.WaitOne();
+                                    openClPresentationMutex.WaitOne();
                                     ((QuickWatch)Presentation).OpenCLPresentation.AmountOfDevices--;
-                                    openCLPresentationMutex.ReleaseMutex();
+                                    openClPresentationMutex.ReleaseMutex();
                                 }, null);
                                 continue;
                             }
@@ -641,8 +635,8 @@ namespace KeySearcher
             for (int i = 0; i < costArray.Length; i++)
             {
                 float cost = costArray[i];
-                if (((op == RelationOperator.LargerThen) && (cost > value_threshold))
-                    || (op == RelationOperator.LessThen) && (cost < value_threshold))
+                if (((op == RelationOperator.LargerThen) && (cost > valueThreshold))
+                    || (op == RelationOperator.LessThen) && (cost < valueThreshold))
                 {
                     ValueKey valueKey = new ValueKey { value = cost, key = keyTranslator.GetKeyRepresentation(i + add) };
                     valueKey.keya = keyTranslator.GetKeyFromRepresentation(valueKey.key);
@@ -703,7 +697,7 @@ namespace KeySearcher
 
             if (this.costMaster.GetRelationOperator() == RelationOperator.LargerThen)
             {
-                if (valueKey.value > value_threshold)
+                if (valueKey.value > valueThreshold)
                 {
                     valueKey.key = keyTranslator.GetKeyRepresentation();
                     valueKey.keya = (byte[])keya.Clone();
@@ -713,7 +707,7 @@ namespace KeySearcher
             }
             else
             {
-                if (valueKey.value < value_threshold)
+                if (valueKey.value < valueThreshold)
                 {
                     valueKey.key = keyTranslator.GetKeyRepresentation();
                     valueKey.keya = (byte[])keya.Clone();
@@ -926,9 +920,9 @@ namespace KeySearcher
         {
             ((QuickWatch) Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
             {
-                openCLPresentationMutex.WaitOne();
+                openClPresentationMutex.WaitOne();
                 ((QuickWatch) Presentation).OpenCLPresentation.AmountOfDevices = 0;
-                openCLPresentationMutex.ReleaseMutex();
+                openClPresentationMutex.ReleaseMutex();
             }, null);
 
             if (!redirectResultsToStatisticsGenerator)
@@ -1185,7 +1179,7 @@ namespace KeySearcher
                 valueKey.value = double.MinValue;
             valueKey.key = Resources.dummykey;
             valueKey.decryption = new byte[0];
-            value_threshold = valueKey.value;
+            valueThreshold = valueKey.value;
             LinkedListNode<ValueKey> node = costList.AddFirst(valueKey);
             for (int i = 1; i < maxInList; i++)
             {
@@ -1193,24 +1187,7 @@ namespace KeySearcher
             }
         }
 
-        /// <summary>
-        /// Statistic getter
-        /// </summary>
-        public Dictionary<string, Dictionary<long, Information>> GetStatistics()
-        {
-            return statistic;
-        }
-
-        private DateTime startDate;
-
-        /// <summary>
-        /// Setter for the start date for this job from the keypooltree
-        /// </summary>
-        public void SetBeginningDate(DateTime sd)
-        {
-            startDate = sd;
-        }
-
+    
         /// <summary>
         /// Reseting statistic values to avoid too high sums in case of network failure
         /// </summary>
@@ -1219,26 +1196,11 @@ namespace KeySearcher
             statistic = null;
             statistic = new Dictionary<string, Dictionary<long, Information>>();
             machineHierarchy = null;
-            machineHierarchy = new Dictionary<long, MachInfo>();
-            alreadyIntegratedNodes.Clear();
-            statisticInitialized = false;
+            machineHierarchy = new Dictionary<long, MachInfo>(); 
         }
-
-        public void SetStatisticInitialized()
-        {
-            statisticInitialized = true;
-        }
-    
-        public void ResetMemory()
-        {
-            memory = false;
-        }
-
+ 
         private bool memory = false;
-        private int cUsers = 0;
-        private int cMachines = 0;
-        private DateTime memTime = DateTime.UtcNow;
-        private BigInteger memKeys = 0;
+        private int cUsers = 0; 
 
         /// <summary>
         /// Initialisation for fixed and current values every utime/30 minutes
@@ -1251,27 +1213,10 @@ namespace KeySearcher
             }
 
             CalcCurrentStats();
-            GenerateMaschineStats();
-            int interval = settings.UpdateTime > 0 ? settings.UpdateTime : 30;
-            var now = DateTime.UtcNow;
-            var keyPattern = Pattern;
-            var keysPerChunk = Math.Pow(2, settings.NumberOfBlocks);
-            var keyPatternPool = new KeyPatternPool(keyPattern, new BigInteger(keysPerChunk));
+            GenerateMaschineStats();  
 
             //if we have two time values to compare
-            if(memory)
-            {
-                var keysnow = calculatedChunks()*(BigInteger) Math.Pow(2, settings.NumberOfBlocks);
-                var timenow = DateTime.UtcNow;
-                memKeys = keysnow;
-                memTime = timenow;
-            }
-            else
-            {
-                memKeys = calculatedChunks() * (BigInteger)Math.Pow(2, settings.NumberOfBlocks);
-                memTime = DateTime.UtcNow;
-                memory = true;
-            } 
+            if( ! memory) memory = true;
         }
 
         /// <summary>
@@ -1279,8 +1224,7 @@ namespace KeySearcher
         /// </summary>
         internal void CalcCurrentStats()
         {
-            cUsers = 0;
-            cMachines = 0;
+            cUsers = 0; 
             var testdate = DateTime.UtcNow;
 
             if(statistic != null)
@@ -1298,8 +1242,7 @@ namespace KeySearcher
                         {
                             statistic[avatar][mid].Current = true;
                             statistic[avatar][mid].Dead = false;
-                            useradd = 1;
-                            cMachines++;
+                            useradd = 1; 
                         }
                         else
                         {
@@ -1490,7 +1433,7 @@ namespace KeySearcher
                                     Top1 = vk;
                                 costList.AddBefore(node, vk);
                                 costList.RemoveLast();
-                                value_threshold = costList.Last.Value.value;
+                                valueThreshold = costList.Last.Value.value;
                                 break;
                             }
                             node = node.Next;
@@ -1510,7 +1453,7 @@ namespace KeySearcher
                                     Top1 = vk;
                                 costList.AddBefore(node, vk);
                                 costList.RemoveLast();
-                                value_threshold = costList.Last.Value.value;
+                                valueThreshold = costList.Last.Value.value;
                                 break;
                             }
                             node = node.Next;

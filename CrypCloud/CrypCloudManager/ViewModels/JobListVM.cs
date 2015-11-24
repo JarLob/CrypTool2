@@ -86,9 +86,16 @@ namespace CrypCloud.Manager.ViewModels
                 selectedID = selectedJob.Id;
             }
 
+            var jobItems = crypCloudCore.GetJobs()
+                .Select(ConvertToListItem)
+                .Distinct(NetworkJobItem.IdComparer)
+                .ToList();
+
             RunningJobs.Clear();
-            var jobs = crypCloudCore.GetJobs();
-            jobs.ForEach(it => RunningJobs.Add(ConvertToListItem(it)));
+            foreach (var networkJobItem in jobItems)
+            {
+                RunningJobs.Add(networkJobItem);
+            }  
 
             SetSelectionByJobId(selectedID);
         }
