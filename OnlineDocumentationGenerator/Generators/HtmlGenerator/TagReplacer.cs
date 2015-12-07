@@ -22,6 +22,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         private static readonly Regex FindComponentTreeTagRegex = new Regex("<componentTree.*?/>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex FindEditorListTagRegex = new Regex("<editorList.*?/>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex FindTemplateListTagRegex = new Regex("<templatesList.*?/>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static readonly Regex FindTemplateTreeTagRegex = new Regex("<templatesTree.*?/>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex FindCommonListTagRegex = new Regex("<commonList.*?/>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex FindBeginningSectionSwitchTagRegex = new Regex("<sectionSwitch.*?section=\"(.*?)\".*?>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         private static readonly Regex FindEndingSectionSwitchTagRegex = new Regex("</.*?sectionSwitch.*?>", RegexOptions.IgnoreCase | RegexOptions.Compiled);
@@ -62,29 +63,6 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 return null;
             var property = match.Groups[1].Value;
             return property;
-        }
-
-        public static string ReplaceLanguageSelectionTag(string html, string languageSelectionCode)
-        {
-            int pos;
-            int len;
-            var htmlBuilder = new StringBuilder(html);
-
-            while (FindLanguageSelectionTag(htmlBuilder.ToString(), out pos, out len))
-            {
-                htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, languageSelectionCode);
-            }
-
-            return htmlBuilder.ToString();
-        }
-
-        internal static bool FindLanguageSelectionTag(string html, out int pos, out int len)
-        {
-            var match = FindLanguageSelectionTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
         }
 
         public static string ReplaceLanguageSwitchs(string html, string lang)
@@ -235,119 +213,62 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             return htmlBuilder.ToString();
         }
 
-        public static string ReplaceComponentList(string html, string componentListCode)
+        internal static bool FindTag(Regex tag, string html, out int pos, out int len)
+        {
+            var match = tag.Match(html);
+            pos = match.Index;
+            len = match.Length;
+            return match.Success;
+        }
+
+        public static string ReplaceTags(string html, Regex tag, string replacement)
         {
             int pos;
             int len;
             var htmlBuilder = new StringBuilder(html);
 
-            while (FindComponentListTag(htmlBuilder.ToString(), out pos, out len))
+            while (FindTag(tag, htmlBuilder.ToString(), out pos, out len))
             {
                 htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, componentListCode);
+                htmlBuilder.Insert(pos, replacement);
             }
 
             return htmlBuilder.ToString();
+        }
+
+        public static string ReplaceLanguageSelectionTag(string html, string languageSelectionCode)
+        {
+            return ReplaceTags(html, FindLanguageSelectionTagRegex, languageSelectionCode);
+        }
+
+        public static string ReplaceComponentList(string html, string componentListCode)
+        {
+            return ReplaceTags(html, FindComponentListTagRegex, componentListCode);
         }
 
         public static string ReplaceComponentTree(string html, string componentTreeCode)
         {
-            int pos;
-            int len;
-            var htmlBuilder = new StringBuilder(html);
-
-            while (FindComponentTreeTag(htmlBuilder.ToString(), out pos, out len))
-            {
-                htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, componentTreeCode);
-            }
-
-            return htmlBuilder.ToString();
+            return ReplaceTags(html, FindComponentTreeTagRegex, componentTreeCode);
         }
 
         public static string ReplaceCommonList(string html, string commonListCode)
         {
-            int pos;
-            int len;
-            var htmlBuilder = new StringBuilder(html);
-
-            while (FindCommonListTag(htmlBuilder.ToString(), out pos, out len))
-            {
-                htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, commonListCode);
-            }
-
-            return htmlBuilder.ToString();
+            return ReplaceTags(html, FindCommonListTagRegex, commonListCode);
         }
 
         public static string ReplaceTemplatesList(string html, string templatesListCode)
         {
-            int pos;
-            int len;
-            var htmlBuilder = new StringBuilder(html);
-
-            while (FindTemplatesListTag(htmlBuilder.ToString(), out pos, out len))
-            {
-                htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, templatesListCode);
-            }
-
-            return htmlBuilder.ToString();
+            return ReplaceTags(html, FindTemplateListTagRegex, templatesListCode);
         }
 
-        internal static bool FindComponentListTag(string html, out int pos, out int len)
+        public static string ReplaceTemplatesTree(string html, string templatesTreeCode)
         {
-            var match = FindComponentListTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
-        }
-
-        internal static bool FindTemplatesListTag(string html, out int pos, out int len)
-        {
-            var match = FindTemplateListTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
-        }
-
-        internal static bool FindCommonListTag(string html, out int pos, out int len)
-        {
-            var match = FindCommonListTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
-        }
-
-        internal static bool FindComponentTreeTag(string html, out int pos, out int len)
-        {
-            var match = FindComponentTreeTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
+            return ReplaceTags(html, FindTemplateTreeTagRegex, templatesTreeCode);
         }
 
         public static string ReplaceEditorList(string html, string editorListCode)
         {
-            int pos;
-            int len;
-            var htmlBuilder = new StringBuilder(html);
-
-            while (FindEditorListTag(htmlBuilder.ToString(), out pos, out len))
-            {
-                htmlBuilder.Remove(pos, len);
-                htmlBuilder.Insert(pos, editorListCode);
-            }
-
-            return htmlBuilder.ToString();
-        }
-
-        internal static bool FindEditorListTag(string html, out int pos, out int len)
-        {
-            var match = FindEditorListTagRegex.Match(html);
-            pos = match.Index;
-            len = match.Length;
-            return match.Success;
+            return ReplaceTags(html, FindEditorListTagRegex, editorListCode);
         }
     }
 }

@@ -109,17 +109,20 @@ for (var t = 0; t < tables.length; t++) {
 
 		/* Here is dynamically created a form */
 		var form = document.createElement('form');
-        var text = document.createTextNode("Filter:")
+		var text = document.createTextNode("Filter: ")
 		form.setAttribute('class', 'filter');
 		// For ie...
 		form.attributes['class'].value = 'filter';
 		var input = document.createElement('input');
-		input.onkeyup = function() {
-			filterTable(input, element);
-		}
-		form.appendChild(input);
-		element.parentNode.insertBefore(text, element);
-        element.parentNode.insertBefore(form, element);
+		input.onkeyup = function() { filterTable(input, element); }
+
+		var div = document.createElement('div');
+		div.setAttribute('class', 'searchinput');
+		div.appendChild(text);
+		div.appendChild(input);
+
+		form.appendChild(div);
+
+		element.parentNode.insertBefore(div, element);
 	}
 }
-

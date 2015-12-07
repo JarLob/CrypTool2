@@ -46,6 +46,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 indexHtml = TagReplacer.ReplaceInstallVersionSwitchs(indexHtml, AssemblyHelper.InstallationType);
                 var languageSelectionCode = GenerateIndexLanguageSelectionCode(AvailableLanguages, lang);
                 indexHtml = TagReplacer.ReplaceLanguageSelectionTag(indexHtml, languageSelectionCode);
+
                 var componentListCode = GenerateComponentListCode(DocPages.FindAll(x => x is ComponentDocumentationPage).Select(x => (ComponentDocumentationPage)x), lang);
                 indexHtml = TagReplacer.ReplaceComponentList(indexHtml, componentListCode);
                 var componentTreeCode = GenerateComponentTreeCode(DocPages.FindAll(x => x is ComponentDocumentationPage).Select(x => (ComponentDocumentationPage)x), lang);
@@ -67,7 +68,9 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 var templatesHtml = TagReplacer.ReplaceLanguageSwitchs(Properties.Resources.TemplateTemplatesIndex, lang);
                 var languageSelectionCode = GenerateTemplatesPageLanguageSelectionCode(AvailableLanguages, lang);
                 templatesHtml = TagReplacer.ReplaceLanguageSelectionTag(templatesHtml, languageSelectionCode);
-                var templatesListCode = GenerateTemplatesTree(lang);
+                var templatesTreeCode = GenerateTemplatesTree(lang);
+                templatesHtml = TagReplacer.ReplaceTemplatesTree(templatesHtml, templatesTreeCode);
+                var templatesListCode = GenerateTemplatesList(lang);
                 templatesHtml = TagReplacer.ReplaceTemplatesList(templatesHtml, templatesListCode);
 
                 var filename = OnlineHelp.GetTemplatesIndexFilename(lang);
@@ -108,33 +111,62 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 commonHtml = TagReplacer.ReplaceLanguageSelectionTag(commonHtml, languageSelectionCode);
                 var commonListCode = GenerateCommonListCode(DocPages.FindAll(x => x is CommonDocumentationPage).Select(x => (CommonDocumentationPage)x), lang);
                 commonHtml = TagReplacer.ReplaceCommonList(commonHtml, commonListCode);
-                //var templatesListCode = GenerateTemplatesTree(lang);
-                //templatesHtml = TagReplacer.ReplaceTemplatesList(templatesHtml, templatesListCode);
 
                 var filename = OnlineHelp.GetCommonIndexFilename(lang);
                 StoreIndexPage(commonHtml, filename);
             }
         }
 
-        private string GenerateTemplatesTree(string lang)
-        {            
-            var stringBuilder = new StringBuilder();
+        private List<TemplateDocumentationPage> AllTemplatesList = new List<TemplateDocumentationPage>();
 
-            stringBuilder.AppendLine(@"
-                                <script type='text/javascript'>
-			                    <!--  
-                                function ShowHideDiv(divName) {
-                                if (document.getElementById(divName)) {
-                                    document.getElementById(divName).style.display = (document.getElementById(divName).style.display == 'none') ? 'inline' : 'none';
-                                    }
-                                }
-                                </script>");            
+        private string GenerateTemplatesList(string lang)
+        {
+            AllTemplatesList.Clear();
+            WalkTemplateDirectory2(_templatesDir);
+            var groups = AllTemplatesList.OrderBy(t => t.CurrentLocalization.Name).GroupBy(t => t.CurrentLocalization.Name[0]);
+
+            var anchor = "<p>" + String.Concat(groups.Select(g => string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;", g.Key))) + "</p>";
+
+            var stringBuilder = new StringBuilder(anchor);
+            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\" class=\"filterable\">");
+
+            foreach (var group in groups)
+            {
+                stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h2></td><td></td></tr>", group.Key));
+                foreach (var templateDocumentationPage in group)
+                {
+                    var locTemplate = templateDocumentationPage.CurrentLocalization;
+                    var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
+                    description = description.Replace("../", ""); //correct relative paths in images                
+                    stringBuilder.AppendLine(string.Format("<tr><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
+                }
+            }
+
+            stringBuilder.AppendLine("</table>");
+            stringBuilder.AppendLine("<script type=\"text/javascript\" src=\"filterTable.js\"></script>");
+
+            return stringBuilder.ToString();
+        }
+        
+        private void WalkTemplateDirectory2(TemplateDirectory templatesDir)
+        {
+            AllTemplatesList.AddRange(templatesDir.ContainingTemplateDocPages);
+            foreach (var dir in templatesDir.SubDirectories)
+                WalkTemplateDirectory2(dir);
+        }
+        
+        private string GenerateTemplatesTree(string lang)
+        {
+            var stringBuilder = new StringBuilder();
             var anchorBuilder = new StringBuilder();
+
             anchorBuilder.Append("<p>");
+            anchorBuilder.Append("<ul>");
             foreach (var dir in _templatesDir.SubDirectories)
             {
-                WalkTemplateDirectory(dir, stringBuilder, 0, lang);
+                WalkTemplateDirectory(dir, anchorBuilder, stringBuilder, new List<string>(), lang);
             }
+            anchorBuilder.Append("</ul>");
             anchorBuilder.Append("</p>");
             anchorBuilder.Append(stringBuilder);
             return anchorBuilder.ToString();
@@ -145,36 +177,40 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         /// </summary>
         private int _uid;
 
-        private void WalkTemplateDirectory(TemplateDirectory templatesDir, StringBuilder stringBuilder, int depth, string lang)
+        private void WalkTemplateDirectory(TemplateDirectory templatesDir, StringBuilder anchorBuilder, StringBuilder stringBuilder, List<string> categories, string lang)
         {
-            var spacesStringBuilder = new StringBuilder();
-            for(int i=0;i<depth*2;i++)
+            var id = "ID_" + (++_uid);
+
+            categories.Add(templatesDir.GetName());
+
+            if (templatesDir.ContainingTemplateDocPages.Count > 0)
             {
-                spacesStringBuilder.Append("&nbsp;");
+                stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\">");
+                stringBuilder.AppendLine(string.Format("<tr><td colspan=4><h2 id=\"{0}\">{1}</h2></td></tr>", id, String.Join(" / ", categories)));
+
+                foreach (var templateDocumentationPage in templatesDir.ContainingTemplateDocPages)
+                {
+                    var locTemplate = templateDocumentationPage.CurrentLocalization;
+                    var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
+                    var spaces = String.Join("", Enumerable.Range(0, categories.Count - 1).Select(x => "&nbsp;&nbsp;"));
+                    description = description.Replace("../", ""); //correct relative paths in images                
+                    stringBuilder.AppendLine(string.Format("<tr><td>{0}</td><td><div class=\"boximage\"><img src=\"{1}\"></div></td><td><a href=\"{2}\">{3}</a></td><td>{4}</td></tr>", spaces, templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
+                }
+
+                stringBuilder.AppendLine("</table><p>");
             }
-            _uid++;
-            var id = "ID_" + _uid;
-            var spaces = spacesStringBuilder.ToString();            
-            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\" >");
-            stringBuilder.AppendLine(string.Format("<tr><td colspan=\"4\">{0}<a href=\"#\" onclick=\"ShowHideDiv('{1}'); return false;\">{2}</a></td></tr>", spaces, id, templatesDir.GetName()));
-            stringBuilder.AppendLine("</table>");
-            stringBuilder.AppendLine(string.Format("<div style=\"display:none;\" id=\"{0}\">", id));
-            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\">");         
-            foreach (var templateDocumentationPage in templatesDir.ContainingTemplateDocPages)
+
+            anchorBuilder.AppendLine(string.Format("<li><a href=\"#{0}\"><b>{1}</b></a></li>", id, templatesDir.GetName()));
+
+            if (templatesDir.SubDirectories.Count > 0)
             {
-                var locTemplate = templateDocumentationPage.CurrentLocalization;
-                var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
-                description = description.Replace("../", ""); //correct relative paths in images                
-                stringBuilder.AppendLine(string.Format("<tr><td>{0}&nbsp;</td><td><div class=\"boximage\"><img src=\"{1}\"></div></td><td><a href=\"{2}\">{3}</a></td><td>{4}</td></tr>", spaces, templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));                
-            }            
-            foreach (var dir in templatesDir.SubDirectories)
-            {
-                stringBuilder.AppendLine("<tr><td colspan=\"4\">");
-                WalkTemplateDirectory(dir, stringBuilder, depth + 1,lang);
-                stringBuilder.AppendLine("</td></tr>");
+                anchorBuilder.Append("<ul>");
+                foreach (var dir in templatesDir.SubDirectories)
+                    WalkTemplateDirectory(dir, anchorBuilder, stringBuilder, categories, lang);
+                anchorBuilder.Append("</ul>");
             }
-            stringBuilder.AppendLine("</table>");
-            stringBuilder.AppendLine("</div>");
+
+            categories.RemoveAt(categories.Count - 1);
         }
 
         private static string GenerateComponentListCode(IEnumerable<ComponentDocumentationPage> componentDocumentationPages, string lang)
@@ -191,15 +227,14 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             
             char actualIndexCharacter = ' ';
             foreach (var page in query)
-            {        
-                
+            {
                 var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
                 var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
                 if (actualIndexCharacter != pp.Name[0])
                 {
                     actualIndexCharacter = pp.Name.ToUpper()[0];
-                    stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h1></td><td></td></tr>", actualIndexCharacter));
-                    anchorBuilder.AppendLine(string.Format("<a href=\"#{0}\"><b>{0}</b><a>&nbsp;", actualIndexCharacter));
+                    stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h2></td><td></td></tr>", actualIndexCharacter));
+                    anchorBuilder.AppendLine(string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;", actualIndexCharacter));
                 }
                 stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
                     OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
@@ -212,85 +247,68 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             return anchorBuilder.ToString();
         }
 
-        private static string GenerateComponentTreeCode(IEnumerable<PluginDocumentationPage> componentDocumentationPages, string lang)        
+        private static string getCategoryName(ComponentCategory category)
         {
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\">");
+            switch (category)
+            {
+                case ComponentCategory.CiphersClassic:
+                    return Properties.Resources.Category_Classic_Ciphers;
+                case ComponentCategory.CiphersModernSymmetric:
+                    return Properties.Resources.Category_CiphersModernSymmetric;
+                case ComponentCategory.CiphersModernAsymmetric:
+                    return Properties.Resources.Category_CiphersModernAsymmetric;
+                case ComponentCategory.Steganography:
+                    return Properties.Resources.Category_Steganography;
+                case ComponentCategory.HashFunctions:
+                    return Properties.Resources.Category_HashFunctions;
+                case ComponentCategory.CryptanalysisSpecific:
+                    return Properties.Resources.Category_CryptanalysisSpecific;
+                case ComponentCategory.CryptanalysisGeneric:
+                    return Properties.Resources.Category_CryptanalysisGeneric;
+                case ComponentCategory.Protocols:
+                    return Properties.Resources.Category_Protocols;
+                case ComponentCategory.ToolsBoolean:
+                    return Properties.Resources.Category_ToolsBoolean;
+                case ComponentCategory.ToolsDataflow:
+                    return Properties.Resources.Category_ToolsDataflow;
+                case ComponentCategory.ToolsDataInputOutput:
+                    return Properties.Resources.Category_ToolsDataInputOutput;
+                case ComponentCategory.ToolsMisc:
+                    return Properties.Resources.Category_ToolsMisc;
+                case ComponentCategory.ToolsP2P:
+                    return Properties.Resources.Category_ToolsP2P;
+                default:
+                    return Properties.Resources.Category_Unknown;
+            }
+        }
 
-            var anchorBuilder = new StringBuilder();
-            anchorBuilder.Append("<p>");
-
+        private static string GenerateComponentTreeCode(IEnumerable<PluginDocumentationPage> componentDocumentationPages, string lang)
+        {
             var query = from pages in componentDocumentationPages
                         orderby pages.Category
-                        select pages;
+                        group pages by pages.Category into g
+                        select new { Key = getCategoryName(g.Key), Elements = g };
 
-            ComponentCategory actualCategory = ComponentCategory.Undefined;
-            foreach (var page in query)
+            var anchor = "<p><ul>" + String.Join("\n", query.Select(g => string.Format("<li><a href=\"#{0}\"><b>{0}</b><a></li>", g.Key))) + "</ul></p>";
+
+            var stringBuilder = new StringBuilder(anchor);
+            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\">");
+
+            foreach (var pagegroup in query)
             {
-
-                var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
-                var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
-
-                
-                if (actualCategory != page.Category)
-                {                    
-                    actualCategory = page.Category;
-                    string categoryName = null;
-                    switch (page.Category)
-                    {
-                        case ComponentCategory.CiphersClassic:
-                            categoryName = Properties.Resources.Category_Classic_Ciphers;
-                            break;
-                        case ComponentCategory.CiphersModernSymmetric:
-                            categoryName = Properties.Resources.Category_CiphersModernSymmetric;
-                            break;
-                        case ComponentCategory.CiphersModernAsymmetric:
-                            categoryName = Properties.Resources.Category_CiphersModernAsymmetric;
-                            break;
-                        case ComponentCategory.Steganography:
-                            categoryName = Properties.Resources.Category_Steganography;
-                            break;
-                        case ComponentCategory.HashFunctions:
-                            categoryName = Properties.Resources.Category_HashFunctions;
-                            break;
-                        case ComponentCategory.CryptanalysisSpecific:
-                            categoryName = Properties.Resources.Category_CryptanalysisSpecific;
-                            break;
-                        case ComponentCategory.CryptanalysisGeneric:
-                            categoryName = Properties.Resources.Category_CryptanalysisGeneric;
-                            break;
-                        case ComponentCategory.Protocols:
-                            categoryName = Properties.Resources.Category_Protocols;
-                            break;
-                        case ComponentCategory.ToolsBoolean:
-                            categoryName = Properties.Resources.Category_ToolsBoolean;
-                            break;
-                        case ComponentCategory.ToolsDataflow:
-                            categoryName = Properties.Resources.Category_ToolsDataflow;
-                            break;
-                        case ComponentCategory.ToolsDataInputOutput:
-                            categoryName = Properties.Resources.Category_ToolsDataInputOutput;
-                            break;
-                        case ComponentCategory.ToolsMisc:
-                            categoryName = Properties.Resources.Category_ToolsMisc;
-                            break;
-                        case ComponentCategory.ToolsP2P:
-                            categoryName = Properties.Resources.Category_ToolsP2P;
-                            break;
-                        default:
-                            categoryName = Properties.Resources.Category_Unknown;
-                            break;
-                    }
-                    stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h1></td><td></td></tr>", categoryName));
-                    anchorBuilder.AppendLine(string.Format("<a href=\"#{0}\"><b>{0}</b><a>&nbsp;", categoryName));
+                stringBuilder.AppendLine(string.Format("<tr><td colspan=2><h2 id=\"{0}\">{0}</h2></td></tr>", pagegroup.Key));
+                foreach (var page in pagegroup.Elements)
+                {
+                    var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
+                    var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
+                    stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
+                        OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
                 }
-                stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
-                    OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
             }
+
             stringBuilder.AppendLine("</table>");
-            anchorBuilder.Append("</p>");
-            anchorBuilder.Append(stringBuilder);
-            return anchorBuilder.ToString();
+
+            return stringBuilder.ToString();
         }
 
         private static string GenerateEditorListCode(IEnumerable<PluginDocumentationPage> editorDocumentationPages, string lang)
@@ -326,23 +344,15 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                         orderby pages.Localizations[pages.Localizations.ContainsKey(lang) ? lang : "en"].Name
                         select pages;
 
-            char actualIndexCharacter = ' ';
             foreach (var page in query)
             {
 
                 var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
                 var pp = (LocalizedCommonDocumentationPage)page.Localizations[linkedLang];
-                //if (actualIndexCharacter != pp.Name[0])
-                //{
-                //    actualIndexCharacter = pp.Name.ToUpper()[0];
-                //    stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h1></td><td></td></tr>", actualIndexCharacter));
-                //    anchorBuilder.AppendLine(string.Format("<a href=\"#{0}\"><b>{0}</b><a>&nbsp;", actualIndexCharacter));
-                //}
                 stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td></tr>",
                     OnlineHelp.GetCommonDocFilename(page.Name, linkedLang), pp.Name));
             }
             stringBuilder.AppendLine("</table>");
-            //stringBuilder.AppendLine("<script type=\"text/javascript\" src=\"filterTable.js\"></script>");
 
             anchorBuilder.Append("</p>");
             anchorBuilder.Append(stringBuilder);
