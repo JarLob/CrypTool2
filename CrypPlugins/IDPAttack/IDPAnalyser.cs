@@ -165,8 +165,6 @@ namespace IDPAnalyser
 
         public void Execute()
         {
-            //Finished = false;
-
             Bigrams.InitLanguage(settings.Language);
 
             if (this.input == null)
@@ -175,13 +173,6 @@ namespace IDPAnalyser
                 return;
             }
 
-            //if (this.costMaster == null)
-            //{
-            //    GuiLogMessage("You have to connect the Cost Function component to the Transpostion Analyzer control!", NotificationLevel.Error);
-            //    return;
-            //}
-
-            //comparer = new ValueKeyComparer(costMaster.GetRelationOperator() != RelationOperator.LargerThen);
             comparer = new ValueKeyComparer(false);
             TOPLIST = new HighscoreList(comparer, 10);
 
@@ -193,9 +184,10 @@ namespace IDPAnalyser
                 case 1: GuiLogMessage("Starting Hill Climbing Analysis", NotificationLevel.Info); HillClimbingAnalysis(); break;
             }
 
-            //Finished = true;
-            Output = TOPLIST[0].plaintext;
-            //OnPropertyChanged("Output");
+            if (TOPLIST.Count > 0)
+                Output = TOPLIST[0].plaintext;
+            else
+                GuiLogMessage("No candidates found", NotificationLevel.Warning);
 
             ProgressChanged(1, 1);
         }
