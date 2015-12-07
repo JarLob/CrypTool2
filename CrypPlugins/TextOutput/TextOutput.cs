@@ -464,8 +464,13 @@ namespace TextOutput
 
             if (settings.ShowChars)
             {
-                currentText = currentText.Replace("\r", "\r\n");
-                int chars = (currentText == null) ? 0 : currentText.Length - 3;
+                int chars = 0;
+                if (currentText != null)
+                {
+                    currentText = Regex.Replace(currentText, @"\r(?!\n)", "\r\n");  // replace single \r with \r\n
+                    currentText = Regex.Replace(currentText, @"\r\n$", "");         // ignore trailing \r\n
+                    chars = currentText.Length;
+                }
                 string entity = (chars == 1) ? Properties.Resources.Char : Properties.Resources.Chars;
                 label += string.Format(" {0:#,0} " + entity, chars);
             }
