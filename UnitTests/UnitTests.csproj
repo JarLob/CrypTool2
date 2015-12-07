@@ -130,6 +130,7 @@
     <Compile Include="Salsa20Test.cs" />
     <Compile Include="ScytaleTest.cs" />
     <Compile Include="SHATest.cs" />
+    <Compile Include="SigabaTest.cs" />
     <Compile Include="SosemanukTest.cs" />
     <Compile Include="StegoLSBTest.cs" />
     <Compile Include="TemplateAndPluginTests\PluginTestScenario.cs" />
@@ -155,6 +156,10 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPluginsExperimental\Sigaba\Sigaba.csproj">
+      <Project>{29520D81-911D-4FCD-9A6B-670625D6E0A1}</Project>
+      <Name>Sigaba</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginsExperimental\Survey\Survey.csproj">
       <Project>{D11F3E7B-4F9E-43CC-ACA0-DE6AE47E1F5C}</Project>
@@ -224,6 +229,10 @@
     <ProjectReference Include="..\CrypPlugins\BitCommitmentScheme\BitCommitmentScheme.csproj">
       <Project>{E86CE9A5-BBF2-48E3-80F1-80BD935670EF}</Project>
       <Name>BitCommitmentScheme</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\BLAKE\BLAKE.csproj">
+      <Project>{56D9C687-264D-4311-8598-7808EBC41354}</Project>
+      <Name>BLAKE</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\BooleanFunctionParser\BooleanFunctionParser.csproj">
       <Project>{AE633B61-EA75-40F0-BFF8-04B707FB1159}</Project>
@@ -300,6 +309,10 @@
     <ProjectReference Include="..\CrypPlugins\GrainV1\GrainV1.csproj">
       <Project>{76BF9E04-F403-44AE-BFAB-D907425EA6A7}</Project>
       <Name>GrainV1</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\Groestl\Groestl.csproj">
+      <Project>{B38C24C0-28CC-4448-804B-6C824ABE5AFB}</Project>
+      <Name>Groestl</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\HC128\HC128.csproj">
       <Project>{93268220-78CA-4979-9168-19E8D3CE7274}</Project>
