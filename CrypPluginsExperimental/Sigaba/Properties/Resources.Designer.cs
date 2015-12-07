@@ -70,7 +70,25 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choose the mode of opertation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
+        /// </summary>
+        public static string ActionList1 {
+            get {
+                return ResourceManager.GetString("ActionList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
+        /// </summary>
+        public static string ActionList2 {
+            get {
+                return ResourceManager.GetString("ActionList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choose the mode of operation ähnelt.
         /// </summary>
         public static string ActionTooltip {
             get {
@@ -142,7 +160,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the positions of the cipher rotors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the starting positions of the cipher rotors ähnelt.
         /// </summary>
         public static string CipherKeyTooltip {
             get {
@@ -160,7 +178,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the typ of the first cipher rotor ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the first cipher rotor ähnelt.
         /// </summary>
         public static string CipherRotor1Tooltip {
             get {
@@ -178,7 +196,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the typ of the second cipher rotor ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the second cipher rotor ähnelt.
         /// </summary>
         public static string CipherRotor2Tooltip {
             get {
@@ -198,9 +216,9 @@ namespace Sigaba.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the third cipher rotor ähnelt.
         /// </summary>
-        public static string CipherRotor3ToolTip {
+        public static string CipherRotor3Tooltip {
             get {
-                return ResourceManager.GetString("CipherRotor3ToolTip", resourceCulture);
+                return ResourceManager.GetString("CipherRotor3Tooltip", resourceCulture);
             }
         }
         
@@ -232,7 +250,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fith cipher rotor ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fifth cipher rotor ähnelt.
         /// </summary>
         public static string CipherRotor5Tooltip {
             get {
@@ -259,7 +277,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the positions of the control rotors ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the starting positions of the control rotors ähnelt.
         /// </summary>
         public static string ControlKeyTooltip {
             get {
@@ -333,9 +351,9 @@ namespace Sigaba.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fourth control wheel ähnelt.
         /// </summary>
-        public static string ControlRotor4ToolTip {
+        public static string ControlRotor4Tooltip {
             get {
-                return ResourceManager.GetString("ControlRotor4ToolTip", resourceCulture);
+                return ResourceManager.GetString("ControlRotor4Tooltip", resourceCulture);
             }
         }
         
@@ -351,9 +369,9 @@ namespace Sigaba.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fith control wheel ähnelt.
         /// </summary>
-        public static string ControlRotor5ToolTip {
+        public static string ControlRotor5Tooltip {
             get {
-                return ResourceManager.GetString("ControlRotor5ToolTip", resourceCulture);
+                return ResourceManager.GetString("ControlRotor5Tooltip", resourceCulture);
             }
         }
         
@@ -376,7 +394,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the positions of the index wheels ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the starting positions of the index wheels ähnelt.
         /// </summary>
         public static string IndexKeyTooltip {
             get {
@@ -678,24 +696,6 @@ namespace Sigaba.Properties {
         public static string RotorReverseTooltip {
             get {
                 return ResourceManager.GetString("RotorReverseTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt ähnelt.
-        /// </summary>
-        public static string SigabaSettings_SigabaSettings_Cipher {
-            get {
-                return ResourceManager.GetString("SigabaSettings_SigabaSettings_Cipher", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypt ähnelt.
-        /// </summary>
-        public static string SigabaSettings_SigabaSettings_Decipher {
-            get {
-                return ResourceManager.GetString("SigabaSettings_SigabaSettings_Decipher", resourceCulture);
             }
         }
         

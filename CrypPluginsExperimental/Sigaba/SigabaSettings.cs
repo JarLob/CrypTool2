@@ -62,7 +62,7 @@ namespace Sigaba
         public SigabaSettings()
         {
             SetList(_typeStrings, "CSP888/889", "CSP2800");
-            SetList(_actionStrings, "SigabaSettings_SigabaSettings_Cipher", Resources.SigabaSettings_SigabaSettings_Decipher);
+            SetList(_actionStrings, "ActionList1", "ActionList2");
             SetList(_cipherControlRotorStrings, "TestRotor", "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8", "RotorA9", "RotorA10");
             SetList(_indexRotorStrings, "TestRotor", "RotorB1", "RotorB2", "RotorB3", "RotorB4", "RotorB5");
         }
@@ -92,7 +92,7 @@ namespace Sigaba
             }
         }
 
-        [TaskPane("ActionCaption", "ActionTooltip", null, 0, false, ControlType.DynamicComboBox, new string[] { "ActionStrings" })]
+        [TaskPane("ActionCaption", "ActionTooltip", null, 1, false, ControlType.DynamicComboBox, new string[] { "ActionStrings" })]
         public int Action
         {
             get { return this._action; }
@@ -120,7 +120,7 @@ namespace Sigaba
             }
         }
 
-        [TaskPane("CipherKeyCaption", "ControlKeyTooltip", null, 0, false, ControlType.TextBox, ValidationType.RegEx, "^[A-Z]{5}$")]
+        [TaskPane("CipherKeyCaption", "CipherKeyTooltip", null, 3, false, ControlType.TextBox, ValidationType.RegEx, "^[A-Z]{5}$")]
         public string CipherKey
         {
             get { return this._cipherKey; }
@@ -134,7 +134,7 @@ namespace Sigaba
             }
         }
 
-        [TaskPane("IndexKeyCaption", "IndexKeyTooltip", null, 1, false, ControlType.TextBox, ValidationType.RegEx, "^[0-9]{5}$")]
+        [TaskPane("IndexKeyCaption", "IndexKeyTooltip", null, 4, false, ControlType.TextBox, ValidationType.RegEx, "^[0-9]{5}$")]
         public string IndexKey
         {
             get { return this._indexKey; }
@@ -444,7 +444,7 @@ namespace Sigaba
             set { setReverse(_indexRotorReverse, 0, value, "Index"); }
         }
 
-        [TaskPane("IndexRotor2Caption", "Rotor2Tooltip", "IndexGroup", 27, false, ControlType.DynamicComboBox, new string[] { "IndexRotorStrings" })]
+        [TaskPane("IndexRotor2Caption", "IndexRotor2Tooltip", "IndexGroup", 27, false, ControlType.DynamicComboBox, new string[] { "IndexRotorStrings" })]
         public int IndexRotor2
         {
             get { return _indexRotor[1]; }

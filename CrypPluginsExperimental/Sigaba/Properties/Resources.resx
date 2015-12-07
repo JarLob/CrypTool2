@@ -120,8 +120,14 @@
   <data name="ActionCaption" xml:space="preserve">
     <value>Action</value>
   </data>
+  <data name="ActionList1" xml:space="preserve">
+    <value>Encrypt</value>
+  </data>
+  <data name="ActionList2" xml:space="preserve">
+    <value>Decrypt</value>
+  </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Choose the mode of opertation</value>
+    <value>Choose the mode of operation</value>
   </data>
   <data name="CaseHandlingCaption" xml:space="preserve">
     <value>Case handling</value>
@@ -145,24 +151,24 @@
     <value>Cipher key</value>
   </data>
   <data name="CipherKeyTooltip" xml:space="preserve">
-    <value>Defines the positions of the cipher rotors</value>
+    <value>Defines the starting positions of the cipher rotors</value>
   </data>
   <data name="CipherRotor1Caption" xml:space="preserve">
     <value>Cipher wheel 1 (most left)</value>
   </data>
   <data name="CipherRotor1Tooltip" xml:space="preserve">
-    <value>Defines the typ of the first cipher rotor</value>
+    <value>Defines the type of the first cipher rotor</value>
   </data>
   <data name="CipherRotor2Caption" xml:space="preserve">
     <value>Cipher wheel 2</value>
   </data>
   <data name="CipherRotor2Tooltip" xml:space="preserve">
-    <value>Defines the typ of the second cipher rotor</value>
+    <value>Defines the type of the second cipher rotor</value>
   </data>
   <data name="CipherRotor3Caption" xml:space="preserve">
     <value>Cipher wheel 3</value>
   </data>
-  <data name="CipherRotor3ToolTip" xml:space="preserve">
+  <data name="CipherRotor3Tooltip" xml:space="preserve">
     <value>Defines the type of the third cipher rotor</value>
   </data>
   <data name="CipherRotor4Caption" xml:space="preserve">
@@ -175,7 +181,7 @@
     <value>Cipher wheel 5 (most right)</value>
   </data>
   <data name="CipherRotor5Tooltip" xml:space="preserve">
-    <value>Defines the type of the fith cipher rotor</value>
+    <value>Defines the type of the fifth cipher rotor</value>
   </data>
   <data name="ControlGroup" xml:space="preserve">
     <value>Stepping maze</value>
@@ -184,7 +190,7 @@
     <value>Control key</value>
   </data>
   <data name="ControlKeyTooltip" xml:space="preserve">
-    <value>Defines the positions of the control rotors</value>
+    <value>Defines the starting positions of the control rotors</value>
   </data>
   <data name="ControlRotor1Caption" xml:space="preserve">
     <value>Control wheel 1 (most right)</value>
@@ -207,13 +213,13 @@
   <data name="ControlRotor4Caption" xml:space="preserve">
     <value>Control wheel 4</value>
   </data>
-  <data name="ControlRotor4ToolTip" xml:space="preserve">
+  <data name="ControlRotor4Tooltip" xml:space="preserve">
     <value>Defines the type of the fourth control wheel</value>
   </data>
   <data name="ControlRotor5Caption" xml:space="preserve">
     <value>Control wheel 5 (most left)</value>
   </data>
-  <data name="ControlRotor5ToolTip" xml:space="preserve">
+  <data name="ControlRotor5Tooltip" xml:space="preserve">
     <value>Defines the type of the fith control wheel</value>
   </data>
   <data name="IndexGroup" xml:space="preserve">
@@ -223,7 +229,7 @@
     <value>Index key</value>
   </data>
   <data name="IndexKeyTooltip" xml:space="preserve">
-    <value>Defines the positions of the index wheels</value>
+    <value>Defines the starting positions of the index wheels</value>
   </data>
   <data name="IndexRotor1Caption" xml:space="preserve">
     <value>Index wheel 1 (most left)</value>
@@ -323,12 +329,6 @@
   </data>
   <data name="RotorReverseTooltip" xml:space="preserve">
     <value>Activate the checkbox to revert this rotor.</value>
-  </data>
-  <data name="SigabaSettings_SigabaSettings_Cipher" xml:space="preserve">
-    <value>Encrypt</value>
-  </data>
-  <data name="SigabaSettings_SigabaSettings_Decipher" xml:space="preserve">
-    <value>Decrypt</value>
   </data>
   <data name="TestRotor" xml:space="preserve">
     <value>Test wheel</value>
