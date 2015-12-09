@@ -100,11 +100,6 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
             if (e.PropertyName == "NmbrGen")
             {
-                nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = "This is the generated number";
-                }
-                ,null);
                 Process cmd = new Process();
 
                 cmd.StartInfo.FileName = "cmd.exe";
@@ -114,13 +109,26 @@ namespace Cryptool.Plugins.NFSFactorizer
                 cmd.StartInfo.UseShellExecute = false;
 
                 cmd.Start();
-
-                cmd.StandardInput.WriteLine("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa({0})\" ", settings.Bits);
+                // D:\Documents\CrypTool2\CrypPluginsExperimental\NFSFactorizer
+                cmd.StandardInput.WriteLine("D:\\Documents\\CrypTool2\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa({0})\" ", settings.Bits);
                 cmd.StandardInput.Flush();
                 cmd.StandardInput.Close();
                 string tmp = cmd.StandardOutput.ReadToEnd();
                 cmd.Close();
-                InputNumber1 = BigInteger.Parse(tmp.Between("ans = ", "\n"));
+                try
+                {
+                    InputNumber1 = BigInteger.Parse(tmp.Between("ans = ", "\n"));
+                }
+                catch
+                {
+                    InputNumber1 = 25;
+                }
+                
+                nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = tmp;
+                }
+                , null);
             }
             else
             {
@@ -364,7 +372,7 @@ namespace Cryptool.Plugins.NFSFactorizer
         public void PostExecution()
         {
             Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\ggnfs-bin", true);
-            Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34", true);
+            Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34", true); 
         }
 
         public void Stop()
