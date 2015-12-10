@@ -81,14 +81,6 @@ namespace Cryptool.Plugins.NFSFactorizer
             ZipFile zipFile1 = new ZipFile(zipPath1);
             zipFile.ExtractAll(mainDir);
             zipFile1.ExtractAll(mainDir);
-
-            /*string[] files = Directory.GetFiles(yafuDir + "\\yafu-1.34");
-            foreach (string s in files)
-            {
-                string fileName = Path.GetFileName(s);
-                string destfile = Path.Combine(yafuDir + "\\bin\\Debug", fileName);
-                File.Copy(s, destfile, true);
-            } */ 
         }
 
 
@@ -100,33 +92,17 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
             if (e.PropertyName == "NmbrGen")
             {
-                Process cmd = new Process();
+                SortOutputRedirection pr = new SortOutputRedirection();
+                pr.cmndLine = String.Format("/c ..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa(150)\" ");
 
-                cmd.StartInfo.FileName = "cmd.exe";
-                cmd.StartInfo.RedirectStandardInput = true;
-                cmd.StartInfo.RedirectStandardOutput = true;
-                cmd.StartInfo.CreateNoWindow = true;
-                cmd.StartInfo.UseShellExecute = false;
+                pr.ConvertToMPEG();
+                while (!pr.redirectInfo.Contains("ans = ")) { }
+                string genNumb = pr.redirectInfo;
+                InputNumber1 = BigInteger.Parse(genNumb.Between("ans = ", "\n"));
 
-                cmd.Start();
-                // D:\Documents\CrypTool2\CrypPluginsExperimental\NFSFactorizer
-                cmd.StandardInput.WriteLine("D:\\Documents\\CrypTool2\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa({0})\" ", settings.Bits);
-                cmd.StandardInput.Flush();
-                cmd.StandardInput.Close();
-                string tmp = cmd.StandardOutput.ReadToEnd();
-                cmd.Close();
-                try
-                {
-                    InputNumber1 = BigInteger.Parse(tmp.Between("ans = ", "\n"));
-                }
-                catch
-                {
-                    InputNumber1 = 25;
-                }
-                
                 nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = tmp;
+                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = "The generated number will appear when you start factorization.";
                 }
                 , null);
             }
@@ -260,7 +236,7 @@ namespace Cryptool.Plugins.NFSFactorizer
                     Choice = "Pollards Rho method";
                     break;
                 case 7:
-                    method = "trial"; // I think is better to use a trial implemented appart from YAFU. I am not convinced on the info given by the algorithm. 
+                    method = "trial";
                     Choice = "Trial Division";
                     SecondArg = "," + settings.BruteForceLimit;
                     break;
