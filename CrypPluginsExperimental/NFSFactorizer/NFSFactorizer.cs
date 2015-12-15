@@ -92,19 +92,27 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
             if (e.PropertyName == "NmbrGen")
             {
-                SortOutputRedirection pr = new SortOutputRedirection();
-                pr.cmndLine = String.Format("/c ..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa(150)\" ");
-
-                pr.ConvertToMPEG();
-                while (!pr.redirectInfo.Contains("ans = ")) { }
-                string genNumb = pr.redirectInfo;
-                InputNumber1 = BigInteger.Parse(genNumb.Between("ans = ", "\n"));
-
+                PreExecution();
                 nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     nfsFactQuickWatchPresentation.ComplementaryInfo.Content = "The generated number will appear when you start factorization.";
                 }
                 , null);
+                try
+                {
+                    SortOutputRedirection pr = new SortOutputRedirection();
+                    pr.cmndLine = String.Format("/c ..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa(150)\" ");
+
+                    pr.ConvertToMPEG();
+                    while (!pr.redirectInfo.Contains("ans = ")) { }
+                    string genNumb = pr.redirectInfo;
+                    InputNumber1 = BigInteger.Parse(genNumb.Between("ans = ", "\n"));
+                }
+                catch
+                {
+                    InputNumber1 = 25;
+                }
+                
             }
             else
             {
