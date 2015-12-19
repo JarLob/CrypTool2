@@ -51,7 +51,7 @@ namespace voluntLib
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
         
-        private const int DefaultWorkingListTimeout = 10*60000;
+        private const int DefaultWorkingListTimeout = 600000;
         private const int DefaultMaximumBackoffTime = 1000;
         private const int DefaultPort = 13337;
         private const string DefaultMulticastGroup = "224.0.7.1";
