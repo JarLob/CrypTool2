@@ -9,8 +9,8 @@
     Cramer-Shoup is an asymmetric key encryption algorithm based on ElGamal.
     Cramer-Shoup was presented by Ronald Cramer and Victor Shoup in 1998.
     It was the first efficient cryptosystem against adaptive chosen ciphertext attacks.
-    In comparison to ElGamal, Cramer-Shoup is extend to ensure non-mallebility even against a resourceful attacker.
-    The difference between ensure an increase of the ciphertext's size (two to three times).
+    In comparison to ElGamal, Cramer-Shoup was extended to ensure non-malleability even against a resourceful attacker.
+    The difference between ensure an increase of the ciphertexts size (two to three times).
   </introduction>
 
   <introduction lang="de-DE">
@@ -31,19 +31,19 @@
     The asymmetric part are need to generate a random key and send to generator of public/private key.
     The key can be used for symmetric encryption scheme.
     <section headline="Cramer Shoup Key Generator">
-      Generator is used to generate public/private key based on a chosen elliptic curve.
-      Recommended elliptic is curve25519.
-      The output is split in two part, public key and private key.
+      The CS Key Generator is used to generate a public/private pair key based on a chosen elliptic curve.
+      The recommended elliptic is curve25519.
+      The output is split in two parts, the public key and the private key.
     </section>
     <newline/>
     <newline/>
     The AES component has the two operation modes "Encaps" and "Decaps". You can switch between the modes in the settings of the component.
-    <section headline="Encaps">
-      The Cramer Shoup Encaps generates a key and a ciphertext based on public key and chosen hash-function.
+    <section headline="Cramer Shoup Encaps">
+      The CS Encaps generates a key and a ciphertext based on public key and chosen hash-function.
       The public key is an input and the hash-function can be chosen via settings.
     </section>
-    <section headline="Decaps">
-      Cramer Shoup Decaps is used to extracted the key from the ciphertext.
+    <section headline="Cramer Shoup Decaps">
+      CS Decaps is used to extracted the key from the ciphertext.
       The hash-function must same as in the encaps mode.
     </section>
   </usage>

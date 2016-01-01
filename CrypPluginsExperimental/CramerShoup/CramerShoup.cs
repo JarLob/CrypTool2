@@ -55,8 +55,8 @@ namespace Cryptool.Plugins.CramerShoup
         /// HOWTO: Output interface to write the output data.
         /// You can add more output properties ot other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputChiffreTextCaption", "InputChiffreTextTooltip")]
-        public ECCramerShoupCipherText InputChiffreText
+        [PropertyInfo(Direction.InputData, "InputCiphertextCaption", "InputCiphertextTooltip")]
+        public ECCramerShoupCipherText InputCiphertext
         {
             get;
             set;
@@ -66,8 +66,8 @@ namespace Cryptool.Plugins.CramerShoup
         /// HOWTO: Output interface to write the output data.
         /// You can add more output properties ot other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "OutputChiffreTextCaption", "OutputChiffreTextTooltip")]
-        public ECCramerShoupCipherText OutputChiffreText
+        [PropertyInfo(Direction.OutputData, "OutputCiphertextCaption", "OutputCiphertextTooltip")]
+        public ECCramerShoupCipherText OutputCiphertext
         {
             get;
             set;
@@ -142,11 +142,11 @@ namespace Cryptool.Plugins.CramerShoup
                     var output = engine.Encaps(parameter, random, digest);
 
                     ProgressChanged(0.66, 1);
-                    OutputChiffreText = output.Item1;
+                    OutputCiphertext = output.Item1;
 
                     Key = output.Item2;
 
-                    OnPropertyChanged("OutputChiffreText");
+                    OnPropertyChanged("OutputCiphertext");
                     OnPropertyChanged("Key");
                     // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
                     ProgressChanged(1, 1);
@@ -159,10 +159,10 @@ namespace Cryptool.Plugins.CramerShoup
             else
             {
                 var parameter = Parameter as ECCramerShoupPrivateParameter;
-                if (parameter != null && InputChiffreText != null)
+                if (parameter != null && InputCiphertext != null)
                 {
                     ProgressChanged(0.33, 1);
-                    Key = engine.Decaps(parameter, InputChiffreText, digest);
+                    Key = engine.Decaps(parameter, InputCiphertext, digest);
 
                     ProgressChanged(0.66, 1);
                     OnPropertyChanged("Key");
