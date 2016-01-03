@@ -124,29 +124,23 @@ namespace Cryptool.CrypWin
             string hex = BitConverter.ToString(ba);
             return hex;
         }
-
-        private void MyExecutedRoutedEventHandler(object sender, ExecutedRoutedEventArgs e)
-        {
-            var info = (Info) InfoGrid.SelectedItem;
-            Clipboard.SetText(info.Description + ": " + info.Value);
-        }
         
         private void CanExecuteRoutedEventHandler(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = (InfoGrid.SelectedIndex >= 0);
         }
 
+        private void MyExecutedRoutedEventHandler(object sender, ExecutedRoutedEventArgs e)
+        {
+            var info = (Info) InfoGrid.SelectedItem;
+            string msg = info.Description + ": " + info.Value;
+            Clipboard.SetDataObject(msg);
+        }
+
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var sb = new StringBuilder();
-            foreach (var info in informations)
-            {
-                sb.Append(info.Description);
-                sb.Append(": ");
-                sb.Append(info.Value);
-                sb.AppendLine();
-            }
-            Clipboard.SetText(sb.ToString());
+            string msg = String.Join(Environment.NewLine, informations.Select(i => i.Description + ": " + i.Value));
+            Clipboard.SetDataObject(msg);
         }
 
         // update system time row, refresh grid
