@@ -39,12 +39,12 @@
     <newline/>
     The AES component has the two operation modes "Encaps" and "Decaps". You can switch between the modes in the settings of the component.
     <section headline="Cramer Shoup Encaps">
-      The CS Encaps generates a key and a ciphertext based on public key and chosen hash-function.
-      The public key is an input and the hash-function can be chosen via settings.
+      CS Encaps generates a session key and a ciphertext based on public key and chosen hash function.
+      The public key is an input and the hash function can be chosen via settings.
     </section>
     <section headline="Cramer Shoup Decaps">
-      CS Decaps is used to extracted the key from the ciphertext.
-      The hash-function must same as in the encaps mode.
+      CS Decaps is used to extract the key from the ciphertext.
+      The hash function must same as in the encaps mode.
     </section>
   </usage>
 

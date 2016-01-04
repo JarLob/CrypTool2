@@ -27,7 +27,7 @@ using System;
 namespace Cryptool.Plugins.CramerShoup
 {
     [Author("Jan Jansen", "jan.jansen-n22@rub.de", "Ruhr Uni-Bochum", "http://cits.rub.de/")]
-    [PluginInfo("CramerShoup.Properties.Resources", "PluginCaption", "PluginTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/CS.png" })]
+    [PluginInfo("CramerShoup.Properties.Resources", "PluginCaption", "PluginTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/cs.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernAsymmetric)]
     public class CramerShoup : ICrypComponent
     {
