@@ -220,7 +220,7 @@
     <value>Control wheel 5 (most left)</value>
   </data>
   <data name="ControlRotor5Tooltip" xml:space="preserve">
-    <value>Defines the type of the fith control wheel</value>
+    <value>Defines the type of the fifth control wheel</value>
   </data>
   <data name="IndexGroup" xml:space="preserve">
     <value>Index maze</value>

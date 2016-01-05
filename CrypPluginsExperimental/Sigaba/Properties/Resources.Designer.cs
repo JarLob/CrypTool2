@@ -367,7 +367,7 @@ namespace Sigaba.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fith control wheel ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the type of the fifth control wheel ähnelt.
         /// </summary>
         public static string ControlRotor5Tooltip {
             get {

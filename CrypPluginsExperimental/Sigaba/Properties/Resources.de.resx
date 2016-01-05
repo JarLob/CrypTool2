@@ -241,25 +241,25 @@
     <value>Indexrotor 2</value>
   </data>
   <data name="IndexRotor2Tooltip" xml:space="preserve">
-    <value>Definiert den Typ des zweiten Indexrotoren</value>
+    <value>Definiert den Typ des zweiten Indexrotors</value>
   </data>
   <data name="IndexRotor3Caption" xml:space="preserve">
     <value>Indexrotor 3</value>
   </data>
   <data name="IndexRotor3Tooltip" xml:space="preserve">
-    <value>Definiert den Typ des dritten Indexrotoren</value>
+    <value>Definiert den Typ des dritten Indexrotors</value>
   </data>
   <data name="IndexRotor4Caption" xml:space="preserve">
     <value>Indexrotor 4</value>
   </data>
   <data name="IndexRotor4Tooltip" xml:space="preserve">
-    <value>Definiert den Typ des vierten Indexrotoren</value>
+    <value>Definiert den Typ des vierten Indexrotors</value>
   </data>
   <data name="IndexRotor5Caption" xml:space="preserve">
     <value>Indexrotor 5 (rechter Rotor)</value>
   </data>
   <data name="IndexRotor5Tooltip" xml:space="preserve">
-    <value>Definiert den Typ des fünften Indexrotoren</value>
+    <value>Definiert den Typ des fünften Indexrotors</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Sigaba</value>
@@ -340,7 +340,7 @@
     <value>Maschinentyp</value>
   </data>
   <data name="TypeTooltip" xml:space="preserve">
-    <value>Wähle Sie den Typ der Sigaba-Maschine.</value>
+    <value>Wählen Sie den Typ der Sigaba-Maschine.</value>
   </data>
   <data name="UnknownSymbolHandlingCaption" xml:space="preserve">
     <value>Behandlung ungültiger Zeichen</value>
