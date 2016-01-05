@@ -230,13 +230,13 @@
     <value>CrypCloud</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Eine P2P basierte Volunteer-Cloud</value>
+    <value>Eine P2P-basierte Volunteer-Cloud</value>
   </data>
   <data name="_Login_link_ForgotPassword" xml:space="preserve">
     <value>Passwort vergessen</value>
   </data>
   <data name="_Login_subheader" xml:space="preserve">
-    <value>Eine P2P basierte Volunteer-cloud</value>
+    <value>Eine P2P-basierte Volunteer-Cloud</value>
   </data>
   <data name="_ResetPW_enterData" xml:space="preserve">
     <value>Geben Sie Ihre Accountdaten an, um Ihr Passwort zurückzusetzen.</value>
