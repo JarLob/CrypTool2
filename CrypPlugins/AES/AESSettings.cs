@@ -106,21 +106,29 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
         }
 
-        public int KeysizeAsBits
+        public int KeysizeAsBytes
         {
             get
             {
                 switch (this.keysize)
                 {
                     case 0:
-                        return 16 * 8;
+                        return 16;
                     case 1:
-                        return 24 * 8;
+                        return 24;
                     case 2:
-                        return 32 * 8;
+                        return 32;
                     default:
                         throw new InvalidOperationException("Selected keysize entry unknown: " + this.keysize);
                 }
+            }
+        }
+
+        public int KeysizeAsBits
+        {
+            get
+            {
+                return KeysizeAsBytes * 8;
             }
         }
 

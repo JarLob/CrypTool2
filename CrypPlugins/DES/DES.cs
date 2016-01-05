@@ -605,15 +605,8 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public string GetKeyPattern()
         {
-            if (((DESSettings)plugin.Settings).TripleDES)
-            {
-                return "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-"
-               + "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-"
-               + "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-" 
-               + "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]";
-            }           
-            return "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-"
-            + "[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]-[0-9A-F][0-9A-F]";          
+            int bytes = ((DESSettings)plugin.Settings).TripleDES ? 16 : 8;
+            return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", bytes));         
         }
 
         public IControlEncryption clone()

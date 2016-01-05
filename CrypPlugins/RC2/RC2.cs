@@ -426,13 +426,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public string GetKeyPattern()
         {
-            string pattern = "";
-            for (int i = 1; i < 16; i++)
-            {
-                pattern += "[0-9A-F][0-9A-F]-";
-            }
-            pattern += "[0-9A-F][0-9A-F]";
-            return pattern;
+            return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", 16));
         }
 
         public IKeyTranslator GetKeyTranslator()

@@ -552,30 +552,12 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public string GetKeyPattern()
         {
-            int bytes = 0;
-            switch (((AESSettings)plugin.Settings).Keysize)
-            {
-                case 0:
-                    bytes = 16;
-                    break;
-                case 1:
-                    bytes = 24;
-                    break;
-                case 2:
-                    bytes = 32;
-                    break;
-            }
-            string pattern = "";
-            for (int i = 1; i < bytes; i++)
-                pattern += "[0-9A-F][0-9A-F]-";
-            pattern += "[0-9A-F][0-9A-F]";
-            return pattern;
+            return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", settings.KeysizeAsBytes));
         }
 
         public IControlEncryption clone()
         {
-            AESControl aes = new AESControl(plugin);
-            return aes;
+            return new AESControl(plugin);
         }
 
         public void Dispose()
@@ -585,42 +567,18 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public string GetOpenCLCode(int decryptionLength, byte[] iv)
         {
             string opencl = Properties.Resources.AESOpenCL;
-
-            int bits = -1;
-            switch (((AESSettings)plugin.Settings).Keysize)
-            {
-                case 0:
-                    bits = 16 * 8;
-                    break;
-                case 1:
-                    bits = 24 * 8;
-                    break;
-                case 2:
-                    bits = 32 * 8;
-                    break;
-            }
-            if (bits == -1)
-                return null;
-
-            opencl = opencl.Replace("$$BITS$$", "" + bits);
+            opencl = opencl.Replace("$$BITS$$", "" + settings.KeysizeAsBits);
 
             //if there is a relevant IV:
             bool useIV = false;
+            string IV = "";
             if (iv != null && iv.Length != 0 && iv.Count(x => x != 0) > 0)
             {
                 useIV = true;
-                string IV = "";
-                foreach (byte i in iv)
-                {
-                    IV += string.Format("0x{0:X}, ", i);
-                }
-                IV = IV.Substring(0, IV.Length - 2);
-                opencl = opencl.Replace("$$IVARRAY$$", string.Format("__constant u8 IV[] = {{ {0} }};", IV));
+                IV = String.Join(", ", iv.Select(i => string.Format("0x{0:X}, ", i)));
+                IV = opencl.Replace("$$IVARRAY$$", string.Format("__constant u8 IV[] = {{ {0} }};", IV));
             }
-            else
-            {
-                opencl = opencl.Replace("$$IVARRAY$$", "");
-            }
+            opencl = opencl.Replace("$$IVARRAY$$", IV);
 
             string decryptionCode = string.Format("int decryptionLength = {0}; \n", decryptionLength);
             int blocks = decryptionLength / 16;
@@ -678,7 +636,6 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                               + "{ \n unsigned char c = block[i] ^ IV[i]; \n "
                               + "$$COSTFUNCTIONCALCULATE$$ \n } \n";
                     return decryptionCode;
-                    break;
                 case 2: //CFB
                     throw new NotImplementedException("CFB for OpenCL is not implemented!"); //not supported
                 default:
