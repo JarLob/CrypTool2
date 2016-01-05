@@ -136,7 +136,7 @@
     <value>Startcenter</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Access the main functions in the Startcenter</value>
+    <value>Easy access to the CT2 functions in the Startcenter</value>
   </data>
   <data name="RecentFiles" xml:space="preserve">
     <value>Recently Opened Templates</value>

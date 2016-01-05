@@ -205,7 +205,7 @@ namespace Startcenter.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Access the main functions in the Startcenter ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Easy access to the CT2 functions in the Startcenter ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
