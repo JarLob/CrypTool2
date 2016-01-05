@@ -68,9 +68,10 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 var templatesHtml = TagReplacer.ReplaceLanguageSwitchs(Properties.Resources.TemplateTemplatesIndex, lang);
                 var languageSelectionCode = GenerateTemplatesPageLanguageSelectionCode(AvailableLanguages, lang);
                 templatesHtml = TagReplacer.ReplaceLanguageSelectionTag(templatesHtml, languageSelectionCode);
-                var templatesTreeCode = GenerateTemplatesTree(lang);
+
+                var templatesTreeCode = GenerateTemplatesTreeCode(lang);
                 templatesHtml = TagReplacer.ReplaceTemplatesTree(templatesHtml, templatesTreeCode);
-                var templatesListCode = GenerateTemplatesList(lang);
+                var templatesListCode = GenerateTemplatesListCode(lang);
                 templatesHtml = TagReplacer.ReplaceTemplatesList(templatesHtml, templatesListCode);
 
                 var filename = OnlineHelp.GetTemplatesIndexFilename(lang);
@@ -119,13 +120,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 
         private List<TemplateDocumentationPage> AllTemplatesList = new List<TemplateDocumentationPage>();
 
-        private string GenerateTemplatesList(string lang)
+        private string GenerateTemplatesListCode(string lang)
         {
             AllTemplatesList.Clear();
             WalkTemplateDirectory2(_templatesDir);
             var groups = AllTemplatesList.OrderBy(t => t.CurrentLocalization.Name).GroupBy(t => t.CurrentLocalization.Name[0]);
 
-            var anchor = "<p>" + String.Concat(groups.Select(g => string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;", g.Key))) + "</p>";
+            var anchor = "<p>" + String.Concat(groups.Select(g => string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;\n", g.Key))) + "</p>";
 
             var stringBuilder = new StringBuilder(anchor);
             stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\" class=\"filterable\">");
@@ -138,11 +139,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                     var locTemplate = templateDocumentationPage.CurrentLocalization;
                     var description = _objectConverter.Convert(locTemplate.SummaryOrDescription, templateDocumentationPage);
                     description = description.Replace("../", ""); //correct relative paths in images                
-                    stringBuilder.AppendLine(string.Format("<tr><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
+                    stringBuilder.AppendLine(string.Format("<tr><td>&nbsp;</td><td><div class=\"boximage\"><img src=\"{0}\"></div></td><td><a href=\"{1}\">{2}</a></td><td>{3}</td></tr>", 
+                        templateDocumentationPage.Icon, locTemplate.FilePath, locTemplate.Name, description));
                 }
             }
 
             stringBuilder.AppendLine("</table>");
+            stringBuilder.AppendLine(String.Format("<script type=\"text/javascript\"> lang = \"{0}\"; </script>", lang));
             stringBuilder.AppendLine("<script type=\"text/javascript\" src=\"filterTable.js\"></script>");
 
             return stringBuilder.ToString();
@@ -155,20 +158,21 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 WalkTemplateDirectory2(dir);
         }
         
-        private string GenerateTemplatesTree(string lang)
+        private string GenerateTemplatesTreeCode(string lang)
         {
             var stringBuilder = new StringBuilder();
             var anchorBuilder = new StringBuilder();
 
             anchorBuilder.Append("<p>");
             anchorBuilder.Append("<ul>");
+
             foreach (var dir in _templatesDir.SubDirectories)
-            {
                 WalkTemplateDirectory(dir, anchorBuilder, stringBuilder, new List<string>(), lang);
-            }
+
             anchorBuilder.Append("</ul>");
             anchorBuilder.Append("</p>");
             anchorBuilder.Append(stringBuilder);
+
             return anchorBuilder.ToString();
         }
 
@@ -214,72 +218,33 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         }
 
         private static string GenerateComponentListCode(IEnumerable<ComponentDocumentationPage> componentDocumentationPages, string lang)
-        {
-            var stringBuilder = new StringBuilder();            
-            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\" class=\"filterable\">");
-
-            var anchorBuilder = new StringBuilder();
-            anchorBuilder.Append("<p>");
-
+        {            
             var query = from pages in componentDocumentationPages
                         orderby pages.Localizations[pages.Localizations.ContainsKey(lang) ? lang : "en"].Name
-                        select pages;
-            
-            char actualIndexCharacter = ' ';
-            foreach (var page in query)
+                        group pages by pages.Localizations[pages.Localizations.ContainsKey(lang) ? lang : "en"].Name[0];
+
+            var anchor = "<p>" + String.Concat(query.Select(g => string.Format("<a href=\"#{0}\"><b>{0}</b><a>&nbsp;\n", g.Key))) + "</p>";
+
+            var stringBuilder = new StringBuilder(anchor);
+            stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\" class=\"filterable\">");
+
+            foreach (var pagegroup in query)
             {
-                var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
-                var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
-                if (actualIndexCharacter != pp.Name[0])
+                stringBuilder.AppendLine(string.Format("<tr><td colspan=2><h2 id=\"{0}\">{0}</h2></td></tr>", pagegroup.Key));
+                foreach (var page in pagegroup)
                 {
-                    actualIndexCharacter = pp.Name.ToUpper()[0];
-                    stringBuilder.AppendLine(string.Format("<tr><td><h2 id=\"{0}\">{0}</h2></td><td></td></tr>", actualIndexCharacter));
-                    anchorBuilder.AppendLine(string.Format("<a href=\"#{0}\"><b>{0}</b></a>&nbsp;", actualIndexCharacter));
+                    var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
+                    var pp = (LocalizedComponentDocumentationPage)page.Localizations[linkedLang];
+                    stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
+                        OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
                 }
-                stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
-                    OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
             }
+
             stringBuilder.AppendLine("</table>");
+            stringBuilder.AppendLine(String.Format("<script type=\"text/javascript\"> lang = \"{0}\"; </script>", lang));
             stringBuilder.AppendLine("<script type=\"text/javascript\" src=\"filterTable.js\"></script>");
 
-            anchorBuilder.Append("</p>");
-            anchorBuilder.Append(stringBuilder);
-            return anchorBuilder.ToString();
-        }
-
-        private static string getCategoryName(ComponentCategory category)
-        {
-            switch (category)
-            {
-                case ComponentCategory.CiphersClassic:
-                    return Properties.Resources.Category_Classic_Ciphers;
-                case ComponentCategory.CiphersModernSymmetric:
-                    return Properties.Resources.Category_CiphersModernSymmetric;
-                case ComponentCategory.CiphersModernAsymmetric:
-                    return Properties.Resources.Category_CiphersModernAsymmetric;
-                case ComponentCategory.Steganography:
-                    return Properties.Resources.Category_Steganography;
-                case ComponentCategory.HashFunctions:
-                    return Properties.Resources.Category_HashFunctions;
-                case ComponentCategory.CryptanalysisSpecific:
-                    return Properties.Resources.Category_CryptanalysisSpecific;
-                case ComponentCategory.CryptanalysisGeneric:
-                    return Properties.Resources.Category_CryptanalysisGeneric;
-                case ComponentCategory.Protocols:
-                    return Properties.Resources.Category_Protocols;
-                case ComponentCategory.ToolsBoolean:
-                    return Properties.Resources.Category_ToolsBoolean;
-                case ComponentCategory.ToolsDataflow:
-                    return Properties.Resources.Category_ToolsDataflow;
-                case ComponentCategory.ToolsDataInputOutput:
-                    return Properties.Resources.Category_ToolsDataInputOutput;
-                case ComponentCategory.ToolsMisc:
-                    return Properties.Resources.Category_ToolsMisc;
-                case ComponentCategory.ToolsP2P:
-                    return Properties.Resources.Category_ToolsP2P;
-                default:
-                    return Properties.Resources.Category_Unknown;
-            }
+            return stringBuilder.ToString();
         }
 
         private static string GenerateComponentTreeCode(IEnumerable<PluginDocumentationPage> componentDocumentationPages, string lang)
@@ -287,7 +252,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             var query = from pages in componentDocumentationPages
                         orderby pages.Category
                         group pages by pages.Category into g
-                        select new { Key = getCategoryName(g.Key), Elements = g };
+                        select new { Key = GetCategoryName(g.Key), Elements = g };
 
             var anchor = "<p><ul>" + String.Join("\n", query.Select(g => string.Format("<li><a href=\"#{0}\"><b>{0}</b><a></li>", g.Key))) + "</ul></p>";
 
@@ -327,6 +292,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 stringBuilderListCode.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td><td>{2}</td></tr>",
                     OnlineHelp.GetPluginDocFilename(pp.PluginType, linkedLang), pp.Name, pp.ToolTip));
             }
+
             stringBuilderListCode.AppendLine("</table>");
 
             return stringBuilderListCode.ToString();
@@ -337,46 +303,72 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("<table width=\"100%\" border=\"0\" cellspacing=\"3\" cellpadding=\"3\">");
 
-            var anchorBuilder = new StringBuilder();
-            anchorBuilder.Append("<p>");
-
             var query = from pages in commonDocumentationPages
                         orderby pages.Localizations[pages.Localizations.ContainsKey(lang) ? lang : "en"].Name
                         select pages;
 
             foreach (var page in query)
             {
-
                 var linkedLang = page.Localizations.ContainsKey(lang) ? lang : "en";
                 var pp = (LocalizedCommonDocumentationPage)page.Localizations[linkedLang];
                 stringBuilder.AppendLine(string.Format("<tr><td><a href=\"{0}\">{1}</a></td></tr>",
                     OnlineHelp.GetCommonDocFilename(page.Name, linkedLang), pp.Name));
             }
+
             stringBuilder.AppendLine("</table>");
 
-            anchorBuilder.Append("</p>");
-            anchorBuilder.Append(stringBuilder);
-            return anchorBuilder.ToString();
+            return stringBuilder.ToString();
+        }
+
+        private static string GetCategoryName(ComponentCategory category)
+        {
+            switch (category)
+            {
+                case ComponentCategory.CiphersClassic:
+                    return Properties.Resources.Category_Classic_Ciphers;
+                case ComponentCategory.CiphersModernSymmetric:
+                    return Properties.Resources.Category_CiphersModernSymmetric;
+                case ComponentCategory.CiphersModernAsymmetric:
+                    return Properties.Resources.Category_CiphersModernAsymmetric;
+                case ComponentCategory.Steganography:
+                    return Properties.Resources.Category_Steganography;
+                case ComponentCategory.HashFunctions:
+                    return Properties.Resources.Category_HashFunctions;
+                case ComponentCategory.CryptanalysisSpecific:
+                    return Properties.Resources.Category_CryptanalysisSpecific;
+                case ComponentCategory.CryptanalysisGeneric:
+                    return Properties.Resources.Category_CryptanalysisGeneric;
+                case ComponentCategory.Protocols:
+                    return Properties.Resources.Category_Protocols;
+                case ComponentCategory.ToolsBoolean:
+                    return Properties.Resources.Category_ToolsBoolean;
+                case ComponentCategory.ToolsDataflow:
+                    return Properties.Resources.Category_ToolsDataflow;
+                case ComponentCategory.ToolsDataInputOutput:
+                    return Properties.Resources.Category_ToolsDataInputOutput;
+                case ComponentCategory.ToolsMisc:
+                    return Properties.Resources.Category_ToolsMisc;
+                case ComponentCategory.ToolsP2P:
+                    return Properties.Resources.Category_ToolsP2P;
+                default:
+                    return Properties.Resources.Category_Unknown;
+            }
         }
 
         private static string GetDocumentationTemplate(EntityDocumentationPage entityDocPage)
         {
             if (entityDocPage is EditorDocumentationPage)
-            {
                 return Properties.Resources.TemplateEditorDocumentationPage;
-            }
+
             if (entityDocPage is ComponentDocumentationPage)
-            {
                 return Properties.Resources.TemplateComponentDocumentationPage;
-            }
+
             if (entityDocPage is TemplateDocumentationPage)
-            {
                 return Properties.Resources.TemplateTemplateDocumentationPage;
-            }
+
             if (entityDocPage is CommonDocumentationPage)
-            {
                 return Properties.Resources.TemplateCommonDocumentationPage;
-            }
+
             throw new Exception(string.Format("Unknown documentation page type {0}!", entityDocPage.GetType()));
         }
 
@@ -450,112 +442,53 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() {{"en", "English"}, {"de", "Deutsch"}};
         private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" } };
 
+        private static readonly Dictionary<string, Dictionary<string, string>> _languagePresentation = new Dictionary<string,Dictionary<string,string>> {
+            { "en", new Dictionary<string, string> { { "Name", "English" }, { "Icon", "en.png" } } },
+            { "de", new Dictionary<string, string> { { "Name", "Deutsch" }, { "Icon", "de.png" } } }
+        };
+
+        private static string GenerateLanguageSelectionCodeBase(IEnumerable<string> availableLanguages, Dictionary<string, string[]> langdata, string lang)
+        {
+            var langs = availableLanguages.Select(new Func<string, string>(l =>
+            {
+                string s = string.Format("<img src=\"{0}\" border=\"0\"/>&nbsp;{1}", langdata[l][0], _languagePresentationString[l]);
+                if (l != lang) s = string.Format("<a href=\"{0}\">{1}</a>", langdata[l][1], s);
+                return s;
+            }));
+
+            return String.Join("&nbsp; | &nbsp;", langs) + "&nbsp;";
+        }
+
         private static string GenerateLanguageSelectionCode(EntityDocumentationPage entityDocumentationPage, IEnumerable<string> availableLanguages, string lang)
         {
-            var codeBuilder = new StringBuilder();
+            var iconPath = Path.Combine(entityDocumentationPage.DocDirPath.Split(Path.PathSeparator).Select(p => "..").ToArray());
 
-            foreach (var availableLanguage in availableLanguages)
-            {
-                var iconPath = "";
-                for (int i = 0; i < entityDocumentationPage.DocDirPath.Split(Path.PathSeparator).Count(); i++)
-                {
-                    iconPath = Path.Combine("..", iconPath);
-                }
-                iconPath = Path.Combine(iconPath, _languagePresentationIcon[availableLanguage]);
-                
-                if (availableLanguage == lang)
-                {
-                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], iconPath));
-                }
-                else
-                {
-                    var filename = Path.GetFileName(entityDocumentationPage.Localizations[availableLanguage].FilePath);
-                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", filename, _languagePresentationString[availableLanguage], iconPath));
-                }
-                codeBuilder.AppendLine("|");
-            }
-
-            return codeBuilder.ToString();
+            Dictionary<string, string[]> langdata = availableLanguages.ToDictionary(l => l, l => new string[] { Path.Combine(iconPath, _languagePresentationIcon[l]), Path.GetFileName(entityDocumentationPage.Localizations[l].FilePath) });
+            return GenerateLanguageSelectionCodeBase(availableLanguages, langdata, lang);
         }
 
         private static string GenerateIndexLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
         {
-            var codeBuilder = new StringBuilder();
-
-            foreach (var availableLanguage in availableLanguages)
-            {
-                if (availableLanguage == lang)
-                {
-                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
-                }
-                else
-                {
-                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetComponentIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
-                }
-                codeBuilder.AppendLine("|");
-            }
-
-            return codeBuilder.ToString();
+            Dictionary<string, string[]> langdata = availableLanguages.ToDictionary(l => l, l => new string[] { _languagePresentationIcon[l], OnlineHelp.GetComponentIndexFilename(l) });
+            return GenerateLanguageSelectionCodeBase(availableLanguages,langdata,lang);
         }
 
         private static string GenerateTemplatesPageLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
         {
-            var codeBuilder = new StringBuilder();
-
-            foreach (var availableLanguage in availableLanguages)
-            {
-                if (availableLanguage == lang)
-                {
-                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
-                }
-                else
-                {
-                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetTemplatesIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
-                }
-                codeBuilder.AppendLine("|");
-            }
-
-            return codeBuilder.ToString();
+            Dictionary<string, string[]> langdata = availableLanguages.ToDictionary(l => l, l => new string[] { _languagePresentationIcon[l], OnlineHelp.GetTemplatesIndexFilename(l) });
+            return GenerateLanguageSelectionCodeBase(availableLanguages, langdata, lang);
         }
 
         private static string GenerateEditorLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
         {
-            var codeBuilder = new StringBuilder();
-
-            foreach (var availableLanguage in availableLanguages)
-            {
-                if (availableLanguage == lang)
-                {
-                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
-                }
-                else
-                {
-                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetEditorIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
-                }
-                codeBuilder.AppendLine("|");
-            }
-
-            return codeBuilder.ToString();
+            Dictionary<string, string[]> langdata = availableLanguages.ToDictionary(l => l, l => new string[] { _languagePresentationIcon[l], OnlineHelp.GetEditorIndexFilename(l) });
+            return GenerateLanguageSelectionCodeBase(availableLanguages, langdata, lang);
         }
 
         private static string GenerateCommonLanguageSelectionCode(IEnumerable<string> availableLanguages, string lang)
         {
-            var codeBuilder = new StringBuilder();
-
-            foreach (var availableLanguage in availableLanguages)
-            {
-                if (availableLanguage == lang)
-                {
-                    codeBuilder.AppendLine(string.Format("<img src=\"{1}\" border=\"0\"/>&nbsp;{0}", _languagePresentationString[lang], _languagePresentationIcon[availableLanguage]));
-                }
-                else
-                {
-                    codeBuilder.AppendLine(string.Format("<a href=\"{0}\"><img src=\"{2}\" border=\"0\"/>&nbsp;{1}</a>", OnlineHelp.GetCommonIndexFilename(availableLanguage), _languagePresentationString[availableLanguage], _languagePresentationIcon[availableLanguage]));
-                }
-                codeBuilder.AppendLine("|");
-            }
-
-            return codeBuilder.ToString();
+            Dictionary<string, string[]> langdata = availableLanguages.ToDictionary(l => l, l => new string[] { _languagePresentationIcon[l], OnlineHelp.GetCommonIndexFilename(l) });
+            return GenerateLanguageSelectionCodeBase(availableLanguages, langdata, lang);
         }
 
         private void CopyAdditionalResources()

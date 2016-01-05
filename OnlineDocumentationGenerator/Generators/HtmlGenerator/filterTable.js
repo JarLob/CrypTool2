@@ -4,22 +4,41 @@
  * http://leparlement.org/filterTable
  * See also http://www.vonloesch.de/node/23
  */
+
+var localizedStrings = {
+	"en": [ "Filter", " matches" ],
+	"de": [ "Filter", " Treffer" ]
+}
+
+if (typeof lang == 'undefined' || !(lang in localizedStrings) ) lang = "en";
+var strings = localizedStrings[lang]
+
+function setCounter(table)
+{
+	var cnt=0;
+
+	for (var r = 0; r < table.rows.length; r++) {
+		if( table.rows[r].style.display == '' ) cnt++;
+	}
+
+	document.getElementById("countmatches").innerHTML = '&nbsp;('+cnt+strings[1]+')';
+}
+
 function filterTable(term, table) {
 	dehighlight(table);
 	var terms = term.value.toLowerCase().split(" ");
 
 	for (var r = 0; r < table.rows.length; r++) {
 		var display = '';
+		var txt = table.rows[r].innerHTML.replace(/<[^>]+>/g, "").toLowerCase()
 		for (var i = 0; i < terms.length; i++) {
-			if (table.rows[r].innerHTML.replace(/<[^>]+>/g, "").toLowerCase()
-				.indexOf(terms[i]) < 0) {
-				display = 'none';
-			} else {
-				if (terms[i].length) highlight(terms[i], table.rows[r]);
-			}
-			table.rows[r].style.display = display;
+			if (txt.indexOf(terms[i]) < 0) { display = 'none'; break; }
+			if (terms[i].length) highlight(terms[i], table.rows[r]);
 		}
+		table.rows[r].style.display = display;
 	}
+
+	setCounter(table);
 }
 
 
@@ -94,8 +113,6 @@ function create_node(child) {
 	return node;
 }
 
-
-
 /*
  * Here is the code used to set a filter on all filterable elements, usually I
  * use the behaviour.js library which does that just fine
@@ -109,20 +126,28 @@ for (var t = 0; t < tables.length; t++) {
 
 		/* Here is dynamically created a form */
 		var form = document.createElement('form');
-		var text = document.createTextNode("Filter: ")
+		var text = document.createTextNode(strings[0]+": ")
 		form.setAttribute('class', 'filter');
 		// For ie...
 		form.attributes['class'].value = 'filter';
 		var input = document.createElement('input');
 		input.onkeyup = function() { filterTable(input, element); }
 
+		var cntdiv = document.createElement('div');
+		cntdiv.style.display = "inline";
+		cntdiv.setAttribute('id', 'countmatches');
+		cntdiv.innerHTML = '&nbsp;';
+
 		var div = document.createElement('div');
 		div.setAttribute('class', 'searchinput');
 		div.appendChild(text);
 		div.appendChild(input);
+		div.appendChild(cntdiv);
 
 		form.appendChild(div);
 
 		element.parentNode.insertBefore(div, element);
+		setCounter(element);
 	}
 }
+
