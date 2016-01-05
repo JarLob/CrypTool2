@@ -17,4 +17,25 @@
     <plugin name="Hill" />
   </relevantPlugins>
 
+  <replacements lang="de">
+	<replacement key="$plaintext$" value="Klartext"/>
+	<replacement key="$ciphertext$" value="Geheimtext"/>
+	<replacement key="$decryptedciphertext$" value="Entschlüsselter Geheimtext"/>
+	<replacement key="$hillmatrix$" value="Hill-Matrix"/>
+	<replacement key="$converter$" value="Konvertierer"/>
+	<replacement key="$splitchars$" value="Trennzeichen"/>
+	<replacement key="$split$" value="Trennen"/>
+	<replacement key="$hillcipher$" value="Hill-Chiffre"/>
+ </replacements>
+ <replacements lang="en">
+	<replacement key="$plaintext$" value="Plaintext"/>
+	<replacement key="$ciphertext$" value="Ciphertext"/>
+	<replacement key="$decryptedciphertext$" value="Decrypted Ciphertext"/>
+	<replacement key="$hillmatrix$" value="Hill Matrix"/>
+	<replacement key="$converter$" value="Converter"/>
+	<replacement key="$splitchars$" value="Split chars"/>
+	<replacement key="$split$" value="Split"/>
+	<replacement key="$hillcipher$" value="Hill Cipher"/>
+ </replacements>
+
 </sample>

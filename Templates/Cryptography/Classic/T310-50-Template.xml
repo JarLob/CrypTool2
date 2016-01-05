@@ -16,4 +16,25 @@
     <plugin name="T310" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext (Hex)$" value="Geheimtext (hex)"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$Key (Hex)$" value="Schlüssel (hex)"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$T/310-50 encrypt$" value="T/310-50 Verschlüsselung"/>
+    <replacement key="$T/310-50 decrypt$" value="T/310-50 Entschlüsselung"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext (Hex)$" value="Ciphertext (Hex)"/>
+    <replacement key="$Key (Hex)$" value="Key (Hex)"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$T/310-50 encrypt$" value="T/310-50 Encrypt"/>
+    <replacement key="$T/310-50 decrypt$" value="T/310-50 Decrypt"/>
+ </replacements>
+
 </sample>

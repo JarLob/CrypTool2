@@ -16,4 +16,23 @@
     <plugin name="Xor" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+    <replacement key="$One time pad$" value="One-Time-Pad"/>
+	 <replacement key="$memo$" value="This sample demonstrates a one time pad (OTP). The plaintext and the pad being used are shown at the top left. The resulting ciphertext is shown at the top right.\line At the bottom there are two additional XOR operations to demonstrate, that you can generate any plaintext by choosing a different pad. This output may look correctly decrypted, but has nothing to do with the actual message."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+    <replacement key="$One time pad$" value="One time pad"/>
+	 <replacement key="$memo$" value="This sample demonstrates a one time pad (OTP). The plaintext and the pad being used are shown at the top left. The resulting ciphertext is shown at the top right.\line At the bottom there are two additional XOR operations to demonstrate, that you can generate any plaintext by choosing a different pad. This output may look correctly decrypted, but has nothing to do with the actual message."/>
+ </replacements>
+
 </sample>

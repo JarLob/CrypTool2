@@ -24,4 +24,29 @@ Der Navajo-Code wurde von den Amerikanern während des 2. Weltkrieges verwendet 
     <plugin name="Substitution" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$Substitution (encode)$" value="Substitution (verschlüsseln)"/>
+    <replacement key="$Substitution (decode)$" value="Substitution (entschlüsseln)"/>
+    <replacement key="$Extract col 0$" value="Lese Spalte 0"/>
+    <replacement key="$Extract col 1$" value="Lese Spalte 1"/>
+    <replacement key="$Navajo Codebook$" value="Navajo-Codebuch"/>
+    <replacement key="$ToUpper$" value="Großbuchstaben"/>
+	 <replacement key="$memo$" value="With this template we illustrate the encryption of a plaintext by means of a codebook. The codebook -- in this case the Navajo codebook -- contains codewords for many commonly used words from the English language. Additionally, there are also codewords for each letter in order to encrypt words, which are not in the codebook.\line\line The Navajo code was used during World War II by the Americans, and it was never broken. As the name suggests it is based on the language of the Navajo Indians. It's success is based on the fact, that the Navajo language has no common roots with any other spoken or written language during the time of WW2 -- and it was completely unknown to the enemy."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$Substitution (encode)$" value="Substitution (encode)"/>
+    <replacement key="$Substitution (decode)$" value="Substitution (decode)"/>
+    <replacement key="$Extract col 0$" value="Extract col 0"/>
+    <replacement key="$Extract col 1$" value="Extract col 1"/>
+    <replacement key="$Navajo Codebook$" value="Navajo Codebook"/>
+    <replacement key="$ToUpper$" value="ToUpper"/>
+	 <replacement key="$memo$" value="With this template we illustrate the encryption of a plaintext by means of a codebook. The codebook -- in this case the Navajo codebook -- contains codewords for many commonly used words from the English language. Additionally, there are also codewords for each letter in order to encrypt words, which are not in the codebook.\line\line The Navajo code was used during World War II by the Americans, and it was never broken. As the name suggests it is based on the language of the Navajo Indians. It's success is based on the fact, that the Navajo language has no common roots with any other spoken or written language during the time of WW2 -- and it was completely unknown to the enemy."/>
+ </replacements>
+
 </sample>

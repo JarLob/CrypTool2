@@ -18,4 +18,23 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie
     <plugin name="Transposition" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$Transposition (Encryption)$" value="Transposition (Verschlüsselung)"/>
+    <replacement key="$Transposition (Decryption)$" value="Transposition (Entschlüsselung)"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$Transposition (Encryption)$" value="Transposition (Encryption)"/>
+    <replacement key="$Transposition (Decryption)$" value="Transposition (Decryption)"/>
+ </replacements>
+
 </sample>

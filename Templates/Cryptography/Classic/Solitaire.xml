@@ -16,4 +16,23 @@
     <plugin name="Solitaire" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$Given state$" value="Gegebener Kartenstapel"/>
+    <replacement key="$Key stream$" value="Schlüsselstrom"/>
+    <replacement key="$Initial deckstate$" value="Initialer Kartenstapel"/>
+    <replacement key="$Current deckstate$" value="Aktueller Kartenstapel"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Password$" value="Password"/>
+    <replacement key="$Given state$" value="Given state"/>
+    <replacement key="$Key stream$" value="Key stream"/>
+    <replacement key="$Initial deckstate$" value="Initial deckstate"/>
+    <replacement key="$Current deckstate$" value="Current deckstate"/>
+ </replacements>
+
 </sample>

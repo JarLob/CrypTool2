@@ -16,4 +16,27 @@
     <plugin name="SDES" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel (binär)"/>
+    <replacement key="$Message Encoder$" value="Nachrichten-Codierer"/>
+    <replacement key="$Message Decoder$" value="Nachrichten-Decodierer"/>
+    <replacement key="$Key Decoder$" value="Schlüssel-Decodierer"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$text$" value="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern."/>
+	 <replacement key="$memo$" value="With this template you can use the {\b SDES} component to encrypt an arbitrary text entered in the component {\b Input message} on the left side. The resulting encrypted text is displayed in the component {\b Output message} on the right side after pressing the Play button. The {\b SDES} component works on binary values, i.e. bytes. Thus, the input text is first converted to bytes with the component {\b Message decoder}. With the current settings, it is interpreted as ASCII. The resulting bytes are then encrypted with {\b SDES}, yielding another sequence of bytes. These bytes are then simply printed as hexadecimal values with the help of the component {\b Message encoder}. Note that you can also decrypt messages with this template. To do so, first copy the encrypted hexadecimal values to the {\b Input message}. Then change the following: (1) Set Input format of the {\b Message decoder} to Hexadecimal; (2) Set Action of {\b SDES} to Decrpyt; (3) Set Format of the {\b Message encoder} to Text and the Encoding to ASCII."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key (binary)"/>
+    <replacement key="$Message Encoder$" value="Message Encoder"/>
+    <replacement key="$Message Decoder$" value="Message Decoder"/>
+    <replacement key="$Key Decoder$" value="Key Decoder"/>
+    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$text$" value="The quick brown fox jumps over the lazy dog."/>
+	 <replacement key="$memo$" value="With this template you can use the {\b SDES} component to encrypt an arbitrary text entered in the component {\b Input message} on the left side. The resulting encrypted text is displayed in the component {\b Output message} on the right side after pressing the Play button. The {\b SDES} component works on binary values, i.e. bytes. Thus, the input text is first converted to bytes with the component {\b Message decoder}. With the current settings, it is interpreted as ASCII. The resulting bytes are then encrypted with {\b SDES}, yielding another sequence of bytes. These bytes are then simply printed as hexadecimal values with the help of the component {\b Message encoder}. Note that you can also decrypt messages with this template. To do so, first copy the encrypted hexadecimal values to the {\b Input message}. Then change the following: (1) Set Input format of the {\b Message decoder} to Hexadecimal; (2) Set Action of {\b SDES} to Decrpyt; (3) Set Format of the {\b Message encoder} to Text and the Encoding to ASCII."/>
+ </replacements>
+
 </sample>

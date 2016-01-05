@@ -18,4 +18,27 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Camellia_%28Algorithmus%29" 
     <plugin name="Camellia" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel (Hex)"/>
+    <replacement key="$Message Encoder$" value="Nachrichten-Codierer"/>
+    <replacement key="$Message Decoder$" value="Nachrichten-Decodierer"/>
+    <replacement key="$Key Decoder$" value="Schlüssel-Decodierer"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$text$" value="73 5E 0C E5 7F 19 38 DE D0 CF 0D 3A B7 6B 8E 02 58 1C F2 BE EF B1 78 99 82 BD CB E9 BE 3D 59 A0 75 2B BF DB 43 82 38 36 D0 65 4A F5 7D D2 81 E8 C3 B3 19 A5 9D 0D 5A 61 E8 90 12 A8 A2 8F 80 4E"/>
+	 <replacement key="$memo$" value="With this template you can use the {\b Camellia}-component to encrypt an arbitrary text entered in the {\b Input message}-component on the left side. The resulting encrypted text is displayed in the {\b Output message}-component on the right side after hitting the Play-button. The {\b Camellia}-component works on binary values, i.e. bytes. Thus, the inputted text is first converted to bytes with the {\b Message decoder}-component. With the current settings, it is interpreted as ASCII. The resulting bytes are then encrypted with {\b Camellia}, yielding another sequence of bytes. These bytes are then simply printed as hexadecimal values with the help of the {\b Message encoder}-component. Note that you can also decrypt messages with this template. To do so, you first copy the encrypted hexadecimal values to the {\b Input message}. Then you have to change the following: (1) Set Input format of the {\b Message decoder} to Hexadecimal; (2) Set Action of {\b Camellia} to Decrypt; (3) Set Format of the {\b Message encoder} to Text and the encoding to ASCII."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key (Hex values)"/>
+    <replacement key="$Message Encoder$" value="Message Encoder"/>
+    <replacement key="$Message Decoder$" value="Message Decoder"/>
+    <replacement key="$Key Decoder$" value="Key Decoder"/>
+    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
+	 <replacement key="$text$" value="2D 1F 0E E1 FF 80 0F 1C 78 E6 25 3D 53 BD F9 1B 95 5A 8E FB 2C F3 78 03 98 F3 E9 F1 CA CE AB ED FB AA 04 77 5A BC ED C2 B8 EC 92 0A C3 6C F5 18"/>
+	 <replacement key="$memo$" value="With this template you can use the {\b Camellia}-component to encrypt an arbitrary text entered in the {\b Input message}-component on the left side. The resulting encrypted text is displayed in the {\b Output message}-component on the right side after hitting the Play-button. The {\b Camellia}-component works on binary values, i.e. bytes. Thus, the inputted text is first converted to bytes with the {\b Message decoder}-component. With the current settings, it is interpreted as ASCII. The resulting bytes are then encrypted with {\b Camellia}, yielding another sequence of bytes. These bytes are then simply printed as hexadecimal values with the help of the {\b Message encoder}-component. Note that you can also decrypt messages with this template. To do so, you first copy the encrypted hexadecimal values to the {\b Input message}. Then you have to change the following: (1) Set Input format of the {\b Message decoder} to Hexadecimal; (2) Set Action of {\b Camellia} to Decrypt; (3) Set Format of the {\b Message encoder} to Text and the encoding to ASCII."/>
+ </replacements>
+
 </sample>

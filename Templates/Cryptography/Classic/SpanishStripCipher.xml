@@ -16,4 +16,15 @@
     <plugin name="SpanishStripCipher" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Spanish Strip Cipher$" value="Spanische Strip-Chiffre"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Spanish Strip Cipher$" value="Spanish Strip Cipher"/>
+ </replacements>
+
 </sample>

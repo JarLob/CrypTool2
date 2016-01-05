@@ -19,18 +19,18 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Skytale" /></description>
   </relevantPlugins>
 
  <replacements lang="de">
-	<replacement key="$message$" value="Klartext"/>
-	<replacement key="$result$" value="Geheimtext"/>
-	<replacement key="$scytale$" value="Skytale"/>
-	<replacement key="$key$" value="Schlüssel"/>
-	<replacement key="$text$" value="Dies ist eine geheime Botschaft."/>
+	<replacement key="$Plaintext$" value="Klartext"/>
+	<replacement key="$Ciphertext$" value="Geheimtext"/>
+	<replacement key="$Scytale$" value="Skytale"/>
+	<replacement key="$Key$" value="Schlüssel"/>
+	<replacement key="$message$" value="Dies ist eine geheime Botschaft."/>
  </replacements>
  <replacements lang="en">
-	<replacement key="$message$" value="Plaintext"/>
-	<replacement key="$result$" value="Ciphertext"/>
-	<replacement key="$scytale$" value="Scytale"/>
-	<replacement key="$key$" value="Key"/>
-	<replacement key="$text$" value="This is a secret message."/>
+	<replacement key="$Plaintext$" value="Plaintext"/>
+	<replacement key="$Ciphertext$" value="Ciphertext"/>
+	<replacement key="$Scytale$" value="Scytale"/>
+	<replacement key="$Key$" value="Key"/>
+	<replacement key="$message$" value="This is a secret message."/>
  </replacements>
 
 </sample>

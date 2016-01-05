@@ -20,24 +20,24 @@ Das One-Time-Pad gehört zu den polyalphabetischen Substitutions-Verfahren, bei 
   </relevantPlugins>
 
   <replacements lang="de">
-	 <replacement key="$message$" value="Nachricht"/>
-	 <replacement key="$ciphertext$" value="Geheimtext"/>
-	 <replacement key="$plaintext$" value="Entschlüsselter Geheimtext"/>
-	 <replacement key="$key$" value="Schlüssel"/>
-	 <replacement key="$stringdecoder$" value="String-Decoder"/>
-	 <replacement key="$stringencoder$" value="String-Encoder"/>
-	 <replacement key="$xorenc$" value="XOR (verschlüsseln)"/>
-	 <replacement key="$xordec$" value="XOR (entschlüsseln)"/>
+	 <replacement key="$Plaintext$" value="Nachricht"/>
+	 <replacement key="$Ciphertext (Hex)$" value="Geheimtext (Hex)"/>
+	 <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+	 <replacement key="$Key$" value="Schlüssel (Hex)"/>
+	 <replacement key="$StringDecoder$" value="String-Decodierer"/>
+	 <replacement key="$StringEncoder$" value="String-Codierer"/>
+	 <replacement key="$XOR Encode$" value="XOR (verschlüsseln)"/>
+	 <replacement key="$XOR Decode$" value="XOR (entschlüsseln)"/>
   </replacements>
   <replacements lang="en">
-	 <replacement key="$message$" value="Plaintext"/>
-	 <replacement key="$ciphertext$" value="Ciphertext"/>
-	 <replacement key="$plaintext$" value="Decrypted Ciphertext"/>
-	 <replacement key="$key$" value="Key"/>
-	 <replacement key="$stringdecoder$" value="StringDecoder"/>
-	 <replacement key="$stringencoder$" value="StringEncoder"/>
-	 <replacement key="$xorenc$" value="XOR Encode"/>
-	 <replacement key="$xordec$" value="XOR Decode"/>
+	 <replacement key="$Plaintext$" value="Plaintext"/>
+	 <replacement key="$Ciphertext (Hex)$" value="Ciphertext (Hex)"/>
+	 <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+	 <replacement key="$Key$" value="Key (Hex)"/>
+	 <replacement key="$StringDecoder$" value="StringDecoder"/>
+	 <replacement key="$StringEncoder$" value="StringEncoder"/>
+	 <replacement key="$XOR Encode$" value="XOR Encode"/>
+	 <replacement key="$XOR Decode$" value="XOR Decode"/>
   </replacements>
 
 </sample>

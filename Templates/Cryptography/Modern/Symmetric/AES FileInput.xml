@@ -22,4 +22,19 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Advanced_Encryption_Standard
     <plugin name="FileInputClass" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+	 <replacement key="$memo$" value="Encryption of a file with the AES cipher using the content of the component &quot;Key&quot; as key and the parameters of the AES component for key size, block mode and padding. For 128 bit AES you should enter 32 hex characters. Non-hex characters are extracted by the StringDecoder component.\line\line First you have to open a file using the component &quot;File Input&quot;: To do so you can either click within this component on the icon &quot;Maximize&quot; or &quot;Fullscreen&quot; (which is the same as double clicking this component). Alternatively you can select the &quot;File Input&quot; component and open a file with the button in its Parameter bar."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+	 <replacement key="$memo$" value="Encryption of a file with the AES cipher using the content of the component &quot;Key&quot; as key and the parameters of the AES component for key size, block mode and padding. For 128 bit AES you should enter 32 hex characters. Non-hex characters are extracted by the StringDecoder component.\line\line First you have to open a file using the component &quot;File Input&quot;: To do so you can either click within this component on the icon &quot;Maximize&quot; or &quot;Fullscreen&quot; (which is the same as double clicking this component). Alternatively you can select the &quot;File Input&quot; component and open a file with the button in its Parameter bar."/>
+ </replacements>
+
 </sample>

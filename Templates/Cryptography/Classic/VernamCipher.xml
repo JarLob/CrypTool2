@@ -29,4 +29,25 @@ Wenn z.B. der Klartext "a" und der Schlüsseltext "c" lautet und das Alphabet au
     <plugin name="VernamCipher" />
   </relevantPlugins> 
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$Vernam Cipher$" value="Vernam-Chiffre"/>
+    <replacement key="$Alphabet$" value="Alphabet"/>
+    <replacement key="$Secret Key$" value="Geheimer Schlüssel"/>
+	 <replacement key="$text$" value="FRANZ JAGT IM KOMPLETT VERWAHRLOSTEN TAXI QUER DURCH BAYERN"/>
+	 <replacement key="$key$" value="ZHBVCXSERTZUIKMNBVGTZUIOLKMNBVGFTZUHBNVCDSEGKRCSUSMQPGLKZSX"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$Vernam Cipher$" value="Vernam Cipher"/>
+    <replacement key="$Alphabet$" value="Alphabet"/>
+    <replacement key="$Secret Key$" value="Secret Key"/>
+	 <replacement key="$text$" value="THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"/>
+	 <replacement key="$key$" value="ZHBVCXSERTZUIKMNBVGTZUIOLKMNBVGFTZUHBNVCDSE"/>
+ </replacements>
+
 </sample>

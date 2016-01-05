@@ -17,4 +17,21 @@
     <plugin name="M_138" />
   </relevantPlugins>
 
+  <replacements lang="de">
+	<replacement key="$plaintext$" value="Klartext"/>
+	<replacement key="$ciphertext$" value="Geheimtext"/>
+	<replacement key="$key$" value="Schlüssel"/>
+	<replacement key="$memo1$" value="Here you provide the plaintext / ciphertext and the key to be used."/>
+	<replacement key="$memo2$" value="The resulting plaintext / ciphertext is shown here"/>
+	<replacement key="$memo3$" value="This template describes the usage of the M-138. In the component's settings, you can select what should happen to invalid characters not being supported by the M-138, whether to encrypt or decrypt, how to handle capitalization and the format of the key. In the component's visualization, you can see how the strips of the M-138 look like in the actual device."/>
+ </replacements>
+ <replacements lang="en">
+	<replacement key="$plaintext$" value="Plaintext"/>
+	<replacement key="$ciphertext$" value="Ciphertext"/>
+	<replacement key="$key$" value="Key"/>
+	<replacement key="$memo1$" value="Here you provide the plaintext / ciphertext and the key to be used."/>
+	<replacement key="$memo2$" value="The resulting plaintext / ciphertext is shown here"/>
+	<replacement key="$memo3$" value="This template describes the usage of the M-138. In the component's settings, you can select what should happen to invalid characters not being supported by the M-138, whether to encrypt or decrypt, how to handle capitalization and the format of the key. In the component's visualization, you can see how the strips of the M-138 look like in the actual device."/>
+ </replacements>
+
 </sample>

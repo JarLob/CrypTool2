@@ -16,4 +16,17 @@
     <plugin name="Rabbit" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext (Hex)"/>
+    <replacement key="$Ciphertext$" value="Geheimtext (Hex)"/>
+    <replacement key="$Key$" value="Schlüssel (Hex)"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext (Hex)"/>
+    <replacement key="$Ciphertext$" value="Ciphertext (Hex)"/>
+    <replacement key="$Key$" value="Key (Hex)"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+ </replacements>
+
 </sample>

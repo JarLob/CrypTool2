@@ -17,4 +17,25 @@
     <plugin name="PictureOutput" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Verschlüsselung"/>
+    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Entschlüsselung"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Encrypt"/>
+    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Decrypt"/>
+ </replacements>
+
 </sample>

@@ -16,4 +16,17 @@
     <plugin name="Nihilist" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+	 <replacement key="$StringEncoder$" value="String-Codierer"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+	 <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+ </replacements>
+
 </sample>

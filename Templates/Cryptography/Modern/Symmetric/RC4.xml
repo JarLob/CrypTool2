@@ -16,4 +16,45 @@
     <plugin name="RC4" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Sender$" value="Sender"/>
+    <replacement key="$Receiver$" value="Empfänger"/>
+    <replacement key="$Sender Key$" value="Sender-Schlüssel"/>
+    <replacement key="$Receiver Key$" value="Empfänger-Schlüssel"/>
+    <replacement key="$Sender Message$" value="Sender-Nachricht (Klartext)"/>
+    <replacement key="$Receiver Message$" value="Empfänger-Nachricht (entschlüsselt)"/>
+    <replacement key="$RC4 Encrypt$" value="RC4 Verschlüsselung"/>
+    <replacement key="$RC4 Decrypt$" value="RC4 Entschlüsselung"/>
+	 <replacement key="$Hex to Bytes$" value="Hex -> Bytes"/>
+    <replacement key="$Keystream$" value="Schlüsselstrom"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Encryption$" value="Verschlüsselung"/>
+    <replacement key="$Decryption$" value="Entschlüsselung"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$Transmitted Message (ASCII)$" value="Übertragene Nachricht (ASCII)"/>
+    <replacement key="$Transmitted Message (Hex)$" value="Übertragene Nachricht (Hex)"/>
+    <replacement key="$Transmission Channel$" value="Übertragungskanal"/>
+	 <replacement key="$text$" value="Eine geheime Nachricht für mich selbst.&#13;&#10;Dies ist ein Test.&#13;&#10;Nachrichten verschicken macht Spaß."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Sender$" value="Sender"/>
+    <replacement key="$Receiver$" value="Receiver"/>
+    <replacement key="$Sender Key$" value="Sender Key"/>
+    <replacement key="$Receiver Key$" value="Receiver Key"/>
+    <replacement key="$Sender Message$" value="Sender Message (Plaintext)"/>
+    <replacement key="$Receiver Message$" value="Receiver Message (decrypted)"/>
+    <replacement key="$RC4 Encrypt$" value="RC4 Encrypt"/>
+    <replacement key="$RC4 Decrypt$" value="RC4 Decrypt"/>
+    <replacement key="$Hex to Bytes$" value="Hex to Bytes"/>
+    <replacement key="$Keystream$" value="Keystream"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Encryption$" value="Encryption"/>
+    <replacement key="$Decryption$" value="Decryption"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$Transmitted Message (ASCII)$" value="Transmitted Message (ASCII)"/>
+    <replacement key="$Transmitted Message (Hex)$" value="Transmitted Message (Hex)"/>
+    <replacement key="$Transmission Channel$" value="Transmission Channel"/>
+	 <replacement key="$text$" value="A secret Message to myself.&#13;&#10;This is a test.&#13;&#10;Sending messages is kind of fun."/>
+ </replacements>
+
 </sample>

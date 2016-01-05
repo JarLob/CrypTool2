@@ -16,4 +16,17 @@
     <plugin name="Sosemanuk" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+ </replacements>
+
 </sample>

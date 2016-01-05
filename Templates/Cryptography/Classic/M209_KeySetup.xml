@@ -17,4 +17,25 @@
     <plugin name="M209" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Internal Key$" value="Interner Schlüssel"/>
+    <replacement key="$Internal Key (formatted)$" value="Interner Schlüssel (formatiert)"/>
+    <replacement key="$M209 Decryption$" value="M209 Entschlüsselung"/>
+	 <replacement key="$memo$" value="This template demonstrates how the internal key of the M-209 can be set by entering it on the input 'Input internal key' of the M-209 component. The format of the internal key, as seen above, is a comma-separated list of the effective pins for the rotors followed by the lug positions for the 27 bars.\r\n\r\n
+
+In the given example, the first rotor has the effective pins B, C, E, J, O, P, S, T, U, V, X and Y. The first bar has one lug on position 1 and the other lug on the neutral position. On the last bar, the lugs are on positions 4 and 5."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Internal Key$" value="Internal Key"/>
+    <replacement key="$Internal Key (formatted)$" value="Internal Key (formatted)"/>
+    <replacement key="$M209 Decryption$" value="M209 Decryption"/>
+	 <replacement key="$memo$" value="This template demonstrates how the internal key of the M-209 can be set by entering it on the input 'Input internal key' of the M-209 component. The format of the internal key, as seen above, is a comma-separated list of the effective pins for the rotors followed by the lug positions for the 27 bars.
+
+In the given example, the first rotor has the effective pins B, C, E, J, O, P, S, T, U, V, X and Y. The first bar has one lug on position 1 and the other lug on the neutral position. On the last bar, the lugs are on positions 4 and 5."/>
+ </replacements>
+
 </sample>

@@ -18,4 +18,15 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/PURPLE" /></description>
     <plugin name="Purple" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext (der gleiche Text wie in der Vorlage links)"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+	 <replacement key="$memo$" value="Diese Vorlage zeigt die Entschlüsselung der berühmten &quot;Nomura Note&quot;, die mit der japanischen Chiffriermaschine PURPLE verschlüsselt wurde. Sie wurde von Tokio an den japanischen Botschafter in den Vereinigten Staaten geschickt, einen Tag vor dem Angriff auf Pearl Harbor."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext (same as in the template on the left)"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+	 <replacement key="$memo$" value="This template demonstrates the decipherment of the famous &quot;Nomura Note&quot;, which was encoded with the Japanese cipher machine PURPLE. It was delivered from Tokio to the Japanese ambassador in the United States one day before the attack on Pearl Harbor."/>
+ </replacements>
+
 </sample>

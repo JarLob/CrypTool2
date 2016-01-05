@@ -16,4 +16,27 @@
     <plugin name="DES" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext (Hex)"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$DES Encrypt$" value="DES Verschlüsselung"/>
+    <replacement key="$DES Decrypt$" value="DES Entschlüsselung"/>
+    <replacement key="$text$" value="Hallo, Welt! Dies ist ein Test!"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext (Hex)"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$DES Encrypt$" value="DES Encrypt"/>
+    <replacement key="$DES Decrypt$" value="DES Decrypt"/>
+    <replacement key="$text$" value="Hello world! This is a test!"/>
+ </replacements>
+
 </sample>

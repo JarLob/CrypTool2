@@ -17,4 +17,21 @@
     <plugin name="M209" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$M209 Encrypt$" value="M209 Verschlüsselung"/>
+    <replacement key="$M209 Decrypt$" value="M209 Entschlüsselung"/>
+    <replacement key="$message$" value="Hallo Welt"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$M209 Encrypt$" value="M209 Encrypt"/>
+    <replacement key="$M209 Decrypt$" value="M209 Decrypt"/>
+    <replacement key="$message$" value="Hello World"/>
+ </replacements>
+
 </sample>

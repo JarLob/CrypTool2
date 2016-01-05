@@ -19,4 +19,21 @@
     <plugin name="Xor" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$P$" value="P (ein einzelner 64-Bit-Block für DES)"/>
+    <replacement key="$K$" value="K (ein 56-Bit DES-Schlüssel)"/>
+    <replacement key="$111$" value="111... ein 64-Bit-Block mit 111... für XOR"/>
+    <replacement key="$equals$" value="Gleichheit?"/>
+	 <replacement key="$memo1$" value="By comparing C and C' XOR 111... you can see that DES indeed has a &quot;complementation property&quot;."/>
+	 <replacement key="$memo2$" value="This template demonstrates the &quot;complementation property&quot; of the DES encryption algorithm.\line\line &quot;Complementation property&quot; means that DES fullfills the following equation:\line\line DES(P,k) = C &lt;=&gt; DES(P',k') = C'\line where P is the plaintext\line k is the key\line C is the ciphertext\line and P', k', C' are the &quot;bitwise complements&quot; of the plaintext, the key, and the ciphertext.\line Example k='110011000...&quot; =&gt; k'='001100111...\line\line The complementation property means that the work for a brute force attack could be reduced by a factor of 2 (or a single bit) under a chosen-plaintext assumption (source: http://en.wikipedia.org/wiki/Data_Encryption_Standard#Security_and_cryptanalysis).\line\line Thus, the complexity for a chosen-plaintext attack is 2^55."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$P$" value="P (a single 64 bit block for DES)"/>
+    <replacement key="$K$" value="K (a 56 bit DES key)"/>
+    <replacement key="$111$" value="111... a 64 bit block with 111... for XOR"/>
+    <replacement key="$equals$" value="equals?"/>
+	 <replacement key="$memo1$" value="By comparing C and C' XOR 111... you can see that DES indeed has a &quot;complementation property&quot;."/>
+	 <replacement key="$memo2$" value="This template demonstrates the &quot;complementation property&quot; of the DES encryption algorithm.\line\line &quot;Complementation property&quot; means that DES fullfills the following equation:\line\line DES(P,k) = C &lt;=&gt; DES(P',k') = C'\line where P is the plaintext\line k is the key\line C is the ciphertext\line and P', k', C' are the &quot;bitwise complements&quot; of the plaintext, the key, and the ciphertext.\line Example k='110011000...&quot; =&gt; k'='001100111...\line\line The complementation property means that the work for a brute force attack could be reduced by a factor of 2 (or a single bit) under a chosen-plaintext assumption (source: http://en.wikipedia.org/wiki/Data_Encryption_Standard#Security_and_cryptanalysis).\line\line Thus, the complexity for a chosen-plaintext attack is 2^55."/>
+ </replacements>
+
 </sample>

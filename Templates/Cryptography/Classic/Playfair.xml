@@ -18,4 +18,15 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Playfair" /></description>
     <plugin name="Playfair" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Pre-formatted Text$" value="Vorformatierter Text"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Pre-formatted Text$" value="Pre-formatted Text"/>
+ </replacements>
+
 </sample>
