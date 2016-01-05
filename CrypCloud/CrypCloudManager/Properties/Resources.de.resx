@@ -191,7 +191,7 @@
     <value>Workspace Pfad:</value>
   </data>
   <data name="_enterVerificationCode" xml:space="preserve">
-    <value>Bitte geben sie den Verifizierungscode ein.</value>
+    <value>Bitte geben Sie den Verifizierungscode ein.</value>
   </data>
   <data name="_JobList_btn_createNew" xml:space="preserve">
     <value>Neu</value>
@@ -230,7 +230,7 @@
     <value>CrypCloud</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Eine P2P basierte Volunteer-cloud</value>
+    <value>Eine P2P basierte Volunteer-Cloud</value>
   </data>
   <data name="_Login_link_ForgotPassword" xml:space="preserve">
     <value>Passwort vergessen</value>
@@ -239,10 +239,10 @@
     <value>Eine P2P basierte Volunteer-cloud</value>
   </data>
   <data name="_ResetPW_enterData" xml:space="preserve">
-    <value>Geben Sie Ihre Accountdaten an um Ihr Passwort zurückzusetzen.</value>
+    <value>Geben Sie Ihre Accountdaten an, um Ihr Passwort zurückzusetzen.</value>
   </data>
   <data name="_ResetPW_enterVerificationData" xml:space="preserve">
-    <value>Ein Verifizierungscode wurde an die Email-Addresse Ihres Accounts verschickt.</value>
+    <value>Ein Verifizierungscode wurde an die Email-Adresse Ihres Accounts verschickt.</value>
   </data>
   <data name="_ResetPW_Header" xml:space="preserve">
     <value>Passwort zurücksetzen</value>
