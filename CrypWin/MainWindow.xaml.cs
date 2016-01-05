@@ -2718,16 +2718,19 @@ namespace Cryptool.CrypWin
         private void dockWindowLogMessages_Closed(object sender, RoutedEventArgs e)
         {
             LogBTN.IsChecked = false;
+            LogBTN_Checked(LogBTN, null);
         }
 
         private void dockWindowAlgorithmSettings_Closed(object sender, RoutedEventArgs e)
         {
             SettingBTN.IsChecked = false;
+            SettingBTN_Checked(SettingBTN, null);
         }
 
         private void dockWindowNaviPaneAlgorithms_Closed(object sender, RoutedEventArgs e)
         {
             PluginBTN.IsChecked = false;
+            PluginBTN_Checked(PluginBTN, null);
         }
 
         private void navListBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
