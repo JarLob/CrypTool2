@@ -144,9 +144,11 @@ namespace Cryptool.VigenereAnalyzer
                 GuiLogMessage("No Vigenere Alphabet given for analysis!", NotificationLevel.Error);
                 return;
             }
-            if (_settings.ToKeyLength > RemoveInvalidChars(Ciphertext,Alphabet).Length)
+            var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet), Alphabet);
+
+            if (_settings.ToKeyLength > ciphertext.Length)
             {
-                _settings.ToKeyLength = RemoveInvalidChars(Ciphertext, Alphabet).Length;
+                _settings.ToKeyLength = ciphertext.Length;
                 GuiLogMessage("Max tested keylength can not be longer than the plaintext. Set max tested keylength to plaintext length.",NotificationLevel.Warning);
             }
             if (_settings.ToKeyLength < _settings.FromKeylength)
@@ -154,8 +156,7 @@ namespace Cryptool.VigenereAnalyzer
                 var temp = _settings.ToKeyLength;
                 _settings.ToKeyLength = _settings.FromKeylength;
                 _settings.FromKeylength = temp;
-            }
-            var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet), Alphabet);
+            }            
             UpdateDisplayStart();
             for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
             {
