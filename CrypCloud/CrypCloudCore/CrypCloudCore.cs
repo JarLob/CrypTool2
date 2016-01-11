@@ -78,8 +78,22 @@ namespace CrypCloud.Core
                 LoadDataFromLocalStorage = true,
                 AdminCertificateList = adminList,
                 BannedCertificateList = bannedList,
-                LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml")
+                LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
             };
+
+            var networkBridges = Resources.networkBridges.Replace("\r","");
+            var networkBridgesList = networkBridges
+                .Split('\n')
+                .Where(it => it.Contains(':'))
+                .ToList();
+
+            var randomIndex = new Random().Next(networkBridgesList.Count);
+            var selectedBridge = networkBridgesList[randomIndex];
+
+            var tmp = selectedBridge.Split(':');
+            var ip = tmp[0];
+            var port = int.Parse(tmp[1]);
+            vlib.AddNetworkBridge(ip, port);
 
             try
             {

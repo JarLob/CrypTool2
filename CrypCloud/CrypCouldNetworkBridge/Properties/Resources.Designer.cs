@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CrypCloud.Core.Properties {
+namespace CrypCouldNetworkBridge.Properties {
     using System;
     
     
@@ -22,7 +22,7 @@ namespace CrypCloud.Core.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,10 +36,10 @@ namespace CrypCloud.Core.Properties {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypCloud.Core.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("CrypCouldNetworkBridge.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace CrypCloud.Core.Properties {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,9 +64,19 @@ namespace CrypCloud.Core.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die N:ckonze
         /// ähnelt.
         /// </summary>
-        public static string adminCertificates {
+        internal static string adminCertificates {
             get {
                 return ResourceManager.GetString("adminCertificates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        internal static byte[] asdasd {
+            get {
+                object obj = ResourceManager.GetObject("asdasd", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -74,40 +84,19 @@ namespace CrypCloud.Core.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die N:asdasd8
         /// ähnelt.
         /// </summary>
-        public static string bannedCertificates {
+        internal static string bannedCertificates {
             get {
                 return ResourceManager.GetString("bannedCertificates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 127.0.0.1:13337
-        ///127.0.0.1:13337
-        ///127.0.0.1:13337
-        /// ähnelt.
-        /// </summary>
-        public static string networkBridges {
-            get {
-                return ResourceManager.GetString("networkBridges", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        public static byte[] rootCA {
+        internal static byte[] rootCA {
             get {
                 object obj = ResourceManager.GetObject("rootCA", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die s ähnelt.
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
     }
