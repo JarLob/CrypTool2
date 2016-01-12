@@ -27,10 +27,13 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
 {
     public class SendingTCPCommunicator : TCPCommunicator
     {
+        
         #region private member
 
+        private const int MAX_CONNECTION_TRIES = 5;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private bool hasStopped;
+        private int unableToConnectCounter = 0;
 
         #endregion
 
@@ -60,16 +63,27 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
         #region receiving
 
         protected void OnConnect(Byte[] data, IAsyncResult asyncResult)
-        {
-            using (var netStream = tcpClient.GetStream())
-            {
-                WriteToStream(data, netStream);
+        { 
+            if (unableToConnectCounter >= MAX_CONNECTION_TRIES) return;
 
-                //wait and read messages
-                netStream.ReadTimeout = WaitForRemoteAnswerMS;
-                BeginReadFromStream(netStream, RemoteNetworkBridgeIP);
+            try
+            {
+                using (var netStream = tcpClient.GetStream())
+                {
+                    WriteToStream(data, netStream);
+
+                    //wait and read messages
+                    netStream.ReadTimeout = WaitForRemoteAnswerMS;
+                    BeginReadFromStream(netStream, RemoteNetworkBridgeIP);
+                }
+                CloseConnection(tcpClient);
+                unableToConnectCounter = 0;
             }
-            CloseConnection(tcpClient);
+            catch
+            {
+                Logger.Warn("VoluntLib could not connect to remote client {0}:{1}", RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort);
+                IncreaseUnableToConnectCounter();               
+            }          
         }
 
         #endregion
@@ -78,16 +92,35 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
 
         public override void ProcessMessage(AMessage data, IPAddress to)
         {
-            //reuse connection if connected
-            if (tcpClient.Connected)
+            if (unableToConnectCounter >= MAX_CONNECTION_TRIES) return;
+
+            try
             {
-                WriteToStream(data.Serialize(), tcpClient.GetStream());
-                return;
+                //reuse connection if connected
+                if (tcpClient.Connected)
+                {
+                    WriteToStream(data.Serialize(), tcpClient.GetStream());
+                    return;
+                }
+                // else start new connection
+                tcpClient.BeginConnect(RemoteNetworkBridgeIP, RemoteNetworkBridgePort, ar => OnConnect(data.Serialize(), ar), tcpClient);
+                unableToConnectCounter = 0;
+            }  
+            catch
+            {
+                Logger.Warn("VoluntLib could not process message from remote client {0}:{1}", RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort);
+                IncreaseUnableToConnectCounter();
             }
-            // else start new connection
-            tcpClient.BeginConnect(RemoteNetworkBridgeIP, RemoteNetworkBridgePort, ar => OnConnect(data.Serialize(), ar), tcpClient);
         }
 
         #endregion
+
+
+        private void IncreaseUnableToConnectCounter(){
+            unableToConnectCounter++;
+            if (unableToConnectCounter >= MAX_CONNECTION_TRIES) {                
+                Logger.Warn("VoluntLib could not connect to remote {0}:{1} more than {2} times. Igoring remote", RemoteNetworkBridgeIP.ToString(),  RemoteNetworkBridgePort, MAX_CONNECTION_TRIES);
+            }
+        }
     }
 }
