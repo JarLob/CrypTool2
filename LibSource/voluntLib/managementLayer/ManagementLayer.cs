@@ -111,21 +111,22 @@ namespace voluntLib.managementLayer
 
             //add to working peer list
             WorkingPeers.AddOrUpdate(message);
-        } 
+        }
 
-        private void ProcessUsefulStates(BigInteger jobID, EpochState incomingState)
+
+        public void ProcessUsefulStates(BigInteger jobID, EpochState incomingState)
         {
             var localStateManager = LocalStates[jobID];
             taskContainer.GetPropagateStateTask(jobID).StopTimer();
             localStateManager.ProcessState(incomingState);
         }
 
-        private static bool IncomingStateIsOlder(LocalStateManager<EpochState> localStateManager, EpochState incomingState)
+        public static bool IncomingStateIsOlder(LocalStateManager<EpochState> localStateManager, EpochState incomingState)
         {
             return localStateManager.IsSuperSetOf(incomingState);
         }
 
-        private void RespondWithOwnState(BigInteger jobID, string worldName, ALocalState localState)
+        public void RespondWithOwnState(BigInteger jobID, string worldName, ALocalState localState)
         {
             taskContainer.GetPropagateStateTask(jobID).StartTimer(worldName, localState, MaximumBackoffTime);
         }
@@ -180,7 +181,7 @@ namespace voluntLib.managementLayer
             stateManager.CalculationLayer = calculationLayer;
         }
 
-        private LocalStateManager<EpochState> GetOrCreateStateManager(BigInteger jobID, NetworkJob job)
+        public LocalStateManager<EpochState> GetOrCreateStateManager(BigInteger jobID, NetworkJob job)
         {
             //create state
             if ( ! LocalStates.ContainsKey(jobID))
@@ -304,9 +305,20 @@ namespace voluntLib.managementLayer
             {
                 RespondWithJobDeletionMessage(job, from);
                 return;
+            } 
+            if( ! job.HasPayload())
+            {
+                return;
             }
 
-            taskContainer.GetSendJobDetailTask(world).StartTimer(job, MaximumBackoffTime);
+            if (IPAddress.Any.Equals(from))
+            {
+                taskContainer.GetSendJobDetailTask(world).StartTimer(job, MaximumBackoffTime);
+            }
+            else
+            {
+                NetworkCommunicationLayer.SendJobDetails(world, job.JobID, job.ToNetworkJobPayload(), from);
+            }
         }
 
         /// <summary>
@@ -314,14 +326,17 @@ namespace voluntLib.managementLayer
         ///   It sets the payload and invokes the JobListChanged-event iff
         ///   the client knows the job (match of world and jobID) and the the known jobs doesn't already have a detail payload
         /// </summary>
-        public void OnJobDetailsReceived(string world, BigInteger jobID, byte[] payload)
+        public void OnJobDetailsReceived(string world, BigInteger jobID, byte[] payload, IPAddress from)
         {
             taskContainer.GetSendJobDetailTask(world).StopTimer();
             var job = Jobs.GetJob(jobID);
 
             //unknown job
             if (job == null)
-                return;
+            {
+                job = new NetworkJob(jobID);
+                Jobs.AddJob(job);
+            }
 
             //already have payload
             if (job.HasPayload())
@@ -340,7 +355,7 @@ namespace voluntLib.managementLayer
         ///   This Method is meant to be called in incoming CreateNetworkJob.
         ///   It adds the new job if no job with an equal jobID within the same world is known and invokes the JobListChanged-Event
         /// </summary>
-        public void OnJobCreation(NetworkJob newJob)
+        public void OnJobCreation(NetworkJob newJob, IPAddress from)
         {
             var job = Jobs.GetJob(newJob.JobID);
             if (job != null)
@@ -354,7 +369,7 @@ namespace voluntLib.managementLayer
 
         public void CreateNetworkJob(NetworkJob job)
         {
-            OnJobCreation(job);
+            OnJobCreation(job, null);
             NetworkCommunicationLayer.CreateNetworkJob(job, IPAddress.Any);
         }
 
@@ -534,7 +549,7 @@ namespace voluntLib.managementLayer
             }
         }
 
-        protected EpochState CreateIncomingState(PropagateStateMessage message, LocalStateManager<EpochState> localStateManager, BigInteger jobID)
+        public EpochState CreateIncomingState(PropagateStateMessage message, LocalStateManager<EpochState> localStateManager, BigInteger jobID)
         {
             var incomingState = localStateManager.GetNewStateObject();
 
@@ -554,17 +569,23 @@ namespace voluntLib.managementLayer
             // bind events
             stateManager.StateHasBeenMerged += (sender, args) => NewStateToPropagate(jobID, worldName, stateManager.LocalState);
             stateManager.StateHasBeenUpdated += OnJobProgress;
+            stateManager.StateHasBeenUpdated += (sender, args) => PersistState(jobID, worldName, stateManager.LocalState);
         }
 
         private void NewStateToPropagate(BigInteger jobID, string worldName, EpochState localState)
         {
             AddOwnWorklog(jobID);
             NetworkCommunicationLayer.PropagateState(jobID, worldName, localState, IPAddress.Any);
+            PersistState(jobID, worldName, localState);
+        }
 
+        private void PersistState(BigInteger jobID, string worldName, EpochState localState)
+        {
             if (FileCommunicationLayer != null)
                 FileCommunicationLayer.PropagateState(jobID, worldName, localState, IPAddress.Any);
-            
+
         }
+
 
         private void AddOwnWorklog(BigInteger jobID)
         {

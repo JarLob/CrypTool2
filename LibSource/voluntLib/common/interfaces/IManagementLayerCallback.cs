@@ -26,7 +26,7 @@ namespace voluntLib.common.interfaces
     public interface IManagementLayerCallback
     {
         void OnIncomingState(PropagateStateMessage stateRaw, IPAddress from);
-        void OnJobCreation(NetworkJob newJob);
+        void OnJobCreation(NetworkJob newJob, IPAddress from);
 
         void OnWorldListRequest(IPAddress from);
         void OnWorldListReceived(List<string> worldList, IPAddress from);
@@ -35,7 +35,7 @@ namespace voluntLib.common.interfaces
         void OnJobListReceived(string world, List<NetworkJob> receivedJobs, IPAddress from);
 
         void OnJobDetailRequest(string world, BigInteger jobID, IPAddress from);
-        void OnJobDetailsReceived(string world, BigInteger jobID, byte[] detailPayload);
+        void OnJobDetailsReceived(string world, BigInteger jobID, byte[] detailPayload, IPAddress from);
 
         void OnJobDeletion(DeleteNetworkJobMessage message, IPAddress fromIP);
         List<string> GetWorlds();

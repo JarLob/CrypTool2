@@ -90,9 +90,8 @@ namespace voluntLib.communicationLayer
 
         public void HandleIncomingMessages(byte[] message, IPAddress from)
         {
-            Logger.Info((MessageType) message[1] + " received");
             if (! messagesHandler.ContainsKey(message[1]))
-                return;
+                return; 
 
             Logger.Debug("Message Handler found");
             messagesHandler[message[1]].HandleByteArray(message, from);
@@ -242,7 +241,7 @@ namespace voluntLib.communicationLayer
                     {
                         foreach (var world in  managementCallback.GetWorlds())
                         {
-                            Logger.Warn("scheduled JobList-Exchange with " + bridgeIP);
+                            Logger.Info("scheduled JobList-Exchange with " + bridgeIP);
                             RequestJobList(world, bridgeIP);
                         }
                     }, null, new TimeSpan(0, 0, 0, 1), TimeSpan.FromMilliseconds(Timeout.Infinite));

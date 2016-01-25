@@ -57,7 +57,7 @@ namespace voluntLib.communicationLayer.messageHandler
         {
             managementCallback.OnJobDetailsReceived(message.Header.WorldName,
                 message.Header.JobID,
-                message.JobDetails.JobPayload);
+                message.JobDetails.JobPayload, from);
         }
     }
 

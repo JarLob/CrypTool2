@@ -21,6 +21,8 @@ using System.Net.Sockets;
 using NLog;
 using voluntLib.common.interfaces;
 using voluntLib.communicationLayer.messages.messageWithCertificate;
+using System.Security.Cryptography;
+
 
 #endregion
 
@@ -64,63 +66,23 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
         {
             if (!client.Connected)
                 return;
-
-            using (var stream = client.GetStream())
-            {
-                if (stream.CanRead)
-                {
-                    var buffer = new byte[client.ReceiveBufferSize];
-                    stream.Read(buffer, 0, buffer.Length);
-                }
-                stream.Write(new byte[2], 0, 2); // indicating that no message'll follow
-            }
-
-            client.Close();
-        }
-
-        /// <summary>
-        ///   Begins to read messages from the stream.
-        ///   This method waits busy for messages occurring on the networkStream.
-        ///   It will return if:
-        ///   - it cannot read from the stream.
-        ///   - the connections is closed ( ether by sending an 0-sized message or forcely drop the connection)
-        ///   - it times out.
-        /// </summary>
-        /// <param name="netStream">The net stream.</param>
-        /// <param name="remoteIP">The remote IP.</param>
-        protected void BeginReadFromStream(NetworkStream netStream, IPAddress remoteIP)
-        {
-            if (!netStream.CanRead)
-            {
-                Logger.Debug("Read from TCP stream failed, cant read from stream");
-                return;
-            }
-
             try
             {
-                // read message length
-                var emptyBytes = new byte[2];
-                var bufferLength = new byte[2];
-                netStream.Read(bufferLength, 0, 2);
-                var messageLength = BitConverter.ToUInt16(bufferLength, 0);
-
-                while (messageLength != 0 && netStream.CanRead)
+                using (var stream = client.GetStream())
                 {
-                    //repeat until all messages have been fetched
-                    var buffer = new byte[messageLength];
-                    netStream.Read(buffer, 0, buffer.Length);
-
-                    //handle data
-                    comLayer.HandleIncomingMessages(buffer, remoteIP);
-
-                    // read next 2 bytes to see if another message is available
-                    emptyBytes.CopyTo(bufferLength, 0);
-                    netStream.Read(bufferLength, 0, 2);
-                    messageLength = BitConverter.ToUInt16(bufferLength, 0);
+                    if (stream.CanRead)    
+                    {
+                        var buffer = new byte[client.ReceiveBufferSize];
+                        stream.Read(buffer, 0, buffer.Length);
+                    }
+               
+                    stream.Write(new byte[2], 0, 2); // indicating that no message'll follow   
                 }
-            } catch (IOException e)
+                client.Close();
+            } 
+            catch
             {
-                Logger.Debug("Read from TCP stream faild due: " + e.Message + e.StackTrace);
+                Logger.Info("Connection already has been closed");
             }
         }
 
@@ -142,9 +104,8 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
             {
                 //add length at the front of the message
                 var bytes = new byte[message.Length + 2];
-                BitConverter.GetBytes((ulong) message.Length).CopyTo(bytes, 0);
+                BitConverter.GetBytes((ushort)message.Length).CopyTo(bytes, 0);
                 message.CopyTo(bytes, 2);
-
                 //write to stream
                 netStream.Write(bytes, 0, bytes.Length);
             } catch (IOException e)
@@ -152,5 +113,22 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
                 Logger.Debug("Write to TCP stream faild due: " + e.Message + e.StackTrace);
             }
         }
+
+        protected byte[] readFromNetworkStream(NetworkStream netStream, int messageLength)
+        {
+            var buffer = new byte[messageLength];
+            return readFromNetworkStream(netStream, buffer, messageLength);
+        }
+
+        protected byte[] readFromNetworkStream(NetworkStream netStream, byte[] buffer, int messageLength)
+        {
+            int readBytes = 0;
+            while (readBytes < messageLength && netStream.CanRead)
+            {
+                readBytes += netStream.Read(buffer, readBytes, messageLength - readBytes);
+            };
+            return buffer;
+        }
+
     }
 }

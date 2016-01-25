@@ -459,10 +459,10 @@ namespace CrypCloud.Core
         {
             var notificationLevel = GetNotificationLevel(logEvent);
 
-            if (notificationLevel == NotificationLevel.Debug || notificationLevel == NotificationLevel.Info)
+        /*    if (notificationLevel == NotificationLevel.Debug || notificationLevel == NotificationLevel.Info)
             {
                 return;
-            }
+            }*/
 
             var message = "(" + logEvent.Location + "): " + logEvent.Message;
             OnApplicationLog(sender, new GuiLogEventArgs(message, null, notificationLevel));

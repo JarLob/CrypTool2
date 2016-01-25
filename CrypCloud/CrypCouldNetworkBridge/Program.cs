@@ -20,7 +20,6 @@ namespace CrypCouldNetworkBridge
         private const int NB_PORT = 13377;
         private static IPAddress NB_ENDPOINT = IPAddress.Any;
 
-
         public static void Main(string[] args)
         {  
             //utilizing certificate of user named asdasd for testing. user "asdasd" supposed to be banned for production ct
@@ -45,7 +44,8 @@ namespace CrypCouldNetworkBridge
                 EnablePersistence = true,
                 LoadDataFromLocalStorage = true,
                 AdminCertificateList = adminList,
-                BannedCertificateList = bannedList   
+                BannedCertificateList = bannedList,
+                MulticastGroup = "224.0.7.100"
             };
 
             voluntLib.EnableNATFreeNetworkBridge(NB_PORT, NB_ENDPOINT);

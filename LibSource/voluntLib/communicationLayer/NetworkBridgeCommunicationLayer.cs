@@ -44,5 +44,10 @@ namespace voluntLib.communicationLayer
         {
             communicator.Stop();
         }
+
+        internal void SendMessages(IPAddress from)
+        {
+            ((voluntLib.communicationLayer.communicator.networkBridgeCommunicator.ReceivingTCPCommunicator)communicator).SendMessages(from);
+        }
     }
 }

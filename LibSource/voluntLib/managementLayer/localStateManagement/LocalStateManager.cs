@@ -103,6 +103,13 @@ namespace voluntLib.managementLayer.localStateManagement
                 logger.Debug("<ProcessState> StateRelation: " + stateRelation);
             }
 
+            if (stateRelation == StateRelation.DifferentStateConfig && LocalState.NumberOfCalculatedBlocks == 0)
+            {
+                LocalState.Deserialize(candidate.Serialize());
+                OnStateHasBeenUpdated();
+            }
+
+
             if (stateRelation == StateRelation.OutOfSync)
             {
                 MergeOrKeepBestState(candidate);
@@ -126,8 +133,15 @@ namespace voluntLib.managementLayer.localStateManagement
             {
                 lock (this)
                 {
-                    LocalState.MergeMetaData(candidate);
-                    LocalState.ResultList = CalculationLayer.MergeResults(candidate.ResultList, LocalState.ResultList);
+                    try
+                    {  
+                        LocalState.MergeMetaData(candidate);
+                        LocalState.ResultList = CalculationLayer.MergeResults(candidate.ResultList, LocalState.ResultList);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Warn("Could not merge States. " + e.Message);
+                    }
                 }
 
                 OnStateHasBeenMerged();

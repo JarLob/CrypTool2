@@ -101,6 +101,7 @@ namespace voluntLib.managementLayer.localStateManagement.states
         Equal,
         OutOfSync,
         IsSuperSet,
-        DifferentStateType
+        DifferentStateType,
+        DifferentStateConfig
     }
 }

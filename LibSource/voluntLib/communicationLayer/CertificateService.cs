@@ -90,25 +90,30 @@ namespace voluntLib.communicationLayer
                 return CertificateValidationState.Invalid;
 
             if (IsBannedCertificate(senderCertificate))
-                return CertificateValidationState.Invalid; 
+                return CertificateValidationState.Invalid;
 
             //extract signature and replace with empty signature
             var originalSignature = message.Header.SignatureData;
-            var signature = message.Header.SignatureData;
+
             message.ClearSignature();
             var data = message.Serialize();
+
+            bool valid;
+            lock (this)
+            {
+                // Verify the signature with the hash
+                var provider = (RSACryptoServiceProvider)senderCertificate.PublicKey.Key;
+                valid = provider.VerifyData(data, NameOfHashAlgorithm, originalSignature);
+            }
+
             message.Header.SignatureData = originalSignature;
-
-
-            // Verify the signature with the hash
-            var provider = (RSACryptoServiceProvider) senderCertificate.PublicKey.Key;
-            if (provider.VerifyData(data, NameOfHashAlgorithm, signature))
+            if (valid)
             {
                 Logger.Debug("[" + OwnName + "] Signature is valid");
                 return CertificateValidationState.Valid;
             }
 
-            Logger.Error("Signature is invalid");
+            Logger.Error("Signature is invalid: " + (MessageType)message.Header.MessageType); 
             return CertificateValidationState.Invalid;
         }
 
@@ -127,7 +132,10 @@ namespace voluntLib.communicationLayer
 
             // sign data
             var data = message.Serialize();
-            message.Header.SignatureData = csProvider.SignData(data, NameOfHashAlgorithm);
+            lock (this)
+            {
+                message.Header.SignatureData = csProvider.SignData(data, NameOfHashAlgorithm);
+            }
             return message;
         }
 

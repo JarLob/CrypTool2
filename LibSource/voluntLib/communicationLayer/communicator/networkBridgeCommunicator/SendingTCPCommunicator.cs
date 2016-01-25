@@ -20,6 +20,7 @@ using System.Net.Sockets;
 using NLog;
 using voluntLib.common.interfaces;
 using voluntLib.communicationLayer.messages.messageWithCertificate;
+using System.Security.Cryptography;
 
 #endregion
 
@@ -39,7 +40,7 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
 
         #region properties
 
-        private readonly TcpClient tcpClient = new TcpClient();
+        private TcpClient tcpClient;
         public IPAddress RemoteNetworkBridgeIP { get; private set; }
         public int RemoteNetworkBridgePort { get; private set; }
         public IPAddress LocalInterface { get; set; }
@@ -63,30 +64,73 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
         #region receiving
 
         protected void OnConnect(Byte[] data, IAsyncResult asyncResult)
-        { 
-            if (unableToConnectCounter >= MAX_CONNECTION_TRIES) return;
+        {
+            if (!tcpClient.Connected) return; 
+            
+            using (var netStream = tcpClient.GetStream())
+            {
+                WriteToStream(data, netStream);
+                
+                //wait and read messages
+                netStream.ReadTimeout = WaitForRemoteAnswerMS;
+                InstanceBeginReadFromStream(netStream, RemoteNetworkBridgeIP);
+            }
+            Logger.Error("ended");
+            CloseConnection(tcpClient);
+        }
+
+        /// <summary>
+        ///   Begins to read messages from the stream.
+        ///   This method waits busy for messages occurring on the networkStream.
+        ///   It will return if:
+        ///   - it cannot read from the stream.
+        ///   - the connections is closed ( ether by sending an 0-sized message or forcely drop the connection)
+        ///   - it times out.
+        /// </summary>
+        /// <param name="netStream">The net stream.</param>
+        /// <param name="remoteIP">The remote IP.</param>
+        protected void InstanceBeginReadFromStream(NetworkStream netStream, IPAddress remoteIP)
+        {
+            if (!netStream.CanRead)
+            {
+                Logger.Debug("Read from TCP stream failed, cant read from stream");
+                return;
+            }
 
             try
             {
-                using (var netStream = tcpClient.GetStream())
+                // read message length
+                var emptyBytes = new byte[2];
+                var bufferLength = new byte[2];
+                netStream.Read(bufferLength, 0, 2);
+                var messageLength = BitConverter.ToUInt16(bufferLength, 0);
+
+                while (messageLength != 0 && netStream.CanRead)
                 {
-                    WriteToStream(data, netStream);
-
-                    //wait and read messages
-                    netStream.ReadTimeout = WaitForRemoteAnswerMS;
-                    BeginReadFromStream(netStream, RemoteNetworkBridgeIP);
+                    //repeat until all messages have been fetched
+                    var buffer = readFromNetworkStream(netStream, messageLength);
+                    try
+                    { 
+                        //handle data
+                        comLayer.HandleIncomingMessages(buffer, remoteIP);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Debug("Could not handle remotes message: " + e.Message + e.StackTrace);
+                    }
+                    // read next 2 bytes to see if another message is available
+                    emptyBytes.CopyTo(bufferLength, 0);
+                    netStream.Read(bufferLength, 0, 2);
+                    messageLength = BitConverter.ToUInt16(bufferLength, 0); 
                 }
-                CloseConnection(tcpClient);
-                unableToConnectCounter = 0;
             }
-            catch
+            catch (Exception e)
             {
-                Logger.Warn("VoluntLib could not connect to remote client {0}:{1}", RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort);
-                IncreaseUnableToConnectCounter();               
-            }          
+                Logger.Debug("Read from TCP stream faild due: " + e.Message + e.StackTrace);
+            }
         }
-
         #endregion
+
 
         #region send
 
@@ -95,32 +139,22 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
             if (unableToConnectCounter >= MAX_CONNECTION_TRIES) return;
 
             try
-            {
-                //reuse connection if connected
-                if (tcpClient.Connected)
-                {
-                    WriteToStream(data.Serialize(), tcpClient.GetStream());
-                    return;
-                }
-                // else start new connection
+            {               
+                tcpClient = new TcpClient();            
                 tcpClient.BeginConnect(RemoteNetworkBridgeIP, RemoteNetworkBridgePort, ar => OnConnect(data.Serialize(), ar), tcpClient);
                 unableToConnectCounter = 0;
-            }  
-            catch
-            {
-                Logger.Warn("VoluntLib could not process message from remote client {0}:{1}", RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort);
-                IncreaseUnableToConnectCounter();
-            }
-        }
+           } 
+           catch (Exception e)
+           {
+               Logger.Warn("VoluntLib could not process message from remote client {0}:{1} {2}",RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort, e.Message);
 
-        #endregion
-
-
-        private void IncreaseUnableToConnectCounter(){
-            unableToConnectCounter++;
-            if (unableToConnectCounter >= MAX_CONNECTION_TRIES) {                
-                Logger.Warn("VoluntLib could not connect to remote {0}:{1} more than {2} times. Igoring remote", RemoteNetworkBridgeIP.ToString(),  RemoteNetworkBridgePort, MAX_CONNECTION_TRIES);
-            }
-        }
+               unableToConnectCounter++;
+               if (unableToConnectCounter >= MAX_CONNECTION_TRIES)
+               {
+                   Logger.Warn("VoluntLib could not connect to remote {0}:{1} more than {2} times. Igoring remote", RemoteNetworkBridgeIP.ToString(), RemoteNetworkBridgePort, MAX_CONNECTION_TRIES);
+               }
+           }
+       }
+       #endregion
     }
 }

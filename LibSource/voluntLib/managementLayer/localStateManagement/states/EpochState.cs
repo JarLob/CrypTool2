@@ -87,6 +87,11 @@ namespace voluntLib.managementLayer.localStateManagement.states
                     : StateRelation.IsProperSubset;
             }
 
+            if (BitMask.Length != candidateAsEpochState.BitMask.Length)
+            {
+                return StateRelation.DifferentStateConfig;
+            }
+
             if (AreEqual(candidateAsEpochState.BitMask, BitMask))
             {
                 return StateRelation.Equal;

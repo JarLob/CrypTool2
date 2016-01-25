@@ -34,7 +34,7 @@ namespace voluntLib.communicationLayer.messageHandler
         {
             var newNetworkJob = new NetworkJob(message.Header.JobID);
             newNetworkJob.Fill(message);
-            managementCallback.OnJobCreation(newNetworkJob);
+            managementCallback.OnJobCreation(newNetworkJob, from);
 
             RedirectToNetworkBridges(message, from);
         }
