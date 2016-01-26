@@ -75,7 +75,6 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
                 netStream.ReadTimeout = WaitForRemoteAnswerMS;
                 InstanceBeginReadFromStream(netStream, RemoteNetworkBridgeIP);
             }
-            Logger.Error("ended");
             CloseConnection(tcpClient);
         }
 
