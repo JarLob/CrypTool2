@@ -74,7 +74,6 @@
     <Compile Include="communicationLayer\CertificateService.cs" />
     <Compile Include="communicationLayer\CommunicationLayer.cs" />
     <Compile Include="common\interfaces\IMessageHandler.cs" />
-    <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\ArrayList.cs" />
     <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\ReceivingTCPCommunicator.cs" />
     <Compile Include="communicationLayer\communicator\networkBridgeCommunicator\SendingTCPCommunicator.cs" />
     <Compile Include="communicationLayer\communicator\FileCommunicator.cs" />
