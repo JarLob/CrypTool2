@@ -130,6 +130,7 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
                 return;
             }
 
+            byte[] receivedMessageBuffer = null;
             try
             {
                 // read message length
@@ -138,28 +139,35 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
                 netStream.Read(bufferLength, 0, 2);
                 var messageLength = BitConverter.ToUInt16(bufferLength, 0);
 
-                var buffer = readFromNetworkStream(netStream, messageLength);
-                try
-                {
-                    //handle data
-                    comLayer.HandleIncomingMessages(buffer, remoteIP);
-                }
-                catch (Exception e)
-                {
-                    Logger.Debug("Could not handle message from clientd due: " + e.Message + e.StackTrace);
-                }
-
+                receivedMessageBuffer = readFromNetworkStream(netStream, messageLength);
             }
             catch (Exception e)
             {
-                Logger.Debug("Read from TCP stream faild due: " + e.Message + e.StackTrace);
+                Logger.Warn("Read from TCP stream failed due to: " + e.Message + e.StackTrace);
             }
-            finally
+
+            if(receivedMessageBuffer == null){
+                return;
+            }
+
+            try
             {
-                Logger.Debug("sending collected messages to" + remoteIP);
-                SendMessages(remoteIP);
-                CloseAndRemoveConnection(remoteIP);
+                comLayer.HandleIncomingMessages(receivedMessageBuffer, remoteIP);
             }
+            catch (Exception e)
+            {
+                Logger.Warn("Could not handle message from client due to: " + e.Message + e.StackTrace);
+            }
+
+            try
+            {
+                Logger.Info("send informations to " + remoteIP);
+                SendMessages(remoteIP);
+            }
+            catch (Exception e)
+            {
+                Logger.Warn("could not send requested information to client due to: " + e.Message + e.StackTrace);
+            }  
         }
 
 
@@ -167,11 +175,19 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
 
         private void CloseAndRemoveConnection(IPAddress clientAddress)
         {
-            TcpClient client;
-            if (activeClients.TryRemove(clientAddress, out client))
+            try
             {
-                CloseConnection(client);
+                TcpClient client;
+                if (activeClients.TryRemove(clientAddress, out client))
+                {
+                    CloseConnection(client);
+                }
             }
+            catch (Exception)
+            {
+                Logger.Info("Client already closed connection");
+            }
+
         }
 
         #region send
