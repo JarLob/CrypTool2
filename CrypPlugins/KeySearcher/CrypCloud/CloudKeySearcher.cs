@@ -80,8 +80,14 @@ namespace KeySearcher
         
         private void UpdateKeyPerSecond(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            var globalApproximateKeysPerSecond = globalSpeedStatistics.ApproximateKeysPerSecond();
             var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
+            var globalApproximateKeysPerSecond = globalSpeedStatistics.ApproximateKeysPerSecond();
+
+            if (localApproximateKeysPerSecond > globalApproximateKeysPerSecond)
+            {
+                globalApproximateKeysPerSecond = localApproximateKeysPerSecond;                
+            }
+
             RunInUiContext(() =>
             {
                 viewModel.UpdateGlobalSpeed(globalApproximateKeysPerSecond);
