@@ -242,6 +242,8 @@ int DES_read_2passwords(DES_cblock *key1, DES_cblock *key2, const char *prompt,
 
 #define DES_fixup_key_parity DES_set_odd_parity
 
+#define DES_UNROLL
+
 #ifdef  __cplusplus
 }
 #endif
