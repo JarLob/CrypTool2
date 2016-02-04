@@ -41,29 +41,18 @@ namespace Cryptool.Plugins.ImageProcessor
         private int sizeY = 50;
         private int degrees = 90;
         private int outputFileFormat = 0;
-        private static String[] comboAction = new string[] { "Flip Image", 
-                                      "Gray Scale",
-                                      "Create Image",
-                                      "Crop Image"};
+        //private static String[] comboAction = new string[] { "Flip Image", 
+        //                              "Gray Scale",
+        //                              "Create Image",
+        //                              "Crop Image"};
         
         #endregion
 
         #region TaskPane Settings
         [TaskPane("ActionCaption", "ActionTooltip", null, 1, true, ControlType.ComboBox, new String[] { 
-            "Flip Image", 
-            "Gray Scale",
-            "Smooth Image",
-            "Resize Image",
-            "Rotate Image",
-            "Invert Image",
-            "And-Connect Images",
-            "Or-Connect Images",
-            "XOR-Connect Images",
-            "Create Image",
-            "Crop Image",
-            "XOR GrayscaleImages",
-            "Black and White",
-            "Image Contrast"})]
+            "ActionList1", "ActionList2", "ActionList3", "ActionList4", "ActionList5", "ActionList6", "ActionList7", 
+            "ActionList8", "ActionList9", "ActionList10", "ActionList11", "ActionList12", "ActionList13", "ActionList14"
+        })]
         public ActionType Action
         {
             get
@@ -81,9 +70,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("FlipTypeCaption", "FlipTypeTooltip", null, 1, true, ControlType.ComboBox, new string[] {
-            "Horizontal", 
-            "Vertical" })]
+        [TaskPane("FlipTypeCaption", "FlipTypeTooltip", null, 1, true, ControlType.ComboBox, new string[] { "FlipTypeList1", "FlipTypeList2" })]
         public int FlipType
         {
             get
@@ -100,10 +87,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("OutputFileFormatCaption", "OutputFileFormatTooltip", null, 1, true, ControlType.ComboBox, new string[] { 
-            "Bmp", 
-            "Png", 
-            "Tiff" })]
+        [TaskPane("OutputFileFormatCaption", "OutputFileFormatTooltip", null, 1, true, ControlType.ComboBox, new string[] { "Bmp", "Png", "Tiff" })]
         public int OutputFileFormat
         {
             get
@@ -120,7 +104,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("Smooth", "Enter the smooth value", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
+        [TaskPane("SmoothCaption", "SmoothTooltip", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
         public int Smooth
         {
             get
@@ -131,19 +115,12 @@ namespace Cryptool.Plugins.ImageProcessor
             {
                 if (smooth != value)
                 {
-                    if (value > 10000)
-                    {
-                        smooth = 10000;
-                    }
-                    else
-                    {
-                        smooth = value;
-                    }
+                    smooth = Math.Min(value, 10000);
                     OnPropertyChanged("smooth");
                 }
             }
         }
-        [TaskPane("SliderX1", "Enter the value of left margin", null, 1, true, ControlType.Slider, 0, 10000)]
+        [TaskPane("SliderX1Caption", "SliderX1Tooltip", null, 1, true, ControlType.Slider, 0, 10000)]
         public int SliderX1
         {
             get
@@ -159,7 +136,7 @@ namespace Cryptool.Plugins.ImageProcessor
                 }
             }
         }
-        [TaskPane("SliderX2", "Enter the value of right margin", null, 1, true, ControlType.Slider, 0, 10000)]
+        [TaskPane("SliderX2Caption", "SliderX2Tooltip", null, 1, true, ControlType.Slider, 0, 10000)]
         public int SliderX2
         {
             get
@@ -175,7 +152,7 @@ namespace Cryptool.Plugins.ImageProcessor
                 }
             }
         }
-        [TaskPane("SliderY1", "Enter the value of top margin", null, 1, true, ControlType.Slider, 0, 10000)]
+        [TaskPane("SliderY1Caption", "SliderY1Tooltip", null, 1, true, ControlType.Slider, 0, 10000)]
         public int SliderY1
         {
             get
@@ -191,7 +168,7 @@ namespace Cryptool.Plugins.ImageProcessor
                 }
             }
         }
-        [TaskPane("SliderY2", "Enter the value of bottom margin", null, 1, true, ControlType.Slider, 0, 10000)]
+        [TaskPane("SliderY2Caption", "SliderY2Tooltip", null, 1, true, ControlType.Slider, 0, 10000)]
         public int SliderY2
         {
             get
@@ -208,7 +185,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("Threshold", "Enter the value of the threshold", null, 1, true, ControlType.Slider, 0, 255)]
+        [TaskPane("ThresholdCaption", "ThresholdTooltip", null, 1, true, ControlType.Slider, 0, 255)]
         public int Threshold
         {
             get
@@ -225,7 +202,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("Contrast", "Enter the value of the threshold", null, 1, true, ControlType.Slider, 1, 1000)]
+        [TaskPane("ContrastCaption", "ContrastTooltip", null, 1, true, ControlType.Slider, 1, 1000)]
         public int Contrast
         {
             get
@@ -242,7 +219,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("SizeX", "Enter the value of horizontal pixels", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
+        [TaskPane("SizeXCaption", "SizeXTooltip", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
         public int SizeX
         {
             get
@@ -266,7 +243,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("SizeY", "Enter the value of vertical pixels", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
+        [TaskPane("SizeYCaption", "SizeYTooltip", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 5000)]
         public int SizeY
         {
             get
@@ -290,7 +267,7 @@ namespace Cryptool.Plugins.ImageProcessor
             }
         }
 
-        [TaskPane("Degrees", "Enter the degrees for the rotation", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 360)]
+        [TaskPane("DegreesCaption", "DegreesTooltip", null, 1, false, ControlType.TextBox, ValidationType.RangeInteger, 0, 360)]
         public int Degrees
         {
             get

@@ -33,9 +33,8 @@ using Emgu.CV.Structure;
 
 namespace Cryptool.Plugins.ImageProcessor
 {
-    [Author("Heuser", "bhe@student.uni-kassel.de", "", "")]
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("ImageProcessor", "Process and save an image", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
+    [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
+    [PluginInfo("ImageProcessor.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ImageProcessor : ICrypComponent
     {
@@ -57,7 +56,7 @@ namespace Cryptool.Plugins.ImageProcessor
         /// <summary>
         /// Input image1 ICryptoolStream, handles "inputImage1".
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputImage1", "This is the standard image used for the processing.", true)]
+        [PropertyInfo(Direction.InputData, "InputImage1Caption", "InputImage1Tooltip", true)]
         public ICryptoolStream InputImage1
         {
             get;
@@ -67,7 +66,7 @@ namespace Cryptool.Plugins.ImageProcessor
         /// <summary>
         /// Input image2 ICryptoolStream, handles "inputImage2".
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputImage2", "This is the second image only used for and-, or-, xor-functions.")]
+        [PropertyInfo(Direction.InputData, "InputImage2Caption", "InputImage2Tooltip")]
         public ICryptoolStream InputImage2
         {
             get;
@@ -77,7 +76,7 @@ namespace Cryptool.Plugins.ImageProcessor
         /// <summary>
         /// Output processed image as ICryptoolStream.
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "OutputImage", "This is the processed image.")]
+        [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
         public ICryptoolStream OutputImage
         {
             get;
