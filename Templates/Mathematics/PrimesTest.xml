@@ -18,4 +18,17 @@
     <plugin name="PrimeTest" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Number Input$" value="Zahleneingabe"/>
+    <replacement key="$PrimeTest$" value="Primzahltest"/>
+    <replacement key="$Is Prime?$" value="Ist prim?"/>
+	 <replacement key="$memo$" value="Grün: wahr\line Rot: falsch"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number Input$" value="Number Input"/>
+    <replacement key="$PrimeTest$" value="PrimeTest"/>
+    <replacement key="$Is Prime?$" value="Is Prime?"/>
+	 <replacement key="$memo$" value="Green: true\line Red: false"/>
+  </replacements>
+
 </sample>

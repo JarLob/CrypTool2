@@ -16,4 +16,13 @@
     <plugin name="BLAKE" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Hash value$" value="Hashwert"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Hash value$" value="Hash value"/>
+  </replacements>
+
 </sample>

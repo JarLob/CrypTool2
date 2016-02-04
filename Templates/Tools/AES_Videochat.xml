@@ -24,4 +24,33 @@
     <plugin name="Webcam" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$store IP$" value="speichere IP"/>
+    <replacement key="$send webcam$" value="sende Webcam"/>
+    <replacement key="$send chat$" value="sende Chat"/>
+    <replacement key="$Camera$" value="Kamera"/>
+    <replacement key="$PictureOutput$" value="Bildausgabe"/>
+    <replacement key="$incoming chat$" value="eingehender Chat"/>
+    <replacement key="$outgoing chat$" value="ausgehender Chat"/>
+    <replacement key="$receive chat$" value="empfange Chat"/>
+    <replacement key="$receive webcam$" value="empfange Webcam"/>
+    <replacement key="$TextInput$" value="Texteingabe"/>
+	 <replacement key="$memo$" value="This template shows an AES encrypted video chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$store IP$" value="store IP"/>
+    <replacement key="$send webcam$" value="send webcam"/>
+    <replacement key="$send chat$" value="send chat"/>
+    <replacement key="$Camera$" value="Camera"/>
+    <replacement key="$PictureOutput$" value="Picture Output"/>
+    <replacement key="$incoming chat$" value="incoming chat"/>
+    <replacement key="$outgoing chat$" value="outgoing chat"/>
+    <replacement key="$receive chat$" value="receive chat"/>
+    <replacement key="$receive webcam$" value="receive webcam"/>
+    <replacement key="$TextInput$" value="Text Input"/>
+	 <replacement key="$memo$" value="This template shows an AES encrypted video chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
+  </replacements>
+
 </sample>

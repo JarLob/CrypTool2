@@ -18,4 +18,21 @@
     <plugin name="StegoPermutation" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Permutation Steganography$" value="Permutations-Steganographie"/>
+    <replacement key="$Text Output$" value="Textausgabe"/>
+    <replacement key="$Image Output$" value="Bildausgabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Permutation Steganography$" value="Permutation Steganography"/>
+    <replacement key="$Text Output$" value="Text Output"/>
+    <replacement key="$Image Output$" value="Image Output"/>
+  </replacements>
+
 </sample>

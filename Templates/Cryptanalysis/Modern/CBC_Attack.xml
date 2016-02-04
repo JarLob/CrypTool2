@@ -16,4 +16,34 @@
     <plugin name="AES" />
     <plugin name="XOR" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Original Ciphertext$" value="Originaler Geheimtext"/>
+    <replacement key="$Modified Ciphertext$" value="Modifizierter Geheimtext"/>
+    <replacement key="$Modified Decrypted Plaintext$" value="Modifizierter entschlüsselter Klartext"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$String Encoder$" value="String-Kodierer"/>
+    <replacement key="$String Decoder$" value="String-Dekodierer"/>
+    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$Modify Ciphertext Array$" value="Array für die Modifikation des Geheimtextes"/>
+	 <replacement key="$memo$" value="This template demonstrates an attack on the cipher block chaining mode (CBC) of block ciphers. The attacker needs access to the original plaintext and the ciphertext.\line\line In this example, the plaintext (a list of first names) is encrypted using an AES with CBC mode. Since CBC combines each block using the XOR function with the previous cipher block, one can easily change each first block in such a way that each second decrypted block contains arbitrary content. Clearly, each decrypted first block is destroyed in this case. In this example, you can see that we changed four names and destroyed four names in the new decrypted plaintext.\line\line This attack can be practically used to attack LUKS (Linux Unified Key Setup) partitions. For more information on this attack have a look at:\line http://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Original Ciphertext$" value="Original Ciphertext"/>
+    <replacement key="$Modified Ciphertext$" value="Modified Ciphertext"/>
+    <replacement key="$Modified Decrypted Plaintext$" value="Modified Decrypted Plaintext"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$String Decoder$" value="String Decoder"/>
+    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$Modify Ciphertext Array$" value="Modify Ciphertext Array"/>
+	 <replacement key="$memo$" value="This template demonstrates an attack on the cipher block chaining mode (CBC) of block ciphers. The attacker needs access to the original plaintext and the ciphertext.\line\line In this example, the plaintext (a list of first names) is encrypted using an AES with CBC mode. Since CBC combines each block using the XOR function with the previous cipher block, one can easily change each first block in such a way that each second decrypted block contains arbitrary content. Clearly, each decrypted first block is destroyed in this case. In this example, you can see that we changed four names and destroyed four names in the new decrypted plaintext.\line\line This attack can be practically used to attack LUKS (Linux Unified Key Setup) partitions. For more information on this attack have a look at:\line http://www.jakoblell.com/blog/2013/12/22/practical-malleability-attack-against-cbc-encrypted-luks-partitions/"/>
+  </replacements>
+
 </sample>

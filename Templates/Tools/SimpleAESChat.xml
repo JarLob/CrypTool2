@@ -19,4 +19,25 @@
     <plugin name="SHA" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Message to send$" value="Zu sendende Nachricht"/>
+    <replacement key="$Shared key$" value="Gemeinsamer Schlüssel"/>
+    <replacement key="$Network receiver$" value="Netzwerk-Empfänger"/>
+    <replacement key="$Network sender$" value="Netzwerk-Sender"/>
+    <replacement key="$Destination IP$" value="Ziel-IP"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Received decrypted message$" value="Entschlüsselte empfangene Nachricht"/>
+	 <replacement key="$memo$" value="This sample demonstrates the usage of the network sender and the network receiver.\line\line In the destination IP select an Destination IP adress where you want the message to be delivered.\line\line If you use two cryptool 2 instances and the same secret key you may send an AES 256 encrypted message from one PC to the other one."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Message to send$" value="Message to send"/>
+    <replacement key="$Shared key$" value="Shared key"/>
+    <replacement key="$Network receiver$" value="Network receiver"/>
+    <replacement key="$Network sender$" value="Network sender"/>
+    <replacement key="$Destination IP$" value="Destination IP"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Received decrypted message$" value="Received decrypted message"/>
+	 <replacement key="$memo$" value="This sample demonstrates the usage of the network sender and the network receiver.\line\line In the destination IP select an Destination IP adress where you want the message to be delivered.\line\line If you use two cryptool 2 instances and the same secret key you may send an AES 256 encrypted message from one PC to the other one."/>
+  </replacements>
+
 </sample>

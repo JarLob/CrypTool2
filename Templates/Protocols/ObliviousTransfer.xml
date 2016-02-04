@@ -20,4 +20,35 @@
     <plugin name="RandomMessageGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$RSA Key$" value="RSA-Schlüssel"/>
+    <replacement key="$Newline$" value="Zeilenumbruch"/>
+    <replacement key="$Split$" value="Trenne"/>
+    <replacement key="$Database$" value="Datenbank"/>
+    <replacement key="$Requested entry$" value="Angefragter Eintrag"/>
+	 <replacement key="$step1$" value="{\b Schritt 1}\line Alice erzeugt eine Liste von Zufallszahlen (eine Zufallszahl pro Datenbankeintrag)."/>
+    <replacement key="$step2$" value="{\b Schritt 2}\line Bob generiert zufälliges k und v=x[i]+enc(k)."/>
+    <replacement key="$step3$" value="{\b Schritt 3}\line Alice sendet verschlüsselte Datenbank-Einträge m[j]+dec(v-x[j])."/>
+    <replacement key="$step4$" value="{\b Schritt 4}\line Bob entschlüsselt den angefragten Datenbank-Eintrag."/>
+	 <replacement key="$memo1$" value="Alices geheimer und privater Schlüssel"/>
+	 <replacement key="$memo2$" value="Alices Datenbank (eine Zahl pro Zeile)"/>
+	 <replacement key="$memo3$" value="Index der angefragten Nachricht"/>
+	 <replacement key="$desc$" value="{\b Oblivious Transfer Protocol}\line\line Alice has a database of messages. Bob wants to retrieve one of the entries, but doesn't want Alice to know, which entry he requested. Alice is prepared to send the requested entry to Bob, but she doesn't want Bob to get more than this one entry per request.\line\line The {\b Oblivious Transfer Protocol} meets these requirements. It requires Alice to supply the keys for an RSA encryption. Alice and Bob follow these steps:\line\line {\b Step 1:} Alice creates a list x of random numbers. The list must have the same number of entries as the database and the numbers must be smaller than the modulus N of the RSA key. Alice sends x to Bob.\line\line {\b Step 2:} Bob chooses the index i, which is the index of the database entry he wants to request from Alice. He generates a random number k that serves to blind the index i for Alice: he calculates v = x[i] + encode(k) with Alice's public key and sends it to Alice.\line\line {\b Step 3:} For each entry m[j] in her database, Alice calculates the value m[j] + decode(v-x[j]) using her private key and sends the resulting list to Bob. For entry number i, this evaluates to m[i]+k, but as Alice doesn't know k, she can't tell which entry that is.\line\line {\b Step 4:} Bob receives Alice's list and selects entry i, which is m[i] + k. He subtracts k and is left with m[i], the entry of Alice's database that he requested. Without the private key, Bob can't reconstruct any other values of Alice's list."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$RSA Key$" value="RSA Key"/>
+    <replacement key="$Newline$" value="Newline"/>
+    <replacement key="$Split$" value="Split"/>
+    <replacement key="$Database$" value="Database"/>
+    <replacement key="$Requested entry$" value="Requested entry"/>
+	 <replacement key="$step1$" value="{\b Step 1}\line Alice creates a list of random numbers (one random number per database entry)."/>
+    <replacement key="$step2$" value="{\b Step 2}\line Bob generates random k and v=x[i]+enc(k)."/>
+    <replacement key="$step3$" value="{\b Step 3}\line Alice sends encoded database entries m[j]+dec(v-x[j])."/>
+    <replacement key="$step4$" value="{\b Step 4}\line Bob decodes the requested database entry."/>
+	 <replacement key="$memo1$" value="Alice's secret and private key"/>
+	 <replacement key="$memo2$" value="Alice's database (one number per line)"/>
+	 <replacement key="$memo3$" value="Index of requested message"/>
+	 <replacement key="$desc$" value="{\b Oblivious Transfer Protocol}\line\line Alice has a database of messages. Bob wants to retrieve one of the entries, but doesn't want Alice to know, which entry he requested. Alice is prepared to send the requested entry to Bob, but she doesn't want Bob to get more than this one entry per request.\line\line The {\b Oblivious Transfer Protocol} meets these requirements. It requires Alice to supply the keys for an RSA encryption. Alice and Bob follow these steps:\line\line {\b Step 1:} Alice creates a list x of random numbers. The list must have the same number of entries as the database and the numbers must be smaller than the modulus N of the RSA key. Alice sends x to Bob.\line\line {\b Step 2:} Bob chooses the index i, which is the index of the database entry he wants to request from Alice. He generates a random number k that serves to blind the index i for Alice: he calculates v = x[i] + encode(k) with Alice's public key and sends it to Alice.\line\line {\b Step 3:} For each entry m[j] in her database, Alice calculates the value m[j] + decode(v-x[j]) using her private key and sends the resulting list to Bob. For entry number i, this evaluates to m[i]+k, but as Alice doesn't know k, she can't tell which entry that is.\line\line {\b Step 4:} Bob receives Alice's list and selects entry i, which is m[i] + k. He subtracts k and is left with m[i], the entry of Alice's database that he requested. Without the private key, Bob can't reconstruct any other values of Alice's list."/>
+  </replacements>
+
 </sample>

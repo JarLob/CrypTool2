@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Diffie-Hellman Key-Exchange over network</title>
@@ -24,5 +24,20 @@
     <plugin name="NetworkReceiver" />
     <plugin name="PrimesGenerator" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Secure Key$" value="Sicherer Schlüssel"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Sender$" value="Sender"/>
+    <replacement key="$Receiver$" value="Empfänger"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Secure Key$" value="Secure Key"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Sender$" value="Sender"/>
+    <replacement key="$Receiver$" value="Receiver"/>
+  </replacements>
 
 </sample>

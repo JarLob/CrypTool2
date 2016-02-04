@@ -16,4 +16,17 @@
     <plugin name="CRC" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$CRC value (hexadecimal)$" value="CRC-Wert (hexadezimal)"/>
+    <replacement key="$CRC value (binary)$" value="CRC-Wert (binär)"/>
+    <replacement key="$String Encoder$" value="String-Dekodierer"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$CRC value (hexadecimal)$" value="CRC value (hexadecimal)"/>
+    <replacement key="$CRC value (binary)$" value="CRC value (binary)"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+  </replacements>
+
 </sample>

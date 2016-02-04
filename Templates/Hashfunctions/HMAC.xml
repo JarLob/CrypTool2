@@ -19,4 +19,25 @@
     <plugin name="Xor" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$IPAD constant$" value="IPAD-Konstante"/>
+    <replacement key="$OPAD constant$" value="OPAD-Konstante"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Concatenate$" value="Konkatenation"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$HMAC key$" value="HMAC-Schlüssel"/>
+	 <replacement key="$memo$" value="This workspace demonstrates the HMAC component.\line The top half of the workspace consists of an arrangement of other existing components to calculate an MD5-HMAC &quot;manually&quot;. These individual components are labelled to show which part of the final HMAC output they generate. In order for this arrangement to generate a correct result, the HMAC key chosen must have a length of exactly 64 bytes. This is the case because the ipad and opad variables in the HMAC computation are created by XORing the key with the corresponding IPAD and OPAD constants, an operation which is represented here through use of the XOR cipher component. This cipher component however repeats its key input before XORing key and plaintext input if the key input is smaller than the plaintext, an operation which is not done when calculating an HMAC.\line In the lower half of the workspace there is the self-contained HMAC component, which can be used to verify the top half's result for HMAC using MD5 with key length 64 and to compute HMACs using different hash algorithms and key lengths."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$IPAD constant$" value="IPAD constant"/>
+    <replacement key="$OPAD constant$" value="OPAD constant"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Concatenate$" value="Concatenate"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$HMAC key$" value="HMAC key"/>
+	 <replacement key="$memo$" value="This workspace demonstrates the HMAC component.\line The top half of the workspace consists of an arrangement of other existing components to calculate an MD5-HMAC &quot;manually&quot;. These individual components are labelled to show which part of the final HMAC output they generate. In order for this arrangement to generate a correct result, the HMAC key chosen must have a length of exactly 64 bytes. This is the case because the ipad and opad variables in the HMAC computation are created by XORing the key with the corresponding IPAD and OPAD constants, an operation which is represented here through use of the XOR cipher component. This cipher component however repeats its key input before XORing key and plaintext input if the key input is smaller than the plaintext, an operation which is not done when calculating an HMAC.\line In the lower half of the workspace there is the self-contained HMAC component, which can be used to verify the top half's result for HMAC using MD5 with key length 64 and to compute HMACs using different hash algorithms and key lengths."/>
+  </replacements>
+
 </sample>

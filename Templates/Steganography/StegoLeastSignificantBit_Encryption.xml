@@ -19,4 +19,17 @@
     <plugin name="StegoLeastSignificantBit" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Carrier Picture$" value="Trägerbild"/>
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Carrier Picture$" value="Carrier Picture"/>
+    <replacement key="$Password$" value="Password"/>
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Image with hidden message$" value="Image with hidden message"/>
+  </replacements>
+
 </sample>

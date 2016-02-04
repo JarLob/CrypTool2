@@ -18,4 +18,17 @@
     <plugin name="Vigenere" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$FrequencyTest$" value="Frequenz-Test"/>
+    <replacement key="$FriedmanTest$" value="Friedman-Test"/>
+    <replacement key="$Test Results$" value="Testergebnisse"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$FrequencyTest$" value="Frequency Test"/>
+    <replacement key="$FriedmanTest$" value="Friedman Test"/>
+    <replacement key="$Test Results$" value="Test Results"/>
+  </replacements>
+
 </sample>

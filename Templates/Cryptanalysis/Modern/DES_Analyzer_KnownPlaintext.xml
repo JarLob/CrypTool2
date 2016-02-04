@@ -18,4 +18,24 @@
     <plugin name="KeySearcher" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+	 <replacement key="$memo$" value="In this template, the {\b KeySearcher} component tries to find the {\b DES} key that was used to encrypt a plaintext to produce the given ciphertext. It uses brute-force to search the key space and a word that is known to occur in the plaintext (&quot;Encryption&quot;) to identify the correct key. The known word can be entered in the settings of the {\b KeySearcher} component. It does however not examine the entire key space of {\b DES}, but only a subset of it. The subset can be specified as a regular expression in the settings of the {\b KeySearcher} component.\line\line The key space to be examined in this example is given by the pattern\line \tab\tab\tab {\b 11-11-11-11-11-*[13579BDF]-*[13579BDF]-*[13579BDF]},\line which means, that the first 5 bytes are set to 11 and the last 3 bytes are assumed to be odd. The resulting key space thus contains only 2^21 keys."/>
+
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+	 <replacement key="$memo$" value="In this template, the {\b KeySearcher} component tries to find the {\b DES} key that was used to encrypt a plaintext to produce the given ciphertext. It uses brute-force to search the key space and a word that is known to occur in the plaintext (&quot;Encryption&quot;) to identify the correct key. The known word can be entered in the settings of the {\b KeySearcher} component. It does however not examine the entire key space of {\b DES}, but only a subset of it. The subset can be specified as a regular expression in the settings of the {\b KeySearcher} component.\line\line The key space to be examined in this example is given by the pattern\line \tab\tab\tab {\b 11-11-11-11-11-*[13579BDF]-*[13579BDF]-*[13579BDF]},\line which means, that the first 5 bytes are set to 11 and the last 3 bytes are assumed to be odd. The resulting key space thus contains only 2^21 keys."/>
+  </replacements>
+
 </sample>

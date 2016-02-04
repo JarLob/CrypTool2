@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Dictionary attack on the Double Columnar Transposition Cipher</title>
@@ -17,5 +17,34 @@
     <plugin name="IDPAnalyser" />
     <plugin name="TranspositionAnalyser" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$String Encoder$" value="Stringkodierer"/>
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Replace$" value="Ersetzen"/>
+    <replacement key="$Split$" value="Trennen"/>
+    <replacement key="$Split Chars$" value="Trennzeichen"/>
+    <replacement key="$Step 1$" value="Schritt 1: IDP-Analyse"/>
+    <replacement key="$Step 2$" value="Schritt 2: Single-Columnar Transposition-Analyse"/>
+    <replacement key="$Intermediate Ciphertext$" value="Zwischen-Geheimtext"/>
+	 <replacement key="$memo1$" value="This template demonstrates a new attack on a ciphertext encrypted with the {b double columnar transposition (DCT)}. It makes use of the {\b IDP (Index of digraphic potential)} method developed by {\b George Lasry} in 2013, when he successfully solved the famous DCT challenge from {\b Klaus Schmeh}.\line\line A DCT consists of two {\b single-columnar transpositions (SCT)}, each having its own key. The success of the IDP method relies on the fact that it can provide a measurement of the quality of the second key without knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the IDP Analysis component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase and produces an intermediate ciphertext, which is basically just a SCT and can easily be solved in a second step with a classic hill climbing attack."/>
+	 <replacement key="$memo2$" value="If you want to analyze your own ciphertexts and the IDP analysis component does not find the correct key phrase in the provided dictionary, you should try using a different dictionary. The following link is a good source for dictionaries:  {\b http://www.ngrams.info/download_coca.asp}"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Replace$" value="Replace"/>
+    <replacement key="$Split$" value="Split"/>
+    <replacement key="$Split Chars$" value="Split Chars"/>
+    <replacement key="$Step 1$" value="Step 1: IDP Analysis"/>
+    <replacement key="$Step 2$" value="Step 2: Single-Columnar Transposition Analysis"/>
+    <replacement key="$Intermediate Ciphertext$" value="Intermediate Ciphertext"/>
+	 <replacement key="$memo1$" value="This template demonstrates a new attack on a ciphertext encrypted with the {b double columnar transposition (DCT)}. It makes use of the {\b IDP (Index of digraphic potential)} method developed by {\b George Lasry} in 2013, when he successfully solved the famous DCT challenge from {\b Klaus Schmeh}.\line\line A DCT consists of two {\b single-columnar transpositions (SCT)}, each having its own key. The success of the IDP method relies on the fact that it can provide a measurement of the quality of the second key without knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the IDP Analysis component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase and produces an intermediate ciphertext, which is basically just a SCT and can easily be solved in a second step with a classic hill climbing attack."/>
+	 <replacement key="$memo2$" value="If you want to analyze your own ciphertexts and the IDP analysis component does not find the correct key phrase in the provided dictionary, you should try using a different dictionary. The following link is a good source for dictionaries:  {\b http://www.ngrams.info/download_coca.asp}"/>
+  </replacements>
 
 </sample>

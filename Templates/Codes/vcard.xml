@@ -16,4 +16,23 @@
     <plugin name="VisualEncoder" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Visual Encoder$" value="Visueller Kodierer"/>
+    <replacement key="$Template$" value="Vorlage"/>
+    <replacement key="$forename$" value="Vorname"/>
+    <replacement key="$surname$" value="Nachname"/>
+    <replacement key="$home phone$" value="Telefon (privat)"/>
+    <replacement key="$working phone$" value="Telefon (geschäftlich)"/>
+    <replacement key="$email$" value="E-Mail"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Visual Encoder$" value="Visual Encoder"/>
+    <replacement key="$Template$" value="Template"/>
+    <replacement key="$forename$" value="Forename"/>
+    <replacement key="$surname$" value="Surname"/>
+    <replacement key="$home phone$" value="Home phone"/>
+    <replacement key="$working phone$" value="Working phone"/>
+    <replacement key="$email$" value="Email"/>
+  </replacements>
+
 </sample>

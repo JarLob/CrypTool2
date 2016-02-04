@@ -18,4 +18,21 @@
     <plugin name="IncDec" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Initial Value$" value="Startwert"/>
+    <replacement key="$Stop Value$" value="Stopwert"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$Comparator$" value="Vergleicher"/>
+    <replacement key="$Counter Output$" value="Ausgabe des Zählers"/>
+	 <replacement key="$memo$" value="This loop starts counting from the &quot;Initial Value&quot;. The counter stops at the &quot;Stop Value&quot;.\line This loop prevents the IncDec component to use CPU when the count is done by closing the gate with the input to that component."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Initial Value$" value="Initial Value"/>
+    <replacement key="$Stop Value$" value="Stop Value"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+    <replacement key="$Counter Output$" value="Counter Output"/>
+	 <replacement key="$memo$" value="This loop starts counting from the &quot;Initial Value&quot;. The counter stops at the &quot;Stop Value&quot;.\line This loop prevents the IncDec component to use CPU when the count is done by closing the gate with the input to that component."/>
+  </replacements>
+
 </sample>

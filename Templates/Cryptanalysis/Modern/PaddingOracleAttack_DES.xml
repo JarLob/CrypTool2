@@ -18,4 +18,33 @@
     <plugin name="PaddingOracleAttack" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+    <replacement key="$Encrypt$" value="Verschlüsselung"/>
+    <replacement key="$Decrypt$" value="Entschlüsselung"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$Padding Oracle$" value="Padding-Orakel"/>
+    <replacement key="$Padding Oracle Attack$" value="Padding-Orakel-Angriff"/>
+	 <replacement key="$memo1$" value="CLIENT\line The client wants to send a message to the server. DES in CBC mode is used to encrypt the message. The message consists of two 8 byte long blocks: The first block is only used as initialization vector, while the second block contains the secret information."/>
+	 <replacement key="$memo2$" value="SERVER\line Upon receipt of an encrypted message, the server decrypts it in CBC mode (C2 is decrypted and then XORed with C1). Afterwards the padding is validated. The result of the validation is then returned as True/False Response to the attacker."/>
+	 <replacement key="$memo3$" value="LEGEND\line C1: The first block of the client message (encrypted).\line C2: The second block of the client message (encrypted).\line D2: The decrypted block C2.\line O: The Overlay, which represents the manipulation to C1.\line P2: The resulting plaintext message. During the attack, P2 represents the padding. At the end of the attack, P2 represents the second block of the original plaintext message."/>
+	 <replacement key="$memo4$" value="ATTACKER\line The attacker is between client and server and intercepts every message. His/her goal is to decipher the secret information of the message. The message consists of two ciphertext blocks C1 and C2 and the secret information is in block C2. The decipherment is performed by modifying the first ciphertext block C1, sending messages to the server and interpreting the server responses. The modifications are performed by computing the XOR of the original block C1 and a so called &quot;Overlay&quot; O. The result of this computation is the new, corrupt block C1.\line\line {\b The attack consists of three phases:}\line 1. Find a valid padding.\line 2. Determine the padding length by finding the first padding byte.\line 3. Bytewise decryption of the message."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+    <replacement key="$Encrypt$" value="Encrypt"/>
+    <replacement key="$Decrypt$" value="Decrypt"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$Padding Oracle$" value="Padding Oracle"/>
+    <replacement key="$Padding Oracle Attack$" value="Padding Oracle Attack"/>
+	 <replacement key="$memo1$" value="CLIENT\line The client wants to send a message to the server. DES in CBC mode is used to encrypt the message. The message consists of two 8 byte long blocks: The first block is only used as initialization vector, while the second block contains the secret information."/>
+	 <replacement key="$memo2$" value="SERVER\line Upon receipt of an encrypted message, the server decrypts it in CBC mode (C2 is decrypted and then XORed with C1). Afterwards the padding is validated. The result of the validation is then returned as True/False Response to the attacker."/>
+	 <replacement key="$memo3$" value="LEGEND\line C1: The first block of the client message (encrypted).\line C2: The second block of the client message (encrypted).\line D2: The decrypted block C2.\line O: The Overlay, which represents the manipulation to C1.\line P2: The resulting plaintext message. During the attack, P2 represents the padding. At the end of the attack, P2 represents the second block of the original plaintext message."/>
+	 <replacement key="$memo4$" value="ATTACKER\line The attacker is between client and server and intercepts every message. His/her goal is to decipher the secret information of the message. The message consists of two ciphertext blocks C1 and C2 and the secret information is in block C2. The decipherment is performed by modifying the first ciphertext block C1, sending messages to the server and interpreting the server responses. The modifications are performed by computing the XOR of the original block C1 and a so called &quot;Overlay&quot; O. The result of this computation is the new, corrupt block C1.\line\line {\b The attack consists of three phases:}\line 1. Find a valid padding.\line 2. Determine the padding length by finding the first padding byte.\line 3. Bytewise decryption of the message."/>
+  </replacements>
+
 </sample>

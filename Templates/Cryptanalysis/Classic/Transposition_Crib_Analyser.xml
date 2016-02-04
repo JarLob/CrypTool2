@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Transposition Crib Analysis</title>
@@ -17,5 +17,20 @@
     <plugin name="Transposition" />
     <plugin name="TranspositionAnalyser" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse"/>
+    <replacement key="$Crib$" value="Crib"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$TranspositionAnalyser$" value="TranspositionAnalyser"/>
+    <replacement key="$Crib$" value="Crib"/>
+    <replacement key="$Converter$" value="Converter"/>
+  </replacements>
 
 </sample>

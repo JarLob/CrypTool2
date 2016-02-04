@@ -20,4 +20,22 @@ einfügen kann.</description>
   <relevantPlugins>
     <plugin name="WatermarkCreator" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+	 <replacement key="$memo1$" value="This template shows how to embed a visible text as a watermark into an image. In the &quot;File input&quot; component you can choose the image to be used. In the &quot;Text input&quot; component you can write a text that is added to the image as an watermark. This text can be changed while the component is being executed."/>
+	 <replacement key="$memo2$" value="In the component's settings you can select (From top to bottom):\line - The position of the watermark\line - The maximum text size to be used for the watermark text\line - The font to be used for the watermark\line - The location of the watermark on the image"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+	 <replacement key="$memo1$" value="This template shows how to embed a visible text as a watermark into an image. In the &quot;File input&quot; component you can choose the image to be used. In the &quot;Text input&quot; component you can write a text that is added to the image as an watermark. This text can be changed while the component is being executed."/>
+	 <replacement key="$memo2$" value="In the component's settings you can select (From top to bottom):\line - The position of the watermark\line - The maximum text size to be used for the watermark text\line - The font to be used for the watermark\line - The location of the watermark on the image"/>
+  </replacements>
+
 </sample>

@@ -22,4 +22,35 @@
     <plugin name="StreamComparator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Count$" value="Zähler"/>
+    <replacement key="$Length$" value="Länge"/>
+    <replacement key="$Select word$" value="Wähle Wort"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$String Decoder$" value="String-Kodierer"/>
+    <replacement key="$Comparator$" value="Datenstrom-Vergleicher"/>
+    <replacement key="$Actual search password$" value="Momentan untersuchtes Passwort"/>
+    <replacement key="$Found password$" value="Gefundenes Passwort"/>
+    <replacement key="$Found index$" value="Gefundener Index"/>
+    <replacement key="$Progress$" value="Fortschritt"/>
+	 <replacement key="$Test password - Hash-value (HEX)$" value="Hashwert des Test-Passwortes (HEX)"/>
+	 <replacement key="$memo$" value="This template shows how a dictionary attack can be built using CrypTool 2.\line\line The dictionary is indexed using a number. This number is incremented until the correct password is found.\line\line All entries of the dictionary are hashed and tested against the hash of the test password.\line\line Finally the found password and the correpsonding index are visible in the &quot;Found password&quot;, &quot;Found hash&quot;, and &quot;Found index&quot; textboxes."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Count$" value="Count"/>
+    <replacement key="$Length$" value="Length"/>
+    <replacement key="$Select word$" value="Select word"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$String Decoder$" value="String Decoder"/>
+    <replacement key="$Comparator$" value="Datastream Comparator"/>
+    <replacement key="$Actual search password$" value="Actual search password"/>
+    <replacement key="$Found password$" value="Found password"/>
+    <replacement key="$Found index$" value="Found index"/>
+    <replacement key="$Progress$" value="Progress"/>
+    <replacement key="$Test password - Hash-value (HEX)$" value="Test password - Hash-value (HEX)"/>
+	 <replacement key="$memo$" value="This template shows how a dictionary attack can be built using CrypTool 2.\line\line The dictionary is indexed using a number. This number is incremented until the correct password is found.\line\line All entries of the dictionary are hashed and tested against the hash of the test password.\line\line Finally the found password and the correpsonding index are visible in the &quot;Found password&quot;, &quot;Found hash&quot;, and &quot;Found index&quot; textboxes."/>
+ </replacements>
+
 </sample>

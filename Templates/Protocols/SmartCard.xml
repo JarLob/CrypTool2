@@ -18,4 +18,15 @@
     <plugin name="SmartInterpreter" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$TextInput$" value="Texteingabe"/>
+    <replacement key="$TextOutput$" value="Textausgabe"/>
+    <replacement key="$SmartInterpreter$" value="SmartCard-Interpreter"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$TextInput$" value="Text Input"/>
+    <replacement key="$TextOutput$" value="Text Output"/>
+    <replacement key="$SmartInterpreter$" value="SmartCard Interpreter"/>
+  </replacements>
+
 </sample>

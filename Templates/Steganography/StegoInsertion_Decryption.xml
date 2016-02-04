@@ -18,4 +18,13 @@
     <plugin name="StegoInsertion" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Hidden message$" value="Versteckte Nachricht"/>
+    <replacement key="$Carrier MIDI File$" value="MIDI-Trägerdatei"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Hidden message$" value="Hidden message"/>
+    <replacement key="$Carrier MIDI File$" value="Carrier MIDI File"/>
+  </replacements>
+
 </sample>

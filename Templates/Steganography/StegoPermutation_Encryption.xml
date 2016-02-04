@@ -19,4 +19,19 @@
     <plugin name="StegoInsertion" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Carrier list$" value="Trägerliste"/>
+    <replacement key="$Split$" value="Trenne"/>
+    <replacement key="$Permutation Steganography$" value="Permutations-Steganographie"/>
+    <replacement key="$Carrier with hidden message$" value="Träger mit versteckter Nachricht"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Carrier list$" value="Carrier List"/>
+    <replacement key="$Split$" value="Split"/>
+    <replacement key="$Permutation Steganography$" value="Permutation Steganography"/>
+    <replacement key="$Carrier with hidden message$" value="Carrier with hidden message"/>
+  </replacements>
+
 </sample>

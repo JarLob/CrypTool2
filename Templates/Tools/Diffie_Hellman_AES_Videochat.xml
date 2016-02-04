@@ -27,4 +27,65 @@
     <plugin name="Webcam" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Camera$" value="Kamera"/>
+    <replacement key="$outgoing chat$" value="ausgehender Chat"/>
+    <replacement key="$incoming chat$" value="eingehender Chat"/>
+    <replacement key="$Session Key$" value="Sitzungsschlüssel"/>
+    <replacement key="$store$" value="speichere"/>
+    <replacement key="$send webcam$" value="sende Webcam"/>
+    <replacement key="$receive webcam$" value="empfange Webcam"/>
+    <replacement key="$send chat$" value="sende Chat"/>
+    <replacement key="$receive chat$" value="empfange Chat"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+	 <replacement key="$Phase 1: Key Exchange$" value="Phase 1: Schlüsselaustausch"/>
+	 <replacement key="$Phase 2: Video chat$" value="Phase 2: Video-Chat"/>
+    <replacement key="$fill$" value="fülle"/>
+    <replacement key="$filter$" value="filtere"/>
+    <replacement key="$read$" value="lese"/>
+    <replacement key="$get$" value="hole"/>
+    <replacement key="$receive$" value="empfange"/>
+    <replacement key="$send init$" value="sende Init"/>
+    <replacement key="$receive init$" value="empfange Init"/>
+    <replacement key="$pad$" value="Pad"/>
+    <replacement key="$start DH msg$" value="starte DH_msg"/>
+    <replacement key="$send dh_response$" value="sende DH_response"/>
+    <replacement key="$empty$" value="leer"/>
+    <replacement key="$message$" value="Hallo, wie geht's?"/>
+	 <replacement key="$memo1$" value="This template shows an AES encrypted video chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
+	 <replacement key="$memo2$" value="On start:\line Choose a G and a P, calculate A and send a\line dh_start msg with P and A.\line Wait for response, get B to calculate s."/>
+	 <replacement key="$memo3$" value="On receiving a dh_start msg:\line Get P and A calculate B and s.\line Send B back."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Camera$" value="Camera"/>
+    <replacement key="$outgoing chat$" value="outgoing chat"/>
+    <replacement key="$incoming chat$" value="incoming chat"/>
+    <replacement key="$Session Key$" value="Session Key"/>
+    <replacement key="$store$" value="store"/>
+    <replacement key="$send webcam$" value="send webcam"/>
+    <replacement key="$receive webcam$" value="receive webcam"/>
+    <replacement key="$send chat$" value="send chat"/>
+    <replacement key="$receive chat$" value="receive chat"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+    <replacement key="$Converter$" value="Converter"/>
+	 <replacement key="$Phase 1: Key Exchange$" value="Phase 1: Key Exchange     "/>
+	 <replacement key="$Phase 2: Video chat$" value="Phase 2: Video chat"/>
+    <replacement key="$fill$" value="fill"/>
+    <replacement key="$filter$" value="filter"/>
+    <replacement key="$read$" value="read"/>
+    <replacement key="$get$" value="get"/>
+    <replacement key="$receive$" value="receive"/>
+    <replacement key="$send init$" value="send init"/>
+    <replacement key="$receive init$" value="receive init"/>
+    <replacement key="$pad$" value="pad"/>
+    <replacement key="$start DH msg$" value="start DH_msg"/>
+    <replacement key="$send dh_response$" value="send DH_response"/>
+    <replacement key="$empty$" value="empty"/>
+    <replacement key="$message$" value="hello, how are you?"/>
+	 <replacement key="$memo1$" value="This template shows an AES encrypted video chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
+	 <replacement key="$memo2$" value="On start:\line Choose a G and a P, calculate A and send a\line dh_start msg with P and A.\line Wait for response, get B to calculate s."/>
+	 <replacement key="$memo3$" value="On receiving a dh_start msg:\line Get P and A calculate B and s.\line Send B back."/>
+  </replacements>
+
 </sample>

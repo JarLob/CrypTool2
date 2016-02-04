@@ -53,4 +53,47 @@ Quellen:<newline />
     <plugin name="Webcam" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Camera$" value="Kamera"/>
+    <replacement key="$Output$" value="Ausgabe"/>
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$Base64 Decoder$" value="Base64-Decodierer"/>
+    <replacement key="$Base64 Encoder$" value="Base64-Encodierer"/>
+    <replacement key="$Switch$" value="Schalter"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$Length$" value="Länge"/>
+    <replacement key="$Random IV$" value="Zufalls-IV"/>
+    <replacement key="$IV Length$" value="IV-Länge"/>
+    <replacement key="$IV Decoder$" value="IV-Decodierer"/>
+    <replacement key="$Extract Message$" value="Extrahiere Nachricht"/>
+    <replacement key="$Extract IV$" value="Extrahiere IV"/>
+    <replacement key="$Visual Decoder$" value="Visueller Dekodierer"/>
+    <replacement key="$Visual Encoder$" value="Visueller Kodierer"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+	 <replacement key="$memo$" value="In this sample we provide a quick way to encrypt plaintext with AES by using a simple password (which is converted to an AES-key by using PKCS5). The result is base64-encoded for easy copy &amp; paste e.g. to an email. Decryption is also possible with this template: The encrypted base64-encoded text needs to be copied to the {\b Input}-component. Then the {\b AES}-component needs to be switched to &quot;Decrypt&quot; and the {\b Switch}-component must be set to True. With the help of the {\b Switch}-component, the data takes a different path, i.e. for decryption we first need to base64-decode it, while when encrypting we encode it in base64 after encryption.\line AES is used in CBC-mode and the required Initialization Vector (IV) is created randomly. Since the IV must also be sent to the receiver, it is also base64-encoded and prepended to the message, i.e. the entire message is &quot;base64(IV)|| base64(aes(plaintext))&quot;. On the receiving side, the IV is first chopped of the message and used to decrypt the rest of the message."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Camera$" value="Camera"/>
+    <replacement key="$Output$" value="Output"/>
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Password$" value="Password"/>
+    <replacement key="$Base64 Decoder$" value="Base64 Decoder"/>
+    <replacement key="$Base64 Encoder$" value="Base64 Encoder"/>
+    <replacement key="$Switch$" value="Switch"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$Length$" value="Length"/>
+    <replacement key="$Random IV$" value="Random IV"/>
+    <replacement key="$IV Decoder$" value="IV Decoder"/>
+    <replacement key="$IV Length$" value="IV Length"/>
+    <replacement key="$Extract Message$" value="Extract Message"/>
+    <replacement key="$Extract IV$" value="Extract IV"/>
+    <replacement key="$Visual Decoder$" value="Visual Decoder"/>
+    <replacement key="$Visual Encoder$" value="Visual Encoder"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+	 <replacement key="$memo$" value="In this sample we provide a quick way to encrypt plaintext with AES by using a simple password (which is converted to an AES-key by using PKCS5). The result is base64-encoded for easy copy &amp; paste e.g. to an email. Decryption is also possible with this template: The encrypted base64-encoded text needs to be copied to the {\b Input}-component. Then the {\b AES}-component needs to be switched to &quot;Decrypt&quot; and the {\b Switch}-component must be set to True. With the help of the {\b Switch}-component, the data takes a different path, i.e. for decryption we first need to base64-decode it, while when encrypting we encode it in base64 after encryption.\line AES is used in CBC-mode and the required Initialization Vector (IV) is created randomly. Since the IV must also be sent to the receiver, it is also base64-encoded and prepended to the message, i.e. the entire message is &quot;base64(IV)|| base64(aes(plaintext))&quot;. On the receiving side, the IV is first chopped of the message and used to decrypt the rest of the message."/>
+  </replacements>
+
 </sample>

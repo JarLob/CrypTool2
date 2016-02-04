@@ -17,4 +17,37 @@
     <plugin name="HammingDistance" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Image Equality$" value="Übereinstimmung der Bilder"/>
+    <replacement key="$Original Image$" value="Originales Bild"/>
+    <replacement key="$Original Hash Value$" value="Originaler Hashwert"/>
+    <replacement key="$Original Hash Image$" value="Originales Hashbild"/>
+    <replacement key="$Processed Image$" value="Bearbeitetes Bild"/>
+    <replacement key="$Processed Hash Value$" value="Bearbeiteter Hashwert"/>
+    <replacement key="$Processed Hash Image$" value="Bearbeitetes Hashbild"/>
+    <replacement key="$Hamming Distance$" value="Hamming-Abstand"/>
+    <replacement key="$ImageProcessor$" value="Bildbearbeitung"/>
+    <replacement key="$ImageHash$" value="Bildhash"/>
+    <replacement key="$Differences of Hashed Images$" value="Unterschiede in den Hashbildern"/>
+    <replacement key="$value$" value="Wert"/>
+	 <replacement key="$memo$" value="{\b What does this template do?}\line\line This template loads one picture and displays it. This picture is smoothed and this new picture also displayed. Then the hash of both is calculated. Both this hash as text and the hashed pictures are displayed. In the next step the difference of the hashed images is shown. On the right side the hamming distance between the two hashes is calculated. It tells how meny pixels differ. Moreover the Image Equality is calculated in percent.\line\line {\b How does this template work?}\line\line The chosen input image is hashed via the ImageHash component. The same image is smoothed via the ImageProcessor component and hashed afterwards. These to images are Xor-connected via the ImageProcessor. The hamming distance component calculates the differing pixel amount. This amount is subtracted from 1024 and put into a progress component, together with 1024. This shows the Image Equality in percent."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Image Equality$" value="Image Equality"/>
+    <replacement key="$Original Image$" value="Original Image"/>
+    <replacement key="$Original Hash Value$" value="Original Hash Value"/>
+    <replacement key="$Original Hash Image$" value="Original Hash Image"/>
+    <replacement key="$Processed Image$" value="Processed Image"/>
+    <replacement key="$Processed Hash Value$" value="Processed Hash Value"/>
+    <replacement key="$Processed Hash Image$" value="Processed Hash Image"/>
+    <replacement key="$Hamming Distance$" value="Hamming Distance"/>
+    <replacement key="$ImageProcessor$" value="Image Processor"/>
+    <replacement key="$ImageHash$" value="Image Hash"/>
+    <replacement key="$Differences of Hashed Images$" value="Differences of Hashed Images"/>
+    <replacement key="$value$" value="value"/>
+	 <replacement key="$memo$" value="{\b What does this template do?}\line\line This template loads one picture and displays it. This picture is smoothed and this new picture also displayed. Then the hash of both is calculated. Both this hash as text and the hashed pictures are displayed. In the next step the difference of the hashed images is shown. On the right side the hamming distance between the two hashes is calculated. It tells how meny pixels differ. Moreover the Image Equality is calculated in percent.\line\line {\b How does this template work?}\line\line The chosen input image is hashed via the ImageHash component. The same image is smoothed via the ImageProcessor component and hashed afterwards. These to images are Xor-connected via the ImageProcessor. The hamming distance component calculates the differing pixel amount. This amount is subtracted from 1024 and put into a progress component, together with 1024. This shows the Image Equality in percent."/>
+  </replacements>
+
 </sample>

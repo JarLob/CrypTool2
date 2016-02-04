@@ -19,4 +19,13 @@
     <plugin name="BooleanOutput" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$BooleanInput$" value="Boolesche Eingabe"/>
+    <replacement key="$BooleanOutput$" value="Boolesche Ausgabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$BooleanInput$" value="Boolean Input"/>
+    <replacement key="$BooleanOutput$" value="Boolean Output"/>
+  </replacements>
+
 </sample>

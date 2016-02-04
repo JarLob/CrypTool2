@@ -23,4 +23,37 @@
     <plugin name="Yao3" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$B (Bob's money)$" value="B (Bobs Vermögen)"/>
+    <replacement key="$A (Alice's money)$" value="A (Alices Vermögen)"/>
+    <replacement key="$RSA Key$" value="RSA-Schlüssel"/>
+    <replacement key="$Bob richer?$" value="Bob reicher?"/>
+	 <replacement key="$step1$" value="{\b Step 1}\line Bob berechnet C = enc(x) mit Alices öffentlichem Schlüssel und sendet D=C-B an Alice."/>
+    <replacement key="$step2$" value="{\b Step 2}\line Alice generiert Zahlenliste Y\line mit Y(i) = dec(D+i) und i von 0 bis m-1."/>
+    <replacement key="$step3$" value="{\b Step 3}\line Alice berechnet Liste Z und sendet sie an Bob ,\line wobei Z(i) = Y(i) % p für i&lt;=A, \line und Z(i) = (Y(i)+1) % p für i&gt;A."/>
+    <replacement key="$step4$" value="{\b Step 4}\line Bob entscheidet, wer reicher ist: Falls Z(B) = x % p, dann B&lt;=A und Bob ist nicht reicher als Alice. Sonst ist Bob reicher."/>
+    <replacement key="$memo1$" value="Bob generiert eine Zufallszahl x mit N Bits."/>
+    <replacement key="$memo2$" value="Alice generiert zufällige Primzahl p mit N/2 Bits."/>
+    <replacement key="$memo3$" value="Alices öffentlicher und privater Schlüssel"/>
+    <replacement key="$memo4$" value="Obergrenze der Vermögen"/>
+    <replacement key="$memo5$" value="Ist Bob reicher\line als Alice?"/>
+	 <replacement key="$desc$" value="{\b Yao's Millionaire Problem}\line\line Millionaires Alice and Bob want to find out who is richer, without telling each other how much money they own. Let Alice have A million dollars and Bob B million dollars. They agree on an upper limit m that is bigger than A and B. They follow this protocol:\line\line {\b Step 1:} Bob generates a random number x, encrypts it with Alice's public key to get C = encode(x) and sends the number D=C-B to Alice.\line\line {\b Step 2:} Alice generates the numbers Y(0) to Y(m-1) by calculating Y(i) = decode(D+i) with her private key. One of the Y(i) is equal to x, but Alice doesn't know, which one.\line\line {\b Step 3:} Alice generates a random prime number p with N/2 bits. She calculates a new number list Z, where Z(i) = Y(i) % p for 0&lt;=i&lt;=A and Z(i) = (Y(i) % p)+1 for A&lt;i&lt;m. She sends p and Z to Bob.\line\line {\b Step 4:} Bob receives p and the number list. He calculates x % p. Bob knows that his encrypted value is on position B of the list Y. So if Z(B)=x % p, he knows that Alice didn't increase the value and thus B&lt;=A, meaning that Bob is not richer than Alice. Otherwise, Bob is richer.\line\line {\b Conclusion:} Although Bob's secret value x appears in Alice's number list Y, Alice wins no knowledge about Bob's wealth, as she doesn't know on which position x appears.\line As Bob doesn't know Alice's secret key, he can't find out which values of Z were increased by Alice, and so he can't determine her exact wealth.\line And so they have found out who is richer, without learning the wealth of the other."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$B (Bob's money)$" value="B (Bob's money)"/>
+    <replacement key="$A (Alice's money)$" value="A (Alice's money)"/>
+    <replacement key="$RSA Key$" value="RSA Key"/>
+    <replacement key="$Bob richer?$" value="Bob richer?"/>
+	 <replacement key="$step1$" value="{\b Step 1}\line Bob calculates C = enc(x) with Alice's public key and sends D=C-B to Alice."/>
+    <replacement key="$step2$" value="{\b Step 2}\line Alice generates number list Y\line with Y(i) = dec(D+i) for i from 0 to m-1."/>
+    <replacement key="$step3$" value="{\b Step 3}\line Alice calculates list Z and sends it to Bob,\line where Z(i) = Y(i) % p for i&lt;=A, \line and Z(i) = (Y(i)+1) % p for i&gt;A."/>
+    <replacement key="$step4$" value="{\b Step 4}\line Bob decides who is richer: If Z(B) = x % p, then B&lt;=A and Bob is not richer than Alice. Otherwise, Bob is richer."/>
+    <replacement key="$memo1$" value="Bob generates a random number x with N bits."/>
+    <replacement key="$memo2$" value="Alice generates a random prime p with N/2 bits."/>
+    <replacement key="$memo3$" value="Alice's public and private keys"/>
+    <replacement key="$memo4$" value="Maximal amount of money"/>
+    <replacement key="$memo5$" value="Is Bob richer\line than Alice?"/>
+	 <replacement key="$desc$" value="{\b Yao's Millionaire Problem}\line\line Millionaires Alice and Bob want to find out who is richer, without telling each other how much money they own. Let Alice have A million dollars and Bob B million dollars. They agree on an upper limit m that is bigger than A and B. They follow this protocol:\line\line {\b Step 1:} Bob generates a random number x, encrypts it with Alice's public key to get C = encode(x) and sends the number D=C-B to Alice.\line\line {\b Step 2:} Alice generates the numbers Y(0) to Y(m-1) by calculating Y(i) = decode(D+i) with her private key. One of the Y(i) is equal to x, but Alice doesn't know, which one.\line\line {\b Step 3:} Alice generates a random prime number p with N/2 bits. She calculates a new number list Z, where Z(i) = Y(i) % p for 0&lt;=i&lt;=A and Z(i) = (Y(i) % p)+1 for A&lt;i&lt;m. She sends p and Z to Bob.\line\line {\b Step 4:} Bob receives p and the number list. He calculates x % p. Bob knows that his encrypted value is on position B of the list Y. So if Z(B)=x % p, he knows that Alice didn't increase the value and thus B&lt;=A, meaning that Bob is not richer than Alice. Otherwise, Bob is richer.\line\line {\b Conclusion:} Although Bob's secret value x appears in Alice's number list Y, Alice wins no knowledge about Bob's wealth, as she doesn't know on which position x appears.\line As Bob doesn't know Alice's secret key, he can't find out which values of Z were increased by Alice, and so he can't determine her exact wealth.\line And so they have found out who is richer, without learning the wealth of the other."/>
+  </replacements>
+
 </sample>

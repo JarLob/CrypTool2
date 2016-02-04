@@ -22,4 +22,27 @@
     <plugin name="WEPAttacks" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Iframe Generator$" value="IP-Frame-Generator"/>
+    <replacement key="$WEP protocol$" value="WEP-Protokoll"/>
+    <replacement key="$Attack WEP$" value="Angriff auf das WEP-Protokoll"/>
+    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$false$" value="falsch"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Gate$" value="Gatter"/>
+	 <replacement key="$memo1$" value="Generiere 10K Arp-Pakete und &quot;sende&quot; sie mit dem WEP-Protokoll und dem angegebenen Schlüssel verschlüsselt."/>
+	 <replacement key="$memo2$" value="Wenn der Angriff noch nicht genügend Schlüssel hat, erhöhe den Zähler und empfange nochmals 10K Pakete."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Iframe Generator$" value="Iframe Generator"/>
+    <replacement key="$WEP protocol$" value="WEP protocol"/>
+    <replacement key="$Attack WEP$" value="Attack WEP"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$false$" value="false"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Gate$" value="Gate"/>
+	 <replacement key="$memo1$" value="Generate 10K Arp packets and &quot;send&quot; it using the WEP protocol with the given Key."/>
+	 <replacement key="$memo2$" value="If the attack does not have enough keys, increment the counter to get another 10K packets."/>
+  </replacements>
+
 </sample>

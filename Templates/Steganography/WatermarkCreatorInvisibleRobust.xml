@@ -21,4 +21,24 @@ wurde.</description>
   <relevantPlugins>
     <plugin name="WatermarkCreator" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$Text Output$" value="Textausgabe"/>
+    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+    <replacement key="$Image Processor$" value="Bildbearbeitung"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+	 <replacement key="$memo$" value="This template demonstrates the robustness of the watermark. At the very right you can see the image, manipulated (grayscale) by the &quot;Image processor&quot;. Left to it you can see the original image with the watermark added. As you can see, the component still manages to extract the watermark text from the manipulated image."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$Text Output$" value="Text Output"/>
+    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
+    <replacement key="$Image Processor$" value="Image Processor"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+	 <replacement key="$memo$" value="This template demonstrates the robustness of the watermark. At the very right you can see the image, manipulated (grayscale) by the &quot;Image processor&quot;. Left to it you can see the original image with the watermark added. As you can see, the component still manages to extract the watermark text from the manipulated image."/>
+  </replacements>
+
 </sample>

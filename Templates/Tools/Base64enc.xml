@@ -44,4 +44,21 @@ Quellen:<newline />
 
   <icon file="enc.png" />
 
+  <replacements lang="de">
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Output$" value="Ausgabe"/>
+    <replacement key="$Encoder$" value="Kodierer"/>
+    <replacement key="$Decoder$" value="Dekodierer"/>
+    <replacement key="$Output (hexadecimal)$" value="Ausgabe (hexadezimal)"/>
+	 <replacement key="$memo$" value="With this template different encoding techniques can be demonstrated. The {\b Input} on the left side is first decoded as text (ASCII) and outputted as binary data. The {\b Encoder} then encodes this binary data as Base-64. In the parameter panel, other coding-combinations can be set."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Output$" value="Output"/>
+    <replacement key="$Encoder$" value="Encoder"/>
+    <replacement key="$Decoder$" value="Decoder"/>
+    <replacement key="$Output (hexadecimal)$" value="Output (hexadecimal)"/>
+	 <replacement key="$memo$" value="With this template different encoding techniques can be demonstrated. The {\b Input} on the left side is first decoded as text (ASCII) and outputted as binary data. The {\b Encoder} then encodes this binary data as Base-64. In the parameter panel, other coding-combinations can be set."/>
+  </replacements>
+
 </sample>

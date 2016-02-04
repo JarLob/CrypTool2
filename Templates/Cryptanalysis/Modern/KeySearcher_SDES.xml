@@ -18,4 +18,17 @@
     <plugin name="SDES" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+  </replacements>
+
 </sample>

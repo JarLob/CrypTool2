@@ -16,4 +16,17 @@
     <plugin name="Keccak" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Debug Information$" value="Debug-Informationen"/>
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Hash Value$" value="Hashwert"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Debug Information$" value="Debug Information"/>
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Hash Value$" value="Hash value"/>
+  </replacements>
+
 </sample>

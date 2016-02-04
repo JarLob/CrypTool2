@@ -22,4 +22,47 @@
     <plugin name="VisualEncoder" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Message Input$" value="Nachrichteneingabe"/>
+    <replacement key="$Message Output$" value="Nachrichtenausgabe"/>
+    <replacement key="$Concatenate$" value="Konkateniere"/>
+    <replacement key="$RSA Key Generator$" value="RSA-Schlüsselgenerator"/>
+    <replacement key="$RSA Decrypt$" value="RSA-Entschlüsselung"/>
+    <replacement key="$Signed Hash$" value="Signierter Hash"/>
+    <replacement key="$Base64 Encoder$" value="Base64-Kodierer"/>
+    <replacement key="$Base64 Decoder$" value="Base64-Dekodierer"/>
+    <replacement key="$minus hashlength$" value="minus Hashlänge"/>
+    <replacement key="$Visual Encoder$" value="Visueller Kodierer"/>
+    <replacement key="$Visual Decoder$" value="Visueller Dekodierer"/>
+    <replacement key="$Length$" value="Länge"/>
+    <replacement key="$Valid?$" value="Gültig?"/>
+    <replacement key="$Comparator$" value="Vergleicher"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Read Signed QR-Code$" value="Lese signierten QR-Code"/>
+    <replacement key="$Create Signed QR-Code$" value="Erzeuge signierten QR-Code"/>
+    <replacement key="$memo$" value="This Template shows a QR Code, that is authenticated by using RSA.\line\line The authentication is reached by the following Steps:\line At first we generate a hash of the message that the QR Code should contain. Then we encrypt that hash with our RSA private key and convert it to a Base64 String to avoid non-printable characters. And finally we encode a QRcode of the concatenation of the Message and that signed hash.\line The receiver of the QR Code will decrypt our hash with our public key. Then he has to generate his own hash of our message and eventually compare both hashes. If they are equal the QRcode is considered as authenticated."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Message Input$" value="Message Input"/>
+    <replacement key="$Message Output$" value="Message Output"/>
+    <replacement key="$Concatenate$" value="Concatenate"/>
+    <replacement key="$RSA Key Generator$" value="RSA Key Generator"/>
+    <replacement key="$RSA Decrypt$" value="RSA Decrypt"/>
+    <replacement key="$Signed Hash$" value="Signed Hash"/>
+    <replacement key="$Base64 Encoder$" value="Base64 Encoder"/>
+    <replacement key="$Base64 Decoder$" value="Base64 Decoder"/>
+    <replacement key="$minus hashlength$" value="minus hashlength"/>
+    <replacement key="$Visual Encoder$" value="Visual Encoder"/>
+    <replacement key="$Visual Decoder$" value="Visual Decoder"/>
+    <replacement key="$Length$" value="Length"/>
+    <replacement key="$Valid?$" value="Valid?"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Read Signed QR-Code$" value="Read Signed QR-Code"/>
+    <replacement key="$Create Signed QR-Code$" value="Create Signed QR-Code"/>
+    <replacement key="$memo$" value="This Template shows a QR Code, that is authenticated by using RSA.\line\line The authentication is reached by the following Steps:\line At first we generate a hash of the message that the QR Code should contain. Then we encrypt that hash with our RSA private key and convert it to a Base64 String to avoid non-printable characters. And finally we encode a QRcode of the concatenation of the Message and that signed hash.\line The receiver of the QR Code will decrypt our hash with our public key. Then he has to generate his own hash of our message and eventually compare both hashes. If they are equal the QRcode is considered as authenticated."/>
+  </replacements>
+
 </sample>

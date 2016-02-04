@@ -19,4 +19,25 @@
     <plugin name="StreamComparator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$Text Output$" value="Textausgabe"/>
+    <replacement key="$Concatenate$" value="Konkatenation"/>
+    <replacement key="$Hash Value$" value="Hashwert"/>
+    <replacement key="$Comparator$" value="Vergleicher"/>
+    <replacement key="$Result$" value="Ergebnis"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$Hash$" value="Kopie des Hashwertes. Hier variieren ändert Vergleichsergebnis"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Password$" value="Password"/>
+    <replacement key="$Text Output$" value="Text Output"/>
+    <replacement key="$Concatenate$" value="Concatenate"/>
+    <replacement key="$Hash Value$" value="Hash Value"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+    <replacement key="$Result$" value="Result"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$Hash$" value="Copy of hash. Change this to change the comparison result."/>
+  </replacements>
+
 </sample>

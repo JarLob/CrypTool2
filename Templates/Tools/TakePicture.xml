@@ -18,4 +18,15 @@
     <plugin name="Webcam" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Take Picture$" value="Bild aufnehmen"/>
+    <replacement key="$Camera$" value="Kamera"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Take Picture$" value="Take Picture"/>
+    <replacement key="$Camera$" value="Camera"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+  </replacements>
+
 </sample>

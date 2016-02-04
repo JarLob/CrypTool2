@@ -26,4 +26,21 @@
 	<plugin name="BB84PhotonbaseGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Initial key$" value="Initialschlüssel"/>
+    <replacement key="$Shared key$" value="Gemeinsamer Schlüssel"/>
+    <replacement key="$Received key$" value="Empfangener Schlüssel"/>
+    <replacement key="$BB84PhotonEncoder$" value="BB84-Photonenkodierer"/>
+    <replacement key="$BB84PhotonDecoder$" value="BB84-Photonendekodierer"/>
+    <replacement key="$BB84KeyGenerator$" value="BB84-Schlüsselgenerator"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Initial key$" value="Initial key"/>
+    <replacement key="$Shared key$" value="Shared key"/>
+    <replacement key="$Received key$" value="Received key"/>
+    <replacement key="$BB84PhotonEncoder$" value="BB84 Photon Encoder"/>
+    <replacement key="$BB84PhotonDecoder$" value="BB84 Photon Decoder"/>
+    <replacement key="$BB84KeyGenerator$" value="BB84 Key Generator"/>
+  </replacements>
+
 </sample>

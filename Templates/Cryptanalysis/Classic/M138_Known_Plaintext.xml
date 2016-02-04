@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">M-138 Known Plaintext Attack</title>
@@ -16,5 +16,25 @@
   <relevantPlugins>
     <plugin name="M138Analyzer" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$M-138 Analyzer$" value="M-138 Analysewerkzeug"/>
+	 <replacement key="$memo1$" value="The user can set a pair of ciphertext and plaintext as inputs for the component &quot;M-138 Analyzer&quot;."/>
+	 <replacement key="$memo2$" value="This template shows a known-plaintext attack on M-138."/>
+	 <replacement key="$memo3$" value="As a result, the user receives a set of possible keys that map the given plaintext to the given ciphertext. For each possible offset, one set of keys is given by the format\line strip1, strip2, ... / offset\line In case there are positions where multiple strips could be used, the output will have the following format:\line strip1, [strip2|strip3], ... / offset\line This means that on position 2 of the key both, strip1 and strip2, are possible."/>
+	 
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$M-138 Analyzer$" value="M-138 Analyzer"/>
+	 <replacement key="$memo1$" value="The user can set a pair of ciphertext and plaintext as inputs for the component &quot;M-138 Analyzer&quot;."/>
+	 <replacement key="$memo2$" value="This template shows a known-plaintext attack on M-138."/>
+	 <replacement key="$memo3$" value="As a result, the user receives a set of possible keys that map the given plaintext to the given ciphertext. For each possible offset, one set of keys is given by the format\line strip1, strip2, ... / offset\line In case there are positions where multiple strips could be used, the output will have the following format:\line strip1, [strip2|strip3], ... / offset\line This means that on position 2 of the key both, strip1 and strip2, are possible."/>
+  </replacements>
 
 </sample>

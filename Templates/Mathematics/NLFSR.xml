@@ -17,4 +17,17 @@
     <plugin name="NLFSR" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Tap Sequence$" value="Tap-Sequenz"/>
+    <replacement key="$NLFSR$" value="Nichtlinear rückgekoppeltes Schieberegister"/>
+    <replacement key="$TextOutput$" value="Textausgabe"/>
+	 <replacement key="$memo$" value="A NLFSR (Non-Linear Feedback Shift Register) is a common component in modern stream ciphers, especially in RFID and smartcard applications. NLFSRs are known to be more resistant to cryptanalytic attacks than Linear Feedback Shift Registers (LFSRs), although construction of large NLFSRs with guaranteed long periods remains an open problem.\line\line http://en.wikipedia.org/wiki/NLFSR\line\line You may also want to take a look at the LFSR template included in CrypTool 2."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Tap Sequence$" value="Tap Sequence"/>
+    <replacement key="$NLFSR$" value="Non-Linear Feedback Shift Register"/>
+    <replacement key="$TextOutput$" value="Text Output"/>
+	 <replacement key="$memo$" value="A NLFSR (Non-Linear Feedback Shift Register) is a common component in modern stream ciphers, especially in RFID and smartcard applications. NLFSRs are known to be more resistant to cryptanalytic attacks than Linear Feedback Shift Registers (LFSRs), although construction of large NLFSRs with guaranteed long periods remains an open problem.\line\line http://en.wikipedia.org/wiki/NLFSR\line\line You may also want to take a look at the LFSR template included in CrypTool 2."/>
+  </replacements>
+
 </sample>

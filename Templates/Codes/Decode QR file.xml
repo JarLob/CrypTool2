@@ -18,4 +18,21 @@
     <plugin name="VisualDecoder" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Visual Decoder$" value="Visueller Decodierer"/>
+    <replacement key="$Text Output$" value="Textausgabe"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+    <replacement key="$memo$" value="Wählen Sie in der Komponente &quot;Dateieingabe&quot; eine JPG- oder PNG-Datei mit einem QR-Code aus. In der Komponente &quot;Bildausgabe&quot; wird diese Bilddatei dargestellt und der im QR-Code codierte Inhalt wird in der Komponente &quot;Textausgabe&quot; angezeigt."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Visual Decoder$" value="Visual Decoder"/>
+    <replacement key="$Text Output$" value="Text Output"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+    <replacement key="$memo$" value="Selecting a jpg or png file with a QR code within the &quot;File Input&quot; component will output the picture contained in the file on the &quot;Picture Output&quot; component and the text content of the QR code on the &quot;Text Output&quot; component."/>
+  </replacements>
+
 </sample>

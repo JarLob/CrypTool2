@@ -18,4 +18,17 @@
     <plugin name="RandomInput" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Random input$" value="Zufallseingabe"/>
+    <replacement key="$Decimalisation$" value="Dezimalisierung"/>
+    <replacement key="$Random decimal number$" value="Zufällige Dezimalzahl"/>
+	 <replacement key="$memo$" value="With this template you can create a random decimal number. To do so, first a set of random bytes  (preset to 1000) are generated. These bytes are then used by the {\b Decimalisation}-component to generate a random number with a certain amount of decimal digits (preset to 100). The decimalisation-component is set to use the Modulo-approach to generate the random decimal number. For further details, read the help page for the decimalisation component."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Random input$" value="Random input"/>
+    <replacement key="$Decimalisation$" value="Decimalisation"/>
+    <replacement key="$Random decimal number$" value="Random decimal number"/>
+	 <replacement key="$memo$" value="With this template you can create a random decimal number. To do so, first a set of random bytes  (preset to 1000) are generated. These bytes are then used by the {\b Decimalisation}-component to generate a random number with a certain amount of decimal digits (preset to 100). The decimalisation-component is set to use the Modulo-approach to generate the random decimal number. For further details, read the help page for the decimalisation component."/>
+  </replacements>
+
 </sample>

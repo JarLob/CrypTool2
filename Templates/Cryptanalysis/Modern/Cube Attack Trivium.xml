@@ -17,4 +17,15 @@
     <plugin name="Trivium" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Cube Attack$" value="Cube-Angriff"/>
+    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$TextOutput$" value="Textausgabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Cube Attack$" value="Cube Attack"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$TextOutput$" value="Text Output"/>
+  </replacements>
+
 </sample>

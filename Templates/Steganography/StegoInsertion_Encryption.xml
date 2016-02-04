@@ -19,4 +19,15 @@
     <plugin name="StegoInsertion" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Message Input$" value="Nachrichteneingabe"/>
+    <replacement key="$MIDI File Input$" value="Dateieingabe MIDI-Datei"/>
+    <replacement key="$MIDI Carrier File Output$" value="Dateiausgabe MIDI-Trägerdatei"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Message Input$" value="Message Input"/>
+    <replacement key="$MIDI File Input$" value="MIDI File Input"/>
+    <replacement key="$MIDI Carrier File Output$" value="$MIDI Carrier File Output"/>
+  </replacements>
+
 </sample>

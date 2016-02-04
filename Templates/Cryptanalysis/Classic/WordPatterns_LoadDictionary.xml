@@ -18,4 +18,27 @@
     <plugin name="WordPatterns" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Dictionary file$" value="Wörterbuch-Datei"/>
+    <replacement key="$Dictionary size$" value="Größe des Wörterbuchs"/>
+    <replacement key="$Convert to string$" value="Konvertiere nach String"/>
+    <replacement key="$Word pattern$" value="Wortmuster"/>
+    <replacement key="$Separators$" value="Trennzeichen"/>
+    <replacement key="$Split input$" value="Trenne Eingabe"/>
+    <replacement key="$Search$" value="Suche"/>
+    <replacement key="$Matching entries$" value="Passende Einträge"/>
+	 <replacement key="$memo$" value="This sample demonstrates how to use the WordPatterns component together with a self defined dictionary. The dictionary is provided as a text file where each line defines one entry of the dictionary."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Dictionary file$" value="Dictionary file"/>
+    <replacement key="$Dictionary size$" value="Dictionary size"/>
+    <replacement key="$Convert to string$" value="Convert to string"/>
+    <replacement key="$Word pattern$" value="Word pattern"/>
+    <replacement key="$Separators$" value="Separators"/>
+    <replacement key="$Split input$" value="Split input"/>
+    <replacement key="$Search$" value="Search"/>
+    <replacement key="$Matching entries$" value="Matching entries"/>
+	 <replacement key="$memo$" value="This sample demonstrates how to use the WordPatterns component together with a self defined dictionary. The dictionary is provided as a text file where each line defines one entry of the dictionary."/>
+  </replacements>
+
 </sample>

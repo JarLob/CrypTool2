@@ -21,4 +21,11 @@ Ein Commitment-Protokoll ist ein kryptographisches Zwei-Parteien-Protokoll, das 
     <plugin name="BooleanInput" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$BooleanInput$" value="Boolesche Eingabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$BooleanInput$" value="Boolean Input"/>
+  </replacements>
+
 </sample>

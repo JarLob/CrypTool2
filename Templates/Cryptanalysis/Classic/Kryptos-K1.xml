@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Kryptos K1 Analysis</title>
@@ -15,5 +15,22 @@
   <relevantPlugins>
     <plugin name="VigenereAnalyzer" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext K1"/>
+	 <replacement key="$Vigenere Analyzer$" value="Vigenère-Analysierer"/>
+    <replacement key="$Kryptos Alphabet$" value="Kryptos-Alphabet"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+	 <replacement key="$memo$" value="Kryptos is an encrypted sculpture by American artist Jim Sanborn located on the grounds of the Central Intelligence Agency (CIA) in Langley, Virginia. Since its dedication on November 3, 1990, there has been much speculation about the meaning of the encrypted messages it bears. Of the four messages, three have been solved, with the fourth remaining one of the most famous unsolved codes in the world. The sculpture continues to provide a diversion for cryptanalysts, both amateur and professional, who are attempting to decrypt the final section.\line\line Source: http://en.wikipedia.org/wiki/Kryptos\line\line With this template we demonstrate the solution of Kryptos K1 - the first message of the Kryptos sculpture.\line The Vigenère Analyzer component takes the K1 ciphertext and the Kryptos alphabet (KRYPTOSABCDEFGHIJLMNQUVWXZ). It performs a hillclimb-search for Vigenère keys between 5 and 20 using 100 restarts."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext K1"/>
+    <replacement key="$Vigenere Analyzer$" value="Vigenère Analyzer"/>
+    <replacement key="$Kryptos Alphabet$" value="Kryptos Alphabet"/>
+    <replacement key="$Key$" value="Key"/>
+	 <replacement key="$memo$" value="Kryptos is an encrypted sculpture by American artist Jim Sanborn located on the grounds of the Central Intelligence Agency (CIA) in Langley, Virginia. Since its dedication on November 3, 1990, there has been much speculation about the meaning of the encrypted messages it bears. Of the four messages, three have been solved, with the fourth remaining one of the most famous unsolved codes in the world. The sculpture continues to provide a diversion for cryptanalysts, both amateur and professional, who are attempting to decrypt the final section.\line\line Source: http://en.wikipedia.org/wiki/Kryptos\line\line With this template we demonstrate the solution of Kryptos K1 - the first message of the Kryptos sculpture.\line The Vigenère Analyzer component takes the K1 ciphertext and the Kryptos alphabet (KRYPTOSABCDEFGHIJLMNQUVWXZ). It performs a hillclimb-search for Vigenère keys between 5 and 20 using 100 restarts."/>
+  </replacements>
 
 </sample>

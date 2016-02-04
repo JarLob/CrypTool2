@@ -17,4 +17,17 @@
     <plugin name="StringOperations" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Expected Text$" value="Erwarteter Text"/>
+    <replacement key="$Text with Errors$" value="Text mit Fehlern"/>
+    <replacement key="$LevenshteinDistance$" value="Levenshtein-Distanz"/>
+	 <replacement key="$memo$" value="This template demonstrates the &quot;{\b Levenshtein Distance}&quot; of two given texts.\line\line The Levenshtein Distance was considered by Vladimir Levenshtein in 1965. It is also called the &quot;edit distance&quot;. It is defined by the minimum amount of edits (insert, remove, replace) of single characters to change one text into the other.\line\line In this template the text &quot;This is a test of the Levenshtein Distance&quot; is compared to &quot;This is a Xtest of the LevenshteinXXX DistaXce&quot;. The &quot;Expected Text&quot; could be the expected text in a data transmission. The &quot;Text with Errors&quot; could be a received text with errors. The Levenshtein Distance between these two texts is 5. To generate the one text out of the other, the first &quot;X&quot; (first error) has to be changed to &quot;t&quot;. Then, three errors (&quot;XXX&quot;) have to be removed. Finally, &quot;DistaXce&quot; has to be changed to &quot;Distance&quot;. In sum, we have 1 replace, 3 removals, and 1 replace, which is added to a total Levenshtein Distance of 5.\line\line For more information have a look at: http://en.wikipedia.org/wiki/Levenshtein_distance"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Expected Text$" value="Expected Text"/>
+    <replacement key="$Text with Errors$" value="Text with Errors"/>
+    <replacement key="$LevenshteinDistance$" value="Levenshtein Distance"/>
+	 <replacement key="$memo$" value="This template demonstrates the &quot;Levenshtein Distance&quot; of two given texts.\line\line The Levenshtein Distance was considered by Vladimir Levenshtein in 1965. It is also called the &quot;edit distance&quot;. It is defined by the minimum amount of edits (insert, remove, replace) of single characters to change one text into the other.\line\line In this template the text &quot;This is a test of the Levenshtein Distance&quot; is compared to &quot;This is a Xtest of the LevenshteinXXX DistaXce&quot;. The &quot;Expected Text&quot; could be the expected text in a data transmission. The &quot;Text with Errors&quot; could be a received text with errors. The Levenshtein Distance between these two texts is 5. To generate the one text out of the other, the first &quot;X&quot; (first error) has to be changed to &quot;t&quot;. Then, three errors (&quot;XXX&quot;) have to be removed. Finally, &quot;DistaXce&quot; has to be changed to &quot;Distance&quot;. In sum, we have 1 replace, 3 removals, and 1 replace, which is added to a total Levenshtein Distance of 5.\line\line For more information have a look at: http://en.wikipedia.org/wiki/Levenshtein_distance"/>
+  </replacements>
+
 </sample>

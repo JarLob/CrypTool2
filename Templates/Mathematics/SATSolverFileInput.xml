@@ -17,4 +17,17 @@
     <plugin name="SATSolver" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$String Encoder$" value="String-Kodierer"/>
+    <replacement key="$Text Output$" value="Textausgabe"/>
+    <replacement key="$SAT Solver$" value="SAT-Solver"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Text Output$" value="Text Output"/>
+    <replacement key="$SAT Solver$" value="SAT Solver"/>
+  </replacements>
+
 </sample>

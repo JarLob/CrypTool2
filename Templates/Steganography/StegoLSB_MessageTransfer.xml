@@ -18,4 +18,27 @@
     <plugin name="StegoLeastSignificantBit" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Image file$" value="Bilddatei"/>
+    <replacement key="$Carrier image$" value="Trägerbild"/>
+    <replacement key="$Hide message$" value="Verstecke Nachricht"/>
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Extract message$" value="Extrahiere Nachricht"/>
+    <replacement key="$String Encoder$" value="String-Kodierer"/>
+    <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht"/>
+    <replacement key="$Extracted message$" value="Extrahierte Nachricht"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Image file$" value="Image file"/>
+    <replacement key="$Carrier image$" value="Carrier Image"/>
+    <replacement key="$Hide message$" value="Hide message"/>
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Extract message$" value="Extract message"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Image with hidden message$" value="Image with hidden message"/>
+    <replacement key="$Extracted message$" value="Extracted message"/>
+  </replacements>
+
 </sample>

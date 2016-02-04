@@ -22,4 +22,24 @@ einfügen kann.</description>
   <relevantPlugins>
     <plugin name="WatermarkCreator" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$File Input$" value="Dateieingabe"/>
+    <replacement key="$Watermark Text$" value="Wasserzeichen-Text"/>
+    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+    <replacement key="$Picture Output$" value="Bildausgabe"/>
+    <replacement key="$Read Watermark Text$" value="Lese Wasserzeichen-Text"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;Text input&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another WatermarkCreator component and displayed in another TextOutput component."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$File Input$" value="File Input"/>
+    <replacement key="$Watermark Text$" value="Watermark Text"/>
+    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
+    <replacement key="$Picture Output$" value="Picture Output"/>
+    <replacement key="$Read Watermark Text$" value="Read Watermark Text"/>
+    <replacement key="$Converter$" value="Converter"/>
+	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;Text input&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another WatermarkCreator component and displayed in another TextOutput component."/>
+  </replacements>
+
 </sample>

@@ -18,4 +18,15 @@
     <plugin name="VisualEncoder" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$Visual Encoder$" value="Visueller Codierer"/>
+    <replacement key="$text$" value="Dieses Template erklärt, wie man einen Text in einem QR-Code codieren kann."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$Visual Encoder$" value="Visual Encoder"/>
+    <replacement key="$text$" value="This template will create a QR Code and explain how the code is constructed."/>
+  </replacements>
+
 </sample>

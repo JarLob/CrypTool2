@@ -17,4 +17,21 @@
     <plugin name="StegoPermutation" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Carrier List$" value="Trägerliste"/>
+    <replacement key="$Split$" value="Trenne"/>
+    <replacement key="$Split character$" value="Trennzeichen"/>
+    <replacement key="$Permutation Steganography$" value="Permutations-Steganographie"/>
+    <replacement key="$Hidden message$" value="Versteckte Nachricht"/>
+    <replacement key="$String Encoder$" value="String-Kodierer"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Carrier List$" value="Carrier List"/>
+    <replacement key="$Split$" value="Split"/>
+    <replacement key="$Split character$" value="Split character"/>
+    <replacement key="$Permutation Steganography$" value="Permutation Steganography"/>
+    <replacement key="$Hidden message$" value="Hidden message"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+  </replacements>
+
 </sample>

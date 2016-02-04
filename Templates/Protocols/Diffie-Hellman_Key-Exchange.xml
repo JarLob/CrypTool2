@@ -26,4 +26,23 @@
     <plugin name="VariableStore" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Prime$" value="Primzahl"/>
+    <replacement key="$VariableStore$" value="speichere"/>
+    <replacement key="$Alice's secret$" value="Alices Geheimnis"/>
+    <replacement key="$Bob's secret$" value="Bobs Geheimnis"/>
+    <replacement key="$Shared secret (calculated by Alice)$" value="Gemeinsames Geheimnis (berechnet von Alice)"/>
+    <replacement key="$Shared secret (calculated by Bob)$" value="Gemeinsames Geheimnis (calculated by Bob)"/>
+    <replacement key="$Comparator$" value="Vergleich"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Prime$" value="Prime"/>
+    <replacement key="$VariableStore$" value="store variable"/>
+    <replacement key="$Alice's secret$" value="Alice's secret"/>
+    <replacement key="$Bob's secret$" value="Bob's secret"/>
+    <replacement key="$Shared secret (calculated by Alice)$" value="Shared secret (calculated by Alice)"/>
+    <replacement key="$Shared secret (calculated by Bob)$" value="Shared secret (calculated by Bob)"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+  </replacements>
+
 </sample>

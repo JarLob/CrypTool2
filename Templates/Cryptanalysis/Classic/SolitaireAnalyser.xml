@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Solitaire Brute-force Analysis</title>
@@ -16,5 +16,22 @@
     <plugin name="CryptoolDictionary" />
     <plugin name="SolitaireAnalyser" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$Keyword$" value="Schlüsselwort"/>
+    <replacement key="$Word dictionary$" value="Nachrichten-Wörterbuch"/>
+    <replacement key="$Key dictionary$" value="Schlüssel-Wörterbuch"/>
+    <replacement key="$SolitaireAnalyser$" value="Solitaire-Analysierer"/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$Keyword$" value="Keyword"/>
+    <replacement key="$Word dictionary$" value="Word dictionary"/>
+    <replacement key="$Key dictionary$" value="Key dictionary"/>
+    <replacement key="$SolitaireAnalyser$" value="SolitaireAnalyser"/>
+ </replacements>
 
 </sample>

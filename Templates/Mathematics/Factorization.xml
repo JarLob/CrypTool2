@@ -17,4 +17,25 @@
     <plugin name="Gate" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Number Input$" value="Zahleneingabe"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$Factorizer$" value="Faktorisierer"/>
+    <replacement key="$Prime factors$" value="Primfaktoren"/>
+    <replacement key="$Remainders$" value="Reste"/>
+	 <replacement key="$memo1$" value="This template demonstrates the two operation modes of the  brute-force factorizer component:\line\line {\b Mode 1: Determine smallest prime factor}\line In this mode, the component only looks for the smallest prime factor of the input number. It provides the found factor and the composite remainder on its outputs. In this example, the composite remainder is fed back to the input of the factorizer via a gate and the resulting loop thus completely factorizes the input number.\line\line {\b Mode 2: Determine all prime factors}\line In this mode, the component tries to completely factor the input in one go. When it is done (or the brute-force limit is reached), it outputs the factors it has found as a single array of numbers."/>
+	 <replacement key="$memo2$" value="Bestimme kleinsten Primfaktor"/>
+	 <replacement key="$memo3$" value="Bestimme alle Primfaktoren"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number Input$" value="Number Input"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$Factorizer$" value="Factorizer"/>
+    <replacement key="$Prime factors$" value="Prime factors"/>
+    <replacement key="$Remainders$" value="Remainders"/>
+	 <replacement key="$memo1$" value="This template demonstrates the two operation modes of the  brute-force factorizer component:\line\line {\b Mode 1: Determine smallest prime factor}\line In this mode, the component only looks for the smallest prime factor of the input number. It provides the found factor and the composite remainder on its outputs. In this example, the composite remainder is fed back to the input of the factorizer via a gate and the resulting loop thus completely factorizes the input number.\line\line {\b Mode 2: Determine all prime factors}\line In this mode, the component tries to completely factor the input in one go. When it is done (or the brute-force limit is reached), it outputs the factors it has found as a single array of numbers."/>
+	 <replacement key="$memo2$" value="Determine smallest prime factor"/>
+	 <replacement key="$memo3$" value="Determine all prime factors"/>
+  </replacements>
+
 </sample>

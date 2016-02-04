@@ -17,4 +17,29 @@
     <plugin name="PrimesGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Number Input$" value="Zahleneingabe"/>
+    <replacement key="$PrimeNumber$" value="Primzahl"/>
+    <replacement key="$PrimesGenerator$" value="Primzahlgenerator"/>
+    <replacement key="$PrimeTest$" value="Primzahltest"/>
+    <replacement key="$Is Prime?$" value="Ist prim?"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Random Generator$" value="Zufallsgenerator"/>
+	 <replacement key="$memo1$" value="Erzeuge eine zufällige Primzahl &lt;= 1 Million."/>
+	 <replacement key="$memo2$" value="Erzeuge eine zufällige Primzahl mit genau 250 Bits."/>
+	 <replacement key="$memo3$" value="Erzeuge eine zufällige Primzahl, indem zuerst eine Zufallszahl erzeugt wird und dann die nächstgrößere Primzahl gesucht wird."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number Input$" value="Number Input"/>
+    <replacement key="$PrimeNumber$" value="Prime Number"/>
+    <replacement key="$PrimesGenerator$" value="PrimesGenerator"/>
+    <replacement key="$PrimeTest$" value="PrimeTest"/>
+    <replacement key="$Is Prime?$" value="Is Prime?"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Random Generator$" value="Random Generator"/>
+	 <replacement key="$memo1$" value="Generate a random prime number &lt;= 1 Million."/>
+	 <replacement key="$memo2$" value="Generate a random prime number with exactly 500 bits."/>
+	 <replacement key="$memo3$" value="Generate a random prime number by first generating a random number and then searching for the next bigger prime number."/>
+  </replacements>
+
 </sample>

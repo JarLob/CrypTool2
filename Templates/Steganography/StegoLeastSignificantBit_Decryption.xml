@@ -18,4 +18,17 @@
     <plugin name="StegoLeastSignificantBit" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Carrier Picture$" value="Trägerbild"/>
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$String Encoder$" value="String-Kodierer"/>
+    <replacement key="$Message$" value="Nachricht"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Carrier Picture$" value="Carrier Picture"/>
+    <replacement key="$Password$" value="Password"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Message$" value="Message"/>
+  </replacements>
+
 </sample>

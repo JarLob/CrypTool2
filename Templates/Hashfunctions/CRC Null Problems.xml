@@ -17,4 +17,29 @@
     <plugin name="Concatenate" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Input with correct CRC check value$" value="Eingabe mit korrektem CRC-Wert"/>
+    <replacement key="$Zero bytes suffix$" value="Zero-Bytes-Suffix"/>
+    <replacement key="$Zero bytes prefix$" value="Zero-Bytes-Präfix"/>
+    <replacement key="$CRC value (hexadecimal)$" value="CRC-Wert (hexadezimal)"/>
+    <replacement key="$String Decoder$" value="String-Kodierer"/>
+    <replacement key="$String Encoder$" value="String-Dekodierer"/>
+    <replacement key="$Concatenate$" value="Konkatenation"/>
+	 <replacement key="$memo1$" value="Appending one or more zero bytes to a data block that is padded with a correct CRC value will not change the  CRC value."/>
+	 <replacement key="$memo2$" value="If the start value of the selected CRC method is zero, leading zeros in the input data have no effect on the resulting CRC check value."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Input with correct CRC check value$" value="Input with correct CRC check value"/>
+    <replacement key="$Zero bytes suffix$" value="Zero bytes suffix"/>
+    <replacement key="$Zero bytes prefix$" value="Zero bytes prefix"/>
+    <replacement key="$CRC value (hexadecimal)$" value="CRC value (hexadecimal)"/>
+    <replacement key="$String Decoder$" value="String Decoder"/>
+    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Concatenate$" value="Concatenate"/>
+	 <replacement key="$memo1$" value="Appending one or more zero bytes to a data block that is padded with a correct CRC value will not change the  CRC value."/>
+	 <replacement key="$memo2$" value="If the start value of the selected CRC method is zero, leading zeros in the input data have no effect on the resulting CRC check value."/>
+  </replacements>
+
 </sample>

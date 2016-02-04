@@ -18,4 +18,22 @@
     <plugin name="KeySearcher" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+  </replacements>
+
 </sample>

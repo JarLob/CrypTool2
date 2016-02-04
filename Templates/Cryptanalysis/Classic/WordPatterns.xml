@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Wordpattern Analysis</title>
@@ -16,5 +16,20 @@
     <plugin name="CryptoolDictionary" />
     <plugin name="WordPatterns" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Search pattern$" value="Suchmuster"/>
+    <replacement key="$WordPatterns$" value="Wortmuster"/>
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Found patterns$" value="Gefundene Muster"/>
+	 <replacement key="$memo$" value="This sample demonstrates the use of the WordPatterns component to find words which have the same pattern as an input word (search pattern). In this example, TREE has the pattern 1233 which is the same as the words ball, bass, bell etc.\line When starting the play mode, the wordlist will be processed once. After that, you can change the input word to obtain new results interactively without having to re-process the entire wordlist."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Search pattern$" value="Search pattern"/>
+    <replacement key="$WordPatterns$" value="WordPatterns"/>
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Found patterns$" value="Found patterns"/>
+	 <replacement key="$memo$" value="This sample demonstrates the use of the WordPatterns component to find words which have the same pattern as an input word (search pattern). In this example, TREE has the pattern 1233 which is the same as the words ball, bass, bell etc.\line When starting the play mode, the wordlist will be processed once. After that, you can change the input word to obtain new results interactively without having to re-process the entire wordlist."/>
+  </replacements>
 
 </sample>

@@ -18,4 +18,15 @@
     <plugin name="NetworkReceiver" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Network Sender$" value="Netzwerk-Sender"/>
+    <replacement key="$Network Receiver$" value="Netzwerk-Empfänger"/>
+    <replacement key="$Text Input$" value="Texteingabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Network Sender$" value="Network Sender"/>
+    <replacement key="$Network Receiver$" value="Network Receiver"/>
+    <replacement key="$Text Input$" value="Text Input"/>
+  </replacements>
+
 </sample>

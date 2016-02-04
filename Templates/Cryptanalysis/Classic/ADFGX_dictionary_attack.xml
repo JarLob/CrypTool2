@@ -18,4 +18,43 @@
     <plugin name="Costfunction" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Output (Bestlist)$" value="Ausgabe (Bestenliste)"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Concat$" value="Konkatenierer"/>
+    <replacement key="$Cost function$" value="Kostenfunktion"/>
+    <replacement key="$Actual value$" value="Aktueller Wert"/>
+    <replacement key="$Threshold$" value="Schwellenwert"/>
+    <replacement key="$CoincidenceGate$" value="Koinzidenz-Gatter"/>
+    <replacement key="$KeyGate$" value="Schlüssel-Gatter"/>
+    <replacement key="$TextGate$" value="Text-Gatter"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$infinity$" value="unendlich"/>
+    <replacement key="$Iterate Dictionary$" value="Durchlaufe Wörterbuch"/>
+    <replacement key="$Generate Output$" value="Generiere Ausgabe"/>
+    <replacement key="$Check transposition$" value="Check transposition\line\line This template shows how the ADFGVX cipher can be attacked using a dictionary attack. All entries of the dictionary are tested using the standard columnar transposition. The cost function calculates a cost value based on tuples (2 letters) for each &quot;encrypted&quot; text (only the transposition is reverted). That is possible because the &quot;encrypted&quot; text is a monoalphabetical substition which has the same coincidence index value as the plaintext. The text is still encrypted and can not be read but the transposition is removed.\line\line There may be more than one output in the best list. That comes from the fact that there exists equivalent keys in the columnar transposition."/>
+    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#13;&#10;&#13;&#10;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#13;&#10;&#13;&#10;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#13;&#10;&#13;&#10;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#13;&#10;&#13;&#10;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Output (Bestlist)$" value="Output (Bestlist)"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Concat$" value="Concat"/>
+    <replacement key="$Cost function$" value="$Cost function$"/>
+    <replacement key="$Actual value$" value="Actual value"/>
+    <replacement key="$Threshold$" value="Threshold"/>
+    <replacement key="$CoincidenceGate$" value="CoincidenceGate"/>
+    <replacement key="$KeyGate$" value="KeyGate"/>
+    <replacement key="$TextGate$" value="TextGate"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$infinity$" value="infinity"/>
+    <replacement key="$Iterate Dictionary$" value="Iterate Dictionary"/>
+    <replacement key="$Generate Output$" value="Generate Output"/>
+    <replacement key="$Check transposition$" value="Check transposition\line\line This template shows how the ADFGVX cipher can be attacked using a dictionary attack. All entries of the dictionary are tested using the standard columnar transposition. The cost function calculates a cost value based on tuples (2 letters) for each &quot;encrypted&quot; text (only the transposition is reverted). That is possible because the &quot;encrypted&quot; text is a monoalphabetical substition which has the same coincidence index value as the plaintext. The text is still encrypted and can not be read but the transposition is removed.\line\line There may be more than one output in the best list. That comes from the fact that there exists equivalent keys in the columnar transposition."/>
+    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#13;&#10;&#13;&#10;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#13;&#10;&#13;&#10;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#13;&#10;&#13;&#10;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#13;&#10;&#13;&#10;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher"/>
+  </replacements>
+
 </sample>

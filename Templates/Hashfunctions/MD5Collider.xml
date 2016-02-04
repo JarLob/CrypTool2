@@ -20,4 +20,37 @@
     <plugin name="StreamComparator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Random seed$" value="Zufälliger Seed (optional)"/>
+    <replacement key="$MD5Collider$" value="MD5-Kollisionsgenerator"/>
+    <replacement key="$Prefix$" value="Präfix (Vielfaches von 64 Bytes)"/>
+    <replacement key="$Suffix$" value="Suffix (Daten beliebiger Länge)"/>
+	 <replacement key="$StringDecoder$" value="String-Kodierer"/>
+    <replacement key="$StringEncoder$" value="String-Dekodierer"/>
+    <replacement key="$Concatenate$" value="Konkatenation"/>
+    <replacement key="$MD5 of data$" value="MD5 von Daten"/>
+    <replacement key="$Data$" value="Daten"/>
+    <replacement key="$Compare Data$" value="Vergleiche Daten"/>
+    <replacement key="$Compare Hash$" value="Vergleiche Hash"/>
+    <replacement key="$Same Data$" value="Gleiche Daten"/>
+    <replacement key="$Same Hash$" value="Gleicher Hash"/>
+    <replacement key="$memo$" value="This workspace demonstrates the use of the MD5Collider component to generate an MD5 collision. A collision of the form\line &lt;PREFIX&gt; || &lt;GENERATED COLLISION BLOCK&gt; || &lt;SUFFIX&gt;\line is created."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Random seed$" value="Random seed (optional)"/>
+    <replacement key="$MD5Collider$" value="MD5 Collider"/>
+    <replacement key="$Prefix$" value="Prefix (must be a multiple of 64 bytes)"/>
+    <replacement key="$Suffix$" value="Suffix (data of any length)"/>
+	 <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$Concatenate$" value="Concatenate"/>
+    <replacement key="$MD5 of data$" value="MD5 of data"/>
+    <replacement key="$Data$" value="Data"/>
+    <replacement key="$Compare Data$" value="Compare Data"/>
+    <replacement key="$Compare Hash$" value="Compare Hash"/>
+    <replacement key="$Same Data$" value="Same Data"/>
+    <replacement key="$Same Hash$" value="Same Hash"/>
+    <replacement key="$memo$" value="This workspace demonstrates the use of the MD5Collider component to generate an MD5 collision. A collision of the form\line &lt;PREFIX&gt; || &lt;GENERATED COLLISION BLOCK&gt; || &lt;SUFFIX&gt;\line is created."/>
+  </replacements>
+
 </sample>

@@ -18,4 +18,21 @@
     <plugin name="SDES" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+  </replacements>
+
 </sample>

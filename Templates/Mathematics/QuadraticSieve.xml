@@ -18,4 +18,17 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Quadratisches_Sieb" /></desc
     <plugin name="QuadraticSieve" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Number Input$" value="Zahleneingabe"/>
+    <replacement key="$QuadraticSieve$" value="Quadratisches Sieb"/>
+    <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile"/>
+	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number Input$" value="Number Input"/>
+    <replacement key="$QuadraticSieve$" value="Quadratic Sieve"/>
+    <replacement key="$Output$" value="Output: All factors, one per line"/>
+	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3."/>
+  </replacements>
+
 </sample>

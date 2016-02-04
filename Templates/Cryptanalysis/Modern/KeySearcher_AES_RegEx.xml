@@ -18,4 +18,23 @@
     <plugin name="KeySearcher" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
+	 <replacement key="$memo$" value="This sample shows the usage of a regular expression as the cost function for the KeySearcher. Assume, that you receive the ciphertext and you know only, that it ends with &quot;CrypTool&quot;."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$StringDecoder$" value="String Decoder"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$KeySearcher$" value="KeySearcher"/>
+	 <replacement key="$memo$" value="This sample shows the usage of a regular expression as the cost function for the KeySearcher. Assume, that you receive the ciphertext and you know only, that it ends with &quot;CrypTool&quot;."/> 
+  </replacements>
+
 </sample>

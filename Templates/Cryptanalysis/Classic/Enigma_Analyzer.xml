@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Enigma Analysis</title>
@@ -17,5 +17,22 @@
     <plugin name="FrequencyTest" />
     <plugin name="FriedmanTest" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$FrequencyTest$" value="Frequenz-Test"/>
+    <replacement key="$FriedmanTest$" value="Friedman-Test"/>
+    <replacement key="$Key Settings$" value="Schlüsselstellungen"/>
+    <replacement key="$memo$" value="This sample demonstrates the cryptanalysis algorithm proposed by James Gillogly in Crytptologia volume XIX, Number 4: http://members.fortunecity.com/jpeschel/gillog1.htm\line When you load this sample, the Enigma plugin is set to encryption/decryption mode and all key settings (i.e. rotor settings, ring settings and plugsettings) are entered correctly. Hence, by simply executing this sample you can see the decrypted text right away. The algorithm of J. Gillogly is activated by selecting &quot;Analyze&quot; as the operation mode of the Enigma. In this mode, all Enigma settings (besides the reflector) are ignored and the Enigma perfoms a key search on the encrypted message. The used message is a short german message. You should closely follow the message log to see how the algorithm progresses. You can control the analysis with the options given in the analysis options in the plugin's settings. Depending on which plug search method you choose, the algorithm will decipher the message correctly (log-trigraph sum as cost function for identifying the next plug) or one plug will be wrong (index of coincidences for detecting plugs). This is because the text is too short to deliver reliable results with the index of coincidences."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$FrequencyTest$" value="FrequencyTest"/>
+    <replacement key="$FriedmanTest$" value="FriedmanTest"/>
+    <replacement key="$Key Settings$" value="Key Settings"/>
+    <replacement key="$memo$" value="This sample demonstrates the cryptanalysis algorithm proposed by James Gillogly in Crytptologia volume XIX, Number 4: http://members.fortunecity.com/jpeschel/gillog1.htm\line When you load this sample, the Enigma plugin is set to encryption/decryption mode and all key settings (i.e. rotor settings, ring settings and plugsettings) are entered correctly. Hence, by simply executing this sample you can see the decrypted text right away. The algorithm of J. Gillogly is activated by selecting &quot;Analyze&quot; as the operation mode of the Enigma. In this mode, all Enigma settings (besides the reflector) are ignored and the Enigma perfoms a key search on the encrypted message. The used message is a short german message. You should closely follow the message log to see how the algorithm progresses. You can control the analysis with the options given in the analysis options in the plugin's settings. Depending on which plug search method you choose, the algorithm will decipher the message correctly (log-trigraph sum as cost function for identifying the next plug) or one plug will be wrong (index of coincidences for detecting plugs). This is because the text is too short to deliver reliable results with the index of coincidences."/>
+  </replacements>
 
 </sample>

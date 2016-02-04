@@ -16,4 +16,17 @@
     <plugin name="NumberFieldSieve" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Number$" value="Zahl"/>
+    <replacement key="$GNFS$" value="Allgemeines Zahlkörpersieb (GNFS)"/>
+    <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile"/>
+	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the GNFS component.\line\line The default number 28810...35453 is taken from &quot;Beginners Guide to NFS factoring using GGNFS and MSIEVE&quot;.\line\line Numbers can also be entered as a mathematical expression, e.g. (2^304-1)/2.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3.\line\line The GNFS component uses a multi-threaded MSIEVE version."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number$" value="Number"/>
+    <replacement key="$GNFS$" value="General Number Field Sieve (GNFS)"/>
+    <replacement key="$Output$" value="Output: All factors, one per line"/>
+	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the GNFS component.\line\line The default number 28810...35453 is taken from &quot;Beginners Guide to NFS factoring using GGNFS and MSIEVE&quot;.\line\line Numbers can also be entered as a mathematical expression, e.g. (2^304-1)/2.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3.\line\line The GNFS component uses a multi-threaded MSIEVE version."/>
+  </replacements>
+
 </sample>

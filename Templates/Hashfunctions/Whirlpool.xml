@@ -16,4 +16,13 @@
     <plugin name="WPHash" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Hash$" value="Hashwert"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Hash$" value="Hash Value"/>
+  </replacements>
+
 </sample>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">Scytale Brute-force Analysis</title>
@@ -20,5 +20,38 @@
     <plugin name="IncDec" />
     <plugin name="Scytale" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$All possible plaintexts$" value="Alle möglichen Klartexte"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$Scytale$" value="Skytale"/>
+    <replacement key="$Dictionary$" value="Wörterbuch"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Contains$" value="Enthält"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$KeyGate$" value="Schlüssel-Gatter"/>
+    <replacement key="$PlaintextGate$" value="Klartext-Gatter"/>
+    <replacement key="$Max sticksize$" value=" Max. Stabgröße"/>
+    <replacement key="$Found sticksize$" value="gefundene Stabgröße"/>
+	 <replacement key="$memo$" value="\fs18{\fs21\b &quot;Skytale ciphertext-only attack&quot;}\line This sample performs a brute-force ciphertext-only attack on the Scytale cipher. The basic principle is that for each sticksize from one to a predifined value (max sticksize) a trial decryption is done, and all the decryptions are collected in the &quot;All possible plaintexts&quot; textoutput component. Additionally, it checks if a certain amount of words (see &quot;Contains&quot;) from the decrypted text are found in a dictionary. If the words are found it can be assumed with a high probability, that this is the correct decryption and the decrypted text is additionally forwarded to the &quot;Plaintext&quot; component.\line {\fs20\b\ul How it works:}\line The encrypted text is forwarded to the Scytale component. The sticksize for the Scytale is incremented from 1 to the value given in &quot;Max sticksize&quot; in a loop. The loop is realized with the incrementer (i++) and the Gate. As long as the Gate is provided with a TRUE-value from the comparator (i &lt; Max sticksize) component, the loop is running. For each sitcksize the Scytale is therefore performing a trial decryption which in turn are collected in the textoutput &quot;All possible plaintexts&quot;. Additionally, the &quot;Contains&quot; component checks for each trial decryption if there are a number of words from the trial decryption found in a dictionary. If this is the case, the Contains-component assigns TRUE to the PlaintextGate and therefore the current decryption is assigned to the &quot;Plaintext&quot;-component."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$All possible plaintexts$" value="All possible plaintexts"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$Scytale$" value="Scytale"/>
+    <replacement key="$Dictionary$" value="Dictionary"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Contains$" value="Contains"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$KeyGate$" value="KeyGate"/>
+    <replacement key="$PlaintextGate$" value="PlaintextGate"/>
+    <replacement key="$Max sticksize$" value=" Max sticksize"/>
+    <replacement key="$Found sticksize$" value="found sticksize"/>
+	 <replacement key="$memo$" value="\fs18{\fs21\b &quot;Skytale ciphertext-only attack&quot;}\line This sample performs a brute-force ciphertext-only attack on the Scytale cipher. The basic principle is that for each sticksize from one to a predifined value (max sticksize) a trial decryption is done, and all the decryptions are collected in the &quot;All possible plaintexts&quot; textoutput component. Additionally, it checks if a certain amount of words (see &quot;Contains&quot;) from the decrypted text are found in a dictionary. If the words are found it can be assumed with a high probability, that this is the correct decryption and the decrypted text is additionally forwarded to the &quot;Plaintext&quot; component.\line {\fs20\b\ul How it works:}\line The encrypted text is forwarded to the Scytale component. The sticksize for the Scytale is incremented from 1 to the value given in &quot;Max sticksize&quot; in a loop. The loop is realized with the incrementer (i++) and the Gate. As long as the Gate is provided with a TRUE-value from the comparator (i &lt; Max sticksize) component, the loop is running. For each sitcksize the Scytale is therefore performing a trial decryption which in turn are collected in the textoutput &quot;All possible plaintexts&quot;. Additionally, the &quot;Contains&quot; component checks for each trial decryption if there are a number of words from the trial decryption found in a dictionary. If this is the case, the Contains-component assigns TRUE to the PlaintextGate and therefore the current decryption is assigned to the &quot;Plaintext&quot;-component."/>
+  </replacements>
 
 </sample>

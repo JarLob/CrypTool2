@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
   <title lang="en">M-138 Partially Known-Plaintext Attack</title>
@@ -16,5 +16,24 @@
   <relevantPlugins>
     <plugin name="M138Analyzer" />
   </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$M-138 Analyzer$" value="M-138 Analysewerkzeug"/>
+	 <replacement key="$memo1$" value="The upper textbox contains the known plaintext to be sent to the analyzer. The lower textbox contains the corresponding known ciphertext."/>
+	 <replacement key="$memo2$" value="This template performs a partially known-plaintext attack on M-138. On the left side, you can choose the plain- and ciphertext to be sent to the analyzer. In the analyzer's settings, you can select the language of the plaintext.\line In the visualisation of the analyzer component (its presentation mode), you'll see more information about the attack, e.g. a list of the best keys, according to a value calculated using Trigrams, Quadgrams and relative occurrence of characters."/>
+	 <replacoement key="$memo3$" value="In the upper textbox, you can see the complete plaintext resulting when decrypting the ciphertext using the best found key. In the lower textbox, you can see the best key found."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$M-138 Analyzer$" value="M-138 Analyzer"/>
+	 <replacement key="$memo1$" value="The upper textbox contains the known plaintext to be sent to the analyzer. The lower textbox contains the corresponding known ciphertext."/>
+	 <replacement key="$memo2$" value="This template performs a partially known-plaintext attack on M-138. On the left side, you can choose the plain- and ciphertext to be sent to the analyzer. In the analyzer's settings, you can select the language of the plaintext.\line In the visualisation of the analyzer component (its presentation mode), you'll see more information about the attack, e.g. a list of the best keys, according to a value calculated using Trigrams, Quadgrams and relative occurrence of characters."/>
+	 <replacoement key="$memo3$" value="In the upper textbox, you can see the complete plaintext resulting when decrypting the ciphertext using the best found key. In the lower textbox, you can see the best key found."/>
+  </replacements>
 
 </sample>

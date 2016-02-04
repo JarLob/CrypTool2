@@ -17,4 +17,25 @@
     <plugin name="BooleanOutput" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Secret$" value="Geheimnis"/>
+    <replacement key="$has paid$" value="hat bezahlt"/>
+    <replacement key="$Boolean Output$" value="Boolesche Ausgabe"/>
+	 <replacement key="$step1$" value="{\b Step 1:} Shared secrets\line\line Cryptographers A and B share the common secret AB, which consists of one bit (for example by a coin flip) between them. Cryptographer C doesn't know its value. The same principle holds for secrets BC and CA."/>
+    <replacement key="$step2$" value="{\b Step 2:} XORing the secrets and inverting, if paid"/>
+    <replacement key="$step3$" value="{\b Step 3:} XORing the results"/>
+	 <replacement key="$memo1$" value="{\b The Dining Cryptographers}\line\line The Dining Cryptographers problem is used as an example for multi-party computations, where multiple parties provide input for jointly computing the result of a function, while each party keeps its input secret to the other parties. The problem consists of the following setup:\line\line Three cryptographers had dinner at a restaurant. The waiter informs them that they don't have to pay, because  the meal has already been paid for anonymously. The cryptographers are curious whether it was one of them or someone else, but, if it was one of them, they want the person to stay anonymous, They follow this protocol to find it out:\line\line {\b Step 1:} Each cryptographer creates a shared secret consisting of one bit with each of the other 2 cryptographers, for example by secretly flipping a coin between them. So each cryptographer has 2 shared secrets.\line\line {\b Step 2:} Each cryptographer XORs the two shared secrets he holds. If he was the one who paid, he then inverts the resulting value, otherwise he doesn't.\line\line {\b Step 3:} All three cryptographers tell their result of the previous step and the three values are XORed. If the result is 'true', it was one of them who has paid. Otherwise, someone else did.\line\line The cryptographers can not deduce the input of the other two cryptographers, as each of them only knows 2 of the 3 shared secrets. But by XORing the 3 values in the last step, the unknown secrets cancel out and leave the result.\line\line {\b Note:} The Dining Cryptographers protocol assumes, that at most one of the cryptographers has paid. If two or three cryptographers have paid, the result gets distorted."/>
+    <replacement key="$memo2$" value="Has one of the Cryptographers paid?"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Secret$" value="Secrect"/>
+    <replacement key="$has paid$" value="has paid"/>
+    <replacement key="$Boolean Output$" value="Boolean Output"/>
+	 <replacement key="$step1$" value="{\b Step 1:} Shared secrets\line\line Cryptographers A and B share the common secret AB, which consists of one bit (for example by a coin flip) between them. Cryptographer C doesn't know its value. The same principle holds for secrets BC and CA."/>
+    <replacement key="$step2$" value="{\b Step 2:} XORing the secrets and inverting, if paid"/>
+    <replacement key="$step3$" value="{\b Step 3:} XORing the results"/>
+	 <replacement key="$memo1$" value="{\b The Dining Cryptographers}\line\line The Dining Cryptographers problem is used as an example for multi-party computations, where multiple parties provide input for jointly computing the result of a function, while each party keeps its input secret to the other parties. The problem consists of the following setup:\line\line Three cryptographers had dinner at a restaurant. The waiter informs them that they don't have to pay, because  the meal has already been paid for anonymously. The cryptographers are curious whether it was one of them or someone else, but, if it was one of them, they want the person to stay anonymous, They follow this protocol to find it out:\line\line {\b Step 1:} Each cryptographer creates a shared secret consisting of one bit with each of the other 2 cryptographers, for example by secretly flipping a coin between them. So each cryptographer has 2 shared secrets.\line\line {\b Step 2:} Each cryptographer XORs the two shared secrets he holds. If he was the one who paid, he then inverts the resulting value, otherwise he doesn't.\line\line {\b Step 3:} All three cryptographers tell their result of the previous step and the three values are XORed. If the result is 'true', it was one of them who has paid. Otherwise, someone else did.\line\line The cryptographers can not deduce the input of the other two cryptographers, as each of them only knows 2 of the 3 shared secrets. But by XORing the 3 values in the last step, the unknown secrets cancel out and leave the result.\line\line {\b Note:} The Dining Cryptographers protocol assumes, that at most one of the cryptographers has paid. If two or three cryptographers have paid, the result gets distorted."/>
+    <replacement key="$memo2$" value="Has one of the Cryptographers paid?"/>
+  </replacements>
+
 </sample>
