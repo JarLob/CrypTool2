@@ -66,13 +66,24 @@ namespace WorkspaceManager.Model
 
             try
             {
-
                 var memoryStream = new MemoryStream(data);
                 var flowDocument = new FlowDocument();
                 var textRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
                 textRange.Load(memoryStream, System.Windows.DataFormats.XamlPackage);
                 rtb.Document = flowDocument;
                 memoryStream.Close();
+
+                // get RTF from RichTextBox
+                // useful if you want to extract the content of a textfield in a template as RTF
+                // place a breakpoint here and load the template, rtfFromRtb then contains the RTF code
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    TextRange range = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+                    range.Save(ms, System.Windows.DataFormats.Rtf);
+                    ms.Seek(0, SeekOrigin.Begin);
+                    StreamReader sr = new StreamReader(ms);
+                    string rtfFromRtb = sr.ReadToEnd();
+                }
             }
             catch (Exception ex)
             {
