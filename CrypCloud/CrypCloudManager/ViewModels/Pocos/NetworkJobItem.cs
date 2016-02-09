@@ -37,7 +37,16 @@ namespace CrypCloud.Manager.ViewModels.Pocos
             }
             set {}
         }
+        public string ShortID
+        {
+            get
+            {
+                if (PrintableID.Length <= 5) return PrintableID;
 
+                return PrintableID.Substring(0, 5);
+            }
+            set { }
+        }
 
         private sealed class IdEqualityComparer : IEqualityComparer<NetworkJobItem>
         {

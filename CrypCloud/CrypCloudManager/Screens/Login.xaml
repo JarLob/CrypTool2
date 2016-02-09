@@ -61,8 +61,10 @@
                               Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,5" RenderTransformOrigin="1,0.933" />
                 </Grid>
 
-                <Label/>
+                <Label/>     
+                <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc _Login_btn_connect}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
 
+                <Label/>
                 <TextBlock  Width="200" FontSize="12" Name="ForgotPasswordLabel" Cursor="Hand" HorizontalAlignment="Center">
                     <TextBlock.InputBindings>
                         <MouseBinding Command="{Binding Path=ResetPasswordCommand}" MouseAction="LeftClick" />
@@ -81,9 +83,6 @@
                     </Underline>
                 </TextBlock>
                 <Label/>
-
-                <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc _Login_btn_connect}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
-
             </StackPanel>
         </ScrollViewer>
     </Grid>

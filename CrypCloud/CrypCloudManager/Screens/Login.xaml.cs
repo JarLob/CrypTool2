@@ -23,6 +23,24 @@ namespace CrypCloud.Manager.Screens
             {
                 SecredPasswordInput.Password = "**********";
             }
+            else
+            {
+                ClearPasswordBox();
+            }
+
+            if (DataContext is LoginVM) {
+                var loginVM = DataContext as LoginVM;
+                loginVM.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName.Equals("Password"))
+                    {
+                        if (loginVM.Password.Length == 0)
+                        {
+                            SecredPasswordInput.Clear();
+                        }
+                    }
+                };
+            }
         }
 
         //prevents memory leaking of the sequre password imput
@@ -32,6 +50,11 @@ namespace CrypCloud.Manager.Screens
             {
                 ((LoginVM)DataContext).Password = ((PasswordBox)sender).SecurePassword;
             }
+        }
+
+        public void ClearPasswordBox()
+        {
+            SecredPasswordInput.Clear();
         }
     }
 }

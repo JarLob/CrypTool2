@@ -167,10 +167,10 @@
     <value>Bitte geben Sie Ihre Accountdaten ein.</value>
   </data>
   <data name="_CreateAccount_successHeader" xml:space="preserve">
-    <value>Erstellung erfolgreich!</value>
+    <value>Ihr Account wurde erfolgreich erstellt.</value>
   </data>
   <data name="_CreateAccount_successText" xml:space="preserve">
-    <value>Ihr Account wurde erfolgreich erstellt.</value>
+    <value />
   </data>
   <data name="_CreateAccount_Title" xml:space="preserve">
     <value>Neuen Account erstellen</value>
@@ -276,7 +276,7 @@ Berechnungen.</value>
     <value>Beschreibung:</value>
   </data>
   <data name="_JobList_jobName" xml:space="preserve">
-    <value>Name:</value>
+    <value>Job Name:</value>
   </data>
   <data name="_JobList_btn_logout" xml:space="preserve">
     <value>Abmelden</value>
@@ -304,5 +304,14 @@ Berechnungen.</value>
   </data>
   <data name="_JobList_LoggedInAs" xml:space="preserve">
     <value>eingeloggt als:</value>
+  </data>
+  <data name="_infoVerificationCode" xml:space="preserve">
+    <value>Es wurde ein Verifizierungscode an die angegebene Email Adresse gesendet.</value>
+  </data>
+  <data name="_JobList_helpText" xml:space="preserve">
+    <value>Klicken Sie auf "Öffnen" um an einem Job teilzunehmen.</value>
+  </data>
+  <data name="_JobList_jobID" xml:space="preserve">
+    <value>Job ID:</value>
   </data>
 </root>

@@ -111,7 +111,8 @@
     <Compile Include="Screens\Converter\InvertBoolConverter.cs" />
     <Compile Include="Screens\Converter\AddMarginForProgressBarConverter.cs" />
     <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
-    <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter .cs" />
+    <Compile Include="Screens\Converter\StringNullOrEmptyToVisibilityConverter  - Kopieren.cs" />
+    <Compile Include="Screens\Converter\ShowWhenStringIsEmptyConverter .cs" />
     <Compile Include="Screens\CreateAccount.xaml.cs">
       <DependentUpon>CreateAccount.xaml</DependentUpon>
     </Compile>

@@ -16,29 +16,25 @@ namespace CrypCloud.Manager.ViewModels
     {
         public List<string> AvailableCertificates { get; set; }
         public string Username { get; set; }
-        public SecureString Password { private get; set; }
+        public SecureString Password { get; set; }
          
         public RelayCommand LoginCommand { get; set; }
         public RelayCommand CreateNewAccountCommand { get; set; }
         public RelayCommand ResetPasswordCommand { get; set; }
 
-        private bool rememberPassword;
+        private bool rememberPassword = false;
         public bool RememberPassword
         {
             get { return rememberPassword; }
             set
             {
                 rememberPassword = value;
-                if (rememberPassword)
-                {
-                    RememberUserData();
-                }
-                else
+                if (!value)  
                 {
                     Settings.Default.rememberedUsername = "";
                     Settings.Default.rememberedPassword = "";
                     Settings.Default.Save();
-                }
+                }  
 
                 RaisePropertyChanged("RememberPassword");
             }
@@ -50,20 +46,26 @@ namespace CrypCloud.Manager.ViewModels
             AvailableCertificates = new List<string>(CertificateHelper.GetNamesOfKnownCertificates());
             CreateNewAccountCommand = new RelayCommand(it => Navigator.ShowScreenWithPath(ScreenPaths.CreateAccount));
             ResetPasswordCommand = new RelayCommand(it => Navigator.ShowScreenWithPath(ScreenPaths.ResetPassword));
+            LoginCommand = new RelayCommand(it => GetCertificateAndLogin());            
+        }
 
-            LoginCommand = new RelayCommand(it => GetCertificateAndLogin());
-
+        protected override void HasBeenActivated()
+        {
             var rememberedUsername = Settings.Default.rememberedUsername;
-            if (!string.IsNullOrEmpty(rememberedUsername))
+            RememberPassword = !string.IsNullOrEmpty(rememberedUsername);
+            if (RememberPassword)
             {
                 Username = rememberedUsername;
                 Password = LoadPassword();
-                rememberPassword = true;
-
-                RaisePropertyChanged("rememberPassword");
-                RaisePropertyChanged("Username");
-                RaisePropertyChanged("Password");
             }
+            else
+            {
+                Username = "";
+                Password = new SecureString().FromString("");
+            }
+
+            RaisePropertyChanged("Username");
+            RaisePropertyChanged("Password");
         }
 
         #region remember me
@@ -90,7 +92,6 @@ namespace CrypCloud.Manager.ViewModels
         /// </summary>
         private void GetCertificateAndLogin()
         {
-            RememberUserData();
             if (CertificateHelper.UserCertificateIsUnknown(Username))
                 LoadRemoteCertificateAndLogin();
             else
@@ -101,6 +102,8 @@ namespace CrypCloud.Manager.ViewModels
 
         private void LoadLocalCertificateAndLogin()
         {
+         
+
             var certificate = CertificateHelper.LoadPrivateCertificate(Username, Password);
             if (certificate == null)
             {
@@ -108,12 +111,16 @@ namespace CrypCloud.Manager.ViewModels
                 return;
             }
 
+            if (RememberPassword)
+            {
+                RememberUserData();
+            }
+
             if (CrypCloudCore.Instance.IsBannedCertificate(certificate))
             {
                 ErrorMessage = "Your Certificate has been banned";
                 return;  
-            }
-
+            }        
 
             if (CrypCloudCore.Instance.Login(certificate))
             {

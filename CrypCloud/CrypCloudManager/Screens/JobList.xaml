@@ -19,8 +19,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
- 
-    
+
+
     <UserControl.DataContext>
         <viewModels:JobListVM  IsActive="True" />
     </UserControl.DataContext>
@@ -38,15 +38,15 @@
 
         <!-- top controls -->
         <Grid Grid.Row="0">
-            <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="5" />
+            <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="10" />
             <Label Content="{Loc _JobList_LoggedInAs}" FontSize="14" HorizontalContentAlignment="Right"
                    HorizontalAlignment="Right" Margin="0,10,217,10" Width="204" />
-            
+
             <Label Content="{Binding Path=Username}" FontSize="14" 
                    HorizontalContentAlignment="Left" HorizontalAlignment="Right"
                    Margin="0,10,109,10" Width="108" />
 
-            <Button Command="{Binding Path=LogOutCommand}" HorizontalAlignment="Right" Margin="5" Width="100"
+            <Button Command="{Binding Path=LogOutCommand}" HorizontalAlignment="Right" Margin="10" Width="100"
                     Height="30">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/sign-out.png" Width="16" />
@@ -56,15 +56,16 @@
 
         </Grid>
 
+        <Label Grid.Row="1" Visibility="{Binding Path=ErrorMessage, Converter={converter:ShowWhenStringIsEmptyConverter}}" Content="{Loc  _JobList_helpText}"/>
         <!-- errorBox    -->
-
         <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
             <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="Wrap" />
         </Border>
 
         <Grid Grid.Row="2"  Margin="5" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="689*" />
+                <ColumnDefinition Width="498*"/>
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
@@ -72,10 +73,10 @@
                 <RowDefinition Height="300*" />
             </Grid.RowDefinitions>
             <!--This is the hidden helper Grid which does the resizing -->
-            <Grid Grid.Column="0">
+            <Grid Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding ElementName=CreationDate, Path=ActualWidth}" />
-                    <ColumnDefinition Width="{Binding ElementName=PrintableID, Path=ActualWidth}" />
+                    <ColumnDefinition Width="{Binding ElementName=ShortID, Path=ActualWidth}" />
                     <ColumnDefinition Width="{Binding ElementName=Name, Path=ActualWidth}" />
                     <ColumnDefinition Width="{Binding ElementName=Creator, Path=ActualWidth}" />
                     <ColumnDefinition Width="*" />
@@ -90,7 +91,7 @@
                       SelectedItem="{Binding SelectedJob, Mode=TwoWay}"
                       x:Name="JobListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      MouseDoubleClick="JobListView_OnMouseDoubleClick">
+                      MouseDoubleClick="JobListView_OnMouseDoubleClick" Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -101,11 +102,11 @@
 
                         <GridViewColumn x:Name="CreationDate" Header="{Loc  _JobList_col_Date}"
                                         DisplayMemberBinding="{Binding CreationDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}"
-                                        Width="175" />
-                        <GridViewColumn x:Name="PrintableID" Header="{Loc _JobList_col_Id}"
-                                        DisplayMemberBinding="{Binding PrintableID}" Width="250" />
+                                        Width="150" />
+                        <GridViewColumn x:Name="ShortID" Header="{Loc _JobList_col_Id}"
+                                        DisplayMemberBinding="{Binding ShortID}" Width="50" />
                         <GridViewColumn x:Name="Name" Header="{Loc  _JobList_col_Name}"
-                                        DisplayMemberBinding="{Binding Name}" Width="250" />
+                                        DisplayMemberBinding="{Binding Name}" Width="350" />
                         <GridViewColumn x:Name="Creator" Header="{Loc  _JobList_col_Creator}"
                                         DisplayMemberBinding="{Binding Creator}" Width="100" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
@@ -185,46 +186,46 @@
             </ListView>
 
             <!-- aside -->
-            <ScrollViewer Grid.Row="0" Grid.Column="2" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Row="0" Grid.Column="3" VerticalScrollBarVisibility="Auto">
                 <Grid  Background="White">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="225" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition  Height="5"/>
-                        <RowDefinition Height="25*" MaxHeight="50" />
-                        <RowDefinition Height="25" />
+                        <RowDefinition Height="26" />
+                        <RowDefinition Height="26*" MaxHeight="50" />
+                        <RowDefinition Height="26" />
                         <RowDefinition Height="50"/>
-                        <RowDefinition Height="25" />
+                        <RowDefinition Height="26" />
                         <RowDefinition Height="220" />
-                        <RowDefinition Height="25" />
+                        <RowDefinition Height="26" />
                         <RowDefinition Height="*" MaxHeight="200" />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap"
-                           Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}" />
+                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobID}" />
+                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.PrintableID}"  Margin="0,5,5,0"  />
 
-                    <Label Grid.Column="0"  Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
-                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Minimum="0" 
-                             Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" 
-                             Width="200"
-                             Height="25" />
-                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}"
-                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
+                    <TextBlock Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}"  Margin="0,5,5,0"  />
 
+                    <Label Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
+                    <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Minimum="0" 
+                             Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" Margin="50,12" />
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Margin="73,17,152,17" Width="0" />
 
-                    <Label Grid.Column="0" Grid.Row="4" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
-                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5"  BorderThickness="1" Margin="10" Width="199" Height="199" BorderBrush="#FF000000"
+                    <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
+                    <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"  BorderThickness="1" Margin="50,10,50,0" Height="199" BorderBrush="#FF000000"
                         VerticalAlignment="Top">
                         <Image Width="200" Height="200"
                            Source="{Binding ElementName=JobListView, Path=SelectedItem.Visualization}" />
                     </Border>
 
-                    <Label Grid.Column="0" Grid.Row="6" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />
-                    <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Width="200" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7"
-                           Text="{Binding ElementName=JobListView, Path=SelectedItem.Description}" />
+                    <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />
+                    <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8"
+                           Text="{Binding ElementName=JobListView, Path=SelectedItem.Description}" Margin="25,0" />
 
 
                 </Grid>

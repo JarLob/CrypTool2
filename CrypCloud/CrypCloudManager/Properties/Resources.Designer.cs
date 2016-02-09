@@ -133,7 +133,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Your new account was requested successfully. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
         /// </summary>
         public static string _CreateAccount_successText {
             get {
@@ -210,6 +210,15 @@ namespace CrypCloud.Manager.Properties {
         public static string _enterVerificationCode {
             get {
                 return ResourceManager.GetString("_enterVerificationCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die We&apos;ve send a verification code to the provided email address. ähnelt.
+        /// </summary>
+        public static string _infoVerificationCode {
+            get {
+                return ResourceManager.GetString("_infoVerificationCode", resourceCulture);
             }
         }
         
@@ -340,6 +349,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click on one of the open buttons to participate in a job. ähnelt.
+        /// </summary>
+        public static string _JobList_helpText {
+            get {
+                return ResourceManager.GetString("_JobList_helpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Description: ähnelt.
         /// </summary>
         public static string _JobList_jobDescription {
@@ -349,7 +367,16 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Name: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job ID: ähnelt.
+        /// </summary>
+        public static string _JobList_jobID {
+            get {
+                return ResourceManager.GetString("_JobList_jobID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job Name: ähnelt.
         /// </summary>
         public static string _JobList_jobName {
             get {
@@ -358,7 +385,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die logged in as: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Logged in as: ähnelt.
         /// </summary>
         public static string _JobList_LoggedInAs {
             get {
@@ -394,7 +421,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Forgot Password ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Forgot password ähnelt.
         /// </summary>
         public static string _Login_link_ForgotPassword {
             get {

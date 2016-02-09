@@ -170,7 +170,7 @@
     <value>Account successfully requested</value>
   </data>
   <data name="_CreateAccount_successText" xml:space="preserve">
-    <value>Your new account was requested successfully.</value>
+    <value />
   </data>
   <data name="_CreateAccount_Title" xml:space="preserve">
     <value>Create a new account </value>
@@ -233,7 +233,7 @@
     <value>A P2P based volunteer cloud solution</value>
   </data>
   <data name="_Login_link_ForgotPassword" xml:space="preserve">
-    <value>Forgot Password</value>
+    <value>Forgot password</value>
   </data>
   <data name="_Login_subheader" xml:space="preserve">
     <value>A P2P based volunteer cloud solution</value>
@@ -275,7 +275,7 @@
     <value>Description:</value>
   </data>
   <data name="_JobList_jobName" xml:space="preserve">
-    <value>Name:</value>
+    <value>Job Name:</value>
   </data>
   <data name="_JobList_btn_logout" xml:space="preserve">
     <value>Logout</value>
@@ -308,6 +308,15 @@
     <value>remember me</value>
   </data>
   <data name="_JobList_LoggedInAs" xml:space="preserve">
-    <value>logged in as:</value>
+    <value>Logged in as:</value>
+  </data>
+  <data name="_infoVerificationCode" xml:space="preserve">
+    <value>We've send a verification code to the provided email address.</value>
+  </data>
+  <data name="_JobList_helpText" xml:space="preserve">
+    <value>Click on one of the open buttons to participate in a job.</value>
+  </data>
+  <data name="_JobList_jobID" xml:space="preserve">
+    <value>Job ID:</value>
   </data>
 </root>
