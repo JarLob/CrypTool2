@@ -30,7 +30,7 @@
 
                 <!-- messageBox -->
                 <Border CornerRadius="5" BorderThickness="3" BorderBrush="Gold" 
-                        Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" >
+                        Visibility="{Binding Path=ErrorMessage, Converter={converter:HideWhenStringIsEmptyConverter}}" >
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="Khaki"/>

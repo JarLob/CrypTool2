@@ -25,7 +25,7 @@
         <Label Content="{Loc _CreateJob_Header}" FontSize="14" HorizontalAlignment="Center" Margin="30"/>
         
         <!-- errorBox -->
-        <Border Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}"
+        <Border Visibility="{Binding Path=ErrorMessage, Converter={converter:HideWhenStringIsEmptyConverter}}"
                CornerRadius="5" BorderThickness="3" BorderBrush="Gold">
             <Grid>
                 <Grid.Background>

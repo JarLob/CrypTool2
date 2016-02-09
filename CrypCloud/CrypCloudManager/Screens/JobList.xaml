@@ -58,7 +58,7 @@
 
         <Label Grid.Row="1" Visibility="{Binding Path=ErrorMessage, Converter={converter:ShowWhenStringIsEmptyConverter}}" Content="{Loc  _JobList_helpText}"/>
         <!-- errorBox    -->
-        <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:StringNullOrEmptyToVisibilityConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
+        <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:HideWhenStringIsEmptyConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
             <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="Wrap" />
         </Border>
 
