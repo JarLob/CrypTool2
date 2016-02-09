@@ -209,7 +209,7 @@
     <value>Creator</value>
   </data>
   <data name="_JobList_col_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Job name</value>
   </data>
   <data name="_JobList_col_Progress" xml:space="preserve">
     <value>Progress</value>
@@ -275,7 +275,7 @@
     <value>Description:</value>
   </data>
   <data name="_JobList_jobName" xml:space="preserve">
-    <value>Job Name:</value>
+    <value>Job name:</value>
   </data>
   <data name="_JobList_btn_logout" xml:space="preserve">
     <value>Logout</value>
@@ -311,7 +311,7 @@
     <value>Logged in as:</value>
   </data>
   <data name="_infoVerificationCode" xml:space="preserve">
-    <value>We've send a verification code to the provided email address.</value>
+    <value>A verification code was sent to the provided email address.</value>
   </data>
   <data name="_JobList_helpText" xml:space="preserve">
     <value>Click on one of the open buttons to participate in a job.</value>

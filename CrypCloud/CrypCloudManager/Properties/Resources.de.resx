@@ -209,7 +209,7 @@
     <value>Ersteller</value>
   </data>
   <data name="_JobList_col_Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Job-Name</value>
   </data>
   <data name="_JobList_col_Progress" xml:space="preserve">
     <value>Fortschritt</value>
@@ -263,7 +263,7 @@
     <value>Name: </value>
   </data>
   <data name="_JobList_col_Id" xml:space="preserve">
-    <value>Job ID</value>
+    <value>Job-ID</value>
   </data>
   <data name="Stop_Running_Jobs_Before_Logout" xml:space="preserve">
     <value>Ausloggen fehlgeschlagen! Bitte beenden Sie alle laufenden
@@ -276,7 +276,7 @@ Berechnungen.</value>
     <value>Beschreibung:</value>
   </data>
   <data name="_JobList_jobName" xml:space="preserve">
-    <value>Job Name:</value>
+    <value>Job-Name:</value>
   </data>
   <data name="_JobList_btn_logout" xml:space="preserve">
     <value>Abmelden</value>
@@ -306,12 +306,12 @@ Berechnungen.</value>
     <value>eingeloggt als:</value>
   </data>
   <data name="_infoVerificationCode" xml:space="preserve">
-    <value>Es wurde ein Verifizierungscode an die angegebene Email Adresse gesendet.</value>
+    <value>Ein Verifizierungscode wurde an die angegebene Email-Adresse gesendet.</value>
   </data>
   <data name="_JobList_helpText" xml:space="preserve">
-    <value>Klicken Sie auf "Öffnen" um an einem Job teilzunehmen.</value>
+    <value>Klicken Sie auf einen der "Öffnen"-Buttons, um an einem Job teilzunehmen.</value>
   </data>
   <data name="_JobList_jobID" xml:space="preserve">
-    <value>Job ID:</value>
+    <value>Job-ID:</value>
   </data>
 </root>

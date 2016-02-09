@@ -214,7 +214,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die We&apos;ve send a verification code to the provided email address. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A verification code was sent to the provided email address. ähnelt.
         /// </summary>
         public static string _infoVerificationCode {
             get {
@@ -313,7 +313,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job name ähnelt.
         /// </summary>
         public static string _JobList_col_Name {
             get {
@@ -376,7 +376,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Job Name: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job name: ähnelt.
         /// </summary>
         public static string _JobList_jobName {
             get {
