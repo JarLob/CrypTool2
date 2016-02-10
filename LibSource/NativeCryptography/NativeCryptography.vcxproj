@@ -134,12 +134,16 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>object_files\do_rdtsc.obj;object_files\iaesx86.obj;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <LinkTimeCodeGeneration>
       </LinkTimeCodeGeneration>
       <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <TreatLinkerWarningAsErrors>
+      </TreatLinkerWarningAsErrors>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\Lib"</Command>
@@ -226,6 +230,7 @@ xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\Lib\x64\"</Command>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</CompileAsManaged>
     </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="intel_aes.cpp" />
     <ClCompile Include="MD5\md5.cpp" />
     <ClCompile Include="NativeCryptography.cpp" />
     <ClCompile Include="DES\des_enc.c">
@@ -252,6 +257,8 @@ xcopy /Y /F "$(TargetDir)$(TargetFileName)" "..\..\Lib\x64\"</Command>
     <ClInclude Include="aes_core.h" />
     <ClCompile Include="DES\des.h" />
     <ClInclude Include="DES\des_locl.h" />
+    <ClInclude Include="iaesni.h" />
+    <ClInclude Include="iaes_asm_interface.h" />
     <ClInclude Include="MD5\md5.h" />
     <ClInclude Include="NativeCryptography.h" />
     <ClInclude Include="DES\spr.h" />

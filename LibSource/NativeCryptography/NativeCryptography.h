@@ -3,6 +3,7 @@
 #include "DES/des.h"
 #include <string.h>
 #include "rc2.h"
+#include "iaes_asm_interface.h"
 
 using namespace System::Threading;
 using namespace System;
@@ -74,7 +75,7 @@ namespace NativeCryptography {
 			cli::pin_ptr<unsigned char> p_key = &Key[0];
 			cli::pin_ptr<unsigned char> p_iv = &IV[0];
 
-			rc2_keyschedule( xkey, p_key, Key.Length, Key.Length * 8);					
+			rc2_keyschedule( xkey, p_key, Key->Length, Key->Length * 8);					
 
 			//put IV into saving-block
 			unsigned char block[8] = {0,0,0,0,0,0,0,0};

@@ -26,7 +26,7 @@ namespace NativeCryptography {
 	void Crypto::encrypt(unsigned char* in, unsigned char* out, const cryptMethod method, AES_KEY* aeskey, DES_key_schedule* deskey)
 	{
 		if (method == cryptMethod::methodAES)
-			AES_encrypt(in, out, aeskey);
+			AES_encrypt(in, out, aeskey);			
 		else
 			DES_ecb_encrypt((const_DES_cblock*)in, (const_DES_cblock*)out, deskey, DES_ENCRYPT);
 	}
@@ -48,11 +48,11 @@ namespace NativeCryptography {
 	}
 
 	array<unsigned char>^ Crypto::decryptAESorDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode, const int blockSize, const cryptMethod method)
-	{
+	{		
 		int numBlocks = length / blockSize;
-		if (length % blockSize != 0)
+		if (length % blockSize != 0){
 			numBlocks++;
-
+		}
 		bool noIV = false;
 
 		if (IV == nullptr)
@@ -76,6 +76,35 @@ namespace NativeCryptography {
 		AES_KEY aeskey;
 		DES_key_schedule deskey;
 		DES_key_schedule deskey2;
+
+		//if available we use the AES NI instruction set (for ecb and cbc)
+		if (method == cryptMethod::methodAES && check_for_aes_instructions() && (mode == 0 || mode == 1)){
+			
+			if (mode == 0){ // ecb
+				if (bits == 128){
+					intel_AES_dec128(input, outp, key, numBlocks);
+				}
+				else if (bits == 192){
+					intel_AES_dec192(input, outp, key, numBlocks);
+				}
+				else if (bits == 256){
+					intel_AES_dec256(input, outp, key, numBlocks);
+				}
+			}
+			else if (mode == 1){ //cbc
+				if (bits == 128){
+					intel_AES_dec128_CBC(input, outp, key, numBlocks, iv);
+				}
+				else if (bits == 192){
+					intel_AES_dec192_CBC(input, outp, key, numBlocks, iv);
+				}
+				else if (bits == 256){
+					intel_AES_dec256_CBC(input, outp, key, numBlocks, iv);
+				}
+			}
+			return output;
+		}
+
 
 		if (mode == 2)	//CFB
 		{			
@@ -179,14 +208,14 @@ namespace NativeCryptography {
 
 				DES_set_key_unchecked((const_DES_cblock*)key1, &deskey);
 				DES_set_key_unchecked((const_DES_cblock*)key2, &deskey2);
-			}	
+			}
 
 			if(method == cryptMethod::method3DES){
 				decrypt(input, outp, cryptMethod::methodDES, &aeskey, &deskey);
 				encrypt(outp, outp, cryptMethod::methodDES, &aeskey, &deskey2);
 				decrypt(outp, outp, cryptMethod::methodDES, &aeskey, &deskey);
 			}else{
-				decrypt(input, outp, method, &aeskey, &deskey);
+				decrypt(input, outp, method, &aeskey, &deskey);				
 			}	
 
 			if (mode == 1 && !noIV)		//CBC
@@ -201,7 +230,7 @@ namespace NativeCryptography {
 					decrypt(outp+c*blockSize, outp+c*blockSize, cryptMethod::methodDES, &aeskey, &deskey);
 				}
 				else
-				{
+				{					
 					decrypt(input+c*blockSize, outp+c*blockSize, method, &aeskey, &deskey);
 				}
 				if (mode == 1)		//CBC
@@ -215,8 +244,9 @@ namespace NativeCryptography {
 	array<unsigned char>^ Crypto::encryptAESorDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode, const int blockSize, const cryptMethod method)
 	{
 		int numBlocks = length / blockSize;		
-		if (length % blockSize != 0)
+		if (length % blockSize != 0){
 			throw gcnew System::Exception("Input must be multiple of " + blockSize);
+		}
 
 		bool noIV = false;
 
