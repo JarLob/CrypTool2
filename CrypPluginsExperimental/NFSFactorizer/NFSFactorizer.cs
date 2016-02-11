@@ -47,6 +47,9 @@ namespace Cryptool.Plugins.NFSFactorizer
         private string CoFactArray;
         private BigInteger InputNumber1 = 1;
 
+        private string ggnfsPath, ggnfsZip;
+        private string yafuPath, yafuZip, yafuExe;
+
         private NFSFactorizerSettings settings = new NFSFactorizerSettings();
 
         #region INotifyPropertyChanged Members
@@ -56,6 +59,12 @@ namespace Cryptool.Plugins.NFSFactorizer
             settings.PropertyChanged += settings_PropertyChanged;
             Presentation = new NFSFactorizerPresentation();
             _directoryName = DirectoryHelper.DirectoryLocalTemp;
+
+            ggnfsPath = Path.Combine(_directoryName, "ggnfs-bin");
+            yafuPath = Path.Combine(_directoryName, "yafu-1.34");
+            yafuExe = Path.Combine(yafuPath, "yafu-x64.exe");
+            ggnfsZip = Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "ggnfs-bin.zip");
+            yafuZip = Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "yafu-1.34.zip");
         }
 
 
@@ -66,21 +75,13 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         private void ExtractYAFU()
         {
-            var mainDir = "..\\..\\CrypPluginsExperimental\\NFSFactorizer";
-            if (Directory.Exists(mainDir + "\\ggnfs-bin"))
-            {
-                Directory.Delete(mainDir + "\\ggnfs-bin", true);
-            }
-            if (Directory.Exists(mainDir + "\\yafu-1.34"))
-            {
-                Directory.Delete(mainDir + "\\yafu-1.34", true);
-            }
-            string zipPath = mainDir + "\\yafu-1.34.zip";
-            string zipPath1 = mainDir + "\\ggnfs-bin.zip";
-            ZipFile zipFile = new ZipFile(zipPath);
-            ZipFile zipFile1 = new ZipFile(zipPath1);
-            zipFile.ExtractAll(mainDir);
-            zipFile1.ExtractAll(mainDir);
+            if (Directory.Exists(ggnfsPath)) Directory.Delete(ggnfsPath, true);
+            ZipFile zipFile = new ZipFile(ggnfsZip);
+            zipFile.ExtractAll(_directoryName); 
+
+            if (Directory.Exists(yafuPath)) Directory.Delete(yafuPath, true);
+            ZipFile zipFile1 = new ZipFile(yafuZip);
+            zipFile1.ExtractAll(_directoryName);
         }
 
 
@@ -101,7 +102,7 @@ namespace Cryptool.Plugins.NFSFactorizer
                 try
                 {
                     SortOutputRedirection pr = new SortOutputRedirection();
-                    pr.cmndLine = String.Format("/c ..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"rsa(150)\" ");
+                    pr.cmndLine = String.Format("/c " + yafuExe + " \"rsa(150)\" ");
 
                     pr.ConvertToMPEG();
                     while (!pr.redirectInfo.Contains("ans = ")) { }
@@ -281,9 +282,9 @@ namespace Cryptool.Plugins.NFSFactorizer
 
             if (settings.Action)
                 idle = "-p";
-            
+
             SortOutputRedirection pr = new SortOutputRedirection();
-            pr.cmndLine = String.Format("/c ..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34\\yafu-x64.exe \"{0}( {1}{2} )\" -threads {3} {4} {5}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle);
+            pr.cmndLine = String.Format("/c " + yafuExe + " \"{0}( {1}{2} )\" -threads {3} {4} {5}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle);
 
             pr.ConvertToMPEG();
             
@@ -347,7 +348,7 @@ namespace Cryptool.Plugins.NFSFactorizer
                 nfsFactQuickWatchPresentation.primality.Content = primality;
                 if (nfsFactQuickWatchPresentation.ShowDetailsButton.IsChecked==true)
                 {
-                    Process.Start("notepad.exe", "D:\\Documents\\CrypTool2\\trunk\\CrypBuild\\Debug\\factor.log");
+                    Process.Start("notepad.exe", Path.Combine(DirectoryHelper.BaseDirectory, "factor.log"));
                 }
             }
             , null);
@@ -355,8 +356,8 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         public void PostExecution()
         {
-            Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\ggnfs-bin", true);
-            Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34", true); 
+            Directory.Delete(ggnfsPath, true);
+            Directory.Delete(yafuPath, true); 
         }
 
         public void Stop()
