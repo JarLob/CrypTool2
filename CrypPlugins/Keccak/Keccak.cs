@@ -493,7 +493,7 @@ namespace Cryptool.Plugins.Keccak
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        public void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }

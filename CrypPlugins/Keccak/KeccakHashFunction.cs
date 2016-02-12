@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase;
+using Keccak.Properties;
 
 namespace Cryptool.Plugins.Keccak
 {
@@ -27,8 +28,9 @@ namespace Cryptool.Plugins.Keccak
             Console.WriteLine();
 #endif
 
+
             /* map each bit of the input to a byte */
-            byte[] inputInBitsWithoutSuffix = ByteArrayToBitArray(input, (KeccakSettings.InputTypeEnum) settings.InputType);
+            byte[] inputInBitsWithoutSuffix = ByteArrayToBitArray(input, (KeccakSettings.InputTypeEnum) settings.InputType, plugin);
 
             /* append domain separation suffix bits */
             byte[] inputInBits = appendSuffixBits(settings.SuffixBits, inputInBitsWithoutSuffix);
@@ -276,7 +278,7 @@ namespace Cryptool.Plugins.Keccak
          * Converts a byte array to an another byte array. The returned byte array contains the bit representation of the input byte array
          * where each byte represents a bit of the input byte array
          * */
-        public static byte[] ByteArrayToBitArray(byte[] bytes, KeccakSettings.InputTypeEnum inputType)
+        public static byte[] ByteArrayToBitArray(byte[] bytes, KeccakSettings.InputTypeEnum inputType, Keccak plugin = null)
         {
             List<byte> bitsInBytes = new List<byte>(bytes.Length * 8);
             string bitString;
@@ -291,6 +293,12 @@ namespace Cryptool.Plugins.Keccak
                             bitsInBytes.Add(0x00);
                         else if (b == 49)
                             bitsInBytes.Add(0x01);
+                        else
+                        {
+                            if (plugin != null)
+                                plugin.GuiLogMessage(String.Format(Resources.InputTypeWarning, Resources.InputTypeBinary), NotificationLevel.Warning);
+                        }
+                            
                     }
                     break;
                 case KeccakSettings.InputTypeEnum.Hexadecimal:
@@ -342,6 +350,9 @@ namespace Cryptool.Plugins.Keccak
                                 case 70:  // F
                                 case 102: // f
                                     bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
+                                default:
+                                    if (plugin != null)
+                                        plugin.GuiLogMessage(String.Format(Resources.InputTypeWarning, Resources.InputTypeHexadecimal), NotificationLevel.Warning); break;
                             }
                         }                            
                     }

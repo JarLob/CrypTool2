@@ -706,4 +706,16 @@
   <data name="Bit" xml:space="preserve">
     <value>Bit</value>
   </data>
+  <data name="InputTypeBinary" xml:space="preserve">
+    <value>Binär</value>
+  </data>
+  <data name="InputTypeHexadecimal" xml:space="preserve">
+    <value>Hexadezimal</value>
+  </data>
+  <data name="InputTypeText" xml:space="preserve">
+    <value>Text (UTF-8)</value>
+  </data>
+  <data name="InputTypeWarning" xml:space="preserve">
+    <value>Einige Eingabezeichen sind nicht im ausgewählten {0}-Format.</value>
+  </data>
 </root>
