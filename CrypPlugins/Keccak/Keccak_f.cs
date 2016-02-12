@@ -574,7 +574,7 @@ namespace Cryptool.Plugins.Keccak
         public void Iota(ref byte[] state, int round)
         {
             /* map round constant bits to bytes */
-            byte[] constant = KeccakHashFunction.ByteArrayToBitArray(roundConstants[round]);
+            byte[] constant = KeccakHashFunction.ByteArrayToBitArray(roundConstants[round], KeccakSettings.InputTypeEnum.Text);
 
             /* truncate constant to the size of z */
             byte[] truncatedConstant = KeccakHashFunction.SubArray(constant, 0, z);

@@ -109,7 +109,7 @@ namespace Cryptool.Plugins.Keccak
             using (CStreamReader reader = InputStream.CreateReader())
             {
                 int bytesRead;
-                byte[] buffer = new byte[128];      // buffer of length 128 byte
+                byte[] buffer = new byte[128];
 
                 MemoryStream stream = new MemoryStream();
                 BinaryWriter bw = new BinaryWriter(stream);
@@ -120,6 +120,7 @@ namespace Cryptool.Plugins.Keccak
                 }
 
                 bw.Close();
+                //stream.Close(); // TODO test if necessary
                 input = stream.ToArray();
                 OnPropertyChanged("OutputStream");
             }
@@ -342,7 +343,7 @@ namespace Cryptool.Plugins.Keccak
             #endregion
 
             /* hash input */
-            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this, settings.SuffixBits);
+            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this, settings);
 
             /* write output */
             OutputStreamwriter.Write(output);

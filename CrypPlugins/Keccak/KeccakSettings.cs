@@ -68,12 +68,31 @@ namespace Cryptool.Plugins.Keccak
         private stateSizeName selectedStateSize = stateSizeName.bits1600;
         private String suffixBits = "";
 
+        public enum InputTypeEnum { Binary, Hexadecimal, Text };
+        private InputTypeEnum inputType;
+
         #endregion
 
-        [TaskPane("KECCAKFunctionCaption", "KECCAKFunctionTooltip", null, 1, false, ControlType.ComboBox, new string[] { "KeccakFunctionList1", "KeccakFunctionList2", "KeccakFunctionList3", "KeccakFunctionList4", "KeccakFunctionList5", "KeccakFunctionList6", "KeccakFunctionList7" })]
+        [TaskPane("InputTypeCaption", "InputTypeTooltip", null, 0, false, ControlType.ComboBox,
+            new string[] { "InputTypeBinary", "InputTypeHexadecimal", "InputTypeText"})]
+        public int InputType
+        {
+            get
+            {
+                return (int) this.inputType;
+            }
+            set
+            {
+                this.inputType = (InputTypeEnum) value;
+            }
+        }
+
+        [TaskPane("KECCAKFunctionCaption", "KECCAKFunctionTooltip", null, 1, false, ControlType.ComboBox,
+            new string[] { "KeccakFunctionList1", "KeccakFunctionList2", "KeccakFunctionList3",
+                "KeccakFunctionList4", "KeccakFunctionList5", "KeccakFunctionList6", "KeccakFunctionList7" })]
         public int KECCAKFunction
         {
-            get { return (int)this.selectedKeccakFunction; }
+            get { return (int) this.selectedKeccakFunction; }
             set
             {
                 this.selectedKeccakFunction = KeccakFunctions[value].name;
