@@ -80,6 +80,7 @@ namespace CrypCloud.Core
                 BannedCertificateList = bannedList,
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
             };
+            vlib.EnableQuietMode();
 
             var networkBridges = Resources.networkBridges.Replace("\r","");
             var networkBridgesList = networkBridges

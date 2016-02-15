@@ -98,9 +98,9 @@ namespace voluntLib.managementLayer.localStateManagement
 
             if (logger.IsDebugEnabled)
             {
-                logger.Debug("<ProcessState> LocalState: " + LocalState);
-                logger.Debug("<ProcessState> Canidate: " + candidate);
-                logger.Debug("<ProcessState> StateRelation: " + stateRelation);
+                logger.Debug("<ProcessState> LocalState: {0} ", LocalState);
+                logger.Debug("<ProcessState> Canidate: {0}",candidate);
+                logger.Debug("<ProcessState> StateRelation: {0} ", stateRelation);
             }
 
             if (stateRelation == StateRelation.DifferentStateConfig && LocalState.NumberOfCalculatedBlocks == 0)
@@ -170,7 +170,7 @@ namespace voluntLib.managementLayer.localStateManagement
                 return;
             }
 
-            logger.Debug("<finishBlockCalculation> BlockID: " + blockID);
+            logger.Debug("<finishBlockCalculation> BlockID: {0}",blockID);
             LocalState.MarkBlockAsCalculated(blockID);
             LocalState.ResultList = mergedResults;
             OnStateHasBeenMerged();

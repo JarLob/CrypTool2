@@ -111,7 +111,7 @@ namespace voluntLib.calculationLayer
                     break;
                 }
             }
-            Logger.Info("Started " + (i - 1) + " workers");
+            Logger.Info("Started {0} workers", (i - 1));
             localStateManager.StateHasBeenUpdated += UpdateCalculationTasks;
             IsStarted = true;
             return true;
@@ -147,32 +147,47 @@ namespace voluntLib.calculationLayer
             //stop worker if its block has been calculated
             foreach (var key in runningWorkers.Keys.Where(key => localStateManager.LocalState.IsBlockCalculated(key)))
             {
-                Logger.Debug("External Change on block [" + key + "]. Canceling local task.");
+                Logger.Debug("External Change on block [{0}]. Canceling local task.", key);
                 CancelTask(key);
             }
 
-            //start new worker
-            int amountOfWorkerBefore, i;
-            string workingOnAfter = "", workingOnBefore;
-            bool startedLessThenExpected;
+            int amountOfWorkerBefore = runningWorkers.Count;
+            var limit = amountOfWorker - amountOfWorkerBefore;
 
-            lock (runningWorkers)
+            if (Logger.IsDebugEnabled)
             {
-                amountOfWorkerBefore = runningWorkers.Count;
-                workingOnBefore = runningWorkers.Keys.Aggregate("", (current, key) => current + (key + " "));
+                //start new worker
+                bool startedLessThenExpected;
+                var workingOnAfter = "";
+                var workingOnBefore = "";
 
-                var limit = amountOfWorker - amountOfWorkerBefore;
-                for (i = 0; i < limit && StartCalculationTask(); i++)
+                int i = 0;
+                lock (runningWorkers)
                 {
-                    workingOnAfter = runningWorkers.Keys.Aggregate("", (current, key) => current + (key + " "));
+                    workingOnBefore = runningWorkers.Keys.Aggregate("", (current, key) => current + (key + " "));
+                    for (i = 0; i < limit && StartCalculationTask(); i++)
+                    {
+                        workingOnAfter = runningWorkers.Keys.Aggregate("", (current, key) => current + (key + " "));
+                    }
+                    startedLessThenExpected = i - 1 < limit;
                 }
-                startedLessThenExpected = i - 1 < limit;
-            }
 
-            if (startedLessThenExpected)
-                Logger.Info("Running: " + amountOfWorkerBefore + "/" + amountOfWorker 
-                    + " on "+ workingOnBefore + " Restarted: " 
-                    + i + " worker on " + workingOnAfter);
+                if (startedLessThenExpected)
+                {
+                    Logger.Debug("Running: {0}/{1} workers. Restarted {4} workers. \nTasks before updating: {2}.\n Tasks after updating: {3}.",
+                         amountOfWorkerBefore, amountOfWorker, workingOnBefore, workingOnAfter, i);
+                }
+            }
+            else
+            {
+                for(var i = 0; i < limit; i++){ 
+                    if ( ! StartCalculationTask()) //start task if possible
+                    {
+                        break;
+                    }
+                }
+            }
+          
         }
 
         #endregion
@@ -242,7 +257,7 @@ namespace voluntLib.calculationLayer
             try
             {
                 var results = task.Result;
-                Logger.Debug("Worker on " + results.BlockID + "has finished");
+                Logger.Debug("Worker on {0} has finished", results.BlockID);
 
                 lock (runningWorkers)
                 {
@@ -272,7 +287,6 @@ namespace voluntLib.calculationLayer
 
         public virtual void OnTaskStarted(BigInteger blockID)
         {
-            Console.Out.WriteLine("Worker on " + blockID + " has started");
             var handler = TaskStarted;
             if (handler != null)
             {
@@ -282,7 +296,6 @@ namespace voluntLib.calculationLayer
 
         public virtual void OnTaskStopped(BigInteger blockID, bool hasBeenCanceled)
         {
-            Console.Out.WriteLine("Worker on " + blockID + "has finished");
             var handler = TaskStopped;
             if (handler != null)
             {

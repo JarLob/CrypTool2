@@ -439,6 +439,23 @@ namespace voluntLib
 
             LogManager.Configuration = config;
             eventBasedTarget.ApplicationLog += OnApplicationLog;
+              
+        }
+
+
+        /// <summary>
+        /// Quiet mode disables trace, debug and info logs. Only warnings and error logs will be shown.
+        /// </summary>
+        /// <param name="logLevel"></param>
+        public void EnableQuietMode()
+        {
+            foreach (var rule in LogManager.Configuration.LoggingRules)
+            {
+                rule.DisableLoggingForLevel(LogLevel.Trace);
+                rule.DisableLoggingForLevel(LogLevel.Debug);
+                rule.DisableLoggingForLevel(LogLevel.Info);
+            }
+            LogManager.ReconfigExistingLoggers();
         }
 
         #region init-Helper
