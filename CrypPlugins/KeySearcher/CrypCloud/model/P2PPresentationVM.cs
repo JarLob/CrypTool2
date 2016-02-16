@@ -210,7 +210,11 @@ namespace KeySearcher.CrypCloud
         private void FillTopList(List<KeyResultEntry> keyResultEntries)
         {
             TopList.Clear();
-            keyResultEntries.ForEach(it => TopList.Add(it));
+            keyResultEntries.Sort();            
+            foreach(var key in keyResultEntries)
+            {
+                TopList.Add(key);
+            }
         }
 
         #region properties with propChange handler

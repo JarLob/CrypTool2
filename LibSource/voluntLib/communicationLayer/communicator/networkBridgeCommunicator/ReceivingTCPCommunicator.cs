@@ -221,7 +221,7 @@ namespace voluntLib.communicationLayer.communicator.networkBridgeCommunicator
             { 
                 if(dataToSend.Count == 0) 
                 {   
-                    Logger.Debug("no data to send");
+                    Logger.Debug("no data to send"); 
                     return;
                 }
 

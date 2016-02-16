@@ -23,7 +23,12 @@ namespace KeySearcher.CrypCloud
 
         public override bool Equals(object obj)
         {
-            return GetHashCode().Equals(obj.GetHashCode());
+            var other = obj as KeyResultEntry;
+            if(other == null){
+                return false;
+            }
+
+            return KeyBytes.SequenceEqual(other.KeyBytes);
         }
 
         public override int GetHashCode()
@@ -35,16 +40,19 @@ namespace KeySearcher.CrypCloud
 
         public int CompareTo(object obj)
         {
-            if (Equals(obj)) return 0;
-
-            var entry = (KeyResultEntry) obj;
-            var epsilon = .000001;
-            if (Costs - entry.Costs > epsilon)
-            {
-                return 1;
+            if (Equals(obj)) {
+                return 0;
             }
 
-            return -1;
+            var entry = (KeyResultEntry)obj;
+            if (Costs == entry.Costs)
+            {
+                return KeyBytes[0] - entry.KeyBytes[0];
+            }
+                     
+            var epsilon = .000001; 
+            var compare = Costs - entry.Costs;    
+            return (compare > epsilon) ? 1 : -1;           
         }
 
         #endregion IComparable

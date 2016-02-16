@@ -306,7 +306,7 @@ namespace voluntLib
                 NetworkBridgeCommunicationLayer.Start();
 
             IsStarted = true;
-            logger.Info("VoluntLib has been started");
+            logger.Info("VoluntLib has been started as user {0}", CertificateName);
         }
 
         /// <summary>

@@ -52,8 +52,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="password.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
-    <None Include="asdasd.p12" />
+    <Content Include="certificate.p12">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="rootCA.crt" />
   </ItemGroup>
   <ItemGroup>

@@ -71,16 +71,6 @@ namespace CrypCouldNetworkBridge.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
-        /// </summary>
-        internal static byte[] asdasd {
-            get {
-                object obj = ResourceManager.GetObject("asdasd", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die N:asdasd8
         /// ähnelt.
         /// </summary>

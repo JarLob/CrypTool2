@@ -24,8 +24,8 @@ namespace CrypCouldNetworkBridge
         {  
             //utilizing certificate of user named asdasd for testing. user "asdasd" supposed to be banned for production ct
             //certificate and password needs to be changed before deploying to networkbridge
-            var cerificate = Properties.Resources.asdasd;
-            var networkBridgeCert = new X509Certificate2(cerificate, "asdasd");
+            var password = System.IO.File.ReadAllText("password.txt");
+            var networkBridgeCert = new X509Certificate2("certificate.p12", password);
             
             var rootCert = new X509Certificate2(Properties.Resources.rootCA);
 
