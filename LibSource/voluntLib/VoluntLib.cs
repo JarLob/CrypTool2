@@ -39,6 +39,7 @@ using voluntLib.managementLayer.localStateManagement;
 using voluntLib.managementLayer.localStateManagement.states;
 using voluntLib.managementLayer.localStateManagement.states.config;
 using voluntLib.utilities;
+using voluntLib.communicationLayer.protrocolExtensions;
 
 #endregion
 
@@ -258,6 +259,7 @@ namespace voluntLib
         private readonly List<SendingTCPCommunicator> tcpCommunicatorToAdd = new List<SendingTCPCommunicator>();
         private ReceivingTCPCommunicator receivingTCPCom;
 
+        private List<AExtension> Extension = new List<AExtension>();
         protected CommunicationLayer CommunicationLayer { get; private set; }
         protected CommunicationLayer FileComLayer { get; private set; }
 
@@ -402,7 +404,8 @@ namespace voluntLib
             };
 
             CommunicationLayer = new CommunicationLayer(ManagementLayer, CertificateService, communicator);
-
+            Extension.ForEach(ext => CommunicationLayer.Extensions.Add(ext));
+ 
             //adding outbounding NetworkBridges
             if (tcpCommunicatorToAdd.Capacity > 0) 
                 SetupNetworkBridgeCommunicators();
@@ -424,7 +427,12 @@ namespace voluntLib
             RegisterPublicEvents();
             IsInitialized = true;
         }
-     
+
+
+        public void AddExtension(AExtension extension)
+        {           
+            Extension.Add(extension);
+        }
 
         private void EnableEventBasedLogging()
         {
@@ -463,6 +471,8 @@ namespace voluntLib
         {
             NetworkBridgeManagementLayer = new NetworkBridgeManagementLayer(ManagementLayer);
             NetworkBridgeCommunicationLayer = new NetworkBridgeCommunicationLayer(NetworkBridgeManagementLayer, certificateService, receivingTCPCom);
+            Extension.ForEach(ext => NetworkBridgeCommunicationLayer.Extensions.Add(ext));
+
             NetworkBridgeManagementLayer.NetworkCommunicationLayer = NetworkBridgeCommunicationLayer;
             IsNATFreeNetworkBridge = true;
             IsNetworkBridge = true;
@@ -909,6 +919,7 @@ namespace voluntLib
         /// Set LogMode to LogMode.EventBased to enable
         /// </summary>
         public event EventHandler<LogEventInfoArg> ApplicationLog;
+
 
         #region invoker
 

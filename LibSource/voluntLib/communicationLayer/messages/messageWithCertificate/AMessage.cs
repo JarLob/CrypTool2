@@ -61,7 +61,8 @@ namespace voluntLib.communicationLayer.messages.messageWithCertificate
         CreateNetworkJob = 3,
         JoinNetworkJob = 10,
         PropagateState = 11,
-        DeleteNetworkJob = 12
+        DeleteNetworkJob = 12,
+        All = 99
     }
 
 }

@@ -32,6 +32,7 @@ using voluntLib.communicationLayer.messageHandler;
 using voluntLib.communicationLayer.messages.commonStructs;
 using voluntLib.communicationLayer.messages.messageWithCertificate;
 using voluntLib.managementLayer.localStateManagement.states;
+using voluntLib.communicationLayer.protrocolExtensions;
 
 #endregion
 
@@ -53,6 +54,8 @@ namespace voluntLib.communicationLayer
         #endregion
 
         #region properties
+        public List<AExtension> Extensions { get; set; }
+
 
         /// <summary>
         ///   Gets or sets the job list exchange interval, used for scheduled JobListExchanges with all TCP clients and each world
@@ -63,10 +66,12 @@ namespace voluntLib.communicationLayer
         /// </value>
         public long JobListExchangeInterval { get; set; }
 
+
         #endregion
 
         public CommunicationLayer(IManagementLayerCallback managementCallback, CertificateService certificateHandler, ICommunicator communicator)
         {
+            this.Extensions = new List<AExtension>();
             this.certificateHandler = certificateHandler;
             this.managementCallback = managementCallback;
             communicator.RegisterCommunicationLayer(this);
@@ -102,19 +107,19 @@ namespace voluntLib.communicationLayer
         public void PropagateState(BigInteger jobID, string worldName, ALocalState state, IPAddress to)
         {
             var packet = new PropagateStateMessage(jobID, worldName, state.Serialize());
-            SignAndSendAPacket(packet, to);
+            AddCommonDataAndSendAPacket(packet, to);
         }
 
         public void JoinNetworkJob(BigInteger jobID, string worldName, IPAddress to)
         {
             var packet = new JoinNetworkJobMessage(jobID, worldName);
-            SignAndSendAPacket(packet, to);
+            AddCommonDataAndSendAPacket(packet, to);
         }
 
         public void CreateNetworkJob(NetworkJob job, IPAddress to)
         {
             var packet = new CreateNetworkJobMessage(job.JobID, job.World, job.ToNetworkJobMetaData(), job.ToNetworkJobPayload());
-            SignAndSendAPacket(packet, to);
+            AddCommonDataAndSendAPacket(packet, to);
         }
 
         public void DeleteNetworkJob(DeleteNetworkJobMessage message, IPAddress to)
@@ -136,18 +141,18 @@ namespace voluntLib.communicationLayer
 
         public void RequestWorldList(IPAddress to)
         {
-            SignAndSendAPacket(new RequestWorldListMessage(), to);
+            AddCommonDataAndSendAPacket(new RequestWorldListMessage(), to);
         }
 
         public void RequestJobDetails(BigInteger jobID, string worldName, IPAddress to)
         {
-            SignAndSendAPacket(
+            AddCommonDataAndSendAPacket(
                 new RequestJobDetailsMessage(jobID, worldName), to);
         }
 
         public void RequestJobList(string worldName, IPAddress to)
         {
-            SignAndSendAPacket(new RequestJobListMessage(worldName), to);
+            AddCommonDataAndSendAPacket(new RequestJobListMessage(worldName), to);
         }
 
         #endregion
@@ -156,18 +161,18 @@ namespace voluntLib.communicationLayer
 
         public void SendWorldList(List<string> worlds, IPAddress to)
         {
-            SignAndSendAPacket(new ResponseWorldListMessage(worlds), to);
+            AddCommonDataAndSendAPacket(new ResponseWorldListMessage(worlds), to);
         }
 
         public void SendJobDetails(string worldName, BigInteger jobID, NetworkJobPayload payload, IPAddress to)
         {
             var packet = new ResponseJobDetailsMessage(jobID, worldName, payload);
-            SignAndSendAPacket(packet, to);
+            AddCommonDataAndSendAPacket(packet, to);
         }
 
         public void SendJobList(string worldName, List<NetworkJobMetaData> descriptions, IPAddress to)
         {
-            SignAndSendAPacket(new ResponseJobListMessage(worldName, descriptions), to);
+            AddCommonDataAndSendAPacket(new ResponseJobListMessage(worldName, descriptions), to);
         }
 
         #endregion
@@ -181,8 +186,12 @@ namespace voluntLib.communicationLayer
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="to">To.</param>
-        public virtual void SignAndSendAPacket(AMessage message, IPAddress to)
-        {
+        public virtual void AddCommonDataAndSendAPacket(AMessage message, IPAddress to)
+        { 
+            foreach(var extension in Extensions){
+                message.Header.Extensions.Add(extension.Key, extension.GetData());
+            }
+
             SendASignedPacket(certificateHandler.SignAndAddInformation(message), to);
         }
 
@@ -207,11 +216,6 @@ namespace voluntLib.communicationLayer
             }
         }
 
-        #region zip
-
-      
-
-        #endregion
         #endregion
 
         public void AddCommunicator(IPAddress triggeringIP, ICommunicator communicator)

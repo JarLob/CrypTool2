@@ -100,6 +100,8 @@
     <Compile Include="communicationLayer\communicator\MulticastCommunicator.cs" />
     <Compile Include="common\interfaces\ICommunicationLayer.cs" />
     <Compile Include="communicationLayer\NetworkBridgeCommunicationLayer.cs" />
+    <Compile Include="communicationLayer\protrocolExtensions\AExtension.cs" />
+    <Compile Include="communicationLayer\protrocolExtensions\SendDateExtension.cs" />
     <Compile Include="logging\EventBasedTarget.cs" />
     <Compile Include="logging\LogEventInfoArg.cs" />
     <Compile Include="logging\LogMode.cs" />

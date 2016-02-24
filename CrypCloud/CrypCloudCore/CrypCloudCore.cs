@@ -21,6 +21,7 @@ using voluntLib.logging;
 using voluntLib.managementLayer.localStateManagement.states;
 using voluntLib.managementLayer.localStateManagement.states.config;
 using WorkspaceManager.Model;
+using voluntLib.communicationLayer.protrocolExtensions;
 
 namespace CrypCloud.Core
 { 
@@ -81,6 +82,7 @@ namespace CrypCloud.Core
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
             };
             vlib.EnableQuietMode();
+            vlib.AddExtension(new SendDateExtension());
 
             var networkBridges = Resources.networkBridges.Replace("\r","");
             var networkBridgesList = networkBridges

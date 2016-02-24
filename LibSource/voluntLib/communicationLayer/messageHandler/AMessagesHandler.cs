@@ -55,8 +55,27 @@ namespace voluntLib.communicationLayer.messageHandler
             var packet = new T();
             packet.Deserialize(messageBytes);
 
-            if (certificateService.VerifySignature(packet) == CertificateValidationState.Valid)
+            if (certificateService.VerifySignature(packet) != CertificateValidationState.Valid) return;
+            
+            try
+            {
                 HandleValidPacket(packet, from);
+            }
+            catch (Exception) { }
+            
+            var typeOfMessage  = (MessageType)packet.Header.MessageType;
+            commLayer.Extensions
+                .Where(extention => extention.MessageTypes.Contains(MessageType.All) || extention.MessageTypes.Contains(typeOfMessage))
+                .Where(extention => packet.Header.Extensions.ContainsKey(extention.Key))
+                .ToList()
+                .ForEach(extention =>
+                {
+                    try
+                    {
+                        var value = packet.Header.Extensions[extention.Key];
+                        extention.OnReceive(value);
+                    } catch (Exception) { }
+                });           
         }
 
         protected void RedirectToNetworkBridges(AMessage message, IPAddress from)
@@ -64,7 +83,7 @@ namespace voluntLib.communicationLayer.messageHandler
             var connectedSendingTcpComms = commLayer.GetCommunicator().FindAll(com => com is SendingTCPCommunicator).Cast<SendingTCPCommunicator>();
             foreach (var com in connectedSendingTcpComms.Where(com => !from.Equals(com.RemoteNetworkBridgeIP)))
             {
-                commLayer.SignAndSendAPacket(message, com.RemoteNetworkBridgeIP);
+                commLayer.AddCommonDataAndSendAPacket(message, com.RemoteNetworkBridgeIP);
             }
         }
         

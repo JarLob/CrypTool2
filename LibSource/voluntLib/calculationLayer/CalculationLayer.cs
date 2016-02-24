@@ -216,9 +216,9 @@ namespace voluntLib.calculationLayer
             // start the worker task
             Task.Factory.StartNew((_ =>
             {
-                OnTaskStarted(nextBlockID);
                 try
                 {
+                    OnTaskStarted(nextBlockID);
                     return calculationTemplate.WorkerLogic.DoWork(JobPayload, nextBlockID, token);
                 } catch (Exception e)
                 {

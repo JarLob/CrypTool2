@@ -33,7 +33,7 @@ namespace voluntLib.communicationLayer
             this.communicator = communicator;
         }
 
-        public override void SignAndSendAPacket(AMessage message, IPAddress to)
+        public override void AddCommonDataAndSendAPacket(AMessage message, IPAddress to)
         {
             certificateHandler.SignAndAddInformation(message);
             Logger.Info("Sending " + (MessageType) message.Header.MessageType + " over TCP-Channel");

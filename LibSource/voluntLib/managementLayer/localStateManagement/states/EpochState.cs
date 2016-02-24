@@ -299,7 +299,7 @@ namespace voluntLib.managementLayer.localStateManagement.states
         }
 
         public Int32 GetNumberOfCalculatedBlocksInCurrentEpoch()
-        {           
+        {
             return GetCardinality(BitMask);
         }
 
@@ -344,15 +344,12 @@ namespace voluntLib.managementLayer.localStateManagement.states
         /// <returns></returns>
         protected override BigInteger GetNumberOfCalculatedBlocks()
         {
-            lock (this)
+            var numberOfCalculatedBlocks = EpochNumber * config.BitMaskWidth + GetNumberOfCalculatedBlocksInCurrentEpoch();
+            if (IsInLastEpoch())
             {
-                var numberOfCalculatedBlocks = EpochNumber * config.BitMaskWidth + GetNumberOfCalculatedBlocksInCurrentEpoch();
-                if (IsInLastEpoch())
-                {
-                    numberOfCalculatedBlocks -= config.UnusedBitsOfLastEpoch;
-                }
-                return numberOfCalculatedBlocks;
+                numberOfCalculatedBlocks -= config.UnusedBitsOfLastEpoch;
             }
+            return numberOfCalculatedBlocks;
         }
 
         /// <summary>
