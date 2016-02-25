@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">PBKDF-1 (PKCS#5 2.0)</title>
+  <summary lang="en">Password Based Key Derivation Function 1</summary>
+  <description lang="en">This template shows how to implement PBKDF-1 in CrypTool 2</description>
+  <keywords>Hash, SHA-1, pkcs#5, PBKDF-1, key generation, iterations, RFC 2898 </keywords>
+
+  <title lang="de">PBKDF-1 (PKCS#5 2.0)</title>
+  <summary lang="de">Passwortbasierte Schlüsselgeneration mit PBKDF-1</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man mit CT2 PBKDF-1 implementieren kann.</description>
+  <keywords lang="de">Hash, SHA-1, pkcs#5, PBKDF-1,Schlüsselerzeugung</keywords>
+
+  <icon file="pbkdf1.png" />
+  <relevantPlugins>
+    <plugin name="SHA" />
+  </relevantPlugins>
+
+</sample>
