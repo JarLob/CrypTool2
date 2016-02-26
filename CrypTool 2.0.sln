@@ -417,6 +417,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFSFactorizer", "CrypPlugin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypCouldNetworkBridge", "CrypCloud\CrypCouldNetworkBridge\CrypCouldNetworkBridge.csproj", "{EC61C18D-ACD4-4475-BB87-D72DD0F2755D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioInput", "CrypPlugins\AudioInput\AudioInput.csproj", "{78799748-99DE-4FE7-A7E8-2BF6A85E5492}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioOutput", "CrypPlugins\AudioOutput\AudioOutput.csproj", "{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -1616,6 +1620,18 @@ Global
 		{EC61C18D-ACD4-4475-BB87-D72DD0F2755D}.Release|x86.Build.0 = Release|x86
 		{EC61C18D-ACD4-4475-BB87-D72DD0F2755D}.Test|x86.ActiveCfg = Release|x86
 		{EC61C18D-ACD4-4475-BB87-D72DD0F2755D}.Test|x86.Build.0 = Release|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Debug|x86.ActiveCfg = Debug|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Debug|x86.Build.0 = Debug|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Release|x86.ActiveCfg = Release|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Release|x86.Build.0 = Release|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Test|x86.ActiveCfg = Release|x86
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492}.Test|x86.Build.0 = Release|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Debug|x86.ActiveCfg = Debug|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Debug|x86.Build.0 = Debug|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Release|x86.ActiveCfg = Release|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Release|x86.Build.0 = Release|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Test|x86.ActiveCfg = Release|x86
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42}.Test|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1812,6 +1828,8 @@ Global
 		{C3A0BF12-DEBA-4C21-B118-A340502AD937} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{30001826-E98B-4B15-82E5-AC72FEECEA0C} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
 		{EC61C18D-ACD4-4475-BB87-D72DD0F2755D} = {B3505D0C-EC23-4663-A7AE-CC13A7CFF836}
+		{78799748-99DE-4FE7-A7E8-2BF6A85E5492} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{8601EC43-5533-4DD1-B442-F8D3A4E7FC42} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CrypTool 2.0.vsmdi
