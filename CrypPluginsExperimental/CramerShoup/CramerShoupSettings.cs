@@ -56,6 +56,7 @@ namespace Cryptool.Plugins.CramerShoup
 
                     OnPropertyChanged("Action");
                 }
+                ChangePluginIcon(action);
             }
         }
 
@@ -68,6 +69,13 @@ namespace Cryptool.Plugins.CramerShoup
         private void OnPropertyChanged(string propertyName)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        public event StatusChangedEventHandler OnPluginStatusChanged;
+
+        private void ChangePluginIcon(int Icon)
+        {
+            if (OnPluginStatusChanged != null) OnPluginStatusChanged(null, new StatusEventArgs(StatusChangedMode.ImageUpdate, Icon));
         }
 
         #endregion

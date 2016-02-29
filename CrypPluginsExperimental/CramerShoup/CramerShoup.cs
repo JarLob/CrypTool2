@@ -27,7 +27,7 @@ using System;
 namespace Cryptool.Plugins.CramerShoup
 {
     [Author("Jan Jansen", "jan.jansen-n22@rub.de", "Ruhr Uni-Bochum", "http://cits.rub.de/")]
-    [PluginInfo("CramerShoup.Properties.Resources", "PluginCaption", "PluginTooltip", "CramerShoup/DetailedDescription/doc.xml", new [] { "CramerShoup/Images/cs.png" })]
+    [PluginInfo("CramerShoup.Properties.Resources", "PluginCaption", "PluginTooltip", "CramerShoup/DetailedDescription/doc.xml", new[] { "CramerShoup/Images/csencaps.png", "CramerShoup/Images/csdecaps.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernAsymmetric)]
     public class CramerShoup : ICrypComponent
     {
@@ -37,6 +37,17 @@ namespace Cryptool.Plugins.CramerShoup
         private readonly CramerShoupSettings settings = new CramerShoupSettings();
 
         #endregion
+
+        public CramerShoup()
+        {
+
+            this.settings.OnPluginStatusChanged += settings_OnPluginStatusChanged;
+        }
+
+        void settings_OnPluginStatusChanged(IPlugin sender, StatusEventArgs args)
+        {
+            if (OnPluginStatusChanged != null) OnPluginStatusChanged(this, args);
+        }
 
         #region Data Properties
 
@@ -212,21 +223,18 @@ namespace Cryptool.Plugins.CramerShoup
         public event StatusChangedEventHandler OnPluginStatusChanged;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-
-        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
+        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         private void ProgressChanged(double value, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
