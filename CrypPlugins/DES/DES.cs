@@ -588,13 +588,36 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int bytesToUse)
         {
             int size = bytesToUse > ciphertext.Length ? ciphertext.Length : bytesToUse;
+            
             if (((DESSettings)plugin.Settings).TripleDES)
             {
-                return NativeCryptography.Crypto.decryptTripleDES(ciphertext, key, IV, size, ((DESSettings)plugin.Settings).Mode);
+                //0="ECB", 1="CBC", 2="CFB", 3="OFB"
+                switch (((DESSettings)plugin.Settings).Mode)
+                {
+                    case 0: //ECB
+                        return NativeCryptography.Crypto.decrypt3DES_ECB(ciphertext, key, size);
+                    case 1: //CBC
+                        return NativeCryptography.Crypto.decrypt3DES_CBC(ciphertext, key, IV, size);
+                    case 2: //CFB
+                        return NativeCryptography.Crypto.decrypt3DES_CFB(ciphertext, key, IV, size);
+                    default:
+                        throw new NotSupportedException(String.Format("Non supported mode selected: {0}", ((DESSettings)plugin.Settings).Mode));
+                }
             }
             else
             {
-                return NativeCryptography.Crypto.decryptDES(ciphertext, key, IV, size, ((DESSettings)plugin.Settings).Mode);
+                //0="ECB", 1="CBC", 2="CFB", 3="OFB"
+                switch (((DESSettings)plugin.Settings).Mode) 
+                { 
+                    case 0: //ECB
+                        return NativeCryptography.Crypto.decryptDES_ECB(ciphertext, key, size);
+                    case 1: //CBC
+                        return NativeCryptography.Crypto.decryptDES_CBC(ciphertext, key, IV, size);
+                    case 2: //CFB
+                        return NativeCryptography.Crypto.decryptDES_CFB(ciphertext, key, IV, size);
+                    default:
+                        throw new NotSupportedException(String.Format("Non supported mode selected: {0}",((DESSettings)plugin.Settings).Mode));
+                }
             }
         }
 

@@ -506,20 +506,17 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             this.plugin = plugin;
             this.settings = (AESSettings)plugin.Settings;
-            plugin.Settings.PropertyChanged += delegate(object sender, PropertyChangedEventArgs e)
-            {
-                if (e.PropertyName == "Keysize")
-                {
-                    FireKeyPatternChanged();
-                }
-            };
+            ((AESSettings)plugin.Settings).PropertyChanged += new PropertyChangedEventHandler(AESControl_PropertyChanged);
         }
 
-        private void FireKeyPatternChanged()
+        private void AESControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (keyPatternChanged != null)
+            if (e.PropertyName.Equals("Keysize"))
             {
-                keyPatternChanged();
+                if (keyPatternChanged != null)
+                {
+                    keyPatternChanged();
+                }
             }
         }
 
@@ -536,13 +533,86 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return Decrypt(ciphertext, key, IV, ciphertext.Length);
         }
 
-        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int bytesToUse)
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int length)
         {
             // Don't allow sizes greater than the length of the input
-            int newBytesToUse = Math.Min(bytesToUse, ciphertext.Length);
+            int bytesToUse = Math.Min(length, ciphertext.Length);
             // Note: new size is assumed to be multiple of 16
 
-            return NativeCryptography.Crypto.decryptAES(ciphertext, key, IV, this.settings.KeysizeAsBits, newBytesToUse, settings.Mode);
+            // 0="ECB", 1="CBC", 2="CFB", 3="OFB"
+            switch (settings.Mode)
+            {
+                case 0: // ECB:
+                    switch (settings.KeysizeAsBits)
+                    {
+                        case 128:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES128_ECB_NI(ciphertext, key, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES128_ECB(ciphertext, key, bytesToUse);
+                            }
+                        case 192:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES192_ECB_NI(ciphertext, key, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES192_ECB(ciphertext, key, bytesToUse);
+                            }
+                        case 256:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES256_ECB_NI(ciphertext, key, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES256_ECB(ciphertext, key, bytesToUse);
+                            }
+                        default:
+                            throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
+                    }
+                case 1: // CBC:
+                    switch (settings.KeysizeAsBits)
+                    {
+                        case 128:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES128_CBC_NI(ciphertext, key, IV, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES128_CBC(ciphertext, key, IV, bytesToUse);
+                            }
+                        case 192:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES192_CBC_NI(ciphertext, key, IV, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES192_CBC(ciphertext, key, IV, bytesToUse);
+                            }
+                        case 256:
+                            if (NativeCryptography.Crypto.supportsAESNI())
+                            {
+                                return NativeCryptography.Crypto.decryptAES256_CBC_NI(ciphertext, key, IV, bytesToUse);
+                            }
+                            else
+                            {
+                                return NativeCryptography.Crypto.decryptAES256_CBC(ciphertext, key, IV, bytesToUse);
+                            }
+                        default:
+                            throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
+                    }
+                case 2: // CFB:
+                    throw new NotImplementedException("AES CFB not implemented!");
+                default:
+                    throw new NotSupportedException(String.Format("Non supported mode selected: {0}", settings.Mode));
+            }           
         }
 
         public int GetBlockSize()

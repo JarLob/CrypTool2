@@ -1,3 +1,19 @@
+/*
+Copyright 2016 Nils Kopal, University of Kassel
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 #pragma once
 #include "aes_core.h"
 #include "DES/des.h"
@@ -13,97 +29,48 @@ namespace NativeCryptography {
 	public ref class Crypto
 	{
 	private:
-		enum class cryptMethod {methodAES, methodDES, method3DES};
-
 		static array<unsigned char>^ zeroIV8 = gcnew array<unsigned char>(8);
 		static array<unsigned char>^ zeroIV16 = gcnew array<unsigned char>(16);
-
-		static void xorBlockAES(int *t1, int *t2);
-		static void xorBlockDES(int *t1, int *t2);
-		static void encrypt(unsigned char* in, unsigned char* out, const cryptMethod method, AES_KEY* aeskey, DES_key_schedule* deskey);
-		static void decrypt(unsigned char* in, unsigned char* out, const cryptMethod method, AES_KEY* aeskey, DES_key_schedule* deskey);
-		static void xorblock(unsigned char* t1, unsigned char* t2, const cryptMethod method);
-		static array<unsigned char>^ decryptAESorDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode, const int blockSize, const cryptMethod method);
-		static array<unsigned char>^ encryptAESorDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode, const int blockSize, const cryptMethod method);
-
-		static Mutex^ prepareMutex = gcnew Mutex();
-		
+		static Mutex^ prepareMutex = gcnew Mutex();				
 
 	public:
+
+		//Data Encryption Standard
+		static array<unsigned char>^ decryptDES_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptDES_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptDES_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+
+		//3DES
+		static array<unsigned char>^ decrypt3DES_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decrypt3DES_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decrypt3DES_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+
+		//Advanced Encryption Standard
+		static array<unsigned char>^ decryptAES128_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES128_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES128_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES128_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES128_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES192_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES192_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES192_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES192_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES192_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES256_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES256_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES256_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length);
+		static array<unsigned char>^ decryptAES256_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		static array<unsigned char>^ decryptAES256_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length);
+		//Check method for AES new instructions
+		static bool supportsAESNI();
+
+		//RC2
+		static array<unsigned char>^ decryptRC2(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode);
+
+		//Cost functions
 		static double calculateEntropy(array<unsigned char>^ text, int bytesToUse);
-
-		static array<unsigned char>^ decryptAES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode)
-		{
-			const int blockSize = 16;
-			return decryptAESorDES(Input, Key, IV, bits, length, mode, blockSize, cryptMethod::methodAES);
-		}
-
-		static array<unsigned char>^ decryptDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode)
-		{
-			const int blockSize = 8;
-			return decryptAESorDES(Input, Key, IV, 0, length, mode, blockSize, cryptMethod::methodDES);
-		}
-
-		static array<unsigned char>^ decryptTripleDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode)
-		{
-			const int blockSize = 8;			
-			return decryptAESorDES(Input, Key, IV, 0, length, mode, blockSize, cryptMethod::method3DES);
-		}
-
-		static array<unsigned char>^ encryptAES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int bits, const int length, const int mode)
-		{
-			const int blockSize = 16;
-			return encryptAESorDES(Input, Key, IV, bits, length, mode, blockSize, cryptMethod::methodAES);
-		}
-
-		static array<unsigned char>^ encryptDES(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode)
-		{
-			const int blockSize = 8;
-			return encryptAESorDES(Input, Key, IV, 0, length, mode, blockSize, cryptMethod::methodDES);
-		}		
-
-		static array<unsigned char>^ decryptRC2(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode)
-		{
-			if (mode == 2)	//CFB
-			{			
-				throw gcnew System::Exception("Encrypting CFB not supported (yet?)");
-			}
-
-			array<unsigned char>^ output = gcnew array<unsigned char>(length);
-			unsigned short xkey[64];
-			
-			cli::pin_ptr<unsigned char> p_key = &Key[0];
-			cli::pin_ptr<unsigned char> p_iv = &IV[0];
-
-			rc2_keyschedule( xkey, p_key, Key->Length, Key->Length * 8);					
-
-			//put IV into saving-block
-			unsigned char block[8] = {0,0,0,0,0,0,0,0};
-			xorBlockDES((int*)block,(int*)p_iv);
-
-			for(int i=0;i<length;i+=8)
-			{	
-				if (mode == 0) //ECB
-				{
-					cli::pin_ptr<unsigned char> p_input = &Input[i];
-					cli::pin_ptr<unsigned char> p_output = &output[i];
-					rc2_decrypt( xkey,p_output,p_input);
-				}		
-				if(mode == 1) //CBC
-				{						
-					cli::pin_ptr<unsigned char> p_input = &Input[i];
-					cli::pin_ptr<unsigned char> p_output = &output[i];
-					
-					rc2_decrypt( xkey,p_output,p_input);
-					xorBlockDES((int*)p_output,(int*)block);
-
-					xorBlockDES((int*)block,(int*)block);
-					xorBlockDES((int*)block,(int*)p_input);
-				}
-			}
-			return output;
-		}
-
+		
+		//Message-Digest Algorithm 5
 		static array<unsigned char>^ md5(array<unsigned char>^ Input);
 	};
 }

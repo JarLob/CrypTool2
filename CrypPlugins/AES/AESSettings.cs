@@ -242,7 +242,10 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         protected void OnPropertyChanged(string name)
         {
-            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
         }
 
         #endregion
