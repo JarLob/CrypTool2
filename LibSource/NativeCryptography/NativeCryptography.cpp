@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 #include "NativeCryptography.h"
-#include "MD5/md5.h"
-#include <stdlib.h>
-#include <string.h>
 
 namespace NativeCryptography {
 	
@@ -668,6 +665,7 @@ namespace NativeCryptography {
 		return output;
 
 	}
+
 	array<unsigned char>^ Crypto::decryptAES256_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 	
 		if (IV == nullptr)
@@ -720,6 +718,8 @@ namespace NativeCryptography {
 		return check_for_aes_instructions();
 	}
 
+	//RC2
+	
 	array<unsigned char>^ Crypto::decryptRC2(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode)
 	{
 		if (mode == 2)	//CFB
@@ -759,6 +759,18 @@ namespace NativeCryptography {
 				xor64(block, p_input);
 			}
 		}
+		return output;
+	}
+
+	//RC4
+	array<unsigned char>^ Crypto::decryptRC4(array<unsigned char>^ Input, array<unsigned char>^ Key, const int textlength, const int keylength){
+
+		array<unsigned char>^ output = gcnew array<unsigned char>(textlength);
+		pin_ptr<unsigned char> key = &Key[0];
+		pin_ptr<unsigned char> outp = &output[0];
+		pin_ptr<unsigned char> input = &Input[0];
+		
+		RC4::crypt(input, outp, key, textlength, keylength);
 		return output;
 	}
 

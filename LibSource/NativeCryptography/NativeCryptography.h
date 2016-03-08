@@ -15,11 +15,16 @@ limitations under the License.
 */
 
 #pragma once
+#include <string.h>
+#include <stdlib.h>
+#include <string.h>
 #include "aes_core.h"
 #include "DES/des.h"
-#include <string.h>
 #include "rc2.h"
 #include "iaes_asm_interface.h"
+#include "MD5/md5.h"
+
+#include "rc4.h"
 
 using namespace System::Threading;
 using namespace System;
@@ -66,6 +71,9 @@ namespace NativeCryptography {
 
 		//RC2
 		static array<unsigned char>^ decryptRC2(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length, const int mode);
+
+		//RC4
+		static array<unsigned char>^ decryptRC4(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length, const int keylength);
 
 		//Cost functions
 		static double calculateEntropy(array<unsigned char>^ text, int bytesToUse);

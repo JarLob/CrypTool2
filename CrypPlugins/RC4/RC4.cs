@@ -25,6 +25,7 @@ using System.ComponentModel;
 using Cryptool.PluginBase.IO;
 using System.Resources;
 using System.Reflection;
+using Cryptool.PluginBase.Control;
 
 namespace Cryptool.Plugins.Cryptography.Encryption
 {
@@ -43,7 +44,14 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         private CStreamWriter outputStreamWriter;
         // indicates if we need to stop the algorithm
         private bool stop = false;
+        private IControlEncryption controlSlave;
+        private RC4Settings settings;
         #endregion
+
+        public RC4()
+        {
+            settings = new RC4Settings();
+        }
 
         void settings_OnPluginStatusChanged(IPlugin sender, StatusEventArgs args)
         {
@@ -52,7 +60,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
         public ISettings Settings
         {
-            get { return null; }
+            get { return settings; }
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
@@ -122,6 +130,13 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     return;
                 }
 
+                // make sure we have a valid key input
+                if (inputKey.Length < settings.Keylength)
+                {
+                    GuiLogMessage(String.Format(resourceManager.GetString("ErrorInputKeyTooShort"), inputKey.Length, settings.Keylength), NotificationLevel.Error);
+                    return;
+                }
+
                 byte[] key = ToByteArray(inputKey);
                 
                 // make sure the input key is within the desired range
@@ -151,7 +166,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     j = 0;
                     for (i = 0; i < 256; i++)
                     {
-                        j = (j + sbox[i] + key[i % key.Length]) % 256;
+                        j = (j + sbox[i] + key[i % settings.Keylength]) % 256;
                         byte sboxOld = sbox[i];
                         sbox[i] = sbox[j];
                         sbox[j] = sboxOld;
@@ -285,6 +300,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
+        
         private void ProgressChanged(double value, double max)
         {
             if (OnPluginProgressChanged != null)
@@ -294,5 +310,104 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         }
 
         #endregion
+
+        [PropertyInfo(Direction.ControlSlave, "ControlSlaveCaption", "ControlSlaveTooltip")]
+        public IControlEncryption ControlSlave
+        {
+            get
+            {
+                if (controlSlave == null)
+                    controlSlave = new RC4Control(this);
+                return controlSlave;
+            }
+        }  
     }
+
+    public class RC4Control : IControlEncryption
+    {
+        private readonly RC4 _plugin;
+
+        public RC4Control(RC4 rc4)
+        {
+            _plugin = rc4;
+            _plugin.Settings.PropertyChanged +=_plugin_settings_PropertyChanged;
+        }
+
+        private void _plugin_settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals("Keylength"))
+            {
+                if (keyPatternChanged != null)
+                {
+                    keyPatternChanged();
+                }
+            }   
+        }
+
+        #region IControlEncryption Members
+
+        public byte[] Encrypt(byte[] key, int blocksize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV)
+        {
+            return Decrypt(ciphertext, key, IV, ciphertext.Length);
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int bytesToUse)
+        {
+            int length = Math.Min(bytesToUse, ciphertext.Length);
+            return NativeCryptography.Crypto.decryptRC4(ciphertext, key, length, ((RC4Settings)_plugin.Settings).Keylength);
+        }
+
+        public int GetBlockSize()
+        {
+            return 0;
+        }
+
+        public string GetKeyPattern()
+        {
+            return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", ((RC4Settings)_plugin.Settings).Keylength));
+        }
+
+        public IKeyTranslator GetKeyTranslator()
+        {
+            return new KeySearcher.KeyTranslators.ByteArrayKeyTranslator();
+        }
+
+        public string GetOpenCLCode(int decryptionLength, byte[] iv)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void changeSettings(string setting, object value)
+        {
+        }
+
+        public IControlEncryption clone()
+        {
+            var control = new RC4Control(_plugin);
+            return control;
+        }
+
+        public event KeyPatternChanged keyPatternChanged;
+
+        #endregion
+
+        #region IControl Members
+
+        public event IControlStatusChangedEventHandler OnStatusChanged;
+
+        #endregion
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+        }
+
+        #endregion
+    } 
 }

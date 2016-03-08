@@ -123,6 +123,12 @@
   <data name="ActionTooltip" xml:space="preserve">
     <value>Wollen Sie die Eingangsdaten verschlüsseln oder entschlüsseln?</value>
   </data>
+  <data name="ControlSlaveCaption" xml:space="preserve">
+    <value>RC4-Sklave</value>
+  </data>
+  <data name="ControlSlaveTooltip" xml:space="preserve">
+    <value>Direkter Zugriff auf das RC4-Plugin</value>
+  </data>
   <data name="ErrorInputDataNotProvided" xml:space="preserve">
     <value>Keine gültigen Eingangsdaten angegeben.</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="ErrorInputKeyNotProvided" xml:space="preserve">
     <value>Kein gültiger Schlüssel angegeben.</value>
+  </data>
+  <data name="ErrorInputKeyTooShort" xml:space="preserve">
+    <value>Der eingegebene Schlüssel war zu kurz ({0}) was die eingestellte Schlüssellänge anbelangt: {1}</value>
   </data>
   <data name="InputDataCaption" xml:space="preserve">
     <value>Daten</value>
@@ -143,6 +152,12 @@
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
     <value>Der Schlüssel muss zwischen 5 und 256 Byte lang sein.</value>
+  </data>
+  <data name="KeylengthCaption" xml:space="preserve">
+    <value>Schlüssellänge</value>
+  </data>
+  <data name="KeylengthTooltip" xml:space="preserve">
+    <value>Länge des zu benutzenden Schlüssels (in Bytes).</value>
   </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Ausgabe</value>

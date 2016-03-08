@@ -123,6 +123,12 @@
   <data name="ActionTooltip" xml:space="preserve">
     <value>Do you want the input data to be encrypted or decrypted?</value>
   </data>
+  <data name="ControlSlaveCaption" xml:space="preserve">
+    <value>RC4 Slave</value>
+  </data>
+  <data name="ControlSlaveTooltip" xml:space="preserve">
+    <value>Direct access to RC4.</value>
+  </data>
   <data name="ErrorInputDataNotProvided" xml:space="preserve">
     <value>No valid input data provided.</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="ErrorInputKeyNotProvided" xml:space="preserve">
     <value>No valid input key provided.</value>
+  </data>
+  <data name="ErrorInputKeyTooShort" xml:space="preserve">
+    <value>The input key was too short ({0}) with respect to the keylength setting: {1}</value>
   </data>
   <data name="InputDataCaption" xml:space="preserve">
     <value>Data</value>
@@ -143,6 +152,12 @@
   </data>
   <data name="InputKeyTooltip" xml:space="preserve">
     <value>The key must be between 5 and 256 bytes long.</value>
+  </data>
+  <data name="KeylengthCaption" xml:space="preserve">
+    <value>Keylength</value>
+  </data>
+  <data name="KeylengthTooltip" xml:space="preserve">
+    <value>Length of the to be used key (in bytes).</value>
   </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Output stream</value>
