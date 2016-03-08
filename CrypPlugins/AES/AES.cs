@@ -609,7 +609,17 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                             throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
                     }
                 case 2: // CFB:
-                    throw new NotImplementedException("AES CFB not implemented!");
+                    switch (settings.KeysizeAsBits)
+                    {
+                        case 128:
+                            return NativeCryptography.Crypto.decryptAES128_CFB(ciphertext, key, IV, bytesToUse);
+                        case 192:
+                            return NativeCryptography.Crypto.decryptAES192_CFB(ciphertext, key, IV, bytesToUse);
+                        case 256:
+                            return NativeCryptography.Crypto.decryptAES256_CFB(ciphertext, key, IV, bytesToUse);
+                        default:
+                            throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
+                    }
                 default:
                     throw new NotSupportedException(String.Format("Non supported mode selected: {0}", settings.Mode));
             }           

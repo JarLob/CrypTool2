@@ -41,6 +41,27 @@ namespace NativeCryptography {
 		((int*)x)[3] ^= ((int*)y)[3];
 	}
 
+	/*
+	 * Calculate the amount of blocks of size 8 bytes
+	 */
+	inline int blockAmount8(int length){
+		if ((length & 7) == 0){
+			return length >> 3;
+		}
+		return (length >> 3) + 1;
+		
+	}
+
+	/*
+	* Calculate the amount of blocks of size 16 bytes
+	*/
+	inline int blockAmount16(int length){
+		if ((length & 15) == 0){
+			return length >> 4;
+		}
+		return (length >> 4) + 1;
+	}
+
 	//Data Encryption Standard
 
 	/*
@@ -48,10 +69,7 @@ namespace NativeCryptography {
 	 */
 	array<unsigned char>^ Crypto::decryptDES_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 		
-		int numBlocks = length / 8;
-		if (length % 8 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount8(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -74,10 +92,7 @@ namespace NativeCryptography {
 	 */
 	array<unsigned char>^ Crypto::decryptDES_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 
-		int numBlocks = length / 8;
-		if (length % 8 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount8(length);
 		
 		if (IV == nullptr)
 		{
@@ -160,10 +175,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decrypt3DES_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 		
-		int numBlocks = length / 8;
-		if (length % 8 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount8(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -192,10 +204,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decrypt3DES_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 		
-		int numBlocks = length / 8;
-		if (length % 8 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount8(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -288,10 +297,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES128_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 		
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -314,10 +320,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES128_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 	
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		if (IV == nullptr)
 		{
@@ -352,10 +355,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES128_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -372,10 +372,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES128_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 	
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -389,17 +386,59 @@ namespace NativeCryptography {
 
 	}
 
-	array<unsigned char>^ Crypto::decryptAES128_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){ return gcnew array<unsigned char>(length); }
+	array<unsigned char>^ Crypto::decryptAES128_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){ 
+
+		if (IV == nullptr)
+		{
+			IV = zeroIV16;
+		}
+
+		array<unsigned char>^ output = gcnew array<unsigned char>(length);
+
+		pin_ptr<unsigned char> input = &Input[0];
+		pin_ptr<unsigned char> key = &Key[0];
+		pin_ptr<unsigned char> iv = &IV[0];
+		pin_ptr<unsigned char> outp = &output[0];
+		
+		AES_KEY aeskey;
+		AES_set_encrypt_key(key, 128, &aeskey);
+
+		unsigned char block[16];
+		unsigned char shiftregister[16];
+		//works only for little endian architectures:
+
+		*((unsigned int*)shiftregister) = *((unsigned int*)&iv[1]);
+		*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&iv[4]) >> 8) | ((unsigned int)iv[8] << 24);
+		*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&iv[8]) >> 8) | ((unsigned int)iv[12] << 24);
+		*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&iv[12]) >> 8) | ((unsigned int)input[0] << 24);
+
+		AES_encrypt(iv, block, &aeskey);
+
+		unsigned char leftmost = block[0];
+		outp[0] = leftmost ^ input[0];
+
+		for (int i = 1; i < length; i++)
+		{
+			AES_encrypt(shiftregister, block, &aeskey);
+
+			leftmost = block[0];
+			outp[i] = leftmost ^ input[i];
+
+			*((unsigned int*)shiftregister) = *((unsigned int*)&shiftregister[1]);
+			*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&shiftregister[4]) >> 8) | ((unsigned int)shiftregister[8] << 24);
+			*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&shiftregister[8]) >> 8) | ((unsigned int)shiftregister[12] << 24);
+			*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&shiftregister[12]) >> 8) | ((unsigned int)input[i] << 24);
+		}
+
+		return output;	
+	}
 	
 	/*
 	* Decrypt AES with ECB mode
 	*/
 	array<unsigned char>^ Crypto::decryptAES192_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -422,10 +461,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES192_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		if (IV == nullptr)
 		{
@@ -460,10 +496,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES192_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -480,10 +513,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES192_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -498,17 +528,59 @@ namespace NativeCryptography {
 	}
 
 		
-	array<unsigned char>^ Crypto::decryptAES192_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){ return gcnew array<unsigned char>(length); }
+	array<unsigned char>^ Crypto::decryptAES192_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){ 
+		
+		if (IV == nullptr)
+		{
+			IV = zeroIV16;
+		}
+
+		array<unsigned char>^ output = gcnew array<unsigned char>(length);
+
+		pin_ptr<unsigned char> input = &Input[0];
+		pin_ptr<unsigned char> key = &Key[0];
+		pin_ptr<unsigned char> iv = &IV[0];
+		pin_ptr<unsigned char> outp = &output[0];
+
+		AES_KEY aeskey;
+		AES_set_encrypt_key(key, 192, &aeskey);
+
+		unsigned char block[16];
+		unsigned char shiftregister[16];
+		//works only for little endian architectures:
+
+		*((unsigned int*)shiftregister) = *((unsigned int*)&iv[1]);
+		*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&iv[4]) >> 8) | ((unsigned int)iv[8] << 24);
+		*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&iv[8]) >> 8) | ((unsigned int)iv[12] << 24);
+		*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&iv[12]) >> 8) | ((unsigned int)input[0] << 24);
+
+		AES_encrypt(iv, block, &aeskey);
+
+		unsigned char leftmost = block[0];
+		outp[0] = leftmost ^ input[0];
+
+		for (int i = 1; i < length; i++)
+		{
+			AES_encrypt(shiftregister, block, &aeskey);
+
+			leftmost = block[0];
+			outp[i] = leftmost ^ input[i];
+
+			*((unsigned int*)shiftregister) = *((unsigned int*)&shiftregister[1]);
+			*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&shiftregister[4]) >> 8) | ((unsigned int)shiftregister[8] << 24);
+			*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&shiftregister[8]) >> 8) | ((unsigned int)shiftregister[12] << 24);
+			*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&shiftregister[12]) >> 8) | ((unsigned int)input[i] << 24);
+		}
+
+		return output;
+	}
 	
 	/*
 	* Decrypt AES with ECB mode
 	*/
 	array<unsigned char>^ Crypto::decryptAES256_ECB(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -531,10 +603,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES256_CBC(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		if (IV == nullptr)
 		{
@@ -569,10 +638,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES256_ECB_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -589,10 +655,7 @@ namespace NativeCryptography {
 	*/
 	array<unsigned char>^ Crypto::decryptAES256_CBC_NI(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
 
-		int numBlocks = length / 16;
-		if (length % 16 != 0){
-			numBlocks++;
-		}
+		unsigned int numBlocks = blockAmount16(length);
 
 		array<unsigned char>^ output = gcnew array<unsigned char>(length);
 
@@ -605,7 +668,52 @@ namespace NativeCryptography {
 		return output;
 
 	}
-	array<unsigned char>^ Crypto::decryptAES256_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){ return gcnew array<unsigned char>(length); }
+	array<unsigned char>^ Crypto::decryptAES256_CFB(array<unsigned char>^ Input, array<unsigned char>^ Key, array<unsigned char>^ IV, const int length){
+	
+		if (IV == nullptr)
+		{
+			IV = zeroIV16;
+		}
+
+		array<unsigned char>^ output = gcnew array<unsigned char>(length);
+
+		pin_ptr<unsigned char> input = &Input[0];
+		pin_ptr<unsigned char> key = &Key[0];
+		pin_ptr<unsigned char> iv = &IV[0];
+		pin_ptr<unsigned char> outp = &output[0];
+
+		AES_KEY aeskey;
+		AES_set_encrypt_key(key, 256, &aeskey);
+
+		unsigned char block[16];
+		unsigned char shiftregister[16];
+		//works only for little endian architectures:
+
+		*((unsigned int*)shiftregister) = *((unsigned int*)&iv[1]);
+		*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&iv[4]) >> 8) | ((unsigned int)iv[8] << 24);
+		*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&iv[8]) >> 8) | ((unsigned int)iv[12] << 24);
+		*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&iv[12]) >> 8) | ((unsigned int)input[0] << 24);
+
+		AES_encrypt(iv, block, &aeskey);
+
+		unsigned char leftmost = block[0];
+		outp[0] = leftmost ^ input[0];
+
+		for (int i = 1; i < length; i++)
+		{
+			AES_encrypt(shiftregister, block, &aeskey);
+
+			leftmost = block[0];
+			outp[i] = leftmost ^ input[i];
+
+			*((unsigned int*)shiftregister) = *((unsigned int*)&shiftregister[1]);
+			*((unsigned int*)&shiftregister[4]) = (*((unsigned int*)&shiftregister[4]) >> 8) | ((unsigned int)shiftregister[8] << 24);
+			*((unsigned int*)&shiftregister[8]) = (*((unsigned int*)&shiftregister[8]) >> 8) | ((unsigned int)shiftregister[12] << 24);
+			*((unsigned int*)&shiftregister[12]) = (*((unsigned int*)&shiftregister[12]) >> 8) | ((unsigned int)input[i] << 24);
+		}
+
+		return output;	
+	}
 
 	//Check method for AES new instructions
 	bool Crypto::supportsAESNI(){
