@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
-  <title lang="en">Simple Video Chat using AES encryption</title>
+  <title lang="en">Simple Video and Audio Chat using AES encryption</title>
   <title lang="de">Einfacher Video-Chat mit AES-Verschlüsselung</title>
 	
-  <summary lang="en">Simple <i>Video Chat</i> using <i>AES</i> encryption</summary>
-  <summary lang="de">Einfacher <i>Video-Chat</i> mit <i>AES</i>-Verschlüsselung</summary>
-  <description lang="en">This template shows a simple AES encrypted video chat with preshared encryption key.</description>
-  <description lang="de">Diese Vorlage zeigt einen einfachen AES-verschlüsselten Video-Chat.</description> 
+  <summary lang="en">Simple <i>Video and Audio Chat</i> using <i>AES</i> encryption</summary>
+  <summary lang="de">Einfacher <i>Video-Audio-Chat</i> mit <i>AES</i>-Verschlüsselung</summary>
+  <description lang="en">This template shows a simple AES encrypted video and audio chat with preshared encryption key.</description>
+  <description lang="de">Diese Vorlage zeigt einen einfachen AES-verschlüsselten Video-Audio-Chat.</description> 
 	
   <keywords> AES, Videochat, Camera, Network</keywords>
   <keywords lang="de">Kamera, Netzwerk</keywords>
@@ -36,7 +36,7 @@
     <replacement key="$receive chat$" value="empfange Chat"/>
     <replacement key="$receive webcam$" value="empfange Webcam"/>
     <replacement key="$TextInput$" value="Texteingabe"/>
-	 <replacement key="$memo$" value="This template shows an AES encrypted video chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
+	 <replacement key="$memo$" value="This template shows an AES encrypted video and audio chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Converter$" value="Converter"/>
@@ -50,7 +50,7 @@
     <replacement key="$receive chat$" value="receive chat"/>
     <replacement key="$receive webcam$" value="receive webcam"/>
     <replacement key="$TextInput$" value="Text Input"/>
-	 <replacement key="$memo$" value="This template shows an AES encrypted video chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
+	 <replacement key="$memo$" value="This template shows an AES encrypted video and audio chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
   </replacements>
 
 </sample>

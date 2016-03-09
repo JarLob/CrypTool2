@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
-  <title lang="en">Diffie-Hellman AES Video Chat</title>
-  <title lang="de">Diffie-Hellman AES-Video-Chat</title>
+  <title lang="en">Diffie-Hellman AES Video Audio Chat</title>
+  <title lang="de">Diffie-Hellman AES-Video-Audio-Chat</title>
 	
-  <summary lang="en">Diffie-Hellman <i>AES Video Chat</i></summary>
+  <summary lang="en">Diffie-Hellman <i>AES Video and Audio Chat</i></summary>
 	<summary lang="de">Diffie-Hellman <i>AES-Video-Chat</i></summary>
 	 
-	<description lang="en">This template shows an AES encrypted video chat which uses Diffie-Hellman to exchange an encryption key.</description>
-  <description lang="de">Diese Vorlage zeigt einen AES-verschlüsselten Video-Chat, der mittels Diffie-Hellman den Verschlüsselungsschlüssel austauscht.</description> 
+	<description lang="en">This template shows an AES encrypted video and audio chat which uses Diffie-Hellman to exchange an encryption key.</description>
+  <description lang="de">Diese Vorlage zeigt einen AES-verschlüsselten Video-Audio-Chat, der mittels Diffie-Hellman den Verschlüsselungsschlüssel austauscht.</description> 
 	
   <keywords>Diffie, Hellman, AES, Videochat, Camera, Network</keywords>
 	<keywords lang="de">Kamera, Netzwerk</keywords>
@@ -53,7 +53,7 @@
     <replacement key="$send dh_response$" value="sende DH_response"/>
     <replacement key="$empty$" value="leer"/>
     <replacement key="$message$" value="Hallo, wie geht's?"/>
-	 <replacement key="$memo1$" value="This template shows an AES encrypted video chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
+	 <replacement key="$memo1$" value="This template shows an AES encrypted video and audio chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
 	 <replacement key="$memo2$" value="On start:\line Choose a G and a P, calculate A and send a\line dh_start msg with P and A.\line Wait for response, get B to calculate s."/>
 	 <replacement key="$memo3$" value="On receiving a dh_start msg:\line Get P and A calculate B and s.\line Send B back."/>
   </replacements>
@@ -83,7 +83,7 @@
     <replacement key="$send dh_response$" value="send DH_response"/>
     <replacement key="$empty$" value="empty"/>
     <replacement key="$message$" value="hello, how are you?"/>
-	 <replacement key="$memo1$" value="This template shows an AES encrypted video chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
+	 <replacement key="$memo1$" value="This template shows an AES encrypted video and audio chat over an IP-based Network without any preshared key.\line\line You have to set the ip of your chat partner below in order to connect to him. By default you will connect to yourself.\line\line This template works basically in two phases.\line In the first phase it will exchange an 128 bit AES session key with itself or with a remote version of itself, by using the Diffie-Hellman key exchange.\line\line If the key is exchanged it will starts the video chat and encrypt the packets with the session key."/>
 	 <replacement key="$memo2$" value="On start:\line Choose a G and a P, calculate A and send a\line dh_start msg with P and A.\line Wait for response, get B to calculate s."/>
 	 <replacement key="$memo3$" value="On receiving a dh_start msg:\line Get P and A calculate B and s.\line Send B back."/>
   </replacements>
