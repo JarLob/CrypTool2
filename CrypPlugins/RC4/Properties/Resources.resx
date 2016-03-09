@@ -139,7 +139,7 @@
     <value>No valid input key provided.</value>
   </data>
   <data name="ErrorInputKeyTooShort" xml:space="preserve">
-    <value>The input key was too short ({0}) with respect to the keylength setting: {1}</value>
+    <value>The input key was too short ({0} bytes) with respect to the keylength setting: {1} bytes</value>
   </data>
   <data name="InputDataCaption" xml:space="preserve">
     <value>Data</value>
