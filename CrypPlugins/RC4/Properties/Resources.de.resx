@@ -139,7 +139,8 @@
     <value>Kein gültiger Schlüssel angegeben.</value>
   </data>
   <data name="ErrorInputKeyTooShort" xml:space="preserve">
-    <value>Der eingegebene Schlüssel war zu kurz ({0} Bytes) was die eingestellte Schlüssellänge anbelangt: {1} Bytes</value>
+    <value>Der eingegebene Schlüssel ist zu kurz ({0} Bytes) für die
+eingestellte Schlüssellänge von {1} Bytes.</value>
   </data>
   <data name="InputDataCaption" xml:space="preserve">
     <value>Daten</value>

@@ -124,7 +124,7 @@ namespace CrypTool.RC4.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The input key was too short ({0}) with respect to the keylength setting: {1} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The given input key is too short ({0} bytes) for the keylength setting of {1} bytes. ähnelt.
         /// </summary>
         internal static string ErrorInputKeyTooShort {
             get {
