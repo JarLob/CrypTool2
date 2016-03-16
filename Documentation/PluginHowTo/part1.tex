@@ -1,7 +1,7 @@
 \chapter{Developer Guidelines}
 \label{DeveloperGuidelines}
 
-CrypTool~2.0 is built upon state-of-the-art technologies such as .NET 4.0 and the Windows Presentation Foundation (WPF). Before you can start writing code and adding to the development of the project, a few things need to be considered. To make this process easier, please read through this document\footnote{Download the most current version of this document \href{https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/PluginHowTo/HowToDeveloper.pdf}{here}.} and follow the instructions closely. This document exists to help get you started by showing you how CrypTool~2 plugins are built in order to successfully interact with the application core. We have tried to be very thorough, but if you encounter a problem or error that is not described here, please let us know\footnote{Contact us \href{https://www.cryptool.org/trac/CrypTool2/wiki/DiscussionGroups}{here} or write an email to \url{mailto:ct2contact@cryptool.org}}. Not only do we want to help get you up and running, but we also want to add the appropriate information to this guide for the benefit of other future developers.
+CrypTool~2 is built upon state-of-the-art technologies such as .NET 4.0 and the Windows Presentation Foundation (WPF). Before you can start writing code and adding to the development of the project, a few things need to be considered. To make this process easier, please read through this document\footnote{Download the most current version of this document \href{https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/PluginHowTo/HowToDeveloper.pdf}{here}.} and follow the instructions closely. This document exists to help get you started by showing you how CrypTool~2 plugins are built in order to successfully interact with the application core. We have tried to be very thorough, but if you encounter a problem or error that is not described here, please let us know\footnote{Contact us \href{https://www.cryptool.org/trac/CrypTool2/wiki/DiscussionGroups}{here} or write an email to \url{mailto:ct2contact@cryptool.org}}. Not only do we want to help get you up and running, but we also want to add the appropriate information to this guide for the benefit of other future developers.
 
 In this first chapter we will describe all steps necessary in order to compile CrypTool~2 on your own computer. This is always the first thing you need to do before you can begin developing your own plugins and extensions. The basic steps are:
 \begin{itemize}
@@ -15,7 +15,7 @@ In this first chapter we will describe all steps necessary in order to compile C
 
 Since CrypTool~2 is based on Microsoft .NET 4.0, you will need a Microsoft Windows environment. (Currently no plans exist for porting this project to Mono or other platforms.) We have successfully tested with \textbf{Windows XP}, \textbf{Windows Vista} and \textbf{Windows 7}.
 
-Since you are reading the developer guidelines, you probably want to develop something. Hence, you will need a development environment. In order to compile our sources you need \textbf{Microsoft Visual Studio 2010} or \textbf{Microsoft Visual C\# 2010 Express}. Make sure to always install the latest service packs for Visual Studio.
+Since you are reading the developer guidelines, you probably want to develop something. Hence, you will need a development environment. In order to compile our sources you need \textbf{Microsoft Visual Studio 2013} or newer or the free \textbf{Microsoft Visual Community 2015}. Make sure to always install the latest service packs for Visual Studio.
 
 In order to run or compile our source code you will need at least the \textbf{Microsoft .NET 4.0}. Usually the installation of Visual Studio also installs the .NET framework, but if you do not have the latest version, you can get it for free from \href{http://www.microsoft.com/downloads/details.aspx?FamilyID=9cfb2d51-5ff4-4491-b0e5-b386f32c0992}{Microsoft's website}. Once the framework has been installed, your development environment should be ready for our source code.
 \clearpage
@@ -156,7 +156,7 @@ override-bad-extension:\ someLib.dll
 
 Note that any text after the colon and the whitespace will be treated as the file name. Therefore, do not use quotation marks and do not write any text after the file name.
 
-\section{Compile the sources with Visual Studio 2010}
+\section{Compile the sources with Visual Studio 2013}
 \label{CompilingTheSourcesVS}
 
 By this point you should have checked out a copy of the entire CrypTool~2 repository. Compiling is pretty easy; just go to the \texttt{trunk\textbackslash} directory and open the \textbf{\textit{CrypTool~2.0.sln}} Visual Studio solution. The Visual Studio IDE should open with all the working plugin components nicely arranged. If you are now starting Visual Studio for the first time, you will have to choose your settings. Just select either \textit{most common} or \textit{C\#} --- you can change this at any time later. On the right side is the project explorer, where you can see all the subprojects included in the solution. Look for the project \textbf{\textit{CrypWin}} there and make sure it is selected as startup project (right-click on it and select \textit{Set as StartUp Project} from the context menu). Then click \textit{Build $\rightarrow$ Build Solution} in the menubar to start the build process.
@@ -165,15 +165,15 @@ You may have to wait a while for the program to compile. Once it is finished, se
 
 If you are a \textbf{core developer}, you can use the \textbf{\textit{CrypTool~2.0.sln}} solution from the \texttt{CoreDeveloper\textbackslash} directory (which will \textit{not} be visible to you if you are not a core developer). We often refer to this solution as the core-developer solution or as the internal solution. The core-developer solution is used for building the nightly build. Thus, if a plugin should become delivered with the nightly builds it needs to be added to this solution.
 
-\section{Compiling the sources with Visual C\# 2010 Express}
+\section{Compiling the sources with Visual Studio Community 2015}
 \label{CompilingTheSourcesExpress}
 
-With Visual C\# Express the build process is basically the same as with Visual Studio. When opening the solution file, you will receive two error messages. The first is because Visual C\# does not support solution folders and shows all plugin projects as a flat list in the solution explorer. However, this is merely a visual defect. The second error message occurs because Visual C\# does not support unit tests and thus is not able to load the project \textit{UnitTests}. Again, this does not interfere with opening, writing, compiling, running, or debugging any other plugins.
+With Visual Studio Community the build process is basically the same as with Visual Studio.
 
 \section{Download the plugin template}
 \label{DownloadingThePluginTemplate}
 
-Before you can start implementing a new plugin, you will need to download the CrypTool~2 plugin template. The most current version of this template is located in our CrypTool~2 repository, and can be downloaded via our wiki interface at \url{https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/CrypPluginTemplate/CrypTool\%202.0\%20Plugin.zip}. Save the template zip file in your documents folder in the subdirectory \texttt{Visual Studio 2010\textbackslash{}Templates\textbackslash{}ProjectTemplates\textbackslash{}}. (This applies to both Visual Studio and Visual C\# Express.) Do not unpack the zip file.
+Before you can start implementing a new plugin, you will need to download the CrypTool~2 plugin template. The most current version of this template is located in our CrypTool~2 repository, and can be downloaded via our wiki interface at \url{https://www.cryptool.org/trac/CrypTool2/browser/trunk/Documentation/CrypPluginTemplate/CrypTool\%202\%20Plugin.zip}. Save the template zip file in your documents folder in the subdirectory \texttt{Visual Studio 2013\textbackslash{}Templates\textbackslash{}ProjectTemplates\textbackslash{}} or in the subdirectory \texttt{Visual Studio 2015\textbackslash{}Templates\textbackslash{}ProjectTemplates\textbackslash{}}, depending on your Visual Studio version. Do not unpack the zip file.
 
 \begin{figure}[htbp]
 	\centering

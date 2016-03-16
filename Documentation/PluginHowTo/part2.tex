@@ -1,11 +1,11 @@
 \chapter{Plugin Implementation}
 \label{sec:PluginImplementation}
-In this chapter we provide step-by-step instructions for implementing your own CrypTool 2 plugin. We shall assume that you have already retrieved the CrypTool 2 source code from the SVN repository, set up Visual Studio 2010 or Visual C\# 2010 Express to build CrypTool 2, and you have placed the plugin template in the right place.
+In this chapter we provide step-by-step instructions for implementing your own CrypTool 2 plugin. We shall assume that you have already retrieved the CrypTool 2 source code from the SVN repository, set up Visual Studio 2013 or Visual Studio Community 2015 to build CrypTool 2, and you have placed the plugin template in the right place.
 
 \section{Create a new project}
 \label{sec:CreatingANewProject}
 
-Open the CrypTool 2 solution, right click in the solution explorer on \textit{CrypPlugins} (or on the top solution item, if you're using Visual C\# Express) and select \textit{Add~$\rightarrow$ New Project}. In the dialog window, select \textit{Visual C\# $\rightarrow$ CrypTool 2.0 Plugin} as project template and enter a unique name for your new plugin project (such as \textit{Caesar} in our case). The \textbf{next step is crucial} to ensure that your plugin will compile and run correctly: select the subdirectory \texttt{CrypPluginsExperimental\textbackslash} as the location of your project (Figure~\ref{fig:vs_create_new_project}).
+Open the CrypTool 2 solution, right click in the solution explorer on \textit{CrypPlugins} and select \textit{Add~$\rightarrow$ New Project}. In the dialog window, select \textit{Visual C\# $\rightarrow$ CrypTool 2 Plugin} as project template and enter a unique name for your new plugin project (such as \textit{Caesar} in our case). The \textbf{next step is crucial} to ensure that your plugin will compile and run correctly: select the subdirectory \texttt{CrypPluginsExperimental\textbackslash} as the location of your project (Figure~\ref{fig:vs_create_new_project}).
 
 \begin{figure}[h!]
 	\centering
@@ -253,7 +253,7 @@ You may use \textit{GuiLogMessage} to show errors, warnings or informational mes
 \section{Create an editor template}
 \label{DrawingTheWorkfloweOfYourPlugin}
 
-Each plugin should have an associated workflow file to show the algorithm in action in CrypTool 2. These workflow files are saved as \textit{Compressed Workspace Manager} files with file extension \textit{.cwm}. You can view the example files from other plugins by opening any of the files in the \texttt{Templates\textbackslash} folder with CrypTool 2. Below is an example workflow (image shows old editor, but the new one looks similar). You should provide such a template .cwm file to demonstrate a typical use case of your plugin. Please place it into the \texttt{Templates\textbackslash} folder and make sure to commit the file to the SVN repository (see Section \ref{CommitingYourChanges}).
+Each plugin should have an associated workflow file to show the algorithm in action in CrypTool 2. These workflow files are saved as \textit{Compressed Workspace Manager} files with file extension \textit{.cwm}. You can view the example files from other plugins by opening any of the files in the \texttt{Templates\textbackslash} folder with CrypTool 2. Below is an example workflow. You should provide such a template .cwm file to demonstrate a typical use case of your plugin. Please place it into the \texttt{Templates\textbackslash} folder and make sure to commit the file to the SVN repository (see Section \ref{CommitingYourChanges}).
 
 \begin{figure}[h]
 	\centering
