@@ -69,7 +69,7 @@ namespace voluntLib.managementLayer
         public void OnJobListRequest(string world, IPAddress from)
         {
             // find jobs with payload
-            var jobsWithPayload = Jobs.GetJobsOfWorld(world).FindAll(job => job.HasPayload());
+            var jobsWithPayload = Jobs.GetJobsOfWorld(world).FindAll(job => job.HasPayload() && !job.IsDeleted);
 
             //send metaData of found jobs
             NetworkCommunicationLayer.SendJobList(world, jobsWithPayload.Select(job => job.ToNetworkJobMetaData()).ToList(), from);
@@ -119,7 +119,7 @@ namespace voluntLib.managementLayer
         public void OnJobDetailRequest(string world, BigInteger jobID, IPAddress from)
         {
             var job = Jobs.GetJob(jobID);
-            if(job == null || !job.HasPayload()){
+            if(job == null || !job.HasPayload() || job.IsDeleted){
                 return;
             }
 

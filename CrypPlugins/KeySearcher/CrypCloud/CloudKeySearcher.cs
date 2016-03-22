@@ -35,20 +35,6 @@ namespace KeySearcher
         {
             this.keySearcher = keySearcher;
 
-            try
-            {
-                CrypCloudCore.Instance.TaskProgress -= TaskProgress;
-                CrypCloudCore.Instance.TaskHasStopped -= TaskEnded;
-                CrypCloudCore.Instance.TaskHasStarted -= NewTaskStarted;
-                CrypCloudCore.Instance.JobStateChanged -= JobStateChanged;
-            }
-            finally
-            {
-                CrypCloudCore.Instance.JobStateChanged += JobStateChanged;
-                CrypCloudCore.Instance.TaskHasStarted += NewTaskStarted;
-                CrypCloudCore.Instance.TaskHasStopped += TaskEnded;
-                CrypCloudCore.Instance.TaskProgress += TaskProgress;
-            }
 
             jobId = jobDataContainer.JobId;
             calculationTemplate = new CalculationTemplate(jobDataContainer, pattern, SortAscending(), keySearcher, CrypCloudCore.Instance.EnableOpenCL);
@@ -76,6 +62,8 @@ namespace KeySearcher
                 });
             }
             catch (Exception e) { }
+
+       
         }
         
         private void UpdateKeyPerSecond(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -192,7 +180,23 @@ namespace KeySearcher
             updateTimer = new Timer(UpdateInterval);
             updateTimer.Elapsed += UpdateKeyPerSecond;
             updateTimer.Interval = UpdateInterval;
-            updateTimer.Enabled = true;  
+            updateTimer.Enabled = true;
+
+
+            try
+            {
+                CrypCloudCore.Instance.TaskProgress -= TaskProgress;
+                CrypCloudCore.Instance.TaskHasStopped -= TaskEnded;
+                CrypCloudCore.Instance.TaskHasStarted -= NewTaskStarted;
+                CrypCloudCore.Instance.JobStateChanged -= JobStateChanged;
+            }
+            finally
+            {
+                CrypCloudCore.Instance.JobStateChanged += JobStateChanged;
+                CrypCloudCore.Instance.TaskHasStarted += NewTaskStarted;
+                CrypCloudCore.Instance.TaskHasStopped += TaskEnded;
+                CrypCloudCore.Instance.TaskProgress += TaskProgress;
+            }
         }
 
         public void Stop()
