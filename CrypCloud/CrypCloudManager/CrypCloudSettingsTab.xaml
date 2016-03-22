@@ -4,24 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" xmlns:Properties="clr-namespace:Cryptool.PluginBase.Properties;assembly=CrypPluginBase" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-        <Grid> 
+             d:DesignHeight="300" d:DesignWidth="550">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0,0,-133,-63">
+        <Grid>
             <StackPanel Name="stackPanel1" VerticalAlignment="Top" Margin="20">
-                <Grid Width="300" HorizontalAlignment="Left">
+                <Grid Width="500" HorizontalAlignment="Left">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="13" />
+                        <ColumnDefinition Width="47.2" />
+                        <ColumnDefinition Width="104.2" />
+                        <ColumnDefinition Width="48.6"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="13" />
-                        <RowDefinition Height="13" />
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="15" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Content="{Loc AmountOfWorker_Settings}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2" />
-                    <TextBox Name="NUDTextBox"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged"/>
-                    <RepeatButton Name="NUDButtonUP"  Grid.Column="2" Grid.Row="0" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click">5</RepeatButton>
-                    <RepeatButton Name="NUDButtonDown"  Grid.Column="2" Grid.Row="1" FontSize="8"  FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Height="13" VerticalAlignment="Bottom" Click="NUDButtonDown_Click">6</RepeatButton>
+                    <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Content="{Loc AmountOfWorker_Settings}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2,-1,2,23.8" />
+                    <TextBox Name="NUDTextBox"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged" Margin="0,0,0,0.2" HorizontalAlignment="Left" Width="47"/>
+                    <RepeatButton Name="NUDButtonUP"  Grid.Column="2" Grid.Row="0" FontSize="8" FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonUP_Click" Margin="0.8,0,89.2,0" Height="15" VerticalAlignment="Top">5</RepeatButton>
+                    <RepeatButton Name="NUDButtonDown"  Grid.Column="2" FontSize="8"  FontFamily="Marlett" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="NUDButtonDown_Click" Margin="0.8,15,89.2,0.2" Grid.RowSpan="2">6</RepeatButton>
+
+                    <Label Grid.Column="0" Grid.Row="1" Content="{Loc EnableOpenCL}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2,11.4,2,23.4" Grid.RowSpan="3" />
+                    <CheckBox Grid.Column="1" Grid.Row="2" Name="EnableOpenCL"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="EnableOpenCL_Click"/>
+
+                    <Label Grid.Column="0" Grid.Row="2" Content="{Loc OpenCLDevice}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="12" Height="30" Margin="2,23.8,2,-2.6" Grid.RowSpan="2" />
+                    <ComboBox Name="OpenCLDevice"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0.2,29.8,-96.8,1.2" SelectionChanged="OpenCLDevice_SelectionChanged" Grid.RowSpan="2"/>
                 </Grid>
             </StackPanel>
         </Grid>

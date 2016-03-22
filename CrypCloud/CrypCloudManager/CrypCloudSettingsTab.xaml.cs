@@ -1,12 +1,14 @@
-﻿ 
+﻿
 using System;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CrypCloud.Core;
-using Cryptool.PluginBase.Attributes; 
+using Cryptool.PluginBase.Attributes;
+using OpenCLNet; 
 namespace CrypCloud.Manager
 {
     /// <summary>
@@ -23,8 +25,50 @@ namespace CrypCloud.Manager
             startvalue = Settings.Default.amountOfWorker;
             CrypCloudCore.Instance.AmountOfWorker = startvalue; 
             Resources.Add("settingsStyle", settingsStyle);
-            InitializeComponent(); 
-            NUDTextBox.Text = startvalue.ToString(); 
+            InitializeComponent();            
+            NUDTextBox.Text = startvalue.ToString();
+            EnableOpenCL.IsChecked = Settings.Default.enableOpenCL;
+            OpenCLDevice.ItemsSource = DevicesAvailable;
+            RefreshDevicesList();
+            OpenCLDevice.SelectedIndex = Settings.Default.OpenCLDevice;
+            if (EnableOpenCL.IsChecked.Value == true)
+            {
+                OpenCLDevice.IsEnabled = true;
+            }
+            else
+            {
+                OpenCLDevice.IsEnabled = false;
+            }
+        }
+
+        private ObservableCollection<string> devicesAvailable = new ObservableCollection<string>();
+        public ObservableCollection<string> DevicesAvailable
+        {
+            get { return devicesAvailable; }
+            set
+            {
+                if (value != devicesAvailable)
+                {
+                    devicesAvailable = value;
+                }
+            }
+        }
+
+        private void RefreshDevicesList( )
+        {
+            var oclManager = new OpenCLManager();
+            oclManager.CreateDefaultContext();
+            devicesAvailable.Clear();
+            int c = 0;
+            if (oclManager != null)
+            {
+                foreach (var device in oclManager.Context.Devices)
+                {
+                    devicesAvailable.Add(c + ": " + device.Vendor + " - " + device.Name);
+                    c++;
+                }
+            }
+            DevicesAvailable = devicesAvailable;            
         }
 
         private void NUDButtonUP_Click(object sender, RoutedEventArgs e)
@@ -80,7 +124,29 @@ namespace CrypCloud.Manager
 
             Settings.Default.amountOfWorker = number;
             Settings.Default.Save();
-            CrypCloudCore.Instance.AmountOfWorker = number; 
+            CrypCloudCore.Instance.AmountOfWorker = number;            
+        }
+
+        private void EnableOpenCL_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.enableOpenCL = EnableOpenCL.IsChecked.Value;
+            Settings.Default.Save();
+            CrypCloudCore.Instance.EnableOpenCL = EnableOpenCL.IsChecked.Value; 
+            if (EnableOpenCL.IsChecked.Value == true)
+            {
+                OpenCLDevice.IsEnabled = true;
+            }
+            else
+            {
+                OpenCLDevice.IsEnabled = false;
+            }
+        }
+
+        private void OpenCLDevice_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Settings.Default.OpenCLDevice = OpenCLDevice.SelectedIndex;
+            Settings.Default.Save();
+            CrypCloudCore.Instance.OpenCLDevice = OpenCLDevice.SelectedIndex;
         }
 
     }

@@ -282,7 +282,7 @@ Berechnungen.</value>
     <value>Abmelden</value>
   </data>
   <data name="AmountOfWorker_Settings" xml:space="preserve">
-    <value>Anzahl der Arbeitsthreads</value>
+    <value>Anzahl der Arbeitsthreads:</value>
   </data>
   <data name="CrypCloudSettings" xml:space="preserve">
     <value>CrypCloud-Einstellungen</value>
@@ -313,5 +313,11 @@ Berechnungen.</value>
   </data>
   <data name="_JobList_jobID" xml:space="preserve">
     <value>Job-ID:</value>
+  </data>
+  <data name="EnableOpenCL" xml:space="preserve">
+    <value>Aktiviere OpenCL:</value>
+  </data>
+  <data name="OpenCLDevice" xml:space="preserve">
+    <value>OpenCL Gerät:</value>
   </data>
 </root>

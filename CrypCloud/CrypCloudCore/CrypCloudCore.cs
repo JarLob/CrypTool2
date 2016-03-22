@@ -51,6 +51,8 @@ namespace CrypCloud.Core
         }
 
         public int AmountOfWorker { get; set; }
+        public bool EnableOpenCL { get; set; }
+        public int OpenCLDevice { get; set; }
 
         #endregion
 

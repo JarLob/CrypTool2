@@ -51,7 +51,7 @@ namespace KeySearcher
             }
 
             jobId = jobDataContainer.JobId;
-            calculationTemplate = new CalculationTemplate(jobDataContainer, pattern, SortAscending());
+            calculationTemplate = new CalculationTemplate(jobDataContainer, pattern, SortAscending(), keySearcher, CrypCloudCore.Instance.EnableOpenCL);
 
             uiContext = presentation.UiContext;
             viewModel = presentation.ViewModel; 
