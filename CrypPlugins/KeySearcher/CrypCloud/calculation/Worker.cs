@@ -52,7 +52,28 @@ namespace KeySearcher
                     BinaryPath = Path.Combine(directoryName, "openclbin"),
                     BuildOptions = "-cl-opt-disable"
                 };
-                oclManager.CreateDefaultContext(0, DeviceType.ALL);
+
+                for (var id = 0; id < OpenCL.GetPlatforms().Length; id++)
+                {
+                    oclManager.CreateDefaultContext(id, DeviceType.ALL);
+                    var deviceCounter = 0;
+                    if (oclManager != null)
+                    {
+                        var deviceIndex = 0;
+                        foreach (var device in oclManager.Context.Devices)
+                        {
+                            if (deviceCounter == opencl_deviceIndex)
+                            {
+                                //we found the correct platform and correct device
+                                //thus, we set the opencl_deviceIndex to the deviceIndex of the platform
+                                //and stop searching. Now, we already set the correct context
+                                opencl_deviceIndex = deviceIndex;
+                                break;
+                            }
+                            deviceCounter++;
+                        }
+                    }
+                }                
 
                 keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Cryp, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
                 keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(opencl_mode,

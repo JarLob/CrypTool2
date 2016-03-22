@@ -57,15 +57,18 @@ namespace CrypCloud.Manager
         private void RefreshDevicesList( )
         {
             var oclManager = new OpenCLManager();
-            oclManager.CreateDefaultContext();
             devicesAvailable.Clear();
-            int c = 0;
-            if (oclManager != null)
+            for (var id = 0; id < OpenCL.GetPlatforms().Length; id++)
             {
-                foreach (var device in oclManager.Context.Devices)
+                oclManager.CreateDefaultContext(id, DeviceType.ALL);
+                int c = 0;
+                if (oclManager != null)
                 {
-                    devicesAvailable.Add(c + ": " + device.Vendor + " - " + device.Name);
-                    c++;
+                    foreach (var device in oclManager.Context.Devices)
+                    {
+                        devicesAvailable.Add(c + ": " + device.Vendor + " - " + device.Name);
+                        c++;
+                    }
                 }
             }
             DevicesAvailable = devicesAvailable;            
