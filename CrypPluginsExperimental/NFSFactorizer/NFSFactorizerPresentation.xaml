@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Name="Presentation">
+        Name="Presentation" Height="451.6" d:DesignWidth="905.2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
         <RotateTransform x:Key="HeaderRotate" Angle="270" />
@@ -16,7 +16,7 @@
         </Style>
     </UserControl.Resources>
     <Viewbox>
-        <StackPanel Width="646">
+        <StackPanel Width="895">
 
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
                 <Grid Background="#AFFFD4C1">
@@ -56,38 +56,36 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition Width="26" />
+                        <ColumnDefinition Width="200" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0">
-                        <Label Content="FactorList" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="115" HorizontalContentAlignment="Center" />
+                        <Label Content="FactorList / Primality" FontSize="11" HorizontalAlignment="Right" Foreground="White" Width="115" HorizontalContentAlignment="Center" Margin="0,0.2,16.6,-0.2" />
                     </Border>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="2">
-                        <Label Content="Primality of factor" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="115" HorizontalContentAlignment="Center" />
-                    </Border>
-                    <Grid Grid.Column="1">
+                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="0.4,0,416.4,0.4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="factorInfo" Height="150" HorizontalAlignment="Stretch" Margin="1,0,-1,0.4" Grid.RowSpan="3"/>
-                        
+                        <ScrollViewer HorizontalScrollBarVisibility="Visible"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="factorInfo" Height="150" HorizontalAlignment="Stretch" Margin="1,0,119.8,0.4"/>
+
                     </Grid>
-                    <Grid Grid.Column="3">
+                    <Grid Grid.Column="2" Margin="0.4,0,0.2,0.4">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="109*" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="primality" Height="150" HorizontalAlignment="Stretch" Margin="1,0,-1,0.4" Grid.RowSpan="3"/>
+                        <Label Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="primality" HorizontalAlignment="Stretch" Margin="131,0,236.6,0.4"/>
+                        <Label Grid.Row="0" Background="#AFE2FFCE" Content="" Name="algorithmFact" HorizontalAlignment="Stretch" Margin="428,0,-0.2,0.4"/>
                     </Grid>
 
                 </Grid>
             </Border>
+
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
                 <Grid Background="#AFE2E2E2">
                     <Grid.ColumnDefinitions>
@@ -103,15 +101,43 @@
                         <Label Content="Progress" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="65" HorizontalContentAlignment="Center" />
                     </Border>
 
-                    <ScrollViewer HorizontalScrollBarVisibility="Visible" Name ="Details" Content="" Grid.Column="1" Grid.RowSpan="3"  Margin="0,-3,0,3"/>
-                    
+                    <ScrollViewer  Name ="Details"  Content="" Grid.Column="1" Grid.RowSpan="3"  Margin="5,-3,0,3"/>
+
+                </Grid>
+            </Border>
+            <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
+                <Grid Background="#FFE6E6FA" HorizontalAlignment="Right" Margin="0,0,-0.2,0" Width="891">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FFCD5C5C" Grid.Column="0" Grid.RowSpan="3">
+                        <Label Content="NFS/QS summary" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="105" HorizontalContentAlignment="Center" />
+                    </Border>
+
+                    <Label Name="QSNFS1" Content="This section is dedicated to give information exclusively about the quadratic sieve and the number field sieve algortihms. It summarizes the progress." Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS2" Content="Polynomial Selection - " Grid.Column="1" Grid.Row="2" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS3" Content="Sieving - " Grid.Column="2" Grid.Row="1" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS4" Content="Number of relations - " Grid.Column="2" Grid.Row="2" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS5" Content="Algebra step - " Grid.Row="1" Grid.Column="3" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS6" Content="Algorithm - " Grid.Row="1" Grid.Column="1" Margin="5,-3,0,3"/>
+                    <Label Name="QSNFS7" Content="" Grid.Row="2" Grid.Column="3" Margin="5,-3,0,3"/>
                 </Grid>
             </Border>
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
                 <Grid Background="Beige">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="300*" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100*" />
                         <ColumnDefinition Width="100" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -120,15 +146,16 @@
                     <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="Chocolate" Grid.Column="0" Grid.RowSpan="2">
                         <Label Content="Details" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="45" HorizontalContentAlignment="Center" />
                     </Border>
-                    <Label Content="Press to show log file" Grid.Column="1" Margin="0,-3,125,3" VerticalAlignment="Center"/>
-                    <ToggleButton IsChecked="False" x:Name="ShowDetailsButton" Grid.Column="2" Content="Show details"  Grid.Row="0" />
-                   
+                    <Label Content="Press to show log file at the end of the factorization" Margin="0.4,9,9.6,14.6" VerticalAlignment="Center" Grid.Column="1"/>
+                    <ToggleButton IsChecked="False" x:Name="ShowDetailsButton" Grid.Column="2" Content="Show details"  Grid.Row="0" Margin="63.4,1,303.2,-0.4" RenderTransformOrigin="1.79,0.491" Grid.ColumnSpan="2" />
+
                 </Grid>
-                
+
             </Border>
-            
+
+
         </StackPanel>
-        
+
     </Viewbox>
-    
+
 </UserControl>
