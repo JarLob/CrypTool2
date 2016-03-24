@@ -36,7 +36,7 @@ using System.Reflection;
 namespace Cryptool.Plugins.NFSFactorizer
 {
     [Author("Queremendi", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("NFS Factorizer", "Subtract one number from another", "NFSFactorizer/Documentation/doc.xml", new[] { "NFSFactorizer/images.png" })]
+    [PluginInfo("NFS Factorizer", "Subtract one number from another", "NFSFactorizer/userdoc.xml", new[] { "NFSFactorizer/images.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
 
     public class NFSFactorizer : ICrypComponent
@@ -303,6 +303,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             cmd.StartInfo.CreateNoWindow = true;
             cmd.StartInfo.UseShellExecute = false;
             cmd.StartInfo.Arguments = cmndLine;
+            cmd.StartInfo.WorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Data\\yafu-1.34";
 
             cmd.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
 
