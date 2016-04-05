@@ -457,13 +457,23 @@ namespace voluntLib
         /// <param name="logLevel"></param>
         public void EnableQuietMode()
         {
-            foreach (var rule in LogManager.Configuration.LoggingRules)
+            try
             {
-                rule.DisableLoggingForLevel(LogLevel.Trace);
-                rule.DisableLoggingForLevel(LogLevel.Debug);
-                rule.DisableLoggingForLevel(LogLevel.Info);
+                if (LogManager.Configuration != null && LogManager.Configuration.LoggingRules != null)
+                {
+                    foreach (var rule in LogManager.Configuration.LoggingRules)
+                    {
+                        rule.DisableLoggingForLevel(LogLevel.Trace);
+                        rule.DisableLoggingForLevel(LogLevel.Debug);
+                        rule.DisableLoggingForLevel(LogLevel.Info);
+                    }
+                    LogManager.ReconfigExistingLoggers();
+                }
             }
-            LogManager.ReconfigExistingLoggers();
+            catch (Exception ex)
+            {
+                //wtf?
+            }
         }
 
         #region init-Helper
