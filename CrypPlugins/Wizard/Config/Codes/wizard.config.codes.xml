@@ -34,7 +34,7 @@
       Die Eingabe wird zunächst gemäß der gewählten Eingabecodierung in Bytes decodiert. Aus diesen Bytes wird danach die Ausgabe in dem eingestellen Ausagebeformat codiert. Die eingestellte Zeichencodierung wird immer verwendet, wenn als Ein- oder Ausgabe "Text" gewählt wurde. Diese Einstellung steuert, wie die einzelnen Zeichen in Bytes codiert werden.
     </task>
 
-    <comboBox plugin="Decoder;Encoder" property="Encoding" alignment="Left" width="30%" group="1" defaultValue="4">
+    <comboBox plugin="$Decoder$;$Encoder$" property="Encoding" alignment="Left" width="30%" group="1" defaultValue="4">
       <description lang="en">Used character encoding:</description>
       <description lang="de">Verwendete Zeichencodierung:</description>
       <item content="UTF-8"/>
@@ -46,7 +46,7 @@
       <item content="Windows-1525"/>
     </comboBox>
 
-    <comboBox plugin="Decoder" property="PresentationFormatSetting" alignment="Left" width="30%" group="1" defaultValue="0">
+    <comboBox plugin="$Decoder$" property="PresentationFormatSetting" alignment="Left" width="30%" group="1" defaultValue="0">
       <description lang="en">What encoding does the input text have?</description>
       <description lang="de">In welcher Codierung liegt die Eingabe vor?</description>
       <item lang="en" content="Text"/>
@@ -63,7 +63,7 @@
       <item lang="de" content="Base64"/>
     </comboBox>
 
-    <comboBox plugin="Encoder" property="PresentationFormatSetting" alignment="Left" width="30%" group="1" defaultValue="5">
+    <comboBox plugin="$Encoder$" property="PresentationFormatSetting" alignment="Left" width="30%" group="1" defaultValue="5">
       <description lang="en">The output should be encoded as:</description>
       <description lang="de">Wie soll die Ausgabe codiert werden?</description>
       <item lang="en" content="Text"/>
@@ -80,7 +80,7 @@
       <item lang="de" content="Base64"/>
     </comboBox>
     
-    <inputBox plugin="Input" property="Text" alignment="Stretch" width="100%" visibleLines="15">
+    <inputBox plugin="$Input$" property="Text" alignment="Stretch" width="100%" visibleLines="15">
       <description lang="en">Input</description>
       <description lang="de">Eingabe</description>
       <defaultvalue>The quick brown fox jumps over the lazy dog.</defaultvalue>
@@ -97,21 +97,21 @@
       <task lang="en">Here you see again your input, the used bytes in hexadecimal representation and the resulting representation in the chosen encoding. You still can change your input while observing the direct effects on the used bytes and the chosen encoding.</task>
       <task lang="de">Hier sehen Sie nochmal Ihre Eingabe, die dafür verwendeten Bytes in hexadezimaler Darstellung und die resultierende Darstellung in der gewählten Codierung. Sie können dabei die Eingabe weiterhin verändern und die direkten Auswirkungen auf die verwendeten Bytes und die gewählte Codierung beobachten.</task>
 
-      <inputBox plugin="Input" property="Text" alignment="Stretch" width="100%">
+      <inputBox plugin="$Input$" property="Text" alignment="Stretch" width="100%">
         <description lang="en">Input:</description>
         <description lang="de">Eingabe:</description>
         <defaultvalue>The quick brown fox jumps over the lazy dog.</defaultvalue>
       </inputBox>
 
-      <outputBox plugin="HEX" property="CurrentValue" alignment="Stretch">
+      <presentation plugin="$Output (hexadecimal)$" height="150" alignment="Stretch">
         <description lang="en">Hexadecimal representation of the used bytes:</description>
         <description lang="de">Hexadezimale Darstellung der verwendeten Bytes:</description>
-      </outputBox>
+      </presentation>
 
-      <outputBox plugin="Output" property="CurrentValue" alignment="Stretch">
+      <presentation plugin="$Output$" height="150" alignment="Stretch">
         <description lang="en">Output:</description>
         <description lang="de">Ergebnis:</description>
-      </outputBox>
+      </presentation>
 
     </sampleViewer>
   </input>
@@ -127,7 +127,7 @@
       Der Morsecode oder Morsecode, manchmal auch Morsealphabet genannt, ist ein Verfahren zur Übermittlung von Buchstaben und Zeichen.<newline/> Dabei wird ein konstantes Signal ein- und ausgeschaltet.<newline/> Es besteht aus drei Symbolen: kurzes Signal, langes Signal und Pause.
     </description>
 
-    <comboBox plugin="Morse Encoder" property="Action" alignment="Left" width="20%">
+    <comboBox plugin="$Morse Encoder$" property="Action" alignment="Left" width="20%">
       <description lang="en">Encode or decode:</description>
       <description lang="de">Encodieren oder Decodieren:</description>
       <item lang="en" content="Encode"/>
@@ -136,20 +136,20 @@
       <item lang="de" content="Decodieren"/>
     </comboBox>
 
-    <inputBox plugin="Cleartext to send" property="Text" alignment="Right" width="80%" visibleLines="5" group="input1">
+    <inputBox plugin="$Cleartext to send$" property="Text" alignment="Right" width="80%" visibleLines="5" group="input1">
       <description lang="en">
-        <condition plugin="Morse Encoder" property="Action" value="0">
+        <condition plugin="$Morse Encoder$" property="Action" value="0">
           Message to <b>encode</b>:
         </condition>
-        <condition plugin="Morse Encoder" property="Action" value="1">
+        <condition plugin="$Morse Encoder$" property="Action" value="1">
           Message to <b>decode</b>:
         </condition>
       </description>
       <description lang="de">
-        <condition plugin="Morse Encoder" property="Action" value="0">
+        <condition plugin="$Morse Encoder$" property="Action" value="0">
           Zu <b>encodierende</b> Nachricht:
         </condition>
-        <condition plugin="Morse Encoder" property="Action" value="1">
+        <condition plugin="$Morse Encoder$" property="Action" value="1">
           Zu <b>decodierende</b> Nachricht:
         </condition>
       </description>
@@ -166,20 +166,20 @@
       <task lang="en">Here, you can change the parameters and view the results.</task>
       <task lang="de">Hier können Sie Parameter verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Cleartext to send" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Cleartext to send$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
-          <condition plugin="Morse Encoder" property="Action" value="0">
+          <condition plugin="$Morse Encoder$" property="Action" value="0">
             Message to encode:
           </condition>
-          <condition plugin="Morse Encoder" property="Action" value="1">
+          <condition plugin="$Morse Encoder$" property="Action" value="1">
             Message to decode:
           </condition>
         </description>
         <description lang="de">
-          <condition plugin="Morse Encoder" property="Action" value="0">
+          <condition plugin="$Morse Encoder$" property="Action" value="0">
             Zu encodierende Nachricht:
           </condition>
-          <condition plugin="Morse Encoder" property="Action" value="1">
+          <condition plugin="$Morse Encoder$" property="Action" value="1">
             Zu decodierende Nachricht:
           </condition>
         </description>
@@ -187,10 +187,10 @@
         <defaultvalue lang="de">Geben Sie Ihre Nachricht hier ein.</defaultvalue>
       </inputBox>
 
-      <outputBox plugin="Morse Code" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Morse Code$" height="150" alignment="Stretch">
         <description lang="en">Morse Code Output:</description>
         <description lang="de">Morsecode-Ausgabe:</description>
-      </outputBox>
+      </presentation>
 
     </sampleViewer>
     
@@ -207,7 +207,7 @@
       Ein visueller Code ist ein ein- oder zweidimensionaler Code welcher z.B. von einem Smartphone oder von Code Scannern gelesen werden kann.
     </description>
 
-    <comboBox plugin="Encoder" property="EncodingType" alignment="Left" width="20%" defaultValue="4">
+    <comboBox plugin="$Visual Encoder$" property="EncodingType" alignment="Left" width="20%" defaultValue="4">
       <description lang="en">Type of the visual code:</description>
       <description lang="de">Art des Visuellen Codes:</description>
       <item lang="en" content="EAN8"/>
@@ -224,7 +224,7 @@
       <item lang="de" content="PDF417"/>
     </comboBox>    
 
-    <inputBox plugin="Text" property="Text" alignment="Right" width="80%" visibleLines="5" group="input1">
+    <inputBox plugin="$Text Input$" property="Text" alignment="Right" width="80%" visibleLines="5" group="input1">
       <description lang="en">      
           Message to <b>encode</b>:     
       </description>
@@ -244,7 +244,7 @@
       <task lang="en">Here, you can change the parameters and view the results.</task>
       <task lang="de">Hier können Sie Parameter verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Text" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Text Input$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">          
             Message to encode:         
         </description>
@@ -255,7 +255,7 @@
         <defaultvalue lang="de">Geben Sie Ihre Nachricht hier ein.</defaultvalue>
       </inputBox>      
 
-      <presentation plugin="Encoder" width="50%" height="50%">
+      <presentation plugin="$Visual Encoder$" width="50%" height="50%">
         <description lang="en">Encoder:</description>
         <description lang="de">Encodierer:</description>
       </presentation>
@@ -275,7 +275,7 @@
       Ein visueller Code ist ein ein- oder zweidimensionaler Code welcher z.B. von einem Smartphone oder von Code Scannern gelesen werden kann.
     </description>
 
-    <comboBox plugin="Decoder" property="DecodingType" alignment="Left" width="20%" defaultValue="5">
+    <comboBox plugin="$Visual Decoder$" property="DecodingType" alignment="Left" width="20%" defaultValue="5">
       <description lang="en">Type of the visual code:</description>
       <description lang="de">Art des Visuellen Codes:</description>
       <!-- AUTO, EAN13, EAN8, Code39, Code128, QRCode, DataMatrix, PDF417, MaxiCode, Aztec, CodaBar, RSS, UPC_A, UPC_E-->
@@ -315,15 +315,15 @@
       <name lang="en" >Visual Code Output</name>
       <name lang="de" >Visueller Code Ausgabe</name>
 
-      <presentation plugin="Decoder" width="50%" height="50%">
+      <presentation plugin="$Visual Decoder$" width="50%" height="50%">
         <description lang="en">Decoder:</description>
         <description lang="de">Decodierer:</description>
       </presentation>
 
-      <outputBox plugin="Text" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$TextOutput$" height="150" alignment="Stretch">
         <description lang="en">Decoded Text:</description>
         <description lang="de">Decodierter Text:</description>
-      </outputBox>
+      </presentation>
 
     </sampleViewer>    
     

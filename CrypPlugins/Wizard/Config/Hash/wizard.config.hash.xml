@@ -37,13 +37,14 @@
       <task lang="en">Input your message and watch the MD5 output here.</task>
       <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die MD5-Ausgabe.</task>
 
-      <inputBox plugin="Input" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Input$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">Input Message:</description>
         <description lang="de">Eingabenachricht:</description>
         <defaultvalue lang="de">Message-Digest Algorithm 5 (MD5) ist eine weit verbreitete kryptographische Hash-Funktion, die aus einer beliebigen Nachricht einen 128-Bit-Hashwert (deutsch: Prüfsumme) erzeugt. MD5 wurde 1991 von Ronald L. Rivest entwickelt. Sie gilt inzwischen nicht mehr als sicher, da es mit überschaubarem Aufwand möglich ist, unterschiedliche Nachrichten zu erzeugen, die dieselbe MD5-Prüfsumme aufweisen.</defaultvalue>
+        <defaultvalue lang="en">The MD5 message-digest algorithm is a widely used cryptographic hash function producing a 128-bit (16-byte) hash value, typically expressed in text format as a 32-digit hexadecimal number. MD5 has been utilized in a wide variety of cryptographic applications and is also commonly used to verify data integrity.</defaultvalue>
       </inputBox>
 
-      <presentation plugin="Hash" alignment="Stretch">
+      <presentation plugin="$Hash Value$" alignment="Stretch">
         <description lang="en">Hash:</description>        
       </presentation>
     </sampleViewer>
@@ -58,13 +59,14 @@
       <task lang="en">Input your message and watch the MD5 output here.</task>
       <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die MD5-Ausgabe.</task>
 
-      <inputBox plugin="Input" property="Text" width="50%" alignment="Stretch" visibleLines="5" group="1">
+      <inputBox plugin="$Input$" property="Text" width="50%" alignment="Stretch" visibleLines="5" group="1">
         <description lang="en">Input Message:</description>
         <description lang="de">Eingabenachricht:</description>
-        <defaultvalue>Message-Digest Algorithm 5 (MD5) ist eine weit verbreitete kryptographische Hash-Funktion, die aus einer beliebigen Nachricht einen 128-Bit-Hashwert (deutsch: Prüfsumme) erzeugt. MD5 wurde 1991 von Ronald L. Rivest entwickelt. Sie gilt inzwischen nicht mehr als sicher, da es mit überschaubarem Aufwand möglich ist, unterschiedliche Nachrichten zu erzeugen, die dieselbe MD5-Prüfsumme aufweisen.</defaultvalue>
+        <defaultvalue lang="de">Message-Digest Algorithm 5 (MD5) ist eine weit verbreitete kryptographische Hash-Funktion, die aus einer beliebigen Nachricht einen 128-Bit-Hashwert (deutsch: Prüfsumme) erzeugt. MD5 wurde 1991 von Ronald L. Rivest entwickelt. Sie gilt inzwischen nicht mehr als sicher, da es mit überschaubarem Aufwand möglich ist, unterschiedliche Nachrichten zu erzeugen, die dieselbe MD5-Prüfsumme aufweisen.</defaultvalue>
+        <defaultvalue lang="en">The MD5 message-digest algorithm is a widely used cryptographic hash function producing a 128-bit (16-byte) hash value, typically expressed in text format as a 32-digit hexadecimal number. MD5 has been utilized in a wide variety of cryptographic applications and is also commonly used to verify data integrity.</defaultvalue>
       </inputBox>
 
-      <presentation plugin="Hash" width="50%" alignment="Right" group="1">
+      <presentation plugin="$Hash Value$" width="50%" alignment="Right" group="1">
         <description lang="en">Hash:</description>
       </presentation>
 
@@ -85,13 +87,13 @@
     <task lang="en">Input your message and watch the SHA-1 output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die SHA-1-Ausgabe.</task>
 
-    <inputBox plugin="Message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="de">Der Begriff 'secure hash algorithm' (engl. für sicherer Hash-Algorithmus), kurz SHA, bezeichnet eine Gruppe standardisierter kryptographischer Hash-Funktionen. Diese dienen zur Berechnung eines eindeutigen Prüfwerts für beliebige elektronische Daten. Meist handelt es sich dabei um Nachrichten. Es soll praktisch unmöglich sein, zwei verschiedene Nachrichten mit dem gleichen SHA-Wert zu finden (Kollisionssicherheit). Ob SHA-1 dieser Anforderung genügt, kann nicht sicher gesagt werden, da im Sommer 2006 eine wesentliche Schwäche dieses Algorithmus entdeckt und publik gemacht wurde. Grundsätzlich sollte man daher in neuen Entwicklungen SHA-1 nicht mehr als sicheren Hash-Algorithmus vorsehen.</defaultvalue>
     </inputBox>
 
-    <presentation plugin="Hash" alignment="Stretch">
+    <presentation plugin="$Hash$" alignment="Stretch">
       <description lang="en">Hash:</description>
     </presentation>
   </sampleViewer>
@@ -106,13 +108,13 @@
     <task lang="en">Input your message and watch the SHA-256 output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die SHA-256-Ausgabe.</task>
 
-    <inputBox plugin="Message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="de">Der Begriff 'secure hash algorithm' (engl. für sicherer Hash-Algorithmus), kurz SHA, bezeichnet eine Gruppe standardisierter kryptographischer Hash-Funktionen. Diese dienen zur Berechnung eines eindeutigen Prüfwerts für beliebige elektronische Daten. Meist handelt es sich dabei um Nachrichten. Es soll praktisch unmöglich sein, zwei verschiedene Nachrichten mit dem gleichen SHA-Wert zu finden (Kollisionssicherheit). Ob SHA-256 dieser Anforderung genügt, kann nicht sicher gesagt werden, da im Sommer 2006 eine wesentliche Schwäche des SHA-1 Algorithmus entdeckt und publik gemacht wurde. SHA-256 ist davon zwar auch betroffen, allerdings ist der Angriff bei SHA-256 durch die größere Länge des Hashes (256 Bit) noch deutlich schwächer. Grundsätzlich sollte man allerdings bei neuen Entwicklungen die gesamte SHA-Familie kritisch betrachten und wenn möglich vermeiden.</defaultvalue>
     </inputBox>
 
-    <presentation plugin="Hash" alignment="Stretch">
+    <presentation plugin="$Hash$" alignment="Stretch">
       <description lang="en">Hash:</description>
     </presentation>
   </sampleViewer>
@@ -127,7 +129,7 @@
     <task lang="en">Input your message and watch the RIPEMD160 output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die RIPEMD160-Ausgabe.</task>
 
-    <inputBox plugin="Input" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Input$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="de">RIPEMD-160 (RACE Integrity Primitives Evaluation Message Digest) ist eine kryptographische Hash-Funktion mit einer Ausgabe von 160 Bits.
@@ -136,7 +138,7 @@ RIPEMD-160 wurde von Hans Dobbertin, Antoon Bosselaers und Bart Preneel in Europ
       </defaultvalue>
     </inputBox>
 
-    <presentation plugin="Hash" alignment="Stretch">
+    <presentation plugin="$Hash$" alignment="Stretch">
       <description lang="en">Hash:</description>
     </presentation>
   </sampleViewer>
@@ -151,13 +153,13 @@ RIPEMD-160 wurde von Hans Dobbertin, Antoon Bosselaers und Bart Preneel in Europ
     <task lang="en">Input your message and watch the Tiger output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die Tiger-Ausgabe.</task>
 
-    <inputBox plugin="Input" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="de">Tiger ist eine kryptographische Hash-Funktion, die von Ross Anderson und Eli Biham im Jahr 1996 entwickelt wurde. Der von Tiger erzeugte Hashwert hat eine Länge von 192 Bit. Der Tiger-Algorithmus ist nicht patentiert. Testvektoren für den Nachfolger namens Tiger2 sind bereits verfügbar.</defaultvalue>
     </inputBox>
 
-    <presentation plugin="Hash" alignment="Stretch">
+    <presentation plugin="$Hash$" alignment="Stretch">
       <description lang="en">Hash:</description>
     </presentation>
   </sampleViewer>
@@ -172,7 +174,7 @@ RIPEMD-160 wurde von Hans Dobbertin, Antoon Bosselaers und Bart Preneel in Europ
     <task lang="en">Input your message and watch the Whirlpool output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die Whirlpool-Ausgabe.</task>
 
-    <inputBox plugin="Input" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="en">Whirlpool is a cryptographic hash function designed by Vincent Rijmen and Paulo SLM Barreto first described in 2000. It was named after the Whirlpool galaxy in the constellation Canis Venati; Latin for hunting dogs.
@@ -184,7 +186,7 @@ Die Autoren haben erklärt, dass Whirlpool nicht patentiert ist und es nie sein 
 Whirlpool gehört zu den vom Projekt NESSIE empfohlenen kryptographischen Algorithmen und wurde von der ISO mit ISO/IEC 10118-3:2004 standardisiert.</defaultvalue>
     </inputBox>
 
-    <presentation plugin="Hash" alignment="Stretch">
+    <presentation plugin="$Hash$" alignment="Stretch">
       <description lang="en">Hash:</description>
     </presentation>
   </sampleViewer>

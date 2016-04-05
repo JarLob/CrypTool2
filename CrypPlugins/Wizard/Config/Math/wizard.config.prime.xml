@@ -37,7 +37,7 @@
     <task lang="en">Input the parameters for prime number generation.</task>
     <task lang="de">Geben Sie die Parameter zur Erzeugung einer Primzahl ein.</task>
 
-    <inputBox plugin="PrimesGenerator" property="Input" width="50%" alignment="Left">
+    <inputBox plugin="$Number Input2$" property="Number" width="50%" alignment="Left">
       <description lang="en">Number of bits:</description>
       <description lang="de">Anzahl der Bits:</description>
       <defaultvalue>400</defaultvalue>
@@ -54,10 +54,10 @@
       <task lang="en">The generated prime number.</task>
       <task lang="de">Die erzeugte Primzahl.</task>
 
-      <outputBox plugin="PrimeNumber" property="CurrentValue">
+      <presentation plugin="$PrimeNumber2$" height="150">
         <description lang="en">Generated Prime Number:</description>
         <description lang="de">Generierte Primzahl:</description>
-      </outputBox>
+      </presentation>
     </sampleViewer>
   </input>
 
@@ -73,13 +73,13 @@
     <task lang="en">Input the number you want to test.</task>
     <task lang="de">Geben Sie die Zahl ein, die Sie testen wollen.</task>
 
-    <inputBox plugin="Number" property="Number" alignment="Stretch">
+    <inputBox plugin="$Number Input$" property="Number" alignment="Stretch">
       <description lang="en">Number (can be a mathematical expression):</description>
       <description lang="de">Zahl (kann ein mathematischer Ausdruck sein):</description>
       <defaultvalue>358985028000324617802198861844522163047755799681138412255630375745509906768216239732389768930571941971276048934551187949</defaultvalue>
     </inputBox>
 
-    <outputBox plugin="Is Prime?" property="CurrentValue" alignment="Left" width="20%" visibleLines="3">
+    <outputBox plugin="$Is Prime?$" property="CurrentValue" alignment="Left" width="20%" visibleLines="3">
       <description lang="en">Is Prime?</description>
       <description lang="de">Ist Primzahl?</description>
     </outputBox>

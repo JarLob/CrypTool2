@@ -39,22 +39,22 @@
         <!-- Set AES to encrypt -->
         <pluginSetter plugin="AES" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set AES to decrypt -->
         <pluginSetter plugin="AES" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -76,14 +76,14 @@
       <item content="256 Bits"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
       <storage key="key" showLoadAddButtons="true" />
       <description lang="en">Key (hex values):</description>
       <description lang="de">Schlüssel (in hexadezimaler Notation):</description>
       <defaultvalue>FD E8 F7 A9 B8 6C 3B FF 07 C0 D3 9D 04 60 5E DD</defaultvalue>
     </inputBox>
     
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="AES" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="AES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -106,7 +106,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="AES" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="AES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -117,10 +117,10 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">AES Output:</description>
         <description lang="de">AES-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
 
@@ -142,22 +142,22 @@
         <!-- Set DES to encrypt -->
         <pluginSetter plugin="DES" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set DES to decrypt -->
         <pluginSetter plugin="DES" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -171,14 +171,14 @@
       <item content="Output Feedback (OFB)" lang="en"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){8}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){8}">
       <storage key="key" showLoadAddButtons="true" />
       <description lang="en">Key (hex values):</description>
       <description lang="de">Schlüssel (in hexadezimaler Notation):</description>
       <defaultvalue>A1 B1 C1 11 11 11 11 11</defaultvalue>
     </inputBox>
     
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="DES" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="DES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -201,7 +201,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="DES" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="DES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -212,10 +212,10 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">DES Output:</description>
         <description lang="de">DES-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
 
@@ -237,22 +237,22 @@
         <!-- Set SDES to encrypt -->
         <pluginSetter plugin="SDES" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set SDES to decrypt -->
         <pluginSetter plugin="SDES" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -266,13 +266,13 @@
       <item content="Output Feedback (OFB)" lang="en"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch"  visibleLines="1" regex="[01]{10}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch"  visibleLines="1" regex="[01]{10}">
       <description lang="en">Key (binary values):</description>
       <description lang="de">Schlüssel (in binärer Notation):</description>
 		<defaultvalue>1010101010</defaultvalue>
     </inputBox>
     
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="SDES" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="SDES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -295,7 +295,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="SDES" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="SDES" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -306,10 +306,10 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">SDES Output:</description>
         <description lang="de">SDES-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
 
@@ -331,22 +331,22 @@
         <!-- Set Twofish to encrypt -->
         <pluginSetter plugin="Twofish" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set Twofish to decrypt -->
         <pluginSetter plugin="Twofish" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -368,14 +368,14 @@
       <item content="Output Feedback (OFB)" lang="en"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
       <storage key="key" showLoadAddButtons="true" />
       <description lang="en">Key (hex values):</description>
       <description lang="de">Schlüssel (in hexadezimaler Notation):</description>
 		<defaultvalue>0F 1E 2D 3C 4B 5A 69 78 87 96 A5 B4 C3 D2 E1 F0</defaultvalue>
     </inputBox>
     
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="Twofish" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="Twofish" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -398,7 +398,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="Twofish" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="Twofish" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -409,20 +409,12 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">Twofish Output:</description>
         <description lang="de">Twofish-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
-
-  <!-- Trivium input -->
-  <!--<input image="Trivium" >
-    <name lang="en" >Trivium</name>
-    <description lang="en" >
-      Trivium is a symmetric modern algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).
-    </description>
-  </input>-->
 
   <!-- TEA input -->
   <input image="TEA" >
@@ -442,22 +434,22 @@
         <!-- Set TEA to encrypt -->
         <pluginSetter plugin="TEA" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set TEA to decrypt -->
         <pluginSetter plugin="TEA" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -471,7 +463,7 @@
       <item content="Output Feedback (OFB)" lang="en"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch" visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch" visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16}">
       <storage key="key" showLoadAddButtons="true" />
       <description lang="en">Key (hex values):</description>
       <description lang="de">Schlüssel (in hexadezimaler Notation):</description>
@@ -485,7 +477,7 @@
       <item content="XXTEA (1998)"/>
     </comboBox>
 
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="TEA" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="TEA" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -508,7 +500,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="TEA" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="TEA" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -519,10 +511,10 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">TEA Output:</description>
         <description lang="de">TEA-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
 
@@ -544,22 +536,22 @@
         <!-- Set RC2 to encrypt -->
         <pluginSetter plugin="RC2" property="Action">0</pluginSetter>
         <!-- Set input format of the message decoder to Text -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message decoder to ASCII -->
-        <pluginSetter plugin="Message decoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="Encoding">4</pluginSetter>
         <!-- Set output format of the message encoder to Hexadecimal -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">4</pluginSetter>
       </item>
       <item lang="de" content="Verschlüsseln"/>
       <item lang="en" content="Decrypt">
         <!-- Set RC2 to decrypt -->
         <pluginSetter plugin="RC2" property="Action">1</pluginSetter>
         <!-- Set input format of the message decoder to Hexadecimal -->
-        <pluginSetter plugin="Message decoder" property="PresentationFormatSetting">4</pluginSetter>
+        <pluginSetter plugin="$Message Decoder$" property="PresentationFormatSetting">4</pluginSetter>
         <!-- Set output format of the message encoder to Text -->
-        <pluginSetter plugin="Message encoder" property="PresentationFormatSetting">0</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="PresentationFormatSetting">0</pluginSetter>
         <!-- Set Encoding of the message encoder to ASCII -->
-        <pluginSetter plugin="Message encoder" property="Encoding">4</pluginSetter>
+        <pluginSetter plugin="$Message Encoder$" property="Encoding">4</pluginSetter>
        </item>
       <item lang="de" content="Entschlüsseln"/>
     </comboBox>
@@ -573,14 +565,14 @@
       <item content="Output Feedback (OFB)" lang="en"/>
     </comboBox>
 
-	 <inputBox plugin="Key (Hex values)" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
+	 <inputBox plugin="$Key$" property="Text" alignment="Stretch"  visibleLines="1" regex="([0-9a-fA-F]{2}[\s-]*){16,}">
       <storage key="key" showLoadAddButtons="true" />
       <description lang="en">Key (hex values):</description>
       <description lang="de">Schlüssel (in hexadezimaler Notation):</description>
 		<defaultvalue>0F 1E 2D 3C 4B 5A 69 78 87 96 A5 B4 C3 D2 E1 F0</defaultvalue>
     </inputBox>
     
-    <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">
         <condition plugin="RC2" property="Action" value="0">Message to encrypt:</condition>
         <condition plugin="RC2" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -603,7 +595,7 @@
       <task lang="en">Here, you can change the message and view the results.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="Input message" property="Text" alignment="Stretch" visibleLines="5">
+      <inputBox plugin="$Plaintext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">
           <condition plugin="RC2" property="Action" value="0">Message to encrypt:</condition>
           <condition plugin="RC2" property="Action" value="1">Message to decrypt (hex values):</condition>
@@ -614,10 +606,10 @@
         </description>
       </inputBox>
 
-      <outputBox plugin="Output message" property="CurrentValue" alignment="Stretch" visibleLines="5">
+      <presentation plugin="$Ciphertext$" alignment="Stretch" height="150">
         <description lang="en">RC2 Output:</description>
         <description lang="de">RC2-Ausgabe:</description>
-      </outputBox>      
+      </presentation>      
     </sampleViewer>
   </input>
 

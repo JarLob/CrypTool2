@@ -93,10 +93,10 @@
         </condition>
       </task>
 
-      <outputBox plugin="Output" property="CurrentValue" alignment="Stretch" visibleLines="20">
+      <presentation plugin="Output" height="150">
         <description lang="en">Message:</description>
         <description lang="de">Nachricht:</description>
-      </outputBox>
+      </presentation>
     </sampleViewer>   
   </input>  
 
@@ -113,11 +113,11 @@
     <task lang="en">Here, you can enter your password to test its strength. Warning! Password is visible on the screen.</task>
     <task lang="de">Hier können Sie Ihr Passwort eingeben, um dessen Stärke zu ermitteln. Warnung! Das Passwort ist auf dem Bildschirm lesbar.</task>
 
-    <inputBox plugin="Password" property="Text" alignment="Right" width="78%" visibleLines="1" group="1">
+    <inputBox plugin="$Password$" property="Text" alignment="Right" width="78%" visibleLines="1" group="1">
       <storage key="password" showLoadAddButtons="true" />
       <description lang="en">Password (cleartext!) :</description>
       <description lang="de">Passwort (Klartext!) :</description>
-      <defaultvalue>test105!A</defaultvalue> <!-- FIXME: This gets overwritten by the sampleviwer.. hence it is completely useless, but cannot be turned off; strange: same thing works for encoding above. -->
+      <defaultvalue>test105!A</defaultvalue>
     </inputBox>
 
     <sampleViewer image="PasswordStrength" file="Tools\PasswordStrength.cwm">
@@ -131,14 +131,14 @@
       <task lang="en">The detailed result of your passwords strength analysis.</task>
       <task lang="de">Das detaillierte Ergebnis Ihrer Passwort-Stärke-Analyse.</task>
 
-      <inputBox plugin="Password" property="Text" alignment="Right" width="50%" visibleLines="1" group="1">
+      <inputBox plugin="$Password$" property="Text" alignment="Right" width="50%" visibleLines="1" group="1">
         <storage key="password" showLoadAddButtons="true" />
         <description lang="en">Password (cleartext!) :</description>
         <description lang="de">Passwort (Klartext!) :</description>
         <defaultvalue>test105!A</defaultvalue>
       </inputBox>
 
-      <presentation plugin="PasswordStrength" width="50%" alignment="Center" group="2">
+      <presentation plugin="$PasswordStrength$" width="50%" alignment="Center" group="2">
         <description lang="en">Password Strength:</description>
         <description lang="de">Passwort-Stärke:</description>
       </presentation>
@@ -158,12 +158,11 @@
     <task lang="en">Here, you can test whether a server is vulnerable to the heartbleed-bug.</task>
     <task lang="de">Hier können Sie überprüfen, ob ein Server mittels des Heartbleed-Bug angreifbar ist.</task>
 	
-	<inputBox plugin="ServerIP" property="Text" alignment="Left" width="10%" visibleLines="1"> 
+   	<inputBox plugin="ServerIP" property="Text" alignment="Left" width="30%" visibleLines="1"> 
         <description lang="en">Server address:</description>
         <description lang="de">Server Adresse:</description>
         <defaultvalue>heartbleed.ais.uni-kassel.de</defaultvalue>
     </inputBox>
-
 
     <sampleViewer image="HeartbleedTest" file="Protocols\HeartbleedTest.cwm">
       <name lang="en" >Result</name>
@@ -176,23 +175,23 @@
       <task lang="en">Here you can see if a server is vulnerable to the heartbleed bug.</task>
       <task lang="de">Hier können Sie sehen, ob der Server mittels des Heartbleed-Bug angreifbar ist.</task>
 
-      <inputBox plugin="ServerIP" property="Text" alignment="left" width="10%" visibleLines="1" group="1"> 
+      <inputBox plugin="$ServerIP$" property="Text" alignment="left" width="30%" visibleLines="1" group="1"> 
         <description lang="en">Server address:</description>
         <description lang="de">Server Adresse:</description>
         <defaultvalue>heartbleed.ais.uni-kassel.de</defaultvalue>
       </inputBox>
 
-      <presentation plugin="HeartbeatState" width="25%" alignment="Center" group="2">
+      <presentation plugin="$HeartbeatState$" width="25%" alignment="Center" group="2">
         <description lang="en">The server accepts malicious heartbeat messages: </description>
         <description lang="de">Der Server akzeptiert bösartige Heartbeat-Nachrichten: </description>
       </presentation>
 	  
-	  <presentation plugin="HeartbleedState" width="25%" alignment="Center" group="2">
+	    <presentation plugin="$HeartbleedState$" width="25%" alignment="Center" group="2">
         <description lang="en">The server is vulnerable to the heartbleed-bug: </description>
         <description lang="de">Der Server ist über den Heartbleed-Bug angreifbar: </description>
       </presentation>
 	  	  
-	  <presentation plugin="HeartbeatAnswer" width="70%" alignment="Right" group="3">
+	  <presentation plugin="$HeartbeatAnswer$" width="70%" alignment="Right" group="3">
         <description lang="en">Heartbeat Answer: </description>
         <description lang="de">Heartbeat Antwort: </description>
       </presentation>
@@ -217,7 +216,7 @@
     </task>
 
     <!-- simple paramters -->
-    <inputBox plugin="Decimalisation" property="Quant" alignment="Stretch" visibleLines="1">
+    <inputBox plugin="$Decimalisation$" property="Quant" alignment="Stretch" visibleLines="1">
       <description lang="en">Digits:</description>
       <description lang="de">Dezimalstellen:</description>
       <defaultvalue>100</defaultvalue>
@@ -233,14 +232,13 @@
       </description>
     </label>
 
-    <inputBox plugin="Random input" property="Bytes" alignment="Stretch" visibleLines="1">
+    <inputBox plugin="$Random input$" property="Bytes" alignment="Stretch" visibleLines="1">
       <description lang="en">Number of generated random bytes used as the foundation for generating the random decimal number:</description>
       <description lang="de">Anzahl erzeugter Zufallsbytes als Basis für die Berechnung der dezimalen Zufallszahl:</description>
       <defaultvalue>1000</defaultvalue>
     </inputBox>
 
-
-    <comboBox plugin="Decimalisation" property="Mode" alignment="Stretch" defaultValue="1">
+    <comboBox plugin="$Decimalisation$" property="Mode" alignment="Stretch" defaultValue="1">
       <description lang="en">Method to convert binary random numbers to decimal numbers:</description>
       <description lang="de">Die angewandte Methode zur Konvertierung von binären Zufallswerten in Dezimalzahlen:</description>
       <item lang="en" content="Visa"/>
@@ -253,8 +251,6 @@
       <item lang="de" content="IBM"/>
     </comboBox>
     
-    
-    
     <sampleViewer image="RND" file="Tools\RandomDecimalNumber.cwm">
       <name lang="en" >Result</name>
       <name lang="de" >Ergebnis</name>
@@ -266,11 +262,10 @@
       <task lang="en">Your generated decimal number</task>
       <task lang="de">Ihre erzeugte Dezimalzahl</task>
 
-      <outputBox plugin="Random decimal number" property="CurrentValue" alignment="Stretch">
-        <storage key="number" showLoadAddButtons="true" />
+      <presentation plugin="$Random decimal number$" height="150" alignment="Stretch">
         <description lang="en">Random decimal number:</description>
         <description lang="de">Dezimale Zufallszahl:</description>
-      </outputBox>
+      </presentation>
 
     </sampleViewer>
     

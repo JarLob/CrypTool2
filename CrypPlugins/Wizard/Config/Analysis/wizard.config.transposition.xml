@@ -33,7 +33,7 @@ This method is ciphertext-only.
     <task lang="en">Input the ciphertext that was encrypted by using the Transposition algorithm.</task>
     <task lang="de">Geben Sie den Geheimtext ein, der mit dem Transpositions-Algorithmus verschlüsselt wurde.</task>
 
-    <inputBox plugin="Ciphertext" property="Text" visibleLines="5">
+    <inputBox plugin="$Ciphertext$" property="Text" visibleLines="5">
       <description lang="en">Ciphertext:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue>rr ntiieornhhi btpehrmctrpctaiai uy a rctaunhi. heti eti e i o c ioydn i pS::wdg/poh oyrs r dni  ondnfn( oya ofa)sdrte mthhttsri lxa rfuinMalivcidhrsi ca sctr
@@ -79,15 +79,15 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <task lang="en">Please wait while brute-forcing.</task>
       <task lang="de">Bitte warten, während die "Brute-force"-Methode ausgeführt wird.</task>
 
-      <presentation plugin="TranspositionAnalyser" width="50%" height="50%">
+      <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
         <description lang="en">Analyser:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
-      <outputBox plugin="Revealed Plaintext" property="CurrentValue" visibleLines="5">
+      <presentation plugin="$Revealed Plaintext$" width="100%" height="150">
         <description lang="en">Deciphered Ciphertext:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
-      </outputBox>
+      </presentation>
     </sampleViewer>
   </input>
 
@@ -107,7 +107,7 @@ Diese Methode benötigt für die Analyse nur den Geheimtext ("Ciphertext-only-An
     <task lang="en">Input the ciphertext that was encrypted by using the Transposition algorithm.</task>
     <task lang="de">Geben Sie den Geheimtext ein, der mit dem Transpositions-Algorithmus verschlüsselt wurde.</task>
 
-    <inputBox plugin="Ciphertext" property="Text" visibleLines="5">
+    <inputBox plugin="$Ciphertext$" property="Text" visibleLines="5">
       <description lang="en">Ciphertext:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue> arirtn  tdsnioh sardnestctur l  rucMcifinrp p fttc/p/nnnrtteeenhiltihccspraeiry  xtenp.,e   ib  oa syn  pr:igao]rhnnioryhoboehmrrot a ueapceufihhoiatlen tcso nn 
@@ -153,15 +153,15 @@ Diese Methode benötigt für die Analyse nur den Geheimtext ("Ciphertext-only-An
       <task lang="en">Please wait while analyzing.</task>
       <task lang="de">Bitte warten, während analysiert wird.</task>
 
-      <presentation plugin="TranspositionAnalyser" width="50%" height="50%">
+      <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
         <description lang="en">Analyser:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
-      <outputBox plugin="Revealed Plaintext" property="CurrentValue" visibleLines="5">
+      <presentation plugin="$Revealed Plaintext$"  width="100%" height="150">
         <description lang="en">Deciphered Ciphertext:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
-      </outputBox>
+      </presentation>
     </sampleViewer>
   </input>
 
@@ -180,7 +180,7 @@ Diese Methode benötigt für die Analyse einen Teil des Klartextes ("Known-plain
     <task lang="en">Input the ciphertext that was encrypted by using the Transposition algorithm and your crib.</task>
     <task lang="de">Geben Sie den Geheimtext ein, der mit dem Transpositions-Algorithmus verschlüsselt wurde, und den "Crib".</task>
 
-    <inputBox plugin="Ciphertext" property="Text" visibleLines="5">
+    <inputBox plugin="$Ciphertext$" property="Text" visibleLines="5">
       <description lang="en">Ciphertext:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue>rr ntiieornhhi btpehrmctrpctaiai uy a rctaunhi. heti eti e i o c ioydn i pS::wdg/poh oyrs r dni  ondnfn( oya ofa)sdrte mthhttsri lxa rfuinMalivcidhrsi ca sctr
@@ -188,7 +188,7 @@ ctnpokntinthtoneaoetyhpoluoi hclrsrors eo rre tpxseetfpeh,oo  a mlbin etarssn nr
 rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrnietoy[ep.erisipyaasipstfy iethyslxieohe sherfcnalsstctou t en ierhtcdhcacfounctpo p vfodto /ii/ToneIpp poh h pbc ie  atc narg aretcg ato ientpao tTs  esh.ea tuns heonetaeune.uh/kawrs_r</defaultvalue>
     </inputBox>
 
-    <inputBox plugin="Crib" property="Text" visibleLines="5">
+    <inputBox plugin="$Crib$" property="Text" visibleLines="5">
       <description lang="en">Crib (Known plaintext):</description>
       <description lang="de">Crib (Bekannter Klartext):</description>
       <defaultvalue>transposition</defaultvalue>
@@ -232,15 +232,15 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <task lang="en">Please wait while analyzing.</task>
       <task lang="de">Bitte warten, während analysiert wird.</task>
 
-      <presentation plugin="TranspositionAnalyser" width="50%" height="50%">
+      <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
         <description lang="en">Analyser:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
-      <outputBox plugin="Revealed Plaintext" property="CurrentValue" visibleLines="5">
+      <presentation plugin="$Revealed Plaintext$" width="100%" height="150">
         <description lang="en">Deciphered Ciphertext:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
-      </outputBox>
+      </presentation>
     </sampleViewer>
   </input>
 </category>
