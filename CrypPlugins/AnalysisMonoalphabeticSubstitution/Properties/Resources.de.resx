@@ -193,7 +193,7 @@
     <value>Lokal</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Monoalphabetic Substitution Analyzer</value>
+    <value>Monoalphabetische Substitutionsanalyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Kryptoanlayse der monoalphabetischen Substitution</value>
