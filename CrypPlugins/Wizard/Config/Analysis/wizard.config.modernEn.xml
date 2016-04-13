@@ -120,7 +120,7 @@ Klicken Sie auf 'Weiter', um eine große Zahl in ihre Faktoren zu zerlegen.
 
         <headline lang="en">MD5</headline>
         <task lang="en">Watch the MD5-Collision calculation result.</task>
-        <task lang="de">Betrachten Sie ihr MD5-Kollisions Berechnungsresultat.</task>
+        <task lang="de">Betrachten Sie das Resultat der MD5-Kollisionsberechnung.</task>
 
         <presentation plugin="$MD5Collider$" alignment="Stretch" height="30%">
           <description lang="en">Collider Progress:</description>

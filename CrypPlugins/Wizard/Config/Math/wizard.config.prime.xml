@@ -37,7 +37,7 @@
     <task lang="en">Input the parameters for prime number generation.</task>
     <task lang="de">Geben Sie die Parameter zur Erzeugung einer Primzahl ein.</task>
 
-    <inputBox plugin="$Number Input2$" property="Number" width="50%" alignment="Left">
+    <inputBox plugin="$NumberOfBits$" property="Number" width="50%" alignment="Left">
       <description lang="en">Number of bits:</description>
       <description lang="de">Anzahl der Bits:</description>
       <defaultvalue>400</defaultvalue>
@@ -54,7 +54,7 @@
       <task lang="en">The generated prime number.</task>
       <task lang="de">Die erzeugte Primzahl.</task>
 
-      <presentation plugin="$PrimeNumber2$" height="150">
+      <presentation plugin="$PrimeNumber$ 2" height="150">
         <description lang="en">Generated Prime Number:</description>
         <description lang="de">Generierte Primzahl:</description>
       </presentation>

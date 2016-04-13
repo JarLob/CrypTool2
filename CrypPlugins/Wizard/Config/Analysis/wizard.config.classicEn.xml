@@ -430,7 +430,7 @@ Um zusätzlich automatisch unter allen "entschlüsselten" Text den richtigen zu 
     </inputBox>
 
     
-    <sampleViewer image="$Scytale$" file="Cryptanalysis\Classic\Scytale_ExhaustiveKeySearch.cwm">
+    <sampleViewer image="Scytale" file="Cryptanalysis\Classic\Scytale_ExhaustiveKeySearch.cwm">
       <name lang="en" >Results</name>
       <name lang="de" >Ergebnisse</name>
       <description lang="en" >Results from the Scytale Analysis</description>

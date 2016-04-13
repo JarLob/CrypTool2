@@ -116,7 +116,7 @@
     <task lang="en">Here, you can input the message and the key to use.</task>
     <task lang="de">Hier können Sie die Nachricht und den zu benutzenden Schlüssel eingeben.</task>
 
-    <comboBox plugin="Vigenere" property="Action" alignment="Left" width="20%">
+    <comboBox plugin="Vigenère" property="Action" alignment="Left" width="20%">
       <description lang="en">Encrypt or Decrypt:</description>
       <description lang="de">Verschlüsseln oder Entschlüsseln:</description>
       <item lang="en" content="Encrypt"/>
@@ -270,7 +270,7 @@
     <task lang="en">Here, you can input the message and the key to use.</task>
     <task lang="de">Hier können Sie die Nachricht und den zu benutzenden Schlüssel eingeben.</task>
 
-    <inputBox plugin="$message$" property="Text" alignment="Stretch" visibleLines="5" >
+    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5" >
       <description lang="en">Message to encrypt/decrypt:</description>
       <description lang="de">Zu verschlüsselnde/entschlüsselnde Nachricht:</description>
 	  	<defaultvalue lang="en">We were discovered, retreat immediately!</defaultvalue>
@@ -294,7 +294,7 @@
       <task lang="en">Here, you can change the parameters and view the results.</task>
       <task lang="de">Hier können Sie Parameter verändern und die Ergebnisse sehen.</task>
 
-      <inputBox plugin="$message$" property="Text" alignment="stretch" visibleLines="5">
+      <inputBox plugin="$Message$" property="Text" alignment="stretch" visibleLines="5">
         <description lang="en">Message to encrypt/decrypt:</description>
         <description lang="de">Zu verschlüsselnde/entschlüsselnde Nachricht:</description>
         <defaultvalue lang="en">We were discovered, retreat immediately!</defaultvalue>
@@ -306,7 +306,7 @@
         <description lang="de">Plugin-Präsentation:</description>
       </presentation>
 
-      <presentation plugin="$result$" alignment="Stretch" width="100%" height="20%">
+      <presentation plugin="$Result$" alignment="Stretch" width="100%" height="20%">
         <description lang="en">Enigma Output:</description>
         <description lang="de">Enigma-Ausgabe:</description>
       </presentation>

@@ -153,7 +153,7 @@ RIPEMD-160 wurde von Hans Dobbertin, Antoon Bosselaers und Bart Preneel in Europ
     <task lang="en">Input your message and watch the Tiger output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die Tiger-Ausgabe.</task>
 
-    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Input$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="de">Tiger ist eine kryptographische Hash-Funktion, die von Ross Anderson und Eli Biham im Jahr 1996 entwickelt wurde. Der von Tiger erzeugte Hashwert hat eine Länge von 192 Bit. Der Tiger-Algorithmus ist nicht patentiert. Testvektoren für den Nachfolger namens Tiger2 sind bereits verfügbar.</defaultvalue>
@@ -174,7 +174,7 @@ RIPEMD-160 wurde von Hans Dobbertin, Antoon Bosselaers und Bart Preneel in Europ
     <task lang="en">Input your message and watch the Whirlpool output here.</task>
     <task lang="de">Geben Sie hier Ihre Nachricht ein und betrachten Sie die Whirlpool-Ausgabe.</task>
 
-    <inputBox plugin="$Message$" property="Text" alignment="Stretch" visibleLines="5">
+    <inputBox plugin="$Input$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Input Message:</description>
       <description lang="de">Eingabenachricht:</description>
       <defaultvalue lang="en">Whirlpool is a cryptographic hash function designed by Vincent Rijmen and Paulo SLM Barreto first described in 2000. It was named after the Whirlpool galaxy in the constellation Canis Venati; Latin for hunting dogs.

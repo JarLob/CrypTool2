@@ -309,7 +309,7 @@
       <item lang="de" content="UPC_E"/>
     </comboBox>
 
-    <pluginSetter plugin="Camera" property="SendPicture">50</pluginSetter>
+    <pluginSetter plugin="$Camera$" property="SendPicture">50</pluginSetter>
 
     <sampleViewer image="VisualCode" file="Codes\Simple_Code_Detector.cwm" showCreateButton="true">
       <name lang="en" >Visual Code Output</name>
