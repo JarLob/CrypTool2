@@ -1302,6 +1302,26 @@ namespace Wizard
 
         private void RegisterEventsForLoadedSample(WorkspaceModel model)
         {
+            //check if the addressed plugins are present in the template
+            var referencedPlugins = currentInputBoxes.Cast<Control>().Concat<Control>(currentOutputBoxes).Concat<Control>(currentPresentations).Concat<Control>(currentProgressBars);
+            foreach (var plugin in referencedPlugins)
+            {
+                XElement ele = (XElement)plugin.Tag;
+                var pluginName = ele.Attribute("plugin").Value;
+                if (pluginName != null)
+                {
+                    int n = model.GetAllPluginModels().Where(x => x.GetName() == pluginName).Count();
+                    if (n == 0)
+                    {
+                        GuiLogMessage("Could not find plugin '"+pluginName+"'.", NotificationLevel.Warning);
+                    }
+                    else if (n > 1)
+                    {
+                        GuiLogMessage("Found more than one plugin '" + pluginName + "'.", NotificationLevel.Warning);
+                    }
+                }
+            }
+
             //Register events for output boxes:
             foreach (var outputBox in currentOutputBoxes)
             {
