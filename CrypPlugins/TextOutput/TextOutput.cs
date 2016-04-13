@@ -77,7 +77,12 @@ namespace TextOutput
                 {
                     Progress(0, 1);
                     input = value;
-                    if (input != null) ShowInPresentation(input);
+
+                    string fillValue = ObjectToString(value);
+                    fillValue = fillValue.Replace("\n", "");
+                    if (input != null) ShowInPresentation(fillValue);
+                    CurrentValue = getNewValue(fillValue);
+
                     Progress(1, 1);
                     OnPropertyChanged("Input");
                 }
@@ -88,7 +93,7 @@ namespace TextOutput
             }
         }
 
-        private string _currentValue;
+        private string _currentValue = String.Empty;
         public string CurrentValue
         {
             get { return _currentValue; }
@@ -198,7 +203,6 @@ namespace TextOutput
             return byteArray;
         }
 
-
         private byte[] GetByteArray(byte[] byteArray)
         {
             if (byteArray.Length <= settings.MaxLength)
@@ -212,30 +216,27 @@ namespace TextOutput
             return truncatedByteArray;
         }
 
-        internal void ShowInPresentation(object value)
+        internal String ObjectToString(object value)
         {
-            if (!Presentation.IsVisible)
+            string result = String.Empty;
+
+            if (value == null)
             {
-                return;
+                result = String.Empty;
             }
-
-            if (value == null) return;
-
-            string fillValue;
-
-	        if (value is string)
+            else if (value is string)
             {
-                fillValue = (string)value;
+                result = (string)value;
             }
             else if (value is byte[])
             {
                 byte[] byteArray = GetByteArray((byte[])value);
-                fillValue = BitConverter.ToString(byteArray).Replace("-", " ");
+                result = BitConverter.ToString(byteArray).Replace("-", " ");
             }
             else if (value is ICryptoolStream)
             {
                 byte[] byteArray = ConvertStreamToByteArray((ICryptoolStream)value);
-                fillValue = BitConverter.ToString(byteArray).Replace("-", " ");
+                result = BitConverter.ToString(byteArray).Replace("-", " ");
             }
             else if (value is System.Collections.IEnumerable)
             {
@@ -245,22 +246,47 @@ namespace TextOutput
                 foreach (var obj in enumerable)
                     s.Add((obj == null ? "null" : obj.ToString()));
 
-                fillValue = String.Join("\r",s);
+                result = String.Join("\r", s);
             }
             else if (value is BigInteger)
             {
-                fillValue = value.ToString();   // ~ 2x faster than ToBaseString
+                result = value.ToString();   // ~ 2x faster than ToBaseString
             }
             else
             {
-                fillValue = value.ToString();
+                result = value.ToString();
             }
 
-            if (fillValue.Length > settings.MaxLength)
+            if (result == null) result = string.Empty;
+
+            return result;
+        }
+
+        internal string getNewValue(string fillValue)
+        {
+            string newValue = String.Empty;
+
+            if (settings.Append)
             {
-                AddMessage("WARNING - String is too large (" + (fillValue.Length / 1024).ToString("0.00") + " kB), output will be truncated to " + (settings.MaxLength / 1024).ToString("0.00") + "kB", NotificationLevel.Warning);
-                fillValue = fillValue.Substring(0, settings.MaxLength);
+                newValue = (CurrentValue == null ? String.Empty : CurrentValue);
+                if (!string.IsNullOrEmpty(newValue))
+                    newValue += new String('\r', settings.AppendBreaks);
             }
+
+            newValue += fillValue;
+
+            if (newValue.Length > settings.MaxLength)
+            {
+                AddMessage("WARNING - String is too large (" + (newValue.Length / 1024).ToString("0.00") + " kB), output will be truncated to " + (settings.MaxLength / 1024).ToString("0.00") + "kB", NotificationLevel.Warning);
+                newValue = newValue.Substring(0, settings.MaxLength);
+            }
+
+            return newValue;
+        }
+
+        internal void ShowInPresentation(string fillValue)
+        {
+            if (!Presentation.IsVisible) return;
 
             //Check if we are in the UI thread
             if (Thread.CurrentThread == Application.Current.Dispatcher.Thread)
@@ -289,30 +315,34 @@ namespace TextOutput
 
         private void UpdateTextControls(string fillValue)
         {
-            if (!Presentation.IsVisible)
-            {
-                return;
-            }
+            if (!Presentation.IsVisible) return;
+
             string oldtext = (CurrentValue == null ? String.Empty : CurrentValue);
             string newtext = String.Empty;
+
+            if (settings.Append)
+            {
+                newtext = oldtext;
+                // append line breaks only if not first line
+                if (!string.IsNullOrEmpty(oldtext))
+                    newtext += new String('\r', settings.AppendBreaks);
+            }
+
+            newtext += fillValue;
+
             if (settings.Append)
             {
                 // append line breaks only if not first line
                 if (!string.IsNullOrEmpty(oldtext))
-                {
-                    for (int i = 0; i < settings.AppendBreaks; i++)
-                        textOutputPresentation.textBox.AppendText("\r");
-                }
+                    textOutputPresentation.textBox.AppendText(new String('\r', settings.AppendBreaks));
+
                 textOutputPresentation.textBox.AppendText(fillValue);
                 textOutputPresentation.textBox.ScrollToEnd();
-                newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
             }
             else
             {
                 textOutputPresentation.textBox.Document.Blocks.Clear();
-                fillValue = fillValue.Replace("\n", "");
                 textOutputPresentation.textBox.AppendText(fillValue);
-                newtext = new TextRange(textOutputPresentation.textBox.Document.ContentStart, textOutputPresentation.textBox.Document.ContentEnd).Text;
             }
 
             if (settings.ShowChanges == 1 || settings.ShowChanges == 2)
@@ -322,13 +352,10 @@ namespace TextOutput
                 diff.diff_cleanupSemanticLossless(diffs);
 
                 if (textOutputPresentation.textBox.Document == null)
-                {
                     textOutputPresentation.textBox.Document = new FlowDocument();
-                }
                 else
-                {
                     textOutputPresentation.textBox.Document.Blocks.Clear();
-                }
+
                 var para = new Paragraph();
                 foreach (var d in diffs)
                 {
@@ -387,10 +414,9 @@ namespace TextOutput
                 }
                 textOutputPresentation.textBox.Document.Blocks.Add(para);
             }
-            CurrentValue = newtext;
+
             setStatusBar();
         }
-
 
         void clearStatusBar()
         {
@@ -525,7 +551,8 @@ namespace TextOutput
             textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 textOutputPresentation.textBox.Document = new FlowDocument();
-                //input = null;
+                _currentValue = "";
+                Input = null;
                 clearStatusBar();
             }, null);
         }
