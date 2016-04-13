@@ -211,19 +211,19 @@
     <value>Wasserzeichen</value>
   </data>
   <data name="WatermarkCreatorSettings_ModificationType_EmbedInvisibleText" xml:space="preserve">
-    <value>Embed invisible watermark into the image</value>
+    <value>Bette unsichtbares Wasserzeichen in das Bild ein</value>
   </data>
   <data name="WatermarkCreatorSettings_ModificationType_EmbedText" xml:space="preserve">
-    <value>Embed visible text into the image</value>
+    <value>Bette sichtbaren Text in das Bild ein</value>
   </data>
   <data name="WatermarkCreatorSettings_ModificationType_ExtractText" xml:space="preserve">
-    <value>Extract hidden Watermark from image</value>
+    <value>Extrahiere verstecktes Wasserzeichen aus dem Bild</value>
   </data>
   <data name="WatermarkImageCaption" xml:space="preserve">
     <value>Bild mit Wasserzeichen</value>
   </data>
   <data name="WatermarkImageTooltip" xml:space="preserve">
-    <value>Bild, in das ein Text als Wasserzeichen eingefügt wurde.</value>
+    <value>Bild, in das ein Text als Wasserzeichen eingefügt wurde</value>
   </data>
   <data name="WatermarkLocationCap" xml:space="preserve">
     <value>Platzierung des Wasserzeichens</value>
@@ -232,6 +232,6 @@
     <value>Wähle den Ort, wo auf dem Bild das Wasserzeichen eingefügt wird.</value>
   </data>
   <data name="WatermarkTooltip" xml:space="preserve">
-    <value>Text, der dem Bild als Wasserzeichen hinzugefügt wird.</value>
+    <value>Text, der dem Bild als Wasserzeichen hinzugefügt wird</value>
   </data>
 </root>
