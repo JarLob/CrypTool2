@@ -288,7 +288,7 @@ namespace Cryptool.Plugins.QuadraticSieve
                 alreadyInUseMutex.WaitOne();
                 if (alreadyInUse)
                 {
-                    GuiLogMessage("QuadraticSieve plugin is only allowed to execute ones at a time due to technical restrictions.", NotificationLevel.Error);
+                    GuiLogMessage("QuadraticSieve plugin is only allowed to execute once at a time due to technical restrictions.", NotificationLevel.Error);
                     return true;
                 }
                 else
