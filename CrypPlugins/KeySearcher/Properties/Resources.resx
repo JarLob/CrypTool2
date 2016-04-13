@@ -805,6 +805,18 @@
     <value>To distribute the Calculation, it will be splitted into independed chunks.</value>
   </data>
   <data name="settings__tooltip_useNetwork" xml:space="preserve">
-    <value>Use internal network 'CrypCloud' to distribution this workspace.</value>
+    <value>Use internal network 'CrypCloud' for distribution of this workspace.</value>
+  </data>
+  <data name="ChunkSizeCaption" xml:space="preserve">
+    <value>Chunk Size</value>
+  </data>
+  <data name="ChunkSizeTooltip" xml:space="preserve">
+    <value>Number of keys, that are calculated by one peer per time. This value is the exponent of the square of the chunk size.</value>
+  </data>
+  <data name="settings__caption_numberOfBlocks" xml:space="preserve">
+    <value>Number of blocks</value>
+  </data>
+  <data name="settings__tooltip_numberOfBlocks" xml:space="preserve">
+    <value>Enter the number of blocks into which the calculation should be split.</value>
   </data>
 </root>

@@ -808,4 +808,22 @@
   <data name="local_throughput_sec" xml:space="preserve">
     <value>Durchsatz / sek:</value>
   </data>
+  <data name="Client__0__tried_to_auth_with_invalid_password1" xml:space="preserve">
+    <value>Client '{0}' versuchte Authentifizierung mit ungültigem Passwort</value>
+  </data>
+  <data name="settings__caption_numberOfBlocks" xml:space="preserve">
+    <value>Anzahl der Blöcke</value>
+  </data>
+  <data name="settings__caption_useNetwork" xml:space="preserve">
+    <value>Aktiviere CrypCloud</value>
+  </data>
+  <data name="settings__tooltip_numberOfBlocks" xml:space="preserve">
+    <value>Geben Sie die Anzahl der Blöcke ein, in die die Berechnung aufgeteilt werden soll.</value>
+  </data>
+  <data name="settings__tooltip_numberOfChunks" xml:space="preserve">
+    <value>Um die Berechnung verteilen zu können, wird sie in unabhängige Blöcke aufgeteilt.</value>
+  </data>
+  <data name="settings__tooltip_useNetwork" xml:space="preserve">
+    <value>Verwende internes Netzwerk 'CrypCloud', um diesen Arbeitsbereich zu verteilen.</value>
+  </data>
 </root>

@@ -295,6 +295,24 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chunk Size ähnelt.
+        /// </summary>
+        public static string ChunkSizeCaption {
+            get {
+                return ResourceManager.GetString("ChunkSizeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys, that are calculated by one peer per time. This value is the exponent of the square of the chunk size. ähnelt.
+        /// </summary>
+        public static string ChunkSizeTooltip {
+            get {
+                return ResourceManager.GetString("ChunkSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Client {0} connected! ähnelt.
         /// </summary>
         public static string Client__0__connected_ {
@@ -1638,6 +1656,15 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of blocks ähnelt.
+        /// </summary>
+        public static string settings__caption_numberOfBlocks {
+            get {
+                return ResourceManager.GetString("settings__caption_numberOfBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Number of chunks (log) ähnelt.
         /// </summary>
         public static string settings__caption_numberOfChunks {
@@ -1656,6 +1683,15 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the number of blocks into which the calculation should be split. ähnelt.
+        /// </summary>
+        public static string settings__tooltip_numberOfBlocks {
+            get {
+                return ResourceManager.GetString("settings__tooltip_numberOfBlocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die To distribute the Calculation, it will be splitted into independed chunks. ähnelt.
         /// </summary>
         public static string settings__tooltip_numberOfChunks {
@@ -1665,7 +1701,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Use internal network &apos;CrypCloud&apos; to distribution this workspace. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use internal network &apos;CrypCloud&apos; for distribution of this workspace. ähnelt.
         /// </summary>
         public static string settings__tooltip_useNetwork {
             get {
