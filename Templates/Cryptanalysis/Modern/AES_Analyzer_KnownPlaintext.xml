@@ -19,7 +19,7 @@
   </relevantPlugins>
 
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$riphertext$" value="Geheimtext"/>
     <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
     <replacement key="$Revealed Key$" value="Gefundener Schlüssel"/>
     <replacement key="$StringDecoder$" value="String-Dekodierer"/>

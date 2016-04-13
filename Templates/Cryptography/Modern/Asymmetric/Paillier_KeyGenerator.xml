@@ -18,4 +18,21 @@
     <plugin name="PaillierKeyGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$KeyGenerator$" value="Schlüsselgenerator"/>
+    <replacement key="$Encrypt$" value="Verschlüsselung"/>
+    <replacement key="$Decrypt$" value="Entschlüsselung"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Input$" value="Eingabe"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$KeyGenerator$" value="KeyGenerator"/>
+    <replacement key="$Encrypt$" value="Encrypt"/>
+    <replacement key="$Decrypt$" value="Decrypt"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Input$" value="Input"/>
+  </replacements>
+
 </sample>

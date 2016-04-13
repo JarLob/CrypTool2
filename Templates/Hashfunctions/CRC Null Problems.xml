@@ -26,8 +26,8 @@
     <replacement key="$String Decoder$" value="String-Kodierer"/>
     <replacement key="$String Encoder$" value="String-Dekodierer"/>
     <replacement key="$Concatenate$" value="Konkatenation"/>
-	 <replacement key="$memo1$" value="Appending one or more zero bytes to a data block that is padded with a correct CRC value will not change the  CRC value."/>
-	 <replacement key="$memo2$" value="If the start value of the selected CRC method is zero, leading zeros in the input data have no effect on the resulting CRC check value."/>
+	 <replacement key="$memo1$" value="Das Anhängen eines oder mehrerer Nullbytes an einen Datenblock, der mit einem korrekten CRC-Wert versehen ist, wird den CRC-Wert nicht verändern."/>
+	 <replacement key="$memo2$" value="Wenn der Startwert der ausgewählten CRC-Methode Null ist, haben führende Nullbytes in den Eingbedaten keine Auswirkung auf den sich ergebenden CRC-Wert."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Input$" value="Input"/>

@@ -21,10 +21,10 @@
     <replacement key="$Ciphertext$" value="Geheimtext"/>
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$M-138 Analyzer$" value="M-138 Analysewerkzeug"/>
-	 <replacement key="$memo1$" value="The user can set a pair of ciphertext and plaintext as inputs for the component &quot;M-138 Analyzer&quot;."/>
-	 <replacement key="$memo2$" value="This template shows a known-plaintext attack on M-138."/>
-	 <replacement key="$memo3$" value="As a result, the user receives a set of possible keys that map the given plaintext to the given ciphertext. For each possible offset, one set of keys is given by the format\line strip1, strip2, ... / offset\line In case there are positions where multiple strips could be used, the output will have the following format:\line strip1, [strip2|strip3], ... / offset\line This means that on position 2 of the key both, strip1 and strip2, are possible."/>
+    <replacement key="$M-138 Analyzer$" value="M-138-Analysierer"/>
+	 <replacement key="$memo1$" value="Geben Sie hier ein Klartext/Geheimtext-Paar als Eingabe für die Komponente &quot;M-138-Analysierer&quot; an."/>
+	 <replacement key="$memo2$" value="Diese Vorlage demonstriert einen Known-Plaintext-Angriff auf die M-138."/>
+	 <replacement key="$memo3$" value="Als Ergebnis erhält man eine Liste von möglichen Schlüsseln, die den gegebenen Klartext auf den gegebenen Geheimtext abbilden. Für jeden möglichen Offset wird eine Schlüsselmenge im Format\line\line Streifen1, Streifen2, ... / Offset\line\line ausgegeben. Falls es Positionen gibt, in denen mehrere Streifen verwendet werden könnten, hat die Ausgabe folgendes Format:\line\line Streifen1, [Streifen2|Streifen3], ... / Offset\line\line Dies bedeutet, dass in Position 2 des Schlüssels sowohl Streifen2 als auch Streifen3 möglich sind."/>
 	 
   </replacements>
   <replacements lang="en">
@@ -34,7 +34,7 @@
     <replacement key="$M-138 Analyzer$" value="M-138 Analyzer"/>
 	 <replacement key="$memo1$" value="The user can set a pair of ciphertext and plaintext as inputs for the component &quot;M-138 Analyzer&quot;."/>
 	 <replacement key="$memo2$" value="This template shows a known-plaintext attack on M-138."/>
-	 <replacement key="$memo3$" value="As a result, the user receives a set of possible keys that map the given plaintext to the given ciphertext. For each possible offset, one set of keys is given by the format\line strip1, strip2, ... / offset\line In case there are positions where multiple strips could be used, the output will have the following format:\line strip1, [strip2|strip3], ... / offset\line This means that on position 2 of the key both, strip1 and strip2, are possible."/>
+	 <replacement key="$memo3$" value="As a result, the user receives a set of possible keys that map the given plaintext to the given ciphertext. For each possible offset, one set of keys is given by the format\line\line strip1, strip2, ... / offset\line\line In case there are positions where multiple strips could be used, the output will have the following format:\line\line strip1, [strip2|strip3], ... / offset\line\line This means that on position 2 of the key both, strip2 and strip3, are possible."/>
   </replacements>
 
 </sample>

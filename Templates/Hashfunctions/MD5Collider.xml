@@ -34,7 +34,7 @@
     <replacement key="$Compare Hash$" value="Vergleiche Hash"/>
     <replacement key="$Same Data$" value="Gleiche Daten"/>
     <replacement key="$Same Hash$" value="Gleicher Hash"/>
-    <replacement key="$memo$" value="This workspace demonstrates the use of the MD5Collider component to generate an MD5 collision. A collision of the form\line &lt;PREFIX&gt; || &lt;GENERATED COLLISION BLOCK&gt; || &lt;SUFFIX&gt;\line is created."/>
+    <replacement key="$memo$" value="Diese Vorlage demonstriert die Verwendung der Komponente MD5-Kollisionsgenerator, mit der eine MD5-Kollision der Form\line &lt;PRÄFIX&gt; || &lt;GENERIERTER KOLLISIONSBLOCK&gt; || &lt;SUFFIX&gt;\line erzeugt wird."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Random seed$" value="Random seed (optional)"/>
@@ -50,7 +50,7 @@
     <replacement key="$Compare Hash$" value="Compare Hash"/>
     <replacement key="$Same Data$" value="Same Data"/>
     <replacement key="$Same Hash$" value="Same Hash"/>
-    <replacement key="$memo$" value="This workspace demonstrates the use of the MD5Collider component to generate an MD5 collision. A collision of the form\line &lt;PREFIX&gt; || &lt;GENERATED COLLISION BLOCK&gt; || &lt;SUFFIX&gt;\line is created."/>
+    <replacement key="$memo$" value="This template demonstrates the use of the MD5Collider component to generate an MD5 collision. A collision of the form\line &lt;PREFIX&gt; || &lt;GENERATED COLLISION BLOCK&gt; || &lt;SUFFIX&gt;\line is created."/>
   </replacements>
 
 </sample>

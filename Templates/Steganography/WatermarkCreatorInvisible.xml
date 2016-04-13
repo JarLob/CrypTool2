@@ -30,7 +30,7 @@ einfügen kann.</description>
     <replacement key="$Picture Output$" value="Bildausgabe"/>
     <replacement key="$Read Watermark Text$" value="Lese Wasserzeichen-Text"/>
     <replacement key="$Converter$" value="Konvertierer"/>
-	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;Text input&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another WatermarkCreator component and displayed in another TextOutput component."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert, wie man ein Bild mit einem unsichtbaren Wasserzeichen versehen kann. In der &quot;Dateieingabe&quot;-Komponente kann das zu verwendende Bild ausgewählt werden und in der &quot;Texteingabe&quot;-Komponente kann der zu verwendende Text angegeben werden. Wenn in der Komponente &quot;Wasserzeichen-Generator&quot; der &quot;Expertenmodus&quot; aktiviert ist, werden in den Einstellungen der Komponente einige Optionen angeboten, andernfalls werden die Grundeinstellungen verwendet.\line Das Wasserzeichen kann auch von einer anderen &quot;Wasserzeichen-Generator&quot;-Komponente gelesen und in einer &quot;Textausgabe&quot;-Komponente angezeigt werden."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$File Input$" value="File Input"/>
@@ -39,7 +39,7 @@ einfügen kann.</description>
     <replacement key="$Picture Output$" value="Picture Output"/>
     <replacement key="$Read Watermark Text$" value="Read Watermark Text"/>
     <replacement key="$Converter$" value="Converter"/>
-	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;Text input&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another WatermarkCreator component and displayed in another TextOutput component."/>
+	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;TextInput&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another &quot;WatermarkCreator&quot; component and displayed in another TextOutput component."/>
   </replacements>
 
 </sample>

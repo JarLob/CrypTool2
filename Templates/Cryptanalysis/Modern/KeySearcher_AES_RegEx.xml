@@ -25,7 +25,7 @@
     <replacement key="$StringDecoder$" value="String-Dekodierer"/>
     <replacement key="$Key$" value="Schlüssel"/>
     <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
-	 <replacement key="$memo$" value="This sample shows the usage of a regular expression as the cost function for the KeySearcher. Assume, that you receive the ciphertext and you know only, that it ends with &quot;CrypTool&quot;."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Verwendung eines regulären Ausdruckes als Kostenfunktion für die Schlüsselsucher-Komponente. Es wird angenommen, dass man vom empfangenen Geheimtext nur weiss, dass er mit dem Wort &quot;CrypTool&quot; endet."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Ciphertext$" value="Ciphertext"/>

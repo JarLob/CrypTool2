@@ -15,7 +15,7 @@
 
   <replacements lang="de">
     <replacement key="$TextOutput$" value="Textausgabe"/>
-	 <replacement key="$memo$" value="This sample demonstrates building a linear congruential generator (LCG). A LCG represents one of the oldest and best-known pseudorandom number generator algorithms. The theory behind them is easy to understand, and they are easily implemented and fast.\line The generator is defined by the recurrence relation:\line {\b X_{n+1} = (a * X_n + c ) mod m}\line\line The expected sequence with {\b a=3}, {\b X=5} and {\b m=31} is:\line {\b 0,5,20,3,14,16,22,9,1,8,29,30,2,11,7,26,21,6,23,12,10,4,17,25,18,28,27,24,15,19}"/>
+	 <replacement key="$memo$" value="Diese Vorlage zeigt, wie man einen linearen Kongruenzen-Generator (LCG) bauen kann. Der LCG ist eine der ältesten und bekanntesten Methoden zur Erzeugung von Pseudo-Zufallszahlen. Die mathematische Theorie hinter dem LCG ist leicht zu verstehen, und LCGs können schnell und problemlos implementiert werden.\line Der Generator wird definiert durch die rekursive Definition:\line {\b X_{n+1} = (a * X_n + c ) mod m}\line\line Die zu erwartende Folge für {\b a=3}, {\b X=5} und {\b m=31} ist:\line {\b 0,5,20,3,14,16,22,9,1,8,29,30,2,11,7,26,21,6,23,12,10,4,17,25,18,28,27,24,15,19}"/>
   </replacements>
   <replacements lang="en">
     <replacement key="$TextOutput$" value="TextOutput"/>

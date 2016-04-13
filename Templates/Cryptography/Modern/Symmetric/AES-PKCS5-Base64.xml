@@ -31,24 +31,24 @@ Quellen:<newline />
   </relevantPlugins>
 
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Input$" value="Eingabe"/>
+    <replacement key="$Output$" value="Asugabe"/>
+    <replacement key="$Gate$" value="Gatter"/>
+    <replacement key="$Switch$" value="Schalter"/>
     <replacement key="$StringEncoder$" value="String-Codierer"/>
     <replacement key="$StringDecoder$" value="String-Decodierer"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Verschlüsselung"/>
-    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Entschlüsselung"/>
+    <replacement key="$Password$" value="Passwort"/>
+    <replacement key="$memo$" value="Diese Vorlage bietet die Möglichkeit, einen Klartext mit einem einfachen Passwort mittels AES schnell und einfach zu verschlüsseln. Hierbei wird das Passwort durch PKCS5 in einen AES-Schlüssel konvertiert. Das Ergebnis ist Base64-kodiert, um z.B. einfach mit Copy &amp; Paste in eine E-Mail kopiert werden zu können. Die Entschlüsselung ist mit dieser Vorlage auch möglich: Der verschlüsselte, Base64-kodierte Text muss in die Komponente {\b Eingabe} kopiert werden. Dann muss die {\b AES}-Komponente auf &quot;Entschlüsselung&quot; gestellt werden und die {\b Schalter}-Komponente auf {\b Wahr}. Durch das Umschalten der {\b Schalter}-Komponente nehmen die Daten einen anderen Pfad, denn für die Entschlüsselung müssen sie zuerst Base64-dekodiert werden, während sie bei der Verschlüsselung erst danach Base64-kodiert werden."/>
  </replacements>
  <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Input$" value="Input"/>
+    <replacement key="$Output$" value="Output"/>
+    <replacement key="$Gate$" value="Gate"/>
+    <replacement key="$Switch$" value="Switch"/>
     <replacement key="$StringEncoder$" value="StringEncoder"/>
     <replacement key="$StringDecoder$" value="StringDecoder"/>
-    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Encrypt"/>
-    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Decrypt"/>
+    <replacement key="$Password$" value="Password"/>
+	 <replacement key="$memo$" value="In this sample we provide a quick way to encrypt plaintext with AES by using a simple password (which is converted to an AES-key by using PKCS5). The result is base64-encoded for easy copy&amp;paste e.g. to an email. Decryption is also possible with this template: The encrypted base64-encoded text needs to be copied to the {\b Input}-component. Then the {\b AES}-component needs to be switched to &quot;Decrypt&quot; and the {\b Switch}-component must be set to True. With the help of the {\b Switch}-component, the data takes a different path, i.e. for decryption we first need to base64-decode it, while when encrypting we encode it in base64 after encryption."/>
  </replacements>
 
 </sample>

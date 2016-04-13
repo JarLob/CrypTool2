@@ -18,33 +18,30 @@
   </relevantPlugins>
 
   <replacements lang="de">
+    <replacement key="$UpperLimit$" value="Obere Grenze"/>
+    <replacement key="$NumberOfBits$" value="Anzahl der Bits"/>
     <replacement key="$Number Input$" value="Zahleneingabe"/>
-    <replacement key="$Number Input2$" value="Zahleneingabe"/>
     <replacement key="$PrimeNumber$" value="Primzahl"/>
-    <replacement key="$PrimeNumber2$" value="Primzahl"/>
     <replacement key="$PrimesGenerator$" value="Primzahlgenerator"/>
-    <replacement key="$PrimesGenerator2$" value="Primzahlgenerator"/>
     <replacement key="$PrimeTest$" value="Primzahltest"/>
     <replacement key="$Is Prime?$" value="Ist prim?"/>
     <replacement key="$Converter$" value="Konvertierer"/>
     <replacement key="$Random Generator$" value="Zufallsgenerator"/>
-	 <replacement key="$memo1$" value="Erzeuge eine zufällige Primzahl &lt;= 1 Million."/>
-	 <replacement key="$memo2$" value="Erzeuge eine zufällige Primzahl mit genau 250 Bits."/>
+	 <replacement key="$memo1$" value="Erzeuge eine zufällige Primzahl, die kleiner als die angegebene obere Grenze ist."/>
+	 <replacement key="$memo2$" value="Erzeuge eine zufällige Primzahl mit der angegebenen Anzahl von Bits."/>
 	 <replacement key="$memo3$" value="Erzeuge eine zufällige Primzahl, indem zuerst eine Zufallszahl erzeugt wird und dann die nächstgrößere Primzahl gesucht wird."/>
   </replacements>
   <replacements lang="en">
-    <replacement key="$Number Input$" value="Number Input"/>
-    <replacement key="$Number Input2$" value="Number Input"/>
+    <replacement key="$UpperLimit$" value="Upper Limit"/>
+    <replacement key="$NumberOfBits$" value="Number of Bits"/>
     <replacement key="$PrimeNumber$" value="Prime Number"/>
-    <replacement key="$PrimeNumber2$" value="Prime Number"/>
     <replacement key="$PrimesGenerator$" value="PrimesGenerator"/>
-    <replacement key="$PrimesGenerator2$" value="PrimesGenerator"/>
     <replacement key="$PrimeTest$" value="PrimeTest"/>
     <replacement key="$Is Prime?$" value="Is Prime?"/>
     <replacement key="$Converter$" value="Converter"/>
     <replacement key="$Random Generator$" value="Random Generator"/>
-	 <replacement key="$memo1$" value="Generate a random prime number &lt;= 1 Million."/>
-	 <replacement key="$memo2$" value="Generate a random prime number with exactly 500 bits."/>
+	 <replacement key="$memo1$" value="Generate a random prime number less than the given upper limit."/>
+	 <replacement key="$memo2$" value="Generate a random prime number with the given number of bits."/>
 	 <replacement key="$memo3$" value="Generate a random prime number by first generating a random number and then searching for the next bigger prime number."/>
   </replacements>
 

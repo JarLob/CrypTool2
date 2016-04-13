@@ -16,4 +16,11 @@
     <plugin name="RSAKeyGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$RSAKeyGenerator$" value="RSA-Schlüsselgenerator"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$RSAKeyGenerator$" value="RSA KeyGenerator"/>
+  </replacements>
+
 </sample>

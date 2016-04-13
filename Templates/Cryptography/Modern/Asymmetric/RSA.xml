@@ -19,4 +19,23 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RSA-Kryptosystem" /></descri
     <plugin name="RSAKeyGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
+    <replacement key="$RSA Encryption$" value="RSA-Verschlüsselung"/>
+    <replacement key="$RSA Decryption$" value="RSA-Entschlüsselung"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$RSAKeyGenerator$" value="RSA-Schlüsselgenerator"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$RSA Encryption$" value="RSA Encryption"/>
+    <replacement key="$RSA Decryption$" value="RSA Decryption"/>
+    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$RSAKeyGenerator$" value="RSA KeyGenerator"/>
+  </replacements>
+
 </sample>

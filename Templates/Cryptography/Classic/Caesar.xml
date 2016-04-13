@@ -29,7 +29,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Caesar-Verschlüsselung" /><
 	<replacement key="$Ciphertext$" value="Geheimtext"/>
 	<replacement key="$text$" value="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern."/>
 	<replacement key="$memo$" value="{\b Beschreibung der Chiffre}\line\line
-Die Caesar-Verschlüsselung (auch als Cäsar-Chiffre, Cäsar-Algorithmus, Caesar-Verschiebung, Verschiebechiffre oder als Einfacher Caesar bezeichnet) ist ein einfaches symmetrisches Verschlüsselungsverfahren, das auf der monographischen und monoalphabetischen Substitution basiert. Als eines der einfachsten und unsichersten Verfahren dient es heute hauptsächlich dazu, Grundprinzipien der Kryptologie anschaulich darzustellen. Der Einfachheit halber werden oftmals nur die 26 Buchstaben des lateinischen Alphabets ohne Unterscheidung von Groß- und Kleinbuchstaben als Alphabet für Klartext und Geheimtext verwendet und Sonderzeichen, Satzzeichen usw. nicht betrachtet."/>
+Die Caesar-Verschlüsselung (auch als Caesar-Chiffre, Caesar-Algorithmus, Caesar-Verschiebung, Verschiebechiffre oder als Einfacher Caesar bezeichnet) ist ein einfaches symmetrisches Verschlüsselungsverfahren, das auf der monographischen und monoalphabetischen Substitution basiert. Als eines der einfachsten und unsichersten Verfahren dient es heute hauptsächlich dazu, Grundprinzipien der Kryptologie anschaulich darzustellen. Der Einfachheit halber werden oftmals nur die 26 Buchstaben des lateinischen Alphabets ohne Unterscheidung von Groß- und Kleinbuchstaben als Alphabet für Klartext und Geheimtext verwendet und Sonderzeichen, Satzzeichen usw. nicht betrachtet."/>
  </replacements>
  <replacements lang="en">
 	<replacement key="$Plaintext$" value="Plaintext"/>

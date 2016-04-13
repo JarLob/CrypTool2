@@ -22,7 +22,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Quadratisches_Sieb" /></desc
     <replacement key="$Number Input$" value="Zahleneingabe"/>
     <replacement key="$QuadraticSieve$" value="Quadratisches Sieb"/>
     <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile"/>
-	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3."/>
+	 <replacement key="$memo$" value="Geben Sie oben die Zahl ein, die nach Start des Arbeitsbereiches faktorisiert werden soll. Das Ergebnis wird am Ausgang der Komponente &quot;Quadratisches Sieb&quot; ausgegeben und in der Textausgabe-Komponente angezeigt.\line\line Zahlen können auch als mathematischer Ausdruck eingegeben werden, z.B. 2^20+13.\line Wenn der Wert des mathematischen Ausdruckes ein Bruch ist, wird nur der ganzzahlige Anteil verwendet, z.B. (2^3-1)/2 = 7 / 2 = 3."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Number Input$" value="Number Input"/>

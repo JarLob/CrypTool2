@@ -27,7 +27,7 @@
     <replacement key="$Split input$" value="Trenne Eingabe"/>
     <replacement key="$Search$" value="Suche"/>
     <replacement key="$Matching entries$" value="Passende Einträge"/>
-	 <replacement key="$memo$" value="This sample demonstrates how to use the WordPatterns component together with a self defined dictionary. The dictionary is provided as a text file where each line defines one entry of the dictionary."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert, wie die Wortmuster-Komponente in Verbindung mit einem selbstdefinierten Wörterbuch verwendet werden kann. Das Wörterbuch muss als Textdatei vorliegen, wobei jede Zeile der Textdatei als ein Eintrag des Wörterbuches interpretiert wird."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Dictionary file$" value="Dictionary file"/>

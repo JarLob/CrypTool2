@@ -19,14 +19,14 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/Enigma_(Maschine)" /></descr
   </relevantPlugins>
 
   <replacements lang="de">
-	<replacement key="$message$" value="Nachricht"/>
-	<replacement key="$result$" value="Ergebnis"/>
+	<replacement key="$Message$" value="Nachricht"/>
+	<replacement key="$Result$" value="Ergebnis"/>
 	<replacement key="$memo1$" value="Das Klartextbeispiel stammt von folgender Seite:\line http://de.wikipedia.org/wiki/Enigma_(Maschine)"/>
 	<replacement key="$memo2$" value="Wenn die Betriebsart der Enigma auf Verschlüsseln/Entschlüsseln gestellt ist, kann die Texteingabe-Komponente (Nachricht) eine Klartext- oder eine Geheimtextnachricht enthalten. Die Textausgabe-Komponente (Ergebnis) zeigt dann entsprechend den Geheimtext oder den entschlüsselten Geheimtext (Klartext) an. Nachdem ein Klartext verschlüsselt wurde, kann man den resultierenden Geheimtext wieder entschlüsseln, indem man ihn einfach von der Ergebnis-Komponente in die Nachrichten-Komponente kopiert."/>
  </replacements>
  <replacements lang="en">
-	<replacement key="$message$" value="Message"/>
-	<replacement key="$result$" value="Result"/>
+	<replacement key="$Message$" value="Message"/>
+	<replacement key="$Result$" value="Result"/>
 	<replacement key="$memo1$" value="This example plaintext has been taken from:\line http://de.wikipedia.org/wiki/Enigma_(Maschine)"/>
 	<replacement key="$memo2$" value="If the operation mode is Decrypt/Encrypt, the text input component (Message) can contain a cleartext or a ciphertext message. Accordingly, the text output component (Result) receives as result the ciphertext or the decrypted ciphertext (plaintext).  After encrypting a plaintext, you may decrypt the received ciphertext by just copying it from the result component into the message component (continue with the Play mode)."/>
  </replacements>

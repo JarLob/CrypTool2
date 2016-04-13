@@ -22,14 +22,14 @@
     <replacement key="$HammingDistance$" value="Hamming-Distanz"/>
     <replacement key="$Distance Value between CW1 and CW2$" value="Distanz zwischen CW1 und CW2"/>
     <replacement key="$Distance Value between CW2 and CW3$" value="Distanz zwischen CW2 und CW3"/>
-    <replacement key="$memo$" value="This template demonstrates how the hamming distance between codewords can be calculated in CrypTool 2.0. The hamming distance is the amount of different bits between two codewords.\line\line Here, Codeword1 and Codeword2 are different. Thus, the hamming distance is greater than 0.\line Codeword2 and Codeword3 are equal. Thus, the hamming distance is 0."/>
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie man die Hamming-Distanz zwischen Codeworten in CrypTool 2 berechnen kann. Die Hamming-Distanz ist die Anzahl der Bits, in denen sich die beiden Codeworte unterscheiden.\line\line Codewort1 und Codewort2 sind unterschiedlich. Daher ist ihre Hamming-Distanz größer als 0.\line Codewort2 und Codewort3 sind gleich. Daher beträgt ihre Hamming-Distanz 0."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Codeword$" value="Codeword"/>
     <replacement key="$HammingDistance$" value="Hamming Distance"/>
     <replacement key="$Distance Value between CW1 and CW2$" value="Distance Value between CW1 and CW2"/>
     <replacement key="$Distance Value between CW2 and CW3$" value="Distance Value between CW2 and CW3"/>
-    <replacement key="$memo$" value="This template demonstrates how the hamming distance between codewords can be calculated in CrypTool 2.0. The hamming distance is the amount of different bits between two codewords.\line\line Here, Codeword1 and Codeword2 are different. Thus, the hamming distance is greater than 0.\line Codeword2 and Codeword3 are equal. Thus, the hamming distance is 0."/>
+    <replacement key="$memo$" value="This template demonstrates how the hamming distance between codewords can be calculated in CrypTool 2. The hamming distance is the amount of different bits between two codewords.\line\line Here, Codeword1 and Codeword2 are different. Thus, the hamming distance is greater than 0.\line Codeword2 and Codeword3 are equal. Thus, the hamming distance is 0."/>
   </replacements>
 
 </sample>

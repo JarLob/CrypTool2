@@ -23,7 +23,7 @@
     <replacement key="$StringEncoder$" value="String-Codierer"/>
     <replacement key="$StringDecoder$" value="String-Decodierer"/>
     <replacement key="$One time pad$" value="One-Time-Pad"/>
-	 <replacement key="$memo$" value="This sample demonstrates a one time pad (OTP). The plaintext and the pad being used are shown at the top left. The resulting ciphertext is shown at the top right.\line At the bottom there are two additional XOR operations to demonstrate, that you can generate any plaintext by choosing a different pad. This output may look correctly decrypted, but has nothing to do with the actual message."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Verwendung eines One-Time-Pads (OTP). Der Klartext und der verwendete OTP sind links oben zu sehen. Der verschlüsselte Geheimtext wird rechts oben dargestellt.\line Unten wird mit zwei weiteren XOR-Verknüpfungen gezeigt, dass man durch die Verwendung eines anderen OTPs jeden beliebigen Klartext aus dem Geheimtext generieren kann. Diese Klartexte scheinen dann ebenso korrekt entschlüsselt worden zu sein, haben aber mit der ursprünglichen Nachricht nichts zu tun."/>
  </replacements>
  <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext"/>

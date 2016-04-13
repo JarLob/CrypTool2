@@ -19,4 +19,23 @@
     <plugin name="PaillierKeyGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Voter$" value="Wähler"/>
+    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$KeyGenerator$" value="Schlüsselgenerator"/>
+    <replacement key="$Encrypt$" value="Verschlüsselung"/>
+    <replacement key="$Decrypt$" value="Entschlüsselung"/>
+    <replacement key="$Add$" value="Addition"/>
+    <replacement key="$Voting Result$" value="Wahlergebnis"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Voter$" value="Voter"/>
+    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$KeyGenerator$" value="KeyGenerator"/>
+    <replacement key="$Encrypt$" value="Encrypt"/>
+    <replacement key="$Decrypt$" value="Decrypt"/>
+    <replacement key="$Add$" value="Add"/>
+    <replacement key="$Voting Result$" value="Voting Result"/>
+  </replacements>
+
 </sample>

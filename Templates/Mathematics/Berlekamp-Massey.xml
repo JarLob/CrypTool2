@@ -21,7 +21,7 @@
     <replacement key="$Input Sequence$" value="Eingabe-Sequenz"/>
     <replacement key="$Minimal Length$" value="Minimale Länge"/>
     <replacement key="$Feedback Polynomial$" value="Feedback-Polynom"/>
-	 <replacement key="$memo$" value="The Berlekamp-Massey algorithm is an algorithm that will find the shortest linear feedback shift register (LFSR) for a given binary output sequence. The algorithm will also find the minimal polynomial of a linearly recurrent sequence in an arbitrary field.\line\line http://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm\line http://de.wikipedia.org/wiki/Berlekamp-Massey-Algorithmus\line\line http://www.informationsuebertragung.ch/indexAlgorithmen.html"/>
+	 <replacement key="$memo$" value="Der Berlekamp-Massey-Algorithmus ist ein Algorithmus, der für eine gegebene binäre Ausgabesequenz das kürzeste linear rückgekoppelte Schieberegister findet, das diese generiert. Der Algorithmus findet auch das Minimalpolynom einer linearen rekursiven Folge in einem beliebigen Körper.\line\line http://en.wikipedia.org/wiki/Berlekamp%E2%80%93Massey_algorithm\line http://de.wikipedia.org/wiki/Berlekamp-Massey-Algorithmus\line\line http://www.informationsuebertragung.ch/indexAlgorithmen.html"/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Input Sequence$" value="Input Sequence"/>

@@ -30,8 +30,8 @@
     <replacement key="$Length placeholder$" value="Platzhalter Länge"/>
     <replacement key="$Payload placeholder$" value="Platzhalter Inhalt"/>
     <replacement key="$String Encoder$" value="String-Kodierer"/>
-    <replacement key="$HTTP header$" value="HTTP header"/>
-	 <replacement key="$memo$" value="\fs24 {\fs30\b Simple Webserver}\line This template demonstrates, how you can build a simple webserver with CrypTool 2.0.\line\line The template listens on port 81. If you use your web browser to go on\line {\fs28\b http://localhost:81/}\line this server will answer with a nice html page containing the CT2 logo (embedded picture).\line\line In &quot;Client request&quot; you can see the request of your browser, in &quot;Server response&quot; you can see what the webserver sent to the client."/>
+    <replacement key="$HTTP header$" value="HTTP-Header"/>
+	 <replacement key="$memo$" value="\fs24 {\fs30\b Einfacher Webserver}\line Diese Vorlage demonstriert, wie man einen einfachen Webserver mit CrypTool 2 bauen kann.\line\line Die Vorlage empfängt Anfragen auf Port 81. Wenn Sie mit Ihrem Webbrowser auf\line {\fs28\b http://localhost:81/}\line gehen, antwortet dieser Server mit einer kleinen HTML-Seite, die das CT2-Logo zeigt.\line\line In &quot;Client-Anfrage&quot; wird die Anfrage des Browsers angezeigt, in &quot;Server-Antwort&quot; die Antwort des Webservers an den Client."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Network Sender$" value="Network Sender"/>
@@ -46,7 +46,7 @@
     <replacement key="$Payload placeholder$" value="Payload placeholder"/>
     <replacement key="$String Encoder$" value="String-Kodierer"/>
     <replacement key="$HTTP header$" value="HTTP-Header"/>
-	 <replacement key="$memo$" value="\fs24 {\fs30\b Simple Webserver}\line This template demonstrates, how you can build a simple webserver with CrypTool 2.0.\line\line The template listens on port 81. If you use your web browser to go on\line {\fs28\b http://localhost:81/}\line this server will answer with a nice html page containing the CT2 logo (embedded picture).\line\line In &quot;Client request&quot; you can see the request of your browser, in &quot;Server response&quot; you can see what the webserver sent to the client."/>
+	 <replacement key="$memo$" value="\fs24 {\fs30\b Simple Webserver}\line This template demonstrates, how you can build a simple webserver with CrypTool 2.\line\line The template listens on port 81. If you use your web browser to go on\line {\fs28\b http://localhost:81/}\line this server will answer with a nice html page containing the CT2 logo (embedded picture).\line\line In &quot;Client request&quot; you can see the request of your browser, in &quot;Server response&quot; you can see what the webserver sent to the client."/>
   </replacements>
 
 </sample>

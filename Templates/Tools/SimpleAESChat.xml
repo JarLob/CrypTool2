@@ -27,7 +27,7 @@
     <replacement key="$Destination IP$" value="Ziel-IP"/>
     <replacement key="$Converter$" value="Konvertierer"/>
     <replacement key="$Received decrypted message$" value="Entschlüsselte empfangene Nachricht"/>
-	 <replacement key="$memo$" value="This sample demonstrates the usage of the network sender and the network receiver.\line\line In the destination IP select an Destination IP adress where you want the message to be delivered.\line\line If you use two cryptool 2 instances and the same secret key you may send an AES 256 encrypted message from one PC to the other one."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Verwendung der Komponenten Netzwerk-Sender und Netzwerk-Empfänger.\line\line In der Ziel-IP wird die IP-Adresse eingegeben, an die die Nachricht geschickt werden soll.\line\line Wenn diese Vorlage in CrypTool 2 auf zwei Rechnern läuft und beide den selben geheimen Schlüssel haben, können mit AES-256 verschlüsselte Nachrichten zwischen den Rechnern ausgetauscht werden."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Message to send$" value="Message to send"/>
@@ -37,7 +37,7 @@
     <replacement key="$Destination IP$" value="Destination IP"/>
     <replacement key="$Converter$" value="Converter"/>
     <replacement key="$Received decrypted message$" value="Received decrypted message"/>
-	 <replacement key="$memo$" value="This sample demonstrates the usage of the network sender and the network receiver.\line\line In the destination IP select an Destination IP adress where you want the message to be delivered.\line\line If you use two cryptool 2 instances and the same secret key you may send an AES 256 encrypted message from one PC to the other one."/>
+	 <replacement key="$memo$" value="This sample demonstrates the usage of the network sender and the network receiver.\line\line In the destination IP enter the IP address you want the message to be delivered to.\line\line If you use two CrypTool 2 instances and the same secret key, you may send an AES 256 encrypted message from one PC to the other."/>
   </replacements>
 
 </sample>

@@ -18,4 +18,23 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RSA-Kryptosystem" /></descri
     <plugin name="RSA" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$StringEncoder$" value="String-Codierer"/>
+    <replacement key="$StringDecoder$" value="String-Decodierer"/>
+    <replacement key="$RSA Decryption$" value="RSA-Entschlüsselung"/>
+    <replacement key="$Decrypted Number$" value="Entschlüsselte Zahl"/>
+    <replacement key="$Encrypted Number$" value="Verschlüsselte Zahl"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$StringEncoder$" value="StringEncoder"/>
+    <replacement key="$StringDecoder$" value="StringDecoder"/>
+    <replacement key="$RSA Decryption$" value="RSA Decryption"/>
+    <replacement key="$Decrypted Number$" value="Decrypted Number"/>
+    <replacement key="$Encrypted Number$" value="Encrypted Number"/>
+  </replacements>
+
 </sample>

@@ -20,7 +20,7 @@
     <replacement key="$Number$" value="Zahl"/>
     <replacement key="$GNFS$" value="Allgemeines Zahlkörpersieb (GNFS)"/>
     <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile"/>
-	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the GNFS component.\line\line The default number 28810...35453 is taken from &quot;Beginners Guide to NFS factoring using GGNFS and MSIEVE&quot;.\line\line Numbers can also be entered as a mathematical expression, e.g. (2^304-1)/2.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3.\line\line The GNFS component uses a multi-threaded MSIEVE version."/>
+	 <replacement key="$memo$" value="Geben Sie oben die Zahl ein, die nach Start des Arbeitsbereiches faktorisiert werden soll. Das Ergebnis wird am Ausgang der GNFS-Komponente ausgegeben und in der Textausgabe-Komponente angezeigt.\line\line Die voreingestellte Zahl 28810...35453 ist dem &quot;Beginners Guide to NFS factoring using GGNFS and MSIEVE&quot; entnommen.\line\line Zahlen können auch als mathematischer Ausdruck eingegeben werden, z.B. (2^304-1)/2.\line Wenn der Wert des mathematischen Ausdruckes ein Bruch ist, wird nur der ganzzahlige Anteil verwendet, z.B. (2^3-1)/2 = 7 / 2 = 3.\line\line Die GNFS-Komponente verwendet eine multithread-fähige Version von MSIEVE."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Number$" value="Number"/>

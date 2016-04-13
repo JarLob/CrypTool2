@@ -29,7 +29,7 @@ wurde.</description>
     <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
     <replacement key="$Image Processor$" value="Bildbearbeitung"/>
     <replacement key="$Picture Output$" value="Bildausgabe"/>
-	 <replacement key="$memo$" value="This template demonstrates the robustness of the watermark. At the very right you can see the image, manipulated (grayscale) by the &quot;Image processor&quot;. Left to it you can see the original image with the watermark added. As you can see, the component still manages to extract the watermark text from the manipulated image."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Robustheit des Wasserzeichens. Rechts ist das von der Komponente &quot;Bildbearbeitung&quot; manipulierte Bild zu sehen (Grauwerte). Links davon ist das Originalbild mit dem eingebetteten Wasserzeichen. Die Komponente kann den Text des Wasserzeichens vom manipulierten Bild immer noch extrahieren."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$File Input$" value="File Input"/>

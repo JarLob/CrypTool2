@@ -22,7 +22,7 @@
     <replacement key="$WordPatterns$" value="Wortmuster"/>
     <replacement key="$Dictionary$" value="Wörterbuch"/>
     <replacement key="$Found patterns$" value="Gefundene Muster"/>
-	 <replacement key="$memo$" value="This sample demonstrates the use of the WordPatterns component to find words which have the same pattern as an input word (search pattern). In this example, TREE has the pattern 1233 which is the same as the words ball, bass, bell etc.\line When starting the play mode, the wordlist will be processed once. After that, you can change the input word to obtain new results interactively without having to re-process the entire wordlist."/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert, wie mit der Wortmuster-Komponente Wörter gefunden werden können, die dasselbe Muster wie ein Eingabewort (Suchmuster) haben. In diesem Beispiel hat das Eingabewort TREE das Muster 1233, genauso wie die Worte ball, bass, bell etc.\line Wenn die Vorlage ausgeführt wird, wird die Wortliste von der Komponente geladen. Danach kann das Eingabewort interaktiv geändert werden, um neue Muster zu suchen, ohne dass die Wortliste neu geladen wird."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Search pattern$" value="Search pattern"/>

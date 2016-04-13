@@ -24,7 +24,7 @@
     <replacement key="$Gate$" value="Gatter"/>
     <replacement key="$Comparator$" value="Vergleicher"/>
     <replacement key="$Counter Output$" value="Ausgabe des Zählers"/>
-	 <replacement key="$memo$" value="This loop starts counting from the &quot;Initial Value&quot;. The counter stops at the &quot;Stop Value&quot;.\line This loop prevents the IncDec component to use CPU when the count is done by closing the gate with the input to that component."/>
+	 <replacement key="$memo$" value="Die Schleife wird mit dem &quot;Startwert&quot; initialisiert. Der Zähler endet, wenn der &quot;Stopwert&quot; erreicht wurde.\line Die IncDec-Komponente wird nach Erreichen des Stopwertes durch das Gatter blockiert, indem der Zählerwert nicht weitergegeben wird. Dadurch wird keine weitere CPU-Zeit durch die IncDec-Komponente verbraucht."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Initial Value$" value="Initial Value"/>

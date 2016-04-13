@@ -20,4 +20,25 @@
     <plugin name="PaillierKeyGenerator" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement key="$KeyGenerator$" value="Schlüsselgenerator"/>
+    <replacement key="$Encrypt$" value="Verschlüsselung"/>
+    <replacement key="$Decrypt$" value="Entschlüsselung"/>
+    <replacement key="$Decrypted Sum$" value="Entschlüsselte Summe"/>
+    <replacement key="$BooleanOutput$" value="Boolesche Ausgabe"/>
+    <replacement key="$Comparator$" value="Vergleicher"/>
+    <replacement key="$Add$" value="Addition"/>
+    <replacement key="$Summand$" value="Summand"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$KeyGenerator$" value="KeyGenerator"/>
+    <replacement key="$Encrypt$" value="Encrypt"/>
+    <replacement key="$Decrypt$" value="Decrypt"/>
+    <replacement key="$Decrypted Sum$" value="Decrypted Sum"/>
+    <replacement key="$BooleanOutput$" value="BooleanOutput"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+    <replacement key="$Add$" value="Add"/>
+    <replacement key="$Summand$" value="Summand"/>
+  </replacements>
+
 </sample>

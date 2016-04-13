@@ -17,11 +17,11 @@
   </relevantPlugins>
 
   <replacements lang="de">
-    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Input$" value="Eingabe"/>
     <replacement key="$Hash$" value="Hashwert"/>
   </replacements>
   <replacements lang="en">
-    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Input$" value="Input"/>
     <replacement key="$Hash$" value="Hash Value"/>
   </replacements>
 
