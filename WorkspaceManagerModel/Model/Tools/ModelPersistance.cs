@@ -81,30 +81,19 @@ namespace WorkspaceManager.Model
         public void HandleTemplateReplacement(string filename, WorkspaceModel workspacemodel)
         {
             string xmlFile = Path.Combine(Path.GetDirectoryName(filename), Path.GetFileNameWithoutExtension(filename) + ".xml");
+            if (!File.Exists(xmlFile)) return;
 
-            if (!File.Exists(xmlFile))
-            {
-                return;
-            }
-
-            var replacements = new Dictionary<string, string>();
             var xml = XElement.Load(xmlFile);
-            if (XMLHelper.GetGlobalizedElementFromXML(xml, "replacements") == null)
-            {
-                return;
-            }
-            foreach (var replacement in XMLHelper.GetGlobalizedElementFromXML(xml,"replacements").Elements())
-            {
-                replacements.Add(replacement.Attribute("key").Value, replacement.Attribute("value").Value);
-            }
+            if (XMLHelper.GetGlobalizedElementFromXML(xml, "replacements") == null) return;
+            
+            var replacements = XMLHelper.GetGlobalizedElementFromXML(xml, "replacements").Elements().ToDictionary(r => r.Attribute("key").Value, r => r.Attribute("value").Value);
 
             foreach (var plugin in workspacemodel.AllPluginModels)
             {
                 //Replace Names of components
-                if (replacements.ContainsKey(plugin.Name))
-                {
-                    plugin.Name = replacements[plugin.Name];
-                }
+                foreach (var key in replacements.Keys)
+                    plugin.Name = plugin.Name.Replace(key, replacements[key]);
+
                 //Replace text in TextInputs
                 if (plugin.PluginType.FullName.Equals("Cryptool.TextInput.TextInput"))
                 {
