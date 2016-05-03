@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ActionTPTooltip" xml:space="preserve">
-    <value>Method to be performed</value>
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Encrypt or decrypt?</value>
   </data>
-  <data name="Decrypt" xml:space="preserve">
+  <data name="ActionList2" xml:space="preserve">
     <value>Decryption</value>
   </data>
-  <data name="Encrypt" xml:space="preserve">
+  <data name="ActionList1" xml:space="preserve">
     <value>Encryption</value>
   </data>
-  <data name="Homophones" xml:space="preserve">
+  <data name="HomophonesCaption" xml:space="preserve">
     <value>Homophones table</value>
   </data>
   <data name="HomophonesTooltip" xml:space="preserve">
-    <value>This parameter contains 90 or 99 two digits numbers in the range of 10-99 or 01-99. These numbers are used during encryption and decryption. To each letter is assigned three or four numbers</value>
+    <value>This parameter contains 90 or 99 two-digit numbers in the range of 10-99 or 01-99. These numbers are used during encryption and decryption. To each letter are assigned three or four numbers.</value>
   </data>
-  <data name="input" xml:space="preserve">
+  <data name="InputCaption" xml:space="preserve">
     <value>Input</value>
   </data>
   <data name="InputTooltip" xml:space="preserve">
-    <value>If action "Encryption" is selected: Insert plaintext to be encrypted. If action "Decryption" is selected: Insert ciphertext to be decrypted</value>
+    <value>If action "Encryption" is selected, insert plaintext to be encrypted. If action "Decryption" is selected, insert ciphertext to be decrypted.</value>
   </data>
-  <data name="Keyword" xml:space="preserve">
+  <data name="KeywordCaption" xml:space="preserve">
     <value>Keyword</value>
   </data>
   <data name="KeywordTooltip" xml:space="preserve">
-    <value>This parameter can be any word, which must only be formed by letters taken from the ordered alphabet. This parameter is used to generate the random alphabet</value>
+    <value>The keyword must consist of letters of the given alphabet. It is used to generate the random alphabet.</value>
   </data>
-  <data name="OrderedAlphabet" xml:space="preserve">
+  <data name="OrderedAlphabetCaption" xml:space="preserve">
     <value>Ordered alphabet</value>
   </data>
   <data name="OrderedAlphabetTooltip" xml:space="preserve">
@@ -159,46 +159,55 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Spanish Strip Cipher</value>
   </data>
-  <data name="Position1" xml:space="preserve">
+  <data name="Position1Caption" xml:space="preserve">
     <value>Position random alphabet´s letter</value>
   </data>
   <data name="Position1Tooltip" xml:space="preserve">
     <value>The random alphabet will be shifted until the letter indicated by this parameter matches the ordered alphabet´s letter indicated by the parameter "on ordered alphabet´s letter"</value>
   </data>
-  <data name="Position2" xml:space="preserve">
+  <data name="Position2Caption" xml:space="preserve">
     <value>on ordered alphabet´s letter</value>
   </data>
   <data name="Position2Tooltip" xml:space="preserve">
-    <value>This parameter is used to shift the random alphabet </value>
+    <value>This parameter is used to shift the random alphabet.</value>
   </data>
-  <data name="UnorderedAlphabetPanel" xml:space="preserve">
+  <data name="UnorderedAlphabetPanelCaption" xml:space="preserve">
     <value>Random alphabet</value>
   </data>
   <data name="UnorderedAlphabetPanelTooltip" xml:space="preserve">
-    <value>Spanish alphabet  ordered randomly. The random order is defined by the Keyword.</value>
+    <value>Spanish alphabet ordered randomly. The random order is defined by the keyword.</value>
   </data>
-  <data name="HomophonesTables" xml:space="preserve">
-    <value>Homophones tables</value>
+  <data name="HomophonesTablesCaption" xml:space="preserve">
+    <value>Homophones table</value>
   </data>
   <data name="HomophonesTablesTooltip" xml:space="preserve">
-    <value>Please select an homophones table</value>
+    <value>Please select a homophones table.</value>
   </data>
-  <data name="Random" xml:space="preserve">
+  <data name="HomophonesTablesList1" xml:space="preserve">
     <value>Random homophones table</value>
   </data>
-  <data name="TableOne" xml:space="preserve">
+  <data name="HomophonesTablesList2" xml:space="preserve">
     <value>90 homophones (10-99)</value>
   </data>
-  <data name="TableTwo" xml:space="preserve">
+  <data name="HomophonesTablesList3" xml:space="preserve">
     <value>99 homophones (01-99)</value>
   </data>
-  <data name="Letters27" xml:space="preserve">
+  <data name="AlphabetsList1" xml:space="preserve">
     <value>Spanish alphabet (27 letters)</value>
   </data>
-  <data name="Letters29" xml:space="preserve">
+  <data name="AlphabetsList2" xml:space="preserve">
     <value>Spanish alphabet (29 letters - CH and LL included)</value>
   </data>
   <data name="AlphabetsTooltip" xml:space="preserve">
-    <value>Select an alphabet</value>
+    <value>Select an alphabet.</value>
+  </data>
+  <data name="ActionCaption" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="AlphabetsCaption" xml:space="preserve">
+    <value>Alphabet</value>
+  </data>
+  <data name="OutputCaption" xml:space="preserve">
+    <value>Output</value>
   </data>
 </root>
