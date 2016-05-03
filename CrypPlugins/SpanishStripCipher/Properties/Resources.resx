@@ -130,7 +130,7 @@
     <value>Homophones table</value>
   </data>
   <data name="HomophonesTooltip" xml:space="preserve">
-    <value>This parameter contains 90 or 99 two-digit numbers in the range of 10-99 or 01-99. These numbers are used during encryption and decryption. To each letter are assigned three or four numbers.</value>
+    <value>This parameter contains 90 or 99 two-digit numbers in the range of 10-99 or 01-99. These numbers are used during encryption and decryption. To each letter, three or four numbers are assigned.</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
     <value>Input</value>

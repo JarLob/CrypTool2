@@ -136,7 +136,7 @@
     <value>Eingabe</value>
   </data>
   <data name="InputTooltip" xml:space="preserve">
-    <value>Geben Sie den Klartext ein, falls die Aktion "Verschlüsselung" ausgewählt  wurde. Geben Sie den Geheimtext ein, falls die Aktion "Entschlüsselung" ausgewählt wurde.</value>
+    <value>Geben Sie den Klartext ein, falls die Aktion "Verschlüsselung" ausgewählt wurde. Geben Sie den Geheimtext ein, falls die Aktion "Entschlüsselung" ausgewählt wurde.</value>
   </data>
   <data name="KeywordCaption" xml:space="preserve">
     <value>Schlüsselwort</value>
