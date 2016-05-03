@@ -105,63 +105,49 @@ namespace FriedmanTest
 
         public void Execute()
         {
-            if (arrayInput != null)
+            if (arrayInput == null) return;
+
+            double Kp; //Kappa "language"
+
+            //Now we set the Kappa plain-text coefficient. Default is English.
+            switch (settings.Kappa)
             {
-                double Kp; //Kappa "language"
-				double cipherTextLength = 0; //n
-				double countDoubleCharacters = 0;
-                string ciphermode = "monoalphabetic/cleartext";
-
-				//Now we set the Kappa plain-text coefficient. Default is English.
-                switch (settings.Kappa)
-                {
-                    case 1: Kp = 0.0762; break;
-                    case 2: Kp = 0.0778; break;
-                    case 3: Kp = 0.0770; break;
-                    case 4: Kp = 0.0738; break;
-                    case 5: Kp = 0.0745; break;
-                    default: Kp = 0.0667; break;
-                }
-
-                ShowStatusBarMessage("Using IC = " + Kp.ToString() + " for analysis...", NotificationLevel.Debug);
-
-
-                if (arrayInput.Length < 2)
-                {
-                    // error, only one letter?
-                    ShowStatusBarMessage("Error - cannot analyze an array of a single letter.", NotificationLevel.Error);
-                    return;
-                }
-
-				for (int i = 0; i < arrayInput.Length; i++)
-				{
-					cipherTextLength += arrayInput[i];
-					countDoubleCharacters += (arrayInput[i] * (arrayInput[i] - 1));
-
-                    // show some progress
-                    ShowProgress(i, (arrayInput.Length + 1));
-				}
-
-                ShowStatusBarMessage(String.Format("Input analyzed: Got {0} different letters in a text of total length {1}.",arrayInput.Length,cipherTextLength), NotificationLevel.Debug);
-
-				kappaCiphertext = ((double)countDoubleCharacters / (double)(cipherTextLength * (cipherTextLength - 1)));
-                keyLength = (0.0377 * cipherTextLength) / ( (cipherTextLength - 1.0) * kappaCiphertext - (0.0385 * cipherTextLength) + 0.0762 );
-
-                if (Math.Abs(Kp - kappaCiphertext) > 0.01)
-                {
-                    ciphermode = "polyalphabetic";
-                }
-
-                stringOutput = String.Format("KeyLen = {0}\nIC_analyzed = {1}\nIC_provided = {2}\nMode = {3}", keyLength.ToString("0.00000"), kappaCiphertext.ToString("0.00000"), Kp,ciphermode);
-
-            
-                OnPropertyChanged("StringOutput");
-                OnPropertyChanged("KeyLength");
-                OnPropertyChanged("KappaCiphertext");
-                // final step of progress
-                ShowProgress(100, 100);
+                case 1: Kp = 0.0762; break;     // german
+                case 2: Kp = 0.0778; break;     // french
+                case 3: Kp = 0.0770; break;     // spanish
+                case 4: Kp = 0.0738; break;     // italian
+                case 5: Kp = 0.0745; break;     // portuguese
+                default: Kp = 0.0667; break;    // english
             }
 
+            ShowStatusBarMessage("Using IC = " + Kp.ToString() + " for analysis...", NotificationLevel.Debug);
+
+            if (arrayInput.Length < 2)
+            {
+                // error, only one letter?
+                ShowStatusBarMessage("Error - cannot analyze an array of a single letter.", NotificationLevel.Error);
+                return;
+            }
+            
+            double cipherTextLength = (double)arrayInput.Sum();
+            double countDoubleCharacters = arrayInput.Sum(i => (double)i * ((double)i - 1));
+
+            ShowStatusBarMessage(String.Format("Input analyzed: Got {0} different letters in a text of total length {1}.", arrayInput.Length, (int)cipherTextLength), NotificationLevel.Debug);
+
+            double Keqdist = 1.0 / 26;
+            kappaCiphertext = countDoubleCharacters / (cipherTextLength * (cipherTextLength - 1));
+            keyLength = ((Kp - Keqdist) * cipherTextLength) / ((cipherTextLength - 1) * kappaCiphertext - (Keqdist * cipherTextLength) + Kp);
+
+            string ciphermode = (Math.Abs(Kp - kappaCiphertext) > 0.01) ? "polyalphabetic" : "monoalphabetic/cleartext";
+
+            stringOutput = String.Format("KeyLen = {0}\r\nIC_analyzed = {1}\r\nIC_provided = {2}\r\nMode = {3}", keyLength.ToString("0.00000"), kappaCiphertext.ToString("0.00000"), Kp, ciphermode);
+
+            OnPropertyChanged("StringOutput");
+            OnPropertyChanged("KeyLength");
+            OnPropertyChanged("KappaCiphertext");
+
+            // final step of progress
+            ShowProgress(100, 100);
         }
 
         public void PostExecution()
