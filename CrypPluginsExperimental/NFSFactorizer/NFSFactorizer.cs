@@ -35,33 +35,40 @@ using System.Reflection;
 
 namespace Cryptool.Plugins.NFSFactorizer
 {
-    [Author("Queremendi", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("NFS Factorizer", "Subtract one number from another", "NFSFactorizer/userdoc.xml", new[] { "NFSFactorizer/images.png" })]
+    [Author("Inigo Querejeta", "i.querejeta.azurmendi@student.tue.nl", "Technical University of Eindhoven", "https://www.tue.nl/")]
+    [PluginInfo("NFS Factorizer", "Factoring numbers with, among other algorithms, the NFS.", "NFSFactorizer/DetailedDescription/userdoc.xml", new[] { "NFSFactorizer/images.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
 
     public class NFSFactorizer : ICrypComponent
     {
+        #region Variables
         private readonly string _directoryName;
         private BigInteger inputNumber;
         private BigInteger[] FactorArray;
         private string CoFactArray;
+        private string[] LogFileArray;
+        private string ecmtmp;
         private BigInteger InputNumber1 = 1;
 
         static Random rnd = new Random();
-        int logFileName = rnd.Next(1000, 5000);
+        string logFileName = rnd.Next(1000, 5000).ToString();
+        string siqsPath;
 
         private NFSFactorizerSettings settings = new NFSFactorizerSettings();
 
+
         public string cmndLine = "";
         public string redirectInfo = "";
+        public string verbosity = "";
+        public string timeLimit = "";
 
+        private int nfsStart = 0;
 
         string relationsNeeded = "";
         string relationsFound = "";
-        string relationsRatio = "";
-
-        // public string p = ""; Only need this if I actually do the ConvertToMPEG in another class. 
-        // public string cmdline = "";
+        Double relationsRatio;
+        DateTime start;
+        #endregion
 
         #region INotifyPropertyChanged Members
         public NFSFactorizer()
@@ -78,62 +85,12 @@ namespace Cryptool.Plugins.NFSFactorizer
             get { return Presentation as NFSFactorizerPresentation; }
         }
 
-        /*private void ExtractYAFU()
-        {
-            var mainDir = "..\\..\\CrypPluginsExperimental\\NFSFactorizer";
-            if (Directory.Exists(mainDir + "\\ggnfs-bin"))
-            {
-                Directory.Delete(mainDir + "\\ggnfs-bin", true);
-            }
-            if (Directory.Exists(mainDir + "\\yafu-1.34"))
-            {
-                Directory.Delete(mainDir + "\\yafu-1.34", true);
-            }
-            string zipPath = mainDir + "\\yafu-1.34.zip";
-            string zipPath1 = mainDir + "\\ggnfs-bin.zip";
-            ZipFile zipFile = new ZipFile(zipPath);
-            ZipFile zipFile1 = new ZipFile(zipPath1);
-            zipFile.ExtractAll(mainDir);
-            zipFile1.ExtractAll(mainDir);
-        }*/
-
 
         void settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "Details")
             {
                 Process.Start("notepad.exe", "docfile.txt");
-            }
-            if (e.PropertyName == "NmbrGen")
-            {
-                PreExecution();
-                nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = "The generated number will appear when you start factorization.";
-                }
-                , null);
-               
-                string bits = settings.Bits;
-                // SortOutputRedirection pr = new SortOutputRedirection();
-                // Error solving will be to add pr. if we go back with the SortOutputRedirection.
-                cmndLine = String.Format("/c yafu-x64.exe \"rsa({0})\" ",bits);
-                redirectInfo = "i";
-                ConvertToMPEG();
-                while (!redirectInfo.Contains("ans = ")) { }
-                string genNumb = redirectInfo;
-                InputNumber1 = BigInteger.Parse(genNumb.Between("ans = ", "\n"));
-                //cmndLine = "";
-                //redirectInfo = "";
-                
-                
-            }
-            else
-            {
-                nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    nfsFactQuickWatchPresentation.ComplementaryInfo.Content = "Manually entered number";
-                }
-                , null);
             }
         }
 
@@ -145,6 +102,7 @@ namespace Cryptool.Plugins.NFSFactorizer
         }
 
         #endregion
+
         #region Data Properties
 
         [PropertyInfo(Direction.InputData, "Input Number", "Enter the Number you want to Factorize")]
@@ -166,12 +124,12 @@ namespace Cryptool.Plugins.NFSFactorizer
                     this.inputNumber = InputNumber1;
                     FirePropertyChangedEvent("InputNumber");
                 }
-                
+
 
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "Output Factors", "Oh Geoff", true)]
+        [PropertyInfo(Direction.OutputData, "Output Factors", "Returns the list of factors", true)]
         public BigInteger[] Factors
         {
             get { return FactorArray; }
@@ -182,7 +140,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "Co-factor", "Non factored remainder", false)]
+        [PropertyInfo(Direction.OutputData, "Primality of factors", "Determines whether the factorization was successful into prime factors", false)]
         public string CoFact
         {
             get { return CoFactArray; }
@@ -192,7 +150,18 @@ namespace Cryptool.Plugins.NFSFactorizer
                 FirePropertyChangedEvent("CoFact");
             }
         }
-        
+
+        [PropertyInfo(Direction.OutputData, "log-file", "log-file", false)]
+        public string[] LogFile
+        {
+            get { return LogFileArray; }
+            set
+            {
+                LogFileArray = value;
+                FirePropertyChangedEvent("LogFile");
+            }
+        }
+
         #endregion
 
         #region IPlugin Members
@@ -210,57 +179,121 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         public void PreExecution()
         {
-            /*ExtractYAFU();*/
             nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 nfsFactQuickWatchPresentation.Details.Content = "";
-                nfsFactQuickWatchPresentation.primality.Content = "";
+                nfsFactQuickWatchPresentation.Primality.Content = "";
                 nfsFactQuickWatchPresentation.factorInfo.Content = "";
+                nfsFactQuickWatchPresentation.Algorithm.Content = "";
+                nfsFactQuickWatchPresentation.QSNFS7.Content = "";
+                nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - ";
+                nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra step - ";
+                nfsFactQuickWatchPresentation.QSNFS4.Content = "Number of Relations - ";
+                nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - ";
+                nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - ";
             }
                     , null);
+
         }
 
         public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (e.Data != null)
             {
-                redirectInfo += e.Data.ToString() + "\n";
+                ProgressChanged(0, 100);
+                redirectInfo += "\r\n" + e.Data.ToString();
                 nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    nfsFactQuickWatchPresentation.Details.Content += e.Data.ToString() + "\n";
+                    if (nfsStart == 0)
+                    {
+                        if (e.Data.StartsWith("ecm: "))
+                        {
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Content.ToString();
+                            nfsFactQuickWatchPresentation.Details.Content = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                        }
+                        else if (e.Data.Contains(" rels found: "))
+                        {
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Content.ToString();
+                            nfsFactQuickWatchPresentation.Details.Content = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                            relationsFound = e.Data.Before(" rels found: ");
+                            ProgressChanged(int.Parse(relationsFound) * 100 / int.Parse(relationsNeeded), 100);
+                            DateTime present = DateTime.Now;
+                            TimeSpan total = present.Subtract(start);
+                            double ratio = (total.TotalMilliseconds / 1000) / double.Parse(relationsFound);
+                            relationsRatio = Math.Abs((double.Parse(relationsNeeded) - double.Parse(relationsFound)) * ratio);
+                            nfsFactQuickWatchPresentation.QSNFS4.Content = "Number of relations - " + relationsFound;
+                            if (!(Math.Round(relationsRatio, 0).ToString() == "0"))
+                            {
+                                nfsFactQuickWatchPresentation.QSNFS7.Content = "ETA : " + Math.Round(relationsRatio, 0).ToString() + " seconds";
+                            }
+
+                        }
+                        else if (e.Data.StartsWith("==== post"))
+                            nfsStart = 1;
+                        else if (e.Data.StartsWith("==== sieve "))
+                            nfsStart = 1;
+                        else if (e.Data.Contains("==== sieving in progress ("))
+                        {
+                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            start = DateTime.Now;
+
+                            relationsNeeded = e.Data.Between("): ", " relations needed");
+                            nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Quadratic sieve";
+                            nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - N/A";
+                            nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - " + relationsNeeded + " relations needed";
+                        }
+                        else
+                        {
+                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                        }
+                        
+                    }
+                    else
+                    {
+                        if (e.Data.StartsWith("nfs: "))
+                        {
+                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                        }
+                        else if (e.Data.StartsWith("trial factoring"))
+                            nfsStart = 0;
+                        else if (e.Data.StartsWith("commencing Lanczos"))
+                        {
+                            nfsStart = 0;
+                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            nfsFactQuickWatchPresentation.QSNFS5.Content += "Algebra - Lanczos started";
+                        }
+                    }
+                    
+
+                    if (e.Data.Contains("N too big"))
+                    {
+                        CoFact = "N too big, choose another algorithm.";
+                    }
                     /*if (!e.Data.Contains("ctrl-c"))
                     {
-                        nfsFactQuickWatchPresentation.Details.Content += e.Data.ToString() + "\n";
+                        nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
                     }*/
                     if (e.Data.Contains("found prime") | e.Data.Contains("found prp"))
                     {
-                        nfsFactQuickWatchPresentation.algorithmFact.Content += e.Data.Before(": ") + "\n";
-                        //nfsFactQuickWatchPresentation.factorInfo.Content += e.Data.After(" = ") + "found with: " + e.Data.Before(": ") + "\n";
+                        nfsFactQuickWatchPresentation.Algorithm.Content += e.Data.Before(": ") + "\r\n";
+                        nfsFactQuickWatchPresentation.factorInfo.Content += e.Data.After("= ") + "\r\n";
                     }
-                    if (e.Data.Contains("==== sieving in progress ("))
-                    {
-                        relationsNeeded = e.Data.Between("): ", " relations needed");
-                        nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Quadratic sieve";
-                        nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - N/A";
-                        nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - " + relationsNeeded + " relations needed";
-                    }
-                    if (e.Data.Contains(" rels found: "))
-                    {
-                        relationsFound = e.Data.Before(" rels found: ");
-                        //relationsRatio = e.Data.Between(" partial, (", ".");
-                        nfsFactQuickWatchPresentation.QSNFS4.Content = "Number of relations - " + relationsFound;
-                        //BigInteger ETA = (BigInteger.Parse(relationsNeeded) - BigInteger.Parse(relationsFound)) / BigInteger.Parse(relationsRatio);
-
-                        //nfsFactQuickWatchPresentation.QSNFS7.Content = "ETA : " + ETA.ToString() + " seconds";
-                    }
+                    
+                    
                     if (e.Data.StartsWith("nfs: commencing nfs "))
                     {
+                        nfsStart = 1;
                         nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Number Field Sieve";
                         nfsFactQuickWatchPresentation.QSNFS7.Content = "Searching for a special form of the number";
-                        nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Started the search, will take a while";
+                    }
+                    if (e.Data.StartsWith("nfs: commencing polynomial search"))
+                    {
+                        nfsFactQuickWatchPresentation.QSNFS7.Content = "No special form found in the inputed number";
+                        nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Started, be patient.";
                     }
                     if (e.Data.StartsWith("nfs: commencing algebraic side"))
                     {
+                        nfsStart = 0;
                         nfsFactQuickWatchPresentation.QSNFS7.Content = "";
                         nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Completed";
                         nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Algebraic side lattice sieving";
@@ -284,7 +317,7 @@ namespace Cryptool.Plugins.NFSFactorizer
                         nfsFactQuickWatchPresentation.QSNFS7.Content = "Completed";
                     }
 
-                    
+
                     nfsFactQuickWatchPresentation.Details.ScrollToBottom();
                 }
                     , null);
@@ -295,7 +328,6 @@ namespace Cryptool.Plugins.NFSFactorizer
         public void ConvertToMPEG()
         {
             Process cmd = new Process();
-            //NFSFactorizer n = new NFSFactorizer();
 
             cmd.StartInfo.FileName = "cmd.exe";
             cmd.StartInfo.RedirectStandardInput = true;
@@ -313,7 +345,11 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         public void Execute()
         {
-            ProgressChanged(0, 1);
+            ProgressChanged(0, 100);
+            siqsPath = Path.Combine(_directoryName, "siqs.dat");
+            if (File.Exists(siqsPath))
+                File.Delete(siqsPath);
+            logFileName = Path.Combine(_directoryName, rnd.Next(1000, 5000).ToString());
             if (InputNumber <= 0)
             {
                 FireOnGuiLogNotificationOccuredEventError("Input must be a natural number > 0");
@@ -329,6 +365,8 @@ namespace Cryptool.Plugins.NFSFactorizer
                 case 0:
                     method = "siqs";
                     Choice = "Quadratic Sieve";
+                    if (settings.TimeLimit)
+                        option += " -siqsT " + settings.Seconds;
                     break;
                 case 1:
                     method = "smallmpqs";
@@ -337,6 +375,9 @@ namespace Cryptool.Plugins.NFSFactorizer
                 case 2:
                     method = "nfs";
                     Choice = "Number Field Sieve";
+                    option = " -v";
+                    if (settings.TimeLimit)
+                        option += " -ggnfsT " + settings.Seconds;
                     break;
                 case 3:
                     method = "squfof";
@@ -369,139 +410,143 @@ namespace Cryptool.Plugins.NFSFactorizer
                     SecondArg = "," + settings.MaxIt;
                     break;
                 case 10:
-                    method = "snfs";
                     Choice = "Special number field Sieve";
+                    if (settings.knownFactor)
+                    {
+                        method = "snfs";
+                        SecondArg = "," + settings.Factor;
+                        option = " -v";
+                    }
+                    else
+                    {
+                        method = "nfs";
+                        option = " -v";
+                    }
+                    if (settings.TimeLimit)
+                        option += " -ggnfsT " + settings.Seconds;
+
                     break;
                 case 11:
                     Choice = "different algorithms";
                     method = "factor";
-                    if (settings.NoECM)
-                        option = "-noecm -R";
+                    if (settings.Plan == 0)
+                        option = "-plan none -R -v";
+                    else if (settings.Plan == 1)
+                        option = "-plan noecm -R -v";
+                    else if (settings.Plan == 2)
+                        option = "-plan light -R -v";
+                    else if (settings.Plan == 3)
+                        option = "-plan normal -R -v";
                     else
-                        option = "-R";
+                        option = "-plan deep -R -v";
+                    if (settings.OneFactor)
+                        option += " -one";
                     break;
             }
 
             nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                nfsFactQuickWatchPresentation.NmbrToFactor.Content = inputNumber + " is a " + BigIntegerHelper.BitCount(inputNumber) + " bit number with " + inputNumber.ToString().Length + " decimal digits."; // probably too long.
+                nfsFactQuickWatchPresentation.NmbrToFactor.Content = inputNumber;
+                nfsFactQuickWatchPresentation.ComplementaryInfo.Content = BigIntegerHelper.BitCount(inputNumber) + " bit number with " + inputNumber.ToString().Length + " decimal digits."; // probably too long.
                 nfsFactQuickWatchPresentation.SelMethod.Content = "Factorization with " + Choice + ".";
-                // nfsFactQuickWatchPresentation.SelMethod.Content = DirectoryHelper.DirectoryLocalTemp;
             }
             , null);
 
             if (settings.Action)
                 idle = "-p";
+            if (settings.Verbosity)
+                verbosity = "-v";
 
-            // SortOutputRedirection pr = new SortOutputRedirection();
-            // Error solving will be to add pr. if we go back to SortOutputRedirection.
-            
-            cmndLine = String.Format("/c yafu-x64.exe \"{0}( {1}{2} )\" -v -R -threads {3} {4} {5} -logfile {6}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle, logFileName);
+            cmndLine = String.Format("/c yafu-x64.exe \"{0}( {1}{2} )\" -R -threads {3} {4} {5} -logfile {6} {7}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle, logFileName, verbosity);
             redirectInfo = "";
             ConvertToMPEG();
-            
-            while (!redirectInfo.Contains("ans = ")) { }
-            /*{
-                if (redirectInfo != null)
-                {
-                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        nfsFactQuickWatchPresentation.Details.Content += redirectInfo;
-                        nfsFactQuickWatchPresentation.Details.ScrollToBottom();
-                    }
-                    , null);
-                }
 
-            }*/
+            while (!redirectInfo.Contains("ans = ")) { }
+
             string tmp = redirectInfo;
             string primality = "";
 
             string facts = tmp.Between("***factors found***", "ans = ");
-            string remaind = tmp.Between("ans = ", "\n");
+            string remaind = tmp.After("ans = ");
             BigInteger remainder = BigInteger.Parse(remaind);
             string GUIfactors = "";
             string cofact;
             string coFact = "1";
-            string response = " ";
             List<BigInteger> Facts = new List<BigInteger>();
             if (facts.Contains("***co-factor***"))
             {
+                ProgressChanged(2, 100);
                 facts = tmp.Between("***factors found***", "***co-factor***");
                 cofact = tmp.Between("***co-factor***", "ans = ");
-                foreach (var myString in cofact.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var myString in cofact.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
                     coFact = myString.After("= ");
-                if (BigInteger.Parse(coFact).IsProbablePrime())
-                {
-                    response = "co-Factor is prime, the number has been factored.";
-                }
-                else
-                {
-                    response = "co-Factor is not prime, please use another algorithm or augment the boundaries.";
-                }
-                CoFact = coFact + " " + response;
             }
             else if (remainder != 1)
             {
                 coFact = remainder.ToString();
-                if (BigInteger.Parse(coFact).IsProbablePrime())
+            }
+
+            foreach (var myString in facts.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                Facts.Add(BigInteger.Parse(myString.After("= ")));
+            }
+
+            if (coFact != "1" && !Facts.Contains(BigInteger.Parse(coFact)))
+            {
+                Facts.Add(BigInteger.Parse(coFact));
+            }
+            if (settings.Algs == 3)
+            {
+                Facts.Add(InputNumber/BigInteger.Parse(coFact));
+            }
+
+            Facts.Sort();
+            Factors = Facts.ToArray();
+            CoFact = "Factor are all prime. Factorization ended succesfully.";
+            foreach (var myString in Facts)
+            {
+                primality += myString.IsProbablePrime() + "\r\n";
+                if (!myString.IsProbablePrime())
                 {
-                    response = "co-Factor is prime, the number has been factored.";
+                    if (settings.TimeLimit)
+                        CoFact = "Time finished with no result";
+                    else
+                        CoFact = "At least one of the factors is not prime, please use another algorithm or augment the boundaries.";
+                }
+            }
+
+            foreach (BigInteger l in Facts)
+                GUIfactors = GUIfactors + l.ToString() + "\r\n";
+
+            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
+            ProgressChanged(100, 100);
+            nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                nfsFactQuickWatchPresentation.factorInfo.Content = GUIfactors;
+                nfsFactQuickWatchPresentation.Primality.Content = primality;
+                nfsFactQuickWatchPresentation.QSNFS7.Content = "Completed";
+                if (nfsFactQuickWatchPresentation.ShowDetailsButton.IsChecked == true)
+                {
+                    List<String> tempLog = new List<string>();
+                    string[] lines = File.ReadAllLines(logFileName);
+                    foreach (string line in lines)
+                    {
+                        tempLog.Add(line.After(", "));
+                    }
+                    LogFile = tempLog.ToArray();
                 }
                 else
                 {
-                    response = "co-Factor is not prime, please use another algorithm or augment the boundaries.";
-                }
-                CoFact = coFact + " " + response;
-            }
-            else
-            {
-                CoFact = "1";
-            }
-
-            foreach (var myString in facts.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                Facts.Add(BigInteger.Parse(myString.After("= ")));
-                primality += BigInteger.Parse(myString.After("= ")).IsProbablePrime() + "\n";
-            }
-                
-                
-            Facts.Sort();
-            Factors = Facts.ToArray();
-            foreach (BigInteger l in Facts)
-                GUIfactors = GUIfactors + l.ToString() + "\n";
-            if (coFact != "1")
-            {
-                GUIfactors = GUIfactors + coFact + "\n";
-                primality += BigInteger.Parse(coFact).IsProbablePrime() + "\n";
-            }
-            /*if (remainder != "1")
-            {
-                CoFact = remainder;
-                GUIfactors = GUIfactors + remainder + "\n";
-                primality += BigInteger.Parse(remainder).IsProbablePrime() + "\n";
-            }*/
-
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
-            ProgressChanged(1, 1);
-            nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                nfsFactQuickWatchPresentation.factorInfo.Content += GUIfactors;
-                nfsFactQuickWatchPresentation.primality.Content = primality;
-                if (nfsFactQuickWatchPresentation.ShowDetailsButton.IsChecked==true)
-                {
-                    Process.Start("notepad.exe", logFileName.ToString());
+                    string[] arr = new string[] { };
+                    LogFile = arr;
                 }
             }
             , null);
-            // cmndLine = "";
-            // redirectInfo = "";
         }
 
         public void PostExecution()
         {
-            /*Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\ggnfs-bin", true);
-            Directory.Delete("..\\..\\CrypPluginsExperimental\\NFSFactorizer\\yafu-1.34", true); */
-            File.Delete(logFileName.ToString());
+            File.Delete(logFileName);
         }
 
         public void Stop()
@@ -560,39 +605,6 @@ namespace Cryptool.Plugins.NFSFactorizer
             FireOnGuiLogNotificationOccuredEvent(message, NotificationLevel.Error);
         }
 
-        #endregion
+        #endregion // Good
     }
-    /*class SortOutputRedirection
-    {
-        public string cmndLine = "";
-        public string redirectInfo = "";
-        
-        public void ConvertToMPEG()
-        {
-            Process cmd = new Process();
-            //NFSFactorizer n = new NFSFactorizer();
-
-            cmd.StartInfo.FileName = "cmd.exe";
-            cmd.StartInfo.RedirectStandardInput = true;
-            cmd.StartInfo.RedirectStandardOutput = true;
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.StartInfo.Arguments = cmndLine;
-
-            cmd.OutputDataReceived += new DataReceivedEventHandler(p_OutputDataReceived);
-
-            cmd.Start();
-            cmd.BeginOutputReadLine();
-        }
-
-
-        public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                redirectInfo += e.Data.ToString() + "\n";
-            }
-        }
-    }*/
-
 }

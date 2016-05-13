@@ -60,7 +60,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0">
-                        <Label Content="FactorList / Primality" FontSize="11" HorizontalAlignment="Right" Foreground="White" Width="115" HorizontalContentAlignment="Center" Margin="0,0.2,16.6,-0.2" />
+                        <Label Content="Result" FontSize="11" HorizontalAlignment="Right" Foreground="White" Width="115" HorizontalContentAlignment="Center" Margin="0,0.2,16.6,-0.2" />
                     </Border>
                     <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="0.4,0,416.4,0.4">
                         <Grid.RowDefinitions>
@@ -79,8 +79,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Label Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="primality" HorizontalAlignment="Stretch" Margin="131,0,236.6,0.4"/>
-                        <Label Grid.Row="0" Background="#AFE2FFCE" Content="" Name="algorithmFact" HorizontalAlignment="Stretch" Margin="428,0,-0.2,0.4"/>
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="Primality" Height="150" HorizontalAlignment="Stretch" Margin="128,0,358.8,0.4"/>
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="Algorithm" Height="150" HorizontalAlignment="Stretch" Margin="306,0,-0.2,0.4"/>
                     </Grid>
 
                 </Grid>

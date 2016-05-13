@@ -114,7 +114,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="userdoc.xml" />
+    <Resource Include="DetailedDescription\userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images.png" />
