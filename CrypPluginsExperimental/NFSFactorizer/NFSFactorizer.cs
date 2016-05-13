@@ -74,7 +74,7 @@ namespace Cryptool.Plugins.NFSFactorizer
         public NFSFactorizer()
         {
             this.settings = new NFSFactorizerSettings();
-            settings.PropertyChanged += settings_PropertyChanged;
+            // settings.PropertyChanged += settings_PropertyChanged;
             Presentation = new NFSFactorizerPresentation();
             _directoryName = DirectoryHelper.DirectoryLocalTemp;
         }
@@ -84,17 +84,6 @@ namespace Cryptool.Plugins.NFSFactorizer
         {
             get { return Presentation as NFSFactorizerPresentation; }
         }
-
-
-        void settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Details")
-            {
-                Process.Start("notepad.exe", "docfile.txt");
-            }
-        }
-
-
 
         private void FirePropertyChangedEvent(string propertyName)
         {

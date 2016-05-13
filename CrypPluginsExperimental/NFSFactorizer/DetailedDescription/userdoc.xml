@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">   
+	The Number Field Sieve (NFS) is a modern integer factorization algorithm. For numbers above 95 decimal digits, the NFS is the fastest know algorithm. The NFS algorithm can be divided in two types, General NFS (GNFS) and Special NFS (SNFS).
+	The first takes any number as input, while the second only accepts special forms, which will be discussed later. 
+	
+	<section headline="Complexity">
+	  The running time of the GNFS for number n is:
+	  $$\exp((\sqrt{64/9}{3}+o(1))(\ln n)^{1/3}(\ln \ln n)^{2/3}) $$
+	  while the running time of the SNFS:
+	  $$\exp((1+o(1))(32/9\log n)^{1/3}(\log \log n)^{2/3}) $$
+	</section>
+	<section headline="About this component">
+	  This component not only offers the possibility to factor numbers with the Number Field Sieve, but also with algorithms as Quadratic Sieve (QS), Elliptic Curve Method (ECM) or Pollards rho method among others. It is a wrapper of the C implementation YAFU (Yet Another Factoring Utility). 
+	  The executable is called upon each time a factorization is run. The output is then parsed to send it to the GUI. If you want to get further information about YAFU, please have a loot at <ref id="yafuSource"/> or <red id="yafuHome"/>
+	</section>
+</introduction>
+
+<usage lang="en">
+	This component has a BigNumber input. Which means that the input can be inserted in the form of a number to factor, or as an expression of the kind: $$b^n \pm 1$$.
+	The component has three outputs, one will be the list of the factors, another saying whether all factors are prime, and an optional third one, which opens the log file of the process. 
+	The main window of the GUI will give information on the process, and a summary of the two main algorithms of the plug-in, NFS and QS.
+	
+	It offers a wide choice of algorithms to factor with, together with an implementation where different algorithms are used in an optimized way chosen by the program itself. 
+	Each of these algorithms has different settings which will be available for the user in the window of the parameters. Most of the choice for the algorithms are straight forward to use, however, as mentioned before, the SNFS only works for specific types of numbers: 
+	<section headline="Forms of numbers for the SNFS">
+	  The SNFS can be used if the number introduced is of the form $$k*b^n+c$$ such as:
+		- Cunningham numbers 					$$(b^n\pm 1 with b=2,3,5,6,7,10,11,12)$$
+		- Brent Forms							$$(b^n\pm 1, where 13\leq b \leq 99)$$
+		- Odd perfect numbers					$$(b^n -1, b>99)$$
+		- Generalized Cullen numbers			$$(a*b^a \pm 1)$$
+		- Homogeneous Cunningham numbers 		$$(a^n \pm b^n, where a,b\leq 12 and \gcd(a,b) ==1)$$
+		- XYYXF numbers							$$(x^y+y^x, where 1\leq y\leq x\leq 151)$$
+	  Note that for large b, cases with $$k>1$$ or abs(c)>1 may not be deteced.
+	  
+	  If none of these are found, the algorithm will automatically be switched to the NFS.
+	</section>
+</usage>
+  <presentation lang="en">
+	The presentation of this plug-in offers a list of the factors, together with its primality and a window with the process of the algorithm in question. For the NFS and QS there is an extra window where the sections of Polynomial Selection, Sieving and Algebra step will be summarized. 
+	For more information on these algorithms have a look at <ref id="NFSWiki"/> and <ref id="QSWiki" />. For more detailed information on NFS and QS, together with a description of all other algorithms available in the plug-in, have a look at the following master thesis (here I am planning in adding the reference of my thesis).
+	In main window of the GUI, the user has the option of cliquing a button which will open the log file of the process once its finish (in the third output window).
+  </presentation>
+  <introduction lang="de-DE">    
+  </introduction>
+
+
+  <usage lang="de-DE">
+  </usage>
+  
+  
+  
+  <presentation lang="de-DE">
+  </presentation>
+  
+  <references>
+    <linkReference id ="yafuSource">
+	  <link url="https://sourceforge.net/projects/yafu/" lang="en" />
+	  <caption lang="en"> YAFU SourceForge page </caption>
+	</linkReference>
+	<linkReference id ="yafuHome">
+	  <link url = "https://sites.google.com/site/bbuhrow/" lang="en" />
+	  <caption lang="en">YAFU's homepage </caption>
+	</linkReference>
+	<linkReference id="NFSWiki">
+	  <link url = "https://en.wikipedia.org/wiki/General_number_field_sieve" lang = "en" />
+	  <caption lang="en"> NFS description </caption>
+	</linkReference>
+	<linkReference id="QSWiki">
+	  <link url = "https://en.wikipedia.org/wiki/Quadratic_sieve" lang="en" />
+	  <caption lang="en"> QS description </caption>
+	</linkReference>
+  </references>
+</documentation>
