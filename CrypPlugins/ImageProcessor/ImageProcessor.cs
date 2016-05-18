@@ -34,7 +34,7 @@ using Emgu.CV.Structure;
 namespace Cryptool.Plugins.ImageProcessor
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    [PluginInfo("ImageProcessor.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
+    [PluginInfo("Cryptool.Plugins.ImageProcessor.Properties.Resources", "PluginCaption", "PluginTooltip", "ImageProcessor/userdoc.xml", new[] { "ImageProcessor/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ImageProcessor : ICrypComponent
     {
