@@ -325,4 +325,7 @@
   <data name="OpenCLDevice" xml:space="preserve">
     <value>OpenCL device:</value>
   </data>
+  <data name="WritePerformanceLog" xml:space="preserve">
+    <value>Write Performance Log</value>
+  </data>
 </root>

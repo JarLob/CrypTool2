@@ -1,17 +1,19 @@
-using System; 
-using System.Collections.Generic; 
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Numerics; 
+using System.Numerics;
 using System.Threading.Tasks;
-using System.Timers; 
+using System.Timers;
+using System.Windows.Shapes;
 using CrypCloud.Core;
 using Cryptool.PluginBase;
-using Cryptool.PluginBase.Control; 
+using Cryptool.PluginBase.Control;
 using KeySearcher.CrypCloud;
-using KeySearcher.CrypCloud.statistics; 
+using KeySearcher.CrypCloud.statistics;
 using KeySearcherPresentation.Controls;
 using voluntLib.common;
-using voluntLib.common.eventArgs; 
+using voluntLib.common.eventArgs;
 using Timer = System.Timers.Timer;
 
 namespace KeySearcher
@@ -19,6 +21,7 @@ namespace KeySearcher
     internal class CloudKeySearcher 
     {
         public int UpdateInterval = 2000;
+        private readonly string LogfilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud");
 
         private readonly KeySearcher keySearcher;
         private readonly CalculationTemplate calculationTemplate;
@@ -30,11 +33,11 @@ namespace KeySearcher
         private readonly SpeedStatistics localSpeedStatistics = new SpeedStatistics(5);
 
         private Timer updateTimer;
+        private StreamWriter Logfile = null;
 
         public CloudKeySearcher(JobDataContainer jobDataContainer, KeyPattern.KeyPattern pattern, P2PQuickWatchPresentation presentation, KeySearcher keySearcher)
         {
-            this.keySearcher = keySearcher;
-
+            this.keySearcher = keySearcher;            
 
             jobId = jobDataContainer.JobId;
             calculationTemplate = new CalculationTemplate(jobDataContainer, pattern, SortAscending(), keySearcher, CrypCloudCore.Instance.EnableOpenCL);
@@ -81,6 +84,19 @@ namespace KeySearcher
                 viewModel.UpdateGlobalSpeed(globalApproximateKeysPerSecond);
                 viewModel.UpdateLocalSpeed(localApproximateKeysPerSecond);
             });
+
+            if (CrypCloudCore.Instance.WritePerformanceLog)
+            {
+                //Logfile.WriteLine("timestamp;localspeed;globalspeed;finishedlocalchunks;abortedlocalchunks;finishedglobalchunks;globalprocess")
+                Logfile.WriteLine("{0};{1};{2};{3};{4};{5}",DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss:ffff"),
+                    localApproximateKeysPerSecond,
+                    globalApproximateKeysPerSecond,
+                    viewModel.LocalFinishedChunks,
+                    viewModel.LocalAbortChunks,
+                    viewModel.FinishedNumberOfBlocks,
+                    viewModel.GlobalProgress);
+                Logfile.Flush();
+            }
         }
 
         private void TaskProgress(object sender, TaskEventArgs e)
@@ -175,6 +191,12 @@ namespace KeySearcher
                 return;
             }
 
+            if (CrypCloudCore.Instance.WritePerformanceLog)
+            {
+                Logfile = new StreamWriter(System.IO.Path.Combine(LogfilePath, "logfile_" + jobId + ".csv").ToString(), true);
+                Logfile.WriteLine("timestamp;localspeed;globalspeed;finishedlocalchunks;abortedlocalchunks;finishedglobalchunks;globalprocess");
+            }
+
             CrypCloudCore.Instance.StartLocalCalculation(jobId, calculationTemplate);
 
             updateTimer = new Timer(UpdateInterval);
@@ -203,7 +225,7 @@ namespace KeySearcher
         {
 
             viewModel.CurrentChunks.Clear();
-            viewModel.OnPropertyChanged("CurrentChunks");
+            viewModel.OnPropertyChanged("CurrentChunks");                        
 
             try
             {
@@ -225,6 +247,12 @@ namespace KeySearcher
                 CrypCloudCore.Instance.StopLocalCalculation(jobId);
             }
             catch (Exception e) { }
+
+            if (CrypCloudCore.Instance.WritePerformanceLog && Logfile != null)
+            {
+                Logfile.Close();
+                Logfile = null;
+            }
         }
     }
 }

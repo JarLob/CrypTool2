@@ -684,5 +684,14 @@ namespace CrypCloud.Manager.Properties {
                 return ResourceManager.GetString("Tab_Caption", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Write Performance Log ähnelt.
+        /// </summary>
+        public static string WritePerformanceLog {
+            get {
+                return ResourceManager.GetString("WritePerformanceLog", resourceCulture);
+            }
+        }
     }
 }

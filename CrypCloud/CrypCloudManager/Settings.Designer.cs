@@ -82,5 +82,17 @@ namespace CrypCloud.Manager {
                 this["OpenCLDevice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool writePerformanceLog {
+            get {
+                return ((bool)(this["writePerformanceLog"]));
+            }
+            set {
+                this["writePerformanceLog"] = value;
+            }
+        }
     }
 }

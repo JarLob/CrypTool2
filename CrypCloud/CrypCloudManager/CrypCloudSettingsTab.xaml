@@ -13,12 +13,13 @@
                         <ColumnDefinition Width="200" />
                         <ColumnDefinition Width="47.2" />
                         <ColumnDefinition Width="104.2" />
-                        <ColumnDefinition Width="48.6"/>
+                        <ColumnDefinition Width="48.6"/>                        
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15" />
                         <RowDefinition Height="15" />
                         <RowDefinition Height="30" />
+                        <RowDefinition Height="25" />
                         <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Content="{Loc AmountOfWorker_Settings}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2,-1,2,23.8" />
@@ -31,6 +32,10 @@
 
                     <Label Grid.Column="0" Grid.Row="2" Content="{Loc OpenCLDevice}" HorizontalAlignment="Stretch" VerticalAlignment="Center"  FontSize="12" Height="30" Margin="2,23.8,2,-2.6" Grid.RowSpan="2" />
                     <ComboBox Name="OpenCLDevice"  Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" Margin="0.2,29.8,-96.8,1.2" SelectionChanged="OpenCLDevice_SelectionChanged" Grid.RowSpan="2"/>
+
+                    <Label Grid.Column="0" Grid.Row="4" Content="{Loc WritePerformanceLog}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"/>
+                    <CheckBox Grid.Column="1" Grid.Row="4" Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>
+
                 </Grid>
             </StackPanel>
         </Grid>
