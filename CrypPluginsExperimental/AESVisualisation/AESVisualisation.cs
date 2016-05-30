@@ -39,6 +39,7 @@ namespace Cryptool.Plugins.AESVisualisation
         private readonly AESVisualisationSettings settings = new AESVisualisationSettings();
         private byte[] text;
         private byte[] key;
+        private byte[][] keyList = new byte[11][];
         private string output =  "ASDDASF";
         private byte[][] sBox = new byte[16][];
         private int action = 1;
@@ -137,24 +138,30 @@ namespace Cryptool.Plugins.AESVisualisation
             OutputStream = outputStreamWriter;
             OnPropertyChanged("OutputStream");
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            states[0] = arrangeText(text);
-            key = arrangeText(key);
+            byte[] tempState = arrangeText(text);
+            keyList[0] = arrangeText(key);
+            states[0] = addKey(tempState, keyList[0]);
+            pres.tempState = tempState;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.setSBox();
+            }, null);
+            expandKey();
             setStates();
+            roundNumber = 1;
             pres.states = states;
-            pres.key = key;
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setSBox();
-            }, null);
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.setUpSubByte(states);
-            }, null);
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.round1Button.Background = Brushes.Aqua;
-            }, null);            
-            pres.actionMethod();
+            pres.keyList = keyList;
+            //pres.keyExpansion();
+            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            //{
+            //    pres.setUpSubByte(states);
+            //}, null);
+            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            //{
+            //    pres.round1Button.Background = Brushes.Aqua;
+            //}, null);
+            //pres.actionMethod();
+            pres.exectue();
             outputStreamWriter.Write(states[39]);
             outputStreamWriter.Close();
             buttonNextClickedEvent = pres.buttonNextClickedEvent;
@@ -173,6 +180,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
+            pres.buttonNextClickedEvent.Reset();
         }
 
         /// <summary>
@@ -426,13 +434,14 @@ namespace Cryptool.Plugins.AESVisualisation
                     case 3:
                         temp = new byte[16];
                         result = new byte[16];
-                        result = addKey(states[x], key);
+                        result = addKey(states[x], keyList[roundNumber]);
                         x++;
                         states[x] = result;
                         if (x < 39)
                         {
                             y = 0;
                         }
+                        roundNumber++;
                         break;
                     default:
                         break;
@@ -1320,6 +1329,50 @@ namespace Cryptool.Plugins.AESVisualisation
             result[11] = input[14];
             result[15] = input[15];
             return result;
+        }
+
+        private void expandKey()
+        {
+            byte[] calc = new byte[4];
+            for(int x = 1; x < 11; x++)
+            {
+                byte[] roundConst = { Convert.ToByte(x), 0, 0, 0 };
+                byte[] prevKey = { keyList[x - 1][15], keyList[x - 1][3], keyList[x - 1][7], keyList[x - 1][11] };
+                byte a;
+                byte b;
+                int z = 0;
+                byte[] temp = new byte[16];
+                while (z < 4)
+                {
+                    calc[z] = pres.sBox[getSBoxXPosition(prevKey[z])][getSBoxYPosition(prevKey[z])];
+                    z++;
+                }
+                z = 0;
+                while(z < 4)
+                {
+                    prevKey[z] = (byte)(calc[z] ^ roundConst[z]);
+                    z++;
+                }
+                a = keyList[x - 1][0];
+                b = prevKey[0];
+                temp[0] = (byte)(a ^ b);
+                temp[4] = (byte)(keyList[x - 1][4] ^ prevKey[1]);
+                temp[8] = (byte)(keyList[x - 1][8] ^ prevKey[2]);
+                temp[12] = (byte)(keyList[x - 1][12] ^ prevKey[3]);
+                temp[1] = (byte)(temp[0] ^ keyList[x - 1][1]);
+                temp[5] = (byte)(temp[4] ^ keyList[x - 1][5]);
+                temp[9] = (byte)(temp[8] ^ keyList[x - 1][9]);
+                temp[13] = (byte)(temp[12] ^ keyList[x - 1][13]);
+                temp[2] = (byte)(temp[1] ^ keyList[x - 1][2]);
+                temp[6] = (byte)(temp[5] ^ keyList[x - 1][6]);
+                temp[10] = (byte)(temp[9] ^ keyList[x - 1][10]);
+                temp[14] = (byte)(temp[13] ^ keyList[x - 1][14]);
+                temp[3] = (byte)(temp[2] ^ keyList[x - 1][3]);
+                temp[7] = (byte)(temp[6] ^ keyList[x - 1][7]);
+                temp[11] = (byte)(temp[10] ^ keyList[x - 1][11]);
+                temp[15] = (byte)(temp[14] ^ keyList[x - 1][15]);
+                keyList[x] = temp;
+            }
         }
         #endregion
 

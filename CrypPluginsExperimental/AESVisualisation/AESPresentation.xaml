@@ -1471,7 +1471,7 @@
                 <TextBlock Name="sResultTextBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="subByteTransitionGrid" MinHeight="85" MinWidth="125" Visibility="Visible" Grid.Column="3" Margin="0,148,0,169" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Name="subByteTransitionGrid" MinHeight="85" MinWidth="125" Visibility="Hidden" Grid.Column="3" Margin="0,148,0,169" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1492,6 +1492,234 @@
             </Border>
         </Grid>
         <!--EndRegion-->
+        <!-- Region KeyExpansion-->
+        <Grid Name="expansionKeyGrid" Visibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxHeight="200" Margin="10,10,34,232">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Name="expansionKeyBorder1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock1" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder2" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock2" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder3" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock3" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder4" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock4" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder5" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock5" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder6" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock6" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder7" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock7" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder8" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock8" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder9" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock9" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder10" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock10" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder11" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock11" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder12" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock12" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder13" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock13" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder14" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock14" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder15" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock15" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder16" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock16" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionTransitionGrid" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxHeight="200" Margin="10,10,60,232" Grid.ColumnSpan="3" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Name="expansionTransitionBorder1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock1" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder2" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransitionBlock2" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder3" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock3" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock4" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransitionBlock5" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock6" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder7" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock7" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder8" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransitionBlock8" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder9" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock9" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder10" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock10" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder11" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransitionBlock11" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransitionBorder12" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransitionBlock12" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionTransitionGrid1" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxHeight="200" Margin="10,237,12,5" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Name="expansionTransition1Border1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block1" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border2" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block2" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border3" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition1Block3" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block4" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block5" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition1Block6" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border7" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block7" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border8" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block8" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border9" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition1Block9" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border10" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block10" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border11" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition1Block11" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition1Border12" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition1Block12" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionResultGrid" Visibility="Hidden" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxHeight="200" Margin="10,237,20,5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Name="expansionResultBorder1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock1" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder2" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock2" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder3" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock3" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder4" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock4" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder5" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock5" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder6" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock6" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder7" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock7" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder8" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock8" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder9" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock9" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder10" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock10" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder11" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock11" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder12" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock12" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder13" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock13" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder14" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock14" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder15" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock15" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder16" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock16" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <TextBlock Name="expansionExplanation" Visibility="Hidden" FontSize="16" Text="First the last four bytes of the previous key are taken. Afterwards the last byte is placed at the front" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="29,10,16,254" Grid.ColumnSpan="4" Grid.Column="6"/>
+        <TextBlock Name="expansionExplanation1" Visibility="Hidden" FontSize="16" Text="Every byte is exchanged with the corresponding byte from the sBox" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="36,229,19,35" Grid.ColumnSpan="4" Grid.Column="2"/>
+        <TextBlock Name="expansionExplanation2" Visibility="Hidden" FontSize="16" Text="A round constant is added" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <TextBlock Name="expansionExplanation3" Visibility="Hidden" FontSize="16" Text="Adding the first four bytes of the previous key gives you the first four bytes of the next key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <TextBlock Name="expansionExplanation4" Visibility="Hidden" FontSize="16" Text="For column x of the new key you XOR column x from the previous key with column x-1 from the new key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
         <!--Region MixCol-->
         <Grid Name="mixColStateGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,10,20,239" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
             <Grid.RowDefinitions>
@@ -1617,7 +1845,7 @@
                 <TextBlock Name="mMatrixTextBlock16" TextAlignment="Center" Text="2"/>
             </Border>
         </Grid>
-        <Grid Name="mixColTransitionGrid" Visibility="Visible" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,214,68,35" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
+        <Grid Name="mixColTransitionGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,214,68,35" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
