@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">AES Visualization</title>
+  <summary lang="en">Usage of the <i>AES Visualization</i></summary>
+  <description lang="en"></description>
+  <keywords>advanced, Daemen, Rijmen, Rijndael, symmetric, nist, visualization</keywords>
+
+  <title lang="de">AES-Visualisierung</title>
+  <summary lang="de">Benutzung der <i>AES-Visualisierung</i></summary>
+  <description lang="de"></description>
+  <keywords lang="de">symmetrisch, Visualisierung</keywords>
+
+  <icon file="AES.png" />
+  <relevantPlugins>
+    <plugin name="AES" />
+  </relevantPlugins>
+
+</sample>
