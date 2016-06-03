@@ -259,7 +259,7 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup.
+        ///   Looks up a localized string similar to Cramer-Shoup.
         /// </summary>
         internal static string PluginCaption {
             get {
@@ -268,7 +268,7 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Key Generator.
+        ///   Looks up a localized string similar to Cramer-Shoup Key Generator.
         /// </summary>
         internal static string PluginKeyCaption {
             get {
@@ -277,7 +277,7 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup Key Generator.
+        ///   Looks up a localized string similar to Cramer-Shoup Key Generator.
         /// </summary>
         internal static string PluginKeyTooltip {
             get {
@@ -286,7 +286,7 @@ namespace CramerShoup.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cramer Shoup.
+        ///   Looks up a localized string similar to Cramer-Shoup.
         /// </summary>
         internal static string PluginTooltip {
             get {

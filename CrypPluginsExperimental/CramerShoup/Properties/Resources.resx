@@ -184,15 +184,15 @@
     <value>Generated public key</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Cramer Shoup</value>
+    <value>Cramer-Shoup</value>
   </data>
   <data name="PluginKeyCaption" xml:space="preserve">
-    <value>Cramer Shoup Key Generator</value>
+    <value>Cramer-Shoup Key Generator</value>
   </data>
   <data name="PluginKeyTooltip" xml:space="preserve">
-    <value>Cramer Shoup Key Generator</value>
+    <value>Cramer-Shoup Key Generator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Cramer Shoup</value>
+    <value>Cramer-Shoup</value>
   </data>
 </root>
