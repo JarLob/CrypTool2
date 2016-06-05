@@ -27,8 +27,8 @@
   <usage lang="en">
     Cramer-Shoup plugin is based on three components.
     The different components are needed to build a cryptosystem based on the KEM/DEM paradigma.
-    This paradigma is developed to create hybrid encryption scheme.
-    The asymmetric part are need to generate a random key and send to generator of public/private key.
+    This paradigma is developed to create a hybrid encryption scheme.
+    The asymmetric part are necessary to generate a random key and send to generator the public/private key.
     The key can be used for symmetric encryption scheme.
     <section headline="Cramer-Shoup Key Generator">
       The CS Key Generator is used to generate a public/private pair key based on a chosen elliptic curve.
@@ -44,34 +44,34 @@
     </section>
     <section headline="Cramer-Shoup Decaps">
       CS Decaps is used to extract the key from the ciphertext.
-      The hash function must same as in the encaps mode.
+      The hash function must be same as in the encaps mode.
     </section>
   </usage>
 
   <usage lang="de-DE">
     Das Cramer-Shoup Plugin ist nach dem KEM/DEM Hybrid Paradigma aufgebaut.
-    Dies Paradigma definiert eine Variante, wie man kombinierte Verschlüsselungssytem aufbauen kann.
-    KEM ist der asymmetrische Teil, dieser berechnet ein Schlüssel und den passende Chiffretext.
+    Dieses Paradigma definiert ein kombiniertes Verschlüsselungssystem.
+    KEM ist der asymmetrische Teil: Dieser berechnet ein Schlüssel und den passende Chiffretext.
     Anschließend lässt sich mit dem Chiffretext und dem geheimen Schlüssel der Schlüssel berechnen.
     DEM ist der symmetrische Teil, der mit Hilfe von dem Schlüssel Daten verschlüsseln kann.
     Das Cramer-Shoup Plugin besteht aus drei Komponenten.
     <section headline="Cramer-Shoup Key Generator">
-      Wählen Sie in den Einstellung der Komponente eine elliptische Kurve.
-      Die Ausgabe besteht aus dem geheime Schlüssel und öffentlich Schlüssel.
+      Wählen Sie in den Einstellungen der Komponente eine elliptische Kurve.
+      Die Ausgabe besteht aus dem geheimen Schlüssel und dem öffentlich Schlüssel.
       Der geheime Schlüssel wird für die Komponente Cramer-Shoup Decaps benötigt und der öffentliche Schlüssel wird für die Komponente Cramer-Shoup Encaps benötigt.
     </section>
     <newline/>
     <newline/>
     Die Komponente hat die zwei Betriebsarten "Encaps" und "Decaps", zwischen denen in den Einstellungen der Komponente umgeschaltet werden kann.
     <section headline="Encaps">
-      Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
-      Die Eingabe besteht nur aus dem öffentlich Schlüssel generiert in der Komponente Cramer-Shoup Key Generator.
-      Die Ausgabe besteht aus einem zufälligen Schlüssel und der Chiffretext, der benötigt wird in der Komponente Cramer-Shoup Decaps.
+      Wählen Sie in den Einstellungen der Komponente eine Hashfunktion.
+      Die Eingabe besteht nur aus dem öffentlichen Schlüssel (generiert in der Komponente Cramer-Shoup Key Generator).
+      Die Ausgabe besteht aus einem zufälligen Schlüssel und dem Geheimtext, der in der Komponente Cramer-Shoup Decaps benötigt wird.
     </section>
     <section headline="Decaps">
-      Wählen Sie in den Einstellung der Komponente eine Hashfunktion.
+      Wählen Sie in den Einstellungen der Komponente eine Hashfunktion.
       Die Hashfunktion muss mit der Hashfunktion der Komponente Cramer-Shoup Encaps übereinstimmen.
-      Die Eingabe besteht aus dem geheime Schlüssel und dem Chiffretext.
+      Als Eingabe werden der geheime Schlüssel und der Geheimtext benötigt.
       Die Ausgabe ist der generierte Schlüssel.
     </section>
   </usage>
