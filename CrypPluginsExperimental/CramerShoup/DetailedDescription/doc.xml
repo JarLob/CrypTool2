@@ -28,7 +28,7 @@
     Cramer-Shoup plugin is based on three components.
     The different components are needed to build a cryptosystem based on the KEM/DEM paradigma.
     This paradigma is developed to create a hybrid encryption scheme.
-    The asymmetric part are necessary to generate a random key and send to generator the public/private key.
+    The asymmetric part is necessary to generate a random key and to generate the public/private key pair.
     The key can be used for symmetric encryption scheme.
     <section headline="Cramer-Shoup Key Generator">
       The CS Key Generator is used to generate a public/private pair key based on a chosen elliptic curve.
@@ -44,7 +44,7 @@
     </section>
     <section headline="Cramer-Shoup Decaps">
       CS Decaps is used to extract the key from the ciphertext.
-      The hash function must be same as in the encaps mode.
+      The hash function must be the same as in the encaps mode.
     </section>
   </usage>
 
@@ -57,7 +57,7 @@
     Das Cramer-Shoup Plugin besteht aus drei Komponenten.
     <section headline="Cramer-Shoup Key Generator">
       Wählen Sie in den Einstellungen der Komponente eine elliptische Kurve.
-      Die Ausgabe besteht aus dem geheimen Schlüssel und dem öffentlich Schlüssel.
+      Die Ausgabe besteht aus dem geheimen und dem öffentlichen Schlüssel.
       Der geheime Schlüssel wird für die Komponente Cramer-Shoup Decaps benötigt und der öffentliche Schlüssel wird für die Komponente Cramer-Shoup Encaps benötigt.
     </section>
     <newline/>
