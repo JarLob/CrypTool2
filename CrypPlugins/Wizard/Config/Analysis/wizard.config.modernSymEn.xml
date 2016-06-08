@@ -228,12 +228,12 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
         <task lang="en">Here, you can see the DES analysis.</task>
         <task lang="de">Hier können Sie die DES-Analyse sehen.</task>
 
-        <presentation plugin="KeySearcher" width="50%" height="50%">
+        <presentation plugin="$KeySearcher$" width="50%" height="50%">
           <description lang="en">Analyser:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
-        <progressBar plugin="KeySearcher" >
+        <progressBar plugin="$KeySearcher$">
           <description lang="en">Progress:</description>
           <description lang="de">Fortschritt:</description>
         </progressBar>
