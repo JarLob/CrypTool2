@@ -166,24 +166,32 @@ namespace TextOutput
             try
             {
                 if (statusBarThread != null && statusBarThread.IsAlive)
+                {
                     statusBarThread.Abort();
+                }
+                statusBarThread = new Thread(() => setStatusBar_invoke());
+                statusBarThread.IsBackground = true;
+                statusBarThread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
+                statusBarThread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+                statusBarThread.Start();            
             }
             catch (Exception ex)
             {
             }
 
-            statusBarThread = new Thread(() => setStatusBar_invoke());
-            statusBarThread.IsBackground = true;
-            statusBarThread.CurrentCulture = Thread.CurrentThread.CurrentCulture;
-            statusBarThread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
-            statusBarThread.Start();
         }
 
         private void setStatusBar_invoke()
         {
             textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                setStatusBar_orig();
+                try
+                {
+                    setStatusBar_orig();
+                }
+                catch (Exception ex)
+                {
+                }
             }, null);
         }
 
