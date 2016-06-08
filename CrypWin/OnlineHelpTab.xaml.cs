@@ -68,9 +68,13 @@ namespace Cryptool.CrypWin
         }
 
         public static OnlineHelpTab GetSingleton(MainWindow mainWindow)
-        {
+        {            
             if (_singleton == null)
                 _singleton = new OnlineHelpTab(mainWindow);
+            //remove all event handlers from the singleton
+            //to avoid opening templates more than once
+            _singleton.OnOpenEditor = null;
+            _singleton.OnOpenTab = null;
             return _singleton;
         }
 
