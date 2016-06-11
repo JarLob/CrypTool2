@@ -124,8 +124,8 @@ namespace Cryptool.Plugins.AESVisualisation
         /// Called once when workflow execution starts.
         /// </summary>
         public void PreExecution()
-        {           
-           
+        {
+          
         }
 
         /// <summary>
@@ -140,27 +140,19 @@ namespace Cryptool.Plugins.AESVisualisation
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
             byte[] tempState = arrangeText(text);
             keyList[0] = arrangeText(key);
-            states[0] = addKey(tempState, keyList[0]);
+            states[0] = addKey(tempState, keyList[0]);           
             pres.tempState = tempState;
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 pres.setSBox();
+                pres.StartCanvas.Visibility = Visibility.Hidden;
+                pres.showButton();
             }, null);
             expandKey();
             setStates();
             roundNumber = 1;
             pres.states = states;
             pres.keyList = keyList;
-            //pres.keyExpansion();
-            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            //{
-            //    pres.setUpSubByte(states);
-            //}, null);
-            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            //{
-            //    pres.round1Button.Background = Brushes.Aqua;
-            //}, null);
-            //pres.actionMethod();
             pres.exectue();
             outputStreamWriter.Write(states[39]);
             outputStreamWriter.Close();
@@ -180,6 +172,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
+            pres.autostep = false;
             pres.buttonNextClickedEvent.Reset();
         }
 

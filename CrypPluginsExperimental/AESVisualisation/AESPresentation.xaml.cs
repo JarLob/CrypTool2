@@ -47,6 +47,7 @@ namespace AESVisualisation
             autostepSpeedSlider.IsEnabled = true;
             keyButton.Content = "Skip Expansion";
             buttonVisible();
+            hideButton();
             for (int x = 0; x < 13; x++)
             {
                 List<TextBlock> temp = new List<TextBlock>();
@@ -2815,14 +2816,10 @@ namespace AESVisualisation
                         tb.Text = "";
                     }
                     expansionResultGrid.Visibility = Visibility.Hidden;
-                    transition1Borders[0].Visibility = Visibility.Hidden;
-                    //transition1Borders[2].Visibility = Visibility.Hidden;
+                    transition1Borders[0].Visibility = Visibility.Hidden;                   
                     transition1Borders[3].Visibility = Visibility.Hidden;
-                    //transition1Borders[5].Visibility = Visibility.Hidden;
                     transition1Borders[6].Visibility = Visibility.Hidden;
-                    //transition1Borders[8].Visibility = Visibility.Hidden;
                     transition1Borders[9].Visibility = Visibility.Hidden;
-                    //transition1Borders[11].Visibility = Visibility.Hidden;
                     transitionBorders[1].Visibility = Visibility.Visible;
                     transitionBorders[4].Visibility = Visibility.Visible;
                     transitionBorders[7].Visibility = Visibility.Visible;
@@ -2900,6 +2897,7 @@ namespace AESVisualisation
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     autostep = false;
+                    expansionKeyGrid.Visibility = Visibility.Hidden;
                     keyButton.Content = "Key Expansion";
                     changeRoundButton();
                     setUpAddKey();
@@ -2927,6 +2925,44 @@ namespace AESVisualisation
                 mixColButton.Visibility = Visibility.Visible;
                 addKeyButton.Visibility = Visibility.Visible;
             }
+        }
+        public void hideButton()
+        {
+            autostepSpeedSlider.Visibility = Visibility.Hidden;
+            nextStepButton.Visibility = Visibility.Hidden;
+            playButton.Visibility = Visibility.Hidden;
+            prevStepButton.Visibility = Visibility.Hidden;
+            pauseButton.Visibility = Visibility.Hidden;
+            round1Button.Visibility = Visibility.Hidden;
+            round2Button.Visibility = Visibility.Hidden;
+            round3Button.Visibility = Visibility.Hidden;
+            round4Button.Visibility = Visibility.Hidden;
+            round5Button.Visibility = Visibility.Hidden;
+            round6Button.Visibility = Visibility.Hidden;
+            round7Button.Visibility = Visibility.Hidden;
+            round8Button.Visibility = Visibility.Hidden;
+            round9Button.Visibility = Visibility.Hidden;
+            round10Button.Visibility = Visibility.Hidden;
+            keyButton.Visibility = Visibility.Hidden; 
+        }
+        public void showButton()
+        {
+            autostepSpeedSlider.Visibility = Visibility.Visible;
+            nextStepButton.Visibility = Visibility.Visible;
+            playButton.Visibility = Visibility.Visible;
+            prevStepButton.Visibility = Visibility.Visible;
+            pauseButton.Visibility = Visibility.Visible;
+            round1Button.Visibility = Visibility.Visible;
+            round2Button.Visibility = Visibility.Visible;
+            round3Button.Visibility = Visibility.Visible;
+            round4Button.Visibility = Visibility.Visible;
+            round5Button.Visibility = Visibility.Visible;
+            round6Button.Visibility = Visibility.Visible;
+            round7Button.Visibility = Visibility.Visible;
+            round8Button.Visibility = Visibility.Visible;
+            round9Button.Visibility = Visibility.Visible;
+            round10Button.Visibility = Visibility.Visible;
+            keyButton.Visibility = Visibility.Visible;
         }
         #endregion
     }

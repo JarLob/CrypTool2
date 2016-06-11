@@ -6,6 +6,60 @@
              xmlns:local="clr-namespace:AESVisualisation"
              mc:Ignorable="d" 
              MinHeight="400" MinWidth="700" IsEnabled="True" Background="White">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle">
+                <Setter.Value>
+                    <Style>
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="2" SnapsToDevicePixels="True" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FFDDDDDD"/>
+            <Setter Property="BorderBrush" Value="#FF707070"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="True">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBEE6FD"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF3C7FB1"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+                            </Trigger>
+                            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                                <Setter Property="Background" TargetName="border" Value="#FFBCDDEE"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#FF245A83"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <!--<Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>-->
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>                                          
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20*" />
@@ -26,6 +80,9 @@
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="80*" />
         </Grid.ColumnDefinitions>
+        <Canvas Name="StartCanvas" Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="11" Visibility="Visible">
+            <Image Name="StartImage" Source="images/Start.png" Visibility="Visible" Width="569" Canvas.Left="73" Canvas.Top="9" Height="383"/>
+        </Canvas>
         <!-- Region Button -->
         <Button x:Name="keyButton" Content="Key Expansion" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="0" Click="keyButton_Click" Height="21"  />
         <Button x:Name="round1Button" Content="Round1" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="round1Button_Click" />
@@ -47,7 +104,7 @@
         <Button x:Name="mixColButton" Content="Mix Col" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="mixColButton_Click" Visibility="Visible" />
         <Button x:Name="addKeyButton" Content="Add Key" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="addKeyButton_Click" Visibility="Visible" />
         <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
-        <!-- EndRegion -->
+        <!-- EndRegion -->       
         <!-- Region ShiftRow -->
         <Grid Name="shiftRowGrid" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,121,32,121" Visibility="Hidden">
             <Grid.RowDefinitions>
@@ -125,10 +182,10 @@
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" Grid.Row="1" Name="border20" Visibility="Hidden" >
                 <TextBlock Text="" Name="textBlock20"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="2" Name="border21" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="2" Name="border21" Visibility="Hidden" Background="Yellow">
                 <TextBlock Text="" Name="textBlock21"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="2" Name="border22" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="2" Name="border22" Visibility="Hidden" Background="Yellow">
                 <TextBlock Text="" Name="textBlock22"  TextAlignment="Center"/>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.Row="2" Name="border23" Visibility="Hidden">
@@ -137,13 +194,13 @@
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="4" Grid.Row="2" Name="border24" Visibility="Hidden">
                 <TextBlock Text="" Name="textBlock24"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="3" Name="border25" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="3" Name="border25" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock25"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="3" Name="border26" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Grid.Row="3" Name="border26" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock26"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="3" Name="border27" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="3" Name="border27" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock27"  TextAlignment="Center"/>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.Row="3" Name="border28" Visibility="Hidden" >
@@ -152,19 +209,19 @@
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" Grid.Row="1" Name="border29" Visibility="Hidden" Background="Green">
                 <TextBlock Text="" Name="textBlock29"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" Grid.Row="2" Name="border30" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" Grid.Row="2" Name="border30" Visibility="Hidden" Background="Yellow">
                 <TextBlock Text="" Name="textBlock30"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" Grid.Row="2" Name="border31" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" Grid.Row="2" Name="border31" Visibility="Hidden" Background="Yellow">
                 <TextBlock Text="" Name="textBlock31"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="4" Grid.Row="3" Name="border32" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="4" Grid.Row="3" Name="border32" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock32" TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" Grid.Row="3" Name="border33" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="5" Grid.Row="3" Name="border33" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock33"  TextAlignment="Center"/>
             </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" Grid.Row="3" Name="border34" Visibility="Hidden" Background="Green">
+            <Border BorderBrush="Black" BorderThickness="1" Grid.Column="6" Grid.Row="3" Name="border34" Visibility="Hidden" Background="Aquamarine">
                 <TextBlock Text="" Name="textBlock34" TextAlignment="Center"/>
             </Border>
         </Grid>
@@ -326,7 +383,7 @@
                 <TextBlock Text="" Name="keyTextBlock38"  TextAlignment="Center"/>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" Name="keyBorder39">
-                <TextBlock Text="" Name="keyTextBlock39"  TextAlignment="Center" Margin="9"/>
+                <TextBlock Text="" Name="keyTextBlock39"  TextAlignment="Center"/>
             </Border>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.Row="1" Name="keyBorder40">
                 <TextBlock Text="" Name="keyTextBlock40"  TextAlignment="Center"/>
@@ -1720,6 +1777,7 @@
         <TextBlock Name="expansionExplanation2" Visibility="Hidden" FontSize="16" Text="A round constant is added" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
         <TextBlock Name="expansionExplanation3" Visibility="Hidden" FontSize="16" Text="Adding the first four bytes of the previous key gives you the first four bytes of the next key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
         <TextBlock Name="expansionExplanation4" Visibility="Hidden" FontSize="16" Text="For column x of the new key you XOR column x from the previous key with column x-1 from the new key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <!--EndRegion-->
         <!--Region MixCol-->
         <Grid Name="mixColStateGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,10,20,239" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
             <Grid.RowDefinitions>
