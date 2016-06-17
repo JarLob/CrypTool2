@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.Huffman
 
         public void Execute()
         {
-            if (InputBytes.Length == 0)
+            if (InputBytes==null || InputBytes.Length == 0)
             {
                 GuiLogMessage("No input bytes provided", NotificationLevel.Error);
                 return;
@@ -130,7 +130,7 @@ namespace Cryptool.Plugins.Huffman
                     ProgressChanged(7, 8);                    
 
                     // Fill code table in presentation view
-                    presentation.fillCodeTable(tree.getCodeTable(), histogram, decoded, outputBytes.Count());
+                    presentation.fillCodeTable(tree.getCodeTable(), histogram, inputBytes.Count(), outputBytes.Count());
                     ProgressChanged(8, 8);
                 }
                 // Thrown when there's less than two characters in the input
@@ -175,7 +175,7 @@ namespace Cryptool.Plugins.Huffman
 
                 // Fill code table in presentation view
                 tree.CreateCodeTable(histogram);
-                presentation.fillCodeTable(tree.getCodeTable(), histogram, decompressed, outputBytes.Count());
+                presentation.fillCodeTable(tree.getCodeTable(), histogram, outputBytes.Count(), inputBytes.Count());
                 ProgressChanged(8, 8);
             }
         }

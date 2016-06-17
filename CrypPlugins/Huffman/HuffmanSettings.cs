@@ -113,6 +113,8 @@ namespace Cryptool.Plugins.Huffman
 
         internal void SetVisibilityOfEncoding()
         {
+            if (TaskPaneAttributeChanged == null) return;
+
             switch (Presentation)
             {
                 case PresentationFormat.Text:
