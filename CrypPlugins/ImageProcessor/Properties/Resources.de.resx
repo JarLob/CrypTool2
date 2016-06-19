@@ -121,46 +121,49 @@
     <value>Aktion</value>
   </data>
   <data name="ActionList1" xml:space="preserve">
-    <value>Bild spiegeln</value>
+    <value>keine Aktion</value>
   </data>
   <data name="ActionList10" xml:space="preserve">
-    <value>Bild erzeugen</value>
+    <value>Bilder XOR-verknüpfen</value>
   </data>
   <data name="ActionList11" xml:space="preserve">
-    <value>Bild beschneiden</value>
+    <value>Bild erzeugen</value>
   </data>
   <data name="ActionList12" xml:space="preserve">
-    <value>XOR Grayscale-Bild</value>
+    <value>Bild beschneiden</value>
   </data>
   <data name="ActionList13" xml:space="preserve">
-    <value>Schwarz-Weiß</value>
+    <value>XOR Grayscale-Bild</value>
   </data>
   <data name="ActionList14" xml:space="preserve">
+    <value>Schwarz-Weiß</value>
+  </data>
+  <data name="ActionList15" xml:space="preserve">
     <value>Bildkontrast</value>
   </data>
   <data name="ActionList2" xml:space="preserve">
-    <value>Graustufen</value>
+    <value>Bild spiegeln</value>
   </data>
   <data name="ActionList3" xml:space="preserve">
-    <value>Bild glätten</value>
+    <value>Graustufen</value>
   </data>
   <data name="ActionList4" xml:space="preserve">
-    <value>Bildgröße ändern</value>
+    <value>Bild glätten</value>
   </data>
   <data name="ActionList5" xml:space="preserve">
-    <value>Bild rotieren</value>
+    <value>Bildgröße ändern</value>
   </data>
   <data name="ActionList6" xml:space="preserve">
-    <value>Bild invertieren</value>
+    <value>Bild rotieren</value>
   </data>
   <data name="ActionList7" xml:space="preserve">
-    <value>Bilder UND-verknüpfen</value>
+    <value>Bild invertieren</value>
   </data>
   <data name="ActionList8" xml:space="preserve">
-    <value>Bilder ODER-verknüpfen</value>
+    <value>Bilder UND-verknüpfen</value>
   </data>
   <data name="ActionList9" xml:space="preserve">
-    <value>Bilder XOR-verknüpfen</value>
+    <value>Bilder ODER-verknüpfen</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
     <value>Wählen Sie die Aktion, die Sie auf das Bild anwenden wollen.</value>

@@ -22,7 +22,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.ImageProcessor
 {
 
-    public enum ActionType { flip, gray, smooth, resize, rotate, invert, and, or, xor, create, crop, xorgray, blacknwhite, contrast };
+    public enum ActionType { none, flip, gray, smooth, resize, rotate, invert, and, or, xor, create, crop, xorgray, blacknwhite, contrast };
 
     public class ImageProcessorSettings : ISettings
     {
@@ -50,8 +50,8 @@ namespace Cryptool.Plugins.ImageProcessor
 
         #region TaskPane Settings
         [TaskPane("ActionCaption", "ActionTooltip", null, 1, true, ControlType.ComboBox, new String[] { 
-            "ActionList1", "ActionList2", "ActionList3", "ActionList4", "ActionList5", "ActionList6", "ActionList7", 
-            "ActionList8", "ActionList9", "ActionList10", "ActionList11", "ActionList12", "ActionList13", "ActionList14"
+            "ActionList1", "ActionList2", "ActionList3", "ActionList4", "ActionList5", "ActionList6", "ActionList7", "ActionList8",
+            "ActionList9", "ActionList10", "ActionList11", "ActionList12", "ActionList13", "ActionList14", "ActionList15"
         })]
         public ActionType Action
         {

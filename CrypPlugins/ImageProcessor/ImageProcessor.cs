@@ -140,6 +140,9 @@ namespace Cryptool.Plugins.ImageProcessor
                     {
                         switch (settings.Action)
                         {
+                            case ActionType.none:   // Copy image to output
+                                CreateOutputStream(img.ToBitmap(), false);
+                                break;
                             case ActionType.flip:   // Flip Image
                                 switch (settings.FlipType)
                                 {
@@ -185,18 +188,7 @@ namespace Cryptool.Plugins.ImageProcessor
                                 this.CropImage();
                                 break;
                             case ActionType.rotate: // Rotating
-                                if (settings.Degrees > 36000)
-                                    settings.Degrees = 360;
-                                int degrees = settings.Degrees;
-                                while (degrees > 3600)
-                                {
-                                    degrees -= 3600;
-                                }
-                                while (degrees > 360)
-                                {
-                                    degrees -= 360;
-                                }
-                                using (Image<Bgr, byte> newImg = img.Rotate(degrees, new Bgr(System.Drawing.Color.White)))
+                                using (Image<Bgr, byte> newImg = img.Rotate(settings.Degrees % 360, new Bgr(System.Drawing.Color.White)))
                                 {
                                     CreateOutputStream(newImg.ToBitmap());
                                 }
@@ -233,7 +225,7 @@ namespace Cryptool.Plugins.ImageProcessor
                                     GuiLogMessage("Please select two images.", NotificationLevel.Error);
                                 }
                                 break;
-                            case ActionType.or:    // Ond-connect Images
+                            case ActionType.or:    // Or-connect Images
                                 if (InputImage1 != null && InputImage2 != null)
                                 {
                                     using (Image<Bgr, Byte> secondImg = new Image<Bgr, Byte>(new Bitmap(InputImage2.CreateReader())))
@@ -361,10 +353,10 @@ namespace Cryptool.Plugins.ImageProcessor
 
         /// <summary>Create output stream to display.</summary>
         /// <param name="bitmap">The bitmap to display.</param>
-        private void CreateOutputStream(Bitmap bitmap)
+        private void CreateOutputStream(Bitmap bitmap, bool avoidWPFSmoothing = true)
         {
             // Avoid smoothing of WPF
-            if (bitmap.Height < 300)
+            if (avoidWPFSmoothing && bitmap.Height < 300)
             {
                 bitmap = ResizeBitmap(bitmap);
             }
@@ -412,10 +404,10 @@ namespace Cryptool.Plugins.ImageProcessor
             {
                 using (Bitmap bitmap = new Bitmap(reader))
                 {
-                    int x1 = settings.SliderX1*bitmap.Width/10000;
-                    int x2 = bitmap.Width - settings.SliderX2*bitmap.Width/10000 - x1;
-                    int y1 = settings.SliderY1*bitmap.Height/10000;
-                    int y2 = bitmap.Height - settings.SliderY2*bitmap.Height/10000 - y1;
+                    int x1 = settings.SliderX1 * bitmap.Width / 10000;
+                    int x2 = bitmap.Width - settings.SliderX2 * bitmap.Width / 10000 - x1;
+                    int y1 = settings.SliderY1 * bitmap.Height / 10000;
+                    int y2 = bitmap.Height - settings.SliderY2 * bitmap.Height / 10000 - y1;
                     Rectangle cropRect = new Rectangle(x1, y1, x2, y2);
                     Bitmap target = new Bitmap(cropRect.Width, cropRect.Height);
 

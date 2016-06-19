@@ -121,46 +121,49 @@
     <value>Action</value>
   </data>
   <data name="ActionList1" xml:space="preserve">
-    <value>Flip Image</value>
+    <value>No Action</value>
   </data>
   <data name="ActionList10" xml:space="preserve">
-    <value>Create Image</value>
+    <value>XOR-Connect Images</value>
   </data>
   <data name="ActionList11" xml:space="preserve">
-    <value>Crop Image</value>
+    <value>Create Image</value>
   </data>
   <data name="ActionList12" xml:space="preserve">
-    <value>XOR GrayscaleImages</value>
+    <value>Crop Image</value>
   </data>
   <data name="ActionList13" xml:space="preserve">
-    <value>Black and White</value>
+    <value>XOR GrayscaleImages</value>
   </data>
   <data name="ActionList14" xml:space="preserve">
+    <value>Black and White</value>
+  </data>
+  <data name="ActionList15" xml:space="preserve">
     <value>Image Contrast</value>
   </data>
   <data name="ActionList2" xml:space="preserve">
-    <value>Gray Scale</value>
+    <value>Flip Image</value>
   </data>
   <data name="ActionList3" xml:space="preserve">
-    <value>Smooth Image</value>
+    <value>Gray Scale</value>
   </data>
   <data name="ActionList4" xml:space="preserve">
-    <value>Resize Image</value>
+    <value>Smooth Image</value>
   </data>
   <data name="ActionList5" xml:space="preserve">
-    <value>Rotate Image</value>
+    <value>Resize Image</value>
   </data>
   <data name="ActionList6" xml:space="preserve">
-    <value>Invert Image</value>
+    <value>Rotate Image</value>
   </data>
   <data name="ActionList7" xml:space="preserve">
-    <value>And-Connect Images</value>
+    <value>Invert Image</value>
   </data>
   <data name="ActionList8" xml:space="preserve">
-    <value>Or-Connect Images</value>
+    <value>And-Connect Images</value>
   </data>
   <data name="ActionList9" xml:space="preserve">
-    <value>XOR-Connect Images</value>
+    <value>Or-Connect Images</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
     <value>Select the action to perform on the images.</value>
