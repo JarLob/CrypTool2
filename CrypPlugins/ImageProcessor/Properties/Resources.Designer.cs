@@ -205,7 +205,7 @@ namespace Cryptool.Plugins.ImageProcessor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the action to perform on the images. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the action you want to perform on the images. ähnelt.
         /// </summary>
         internal static string ActionTooltip {
             get {

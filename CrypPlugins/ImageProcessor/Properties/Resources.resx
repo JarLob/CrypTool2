@@ -166,7 +166,7 @@
     <value>Or-Connect Images</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Select the action to perform on the images.</value>
+    <value>Select the action you want to perform on the images.</value>
   </data>
   <data name="ContrastCaption" xml:space="preserve">
     <value>Contrast</value>
