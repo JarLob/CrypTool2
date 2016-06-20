@@ -13,8 +13,8 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System.ComponentModel;
 using System.Windows;
+using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
@@ -112,20 +112,21 @@ namespace Cryptool.Plugins.Huffman
         }
 
         internal void SetVisibilityOfEncoding()
-        {
-            if (TaskPaneAttributeChanged == null) return;
-
-            switch (Presentation)
+        {            
+            if(TaskPaneAttributeChanged != null)
             {
-                case PresentationFormat.Text:
-                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs
-                (new TaskPaneAttribteContainer("Encoding", Visibility.Visible)));
-                    break;
-                case PresentationFormat.Binary:
-                    TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs
-                (new TaskPaneAttribteContainer("Encoding", Visibility.Collapsed)));
-                    break;
-            }
+                switch (Presentation)
+                {
+                    case PresentationFormat.Text:
+                        TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs
+                    (new TaskPaneAttribteContainer("Encoding", Visibility.Visible)));
+                        break;
+                    case PresentationFormat.Binary:
+                        TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs
+                    (new TaskPaneAttribteContainer("Encoding", Visibility.Collapsed)));
+                        break;
+                }
+            }                   
         }
 
         #endregion

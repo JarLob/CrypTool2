@@ -180,11 +180,23 @@
   <data name="InputBytesTooltip" xml:space="preserve">
     <value>Input data to be processed by the Huffman's algorithm</value>
   </data>
+  <data name="InputHuffmanTreeCaption" xml:space="preserve">
+    <value>Huffman tree input</value>
+  </data>
+  <data name="InputHuffmanTreeTooltip" xml:space="preserve">
+    <value>Input Huffman tree used for compressing input data</value>
+  </data>
   <data name="OutputBytesCaption" xml:space="preserve">
     <value>byte[] output</value>
   </data>
   <data name="OutputBytesTooltip" xml:space="preserve">
     <value>Data processed by the Huffman's algorithm</value>
+  </data>
+  <data name="OutputHuffmanTreeCaption" xml:space="preserve">
+    <value>Huffman tree output</value>
+  </data>
+  <data name="OutputHuffmanTreeTooltip" xml:space="preserve">
+    <value>Huffman tree used for compressing input data</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Huffman</value>
@@ -200,9 +212,6 @@
   </data>
   <data name="PresentationList2" xml:space="preserve">
     <value>Binary</value>
-  </data>
-  <data name="PresentationStatusCaption" xml:space="preserve">
-    <value>No input data provided</value>
   </data>
   <data name="PresentationTooltip" xml:space="preserve">
     <value>Select the format to be used for presenting input data</value>

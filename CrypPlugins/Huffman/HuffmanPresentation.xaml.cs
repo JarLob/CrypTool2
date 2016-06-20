@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Controls;
@@ -32,14 +31,29 @@ namespace Huffman
                 compressedSize_LB.Content = string.Format("{0:n0}", compressedSize) + " bytes";
                 double compressionRate = Math.Round(1 - (double)compressedSize / uncompressedSize, 2);
                 compressionRate_LB.Content = compressionRate * 100 + "%";
-                codeTable_DG.ItemsSource = codes;                
+                codeTable_DG.ItemsSource = codes;
+                codeTable_DG.CanUserAddRows = false;
             }, null);
         }
 
         public string toString(List<bool> bits)
         {
-            return new string(bits.Select(b => b ? '1' : '0').ToArray());
-        }
+            StringBuilder bitString = new StringBuilder();
+
+            foreach (bool bit in bits)
+            {
+                if (bit)
+                {
+                    bitString.Append("1");
+                }
+                else
+                {
+                    bitString.Append("0");
+                }
+            }
+
+            return bitString.ToString();
+        }        
 
         public class Code
         {

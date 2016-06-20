@@ -38,6 +38,8 @@ namespace Cryptool.Plugins.Huffman
         private readonly HuffmanSettings settings;
         private byte[] inputBytes;
         private byte[] outputBytes;
+        private byte[] inputTree;
+        private byte[] outputTree;
         private HuffmanPresentation presentation;       
 
         #endregion
@@ -80,6 +82,26 @@ namespace Cryptool.Plugins.Huffman
             get { return this.outputBytes; }
         }
 
+        [PropertyInfo(Direction.InputData, "InputHuffmanTreeCaption", "InputHuffmanTreeTooltip", false)]
+        public byte[] InputHuffmanTree
+        {
+            get { return this.inputTree; }
+            set
+            {
+                if (this.inputTree != value)
+                {
+                    this.inputTree = value;
+                    OnPropertyChanged("InputHuffmanTree");
+                }
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "OutputHuffmanTreeCaption", "OutputHuffmanTreeTooltip")]
+        public byte[] OutputHuffmanTree
+        {
+            get { return this.outputTree; }
+        }
+
         #endregion
 
         #region IPlugin Members
@@ -90,7 +112,7 @@ namespace Cryptool.Plugins.Huffman
 
         public void Execute()
         {
-            if (InputBytes==null || InputBytes.Length == 0)
+            if (InputBytes.Length == 0)
             {
                 GuiLogMessage("No input bytes provided", NotificationLevel.Error);
                 return;
@@ -125,12 +147,15 @@ namespace Cryptool.Plugins.Huffman
                     ProgressChanged(6, 8);
 
                     // Pack and output data
-                    outputBytes = packData(encodedTree, compressed);
+                    outputBytes = packData(compressed);
+                    outputTree = packData(encodedTree);
                     OnPropertyChanged("OutputBytes");
-                    ProgressChanged(7, 8);                    
+                    OnPropertyChanged("OutputHuffmanTree");
+                    ProgressChanged(7, 8);
 
-                    // Fill code table in presentation view
-                    presentation.fillCodeTable(tree.getCodeTable(), histogram, inputBytes.Count(), outputBytes.Count());
+                    // Calculate compressed size and fill code table in presentation view
+                    int compressedSize = outputBytes.Count() + outputTree.Count();
+                    presentation.fillCodeTable(tree.getCodeTable(), histogram, decoded.Count(), compressedSize);
                     ProgressChanged(8, 8);
                 }
                 // Thrown when there's less than two characters in the input
@@ -142,13 +167,17 @@ namespace Cryptool.Plugins.Huffman
             }
             else
             {
+                if (InputHuffmanTree.Length == 0)
+                {
+                    GuiLogMessage("No Huffman tree provided", NotificationLevel.Error);
+                    return;
+                }
                 // Get encoding
                 Encoding en = getEncoding(settings.Presentation, settings.Encoding);
                 ProgressChanged(1, 8);
 
-                // Extract encoded tree
-                List<byte> packed = new List<byte>(InputBytes);
-                List<bool> encodedTree = extractTree(ref packed);
+                // Extract encoded tree                
+                List<bool> encodedTree = extractData(InputHuffmanTree);
                 ProgressChanged(2, 8);
 
                 // Rebuild Huffman tree
@@ -157,7 +186,7 @@ namespace Cryptool.Plugins.Huffman
                 ProgressChanged(3, 8);
 
                 // Extract compressed data
-                List<bool> compressed = extractData(packed);
+                List<bool> compressed = extractData(InputBytes);
                 ProgressChanged(4, 8);
 
                 // Decompress data
@@ -173,9 +202,10 @@ namespace Cryptool.Plugins.Huffman
                 Dictionary<char, int> histogram = getCharFrequencies(decompressed);
                 ProgressChanged(7, 8);
 
-                // Fill code table in presentation view
+                // Calculate compressed size and fill code table in presentation view 
+                int compressedSize = InputBytes.Count() + InputHuffmanTree.Count();
                 tree.CreateCodeTable(histogram);
-                presentation.fillCodeTable(tree.getCodeTable(), histogram, outputBytes.Count(), inputBytes.Count());
+                presentation.fillCodeTable(tree.getCodeTable(), histogram, decompressed.Count(), compressedSize);
                 ProgressChanged(8, 8);
             }
         }
@@ -297,7 +327,7 @@ namespace Cryptool.Plugins.Huffman
         {
             // If node is a leaf, add 1 and its character to the list - otherwise add 0 and continue
             // encoding its children
-            if (node.getLeftChild() == null && node.getLeftChild() == null)
+            if (node.getLeftChild() == null && node.getRightChild() == null)
             {
                 encodedTree.Add(true);
                 encodedTree.AddRange(toBits(encodeChar(node.getCharacter(), en)));
@@ -376,76 +406,42 @@ namespace Cryptool.Plugins.Huffman
             return c;
         }
 
-        private static byte[] packData(List<bool> encodedTree, List<bool> compressed)
+        private static byte[] packData(List<bool> data)
         {
             List<bool> packed = new List<bool>();
 
-            // Calculate the offsets of each of the lists from the closest bigger multiple of 8 and
-            // pad them with that number of 0's
-            int treeOffset = 8 - encodedTree.Count%8;
+            // Calculate the offset of data from the closest bigger multiple of 8 and
+            // pad it with that number of 0's
+            int offset = 8 - data.Count%8;
 
-            for (int i = 0; i < treeOffset; i++)
+            for (int i = 0; i < offset; i++)
             {
-                encodedTree.Add(false);
-            }
+                data.Add(false);
+            }            
 
-            int compressedOffset = 8 - compressed.Count%8;
-
-            for (int i = 0; i < compressedOffset; i++)
-            {
-                compressed.Add(false);
-            }
-
-            // Add offsets and the data they relate to, as well as tree size            
-            packed.AddRange(toBits((byte) treeOffset));
-            packed.AddRange(toBits(new List<byte>(BitConverter.GetBytes(encodedTree.Count/8))));
-            packed.AddRange(encodedTree);
-            packed.AddRange(toBits((byte) compressedOffset));
-            packed.AddRange(compressed);
+            // Add offset and data          
+            packed.AddRange(toBits((byte) offset));            
+            packed.AddRange(data);            
 
             return toBytes(packed);
         }
 
-        private static List<bool> extractTree(ref List<byte> packed)
+        private static List<bool> extractData(byte[] packed)
         {
-            // Get tree offset and remove it from packed data
-            int treeOffset = packed.First();
-            packed.RemoveAt(0);
+            List<bool> data = toBits(new List<byte>(packed));
 
-            // Get tree size and remove it from packed data
-            int treeSize = BitConverter.ToInt32(packed.ToArray(), 0);
-            packed.RemoveRange(0, 4);
+            // Get data offset and remove it from data
+            int offset = toByte(data.GetRange(0, 8));
+            data.RemoveRange(0, 8);
 
-            // Get encoded tree and remove it from packed data
-            List<bool> encodedTree = toBits(packed.GetRange(0, treeSize));
-            packed.RemoveRange(0, treeSize);            
-
-            // Remove padding from encoded tree
-            for (int i = 0; i < treeOffset; i++)
+            // Remove padding from data
+            for (int i = 0; i < offset; i++)
             {
-                encodedTree.RemoveAt(encodedTree.Count - 1);
+                data.RemoveAt(data.Count - 1);
             }
 
-            return encodedTree;
-        }
-
-        private static List<bool> extractData(List<byte> packed)
-        {
-            // Get compressed data offset and remove it from packed data
-            int compressedOffset = packed.First();
-            packed.RemoveAt(0);
-
-            // Get compressed data
-            List<bool> compressed = toBits(packed);
-
-            // Remove padding from compressed data
-            for (int i = 0; i < compressedOffset; i++)
-            {
-                compressed.RemoveAt(compressed.Count - 1);
-            }
-
-            return compressed;
-        }                
+            return data;
+        }        
 
         private static byte[] getCharBytes(List<bool> charBits, Encoding en )
         {            
@@ -549,6 +545,25 @@ namespace Cryptool.Plugins.Huffman
             }
 
             return bytes;
+        }
+
+        private static byte toByte(List<bool> bits)
+        {
+            byte b = 0;
+
+            int bitIndex = 0;            
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (bits[i])
+                {
+                    b |= (byte)(1 << bitIndex);
+                }
+
+                bitIndex++;                
+            }
+
+            return b;
         }
 
         #endregion

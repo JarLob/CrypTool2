@@ -250,6 +250,24 @@ namespace Huffman.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Huffman tree input.
+        /// </summary>
+        public static string InputHuffmanTreeCaption {
+            get {
+                return ResourceManager.GetString("InputHuffmanTreeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Huffman tree used for compressing input data.
+        /// </summary>
+        public static string InputHuffmanTreeTooltip {
+            get {
+                return ResourceManager.GetString("InputHuffmanTreeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to byte[] output.
         /// </summary>
         public static string OutputBytesCaption {
@@ -264,6 +282,24 @@ namespace Huffman.Properties {
         public static string OutputBytesTooltip {
             get {
                 return ResourceManager.GetString("OutputBytesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Huffman tree output.
+        /// </summary>
+        public static string OutputHuffmanTreeCaption {
+            get {
+                return ResourceManager.GetString("OutputHuffmanTreeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Huffman tree used for compressing input data.
+        /// </summary>
+        public static string OutputHuffmanTreeTooltip {
+            get {
+                return ResourceManager.GetString("OutputHuffmanTreeTooltip", resourceCulture);
             }
         }
         
@@ -309,15 +345,6 @@ namespace Huffman.Properties {
         public static string PresentationList2 {
             get {
                 return ResourceManager.GetString("PresentationList2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No input data provided.
-        /// </summary>
-        public static string PresentationStatusCaption {
-            get {
-                return ResourceManager.GetString("PresentationStatusCaption", resourceCulture);
             }
         }
         
