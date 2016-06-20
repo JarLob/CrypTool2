@@ -127,16 +127,16 @@
     <value>Dekomprimieren</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Wählen Sie die Betriebsart des Plugins</value>
+    <value>Wählen Sie die Betriebsart des Plugins.</value>
   </data>
   <data name="CharacterCaption" xml:space="preserve">
-    <value>Charakter</value>
+    <value>Zeichen</value>
   </data>
   <data name="CodeCaption" xml:space="preserve">
     <value>Code</value>
   </data>
   <data name="CodeTableCaption" xml:space="preserve">
-    <value>Code Tabelle</value>
+    <value>Code-Tabelle</value>
   </data>
   <data name="CompressedSizeCaption" xml:space="preserve">
     <value>Komprimierte Größe:</value>
@@ -169,7 +169,7 @@
     <value>Windows-1252</value>
   </data>
   <data name="EncodingTooltip" xml:space="preserve">
-    <value>Wählen Sie die Kodierung der Eingabedaten</value>
+    <value>Wählen Sie die Kodierung der Eingabedaten.</value>
   </data>
   <data name="FrequencyCaption" xml:space="preserve">
     <value>Frequenz</value>
@@ -178,31 +178,31 @@
     <value>Eingabe als Byte-Array</value>
   </data>
   <data name="InputBytesTooltip" xml:space="preserve">
-    <value>Tragen Sie die Daten, die mit dem Huffmans Algorithmus verarbeitet werden</value>
+    <value>Geben Sie die Daten ein, die mit dem Huffman-Algorithmus verarbeitet werden sollen.</value>
   </data>
   <data name="InputHuffmanTreeCaption" xml:space="preserve">
-    <value>Huffman-baum Eingang</value>
+    <value>Eingabe Huffman-Baum</value>
   </data>
   <data name="InputHuffmanTreeTooltip" xml:space="preserve">
-    <value>Eingang Huffman-Baum benutzt für die Komprimierung von Daten</value>
+    <value>Geben Sie den Huffman-Baum ein, der für die Decodierung der Daten benutzt werden soll.</value>
   </data>
   <data name="OutputBytesCaption" xml:space="preserve">
     <value>Ausgabe als Byte-Array</value>
   </data>
   <data name="OutputBytesTooltip" xml:space="preserve">
-    <value>Die Eingangsdaten wurden durch den Huffmans Algorithmus verarbeitet</value>
+    <value>Ausgabe der durch den Huffman-Algorithmus verarbeiteten Eingabedaten</value>
   </data>
   <data name="OutputHuffmanTreeCaption" xml:space="preserve">
-    <value>Huffman-baum Ausgang</value>
+    <value>Ausgabe Huffman-Baum</value>
   </data>
   <data name="OutputHuffmanTreeTooltip" xml:space="preserve">
-    <value>Huffman-baum benutzt für die Komprimierung von Daten</value>
+    <value>Ausgabe des Huffman-Baums, der für die Codierung der Daten benutzt wurde</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Huffman</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Datenkompression algorithmus</value>
+    <value>Datenkompression-Algorithmus</value>
   </data>
   <data name="PresentationCaption" xml:space="preserve">
     <value>Darstellungsformat</value>
@@ -214,7 +214,7 @@
     <value>Binär</value>
   </data>
   <data name="PresentationTooltip" xml:space="preserve">
-    <value>Wählen Sie das zu verwendende Format für die Präsentation von Eingabedaten</value>
+    <value>Wählen Sie das zu verwendende Format für die Präsentation der Eingabedaten.</value>
   </data>
   <data name="UncompressedSizeCaption" xml:space="preserve">
     <value>Unkomprimierte Größe:</value>

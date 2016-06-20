@@ -127,7 +127,7 @@
     <value>Decompress</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Select the algorithm action</value>
+    <value>Select the algorithm action.</value>
   </data>
   <data name="CharacterCaption" xml:space="preserve">
     <value>Character</value>
@@ -169,7 +169,7 @@
     <value>Windows-1252</value>
   </data>
   <data name="EncodingTooltip" xml:space="preserve">
-    <value>Select the encoding of input data</value>
+    <value>Select the encoding of the input data.</value>
   </data>
   <data name="FrequencyCaption" xml:space="preserve">
     <value>Frequency</value>
@@ -178,7 +178,7 @@
     <value>byte[] input</value>
   </data>
   <data name="InputBytesTooltip" xml:space="preserve">
-    <value>Input data to be processed by the Huffman's algorithm</value>
+    <value>Input data to be processed by the Huffman algorithm</value>
   </data>
   <data name="InputHuffmanTreeCaption" xml:space="preserve">
     <value>Huffman tree input</value>
@@ -190,7 +190,7 @@
     <value>byte[] output</value>
   </data>
   <data name="OutputBytesTooltip" xml:space="preserve">
-    <value>Data processed by the Huffman's algorithm</value>
+    <value>Data processed by the Huffman algorithm</value>
   </data>
   <data name="OutputHuffmanTreeCaption" xml:space="preserve">
     <value>Huffman tree output</value>
@@ -214,7 +214,7 @@
     <value>Binary</value>
   </data>
   <data name="PresentationTooltip" xml:space="preserve">
-    <value>Select the format to be used for presenting input data</value>
+    <value>Select the format to be used for presenting input data.</value>
   </data>
   <data name="UncompressedSizeCaption" xml:space="preserve">
     <value>Uncompressed size:</value>
