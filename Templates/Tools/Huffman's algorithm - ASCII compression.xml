@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Huffman's algorithm (ASCII)</title>
+  <summary lang="en">Usage of <i>Huffman</i> to compress an ASCII encoded text</summary>
+  <description lang="en">This template shows how the <i>Huffman</i> component can be used to compress an ASCII encoded text.</description>
+  <keywords>Huffman, ascii, compression</keywords>
+
+  <icon file="Huffman.png" />
+  <relevantPlugins>
+    <plugin name="Huffman" />
+  </relevantPlugins>
+
+</sample>
+

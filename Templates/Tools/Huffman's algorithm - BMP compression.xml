@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Huffman's algorithm (BMG, JPG)</title>
+  <summary lang="en">Usage of <i>Huffman</i> to compress a BMP and a JPG image</summary>
+  <description lang="en">This template uses Huffman's algorithm to compress a BMP image and a JPG image. It demonstrates the dependence of the achievable compression rate on the input data's entropy.</description>
+  <keywords>Huffman, bmp, jpg, image, entropy, compression</keywords>
+
+  <icon file="Huffman.png" />
+  <relevantPlugins>
+    <plugin name="Huffman" />
+  </relevantPlugins>
+
+</sample>
+
