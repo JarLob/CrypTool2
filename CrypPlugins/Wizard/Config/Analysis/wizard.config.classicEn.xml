@@ -135,7 +135,7 @@ Zij Vgpyüywafoscw swe „IBHC“, lrx Xarl „kpkeaivzv“. Zqrx Gwykec-Vutobzw
       <item content="Deutsch" lang="de"/>
     </comboBox>
 
-    <comboBox plugin="$Vigenere Analyzer$;Vigenere" property="Mode" defaultValue="0" width="20%" alignment="Left">
+    <comboBox plugin="$Vigenere Analyzer$;Vigenère" property="Mode" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Vigenère mode:</description>
       <description lang="de">Vigenère Modus:</description>
       <item content="Classic Vigenère" lang="en"/>

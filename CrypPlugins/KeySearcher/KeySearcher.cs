@@ -409,14 +409,15 @@ namespace KeySearcher
         }
          
         public override void Initialize()
-        { 
-            p2PQuickWatchPresentation.UpdateSettings(this, settings);
-            
-            if (JobID != 0)
+        {
+            if (p2PQuickWatchPresentation != null)
             {
-                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
-            } 
-              
+                p2PQuickWatchPresentation.UpdateSettings(this, settings);
+                if (JobID != 0)
+                {
+                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+                } 
+            }                          
         }
 
         public override void Dispose()

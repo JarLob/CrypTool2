@@ -49,7 +49,7 @@ namespace Tests.TemplateAndPluginTests
         //
         TestVector[] testvectors = new TestVector[] {
             new TestVector () { n=0,
-                key="AAAAAA", input="AAAAAAAAAAAAAAAAAAAAAAAAAA", output="TNJUW AUQTK CZKNU TOTBC WARMI O", 
+                key="AAAAAA", input="AAAAAAAAAAAAAAAAAAAAAAAAAA", output="TNJUWAUQTKCZKNUTOTBCWARMIO", 
                 pins = new string[] { "ABDHIKMNSTVW", "ADEGJKLORSUX", "ABGHJLMNRSTUX", "CEFHIMNPSTU", "BDEFHIMNPS", "ABDHKNOQ" }, 
                 sliders = new string[] { "36","06","16","15","45","04","04","04","04","20","20","20","20","20","20","20","20","20","20","25","25","05","05","05","05","05","05" }
             },
