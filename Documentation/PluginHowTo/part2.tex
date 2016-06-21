@@ -10,7 +10,7 @@ Open the CrypTool 2 solution, right click in the solution explorer on \textit{Cr
 \begin{figure}[h!]
 	\centering
 		\includegraphics{figures/vs_create_new_project.png}
-	\caption{Creating a new CrypTool 2 plugin project.}
+	\caption{Creating a new CrypTool 2 plugin project}
 	\label{fig:vs_create_new_project}
 \end{figure}
 
@@ -19,7 +19,7 @@ As the project basics are already correctly set up in the template, you should n
 \begin{figure}[h!]
 	\centering
 		\includegraphics{figures/caesar_project.png}
-	\caption{Items of a new plugin project.}
+	\caption{Items of a new plugin project}
 	\label{fig:caesar_project}
 \end{figure}
 
@@ -43,7 +43,7 @@ The \textit{[Author]} attribute is optional, meaning that we are not required to
 \begin{figure}[h!]
 	\centering
 		\includegraphics[width=.90\textwidth]{figures/attribute_author.jpg}
-	\caption{The defintion for the \textit{[Author]} attribute.}
+	\caption{The definition for the \textit{[Author]} attribute}
 	\label{fig:attribute_author}
 \end{figure}
 
@@ -64,7 +64,7 @@ The \textit{[PluginInfo]} attribute provides necessary information about the plu
 \begin{figure}[h]
 	\centering
 		\includegraphics[width=1.00\textwidth]{figures/attribute_plugininfo.png}
-	\caption{Multilingual defintion of \textit{[PluginInfo]} attribute.}
+	\caption{Multilingual definition of \textit{[PluginInfo]} attribute}
 	\label{fig:attribute_plugininfo}
 \end{figure}
 
@@ -73,7 +73,7 @@ The \textit{[PluginInfo]} attribute provides necessary information about the plu
 \begin{itemize}
 	\item \textit{Resource File} --- the namespace and class name of an associated resource file \textit{.resx}. This element is optional and used only if the plugin provides multilingual strings (see also Section~\ref{sec:Internationalization}).
 	\item \textit{Caption} --- the name of the plugin, or, if using a resource file, the name of the field in the file with the caption data. This element is mandatory.
-	\item \textit{ToolTip} --- a description of the plugin, or, if using a resource file, the name of the field in the resource file with the toolTip data. This element may be null.
+	\item \textit{ToolTip} --- a description of the plugin, or, if using a resource file, the name of the field in the resource file with the tooltip data. This element may be null.
 	\item \textit{DescriptionURL} --- the local path of the user documentation file (XML file, see Section~\ref{sec:Documentation}). This element may be null.
 	\item \textit{Icons} --- an array of strings to define all the paths of the icons used in the plugin (i.e.\ the plugin icon described in Section \ref{sec:AddingAnIconToTheCaesarClass}). This element may be null.
 \end{itemize}
@@ -122,7 +122,7 @@ The proper image size is 40x40 pixels, but since the image will be rescaled if n
 \begin{figure}[h!]
 	\centering
 		\includegraphics{figures/add_existing_item.jpg}
-	\caption{Adding an existing item.}
+	\caption{Adding an existing item}
 	\label{fig:add_existing_item}
 \end{figure}
 \clearpage
@@ -132,7 +132,7 @@ Choose \textit{Image Files} as the file type and select your newly-created icon 
 \begin{figure}[h!]
 	\centering
 		\includegraphics{figures/choose_icon.jpg}
-	\caption{Selecting the image file.}
+	\caption{Selecting the image file}
 	\label{fig:choose_icon}
 \end{figure}
 \clearpage
@@ -142,7 +142,7 @@ It's \textbf{necessary} to set the icon file as a \textit{Resource} in the file 
 \begin{figure}[h!]
 	\centering
 		\includegraphics{figures/icon_properties.jpg} \includegraphics{figures/icon_build_action.jpg}
-	\caption{Go to \textit{Properties}, select \textit{Build Action} to \textit{Resource}.}
+	\caption{Go to \textit{Properties}, select \textit{Build Action} to \textit{Resource}}
 	\label{fig:icon_properties}
 \end{figure}
 
@@ -157,8 +157,8 @@ Next we will define some class properties to be used as data input and output co
 		\item \texttt{Direction.Input}
 		\item \texttt{Direction.Output}
 	\end{itemize}
-	\item \textit{caption} --- a short caption of the data property shown in the editor. May be either a text or a key refering to a multilingual resource file (see Section~\ref{sec:Internationalization}).
-	\item \textit{toolTip} --- similar as a caption, but more descriptive. May be either a text or a key refering to a multilingual resource file.
+	\item \textit{caption} --- a short caption of the data property shown in the editor. May be either a text or a key referring to a multilingual resource file (see Section~\ref{sec:Internationalization}).
+	\item \textit{tooltip} --- similar as a caption, but more descriptive. May be either a text or a key referring to a multilingual resource file.
 	\item \textit{mandatory} --- this flag determines whether an input must be attached by the user to use the plugin. If set to \texttt{true}, an input connection will be required or else the plugin will not be executed in the workflow chain. If set to \texttt{false}, connecting an input is optional. As this only applies to input properties, if the direction has been set to \texttt{Direction.Output}, this flag will be ignored.
 
 \end{itemize}
@@ -246,7 +246,7 @@ You may use \textit{GuiLogMessage} to show errors, warnings or informational mes
 \begin{figure}[h]
 	\centering
 		\includegraphics[width=1.00\textwidth]{figures/status_bar.jpg}
-	\caption{An example status bar.}
+	\caption{An example status bar}
 	\label{fig:status_bar}
 \end{figure}
 
@@ -258,6 +258,6 @@ Each plugin should have an associated workflow file to show the algorithm in act
 \begin{figure}[h]
 	\centering
 		\includegraphics{figures/sample.jpg}
-	\caption{A sample workflow diagram for the Caesar algorithm.}
+	\caption{A sample workflow diagram for the Caesar algorithm}
 	\label{fig:sample}
 \end{figure}
