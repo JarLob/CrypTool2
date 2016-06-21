@@ -734,7 +734,7 @@
     <value>Build Type</value>
   </data>
   <data name="SI_Common_Language_Runtime_Version" xml:space="preserve">
-    <value>Common Language Runtime Version</value>
+    <value>Common Language Runtime Version (.NET Version)</value>
   </data>
   <data name="SI_Runtime_Path" xml:space="preserve">
     <value>Runtime Path</value>
