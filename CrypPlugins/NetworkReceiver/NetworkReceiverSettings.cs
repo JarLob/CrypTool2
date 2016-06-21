@@ -51,6 +51,7 @@ namespace Cryptool.Plugins.NetworkReceiver
         public void Initialize()
         {
             NetworkDevice = true;
+            UpdateTaskPaneVisibility();
         }
 
         #endregion

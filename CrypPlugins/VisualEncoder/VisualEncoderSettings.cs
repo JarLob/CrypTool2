@@ -126,7 +126,7 @@ namespace Cryptool.Plugins.VisualEncoder
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            UpdateTaskPaneVisibility();
         }
 
 

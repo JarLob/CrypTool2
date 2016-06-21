@@ -51,7 +51,7 @@ namespace Cryptool.Plugins.RSA
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            UpdateTaskPaneVisibility();
         }
 
         #endregion

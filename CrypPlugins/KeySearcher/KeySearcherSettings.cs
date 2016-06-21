@@ -92,7 +92,8 @@ namespace KeySearcher
             Cryptool.PluginBase.Properties.Settings.Default.PropertyChanged += delegate
                                                     {
                                                         OpenCLGroupVisiblity();
-                                                    }; 
+                                                    };
+                       
         }
 
         [TaskPane("KeyCaption", "KeyTooltip", null, 1, false, ControlType.KeyTextBox, true, "KeyManager")]
@@ -171,7 +172,7 @@ namespace KeySearcher
         #endregion
 
         private string evaluationHost;
-        [TaskPane( "EvaluationHostCaption", "EvaluationHostTooltip", "GroupEvaluation", 0, false, ControlType.TextBox)]
+        //[TaskPane( "EvaluationHostCaption", "EvaluationHostTooltip", "GroupEvaluation", 0, false, ControlType.TextBox)]
         public String EvaluationHost
         {
             get
@@ -189,7 +190,7 @@ namespace KeySearcher
         }
 
         private string evaluationUser;
-        [TaskPane( "EvaluationUserCaption", "EvaluationUserTooltip", "GroupEvaluation", 1, false, ControlType.TextBox)]
+        //[TaskPane( "EvaluationUserCaption", "EvaluationUserTooltip", "GroupEvaluation", 1, false, ControlType.TextBox)]
         public String EvaluationUser
         {
             get
@@ -207,7 +208,7 @@ namespace KeySearcher
         }
 
         private string evaluationPassword;
-        [TaskPane( "EvaluationPasswordCaption", "EvaluationPasswordTooltip", "GroupEvaluation", 2, false, ControlType.TextBox)]
+        //[TaskPane( "EvaluationPasswordCaption", "EvaluationPasswordTooltip", "GroupEvaluation", 2, false, ControlType.TextBox)]
         public String EvaluationPassword
         {
             get
@@ -225,7 +226,7 @@ namespace KeySearcher
         }
 
         private string evaluationDatabase;
-        [TaskPane( "EvaluationDatabaseCaption", "EvaluationDatabaseTooltip", "GroupEvaluation", 3, false, ControlType.TextBox)]
+        //[TaskPane( "EvaluationDatabaseCaption", "EvaluationDatabaseTooltip", "GroupEvaluation", 3, false, ControlType.TextBox)]
         public String EvaluationDatabase
         {
             get
@@ -370,7 +371,7 @@ namespace KeySearcher
         /// Getter/Setter for the time interval (minutes)
         /// </summary>
         private int updatetime = 30;
-        [TaskPane( "UpdateTimeCaption", "UpdateTimeTooltip", "GroupStatisticPath", 1, false, ControlType.TextBox)]
+        //[TaskPane( "UpdateTimeCaption", "UpdateTimeTooltip", "GroupStatisticPath", 1, false, ControlType.TextBox)]
         public int UpdateTime
         {
             get { return updatetime; }
@@ -388,7 +389,7 @@ namespace KeySearcher
         /// Able/Disable for the update time interval
         /// </summary>
         private bool disableupdate = false;
-        [TaskPane( "DisableUpdateCaption", "DisableUpdateTooltip", "GroupStatisticPath", 2, false, ControlType.CheckBox)]
+        //[TaskPane( "DisableUpdateCaption", "DisableUpdateTooltip", "GroupStatisticPath", 2, false, ControlType.CheckBox)]
         public bool DisableUpdate
         {
             get { return disableupdate; }
@@ -405,7 +406,7 @@ namespace KeySearcher
         /// <summary>
         /// Getter/Setter for the csv file
         /// </summary>
-        [TaskPane( "CsvPathCaption", "CsvPathTooltip", "GroupStatisticPath", 3, false, ControlType.SaveFileDialog, FileExtension = "Comma Seperated Values (*.csv)|*.csv")]
+        //[TaskPane( "CsvPathCaption", "CsvPathTooltip", "GroupStatisticPath", 3, false, ControlType.SaveFileDialog, FileExtension = "Comma Seperated Values (*.csv)|*.csv")]
         public string CsvPath
         {
             get { return csvPath; }
@@ -422,7 +423,7 @@ namespace KeySearcher
         /// <summary>
         /// Button to "reset" the csv file. That means it will not appear any more in the text field
         /// </summary>
-        [TaskPane( "DefaultPathCaption", "DefaultPathTooltip", "GroupStatisticPath", 4, false, ControlType.Button)]
+        //[TaskPane( "DefaultPathCaption", "DefaultPathTooltip", "GroupStatisticPath", 4, false, ControlType.Button)]
         public void DefaultPath()
         {
             csvPath = "";

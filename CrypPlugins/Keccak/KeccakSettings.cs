@@ -382,6 +382,7 @@ namespace Cryptool.Plugins.Keccak
         public void Initialize()
         {
             hideSettingsElement("SuffixBitsReadonly");
+            UpdateTaskPaneVisibility();
         }
 
         private void OnPropertyChanged(string propertyName)

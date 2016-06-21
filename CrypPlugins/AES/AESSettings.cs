@@ -237,7 +237,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-
+            UpdateTaskPaneVisibility();
         }
 
         protected void OnPropertyChanged(string name)

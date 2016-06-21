@@ -132,7 +132,7 @@ namespace Cryptool.Plugins.Convertor
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            SetVisibilityOfEncoding();
         }
 
         private void OnPropertyChanged(string name)

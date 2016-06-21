@@ -137,7 +137,7 @@ namespace Cryptool.Plugins.StegoLeastSignificantBit
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            UpdateTaskPaneVisibility();
         }
 
         protected void OnPropertyChanged(string name)

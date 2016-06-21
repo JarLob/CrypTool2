@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.WatermarkCreator
 {
 
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    [PluginInfo("WatermarkCreator.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "WatermarkCreator/userdoc.xml", "WatermarkCreator/icon.png")]
+    [PluginInfo("WatermarkCreator.Properties.Resources", "PluginCaption", "PluginTooltip", "WatermarkCreator/userdoc.xml", "WatermarkCreator/icon.png")]
     [ComponentCategory(ComponentCategory.Steganography)]
     public class WatermarkCreator : ICrypComponent
     {

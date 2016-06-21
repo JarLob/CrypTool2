@@ -237,7 +237,7 @@ namespace TranspositionAnalyser
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            UpdateTaskPaneVisibility();
         }
 
         private void OnPropertyChanged(string name)
