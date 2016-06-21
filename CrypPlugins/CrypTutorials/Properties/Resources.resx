@@ -124,10 +124,10 @@
     <value>Category URL:</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Crypto Tutorials</value>
+    <value>CrypVideos</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Crypto Tutorials</value>
+    <value>CrypVideos</value>
   </data>
   <data name="Show_Video" xml:space="preserve">
     <value>Show video</value>

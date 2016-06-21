@@ -265,7 +265,7 @@
 
             <Grid Background="{StaticResource ResourceKey=Background2}"></Grid>
 
-            <TextBlock Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="Cryptool Tutorial Videos" FontSize="22" Foreground="#666"
+            <TextBlock Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Text="CrypTool Tutorial Videos" FontSize="22" Foreground="#666"
                             FontFamily="pack://application:,,,/CrypPluginBase;component/Miscellaneous/#Yanone Kaffeesatz">
                         <TextBlock.Effect>
                             <DropShadowEffect BlurRadius="5" ShadowDepth="1" Opacity="0.2" ></DropShadowEffect>
