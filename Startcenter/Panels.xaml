@@ -19,7 +19,7 @@
 
         <Expander IsExpanded="True" Header="{Loc Templates}" Grid.Column="0" Grid.Row="0">
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/template.png"/>
+                <BitmapImage UriSource="/Startcenter;component/template.png" />
             </Expander.Tag>
             
             <Border Name="templates">
@@ -31,7 +31,7 @@
 
         <Expander IsExpanded="True" Header="{Loc News}" Grid.Column="2" Grid.Row="0">
             <Expander.Tag>
-                <BitmapImage UriSource="/Startcenter;component/facebook_small.png"/>
+                <BitmapImage UriSource="/Startcenter;component/news.png" DecodePixelWidth="25" DecodePixelHeight="25"/>
             </Expander.Tag>
             <Border>
                 <Startcenter:RSSViewer/>
