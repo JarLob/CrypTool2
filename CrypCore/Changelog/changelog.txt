@@ -1,3 +1,50 @@
+[b]CrypTool 2.1 Beta 1[b]
+Dear CrypTool 2.1 users,
+many new components found their way into this new beta release.
+For a detailed overview of new components please use the list beneath this text. We hope you have as much fun 
+using CrypTool 2.1 Beta 1 as we had creating it. If you find any bugs please do not hesitate using our bug 
+reporting form at https://www.cryptool.org/trac/CrypTool2/newticket or use the contact form on the upper 
+right side under the "About" menu in the CrypTool 2.0 application.
+
+We changed the version number from 2.0 to 2.1 since we are now working on the successor of the CrypTool 2.0 release version.
+
+Sincerly yours,
+The CrypTool 2.1 Developer Team
+
+New components:
+- M-138
+- Cramer Shoup
+- Blake
+- Image Hash
+- Grøstl
+- M-138 Analyser
+- Vigenère Analyser
+- GNFS (General Number Field Sieve)
+- Watermark Creator
+- Transcriptor
+- Image Processor
+- Picture Viewer
+- Audio Input
+- Audio Output
+- Huffman
+
+Templates:
+- All Templates are now available in English and in German. Template language is based on user's system language
+- We created templates for all new components
+- We created a template that allows users to connect two CrypTool 2.1 to create a video and audio chat
+- We created two templates showing how to solve Kryptos K1 and K2 using the Vigenère Analyser
+
+Online Help:
+- Completed the online help (English and German)
+
+CrypCloud:
+We implemented the first version of the CrypCloud. The CrypCloud enables users to connect to a decentralized cloud network to work on distributed cryptanalysis combinging several instances of CrypTool 2. 
+CrypTool 2.1 users may create a user certificate using the cloud login to participate to the cloud. Right now, distributed brute-force attacks on symmetric cipers are possible using the Keysearcher, which is now compatible to the CrypCloud.
+Users are able to upload, download, and work on distribution jobs.
+
+Many bugs fixed...
+Many typos fixed...
+
 [b]Beta 11 (rc1)[b]
 This is a bug-fixing release and the release candidate 1. We think that we can release CT2 in mid of this year!!
 We hope you have as much fun using CrypTool 2.0 Beta 10 as we had creating it. If you find any bugs please do not 
