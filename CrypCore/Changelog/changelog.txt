@@ -31,7 +31,7 @@ New components:
 - Huffman
 
 Templates:
-- All Templates are now available in English and in German. Template language is based on user's system language.
+- All templates are now available in English and in German. Template language is based on user's system language.
 - We created templates for all new components.
 - We created a template that allows users to connect two CrypTool 2.1 instances to create a video and an audio chat.
 - We created two templates showing how to solve Kryptos K1 and K2 using the Vigenère Analyzer
