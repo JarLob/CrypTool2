@@ -45,9 +45,11 @@ namespace Cryptool.Plugins.AESVisualisation
         private int action = 1;
         private int roundNumber = 1;
         private byte[][] states = new byte[40][];
+        private byte[][] roundConstant = new byte[10][];
         private AESPresentation pres = new AESPresentation();
         private CStreamWriter outputStreamWriter = new CStreamWriter();
         static Random rnd = new Random();
+        private Boolean execute = true;
         AutoResetEvent buttonNextClickedEvent;
 
         #endregion
@@ -125,7 +127,10 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void PreExecution()
         {
-          
+            //if (text.Length != 16 || key.Length != 16)
+            //{
+            //    execute = false;
+            //}
         }
 
         /// <summary>
@@ -133,15 +138,24 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
-            
+            if (text.Length != 16 || key.Length != 16)
+            {
+                execute = false;
+            }
+            if (!execute)
+            {
+                return;
+            }
             ProgressChanged(0, 1);
             OutputStream = outputStreamWriter;
             OnPropertyChanged("OutputStream");
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            setRoundConstant();
             byte[] tempState = arrangeText(text);
             keyList[0] = arrangeText(key);
             states[0] = addKey(tempState, keyList[0]);           
             pres.tempState = tempState;
+            pres.roundConstant = this.roundConstant;
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 pres.setSBox();
@@ -162,8 +176,9 @@ namespace Cryptool.Plugins.AESVisualisation
 
         public void PostExecution()
         {
-            pres.buttonNextClickedEvent.Reset();
+            pres.buttonNextClickedEvent.Reset();          
             pres.autostep = false;
+            ProgressChanged(0, 1);
         }
 
         /// <summary>
@@ -172,6 +187,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
+            Thread.CurrentThread.Interrupt();
             pres.autostep = false;
             pres.buttonNextClickedEvent.Reset();
         }
@@ -1329,7 +1345,7 @@ namespace Cryptool.Plugins.AESVisualisation
             byte[] calc = new byte[4];
             for(int x = 1; x < 11; x++)
             {
-                byte[] roundConst = { Convert.ToByte(x), 0, 0, 0 };
+                byte[] roundConst = roundConstant[x - 1];
                 byte[] prevKey = { keyList[x - 1][15], keyList[x - 1][3], keyList[x - 1][7], keyList[x - 1][11] };
                 byte a;
                 byte b;
@@ -1366,6 +1382,20 @@ namespace Cryptool.Plugins.AESVisualisation
                 temp[15] = (byte)(temp[14] ^ keyList[x - 1][15]);
                 keyList[x] = temp;
             }
+        }
+
+        private void setRoundConstant()
+        {          
+            roundConstant[0] = new byte[] { 1, 0, 0, 0 };
+            roundConstant[1] = new byte[] { 2, 0, 0, 0 };
+            roundConstant[2] = new byte[] { 4, 0, 0, 0 };
+            roundConstant[3] = new byte[] { 8, 0, 0, 0 };
+            roundConstant[4] = new byte[] { 16, 0, 0, 0 };
+            roundConstant[5] = new byte[] { 32, 0, 0, 0 };
+            roundConstant[6] = new byte[] { 64, 0, 0, 0 };
+            roundConstant[7] = new byte[] { 128, 0, 0, 0 };
+            roundConstant[8] = new byte[] { 27, 0, 0, 0 };
+            roundConstant[9] = new byte[] { 54, 0, 0, 0 };
         }
         #endregion
 

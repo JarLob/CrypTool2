@@ -52,7 +52,7 @@
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <!--<Setter Property="Background" TargetName="border" Value="#FFF4F4F4"/>-->
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>                                          
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#FF838383"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -62,10 +62,11 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="420*" />
-            <RowDefinition Height="20*" />
-            <RowDefinition Height="20*" />
+            <RowDefinition Height="20*" MaxHeight="40"/>
+            <RowDefinition Height="210*" />
+            <RowDefinition Height="210*" />
+            <RowDefinition Height="20*" MaxHeight="40"/>
+            <RowDefinition Height="20*" MaxHeight="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="80*" />
@@ -80,38 +81,42 @@
             <ColumnDefinition Width="80*" />
             <ColumnDefinition Width="80*" />
         </Grid.ColumnDefinitions>
-        <Canvas Name="StartCanvas" Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="11" Visibility="Visible">
+        <Canvas Name="StartCanvas" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="11" Visibility="Visible">
             <Image Name="StartImage" Source="images/Start.png" Visibility="Visible" Width="569" Canvas.Left="73" Canvas.Top="9" Height="383"/>
         </Canvas>
         <!-- Region Button -->
-        <Button x:Name="keyButton" Content="Key Expansion" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="0" Click="keyButton_Click" Height="21"  />
-        <Button x:Name="round1Button" Content="Round1" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="round1Button_Click" />
-        <Button x:Name="round2Button" Content="Round2" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="round2Button_Click" />
-        <Button x:Name="round3Button" Content="Round3" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="round3Button_Click" />
-        <Button x:Name="round4Button" Content="Round4" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="round4Button_Click" />
-        <Button x:Name="round5Button" Content="Round5" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="round5Button_Click" />
-        <Button x:Name="round6Button" Content="Round6" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="round6Button_Click" />
-        <Button x:Name="round7Button" Content="Round7" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="round7Button_Click" />
-        <Button x:Name="round8Button" Content="Round8" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="round8Button_Click" />
-        <Button x:Name="round9Button" Content="Round9" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="round9Button_Click" />
-        <Button x:Name="round10Button" Content="Round10" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="round10Button_Click" />
-        <Button x:Name="playButton" Content="Next" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click" />
-        <Button x:Name="pauseButton" Content="Auto" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="pauseButton_Click"  />
-        <Button x:Name="nextStepButton" Content="Skip Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click" />
-        <Button x:Name="prevStepButton" Content="Prev. Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" />
+        <Button x:Name="keyButton" Content="Key Expansion" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="keyButton_Click"/>
+        <Button x:Name="round1Button" Content="Round1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="round1Button_Click" />
+        <Button x:Name="round2Button" Content="Round2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="round2Button_Click" />
+        <Button x:Name="round3Button" Content="Round3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="round3Button_Click" />
+        <Button x:Name="round4Button" Content="Round4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="round4Button_Click" />
+        <Button x:Name="round5Button" Content="Round5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="round5Button_Click" />
+        <Button x:Name="round6Button" Content="Round6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="round6Button_Click" />
+        <Button x:Name="round7Button" Content="Round7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="round7Button_Click" />
+        <Button x:Name="round8Button" Content="Round8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="round8Button_Click" />
+        <Button x:Name="round9Button" Content="Round9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="round9Button_Click" />
+        <Button x:Name="round10Button" Content="Round10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="round10Button_Click" />
+        <Button x:Name="playButton" Content="Next" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click" />
+        <Button x:Name="pauseButton" Content="Auto" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="pauseButton_Click"  />
+        <Button x:Name="nextStepButton" Content="Skip Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click" />
+        <Button x:Name="prevStepButton" Content="Prev. Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" />
         <Button x:Name="subByteButton" Content="Sub Bytes" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="subByteButton_Click" Visibility="Visible" />
         <Button x:Name="shiftRowButton" Content="Shift Row" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="shiftRowButton_Click" Visibility="Visible" />
         <Button x:Name="mixColButton" Content="Mix Col" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="mixColButton_Click" Visibility="Visible" />
         <Button x:Name="addKeyButton" Content="Add Key" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="addKeyButton_Click" Visibility="Visible" />
-        <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
-        <!-- EndRegion -->       
+        <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
+        <!-- EndRegion -->
         <!-- Region ShiftRow -->
-        <Grid Name="shiftRowGrid" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,121,32,121" Visibility="Hidden">
+        <TextBlock Name="shiftRowExplanation" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="230" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="7" Margin="27.137,10,10.863,160">
+            First, the second Row is shifted once to the left. Then the third row is shifted two towards the left and finally the third row is shifted three to the left. Then the overlapping bytes are transferred to the right to form a 4 x 4 matrix.
+        </TextBlock>
+        <Grid Name="shiftRowGrid" Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,121,32,101" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -122,6 +127,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2">
+                ShiftRow matrix
+            </TextBlock>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="3" Grid.Row="0" Name="border1">
                 <TextBlock Text="" Name="textBlock1"  TextAlignment="Center"/>
             </Border>
@@ -227,12 +235,16 @@
         </Grid>
         <!-- EndRegion -->
         <!--#region AddKey -->
-        <Grid Name="addKeyStateGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,34,232" Visibility="Hidden" MaxHeight="200">
+        <TextBlock Name="addKeyExplanation" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="7" Margin="30.188,19,13.812,71" >
+            The round key is added to the current state by XORing the bytes.
+        </TextBlock>
+        <Grid Name="addKeyStateGrid" MinHeight="80" MinWidth="80" MaxHeight="240" MaxWidth="240" Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10,5,34.167,50" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -240,6 +252,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                State matrix
+            </TextBlock>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Name="keyBorder1">
                 <TextBlock Text="" Name="keyTextBlock1"  TextAlignment="Center"/>
             </Border>
@@ -289,12 +304,13 @@
                 <TextBlock Text="" Name="keyTextBlock16"  TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="addKeyKeyGrid" MinHeight="80" MinWidth="80" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,232,34,10" Visibility="Hidden" MaxHeight="200">
+        <Grid Name="addKeyKeyGrid" MinHeight="80" MinWidth="80" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,30,34,10" Visibility="Hidden" MaxHeight="240" MaxWidth="240">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -302,6 +318,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                Key matrix
+            </TextBlock>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Name="keyBorder17">
                 <TextBlock Text="" Name="keyTextBlock17"  TextAlignment="Center"/>
             </Border>
@@ -351,12 +370,13 @@
                 <TextBlock Text="" Name="keyTextBlock32"  TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="addKeyResultGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="13,148,10,94" Grid.Column="4" Visibility="Hidden">
+        <Grid Name="addKeyResultGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="13,120,10,120" Grid.Column="4" Visibility="Hidden" MaxHeight="250" MaxWidth="250">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -364,6 +384,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+                Result matrix
+            </TextBlock>
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" Name="keyBorder33">
                 <TextBlock Text="" Name="keyTextBlock33"  TextAlignment="Center"/>
             </Border>
@@ -415,7 +438,13 @@
         </Grid>
         <!--#endregion-->
         <!-- Region SubByte -->
-        <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="340" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden">
+        <TextBlock Name="subByteExplanation" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="160" Height="160" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" Margin="54,0,0.5,40" >
+            First, a byte is transferred from the state matrix to the transition spot and split up.
+        </TextBlock>
+        <TextBlock Name="subByteExplanation1" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="160" Height="160" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" Margin="54,0,0.5,40" >
+            The corresponding byte in the S-Box is determined and placed into the result matrix.
+        </TextBlock>
+        <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="340" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="1" VerticalAlignment="Stretch"  Grid.RowSpan="2" HorizontalAlignment="Stretch" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition MinHeight="20"/>
                 <RowDefinition MinHeight="20"/>
@@ -1404,12 +1433,13 @@
                 </Border>-->
             <!--EndRegion-->
         </Grid>
-        <Grid Name="subByteStateGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,10,34,232" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" MaxHeight="200">
+        <Grid Name="subByteStateGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,10,34,40" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" MaxHeight="240" MaxWidth="240">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1417,6 +1447,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                State matrix
+            </TextBlock>
             <Border Name="sStateBorder1" Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Name="sStateTextBlock1" TextAlignment="Center"/>
             </Border>
@@ -1466,12 +1499,13 @@
                 <TextBlock Name="sStateTextBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="subByteResultGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,232,34,10" Grid.Row="1" RenderTransformOrigin="1.911,-0.144" Visibility="Hidden" MaxHeight="200">
+        <Grid Name="subByteResultGrid" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,40,34,10" Grid.Row="2" RenderTransformOrigin="1.911,-0.144" Visibility="Hidden" MaxHeight="240" MaxWidth="240">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1479,6 +1513,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Result matrix
+            </TextBlock>
             <Border Name="sResultBorder1" Grid.Column="0" Grid.Row="0" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Name="sResultTextBlock1" TextAlignment="Center"/>
             </Border>
@@ -1528,7 +1565,7 @@
                 <TextBlock Name="sResultTextBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="subByteTransitionGrid" MinHeight="85" MinWidth="125" Visibility="Hidden" Grid.Column="3" Margin="0,148,0,169" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Name="subByteTransitionGrid" MinHeight="85" MinWidth="125" Visibility="Hidden" Grid.Column="3" Margin="0,160,0,160" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxWidth="180" MaxHeight="120">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1550,12 +1587,13 @@
         </Grid>
         <!--EndRegion-->
         <!-- Region KeyExpansion-->
-        <Grid Name="expansionKeyGrid" Visibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxHeight="200" Margin="10,10,34,232">
+        <Grid Name="expansionKeyGrid" Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="3" MinHeight="80" MinWidth="80"  MaxWidth="200" MaxHeight="200" Margin="10,10,12,40">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1563,6 +1601,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                State matrix
+            </TextBlock>
             <Border Name="expansionKeyBorder1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Name="expansionKeyBlock1" TextAlignment="Center"/>
             </Border>
@@ -1612,7 +1653,7 @@
                 <TextBlock Name="expansionKeyBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="expansionTransitionGrid" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxHeight="200" Margin="10,10,60,232" Grid.ColumnSpan="3" Grid.Column="3">
+        <Grid Name="expansionTransitionGrid" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxWidth="200" MaxHeight="200" Margin="10,10,60,40" Grid.ColumnSpan="3" Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1661,7 +1702,7 @@
                 <TextBlock Name="expansionTransitionBlock12" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="expansionTransitionGrid1" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxHeight="200" Margin="10,237,12,5" Grid.ColumnSpan="2">
+        <Grid Name="expansionTransitionGrid1" Visibility="Hidden" Grid.Row="2" MinHeight="80" MinWidth="60" MaxWidth="150" MaxHeight="200" Margin="10,40,12,25" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1710,12 +1751,13 @@
                 <TextBlock Name="expansionTransition1Block12" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="expansionResultGrid" Visibility="Hidden" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxHeight="200" Margin="10,237,20,5">
+        <Grid Name="expansionResultGrid" Visibility="Hidden" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxWidth="200" MaxHeight="200" Margin="10,40,20,5">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1723,6 +1765,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Result matrix
+            </TextBlock>
             <Border Name="expansionResultBorder1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Name="expansionResultBlock1" TextAlignment="Center"/>
             </Border>
@@ -1772,19 +1817,26 @@
                 <TextBlock Name="expansionResultBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <TextBlock Name="expansionExplanation" Visibility="Hidden" FontSize="16" Text="First the last four bytes of the previous key are taken. Afterwards the last byte is placed at the front" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="29,10,16,254" Grid.ColumnSpan="4" Grid.Column="6"/>
-        <TextBlock Name="expansionExplanation1" Visibility="Hidden" FontSize="16" Text="Every byte is exchanged with the corresponding byte from the sBox" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="36,229,19,35" Grid.ColumnSpan="4" Grid.Column="2"/>
-        <TextBlock Name="expansionExplanation2" Visibility="Hidden" FontSize="16" Text="A round constant is added" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
-        <TextBlock Name="expansionExplanation3" Visibility="Hidden" FontSize="16" Text="Adding the first four bytes of the previous key gives you the first four bytes of the next key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
-        <TextBlock Name="expansionExplanation4" Visibility="Hidden" FontSize="16" Text="For column x of the new key you XOR column x from the previous key with column x-1 from the new key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <TextBlock Name="expansionExplanation" Visibility="Hidden" FontSize="16" Text="First, the last four bytes of the previous key are taken. Afterwards, the last byte is placed at the front" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Margin="29,10,16,254" Grid.ColumnSpan="4" Grid.Column="6"/>
+        <TextBlock Name="expansionExplanation1" Visibility="Hidden" FontSize="16" Text="Every byte is exchanged with the corresponding byte from the sBox" TextWrapping="Wrap" Width="200" VerticalAlignment="Bottom"  Grid.Row="1" Grid.RowSpan="2" Margin="36,200,19,64" Grid.ColumnSpan="4" Grid.Column="2"/>
+        <TextBlock Name="expansionExplanation2" Visibility="Hidden" FontSize="16" Text="A round constant is added" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <TextBlock Name="expansionExplanation3" Visibility="Hidden" FontSize="16" Text="Adding the first four bytes of the previous key gives you the first four bytes of the next key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
+        <TextBlock Name="expansionExplanation4" Visibility="Hidden" FontSize="16" Text="For column x of the new key you XOR column x from the previous key with column x-1 from the new key." TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Margin="10,10,52,254" Grid.ColumnSpan="4" Grid.Column="3"/>
         <!--EndRegion-->
         <!--Region MixCol-->
-        <Grid Name="mixColStateGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,10,20,239" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
+        <TextBlock Name="mixColExplanation" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="130" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="7" Margin="30.188,19,13.812,253" >
+            One column is taken from the current state and placed next to the multiplication matrix.
+        </TextBlock>
+        <TextBlock Name="mixColExplanation1" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="160" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="7" Margin="23.875,0,22.938,213" >
+            Then it is multiplied with the multiplication matrix to determine the next column of the next state.
+        </TextBlock>
+        <Grid Name="mixColStateGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,10,20,40" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="260" MaxWidth="260">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1792,6 +1844,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="3">
+                State matrix
+            </TextBlock>
             <Border Name="mStateBorder1" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
                 <TextBlock Name="mStateTextBlock1" TextAlignment="Center"/>
             </Border>
@@ -1841,12 +1896,13 @@
                 <TextBlock Name="mStateTextBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="mixColMatrixGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,214,67,35" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Name="mixColMatrixGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Margin="10,40,67,35" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1854,6 +1910,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Multiplication matrix
+            </TextBlock>
             <Border Name="mMatrixBorder1" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
                 <TextBlock Name="mMatrixTextBlock1" TextAlignment="Center" Text="2"/>
             </Border>
@@ -1903,12 +1962,13 @@
                 <TextBlock Name="mMatrixTextBlock16" TextAlignment="Center" Text="2"/>
             </Border>
         </Grid>
-        <Grid Name="mixColTransitionGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,214,68,35" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MaxHeight="200">
+        <Grid Name="mixColTransitionGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="3" Margin="10,40,68,35" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1916,6 +1976,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="3">
+                Transition column
+            </TextBlock>
             <Border Name="mTransitionBorder1" Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
                 <TextBlock Name="mTransitionTextBlock1" TextAlignment="Center"/>
             </Border>
@@ -1965,12 +2028,13 @@
                 <TextBlock Name="mTransitionTextBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="mixColResultGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="6" Margin="0,214,78,35" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid Name="mixColResultGrid" Visibility="Hidden" MinHeight="80" MinWidth="80" Grid.ColumnSpan="3" Grid.Column="6" Margin="0,40,68,35" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition Height="20"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1978,6 +2042,9 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Result matrix
+            </TextBlock>
             <Border Name="mResultBorder1" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
                 <TextBlock Name="mResultTextBlock1" TextAlignment="Center"/>
             </Border>

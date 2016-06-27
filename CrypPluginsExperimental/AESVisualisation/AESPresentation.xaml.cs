@@ -38,6 +38,7 @@ namespace AESVisualisation
         public byte[] key;
         bool first = true;
         bool expansion = true;
+        public byte[][] roundConstant;
 
         public AESPresentation()
         {
@@ -1120,6 +1121,12 @@ namespace AESVisualisation
             mixColStateGrid.Visibility = Visibility.Hidden;
             mixColResultGrid.Visibility = Visibility.Hidden;
             mixColTransitionGrid.Visibility = Visibility.Hidden;
+            shiftRowExplanation.Visibility = Visibility.Hidden;
+            addKeyExplanation.Visibility = Visibility.Hidden;
+            subByteExplanation.Visibility = Visibility.Hidden;
+            subByteExplanation1.Visibility = Visibility.Hidden;
+            mixColExplanation.Visibility = Visibility.Hidden;
+            mixColExplanation1.Visibility = Visibility.Hidden;
         }
 
         private void updateUI()
@@ -1211,6 +1218,8 @@ namespace AESVisualisation
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
+                    subByteExplanation1.Visibility = Visibility.Hidden;
+                    subByteExplanation.Visibility = Visibility.Visible;
                     tb.Background = Brushes.Green;
                 }, null);
                 wait();
@@ -1239,7 +1248,9 @@ namespace AESVisualisation
                 wait();
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                   sTransitionTextBlock2.Background = Brushes.Transparent;
+                    subByteExplanation.Visibility = Visibility.Hidden;
+                    subByteExplanation1.Visibility = Visibility.Visible;
+                    sTransitionTextBlock2.Background = Brushes.Transparent;
                     sTransitionTextBlock1.Background = Brushes.Green;
                 }, null);
                 wait();
@@ -1463,6 +1474,7 @@ namespace AESVisualisation
         {
             lightRemoveColor();
             invisible();
+            subByteExplanation.Visibility = Visibility.Visible;
             List<TextBlock> temp = createTextBlockList(4);
             int x = 0;
             foreach (TextBlock tb in temp)
@@ -1775,6 +1787,7 @@ namespace AESVisualisation
             rowSetBlockText(states[(roundNumber - 1) * 4 + action - 1]);
             shiftRowGrid.Visibility = Visibility.Visible;
             shiftRowButton.Background = Brushes.Aqua;
+            shiftRowExplanation.Visibility = Visibility.Visible;
         }
 
         private void rowSetBlockText(byte[] block)
@@ -1905,6 +1918,7 @@ namespace AESVisualisation
         {
             lightRemoveColor();
             invisible();
+            mixColExplanation.Visibility = Visibility.Visible;
             mixColButton.Background = Brushes.Aqua;
             setMixStateTransition(states[(roundNumber - 1) * 4 + action - 1]);
             mixColMatrixGrid.Visibility = Visibility.Visible;
@@ -1932,6 +1946,8 @@ namespace AESVisualisation
             int x = 0;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
+                mixColExplanation.Visibility = Visibility.Visible;
+                mixColExplanation1.Visibility = Visibility.Hidden;
                 while (x < 16)
                 {
                     if (x == 0 + z || x == 4 + z || x == 8 + z || x == 12 + z)
@@ -1960,6 +1976,7 @@ namespace AESVisualisation
             wait();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
+                mixColExplanation.Visibility = Visibility.Hidden;
                 while (x < 16)
                 {
                     if (x == 0 + z || x == 4 + z || x == 8 + z || x == 12 + z)
@@ -1973,6 +1990,7 @@ namespace AESVisualisation
             wait();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
+                mixColExplanation1.Visibility = Visibility.Visible;
                 while (y < 4)
                 {
                     matrixList[y].Background = Brushes.Green;
@@ -2094,6 +2112,7 @@ namespace AESVisualisation
             action = 4;
             resetAddKey();
             invisible();
+            addKeyExplanation.Visibility = Visibility.Visible;
             if(roundNumber == 0)
             {
                 keySetBlockText(tempState, key);
@@ -2550,7 +2569,7 @@ namespace AESVisualisation
                     }, null);
                     wait();                  
                 }
-                byte[] constant = { Convert.ToByte(roundNumber), 00, 00, 00 };
+                byte[] constant = roundConstant[roundNumber - 1];
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     expansionExplanation1.Visibility = Visibility.Hidden;
