@@ -70,7 +70,7 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
-        [PropertyInfo(Direction.InputData, "Text input", "Input the key", true)]
+        [PropertyInfo(Direction.InputData, "Text input", "Input the text to be encrypted", true)]
         public byte[] Text
         {
             get
