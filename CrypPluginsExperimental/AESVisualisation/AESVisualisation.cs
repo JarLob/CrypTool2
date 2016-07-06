@@ -158,7 +158,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.roundConstant = this.roundConstant;
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                pres.setSBox();
+                pres.createSBox();
                 pres.StartCanvas.Visibility = Visibility.Hidden;
                 pres.showButton();
             }, null);
@@ -168,7 +168,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.states = states;
             pres.keyList = keyList;
             pres.exectue();
-            outputStreamWriter.Write(states[39]);
+            outputStreamWriter.Write(rearrangeText(states[39]));
             outputStreamWriter.Close();
             buttonNextClickedEvent = pres.buttonNextClickedEvent;
             ProgressChanged(1, 1);
@@ -1340,13 +1340,35 @@ namespace Cryptool.Plugins.AESVisualisation
             return result;
         }
 
+        private byte[] rearrangeText(byte[] input)
+        {
+            byte[] result = new byte[16];
+            result[0] = input[0];
+            result[1] = input[4];
+            result[2] = input[8];
+            result[3] = input[12];
+            result[4] = input[1];
+            result[5] = input[5];
+            result[6] = input[9];
+            result[7] = input[13];
+            result[8] = input[2];
+            result[9] = input[6];
+            result[10] = input[10];
+            result[11] = input[14];
+            result[12] = input[3];
+            result[13] = input[7];
+            result[14] = input[11];
+            result[15] = input[15];
+            return result;
+        }
+
         private void expandKey()
         {
             byte[] calc = new byte[4];
             for(int x = 1; x < 11; x++)
             {
                 byte[] roundConst = roundConstant[x - 1];
-                byte[] prevKey = { keyList[x - 1][15], keyList[x - 1][3], keyList[x - 1][7], keyList[x - 1][11] };
+                byte[] prevKey = {  keyList[x - 1][7], keyList[x - 1][11], keyList[x - 1][15], keyList[x - 1][3] };
                 byte a;
                 byte b;
                 int z = 0;
