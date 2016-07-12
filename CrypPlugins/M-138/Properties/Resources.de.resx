@@ -117,40 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CaseSensitiveCap" xml:space="preserve">
-    <value>Groß-/Kleinschreibung beachten</value>
-  </data>
-  <data name="CaseSensitiveDes" xml:space="preserve">
-    <value>Wähle aus, ob das Werkyeug Groß- und Kleinschreibung beachten soll.</value>
-  </data>
-  <data name="DecryptSelection" xml:space="preserve">
-    <value>Entschlüsseln</value>
-  </data>
-  <data name="DeleteSel" xml:space="preserve">
-    <value>Loeschen</value>
-  </data>
-  <data name="EncryptDeryptCap" xml:space="preserve">
+  <data name="ActionCaption" xml:space="preserve">
     <value>Entschlüsseln / Verschlüsseln</value>
   </data>
-  <data name="EncryptDeryptDes" xml:space="preserve">
-    <value>Wähle aus, ob der eingegebene Text Ver- oder Entschlüsselt werden soll.</value>
-  </data>
-  <data name="EncryptSelection" xml:space="preserve">
+  <data name="ActionList1" xml:space="preserve">
     <value>Verschlüsseln</value>
   </data>
-  <data name="IgnoreSel" xml:space="preserve">
-    <value>Ignorieren</value>
+  <data name="ActionList2" xml:space="preserve">
+    <value>Entschlüsseln</value>
   </data>
-  <data name="InvalidCarCap" xml:space="preserve">
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Wähle aus, ob der eingegebene Text Ver- oder Entschlüsselt werden soll.</value>
+  </data>
+  <data name="CaseSensitivyCaption" xml:space="preserve">
+    <value>Groß-/Kleinschreibung beachten</value>
+  </data>
+  <data name="CaseSensitivyTooltip" xml:space="preserve">
+    <value>Wähle aus, ob das Werkyeug Groß- und Kleinschreibung beachten soll.</value>
+  </data>
+  <data name="InvalidCharacterHandlingCaption" xml:space="preserve">
     <value>Behandlung unbekannter Zeichen.</value>
   </data>
-  <data name="InvalidCarDes" xml:space="preserve">
+  <data name="InvalidCharacterHandlingList1" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="InvalidCharacterHandlingList2" xml:space="preserve">
+    <value>Ignorieren</value>
+  </data>
+  <data name="InvalidCharacterHandlingList3" xml:space="preserve">
+    <value>Ersetzen durch '?'</value>
+  </data>
+  <data name="InvalidCharacterHandlingTooltip" xml:space="preserve">
     <value>Wähle aus, wie unbekannte Zeichen im Text behandelt werden sollen.</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Schlüssel</value>
   </data>
-  <data name="KeyDescription" xml:space="preserve">
+  <data name="KeyTooltip" xml:space="preserve">
     <value>Der zu nutzende Schlüssel muss in folgendem Format angegeben
 werden: Streifen 1, Streifen 2, ... , Streifen 25 / Offset. Die Zeichen
 zur Trennung der Streifen und des Offsets können in den Einstellungen
@@ -159,34 +162,37 @@ definiert werden.</value>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138</value>
   </data>
-  <data name="PluginCaptionTooltip" xml:space="preserve">
+  <data name="PluginTooltip" xml:space="preserve">
     <value>M-138, eine polyalphabetische Verschlüsselung der USA aus dem frühen 20. Jahrhundert.</value>
   </data>
-  <data name="ReplaceSel" xml:space="preserve">
-    <value>Ersetzen durch '?'</value>
-  </data>
-  <data name="SeparatorOffCap" xml:space="preserve">
+  <data name="SeparatorOffCharCaption" xml:space="preserve">
     <value>Offset Trennzeichen</value>
   </data>
-  <data name="SeparatorOffDes" xml:space="preserve">
+  <data name="SeparatorOffCharTooltip" xml:space="preserve">
     <value>Zeichen, das genutzt wird, um den Offset von den Streifen zu trennen.</value>
   </data>
-  <data name="SeparatorStripCap" xml:space="preserve">
+  <data name="SeparatorStripCaption" xml:space="preserve">
     <value>Streifen Trennzeichen</value>
   </data>
-  <data name="SeparatorStripDes" xml:space="preserve">
+  <data name="SeparatorStripTooltip" xml:space="preserve">
     <value>Zeichen, das genutzt wird, um die genutzten Streifen voneinander zu trennen.</value>
+  </data>
+  <data name="StripsCaption" xml:space="preserve">
+    <value>Streifen</value>
+  </data>
+  <data name="StripsTooltip" xml:space="preserve">
+    <value>Geben Sie die zu verwendenden Streifen als String ein, wobei jeder Streifen in einer Zeile steht.</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
     <value>Texteingabe</value>
   </data>
-  <data name="TextInputDescription" xml:space="preserve">
+  <data name="TextInputTooltip" xml:space="preserve">
     <value>Text, der Ver- oder Entschlüsselt werden soll.</value>
   </data>
   <data name="TextOutputCaption" xml:space="preserve">
     <value>Textausgabe</value>
   </data>
-  <data name="TextOutputDescription" xml:space="preserve">
+  <data name="TextOutputTooltip" xml:space="preserve">
     <value>Der resultierende Klartext/Geheimtext</value>
   </data>
 </root>

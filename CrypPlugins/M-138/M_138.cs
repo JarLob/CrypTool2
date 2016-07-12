@@ -34,7 +34,7 @@ using System.Windows.Media;
 namespace Cryptool.M_138
 {
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.M_138.Properties.Resources", "PluginCaption", "PluginCaptionTooltip", "M-138/userdoc.xml", "M-138/icon.png")]
+    [PluginInfo("Cryptool.M_138.Properties.Resources", "PluginCaption", "PluginTooltip", "M-138/userdoc.xml", "M-138/icon.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
     public class M_138 : ICrypComponent
     {
@@ -42,46 +42,45 @@ namespace Cryptool.M_138
 
         private readonly M_138Settings settings = new M_138Settings();
         private readonly M138Visualisation visualisation = new M138Visualisation();
-        enum Commands { Encrypt, Decryp };
+        enum Commands { Encrypt, Decrypt };
         private bool _stopped = true;
-        List<int> _characterCases;
         private string[,] toVisualize;
-        private static string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private List<string> stripes = new List<string>();
-        private int _numberOfStripes = 0;
+        private static string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private List<string> strips = new List<string>();
         private int[] TextNumbers;
-        private char _separatorStripes = ',';
-        private char _separatorOffset = '/';
         int _offset;
         int[] _stripNumbers = null;
-        private List<int[]> numStripes = new List<int[]>();
-        private int _invalidChar = 0;
+        private List<int[]> numStrips = new List<int[]>();
         private List<string> _ignoredCharacters = new List<string>();
-        private bool _isCaseSensitive = false;
         string[,] tmpToVis;
         string[] colNames;
-
-
-
+        
         #endregion
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputDescription")]
+        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip")]
         public string TextInput
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "KeyCaption", "KeyDescription")]
+        [PropertyInfo(Direction.InputData, "KeyCaption", "KeyTooltip")]
         public string Key
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputDescription")]
+        [PropertyInfo(Direction.InputData, "StripsCaption", "StripsTooltip", false)]
+        public string Strips
+        {
+            get;
+            set;
+        }
+
+        [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip")]
         public string TextOutput
         {
             get;
@@ -135,67 +134,28 @@ namespace Cryptool.M_138
         /// </summary>
         public void Execute()
         {
+            strips = SetStrips(string.IsNullOrEmpty(Strips) ? LoadStrips() : Strips);
+            
             ProgressChanged(0, 1);
 
             //Invalid character handling
-            _invalidChar = settings.InvalidCharacterHandling;
-            if (_invalidChar == 0) //Remove
-            {
-                TextInput = RemoveInvalidChars(TextInput, alphabet);
-            }
+            if (settings.InvalidCharacterHandling == 0) //Remove
+                TextInput = RemoveInvalidChars(TextInput, Alphabet);
             else
-            {
                 _ignoredCharacters = new List<string>();
-            }
+            
+            if (!splitKey()) return;
 
-            //Case sensitivity
-            _isCaseSensitive = settings.CaseSensitivity;
-            if (_isCaseSensitive)
+            TextNumbers = MapTextIntoNumberSpace(TextInput.ToUpper(), Alphabet, settings.InvalidCharacterHandling);
+
+            if (_offset > Alphabet.Length)
             {
-                _characterCases = new List<int>(); //Save Cases of characters. 0 -> Lower case, 1 -> upper case
-                int i = 0;
-                foreach (char c in TextInput.ToArray())
-                {
-                    if (Char.IsUpper(c))
-                    {
-                        _characterCases.Add(1);
-                    }
-                    else if (Char.IsLower(c))
-                    {
-                        _characterCases.Add(0);
-                    }
-                    else
-                    {
-                        _characterCases.Add(2);
-                        //Special Characters are neither upper nor lower case
-                    }
-                    i++;
-                }
+                GuiLogMessage("Offset " + _offset + " is larger than strip length " + Alphabet.Length + " and will be truncated", NotificationLevel.Warning);
+                _offset %= Alphabet.Length;
             }
-            TextInput = TextInput.ToUpper(); //Just use upper cases internally
+            
+            DeEnCrypt(settings.Action);
 
-            setSeparator();
-            TextNumbers = MapTextIntoNumberSpace(TextInput, alphabet, _invalidChar);
-            splitKey();
-
-            if (_offset > alphabet.Length)
-            {
-                GuiLogMessage("Offset " + _offset + " is larger than strip length " + alphabet.Length + " and will be truncated", NotificationLevel.Warning);
-                _offset = _offset % alphabet.Length;
-            }
-
-            switch (settings.ModificationType)
-            {
-                case (int)Commands.Encrypt:
-                    Encrypt();
-                    break;
-                case (int)Commands.Decryp:
-                    Decrypt();
-                    break;
-                default:
-                    GuiLogMessage("Invalid Selection", NotificationLevel.Error);
-                    return;
-            }
             OnPropertyChanged("TextOutput");
             ProgressChanged(1, 1);
         }
@@ -222,7 +182,6 @@ namespace Cryptool.M_138
         /// </summary>
         public void Initialize()
         {
-            readStripes();
             try
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -273,21 +232,15 @@ namespace Cryptool.M_138
         #endregion
 
         #region Helpers
-        private void readStripes()
+        
+        private List<string> SetStrips(string text)
         {
-            StringBuilder sb = new StringBuilder();
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"), FileMode.Open, FileAccess.Read))
-            {
-                using (var file = new StreamReader(fileStream))
-                {
-                    string line = "";
-                    while ((line = file.ReadLine()) != null)
-                    {
-                        stripes.Add(line);
-                    }
-                    file.Close();
-                }
-            }
+            return text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        }
+
+        private string LoadStrips()
+        {
+            return File.ReadAllText(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"));
         }
 
         private string RemoveInvalidChars(string text, string alphabet)
@@ -307,6 +260,7 @@ namespace Cryptool.M_138
         {
             var numbers = new int[text.Length];
             var position = 0;
+
             if (inv == 0)
             {
                 foreach (char c in text)
@@ -334,6 +288,7 @@ namespace Cryptool.M_138
                     position++;
                 }
             }
+
             return numbers;
         }
 
@@ -341,6 +296,7 @@ namespace Cryptool.M_138
         {
             var builder = new StringBuilder();
             int counter = 0;
+
             if (inv == 0)
             {
                 foreach (char c in numbers)
@@ -370,21 +326,25 @@ namespace Cryptool.M_138
                     }
                 }
             }
+
             return builder.ToString();
         }
 
         private void DeEnCrypt(int deOrEncrypt)
         {
             int _rows = TextNumbers.Length;
-            int _columns = stripes[0].Length;
+            int _columns = strips[0].Length;
             int[] output = new int[_rows];
             toVisualize = new String[_rows + 1, _columns + 2];
 
-            numStripes.Clear();
-            for (int r = 0; r < _stripNumbers.Length; r++) //Create a List of all used Stripes mapped to numbers instead of characters
-            {
-                numStripes.Add(MapTextIntoNumberSpace(stripes[_stripNumbers[r]], alphabet, _invalidChar));
-            }
+            toVisualize[0, 1] = "Strip"; ;  //Top Left field
+            toVisualize[0, 0] = "Row";      //Top right field
+
+            //Create a List of all used Strips mapped to numbers instead of characters
+            numStrips = _stripNumbers.Select(i => MapTextIntoNumberSpace(strips[i], Alphabet, settings.InvalidCharacterHandling)).ToList();
+
+            for (int c = 0; c < _columns; c++)
+                toVisualize[0, c + 2] = c.ToString(); //First row of Visualisation
 
             int r_counter = 0;
             for (int r = 0; r < _rows; r++)
@@ -392,134 +352,58 @@ namespace Cryptool.M_138
                 int _usedStrip = r_counter % _stripNumbers.Length;
                 toVisualize[r + 1, 0] = (r + 1).ToString(); //Fill first column of Visualisation
                 toVisualize[r + 1, 1] = _stripNumbers[_usedStrip].ToString(); //Fill second column of Visualisation
-                int[] currentStrip = numStripes[_usedStrip];
-                int isAt;
-                int counter = 0;
-                if (TextNumbers[r] < 0)
+                int[] currentStrip = numStrips[_usedStrip];
+
+                int isAt = (TextNumbers[r] < 0) ? -1 : Array.IndexOf(currentStrip, TextNumbers[r]); // Location of the Plaintext letter
+
+                if (isAt == -1)
                 {
-                    isAt = -1;
+                    for (int c = 0; c < _columns; c++)
+                        toVisualize[r + 1, c + 2] = "?";
+                    output[r] = -1;
                 }
                 else
                 {
-                    isAt = Array.IndexOf(currentStrip, TextNumbers[r]); //Location of the Plaintext letter
-                }
-
-                for (int c = 0; c < _columns; c++)
-                {
-                    toVisualize[0, c + 2] = c.ToString(); //First row of Visualisation
                     if (deOrEncrypt == (int)Commands.Encrypt)
                     {
-                        if (isAt != -1)
-                        {
-                            toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString(); //Rest of Visualisation
-                            r_counter++;
-                        }
-                        else
-                        {
-                            toVisualize[r + 1, c + 2] = "?"; //Can't show strips for invalid characters
-                        }
-                    }
-                    else if (deOrEncrypt == (int)Commands.Decryp)
-                    {
-                        if (isAt != -1)
-                        {
-                            toVisualize[r + 1, c + 2] = alphabet[currentStrip[(isAt - c + alphabet.Length) % currentStrip.Length]].ToString(); //Rest of Visualisation
-                            r_counter++;
-                        }
-                        else
-                        {
-                            toVisualize[r + 1, c + 2] = "?";
-                        }
+                        for (int c = 0; c < _columns; c++)
+                            toVisualize[r + 1, c + 2] = Alphabet[currentStrip[(isAt + c) % currentStrip.Length]].ToString();
+                        output[r] = currentStrip[(isAt + _offset) % Alphabet.Length];
                     }
                     else
                     {
-                        //This should never happen
+                        for (int c = 0; c < _columns; c++)
+                            toVisualize[r + 1, c + 2] = Alphabet[currentStrip[(isAt + Alphabet.Length - c) % currentStrip.Length]].ToString();
+                        output[r] = currentStrip[(isAt + Alphabet.Length - _offset) % Alphabet.Length];
                     }
-
+                    r_counter++;
                 }
-                switch (deOrEncrypt)
-                {
-                    case (int)Commands.Encrypt:
-                        if (isAt != -1)
-                        {
-                            output[r] = currentStrip[(isAt + _offset) % alphabet.Length];
-                        }
-                        else
-                        {
-                            output[r] = -1;
-                        }
-                        break;
-                    case (int)Commands.Decryp:
-                        if (isAt != -1)
-                        {
-                            output[r] = currentStrip[(isAt - _offset + alphabet.Length) % alphabet.Length];
-                        }
-                        else
-                        {
-                            output[r] = -1;
-                        }
-                        break;
-                    default:
-                        //This should never happen
-                        break;
-                }
-
             }
-            toVisualize[0, 1] = "Strip"; ; //Top Left field
-            toVisualize[0, 0] = "Row"; //Top right field
+
 
             //Column Headers for Visualisation
             colNames = new string[_columns + 2];
             for (int i = 0; i < _columns + 2; i++)
-            {
                 colNames[i] = toVisualize[0, i];
-            }
 
             tmpToVis = new string[_rows, _columns + 2];
             for (int i = 0; i < (_rows); i++)
-            {
                 for (int j = 0; j < _columns + 2; j++)
-                {
                     tmpToVis[i, j] = toVisualize[i + 1, j];
-                }
-            }
 
-            String tmpOutput = MapNumbersIntoTextSpace(output, alphabet, _invalidChar);
-            if (_isCaseSensitive)
-            {
-                StringBuilder tmpStringBuilder = new StringBuilder();
-                int i = 0;
+            String tmp = MapNumbersIntoTextSpace(output, Alphabet, settings.InvalidCharacterHandling);
 
-                foreach (char c in tmpOutput.ToArray())
-                {
-                    if (_characterCases[i] == 0)
-                    {
-                        tmpStringBuilder.Append(Char.ToLower(tmpOutput[i]));
-                    }
-                    else if (_characterCases[i] == 1)
-                    {
-                        tmpStringBuilder.Append(Char.ToUpper(tmpOutput[i]));
-                    }
-                    else
-                    {
-                        tmpStringBuilder.Append(tmpOutput[i]);
-                    }
-                    i++;
-                }
-                tmpOutput = tmpStringBuilder.ToString();
-            }
+            if (settings.CaseSensitivity)
+                tmp = new string(tmp.Select((c, k) => Char.IsLower(TextInput[k]) ? Char.ToLower(c) : c).ToArray());
 
-            TextOutput = tmpOutput;
+            TextOutput = tmp;
 
             if (visualisation.IsVisible)
-            {
                 UpdateGUI();
-            }
         }
 
         private void UpdateGUI()
         {
-
             try
             {
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -537,83 +421,58 @@ namespace Cryptool.M_138
             catch (Exception e)
             {
             }
-
         }
 
         private void visibilityHasChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (visualisation.IsVisible)
-            {
                 UpdateGUI();
-            }
         }
 
-        private void Encrypt()
+        private bool splitKey()
         {
-            DeEnCrypt((int)Commands.Encrypt);
-        }
-        private void Decrypt()
-        {
-            DeEnCrypt((int)Commands.Decryp);
-        }
+            try
+            {
+                char sep = "/,."[settings.SeparatorOffChar];
 
-        private void setSeparator()
-        {
-            switch (settings.SeparatorStripChar)
-            {
-                case 0:
-                    _separatorStripes = ',';
-                    break;
-                case 1:
-                    _separatorStripes = '.';
-                    break;
-                case 2:
-                    _separatorStripes = '/';
-                    break;
-            }
+                if (Key.IndexOf(sep) < 0)
+                    throw new Exception("The key contains no offset separator '" + sep + "'.");
 
-            switch (settings.SeparatorOffChar)
-            {
-                case 0:
-                    _separatorOffset = '/';
-                    break;
-                case 1:
-                    _separatorOffset = ',';
-                    break;
-                case 2:
-                    _separatorOffset = '.';
-                    break;
-            }
-        }
+                string[] splitted;
+                splitted = Key.Split(sep);
+                _offset = Convert.ToInt32(splitted[1]);
 
-        private void splitKey()
-        {
-            string[] splitted;
-            splitted = Key.Split(_separatorOffset);
-            _offset = Convert.ToInt32(splitted[1]);
-            string[] s1 = splitted[0].Split(_separatorStripes);
-            if (s1[s1.Length - 1].Contains("/") || s1[s1.Length - 1].Contains(",") || s1[s1.Length - 1].Contains(";") || s1[s1.Length - 1].Contains(".") || s1[s1.Length - 1].Equals(""))
-            {
-                return;
-            }
-            _stripNumbers = new int[s1.Length];
-            for (int i = 0; i < s1.Length; i++)
-            {
-                _stripNumbers[i] = Convert.ToInt32(s1[i]);
-                if (_stripNumbers[i] > stripes.Count)
+                sep = ",./"[settings.SeparatorStripChar];
+
+                List<int> list = new List<int>();
+                foreach (var ofs in splitted[0].Split(sep))
                 {
-                    GuiLogMessage("Selected strip " + _stripNumbers[i] + " is larger than the ammount of available stripes " + stripes.Count + ". Using default strip 1 instead", NotificationLevel.Error);
-                    _stripNumbers[i] = 1;
+                    int n = Convert.ToInt32(ofs);
+                    if (n > strips.Count)
+                    {
+                        GuiLogMessage("Selected strip " + n + " is larger than the number of available strips " + strips.Count + ". Using default strip 1 instead.", NotificationLevel.Warning);
+                        n = 1;
+                    }
+                    list.Add(n);
                 }
+
+                _stripNumbers = list.ToArray();
             }
+            catch(Exception ex)
+            {
+                GuiLogMessage("Error while parsing key: " + ex.Message, NotificationLevel.Error);
+                return false;
+            }
+
+            return true;
         }
+
         private void Binding2DArrayToListView(DataGrid dataGrid, string[,] data, string[] columnNames)
         {
             dataGrid.AutoGeneratingColumn += dgvMailingList_AutoGeneratingColumn;
             Check2DArrayMatchColumnNames(data, columnNames);
             DataTable dt = Convert2DArrayToDataTable(data, columnNames);
             dataGrid.ItemsSource = dt.DefaultView;
-
         }
 
         private void dgvMailingList_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -642,6 +501,7 @@ namespace Cryptool.M_138
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.HorizontalContentAlignmentProperty, HorizontalAlignment.Center));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.VerticalContentAlignmentProperty, VerticalAlignment.Center));
             }
+
             return;
         }
 

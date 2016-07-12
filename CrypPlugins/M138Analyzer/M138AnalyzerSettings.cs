@@ -37,7 +37,7 @@ namespace Cryptool.M138Analyzer
 
         #region TaskPane Settings
 
-        [TaskPane("MethodCap", "MethodDes", null, 0, false, ControlType.ComboBox, new string[] { "KnownPlaintextDes", "HillClimbingDes", "PartKnowPlainDes" })]
+        [TaskPane("MethodCaption", "MethodTooltip", null, 0, false, ControlType.ComboBox, new string[] { "MethodList1", "MethodList2", "MethodList3" })]
         public int Method
         {
             get
@@ -53,8 +53,8 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("LanguageCap", "LanguageDes", null, 4, false, ControlType.ComboBox, new string[] { "EnglishDes", "GermanDes" })]
-        public int LanguageSelection
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 4, false, ControlType.ComboBox, new string[] { "LanguageList1", "LanguageList2" })]
+        public int Language
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("KeyLengthCap", "KeyLengthDes", null, 1, false, ControlType.TextBox)]
+        [TaskPane("KeyLengthCaption", "KeyLengthTooltip", null, 1, false, ControlType.TextBox)]
         public int KeyLengthUserSelection
         {
             get
@@ -85,7 +85,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("MinOffsetCap", "MinOffsetDes", null, 2, false, ControlType.TextBox)]
+        [TaskPane("MinOffsetCaption", "MinOffsetTooltip", null, 2, false, ControlType.TextBox)]
         public int MinOffsetUserSelection
         {
             get
@@ -101,7 +101,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("MaxOffsetCap", "MaxOffsetDes", null, 3, false, ControlType.TextBox)]
+        [TaskPane("MaxOffsetCaption", "MaxOffsetTooltip", null, 3, false, ControlType.TextBox)]
         public int MaxOffsetUserSelection
         {
             get
@@ -117,7 +117,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("HillClimbRestartsCap", "HillClimbRestartsDes", null, 5, false, ControlType.TextBox)]
+        [TaskPane("HillClimbRestartsCaption", "HillClimbRestartsTooltip", null, 5, false, ControlType.TextBox)]
         public string HillClimbRestarts
         {
             get
@@ -133,7 +133,7 @@ namespace Cryptool.M138Analyzer
             }
         }
 
-        [TaskPane("FastConvergeCap", "FastConvergeDes", null, 6, false, ControlType.CheckBox)]
+        [TaskPane("FastConvergeCaption", "FastConvergeTooltip", null, 6, false, ControlType.CheckBox)]
         public bool FastConverge
         {
             get

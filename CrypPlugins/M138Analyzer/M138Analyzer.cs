@@ -31,7 +31,7 @@ using System.Collections.ObjectModel;
 namespace Cryptool.M138Analyzer
 {
     [Author("Nils Rehwald", "nilsrehwald@gmail.com", "Uni Kassel", "https://www.ais.uni-kassel.de")]
-    [PluginInfo("Cryptool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltoip", "M138Analyzer/userdoc.xml", "M138Analyzer/icon.png")]
+    [PluginInfo("Cryptool.M138Analyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "M138Analyzer/userdoc.xml", "M138Analyzer/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class M138Analyzer : ICrypComponent
     {
@@ -84,29 +84,36 @@ namespace Cryptool.M138Analyzer
         #region Data Properties
 
         //Inputs
-        [PropertyInfo(Direction.InputData, "PlaintextInputDes", "PlaintextInputDescription", "Input tooltip description")]
+        [PropertyInfo(Direction.InputData, "PlaintextCaption", "PlaintextTooltip")]
         public string Plaintext
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "CiphertextInputDes", "CiphertextInputDescription", "Input tooltip description")]
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
         public string Ciphertext
         {
             get;
             set;
         }
 
+        [PropertyInfo(Direction.InputData, "StripsCaption", "StripsTooltip", false)]
+        public string Strips
+        {
+            get;
+            set;
+        }
+
         //Outputs
-        [PropertyInfo(Direction.OutputData, "ResultTextDes", "ResultTextDescription", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "ResultTextCaption", "ResultTextTooltip")]
         public string ResultText
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "KeyOutputDes", "KeyOutputDescription", "Output tooltip description")]
+        [PropertyInfo(Direction.OutputData, "CalculatedKeyCaption", "CalculatedKeyTooltip")]
         public string CalculatedKey
         {
             get;
@@ -145,6 +152,8 @@ namespace Cryptool.M138Analyzer
         /// </summary>
         public void Execute()
         {
+            StripList = string.IsNullOrEmpty(Strips) ? LoadStripes(Alphabet) : SetStripes(Strips, Alphabet);
+
             ProgressChanged(0, 1);
             _isStopped = false;
 
@@ -153,10 +162,10 @@ namespace Cryptool.M138Analyzer
             {
                 ((M138AnalyzerPresentation)Presentation).BestList.Clear();
             }, null);
+
             // Get Settings
             getUserSelections();
-
-
+            
             switch (Attack)
             {
                 case 0: //Known Plaintext
@@ -207,7 +216,6 @@ namespace Cryptool.M138Analyzer
                             int _cachedKeyLength = _keysForOffset.Count;
                             for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
                             {
-
                                 if (_keysForOffset[_keyLocation].Count > 1)
                                 {
                                     sb.Append("[");
@@ -247,7 +255,7 @@ namespace Cryptool.M138Analyzer
                     }
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
                     RetryCounter = 0;
-                    _selectedLanguage = settings.LanguageSelection;
+                    _selectedLanguage = settings.Language;
 
                     int _restartNtimes;
                     int _tmpTextLength = CiphertextNumbers.Length;
@@ -535,14 +543,11 @@ namespace Cryptool.M138Analyzer
                     OnPropertyChanged("CalculatedKey");
                     OnPropertyChanged("ResultText");
                     break;
-
-                case 3:
-                    break;
+                    
                 default:
                     break;
             }
-
-
+            
             ProgressChanged(1, 1);
         }
 
@@ -570,7 +575,7 @@ namespace Cryptool.M138Analyzer
         /// </summary>
         public void Initialize()
         {
-            StripList = LoadStripes(Alphabet);
+            //StripList = LoadStripes(Alphabet);
             Trigrams = Load3Grams(Alphabet);
             Quadgrams = Load4Grams(Alphabet);
         }
@@ -580,6 +585,7 @@ namespace Cryptool.M138Analyzer
         /// </summary>
         public void Dispose()
         {
+            Strips = null;
         }
 
         #endregion
@@ -991,6 +997,7 @@ namespace Cryptool.M138Analyzer
 
         private int[] MapTextIntoNumberSpace(string text, string alphabet)
         {
+            //return text.Select(c => alphabet.IndexOf(c)).ToArray();
             int[] numbers = new int[text.Length];
             int position = 0;
             foreach (char c in text)
@@ -1089,8 +1096,18 @@ namespace Cryptool.M138Analyzer
                 return Quadgrams;
             }
         }
+        
+        private List<int[]> SetStripes(string text, string alphabet)
+        {
+            var stripes = text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            return stripes.Select(s => MapTextIntoNumberSpace(s, alphabet)).ToList();
+        }
+
         private List<int[]> LoadStripes(string alphabet)
         {
+            string text = File.ReadAllText(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"));
+            return SetStripes(text, alphabet);
+
             List<int[]> _tmpStripes = new List<int[]>();
             StringBuilder sb = new StringBuilder();
             using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"), FileMode.Open, FileAccess.Read))

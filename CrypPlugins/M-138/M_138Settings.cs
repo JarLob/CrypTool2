@@ -34,8 +34,8 @@ namespace Cryptool.M_138
 
         #region TaskPane Settings
 
-        [TaskPane("EncryptDeryptCap", "EncryptDeryptDes", null, 0, false, ControlType.ComboBox, new string[] { "EncryptSelection", "DecryptSelection" })]
-        public int ModificationType
+        [TaskPane("ActionCaption", "ActionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
+        public int Action
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Cryptool.M_138
             }
         }
 
-        [TaskPane("SeparatorStripCap", "SeparatorStripDes", null, 0, false, ControlType.ComboBox, new string[] {  ",", ".", "/" })]
+        [TaskPane("SeparatorStripCaption", "SeparatorStripTooltip", null, 1, false, ControlType.ComboBox, new string[] {  ",", ".", "/" })]
         public int SeparatorStripChar
         {
             get
@@ -66,7 +66,7 @@ namespace Cryptool.M_138
             }
         }
 
-        [TaskPane("SeparatorOffCap", "SeparatorOffDes", null, 0, false, ControlType.ComboBox, new string[] { "/", ",", "." })]
+        [TaskPane("SeparatorOffCharCaption", "SeparatorOffCharTooltip", null, 2, false, ControlType.ComboBox, new string[] { "/", ",", "." })]
         public int SeparatorOffChar
         {
             get
@@ -82,7 +82,7 @@ namespace Cryptool.M_138
             }
         }
 
-        [TaskPane("InvalidCarCap", "InvalidCarDesDes", null, 0, false, ControlType.ComboBox, new string[] { "DeleteSel", "IgnoreSel", "ReplaceSel" })]
+        [TaskPane("InvalidCharacterHandlingCaption", "InvalidCharacterHandlingTooltip", null, 3, false, ControlType.ComboBox, new string[] { "InvalidCharacterHandlingList1", "InvalidCharacterHandlingList2", "InvalidCharacterHandlingList3" })]
         public int InvalidCharacterHandling
         {
             get
@@ -98,7 +98,7 @@ namespace Cryptool.M_138
             }
         }
 
-        [TaskPane("CaseSensitiveCap", "CaseSensitiveDes", null, 0, false, ControlType.CheckBox)]
+        [TaskPane("CaseSensitivyCaption", "CaseSensitivyTooltip", null, 4, false, ControlType.CheckBox)]
         public bool CaseSensitivity
         {
             get

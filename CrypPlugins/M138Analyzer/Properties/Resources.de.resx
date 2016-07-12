@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CiphertextInputDes" xml:space="preserve">
+  <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>
   </data>
-  <data name="CiphertextInputDescription" xml:space="preserve">
+  <data name="CiphertextTooltip" xml:space="preserve">
     <value>Geheimtext, der analysiert werden soll.</value>
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
@@ -132,43 +132,43 @@
   <data name="EndLabel" xml:space="preserve">
     <value>Geschätzte Endzeit</value>
   </data>
-  <data name="EnglishDes" xml:space="preserve">
+  <data name="LanguageList1" xml:space="preserve">
     <value>Englisch</value>
   </data>
-  <data name="FastConvergeCap" xml:space="preserve">
+  <data name="FastConvergeCaption" xml:space="preserve">
     <value>Schnelle Konvergierung</value>
   </data>
-  <data name="FastConvergeDes" xml:space="preserve">
+  <data name="FastConvergeTooltip" xml:space="preserve">
     <value>Auswahl, ob die schnelle Konvergierung aktiviert werden soll. Erklärung siehe Hilfe.</value>
   </data>
-  <data name="GermanDes" xml:space="preserve">
+  <data name="LanguageList2" xml:space="preserve">
     <value>Deutsch</value>
   </data>
-  <data name="HillClimbingDes" xml:space="preserve">
+  <data name="MethodList2" xml:space="preserve">
     <value>Hill-Climbing</value>
   </data>
-  <data name="HillClimbRestartsCap" xml:space="preserve">
+  <data name="HillClimbRestartsCaption" xml:space="preserve">
     <value>Neustarts für Hill-Climbing</value>
   </data>
-  <data name="HillClimbRestartsDes" xml:space="preserve">
+  <data name="HillClimbRestartsTooltip" xml:space="preserve">
     <value>Anzahl der Neustarts, die im Hill-Climbing ausgeführt werden sollen, angeben</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Schlüssel</value>
   </data>
-  <data name="KeyLengthCap" xml:space="preserve">
+  <data name="KeyLengthCaption" xml:space="preserve">
     <value>Schlüssellänge</value>
   </data>
-  <data name="KeyLengthDes" xml:space="preserve">
+  <data name="KeyLengthTooltip" xml:space="preserve">
     <value>Schlüssellänge, die für die Analzse benutzt werden soll, auswählen.</value>
   </data>
   <data name="KeyLengthHeader" xml:space="preserve">
     <value>Offset</value>
   </data>
-  <data name="KeyOutputDes" xml:space="preserve">
+  <data name="CalculatedKeyCaption" xml:space="preserve">
     <value>Berechneter Schlüssel</value>
   </data>
-  <data name="KeyOutputDescription" xml:space="preserve">
+  <data name="CalculatedKeyTooltip" xml:space="preserve">
     <value>Bester gefundener Schlüssel.</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
@@ -177,55 +177,52 @@
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
     <value>Aktuelle Schlüssel / Sekunde</value>
   </data>
-  <data name="KnownPlaintextDes" xml:space="preserve">
-    <value>Bekannter Klartext</value>
-  </data>
-  <data name="LanguageCap" xml:space="preserve">
+  <data name="LanguageCaption" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <data name="LanguageDes" xml:space="preserve">
+  <data name="LanguageTooltip" xml:space="preserve">
     <value>Sprache, in der der Klartext wahrscheinlich verfasst ist, auswählen</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Fakten</value>
   </data>
-  <data name="MaxOffsetCap" xml:space="preserve">
+  <data name="MaxOffsetCaption" xml:space="preserve">
     <value>Maximaler Offset</value>
   </data>
-  <data name="MaxOffsetDes" xml:space="preserve">
+  <data name="MaxOffsetTooltip" xml:space="preserve">
     <value>Maximaler Offset, der anaklzsiert werden soll.</value>
   </data>
-  <data name="MethodCap" xml:space="preserve">
+  <data name="MethodCaption" xml:space="preserve">
     <value>Methode</value>
   </data>
-  <data name="MethodDes" xml:space="preserve">
+  <data name="MethodTooltip" xml:space="preserve">
     <value>Wähle die Methode, mit der die Verschlüsselung angegriffen werden soll.</value>
   </data>
-  <data name="MinOffsetCap" xml:space="preserve">
+  <data name="MinOffsetCaption" xml:space="preserve">
     <value>Minimaler Offset</value>
   </data>
-  <data name="MinOffsetDes" xml:space="preserve">
+  <data name="MinOffsetTooltip" xml:space="preserve">
     <value>Minimaler Offset, der analysiert werden soll.</value>
   </data>
-  <data name="PartKnowPlainDes" xml:space="preserve">
+  <data name="MethodList3" xml:space="preserve">
     <value>Teilweise bekannter Klartext</value>
   </data>
-  <data name="PlaintextInputDes" xml:space="preserve">
+  <data name="PlaintextCaption" xml:space="preserve">
     <value>Klartext</value>
   </data>
-  <data name="PlaintextInputDescription" xml:space="preserve">
-    <value>Bekannter Klartext, der verwendet erden soll.</value>
+  <data name="PlaintextTooltip" xml:space="preserve">
+    <value>Bekannter Klartext, der verwendet werden soll.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analysewerkzeug</value>
   </data>
-  <data name="PluginTooltoip" xml:space="preserve">
+  <data name="PluginTooltip" xml:space="preserve">
     <value>Eine Auswahl von möglichen Angriffen auf die M-138</value>
   </data>
-  <data name="ResultTextDes" xml:space="preserve">
+  <data name="ResultTextCaption" xml:space="preserve">
     <value>Resultierender Klartext</value>
   </data>
-  <data name="ResultTextDescription" xml:space="preserve">
+  <data name="ResultTextTooltip" xml:space="preserve">
     <value>Resultierender Klartext unter Benutzung des besten, gefundenen Schlüssels.</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
@@ -240,7 +237,13 @@
   <data name="ValueHeader" xml:space="preserve">
     <value>Wert</value>
   </data>
-  <data name="KnownPlaintextDescription" xml:space="preserve">
-    <value>Bekannter Klartext, der verwendet werden soll.</value>
+  <data name="MethodList1" xml:space="preserve">
+    <value>Bekannter Klartext</value>
+  </data>
+  <data name="StripsCaption" xml:space="preserve">
+    <value>Streifen</value>
+  </data>
+  <data name="StripsTooltip" xml:space="preserve">
+    <value>Geben Sie die zu verwendenden Streifen als String ein, wobei jeder Streifen in einer Zeile steht.</value>
   </data>
 </root>
