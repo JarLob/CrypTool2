@@ -312,7 +312,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             {
                 if ((value)!= plan)
                 {
-                    algs = value;
+                    plan = value;
                     FirePropertyChangedEvent("Plan");
                 }
             }
@@ -330,7 +330,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
         }
 
-        [TaskPane("Threads", "Select the number of threads you want to use", "General Settings", 3, false, ControlType.ComboBox, new string[] { "1", "2", "3", "4" })]
+        [TaskPane("Threads", "Select the number of threads you want to use", "General Settings", 3, false, ControlType.ComboBox, new string[] { "1", "2", "3", "4", "5","6", "7", "8" })]
         public int Threads
         {
             get { return this.threads; }

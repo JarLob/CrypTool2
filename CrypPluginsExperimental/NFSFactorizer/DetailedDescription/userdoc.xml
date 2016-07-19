@@ -22,7 +22,7 @@
 </introduction>
 
 <usage lang="en">
-	This component has a BigNumber input. Which means that the input can be inserted in the form of a number to factor, or as an expression of the kind: $$b^n \pm 1$$.
+	This component has a BigNumber input, which means that the input can be inserted in the form of a number to factor, or as an expression of the kind: $$b^n \pm 1$$.
 	The component has three outputs, one will be the list of the factors, another saying whether all factors are prime, and an optional third one, which opens the log file of the process. 
 	The main window of the GUI will give information on the process, and a summary of the two main algorithms of the plug-in, NFS and QS.
 	
@@ -43,7 +43,12 @@
 </usage>
   <presentation lang="en">
 	The presentation of this plug-in offers a list of the factors, together with its primality and a window with the process of the algorithm in question. For the NFS and QS there is an extra window where the sections of Polynomial Selection, Sieving and Algebra step will be summarized. 
-	For more information on these algorithms have a look at <ref id="NFSWiki"/> and <ref id="QSWiki" />. For more detailed information on NFS and QS, together with a description of all other algorithms available in the plug-in, have a look at the following master thesis (here I am planning in adding the reference of my thesis).
+	For more information on these algorithms have a look at <ref id="NFSWiki"/> and <ref id="QSWiki" />. For more detailed information on NFS and QS, together with a description of all other algorithms available in the plug-in, have a look at the following sections of this master thesis: [link for thesis]
+    - The theory of the General Number Field Sieve. (link to chapter 4)
+    - Details of the General Number Field Sieve. (link to chapter 5)
+    - Is cryptography in danger with the General Number Field Sieve? (link to chapter 6)
+    - A detailed description of the GeneralFactorizer. (link to chapter 7)
+    
 	In main window of the GUI, the user has the option of cliquing a button which will open the log file of the process once its finish (in the third output window).
   </presentation>
   <introduction lang="de-DE">    

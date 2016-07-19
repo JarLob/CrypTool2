@@ -30,6 +30,8 @@ using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Numerics;
 using System.Reflection;
+using System.Management;
+using System.Windows;
 
 
 
@@ -56,6 +58,7 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         private NFSFactorizerSettings settings = new NFSFactorizerSettings();
 
+        public List<User> lvi = new List<User>();
 
         public string cmndLine = "";
         public string redirectInfo = "";
@@ -169,41 +172,213 @@ namespace Cryptool.Plugins.NFSFactorizer
         public void PreExecution()
         {
             nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+
+
+
             {
-                nfsFactQuickWatchPresentation.Details.Content = "";
-                nfsFactQuickWatchPresentation.Primality.Content = "";
-                nfsFactQuickWatchPresentation.factorInfo.Content = "";
-                nfsFactQuickWatchPresentation.Algorithm.Content = "";
+                nfsFactQuickWatchPresentation.resultInfo.ItemsSource = null;
+                nfsFactQuickWatchPresentation.Details.Text = "";
                 nfsFactQuickWatchPresentation.QSNFS7.Content = "";
                 nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - ";
                 nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra step - ";
                 nfsFactQuickWatchPresentation.QSNFS4.Content = "Number of Relations - ";
                 nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - ";
                 nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - ";
+
             }
                     , null);
 
+        }
+        public void CheckLogFile()
+        {
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = Path.GetDirectoryName(logFileName);
+
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
+            watcher.Filter = Path.GetFileName(logFileName);
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+
+            watcher.EnableRaisingEvents = true;
+
+        }
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            nfsStart = 0;
+            //string line;
+
+            /*StreamReader file = new StreamReader(logFileName);
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("nfs: best poly ="))
+                    nfsStart = 0;
+            }*/
+
+            //file.Close();
         }
 
         public void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (e.Data != null)
             {
-                ProgressChanged(0, 100);
+
                 redirectInfo += "\r\n" + e.Data.ToString();
-                nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+
+                if (nfsStart == 0)
+                {
+
+
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        if (e.Data.StartsWith("ecm: "))
+                        {
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Text.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                        }
+                        else if (e.Data.Contains(" rels found: "))
+                        {
+                            nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Visible;
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Text.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                            relationsFound = e.Data.Before(" rels found: ");
+                            ProgressChanged(int.Parse(relationsFound) * 100 / int.Parse(relationsNeeded), 100);
+                            DateTime present = DateTime.Now;
+                            TimeSpan total = present.Subtract(start);
+                            double ratio = (total.TotalMilliseconds / 1000) / double.Parse(relationsFound);
+                            relationsRatio = Math.Abs((double.Parse(relationsNeeded) - double.Parse(relationsFound)) * ratio);
+                            nfsFactQuickWatchPresentation.QSNFS4.Content = "Number of relations - " + relationsFound;
+                            if (!(Math.Round(relationsRatio, 0).ToString() == "0"))
+                            {
+                                nfsFactQuickWatchPresentation.QSNFS7.Content = "ETA : " + Math.Round(relationsRatio, 0).ToString() + " seconds";
+                            }
+
+                        }
+                        else if (e.Data.StartsWith("==== post"))
+
+                            nfsStart = 2;
+                        else if (e.Data.StartsWith("==== sieve "))
+
+                            nfsStart = 2;
+                        else if (e.Data.Contains("==== sieving in progress ("))
+                        {
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
+                            start = DateTime.Now;
+
+                            relationsNeeded = e.Data.Between("): ", " relations needed");
+                            nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Quadratic sieve";
+                            nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - N/A";
+                            nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - " + relationsNeeded + " relations needed";
+                        }
+
+                        else if (e.Data.Contains("error - 11 reading relation"))
+                            Stop();
+                        else
+                        {
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
+                        }
+
+
+
+
+
+
+
+                        if (e.Data.Contains("found prime") | e.Data.Contains("found prp"))
+                        {
+
+                            BigInteger nmbr = BigInteger.Parse(e.Data.After("= "));
+                            lvi.Add(new User() { Factors = nmbr, Primality = nmbr.IsProbablePrime().ToString(), Algorithm = e.Data.Before(": ") });
+                            nfsFactQuickWatchPresentation.resultInfo.ItemsSource = null;
+                            nfsFactQuickWatchPresentation.resultInfo.ItemsSource = lvi;
+
+                        }
+
+
+
+                        if (e.Data.Contains("N too big"))
+                        {
+
+
+
+                            CoFact = "N too big, choose another algorithm.";
+                        }
+
+
+                        if (e.Data.Contains("commencing number field sieve polynomial selection"))
+                        {
+                            nfsStart = 1;
+                            nfsFactQuickWatchPresentation.resultInfo.Visibility = Visibility.Visible;
+                            CheckLogFile();
+                        }
+                        nfsFactQuickWatchPresentation.Scroll.ScrollToBottom();
+                    }, null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+                else if (nfsStart == 2)
+                {
+                    if (e.Data.StartsWith("trial factoring") | e.Data.StartsWith("commencing Lanczos"))
+
+                        nfsStart = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+                /*nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     if (nfsStart == 0)
                     {
                         if (e.Data.StartsWith("ecm: "))
                         {
-                            ecmtmp = nfsFactQuickWatchPresentation.Details.Content.ToString();
-                            nfsFactQuickWatchPresentation.Details.Content = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Text.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
                         }
                         else if (e.Data.Contains(" rels found: "))
                         {
-                            ecmtmp = nfsFactQuickWatchPresentation.Details.Content.ToString();
-                            nfsFactQuickWatchPresentation.Details.Content = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
+                            nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Visible;
+                            ecmtmp = nfsFactQuickWatchPresentation.Details.Text.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text = ecmtmp.Substring(0, ecmtmp.LastIndexOf(Environment.NewLine)) + "\r\n" + e.Data;
                             relationsFound = e.Data.Before(" rels found: ");
                             ProgressChanged(int.Parse(relationsFound) * 100 / int.Parse(relationsNeeded), 100);
                             DateTime present = DateTime.Now;
@@ -219,11 +394,12 @@ namespace Cryptool.Plugins.NFSFactorizer
                         }
                         else if (e.Data.StartsWith("==== post"))
                             nfsStart = 1;
-                        else if (e.Data.StartsWith("==== sieve "))
+                        /*else if (e.Data.StartsWith("==== sieve "))
+
                             nfsStart = 1;
                         else if (e.Data.Contains("==== sieving in progress ("))
                         {
-                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
                             start = DateTime.Now;
 
                             relationsNeeded = e.Data.Between("): ", " relations needed");
@@ -233,87 +409,110 @@ namespace Cryptool.Plugins.NFSFactorizer
                         }
                         else
                         {
-                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
                         }
-                        
+
+                        if (e.Data.Contains("found prime") | e.Data.Contains("found prp"))
+                        {
+                            BigInteger nmbr = BigInteger.Parse(e.Data.After("= "));
+                            lvi.Add(new User() { Factors = nmbr, Primality = nmbr.IsProbablePrime().ToString(), Algorithm = e.Data.Before(": ") });
+                            nfsFactQuickWatchPresentation.resultInfo.ItemsSource = null;
+                            nfsFactQuickWatchPresentation.resultInfo.ItemsSource = lvi;
+
+                        }
+                        if (e.Data.Contains("N too big"))
+                        {
+                            CoFact = "N too big, choose another algorithm.";
+                        }
+                        if (e.Data.Contains("nfs: "))
+                        {
+                            nfsStart = 1;
+                            nfsFactQuickWatchPresentation.resultInfo.Visibility = Visibility.Visible;
+                        }
+
                     }
                     else
                     {
-                        if (e.Data.StartsWith("nfs: "))
+                        nfsFactQuickWatchPresentation.Details.Text += "\r\n" + nfsStart.ToString() + "  " + e.Data.ToString();
+
+                        /*
+                        /*if (e.Data.StartsWith("nfs: "))
                         {
-                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
                         }
-                        else if (e.Data.StartsWith("trial factoring"))
+                        if (e.Data.StartsWith("trial factoring"))
                             nfsStart = 0;
                         else if (e.Data.StartsWith("commencing Lanczos"))
                         {
                             nfsStart = 0;
-                            nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
+                            nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
                             nfsFactQuickWatchPresentation.QSNFS5.Content += "Algebra - Lanczos started";
                         }
+                        if (e.Data.StartsWith("nfs: commencing nfs "))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Number Field Sieve";
+                            nfsFactQuickWatchPresentation.QSNFS7.Content = "Searching for a special form of the number";
+                        }
+                        if (e.Data.StartsWith("nfs: commencing polynomial search"))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS7.Content = "No special form found in the inputed number";
+                            nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Started, be patient.";
+                        }
+                        if (e.Data.StartsWith("nfs: commencing algebraic side"))
+                        {
+                            nfsStart = 0;
+                            nfsFactQuickWatchPresentation.QSNFS7.Content = "";
+                            nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Completed";
+                            nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Algebraic side lattice sieving";
+                        }
+                        if (e.Data.StartsWith("nfs: commencing msieve filtering"))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Filtering the relations";
+                        }
+                        if (e.Data.StartsWith("nfs: commencing msieve linear algebra"))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Completed";
+                            nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra - Started finding dependencies";
+                        }
+                        if (e.Data.StartsWith("nfs: commencing msieve sqrt"))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra - Completed";
+                            nfsFactQuickWatchPresentation.QSNFS7.Content = "Calculating the square root";
+                        }
+                        if (e.Data.StartsWith("NFS elapsed time"))
+                        {
+                            nfsFactQuickWatchPresentation.QSNFS7.Content = "Completed";
+                        }
                     }
-                    
 
-                    if (e.Data.Contains("N too big"))
-                    {
-                        CoFact = "N too big, choose another algorithm.";
-                    }
                     /*if (!e.Data.Contains("ctrl-c"))
                     {
-                        nfsFactQuickWatchPresentation.Details.Content += "\r\n" + e.Data.ToString();
-                    }*/
-                    if (e.Data.Contains("found prime") | e.Data.Contains("found prp"))
-                    {
-                        nfsFactQuickWatchPresentation.Algorithm.Content += e.Data.Before(": ") + "\r\n";
-                        nfsFactQuickWatchPresentation.factorInfo.Content += e.Data.After("= ") + "\r\n";
-                    }
-                    
-                    
-                    if (e.Data.StartsWith("nfs: commencing nfs "))
-                    {
-                        nfsStart = 1;
-                        nfsFactQuickWatchPresentation.QSNFS6.Content = "Algorithm - Number Field Sieve";
-                        nfsFactQuickWatchPresentation.QSNFS7.Content = "Searching for a special form of the number";
-                    }
-                    if (e.Data.StartsWith("nfs: commencing polynomial search"))
-                    {
-                        nfsFactQuickWatchPresentation.QSNFS7.Content = "No special form found in the inputed number";
-                        nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Started, be patient.";
-                    }
-                    if (e.Data.StartsWith("nfs: commencing algebraic side"))
-                    {
-                        nfsStart = 0;
-                        nfsFactQuickWatchPresentation.QSNFS7.Content = "";
-                        nfsFactQuickWatchPresentation.QSNFS2.Content = "Polynomial Selection - Completed";
-                        nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Algebraic side lattice sieving";
-                    }
-                    if (e.Data.StartsWith("nfs: commencing msieve filtering"))
-                    {
-                        nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Filtering the relations";
-                    }
-                    if (e.Data.StartsWith("nfs: commencing msieve linear algebra"))
-                    {
-                        nfsFactQuickWatchPresentation.QSNFS3.Content = "Sieving - Completed";
-                        nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra - Started finding dependencies";
-                    }
-                    if (e.Data.StartsWith("nfs: commencing msieve sqrt"))
-                    {
-                        nfsFactQuickWatchPresentation.QSNFS5.Content = "Algebra - Completed";
-                        nfsFactQuickWatchPresentation.QSNFS7.Content = "Calculating the square root";
-                    }
-                    if (e.Data.StartsWith("NFS elapsed time"))
-                    {
-                        nfsFactQuickWatchPresentation.QSNFS7.Content = "Completed";
-                    }
+                        nfsFactQuickWatchPresentation.Details.Text += "\r\n" + e.Data.ToString();
 
 
-                    nfsFactQuickWatchPresentation.Details.ScrollToBottom();
+
+                    }
+                    nfsFactQuickWatchPresentation.Scroll.ScrollToBottom();
                 }
-                    , null);
+
+                    , null);*/
+
 
             }
+
+
+        }
+        public class User
+        {
+            public BigInteger Factors { get; set; }
+            public string Primality { get; set; }
+            public string Algorithm { get; set; }
         }
 
+        private bool ProcessExists(int id)
+        {
+            return Process.GetProcesses().Any(x => x.Id == id);
+        }
         public void ConvertToMPEG()
         {
             Process cmd = new Process();
@@ -352,16 +551,31 @@ namespace Cryptool.Plugins.NFSFactorizer
             switch (settings.Algs)
             {
                 case 0:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Visible;
+                    }
+                    , null);
                     method = "siqs";
                     Choice = "Quadratic Sieve";
                     if (settings.TimeLimit)
                         option += " -siqsT " + settings.Seconds;
                     break;
                 case 1:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "smallmpqs";
                     Choice = "Multy Polynomial QS";
                     break;
                 case 2:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Visible;
+                    }
+                    , null);
                     method = "nfs";
                     Choice = "Number Field Sieve";
                     option = " -v";
@@ -369,36 +583,76 @@ namespace Cryptool.Plugins.NFSFactorizer
                         option += " -ggnfsT " + settings.Seconds;
                     break;
                 case 3:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "squfof";
                     Choice = "SqufOf";
                     break;
                 case 4:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "pm1";
                     Choice = "Pollards p minus 1";
                     break;
                 case 5:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "pp1";
                     Choice = "Williams p plus one";
                     break;
                 case 6:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "rho";
                     Choice = "Pollards Rho method";
                     break;
                 case 7:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "trial";
                     Choice = "Trial Division";
                     SecondArg = "," + settings.BruteForceLimit;
                     break;
                 case 8:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "ecm";
                     Choice = "Elliptic curve method";
                     break;
                 case 9:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     method = "fermat";
                     Choice = "Fermats method";
                     SecondArg = "," + settings.MaxIt;
                     break;
                 case 10:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Visible;
+                    }
+                    , null);
                     Choice = "Special number field Sieve";
                     if (settings.knownFactor)
                     {
@@ -416,18 +670,39 @@ namespace Cryptool.Plugins.NFSFactorizer
 
                     break;
                 case 11:
+                    nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        nfsFactQuickWatchPresentation.Border.Visibility = Visibility.Hidden;
+                    }
+                    , null);
                     Choice = "different algorithms";
                     method = "factor";
-                    if (settings.Plan == 0)
-                        option = "-plan none -R -v";
-                    else if (settings.Plan == 1)
-                        option = "-plan noecm -R -v";
-                    else if (settings.Plan == 2)
-                        option = "-plan light -R -v";
-                    else if (settings.Plan == 3)
-                        option = "-plan normal -R -v";
-                    else
-                        option = "-plan deep -R -v";
+                    switch (settings.Plan)
+                    {
+                        case 0:
+                            option = "-plan none -R -v";
+
+
+                            break;
+                        case 1:
+                            option = "-plan noecm -R -v";
+
+
+                            break;
+                        case 2:
+                            option = "-plan light -R -v";
+
+
+                            break;
+                        case 3:
+                            option = "-plan normal -R -v";
+
+
+                            break;
+                        case 4:
+                            option = "-plan deep -R -v";
+                            break;
+                    }
                     if (settings.OneFactor)
                         option += " -one";
                     break;
@@ -446,21 +721,25 @@ namespace Cryptool.Plugins.NFSFactorizer
             if (settings.Verbosity)
                 verbosity = "-v";
 
-            cmndLine = String.Format("/c yafu-x64.exe \"{0}( {1}{2} )\" -R -threads {3} {4} {5} -logfile {6} {7}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle, logFileName, verbosity);
+            cmndLine = String.Format("/c yafu-x64.exe \"{0}({1}{2})\" -R -threads {3} {4} {5} -logfile {6} {7}", method, InputNumber, SecondArg, settings.Threads + 1, option, idle, logFileName, verbosity); //D:\\Documents\\CrypTool2\\CrypBuild\\Debug\\
             redirectInfo = "";
             ConvertToMPEG();
+            while (!redirectInfo.Contains("ans = "))
+            {
+            }
 
-            while (!redirectInfo.Contains("ans = ")) { }
+
 
             string tmp = redirectInfo;
-            string primality = "";
+            List<string> primality = new List<string>();
 
             string facts = tmp.Between("***factors found***", "ans = ");
             string remaind = tmp.After("ans = ");
             BigInteger remainder = BigInteger.Parse(remaind);
-            string GUIfactors = "";
+
             string cofact;
             string coFact = "1";
+            string extraProgress = "";
             List<BigInteger> Facts = new List<BigInteger>();
             if (facts.Contains("***co-factor***"))
             {
@@ -486,7 +765,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             }
             if (settings.Algs == 3)
             {
-                Facts.Add(InputNumber/BigInteger.Parse(coFact));
+                Facts.Add(InputNumber / BigInteger.Parse(coFact));
             }
 
             Facts.Sort();
@@ -494,25 +773,45 @@ namespace Cryptool.Plugins.NFSFactorizer
             CoFact = "Factor are all prime. Factorization ended succesfully.";
             foreach (var myString in Facts)
             {
-                primality += myString.IsProbablePrime() + "\r\n";
+                primality.Add(myString.IsProbablePrime().ToString());
                 if (!myString.IsProbablePrime())
                 {
                     if (settings.TimeLimit)
+                    {
                         CoFact = "Time finished with no result";
+                        extraProgress = "Failed factoring due to time limit. Either augment, or factor using another algorithm.";
+                    }
+
                     else
+                    {
                         CoFact = "At least one of the factors is not prime, please use another algorithm or augment the boundaries.";
+                        extraProgress = "\n At least one of the factors is not prime. This may be due to the fact that the algorithm chosen outputs a difference of squares, \n or that it is not powerfull enough to factor the number imputed. \n \n Change the algorithm (General Factorization will give all factors) or try with higher boundaries.";
+                    }
+
                 }
             }
 
-            foreach (BigInteger l in Facts)
-                GUIfactors = GUIfactors + l.ToString() + "\r\n";
 
+
+            var numbersAndWords = Facts.Zip(primality, (n, w) => new { Number = n, Word = w });
+            foreach (var l in numbersAndWords)
+                if (!lvi.Exists(x => x.Factors == l.Number))
+                {
+                    lvi.Add(new User() { Factors = l.Number, Primality = l.Word.ToString(), Algorithm = "" });
+                }
+
+
+            if (CoFact == "Factor are all prime. Factorization ended succesfully.")
+            {
+                extraProgress = "\n Factorization terminated successfully finding a total of " + lvi.Count.ToString() + " factors.";
+            }
             // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(100, 100);
             nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                nfsFactQuickWatchPresentation.factorInfo.Content = GUIfactors;
-                nfsFactQuickWatchPresentation.Primality.Content = primality;
+                nfsFactQuickWatchPresentation.resultInfo.ItemsSource = null;
+                nfsFactQuickWatchPresentation.resultInfo.ItemsSource = lvi;
+                nfsFactQuickWatchPresentation.Details.Text = redirectInfo + "\n" + extraProgress + "\n";
                 nfsFactQuickWatchPresentation.QSNFS7.Content = "Completed";
                 if (nfsFactQuickWatchPresentation.ShowDetailsButton.IsChecked == true)
                 {
@@ -540,6 +839,11 @@ namespace Cryptool.Plugins.NFSFactorizer
 
         public void Stop()
         {
+            nfsFactQuickWatchPresentation.Dispatcher.Invoke(System.Windows.Threading.DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                nfsFactQuickWatchPresentation.Details.Text = redirectInfo;
+            }
+            , null);
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
             cmd.StartInfo.RedirectStandardOutput = true;
@@ -547,7 +851,7 @@ namespace Cryptool.Plugins.NFSFactorizer
             cmd.StartInfo.CreateNoWindow = true;
             cmd.StartInfo.UseShellExecute = false;
 
-            cmd.StartInfo.Arguments = "/c taskkill /F /IM yafu-x64.exe";
+            cmd.StartInfo.Arguments = "/c taskkill /F /IM yafu-x64.exe & gnfs-*";
             cmd.Start();
         }
 

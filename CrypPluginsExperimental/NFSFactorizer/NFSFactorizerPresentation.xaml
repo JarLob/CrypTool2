@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
-        Name="Presentation" Height="451.6" d:DesignWidth="905.2">
+        Name="Presentation" Height="473.2" d:DesignWidth="905.2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="boolToVisibilityConverter" />
         <RotateTransform x:Key="HeaderRotate" Angle="270" />
@@ -52,42 +52,28 @@
 
                 </Grid>
             </Border>
+
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="200" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0">
-                        <Label Content="Result" FontSize="11" HorizontalAlignment="Right" Foreground="White" Width="115" HorizontalContentAlignment="Center" Margin="0,0.2,16.6,-0.2" />
+
+                <Grid Height="283" Margin="0,0,0.4,0">
+                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF479308" Grid.Column="0" Margin="0,0,-0.2,0">
+                        <Label Content="Result" FontSize="11" HorizontalAlignment="Right" Foreground="White" Width="115" HorizontalContentAlignment="Center" Margin="0,-0.8,95.4,0.4" />
                     </Border>
-                    <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="0.4,0,416.4,0.4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ScrollViewer HorizontalScrollBarVisibility="Visible"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="factorInfo" Height="150" HorizontalAlignment="Stretch" Margin="1,0,119.8,0.4"/>
-
-                    </Grid>
-                    <Grid Grid.Column="2" Margin="0.4,0,0.2,0.4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="109*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="Primality" Height="150" HorizontalAlignment="Stretch" Margin="128,0,358.8,0.4"/>
-                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"  Grid.Row="0" Background="#AFE2FFCE" Content ="" Name="Algorithm" Height="150" HorizontalAlignment="Stretch" Margin="306,0,-0.2,0.4"/>
-                    </Grid>
-
+                    <ListView Margin="27,0,-0.2,0" Name="resultInfo" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#BCED91">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Factors" Width="340" DisplayMemberBinding="{Binding Factors}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                                </GridViewColumn>
+                                <GridViewColumn Header="Primality" Width="160" DisplayMemberBinding="{Binding Primality}" />
+                                <GridViewColumn Header="Algorithm" Width="150" DisplayMemberBinding="{Binding Algorithm}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </Border>
 
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                <Grid Background="#AFE2E2E2">
+                <Grid Background="#AFE2E2E2" Margin="2.4,0,-2.2,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="26" />
                         <ColumnDefinition Width="300*" />
@@ -97,16 +83,38 @@
                         <RowDefinition Height="50" />
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF525252" Grid.Column="0" Grid.RowSpan="3">
-                        <Label Content="Progress" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="65" HorizontalContentAlignment="Center" />
+                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="#FF525252" Grid.Column="0" Grid.RowSpan="3" Margin="-3,0,2.6,0.4">
+                        <Label Content="Progress" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="65" HorizontalContentAlignment="Center" Margin="38.2,-1.8,45.6,1.8" />
                     </Border>
-
-                    <ScrollViewer  Name ="Details"  Content="" Grid.Column="1" Grid.RowSpan="3"  Margin="5,-3,0,3"/>
+                    <ScrollViewer Name ="Scroll" Grid.Column="1" Grid.RowSpan="3"  Margin="0.4,-3,0.2,3.4" >
+                        <TextBox Text="" Name="Details" IsReadOnly="True" Background="#A9A9A9" Width="875"/>
+                    </ScrollViewer>
 
                 </Grid>
             </Border>
             <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                <Grid Background="#FFE6E6FA" HorizontalAlignment="Right" Margin="0,0,-0.2,0" Width="891">
+                <Grid Background="Beige">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="26" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="Chocolate" Grid.Column="0" Grid.RowSpan="2">
+                        <Label Content="Details" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="45" HorizontalContentAlignment="Center" />
+                    </Border>
+                    <Label Content="Press to show log file at the end of the factorization" Margin="0.4,9,9.6,14.6" VerticalAlignment="Center" Grid.Column="1"/>
+                    <ToggleButton IsChecked="False" x:Name="ShowDetailsButton" Grid.Column="2" Content="Show details"  Grid.Row="0" Margin="63.4,1,303.2,-0.4" RenderTransformOrigin="1.79,0.491" Grid.ColumnSpan="2" />
+
+                </Grid>
+
+            </Border>
+            <Border Name="Border"  BorderBrush="Silver" BorderThickness="2,2,2,2" Visibility="Hidden">
+                <Grid Background="#FFE6E6FA" HorizontalAlignment="Right" Margin="0,0,-0.2,0" Width="891" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="26" />
                         <ColumnDefinition Width="300" />
@@ -131,27 +139,7 @@
                     <Label Name="QSNFS7" Content="" Grid.Row="2" Grid.Column="3" Margin="5,-3,0,3"/>
                 </Grid>
             </Border>
-            <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
-                <Grid Background="Beige">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="26" />
-                        <ColumnDefinition Width="300" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100*" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
-                    </Grid.RowDefinitions>
-                    <Border BorderThickness="1" BorderBrush="Black" LayoutTransform="{StaticResource HeaderRotate}" Background="Chocolate" Grid.Column="0" Grid.RowSpan="2">
-                        <Label Content="Details" FontSize="11" HorizontalAlignment="Center" Foreground="White" Width="45" HorizontalContentAlignment="Center" />
-                    </Border>
-                    <Label Content="Press to show log file at the end of the factorization" Margin="0.4,9,9.6,14.6" VerticalAlignment="Center" Grid.Column="1"/>
-                    <ToggleButton IsChecked="False" x:Name="ShowDetailsButton" Grid.Column="2" Content="Show details"  Grid.Row="0" Margin="63.4,1,303.2,-0.4" RenderTransformOrigin="1.79,0.491" Grid.ColumnSpan="2" />
 
-                </Grid>
-
-            </Border>
 
 
         </StackPanel>
