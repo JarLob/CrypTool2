@@ -26,11 +26,13 @@ using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Collections;
+using System.Diagnostics;
+
 
 namespace Cryptool.Plugins.AESVisualisation
 {
     [Author("Matthias Becher", "matthias.becher2193@mail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.AESVisualisation.Properties.Resources", "AESVisualisation", "AESVisualisation", "AESVisualisation/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("Cryptool.AESVisualisation.Properties.Resources", "AESVisualization", "AESVisualization", "AESVisualisation/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class AESVisualisation : ICrypComponent
     {
@@ -39,17 +41,23 @@ namespace Cryptool.Plugins.AESVisualisation
         private readonly AESVisualisationSettings settings = new AESVisualisationSettings();
         private byte[] text;
         private byte[] key;
-        private byte[][] keyList = new byte[11][];
+        private byte[][] keyList = new byte[15][];
         private string output =  "ASDDASF";
         private byte[][] sBox = new byte[16][];
         private int action = 1;
         private int roundNumber = 1;
-        private byte[][] states = new byte[40][];
-        private byte[][] roundConstant = new byte[10][];
+        private byte[][] states = new byte[56][];
+        private byte[][] roundConstant = new byte[12][];
         private AESPresentation pres = new AESPresentation();
         private CStreamWriter outputStreamWriter = new CStreamWriter();
         static Random rnd = new Random();
         private Boolean execute = true;
+        private Boolean suspended = false;
+        int keysize;
+        Thread presThread;
+
+
+
         AutoResetEvent buttonNextClickedEvent;
 
         #endregion
@@ -127,10 +135,8 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void PreExecution()
         {
-            //if (text.Length != 16 || key.Length != 16)
-            //{
-            //    execute = false;
-            //}
+           
+            
         }
 
         /// <summary>
@@ -138,22 +144,56 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
-            if (text.Length != 16 || key.Length != 16)
+            //if (text.Length != 16 || key.Length != 16)
+            //{
+            //    execute = false;
+            //}
+            //if (!execute)
+            //{
+            //    return;
+            //}
+            if (suspended)
             {
-                execute = false;
+                presThread.Resume();
+                outputStreamWriter.Write(states[39 + 8 * keysize]);
+                outputStreamWriter.Close();
+                ProgressChanged(1, 1);
             }
-            if (!execute)
+            keysize = settings.Keysize;
+            pres.keysize = keysize;
+            //pres = new AESPresentation();
+            outputStreamWriter = new CStreamWriter();
+            roundNumber = 1;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                return;
-            }
+                pres.invisible();
+                pres.buttonVisible();
+                pres.hideButton();
+            }, null);
             ProgressChanged(0, 1);
             OutputStream = outputStreamWriter;
             OnPropertyChanged("OutputStream");
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
             setRoundConstant();
-            byte[] tempState = arrangeText(text);
-            keyList[0] = arrangeText(key);
-            states[0] = addKey(tempState, keyList[0]);           
+            byte[] tempState = text;
+            int r = 0;
+            int t = 0;
+            foreach(byte b in key)
+            {
+                if(keyList[r] == null)
+                {
+                    keyList[r] = new byte[16];
+                }
+                keyList[r][t] = b;
+                t++;
+                if (t == 16)
+                {
+                    t = 0;
+                    r++;
+                }
+            }
+            //keyList[0] = key;
+            states[0] = addKey(tempState, keyList[0]);
             pres.tempState = tempState;
             pres.roundConstant = this.roundConstant;
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -162,13 +202,42 @@ namespace Cryptool.Plugins.AESVisualisation
                 pres.StartCanvas.Visibility = Visibility.Hidden;
                 pres.showButton();
             }, null);
-            expandKey();
+            switch (keysize)
+            {
+                case 0:
+                    expandKey();
+                    break;
+                case 1:
+                    expandKey192();
+                    break;
+                case 2:
+                    expandKey256();
+                    break;
+                default:
+                    break;
+            }        
             setStates();
             roundNumber = 1;
             pres.states = states;
             pres.keyList = keyList;
-            pres.exectue();
-            outputStreamWriter.Write(rearrangeText(states[39]));
+            //Thread presThread = new Thread(pres.exectue);
+            if (keysize == 0 || keysize == 1 || keysize == 2)
+            {
+                presThread.Start();
+            }
+            while (presThread.IsAlive)
+            {
+                if (!pres.expansion)
+                {
+                    double temp = pres.progress + 0.5;
+                    ProgressChanged(temp, 1);
+                }
+                else
+                {
+                    ProgressChanged(pres.progress, 1);
+                }
+            }
+            outputStreamWriter.Write(states[39 + 8 * keysize]);
             outputStreamWriter.Close();
             buttonNextClickedEvent = pres.buttonNextClickedEvent;
             ProgressChanged(1, 1);
@@ -187,9 +256,11 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
-            Thread.CurrentThread.Interrupt();
-            pres.autostep = false;
-            pres.buttonNextClickedEvent.Reset();
+            presThread.Suspend();
+            suspended = true;
+            //pres.buttonNextClickedEvent.Set();
+            //outputStreamWriter.Close();
+            //System.Threading.
         }
 
         /// <summary>
@@ -197,7 +268,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Initialize()
         {
-
+            presThread = new Thread(pres.exectue);
         }
 
         /// <summary>
@@ -386,7 +457,7 @@ namespace Cryptool.Plugins.AESVisualisation
             int z = 0;
             byte[] temp;
             byte[] result;
-            while (x < 39)
+            while (x < (39 + 8 * keysize))
             {
                 switch (y)
                 {
@@ -409,21 +480,21 @@ namespace Cryptool.Plugins.AESVisualisation
                         temp = states[x];
                         result = new byte[16];
                         result[0] = temp[0];
-                        result[1] = temp[1];
-                        result[2] = temp[2];
-                        result[3] = temp[3];
-                        result[4] = temp[5];
-                        result[5] = temp[6];
-                        result[6] = temp[7];
-                        result[7] = temp[4];
-                        result[8] = temp[10];
-                        result[9] = temp[11];
-                        result[10] = temp[8];
-                        result[11] = temp[9];
-                        result[12] = temp[15];
-                        result[13] = temp[12];
-                        result[14] = temp[13];
-                        result[15] = temp[14];
+                        result[1] = temp[5];
+                        result[2] = temp[10];
+                        result[3] = temp[15];
+                        result[4] = temp[4];
+                        result[5] = temp[9];
+                        result[6] = temp[14];
+                        result[7] = temp[3];
+                        result[8] = temp[8];
+                        result[9] = temp[13];
+                        result[10] = temp[2];
+                        result[11] = temp[7];
+                        result[12] = temp[12];
+                        result[13] = temp[1];
+                        result[14] = temp[6];
+                        result[15] = temp[11];
                         x++;
                         states[x] = result;
                         y = 2;
@@ -431,7 +502,7 @@ namespace Cryptool.Plugins.AESVisualisation
                     case 2:
                         temp = new byte[16];
                         result = new byte[16];
-                        if (x < 38)
+                        if (x < (38 + 8 * keysize))
                         {
                             z = 0;
                             result = mixColumn(states[x]);
@@ -446,7 +517,7 @@ namespace Cryptool.Plugins.AESVisualisation
                         result = addKey(states[x], keyList[roundNumber]);
                         x++;
                         states[x] = result;
-                        if (x < 39)
+                        if (x < (39 + 8 * keysize))
                         {
                             y = 0;
                         }
@@ -882,6 +953,7 @@ namespace Cryptool.Plugins.AESVisualisation
         private byte[] mixColumn(byte[] state)
         {
             byte[] result = new byte[16];
+            state = arrangeText(state);
             BitArray calc = new BitArray(8);
             calc[3] = true;
             calc[4] = true;
@@ -1293,7 +1365,8 @@ namespace Cryptool.Plugins.AESVisualisation
                     default:
                         break;
                 }
-            }           
+            }
+            result = rearrangeText(result);         
             return result;
         }
 
@@ -1368,7 +1441,7 @@ namespace Cryptool.Plugins.AESVisualisation
             for(int x = 1; x < 11; x++)
             {
                 byte[] roundConst = roundConstant[x - 1];
-                byte[] prevKey = {  keyList[x - 1][7], keyList[x - 1][11], keyList[x - 1][15], keyList[x - 1][3] };
+                byte[] prevKey = {  keyList[x - 1][13], keyList[x - 1][14], keyList[x - 1][15], keyList[x - 1][12] };
                 byte a;
                 byte b;
                 int z = 0;
@@ -1387,22 +1460,209 @@ namespace Cryptool.Plugins.AESVisualisation
                 a = keyList[x - 1][0];
                 b = prevKey[0];
                 temp[0] = (byte)(a ^ b);
-                temp[4] = (byte)(keyList[x - 1][4] ^ prevKey[1]);
-                temp[8] = (byte)(keyList[x - 1][8] ^ prevKey[2]);
-                temp[12] = (byte)(keyList[x - 1][12] ^ prevKey[3]);
-                temp[1] = (byte)(temp[0] ^ keyList[x - 1][1]);
-                temp[5] = (byte)(temp[4] ^ keyList[x - 1][5]);
-                temp[9] = (byte)(temp[8] ^ keyList[x - 1][9]);
-                temp[13] = (byte)(temp[12] ^ keyList[x - 1][13]);
-                temp[2] = (byte)(temp[1] ^ keyList[x - 1][2]);
-                temp[6] = (byte)(temp[5] ^ keyList[x - 1][6]);
-                temp[10] = (byte)(temp[9] ^ keyList[x - 1][10]);
-                temp[14] = (byte)(temp[13] ^ keyList[x - 1][14]);
-                temp[3] = (byte)(temp[2] ^ keyList[x - 1][3]);
-                temp[7] = (byte)(temp[6] ^ keyList[x - 1][7]);
-                temp[11] = (byte)(temp[10] ^ keyList[x - 1][11]);
-                temp[15] = (byte)(temp[14] ^ keyList[x - 1][15]);
+                temp[1] = (byte)(keyList[x - 1][1] ^ prevKey[1]);
+                temp[2] = (byte)(keyList[x - 1][2] ^ prevKey[2]);
+                temp[3] = (byte)(keyList[x - 1][3] ^ prevKey[3]);
+                temp[4] = (byte)(temp[0] ^ keyList[x - 1][4]);
+                temp[5] = (byte)(temp[1] ^ keyList[x - 1][5]);
+                temp[6] = (byte)(temp[2] ^ keyList[x - 1][6]);
+                temp[7] = (byte)(temp[3] ^ keyList[x - 1][7]);
+                temp[8] = (byte)(temp[4] ^ keyList[x - 1][8]);
+                temp[9] = (byte)(temp[5] ^ keyList[x - 1][9]);
+                temp[10] = (byte)(temp[6] ^ keyList[x - 1][10]);
+                temp[11] = (byte)(temp[7] ^ keyList[x - 1][11]);
+                temp[12] = (byte)(temp[8] ^ keyList[x - 1][12]);
+                temp[13] = (byte)(temp[9] ^ keyList[x - 1][13]);
+                temp[14] = (byte)(temp[10] ^ keyList[x - 1][14]);
+                temp[15] = (byte)(temp[11] ^ keyList[x - 1][15]);
                 keyList[x] = temp;
+            }
+        }
+
+        private void expandKey192()
+        {
+            byte[] tempkey = new byte[216];
+            tempkey[0] = keyList[0][0];
+            tempkey[1] = keyList[0][1];
+            tempkey[2] = keyList[0][2];
+            tempkey[3] = keyList[0][3];
+            tempkey[4] = keyList[0][4];
+            tempkey[5] = keyList[0][5];
+            tempkey[6] = keyList[0][6];
+            tempkey[7] = keyList[0][7];
+            tempkey[8] = keyList[0][8];
+            tempkey[9] = keyList[0][9];
+            tempkey[10] = keyList[0][10];
+            tempkey[11] = keyList[0][11];
+            tempkey[12] = keyList[0][12];
+            tempkey[13] = keyList[0][13];
+            tempkey[14] = keyList[0][14];
+            tempkey[15] = keyList[0][15];
+            tempkey[16] = keyList[1][0];
+            tempkey[17] = keyList[1][1];
+            tempkey[18] = keyList[1][2];
+            tempkey[19] = keyList[1][3];
+            tempkey[20] = keyList[1][4];
+            tempkey[21] = keyList[1][5];
+            tempkey[22] = keyList[1][6];
+            tempkey[23] = keyList[1][7];
+            byte[] calc = new byte[4];
+            int x = 23;
+            int y = 0;
+            int z = 0;
+            byte[] roundConst;
+            byte[] temp = new byte[4];
+            while (x < 192)
+            {
+                roundConst = roundConstant[y];
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x - 2])][getSBoxYPosition(tempkey[x - 2])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x - 1])][getSBoxYPosition(tempkey[x - 1])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x])][getSBoxYPosition(tempkey[x])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x - 3])][getSBoxYPosition(tempkey[x - 3])];
+                z = 0;
+                while (z < 4)
+                {
+                    temp[z] = (byte)(calc[z] ^ roundConst[z]);
+                    z++;
+                }
+                tempkey[x + 1] = (byte)(temp[0] ^ tempkey[x - 23]);
+                tempkey[x + 2] = (byte)(temp[1] ^ tempkey[x - 22]);
+                tempkey[x + 3] = (byte)(temp[2] ^ tempkey[x - 21]);
+                tempkey[x + 4] = (byte)(temp[3] ^ tempkey[x - 20]);
+                tempkey[x + 5] = (byte)(tempkey[x + 1] ^ tempkey[x - 19]);
+                tempkey[x + 6] = (byte)(tempkey[x + 2] ^ tempkey[x - 18]);
+                tempkey[x + 7] = (byte)(tempkey[x + 3] ^ tempkey[x - 17]);
+                tempkey[x + 8] = (byte)(tempkey[x + 4] ^ tempkey[x - 16]);
+                tempkey[x + 9] = (byte)(tempkey[x + 5] ^ tempkey[x - 15]);
+                tempkey[x + 10] = (byte)(tempkey[x + 6] ^ tempkey[x - 14]);
+                tempkey[x + 11] = (byte)(tempkey[x + 7] ^ tempkey[x - 13]);
+                tempkey[x + 12] = (byte)(tempkey[x + 8] ^ tempkey[x - 12]);
+                tempkey[x + 13] = (byte)(tempkey[x + 9] ^ tempkey[x - 11]);
+                tempkey[x + 14] = (byte)(tempkey[x + 10] ^ tempkey[x - 10]);
+                tempkey[x + 15] = (byte)(tempkey[x + 11] ^ tempkey[x - 9]);
+                tempkey[x + 16] = (byte)(tempkey[x + 12] ^ tempkey[x - 8]);
+                tempkey[x + 17] = (byte)(tempkey[x + 13] ^ tempkey[x - 7]);
+                tempkey[x + 18] = (byte)(tempkey[x + 14] ^ tempkey[x - 6]);
+                tempkey[x + 19] = (byte)(tempkey[x + 15] ^ tempkey[x - 5]);
+                tempkey[x + 20] = (byte)(tempkey[x + 16] ^ tempkey[x - 4]);
+                tempkey[x + 21] = (byte)(tempkey[x + 17] ^ tempkey[x - 3]);
+                tempkey[x + 22] = (byte)(tempkey[x + 18] ^ tempkey[x - 2]);
+                tempkey[x + 23] = (byte)(tempkey[x + 19] ^ tempkey[x - 1]);
+                tempkey[x + 24] = (byte)(tempkey[x + 20] ^ tempkey[x]);
+                x += 24;
+                y++;
+            }
+            x = 0;
+            y = 0;
+            z = 0;
+            pres.keyBytes = tempkey;
+            while(x < 208)
+            {
+                while(y < 16)
+                {
+                    if(keyList[z] == null){
+                        keyList[z] = new byte[16];
+                    }
+                    keyList[z][y] = tempkey[x];
+                    x++;
+                    y++;
+                }
+                y = 0;
+                z++;
+            }        
+        }
+
+        private void expandKey256()
+        {
+            byte[] tempkey = new byte[350];
+            int x = 0;
+            int y = 0;
+            for (int r = 0; r < 32; r++)
+            {
+                tempkey[r] = keyList[x][y];
+                y++;
+                if(y == 16)
+                {
+                    y = 0;
+                    x++;
+                }
+            }
+            byte[] calc = new byte[4];
+            x = 31;
+            y = 0;
+            int z = 0;
+            byte[] roundConst;
+            byte[] temp = new byte[4];
+            while (x < 256)
+            {
+                roundConst = roundConstant[y];
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x - 2])][getSBoxYPosition(tempkey[x - 2])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x - 1])][getSBoxYPosition(tempkey[x - 1])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x])][getSBoxYPosition(tempkey[x])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x - 3])][getSBoxYPosition(tempkey[x - 3])];
+                z = 0;
+                while (z < 4)
+                {
+                    temp[z] = (byte)(calc[z] ^ roundConst[z]);
+                    z++;
+                }
+                tempkey[x + 1] = (byte)(temp[0] ^ tempkey[x - 31]);
+                tempkey[x + 2] = (byte)(temp[1] ^ tempkey[x - 30]);
+                tempkey[x + 3] = (byte)(temp[2] ^ tempkey[x - 29]);
+                tempkey[x + 4] = (byte)(temp[3] ^ tempkey[x - 28]);
+                tempkey[x + 5] = (byte)(tempkey[x + 1] ^ tempkey[x - 27]);
+                tempkey[x + 6] = (byte)(tempkey[x + 2] ^ tempkey[x - 26]);
+                tempkey[x + 7] = (byte)(tempkey[x + 3] ^ tempkey[x - 25]);
+                tempkey[x + 8] = (byte)(tempkey[x + 4] ^ tempkey[x - 24]);
+                tempkey[x + 9] = (byte)(tempkey[x + 5] ^ tempkey[x - 23]);
+                tempkey[x + 10] = (byte)(tempkey[x + 6] ^ tempkey[x - 22]);
+                tempkey[x + 11] = (byte)(tempkey[x + 7] ^ tempkey[x - 21]);
+                tempkey[x + 12] = (byte)(tempkey[x + 8] ^ tempkey[x - 20]);
+                tempkey[x + 13] = (byte)(tempkey[x + 9] ^ tempkey[x - 19]);
+                tempkey[x + 14] = (byte)(tempkey[x + 10] ^ tempkey[x - 18]);
+                tempkey[x + 15] = (byte)(tempkey[x + 11] ^ tempkey[x - 17]);
+                tempkey[x + 16] = (byte)(tempkey[x + 12] ^ tempkey[x - 16]);
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x + 13])][getSBoxYPosition(tempkey[x + 13])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x + 14])][getSBoxYPosition(tempkey[x + 14])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x + 15])][getSBoxYPosition(tempkey[x + 15])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x + 16])][getSBoxYPosition(tempkey[x + 16])];
+                tempkey[x + 17] = (byte)(calc[0] ^ tempkey[x - 15]);
+                tempkey[x + 18] = (byte)(calc[1] ^ tempkey[x - 14]);
+                tempkey[x + 19] = (byte)(calc[2] ^ tempkey[x - 13]);
+                tempkey[x + 20] = (byte)(calc[3] ^ tempkey[x - 12]);
+                tempkey[x + 21] = (byte)(tempkey[x + 17] ^ tempkey[x - 11]);
+                tempkey[x + 22] = (byte)(tempkey[x + 18] ^ tempkey[x - 10]);
+                tempkey[x + 23] = (byte)(tempkey[x + 19] ^ tempkey[x - 9]);
+                tempkey[x + 24] = (byte)(tempkey[x + 20] ^ tempkey[x - 8]);
+                tempkey[x + 25] = (byte)(tempkey[x + 21] ^ tempkey[x - 7]);
+                tempkey[x + 26] = (byte)(tempkey[x + 22] ^ tempkey[x - 6]);
+                tempkey[x + 27] = (byte)(tempkey[x + 23] ^ tempkey[x - 5]);
+                tempkey[x + 28] = (byte)(tempkey[x + 24] ^ tempkey[x - 4]);
+                tempkey[x + 29] = (byte)(tempkey[x + 25] ^ tempkey[x - 3]);
+                tempkey[x + 30] = (byte)(tempkey[x + 26] ^ tempkey[x - 2]);
+                tempkey[x + 31] = (byte)(tempkey[x + 27] ^ tempkey[x - 1]);
+                tempkey[x + 32] = (byte)(tempkey[x + 28] ^ tempkey[x]);
+                x += 32;
+                y++;               
+            }
+            x = 0;
+            y = 0;
+            z = 0;
+            pres.keyBytes = tempkey;
+            while (x < 240)
+            {
+                while (y < 16)
+                {
+                    if (keyList[z] == null)
+                    {
+                        keyList[z] = new byte[16];
+                    }
+                    keyList[z][y] = tempkey[x];
+                    x++;
+                    y++;
+                }
+                y = 0;
+                z++;
             }
         }
 

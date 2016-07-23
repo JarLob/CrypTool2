@@ -104,6 +104,8 @@
         <Button x:Name="shiftRowButton" Content="Shift Row" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="shiftRowButton_Click" Visibility="Visible" />
         <Button x:Name="mixColButton" Content="Mix Col" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="mixColButton_Click" Visibility="Visible" />
         <Button x:Name="addKeyButton" Content="Add Key" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="addKeyButton_Click" Visibility="Visible" />
+        <Button x:Name="shiftRightButton" Content="&gt;&gt;" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="shiftRightButton_Click" />
+        <Button x:Name="shiftLeftButton" Content="&lt;&lt;" Grid.Row="3"  HorizontalAlignment="Stretch" Grid.Column="9" Click="shiftLeftButton_Click" Grid.ColumnSpan="2" Margin="0,0,65.625,0" />
         <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
         <!-- EndRegion -->
         <!-- Region ShiftRow -->
@@ -1653,7 +1655,217 @@
                 <TextBlock Name="expansionKeyBlock16" TextAlignment="Center"/>
             </Border>
         </Grid>
-        <Grid Name="expansionTransitionGrid" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxWidth="200" MaxHeight="200" Margin="10,10,60,40" Grid.ColumnSpan="3" Grid.Column="3">
+        <Grid Name="expansionKeyGrid192" Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="4" MinHeight="80" MinWidth="120"  MaxWidth="240" MaxHeight="200" Margin="10,10,64.083,40">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                State matrix
+            </TextBlock>
+            <Border Name="expansionKeyBorder17" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock17" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder21" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock21" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder25" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock25" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder29" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock29" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder18" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock18" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder22" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock22" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder26" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock26" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder30" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock30" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder19" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock19" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder23" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock23" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder27" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock27" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder31" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock31" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder20" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock20" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder24" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock24" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder28" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock28" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder32" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock32" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder33" Grid.Row="0" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock33" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder34" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock34" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder35" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock35" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder36" Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock36" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder37" Grid.Row="0" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock37" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder38" Grid.Row="1" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock38" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder39" Grid.Row="2" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock39" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder40" Grid.Row="3" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock40" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionKeyGrid256" Visibility="Hidden" Grid.Row="1" Grid.ColumnSpan="4" MinHeight="80" MinWidth="160"  MaxWidth="320" MaxHeight="200" Margin="10,10,0.083,39.5">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                State matrix
+            </TextBlock>
+            <Border Name="expansionKeyBorder41" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock41" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder45" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock45" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder49" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock49" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder53" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock53" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder42" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock42" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder46" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock46" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder50" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock50" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder54" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock54" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder43" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock43" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder47" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock47" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder51" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock51" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder55" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock55" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder44" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock44" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder48" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock48" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder52" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock52" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder56" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock56" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder57" Grid.Row="0" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock57" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder58" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock58" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder59" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock59" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder60" Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock60" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder61" Grid.Row="0" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock61" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder62" Grid.Row="1" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock62" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder63" Grid.Row="2" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock63" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder64" Grid.Row="3" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock64" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder65" Grid.Row="0" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock65" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder66" Grid.Row="1" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock66" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder67" Grid.Row="2" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock67" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder68" Grid.Row="3" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock68" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder69" Grid.Row="0" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock69" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder70" Grid.Row="1" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock70" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder71" Grid.Row="2" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock71" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionKeyBorder72" Grid.Row="3" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionKeyBlock72" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionTransitionGrid" Visibility="Hidden" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxWidth="150" MaxHeight="200" Margin="57.833,12,29.75,59.5" Grid.ColumnSpan="3" Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -1751,6 +1963,55 @@
                 <TextBlock Name="expansionTransition1Block12" TextAlignment="Center"/>
             </Border>
         </Grid>
+        <Grid Name="expansionTransitionGrid2" Visibility="Hidden" Grid.Row="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinHeight="80" MinWidth="60" MaxWidth="150" MaxHeight="200" Margin="57.833,40,29.75,25" Grid.ColumnSpan="3" Grid.Column="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border Name="expansionTransition2Border1" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block1" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border2" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition2Block2" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border3" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block3" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block4" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition2Block5" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block6" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border7" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block7" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border8" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition2Block8" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border9" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block9" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border10" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block10" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border11" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionTransition2Block11" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionTransition2Border12" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Visibility="Hidden">
+                <TextBlock Name="expansionTransition2Block12" TextAlignment="Center"/>
+            </Border>
+        </Grid>
         <Grid Name="expansionResultGrid" Visibility="Hidden" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Stretch" MinHeight="80" MinWidth="80" MaxWidth="200" MaxHeight="200" Margin="10,40,20,5">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -1815,6 +2076,216 @@
             </Border>
             <Border Name="expansionResultBorder16" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
                 <TextBlock Name="expansionResultBlock16" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionResultGrid192" Visibility="Hidden" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4" VerticalAlignment="Top" MinHeight="80" MinWidth="120" MaxWidth="300" MaxHeight="200" Margin="9.833,40.5,60.75,0" Height="136">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Result matrix
+            </TextBlock>
+            <Border Name="expansionResultBorder17" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock17" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder21" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock21" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder25" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock25" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder29" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock29" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder18" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock18" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder22" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock22" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder26" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock26" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder30" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock30" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder19" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock19" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder23" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock23" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder27" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock27" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder31" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock31" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder20" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock20" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder24" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock24" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder28" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock28" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder32" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock32" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder33" Grid.Row="0" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock33" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder34" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock34" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder35" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock35" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder36" Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock36" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder37" Grid.Row="0" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock37" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder38" Grid.Row="1" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock38" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder39" Grid.Row="2" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock39" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder40" Grid.Row="3" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock40" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+        <Grid Name="expansionResultGrid256" Visibility="Hidden" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="4" VerticalAlignment="Top" MinHeight="80" MinWidth="160" MaxWidth="320" MaxHeight="200" Margin="9.833,40.5,19.75,0" Height="136">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
+                Result matrix
+            </TextBlock>
+            <Border Name="expansionResultBorder41" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock41" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder45" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock45" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder49" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock49" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder53" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock53" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder42" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock42" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder46" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock46" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder50" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock50" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder54" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock54" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder43" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock43" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder47" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock47" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder51" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock51" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder55" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock55" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder44" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock44" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder48" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock48" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder52" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock52" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder56" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock56" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder57" Grid.Row="0" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock57" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder58" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock58" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder59" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock59" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder60" Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock60" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder61" Grid.Row="0" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock61" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder62" Grid.Row="1" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock62" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder63" Grid.Row="2" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock63" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder64" Grid.Row="3" Grid.Column="5" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock64" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder65" Grid.Row="0" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock65" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder66" Grid.Row="1" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock66" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder67" Grid.Row="2" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock67" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder68" Grid.Row="3" Grid.Column="6" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock68" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder69" Grid.Row="0" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock69" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder70" Grid.Row="1" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock70" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder71" Grid.Row="2" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock71" TextAlignment="Center"/>
+            </Border>
+            <Border Name="expansionResultBorder72" Grid.Row="3" Grid.Column="7" BorderBrush="Black" BorderThickness="1">
+                <TextBlock Name="expansionResultBlock72" TextAlignment="Center"/>
             </Border>
         </Grid>
         <TextBlock Name="expansionExplanation" Visibility="Hidden" FontSize="16" Text="First, the last four bytes of the previous key are taken. Afterwards, the last byte is placed at the front" TextWrapping="Wrap" Width="200" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Margin="29,10,16,254" Grid.ColumnSpan="4" Grid.Column="6"/>

@@ -25,7 +25,7 @@ namespace Cryptool.Plugins.AESVisualisation
     {
         #region Private Variables
 
-        
+        private int keysize;
 
         #endregion
 
@@ -35,8 +35,19 @@ namespace Cryptool.Plugins.AESVisualisation
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-       
-
+        [TaskPane("Keysize", "KeysizeTooltip", null, 3, false, ControlType.ComboBox, new String[] { "128 Bit", "192 Bit", "256 Bit" })]
+        public int Keysize
+        {
+            get { return this.keysize; }
+            set
+            {
+                if (((int)value) != keysize)
+                {
+                    this.keysize = (int)value;
+                    OnPropertyChanged("Keysize");
+                }
+            }
+        }
         #endregion
 
         #region Events
