@@ -94,7 +94,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(0);
             }
@@ -122,7 +122,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(0);
             }
@@ -151,7 +151,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(0);
             }
@@ -180,7 +180,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(0);
             }
@@ -267,8 +267,8 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
-            {
+            if (keysize != 0)
+            { 
                 shiftButtons(1);
             }
             mixColButton.IsEnabled = true;
@@ -296,7 +296,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(1);
             }
@@ -322,7 +322,7 @@ namespace AESVisualisation
             roundNumber = 9 + shift * 2 * keysize;
             action = 1;
             setUpSubByte(states);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(1);
             }
@@ -351,7 +351,7 @@ namespace AESVisualisation
             {
                 setUpSubByte(states);
             }, null);
-            if (keysize == 1)
+            if (keysize != 0)
             {
                 shiftButtons(1);
             }
@@ -498,7 +498,25 @@ namespace AESVisualisation
         {
             if (expansion)
             {
-                if (roundNumber < 10)
+                if (roundNumber < 10 && keysize == 0)
+                {
+                    roundNumber++;
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpExpansion();
+                    }, null);
+                    return;
+                }
+                else if(roundNumber < 8 && keysize == 1)
+                {
+                    roundNumber++;
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpExpansion();
+                    }, null);
+                    return;
+                }
+                else if(roundNumber < 7 && keysize == 2)
                 {
                     roundNumber++;
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -783,7 +801,7 @@ namespace AESVisualisation
                     break;
                 case 3:
                     removeColors();
-                    if(shift == 1)
+                    if(shift == 1 && keysize == 1)
                     {
                         round1Button.Background = Brushes.Aqua;
                         break;
@@ -792,7 +810,7 @@ namespace AESVisualisation
                     break;
                 case 4:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round2Button.Background = Brushes.Aqua;
                         break;
@@ -801,69 +819,125 @@ namespace AESVisualisation
                     break;
                 case 5:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round3Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round1Button.Background = Brushes.Aqua;
                         break;
                     }
                     round5Button.Background = Brushes.Aqua;
                     break;
                 case 6:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round4Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round2Button.Background = Brushes.Aqua;
                         break;
                     }
                     round6Button.Background = Brushes.Aqua;
                     break;
                 case 7:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round5Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round3Button.Background = Brushes.Aqua;
                         break;
                     }
                     round7Button.Background = Brushes.Aqua;
                     break;
                 case 8:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round6Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round4Button.Background = Brushes.Aqua;
                         break;
                     }
                     round8Button.Background = Brushes.Aqua;
                     break;
                 case 9:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round7Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round5Button.Background = Brushes.Aqua;
                         break;
                     }
                     round9Button.Background = Brushes.Aqua;
                     break;
                 case 10:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round8Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round6Button.Background = Brushes.Aqua;
                         break;
                     }
                     round10Button.Background = Brushes.Aqua;
                     break;
                 case 11:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
                     {
                         round9Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round7Button.Background = Brushes.Aqua;
                         break;
                     }
                     break;
                 case 12:
                     removeColors();
-                    if (shift == 1)
+                    if (shift == 1 && keysize == 1)
+                    {
+                        round10Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    else if (shift == 1 && keysize == 2)
+                    {
+                        round8Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    break;
+                case 13:
+                    removeColors();
+                    if (shift == 1 && keysize == 2)
+                    {
+                        round9Button.Background = Brushes.Aqua;
+                        break;
+                    }
+                    break;
+                case 14:
+                    removeColors();
+                    if (shift == 1 && keysize == 2)
                     {
                         round10Button.Background = Brushes.Aqua;
                         break;
@@ -4949,6 +5023,10 @@ namespace AESVisualisation
                 {
                     roundNumber = 8;
                 }
+                if(keysize == 2 && roundNumber > 7)
+                {
+                    roundNumber = 7;
+                }
                 if(roundNumber == 0)
                 {
                     roundNumber++;
@@ -5018,17 +5096,33 @@ namespace AESVisualisation
             {
                 round9Button.Visibility = Visibility.Visible;
                 round10Button.Visibility = Visibility.Visible;
+                prevStepButton.SetValue(Grid.RowProperty, 3);
+                prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                nextStepButton.SetValue(Grid.RowProperty, 3);
+                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+
             }
             else if(keysize == 1)
             {
                 round10Button.Visibility = Visibility.Hidden;
                 round9Button.Visibility = Visibility.Hidden;
+                prevStepButton.SetValue(Grid.RowProperty, 4);
+                prevStepButton.SetValue(Grid.ColumnProperty, 9);
+                nextStepButton.SetValue(Grid.ColumnProperty, 10);
+                nextStepButton.SetValue(Grid.RowProperty, 4);
+                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
             }
             else
             {
                 round10Button.Visibility = Visibility.Hidden;
                 round9Button.Visibility = Visibility.Hidden;
                 round8Button.Visibility = Visibility.Hidden;
+                prevStepButton.SetValue(Grid.RowProperty, 4);
+                prevStepButton.SetValue(Grid.ColumnProperty, 8);
+                nextStepButton.SetValue(Grid.ColumnProperty, 9);
+                nextStepButton.SetValue(Grid.RowProperty, 4);
+                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
             }
             keyButton.Visibility = Visibility.Visible;
         }
