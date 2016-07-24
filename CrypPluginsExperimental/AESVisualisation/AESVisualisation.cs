@@ -227,15 +227,16 @@ namespace Cryptool.Plugins.AESVisualisation
             }
             while (presThread.IsAlive)
             {
-                if (!pres.expansion)
-                {
-                    double temp = pres.progress + 0.5;
-                    ProgressChanged(temp, 1);
-                }
-                else
-                {
-                    ProgressChanged(pres.progress, 1);
-                }
+                ProgressChanged(pres.progress, 1);
+                //if (!pres.expansion)
+                //{
+                //    double temp = pres.progress + 0.5;
+                //    ProgressChanged(temp, 1);
+                //}
+                //else
+                //{
+                //    ProgressChanged(pres.progress, 1);
+                //}
             }
             outputStreamWriter.Write(states[39 + 8 * keysize]);
             outputStreamWriter.Close();

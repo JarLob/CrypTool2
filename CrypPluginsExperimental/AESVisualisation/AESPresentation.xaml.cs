@@ -450,10 +450,11 @@ namespace AESVisualisation
                         setUpAddKey();
                         changeRoundButton();
                     }, null);
-                    if(roundNumber == 9)
+                    if(roundNumber == 9+ 2 * keysize)
                     {
                         mixColButton.IsEnabled = true;
                     }
+                    encryptionProgress();
                     break;
                 case 2:
                     action = 1;
@@ -1862,7 +1863,8 @@ namespace AESVisualisation
             subByteResultGrid.Visibility = Visibility.Visible;
             subByteTransitionGrid.Visibility = Visibility.Visible;
             expansionKeyGrid.Visibility = Visibility.Hidden;
-            subByteButton.Background = Brushes.Aqua;        
+            subByteButton.Background = Brushes.Aqua;
+            encryptionProgress();     
             
         }
 
@@ -3633,6 +3635,7 @@ namespace AESVisualisation
                 }, null);
                 x = 0;
                 roundNumber++;
+                progress = roundNumber* 0.5 / 7;
                 if (roundNumber < 8)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -4248,6 +4251,7 @@ namespace AESVisualisation
                     expansionTransitionGrid1.Visibility = Visibility.Hidden;
                 }, null);
                 roundNumber++;
+                progress = roundNumber * 0.5 / 8;
                 if (roundNumber < 9)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -4888,7 +4892,8 @@ namespace AESVisualisation
                     expansionTransitionGrid.Visibility = Visibility.Hidden;
                     expansionTransitionGrid1.Visibility = Visibility.Hidden;
                 }, null);
-                roundNumber++;                            
+                roundNumber++;
+                progress = roundNumber * 0.05;
                 if (roundNumber < 11)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -4909,6 +4914,7 @@ namespace AESVisualisation
                 {
                     return;
                 }
+
             }
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -4962,6 +4968,7 @@ namespace AESVisualisation
                 }
                 expansionKeyGrid256.Visibility = Visibility.Visible;
             }
+            expansionProgress();
         }
         public byte[] StringToByteArray(String hex)
         {
@@ -5017,6 +5024,7 @@ namespace AESVisualisation
                     setUpAddKey();
                     buttonVisible();
                 }, null);
+                progress = 0.5;
                 actionMethod();
                 action = 1;
                 if(keysize == 1 && roundNumber > 8)
@@ -5233,6 +5241,42 @@ namespace AESVisualisation
             {               
                 //markedBorders.Remove(b);
                 b.Background = Brushes.Transparent;
+            }
+        }
+
+        private void expansionProgress()
+        {
+            switch (keysize)
+            {
+                case 0:
+                    progress = (roundNumber-1) * 0.05;
+                    break;
+                case 1:
+                    progress = (roundNumber-1) * 0.5 / 8;
+                    break;
+                case 2:
+                    progress = (roundNumber-1) * 0.5 / 7;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void encryptionProgress()
+        {
+            switch (keysize)
+            {
+                case 0:
+                    progress = (roundNumber - 1) * 0.05 + 0.5;
+                    break;
+                case 1:
+                    progress = (roundNumber - 1) * 0.5 / 12 + 0.5;
+                    break;
+                case 2:
+                    progress = (roundNumber - 1) * 0.5 / 14 + 0.5;
+                    break;
+                default:
+                    break;
             }
         }
         #endregion
