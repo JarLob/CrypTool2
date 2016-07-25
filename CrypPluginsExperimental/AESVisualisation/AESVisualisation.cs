@@ -135,8 +135,6 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void PreExecution()
         {
-           
-            
         }
 
         /// <summary>
@@ -161,6 +159,7 @@ namespace Cryptool.Plugins.AESVisualisation
             }
             keysize = settings.Keysize;
             pres.keysize = keysize;
+            checkKeysize();
             //pres = new AESPresentation();
             outputStreamWriter = new CStreamWriter();
             roundNumber = 1;
@@ -1679,6 +1678,37 @@ namespace Cryptool.Plugins.AESVisualisation
             roundConstant[7] = new byte[] { 128, 0, 0, 0 };
             roundConstant[8] = new byte[] { 27, 0, 0, 0 };
             roundConstant[9] = new byte[] { 54, 0, 0, 0 };
+        }
+
+        private void checkKeysize()
+        {
+            if (key.Length != 16 + 8 * keysize)
+            {
+                byte[] temp = new byte[16 + 8 * keysize];
+                int x = 0;
+                if (key.Length < 16 + 8 * keysize)
+                {
+                    foreach (byte b in key)
+                    {
+                        temp[x] = b;
+                        x++;
+                    }
+                    while (x < 16 + 8 * keysize)
+                    {
+                        temp[x] = 0;
+                        x++;
+                    }
+                }
+                else
+                {
+                    while (x < 16 + 8 * keysize)
+                    {
+                        temp[x] = key[x];
+                        x++;
+                    }
+                }
+                key = temp;
+            }
         }
         #endregion
 
