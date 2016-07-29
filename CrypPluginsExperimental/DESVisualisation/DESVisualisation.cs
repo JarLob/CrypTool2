@@ -29,7 +29,7 @@ namespace Cryptool.DESVisualisation
     [Author("Lars Hoffmann", "lars.hoff94@gmail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Cryptool.DESVisualisation.Properties.Resources", "DESVisualisation", "DESVisualisation", "DESVisualisation/userdoc.xml", new[] { "CrypPluginsExperimental/DESVisualisation/images/icon.png" })]
+    [PluginInfo("Cryptool.DESVisualisation.Properties.Resources", "DESVisualisation", "DESVisualisation", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class DESVisualisation : ICrypComponent
@@ -109,7 +109,8 @@ namespace Cryptool.DESVisualisation
         /// </summary>
         public UserControl Presentation
         {
-            get; private set;
+            get { return pres; }
+            private set { pres = (DESPresentation)value; }
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace Cryptool.DESVisualisation
             // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
-            pres.EncOriginal = new DESImplementation(text, key);
+            pres.EncOriginal = new DESImplementation(key, text);
             try
             {
                 pres.EncOriginal.DES();
