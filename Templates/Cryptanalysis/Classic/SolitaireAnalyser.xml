@@ -31,7 +31,7 @@
     <replacement key="$Keyword$" value="Keyword"/>
     <replacement key="$Word dictionary$" value="Word dictionary"/>
     <replacement key="$Key dictionary$" value="Key dictionary"/>
-    <replacement key="$SolitaireAnalyser$" value="SolitaireAnalyser"/>
+    <replacement key="$SolitaireAnalyser$" value="SolitaireAnalyzer"/>
  </replacements>
 
 </sample>

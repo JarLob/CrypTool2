@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
 
-  <title lang="en">Linear Congurential Generator</title>
-  <summary lang="en">Usage of the <i>Linear Congurential Generator</i></summary>
-  <description lang="en">This template shows the usage of the <i>Linear Congurential Generator</i>.</description>
+  <title lang="en">Linear Congruential Generator</title>
+  <summary lang="en">Usage of the <i>Linear Congruential Generator</i></summary>
+  <description lang="en">This template shows the usage of the <i>Linear Congruential Generator</i>.</description>
   <keywords>pseudorandom, PRNG, LCG, congruence, recurrence</keywords>
 
   <title lang="de">Linearer Kongruenzen-Generator</title>

@@ -30,6 +30,7 @@ Quelle: <external ref="http://de.wikipedia.org/wiki/RSA-Kryptosystem" /></descri
     <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$Ciphertext$" value="Ciphertext"/>
     <replacement key="$RSA Encryption$" value="RSA Encryption"/>
+    <replacement key="$Number$" value="Number"/>
     <replacement key="$Encrypted Number$" value="Encrypted Number"/>
 	 <replacement key="$memo$" value="{\b RSA Encryption process}\line\line c = (m ** e) mod N\line\line m = message\line e = encryption exponent\line N = modulus\line c = ciphertext\line\line a) Number Sample:\line m=100 -->  c=146=0x92\line   (100**23 mod 299 = 146)\line\line b) Character Sample:\line Text Input: d=ASCII 100 = 0x64\line Text Output: 9200 = 0x92"/>
   </replacements>

@@ -2,7 +2,7 @@
 <sample>
 
   <title lang="en">Dictionary attack on the Double Columnar Transposition Cipher</title>
-  <summary lang="en">Usage of the <i>IDP Analyser</i></summary>
+  <summary lang="en">Usage of the <i>IDP Analyzer</i></summary>
   <description lang="en">This template shows a dictionary attack on the double columnar transposition cipher using the <i>IDP Analysis</i> component.</description>
   <keywords>IDP,double,columnar,transposition,dct,index,digraphic,potential,dictionary,keyphrase,keyword</keywords>
 
