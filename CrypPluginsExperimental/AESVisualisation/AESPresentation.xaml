@@ -446,8 +446,9 @@
         <TextBlock Name="subByteExplanation1" Visibility="Hidden" FontSize="16" TextWrapping="Wrap" Width="160" Height="160" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" Margin="54,0,0.5,40" >
             The corresponding byte in the S-Box is determined and placed into the result matrix.
         </TextBlock>
-        <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="340" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="1" VerticalAlignment="Stretch"  Grid.RowSpan="2" HorizontalAlignment="Stretch" Visibility="Hidden">
+        <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="340" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="0" VerticalAlignment="Stretch"  Grid.RowSpan="3" HorizontalAlignment="Stretch" Visibility="Hidden">
             <Grid.RowDefinitions>
+                <RowDefinition MinHeight="20"/>
                 <RowDefinition MinHeight="20"/>
                 <RowDefinition MinHeight="20"/>
                 <RowDefinition MinHeight="20"/>
@@ -485,6 +486,9 @@
                 <ColumnDefinition MinWidth="10"/>
                 <ColumnDefinition MinWidth="10"/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="17" Grid.ColumnSpan="4">
+                sBox
+            </TextBlock>
             <!-- Region Row0 -->
             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" x:Name="sBorder0" Background="Yellow">
                 <TextBlock x:Name="sTextBlock0"  Text="" TextAlignment="Center"/>
