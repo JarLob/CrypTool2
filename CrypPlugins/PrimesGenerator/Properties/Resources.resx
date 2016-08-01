@@ -121,7 +121,7 @@
     <value>Prime Generator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Generator for prime numbers</value>
+    <value>Generates prime numbers</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
     <value>BigInteger output</value>

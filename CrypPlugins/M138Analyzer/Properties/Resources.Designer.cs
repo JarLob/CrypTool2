@@ -70,7 +70,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Best key found. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Best key found ähnelt.
         /// </summary>
         internal static string CalculatedKeyTooltip {
             get {
@@ -88,7 +88,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext to be used. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext to be used ähnelt.
         /// </summary>
         internal static string CiphertextTooltip {
             get {
@@ -304,7 +304,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Partially Known Plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Partially known plaintext ähnelt.
         /// </summary>
         internal static string MethodList3 {
             get {
@@ -349,7 +349,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Known plaintext to be used. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Known plaintext to be used ähnelt.
         /// </summary>
         internal static string PlaintextTooltip {
             get {
@@ -385,7 +385,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting plaintext using the best found key. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting plaintext using the best found key ähnelt.
         /// </summary>
         internal static string ResultTextTooltip {
             get {
@@ -412,7 +412,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the strips as string, where each line defines one stripe. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the strips as string, where each line defines one strip. ähnelt.
         /// </summary>
         internal static string StripsTooltip {
             get {

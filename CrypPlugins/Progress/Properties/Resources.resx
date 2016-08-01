@@ -127,7 +127,7 @@
     <value>Progress</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Visualizes a given progress.</value>
+    <value>Visualizes a given progress</value>
   </data>
   <data name="ValueCaption" xml:space="preserve">
     <value>Value</value>

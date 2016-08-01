@@ -126,10 +126,10 @@
   <data name="AlphabetName" xml:space="preserve">
     <value>Alphabet</value>
   </data>
-  <data name="AlphabetToolTip" xml:space="preserve">
+  <data name="AlphabetTooltip" xml:space="preserve">
     <value>The alphabet which is used in the Transcriptor</value>
   </data>
-  <data name="AlphabetToolTip2" xml:space="preserve">
+  <data name="AlphabetTooltip2" xml:space="preserve">
     <value>It's possible to use a custom Alphabet</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -162,7 +162,7 @@
   <data name="ImageHeader" xml:space="preserve">
     <value>Image</value>
   </data>
-  <data name="ImageToolTip" xml:space="preserve">
+  <data name="ImageTooltip" xml:space="preserve">
     <value>The file which contains the image</value>
   </data>
   <data name="LikeliestSymbol" xml:space="preserve">
@@ -182,6 +182,12 @@
   </data>
   <data name="NewSymbol" xml:space="preserve">
     <value>New symbol</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Transcriptor</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Transcripts an image with symbols into a text</value>
   </data>
   <data name="RectangleColorCaption" xml:space="preserve">
     <value>Rectangle color</value>
@@ -218,12 +224,6 @@
   </data>
   <data name="ThresholdTooltip" xml:space="preserve">
     <value>Set the threshold for the semi-automatic mode</value>
-  </data>
-  <data name="TranscriptorCaption" xml:space="preserve">
-    <value>Transcriptor</value>
-  </data>
-  <data name="TranscriptorTooltip" xml:space="preserve">
-    <value>Transcripts an image with symbols into a Text</value>
   </data>
   <data name="White" xml:space="preserve">
     <value>White</value>

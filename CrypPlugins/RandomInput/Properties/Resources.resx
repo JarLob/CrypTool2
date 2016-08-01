@@ -121,7 +121,7 @@
     <value>Random Generator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Simple random input generator.</value>
+    <value>Simple random number generator</value>
   </data>
   <data name="StreamOutputCaption" xml:space="preserve">
     <value>Stream Output</value>

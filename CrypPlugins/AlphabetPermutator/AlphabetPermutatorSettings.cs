@@ -68,7 +68,7 @@ namespace AlphabetPermutator
             }
         }
 
-        [TaskPane("PasswordCaption", "PasswordCaptionTooltip", null, 3, false, ControlType.TextBox)]
+        [TaskPane("PasswordCaption", "PasswordTooltip", null, 3, false, ControlType.TextBox)]
         public string Password
         {
             get

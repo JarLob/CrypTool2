@@ -31,7 +31,7 @@ using Transcriptor.Properties;
 namespace Cryptool.Plugins.Transcriptor
 {
     [Author("Olga Groh", "o_groh@student.uni-kassel.de", "Uni Kassel", "www.uni-kassel.de")]
-    [PluginInfo("Transcriptor.Properties.Resources", "TranscriptorCaption", "TranscriptorTooltip", "Transcriptor/DetailedDescription/doc.xml", new[] { "Transcriptor/icon.png" })]
+    [PluginInfo("Transcriptor.Properties.Resources", "PluginCaption", "PluginTooltip", "Transcriptor/DetailedDescription/doc.xml", new[] { "Transcriptor/icon.png" })]
     
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
@@ -66,7 +66,7 @@ namespace Cryptool.Plugins.Transcriptor
         /// <summary>
         /// It's possible to use a custom Alphabet
         /// </summary>
-        [PropertyInfo(Direction.InputData, "AlphabetName", "AlphabetToolTip2", false)]
+        [PropertyInfo(Direction.InputData, "AlphabetName", "AlphabetTooltip2", false)]
         public string Alphabet
         {
             get;

@@ -163,6 +163,6 @@
     <value>Einfüge-Steganographie</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Verstecke Daten in einer Trägerdatei.</value>
+    <value>Versteckt Daten in einer Trägerdatei</value>
   </data>
 </root>

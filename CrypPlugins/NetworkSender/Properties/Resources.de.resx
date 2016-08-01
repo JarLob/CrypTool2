@@ -132,14 +132,14 @@
   <data name="PluginCaption" xml:space="preserve">
     <value>Netzwerk-Sender</value>
   </data>
-  <data name="PluginToolTip" xml:space="preserve">
-    <value>Die Komponente kann über ein Netzwerk Pakete senden.</value>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Sendet Pakete über ein Netzwerk</value>
   </data>
-  <data name="Port" xml:space="preserve">
+  <data name="PortCaption" xml:space="preserve">
     <value>Port</value>
   </data>
-  <data name="PortToolTip" xml:space="preserve">
-    <value>Port auf dem die Daten versendet werden</value>
+  <data name="PortTooltip" xml:space="preserve">
+    <value>Port, auf dem die Daten versendet werden</value>
   </data>
   <data name="SendPackagesLabel" xml:space="preserve">
     <value>Gesendete Pakete</value>
@@ -147,19 +147,19 @@
   <data name="StartLabel" xml:space="preserve">
     <value>Gestartet Um:</value>
   </data>
-  <data name="StreamInput" xml:space="preserve">
+  <data name="StreamInputCaption" xml:space="preserve">
     <value>zu sendende Daten</value>
   </data>
   <data name="StreamInputTooltip" xml:space="preserve">
-    <value>Daten, die über das Netzwerk gesendet werden sollen.</value>
+    <value>Daten, die über das Netzwerk gesendet werden sollen</value>
   </data>
   <data name="TOSHeader" xml:space="preserve">
     <value>Gesendet Um</value>
   </data>
-  <data name="DeviceIp" xml:space="preserve">
-    <value>IP-Adresse:</value>
+  <data name="DeviceIPCaption" xml:space="preserve">
+    <value>IP-Adresse</value>
   </data>
-  <data name="DeviceIpCaptionTooltip" xml:space="preserve">
+  <data name="DeviceIPTooltip" xml:space="preserve">
     <value>Geben Sie die IP-Adresse des Empfängers an, um an diese IP-Adresse zu senden.</value>
   </data>
   <data name="LisPort" xml:space="preserve">
@@ -171,20 +171,20 @@
   <data name="ByteAsciiSwitchCaption" xml:space="preserve">
     <value>Bytes als ASCII anzeigen</value>
   </data>
-  <data name="ByteAsciiSwitchCaptionTooltip" xml:space="preserve">
+  <data name="ByteAsciiSwitchTooltip" xml:space="preserve">
     <value>Bytes als ASCII anzeigen</value>
   </data>
-  <data name="IpInput" xml:space="preserve">
+  <data name="IpInputCaption" xml:space="preserve">
     <value>Ziel IP</value>
   </data>
   <data name="IpInputTooltip" xml:space="preserve">
-    <value>Setzen sie die Ziel IP-Adresse hier oder in den Einstellungen der Komponente.</value>
+    <value>Setzen Sie die Ziel IP-Adresse hier oder in den Einstellungen der Komponente.</value>
   </data>
-  <data name="Protocol" xml:space="preserve">
+  <data name="ProtocolCaption" xml:space="preserve">
     <value>Protokoll</value>
   </data>
-  <data name="ProtocolToolTip" xml:space="preserve">
-    <value>Ändert den Protokoll Typen</value>
+  <data name="ProtocolTooltip" xml:space="preserve">
+    <value>Ändert den Protokoll-Typ</value>
   </data>
   <data name="SpeedrateLabel" xml:space="preserve">
     <value>Übertragungsrate:</value>
@@ -192,34 +192,34 @@
   <data name="ConnectIntervallCaption" xml:space="preserve">
     <value>Verbindungsaufbau-Intervall</value>
   </data>
-  <data name="ConnectIntervallCaptionToolTip" xml:space="preserve">
+  <data name="ConnectIntervallTooltip" xml:space="preserve">
     <value>Bestimmt das Zeit-Intervall, in dem versucht wird, die Verbindung zum Server aufzubauen</value>
   </data>
   <data name="TryConnectCaption" xml:space="preserve">
     <value>Wiederhole Verbindungsaufbau</value>
   </data>
-  <data name="TryConnectCaptionToolTip" xml:space="preserve">
+  <data name="TryConnectTooltip" xml:space="preserve">
     <value>Versucht in einem gegebenen Zeit-Intervall, eine Verbindung zum Server aufzubauen</value>
   </data>
-  <data name="NetworkConditions" xml:space="preserve">
+  <data name="NetworkConditionsGroup" xml:space="preserve">
     <value>Netzwerk-Einstellungen</value>
-  </data>
-  <data name="PresentationSettings" xml:space="preserve">
-    <value>Präsentations-Eigenschaften</value>
   </data>
   <data name="TCPIPSettings" xml:space="preserve">
     <value>TCP/IP-Eigenschaften</value>
   </data>
-  <data name="ConnectionIDInput" xml:space="preserve">
+  <data name="ConnectionIDInputCaption" xml:space="preserve">
     <value>Verbindungseingang</value>
   </data>
   <data name="ConnectionIDInputTooltip" xml:space="preserve">
-    <value>Gibt an, welche Verbindung für die Übertragung verwendet werden soll.</value>
+    <value>Gibt an, welche Verbindung für die Übertragung verwendet werden soll</value>
   </data>
-  <data name="ConnectionIDOutput" xml:space="preserve">
+  <data name="ConnectionIDOutputCaption" xml:space="preserve">
     <value>Verbindungsausgang</value>
   </data>
   <data name="ConnectionIDOutputTooltip" xml:space="preserve">
-    <value>Gibt die ID der aktuellen Verbindung an.</value>
+    <value>Gibt die ID der aktuellen Verbindung an</value>
+  </data>
+  <data name="PresentationSettingsGroup" xml:space="preserve">
+    <value>Präsentation</value>
   </data>
 </root>

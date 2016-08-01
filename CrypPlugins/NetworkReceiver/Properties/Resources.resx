@@ -126,7 +126,7 @@
   <data name="MetaLabel" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="PackageLimit" xml:space="preserve">
+  <data name="PackageLimitCaption" xml:space="preserve">
     <value>Package limit</value>
   </data>
   <data name="PackageLimitTooltip" xml:space="preserve">
@@ -139,9 +139,9 @@
     <value>Network Receiver</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>The component is able to receive packets sent over a network.</value>
+    <value>Receives packets sent over a network</value>
   </data>
-  <data name="Port" xml:space="preserve">
+  <data name="PortCaption" xml:space="preserve">
     <value>Port</value>
   </data>
   <data name="PortTooltip" xml:space="preserve">
@@ -150,7 +150,7 @@
   <data name="ReceivedPackagesLabel" xml:space="preserve">
     <value>Received Packages</value>
   </data>
-  <data name="SingleOutput" xml:space="preserve">
+  <data name="SingleOutputCaption" xml:space="preserve">
     <value>Single Packet</value>
   </data>
   <data name="SingleOutputTooltip" xml:space="preserve">
@@ -162,13 +162,13 @@
   <data name="StopConditions" xml:space="preserve">
     <value>Stop Conditions</value>
   </data>
-  <data name="StreamOutput" xml:space="preserve">
+  <data name="StreamOutputCaption" xml:space="preserve">
     <value>Latest Packet</value>
   </data>
   <data name="StreamOutputTooltip" xml:space="preserve">
     <value>Forwards the last received packet.</value>
   </data>
-  <data name="TimeLimit" xml:space="preserve">
+  <data name="TimeLimitCaption" xml:space="preserve">
     <value>Time Limit</value>
   </data>
   <data name="TimeLimitTooltip" xml:space="preserve">
@@ -181,36 +181,36 @@
     <value>Sources:</value>
   </data>
   <data name="DeviceIpCaption" xml:space="preserve">
-    <value>Networkdevice IP Address:</value>
+    <value>Network device IP Address</value>
   </data>
-  <data name="DeviceIpCaptionTooltip" xml:space="preserve">
+  <data name="DeviceIpTooltip" xml:space="preserve">
     <value>Enter the IP address of your network device to only receive from this device.</value>
   </data>
   <data name="LisPort" xml:space="preserve">
     <value>Port:</value>
   </data>
-  <data name="NetworkConditions" xml:space="preserve">
-    <value>Network</value>
+  <data name="NetworkConditionsGroup" xml:space="preserve">
+    <value>Network Settings</value>
   </data>
   <data name="NetworkDeviceCaption" xml:space="preserve">
     <value>Use all network interfaces</value>
   </data>
-  <data name="NetworkDeviceCaptionTooltip" xml:space="preserve">
+  <data name="NetworkDeviceTooltip" xml:space="preserve">
     <value>Enter the IP address of your network interface to only receive from this device.</value>
   </data>
   <data name="ByteAsciiSwitchCaption" xml:space="preserve">
     <value>show bytes as ASCII</value>
   </data>
-  <data name="ByteAsciiSwitchCaptionTooltip" xml:space="preserve">
+  <data name="ByteAsciiSwitchTooltip" xml:space="preserve">
     <value>show bytes as ASCII</value>
   </data>
-  <data name="PresentationSettings" xml:space="preserve">
-    <value>Presentation Settings</value>
+  <data name="PresentationSettingsGroup" xml:space="preserve">
+    <value>Presentation</value>
   </data>
   <data name="Size" xml:space="preserve">
     <value>Size</value>
   </data>
-  <data name="Protocol" xml:space="preserve">
+  <data name="ProtocolCaption" xml:space="preserve">
     <value>Protocol</value>
   </data>
   <data name="ProtocolTooltip" xml:space="preserve">
@@ -229,27 +229,27 @@
     <value>Client limit</value>
   </data>
   <data name="NumberOfClientsTooltip" xml:space="preserve">
-    <value>Sets the maximum number of client connections. 0 means "no limit"</value>
+    <value>Sets the maximum number of client connections. 0 means "no limit".</value>
   </data>
-  <data name="TCPServerConditions" xml:space="preserve">
+  <data name="TCPServerConditionsGroup" xml:space="preserve">
     <value>TCP Conditions</value>
   </data>
-  <data name="ConnectionIDInput" xml:space="preserve">
+  <data name="ConnectionIDInputCaption" xml:space="preserve">
     <value>Connection Input</value>
   </data>
   <data name="ConnectionIDInputTooltip" xml:space="preserve">
-    <value>Specifies on which connection the Receiver should listen.</value>
+    <value>Specifies on which connection the Receiver should listen</value>
   </data>
-  <data name="ConnectionIDOutput" xml:space="preserve">
+  <data name="ConnectionIDOutputCaption" xml:space="preserve">
     <value>Connection Output</value>
   </data>
   <data name="ConnectionIDOutputTooltip" xml:space="preserve">
-    <value>Shows the ID of the current connection.</value>
+    <value>Shows the ID of the current connection</value>
   </data>
   <data name="ConnectionCaption" xml:space="preserve">
     <value>Only use Connection Input</value>
   </data>
-  <data name="ConnectionCaptionTooltip" xml:space="preserve">
-    <value>The Component wont create a new Connection. It will only use the spezified Connection on the Connection Input.</value>
+  <data name="ConnectionTooltip" xml:space="preserve">
+    <value>The component will not create a new connection. It will only use the connection specified on the connection input.</value>
   </data>
 </root>

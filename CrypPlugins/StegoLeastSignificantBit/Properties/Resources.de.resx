@@ -196,7 +196,7 @@
     <value>LSB-Steganographie</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Verstecke Daten in den niederwertigen Bits einer Bilddatei.</value>
+    <value>Versteckt Daten in den niederwertigen Bits einer Bilddatei</value>
   </data>
   <data name="RegionCancel" xml:space="preserve">
     <value>abbrechen</value>

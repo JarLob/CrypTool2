@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CiphertextTooltip" xml:space="preserve">
-    <value>Ciphertext to be used.</value>
+    <value>Ciphertext to be used</value>
   </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Current analyzed offset</value>
@@ -166,7 +166,7 @@
     <value>Calculated key</value>
   </data>
   <data name="CalculatedKeyTooltip" xml:space="preserve">
-    <value>Best key found.</value>
+    <value>Best key found</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
     <value>Average keys / sec</value>
@@ -205,13 +205,13 @@
     <value>Set the minimum offset to be analyzed</value>
   </data>
   <data name="MethodList3" xml:space="preserve">
-    <value>Partially Known Plaintext</value>
+    <value>Partially known plaintext</value>
   </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Plaintext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Known plaintext to be used.</value>
+    <value>Known plaintext to be used</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analyzer</value>
@@ -223,7 +223,7 @@
     <value>Resulting plaintext</value>
   </data>
   <data name="ResultTextTooltip" xml:space="preserve">
-    <value>Resulting plaintext using the best found key.</value>
+    <value>Resulting plaintext using the best found key</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Start time</value>
@@ -244,6 +244,6 @@
     <value>Strips</value>
   </data>
   <data name="StripsTooltip" xml:space="preserve">
-    <value>Enter the strips as string, where each line defines one stripe.</value>
+    <value>Enter the strips as string, where each line defines one strip.</value>
   </data>
 </root>

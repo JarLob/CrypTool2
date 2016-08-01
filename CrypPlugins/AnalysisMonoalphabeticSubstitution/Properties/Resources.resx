@@ -169,7 +169,7 @@
     <value>Monoalphabetic Substitution Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Cryptanalyze monoalphabetic substitution ciphers</value>
+    <value>Cryptanalyzes monoalphabetic substitution ciphers</value>
   </data>
   <data name="PTAlphabetCaption" xml:space="preserve">
     <value>Plaintext language</value>

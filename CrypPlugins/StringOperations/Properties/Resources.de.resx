@@ -132,9 +132,6 @@
   <data name="OperationCaption" xml:space="preserve">
     <value>Funktion</value>
   </data>
-  <data name="OperationCaptionToolTip" xml:space="preserve">
-    <value>Wählen Sie die Funktion, die auf die Zeichenketten angewendet werden soll.</value>
-  </data>
   <data name="OperationList1" xml:space="preserve">
     <value>Konkatenieren </value>
   </data>
@@ -185,6 +182,9 @@
   </data>
   <data name="OperationList9" xml:space="preserve">
     <value>Gleichheit</value>
+  </data>
+  <data name="OperationTooltip" xml:space="preserve">
+    <value>Wählen Sie die Funktion, die auf die Zeichenketten angewendet werden soll.</value>
   </data>
   <data name="OrderCaption" xml:space="preserve">
     <value>Reihenfolge</value>

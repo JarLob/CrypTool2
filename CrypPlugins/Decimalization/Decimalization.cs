@@ -67,21 +67,21 @@ namespace Cryptool.Plugins.Decimalization
 
         #region Data Properties
         
-        [PropertyInfo(Direction.InputData, "InputCaption", "InputCaptionToolTip")]
+        [PropertyInfo(Direction.InputData, "InputCaption", "InputTooltip")]
         public byte[] BinaryNumber
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "Output1Caption", "Output1CaptionToolTip")]
+        [PropertyInfo(Direction.OutputData, "Output1Caption", "Output1Tooltip")]
         public int[] DecimalNumberInt
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "Output2Caption", "Output2CaptionToolTip")]
+        [PropertyInfo(Direction.OutputData, "Output2Caption", "Output2Tooltip")]
         public String DecimalNumberStr
         {
             get;

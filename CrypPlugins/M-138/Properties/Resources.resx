@@ -130,13 +130,13 @@
     <value>Select whether you want to encrypt or decrypt the input.</value>
   </data>
   <data name="CaseSensitivyCaption" xml:space="preserve">
-    <value>Case Sensitivity</value>
+    <value>Case sensitivity</value>
   </data>
   <data name="CaseSensitivyTooltip" xml:space="preserve">
     <value>Select whether the device should work case sensitive or not.</value>
   </data>
   <data name="InvalidCharacterHandlingCaption" xml:space="preserve">
-    <value>Invalid Character Handling</value>
+    <value>Handling of invalid characters</value>
   </data>
   <data name="InvalidCharacterHandlingList1" xml:space="preserve">
     <value>Delete</value>
@@ -160,19 +160,19 @@
     <value>M-138</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>M-138, a strip cipher from the early 20th century.</value>
+    <value>M-138, a strip cipher. This variant of a poly-alphabetic encryption was used by the US Armed Forces since 1934.</value>
   </data>
   <data name="SeparatorOffCharCaption" xml:space="preserve">
     <value>Separator for offset</value>
   </data>
   <data name="SeparatorOffCharTooltip" xml:space="preserve">
-    <value>Separator used to separate the strips from the offset.</value>
+    <value>Separator used to separate the strips from the offset</value>
   </data>
   <data name="SeparatorStripCaption" xml:space="preserve">
     <value>Separator for strips</value>
   </data>
   <data name="SeparatorStripTooltip" xml:space="preserve">
-    <value>Separator that is used to separate the different strips used from each other.</value>
+    <value>Separator that is used to separate the different strips used from each other</value>
   </data>
   <data name="StripsCaption" xml:space="preserve">
     <value>Strips</value>
@@ -190,6 +190,6 @@
     <value>Text Output</value>
   </data>
   <data name="TextOutputTooltip" xml:space="preserve">
-    <value>The resulting ciphertext/plaintext.</value>
+    <value>Resulting ciphertext/plaintext</value>
   </data>
 </root>

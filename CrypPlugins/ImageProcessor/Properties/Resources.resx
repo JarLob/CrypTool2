@@ -220,7 +220,7 @@
     <value>ImageProcessor</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Process and save an image</value>
+    <value>Processes and saves an image</value>
   </data>
   <data name="SizeXCaption" xml:space="preserve">
     <value>SizeX</value>

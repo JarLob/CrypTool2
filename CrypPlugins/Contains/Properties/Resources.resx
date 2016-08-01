@@ -124,7 +124,7 @@
     <value>Contains</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Search strings in a dictionary.</value>
+    <value>Searches strings in a dictionary</value>
   </data>
   <data name="finished_building_search_structure" xml:space="preserve">
     <value>...finished builing search structure in: "{0}" seconds.</value>

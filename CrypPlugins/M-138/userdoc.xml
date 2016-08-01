@@ -6,10 +6,8 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    The M-138 is a device used by the US military forces until the middle of the 20th century. It's also known as CSP-845 and was invented by Colonel Parker Hitt
-    in 1916. <newline/>
-    The M-138 offers a periodic polyalphabetic encryption. It consists of an aluminium or plastic frame, and a set of paper strips that can be put
-    into the frame. The frame can hold 25 strips at a time.
+    The M-138 is a device used by the US military forces until the middle of the 20th century. It's also known as CSP-845 and was invented by Colonel Parker Hitt in 1916. <newline/>
+    The M-138 consists of an aluminium or plastic frame, and a set of paper strips that can be put into the frame. The frame can hold 25 strips at a time.
     Each strip contains the alphabet in a random order. The alphabet is repeated 2 times on each strip to ensure every character can be encrypted
     using every strip. To encrypt a text, the strips are put into the frame in such an order, that the cleartext can be read in the first column.
     After that, the user has to choose an offset which determines the corresponding column the ciphertext will read from. In case a text is
@@ -18,14 +16,16 @@
     CrypTool 2 features a set of strips provided by cryptologist Klaus Schmeh as the original set of strips was not published. Using
     a set of 100 unknown strips from where 25 are taken leads to a keyspace of 2^166 which makes a brute-force attack unpractical.
   </introduction>
+  
 
+  
   <introduction lang="de-DE">    
   </introduction>
   Die M-138 ist ein Verschlüsselungswerkzeug, das bis in die Mitte des 20. Jahrhunderts von den amerikanischen Streitkräften eingesetzt wurde.
   Sie wurde 1916 von Colonel Parker Hitt erfunden und ist auch als CSP-845 bekannt. <newline/>
-  Die M-138 verwendet eine polyalphabetische Verschlüsselung. Sie besteht aus einem Aluminium- oder Plastikrahmen und einem Satz Papierstreifen, die in den
+  Die M-138 besteht aus einem Aluminium- oder Plastikrahmen und einem Satz Papierstreifen, die in den
   Rahmen eingeschoben werden können. In den Rahmen passen untereinander 25 Streifen. Jeder Streifen enthält das Alphabet, wobei die Buchstaben zufällig angeordnet
-  sind. Um einen Text zu verschlüsseln werden die Streifen so in den Rahmen geschoben, dass man in der ersten Spalte den Klartext ablesen kann. Danach kann
+  sind. Um einen Text zu verschlüsseln, werden die Streifen so in den Rahmen geschoben, dass man in der ersten Spalte den Klartext ablesen kann. Danach kann
   der Benutzer einen Offset auswählen. In dieser Spalte wird dann der Geheimtext abgelesen. Ist der Text länger als 25 Buchstaben, so werden die Streifen in
   derselben Reihenfolge für die darauffolgenden Buchstaben verwendet. Der Schlüssel besteht somit aus den 25 verwendeten Streifen in der richtigen Reihenfolge
   und dem gewählten Offset. Die Implementierung in CrypTool2 verwendet einen von dem Kryptologen Klaus Schmeh entworfenen Streifensatz, da die originalen Streifen

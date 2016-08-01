@@ -232,7 +232,7 @@
     <value>Padding Oracle Attack</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Attack an encrypted message using a Padding Oracle</value>
+    <value>Attacks an encrypted message using a Padding Oracle</value>
   </data>
   <data name="ResultOutputCaption" xml:space="preserve">
     <value>Manipulated Cipher Output</value>

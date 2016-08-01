@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.VisualEncoder
 
         #region TaskPane Settings
 
-        [TaskPane("EncodingCaption", "EncodingTooltip", null, 1, true, ControlType.ComboBox, new[] { "EAN8", "EAN13", "Code39", "Code128", "QRCode", "PDF417" })]
+        [TaskPane("EncodingTypeCaption", "EncodingTypeTooltip", null, 1, true, ControlType.ComboBox, new[] { "EAN8", "EAN13", "Code39", "Code128", "QRCode", "PDF417" })]
         public DimCodeType EncodingType
         {
             get { return encodingType; }
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.VisualEncoder
         }
 
 
-        [TaskPane("AppendICVCaption", "AppendICVCaptionTooltip", "BarcodeSection", 2, true, ControlType.CheckBox)]
+        [TaskPane("AppendICVCaption", "AppendICVTooltip", "BarcodeSection", 2, true, ControlType.CheckBox)]
         public bool AppendICV
         {
             get

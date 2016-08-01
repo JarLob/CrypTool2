@@ -301,7 +301,7 @@
     <value>Schlüsselsucher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Führt eine erschöpfende Schlüsselsuche auf einem Geheimtext durch.</value>
+    <value>Führt eine erschöpfende Schlüsselsuche auf einem Geheimtext durch</value>
   </data>
   <data name="Processing_results_of_calculation" xml:space="preserve">
     <value>Werte Ergebnis der Berechnung aus</value>

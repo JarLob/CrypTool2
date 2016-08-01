@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.VisualDecoder
 
         #region TaskPane Settings
 
-        [TaskPane("CodeTypeCaption", "CodeTypeTooltip", null, 1, true, ControlType.ComboBox, new[] { "AUTO", "EAN13", "EAN8", "Code39", "Code128", "QRCode", 
+        [TaskPane("DecodingTypeCaption", "DecodingTypeTooltip", null, 1, true, ControlType.ComboBox, new[] { "AUTO", "EAN13", "EAN8", "Code39", "Code128", "QRCode", 
                                                                                                      "DataMatrix", "PDF417", "MaxiCode",  "Aztec", "CodaBar",
                                                                                                      "RSS", "UPC_A", "UPC_E" })]
         public DimCodeType DecodingType
@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.VisualDecoder
             }
         }
 
-        [TaskPane("StopOnSuccessCaption", "StopOnSuccessCaptionTooltip", null, 2, false, ControlType.CheckBox)]
+        [TaskPane("StopOnSuccessCaption", "StopOnSuccessTooltip", null, 2, false, ControlType.CheckBox)]
         public bool StopOnSuccess
         {
             get

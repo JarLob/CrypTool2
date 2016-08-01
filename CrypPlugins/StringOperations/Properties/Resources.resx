@@ -120,7 +120,7 @@
   <data name="OperationCaption" xml:space="preserve">
     <value>Operation</value>
   </data>
-  <data name="OperationCaptionToolTip" xml:space="preserve">
+  <data name="OperationTooltip" xml:space="preserve">
     <value>Change the operation of this StringOperations</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
@@ -139,7 +139,7 @@
     <value>String Operations</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Operations for modifying Strings</value>
+    <value>Operations for modifying strings</value>
   </data>
   <data name="String1Caption" xml:space="preserve">
     <value>String-One</value>

@@ -121,7 +121,7 @@
     <value>Concatenate</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Concatenates two input data streams.</value>
+    <value>Concatenates two input data streams</value>
   </data>
   <data name="InputStream1Caption" xml:space="preserve">
     <value>First input</value>

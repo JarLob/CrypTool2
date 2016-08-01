@@ -31,7 +31,7 @@ using Cryptool.Plugins.Webcam.Libaries;
 namespace Cryptool.Plugins.Webcam
 {
     [Author("Mirko Sartorius", "mirkosartorius@web.de", "CrypTool 2 Team", "university of kassel")]
-    [PluginInfo("WebCam.Properties.Resources", "PluginCaption", "PluginToolTip", "WebCam/userdoc.xml", new[] { "Webcam/images/webcam.png" })]
+    [PluginInfo("WebCam.Properties.Resources", "PluginCaption", "PluginTooltip", "WebCam/userdoc.xml", new[] { "Webcam/images/webcam.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class Webcam : ICrypComponent
     {
@@ -54,14 +54,14 @@ namespace Cryptool.Plugins.Webcam
 
         /// <summary>
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "PictureOutPutCaption", "PictureOutPutToolTip")]
+        [PropertyInfo(Direction.OutputData, "PictureOutPutCaption", "PictureOutPutTooltip")]
         public byte[] PictureOutput
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "SingleOutPutCaption", "SingleOutPutToolTip")]
+        [PropertyInfo(Direction.OutputData, "SingleOutPutCaption", "SingleOutPutTooltip")]
         public byte[] SingleOutPut
         {
             get;
@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.Webcam
         }
 
 
-        [PropertyInfo(Direction.InputData, "TakePictureCaption", "TakePictureToolTip", false)]
+        [PropertyInfo(Direction.InputData, "TakePictureCaption", "TakePictureTooltip", false)]
         public bool TakePicture
         {
             get

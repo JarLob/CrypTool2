@@ -121,7 +121,7 @@
     <value>Length</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Operates the Length of an input</value>
+    <value>Determines the length of the input object</value>
   </data>
   <data name="ObjInputCaption" xml:space="preserve">
     <value>Object Input</value>

@@ -121,7 +121,7 @@
     <value>Primzahltest</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Primzahltest</value>
+    <value>Testet die Primalität einer Zahl</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Eingabe der Zahl</value>

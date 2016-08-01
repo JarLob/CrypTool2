@@ -37,21 +37,23 @@ namespace Cryptool.Plugins.NetworkSender {
 
         #region TaskPane Settings
 
-        [TaskPane("DeviceIp", "DeviceIpCaptionTooltip", "NetworkConditions", 0, false, ControlType.TextBox)]
-        public string DeviceIP {
+        [TaskPane("DeviceIPCaption", "DeviceIPTooltip", "NetworkConditionsGroup", 0, false, ControlType.TextBox)]
+        public string DeviceIP
+        {
             get { return deviceIP; }
-            set {
+            set
+            {
                 deviceIP = value;
-                OnPropertyChanged("DeviceIp");
+                OnPropertyChanged("DeviceIP");
             }
         }
 
-        [TaskPane("Port", "PortToolTip", "NetworkConditions", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 65535)]
-        public int Port {
-            get {
-                return port;
-            }
-            set {
+        [TaskPane("PortCaption", "PortTooltip", "NetworkConditionsGroup", 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 65535)]
+        public int Port
+        {
+            get { return port; }
+            set
+            {
                 if (port != value) {
                     port = value;
                     OnPropertyChanged("Port");
@@ -59,22 +61,10 @@ namespace Cryptool.Plugins.NetworkSender {
             }
         }
 
-        [TaskPane("ByteAsciiSwitchCaption", "ByteAsciiSwitchCaptionTooltip", "PresentationSettings", 3, false, ControlType.CheckBox)]
-        public bool ByteAsciiSwitch {
-            get { return byteAsciiSwitch; }
-            set {
-                if (value != byteAsciiSwitch) {
-                    byteAsciiSwitch = value;
-                    OnPropertyChanged("ByteAsciiSwitch");
-                }
-            }
-        }
-
-        [TaskPane("Protocol", "ProtocolToolTip", "NetworkConditions", 2, false, ControlType.ComboBox, new[] {"UDP", "TCP"})]
-        public int Protocol {
-            get {
-                return protocol;
-            }
+        [TaskPane("ProtocolCaption", "ProtocolTooltip", "NetworkConditionsGroup", 2, false, ControlType.ComboBox, new[] {"UDP", "TCP"})]
+        public int Protocol
+        {
+            get { return protocol; }
             set {
                 if (protocol != value) {
                     protocol = value;
@@ -83,8 +73,23 @@ namespace Cryptool.Plugins.NetworkSender {
                 }
             }
         }
+
+        [TaskPane("ByteAsciiSwitchCaption", "ByteAsciiSwitchTooltip", "PresentationSettingsGroup", 3, false, ControlType.CheckBox)]
+        public bool ByteAsciiSwitch
+        {
+            get { return byteAsciiSwitch; }
+            set
+            {
+                if (value != byteAsciiSwitch)
+                {
+                    byteAsciiSwitch = value;
+                    OnPropertyChanged("ByteAsciiSwitch");
+                }
+            }
+        }
+
         /*
-        [TaskPane("TryConnectCaption", "TryConnectCaptionToolTip", "TCPIPSettings", 4, false, ControlType.CheckBox)]
+        [TaskPane("TryConnectCaption", "TryConnectTooltip", "TCPIPSettingsGroup", 4, false, ControlType.CheckBox)]
         public bool TryConnect {
             get { return tryConnect; }
             set {
@@ -96,7 +101,7 @@ namespace Cryptool.Plugins.NetworkSender {
             }
         }
 
-        [TaskPane("ConnectIntervallCaption", "ConnectIntervallCaptionToolTip", "TCPIPSettings", 5, false, ControlType.NumericUpDown,
+        [TaskPane("ConnectIntervallCaption", "ConnectIntervallTooltip", "TCPIPSettingsGroup", 5, false, ControlType.NumericUpDown,
             ValidationType.RangeInteger, 100, 10000)]
         public int ConnectIntervall {
             get {
@@ -114,12 +119,13 @@ namespace Cryptool.Plugins.NetworkSender {
 
         public void Initialize() {}
 
-        internal void UpdateTaskPaneVisibility() {
-            if (TaskPaneAttributeChanged == null) {
+        internal void UpdateTaskPaneVisibility()
+        {
+            if (TaskPaneAttributeChanged == null)
                 return;
-            }
 
-            if (Protocol == udpProtocol) {
+            if (Protocol == udpProtocol)
+            {
                 var tba = new TaskPaneAttribteContainer("TryConnect", Visibility.Collapsed);
                 var tbb = new TaskPaneAttribteContainer("ConnectIntervall", Visibility.Collapsed);
                 var tbac = new TaskPaneAttributeChangedEventArgs(tba);
@@ -155,4 +161,3 @@ namespace Cryptool.Plugins.NetworkSender {
         #endregion
     }
 }
-

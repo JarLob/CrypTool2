@@ -36,8 +36,7 @@ using NetworkSender;
 namespace Cryptool.Plugins.NetworkReceiver
 {
     [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
-    [PluginInfo("NetworkReceiver.Properties.Resources", "PluginCaption", "PluginTooltip", "NetworkReceiver/userdoc.xml",
-        new[] {"NetworkReceiver/Images/package.png"})]
+    [PluginInfo("NetworkReceiver.Properties.Resources", "PluginCaption", "PluginTooltip", "NetworkReceiver/userdoc.xml", new[] {"NetworkReceiver/Images/package.png"})]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class NetworkReceiver : ICrypComponent
     {
@@ -70,22 +69,22 @@ namespace Cryptool.Plugins.NetworkReceiver
 
         #region IPlugin Data Properties
 
-        [PropertyInfo(Direction.OutputData, "StreamOutput", "StreamOutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "StreamOutputCaption", "StreamOutputTooltip")]
         public ICryptoolStream PackageStream { get; private set; }
 
-        [PropertyInfo(Direction.OutputData, "SingleOutput", "SingleOutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "SingleOutputCaption", "SingleOutputTooltip")]
         public byte[] SingleOutput { get; set; }
 
         /// <summary>
         ///   Socket ID
         /// </summary>
-        [PropertyInfo(Direction.InputData, "ConnectionIDInput", "ConnectionIDInputTooltip")]
+        [PropertyInfo(Direction.InputData, "ConnectionIDInputCaption", "ConnectionIDInputTooltip")]
         public int ConnectionIDInput { get; set; }
 
         /// <summary>
         ///   Socket ID
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "ConnectionIDOutput", "ConnectionIDOutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "ConnectionIDOutputCaption", "ConnectionIDOutputTooltip")]
         public int ConnectionIDOutput { get; set; }
 
         #endregion

@@ -121,7 +121,7 @@
     <value>Audio Input</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Records audio from microphones.</value>
+    <value>Records audio from microphones</value>
   </data>
   <data name="AudioOutputCaption" xml:space="preserve">
     <value>Audio Output</value>

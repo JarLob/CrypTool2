@@ -439,7 +439,7 @@
     <value>Key Searcher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Performs a brute-force attack on a ciphertext.</value>
+    <value>Performs a brute-force attack on a ciphertext</value>
   </data>
   <data name="PortCaption" xml:space="preserve">
     <value>Port</value>

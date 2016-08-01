@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PluginCaption" xml:space="preserve">
-    <value>IDP Analyser</value>
+    <value>IDP Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component performs an attack on the double columnar transposition.</value>
+    <value>Performs an attack on the double columnar transposition</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
     <value>Input</value>

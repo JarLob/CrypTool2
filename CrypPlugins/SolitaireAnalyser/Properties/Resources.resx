@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Solitaire Analyser</value>
+    <value>Solitaire Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Try to crack the solitaire cipher</value>
+    <value>This component performs the cryptanalysis of a Solitaire cipher.</value>
   </data>
   <data name="InputStringCaption" xml:space="preserve">
     <value>Ciphertext input</value>

@@ -121,7 +121,7 @@
     <value>Quadratic Sieve</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Sieving Primes</value>
+    <value>Modern factorization algorithm</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Number input</value>

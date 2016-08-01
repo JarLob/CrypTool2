@@ -139,7 +139,7 @@
     <value>External alphabet input</value>
   </data>
   <data name="InputAlphabetTooltip" xml:space="preserve">
-    <value>Input a string containing the alhabet which should be used by Vigenère. If no alphabet is provided on this input, the internal alphabet will be used.</value>
+    <value>Input a string containing the alphabet which should be used by Vigenère. If no alphabet is provided on this input, the internal alphabet will be used.</value>
   </data>
   <data name="InputStringCaption" xml:space="preserve">
     <value>Text input</value>
@@ -166,10 +166,10 @@
     <value>Enter multiple letters as the key.</value>
   </data>
   <data name="ShiftValueCaption" xml:space="preserve">
-    <value>String</value>
+    <value>Shift value (string)</value>
   </data>
   <data name="ShiftValueTooltip" xml:space="preserve">
-    <value>Keyword as derived by the VigenèreAnalyser</value>
+    <value>Enter the keyword as a string.</value>
   </data>
   <data name="ShiftValueTPCaption" xml:space="preserve">
     <value>Shift value (integer)</value>

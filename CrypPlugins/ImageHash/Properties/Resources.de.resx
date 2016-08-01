@@ -121,7 +121,7 @@
     <value>BildHash</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Berechne den robusten Hash eines Bildes</value>
+    <value>Berechnet den robusten Hashwert eines Bildes</value>
   </data>
   <data name="OutputHashCaption" xml:space="preserve">
     <value>Ausgabe-Hash</value>

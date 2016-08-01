@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Transposition Analyser</value>
+    <value>Transposition Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This component performs several kinds of attacks against the columnar transposition.</value>
+    <value>Performs several kinds of attacks against the columnar transposition</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
     <value>Input</value>

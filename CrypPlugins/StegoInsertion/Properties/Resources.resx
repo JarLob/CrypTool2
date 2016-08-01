@@ -163,6 +163,6 @@
     <value>Insertion Steganography</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Insert content 'between the lines' of a carrier file</value>
+    <value>Inserts content 'between the lines' of a carrier file</value>
   </data>
 </root>

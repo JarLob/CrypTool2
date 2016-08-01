@@ -121,7 +121,7 @@
     <value>Audio Output</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Plays audio using loudspeakers.</value>
+    <value>Plays audio using loudspeakers</value>
   </data>
   <data name="AudioInputCaption" xml:space="preserve">
     <value>Audio Input</value>

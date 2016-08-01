@@ -121,7 +121,7 @@
     <value>Primzahlgenerator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Primzahlgenerator</value>
+    <value>Generiert Primzahlen</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
     <value>Ausgabe der Primzahl</value>

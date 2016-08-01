@@ -130,7 +130,7 @@
     <value>Rechenoperationen</value>
   </data>
   <data name="PluginOperationTooltip" xml:space="preserve">
-    <value>Dieses Plugin implementiert verschiedene Rechenoperationen für ganze Zahlen beliebiger Größe.</value>
+    <value>Implementiert verschiedene Rechenoperationen für ganze Zahlen beliebiger Größe</value>
   </data>
   <data name="PluginOperationDescriptionURL" xml:space="preserve">
     <value>Numbers/DetailedDescription/DescriptionOperation.xaml</value>
@@ -169,7 +169,7 @@
     <value>Zahlenausgabe</value>
   </data>
   <data name="NumberTooltip" xml:space="preserve">
-    <value>Die Zahl, die diese Komponente ausgeben soll.</value>
+    <value>Die Zahl, die diese Komponente ausgeben soll</value>
   </data>
   <data name="OperatCaption" xml:space="preserve">
     <value>Operation</value>

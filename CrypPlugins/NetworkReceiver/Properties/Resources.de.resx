@@ -126,7 +126,7 @@
   <data name="MetaLabel" xml:space="preserve">
     <value>Info</value>
   </data>
-  <data name="PackageLimit" xml:space="preserve">
+  <data name="PackageLimitCaption" xml:space="preserve">
     <value>Paketlimit</value>
   </data>
   <data name="PackageLimitTooltip" xml:space="preserve">
@@ -139,9 +139,9 @@
     <value>Netzwerk-Empfänger</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Die Komponente kann über ein Netzwerk gesendete Pakete empfangen.</value>
+    <value>Empfängt über ein Netzwerk gesendete Pakete</value>
   </data>
-  <data name="Port" xml:space="preserve">
+  <data name="PortCaption" xml:space="preserve">
     <value>Port</value>
   </data>
   <data name="PortTooltip" xml:space="preserve">
@@ -150,11 +150,11 @@
   <data name="ReceivedPackagesLabel" xml:space="preserve">
     <value>Empfangene Pakete</value>
   </data>
-  <data name="SingleOutput" xml:space="preserve">
+  <data name="SingleOutputCaption" xml:space="preserve">
     <value>Einzelnes Paket</value>
   </data>
   <data name="SingleOutputTooltip" xml:space="preserve">
-    <value>Daten eines einzenen Paketes.</value>
+    <value>Daten eines einzenen Paketes</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Gestartet um:</value>
@@ -162,13 +162,13 @@
   <data name="StopConditions" xml:space="preserve">
     <value>Haltebedingungen</value>
   </data>
-  <data name="StreamOutput" xml:space="preserve">
+  <data name="StreamOutputCaption" xml:space="preserve">
     <value>Letztes Paket</value>
   </data>
   <data name="StreamOutputTooltip" xml:space="preserve">
-    <value>Leitet das zuletzt empfangene Paket weiter.</value>
+    <value>Leitet das zuletzt empfangene Paket weiter</value>
   </data>
-  <data name="TimeLimit" xml:space="preserve">
+  <data name="TimeLimitCaption" xml:space="preserve">
     <value>Zeitlimit</value>
   </data>
   <data name="TimeLimitTooltip" xml:space="preserve">
@@ -183,34 +183,34 @@
   <data name="DeviceIpCaption" xml:space="preserve">
     <value>IP-Adresse:</value>
   </data>
-  <data name="DeviceIpCaptionTooltip" xml:space="preserve">
+  <data name="DeviceIpTooltip" xml:space="preserve">
     <value>Geben Sie die IP-Adresse Ihrer Netzwerkkarte an, um nur von dieser IP-Adresse zu empfangen.</value>
   </data>
   <data name="LisPort" xml:space="preserve">
     <value>Port: </value>
   </data>
-  <data name="NetworkConditions" xml:space="preserve">
-    <value>Netzwerk</value>
+  <data name="NetworkConditionsGroup" xml:space="preserve">
+    <value>Netzwerk-Einstellungen</value>
   </data>
   <data name="NetworkDeviceCaption" xml:space="preserve">
     <value>Alle Netzwerkgeräte benutzen</value>
   </data>
-  <data name="NetworkDeviceCaptionTooltip" xml:space="preserve">
+  <data name="NetworkDeviceTooltip" xml:space="preserve">
     <value>Geben Sie die IP-Adresse ihrer Netzwerkkarte an, um nur von dieser zu empfangen.</value>
   </data>
   <data name="ByteAsciiSwitchCaption" xml:space="preserve">
     <value>Bytes als ASCII anzeigen  </value>
   </data>
-  <data name="ByteAsciiSwitchCaptionTooltip" xml:space="preserve">
+  <data name="ByteAsciiSwitchTooltip" xml:space="preserve">
     <value>Bytes als ASCII anzeigen</value>
   </data>
-  <data name="PresentationSettings" xml:space="preserve">
+  <data name="PresentationSettingsGroup" xml:space="preserve">
     <value>Präsentation</value>
   </data>
   <data name="Size" xml:space="preserve">
     <value>Größe</value>
   </data>
-  <data name="Protocol" xml:space="preserve">
+  <data name="ProtocolCaption" xml:space="preserve">
     <value>Protokoll</value>
   </data>
   <data name="ProtocolTooltip" xml:space="preserve">
@@ -223,33 +223,33 @@
     <value>Empfangsrate-Aktualisierungsintervall:</value>
   </data>
   <data name="updateSpeedrateTooltip" xml:space="preserve">
-    <value>Bestimmt die Zeitspanne in Sekunden, in der die Empfangsrate neu berechnet wird.</value>
+    <value>Bestimmt die Zeitspanne in Sekunden, in der die Empfangsrate neu berechnet wird</value>
   </data>
   <data name="NumberOfClientsCaption" xml:space="preserve">
     <value>Client-Limit</value>
   </data>
   <data name="NumberOfClientsTooltip" xml:space="preserve">
-    <value>Setzt die maximale Anzahl von Client-Verbindungen. 0 bedeutet "kein Limit"</value>
+    <value>Setzt die maximale Anzahl von Client-Verbindungen. 0 bedeutet "kein Limit".</value>
   </data>
-  <data name="TCPServerConditions" xml:space="preserve">
+  <data name="TCPServerConditionsGroup" xml:space="preserve">
     <value>TCP-Eigenschaften</value>
   </data>
-  <data name="ConnectionIDInput" xml:space="preserve">
+  <data name="ConnectionIDInputCaption" xml:space="preserve">
     <value>Verbindungseingang</value>
   </data>
   <data name="ConnectionIDInputTooltip" xml:space="preserve">
-    <value>Gibt an, welche Verbindung der Empfänger überwachen soll.</value>
+    <value>Gibt an, welche Verbindung der Empfänger überwachen soll</value>
   </data>
-  <data name="ConnectionIDOutput" xml:space="preserve">
+  <data name="ConnectionIDOutputCaption" xml:space="preserve">
     <value>Verbindungsausgang</value>
   </data>
   <data name="ConnectionIDOutputTooltip" xml:space="preserve">
-    <value>Gibt die ID der aktuellen Verbindung an.</value>
+    <value>Gibt die ID der aktuellen Verbindung an</value>
   </data>
   <data name="ConnectionCaption" xml:space="preserve">
-    <value>Nur Verbindungs-eingang benutzen</value>
+    <value>Nur Verbindungseingang benutzen</value>
   </data>
-  <data name="ConnectionCaptionTooltip" xml:space="preserve">
-    <value>Die Komponente erstellt keine eigenen Verbindungen. Sie wird nur die übergebenen Verbindung verwenden.</value>
+  <data name="ConnectionTooltip" xml:space="preserve">
+    <value>Die Komponente erstellt keine eigenen Verbindungen. Sie wird nur die übergebene Verbindung verwenden.</value>
   </data>
 </root>

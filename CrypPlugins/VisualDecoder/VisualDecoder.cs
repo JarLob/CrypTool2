@@ -29,7 +29,7 @@ using ZXing;
 namespace Cryptool.Plugins.VisualDecoder
 {
     [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
-    [PluginInfo("VisualDecoder.Properties.Resources", "VisualDecoderCaption", "VisualDecoderCaptionTooltip", "VisualDecoder/userdoc.xml", new[] { "VisualDecoder/Images/icon.png" })]
+    [PluginInfo("VisualDecoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualDecoder/userdoc.xml", new[] { "VisualDecoder/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class VisualDecoder : ICrypComponent
     {
@@ -72,7 +72,7 @@ namespace Cryptool.Plugins.VisualDecoder
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "PictureInput", "PictureInputTooltip")]
+        [PropertyInfo(Direction.InputData, "PictureInputCaption", "PictureInputTooltip")]
         public byte[] PictureInput
         {
             get;
@@ -80,7 +80,7 @@ namespace Cryptool.Plugins.VisualDecoder
         }
 
 
-        [PropertyInfo(Direction.OutputData, "OutputData", "OutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip")]
         public string OutputData
         {
             get;

@@ -148,6 +148,6 @@
     <value>Morse Code</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Encodes a text to morse code or decodes a morse code to text</value>
+    <value>Encodes a text to Morse code or decodes a Morse code to text</value>
   </data>
 </root>

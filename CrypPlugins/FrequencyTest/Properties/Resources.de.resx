@@ -121,7 +121,7 @@
     <value>Frequenzanalyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Ermittelt die Häufigkeiten von Zeichen oder Zeichengruppen im Eingabetext.</value>
+    <value>Ermittelt die Häufigkeiten von Zeichen oder Zeichengruppen im Eingabetext</value>
   </data>
   <data name="StringInputCaption" xml:space="preserve">
     <value>Der zu analysierende Text</value>

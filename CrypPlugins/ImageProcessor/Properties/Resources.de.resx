@@ -220,7 +220,7 @@
     <value>Bildverarbeitung</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Process and save an image</value>
+    <value>Verarbeitet und speichert ein Bild</value>
   </data>
   <data name="SizeXCaption" xml:space="preserve">
     <value>Größe X</value>

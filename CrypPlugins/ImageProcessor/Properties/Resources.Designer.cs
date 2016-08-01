@@ -367,7 +367,7 @@ namespace Cryptool.Plugins.ImageProcessor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Process and save an image ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Processes and saves an image ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

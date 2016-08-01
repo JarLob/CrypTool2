@@ -97,7 +97,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Case Sensitivity ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Case sensitivity ähnelt.
         /// </summary>
         internal static string CaseSensitivyCaption {
             get {
@@ -115,7 +115,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid Character Handling ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handling of invalid characters ähnelt.
         /// </summary>
         internal static string InvalidCharacterHandlingCaption {
             get {
@@ -187,7 +187,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die M-138, a strip cipher from the early 20th century. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die M-138, a strip cipher. This variant of a poly-alphabetic encryption was used by the US Armed Forces since 1934. ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {
@@ -205,7 +205,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator used to separate the strips from the offset. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator used to separate the strips from the offset ähnelt.
         /// </summary>
         internal static string SeparatorOffCharTooltip {
             get {
@@ -223,7 +223,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the different strips used from each other. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the different strips used from each other ähnelt.
         /// </summary>
         internal static string SeparatorStripTooltip {
             get {
@@ -277,7 +277,7 @@ namespace Cryptool.M_138.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The resulting ciphertext/plaintext. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resulting ciphertext/plaintext ähnelt.
         /// </summary>
         internal static string TextOutputTooltip {
             get {

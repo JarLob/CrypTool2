@@ -58,7 +58,7 @@ namespace Cryptool.Plugins.NetworkReceiver
 
         #region TaskPane Settings
 
-        [TaskPane("ConnectionCaption", "ConnectionCaptionTooltip", "NetworkConditions", 0, false, ControlType.CheckBox)]
+        [TaskPane("ConnectionCaption", "ConnectionTooltip", "NetworkConditionsGroup", 0, false, ControlType.CheckBox)]
         public bool ConnectionSwitch
         {
             get { return connectionSwitch; }
@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         }
 
-        [TaskPane("DeviceIpCaption", "DeviceIpCaptionTooltip", "NetworkConditions", 1, false, ControlType.TextBox)]
+        [TaskPane("DeviceIpCaption", "DeviceIpTooltip", "NetworkConditionsGroup", 1, false, ControlType.TextBox)]
         public string DeviceIp
         {
             get { return deviceIp; }
@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         }
      
-        [TaskPane("NetworkDeviceCaption", "NetworkDeviceCaptionTooltip", "NetworkConditions", 2, false, ControlType.CheckBox)]
+        [TaskPane("NetworkDeviceCaption", "NetworkDeviceTooltip", "NetworkConditionsGroup", 2, false, ControlType.CheckBox)]
         public bool NetworkDevice
         {
             get { return networkDevice; }
@@ -118,7 +118,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         }
 
-        [TaskPane("Port", "PortTooltip", "NetworkConditions", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 65535)]
+        [TaskPane("PortCaption", "PortTooltip", "NetworkConditionsGroup", 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 65535)]
         public int Port
         {
             get
@@ -135,7 +135,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         }
 
-        [TaskPane("Protocol", "ProtocolTooltip", "NetworkConditions", 4, false, ControlType.ComboBox, new[] { "UDP", "TCP" })]
+        [TaskPane("ProtocolCaption", "ProtocolTooltip", "NetworkConditionsGroup", 4, false, ControlType.ComboBox, new[] { "UDP", "TCP" })]
         public int Protocol
         {
             get
@@ -153,7 +153,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         }
 
-        [TaskPane("ByteAsciiSwitchCaption", "ByteAsciiSwitchCaptionTooltip", "PresentationSettings" , 3, false, ControlType.CheckBox)]
+        [TaskPane("ByteAsciiSwitchCaption", "ByteAsciiSwitchTooltip", "PresentationSettingsGroup" , 3, false, ControlType.CheckBox)]
         public bool ByteAsciiSwitch
         {
             get { return byteAsciiSwitch; }
@@ -167,7 +167,7 @@ namespace Cryptool.Plugins.NetworkReceiver
             }
         } 
      
-        [TaskPane("NumberOfClientsCaption", "NumberOfClientsTooltip", "TCPServerConditions", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("NumberOfClientsCaption", "NumberOfClientsTooltip", "TCPServerConditionsGroup", 6, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int NumberOfClients
         {
             get

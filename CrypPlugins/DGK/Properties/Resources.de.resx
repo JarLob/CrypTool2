@@ -169,7 +169,7 @@
     <value>DGK-Schlüsselgenerator</value>
   </data>
   <data name="PluginKeyTooltip" xml:space="preserve">
-    <value>DGK-Schlüsselgenerator</value>
+    <value>Generiert einen Schlüssel für das DGK-Kryptosystem</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Kryptosystem mit homomorphen Eigenschaften</value>

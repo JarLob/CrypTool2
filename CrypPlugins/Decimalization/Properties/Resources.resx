@@ -120,56 +120,53 @@
   <data name="AssocStringCaption" xml:space="preserve">
     <value>Association Table</value>
   </data>
-  <data name="AssocStringToolTip" xml:space="preserve">
+  <data name="AssocStringTooltip" xml:space="preserve">
     <value>Association Table for HexNumbers above 9</value>
   </data>
   <data name="IBMACaption" xml:space="preserve">
     <value>A=</value>
   </data>
-  <data name="IBMAToolTip" xml:space="preserve">
+  <data name="IBMATooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value A.</value>
   </data>
   <data name="IBMBCaption" xml:space="preserve">
     <value>B=</value>
   </data>
-  <data name="IBMBToolTip" xml:space="preserve">
+  <data name="IBMBTooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value B.</value>
   </data>
   <data name="IBMCCaption" xml:space="preserve">
     <value>C=</value>
   </data>
-  <data name="IBMCToolTip" xml:space="preserve">
+  <data name="IBMCTooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value C.</value>
   </data>
   <data name="IBMDCaption" xml:space="preserve">
     <value>D=</value>
   </data>
-  <data name="IBMDToolTip" xml:space="preserve">
+  <data name="IBMDTooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value D.</value>
   </data>
   <data name="IBMECaption" xml:space="preserve">
     <value>E=</value>
   </data>
-  <data name="IBMEToolTip" xml:space="preserve">
+  <data name="IBMETooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value E.</value>
   </data>
   <data name="IBMFCaption" xml:space="preserve">
     <value>F=</value>
   </data>
-  <data name="IBMFToolTip" xml:space="preserve">
+  <data name="IBMFTooltip" xml:space="preserve">
     <value>Associate a number between 0 - 9 for hexdecimal value F.</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
     <value>Binary Data</value>
   </data>
-  <data name="InputCaptionToolTip" xml:space="preserve">
+  <data name="InputTooltip" xml:space="preserve">
     <value>Binary Data as Byte Array</value>
   </data>
   <data name="ModeCaption" xml:space="preserve">
     <value>Decimalization Mode</value>
-  </data>
-  <data name="ModeCaptionToolTip" xml:space="preserve">
-    <value>Method to convert binary numbers to decimals.</value>
   </data>
   <data name="ModeList1" xml:space="preserve">
     <value>Visa</value>
@@ -182,6 +179,9 @@
   </data>
   <data name="ModeList4" xml:space="preserve">
     <value>IBM</value>
+  </data>
+  <data name="ModeTooltip" xml:space="preserve">
+    <value>Method to convert binary numbers to decimals.</value>
   </data>
   <data name="NumberList0" xml:space="preserve">
     <value>0</value>
@@ -216,37 +216,37 @@
   <data name="Output1Caption" xml:space="preserve">
     <value>Decimal Numbers</value>
   </data>
-  <data name="Output1CaptionToolTip" xml:space="preserve">
+  <data name="Output1Tooltip" xml:space="preserve">
     <value>Decimal Numbers as Int Array</value>
   </data>
   <data name="Output2Caption" xml:space="preserve">
     <value>Decimal Numbers</value>
   </data>
-  <data name="Output2CaptionToolTip" xml:space="preserve">
+  <data name="Output2Tooltip" xml:space="preserve">
     <value>Decimal Numbers as String</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Decimalization</value>
   </data>
-  <data name="PluginToolTip" xml:space="preserve">
-    <value>Convert Binary Numbers to Decimals</value>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Converts Binary Numbers to Decimals</value>
   </data>
   <data name="QuantCaption" xml:space="preserve">
     <value>Output Quantity</value>
   </data>
-  <data name="QuantCaptionToolTip" xml:space="preserve">
+  <data name="QuantTooltip" xml:space="preserve">
     <value>Quantity of Decimal Numbers which will be outputted.</value>
   </data>
   <data name="SubModeCaption" xml:space="preserve">
     <value>Sub-Mode</value>
-  </data>
-  <data name="SubModeCaptionToolTip" xml:space="preserve">
-    <value>Variation of Decimalization Method</value>
   </data>
   <data name="SubModeList1" xml:space="preserve">
     <value>Normal</value>
   </data>
   <data name="SubModeList2" xml:space="preserve">
     <value>Non-Repeating</value>
+  </data>
+  <data name="SubModeTooltip" xml:space="preserve">
+    <value>Variation of Decimalization Method</value>
   </data>
 </root>

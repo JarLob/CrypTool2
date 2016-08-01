@@ -139,7 +139,7 @@
     <value>Eingabe-Alphabet</value>
   </data>
   <data name="InputAlphabetTooltip" xml:space="preserve">
-    <value>Geben Sie die Zeichen an, aus denen das Eingabe-Alphabet für Vigenère bestehen soll. Wenn hier nichts angegeben wird, dann wird das interne Alphabet verwendet (A-Z).</value>
+    <value>Geben Sie die Zeichen an, aus denen das Eingabe-Alphabet für Vigenère bestehen soll. Wenn hier nichts angegeben wird, wird das interne Alphabet verwendet (A-Z).</value>
   </data>
   <data name="InputStringCaption" xml:space="preserve">
     <value>Texteingabe</value>
@@ -169,7 +169,7 @@
     <value>Schlüsselwort</value>
   </data>
   <data name="ShiftValueTooltip" xml:space="preserve">
-    <value>Geben Sie das Schlüsselwort ein (z.B. vom VigenèreAutokeyAnalyser-Plugin).</value>
+    <value>Geben Sie das Schlüsselwort ein.</value>
   </data>
   <data name="ShiftValueTPCaption" xml:space="preserve">
     <value>Schlüssel (als Zahlenfolge)</value>
@@ -217,6 +217,6 @@
     <value>Ausgabeanzeige kennt ursprüngliche Groß-/Kleinschreibung</value>
   </data>
   <data name="MemorizeCaseTooltip" xml:space="preserve">
-    <value>Obwohl die Kleinbuchstaben vor der Verschlüsselung einander zu geordnet wurden (so dass ein "a" wie ein "A" behandelt wird), merkt sich das Programm, welche Schreibweise der Buchstabe hatte und stellt ihn in der Ausgabe entsprechend dar</value>
+    <value>Obwohl die Kleinbuchstaben vor der Verschlüsselung einander zugeordnet wurden (so dass ein "a" wie ein "A" behandelt wird), merkt sich das Programm, welche Schreibweise der Buchstabe hatte und stellt ihn in der Ausgabe entsprechend dar</value>
   </data>
 </root>

@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AlphabetPermutatorCaption" xml:space="preserve">
-    <value>Alphabet-Permutierer</value>
-  </data>
-  <data name="AlphabetPermutatorTooltip" xml:space="preserve">
-    <value>Komponente, die ein Alphabet mittels eines Passwortes permutiert</value>
-  </data>
   <data name="Ascending" xml:space="preserve">
     <value>Aufsteigend</value>
   </data>
@@ -149,6 +143,12 @@
   </data>
   <data name="PasswordTooltip" xml:space="preserve">
     <value>Das Passwort, das für die Permutation genutzt werden soll</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Alphabet-Permutierer</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Komponente, die ein Alphabet mittels eines Passwortes permutiert</value>
   </data>
   <data name="SourceAlphabetCaption" xml:space="preserve">
     <value>Quellalphabet</value>

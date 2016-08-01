@@ -121,7 +121,7 @@
     <value>IDP-Analyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Diese Komponente führt einen Angriff auf die doppelte Spaltentransposition durch.</value>
+    <value>Führt einen Angriff auf die doppelte Spaltentransposition durch</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
     <value>Eingabe</value>

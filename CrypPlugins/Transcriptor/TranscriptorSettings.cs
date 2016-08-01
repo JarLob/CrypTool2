@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.Transcriptor
             }
         }
 
-        [TaskPane("AlphabetCaption", "AlphabetToolTip", null, 3, false, ControlType.TextBoxReadOnly)]
+        [TaskPane("AlphabetCaption", "AlphabetTooltip", null, 3, false, ControlType.TextBoxReadOnly)]
         public String Alphabet
         {
             get

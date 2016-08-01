@@ -130,7 +130,7 @@
     <value>Number Operation</value>
   </data>
   <data name="PluginOperationTooltip" xml:space="preserve">
-    <value>This plugin implements different operations for integers of arbitrary size.</value>
+    <value>Implements different operations for integers of arbitrary size</value>
   </data>
   <data name="PluginOperationDescriptionURL" xml:space="preserve">
     <value>Numbers/DetailedDescription/DescriptionOperation.xaml</value>
@@ -169,7 +169,7 @@
     <value>Number</value>
   </data>
   <data name="NumberTooltip" xml:space="preserve">
-    <value>The number this component should output.</value>
+    <value>The number this component should output</value>
   </data>
   <data name="OperatCaption" xml:space="preserve">
     <value>Operation</value>

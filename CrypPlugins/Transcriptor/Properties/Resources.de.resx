@@ -126,10 +126,10 @@
   <data name="AlphabetName" xml:space="preserve">
     <value>Alphabet</value>
   </data>
-  <data name="AlphabetToolTip" xml:space="preserve">
+  <data name="AlphabetTooltip" xml:space="preserve">
     <value>Das Alphabet, das im Transkriptor benutzt wird</value>
   </data>
-  <data name="AlphabetToolTip2" xml:space="preserve">
+  <data name="AlphabetTooltip2" xml:space="preserve">
     <value>Es ist möglich, auch ein benutzerdefiniertes Alphabet zu benutzen.</value>
   </data>
   <data name="Black" xml:space="preserve">
@@ -162,7 +162,7 @@
   <data name="ImageHeader" xml:space="preserve">
     <value>Bild</value>
   </data>
-  <data name="ImageToolTip" xml:space="preserve">
+  <data name="ImageTooltip" xml:space="preserve">
     <value>Diese Datei enthält das Bild.</value>
   </data>
   <data name="LikeliestSymbol" xml:space="preserve">
@@ -182,6 +182,12 @@
   </data>
   <data name="NewSymbol" xml:space="preserve">
     <value>Neues Symbol</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Transkriptor</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Transkribiert ein Bild mit Symbolen zu einem Text</value>
   </data>
   <data name="RectangleColorCaption" xml:space="preserve">
     <value>Farbe des Rechtecks</value>
@@ -221,12 +227,6 @@
   </data>
   <data name="Transcriptor" xml:space="preserve">
     <value>Transkriptor</value>
-  </data>
-  <data name="TranscriptorCaption" xml:space="preserve">
-    <value>Transkriptor</value>
-  </data>
-  <data name="TranscriptorTooltip" xml:space="preserve">
-    <value>Transkribiert ein Bild mit Symbolen zu einem Text</value>
   </data>
   <data name="White" xml:space="preserve">
     <value>Weiß</value>

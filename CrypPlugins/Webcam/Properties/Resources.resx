@@ -120,31 +120,31 @@
   <data name="PluginCaption" xml:space="preserve">
     <value>Camera</value>
   </data>
-  <data name="PluginToolTip" xml:space="preserve">
-    <value>This component captures images from a webcam.</value>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Captures images from a webcam</value>
   </data>
   <data name="DeviceChoiceCaption" xml:space="preserve">
     <value>Device choice</value>
   </data>
-  <data name="DeviceChoiceToolTip" xml:space="preserve">
+  <data name="DeviceChoiceTooltip" xml:space="preserve">
     <value>Shows a list of camera devices.</value>
   </data>
   <data name="PictureOutPutCaption" xml:space="preserve">
     <value>Picture output</value>
   </data>
-  <data name="PictureOutPutToolTip" xml:space="preserve">
+  <data name="PictureOutPutTooltip" xml:space="preserve">
     <value>Sends the image file as a byte array.</value>
   </data>
   <data name="PictureQualityCaption" xml:space="preserve">
     <value>Picture quality</value>
   </data>
-  <data name="PictureQualityToolTip" xml:space="preserve">
+  <data name="PictureQualityTooltip" xml:space="preserve">
     <value>Sets the packet size and picture quality of the camera.</value>
   </data>
   <data name="SendPictureCaption" xml:space="preserve">
     <value>Send picture</value>
   </data>
-  <data name="SendPictureToolTip" xml:space="preserve">
+  <data name="SendPictureTooltip" xml:space="preserve">
     <value>Sets the time in milliseconds in which the image file is sent to the output.</value>
   </data>
   <data name="TakePictureCaption" xml:space="preserve">
@@ -153,16 +153,16 @@
   <data name="TakePictureChoiceCaption" xml:space="preserve">
     <value>Action for "Take picture" input</value>
   </data>
-  <data name="TakePictureChoiceToolTip" xml:space="preserve">
+  <data name="TakePictureChoiceTooltip" xml:space="preserve">
     <value>Represents the boolean value at which the image is to be recorded</value>
   </data>
-  <data name="TakePictureToolTip" xml:space="preserve">
+  <data name="TakePictureTooltip" xml:space="preserve">
     <value>Capture the current camera picture and send it to the single picture output.</value>
   </data>
   <data name="SingleOutPutCaption" xml:space="preserve">
     <value>Single picture output</value>
   </data>
-  <data name="SingleOutPutToolTip" xml:space="preserve">
+  <data name="SingleOutPutTooltip" xml:space="preserve">
     <value>Outputs a single picture.</value>
   </data>
   <data name="DeviceSettingsGroup" xml:space="preserve">

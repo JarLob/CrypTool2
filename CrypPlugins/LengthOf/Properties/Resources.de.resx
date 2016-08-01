@@ -121,7 +121,7 @@
     <value>Länge</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Dieses Plugin ermittelt die Länge des Eingabe-Objektes.</value>
+    <value>Ermittelt die Länge des Eingabe-Objektes</value>
   </data>
   <data name="ObjInputCaption" xml:space="preserve">
     <value>Eingabe-Objekt</value>

@@ -121,7 +121,7 @@
     <value>Network Capture</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Dieses Plugin erfasst Daten von einem Netzwerkgerät (benötigt die WinPcap-Library).</value>
+    <value>Erfasst Daten von einem Netzwerkgerät (benötigt die WinPcap-Library)</value>
   </data>
   <data name="DataStreamCaption" xml:space="preserve">
     <value>Erfasster Datenstrom</value>

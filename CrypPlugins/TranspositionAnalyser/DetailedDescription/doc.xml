@@ -4,7 +4,7 @@
 	<language culture="en" />
 
   <introduction lang="en">
-    The <b>Transposition Analyser</b> component offers three different methods for the computer aided analysis of ciphertexts that were generated with the <b>Transposition</b> component:
+    The <b>Transposition Analyzer</b> component offers three different methods for the computer aided analysis of ciphertexts that were generated with the <b>Transposition</b> component:
     the "Brute-Force Algorithm", the "Crib Analysis", and the "Genetic Algorithm".
     All three methods offer settings for the connected <b>Transposition</b> component and list the results in a table.
     Moreover, the results are evaluated by a <b>CostFunction</b> component that can be connected to this component, and the results are then ordered according to their cost value.

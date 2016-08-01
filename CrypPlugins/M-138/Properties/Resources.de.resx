@@ -127,16 +127,16 @@
     <value>Entschlüsseln</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Wähle aus, ob der eingegebene Text Ver- oder Entschlüsselt werden soll.</value>
+    <value>Wähle aus, ob der eingegebene Text ver- oder entschlüsselt werden soll.</value>
   </data>
   <data name="CaseSensitivyCaption" xml:space="preserve">
     <value>Groß-/Kleinschreibung beachten</value>
   </data>
   <data name="CaseSensitivyTooltip" xml:space="preserve">
-    <value>Wähle aus, ob das Werkyeug Groß- und Kleinschreibung beachten soll.</value>
+    <value>Wähle aus, ob das Verfahren Groß- und Kleinschreibung beachten soll.</value>
   </data>
   <data name="InvalidCharacterHandlingCaption" xml:space="preserve">
-    <value>Behandlung unbekannter Zeichen.</value>
+    <value>Behandlung unbekannter Zeichen</value>
   </data>
   <data name="InvalidCharacterHandlingList1" xml:space="preserve">
     <value>Löschen</value>
@@ -163,19 +163,19 @@ definiert werden.</value>
     <value>M-138</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>M-138, eine polyalphabetische Verschlüsselung der USA aus dem frühen 20. Jahrhundert.</value>
+    <value>M-138, eine Streifen-Verschlüsselung (Strip-Cipher). Diese Variante einer polyalphabetischen Verschlüsselung wurde von der US-Armee seit 1934 benutzt.</value>
   </data>
   <data name="SeparatorOffCharCaption" xml:space="preserve">
     <value>Offset Trennzeichen</value>
   </data>
   <data name="SeparatorOffCharTooltip" xml:space="preserve">
-    <value>Zeichen, das genutzt wird, um den Offset von den Streifen zu trennen.</value>
+    <value>Zeichen, das genutzt wird, um den Offset von den Streifen zu trennen</value>
   </data>
   <data name="SeparatorStripCaption" xml:space="preserve">
     <value>Streifen Trennzeichen</value>
   </data>
   <data name="SeparatorStripTooltip" xml:space="preserve">
-    <value>Zeichen, das genutzt wird, um die genutzten Streifen voneinander zu trennen.</value>
+    <value>Zeichen, das genutzt wird, um die genutzten Streifen voneinander zu trennen</value>
   </data>
   <data name="StripsCaption" xml:space="preserve">
     <value>Streifen</value>
@@ -187,12 +187,12 @@ definiert werden.</value>
     <value>Texteingabe</value>
   </data>
   <data name="TextInputTooltip" xml:space="preserve">
-    <value>Text, der Ver- oder Entschlüsselt werden soll.</value>
+    <value>Text, der ver- oder entschlüsselt werden soll</value>
   </data>
   <data name="TextOutputCaption" xml:space="preserve">
     <value>Textausgabe</value>
   </data>
   <data name="TextOutputTooltip" xml:space="preserve">
-    <value>Der resultierende Klartext/Geheimtext</value>
+    <value>Resultierender Klartext/Geheimtext</value>
   </data>
 </root>

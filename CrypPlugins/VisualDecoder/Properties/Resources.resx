@@ -120,43 +120,43 @@
   <data name="AUTO" xml:space="preserve">
     <value>Detect Codetype</value>
   </data>
-  <data name="CodeTypeCaption" xml:space="preserve">
-    <value>Expected Codetype</value>
-  </data>
   <data name="CodeTypeLable" xml:space="preserve">
     <value>Codetype:</value>
   </data>
-  <data name="CodeTypeTooltip" xml:space="preserve">
+  <data name="DecodingTypeCaption" xml:space="preserve">
+    <value>Expected Codetype</value>
+  </data>
+  <data name="DecodingTypeTooltip" xml:space="preserve">
     <value>Choose the codetype or use the automatic detection function.</value>
   </data>
   <data name="DimCodeLabel" xml:space="preserve">
     <value>Visual Decoder</value>
   </data>
-  <data name="OutputData" xml:space="preserve">
+  <data name="OutputDataCaption" xml:space="preserve">
     <value>Visual Code Payload</value>
   </data>
-  <data name="OutputTooltip" xml:space="preserve">
+  <data name="OutputDataTooltip" xml:space="preserve">
     <value>The payload that the given visual code contains.</value>
   </data>
   <data name="PayloadLable" xml:space="preserve">
     <value>Payload:</value>
   </data>
-  <data name="PictureInput" xml:space="preserve">
+  <data name="PictureInputCaption" xml:space="preserve">
     <value>Picture Input</value>
   </data>
   <data name="PictureInputTooltip" xml:space="preserve">
     <value>Pass a picture of the visual code you want to decode.</value>
   </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Visual Decoder</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Decodes various types of one and two dimensional visual codes</value>
+  </data>
   <data name="StopOnSuccessCaption" xml:space="preserve">
     <value>Stop on Successful Decode</value>
   </data>
-  <data name="StopOnSuccessCaptionTooltip" xml:space="preserve">
+  <data name="StopOnSuccessTooltip" xml:space="preserve">
     <value>The component will stop when it has successfully decoded a visual code.</value>
-  </data>
-  <data name="VisualDecoderCaption" xml:space="preserve">
-    <value>Visual Decoder</value>
-  </data>
-  <data name="VisualDecoderCaptionTooltip" xml:space="preserve">
-    <value>This component decodes various types of one and two dimensional visual codes.</value>
   </data>
 </root>

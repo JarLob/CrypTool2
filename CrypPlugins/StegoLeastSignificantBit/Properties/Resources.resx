@@ -196,7 +196,7 @@
     <value>LSB Steganography</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Hide a message in the least significant bits of a picture.</value>
+    <value>Hides a message in the least significant bits of a picture</value>
   </data>
   <data name="RegionCancel" xml:space="preserve">
     <value>Cancel</value>

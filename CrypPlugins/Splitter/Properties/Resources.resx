@@ -121,7 +121,7 @@
     <value>Splitter</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Splits a dictionary input based on delimiter and fires words on event.</value>
+    <value>Splits a dictionary input based on a delimiter and fires words on event</value>
   </data>
   <data name="DictionaryInputStringCaption" xml:space="preserve">
     <value>Dictionary</value>

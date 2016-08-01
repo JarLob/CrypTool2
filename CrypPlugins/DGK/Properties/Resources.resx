@@ -169,7 +169,7 @@
     <value>DGK Key Generator</value>
   </data>
   <data name="PluginKeyTooltip" xml:space="preserve">
-    <value>DGK Key Generator</value>
+    <value>Generates a key for the DGK cryptosystem</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Cryptosystem with homomorphic properties</value>

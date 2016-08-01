@@ -121,7 +121,7 @@
     <value>Prime Test</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Prime Test</value>
+    <value>Checks the primality of numbers</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Text input</value>

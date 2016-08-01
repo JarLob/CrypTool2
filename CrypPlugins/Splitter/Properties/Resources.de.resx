@@ -121,7 +121,7 @@
     <value>Splitter</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Dieses Plugin trennt die Worte des eingegebenen Wörterbuches anhand eines Trennzeichens und gibt sie ereignisgesteuert aus.</value>
+    <value>Trennt die Worte des eingegebenen Wörterbuches anhand eines Trennzeichens und gibt sie ereignisgesteuert aus</value>
   </data>
   <data name="DictionaryInputStringCaption" xml:space="preserve">
     <value>Wörterbuch</value>

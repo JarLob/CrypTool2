@@ -121,7 +121,7 @@
     <value>Faktorisierer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Dieses Plugin sucht Primfaktoren der gegebenen Zahl.</value>
+    <value>Sucht Primfaktoren der gegebenen Zahl</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Eingabe</value>

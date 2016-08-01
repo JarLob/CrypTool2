@@ -139,6 +139,6 @@
     <value>Hamming-Abstand</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente um den Hamming-Abstand zweier Codewörter zu berechnen</value>
+    <value>Berechnet den Hamming-Abstand zweier Codewörter</value>
   </data>
 </root>

@@ -151,7 +151,7 @@
     <value>Neustarts für Hill-Climbing</value>
   </data>
   <data name="HillClimbRestartsTooltip" xml:space="preserve">
-    <value>Anzahl der Neustarts, die im Hill-Climbing ausgeführt werden sollen, angeben</value>
+    <value>Anzahl der Neustarts, die im Hill-Climbing ausgeführt werden sollen</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Schlüssel</value>
@@ -160,7 +160,7 @@
     <value>Schlüssellänge</value>
   </data>
   <data name="KeyLengthTooltip" xml:space="preserve">
-    <value>Schlüssellänge, die für die Analzse benutzt werden soll, auswählen.</value>
+    <value>Schlüssellänge, die für die Analyse benutzt werden soll</value>
   </data>
   <data name="KeyLengthHeader" xml:space="preserve">
     <value>Offset</value>
@@ -181,7 +181,7 @@
     <value>Sprache</value>
   </data>
   <data name="LanguageTooltip" xml:space="preserve">
-    <value>Sprache, in der der Klartext wahrscheinlich verfasst ist, auswählen</value>
+    <value>Sprache, in der der Klartext wahrscheinlich verfasst ist</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Fakten</value>
@@ -190,7 +190,7 @@
     <value>Maximaler Offset</value>
   </data>
   <data name="MaxOffsetTooltip" xml:space="preserve">
-    <value>Maximaler Offset, der anaklzsiert werden soll.</value>
+    <value>Maximaler Offset, der analysiert werden soll</value>
   </data>
   <data name="MethodCaption" xml:space="preserve">
     <value>Methode</value>
@@ -202,7 +202,7 @@
     <value>Minimaler Offset</value>
   </data>
   <data name="MinOffsetTooltip" xml:space="preserve">
-    <value>Minimaler Offset, der analysiert werden soll.</value>
+    <value>Minimaler Offset, der analysiert werden soll</value>
   </data>
   <data name="MethodList3" xml:space="preserve">
     <value>Teilweise bekannter Klartext</value>
@@ -211,7 +211,7 @@
     <value>Klartext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Bekannter Klartext, der verwendet werden soll.</value>
+    <value>Bekannter Klartext, der verwendet werden soll</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>M-138 Analysewerkzeug</value>
@@ -223,7 +223,7 @@
     <value>Resultierender Klartext</value>
   </data>
   <data name="ResultTextTooltip" xml:space="preserve">
-    <value>Resultierender Klartext unter Benutzung des besten, gefundenen Schlüssels.</value>
+    <value>Resultierender Klartext unter Benutzung des besten gefundenen Schlüssels</value>
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Startzeit</value>

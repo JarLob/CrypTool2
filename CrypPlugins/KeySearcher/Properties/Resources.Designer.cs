@@ -1403,7 +1403,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Performs a brute-force attack on a ciphertext. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Performs a brute-force attack on a ciphertext ähnelt.
         /// </summary>
         public static string PluginTooltip {
             get {

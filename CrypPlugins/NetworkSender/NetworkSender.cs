@@ -33,8 +33,8 @@ using Timer = System.Timers.Timer;
 namespace Cryptool.Plugins.NetworkSender
 {
     [Author("Mirko Sartorius", "mirkosartorius@web.de", "University of Kassel", "")]
-    [PluginInfo("NetworkSender.Properties.Resources", "PluginCaption", "PluginToolTip", "NetworkSender/userdoc.xml",
-        new[] {"NetworkSender/Images/package.png"})]
+    [PluginInfo("NetworkSender.Properties.Resources", "PluginCaption", "PluginTooltip", "NetworkSender/userdoc.xml", new[] {"NetworkSender/Images/package.png"})]
+
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     public class NetworkInput : ICrypComponent
     {
@@ -62,25 +62,25 @@ namespace Cryptool.Plugins.NetworkSender
         /// <summary>
         ///   Data to be send inside of a package over a network
         /// </summary>
-        [PropertyInfo(Direction.InputData, "StreamInput", "StreamInputTooltip")]
+        [PropertyInfo(Direction.InputData, "StreamInputCaption", "StreamInputTooltip")]
         public ICryptoolStream PackageStream { get; set; }
 
         /// <summary>
         ///   Socket ID
         /// </summary>
-        [PropertyInfo(Direction.InputData, "ConnectionIDInput", "ConnectionIDInputTooltip")]
+        [PropertyInfo(Direction.InputData, "ConnectionIDInputCaption", "ConnectionIDInputTooltip")]
         public int ConnectionIDInput { get; set; }
 
         /// <summary>
         ///   Socket ID
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "ConnectionIDOutput", "ConnectionIDOutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "ConnectionIDOutputCaption", "ConnectionIDOutputTooltip")]
         public int ConnectionIDOutput { get; set; }
 
         /// <summary>
         ///   DestinationIp
         /// </summary>
-        [PropertyInfo(Direction.InputData, "DeviceIP", "IpInputTooltip")]
+        [PropertyInfo(Direction.InputData, "DeviceIPCaption", "DeviceIPTooltip")]
         public string DeviceIP { get; set; }
 
         #endregion

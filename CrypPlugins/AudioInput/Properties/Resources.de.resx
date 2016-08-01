@@ -121,18 +121,18 @@
     <value>Audio Eingabe</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Nimmt Audio von Mikrofonen auf.</value>
+    <value>Nimmt Audio von Mikrofonen auf</value>
   </data>
   <data name="AudioOutputCaption" xml:space="preserve">
     <value>Audio Ausgabe</value>
   </data>
   <data name="AudioOutputTooltip" xml:space="preserve">
-    <value>Ausgabe der Audiodaten.</value>
+    <value>Ausgabe der Audiodaten</value>
   </data>
   <data name="DeviceChoiceCaption" xml:space="preserve">
     <value>Aufnahmegerät</value>
   </data>
   <data name="DeviceChoiceTooltip" xml:space="preserve">
-    <value>Gerät von dem Audio aufgenommen werden soll.</value>
+    <value>Gerät, von dem Audio aufgenommen werden soll</value>
   </data>
 </root>

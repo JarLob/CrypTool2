@@ -121,19 +121,19 @@
     <value>Audio Ausgabe</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Gibt Audio über Lautsprecher aus.</value>
+    <value>Gibt Audio über Lautsprecher aus</value>
   </data>
   <data name="AudioInputCaption" xml:space="preserve">
     <value>Audio Eingabe</value>
   </data>
   <data name="AudioInputTooltip" xml:space="preserve">
-    <value>Eingabe der Audiodaten.</value>
+    <value>Eingabe der Audiodaten</value>
   </data>
   <data name="DeviceChoiceCaption" xml:space="preserve">
     <value>Ausgabegerät</value>
   </data>
   <data name="DeviceChoiceTooltip" xml:space="preserve">
-    <value>Gerät mit dem Audio abgespielt werden soll.</value>
+    <value>Gerät, mit dem Audio abgespielt werden soll</value>
   </data>
   <data name="BufferSizeCaption" xml:space="preserve">
     <value>Buffergröße</value>

@@ -121,7 +121,7 @@
     <value>Datenstrom-Vergleicher</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Vergleicht zwei Datenströme und gibt das Vergleichsergebnis aus.</value>
+    <value>Vergleicht zwei Datenströme und gibt das Vergleichsergebnis aus</value>
   </data>
   <data name="InputOneCaption" xml:space="preserve">
     <value>Erster Datenstrom</value>

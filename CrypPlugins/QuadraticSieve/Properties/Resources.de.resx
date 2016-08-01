@@ -121,7 +121,7 @@
     <value>Quadratisches Sieb</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Quadratisches Sieb (QS) zum Faktorisieren</value>
+    <value>Moderner Faktorisierungsalgorithmus</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Eingabezahl</value>

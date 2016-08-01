@@ -121,7 +121,7 @@
     <value>Factorizer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>This plugin searches for prime factors of the given number.</value>
+    <value>Searches for prime factors of the given number</value>
   </data>
   <data name="InputNumberCaption" xml:space="preserve">
     <value>Number input</value>

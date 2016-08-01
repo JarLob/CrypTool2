@@ -121,7 +121,7 @@
     <value>Parser für Boolesche Funktion</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Parser für boolesche Funktionen (BFP). Berechnet das Resultat einer booleschen Funktion.</value>
+    <value>Berechnet das Resultat einer booleschen Funktion</value>
   </data>
   <data name="InputFunctionCaption" xml:space="preserve">
     <value>Boolesche Funktion f(i)</value>

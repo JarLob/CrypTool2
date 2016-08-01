@@ -27,7 +27,7 @@ using Cryptool.Plugins.VisualEncoder.Encoders;
 namespace Cryptool.Plugins.VisualEncoder
 {
     [Author("Christopher Konze", "Christopher.Konze@cryptool.org", "University of Kassel", "http://www.uni-kassel.de/eecs/")]
-    [PluginInfo("VisualEncoder.Properties.Resources", "VisualEncoderCaption", "VisualEncoderTooltip", "VisualEncoder/userdoc.xml", new[] { "VisualEncoder/Images/icon.png" })]
+    [PluginInfo("VisualEncoder.Properties.Resources", "PluginCaption", "PluginTooltip", "VisualEncoder/userdoc.xml", new[] { "VisualEncoder/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class VisualEncoder : ICrypComponent
     {
@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.VisualEncoder
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "IncommingData", "IncommingDataTooltip")]
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip")]
         public string InputStream
         {
             get;
@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.VisualEncoder
         }
 
 
-        [PropertyInfo(Direction.OutputData, "PictureBytesOutput", "PictureBytesOutputTooltip")]
+        [PropertyInfo(Direction.OutputData, "PictureBytesCaption", "PictureBytesTooltip")]
         public byte[] PictureBytes
         {
             get;
