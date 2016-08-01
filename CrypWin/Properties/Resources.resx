@@ -388,11 +388,11 @@
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
-  <data name="Start_the_encrypt_decrypt_process_" xml:space="preserve">
-    <value>Start the encryption/decryption process</value>
+  <data name="RBTooltip_Start" xml:space="preserve">
+    <value>Start execution of the current workspace (F5)</value>
   </data>
-  <data name="Stop_the_encrypt_decrypt_process_" xml:space="preserve">
-    <value>Stop the encryption/decryption process</value>
+  <data name="RBTooltip_Stop" xml:space="preserve">
+    <value>Stop execution of the current workspace (Shift + F5)</value>
   </data>
   <data name="Dynamic_controls_of_the_current_plugin_editor_" xml:space="preserve">
     <value>Dynamic controls of the current plugin editor</value>
@@ -427,8 +427,8 @@
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Configure CrypTool 2</value>
   </data>
-  <data name="Help_for_CrypTool_2_" xml:space="preserve">
-    <value>Help for CrypTool 2</value>
+  <data name="RBTooltip_Help" xml:space="preserve">
+    <value>Help for CrypTool 2 (F1)</value>
   </data>
   <data name="Redo_or_Undo_your_last_changes_" xml:space="preserve">
     <value>Undo or Redo your last changes</value>
@@ -842,19 +842,19 @@
     <value>Available Crypto Tutorials</value>
   </data>
   <data name="RBTooltip_Load" xml:space="preserve">
-    <value>Load a workspace</value>
+    <value>Load a workspace (Ctrl + O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
     <value>Toggle visibility of the log window</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
-    <value>Create a new workspace or open Wizard</value>
+    <value>Create a new workspace or open Wizard (Ctrl + N)</value>
   </data>
   <data name="RBTooltip_Print" xml:space="preserve">
-    <value>Print the current workspace</value>
+    <value>Print the current workspace (Ctrl + P)</value>
   </data>
   <data name="RBTooltip_Save" xml:space="preserve">
-    <value>Save the current workspace</value>
+    <value>Save the current workspace (Ctrl + S)</value>
   </data>
   <data name="RBTooltip_View" xml:space="preserve">
     <value>Toggle visibility of windows</value>
@@ -957,5 +957,11 @@
   </data>
   <data name="GeneratingFunctionListWaitMessage" xml:space="preserve">
     <value>Please wait... Generating Function List.</value>
+  </data>
+  <data name="GeneratingTemplateInfoWaitMessage" xml:space="preserve">
+    <value>Please wait... Generating Template Information.</value>
+  </data>
+  <data name="Generating_TemplateInfo_Title" xml:space="preserve">
+    <value>Generating Template Information</value>
   </data>
 </root>

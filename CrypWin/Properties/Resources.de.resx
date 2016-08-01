@@ -391,11 +391,11 @@
   <data name="Play" xml:space="preserve">
     <value>Starten</value>
   </data>
-  <data name="Start_the_encrypt_decrypt_process_" xml:space="preserve">
-    <value>Starte den Ver-/Entschlüsselungsprozess</value>
+  <data name="RBTooltip_Start" xml:space="preserve">
+    <value>Starte den aktuellen Arbeitsbereich (F5)</value>
   </data>
-  <data name="Stop_the_encrypt_decrypt_process_" xml:space="preserve">
-    <value>Stoppe den Ver-/Entschlüsselungsprozess</value>
+  <data name="RBTooltip_Stop" xml:space="preserve">
+    <value>Stoppe den aktuellen Arbeitsbereich (Shift + F5)</value>
   </data>
   <data name="Dynamic_controls_of_the_current_plugin_editor_" xml:space="preserve">
     <value>Dynamische Steuerung des derzeitigen Plug-In Editors</value>
@@ -430,8 +430,8 @@
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Konfiguration von CrypTool 2</value>
   </data>
-  <data name="Help_for_CrypTool_2_" xml:space="preserve">
-    <value>Hilfe für CrypTool 2</value>
+  <data name="RBTooltip_Help" xml:space="preserve">
+    <value>Hilfe für CrypTool 2 (F1)</value>
   </data>
   <data name="Redo_or_Undo_your_last_changes_" xml:space="preserve">
     <value>Letztere Änderungen rückgängig machen oder wiederholen</value>
@@ -809,19 +809,19 @@
     <value>Verfügbare Kryptotutorien</value>
   </data>
   <data name="RBTooltip_Load" xml:space="preserve">
-    <value>Arbeitsbereich laden</value>
+    <value>Arbeitsbereich laden (Strg + O)</value>
   </data>
   <data name="RBTooltip_Log" xml:space="preserve">
     <value>Log-Fenster ein-/ausblenden</value>
   </data>
   <data name="RBTooltip_New" xml:space="preserve">
-    <value>Neuen Arbeitsbereich oder Wizard öffnen</value>
+    <value>Neuen Arbeitsbereich oder Wizard öffnen (Strg + N)</value>
   </data>
   <data name="RBTooltip_Print" xml:space="preserve">
-    <value>Aktuellen Arbeitsbereich drucken</value>
+    <value>Aktuellen Arbeitsbereich drucken (Strg + P)</value>
   </data>
   <data name="RBTooltip_Save" xml:space="preserve">
-    <value>Aktuellen Arbeitsbereich speichern</value>
+    <value>Aktuellen Arbeitsbereich speichern (Strg + S)</value>
   </data>
   <data name="RBTooltip_View" xml:space="preserve">
     <value>Fenster ein- und ausblenden</value>
@@ -936,5 +936,11 @@
   </data>
   <data name="GeneratingFunctionListWaitMessage" xml:space="preserve">
     <value>Bitte warten... Funktionsliste wird erzeugt.</value>
+  </data>
+  <data name="GeneratingTemplateInfoWaitMessage" xml:space="preserve">
+    <value>Bitte warten... Template-Informationen werden erzeugt.</value>
+  </data>
+  <data name="Generating_TemplateInfo_Title" xml:space="preserve">
+    <value>Generiere Template-Informationen</value>
   </data>
 </root>
