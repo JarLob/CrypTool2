@@ -4,6 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Startcenter="clr-namespace:Startcenter" mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="1200" Background="#FFEBEFF6">
+
+    <UserControl.Resources>
+        <RoutedUICommand x:Key="ReloadTemplatesCommand" Text="Text" />
+    </UserControl.Resources>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="R" Modifiers="Ctrl" Command="{StaticResource ReloadTemplatesCommand}" />
+    </UserControl.InputBindings>
+    
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{StaticResource ReloadTemplatesCommand}" Executed="ReloadTemplates" />
+    </UserControl.CommandBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

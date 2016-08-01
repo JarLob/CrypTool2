@@ -169,7 +169,7 @@
     <value>Lesen Sie die Online-Dokumentation.</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Suche</value>
+    <value>Geben Sie einen oder mehrere Suchbegriffe ein. Drücken Sie (Ctrl + R), um die Vorlagenliste zu aktualisieren.</value>
   </data>
   <data name="Show_this_welcome_screen_at_CrypTool_2_0_startup_" xml:space="preserve">
     <value>Diese Begrüßungsseite beim Start von CrypTool 2 anzeigen.</value>

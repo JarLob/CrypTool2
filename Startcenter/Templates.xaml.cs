@@ -32,6 +32,15 @@ namespace Startcenter
     public partial class Templates : UserControl
     {
         private readonly RecentFileList _recentFileList = RecentFileList.GetSingleton();
+
+        public event OpenEditorHandler OnOpenEditor;
+        public event OpenTabHandler OnOpenTab;
+
+        public Templates()
+        {
+            InitializeComponent();
+        }
+        
         private string _templatesDir;
 
         public string TemplatesDir
@@ -41,22 +50,25 @@ namespace Startcenter
                 if (value != null)
                 {
                     _templatesDir = value;
-                    DirectoryInfo templateDir = new DirectoryInfo(value);
-                    FillTemplatesNavigationPane(templateDir, TemplatesTreeView);
+                    FillTemplatesNavigationPane();
                 }
             }
         }
 
-        public event OpenEditorHandler OnOpenEditor;
-        public event OpenTabHandler OnOpenTab;
-
-        public Templates()
+        public void ReloadTemplates()
         {
-            InitializeComponent();
+            FillTemplatesNavigationPane();
+            TemplateSearchInputChanged(this,null);
         }
 
-        private void FillTemplatesNavigationPane(DirectoryInfo templateDir, TreeView treeView)
+        private void FillTemplatesNavigationPane()
         {
+            if (_templatesDir == null) return;
+            DirectoryInfo templateDir = new DirectoryInfo(_templatesDir);
+
+            TemplatesTreeView.Items.Clear();
+            TemplatesListBox.Items.Clear();
+            
             var rootItem = new CTTreeViewItem(templateDir.Name);
             if (templateDir.Exists)
             {
@@ -81,17 +93,17 @@ namespace Startcenter
                 if (item != null)
                 {
                     items.Remove(item);
-                    treeView.Items.Add(item);
+                    TemplatesTreeView.Items.Add(item);
                 }
                 else
                 {
-                    treeView.Items.Add(new TreeViewItem() { Style = (Style) FindResource("SeparatorStyle") });
+                    TemplatesTreeView.Items.Add(new TreeViewItem() { Style = (Style) FindResource("SeparatorStyle") });
 
                     if (items.All(x => x.Order < 0))
                     {
                         foreach (var it in items)
                         {
-                            treeView.Items.Add(it);
+                            TemplatesTreeView.Items.Add(it);
                         }
                         return;
                     }

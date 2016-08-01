@@ -32,6 +32,11 @@ namespace Startcenter
                 ((Panels)panels.Children[0]).TemplatesDir = value;
             }
         }
+        
+        public void ReloadTemplates(Object sender, ExecutedRoutedEventArgs e)
+        {
+            ((Templates)(((Panels)panels.Children[0]).templates.Child)).ReloadTemplates();
+        }
 
         public event OpenEditorHandler OnOpenEditor;
         public event OpenTabHandler OnOpenTab;
