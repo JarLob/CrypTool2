@@ -19,7 +19,6 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using DESVisualisation;
 using System.Threading;
 using System.Windows.Threading;
 
@@ -38,6 +37,7 @@ namespace Cryptool.DESVisualisation
         public DESVisualisation()
         {
             pres = new DESPresentation();
+            execution = false;
         }
 
         #region Private Variables
@@ -46,6 +46,7 @@ namespace Cryptool.DESVisualisation
         private byte[] key;
         private byte[] output;
         private DESPresentation pres;
+        private bool execution;
 
         #endregion
 
@@ -125,26 +126,35 @@ namespace Cryptool.DESVisualisation
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
-
+            execution = true;
             pres.EncOriginal = new DESImplementation(key, text);
             try
             {
                 pres.EncOriginal.DES();
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    pres.showIntroScreen();
+                    pres.activateNavigationButtons(true);
+                    pres.showExecutionScreen(1);
                 }, null);
-                Ciphertext = pres.EncOriginal.Outputciphertext;
+                output = pres.EncOriginal.Outputciphertext;
+                Ciphertext = new byte[8];
+                output.CopyTo(Ciphertext,0);
                 OnPropertyChanged("Ciphertext");
+                while (execution)
+                {
+                    ProgressChanged(pres.progress, 1);
+                    if (pres.screenCounter == 20)
+                    {
+                        execution = false;
+                    }
+                }
             }
             catch (Exception e)
             {
                 GuiLogMessage(e.Message,NotificationLevel.Error);    
             }
 
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
 
@@ -162,7 +172,17 @@ namespace Cryptool.DESVisualisation
         /// </summary>
         public void Stop()
         {
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                if (pres.playTimer.IsEnabled)
+                {
+                    pres.playTimer.Stop();
+                    pres.AutoButton.IsChecked = false;
+                }
+                pres.showInitialState();
 
+            }, null);
+            execution = false;
         }
 
         /// <summary>

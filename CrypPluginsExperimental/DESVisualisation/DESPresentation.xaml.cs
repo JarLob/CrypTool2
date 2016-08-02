@@ -2,17 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -38,12 +31,14 @@ namespace Cryptool.DESVisualisation
             roundCounter = 0;
             keySchedule = false;
             desRounds = false;
+            
+            showInitialState();
         }
 
         /////////////////////////////////////////////////////////////
         // Attributes
         int stepCounter;
-        int screenCounter;
+        public int screenCounter;
         int roundCounter;
 
         bool keySchedule;
@@ -54,11 +49,12 @@ namespace Cryptool.DESVisualisation
         SolidColorBrush yellowBrush = new SolidColorBrush(Colors.Khaki);
         SolidColorBrush buttonBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFBDE0E6"));
 
-        System.Windows.Threading.DispatcherTimer playTimer = new System.Windows.Threading.DispatcherTimer();
+        public System.Windows.Threading.DispatcherTimer playTimer = new System.Windows.Threading.DispatcherTimer();
         public DESImplementation EncOriginal;
         DESImplementation EncDiffusion;
         bool diffusionActive;
 
+        public double progress;
 
 
 
@@ -567,8 +563,8 @@ namespace Cryptool.DESVisualisation
                 enumerator.Current.IsChecked = false;
             }
 
-            clearTexteffects(DataKey);
-            clearTexteffects(DataMessage);
+            DataKey.TextEffects.Clear();
+            DataMessage.TextEffects.Clear();
             DataKey.Text = EncOriginal.key;
             DataMessage.Text = EncOriginal.message;
         }
@@ -582,6 +578,10 @@ namespace Cryptool.DESVisualisation
                 EncDiffusion = new DESImplementation(key, msg);
                 EncDiffusion.DES();
                 diffusionActive = true;
+            }
+            else
+            {
+                diffusionActive = false;
             }
 
             //hide Diffusion-Functionality
@@ -597,7 +597,7 @@ namespace Cryptool.DESVisualisation
         /////////////////////////////////////////////////////////////
         #region Screen-Methods
 
-        // Refresh-Methods
+        // Show-Methods
 
         public void showIntroScreen()
         {
@@ -610,6 +610,7 @@ namespace Cryptool.DESVisualisation
         public void showInfoScreen(int step)
         {
             resetAllScreens(true);
+            progress = 0;
             InfoScreen.Visibility = Visibility.Visible;
             title.Visibility = Visibility.Visible;
 
@@ -642,11 +643,13 @@ namespace Cryptool.DESVisualisation
                     IntroButton.Background = buttonBrush;
                     screenCounter = 2;
                     stepCounter = 1;
+                    progress = 0;
                     break;
                 case 2:
                     ExecutionLabel.Content = "Key Schedule";
                     screenCounter = 5;
                     stepCounter = 1;
+                    progress = 0.0625;
                     break;
                 case 3:
                     ExecutionLabel.Content = "DES Encryption";
@@ -659,6 +662,7 @@ namespace Cryptool.DESVisualisation
                     ShiftButton.Visibility = Visibility.Hidden;
                     PC2Button.Visibility = Visibility.Hidden;
                     SkipStepButton.Content = "Skip Step";
+                    progress = 0.4875;
                     break;
                 case 4:
                     ExecutionLabel.Content = "Summary";
@@ -667,6 +671,7 @@ namespace Cryptool.DESVisualisation
                     screenCounter = 9;
                     stepCounter = 2;
                     roundCounter = 16;
+                    progress = 0.9375;
                     break;
                 default:
                     break;
@@ -677,6 +682,7 @@ namespace Cryptool.DESVisualisation
         public void showFinalScreen()
         {
             resetAllScreens(true);
+            progress = 1;
             FinalScreen.Visibility = Visibility.Visible;
             if (diffusionActive)
             {
@@ -696,12 +702,15 @@ namespace Cryptool.DESVisualisation
             }
             screenCounter = 20;
             stepCounter = 1;
+            playTimer.Stop();
+            AutoButton.IsChecked = false;
 
         }
 
         public void showDataScreen()
         {
             resetAllScreens(true);
+            progress = 0;
             DataScreen.Visibility = Visibility.Visible;
             title.Visibility = Visibility.Visible;
             title.Content = "Input Data";
@@ -871,11 +880,11 @@ namespace Cryptool.DESVisualisation
                 {
                     SBoxRow.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1];
                     colorText(SBoxRow, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1]));
-                    SBoxRow.Text += "    --> " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text += "         ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 else
                 {
-                    SBoxRow.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1] + "    --> " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1] + "         ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
 
             }
@@ -886,11 +895,11 @@ namespace Cryptool.DESVisualisation
                 {
                     SBoxColumn.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2];
                     colorText(SBoxColumn, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2]));
-                    SBoxColumn.Text += "    --> " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text += "     ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
                 else
                 {
-                    SBoxColumn.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "  --> " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "     ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
 
             }
@@ -902,13 +911,13 @@ namespace Cryptool.DESVisualisation
                 {
                     SBoxOutput.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
                     colorText(SBoxOutput, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3]));
-                    SBoxOutput.Text += "  <-- " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    SBoxOutput.Text += "     ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
                     column = EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                     row = EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 else
                 {
-                    SBoxOutput.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "  <-- " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    SBoxOutput.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "     ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
                     column = EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                     row = EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
@@ -1027,14 +1036,15 @@ namespace Cryptool.DESVisualisation
                 }
             }
 
-            if (roundCounter < 10) Canvas.SetLeft(RoundTable, 97 + (roundCounter - 1) * 21.625);
-            else Canvas.SetLeft(RoundTable, 296 + (roundCounter - 10) * 30.3333);
+            if (roundCounter < 10) Canvas.SetLeft(RoundTable, 173 + (roundCounter - 1) * 21.625);
+            else Canvas.SetLeft(RoundTable, 372 + (roundCounter - 10) * 30.3333);
 
         }
 
         public void showStructureScreen()
         {
             resetAllScreens(true);
+            progress = 0.03125;
             StructureScreen.Visibility = Visibility.Visible;
             title.Visibility = Visibility.Visible;
             title.Content = "General Structure";
@@ -1063,6 +1073,7 @@ namespace Cryptool.DESVisualisation
                 clearButtonsColor(true);
                 colorRoundKeys();
                 KeyScheduleButton.Background = buttonBrush;
+                progress = 0.0875 + roundCounter * 0.025;
             }
             KeyScheduleScreen.Visibility = Visibility.Visible;
             KeyScheduleRoundKey.Content = "" + roundCounter;
@@ -1159,6 +1170,7 @@ namespace Cryptool.DESVisualisation
                 clearButtonsColor(true);
                 colorRoundKeys();
                 DESButton.Background = buttonBrush;
+                progress = 0.5125 + roundCounter * 0.025;
             }
 
             DESRoundScreen.Visibility = Visibility.Visible;
@@ -1393,6 +1405,7 @@ namespace Cryptool.DESVisualisation
             title.Visibility = Visibility.Visible;
             title.Content = "Initial Permutation";
             roundCounter = 0;
+            progress = 0.5125;
 
             if (diffusionActive)
             {
@@ -1432,6 +1445,7 @@ namespace Cryptool.DESVisualisation
             title.Visibility = Visibility.Visible;
             title.Content = "Permuted Choice 1";
             roundCounter = 0;
+            progress = 0.0875;
 
             if (diffusionActive)
             {
@@ -1587,6 +1601,7 @@ namespace Cryptool.DESVisualisation
             FPScreen.Visibility = Visibility.Visible;
             title.Visibility = Visibility.Visible;
             title.Content = "Final Permutation";
+            progress = 0.9375;
 
             if (diffusionActive)
             {
@@ -1596,13 +1611,13 @@ namespace Cryptool.DESVisualisation
                 colorText(FP_top, compareStrings(old, changed));
 
 
-                IP_bottom.Text = EncDiffusion.ciphertext;
-                colorText(IP_bottom, compareStrings(EncOriginal.ciphertext, EncDiffusion.ciphertext));
+                FP_bottom.Text = EncDiffusion.ciphertext;
+                colorText(FP_bottom, compareStrings(EncOriginal.ciphertext, EncDiffusion.ciphertext));
             }
             else
             {
-                IP_top.Text = EncOriginal.LR_Data[16, 1] + EncOriginal.LR_Data[16, 0];
-                IP_bottom.Text = EncOriginal.ciphertext;
+                FP_top.Text = EncOriginal.LR_Data[16, 1] + EncOriginal.LR_Data[16, 0];
+                FP_bottom.Text = EncOriginal.ciphertext;
             }
             if (step == 2)
             {
@@ -1655,6 +1670,9 @@ namespace Cryptool.DESVisualisation
         public void resetFinalScreen()
         {
             FinalScreen.Visibility = Visibility.Hidden;
+            FinalCiphertext.TextEffects.Clear();
+            FinalKey.TextEffects.Clear();
+            FinalMessage.TextEffects.Clear();    
         }
 
         public void resetDataScreen()
@@ -1705,6 +1723,41 @@ namespace Cryptool.DESVisualisation
             R14.Visibility = Visibility.Hidden;
             R15.Visibility = Visibility.Hidden;
             R16.Visibility = Visibility.Hidden;
+            L0.TextEffects.Clear();
+            L1.TextEffects.Clear();
+            L2.TextEffects.Clear();
+            L3.TextEffects.Clear();
+            L4.TextEffects.Clear();
+            L5.TextEffects.Clear();
+            L6.TextEffects.Clear();
+            L7.TextEffects.Clear();
+            L8.TextEffects.Clear();
+            L9.TextEffects.Clear();
+            L10.TextEffects.Clear();
+            L11.TextEffects.Clear(); 
+            L12.TextEffects.Clear();
+            L13.TextEffects.Clear();
+            L14.TextEffects.Clear();
+            L15.TextEffects.Clear();
+            L16.TextEffects.Clear();
+            R0.TextEffects.Clear();
+            R1.TextEffects.Clear();
+            R2.TextEffects.Clear();
+            R3.TextEffects.Clear();
+            R4.TextEffects.Clear();
+            R5.TextEffects.Clear();
+            R6.TextEffects.Clear();
+            R7.TextEffects.Clear();
+            R8.TextEffects.Clear();
+            R9.TextEffects.Clear();
+            R10.TextEffects.Clear();
+            R11.TextEffects.Clear();
+            R12.TextEffects.Clear();
+            R13.TextEffects.Clear();
+            R14.TextEffects.Clear();
+            R15.TextEffects.Clear();
+            R16.TextEffects.Clear();
+
             ArrowRounds.Margin = new Thickness(0, 0, 579, 220);
             ArrowRounds.Visibility = Visibility.Visible;
         }
@@ -1728,6 +1781,23 @@ namespace Cryptool.DESVisualisation
             K14.Visibility = Visibility.Hidden;
             K15.Visibility = Visibility.Hidden;
             K16.Visibility = Visibility.Hidden;
+
+            K1.TextEffects.Clear();
+            K2.TextEffects.Clear();
+            K3.TextEffects.Clear();
+            K4.TextEffects.Clear();
+            K5.TextEffects.Clear();
+            K6.TextEffects.Clear();
+            K7.TextEffects.Clear();
+            K8.TextEffects.Clear();
+            K9.TextEffects.Clear();
+            K10.TextEffects.Clear();
+            K11.TextEffects.Clear();
+            K12.TextEffects.Clear();
+            K13.TextEffects.Clear();
+            K14.TextEffects.Clear();
+            K15.TextEffects.Clear();
+            K16.TextEffects.Clear();
             ArrowSubKeys.Margin = new Thickness(30, 0, 579, 220);
             ArrowSubKeys.Visibility = Visibility.Visible;
         }
@@ -1744,9 +1814,13 @@ namespace Cryptool.DESVisualisation
             S7Box.Visibility = Visibility.Hidden;
             S8Box.Visibility = Visibility.Hidden;
             SBoxInput.Visibility = Visibility.Hidden;
+            SBoxInput.TextEffects.Clear();
             SBoxRow.Visibility = Visibility.Hidden;
+            SBoxRow.TextEffects.Clear();
             SBoxColumn.Visibility = Visibility.Hidden;
+            SBoxColumn.TextEffects.Clear();
             SBoxOutput.Visibility = Visibility.Hidden;
+            SBoxOutput.TextEffects.Clear();
             SBoxJumper.Visibility = Visibility.Hidden;
             Canvas.SetLeft(SBoxJumper, 53);
             Canvas.SetTop(SBoxJumper, 63);
@@ -1756,21 +1830,20 @@ namespace Cryptool.DESVisualisation
             {
                 SBoxOut.Visibility = Visibility.Hidden;
                 SBoxOut.Text = "";
+                SBoxOut.TextEffects.Clear();
             }
-
-
-            //Counter auf 1 setzen vllt (1-8)                
+                
         }
 
         public void resetShift1Screen()
         {
             Shift1Screen.Visibility = Visibility.Hidden;
-            Canvas.SetLeft(RoundTable, 97);
-            Canvas.SetTop(RoundTable, 166);
+            Canvas.SetLeft(RoundTable, 173);
             Shift_bottom.Visibility = Visibility.Hidden;
+            Shift_bottom.TextEffects.Clear();
+            Shift_top.TextEffects.Clear();
             singleShift.Visibility = Visibility.Hidden;
             doubleShift.Visibility = Visibility.Hidden;
-            Canvas.SetLeft(RoundTable, 97);
             title.Content = "";
             title.Visibility = Visibility.Hidden;
         }
@@ -1780,7 +1853,6 @@ namespace Cryptool.DESVisualisation
             StructureScreen.Visibility = Visibility.Hidden;
             title.Content = "";
             title.Visibility = Visibility.Hidden;
-            //evtl. Farben wieder auf default setzen
         }
 
         public void resetKeyScheduleScreen()
@@ -1797,6 +1869,8 @@ namespace Cryptool.DESVisualisation
             KeyScheduleShiftBox1.ClearValue(Rectangle.FillProperty);
             KeyScheduleShiftBox2.ClearValue(Rectangle.FillProperty);
             KeySchedulePC2Box.ClearValue(Rectangle.FillProperty);
+            KeyScheduleCRound.TextEffects.Clear();
+            KeyScheduleDRound.TextEffects.Clear();
         }
 
         public void resetDESRoundScreen()
@@ -1811,6 +1885,11 @@ namespace Cryptool.DESVisualisation
             DESRoundR1Name.Visibility = Visibility.Hidden;
             DESRoundL1.Visibility = Visibility.Hidden;
             DESRoundR1.Visibility = Visibility.Hidden;
+
+            DESRoundL0.TextEffects.Clear();
+            DESRoundL1.TextEffects.Clear();
+            DESRoundR0.TextEffects.Clear();
+            DESRoundR1.TextEffects.Clear();
         }
 
         public void resetRoundFunctionScreen()
@@ -1836,6 +1915,10 @@ namespace Cryptool.DESVisualisation
             XORScreen.Visibility = Visibility.Hidden;
             XORResult.Visibility = Visibility.Hidden;
             XORResultName.Visibility = Visibility.Hidden;
+            XOROperator1.TextEffects.Clear();
+            XOROperator2.TextEffects.Clear();
+            XORResult.TextEffects.Clear();
+
             title.Content = "";
             title.Visibility = Visibility.Hidden;
         }
@@ -1844,6 +1927,8 @@ namespace Cryptool.DESVisualisation
         {
             IPScreen.Visibility = Visibility.Hidden;
             IP_bottom.Visibility = Visibility.Hidden;
+            IP_bottom.TextEffects.Clear();
+            IP_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1853,6 +1938,8 @@ namespace Cryptool.DESVisualisation
         {
             PC1Screen.Visibility = Visibility.Hidden;
             PC1_bottom.Visibility = Visibility.Hidden;
+            PC1_bottom.TextEffects.Clear();
+            PC1_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1862,6 +1949,8 @@ namespace Cryptool.DESVisualisation
         {
             PC2Screen.Visibility = Visibility.Hidden;
             PC2_bottom.Visibility = Visibility.Hidden;
+            PC2_bottom.TextEffects.Clear();
+            PC2_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1871,6 +1960,8 @@ namespace Cryptool.DESVisualisation
         {
             ExpansionScreen.Visibility = Visibility.Hidden;
             Expansion_bottom.Visibility = Visibility.Hidden;
+            Expansion_bottom.TextEffects.Clear();
+            Expansion_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1880,6 +1971,8 @@ namespace Cryptool.DESVisualisation
         {
             PPScreen.Visibility = Visibility.Hidden;
             PP_bottom.Visibility = Visibility.Hidden;
+            PP_bottom.TextEffects.Clear();
+            PP_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1889,6 +1982,8 @@ namespace Cryptool.DESVisualisation
         {
             FPScreen.Visibility = Visibility.Hidden;
             FP_bottom.Visibility = Visibility.Hidden;
+            FP_bottom.TextEffects.Clear();
+            FP_top.TextEffects.Clear();
 
             title.Content = "";
             title.Visibility = Visibility.Hidden;
@@ -1899,6 +1994,42 @@ namespace Cryptool.DESVisualisation
 
         /////////////////////////////////////////////////////////////
         #region Helper-Methods
+
+        public void showInitialState()
+        {
+            if (desRounds)
+            {
+                showFPScreen(1);
+            }
+            else if (keySchedule)
+            {
+                showExecutionScreen(3);
+            }
+            if (diffusionActive)
+            {
+                IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    enumerator.Current.IsChecked = false;
+                }
+
+                DataKey.TextEffects.Clear();
+                DataMessage.TextEffects.Clear();
+                DataKey.Text = EncOriginal.key;
+                DataMessage.Text = EncOriginal.message;
+            }
+            resetAllScreens(true);
+            stepCounter = 0;
+            screenCounter = 0;
+            roundCounter = 0;
+            progress = 0;
+            keySchedule = false;
+            desRounds = false;
+            diffusionActive = false;
+            showIntroScreen();
+            activateNavigationButtons(false);
+
+        }
 
         private void showDiffusionBoxes(bool show)
         {
@@ -1953,7 +2084,7 @@ namespace Cryptool.DESVisualisation
         private void colorText(TextBlock text, List<byte> pos)
         {
             byte[] changePos = pos.ToArray();
-            clearTexteffects(text);
+            text.TextEffects.Clear();
             for (byte i = 0; i < changePos.Length; i++)
             {
                 colorTextSingle(text, (byte)(changePos[i]));
@@ -1969,11 +2100,6 @@ namespace Cryptool.DESVisualisation
             te.Foreground = Brushes.Red;
             te.PositionCount = 1;
             text.TextEffects.Add(te);
-        }
-
-        private void clearTexteffects(TextBlock text)
-        {
-            text.TextEffects.Clear();
         }
 
         private byte[] stringToByteArray(String str)
@@ -2068,6 +2194,23 @@ namespace Cryptool.DESVisualisation
                     default: break;
                 }
             }, null);
+        }
+
+        public void activateNavigationButtons(bool active)
+        {
+            IntroButton.IsEnabled = active;
+            DataButton.IsEnabled = active;
+            PC1Button.IsEnabled = active;
+            KeyScheduleButton.IsEnabled = active;
+            IPButton.IsEnabled = active;
+            DESButton.IsEnabled = active;
+            FPButton.IsEnabled = active;
+            SummaryButton.IsEnabled = active;
+            NextButton.IsEnabled = active;
+            PrevButton.IsEnabled = active;
+            SkipStepButton.IsEnabled = active;
+            AutoButton.IsEnabled = active;
+            AutoSpeedSlider.IsEnabled = active;
         }
 
         private void activateRoundButtons(bool active)

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">DES Visualisation</title>
+  <summary lang="en">Usage of the <i>DES Visualisation</i></summary>
+  <description lang="en">With this template you can look at the encryption process of the Data Encryption Standard step by step</description>
+  <keywords>advanced, modern, cipher, encryption, Lucifer, symmetric, nist, visualisation, DES</keywords>
+
+  <title lang="de">DES-Visualisierung</title>
+  <summary lang="de">Benutzung der <i>DES-Visualisierung</i></summary>
+  <description lang="de">Mit dieser Vorlagen können Sie sich den Verschlüsselungsprozess des Data Encryption Standards schrittweise anschauen.</description>
+  <keywords lang="de">symmetrisch, modern, Blockchiffre, Verschlüsselung, Lucifer, Visualisierung, DES</keywords>
+
+  <icon file="DESVisualisation.png" />
+  <relevantPlugins>
+    <plugin name="DESVisualisation" />
+  </relevantPlugins>
+
+</sample>

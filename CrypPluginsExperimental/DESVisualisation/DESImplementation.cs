@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Security.Cryptography;
-
 
 namespace Cryptool.DESVisualisation
 {
@@ -28,7 +22,7 @@ namespace Cryptool.DESVisualisation
         public byte[] Inputkey;
         public byte[] Outputciphertext;
 
-        //Strings for visualization
+        //Strings for DESPresentation.xaml
         public String[,] KeySchedule = new String[17, 2];           // Cn, Dn (C0D0 = PC1Result)    
         public String[] RoundKeys = new String[16];                 // Kn = PC2Result
 
@@ -116,7 +110,7 @@ namespace Cryptool.DESVisualisation
             public bool GetBit(int iByteOffset, int iBitOffset)
             {
 
-                // call sibling function
+                // Call sibling function
                 return ((this.m_data[iByteOffset] >> iBitOffset) & 0x01) == 0x01;
 
             }
@@ -124,7 +118,7 @@ namespace Cryptool.DESVisualisation
             public void ShiftLeftWrapped(BLOCK8BYTE S, int iBitShift)
             {
 
-                // this shift is only applied to the first 32 bits, and parity bit is ignored
+                // This shift is only applied to the first 32 bits, and parity bit is ignored
 
                 // Declaration of local variables
                 int iByteOffset = 0;
@@ -178,7 +172,6 @@ namespace Cryptool.DESVisualisation
             public String ToBinaryString(int length, int deletePos)
             {
                 String tmp = "";
-                
                 for (int i = 0; i < BYTE_LENGTH; i++)
                 {
                     for (int j = 0; j < BYTE_LENGTH; j++)
@@ -189,12 +182,9 @@ namespace Cryptool.DESVisualisation
                                 tmp = tmp + "1";
                             else
                                 tmp = tmp + "0";        
-                        }
-                            
-                    }
-                     
+                        }     
+                    }  
                 }
-                
                 tmp =tmp.Remove(length-1,tmp.Length-length);
                 return tmp;
             }
@@ -202,7 +192,6 @@ namespace Cryptool.DESVisualisation
             public String ToBinaryString2(int deletePos1, int deletePos2)
             {
                 String tmp = "";
-
                 for (int i = 0; i < BYTE_LENGTH; i++)
                 {
                     for (int j = 0; j < BYTE_LENGTH; j++)
@@ -214,18 +203,14 @@ namespace Cryptool.DESVisualisation
                             else
                                 tmp = tmp + "0";        
                         }
-
-                    }
-                    
+                    }  
                 }
-
                 return tmp;
             }
 
             public String ToBinaryString4(int deletePos1, int deletePos2, int deletePos3, int deletePos4)
             {
                 String tmp = "";
-
                 for (int i = 0; i < BYTE_LENGTH; i++)
                 {
                     for (int j = 0; j < BYTE_LENGTH; j++)
@@ -237,11 +222,8 @@ namespace Cryptool.DESVisualisation
                             else
                                 tmp = tmp + "0";
                         }
-
-                    }
-                    
+                    }                   
                 }
-
                 return tmp;
             }
 
@@ -320,7 +302,6 @@ namespace Cryptool.DESVisualisation
                     Ln[i1] = new BLOCK8BYTE();
                     Rn[i1] = new BLOCK8BYTE();
                 }
-
             }
 
         }
@@ -453,10 +434,8 @@ namespace Cryptool.DESVisualisation
         /////////////////////////////////////////////////////////////
         #region Operations - DES
 
-        public static bool IsValidDESInput(byte[] Input)
+        private bool IsValidDESInput(byte[] Input)
         {
-
-            // Shortcuts
             if (Input == null)
                 return false;
             if (Input.Length != KEY_BYTE_LENGTH)
@@ -464,7 +443,6 @@ namespace Cryptool.DESVisualisation
 
             // Return success
             return true;
-
         }
 
         public void DES()
@@ -491,31 +469,11 @@ namespace Cryptool.DESVisualisation
         /////////////////////////////////////////////////////////////
         #region Low-level Operations
 
-        private void _incKey(byte[] Key, int iInc)
-        {
-
-            // shortcuts
-            if (iInc == 0)
-                return;
-
-            // Add the increment				
-            int iCarry = iInc;
-            for (int iByteOffset = 0; iByteOffset < KEY_BYTE_LENGTH; iByteOffset++)
-            {
-                int iTemp = Key[iByteOffset] + iCarry;
-                iCarry = iTemp >> 8;
-                Key[iByteOffset] = Convert.ToByte(iTemp & 0xFF);
-                if (iCarry == 0)
-                    break;
-            }
-
-        }
-
         private KEY_SET _expandKey(byte[] Key, int iOffset)
         {
 
             //
-            // Expand an 8 byte DES key into a set of permuted keys
+            // Expand an 8 byte DES key into a set of permuted round keys
             //
 
             // Declare return variable
@@ -752,7 +710,7 @@ namespace Cryptool.DESVisualisation
                         
                         //Fill String Attribute
                         String tmp = RoundDetails[iBlockOffset - 1, 1];
-                        SBoxStringDetails[iBlockOffset-1, iTableOffset * 4] = Convert.ToString(workingSet.XorBlock.m_data[iTableOffset], 2).PadLeft(8, '0').Remove(5,2);
+                        SBoxStringDetails[iBlockOffset-1, iTableOffset * 4] = Convert.ToString(workingSet.XorBlock.m_data[iTableOffset], 2).PadLeft(8, '0').Remove(6,2);
 
                         // Calculate m and n
                         int m = ((workingSet.XorBlock.GetBit(iTableOffset, 7) ? 1 : 0) << 1) | (workingSet.XorBlock.GetBit(iTableOffset, 2) ? 1 : 0);
