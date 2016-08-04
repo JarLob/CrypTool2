@@ -35,7 +35,16 @@ namespace Startcenter
         
         public void ReloadTemplates(Object sender, ExecutedRoutedEventArgs e)
         {
-            ((Templates)(((Panels)panels.Children[0]).templates.Child)).ReloadTemplates();
+            Cursor _previousCursor = Mouse.OverrideCursor;
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                ((Templates)(((Panels)panels.Children[0]).templates.Child)).ReloadTemplates();
+            }
+            catch(Exception ex)
+            {
+            }
+            Mouse.OverrideCursor = _previousCursor;
         }
 
         public event OpenEditorHandler OnOpenEditor;
