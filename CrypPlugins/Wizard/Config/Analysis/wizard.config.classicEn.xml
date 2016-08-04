@@ -202,7 +202,7 @@ Wählen Sie diesen Punkt, um einen mit der Enigma verschlüsselten Text zu analy
       <defaultvalue lang="en">KSBWQUMKVUXBMDWTXAYBBIKVHVFGAJROQUWPWXFBYSREIFGKNWDVTUDNBHAGGOONSZERHJAQOQFDDCLPWCXCNJHHNGIHLYXNJCVAQHMJJPDMJQRCMEYHQDKMJOMDUQNGKQCHSXMQWSSCHDMJVDUHSWFUZVSLVHJHHLLFGNYBSJFJFNDGQXYBCLYBODQKDJGIILQUPZJCJUTNZTADMZUPOVUTAYYIRMJTGBOCPGYUZSCYXJTTQZIFQYFNJPAVVAPVMZSDOFAMPCSMFDULBUKPRVRJAUEEHOTGIWOKAYVMOJENPTTNUICXB</defaultvalue>
     </inputBox>
 
-    <loadSample title="Enigma Analyser" file="Cryptanalysis\Classic\Enigma_Analyzer.cwm"/>
+    <loadSample title="Enigma Analyzer" file="Cryptanalysis\Classic\Enigma_Analyzer.cwm"/>
   </input>
 
   <!-- Playfair input --><!--

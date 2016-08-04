@@ -22,7 +22,7 @@
   </introduction>
 
   <usage lang="en">
-  After dragging the Vernam-component onto the workspace, you need to specify a data source that represents the text to be encrypted or decrypted. This input is mandatory.
+  After dragging the Vernam component onto the workspace, you need to specify a data source that represents the text to be encrypted or decrypted. This input is mandatory.
   <newline/>
   Next you have to do the same to specify the data source for you key text. This input is not mandatory but your text will not be encrypted or decrypted if you don't set a key.
   <newline/>

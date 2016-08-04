@@ -31,7 +31,7 @@
 
   <usage lang="en">
 	To work correctly, the plugin needs both the key represented by a string of '0' and '1' characters and a photon base character for each bit in the key string.
-	The key is typically entered by a text-input plugin, the photon bases are created by the BB84 Photonbase Generator which is also part of the BB84-protocol-plugins.<newline/>
+	The key is typically entered by a text-input plugin, the photon bases are created by the BB84 Photonbase Generator which is also part of the BB84-protocol plugins.<newline/>
 	The encoding table can be changed in the plugin settings. For correct use of the protocol, this table settings should be equal to these of the BB84 Photon Decoder.
 	Executing the plugin a new string will be created, in which every bit-char is exchanged by the related photon-char. Finally this string is sent to the output.
   </usage>

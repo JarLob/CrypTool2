@@ -75,7 +75,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem AES-Algorithmus versc
         <task lang="de">Hier können Sie die AES-Analyse sehen.</task>
 
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
@@ -153,7 +153,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem AES-Algorithmus versc
         <task lang="de">Hier können Sie die AES-Analyse sehen.</task>
         
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
@@ -223,17 +223,17 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
         <description lang="en">Ciphertext-Only Analysis Output</description>
         <description lang="de">Ciphertext-only-Analyse: Ausgabe</description>
 
-        <headline lang="en">AES Ciphertext-Only Analysis Output</headline>
+        <headline lang="en">Ciphertext-Only Analysis Output</headline>
         <headline lang="de">Ciphertext-only-Analyse: Ausgabe</headline>
         <task lang="en">Here, you can see the DES analysis.</task>
         <task lang="de">Hier können Sie die DES-Analyse sehen.</task>
 
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
-        <progressBar plugin="$KeySearcher$">
+        <progressBar plugin="$KeySearcher$" >
           <description lang="en">Progress:</description>
           <description lang="de">Fortschritt:</description>
         </progressBar>
@@ -299,7 +299,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
         <task lang="de">Hier können Sie die DES-Analyse sehen.</task>
 
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
@@ -329,7 +329,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
     <description lang="en" >SDES is a modern symmetric and very simple algorithm to encrypt plaintext or to decrypt ciphertext.
 By selecting this, you can analyze some ciphertext that was encrypted with the SDES algorithm.
     </description>
-    <description lang="de" >SDES ist ein modernes symmetrisches Verschlüsselungsverfahren..
+    <description lang="de" >SDES ist ein modernes symmetrisches Verschlüsselungsverfahren.
 Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus verschlüsselt wurde, zu analysieren.
     </description>
 
@@ -375,7 +375,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus vers
         <task lang="de">Hier können Sie die SDES-Analyse sehen.</task>
 
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 
@@ -445,7 +445,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus vers
         <task lang="de">Hier können Sie die SDES-Analyse sehen.</task>
 
         <presentation plugin="$KeySearcher$" width="50%" height="50%">
-          <description lang="en">Analyser:</description>
+          <description lang="en">Analyzer:</description>
           <description lang="de">Analysierer:</description>
         </presentation>
 

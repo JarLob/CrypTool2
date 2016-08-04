@@ -80,7 +80,7 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <task lang="de">Bitte warten, während die "Brute-force"-Methode ausgeführt wird.</task>
 
       <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
-        <description lang="en">Analyser:</description>
+        <description lang="en">Analyzer:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
@@ -154,7 +154,7 @@ Diese Methode benötigt für die Analyse nur den Geheimtext ("Ciphertext-only-An
       <task lang="de">Bitte warten, während analysiert wird.</task>
 
       <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
-        <description lang="en">Analyser:</description>
+        <description lang="en">Analyzer:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
@@ -233,7 +233,7 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <task lang="de">Bitte warten, während analysiert wird.</task>
 
       <presentation plugin="$TranspositionAnalyser$" width="50%" height="50%">
-        <description lang="en">Analyser:</description>
+        <description lang="en">Analyzer:</description>
         <description lang="de">Analysierer:</description>
       </presentation>
 
