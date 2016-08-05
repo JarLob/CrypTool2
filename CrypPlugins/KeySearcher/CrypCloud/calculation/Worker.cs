@@ -17,6 +17,9 @@ using voluntLib.common.interfaces;
 
 namespace KeySearcher
 {
+    /// <summary>
+    /// Worker that performs keysearching
+    /// </summary>
     internal class Worker : AWorker
     {
         private const double Epsilon = 0.01d;
