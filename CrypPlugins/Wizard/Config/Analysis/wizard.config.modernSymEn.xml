@@ -26,7 +26,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem AES-Algorithmus versc
     </description>
 
     <input image="AES">
-      <name lang="en">Ciphertext-Only</name>
+      <name lang="en">Ciphertext-only</name>
       <name lang="de">Ciphertext-only</name>
       <description lang="en">Analyzes a ciphertext by using only the ciphertext. It will use entropy as the cost function.</description>
       <description lang="de">Analysiert einen Geheimtext (ohne Kenntnis von Klartext(teilen) und ohne Kenntnis des Schlüssels). Verwendet die Entropie als Kostenfunktion.</description>
@@ -64,9 +64,9 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem AES-Algorithmus versc
       </comboBox>
 
       <sampleViewer image="AES" file="Cryptanalysis\Modern\AES_Analyzer_Entropy.cwm">
-        <name lang="en">Ciphertext-Only Analysis</name>
+        <name lang="en">Ciphertext-only Analysis</name>
         <name lang="de">Ciphertext-only-Analyse</name>
-        <description lang="en">Ciphertext-Only Analysis Output</description>
+        <description lang="en">Ciphertext-only Analysis Output</description>
         <description lang="de">Ciphertext-only-Analyse: Ausgabe</description>
 
         <headline lang="en">AES Ciphertext-Only Analysis Output</headline>
@@ -98,7 +98,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem AES-Algorithmus versc
     </input>
     
     <input image="AES">
-      <name lang="en">Known Plaintext</name>
+      <name lang="en">Known plaintext</name>
       <name lang="de">Bekannter Klartext</name>
       <description lang="en">Analyzes a ciphertext by using a piece of known plaintext.</description>
       <description lang="de">Analysiert einen Geheimtext mit Hilfe eines Stücks bekannten Klartextes.</description>
@@ -188,7 +188,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
     </description>
 
     <input image="DES">
-      <name lang="en">Ciphertext-Only</name>
+      <name lang="en">Ciphertext-only</name>
       <name lang="de">Ciphertext-only-Analyse</name>
       <description lang="en">Analyzes a ciphertext by using only the ciphertext. It will use entropy as the cost function.</description>
       <description lang="de">Analysiert einen Geheimtext (ohne Kenntnis von Klartext(teilen) und ohne Kenntnis des Schlüssels). Verwendet die Entropie als Kostenfunktion.</description>
@@ -218,9 +218,9 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
       </comboBox>
 
       <sampleViewer image="DES" file="Cryptanalysis\Modern\DES_Analyzer_Entropy.cwm">
-        <name lang="en">Ciphertext-Only Analysis</name>
+        <name lang="en">Ciphertext-only Analysis</name>
         <name lang="de">Ciphertext-only-Analyse</name>
-        <description lang="en">Ciphertext-Only Analysis Output</description>
+        <description lang="en">Ciphertext-only Analysis Output</description>
         <description lang="de">Ciphertext-only-Analyse: Ausgabe</description>
 
         <headline lang="en">Ciphertext-Only Analysis Output</headline>
@@ -252,7 +252,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem DES-Algorithmus versc
     </input>
 
     <input image="DES">
-      <name lang="en">Known Plaintext</name>
+      <name lang="en">Known plaintext</name>
       <name lang="de">Bekannter Klartext</name>
       <description lang="en">Analyzes a ciphertext by using a piece of known plaintext.</description>
       <description lang="de">Analysiert einen Geheimtext mit Hilfe eines Stücks bekannten Klartextes.</description>
@@ -334,7 +334,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus vers
     </description>
 
     <input image="SDES">
-      <name lang="en">Ciphertext-Only</name>
+      <name lang="en">Ciphertext-only</name>
       <name lang="de">Ciphertext-only</name>
       <description lang="en">Analyzes a ciphertext by using only the ciphertext. It will use entropy as the cost function.</description>
       <description lang="de">Analysiert einen Geheimtext (ohne Kenntnis von Klartext(teilen) und ohne Kenntnis des Schlüssels). Verwendet die Entropie als Kostenfunktion.</description>
@@ -364,9 +364,9 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus vers
       </comboBox>
 
       <sampleViewer image="SDES" file="Cryptanalysis\Modern\SDES_Analyzer_Entropy.cwm">
-        <name lang="en">Ciphertext-Only Analysis</name>
+        <name lang="en">Ciphertext-only Analysis</name>
         <name lang="de">Ciphertext-only-Analyse</name>
-        <description lang="en">Ciphertext-Only Analysis Output</description>
+        <description lang="en">Ciphertext-only Analysis Output</description>
         <description lang="de">Ciphertext-only-Analyse: Ausgabe</description>
 
         <headline lang="en">AES Ciphertext-Only Analysis Output</headline>
@@ -398,7 +398,7 @@ Wählen Sie diesen Punkt, um einen Geheimtext, der mit dem SDES-Algorithmus vers
     </input>
 
     <input image="SDES">
-      <name lang="en">Known Plaintext</name>
+      <name lang="en">Known plaintext</name>
       <name lang="de">Bekannter Klartext</name>
       <description lang="en">Analyzes a ciphertext by using a piece of known plaintext.</description>
       <description lang="de">Analysiert einen Geheimtext mit Hilfe eines Stücks bekannten Klartextes.</description>

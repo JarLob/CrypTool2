@@ -48,7 +48,7 @@ Quellen:<newline />
     <replacement key="$StringEncoder$" value="StringEncoder"/>
     <replacement key="$StringDecoder$" value="StringDecoder"/>
     <replacement key="$Password$" value="Password"/>
-	 <replacement key="$memo$" value="In this sample we provide a quick way to encrypt plaintext with AES by using a simple password (which is converted to an AES-key by using PKCS5). The result is base64-encoded for easy copy&amp;paste e.g. to an email. Decryption is also possible with this template: The encrypted base64-encoded text needs to be copied to the {\b Input} component. Then the {\b AES} component needs to be switched to &quot;Decrypt&quot; and the {\b Switch} component must be set to True. With the help of the {\b Switch} component, the data takes a different path, i.e. for decryption we first need to base64-decode it, while when encrypting we encode it in base64 after encryption."/>
+	 <replacement key="$memo$" value="In this sample we provide a quick way to encrypt plaintext with AES by using a simple password (which is converted to an AES key by using PKCS5). The result is base64-encoded for easy copy&amp;paste e.g. to an email. Decryption is also possible with this template: The encrypted base64-encoded text needs to be copied to the {\b Input} component. Then the {\b AES} component needs to be switched to &quot;Decrypt&quot; and the {\b Switch} component must be set to True. With the help of the {\b Switch} component, the data takes a different path, i.e. for decryption we first need to base64-decode it, while when encrypting we encode it in base64 after encryption."/>
  </replacements>
 
 </sample>
