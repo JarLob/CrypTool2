@@ -18,8 +18,8 @@
     <replacement key="$Decompress$" value="Dekomprimiere"/>
     <replacement key="$ASCII string$" value="ASCII-String"/>
     <replacement key="$Decompressed text$" value="Dekomprimierter Text"/>
-    <replacement key="$memo1$" value="In diesem Beispiel wird ein ASCII-kodierter Text von 100,000 Bytes auf eine Größe von 54,546 Bytes mit einer Kompressionsrate von 45% komprimiert."/>
-	 <replacement key="$memo2$" value="Die Code-Tabelle zeigt, dass häufiger vorkommende Zeichen kürzere Codeworte erhalten."/>
+    <replacement key="$memo1$" value="In diesem Beispiel wird ein ASCII-kodierter Text von 100.000 Bytes auf eine Größe von 54.546 Bytes mit einer Kompressionsrate von 45% komprimiert."/>
+    <replacement key="$memo2$" value="Die Code-Tabelle zeigt, dass häufiger vorkommende Zeichen kürzere Codeworte erhalten."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Uncompressed text$" value="Uncompressed text"/>
@@ -29,7 +29,7 @@
     <replacement key="$ASCII string$" value="ASCII string"/>
     <replacement key="$Decompressed text$" value="Decompressed text"/>
     <replacement key="$memo1$" value="In this example, we are compressing ASCII encoded text from 100,000 bytes to 54,546 bytes with a 45% compression rate."/>
-	 <replacement key="$memo2$" value="As we can see from the code table, more frequent characters have shorter codewords."/>
+    <replacement key="$memo2$" value="As we can see from the code table, more frequent characters have shorter codewords."/>
   </replacements>
 
 </sample>

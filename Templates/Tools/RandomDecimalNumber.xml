@@ -2,7 +2,7 @@
 <sample>
   <title lang="en">Random Decimal Number</title>
   <summary lang="en">Generating a <i>random decimal number</i></summary>
-  <description lang="en">With this template you can create a random decimal number. To do so, first a set of random bytes (preset to <i>1000</i>) is generated. Then, these bytes are used by the <b>Decimalization</b> component to generate a random number with a certain amount of decimal digits (preset to <i>100</i>). The decimalization component is configured so, that it uses the <i>modulo</i> approach to generate the random decimal number. For further details, please read the help page for the decimalization component.</description>
+  <description lang="en">With this template you can create a random decimal number. To do so, first a set of random bytes (preset to <i>1000</i>) is generated. These bytes are then used by the <b>Decimalization</b> component to generate a random number with a certain amount of decimal digits (preset to <i>100</i>). The decimalization component is set to use the <i>modulo</i> approach to generate the random decimal number. For further details, please read the help page for the decimalization component.</description>
   <keywords>Random, Number, Decimal</keywords>
   
   <title lang="de">Zufällige Dezimalzahl</title>
@@ -28,7 +28,7 @@
     <replacement key="$Random input$" value="Random input"/>
     <replacement key="$Decimalisation$" value="Decimalization"/>
     <replacement key="$Random decimal number$" value="Random decimal number"/>
-    <replacement key="$memo$" value="With this template you can create a random decimal number. To do so, first a set of random bytes (preset to 1000) are generated. These bytes are then used by the {\b Decimalization} component to generate a random number with a certain amount of decimal digits (preset to 100). The decimalization component is set to use the Modulo-approach to generate the random decimal number. For further details, read the help page for the decimalization component."/>
+    <replacement key="$memo$" value="With this template you can create a random decimal number. To do so, first a set of random bytes (preset to 1000) is generated. These bytes are then used by the {\b Decimalization} component to generate a random number with a certain amount of decimal digits (preset to 100). The decimalization component is set to use the modulo approach to generate the random decimal number. For further details, please read the help page for the decimalization component."/>
   </replacements>
 
 </sample>
