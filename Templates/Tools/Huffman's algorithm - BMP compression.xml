@@ -11,5 +11,29 @@
     <plugin name="Huffman" />
   </relevantPlugins>
 
-</sample>
+  <replacements lang="de">
+    <replacement key="$Image file$" value="Bilddatei"/>
+    <replacement key="$UTF-8 bytes$" value="UTF-8-Bytes"/>
+    <replacement key="$Huffman compression$" value="Huffman-Komprimierung"/>
+    <replacement key="$Huffman decompression$" value="Huffman-Dekomprimierung"/>
+    <replacement key="$Decompressed image$" value="Dekomprimiertes Bild"/>
+    <replacement key="$to BMP$" value="nach BMP"/>
+    <replacement key="$memo1$" value="In diesem Beispiel werden ein JPG-Bild und ein BMP-Bild mit dem Huffman-Algorithmus komprimiert, um den Einfluss der Entropie der Eingangsdaten auf die Kompressionsrate der Huffman-Komprimierung zu demonstrieren."/>
+    <replacement key="$memo2$" value="Da das JPG-Bild bereits komprimiert ist, ist die Anwendung der Huffman-Komprimierung nicht effektiv und führt sogar zu einer Vergrößerung der Datenmenge um 1%."/>
+    <replacement key="$memo3$" value="Konvertiere das Eingabebild von JPG nach BMP."/>
+    <replacement key="$memo4$" value="Das BMP-Bildformat speichert die Bilddaten in einer umkomprimierten Form, so dass die Anwendung der Huffman-Komprimierung sehr effektiv ist. Die Kompressionsrate beträgt 29%."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Image file$" value="Image file"/>
+    <replacement key="$UTF-8 bytes$" value="UTF-8 bytes"/>
+    <replacement key="$Huffman compression$" value="Huffman compression"/>
+    <replacement key="$Huffman decompression$" value="Huffman decompression"/>
+    <replacement key="$Decompressed image$" value="Decompressed image"/>
+    <replacement key="$to BMP$" value="to BMP"/>
+    <replacement key="$memo1$" value="In this example, we compress a JPG image and a BMP image with the Huffman algorithm to demonstrate the influence of the input data's entropy on the compression rate of the Huffman compression."/>
+    <replacement key="$memo2$" value="As the JPG image data is already compressed, applying the Huffman compression to the data is not effective and even increases the data size by 1%."/>
+    <replacement key="$memo3$" value="Convert the input image from JPG to BMP."/>
+    <replacement key="$memo4$" value="The BMP image file format saves the image data in an uncompressed form, so that applying the Huffman compression to the data is very effective. The compression rate is 29%."/>
+  </replacements>
 
+</sample>
