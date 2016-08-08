@@ -24,7 +24,12 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
+using System.IO;
 using Microsoft.CSharp;
+using System.Runtime.Remoting;
+using System.Security.Permissions;
+using System.Security;
+using AurelienRibon.Ui.SyntaxHighlightBox;
 
 namespace Cryptool.Plugins.UserCode
 {
@@ -38,12 +43,13 @@ namespace Cryptool.Plugins.UserCode
         public UserCode()
         {
             _settings = new UserCodeSettings();
-            _presentation.TextBox.TextChanged +=new TextChangedEventHandler(TextBox_TextChanged);
+            _presentation.TextBox.TextChanged += new TextChangedEventHandler(TextBox_TextChanged);
+            _presentation.TextBox.CurrentHighlighter = HighlighterManager.Instance.Highlighters["CSharp"];
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs args)
         {
-            _settings.Sourcecode = _presentation.TextBox.Text;            
+            _settings.Sourcecode = _presentation.TextBox.Text;
         }
 
         #region Properties
@@ -219,7 +225,6 @@ namespace Cryptool.Plugins.UserCode
         }
 
         private UserCodeSettings _settings;
-        private object _compiledAssembly;
 
         public ISettings Settings
         {
@@ -234,56 +239,98 @@ namespace Cryptool.Plugins.UserCode
 
         public void PreExecution()
         {
-            try
-            {
-                var cs = new CSharpCodeProvider();
-                var cc = cs.CreateCompiler();
-                var cp = new CompilerParameters {GenerateInMemory = true};
-                cp.ReferencedAssemblies.Add(GetType().Assembly.Location);
-                cp.ReferencedAssemblies.Add(typeof (IPlugin).Assembly.Location);
-                cp.ReferencedAssemblies.Add(typeof (Exception).Assembly.Location);
-                cp.ReferencedAssemblies.Add(typeof (INotifyPropertyChanged).Assembly.Location);
-                cp.ReferencedAssemblies.Add(typeof (BigInteger).Assembly.Location);
-                var code = Properties.Resources.UserClass.Replace("//USERCODE//", _settings.Sourcecode);
-                var assembly = cc.CompileAssemblyFromSource(cp, code);
-                if(assembly.Errors.Count>0)
-                {
-                    foreach (var error in assembly.Errors)
-                    {
-                        GuiLogMessage(string.Format("Compile error: {0}",error.ToString()),NotificationLevel.Error);
-                    }
-                    return;
-                }
-                _compiledAssembly = assembly.CompiledAssembly.CreateInstance("Cryptool.Plugins.UserCode.UserClass",
-                    true,BindingFlags.Default,null,new object[]{this},null,null);
-            }
-            catch(Exception ex)
-            {
-                GuiLogMessage(string.Format("Exception during code compilation: {0}",ex.Message),NotificationLevel.Error);
-            }
+
         }
 
         public void Execute()
         {
+            AppDomain appDomain = null;
+            ObjectHandle userCodeObject = null;
+            string outputAssembly = null;
+            CompilerResults compilerResults = null;
+
+            //1. Compile:
+
+            try
+            {                
+                var rnd = new Random();
+                var id = rnd.Next(int.MaxValue);
+                appDomain = AppDomain.CreateDomain("UserCodeDomain" + id);
+                var cs = new CSharpCodeProvider();
+                var cc = cs.CreateCompiler();
+                var cp = new CompilerParameters { GenerateInMemory = false, CompilerOptions = "/optimize" };
+                cp.ReferencedAssemblies.Add(GetType().Assembly.Location);
+                cp.ReferencedAssemblies.Add(typeof(IPlugin).Assembly.Location);
+                cp.ReferencedAssemblies.Add(typeof(Exception).Assembly.Location);
+                cp.ReferencedAssemblies.Add(typeof(INotifyPropertyChanged).Assembly.Location);
+                cp.ReferencedAssemblies.Add(typeof(BigInteger).Assembly.Location);
+                cp.ReferencedAssemblies.Add(typeof(AppDomain).Assembly.Location);
+                var code = Properties.Resources.UserClass.Replace("//USERCODE//", _settings.Sourcecode);
+                compilerResults = cc.CompileAssemblyFromSource(cp, code);
+                if (compilerResults.Errors.Count > 0)
+                {
+                    foreach (var error in compilerResults.Errors)
+                    {
+                        GuiLogMessage(string.Format("Compile error: {0}", error.ToString()), NotificationLevel.Error);
+                    }
+                    return;
+                }                                
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception during code compilation: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
+
+            //2. Execute:
+
             try
             {
-                _compiledAssembly.GetType().GetMethod("UserMethod").Invoke(_compiledAssembly, null);
+                appDomain.SetData("input1", Input1);
+                appDomain.SetData("input2", Input2);
+                appDomain.SetData("input3", Input3);
+                appDomain.SetData("input4", Input4);
+                appDomain.SetData("input5", Input5);
+
+                userCodeObject = appDomain.CreateInstanceFrom(compilerResults.PathToAssembly, "Cryptool.Plugins.UserCode.UserClass");
+
+                Output1 = appDomain.GetData("output1");
+                Output2 = appDomain.GetData("output2");
+                Output3 = appDomain.GetData("output3");
+                Output4 = appDomain.GetData("output4");
+                Output5 = appDomain.GetData("output5");
+
             }
             catch (Exception ex)
             {
                 GuiLogMessage(string.Format("Exception during code execution: {0}", ex.Message), NotificationLevel.Error);
             }
+
+            //3. Unload:
+
+            try
+            {
+                userCodeObject = null;
+                AppDomain.Unload(appDomain);
+                File.Delete(compilerResults.PathToAssembly);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Exception during removing of assembly: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
+
             ProgressChanged(1.0, 1.0);
         }
 
         public void PostExecution()
         {
-            Dispose();
+
         }
 
         public void Stop()
         {
-            
+
         }
 
         public void Initialize()
@@ -292,12 +339,12 @@ namespace Cryptool.Plugins.UserCode
             {
                 _presentation.TextBox.Text = ((UserCodeSettings)_settings).Sourcecode;
             }
-            , null);            
+            , null);
         }
 
         public void Dispose()
         {
-            
+
         }
 
         #endregion
@@ -313,5 +360,5 @@ namespace Cryptool.Plugins.UserCode
 
         #endregion
     }
-    
+
 }

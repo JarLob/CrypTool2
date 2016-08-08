@@ -1,124 +1,88 @@
 ﻿using System.Numerics;
+using System;
 
 namespace Cryptool.Plugins.UserCode
 {
 
     public class UserClass
     {
-        private Cryptool.Plugins.UserCode.UserCode _userCode;
-        public UserClass(Cryptool.Plugins.UserCode.UserCode userCode)
+        public UserClass()
         {
-            _userCode = userCode;
+            Input1 = AppDomain.CurrentDomain.GetData("input1");
+            Input2 = AppDomain.CurrentDomain.GetData("input2");
+            Input3 = AppDomain.CurrentDomain.GetData("input3");
+            Input4 = AppDomain.CurrentDomain.GetData("input4");
+            Input5 = AppDomain.CurrentDomain.GetData("input5");
+
+            Execute();
+
+            AppDomain.CurrentDomain.SetData("output1", Output1);
+            AppDomain.CurrentDomain.SetData("output2", Output2);
+            AppDomain.CurrentDomain.SetData("output3", Output3);
+            AppDomain.CurrentDomain.SetData("output4", Output4);
+            AppDomain.CurrentDomain.SetData("output5", Output5);
         }
 
-        public void UserMethod()
+        //USERCODE//
+
+        public object Input1
         {
-            //USERCODE//
+            get; 
+            set;
         }
 
-        public void ProgressChanged(double percentage)
+        public object Input2
         {
-            _userCode.ProgressChanged(percentage, 1.0);
+            get;
+            set;
         }
 
-        public object input1
+        public object Input3
         {
-            get
-            {
-                return _userCode.Input1;
-            }
+            get;
+            set;
         }
 
-        public object input2
+        public object Input4
         {
-            get
-            {
-                return _userCode.Input2;
-            }
+            get;
+            set;
         }
 
-        public object input3
+        public object Input5
         {
-            get
-            {
-                return _userCode.Input3;
-            }
+            get;
+            set;
         }
 
-        public object input4
+        public object Output1
         {
-            get
-            {
-                return _userCode.Input4;
-            }
+            get;
+            set;
         }
 
-        public object input5
+        public object Output2
         {
-            get
-            {
-                return _userCode.Input5;
-            }
+            get;
+            set;
         }
 
-        public object output1
+        public object Output3
         {
-            get
-            {
-                return _userCode.Output1;
-            }
-            set
-            {
-                _userCode.Output1 = value;
-            }
+            get;
+            set;
         }
 
-        public object output2
+        public object Output4
         {
-            get
-            {
-                return _userCode.Output2;
-            }
-            set
-            {
-                _userCode.Output2 = value;
-            }
+            get;
+            set;
         }
 
-        public object output3
+        public object Output5
         {
-            get
-            {
-                return _userCode.Output3;
-            }
-            set
-            {
-                _userCode.Output3 = value;
-            }
-        }
-
-        public object output4
-        {
-            get
-            {
-                return _userCode.Output4;
-            }
-            set
-            {
-                _userCode.Output4 = value;
-            }
-        }
-
-        public object output5
-        {
-            get
-            {
-                return _userCode.Output5;
-            }
-            set
-            {
-                _userCode.Output5 = value;
-            }
+            get;
+            set;
         }
     }
 }
