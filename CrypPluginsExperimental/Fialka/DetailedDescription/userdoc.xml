@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <!--EN-->
+  <language culture="en"/>
+
+  <introduction lang="en">
+    Fialka M-125 is a rotor machine using an electro-mechanical construction. There are two known versions of the machine: standard (M-125) and extended
+    (M-125-3). Each of these versions also had a country-specific variant. It is known that it was used in the (former) Soviet Union, Poland, Czechoslovakia, Hungary and East Germany (DDR).
+    <newline />
+    The design of Fialka M-125 is largely based on the well-known cipher machine Enigma. There are some major differences in the machine’s construction that can
+    imply an effort to correct known Enigma weaknesses.
+    <newline />
+    <newline />
+    A keyboard containing 30 keys serves as an input for the cipher machine. Pressing a key sends an electrical signal from the key into the output of
+    the cipher machine through several electro-mechanical components of the device.
+    The cryptographic security of Fialka relies on the use of several rotors, where each rotor implements a monoalphabetic substitution.
+    The machine contains a special card reader that allows for the use of punched cards as a fixed permutation of the input alphabet.
+    The result is printed on a paper-tape.
+    After encrypting a letter, rotors are moved into new positions, so in the next step a different permutation of the input alphabet is realized.
+    <newline />
+    <newline />
+    Fialka has the following operation flow:
+    <list>
+      <item> The key is pressed on the keyboard. </item>
+      <item> The electrical circuit is connected through the card reader into the entry disc.</item>
+      <item> The circuit continues from the entry disc through a set of ten rotors into the reflector.</item>
+      <item> The signal is reflected by the reflector and returned through the components listed above, in reverse order, into the printer.</item>
+    </list>
+    <newline />
+    Despite to Enigma, the reflector’s wiring in Fialka is special. The substitution is not involutoric (contains one cycle of length 3 and one cycle of length 1).
+    This causes, that different operation mode should be used for decryption. The cycle of length 1 enables self-encryption of the input letter.
+    <newline />
+    <newline />
+    The main differences between Enigma and Fialka are summarized in the following table:
+    <table border="1">
+      <tr>
+        <th></th>
+        <th>Enigma</th>
+        <th>Fialka</th>
+      </tr>
+      <tr>
+        <td>Rotor count</td>
+        <td>3 or 4</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>Letter count</td>
+        <td>26</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>Rotor stepping</td>
+        <td>simple</td>
+        <td>blocking pin based</td>
+      </tr>
+      <tr>
+        <td>Rotor stepping direction</td>
+        <td>one directional</td>
+        <td>adjacent rotors in opposite direction</td>
+      </tr>
+      <tr>
+        <td>Letter self-encryption</td>
+        <td>impossible</td>
+        <td>possible</td>
+      </tr>
+    </table>
+    <newline />
+    <newline />
+    The Fialka component is fully compatible with the real Fialka machine. It allows to set up:
+    <list>
+      <item>Different machine models (M-125 and M-125-3).</item>
+      <item>Different rotor models (PROTON I and PROTON II) and different country specific rotor wirings (3K : Poland, 5K : Hungary, 6K : Czechoslovakia).</item>
+      <item>Different (country specific) keyboard layouts and print heads.</item>
+      <item>Different operation modes (Encrypt, Decrypt, Plain text mode).</item>
+      <item>All possible key settings (rotor order, rotor offsets, ring offset, punch card substitution, core order, core offsets, core sides).</item>
+      <item>In case of M-125-3 different text operation modes (letters only, numbers only (special characters) and mixed mode).</item>
+      <item>In case of M-125-3 special numbers only encryption mode (Num lock 10).</item>
+    </list>
+  </introduction>
+
+  <usage lang="en">
+    In the settings of the component, you can select from several settings group.
+    <newline/>
+    <newline/>
+    In the 'Workspace' menu you find settings for handling of unknown symbols and the time period of restoring the initial key (saved  before the PLAY button is pressed).
+    <newline />
+    If the input text contains a symbol that is not supported for a selected charset (specified by the print head and country layout), you can choose whether that symbol should be removed, ignored, or replaced by the letter '@'.
+    If it is ignored, it will be added unmodified to the output text.
+    <newline />
+    The machine settings is saved every time before the PLAY button is pressed. If the save period is set to:
+    <newline />
+    "After execution" - the saved key is restored after the encryption process is finished;
+    <newline />
+    "Stop pressed " - the saved key is restored only when the STOP button is pressed, if you modify the input before pressing the STOP - the changed key is applied;
+    <newline />
+    "Input changed" - the saved key is restored each time before the encryption is called;
+    <newline />
+    "Never" - the saved key is never restored.
+    <newline/>
+    <newline/>
+    The 'Fialka machine settings' menu contains the main machine settings.
+    <newline />
+    You can set the machine model (M-125 / M-125-3), rotor type (PROTON I / PROTON II), country specific layouts and rotor series.
+    In this menu you can also find the print head mapping, num lock type and text operation modes.
+    The num lock and text operation modes are available only for M-125-3 machine type.
+    <newline />
+    The Operation mode specify if the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode - without any encryption.
+    <newline />
+    <newline />
+    The rest of the available settings forms the machine's key based on the selected rotor type.
+    <newline />
+    <newline />
+
+    <section headline="PROTON I key settings">
+      In the 'Rotor series' part of the 'Fialka machine settings' menu, you can choose the country specific rotor series.
+      The available set of rotors depends on the chosen rotor series. The rotors are unique (contains different permutation and different pin positions) for all countries.
+      <newline />
+      <newline />
+      In the 'Rotor order' menu, you can determine the position of the rotors on the spindle. The positions are marked from 1 to 10 from the reflector.
+      Each rotor contains a unique wiring (substitution) and pin positions (responsible for rotor stepping).
+      <newline />
+      The following table contains the rotor labels (Cyrillic and numeric values):
+      <table border="1">
+        <tr>
+          <th>А</th>
+          <th>Б</th>
+          <th>В</th>
+          <th>Г</th>
+          <th>Д</th>
+          <th>Е</th>
+          <th>Ж</th>
+          <th>З</th>
+          <th>И</th>
+          <th>К</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+        </tr>
+      </table>
+      <newline />
+      If you want to order the rotors into base position (1 .. 10), press the button 'Base positions'.
+      <newline />
+      <newline />
+      In the 'Rotor offsets' menu, you can determine the initial offset on each of the rotors. Rotor [x] offset specify the offset for rotor placed in position (Rotor order) [x].
+      <newline />
+      If you want to reset the offsets, press the button 'Null offsets'. The 'Base positions' button set an increasing offset for each rotor (1 .. 10).
+      <newline />
+      <newline />
+      In the 'Ring offsets' menu, you can determine the offset of the rings on each of the rotors.
+      <newline />
+      If you want to reset the offsets, press the button 'Null offsets'.
+      <newline />
+      <newline />
+      In the 'Punch card' menu, you can configure a punch card substitution.
+      If you want to reset (remove) the punch card, press the button 'Set identity'.
+      <newline />
+      <newline />
+    </section>
+
+    <section headline="PROTON II additional key settings">
+      The PROTON II rotor type contains some additional settings.
+      <newline />
+      The core of the rotors (the wiring) can be rotated, flipped or exchanged with another rotor.
+      <newline />
+      If the cores are in the same order as rotors, inserted in side I and with 0 offsets, the PROTON II rotors are the same as PROTON I rotors.
+      <newline />
+      <newline />
+      In the 'Core order' menu, you can determine the position of cores in the rotors. Core [x] order specify the core placed into rotor at position [x].
+      If the core is inserted into a new position the pin positions on the rotor remains the same, but the rotor wiring is changed.
+      <newline />
+      The following table contains the core labels (Cyrillic and numeric values):
+      <table border="1">
+        <tr>
+          <th>А</th>
+          <th>Б</th>
+          <th>В</th>
+          <th>Г</th>
+          <th>Д</th>
+          <th>Е</th>
+          <th>Ж</th>
+          <th>З</th>
+          <th>И</th>
+          <th>К</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+        </tr>
+      </table>
+      <newline />
+      <newline />
+      In the 'Core offsets' menu, you can determine the initial offset of each core. Core [x] offset specify the offset for core placed into rotor at position [x].
+      <newline />
+      If you want to reset the offsets, press the button 'Null offsets'.
+      <newline />
+      <newline />
+      In the 'Core sides' menu, you can determine the cores are flipped. Core [x] side specify the side for core placed into rotor at position [x].
+      <newline />
+      The 'Default core sides' button set side I for all cores.
+      <newline />
+      <newline />
+    </section>
+
+    <section headline="M-125-3 specific settings">
+      The M-125-3 model allows to select from different text operation modes.
+      <newline />
+      Each key on the machine's keyboard contains a letter and a special characters for both Cyrillic and Latin print head.
+      Selecting the 'Print head mapping' you can choose whether that Cyrillic or Latin layout is used (for input and output).
+      The Latin layout is country specific and can be set in the 'Country layout' part of the 'Fialka machine settings'.
+      <newline />
+      The allowed charset of available layouts is presented in <ref id="Cryptomuseum"/>.
+      <newline />
+      <newline />
+      If you want to use letters, select the 'Letters' option in the 'Text operation mode'.
+      The 'Letters' mode is compatible with the older M-125 device.
+      <newline />
+      <newline />
+      For special characters select the 'Numbers' option.
+      <newline />
+      <newline />
+      There is also an option to use both letters and special characters. To set this mode, select the 'Mixed' option.
+      In this case two keys are given up to switch between the 'Letters' and 'Numbers' modes.
+      <newline />
+      Whether the letter shift character ('[','5','Ж') is present in the input the 'Letters' mode will be used for the next input.
+      <newline />
+      Whether the number shift character (']','7','A','Ф') is present in the input the 'Numbers' mode will be used for the next input.
+      <newline />
+      There is also necessary to select the corresponding letter/number shift character based on the selected print head and on the selected country layout.
+      To make this process easier the '[' and ']' characters can be used in all cases.
+      <newline />
+      <newline />
+      The M-125-3 model can be used to encrypt only numerical data (numbers 0,1,..9).
+      If you want to use this mode, set the 'Num lock' settings to 'NumLock 10', in all other cases use the 'NumLock 30' option.
+      <newline />
+      On the real Fialka machine this mode is only available, when the 'Text operation mode' is set to 'Numbers' and the 'Print head mapping' is set to 'Cyrillic'.
+      <newline />
+      Selecting the 'NumLock 10' mode automatically set the required 'Text operation mode' and the 'Print head mapping'. In this case the non-numeric inputs are invalid.
+      <newline />
+    </section>
+  </usage>
+
+  <presentation lang="en">
+  </presentation>
+
+  <!--DE-->
+  <language culture="de-DE"/>
+
+  <introduction lang="de-DE">
+  </introduction>
+
+
+  <usage lang="de-DE">
+  </usage>
+
+  <presentation lang="de-DE">
+  </presentation>
+
+  <!--REFERENCES-->
+  <references>
+    <linkReference>
+      <link url="http://www.tandfonline.com/doi/full/10.1080/01611194.2014.915264" lang="en" />
+      <caption lang="en">Key Space and Period of Fialka M-125 Cipher Machine (Cryptologia)</caption>
+    </linkReference>
+    <linkReference id="Cryptomuseum">
+      <link url="http://www.cryptomuseum.com/crypto/fialka/" lang="en" />
+      <caption lang="en">Fialka (Cryptomuseum)</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://en.wikipedia.org/wiki/Fialka" lang="en" />
+      <caption lang="en">Fialka (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Fialka_(Maschine)" lang="de" />
+      <caption lang="de">Fialka (Wikipedia)</caption>
+    </linkReference>
+  </references>
+</documentation>

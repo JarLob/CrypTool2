@@ -93,6 +93,7 @@
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
     <Compile Include="CaesarTest.cs" />
+    <Compile Include="FialkaTest.cs" />
     <Compile Include="GroestlTest.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -156,6 +157,10 @@
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPluginsExperimental\Fialka\Fialka.csproj">
+      <Project>{92c31d1c-a348-4c4d-b591-36d51f48f401}</Project>
+      <Name>Fialka</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginsExperimental\Sigaba\Sigaba.csproj">
       <Project>{29520D81-911D-4FCD-9A6B-670625D6E0A1}</Project>
