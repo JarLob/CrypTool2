@@ -5,13 +5,13 @@ Dear CrypTool 2.1 users.
 Many new components found their way into this new beta release.
 For a detailed overview of new components please use the list beneath this text. We hope you have as much fun 
 using CrypTool 2.1 Beta 1 as we had creating it. If you find any bugs please do not hesitate using our bug 
-reporting form at https://www.cryptool.org/trac/CrypTool2/newticket  or use the contact form on the upper 
-right side under the "About" menu in the CrypTool 2.0 application.
+reporting form at https://www.cryptool.org/trac/CrypTool2/newticket, or use the contact form on the upper
+right side under the "About" menu in the CrypTool 2 application.
 
 We changed the version number from 2.0 to 2.1 since we are now working on the successor of the CrypTool 2.0 release version.
 
 Sincerly yours,
-The CrypTool 2.1 Developer Team, August 2016
+The CrypTool 2 Developer Team, August 2016
 
 New components:
 - M-138
@@ -40,8 +40,14 @@ Online Help:
 - Completed the online help (English and German)
 
 CrypCloud:
-We implemented the first version of the CrypCloud. The CrypCloud enables users to connect to a decentralized cloud network to work on distributed cryptanalysis combinging several instances of CrypTool 2. 
-CrypTool 2.1 users may create a user certificate using the cloud login to participate in the CrypCloud. Right now, only distributed brute-force attacks on symmetric cipers are possible using the Keysearcher component, which is now compatible to the CrypCloud.
+We implemented the first version of the CrypCloud. With CrypCloud users
+can establish and connect to a decentralized cloud network and work on
+distributed cryptanalysis combining several instances of CrypTool 2.
+CrypTool 2 users may create a user certificate with the cloud login
+to participate in the CrypCloud. Right now, only distributed brute-force
+attacks on symmetric ciphers are possible. These attacks use the
+Keysearcher component which is now extended to support the CrypCloud.
+
 Users are able to upload, download, and work on distributed jobs.
 
 Many bugs fixed...
