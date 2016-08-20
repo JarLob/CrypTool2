@@ -41,7 +41,7 @@ Online Help:
 
 CrypCloud:
 We implemented the first version of the CrypCloud. With CrypCloud users
-can establish and connect to a decentralized cloud network and work on
+can establish and connect to a decentralized cloud network and perform
 distributed cryptanalysis combining several instances of CrypTool 2.
 CrypTool 2 users may create a user certificate with the cloud login
 to participate in the CrypCloud. Right now, only distributed brute-force
