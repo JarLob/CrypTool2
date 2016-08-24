@@ -47,6 +47,7 @@ namespace AESVisualisation
         List<int[]> markedPositions = new List<int[]>();
         public Brush brush = Brushes.Green;
         public bool skip = false;
+        private bool finish = false;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -72,7 +73,6 @@ namespace AESVisualisation
                 temp = createBorderList(x);
                 borderList.Add(temp);
             }
-            disableButtons();
             sBoxList = createSBoxList();
             
         }
@@ -488,7 +488,7 @@ namespace AESVisualisation
             autostep = false;
             if (expansion)
             {
-                if(roundNumber > 0)
+                if(roundNumber > 1)
                 {
                     roundNumber--;
                     skip = true;
@@ -719,6 +719,47 @@ namespace AESVisualisation
         {
             autostepSpeed = 50 + 100 * (10 - (int)autostepSpeedSlider.Value);
         }
+
+        private void endButton_Click(object sender, RoutedEventArgs e)
+        {
+            autostep = false;
+            cleanUp();
+            expansion = !expansion;
+            buttonNextClickedEvent.Set();
+            //roundNumber = 10 + keysize * 2;
+            //action = 4;
+            //Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            //{
+            //    setUpAddKey();
+            //}, null);
+            skip = true;
+            finish = true;
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!expansion)
+            {
+                autostep = false;
+                cleanUp();
+                expansion = !expansion;
+                buttonNextClickedEvent.Set();
+                skip = true;
+                roundNumber = 1;
+            }
+            else
+            {
+                autostep = false;
+                roundNumber = 1;
+                cleanUp();
+                skip = true;
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    setUpExpansion();
+                }, null);
+            }
+        }
+
         #endregion Buttons
 
         #region Methods
@@ -1607,6 +1648,7 @@ namespace AESVisualisation
             subByteExplanation1.Visibility = Visibility.Hidden;
             mixColExplanation.Visibility = Visibility.Hidden;
             mixColExplanation1.Visibility = Visibility.Hidden;
+            expansionKeyGrid.Visibility = Visibility.Hidden;
             expansionKeyGrid192.Visibility = Visibility.Hidden;
             expansionKeyGrid256.Visibility = Visibility.Hidden;
             expansionTransitionGrid.Visibility = Visibility.Hidden;
@@ -1617,7 +1659,7 @@ namespace AESVisualisation
             expansionResultGrid.Visibility = Visibility.Hidden;
         }
 
-        private void updateUI()
+        public void updateUI()
         {
 
             DispatcherFrame frame = new DispatcherFrame();
@@ -4317,7 +4359,7 @@ namespace AESVisualisation
             //    setUpExpansion();
             //    enableButtons();
             //}, null);
-            //wait();
+            wait();
             if (!expansion)
             {
                 return;
@@ -4965,14 +5007,16 @@ namespace AESVisualisation
         }
         public void exectue()
         {
-            while (expansion)
+            int saveRoundNumber = 11 - keysize * 2;
+            while (expansion && !finish)
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     keyButton.Content = "Skip Expansion";
+                    expansionEncryptionTextBlock.Text = "Key Expansion";
                     showButton();
                     invisible();
-                    disableButtons();
+                    StartingImage.Visibility = Visibility.Hidden;
                     changeRoundButton();
                     buttonVisible();
                     if (expansion && shift == 1)
@@ -5000,6 +5044,7 @@ namespace AESVisualisation
                                 skip = false;
                                 if (!expansion)
                                 {
+                                    saveRoundNumber = roundNumber;
                                     roundNumber = 11;
                                 }
                             }
@@ -5016,14 +5061,15 @@ namespace AESVisualisation
                         {
                             autostep = false;
                             wait();
-                        }
+                        }       
                     }
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         expansionKeyGrid.Visibility = Visibility.Hidden;
                     }, null);
-                    roundNumber = 1;
                     expansion = false;
+                    //roundNumber = 1;
+                    roundNumber = saveRoundNumber;
                 }
                 else if (keysize == 1)
                 {
@@ -5045,6 +5091,7 @@ namespace AESVisualisation
                                 skip = false;
                                 if (!expansion)
                                 {
+                                    saveRoundNumber = roundNumber;
                                     roundNumber = 9;
                                 }
                             }
@@ -5063,6 +5110,7 @@ namespace AESVisualisation
                             wait();
                         }
                     }
+                    roundNumber = saveRoundNumber;
                 }
                 else
                 {
@@ -5083,6 +5131,7 @@ namespace AESVisualisation
                                 skip = false;
                                 if (!expansion)
                                 {
+                                    saveRoundNumber = roundNumber;
                                     roundNumber = 8;
                                 }
                             }
@@ -5101,13 +5150,25 @@ namespace AESVisualisation
                             wait();
                         }
                     }
+                    roundNumber = saveRoundNumber;
                 }
                 expansion = false;
-                if (first)
+                if (first && !finish)
                 {
                     roundNumber = 0;
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpAddKey();
+                    }, null);
+                    first = false;
                 }
-                first = false;
+                else if(!finish)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpSubByte(states);
+                    }, null);
+                }
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     expansionKeyGrid.Visibility = Visibility.Hidden;
@@ -5115,12 +5176,15 @@ namespace AESVisualisation
                     expansionKeyGrid.Visibility = Visibility.Hidden;
                     showButton();
                     keyButton.Content = "Key Expansion";
+                    expansionEncryptionTextBlock.Text = "Encryption";
                     changeRoundButton();
-                    setUpAddKey();
                     buttonVisible();
                 }, null);
                 progress = 0.5;
-                actionMethod();
+                if (!finish)
+                {
+                    actionMethod();
+                }
                 action = 1;
                 if (keysize == 1 && roundNumber > 8)
                 {
@@ -5146,6 +5210,8 @@ namespace AESVisualisation
                 addKeyButton.Visibility = Visibility.Hidden;
                 shiftRightButton.Visibility = Visibility.Hidden;
                 shiftLeftButton.Visibility = Visibility.Hidden;
+                startButton.SetValue(Grid.ColumnProperty, 9);
+                endButton.SetValue(Grid.ColumnProperty, 10);
             }
             else
             {
@@ -5157,6 +5223,8 @@ namespace AESVisualisation
                 {
                     shiftRightButton.Visibility = Visibility.Visible;
                     shiftLeftButton.Visibility = Visibility.Visible;
+                    startButton.SetValue(Grid.ColumnProperty, 7);
+                    endButton.SetValue(Grid.ColumnProperty, 8);
                 }
             }
         }
@@ -5177,7 +5245,9 @@ namespace AESVisualisation
             round8Button.Visibility = Visibility.Hidden;
             round9Button.Visibility = Visibility.Hidden;
             round10Button.Visibility = Visibility.Hidden;
-            keyButton.Visibility = Visibility.Hidden; 
+            keyButton.Visibility = Visibility.Hidden;
+            startButton.Visibility = Visibility.Hidden;
+            endButton.Visibility = Visibility.Hidden;
         }
         public void showButton()
         {
@@ -5194,6 +5264,8 @@ namespace AESVisualisation
             round6Button.Visibility = Visibility.Visible;
             round7Button.Visibility = Visibility.Visible;
             round8Button.Visibility = Visibility.Visible;
+            startButton.Visibility = Visibility.Visible;
+            endButton.Visibility = Visibility.Visible;
             if(!expansion || keysize == 0)
             {
                 round9Button.Visibility = Visibility.Visible;
@@ -5400,7 +5472,7 @@ namespace AESVisualisation
             }
         }
 
-        private void cleanUp()
+        public void cleanUp()
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -5619,6 +5691,24 @@ namespace AESVisualisation
                     break;
             }
         }
+
+        public void reset()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                StartCanvas.Visibility = Visibility.Visible;
+            }, null);
+            roundNumber = 1;
+            action = 1;
+            first = true;
+            shift = 0;
+            expansion = true;
+            skip = false;
+            sBox = new byte[16][];
+            states = new byte[40][];
+            keyList = new byte[11][];
+    }
+
         #endregion
 
        

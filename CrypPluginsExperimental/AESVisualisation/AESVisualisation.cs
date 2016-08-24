@@ -48,13 +48,15 @@ namespace Cryptool.Plugins.AESVisualisation
         private int roundNumber = 1;
         private byte[][] states = new byte[56][];
         private byte[][] roundConstant = new byte[12][];
-        private AESPresentation pres = new AESPresentation();
+        private AESPresentation pres;
         private CStreamWriter outputStreamWriter = new CStreamWriter();
         static Random rnd = new Random();
         private Boolean execute = true;
-        private Boolean suspended = false;
+        private Boolean aborted = false;
         int keysize;
         Thread presThread;
+        Thread executeThread;
+        Thread newPresentationThread;
 
 
 
@@ -142,113 +144,21 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
-            //if (text.Length != 16 || key.Length != 16)
+            executeThread = new Thread(execution);
+            executeThread.Start();
+            //if (aborted)
             //{
-            //    execute = false;
+            //    outputStreamWriter.Write();
+            //    outputStreamWriter.Close();
+            //    buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            //    ProgressChanged(1, 1);
             //}
-            //if (!execute)
-            //{
-            //    return;
-            //}
-            if (suspended)
-            {
-                presThread.Resume();
-                outputStreamWriter.Write(states[39 + 8 * keysize]);
-                outputStreamWriter.Close();
-                ProgressChanged(1, 1);
-            }
-            keysize = settings.Keysize;
-            pres.keysize = keysize;
-            checkKeysize();
-            checkTextLength();
-            //pres = new AESPresentation();
-            outputStreamWriter = new CStreamWriter();
-            roundNumber = 1;
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.invisible();
-                pres.buttonVisible();
-                pres.hideButton();
-            }, null);
-            ProgressChanged(0, 1);
-            OutputStream = outputStreamWriter;
-            OnPropertyChanged("OutputStream");
-            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            setRoundConstant();
-            byte[] tempState = text;
-            int r = 0;
-            int t = 0;
-            foreach(byte b in key)
-            {
-                if(keyList[r] == null)
-                {
-                    keyList[r] = new byte[16];
-                }
-                keyList[r][t] = b;
-                t++;
-                if (t == 16)
-                {
-                    t = 0;
-                    r++;
-                }
-            }
-            //keyList[0] = key;
-            states[0] = addKey(tempState, keyList[0]);
-            pres.tempState = tempState;
-            pres.roundConstant = this.roundConstant;
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.createSBox();
-                pres.StartCanvas.Visibility = Visibility.Hidden;
-                pres.showButton();
-            }, null);
-            switch (keysize)
-            {
-                case 0:
-                    expandKey();
-                    break;
-                case 1:
-                    expandKey192();
-                    break;
-                case 2:
-                    expandKey256();
-                    break;
-                default:
-                    break;
-            }        
-            setStates();
-            roundNumber = 1;
-            pres.states = states;
-            pres.keyList = keyList;
-            //Thread presThread = new Thread(pres.exectue);
-            if (keysize == 0 || keysize == 1 || keysize == 2)
-            {
-                presThread.Start();
-            }
-            while (presThread.IsAlive)
-            {
-                ProgressChanged(pres.progress, 1);
-                //if (!pres.expansion)
-                //{
-                //    double temp = pres.progress + 0.5;
-                //    ProgressChanged(temp, 1);
-                //}
-                //else
-                //{
-                //    ProgressChanged(pres.progress, 1);
-                //}
-            }
-            outputStreamWriter.Write(states[39 + 8 * keysize]);
-            outputStreamWriter.Close();
-            buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            ProgressChanged(1, 1);
         }
 
         public void PostExecution()
         {
-            pres.buttonNextClickedEvent.Reset();          
-            pres.autostep = false;
-            ProgressChanged(0, 1);
+            executeThread.Abort();
+            //pres = new AESPresentation();
         }
 
         /// <summary>
@@ -257,11 +167,15 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
-            presThread.Suspend();
-            suspended = true;
-            //pres.buttonNextClickedEvent.Set();
-            //outputStreamWriter.Close();
-            //System.Threading.
+            aborted = true;
+            presThread.Abort();          
+            executeThread.Abort();
+            newPresentationThread = new Thread(newPresentation);
+            newPresentationThread.SetApartmentState(ApartmentState.STA);
+            newPresentationThread.Start();
+            //pres.cleanUp();
+            //pres.reset();
+            outputStreamWriter.Close();
         }
 
         /// <summary>
@@ -269,6 +183,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Initialize()
         {
+            pres = new AESPresentation();
             presThread = new Thread(pres.exectue);
         }
 
@@ -1742,6 +1657,89 @@ namespace Cryptool.Plugins.AESVisualisation
                 text = temp;
             }
         }
+
+        private void execution()
+        {
+            presThread = new Thread(pres.exectue);
+            keysize = settings.Keysize;
+            pres.keysize = keysize;
+            checkKeysize();
+            checkTextLength();
+            outputStreamWriter = new CStreamWriter();
+            roundNumber = 1;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                pres.invisible();
+                pres.buttonVisible();
+                pres.hideButton();
+            }, null);
+            ProgressChanged(0, 1);
+            OutputStream = outputStreamWriter;
+            OnPropertyChanged("OutputStream");
+            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            setRoundConstant();
+            byte[] tempState = text;
+            int r = 0;
+            int t = 0;
+            foreach (byte b in key)
+            {
+                if (keyList[r] == null)
+                {
+                    keyList[r] = new byte[16];
+                }
+                keyList[r][t] = b;
+                t++;
+                if (t == 16)
+                {
+                    t = 0;
+                    r++;
+                }
+            }
+            states[0] = addKey(tempState, keyList[0]);
+            pres.tempState = tempState;
+            pres.roundConstant = this.roundConstant;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.createSBox();
+                pres.StartCanvas.Visibility = Visibility.Hidden;
+                pres.showButton();
+            }, null);
+            switch (keysize)
+            {
+                case 0:
+                    expandKey();
+                    break;
+                case 1:
+                    expandKey192();
+                    break;
+                case 2:
+                    expandKey256();
+                    break;
+                default:
+                    break;
+            }
+            setStates();
+            roundNumber = 1;
+            pres.states = states;
+            pres.keyList = keyList;
+            presThread.Start();
+            while (presThread.IsAlive)
+            {
+                ProgressChanged(pres.progress, 1);
+            }
+            outputStreamWriter.Write(states[39 + 8 * keysize]);
+            outputStreamWriter.Close();
+            buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            ProgressChanged(1, 1);
+        }
+
+        private void newPresentation()
+        {
+            pres = null;
+            pres = new AESPresentation();
+        }
+
         #endregion
 
         #region Event Handling
