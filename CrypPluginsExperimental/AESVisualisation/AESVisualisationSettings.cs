@@ -26,6 +26,7 @@ namespace Cryptool.Plugins.AESVisualisation
         #region Private Variables
 
         private int keysize;
+        private int language;
 
         #endregion
 
@@ -45,6 +46,20 @@ namespace Cryptool.Plugins.AESVisualisation
                 {
                     this.keysize = (int)value;
                     OnPropertyChanged("Keysize");
+                }
+            }
+        }
+
+        [TaskPane("Sprache", "SpracheTooltip", null, 2, false, ControlType.ComboBox, new String[] { "English", "Deutsch"})]
+        public int Language
+        {
+            get { return this.language; }
+            set
+            {
+                if (((int)value) != language)
+                {
+                    this.language = (int)value;
+                    OnPropertyChanged("Sprache");
                 }
             }
         }

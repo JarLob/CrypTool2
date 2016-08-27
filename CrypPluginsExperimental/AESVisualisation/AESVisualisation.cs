@@ -53,6 +53,7 @@ namespace Cryptool.Plugins.AESVisualisation
         static Random rnd = new Random();
         private Boolean execute = true;
         private Boolean aborted = false;
+        private int language;
         int keysize;
         Thread presThread;
         Thread executeThread;
@@ -1663,6 +1664,9 @@ namespace Cryptool.Plugins.AESVisualisation
             presThread = new Thread(pres.exectue);
             keysize = settings.Keysize;
             pres.keysize = keysize;
+            language = settings.Language;
+            pres.language = language;
+            pres.setLanguage();
             checkKeysize();
             checkTextLength();
             outputStreamWriter = new CStreamWriter();

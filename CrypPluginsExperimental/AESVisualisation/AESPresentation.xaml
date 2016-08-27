@@ -62,6 +62,11 @@
     </UserControl.Resources>
     <Grid Background="#FF9DEDFF">
         <Image Name="StartingImage" Source="images/Starting.png" Visibility="Visible" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image Name="EncryptionImage" Source="images/Encryption.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image Name="KeyExpansionImage" Source="images/KeyExpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image Name="Intro1DEImage" Source="images/Intro1.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image Name="Intro2DEImage" Source="images/Intro2.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
+        <Image Name="Intro3DEImage" Source="images/Intro3.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="UniformToFill"/>
         <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*" MaxHeight="40"/>
@@ -101,7 +106,11 @@
             <Button x:Name="playButton" Content="Next" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click" />
             <Button x:Name="pauseButton" Content="Auto" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="pauseButton_Click"  />
             <Button x:Name="nextStepButton" Content="Skip Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click" />
-            <Button x:Name="prevStepButton" Content="Prev. Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" />
+            <Button x:Name="prevStepButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" >
+                <Viewbox Stretch="Fill" Margin="2,2,2,2">
+                    <TextBlock Name="prevStepTextBlock" Text="Prev. Round"/>
+                </Viewbox>
+            </Button>
             <Button x:Name="subByteButton" Content="Sub Bytes" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="subByteButton_Click" Visibility="Visible" />
             <Button x:Name="shiftRowButton" Content="Shift Row" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="shiftRowButton_Click" Visibility="Visible" />
             <Button x:Name="mixColButton" Content="Mix Col" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="mixColButton_Click" Visibility="Visible" />
