@@ -5021,24 +5021,24 @@ namespace AESVisualisation
                 case 0:
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        Intro1DEImage.Visibility = Visibility.Visible;
+                        Intro1ENImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    //Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    //{
+                    //    Intro1DEImage.Visibility = Visibility.Hidden;
+                    //    Intro2DEImage.Visibility = Visibility.Visible;
+                    //}, null);
+                    //wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro1ENImage.Visibility = Visibility.Hidden;
+                        Intro3ENImage.Visibility = Visibility.Visible;
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        Intro1DEImage.Visibility = Visibility.Hidden;
-                        Intro2DEImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro2DEImage.Visibility = Visibility.Hidden;
-                        Intro3DEImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro3DEImage.Visibility = Visibility.Hidden;
+                        Intro3ENImage.Visibility = Visibility.Hidden;
                         KeyExpansionImage.Visibility = Visibility.Visible;
                     }, null);
                     wait();
