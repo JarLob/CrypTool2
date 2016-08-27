@@ -49,6 +49,7 @@ namespace AESVisualisation
         public bool skip = false;
         private bool finish = false;
         public int language;
+        private Boolean start = true;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -725,7 +726,7 @@ namespace AESVisualisation
         {
             autostep = false;
             cleanUp();
-            expansion = !expansion;
+            expansion = false;
             buttonNextClickedEvent.Set();
             //roundNumber = 10 + keysize * 2;
             //action = 4;
@@ -739,25 +740,28 @@ namespace AESVisualisation
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            progress = 0;
+            start = true;
             if (!expansion)
             {
                 autostep = false;
+                start = true;
                 cleanUp();
                 expansion = !expansion;
                 buttonNextClickedEvent.Set();
                 skip = true;
                 roundNumber = 1;
+
             }
             else
             {
+                buttonNextClickedEvent.Set();
                 autostep = false;
+                start = true;
                 roundNumber = 1;
                 cleanUp();
                 skip = true;
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+
             }
         }
 
@@ -5011,74 +5015,9 @@ namespace AESVisualisation
             int saveRoundNumber = 11 - keysize * 2;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                hideButton();
                 StartingImage.Visibility = Visibility.Hidden;
-                playButton.Visibility = Visibility.Visible;
-                playButton.SetValue(Grid.RowProperty, 4);
+                expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
-            switch (language)
-            {
-                case 0:
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro1ENImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    //Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    //{
-                    //    Intro1DEImage.Visibility = Visibility.Hidden;
-                    //    Intro2DEImage.Visibility = Visibility.Visible;
-                    //}, null);
-                    //wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro1ENImage.Visibility = Visibility.Hidden;
-                        Intro3ENImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro3ENImage.Visibility = Visibility.Hidden;
-                        KeyExpansionImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        playButton.SetValue(Grid.RowProperty, 3);
-                        KeyExpansionImage.Visibility = Visibility.Hidden;
-                    }, null);
-                    break;
-                case 1:
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro1DEImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro1DEImage.Visibility = Visibility.Hidden;
-                        Intro2DEImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro2DEImage.Visibility = Visibility.Hidden;
-                        Intro3DEImage.Visibility = Visibility.Visible;
-                    }, null);  
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        Intro3DEImage.Visibility = Visibility.Hidden;
-                        KeyExpansionImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        playButton.SetValue(Grid.RowProperty, 3);
-                        KeyExpansionImage.Visibility = Visibility.Hidden;
-                    }, null);
-                    break;
-            }
             while (expansion && !finish)
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -5090,11 +5029,10 @@ namespace AESVisualisation
                             expansionEncryptionTextBlock.Text = "Key Expansion";
                             break;
                         case 1:
-                            keyButton.Content = "Erweiterung Überspringen";
-                            expansionEncryptionTextBlock.Text = "Schlüsselerweiterung";
+                            keyButton.Content = "Generierung Überspringen";
+                            expansionEncryptionTextBlock.Text = "Schlüsselergenerierung";
                             break;
                     }
-                    
                     showButton();
                     invisible();
                     changeRoundButton();
@@ -5106,13 +5044,20 @@ namespace AESVisualisation
                 }, null);
                 if (keysize == 0)
                 {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
-                    //keyExpansion192();
                     while (roundNumber < 11 && expansion)
                     {
+                        if (start)
+                        {
+                            introduction();
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                                setUpExpansion();
+                                showButton();
+                                buttonVisible();
+                            }, null);
+                            start = false;
+                        }
                         skip = false;
                         expansionThread = new Thread(keyExpansion);
                         expansionThread.Start();
@@ -5127,17 +5072,21 @@ namespace AESVisualisation
                                     saveRoundNumber = roundNumber;
                                     roundNumber = 11;
                                 }
+                                if (start)
+                                {
+                                    roundNumber = 1;
+                                }
                             }
                         }
                         progress = roundNumber * 0.5 / 10;
-                        if (roundNumber < 11)
+                        if (roundNumber < 11 && !start)
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpExpansion();
                             }, null);
                         }
-                        if (roundNumber < 11)
+                        if (roundNumber < 11 && !start)
                         {
                             autostep = false;
                             wait();
@@ -5153,14 +5102,20 @@ namespace AESVisualisation
                 }
                 else if (keysize == 1)
                 {                   
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
-                    //keyExpansion192();
                     while (roundNumber < 9 && expansion)
                     {
-                        skip = false;
+                        if (start)
+                        {
+                            introduction();
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setUpExpansion();
+                                showButton();
+                                buttonVisible();
+                            }, null);
+                            start = false;
+                            skip = false;
+                        }
                         expansionThread = new Thread(keyExpansion192);
                         expansionThread.Start();
                         while (expansionThread.IsAlive)
@@ -5174,17 +5129,21 @@ namespace AESVisualisation
                                     saveRoundNumber = roundNumber;
                                     roundNumber = 9;
                                 }
+                                if (start)
+                                {
+                                    roundNumber = 1;
+                                }
                             }
                         }
                         progress = roundNumber * 0.5 / 8;
-                        if (roundNumber < 9)
+                        if (roundNumber < 9 && !start)
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpExpansion();
                             }, null);
                         }
-                        if (roundNumber < 9)
+                        if (roundNumber < 9 && !start)
                         {
                             autostep = false;
                             wait();
@@ -5194,13 +5153,21 @@ namespace AESVisualisation
                 }
                 else
                 {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
                     while (roundNumber < 8 && expansion)
                     {
-                        skip = false;
+                        if (start)
+                        {
+                            introduction();
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setUpExpansion();
+                                showButton();
+                                buttonVisible();
+                            }, null);
+                            start = false;
+                            skip = false;
+                        }
+                            skip = false;
                         expansionThread = new Thread(keyExpansion256);
                         expansionThread.Start();
                         while (expansionThread.IsAlive)
@@ -5214,17 +5181,21 @@ namespace AESVisualisation
                                     saveRoundNumber = roundNumber;
                                     roundNumber = 8;
                                 }
+                                if (start)
+                                {
+                                    roundNumber = 1;
+                                }
                             }
                         }
                         progress = roundNumber * 0.5 / 7;
-                        if (roundNumber < 8)
+                        if (roundNumber < 8 && !start)
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpExpansion();
                             }, null);
                         }
-                        if (roundNumber < 8)
+                        if (roundNumber < 8 && !start)
                         {
                             autostep = false;
                             wait();
@@ -5233,6 +5204,27 @@ namespace AESVisualisation
                     roundNumber = saveRoundNumber;
                 }
                 expansion = false;
+                if (!finish)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
+                        hideButton();
+                        playButton.Visibility = Visibility.Visible;
+                        EncryptionImage.Visibility = Visibility.Visible;
+                        playButton.SetValue(Grid.RowProperty, 4);
+                    }, null);
+                    wait();
+                    autostep = false;
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        EncryptionImage.Visibility = Visibility.Hidden;
+                        playButton.SetValue(Grid.RowProperty, 3);
+                        showButton();
+                        buttonVisible();
+                        expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                    }, null);
+                }
                 if (first && !finish)
                 {
                     roundNumber = 0;
@@ -5246,7 +5238,7 @@ namespace AESVisualisation
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        setUpSubByte(states);
+                        setUpSubByte(states);                      
                     }, null);
                 }
                 else if (finish)
@@ -5276,24 +5268,23 @@ namespace AESVisualisation
                     autostep = false;
                     expansionKeyGrid.Visibility = Visibility.Hidden;
                     showButton();
-                    keyButton.Content = "Key Expansion";
-                    expansionEncryptionTextBlock.Text = "Encryption";
+                    switch (language)
+                    {
+                        case 0:
+                            keyButton.Content = "Key Expansion";
+                            expansionEncryptionTextBlock.Text = "Encryption";
+                            break;
+                        case 1:
+                            keyButton.Content = "Schlüsselgenerierung";
+                            expansionEncryptionTextBlock.Text = "Verschlüsselung";
+                            break;
+                    }
                     changeRoundButton();
                     buttonVisible();
                 }, null);
                 progress = 0.5;
                 if (!finish)
                 {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        EncryptionImage.Visibility = Visibility.Visible;
-                    }, null);
-                    wait();
-                    autostep = false;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        EncryptionImage.Visibility = Visibility.Hidden;
-                    }, null);
                     actionMethod();
                 }
                 action = 1;
@@ -5867,6 +5858,73 @@ namespace AESVisualisation
             }   
             
             
+        }
+
+        public void introduction()
+        {
+            switch (language)
+            {
+                case 0:
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro1ENImage.Visibility = Visibility.Visible;
+                        hideButton();
+                        playButton.Visibility = Visibility.Visible;
+                        playButton.SetValue(Grid.RowProperty, 4);
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro1ENImage.Visibility = Visibility.Hidden;
+                        Intro3ENImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro3ENImage.Visibility = Visibility.Hidden;
+                        KeyExpansionImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        playButton.SetValue(Grid.RowProperty, 3);
+                        KeyExpansionImage.Visibility = Visibility.Hidden;
+                    }, null);
+                    break;
+                case 1:
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro1DEImage.Visibility = Visibility.Visible;
+                        hideButton();
+                        playButton.Visibility = Visibility.Visible;
+                        playButton.SetValue(Grid.RowProperty, 4);
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro1DEImage.Visibility = Visibility.Hidden;
+                        Intro2DEImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro2DEImage.Visibility = Visibility.Hidden;
+                        Intro3DEImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        Intro3DEImage.Visibility = Visibility.Hidden;
+                        KeyExpansionImage.Visibility = Visibility.Visible;
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        playButton.SetValue(Grid.RowProperty, 3);
+                        KeyExpansionImage.Visibility = Visibility.Hidden;
+                    }, null);
+                    break;
+            }
         }
 
         #endregion
