@@ -111,14 +111,30 @@
             <Button x:Name="pauseButton" Content="Auto" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="pauseButton_Click"  />
             <Button x:Name="nextStepButton" Content="Skip Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click" />
             <Button x:Name="prevStepButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" >
-                <Viewbox Stretch="Fill" Margin="2,2,2,2">
+                <Viewbox Stretch="UniformToFill" Margin="2,2,2,2">
                     <TextBlock Name="prevStepTextBlock" Text="Prev. Round"/>
                 </Viewbox>
             </Button>
-            <Button x:Name="subByteButton" Content="Sub Bytes" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="subByteButton_Click" Visibility="Visible" />
-            <Button x:Name="shiftRowButton" Content="Shift Row" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="shiftRowButton_Click" Visibility="Visible" />
-            <Button x:Name="mixColButton" Content="Mix Col" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="mixColButton_Click" Visibility="Visible" />
-            <Button x:Name="addKeyButton" Content="Add Key" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="addKeyButton_Click" Visibility="Visible" />
+            <Button x:Name="subByteButton" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="subByteButton_Click" Visibility="Visible">
+                <Viewbox>
+                    <TextBlock Name="subByteTextBlock" Text="Sub Bytes"/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="shiftRowButton" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="shiftRowButton_Click" Visibility="Visible">
+                <Viewbox>
+                    <TextBlock Text="Shift Row"/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="mixColButton" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="mixColButton_Click" Visibility="Visible">
+                <Viewbox>
+                    <TextBlock Text="Mix Col."/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="addKeyButton" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="addKeyButton_Click" Visibility="Visible">
+                <Viewbox>
+                    <TextBlock Text="Add Key"/>
+                </Viewbox>
+            </Button>
             <Button x:Name="shiftRightButton" Content="&gt;&gt;" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="shiftRightButton_Click" />
             <Button x:Name="shiftLeftButton" Content="&lt;&lt;" Grid.Row="3"  HorizontalAlignment="Stretch" Grid.Column="9" Click="shiftLeftButton_Click" Grid.ColumnSpan="2" Margin="0,0,65.625,0" />
             <Button x:Name="startButton" Content="Start" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9"  Click="startButton_Click" />
@@ -126,6 +142,9 @@
             <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
             <Viewbox Stretch="Fill" Margin="2,2,2,2" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1">
                 <TextBlock Name="expansionEncryptionTextBlock" Text="Key Expansion" Visibility="Hidden"/>
+            </Viewbox>
+            <Viewbox Stretch="Fill" Margin="2,2,2,2" Grid.Row="0" Grid.RowSpan="1" Grid.Column="1" Grid.ColumnSpan="1">
+                <TextBlock Name="InitialRoundTextBlock" Text="Initial Round" Visibility="Hidden"/>
             </Viewbox>
             <!--<TextBlock Name="expansionEncryptionTextBlock" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Hidden">Key Expansion</TextBlock>-->
             <!-- EndRegion -->

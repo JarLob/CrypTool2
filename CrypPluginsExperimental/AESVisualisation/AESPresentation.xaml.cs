@@ -50,6 +50,7 @@ namespace AESVisualisation
         private bool finish = false;
         public int language;
         private Boolean start = true;
+        private Boolean initialRound = true;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -83,6 +84,7 @@ namespace AESVisualisation
         private void round1Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {
                 roundNumber = 1;
@@ -117,6 +119,7 @@ namespace AESVisualisation
         private void round2Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {
                 roundNumber = 2;
@@ -150,6 +153,7 @@ namespace AESVisualisation
         private void round3Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {             
                 roundNumber = 3;
@@ -183,6 +187,7 @@ namespace AESVisualisation
         private void round4Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {              
                 roundNumber = 4;
@@ -216,6 +221,7 @@ namespace AESVisualisation
         private void round5Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {              
                 roundNumber = 5;
@@ -249,6 +255,7 @@ namespace AESVisualisation
         private void round6Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {              
                 roundNumber = 6;
@@ -282,6 +289,7 @@ namespace AESVisualisation
         private void round7Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {             
                 roundNumber = 7;
@@ -315,6 +323,7 @@ namespace AESVisualisation
         private void round8Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {               
                 roundNumber = 8;
@@ -348,6 +357,7 @@ namespace AESVisualisation
         private void round9Button_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
             if (expansion)
             {               
                 roundNumber = 9;
@@ -389,6 +399,7 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            checkInitialRound();
             skip = true;
             cleanUp();
             removeColors();
@@ -411,6 +422,8 @@ namespace AESVisualisation
         private void keyButton_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
+            checkInitialRound();
+            initialRound = true;
             cleanUp();
             expansion = !expansion;
             buttonNextClickedEvent.Set();
@@ -487,6 +500,7 @@ namespace AESVisualisation
 
         private void prevStepButton_Click(object sender, RoutedEventArgs e)
         {
+            checkInitialRound();
             autostep = false;
             if (expansion)
             {
@@ -513,6 +527,18 @@ namespace AESVisualisation
             {
                 case 1:                    
                     roundNumber--;
+                    if(roundNumber == 0)
+                    {
+                        initialRound = true;
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            InitialRoundTextBlock.Visibility = Visibility.Visible;
+                            addKeyButton.SetValue(Grid.ColumnProperty, 2);
+                            subByteButton.Visibility = Visibility.Hidden;
+                            shiftRowButton.Visibility = Visibility.Hidden;
+                            mixColButton.Visibility = Visibility.Hidden;
+                        }, null);
+                    }
                     if(roundNumber < 7 && keysize == 1)
                     {
                         if (keysize == 1)
@@ -573,6 +599,7 @@ namespace AESVisualisation
 
         private void nextStepButton_Click(object sender, RoutedEventArgs e)
         {
+            checkInitialRound();
             autostep = false;
             if (expansion)
             {
@@ -724,22 +751,36 @@ namespace AESVisualisation
 
         private void endButton_Click(object sender, RoutedEventArgs e)
         {
+            checkInitialRound();
             autostep = false;
             cleanUp();
             expansion = false;
             buttonNextClickedEvent.Set();
-            //roundNumber = 10 + keysize * 2;
-            //action = 4;
-            //Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            //{
-            //    setUpAddKey();
-            //}, null);
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                switch (language)
+                {
+                    case 0:
+                        InitialRoundTextBlock.Text = "Result";
+                        break;
+                    case 1:
+                        expansionEncryptionTextBlock.Text = "Verschlüsselung";
+                        InitialRoundTextBlock.Text = "Ergebnis";
+                        break;
+                    default:
+                        break;
+                }
+                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                InitialRoundTextBlock.Visibility = Visibility.Visible;
+            }, null);
             skip = true;
             finish = true;
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            checkInitialRound();
+            initialRound = true;
             progress = 0;
             start = true;
             if (!expansion)
@@ -770,10 +811,17 @@ namespace AESVisualisation
         #region Methods
         public void actionMethod()
         {
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if(initialRound)
             {
-                enableButtons();
-            }, null);
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    InitialRoundTextBlock.Visibility = Visibility.Visible;
+                    addKeyButton.SetValue(Grid.ColumnProperty, 2);
+                    subByteButton.Visibility = Visibility.Hidden;
+                    shiftRowButton.Visibility = Visibility.Hidden;
+                    mixColButton.Visibility = Visibility.Hidden;
+                }, null);
+            }        
             wait();
             if (expansion)
             {
@@ -906,14 +954,23 @@ namespace AESVisualisation
                             {
                                 if (skip)
                                 {
-                                    encryptionThread.Abort();
-                                }
+                                    encryptionThread.Abort();                                  
+                                }     
                             }
-                            //addKey();
                             if (!skip)
                             {
                                 autostep = false;
                                 wait();
+                                if (initialRound)
+                                {
+                                    initialRound = false;
+                                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
+                                        InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                                        addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                        buttonVisible();
+                                    }, null);
+                                }
                                 if (roundNumber < 10 + keysize * 2)
                                 {
                                     action = 1;
@@ -945,6 +1002,7 @@ namespace AESVisualisation
                                 }
                             }
                             skip = false;
+ 
                             if (expansion)
                             {
                                 return;
@@ -6017,6 +6075,20 @@ namespace AESVisualisation
                         SchlüsselexpansionImage.Visibility = Visibility.Hidden;
                     }, null);
                     break;
+            }
+        }
+
+        private void checkInitialRound()
+        {
+            if (initialRound)
+            {
+                initialRound = false;
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                    addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                    buttonVisible();
+                }, null);
             }
         }
 
