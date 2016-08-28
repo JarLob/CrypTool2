@@ -64,6 +64,8 @@
         <Image Name="StartingImage" Source="images/Starting.png" Visibility="Visible" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Image Name="EncryptionImage" Source="images/Encryption.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="KeyExpansionImage" Source="images/KeyExpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image Name="VerschlüsselungImage" Source="images/Verschlüsselung.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image Name="SchlüsselexpansionImage" Source="images/Schlüsselexpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="Intro1DEImage" Source="images/Intro1.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="Intro2DEImage" Source="images/Intro2.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="Intro3DEImage" Source="images/Intro3.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />

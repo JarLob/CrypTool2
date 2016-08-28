@@ -5040,8 +5040,49 @@ namespace AESVisualisation
                     if (expansion && shift == 1)
                     {
                         shiftButtons(0);
-                    }
+                    }                   
                 }, null);
+                if (!start)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        hideButton();
+                        playButton.Visibility = Visibility.Visible;
+                        playButton.SetValue(Grid.RowProperty, 4);
+                        switch (language)
+                        {
+                            case 0:
+                                KeyExpansionImage.Visibility = Visibility.Visible;
+                                break;
+                            case 1:
+                                SchlüsselexpansionImage.Visibility = Visibility.Visible;
+                                break;
+                            default:
+                                break;
+                        }
+                    }, null);
+                    wait();
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        showButton();
+                        playButton.SetValue(Grid.RowProperty, 3);
+                        switch (language)
+                        {
+                            case 0:
+                                KeyExpansionImage.Visibility = Visibility.Hidden;
+                                break;
+                            case 1:
+                                SchlüsselexpansionImage.Visibility = Visibility.Hidden; 
+                                break;
+                            default:
+                                break;
+                        }
+                    }, null);
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpExpansion();
+                    }, null);
+                }
                 if (keysize == 0)
                 {
                     while (roundNumber < 11 && expansion)
@@ -5211,7 +5252,17 @@ namespace AESVisualisation
                         expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
                         hideButton();
                         playButton.Visibility = Visibility.Visible;
-                        EncryptionImage.Visibility = Visibility.Visible;
+                        switch (language)
+                        {
+                            case 0:
+                                EncryptionImage.Visibility = Visibility.Visible;
+                                break;
+                            case 1:
+                                VerschlüsselungImage.Visibility = Visibility.Visible;
+                                break;
+                            default:
+                                break;
+                        }
                         playButton.SetValue(Grid.RowProperty, 4);
                     }, null);
                     wait();
@@ -5219,6 +5270,7 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         EncryptionImage.Visibility = Visibility.Hidden;
+                        VerschlüsselungImage.Visibility = Visibility.Hidden;
                         playButton.SetValue(Grid.RowProperty, 3);
                         showButton();
                         buttonVisible();
@@ -5902,6 +5954,7 @@ namespace AESVisualisation
 
         public void introduction()
         {
+            progress = 0;
             switch (language)
             {
                 case 0:
@@ -5955,13 +6008,13 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         Intro3DEImage.Visibility = Visibility.Hidden;
-                        KeyExpansionImage.Visibility = Visibility.Visible;
+                        SchlüsselexpansionImage.Visibility = Visibility.Visible;
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         playButton.SetValue(Grid.RowProperty, 3);
-                        KeyExpansionImage.Visibility = Visibility.Hidden;
+                        SchlüsselexpansionImage.Visibility = Visibility.Hidden;
                     }, null);
                     break;
             }
