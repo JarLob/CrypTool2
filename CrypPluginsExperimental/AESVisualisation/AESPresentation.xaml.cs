@@ -755,7 +755,6 @@ namespace AESVisualisation
             autostep = false;
             cleanUp();
             expansion = false;
-            buttonNextClickedEvent.Set();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 switch (language)
@@ -775,6 +774,7 @@ namespace AESVisualisation
             }, null);
             skip = true;
             finish = true;
+            buttonNextClickedEvent.Set();
         }
 
         private void startButton_Click(object sender, RoutedEventArgs e)
@@ -5533,22 +5533,36 @@ namespace AESVisualisation
             {
                 round10Button.Visibility = Visibility.Hidden;
                 round9Button.Visibility = Visibility.Hidden;
-                prevStepButton.SetValue(Grid.RowProperty, 4);
-                prevStepButton.SetValue(Grid.ColumnProperty, 9);
-                nextStepButton.SetValue(Grid.ColumnProperty, 10);
-                nextStepButton.SetValue(Grid.RowProperty, 4);
-                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
+                prevStepButton.SetValue(Grid.RowProperty, 3);
+                prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                nextStepButton.SetValue(Grid.RowProperty, 3);
+                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+                startButton.SetValue(Grid.ColumnProperty, 5);
+                endButton.SetValue(Grid.ColumnProperty, 6);
+                //prevStepButton.SetValue(Grid.RowProperty, 4);
+                //prevStepButton.SetValue(Grid.ColumnProperty, 9);
+                //nextStepButton.SetValue(Grid.ColumnProperty, 10);
+                //nextStepButton.SetValue(Grid.RowProperty, 4);
+                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
             }
             else
             {
                 round10Button.Visibility = Visibility.Hidden;
                 round9Button.Visibility = Visibility.Hidden;
                 round8Button.Visibility = Visibility.Hidden;
-                prevStepButton.SetValue(Grid.RowProperty, 4);
-                prevStepButton.SetValue(Grid.ColumnProperty, 8);
-                nextStepButton.SetValue(Grid.ColumnProperty, 9);
-                nextStepButton.SetValue(Grid.RowProperty, 4);
-                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
+                prevStepButton.SetValue(Grid.RowProperty, 3);
+                prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                nextStepButton.SetValue(Grid.RowProperty, 3);
+                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+                startButton.SetValue(Grid.ColumnProperty, 5);
+                endButton.SetValue(Grid.ColumnProperty, 6);
+                //prevStepButton.SetValue(Grid.RowProperty, 4);
+                //prevStepButton.SetValue(Grid.ColumnProperty, 8);
+                //nextStepButton.SetValue(Grid.ColumnProperty, 9);
+                //nextStepButton.SetValue(Grid.RowProperty, 4);
+                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
             }
             keyButton.Visibility = Visibility.Visible;
         }
