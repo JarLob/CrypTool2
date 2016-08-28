@@ -811,7 +811,7 @@ namespace AESVisualisation
         #region Methods
         public void actionMethod()
         {
-            if(initialRound)
+            if (roundNumber == 0)
             {
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
@@ -5538,8 +5538,8 @@ namespace AESVisualisation
                 nextStepButton.SetValue(Grid.ColumnProperty, 3);
                 nextStepButton.SetValue(Grid.RowProperty, 3);
                 autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-                startButton.SetValue(Grid.ColumnProperty, 5);
-                endButton.SetValue(Grid.ColumnProperty, 6);
+                //startButton.SetValue(Grid.ColumnProperty, 5);
+                //endButton.SetValue(Grid.ColumnProperty, 6);
                 //prevStepButton.SetValue(Grid.RowProperty, 4);
                 //prevStepButton.SetValue(Grid.ColumnProperty, 9);
                 //nextStepButton.SetValue(Grid.ColumnProperty, 10);
@@ -5556,8 +5556,8 @@ namespace AESVisualisation
                 nextStepButton.SetValue(Grid.ColumnProperty, 3);
                 nextStepButton.SetValue(Grid.RowProperty, 3);
                 autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-                startButton.SetValue(Grid.ColumnProperty, 5);
-                endButton.SetValue(Grid.ColumnProperty, 6);
+                //startButton.SetValue(Grid.ColumnProperty, 5);
+                //endButton.SetValue(Grid.ColumnProperty, 6);
                 //prevStepButton.SetValue(Grid.RowProperty, 4);
                 //prevStepButton.SetValue(Grid.ColumnProperty, 8);
                 //nextStepButton.SetValue(Grid.ColumnProperty, 9);
