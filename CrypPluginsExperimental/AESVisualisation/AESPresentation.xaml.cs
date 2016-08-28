@@ -5285,7 +5285,47 @@ namespace AESVisualisation
                 progress = 0.5;
                 if (!finish)
                 {
-                    actionMethod();
+                    Thread actionThread = new Thread(actionMethod);
+                    actionThread.Start();
+                    while (actionThread.IsAlive)
+                    {
+                        if (finish)
+                        {
+                            actionThread.Abort();
+                            action = 4;
+                            roundNumber = 10 + keysize * 2;
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setUpAddKey();
+                            }, null);
+                            byte[] result;
+                            result = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
+                            List<TextBlock> resultList = textBlockList[2];
+                            int y = 0;
+                            foreach (TextBlock tb in resultList)
+                            {
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                {
+                                    renameTextBlock(tb, result[y]);
+                                }, null);
+                                y++;
+                            }
+                        }
+                    }
+                }
+                if (finish)
+                {
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        hideButton();
+                        addKeyButton.Visibility = Visibility.Hidden;
+                        subByteButton.Visibility = Visibility.Hidden;
+                        shiftRowButton.Visibility = Visibility.Hidden;
+                        mixColButton.Visibility = Visibility.Hidden;
+                        addKeyExplanation.Visibility = Visibility.Hidden;
+                        shiftLeftButton.Visibility = Visibility.Hidden;
+                        shiftRightButton.Visibility = Visibility.Hidden;
+                    }, null);
                 }
                 action = 1;
                 if (keysize == 1 && roundNumber > 8)
