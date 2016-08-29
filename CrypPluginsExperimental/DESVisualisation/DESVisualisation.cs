@@ -28,7 +28,7 @@ namespace Cryptool.DESVisualisation
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Lars Hoffmann", "lars.hoff94@gmail.com", "institute", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    [PluginInfo("DESVisualisation.Properties.Resources", "DESVisualisationCaption", "DESVisualisationTooltip", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
+    [PluginInfo("Cryptool.DESVisualisation.Properties.Resources", "DESVisualisationCaption", "DESVisualisationTooltip", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class DESVisualisation : ICrypComponent
