@@ -24,20 +24,21 @@ using System.Windows.Threading;
 
 namespace Cryptool.DESVisualisation
 {
+
     // HOWTO: Change author name, email address, organization and URL.
-    [Author("Lars Hoffmann", "lars.hoff94@gmail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
+    [Author("Lars Hoffmann", "lars.hoff94@gmail.com", "institute", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Cryptool.DESVisualisation.Properties.Resources", "DESVisualisation", "DESVisualisation", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
+    [PluginInfo("DESVisualisation.Properties.Resources", "DESVisualisationCaption", "DESVisualisationTooltip", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class DESVisualisation : ICrypComponent
     {
-
+        
+        // Constructor
         public DESVisualisation()
         {
             pres = new DESPresentation();
-            execution = false;
+            isRunning = false;
         }
 
         #region Private Variables
@@ -46,13 +47,13 @@ namespace Cryptool.DESVisualisation
         private byte[] key;
         private byte[] output;
         private DESPresentation pres;
-        private bool execution;
+        private bool isRunning;
 
         #endregion
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Key input", "Input the key used for encryption", true)]
+        [PropertyInfo(Direction.InputData, "inputKeyName", "inputKeyDescription", true)]
         public byte[] Key
         {
             get
@@ -66,7 +67,7 @@ namespace Cryptool.DESVisualisation
             }
         }
 
-        [PropertyInfo(Direction.InputData, "Text input", "Input the text to be encrypted", true)]
+        [PropertyInfo(Direction.InputData, "inputTextName", "inputTextDescription", true)]
         public byte[] Text
         {
             get
@@ -80,7 +81,7 @@ namespace Cryptool.DESVisualisation
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "Ciphertext output", "Ciphertext after encryption with the DES algorithm", false)]
+        [PropertyInfo(Direction.OutputData, "outputCiphertextName", "outputCiphertextDescription", false)]
         public byte[] Ciphertext
         {
             get
@@ -127,32 +128,36 @@ namespace Cryptool.DESVisualisation
         public void Execute()
         {
             ProgressChanged(0, 1);
-            execution = true;
-            pres.EncOriginal = new DESImplementation(key, text);
+            isRunning = true;
+            pres.encOriginal = new DESImplementation(key, text);
             try
             {
-                pres.EncOriginal.DES();
+                pres.encOriginal.DES();
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    pres.activateNavigationButtons(true);
-                    pres.showExecutionScreen(1);
+                    pres.ActivateNavigationButtons(true);
+                    //pres.ShowChapterScreen(1);
                 }, null);
-                output = pres.EncOriginal.Outputciphertext;
+                output = pres.encOriginal.outputCiphertext;
                 Ciphertext = new byte[8];
                 output.CopyTo(Ciphertext,0);
                 OnPropertyChanged("Ciphertext");
-                while (execution)
+                if (pres.IsVisible)
                 {
-                    ProgressChanged(pres.progress, 1);
-                    if (pres.screenCounter == 20)
+                    while (isRunning)
                     {
-                        execution = false;
+                        ProgressChanged(pres.progress, 1);
+                        if (pres.nextScreenID == 20)
+                        {
+                            isRunning = false;
+                        }
                     }
                 }
+
             }
             catch (Exception e)
             {
-                GuiLogMessage(e.Message,NotificationLevel.Error);    
+                GuiLogMessage(e.Message,NotificationLevel.Error);
             }
 
             ProgressChanged(1, 1);
@@ -177,12 +182,12 @@ namespace Cryptool.DESVisualisation
                 if (pres.playTimer.IsEnabled)
                 {
                     pres.playTimer.Stop();
-                    pres.AutoButton.IsChecked = false;
+                    pres.AutoTButton.IsChecked = false;
                 }
-                pres.showInitialState();
+                pres.SetInitialState();
 
             }, null);
-            execution = false;
+            isRunning = false;
         }
 
         /// <summary>
@@ -190,7 +195,6 @@ namespace Cryptool.DESVisualisation
         /// </summary>
         public void Initialize()
         {
-            
         }
 
         /// <summary>

@@ -118,30 +118,30 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="DESVisualisationCaption" xml:space="preserve">
-    <value>DESVisualisation</value>
+    <value>DES-Visualisierung</value>
   </data>
   <data name="DESVisualisationTooltip" xml:space="preserve">
-    <value>Visualisation of DES encryption</value>
+    <value>Visualisierung der DES Verschlüsselung</value>
   </data>
   <data name="inputKeyDescription" xml:space="preserve">
-    <value>Input the key used for encryption</value>
+    <value>Eingabe des Schlüssels für die Verschlüsselung</value>
   </data>
   <data name="inputKeyName" xml:space="preserve">
-    <value>Key input</value>
+    <value>Schlüsseleingabe</value>
   </data>
   <data name="inputTextDescription" xml:space="preserve">
-    <value>Input the text to be encrypted</value>
+    <value>Eingabe des Textes, der verschlüsselt werden soll</value>
   </data>
   <data name="inputTextName" xml:space="preserve">
-    <value>Text input</value>
+    <value>Texteingabe</value>
   </data>
   <data name="institute" xml:space="preserve">
-    <value>University of Mannheim</value>
+    <value>Universität Mannheim</value>
   </data>
   <data name="outputCiphertextDescription" xml:space="preserve">
-    <value>Output the Ciphertext after encryption with the DES algorithm</value>
+    <value>Ausgabe des Chiffretextes nach Anwendung der DES Verschlüsselung</value>
   </data>
   <data name="outputCiphertextName" xml:space="preserve">
-    <value>Ciphertext output</value>
+    <value>Chiffretextasugabe</value>
   </data>
 </root>

@@ -1,28 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+    Data Encryption Standard (DES) is a symmetric cryptosystem that was announced by the US government in cooperation with the National Bureau of Standards (NBS) in 1976 as official standard (FIPS 46) <ref id="NIST"/>.
+    <newline />
+    <newline />
+    DES is a block cipher based on a modified Feistel cipher with a block length of 64 bits. Therefore the algorithm encrypts and decrypts a block of 64 bits (= 8 bytes) with a 64 bit long key.
+    For the decryption of a ciphertext the same key is used as for the encryption.     
+    Formally the key is also 64 bits long. But each 8th bit of a byte represents a parity bit. This means that the first seven bits of an byte determine the the last bit. One can only choose 56 of the 64 bits.  
+    So cryptographers say, that the (effective) key length is 56 bits.
+    Today, due to the short key length, the security of DES is no longer considered sufficient.
+    The involvement of the NSA in the design of the algorithm also nourished suspicions about a backdoor.   
+  </introduction>
+  
+  <introduction lang="de-DE">
+    Der Data Encryption Standard (DES) ist ein symmetrisches Verschlüsselungsverfahren, das von der US-Regierung in Zusammenarbeit mit dem National Bureau of Standards (NBS) 1976 als 
+    offizieller Standard (FIPS 46) <ref id="NIST"/> bekanntgegeben wurde.
+    <newline />
+    <newline />
+    Der DES ist eine Blockchiffre, genauer eine leicht modifizierte Feistelchiffre, mit einer Blocklänge von 64 Bit. Der Algorithmus ver- und entschlüsselt folglich einen 64 Bit Datenblock 
+    unter Berücksichtigung eines 64 Bit Schlüssels. Die Entschlüsselung eines Chiffretextes erfolgt mit dem selben Schlüssel, der für die Verschlüsselung verwendet wurde.
+    Die formale Länge des Schlüssels beträgt ebenfalls 64 Bits. Jedes achte Bit ist allerdings ein sogenanntes Paritätsbit und ermöglicht eine Korrektur von Speicher- und Übertragungsfehlern.
+    Daraus folgt, dass die ersten sieben Bits eines Bytes laut Definition das achte Bit festlegen. Innerhalb eines DES-Schlüssels sind also nur 56 der 64 Bits frei wählbar.
+    Deshalb spricht man von einer (effektiven) Schlüssellänge von 56 Bit.
+    Heute wird der DES schon aufgrund der kurzen Schlüssellänge von nur 56 Bits nicht mehr als ausreichend sicher erachtet.
+    Auch wegen der Beteiligung der NSA am Design des Algorithmus gab es immer wieder Spekulationen über seine Sicherheit.
   </introduction>
 
-  <introduction lang="de-DE">    
-  </introduction>
-
-  <usage lang="en">
+  <usage lang="en">   
+    The DES encryption algorithm works with a plaintext block of 64 bits (8 bytes) and a key of 64 bits (8 bytes). 
+    The plugin can only encrypt without usage of padding and modes of operation.
+    <newline />
+    <newline />
+    <section headline="Encryption">
+      The component expects the plaintext as a byte array on the input labeled "Text" and a key as a byte array on the input labeled "Key".
+      If the selected size of the input data does not correspond to a 8 byte array, an error message will be issued and the execution stops.
+      To keep the usage simple, the plugin doesn't check the correctness of the parity bits used in the key.
+      The encrypted data block is sent to the output of the component also as a byte array.
+    </section>
   </usage>
 
   <usage lang="de-DE">
+    Der DES Verschlüsselungsalgorithmus arbeitet mit einer Blockgröße von 64 Bits (8 Bytes) und einem Schlüssel bestehend aus 64 Bits (8 Bytes).
+    Die Komponente ermöglicht nur die Verschlüsselung. 
+    <newline/>
+    <newline/>
+    <section headline="Verschlüsselung">
+      Die Komponente erwartet als Eingabe den zu verschlüsselnden Klartext als Byte-Array am Eingang "Text" und den Schlüssel als Byte-Array am Eingang "Schlüssel". 
+      Stimmt die Größe der Eingabedaten nicht mit einem 8 Byte-Array überein, so wird eine Fehlermeldung ausgegeben und die Ausführung wird beendet.
+      Aus Gründen der Einfachheit werden die Paritätsbits des Schlüssels nicht auf Korrektheit überprüft.
+      Der Chiffretext wird als Byte-Array zum Ausgang der Komponente gesendet.
+    </section>
   </usage>
-  
+
   <presentation lang="en">
+    The focus of this component is on its presentation mode. Here are the structure and the different operations within the encryption algorithm visualized. 
+    Thereby the understanding of the DES encryption should be promoted. This plugin can be used for educational purposes to enable a simple introduction to basic cryptographic operations, for 
+    example permutations and s-boxes. Additionally the overall structure of the DES encryption is illustrated based on graphical representations. Thus, the properties of the DES with its 
+    advantages and disadvantages can be clarified without mentioning complex mathematical definitions and proofs. 
+    By using the plugin it is also possible to see important building concepts of block ciphers and Feistel-ciphers in action. This includes the Feistel network and the
+    related Key Schedule algorithm . 
+    <section headline="Diffusion-Visualisation">
+     An important function the presentation provides is the ability to illustrate the diffusion property of the DES. The impact on the diffusion of individual operations and thus all rounds
+     is presented in a clear and understandable way. 
+     Therefore the plugin contains the ability to flip individual input bits and show the impact over the entire encryption process. The resulting changes,
+     this means the swapped bits, are highlighted by the original bits in red color. It is possible to flip any individual input bit at any time in the presentation. 
+    </section>
   </presentation>
   
   <presentation lang="de-DE">
+    Der Fokus der Komponente liegt auf seinem Präsentationsmodus. Hier werden die Struktur und die verschiedenen Operationen innerhalb des Algorithmus visualisiert. 
+    Dadurch soll das Verständnis der DES-Verschlüsselung gefördert werden. Dieses Plugin kann somit bevorzugt in der Lehre angewendet werden, um einen leichteren Einstieg in 
+    kryptographische Grundoperationen, zum Beispiel Permutationen und S-Boxen, zu ermöglichen. Zusätzlich wird anhand von grafischen Darstellungen die allgemeine Struktur des DES
+    und seine Funktionsweise veranschaulicht. Somit können die Eigenschaften des DES mit seinen Vor- und Nachteilen verdeutlicht werden, ohne rein mathematische Definitionen und Beweise anzuführen. 
+    Mithilfe des Plugins lassen sich ebenfalls wichtige Grundbausteine von Blockchiffren sowie Feistelchiffren in Aktion betrachten. Dazu gehört das Feistel-Netzwerk und der 
+    damit verbundene Key Schedule Algorithm. 
+    <section headline="Diffusion-Visualisierung">
+     Eine wichtige Funktion innerhalb der Präsentation ist die Darstellung der Diffusionseigenschaft des DES. Damit lassen sich die Auswirkungen von einzelnen Operationen und somit ganzen Runden 
+     eindeutig und nachvollziehbar darstellen. 
+     Das Plugin enthält dazu die Möglichkeit einzelne Eingabebits zu flippen und sich die Auswirkungen über die gesamte Verschlüsselung hinweg anzuschauen. Die dadurch entstehenden Veränderungen, 
+     das bedeutet die vertauschten Bits, werden in der Farbe Rot von den ursprünglichen Bits hervorgehoben. Das Flippen einzelner Eingabebits ist zu jeder Zeit in der Präsentation möglich. 
+    </section>  
   </presentation>
-  
+
   <references>
-  </references>
+    <linkReference id="wikipedia">
+      <link url="http://en.wikipedia.org/wiki/Data_Encryption_Standard" lang="en" />
+      <caption lang="en">Data Encryption Standard (Wikipedia)</caption>
+      <link url="http://de.wikipedia.org/wiki/Data_Encryption_Standard" lang="de-DE" />
+      <caption lang="de-DE">Data Encryption Standard (Wikipedia)</caption>
+    </linkReference>
+    <linkReference id="NIST">
+      <link url="http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf" lang="en" />
+      <caption lang="en">DES Specification by NIST (PDF)</caption>
+      <link url="http://csrc.nist.gov/publications/fips/fips46-3/fips46-3.pdf" lang="de-DE" />
+      <caption lang="de-DE">DES-Spezifikation des NIST (englisch, PDF)</caption>
+    </linkReference>
+  </references>  
 </documentation>

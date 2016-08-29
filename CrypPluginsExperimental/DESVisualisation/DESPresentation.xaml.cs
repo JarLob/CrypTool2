@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,273 +18,337 @@ namespace Cryptool.DESVisualisation
     public partial class DESPresentation : UserControl
     {
 
-        //Constructor
+        // Constructor
         public DESPresentation()
         {
             InitializeComponent();
+
             playTimer.Tick += PlayTimer_Tick;
-            playTimer.Interval = TimeSpan.FromSeconds(1.5);
+            playTimer.Interval = TimeSpan.FromSeconds(2);
             playTimer.IsEnabled = false;
-            getDiffusionBoxes();
-            diffusionActive = false;
-            stepCounter = 0;
-            screenCounter = 0;
-            roundCounter = 0;
-            keySchedule = false;
-            desRounds = false;
-            
-            showInitialState();
+            GetDiffusionBoxes();
+            SetInitialState();
         }
 
-        /////////////////////////////////////////////////////////////
-        // Attributes
-        int stepCounter;
-        public int screenCounter;
-        int roundCounter;
+        #region Attributes
+        private int nextStepCounter;
+        public int nextScreenID;
+        private int roundCounter;
 
-        bool keySchedule;
-        bool desRounds;
+        private bool keyScheduleIsRunning;
+        private bool desRoundsIsRunning;
 
-        IEnumerable<CheckBox> diffusionBoxes;
-        SolidColorBrush greenBrush = new SolidColorBrush(Colors.LightGreen);
-        SolidColorBrush yellowBrush = new SolidColorBrush(Colors.Khaki);
-        SolidColorBrush buttonBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFBDE0E6"));
+        private IEnumerable<CheckBox> diffusionBoxes;
+        private SolidColorBrush greenBrush = new SolidColorBrush(Colors.LightGreen);
+        private SolidColorBrush yellowBrush = new SolidColorBrush(Colors.Khaki);
+        private SolidColorBrush buttonBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFBDE0E6"));
 
-        public System.Windows.Threading.DispatcherTimer playTimer = new System.Windows.Threading.DispatcherTimer();
-        public DESImplementation EncOriginal;
-        DESImplementation EncDiffusion;
-        bool diffusionActive;
+        public DispatcherTimer playTimer = new DispatcherTimer();
+        public DESImplementation encOriginal;
+        private DESImplementation encDiffusion;
+        private bool diffusionIsActive;
 
         public double progress;
 
+        #endregion Attributes
 
-
-        /////////////////////////////////////////////////////////////
         #region Button-Methods
 
-        //////////////////// Button Row 1
+        // Button Row 1
 
-        private void ShiftButton_Click(object sender, RoutedEventArgs e)
+        private void ShiftCButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 7;
-            stepCounter = 0;
-            executeSteps();
+            nextScreenID = 7;
+            nextStepCounter = 1;
+            ExecuteNextStep();
+        }
+
+        private void ShiftDButton_Click(object sender, RoutedEventArgs e)
+        {
+            nextScreenID = 7;
+            nextStepCounter = 3;
+            ExecuteNextStep();
         }
 
         private void PC2Button_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 8;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 8;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void ExpansionButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 13;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 13;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void KeyAdditionButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 14;
-            stepCounter = 0;
-            executeSteps();
+            nextScreenID = 14;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void SBoxButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 15;
-            stepCounter = 0;
-            executeSteps();
+            nextScreenID = 15;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void PermutationButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 16;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 16;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void RoundAdditionButton_Click(object sender, RoutedEventArgs e)
         {
-            screenCounter = 14;
-            stepCounter = 2;
-            executeSteps();
+            nextScreenID = 14;
+            nextStepCounter = 3;
+            ExecuteNextStep();
         }
 
-        //////////////////// Button Row 2
+        // Button Row 2
 
         private void PrevButton_Click(object sender, RoutedEventArgs e)
         {
-            switch (screenCounter)
+            switch (nextScreenID)
             {
                 case 1:
-                    if (stepCounter == 2) showDataScreen();
-                    else if (stepCounter == 3)
+                    if (nextStepCounter == 2)
+                    {
+                        ShowInputDataScreen();
+                    }   
+                    else if (nextStepCounter == 3)
                     {
                         roundCounter = 16;
-                        showKeyScheduleScreen(5);
+                        ShowKeyScheduleScreen(5);
                     }
-                    else if (stepCounter == 4)
+                    else if (nextStepCounter == 4)
                     {
                         roundCounter = 0;
-                        showDESRoundScreen(1);
+                        ShowDESRoundScreen(1);
                         roundCounter = 15;
-                        showDESRoundScreen(1);
-                        showRoundDataScreen(1);
+                        ShowDESRoundScreen(1);
+                        ShowRoundDataScreen(1);
                     }
                     break;
                 case 2:
-                    if (stepCounter == 2) showExecutionScreen(1);
-                    else if (stepCounter == 1) showIntroScreen();
+                    if (nextStepCounter == 2)
+                        ShowChapterScreen(1);
+                    else if (nextStepCounter == 1)
+                        ShowIntroScreen();
 
                     break;
-                case 3: showExecutionScreen(1); break;
-                case 4: showInfoScreen(1); break;
+                case 3: ShowChapterScreen(1); break;
+                case 4: ShowInfoScreen(1); break;
                 case 5:
-                    if (stepCounter == 1) showStructureScreen();
-                    else if (stepCounter == 2) showExecutionScreen(2);
+                    if (nextStepCounter == 1)
+                        ShowStructureScreen();
+                    else if (nextStepCounter == 2)
+                        ShowChapterScreen(2);
 
                     break;
                 case 6:
-                    if (stepCounter == 1 && roundCounter == 0) showExecutionScreen(2);
-                    else if (stepCounter == 1 && roundCounter != 0) showKeyScheduleScreen(5);
-                    else if (stepCounter == 2 && roundCounter == 1)
+                    if (nextStepCounter == 1 && roundCounter == 0)
                     {
-                        showExecutionScreen(3);
-                        showPC1Screen(1);
+                        ShowChapterScreen(2);
                     }
-                    else if (stepCounter == 2 && roundCounter != 1)
+                    else if (nextStepCounter == 1 && roundCounter != 0)
+                    {
+                        ShowKeyScheduleScreen(5);
+                    }
+                    else if (nextStepCounter == 2 && roundCounter == 1)
+                    {
+                        ShowChapterScreen(3);
+                        ShowPC1Screen(1);
+                    }
+                    else if (nextStepCounter == 2 && roundCounter != 1)
                     {
                         roundCounter = roundCounter - 2;
-                        showKeyScheduleScreen(1);
-                        showRoundKeyDataScreen(1);
+                        ShowKeyScheduleScreen(1);
+                        ShowRoundKeyDataScreen(1);
                     }
-                    else if (stepCounter == 3)
+                    else if (nextStepCounter == 3)
                     {
-                        showKeyScheduleScreen(2);
+                        ShowKeyScheduleScreen(2);
                     }
-                    else if (stepCounter == 4)
+                    else if (nextStepCounter == 4)
                     {
-                        showKeyScheduleScreen(3);
+                        ShowKeyScheduleScreen(3);
                     }
-                    else if (stepCounter == 5)
+                    else if (nextStepCounter == 5)
                     {
-                        showKeyScheduleScreen(4);
+                        ShowKeyScheduleScreen(4);
                     }
                     break;
                 case 7:
-                    if (stepCounter == 0)
+                    if (nextStepCounter == 1)
                     {
                         roundCounter--;
-                        showKeyScheduleScreen(1);
+                        ShowKeyScheduleScreen(1);
                     }
-                    else if (stepCounter == 1) showKeyScheduleScreen(2);
-                    else if (stepCounter == 2) showShift1Screen(0);
-                    else if (stepCounter == 3) showKeyScheduleScreen(3);
+                    else if (nextStepCounter == 2)
+                    {
+                        ShowKeyScheduleScreen(2);
+                    }
+                    else if (nextStepCounter == 3)
+                    {
+                        ShowShiftScreen(1);
+                    }
+                    else if (nextStepCounter == 4)
+                    {
+                        ShowKeyScheduleScreen(3);
+                    }
 
                     break;
                 case 8:
-                    if (stepCounter == 1) showShift1Screen(2);
-                    else if (stepCounter == 2) showKeyScheduleScreen(4);
+                    if (nextStepCounter == 1)
+                        ShowShiftScreen(3);
+                    else if (nextStepCounter == 2)
+                        ShowKeyScheduleScreen(4);
 
                     break;
                 case 9:
-                    if (stepCounter == 1) showPC2Screen(1);
-                    else if (stepCounter == 2) showFPScreen(1);
+                    if (nextStepCounter == 1)
+                        ShowPC2Screen(1);
+                    else if (nextStepCounter == 2)
+                        ShowFPScreen(1);
 
                     break;
                 case 10:
-                    if (stepCounter == 1)
+                    if (nextStepCounter == 1)
                     {
                         roundCounter = 0;
-                        showKeyScheduleScreen(1);
+                        ShowKeyScheduleScreen(1);
                         roundCounter = 15;
-                        showKeyScheduleScreen(1);
-                        showRoundKeyDataScreen(1);
+                        ShowKeyScheduleScreen(1);
+                        ShowRoundKeyDataScreen(1);
                     }
-                    else if (stepCounter == 2) showExecutionScreen(3);
+                    else if (nextStepCounter == 2)
+                    {
+                        ShowChapterScreen(3);
+                    }
                     break;
                 case 11:
-                    if (stepCounter == 1 && roundCounter == 0) showExecutionScreen(3);
-                    else if (stepCounter == 1 && roundCounter != 0) showDESRoundScreen(4);
-                    else if (stepCounter == 2 && roundCounter == 1)
+                    if (nextStepCounter == 1 && roundCounter == 0)
                     {
-                        showFPScreen(1);
-                        showIPScreen(1);
+                        ShowChapterScreen(3);
                     }
-                    else if (stepCounter == 2 && roundCounter != 1)
+                    else if (nextStepCounter == 1 && roundCounter != 0)
+                    {
+                        ShowDESRoundScreen(4);
+                    }
+                    else if (nextStepCounter == 2 && roundCounter == 1)
+                    {
+                        ShowFPScreen(1);
+                        ShowIPScreen(1);
+                    }
+                    else if (nextStepCounter == 2 && roundCounter != 1)
                     {
                         roundCounter = roundCounter - 2;
-                        showDESRoundScreen(1);
-                        showRoundDataScreen(1);
+                        ShowDESRoundScreen(1);
+                        ShowRoundDataScreen(1);
                     }
-                    else if (stepCounter == 3)
+                    else if (nextStepCounter == 3)
                     {
-                        showPPScreen(1);
+                        ShowPScreen(1);
                     }
-                    else if (stepCounter == 4)
+                    else if (nextStepCounter == 4)
                     {
-                        showDESRoundScreen(3);
+                        ShowDESRoundScreen(3);
                     }
 
                     break;
                 case 12:
-                    if (stepCounter == 1)
+                    if (nextStepCounter == 1)
                     {
                         roundCounter--;
-                        showDESRoundScreen(1);
+                        ShowDESRoundScreen(1);
                     }
-                    else if (stepCounter == 2) showDESRoundScreen(2);
-                    else if (stepCounter == 3) showRoundFunctionScreen(2);
-                    else if (stepCounter == 4) showRoundFunctionScreen(3);
-                    else if (stepCounter == 5) showRoundFunctionScreen(4);
-                    else if (stepCounter == 6) showRoundFunctionScreen(5);
+                    else if (nextStepCounter == 2)
+                    {
+                        ShowDESRoundScreen(2);
+                    }
+                    else if (nextStepCounter == 3)
+                    {
+                        ShowRoundFunctionScreen(2);
+                    }
+                    else if (nextStepCounter == 4)
+                    {
+                        ShowRoundFunctionScreen(3);
+                    }
+                    else if (nextStepCounter == 5)
+                    {
+                        ShowRoundFunctionScreen(4);
+                    }
+                    else if (nextStepCounter == 6)
+                    {
+                        ShowRoundFunctionScreen(5);
+                    }
                     break;
                 case 13:
-                    if (stepCounter == 1) showRoundFunctionScreen(1);
-                    else if (stepCounter == 2) showRoundFunctionScreen(2);
+                    if (nextStepCounter == 1)
+                        ShowRoundFunctionScreen(1);
+                    else if (nextStepCounter == 2)
+                        ShowRoundFunctionScreen(2);
                     break;
                 case 14:
-                    if (stepCounter == 0) showExpansionScreen(1);
-                    else if (stepCounter == 1) showRoundFunctionScreen(3);
-                    else if (stepCounter == 2) showRoundFunctionScreen(6);
-                    else if (stepCounter == 3) showDESRoundScreen(3);
+                    if (nextStepCounter == 1)
+                        ShowExpansionScreen(1);
+                    else if (nextStepCounter == 2)
+                        ShowRoundFunctionScreen(3);
+                    else if (nextStepCounter == 3)
+                        ShowRoundFunctionScreen(6);
+                    else if (nextStepCounter == 4)
+                        ShowDESRoundScreen(3);
                     break;
                 case 15:
-                    if (stepCounter == 0) showXORScreen(0);
-                    else if (stepCounter != 0) showRoundFunctionScreen(4);
+                    if (nextStepCounter == 1)
+                        ShowXORScreen(1);
+                    else if (nextStepCounter != 1)
+                        ShowRoundFunctionScreen(4);
                     break;
                 case 16:
-                    if (stepCounter == 1) showSBoxScreen(0);
-                    else if (stepCounter == 2) showRoundFunctionScreen(5);
+                    if (nextStepCounter == 1)
+                        ShowSBoxScreen(1);
+                    else if (nextStepCounter == 2)
+                        ShowRoundFunctionScreen(5);
                     break;
                 case 17:
-                    if (stepCounter == 1) showXORScreen(2);
-                    else if (stepCounter == 2) showExecutionScreen(4);
+                    if (nextStepCounter == 1)
+                        ShowXORScreen(3);
+                    else if (nextStepCounter == 2)
+                        ShowChapterScreen(4);
                     break;
                 case 18:
-                    if (stepCounter == 1) showDESRoundScreen(4);
-                    else if (stepCounter == 2)
+                    if (nextStepCounter == 1)
+                    {
+                        ShowDESRoundScreen(4);
+                    }
+                    else if (nextStepCounter == 2)
                     {
                         roundCounter = 0;
-                        showDESRoundScreen(1);
+                        ShowDESRoundScreen(1);
                         roundCounter = 15;
-                        showDESRoundScreen(1);
-                        showRoundDataScreen(1);
+                        ShowDESRoundScreen(1);
+                        ShowRoundDataScreen(1);
                     }
                     break;
-                case 19: showRoundKeyDataScreen(2); break;
-                case 20: showRoundDataScreen(2); break;
+                case 19: ShowRoundKeyDataScreen(2); break;
+                case 20: ShowRoundDataScreen(2); break;
                 default: break;
 
             }
         }
 
-        private void AutoButton_Click(object sender, RoutedEventArgs e)
+        private void AutoTButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AutoButton.IsChecked == true)
+            if (AutoTButton.IsChecked == true)
             {
                 playTimer.Start();
             }
@@ -300,228 +365,219 @@ namespace Cryptool.DESVisualisation
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            executeSteps();
+            ExecuteNextStep();
         }
 
-        private void SkipStepButton_Click(object sender, RoutedEventArgs e)
+        private void SkipButton_Click(object sender, RoutedEventArgs e)
         {
-
             if (roundCounter > 0 && roundCounter < 16)
             {
-                if (desRounds)
+                if (desRoundsIsRunning)
                 {
-                    showDESRoundScreen(1);
+                    ShowDESRoundScreen(1);
                 }
-                else if (keySchedule)
+                else if (keyScheduleIsRunning)
                 {
-                    showKeyScheduleScreen(1);
+                    ShowKeyScheduleScreen(1);
                 }
             }
             else if (roundCounter == 16)
             {
-                if (desRounds)
+                if (desRoundsIsRunning)
                 {
-                    showFPScreen(1);
+                    ShowFPScreen(1);
                 }
-                else if (keySchedule)
+                else if (keyScheduleIsRunning)
                 {
-                    showExecutionScreen(3);
+                    ShowChapterScreen(3);
                 }
                 else
                 {
-                    executeSteps();
+                    ExecuteNextStep();
                 }
             }
             else
             {
-                if (stepCounter != 1)
+                if (nextStepCounter != 1)
                 {
-                    switch (screenCounter)
+                    switch (nextScreenID)
                     {
-                        case 2: executeSteps(); break;
-                        case 5: executeSteps(); break;
-                        case 10: executeSteps(); break;
-                        case 18: executeSteps(); break;
-                        default:
-                            break;
+                        case 2: ExecuteNextStep(); break;
+                        case 5: ExecuteNextStep(); break;
+                        case 10: ExecuteNextStep(); break;
+                        case 18: ExecuteNextStep(); break;
                     }
-
-
                 }
-                executeSteps();
+                ExecuteNextStep();
             }
         }
 
-        //////////////////// Button Row 3
+        // Button Row 3
 
         private void IntroButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 1;
-            stepCounter = 1;
-            executeSteps();
-
+            nextScreenID = 1;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void DataButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 3;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 3;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void PC1Button_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 5;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 5;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void KeyScheduleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
             roundCounter = 0;
-            screenCounter = 6;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 6;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void IPButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 10;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 10;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void DESButton_Click(object sender, RoutedEventArgs e)
         {
-            if (keySchedule)
+            if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
             roundCounter = 0;
-            screenCounter = 11;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 11;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void FPButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 18;
-            stepCounter = 1;
-            executeSteps();
+            nextScreenID = 18;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
         private void SummaryButton_Click(object sender, RoutedEventArgs e)
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            screenCounter = 1;
-            stepCounter = 4;
-            executeSteps();
+            nextScreenID = 1;
+            nextStepCounter = 4;
+            ExecuteNextStep();
         }
 
-        //////////////////// Button Row 4
+        // Button Row 4
 
         private void roundButton_Click(object sender, RoutedEventArgs e)
         {
 
             roundCounter = Grid.GetColumn((Button)sender) - 1;
-            if (desRounds)
-            {
-                screenCounter = 11;
-            }
+            if (desRoundsIsRunning)
+                nextScreenID = 11;
             else
-            {
-                screenCounter = 6;
-            }
-            stepCounter = 1;
-            executeSteps();
+                nextScreenID = 6;
+            nextStepCounter = 1;
+            ExecuteNextStep();
         }
 
-        //////////////////// Button in DataScreen
+        // Buttons in DataScreen
 
-        private void DiffusionTButton_Click(object sender, RoutedEventArgs e)
+        private void DiffTButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DiffusionTButton.IsChecked == true)
+            if (DiffTButton.IsChecked == true)
             {
-                showDiffusionBoxes(true);
-                DiffusionOKButton.Visibility = Visibility.Visible;
-                DiffusionClearButton.Visibility = Visibility.Visible;
-                DiffusionTButton.Background = Brushes.Aqua;
+                ShowDiffusionBoxes(true);
+                DiffOkButton.Visibility = Visibility.Visible;
+                DiffClearButton.Visibility = Visibility.Visible;
             }
             else
             {
-                showDiffusionBoxes(false);
-                DiffusionOKButton.Visibility = Visibility.Hidden;
-                DiffusionClearButton.Visibility = Visibility.Hidden;
-                DiffusionTButton.ClearValue(Button.BackgroundProperty);
+                ShowDiffusionBoxes(false);
+                DiffOkButton.Visibility = Visibility.Hidden;
+                DiffClearButton.Visibility = Visibility.Hidden;
+                DiffInfoLabel.Visibility = Visibility.Hidden;
+                DiffTButton.ClearValue(BackgroundProperty);
             }
         }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
+            DiffInfoLabel.Visibility = Visibility.Visible;
             CheckBox box = (CheckBox)sender;
             int pos = Grid.GetColumn(box) - 1;
             if (box.IsChecked == true)
             {
                 if (Grid.GetRow(box) == 9)
                 {
-                    colorTextSingle(DataKey, (byte)(pos));
-                    switchStringBit(DataKey, pos);
+                    ColorTextSingle(DataKey, (byte)(pos));
+                    SwitchStringBit(DataKey, pos);
                 }
                 else
                 {
-                    colorTextSingle(DataMessage, (byte)(pos));
-                    switchStringBit(DataMessage, pos);
+                    ColorTextSingle(DataMessage, (byte)(pos));
+                    SwitchStringBit(DataMessage, pos);
                 }
             }
             else
@@ -529,7 +585,7 @@ namespace Cryptool.DESVisualisation
 
                 if (Grid.GetRow(box) == 9)
                 {
-                    switchStringBit(DataKey, pos);
+                    SwitchStringBit(DataKey, pos);
                     TextEffect tmp = null;
                     TextEffectCollection.Enumerator enumerator = DataKey.TextEffects.GetEnumerator();
                     while (enumerator.MoveNext())
@@ -542,7 +598,7 @@ namespace Cryptool.DESVisualisation
                 }
                 else
                 {
-                    switchStringBit(DataMessage, pos);
+                    SwitchStringBit(DataMessage, pos);
                     TextEffect tmp = null;
                     TextEffectCollection.Enumerator enumerator = DataMessage.TextEffects.GetEnumerator();
                     while (enumerator.MoveNext())
@@ -555,7 +611,7 @@ namespace Cryptool.DESVisualisation
             }
         }
 
-        private void DiffusionClearButton_Click(object sender, RoutedEventArgs e)
+        private void DiffClearButton_Click(object sender, RoutedEventArgs e)
         {
             IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
             while (enumerator.MoveNext())
@@ -565,178 +621,220 @@ namespace Cryptool.DESVisualisation
 
             DataKey.TextEffects.Clear();
             DataMessage.TextEffects.Clear();
-            DataKey.Text = EncOriginal.key;
-            DataMessage.Text = EncOriginal.message;
+            DataKey.Text = encOriginal.key;
+            DataMessage.Text = encOriginal.message;
+
+            DiffusionActiveLabel.Visibility = Visibility.Hidden;
+            diffusionIsActive = false;
         }
 
-        private void DiffusionOKButton_Click(object sender, RoutedEventArgs e)
+        private void DiffOKButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!DataKey.Text.Equals(EncOriginal.key) || !DataMessage.Text.Equals(EncOriginal.message))
+            if (!DataKey.Text.Equals(encOriginal.key) || !DataMessage.Text.Equals(encOriginal.message))
             {
-                byte[] key = stringToByteArray(DataKey.Text);
-                byte[] msg = stringToByteArray(DataMessage.Text);
-                EncDiffusion = new DESImplementation(key, msg);
-                EncDiffusion.DES();
-                diffusionActive = true;
+                byte[] key = StringToByteArray(DataKey.Text);
+                byte[] msg = StringToByteArray(DataMessage.Text);
+                encDiffusion = new DESImplementation(key, msg);
+                encDiffusion.DES();
+                diffusionIsActive = true;
+                DiffusionActiveLabel.Visibility = Visibility.Visible;
             }
             else
             {
-                diffusionActive = false;
+                diffusionIsActive = false;
+                DiffusionActiveLabel.Visibility = Visibility.Hidden;
             }
 
             //hide Diffusion-Functionality
-            showDiffusionBoxes(false);
-            DiffusionOKButton.Visibility = Visibility.Hidden;
-            DiffusionClearButton.Visibility = Visibility.Hidden;
-            DiffusionTButton.ClearValue(Button.BackgroundProperty);
-            DiffusionTButton.IsChecked = false;
+            ShowDiffusionBoxes(false);
+            DiffOkButton.Visibility = Visibility.Hidden;
+            DiffClearButton.Visibility = Visibility.Hidden;
+            DiffInfoLabel.Visibility = Visibility.Hidden;
+            DiffTButton.ClearValue(BackgroundProperty);
+            DiffTButton.IsChecked = false;
         }
 
         #endregion Button-Methods
 
-        /////////////////////////////////////////////////////////////
-        #region Screen-Methods
+        #region Screen-Methods (Show)
 
-        // Show-Methods
-
-        public void showIntroScreen()
+        public void ShowIntroScreen()
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             IntroScreen.Visibility = Visibility.Visible;
-            screenCounter = 1;
-            stepCounter = 1;
+            nextScreenID = 1;
+            nextStepCounter = 1;
         }
 
-        public void showInfoScreen(int step)
+        public void ShowInfoScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             progress = 0;
             InfoScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
+            Title.Visibility = Visibility.Visible;
 
             if (step == 1)
             {
-                title.Content = "Background";
+                Title.Content = "Background";
                 HistoryText.Visibility = Visibility.Visible;
-                screenCounter = 2;
-                stepCounter = 2;
+                nextScreenID = 2;
+                nextStepCounter = 2;
             }
             else if (step == 2)
             {
-                title.Content = "General Informations";
+                Title.Content = "General Informations";
                 InfoText.Visibility = Visibility.Visible;
-                screenCounter = 3;
-                stepCounter = 1;
+                nextScreenID = 3;
+                nextStepCounter = 1;
             }
-
         }
 
-        public void showExecutionScreen(int step)
+        public void ShowChapterScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             ExecutionScreen.Visibility = Visibility.Visible;
             switch (step)
             {
                 case 1:
                     ExecutionLabel.Content = "Introduction";
-                    clearButtonsColor(false);
+                    ClearButtonsColor(false);
                     IntroButton.Background = buttonBrush;
-                    screenCounter = 2;
-                    stepCounter = 1;
+                    nextScreenID = 2;
+                    nextStepCounter = 1;
                     progress = 0;
                     break;
                 case 2:
                     ExecutionLabel.Content = "Key Schedule";
-                    screenCounter = 5;
-                    stepCounter = 1;
+                    nextScreenID = 5;
+                    nextStepCounter = 1;
                     progress = 0.0625;
                     break;
                 case 3:
                     ExecutionLabel.Content = "DES Encryption";
-                    screenCounter = 10;
-                    stepCounter = 1;
+                    nextScreenID = 10;
+                    nextStepCounter = 1;
                     roundCounter = 0;
-                    activateRoundButtons(false);
-                    keySchedule = false;
-                    clearButtonsColor(true);
-                    ShiftButton.Visibility = Visibility.Hidden;
+                    ActivateRoundButtons(false);
+                    keyScheduleIsRunning = false;
+                    ClearButtonsColor(true);
+                    ShiftDButton.Visibility = Visibility.Hidden;
+                    ShiftCButton.Visibility = Visibility.Hidden;
                     PC2Button.Visibility = Visibility.Hidden;
-                    SkipStepButton.Content = "Skip Step";
+                    SkipButton.Content = "Skip Step";
                     progress = 0.4875;
                     break;
                 case 4:
                     ExecutionLabel.Content = "Summary";
-                    clearButtonsColor(false);
+                    ClearButtonsColor(false);
                     SummaryButton.Background = buttonBrush;
-                    screenCounter = 9;
-                    stepCounter = 2;
+                    nextScreenID = 9;
+                    nextStepCounter = 2;
                     roundCounter = 16;
                     progress = 0.9375;
                     break;
-                default:
-                    break;
             }
-
         }
 
-        public void showFinalScreen()
+        public void ShowFinalScreen()
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             progress = 1;
             FinalScreen.Visibility = Visibility.Visible;
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                FinalCiphertext.Text = EncDiffusion.ciphertext;
-                colorText(FinalCiphertext, compareStrings(EncOriginal.ciphertext, EncDiffusion.ciphertext));
+                FinalCiphertext.Text = encDiffusion.ciphertext;
+                ColorText(FinalCiphertext, CompareStrings(encOriginal.ciphertext, encDiffusion.ciphertext));
 
-                FinalMessage.Text = EncDiffusion.message;
-                colorText(FinalMessage, compareStrings(EncOriginal.message, FinalMessage.Text));
-                FinalKey.Text = EncDiffusion.key;
-                colorText(FinalKey, compareStrings(EncOriginal.key, FinalKey.Text));
+                FinalMessage.Text = encDiffusion.message;
+                ColorText(FinalMessage, CompareStrings(encOriginal.message, FinalMessage.Text));
+                FinalKey.Text = encDiffusion.key;
+                ColorText(FinalKey, CompareStrings(encOriginal.key, FinalKey.Text));
             }
             else
             {
-                FinalCiphertext.Text = EncOriginal.ciphertext;
-                FinalMessage.Text = EncOriginal.message;
-                FinalKey.Text = EncOriginal.key;
+                FinalCiphertext.Text = encOriginal.ciphertext;
+                FinalMessage.Text = encOriginal.message;
+                FinalKey.Text = encOriginal.key;
             }
-            screenCounter = 20;
-            stepCounter = 1;
+            nextScreenID = 20;
+            nextStepCounter = 1;
             playTimer.Stop();
-            AutoButton.IsChecked = false;
+            AutoTButton.IsChecked = false;
 
         }
 
-        public void showDataScreen()
+        public void ShowInputDataScreen()
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             progress = 0;
-            DataScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Input Data";
+            InputDataScreen.Visibility = Visibility.Visible;
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Input Data";
 
-
-            if (diffusionActive)
+            if (diffusionIsActive == false)
             {
-                DataMessage.Text = EncDiffusion.message;
-                DataKey.Text = EncDiffusion.key;
+                IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    enumerator.Current.IsChecked = false;
+                }
+
+                DataKey.TextEffects.Clear();
+                DataMessage.TextEffects.Clear();
+                if (encOriginal != null)
+                {
+                    DataKey.Text = encOriginal.key;
+                    DataMessage.Text = encOriginal.message;
+                }
             }
             else
             {
-                DataMessage.Text = EncOriginal.message;
-                DataKey.Text = EncOriginal.key;
+                DataKey.TextEffects.Clear();
+                DataMessage.TextEffects.Clear();
+                List<Byte> messageList = CompareStrings(encDiffusion.message, encOriginal.message);
+                List<Byte> keyList = CompareStrings(encDiffusion.key, encOriginal.key);
+                IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    CheckBox tmp = enumerator.Current;
+                    if (Grid.GetRow(tmp) == 4)
+                    {
+                        if (messageList.Contains((byte) (Grid.GetColumn(tmp)-1)))
+                        {
+                            tmp.IsChecked = true;
+                        }
+                        else
+                        {
+                            tmp.IsChecked = false;
+                        }
+                    }
+                    else
+                    {
+                        if (keyList.Contains((byte) (Grid.GetColumn(tmp)-1)))
+                        {
+                            tmp.IsChecked = true;
+                        }
+                        else
+                        {
+                            tmp.IsChecked = false;
+                        }
+                    }
+                }
+                DataKey.Text = encDiffusion.key;
+                DataMessage.Text = encDiffusion.message;
+                ColorText(DataMessage, messageList);
+                ColorText(DataKey, keyList);
             }
 
-
-            clearButtonsColor(false);
+            ClearButtonsColor(false);
             DataButton.Background = buttonBrush;
-            screenCounter = 4;
-            stepCounter = 1;
+            nextScreenID = 4;
+            nextStepCounter = 1;
         }
 
-        public void showRoundDataScreen(int step)
+        public void ShowRoundDataScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             RoundDataScreen.Visibility = Visibility.Visible;
             ArrowRounds.Margin = new Thickness(0, 0, 579, 220 - roundCounter * 30);
             IEnumerable<TextBlock> textChilds = RoundDataGrid.Children.OfType<TextBlock>();
@@ -745,50 +843,50 @@ namespace Cryptool.DESVisualisation
             {
                 enumerator.MoveNext();
                 enumerator.Current.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    enumerator.Current.Text = EncDiffusion.LR_Data[i, 0];
-                    colorText(enumerator.Current, compareStrings(EncOriginal.LR_Data[i, 0], enumerator.Current.Text));
+                    enumerator.Current.Text = encDiffusion.lrData[i, 0];
+                    ColorText(enumerator.Current, CompareStrings(encOriginal.lrData[i, 0], enumerator.Current.Text));
                 }
                 else
                 {
-                    enumerator.Current.Text = EncOriginal.LR_Data[i, 0];
+                    enumerator.Current.Text = encOriginal.lrData[i, 0];
                 }
                 enumerator.MoveNext();
                 enumerator.Current.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    enumerator.Current.Text = EncDiffusion.LR_Data[i, 1];
-                    colorText(enumerator.Current, compareStrings(EncOriginal.LR_Data[i, 1], enumerator.Current.Text));
+                    enumerator.Current.Text = encDiffusion.lrData[i, 1];
+                    ColorText(enumerator.Current, CompareStrings(encOriginal.lrData[i, 1], enumerator.Current.Text));
                 }
                 else
                 {
-                    enumerator.Current.Text = EncOriginal.LR_Data[i, 1];
+                    enumerator.Current.Text = encOriginal.lrData[i, 1];
                 }
             }
             if (roundCounter == 16 && step == 1)
             {
-                screenCounter = 18;
-                stepCounter = 1;
-                clearButtonsColor(true);
+                nextScreenID = 18;
+                nextStepCounter = 1;
+                ClearButtonsColor(true);
             }
             else if (roundCounter < 16 && step == 1)
             {
-                screenCounter = 11;
-                stepCounter = 1;
-                clearButtonsColor(true);
+                nextScreenID = 11;
+                nextStepCounter = 1;
+                ClearButtonsColor(true);
             }
             else
             {
-                screenCounter = 19;
-                stepCounter = 1;
+                nextScreenID = 19;
+                nextStepCounter = 1;
                 ArrowRounds.Visibility = Visibility.Hidden;
             }
         }
 
-        public void showRoundKeyDataScreen(int step)
+        public void ShowRoundKeyDataScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             RoundKeyDataScreen.Visibility = Visibility.Visible;
             ArrowSubKeys.Margin = new Thickness(0, 0, 579, 220 - (roundCounter - 1) * 30);
             IEnumerable<TextBlock> textChilds = RoundKeyDataGrid.Children.OfType<TextBlock>();
@@ -797,48 +895,51 @@ namespace Cryptool.DESVisualisation
             {
                 enumerator.MoveNext();
                 enumerator.Current.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    enumerator.Current.Text = EncDiffusion.RoundKeys[i];
-                    colorText(enumerator.Current, compareStrings(EncOriginal.RoundKeys[i], enumerator.Current.Text));
+                    enumerator.Current.Text = encDiffusion.roundKeys[i];
+                    ColorText(enumerator.Current, CompareStrings(encOriginal.roundKeys[i], enumerator.Current.Text));
                 }
                 else
                 {
-                    enumerator.Current.Text = EncOriginal.RoundKeys[i];
+                    enumerator.Current.Text = encOriginal.roundKeys[i];
                 }
             }
 
             if (roundCounter == 16 && step == 1)
             {
-                screenCounter = 1;
-                stepCounter = 3;
+                nextScreenID = 1;
+                nextStepCounter = 3;
                 roundCounter = 0;
-                clearButtonsColor(true);
+                ClearButtonsColor(true);
             }
             else if (roundCounter < 16 && step == 1)
             {
-                screenCounter = 6;
-                stepCounter = 1;
-                clearButtonsColor(true);
+                nextScreenID = 6;
+                nextStepCounter = 1;
+                ClearButtonsColor(true);
             }
             else
             {
-                screenCounter = 17;
-                stepCounter = 2;
+                nextScreenID = 17;
+                nextStepCounter = 2;
                 ArrowSubKeys.Visibility = Visibility.Hidden;
             }
 
         }
 
-        public void showSBoxScreen(int fullStep)        //fängt bei 0 an !!!
+        public void ShowSBoxScreen(int step)
         {
-            int sBoxctr = (int)(fullStep / 5);
-            int step = fullStep % 5;
-            if (fullStep == 0) resetAllScreens(true);
-            else resetAllScreens(false);
+            int sBoxctr = (int) (step-1) / 5;
+            int sBoxstep = (step - 1) % 5;
+            if (step - 1 == 0)
+                ResetAllScreens(true);
+            else
+                ResetAllScreens(false);
+
             SBoxScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "S-Boxes";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "S-Boxes";
             SLabel.Content = "S" + (sBoxctr + 1);
             switch (sBoxctr)
             {
@@ -850,228 +951,237 @@ namespace Cryptool.DESVisualisation
                 case 5: S6Box.Visibility = Visibility.Visible; break;
                 case 6: S7Box.Visibility = Visibility.Visible; break;
                 case 7: S8Box.Visibility = Visibility.Visible; break;
-                default: break;
-
             }
 
-            if (step >= 0)
+            if (sBoxstep >= 0)
             {
                 SBoxInput.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    SBoxInput.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
-                    colorText(SBoxInput, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0]));
+                    SBoxInput.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
+                    ColorText(SBoxInput, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0]));
                 }
                 else
                 {
-                    SBoxInput.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
+                    SBoxInput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
                 }
                 if (sBoxctr == 0)
                 {
-                    clearButtonsColor(true);
+                    ClearButtonsColor(true);
                     SBoxButton.Background = buttonBrush;
                 }
 
             }
-            if (step >= 1)
+            if (sBoxstep >= 1)
             {
                 SBoxRow.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    SBoxRow.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1];
-                    colorText(SBoxRow, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1]));
-                    SBoxRow.Text += "         ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1];
+                    ColorText(SBoxRow, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1]));
+                    SBoxRow.Text += "         ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 else
                 {
-                    SBoxRow.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1] + "         ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1] + "         ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
 
             }
-            if (step >= 2)
+            if (sBoxstep >= 2)
             {
                 SBoxColumn.Visibility = Visibility.Visible;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    SBoxColumn.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2];
-                    colorText(SBoxColumn, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2]));
-                    SBoxColumn.Text += "     ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2];
+                    ColorText(SBoxColumn, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2]));
+                    SBoxColumn.Text += "     ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
                 else
                 {
-                    SBoxColumn.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "     ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "     ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
 
             }
-            if (step >= 3)
+            if (sBoxstep >= 3)
             {
                 SBoxOutput.Visibility = Visibility.Visible;
                 int column, row;
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    SBoxOutput.Text = EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
-                    colorText(SBoxOutput, compareStrings(EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3], EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3]));
-                    SBoxOutput.Text += "     ≙ " + EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
-                    column = EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
-                    row = EncDiffusion.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxOutput.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
+                    ColorText(SBoxOutput, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3]));
+                    SBoxOutput.Text += "     ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    column = encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    row = encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 else
                 {
-                    SBoxOutput.Text = EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "     ≙ " + EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
-                    column = EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
-                    row = EncOriginal.SBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxOutput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "     ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    column = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    row = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 // Set SBoxJumper at the right place                
                 SBoxJumper.Visibility = Visibility.Visible;
-                if (column < 10) Canvas.SetLeft(SBoxJumper, 77 + column * 21.556);
-                else Canvas.SetLeft(SBoxJumper, 297 + (column % 10) * 25.4);
+                if (column < 10)
+                    Canvas.SetLeft(SBoxJumper, 77 + column * 21.556);
+                else
+                    Canvas.SetLeft(SBoxJumper, 297 + (column % 10) * 25.4);
                 Canvas.SetTop(SBoxJumper, 63 + row * 20.45);
 
             }
-            if (step >= 4)
+            if (sBoxstep >= 4)
             {
                 SBoxOut.Visibility = Visibility.Visible;
 
-                if (diffusionActive)
+                if (diffusionIsActive)
                 {
-                    SBoxOut.Text += EncDiffusion.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
-                    colorText(SBoxOut, compareStrings(EncDiffusion.RoundDetails[roundCounter - 1, 2], EncOriginal.RoundDetails[roundCounter - 1, 2]));
+                    SBoxOut.Text += encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
+                    ColorText(SBoxOut, CompareStrings(encDiffusion.roundDetails[roundCounter - 1, 2], encOriginal.roundDetails[roundCounter - 1, 2]));
                 }
                 else
                 {
-                    SBoxOut.Text += EncOriginal.SBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
+                    SBoxOut.Text += encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
                 }
 
                 if (sBoxctr == 7)
                 {
-                    screenCounter = 12;
-                    stepCounter = 5;
+                    nextScreenID = 12;
+                    nextStepCounter = 5;
                     return;
                 }
 
             }
-            screenCounter = 15;
-            stepCounter++;
+            nextScreenID = 15;
+            nextStepCounter++;
 
         }
 
-        public void showShift1Screen(int fullStep)      //fängt bei 0 an !!!
+        public void ShowShiftScreen(int step)
         {
-            resetAllScreens(true);
-            bool firstShift;
-            if (fullStep / 2 == 0) firstShift = true;
-            else firstShift = false;
-            int step = fullStep % 2;
-            Shift1Screen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Cyclic Shift";
-            if (DESImplementation.byteShifts[roundCounter - 1] == 1) singleShift.Visibility = Visibility.Visible;
-            else doubleShift.Visibility = Visibility.Visible;
+            ResetAllScreens(true);
+            bool firstShift = step < 3;
+            int shiftStep = (step - 1) % 2;
+            ShiftScreen.Visibility = Visibility.Visible;
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Cyclic Shift";
+            if (DESImplementation.byteShifts[roundCounter - 1] == 1)
+                SingleShift.Visibility = Visibility.Visible;
+            else
+                DoubleShift.Visibility = Visibility.Visible;
 
             if (firstShift)
             {
-                Shift_topName.Content = "C" + (roundCounter - 1);
-                Shift_bottomName.Content = "C" + roundCounter;
-                if (diffusionActive)
+                ShiftTopName.Content = "C" + (roundCounter - 1);
+                ShiftBottomName.Content = "C" + roundCounter;
+                if (diffusionIsActive)
                 {
-                    Shift_top.Text = insertSpaces(EncDiffusion.KeySchedule[roundCounter - 1, 0]);
-                    colorText(Shift_top, compareStrings(insertSpaces(EncOriginal.KeySchedule[roundCounter - 1, 0]), Shift_top.Text));
-                    Shift_bottom.Text = insertSpaces(EncDiffusion.KeySchedule[roundCounter, 0]);
-                    colorText(Shift_bottom, compareStrings(insertSpaces(EncOriginal.KeySchedule[roundCounter, 0]), Shift_bottom.Text));
+                    ShiftTop.Text = InsertSpaces(encDiffusion.keySchedule[roundCounter - 1, 0]);
+                    ColorText(ShiftTop, CompareStrings(InsertSpaces(encOriginal.keySchedule[roundCounter - 1, 0]), ShiftTop.Text));
+                    ShiftBottom.Text = InsertSpaces(encDiffusion.keySchedule[roundCounter, 0]);
+                    ColorText(ShiftBottom, CompareStrings(InsertSpaces(encOriginal.keySchedule[roundCounter, 0]), ShiftBottom.Text));
                 }
                 else
                 {
-                    Shift_top.Text = insertSpaces(EncOriginal.KeySchedule[roundCounter - 1, 0]);
-                    Shift_bottom.Text = insertSpaces(EncOriginal.KeySchedule[roundCounter, 0]);
+                    ShiftTop.Text = InsertSpaces(encOriginal.keySchedule[roundCounter - 1, 0]);
+                    ShiftBottom.Text = InsertSpaces(encOriginal.keySchedule[roundCounter, 0]);
                 }
-                if (step == 0)
+                if (shiftStep == 0)
                 {
-                    clearButtonsColor(true);
-                    ShiftButton.Background = buttonBrush;
+                    ShiftCButton.Background = buttonBrush;
                 }
             }
             else
             {
-                Shift_topName.Content = "D" + (roundCounter - 1);
-                Shift_bottomName.Content = "D" + roundCounter;
-                if (diffusionActive)
+                ShiftTopName.Content = "D" + (roundCounter - 1);
+                ShiftBottomName.Content = "D" + roundCounter;
+                if (diffusionIsActive)
                 {
-                    Shift_top.Text = insertSpaces(EncDiffusion.KeySchedule[roundCounter - 1, 1]);
-                    colorText(Shift_top, compareStrings(insertSpaces(EncOriginal.KeySchedule[roundCounter - 1, 1]), Shift_top.Text));
-                    Shift_bottom.Text = insertSpaces(EncDiffusion.KeySchedule[roundCounter, 1]);
-                    colorText(Shift_bottom, compareStrings(insertSpaces(EncOriginal.KeySchedule[roundCounter, 1]), Shift_bottom.Text));
+                    ShiftTop.Text = InsertSpaces(encDiffusion.keySchedule[roundCounter - 1, 1]);
+                    ColorText(ShiftTop, CompareStrings(InsertSpaces(encOriginal.keySchedule[roundCounter - 1, 1]), ShiftTop.Text));
+                    ShiftBottom.Text = InsertSpaces(encDiffusion.keySchedule[roundCounter, 1]);
+                    ColorText(ShiftBottom, CompareStrings(InsertSpaces(encOriginal.keySchedule[roundCounter, 1]), ShiftBottom.Text));
                 }
                 else
                 {
-                    Shift_top.Text = insertSpaces(EncOriginal.KeySchedule[roundCounter - 1, 1]);
-                    Shift_bottom.Text = insertSpaces(EncOriginal.KeySchedule[roundCounter, 1]);
+                    ShiftTop.Text = InsertSpaces(encOriginal.keySchedule[roundCounter - 1, 1]);
+                    ShiftBottom.Text = InsertSpaces(encOriginal.keySchedule[roundCounter, 1]);
+                }
+                if (shiftStep == 0)
+                {
+                    ShiftDButton.Background = buttonBrush;
                 }
             }
 
-            if (step == 1)
+            if (shiftStep == 1)
             {
-                Shift_bottom.Visibility = Visibility.Visible;
+                ShiftBottom.Visibility = Visibility.Visible;
                 if (firstShift)
                 {
-                    screenCounter = 6;
-                    stepCounter = 3;
+                    nextScreenID = 6;
+                    nextStepCounter = 3;
                 }
                 else
                 {
-                    screenCounter = 6;
-                    stepCounter = 4;
+                    nextScreenID = 6;
+                    nextStepCounter = 4;
                 }
             }
             else
             {
                 if (firstShift)
                 {
-                    screenCounter = 7;
-                    stepCounter = 1;
+                    nextScreenID = 7;
+                    nextStepCounter = 2;
                 }
                 else
                 {
-                    screenCounter = 7;
-                    stepCounter = 3;
+                    nextScreenID = 7;
+                    nextStepCounter = 4;
                 }
             }
 
-            if (roundCounter < 10) Canvas.SetLeft(RoundTable, 173 + (roundCounter - 1) * 21.625);
-            else Canvas.SetLeft(RoundTable, 372 + (roundCounter - 10) * 30.3333);
+            if (roundCounter < 10)
+                Canvas.SetLeft(RoundTable, 173 + (roundCounter - 1) * 21.625);
+            else
+                Canvas.SetLeft(RoundTable, 372 + (roundCounter - 10) * 30.3333);
 
         }
 
-        public void showStructureScreen()
+        public void ShowStructureScreen()
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             progress = 0.03125;
             StructureScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "General Structure";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "General Structure";
 
-            screenCounter = 1;
-            stepCounter = 2;
+            nextScreenID = 1;
+            nextStepCounter = 2;
         }
 
-        public void showKeyScheduleScreen(int step)
+        public void ShowKeyScheduleScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
+            ClearButtonsColor(true);
             if (step == 1)
             {
-                stepCounter = 2;
-                screenCounter = 6;
+                nextStepCounter = 2;
+                nextScreenID = 6;
                 roundCounter++;
                 if (roundCounter == 1)
                 {
-                    clearButtonsColor(false);
-                    activateRoundButtons(true);
-                    keySchedule = true;
-                    SkipStepButton.Content = "Skip Round";
+                    ClearButtonsColor(false);
+                    ActivateRoundButtons(true);
+                    keyScheduleIsRunning = true;
+                    SkipButton.Content = "Skip Round";
                 }
-                ShiftButton.Visibility = Visibility.Visible;
+                ShiftDButton.Visibility = Visibility.Visible;
+                ShiftDButton.Content = "Shift(D" + (roundCounter - 1) + ")";
+                ShiftCButton.Visibility = Visibility.Visible;
+                ShiftCButton.Content = "Shift(C" + (roundCounter - 1) + ")";
                 PC2Button.Visibility = Visibility.Visible;
-                clearButtonsColor(true);
-                colorRoundKeys();
+                ClearButtonsColor(true);
+                ColorRoundButton();
                 KeyScheduleButton.Background = buttonBrush;
                 progress = 0.0875 + roundCounter * 0.025;
             }
@@ -1080,17 +1190,17 @@ namespace Cryptool.DESVisualisation
             KeyScheduleLabel.Content = "Round " + roundCounter + "/16";
             KeyScheduleCRoundName.Content = "C" + (roundCounter - 1) + ":";
             KeyScheduleDRoundName.Content = "D" + (roundCounter - 1) + ":";
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                KeyScheduleCRound.Text = EncDiffusion.KeySchedule[roundCounter - 1, 0];
-                colorText(KeyScheduleCRound, compareStrings(EncOriginal.KeySchedule[roundCounter - 1, 0], KeyScheduleCRound.Text));
-                KeyScheduleDRound.Text = EncDiffusion.KeySchedule[roundCounter - 1, 1];
-                colorText(KeyScheduleDRound, compareStrings(EncOriginal.KeySchedule[roundCounter - 1, 1], KeyScheduleDRound.Text));
+                KeyScheduleCRound.Text = encDiffusion.keySchedule[roundCounter - 1, 0];
+                ColorText(KeyScheduleCRound, CompareStrings(encOriginal.keySchedule[roundCounter - 1, 0], KeyScheduleCRound.Text));
+                KeyScheduleDRound.Text = encDiffusion.keySchedule[roundCounter - 1, 1];
+                ColorText(KeyScheduleDRound, CompareStrings(encOriginal.keySchedule[roundCounter - 1, 1], KeyScheduleDRound.Text));
             }
             else
             {
-                KeyScheduleCRound.Text = EncOriginal.KeySchedule[roundCounter - 1, 0];
-                KeyScheduleDRound.Text = EncOriginal.KeySchedule[roundCounter - 1, 1];
+                KeyScheduleCRound.Text = encOriginal.keySchedule[roundCounter - 1, 0];
+                KeyScheduleDRound.Text = encOriginal.keySchedule[roundCounter - 1, 1];
             }
             if (roundCounter == 1)
             {
@@ -1119,47 +1229,52 @@ namespace Cryptool.DESVisualisation
             if (step >= 2)
             {
                 KeyScheduleShiftBox1.Fill = yellowBrush;
-                screenCounter = 7;
-                stepCounter = 0;
+                KeyScheduleShiftBox1.StrokeThickness = 5;
+                nextScreenID = 7;
+                nextStepCounter = 1;
             }
             if (step >= 3)
             {
                 KeyScheduleShiftBox1.Fill = greenBrush;
+                KeyScheduleShiftBox1.StrokeThickness = 2.63997;
                 KeyScheduleShiftBox2.Fill = yellowBrush;
-                screenCounter = 7;
-                stepCounter = 2;
+                KeyScheduleShiftBox2.StrokeThickness = 5;
+                nextScreenID = 7;
+                nextStepCounter = 3;
             }
             if (step >= 4)
             {
                 KeyScheduleShiftBox2.Fill = greenBrush;
+                KeyScheduleShiftBox2.StrokeThickness = 2.63997;
                 KeySchedulePC2Box.Fill = yellowBrush;
-                screenCounter = 8;
-                stepCounter = 1;
+                KeySchedulePC2Box.StrokeThickness = 5;
+                nextScreenID = 8;
+                nextStepCounter = 1;
             }
             if (step >= 5)
             {
                 KeySchedulePC2Box.Fill = greenBrush;
-                screenCounter = 9;
-                stepCounter = 1;
+                KeySchedulePC2Box.StrokeThickness = 2.63997;
+                nextScreenID = 9;
+                nextStepCounter = 1;
             }
-
-
         }
 
-        public void showDESRoundScreen(int step)
+        public void ShowDESRoundScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
+            ClearButtonsColor(true);
             if (step == 1)
             {
-                stepCounter = 2;
-                screenCounter = 11;
+                nextStepCounter = 2;
+                nextScreenID = 11;
                 roundCounter++;
                 if (roundCounter == 1)
                 {
-                    clearButtonsColor(false);
-                    activateRoundButtons(true);
-                    desRounds = true;
-                    SkipStepButton.Content = "Skip Round";
+                    ClearButtonsColor(false);
+                    ActivateRoundButtons(true);
+                    desRoundsIsRunning = true;
+                    SkipButton.Content = "Skip Round";
                 }
                 ExpansionButton.Visibility = Visibility.Visible;
                 KeyAdditionButton.Visibility = Visibility.Visible;
@@ -1167,8 +1282,8 @@ namespace Cryptool.DESVisualisation
                 PermutationButton.Visibility = Visibility.Visible;
                 RoundAdditionButton.Visibility = Visibility.Visible;
                 RoundAdditionButton.Content = "L" + (roundCounter - 1) + " ⊕ f (R" + (roundCounter - 1) + ")";
-                clearButtonsColor(true);
-                colorRoundKeys();
+                ClearButtonsColor(true);
+                ColorRoundButton();
                 DESButton.Background = buttonBrush;
                 progress = 0.5125 + roundCounter * 0.025;
             }
@@ -1180,25 +1295,25 @@ namespace Cryptool.DESVisualisation
             DESRoundL0Name.Content = "L" + (roundCounter - 1) + ":";
             DESRoundR1Name.Content = "R" + (roundCounter) + ":";
             DESRoundL1Name.Content = "L" + (roundCounter) + ":";
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                DESRoundL0.Text = EncDiffusion.LR_Data[roundCounter - 1, 0];
-                colorText(DESRoundL0, compareStrings(EncOriginal.LR_Data[roundCounter - 1, 0], DESRoundL0.Text));
-                DESRoundR0.Text = EncDiffusion.LR_Data[roundCounter - 1, 1];
-                colorText(DESRoundR0, compareStrings(EncOriginal.LR_Data[roundCounter - 1, 1], DESRoundR0.Text));
+                DESRoundL0.Text = encDiffusion.lrData[roundCounter - 1, 0];
+                ColorText(DESRoundL0, CompareStrings(encOriginal.lrData[roundCounter - 1, 0], DESRoundL0.Text));
+                DESRoundR0.Text = encDiffusion.lrData[roundCounter - 1, 1];
+                ColorText(DESRoundR0, CompareStrings(encOriginal.lrData[roundCounter - 1, 1], DESRoundR0.Text));
 
-                DESRoundL1.Text = EncDiffusion.LR_Data[roundCounter, 0];
-                colorText(DESRoundL1, compareStrings(EncOriginal.LR_Data[roundCounter, 0], DESRoundL1.Text));
-                DESRoundR1.Text = EncDiffusion.LR_Data[roundCounter, 1];
-                colorText(DESRoundR1, compareStrings(EncOriginal.LR_Data[roundCounter, 1], DESRoundR1.Text));
+                DESRoundL1.Text = encDiffusion.lrData[roundCounter, 0];
+                ColorText(DESRoundL1, CompareStrings(encOriginal.lrData[roundCounter, 0], DESRoundL1.Text));
+                DESRoundR1.Text = encDiffusion.lrData[roundCounter, 1];
+                ColorText(DESRoundR1, CompareStrings(encOriginal.lrData[roundCounter, 1], DESRoundR1.Text));
             }
             else
             {
-                DESRoundL0.Text = EncOriginal.LR_Data[roundCounter - 1, 0];
-                DESRoundR0.Text = EncOriginal.LR_Data[roundCounter - 1, 1];
+                DESRoundL0.Text = encOriginal.lrData[roundCounter - 1, 0];
+                DESRoundR0.Text = encOriginal.lrData[roundCounter - 1, 1];
 
-                DESRoundL1.Text = EncOriginal.LR_Data[roundCounter, 0];
-                DESRoundR1.Text = EncOriginal.LR_Data[roundCounter, 1];
+                DESRoundL1.Text = encOriginal.lrData[roundCounter, 0];
+                DESRoundR1.Text = encOriginal.lrData[roundCounter, 1];
             }
             if (roundCounter == 1)
             {
@@ -1214,31 +1329,36 @@ namespace Cryptool.DESVisualisation
             if (step >= 2)
             {
                 DESRoundFunctionPath.Fill = yellowBrush;
+                DESRoundFunctionPath.StrokeThickness = 5;
                 DESRoundL1Name.Visibility = Visibility.Visible;
                 DESRoundL1.Visibility = Visibility.Visible;
-                screenCounter = 12;
-                stepCounter = 1;
+                nextScreenID = 12;
+                nextStepCounter = 1;
             }
             if (step >= 3)
             {
                 DESRoundFunctionPath.Fill = greenBrush;
+                DESRoundFunctionPath.StrokeThickness = 2.63997;
                 RoundAdditionPath.Fill = yellowBrush;
-                screenCounter = 14;
-                stepCounter = 2;
+                RoundAdditionPath.StrokeThickness = 5;
+                nextScreenID = 14;
+                nextStepCounter = 3;
             }
             if (step >= 4)
             {
                 RoundAdditionPath.Fill = greenBrush;
+                RoundAdditionPath.StrokeThickness = 2.63997;
                 DESRoundR1Name.Visibility = Visibility.Visible;
                 DESRoundR1.Visibility = Visibility.Visible;
-                screenCounter = 17;
-                stepCounter = 1;
+                nextScreenID = 17;
+                nextStepCounter = 1;
             }
         }
 
-        public void showRoundFunctionScreen(int step)
+        public void ShowRoundFunctionScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
+            ClearButtonsColor(true);
             RoundFunctionScreen.Visibility = Visibility.Visible;
             FScreenFunctionR.Content = "" + (roundCounter - 1);
             FScreenFunctionKey.Content = "" + roundCounter;
@@ -1248,117 +1368,137 @@ namespace Cryptool.DESVisualisation
 
             if (step == 1)
             {
-                stepCounter = 2;
-                screenCounter = 12;
+                nextStepCounter = 2;
+                nextScreenID = 12;
             }
             if (step >= 2)
             {
                 ExpansionPath.Fill = yellowBrush;
-                screenCounter = 13;
-                stepCounter = 1;
+                ExpansionPath.StrokeThickness = 2;
+                nextScreenID = 13;
+                nextStepCounter = 1;
             }
             if (step >= 3)
             {
                 ExpansionPath.Fill = greenBrush;
-                FScreenXORPath.Fill = yellowBrush;
-                screenCounter = 14;
-                stepCounter = 0;
+                ExpansionPath.StrokeThickness = 1.43999;
+                FScreenXorPath.Fill = yellowBrush;
+                FScreenXorPath.StrokeThickness = 2;
+                nextScreenID = 14;
+                nextStepCounter = 1;
             }
             if (step >= 4)
             {
-                FScreenXORPath.Fill = greenBrush;
+                FScreenXorPath.Fill = greenBrush;
+                FScreenXorPath.StrokeThickness = 1.43999;
                 FScreenSPath1.Fill = yellowBrush;
+                FScreenSPath1.StrokeThickness = 2;
                 FScreenSPath2.Fill = yellowBrush;
+                FScreenSPath2.StrokeThickness = 2;
                 FScreenSPath3.Fill = yellowBrush;
+                FScreenSPath3.StrokeThickness = 2;
                 FScreenSPath4.Fill = yellowBrush;
+                FScreenSPath4.StrokeThickness = 2;
                 FScreenSPath5.Fill = yellowBrush;
+                FScreenSPath5.StrokeThickness = 2;
                 FScreenSPath6.Fill = yellowBrush;
+                FScreenSPath6.StrokeThickness = 2;
                 FScreenSPath7.Fill = yellowBrush;
+                FScreenSPath7.StrokeThickness = 2;
                 FScreenSPath8.Fill = yellowBrush;
-                screenCounter = 15;
-                stepCounter = 0;
+                FScreenSPath8.StrokeThickness = 2;
+                nextScreenID = 15;
+                nextStepCounter = 1;
             }
             if (step >= 5)
             {
                 FScreenSPath1.Fill = greenBrush;
+                FScreenSPath1.StrokeThickness = 1.43999;
                 FScreenSPath2.Fill = greenBrush;
+                FScreenSPath2.StrokeThickness = 1.43999;
                 FScreenSPath3.Fill = greenBrush;
+                FScreenSPath3.StrokeThickness = 1.43999;
                 FScreenSPath4.Fill = greenBrush;
+                FScreenSPath4.StrokeThickness = 1.43999;
                 FScreenSPath5.Fill = greenBrush;
+                FScreenSPath5.StrokeThickness = 1.43999;
                 FScreenSPath6.Fill = greenBrush;
+                FScreenSPath6.StrokeThickness = 1.43999;
                 FScreenSPath7.Fill = greenBrush;
+                FScreenSPath7.StrokeThickness = 1.43999;
                 FScreenSPath8.Fill = greenBrush;
+                FScreenSPath8.StrokeThickness = 1.43999;
                 FScreenPPermutationBox.Fill = yellowBrush;
-                screenCounter = 16;
-                stepCounter = 1;
+                FScreenPPermutationBox.StrokeThickness = 2;
+                nextScreenID = 16;
+                nextStepCounter = 1;
             }
             if (step >= 6)
             {
                 FScreenPPermutationBox.Fill = greenBrush;
-                screenCounter = 11;
-                stepCounter = 3;
+                FScreenPPermutationBox.StrokeThickness = 1.43999;
+                nextScreenID = 11;
+                nextStepCounter = 3;
             }
         }
 
-        public void showXORScreen(int fullStep)
+        public void ShowXORScreen(int step)
         {
-            resetAllScreens(true);
-            bool keyAddition;
-            if (fullStep / 2 == 0) keyAddition = true;
-            else keyAddition = false;
-            int step = fullStep % 2;
+            ResetAllScreens(true);
+            bool keyAddition = step < 3;
+            int xorStep = (step - 1) % 2;
             XORScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "XOR Operation";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Bitwise XOR Operation";
             if (keyAddition)
             {
-                XOROperator1Name.Content = "K" + roundCounter + ":";
-                XOROperator2Name.Content = "Exp:";
-                XORResultName.Content = "SBox:";
-                if (diffusionActive)
+                XorOperator1Name.Content = "K" + roundCounter + ":";
+                XorOperator2Name.Content = "Exp:";
+                XorResultName.Content = "SBox:";
+                if (diffusionIsActive)
                 {
-                    XOROperator1.Text = EncDiffusion.RoundKeys[roundCounter - 1];
-                    colorText(XOROperator1, compareStrings(EncOriginal.RoundKeys[roundCounter - 1], XOROperator1.Text));
-                    XOROperator2.Text = EncDiffusion.RoundDetails[roundCounter - 1, 0];
-                    colorText(XOROperator2, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 0], XOROperator2.Text));
-                    XORResult.Text = EncDiffusion.RoundDetails[roundCounter - 1, 1];
-                    colorText(XORResult, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 1], XORResult.Text));
+                    XorOperator1.Text = encDiffusion.roundKeys[roundCounter - 1];
+                    ColorText(XorOperator1, CompareStrings(encOriginal.roundKeys[roundCounter - 1], XorOperator1.Text));
+                    XorOperator2.Text = encDiffusion.roundDetails[roundCounter - 1, 0];
+                    ColorText(XorOperator2, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 0], XorOperator2.Text));
+                    XorResult.Text = encDiffusion.roundDetails[roundCounter - 1, 1];
+                    ColorText(XorResult, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 1], XorResult.Text));
                 }
                 else
                 {
-                    XOROperator1.Text = EncOriginal.RoundKeys[roundCounter - 1];
-                    XOROperator2.Text = EncOriginal.RoundDetails[roundCounter - 1, 0];
-                    XORResult.Text = EncOriginal.RoundDetails[roundCounter - 1, 1];
+                    XorOperator1.Text = encOriginal.roundKeys[roundCounter - 1];
+                    XorOperator2.Text = encOriginal.roundDetails[roundCounter - 1, 0];
+                    XorResult.Text = encOriginal.roundDetails[roundCounter - 1, 1];
                 }
-                if (step == 0)
+                if (xorStep == 0)
                 {
-                    clearButtonsColor(true);
+                    ClearButtonsColor(true);
                     KeyAdditionButton.Background = buttonBrush;
                 }
             }
             else
             {
-                XOROperator1Name.Content = "L" + (roundCounter - 1) + ":";
-                XOROperator2Name.Content = "f(R" + (roundCounter - 1) + "):";
-                XORResultName.Content = "R" + roundCounter + ":";
-                if (diffusionActive)
+                XorOperator1Name.Content = "L" + (roundCounter - 1) + ":";
+                XorOperator2Name.Content = "f(R" + (roundCounter - 1) + "):";
+                XorResultName.Content = "R" + roundCounter + ":";
+                if (diffusionIsActive)
                 {
-                    XOROperator1.Text = EncDiffusion.LR_Data[roundCounter - 1, 0];
-                    colorText(XOROperator1, compareStrings(EncOriginal.LR_Data[roundCounter - 1, 0], XOROperator1.Text));
-                    XOROperator2.Text = EncDiffusion.RoundDetails[roundCounter - 1, 3];
-                    colorText(XOROperator2, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 3], XOROperator2.Text));
-                    XORResult.Text = EncDiffusion.LR_Data[roundCounter, 1];
-                    colorText(XORResult, compareStrings(EncOriginal.LR_Data[roundCounter, 1], XORResult.Text));
+                    XorOperator1.Text = encDiffusion.lrData[roundCounter - 1, 0];
+                    ColorText(XorOperator1, CompareStrings(encOriginal.lrData[roundCounter - 1, 0], XorOperator1.Text));
+                    XorOperator2.Text = encDiffusion.roundDetails[roundCounter - 1, 3];
+                    ColorText(XorOperator2, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 3], XorOperator2.Text));
+                    XorResult.Text = encDiffusion.lrData[roundCounter, 1];
+                    ColorText(XorResult, CompareStrings(encOriginal.lrData[roundCounter, 1], XorResult.Text));
                 }
                 else
                 {
-                    XOROperator1.Text = EncOriginal.LR_Data[roundCounter - 1, 0];
-                    XOROperator2.Text = EncOriginal.RoundDetails[roundCounter - 1, 3];
-                    XORResult.Text = EncOriginal.LR_Data[roundCounter, 1];
+                    XorOperator1.Text = encOriginal.lrData[roundCounter - 1, 0];
+                    XorOperator2.Text = encOriginal.roundDetails[roundCounter - 1, 3];
+                    XorResult.Text = encOriginal.lrData[roundCounter, 1];
                 }
-                if (step == 0)
+                if (xorStep == 0)
                 {
-                    clearButtonsColor(true);
+                    ClearButtonsColor(true);
                     RoundAdditionButton.Background = buttonBrush;
                 }
             }
@@ -1368,306 +1508,295 @@ namespace Cryptool.DESVisualisation
             FScreenFunctionInfoR.Content = "" + (roundCounter - 1);
             FScreenFunctionInfoRound.Content = "" + roundCounter;
 
-            if (step == 1)
+            if (xorStep == 1)
             {
-                XORResult.Visibility = Visibility.Visible;
-                XORResultName.Visibility = Visibility.Visible;
+                XorResult.Visibility = Visibility.Visible;
+                XorResultName.Visibility = Visibility.Visible;
                 if (keyAddition)
                 {
-                    screenCounter = 12;
-                    stepCounter = 4;
+                    nextScreenID = 12;
+                    nextStepCounter = 4;
                 }
                 else
                 {
-                    screenCounter = 11;
-                    stepCounter = 4;
+                    nextScreenID = 11;
+                    nextStepCounter = 4;
                 }
             }
             else
             {
                 if (keyAddition)
                 {
-                    screenCounter = 14;
-                    stepCounter = 1;
+                    nextScreenID = 14;
+                    nextStepCounter = 2;
                 }
                 else
                 {
-                    screenCounter = 14;
-                    stepCounter = 3;
+                    nextScreenID = 14;
+                    nextStepCounter = 4;
                 }
             }
-        }       //fängt bei 0 an !!!
+        } 
 
-        public void showIPScreen(int step)
+        public void ShowIPScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             IPScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Initial Permutation";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Initial Permutation";
             roundCounter = 0;
             progress = 0.5125;
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                IP_top.Text = EncDiffusion.message;
-                colorText(IP_top, compareStrings(EncOriginal.message, IP_top.Text));
+                IpTop.Text = encDiffusion.message;
+                ColorText(IpTop, CompareStrings(encOriginal.message, IpTop.Text));
 
-                String old = EncOriginal.LR_Data[0, 0] + EncOriginal.LR_Data[0, 1];
-                String changed = EncDiffusion.LR_Data[0, 0] + EncDiffusion.LR_Data[0, 1];
-                IP_bottom.Text = changed;
-                colorText(IP_bottom, compareStrings(old, changed));
+                String old = encOriginal.lrData[0, 0] + encOriginal.lrData[0, 1];
+                String changed = encDiffusion.lrData[0, 0] + encDiffusion.lrData[0, 1];
+                IpBottom.Text = changed;
+                ColorText(IpBottom, CompareStrings(old, changed));
             }
             else
             {
-                IP_top.Text = EncOriginal.message;
-                IP_bottom.Text = EncOriginal.LR_Data[0, 0] + EncOriginal.LR_Data[0, 1];
+                IpTop.Text = encOriginal.message;
+                IpBottom.Text = encOriginal.lrData[0, 0] + encOriginal.lrData[0, 1];
             }
             if (step == 2)
             {
-                IP_bottom.Visibility = Visibility.Visible;
-                screenCounter = 11;
-                stepCounter = 1;
+                IpBottom.Visibility = Visibility.Visible;
+                nextScreenID = 11;
+                nextStepCounter = 1;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 10;
-                clearButtonsColor(false);
+                nextStepCounter = 2;
+                nextScreenID = 10;
+                ClearButtonsColor(false);
                 IPButton.Background = buttonBrush;
             }
-
         }
 
-        public void showPC1Screen(int step)
+        public void ShowPC1Screen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             PC1Screen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Permuted Choice 1";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Permuted Choice 1";
             roundCounter = 0;
             progress = 0.0875;
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                PC1_top.Text = EncDiffusion.key;
-                colorText(PC1_top, compareStrings(EncOriginal.key, PC1_top.Text));
+                Pc1Top.Text = encDiffusion.key;
+                ColorText(Pc1Top, CompareStrings(encOriginal.key, Pc1Top.Text));
 
-                String old = EncOriginal.KeySchedule[0, 0] + EncOriginal.KeySchedule[0, 1];
-                String changed = EncDiffusion.KeySchedule[0, 0] + EncDiffusion.KeySchedule[0, 1];
-                PC1_bottom.Text = changed;
-                colorText(PC1_bottom, compareStrings(old, changed));
+                String old = encOriginal.keySchedule[0, 0] + encOriginal.keySchedule[0, 1];
+                String changed = encDiffusion.keySchedule[0, 0] + encDiffusion.keySchedule[0, 1];
+                Pc1Bottom.Text = changed;
+                ColorText(Pc1Bottom, CompareStrings(old, changed));
             }
             else
             {
-                PC1_top.Text = EncOriginal.key;
-                PC1_bottom.Text = EncOriginal.KeySchedule[0, 0] + EncOriginal.KeySchedule[0, 1];
+                Pc1Top.Text = encOriginal.key;
+                Pc1Bottom.Text = encOriginal.keySchedule[0, 0] + encOriginal.keySchedule[0, 1];
             }
             if (step == 2)
             {
-                PC1_bottom.Visibility = Visibility.Visible;
-                screenCounter = 6;
-                stepCounter = 1;
+                Pc1Bottom.Visibility = Visibility.Visible;
+                nextScreenID = 6;
+                nextStepCounter = 1;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 5;
-                clearButtonsColor(false);
+                nextStepCounter = 2;
+                nextScreenID = 5;
+                ClearButtonsColor(false);
                 PC1Button.Background = buttonBrush;
             }
-
         }
 
-        public void showPC2Screen(int step)
+        public void ShowPC2Screen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             PC2Screen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Permuted Choice 2";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Permuted Choice 2";
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                String old = EncOriginal.KeySchedule[roundCounter, 0] + EncOriginal.KeySchedule[roundCounter, 1];
-                String changed = EncDiffusion.KeySchedule[roundCounter, 0] + EncDiffusion.KeySchedule[roundCounter, 1];
-                PC2_top.Text = changed;
-                colorText(PC2_top, compareStrings(old, changed));
+                String old = encOriginal.keySchedule[roundCounter, 0] + encOriginal.keySchedule[roundCounter, 1];
+                String changed = encDiffusion.keySchedule[roundCounter, 0] + encDiffusion.keySchedule[roundCounter, 1];
+                Pc2Top.Text = changed;
+                ColorText(Pc2Top, CompareStrings(old, changed));
 
-
-                PC2_bottom.Text = EncDiffusion.RoundKeys[roundCounter - 1];
-                colorText(PC2_bottom, compareStrings(EncOriginal.RoundKeys[roundCounter - 1], PC2_bottom.Text));
+                Pc2Bottom.Text = encDiffusion.roundKeys[roundCounter - 1];
+                ColorText(Pc2Bottom, CompareStrings(encOriginal.roundKeys[roundCounter - 1], Pc2Bottom.Text));
             }
             else
             {
-                PC2_top.Text = EncOriginal.KeySchedule[roundCounter, 0] + EncOriginal.KeySchedule[roundCounter, 1];
-                PC2_bottom.Text = EncOriginal.RoundKeys[roundCounter - 1];
+                Pc2Top.Text = encOriginal.keySchedule[roundCounter, 0] + encOriginal.keySchedule[roundCounter, 1];
+                Pc2Bottom.Text = encOriginal.roundKeys[roundCounter - 1];
             }
             if (step == 2)
             {
-                PC2_bottom.Visibility = Visibility.Visible;
-                screenCounter = 6;
-                stepCounter = 5;
+                Pc2Bottom.Visibility = Visibility.Visible;
+                nextScreenID = 6;
+                nextStepCounter = 5;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 8;
-                clearButtonsColor(true);
+                nextStepCounter = 2;
+                nextScreenID = 8;
+                ClearButtonsColor(true);
                 PC2Button.Background = buttonBrush;
             }
-
         }
 
-        public void showExpansionScreen(int step)
+        public void ShowExpansionScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             ExpansionScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Expansion";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Expansion";
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                Expansion_top.Text = EncDiffusion.LR_Data[roundCounter - 1, 1];
-                colorText(Expansion_top, compareStrings(EncOriginal.LR_Data[roundCounter - 1, 1], Expansion_top.Text));
+                ExpansionTop.Text = encDiffusion.lrData[roundCounter - 1, 1];
+                ColorText(ExpansionTop, CompareStrings(encOriginal.lrData[roundCounter - 1, 1], ExpansionTop.Text));
 
-
-                Expansion_bottom.Text = EncDiffusion.RoundDetails[roundCounter - 1, 0];
-                colorText(Expansion_bottom, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 0], Expansion_bottom.Text));
+                ExpansionBottom.Text = encDiffusion.roundDetails[roundCounter - 1, 0];
+                ColorText(ExpansionBottom, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 0], ExpansionBottom.Text));
             }
             else
             {
-                Expansion_top.Text = EncOriginal.LR_Data[roundCounter - 1, 1];
-                Expansion_bottom.Text = EncOriginal.RoundDetails[roundCounter - 1, 0];
+                ExpansionTop.Text = encOriginal.lrData[roundCounter - 1, 1];
+                ExpansionBottom.Text = encOriginal.roundDetails[roundCounter - 1, 0];
             }
             if (step == 2)
             {
-                Expansion_bottom.Visibility = Visibility.Visible;
-                screenCounter = 12;
-                stepCounter = 3;
+                ExpansionBottom.Visibility = Visibility.Visible;
+                nextScreenID = 12;
+                nextStepCounter = 3;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 13;
-                clearButtonsColor(true);
+                nextStepCounter = 2;
+                nextScreenID = 13;
+                ClearButtonsColor(true);
                 ExpansionButton.Background = buttonBrush;
             }
-
-
-
         }
 
-        public void showPPScreen(int step)
+        public void ShowPScreen(int step)
         {
-            resetAllScreens(true);
-            PPScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "P-Permutation";
+            ResetAllScreens(true);
+            PScreen.Visibility = Visibility.Visible;
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Permutation Function";
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                PP_top.Text = EncDiffusion.RoundDetails[roundCounter - 1, 2];
-                colorText(PP_top, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 2], PP_top.Text));
+                PTop.Text = encDiffusion.roundDetails[roundCounter - 1, 2];
+                ColorText(PTop, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 2], PTop.Text));
 
-
-                PP_bottom.Text = EncDiffusion.RoundDetails[roundCounter - 1, 3];
-                colorText(PP_bottom, compareStrings(EncOriginal.RoundDetails[roundCounter - 1, 3], PP_bottom.Text));
+                PBottom.Text = encDiffusion.roundDetails[roundCounter - 1, 3];
+                ColorText(PBottom, CompareStrings(encOriginal.roundDetails[roundCounter - 1, 3], PBottom.Text));
             }
             else
             {
-                PP_top.Text = EncOriginal.RoundDetails[roundCounter - 1, 2];
-                PP_bottom.Text = EncOriginal.RoundDetails[roundCounter - 1, 3];
+                PTop.Text = encOriginal.roundDetails[roundCounter - 1, 2];
+                PBottom.Text = encOriginal.roundDetails[roundCounter - 1, 3];
             }
             if (step == 2)
             {
-                PP_bottom.Visibility = Visibility.Visible;
-                screenCounter = 12;
-                stepCounter = 6;
+                PBottom.Visibility = Visibility.Visible;
+                nextScreenID = 12;
+                nextStepCounter = 6;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 16;
-                clearButtonsColor(true);
+                nextStepCounter = 2;
+                nextScreenID = 16;
+                ClearButtonsColor(true);
                 PermutationButton.Background = buttonBrush;
             }
-
-
-
         }
 
-        public void showFPScreen(int step)
+        public void ShowFPScreen(int step)
         {
-            resetAllScreens(true);
+            ResetAllScreens(true);
             FPScreen.Visibility = Visibility.Visible;
-            title.Visibility = Visibility.Visible;
-            title.Content = "Final Permutation";
+            Title.Visibility = Visibility.Visible;
+            Title.Content = "Final Permutation";
             progress = 0.9375;
 
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
-                String old = EncOriginal.LR_Data[16, 1] + EncOriginal.LR_Data[16, 0];
-                String changed = EncDiffusion.LR_Data[16, 1] + EncDiffusion.LR_Data[16, 0];
-                FP_top.Text = changed;
-                colorText(FP_top, compareStrings(old, changed));
+                String old = encOriginal.lrData[16, 1] + encOriginal.lrData[16, 0];
+                String changed = encDiffusion.lrData[16, 1] + encDiffusion.lrData[16, 0];
+                FpTop.Text = changed;
+                ColorText(FpTop, CompareStrings(old, changed));
 
-
-                FP_bottom.Text = EncDiffusion.ciphertext;
-                colorText(FP_bottom, compareStrings(EncOriginal.ciphertext, EncDiffusion.ciphertext));
+                FpBottom.Text = encDiffusion.ciphertext;
+                ColorText(FpBottom, CompareStrings(encOriginal.ciphertext, encDiffusion.ciphertext));
             }
             else
             {
-                FP_top.Text = EncOriginal.LR_Data[16, 1] + EncOriginal.LR_Data[16, 0];
-                FP_bottom.Text = EncOriginal.ciphertext;
+                FpTop.Text = encOriginal.lrData[16, 1] + encOriginal.lrData[16, 0];
+                FpBottom.Text = encOriginal.ciphertext;
             }
             if (step == 2)
             {
-                FP_bottom.Visibility = Visibility.Visible;
-                screenCounter = 1;
-                stepCounter = 4;
+                FpBottom.Visibility = Visibility.Visible;
+                nextScreenID = 1;
+                nextStepCounter = 4;
             }
             else
             {
-                stepCounter = 2;
-                screenCounter = 18;
-                clearButtonsColor(false);
+                nextStepCounter = 2;
+                nextScreenID = 18;
+                ClearButtonsColor(false);
                 FPButton.Background = buttonBrush;
-                activateRoundButtons(false);
-                clearButtonsColor(true);
+                ActivateRoundButtons(false);
+                ClearButtonsColor(true);
                 roundCounter = 0;
-                SkipStepButton.Content = "Skip Step";
+                SkipButton.Content = "Skip Step";
                 ExpansionButton.Visibility = Visibility.Hidden;
                 KeyAdditionButton.Visibility = Visibility.Hidden;
                 SBoxButton.Visibility = Visibility.Hidden;
                 PermutationButton.Visibility = Visibility.Hidden;
                 RoundAdditionButton.Visibility = Visibility.Hidden;
-                desRounds = false;
+                desRoundsIsRunning = false;
             }
 
         }
 
-        // Reset-Methods
+        #endregion Screen-Methods (Show)
 
-        public void resetIntroScreen()
+        #region Screen-Methods (Reset)
+
+        public void ResetIntroScreen()
         {
             IntroScreen.Visibility = Visibility.Hidden;
         }
 
-        public void resetInfoScreen()
+        public void ResetInfoScreen()
         {
             InfoScreen.Visibility = Visibility.Hidden;
             InfoText.Visibility = Visibility.Hidden;
             HistoryText.Visibility = Visibility.Hidden;
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetExecutionScreen()
+        public void ResetChapterScreen()
         {
             ExecutionScreen.Visibility = Visibility.Hidden;
             ExecutionLabel.Content = "";
         }
 
-        public void resetFinalScreen()
+        public void ResetFinalScreen()
         {
             FinalScreen.Visibility = Visibility.Hidden;
             FinalCiphertext.TextEffects.Clear();
@@ -1675,18 +1804,20 @@ namespace Cryptool.DESVisualisation
             FinalMessage.TextEffects.Clear();    
         }
 
-        public void resetDataScreen()
+        public void ResetInputDataScreen()
         {
-            DataScreen.Visibility = Visibility.Hidden;
-            DiffusionTButton.IsChecked = false;
-            DiffusionClearButton.Visibility = Visibility.Hidden;
-            DiffusionOKButton.Visibility = Visibility.Hidden;
-            showDiffusionBoxes(false);                                  //DiffBoxen ausblenden, Werte lassen
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            InputDataScreen.Visibility = Visibility.Hidden;
+            DiffTButton.IsChecked = false;
+            DiffTButton.ClearValue(BackgroundProperty);
+            DiffClearButton.Visibility = Visibility.Hidden;
+            DiffOkButton.Visibility = Visibility.Hidden;
+            DiffInfoLabel.Visibility = Visibility.Hidden;
+            ShowDiffusionBoxes(false);
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetRoundDataScreen()
+        public void ResetRoundDataScreen()
         {
             RoundDataScreen.Visibility = Visibility.Hidden;
             L0.Visibility = Visibility.Hidden;
@@ -1762,7 +1893,7 @@ namespace Cryptool.DESVisualisation
             ArrowRounds.Visibility = Visibility.Visible;
         }
 
-        public void resetRoundKeyDataScreen()
+        public void ResetRoundKeyDataScreen()
         {
             RoundKeyDataScreen.Visibility = Visibility.Hidden;
             K1.Visibility = Visibility.Hidden;
@@ -1802,7 +1933,7 @@ namespace Cryptool.DESVisualisation
             ArrowSubKeys.Visibility = Visibility.Visible;
         }
 
-        public void resetSBoxScreen(bool full)
+        public void ResetSBoxScreen(bool full)
         {
             SBoxScreen.Visibility = Visibility.Hidden;
             S1Box.Visibility = Visibility.Hidden;
@@ -1824,8 +1955,8 @@ namespace Cryptool.DESVisualisation
             SBoxJumper.Visibility = Visibility.Hidden;
             Canvas.SetLeft(SBoxJumper, 53);
             Canvas.SetTop(SBoxJumper, 63);
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
             if (full)
             {
                 SBoxOut.Visibility = Visibility.Hidden;
@@ -1835,27 +1966,27 @@ namespace Cryptool.DESVisualisation
                 
         }
 
-        public void resetShift1Screen()
+        public void ResetShiftScreen()
         {
-            Shift1Screen.Visibility = Visibility.Hidden;
+            ShiftScreen.Visibility = Visibility.Hidden;
             Canvas.SetLeft(RoundTable, 173);
-            Shift_bottom.Visibility = Visibility.Hidden;
-            Shift_bottom.TextEffects.Clear();
-            Shift_top.TextEffects.Clear();
-            singleShift.Visibility = Visibility.Hidden;
-            doubleShift.Visibility = Visibility.Hidden;
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            ShiftBottom.Visibility = Visibility.Hidden;
+            ShiftBottom.TextEffects.Clear();
+            ShiftTop.TextEffects.Clear();
+            SingleShift.Visibility = Visibility.Hidden;
+            DoubleShift.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetStructureScreen()
+        public void ResetStructureScreen()
         {
             StructureScreen.Visibility = Visibility.Hidden;
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetKeyScheduleScreen()
+        public void ResetKeyScheduleScreen()
         {
             KeyScheduleScreen.Visibility = Visibility.Hidden;
             KeyScheduleTopLine.Visibility = Visibility.Hidden;
@@ -1866,20 +1997,25 @@ namespace Cryptool.DESVisualisation
             KeyScheduleDownArrow1.Visibility = Visibility.Hidden;
             KeySchedulePC1Box.Visibility = Visibility.Hidden;
             KeySchedulePC1Label.Visibility = Visibility.Hidden;
-            KeyScheduleShiftBox1.ClearValue(Rectangle.FillProperty);
-            KeyScheduleShiftBox2.ClearValue(Rectangle.FillProperty);
-            KeySchedulePC2Box.ClearValue(Rectangle.FillProperty);
+            KeyScheduleShiftBox1.ClearValue(Shape.FillProperty);
+            KeyScheduleShiftBox1.StrokeThickness = 2.63997;
+            KeyScheduleShiftBox2.ClearValue(Shape.FillProperty);
+            KeyScheduleShiftBox2.StrokeThickness = 2.63997;
+            KeySchedulePC2Box.ClearValue(Shape.FillProperty);
+            KeySchedulePC2Box.StrokeThickness = 2.63997;
             KeyScheduleCRound.TextEffects.Clear();
             KeyScheduleDRound.TextEffects.Clear();
         }
 
-        public void resetDESRoundScreen()
+        public void ResetDESRoundScreen()
         {
             DESRoundScreen.Visibility = Visibility.Hidden;
             DESRoundTopLine.Visibility = Visibility.Hidden;
 
-            DESRoundFunctionPath.ClearValue(Path.FillProperty);
-            RoundAdditionPath.ClearValue(Path.FillProperty);
+            DESRoundFunctionPath.ClearValue(Shape.FillProperty);
+            DESRoundFunctionPath.StrokeThickness = 2.63997;
+            RoundAdditionPath.ClearValue(Shape.FillProperty);
+            RoundAdditionPath.StrokeThickness = 2.63997;
 
             DESRoundL1Name.Visibility = Visibility.Hidden;
             DESRoundR1Name.Visibility = Visibility.Hidden;
@@ -1892,120 +2028,129 @@ namespace Cryptool.DESVisualisation
             DESRoundR1.TextEffects.Clear();
         }
 
-        public void resetRoundFunctionScreen()
+        public void ResetRoundFunctionScreen()
         {
             RoundFunctionScreen.Visibility = Visibility.Hidden;
 
-            ExpansionPath.ClearValue(Path.FillProperty);
-            FScreenXORPath.ClearValue(Path.FillProperty);
-            FScreenSPath1.ClearValue(Path.FillProperty);
-            FScreenSPath2.ClearValue(Path.FillProperty);
-            FScreenSPath3.ClearValue(Path.FillProperty);
-            FScreenSPath4.ClearValue(Path.FillProperty);
-            FScreenSPath5.ClearValue(Path.FillProperty);
-            FScreenSPath6.ClearValue(Path.FillProperty);
-            FScreenSPath7.ClearValue(Path.FillProperty);
-            FScreenSPath8.ClearValue(Path.FillProperty);
-            FScreenPPermutationBox.ClearValue(Rectangle.FillProperty);
+            ExpansionPath.ClearValue(Shape.FillProperty);
+            ExpansionPath.StrokeThickness = 1.43999;
+            FScreenXorPath.ClearValue(Shape.FillProperty);
+            FScreenXorPath.StrokeThickness = 1.43999;
+            FScreenSPath1.ClearValue(Shape.FillProperty);
+            FScreenSPath1.StrokeThickness = 1.43999;
+            FScreenSPath2.ClearValue(Shape.FillProperty);
+            FScreenSPath2.StrokeThickness = 1.43999;
+            FScreenSPath3.ClearValue(Shape.FillProperty);
+            FScreenSPath3.StrokeThickness = 1.43999;
+            FScreenSPath4.ClearValue(Shape.FillProperty);
+            FScreenSPath4.StrokeThickness = 1.43999;
+            FScreenSPath5.ClearValue(Shape.FillProperty);
+            FScreenSPath5.StrokeThickness = 1.43999;
+            FScreenSPath6.ClearValue(Shape.FillProperty);
+            FScreenSPath6.StrokeThickness = 1.43999;
+            FScreenSPath7.ClearValue(Shape.FillProperty);
+            FScreenSPath7.StrokeThickness = 1.43999;
+            FScreenSPath8.ClearValue(Shape.FillProperty);
+            FScreenSPath8.StrokeThickness = 1.43999;
+            FScreenPPermutationBox.ClearValue(Shape.FillProperty);
+            FScreenPPermutationBox.StrokeThickness = 1.43999;
 
         }
 
-        public void resetXORScreen()
+        public void ResetXORScreen()
         {
             XORScreen.Visibility = Visibility.Hidden;
-            XORResult.Visibility = Visibility.Hidden;
-            XORResultName.Visibility = Visibility.Hidden;
-            XOROperator1.TextEffects.Clear();
-            XOROperator2.TextEffects.Clear();
-            XORResult.TextEffects.Clear();
+            XorResult.Visibility = Visibility.Hidden;
+            XorResultName.Visibility = Visibility.Hidden;
+            XorOperator1.TextEffects.Clear();
+            XorOperator2.TextEffects.Clear();
+            XorResult.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetIPScreen()
+        public void ResetIPScreen()
         {
             IPScreen.Visibility = Visibility.Hidden;
-            IP_bottom.Visibility = Visibility.Hidden;
-            IP_bottom.TextEffects.Clear();
-            IP_top.TextEffects.Clear();
+            IpBottom.Visibility = Visibility.Hidden;
+            IpBottom.TextEffects.Clear();
+            IpTop.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetPC1Screen()
+        public void ResetPC1Screen()
         {
             PC1Screen.Visibility = Visibility.Hidden;
-            PC1_bottom.Visibility = Visibility.Hidden;
-            PC1_bottom.TextEffects.Clear();
-            PC1_top.TextEffects.Clear();
+            Pc1Bottom.Visibility = Visibility.Hidden;
+            Pc1Bottom.TextEffects.Clear();
+            Pc1Top.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetPC2Screen()
+        public void ResetPC2Screen()
         {
             PC2Screen.Visibility = Visibility.Hidden;
-            PC2_bottom.Visibility = Visibility.Hidden;
-            PC2_bottom.TextEffects.Clear();
-            PC2_top.TextEffects.Clear();
+            Pc2Bottom.Visibility = Visibility.Hidden;
+            Pc2Bottom.TextEffects.Clear();
+            Pc2Top.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetExpansionScreen()
+        public void ResetExpansionScreen()
         {
             ExpansionScreen.Visibility = Visibility.Hidden;
-            Expansion_bottom.Visibility = Visibility.Hidden;
-            Expansion_bottom.TextEffects.Clear();
-            Expansion_top.TextEffects.Clear();
+            ExpansionBottom.Visibility = Visibility.Hidden;
+            ExpansionBottom.TextEffects.Clear();
+            ExpansionTop.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetPPScreen()
+        public void ResetPScreen()
         {
-            PPScreen.Visibility = Visibility.Hidden;
-            PP_bottom.Visibility = Visibility.Hidden;
-            PP_bottom.TextEffects.Clear();
-            PP_top.TextEffects.Clear();
+            PScreen.Visibility = Visibility.Hidden;
+            PBottom.Visibility = Visibility.Hidden;
+            PBottom.TextEffects.Clear();
+            PTop.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
-        public void resetFPScreen()
+        public void ResetFPScreen()
         {
             FPScreen.Visibility = Visibility.Hidden;
-            FP_bottom.Visibility = Visibility.Hidden;
-            FP_bottom.TextEffects.Clear();
-            FP_top.TextEffects.Clear();
+            FpBottom.Visibility = Visibility.Hidden;
+            FpBottom.TextEffects.Clear();
+            FpTop.TextEffects.Clear();
 
-            title.Content = "";
-            title.Visibility = Visibility.Hidden;
+            Title.Content = "";
+            Title.Visibility = Visibility.Hidden;
         }
 
+        #endregion Screen-Methods (Reset)
 
-        #endregion Screen-Methods
-
-        /////////////////////////////////////////////////////////////
         #region Helper-Methods
 
-        public void showInitialState()
+        public void SetInitialState()
         {
-            if (desRounds)
+            if (desRoundsIsRunning)
             {
-                showFPScreen(1);
+                ShowFPScreen(1);
             }
-            else if (keySchedule)
+            else if (keyScheduleIsRunning)
             {
-                showExecutionScreen(3);
+                ShowChapterScreen(3);
             }
-            if (diffusionActive)
+            if (diffusionIsActive)
             {
                 IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
                 while (enumerator.MoveNext())
@@ -2015,23 +2160,97 @@ namespace Cryptool.DESVisualisation
 
                 DataKey.TextEffects.Clear();
                 DataMessage.TextEffects.Clear();
-                DataKey.Text = EncOriginal.key;
-                DataMessage.Text = EncOriginal.message;
+                DataKey.Text = encOriginal.key;
+                DataMessage.Text = encOriginal.message;
             }
-            resetAllScreens(true);
-            stepCounter = 0;
-            screenCounter = 0;
+            ResetAllScreens(true);
+            nextStepCounter = 0;
+            nextScreenID = 0;
             roundCounter = 0;
             progress = 0;
-            keySchedule = false;
-            desRounds = false;
-            diffusionActive = false;
-            showIntroScreen();
-            activateNavigationButtons(false);
+            keyScheduleIsRunning = false;
+            desRoundsIsRunning = false;
+            diffusionIsActive = false;
+            ClearButtonsColor(false);
+            ClearButtonsColor(true);
+            ShowIntroScreen();
+            ActivateNavigationButtons(false);
+            DiffusionActiveLabel.Visibility = Visibility.Hidden;
 
         }
 
-        private void showDiffusionBoxes(bool show)
+        private void ResetAllScreens(bool sBoxfullReset)
+        {
+            ResetIntroScreen();
+            ResetInfoScreen();
+            ResetChapterScreen();
+            ResetInputDataScreen();
+            ResetStructureScreen();
+            ResetPC1Screen();
+            ResetKeyScheduleScreen();
+            ResetShiftScreen();
+            ResetPC2Screen();
+            ResetRoundKeyDataScreen();
+            ResetIPScreen();
+            ResetDESRoundScreen();
+            ResetRoundFunctionScreen();
+            ResetExpansionScreen();
+            ResetXORScreen();
+            ResetSBoxScreen(sBoxfullReset);
+            ResetPScreen();
+            ResetRoundDataScreen();
+            ResetFPScreen();
+            ResetFinalScreen();
+        }
+
+        private void ExecuteNextStep()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                switch (nextScreenID)
+                {
+                    case 1: ShowChapterScreen(nextStepCounter); break;
+                    case 2: ShowInfoScreen(nextStepCounter); break;
+                    case 3: ShowInputDataScreen(); break;
+                    case 4: ShowStructureScreen(); break;
+                    case 5: ShowPC1Screen(nextStepCounter); break;
+                    case 6: ShowKeyScheduleScreen(nextStepCounter); break;
+                    case 7: ShowShiftScreen(nextStepCounter); break;
+                    case 8: ShowPC2Screen(nextStepCounter); break;
+                    case 9: ShowRoundKeyDataScreen(nextStepCounter); break;
+                    case 10: ShowIPScreen(nextStepCounter); break;
+                    case 11: ShowDESRoundScreen(nextStepCounter); break;
+                    case 12: ShowRoundFunctionScreen(nextStepCounter); break;
+                    case 13: ShowExpansionScreen(nextStepCounter); break;
+                    case 14: ShowXORScreen(nextStepCounter); break;
+                    case 15: ShowSBoxScreen(nextStepCounter); break;
+                    case 16: ShowPScreen(nextStepCounter); break;
+                    case 17: ShowRoundDataScreen(nextStepCounter); break;
+                    case 18: ShowFPScreen(nextStepCounter); break;
+                    case 19: ShowFinalScreen(); break;
+                }
+            }, null);
+
+        }
+
+        public void ActivateNavigationButtons(bool active)
+        {
+            IntroButton.IsEnabled = active;
+            DataButton.IsEnabled = active;
+            PC1Button.IsEnabled = active;
+            KeyScheduleButton.IsEnabled = active;
+            IPButton.IsEnabled = active;
+            DESButton.IsEnabled = active;
+            FPButton.IsEnabled = active;
+            SummaryButton.IsEnabled = active;
+            NextButton.IsEnabled = active;
+            PrevButton.IsEnabled = active;
+            SkipButton.IsEnabled = active;
+            AutoTButton.IsEnabled = active;
+            AutoSpeedSlider.IsEnabled = active;
+        }
+
+        private void ShowDiffusionBoxes(bool show)
         {
             IEnumerator<CheckBox> enumerator = diffusionBoxes.GetEnumerator();
             while (enumerator.MoveNext())
@@ -2040,15 +2259,20 @@ namespace Cryptool.DESVisualisation
                     enumerator.Current.Visibility = Visibility.Visible;
                 else
                     enumerator.Current.Visibility = Visibility.Hidden;
-            };
+            }
         }
 
-        private void getDiffusionBoxes()
+        private void GetDiffusionBoxes()
         {
             diffusionBoxes = DiffusionGrid.Children.OfType<CheckBox>();
         }
 
-        private List<byte> compareStrings(String old, String changed)
+        /// <summary>
+        /// This method compares each character of the two strings. If the character at a position is different
+        /// in the two strings this position is added to a list.
+        /// </summary>
+        /// <returns>A list of the positions with different characters</returns>
+        private List<byte> CompareStrings(string old, string changed)
         {
             List<byte> tmp = new List<byte>();
             char[] oldArray = old.ToCharArray();
@@ -2064,9 +2288,9 @@ namespace Cryptool.DESVisualisation
             return tmp;
         }
 
-        private void switchStringBit(TextBlock text, int pos)
+        private void SwitchStringBit(TextBlock text, int pos)
         {
-            String tmp = text.Text;
+            string tmp = text.Text;
             if (tmp.ElementAt(pos).Equals('0'))
             {
                 tmp = tmp.Remove(pos, 1);
@@ -2081,19 +2305,23 @@ namespace Cryptool.DESVisualisation
 
         }
 
-        private void colorText(TextBlock text, List<byte> pos)
+        /// <summary>
+        /// This method colors the characters at the given positions of a TextBlock red. 
+        /// </summary>
+        /// <param name="text">TextBlock which will be colored</param>
+        /// <param name="pos">Contains all positions which characters will be colored</param>
+        private void ColorText(TextBlock text, List<byte> pos)
         {
             byte[] changePos = pos.ToArray();
             text.TextEffects.Clear();
             for (byte i = 0; i < changePos.Length; i++)
             {
-                colorTextSingle(text, (byte)(changePos[i]));
+                ColorTextSingle(text, changePos[i]);
             }
-
 
         }
 
-        private void colorTextSingle(TextBlock text, byte pos)
+        private void ColorTextSingle(TextBlock text, byte pos)
         {
             TextEffect te = new TextEffect();
             te.PositionStart = pos;
@@ -2102,10 +2330,10 @@ namespace Cryptool.DESVisualisation
             text.TextEffects.Add(te);
         }
 
-        private byte[] stringToByteArray(String str)
+        private byte[] StringToByteArray(string str)
         {
             char[] strArray = str.ToCharArray();
-            String[] byteStrings = new String[8];
+            string[] byteStrings = new string[8];
             byteStrings[0] = "" + strArray[0] + strArray[1] + strArray[2] + strArray[3] + strArray[4] + strArray[5] + strArray[6] + strArray[7];
             byteStrings[1] = "" + strArray[8] + strArray[9] + strArray[10] + strArray[11] + strArray[12] + strArray[13] + strArray[14] + strArray[15];
             byteStrings[2] = "" + strArray[16] + strArray[17] + strArray[18] + strArray[19] + strArray[20] + strArray[21] + strArray[22] + strArray[23];
@@ -2123,123 +2351,49 @@ namespace Cryptool.DESVisualisation
 
         }
 
-        private String insertSpaces(String str)
+        private string InsertSpaces(string str)
         {
-            String tmp = "";
+            StringBuilder builder = new StringBuilder();
             char[] strArray = str.ToCharArray();
             for (int i = 0; i < strArray.Length; i++)
             {
-                tmp += strArray[i] + "  ";
+                builder.Append(strArray[i] + "  ");
             }
-            return tmp;
-
+            return builder.ToString();
         }
 
         private void PlayTimer_Tick(object sender, EventArgs e)
         {
-            executeSteps();
+            ExecuteNextStep();
         }
 
-        private void resetAllScreens(bool sBoxfull)
+        private void ActivateRoundButtons(bool active)
         {
-            resetIntroScreen();
-            resetInfoScreen();
-            resetExecutionScreen();
-            resetDataScreen();
-            resetStructureScreen();
-            resetPC1Screen();
-            resetKeyScheduleScreen();
-            resetShift1Screen();
-            resetPC2Screen();
-            resetRoundKeyDataScreen();
-            resetIPScreen();
-            resetDESRoundScreen();
-            resetRoundFunctionScreen();
-            resetExpansionScreen();
-            resetXORScreen();
-            resetSBoxScreen(sBoxfull);
-            resetPPScreen();
-            resetRoundDataScreen();
-            resetFPScreen();
-            resetFinalScreen();
-
+            Round1Button.IsEnabled = active;
+            Round2Button.IsEnabled = active;
+            Round3Button.IsEnabled = active;
+            Round4Button.IsEnabled = active;
+            Round5Button.IsEnabled = active;
+            Round6Button.IsEnabled = active;
+            Round7Button.IsEnabled = active;
+            Round8Button.IsEnabled = active;
+            Round9Button.IsEnabled = active;
+            Round10Button.IsEnabled = active;
+            Round11Button.IsEnabled = active;
+            Round12Button.IsEnabled = active;
+            Round13Button.IsEnabled = active;
+            Round14Button.IsEnabled = active;
+            Round15Button.IsEnabled = active;
+            Round16Button.IsEnabled = active;
 
         }
 
-        private void executeSteps()
+        private void ClearButtonsColor(bool topOnly)
         {
-            this.Dispatcher.Invoke(DispatcherPriority.Normal,(SendOrPostCallback)delegate
-            {           
-                switch (screenCounter)
-                {
-                    case 1: showExecutionScreen(stepCounter); break;
-                    case 2: showInfoScreen(stepCounter); break;
-                    case 3: showDataScreen(); break;
-                    case 4: showStructureScreen(); break;
-                    case 5: showPC1Screen(stepCounter); break;
-                    case 6: showKeyScheduleScreen(stepCounter); break;
-                    case 7: showShift1Screen(stepCounter); break;
-                    case 8: showPC2Screen(stepCounter); break;
-                    case 9: showRoundKeyDataScreen(stepCounter); break;
-                    case 10: showIPScreen(stepCounter); break;
-                    case 11: showDESRoundScreen(stepCounter); break;
-                    case 12: showRoundFunctionScreen(stepCounter); break;
-                    case 13: showExpansionScreen(stepCounter); break;
-                    case 14: showXORScreen(stepCounter); break;
-                    case 15: showSBoxScreen(stepCounter); break;
-                    case 16: showPPScreen(stepCounter); break;
-                    case 17: showRoundDataScreen(stepCounter); break;
-                    case 18: showFPScreen(stepCounter); break;
-                    case 19: showFinalScreen(); break;
-                    default: break;
-                }
-            }, null);
-        }
-
-        public void activateNavigationButtons(bool active)
-        {
-            IntroButton.IsEnabled = active;
-            DataButton.IsEnabled = active;
-            PC1Button.IsEnabled = active;
-            KeyScheduleButton.IsEnabled = active;
-            IPButton.IsEnabled = active;
-            DESButton.IsEnabled = active;
-            FPButton.IsEnabled = active;
-            SummaryButton.IsEnabled = active;
-            NextButton.IsEnabled = active;
-            PrevButton.IsEnabled = active;
-            SkipStepButton.IsEnabled = active;
-            AutoButton.IsEnabled = active;
-            AutoSpeedSlider.IsEnabled = active;
-        }
-
-        private void activateRoundButtons(bool active)
-        {
-            round1Button.IsEnabled = active;
-            round2Button.IsEnabled = active;
-            round3Button.IsEnabled = active;
-            round4Button.IsEnabled = active;
-            round5Button.IsEnabled = active;
-            round6Button.IsEnabled = active;
-            round7Button.IsEnabled = active;
-            round8Button.IsEnabled = active;
-            round9Button.IsEnabled = active;
-            round10Button.IsEnabled = active;
-            round11Button.IsEnabled = active;
-            round12Button.IsEnabled = active;
-            round13Button.IsEnabled = active;
-            round14Button.IsEnabled = active;
-            round15Button.IsEnabled = active;
-            round16Button.IsEnabled = active;
-
-        }
-
-        private void clearButtonsColor(bool top)
-        {
-
-            if (top)
+            if (topOnly)
             {
-                ShiftButton.ClearValue(BackgroundProperty);
+                ShiftCButton.ClearValue(BackgroundProperty);
+                ShiftDButton.ClearValue(BackgroundProperty);
                 PC2Button.ClearValue(BackgroundProperty);
                 ExpansionButton.ClearValue(BackgroundProperty);
                 KeyAdditionButton.ClearValue(BackgroundProperty);
@@ -2257,54 +2411,49 @@ namespace Cryptool.DESVisualisation
                 DESButton.ClearValue(BackgroundProperty);
                 FPButton.ClearValue(BackgroundProperty);
                 SummaryButton.ClearValue(BackgroundProperty);
-                round1Button.ClearValue(BackgroundProperty);
-                round2Button.ClearValue(BackgroundProperty);
-                round3Button.ClearValue(BackgroundProperty);
-                round4Button.ClearValue(BackgroundProperty);
-                round5Button.ClearValue(BackgroundProperty);
-                round6Button.ClearValue(BackgroundProperty);
-                round7Button.ClearValue(BackgroundProperty);
-                round8Button.ClearValue(BackgroundProperty);
-                round9Button.ClearValue(BackgroundProperty);
-                round10Button.ClearValue(BackgroundProperty);
-                round11Button.ClearValue(BackgroundProperty);
-                round12Button.ClearValue(BackgroundProperty);
-                round13Button.ClearValue(BackgroundProperty);
-                round14Button.ClearValue(BackgroundProperty);
-                round15Button.ClearValue(BackgroundProperty);
-                round16Button.ClearValue(BackgroundProperty);
+                Round1Button.ClearValue(BackgroundProperty);
+                Round2Button.ClearValue(BackgroundProperty);
+                Round3Button.ClearValue(BackgroundProperty);
+                Round4Button.ClearValue(BackgroundProperty);
+                Round5Button.ClearValue(BackgroundProperty);
+                Round6Button.ClearValue(BackgroundProperty);
+                Round7Button.ClearValue(BackgroundProperty);
+                Round8Button.ClearValue(BackgroundProperty);
+                Round9Button.ClearValue(BackgroundProperty);
+                Round10Button.ClearValue(BackgroundProperty);
+                Round11Button.ClearValue(BackgroundProperty);
+                Round12Button.ClearValue(BackgroundProperty);
+                Round13Button.ClearValue(BackgroundProperty);
+                Round14Button.ClearValue(BackgroundProperty);
+                Round15Button.ClearValue(BackgroundProperty);
+                Round16Button.ClearValue(BackgroundProperty);
             }
-
 
         }
 
-        private void colorRoundKeys()
+        private void ColorRoundButton()
         {
-            clearButtonsColor(false);
+            ClearButtonsColor(false);
             switch (roundCounter)
             {
-                case 1: round1Button.Background = buttonBrush; break;
-                case 2: round2Button.Background = buttonBrush; break;
-                case 3: round3Button.Background = buttonBrush; break;
-                case 4: round4Button.Background = buttonBrush; break;
-                case 5: round5Button.Background = buttonBrush; break;
-                case 6: round6Button.Background = buttonBrush; break;
-                case 7: round7Button.Background = buttonBrush; break;
-                case 8: round8Button.Background = buttonBrush; break;
-                case 9: round9Button.Background = buttonBrush; break;
-                case 10: round10Button.Background = buttonBrush; break;
-                case 11: round11Button.Background = buttonBrush; break;
-                case 12: round12Button.Background = buttonBrush; break;
-                case 13: round13Button.Background = buttonBrush; break;
-                case 14: round14Button.Background = buttonBrush; break;
-                case 15: round15Button.Background = buttonBrush; break;
-                case 16: round16Button.Background = buttonBrush; break;
-                default: break;
+                case 1: Round1Button.Background = buttonBrush; break;
+                case 2: Round2Button.Background = buttonBrush; break;
+                case 3: Round3Button.Background = buttonBrush; break;
+                case 4: Round4Button.Background = buttonBrush; break;
+                case 5: Round5Button.Background = buttonBrush; break;
+                case 6: Round6Button.Background = buttonBrush; break;
+                case 7: Round7Button.Background = buttonBrush; break;
+                case 8: Round8Button.Background = buttonBrush; break;
+                case 9: Round9Button.Background = buttonBrush; break;
+                case 10: Round10Button.Background = buttonBrush; break;
+                case 11: Round11Button.Background = buttonBrush; break;
+                case 12: Round12Button.Background = buttonBrush; break;
+                case 13: Round13Button.Background = buttonBrush; break;
+                case 14: Round14Button.Background = buttonBrush; break;
+                case 15: Round15Button.Background = buttonBrush; break;
+                case 16: Round16Button.Background = buttonBrush; break;
             }
         }
-
-
-
 
         #endregion Helper-Methods
 

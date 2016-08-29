@@ -1,306 +1,272 @@
 ﻿using System;
+using System.Text;
 
 namespace Cryptool.DESVisualisation
 {
+
     /// <summary>
     /// Declaration of the DESImplementation class which executes the Data Encryption Standard
     /// algorithm for encryption and saves all the binary strings needed for DESPresentation.xaml.
     /// </summary>
     public class DESImplementation
     {
-        //Constructor
+
+        // Constructor
         public DESImplementation(byte[] keyInput, byte[] messageInput)
         {
-            Inputmessage = messageInput;
-            Inputkey = keyInput;
+            inputMessage = messageInput;
+            inputKey = keyInput;
         }
 
-        /////////////////////////////////////////////////////////////
-        // Attributes
+        #region Attributes
 
-        public byte[] Inputmessage;
-        public byte[] Inputkey;
-        public byte[] Outputciphertext;
+        public byte[] inputMessage;
+        public byte[] inputKey;
+        public byte[] outputCiphertext;
+        
+        // Row, Column and Output of each S-Box for all 16 rounds saved as bytes
+        public byte[,] sBoxNumberDetails = new byte[16, 24];
 
-        //Strings for DESPresentation.xaml
-        public String[,] KeySchedule = new String[17, 2];           // Cn, Dn (C0D0 = PC1Result)    
-        public String[] RoundKeys = new String[16];                 // Kn = PC2Result
+        // Binary Strings for DESPresentation
 
-        public String[,] LR_Data = new String[17, 2];               // Ln, Rn (L0R0 = IPResult)
-        public String[,] RoundDetails = new String[16, 4];          // E(Rn-1), KeyXOR, SBoxOut, FOut
-        public byte[,] SBoxNumberDetails = new byte[16, 24];        // SiRow, SiColumn, SiOut (i = 1 to 8)
-        public String[,] SBoxStringDetails = new String[16, 32];    // SiIn, SiRow, SiColumn, SiOut (i = 1 to 8)
+        // Cn, Dn for all 16 rounds n (C0D0 = Result of PC1)
+        public string[,] keySchedule = new string[17, 2];
+        // Kn for all 16 rounds n (Result of PC2)
+        public string[] roundKeys = new string[16];
 
-        public String ciphertext;                                   // FPResult = R16L16 
-        public String message;
-        public String key;
+        // Ln, Rn for all 16 rounds n (L0R0 =  Result of IP)
+        public string[,] lrData = new string[17, 2];
+        // E(Rn-1), KeyAddition, SBoxOutput, FunctionOutput for all 16 rounds n
+        public string[,] roundDetails = new string[16, 4];
+        // Input, Row, Column and Output of each S-Box for all 16 rounds saved as binary string
+        public string[,] sBoxStringDetails = new string[16, 32];
 
-        /////////////////////////////////////////////////////////////
+        // Result of FP(R16L16)
+        public string ciphertext;
+        public string message;
+        public string key;
+
         // Constants
 
-        public const int KEY_BYTE_LENGTH = 8;
+        public const int KeyByteLength = 8;
+        public const int BitsPerByte = 8;
 
-        public const int BITS_PER_BYTE = 8;
+        #endregion Attributes
 
-        /////////////////////////////////////////////////////////////
         #region Nested classes
 
         /// <summary>
-        /// Declaration of BLOCK8BYTE class
+        /// Declaration of ByteBlock class which represents a 64 bit block.
         /// </summary>
-        internal class BLOCK8BYTE
+        internal class ByteBlock
         {
 
-            /////////////////////////////////////////////////////////
             // Constants
+            public const int ByteLength = 8;
 
-            public const int BYTE_LENGTH = 8;
-
-            /////////////////////////////////////////////////////////
             // Attributes
+            internal byte[] data = new byte[ByteLength];
 
-            internal byte[] m_data = new byte[BYTE_LENGTH];
-
-            /////////////////////////////////////////////////////////
             // Operations
 
+            /// <summary>
+            /// Reset Data bytes
+            /// </summary>
             public void Reset()
             {
-
-                // Reset bytes
-                Array.Clear(m_data, 0, BYTE_LENGTH);
-
+                Array.Clear(data, 0, ByteLength);
             }
 
-            public void Set(BLOCK8BYTE Source)
+            /// <summary>
+            /// Copy source Data to this Data
+            /// </summary>
+            public void Set(ByteBlock source)
             {
-
-                // Copy source data to this
-                this.Set(Source.m_data, 0);
-
+                Set(source.data, 0);
             }
 
-            public void Set(byte[] buffer, int iOffset)
+            /// <summary>
+            /// Copy bytes from buffer starting at offset into Data
+            /// </summary>
+            public void Set(byte[] buffer, int offset)
             {
-
-                // Set contents by copying array
-                Array.Copy(buffer, iOffset, m_data, 0, BYTE_LENGTH);
-
+                Array.Copy(buffer, offset, data, 0, ByteLength);
             }
 
-            public void Xor(BLOCK8BYTE A, BLOCK8BYTE B)
+            /// <summary>
+            /// Set result of a xor b to Data
+            /// </summary>
+            public void Xor(ByteBlock a, ByteBlock b)
             {
-
-                // Set byte to A ^ B
-                for (int iOffset = 0; iOffset < BYTE_LENGTH; iOffset++)
-                    m_data[iOffset] = Convert.ToByte(A.m_data[iOffset] ^ B.m_data[iOffset]);
-
+                for (int offset = 0; offset < ByteLength; offset++)
+                {
+                    data[offset] = Convert.ToByte(a.data[offset] ^ b.data[offset]);
+                }
             }
 
-            public void SetBit(int iByteOffset, int iBitOffset, bool bFlag)
+            /// <summary>
+            /// Set one bit in Data to true (1) or false (0)
+            /// </summary>
+            public void SetBit(int byteOffset, int bitOffset, bool flag)
             {
-
-                // Compose mask
-                byte mask = Convert.ToByte(1 << iBitOffset);
-                if (((m_data[iByteOffset] & mask) == mask) != bFlag)
-                    m_data[iByteOffset] ^= mask;
-
+                byte mask = Convert.ToByte(1 << bitOffset);
+                if (((data[byteOffset] & mask) == mask) != flag)
+                {
+                    data[byteOffset] ^= mask;
+                }
             }
 
-            public bool GetBit(int iByteOffset, int iBitOffset)
+            /// <summary>
+            /// Return one bit in Data, true (1) or false (0)
+            /// </summary>
+            public bool GetBit(int byteOffset, int bitOffset)
             {
-
-                // Call sibling function
-                return ((this.m_data[iByteOffset] >> iBitOffset) & 0x01) == 0x01;
-
+                return ((data[byteOffset] >> bitOffset) & 0x01) == 0x01;
             }
 
-            public void ShiftLeftWrapped(BLOCK8BYTE S, int iBitShift)
+            /// <summary>
+            ///  Cyclic left shift by 1 or 2 is only applied to the first 32 bits and parity bit is ignored
+            /// </summary>
+            public void ShiftLeftWrapped(ByteBlock s, int bitShift)
             {
-
-                // This shift is only applied to the first 32 bits, and parity bit is ignored
-
-                // Declaration of local variables
-                int iByteOffset = 0;
-                bool bBit = false;
+                int byteOffset;
+                bool bit;
 
                 // Copy byte and shift regardless
-                for (iByteOffset = 0; iByteOffset < 4; iByteOffset++)
-                    m_data[iByteOffset] = Convert.ToByte((S.m_data[iByteOffset] << iBitShift) & 0xFF);
+                for (byteOffset = 0; byteOffset < 4; byteOffset++)
+                {
+                    data[byteOffset] = Convert.ToByte((s.data[byteOffset] << bitShift) & 0xFF);
+                }
 
-                // if shifting by 1...
-                if (iBitShift == 1)
+                if (bitShift == 1)
                 {
 
                     // repair bits on right of BYTE
-                    for (iByteOffset = 0; iByteOffset < 3; iByteOffset++)
+                    for (byteOffset = 0; byteOffset < 3; byteOffset++)
                     {
 
-                        // get repairing bit offsets
-                        bBit = S.GetBit(iByteOffset + 1, 7);
-                        this.SetBit(iByteOffset, 1, bBit);
+                        bit = s.GetBit(byteOffset + 1, 7);
+                        SetBit(byteOffset, 1, bit);
 
                     }
 
                     // wrap around the final bit
-                    this.SetBit(3, 1, S.GetBit(0, 7));
+                    SetBit(3, 1, s.GetBit(0, 7));
 
                 }
-                else if (iBitShift == 2)
+                else if (bitShift == 2)
                 {
 
                     // repair bits on right of BYTE
-                    for (iByteOffset = 0; iByteOffset < 3; iByteOffset++)
+                    for (byteOffset = 0; byteOffset < 3; byteOffset++)
                     {
 
-                        // get repairing bit offsets
-                        bBit = S.GetBit(iByteOffset + 1, 7);
-                        this.SetBit(iByteOffset, 2, bBit);
-                        bBit = S.GetBit(iByteOffset + 1, 6);
-                        this.SetBit(iByteOffset, 1, bBit);
+                        bit = s.GetBit(byteOffset + 1, 7);
+                        SetBit(byteOffset, 2, bit);
+                        bit = s.GetBit(byteOffset + 1, 6);
+                        SetBit(byteOffset, 1, bit);
 
                     }
 
                     // wrap around the final bit
-                    this.SetBit(3, 2, S.GetBit(0, 7));
-                    this.SetBit(3, 1, S.GetBit(0, 6));
+                    SetBit(3, 2, s.GetBit(0, 7));
+                    SetBit(3, 1, s.GetBit(0, 6));
 
                 }
 
             }
 
-            public String ToBinaryString(int length, int deletePos)
+            /// <summary>
+            /// This method creates a modified binary string equivalent to the data byte array.
+            /// </summary>
+            /// <param name="length">Sets the length of the returned string.</param>
+            /// <param name="lastPos">The bit at this position and all bits after that position in each byte will be skipped. They are not included in the returned binary string. It starts by 1 and ends with 8. If no bit should be skipped this parameter has to be 0.</param>
+            /// <returns>Binary string with specified length</returns>
+            public string ToBinaryString(int length, int lastPos)
             {
-                String tmp = "";
-                for (int i = 0; i < BYTE_LENGTH; i++)
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < ByteLength; i++)
                 {
-                    for (int j = 0; j < BYTE_LENGTH; j++)
+                    for (int j = 0; j < ByteLength; j++)
                     {
-                        if(deletePos-1-j != 0)
+                        if(lastPos==0 || lastPos-1-j > 0 )
                         {
                             if (GetBit(i, 7-j))
-                                tmp = tmp + "1";
+                                builder.Append('1');
                             else
-                                tmp = tmp + "0";        
+                                builder.Append('0');
                         }     
                     }  
                 }
+                string tmp = builder.ToString();
                 tmp =tmp.Remove(length-1,tmp.Length-length);
                 return tmp;
             }
-
-            public String ToBinaryString2(int deletePos1, int deletePos2)
-            {
-                String tmp = "";
-                for (int i = 0; i < BYTE_LENGTH; i++)
-                {
-                    for (int j = 0; j < BYTE_LENGTH; j++)
-                    {
-                        if (deletePos1 - 1 - j != 0 && deletePos2-1-j !=0)
-                        {
-                            if (GetBit(i, 7 - j))
-                                tmp = tmp + "1";
-                            else
-                                tmp = tmp + "0";        
-                        }
-                    }  
-                }
-                return tmp;
-            }
-
-            public String ToBinaryString4(int deletePos1, int deletePos2, int deletePos3, int deletePos4)
-            {
-                String tmp = "";
-                for (int i = 0; i < BYTE_LENGTH; i++)
-                {
-                    for (int j = 0; j < BYTE_LENGTH; j++)
-                    {
-                        if (deletePos1 - 1 - j != 0 && deletePos2 - 1 - j != 0 && deletePos3 - 1 - j != 0 && deletePos4 - 1 - j != 0)
-                        {
-                            if (GetBit(i, 7 - j))
-                                tmp = tmp + "1";
-                            else
-                                tmp = tmp + "0";
-                        }
-                    }                   
-                }
-                return tmp;
-            }
-
         }
 
         /// <summary>
-        /// Declaration of KEY_SET class
+        /// Declaration of KeySet class which contains all RoundKeys.
         /// </summary>
-        internal class KEY_SET
+        internal class KeySet
         {
 
-            /////////////////////////////////////////////////////////
             // Constants
+            public const int KeyCount = 17;
 
-            public const int KEY_COUNT = 17;
-
-            /////////////////////////////////////////////////////////
             // Attributes
+            internal ByteBlock[] keys;
 
-            internal BLOCK8BYTE[] m_array;
-
-            /////////////////////////////////////////////////////////
-            // Construction
-
-            internal KEY_SET()
+            // Constructor
+            internal KeySet()
             {
 
                 // Create array
-                m_array = new BLOCK8BYTE[KEY_COUNT];
-                for (int i1 = 0; i1 < KEY_COUNT; i1++)
-                    m_array[i1] = new BLOCK8BYTE();
+                keys = new ByteBlock[KeyCount];
+                for (int i = 0; i < KeyCount; i++)
+                {
+                    keys[i] = new ByteBlock();
+                }
 
             }
 
-            /////////////////////////////////////////////////////////
-            // Operations
+            // Operation
 
-            public BLOCK8BYTE GetAt(int iArrayOffset)
+            public ByteBlock GetAt(int arrayOffset)
             {
-                return m_array[iArrayOffset];
+                return keys[arrayOffset];
             }
 
         }
 
         /// <summary>
-        /// Declaration of WORKING_SET class
+        /// Declaration of WorkingSet class which contains all data blocks calculated in the 16 DES-Rounds.
         /// </summary>
-        internal class WORKING_SET
+        internal class WorkingSet
         {
 
-            /////////////////////////////////////////////////////////
             // Attributes
 
-            internal BLOCK8BYTE IP = new BLOCK8BYTE();
-            internal BLOCK8BYTE[] Ln = new BLOCK8BYTE[17];
-            internal BLOCK8BYTE[] Rn = new BLOCK8BYTE[17];
-            internal BLOCK8BYTE RnExpand = new BLOCK8BYTE();
-            internal BLOCK8BYTE XorBlock = new BLOCK8BYTE();
-            internal BLOCK8BYTE SBoxValues = new BLOCK8BYTE();
-            internal BLOCK8BYTE f = new BLOCK8BYTE();
-            internal BLOCK8BYTE X = new BLOCK8BYTE();
+            internal ByteBlock ip = new ByteBlock();
+            internal ByteBlock[] ln = new ByteBlock[17];
+            internal ByteBlock[] rn = new ByteBlock[17];
+            internal ByteBlock rnExpand = new ByteBlock();
+            internal ByteBlock xorBlock = new ByteBlock();
+            internal ByteBlock sBoxValues = new ByteBlock();
+            internal ByteBlock f = new ByteBlock();
+            internal ByteBlock x = new ByteBlock();
 
-            internal BLOCK8BYTE DataBlockIn = new BLOCK8BYTE();
-            internal BLOCK8BYTE DataBlockOut = new BLOCK8BYTE();
-            internal BLOCK8BYTE DecryptXorBlock = new BLOCK8BYTE();
+            internal ByteBlock inputBlock = new ByteBlock();
+            internal ByteBlock outputBlock = new ByteBlock();
 
-            /////////////////////////////////////////////////////////
-            // Construction
-
-            internal WORKING_SET()
+            // Constructor
+            internal WorkingSet()
             {
 
                 // Build the arrays
                 for (int i1 = 0; i1 < 17; i1++)
                 {
-                    Ln[i1] = new BLOCK8BYTE();
-                    Rn[i1] = new BLOCK8BYTE();
+                    ln[i1] = new ByteBlock();
+                    rn[i1] = new ByteBlock();
                 }
             }
 
@@ -308,10 +274,9 @@ namespace Cryptool.DESVisualisation
 
         #endregion Nested classes
 
-        /////////////////////////////////////////////////////////////
         #region DES Tables
 
-        /* PERMUTED CHOICE 1 (PCl) */
+        // Permuted Choice 1 (PCl)
         private static byte[] bytePC1 = {
             57, 49, 41, 33, 25, 17,  9,
             1,  58, 50, 42, 34, 26, 18,
@@ -323,7 +288,7 @@ namespace Cryptool.DESVisualisation
             21, 13,  5, 28, 20, 12,  4,
         };
 
-        /* PERMUTED CHOICE 2 (PC2) */
+        // Permuted Choice 2 (PC2)
         private static byte[] bytePC2 = {
             14, 17, 11, 24,  1,  5,
             3,  28, 15,  6, 21, 10,
@@ -335,7 +300,7 @@ namespace Cryptool.DESVisualisation
             46, 42, 50, 36, 29, 32,
         };
 
-        /* INITIAL PERMUTATION (IP) */
+        // Initial Permutation (IP)
         private static byte[] byteIP =  {
             58, 50, 42, 34, 26, 18, 10,  2,
             60, 52, 44, 36, 28, 20, 12,  4,
@@ -347,8 +312,8 @@ namespace Cryptool.DESVisualisation
             63, 55, 47, 39, 31, 23, 15,  7
         };
 
-        /* REVERSE FINAL PERMUTATION (IP-1) */
-        private static byte[] byteRFP = {
+        // Final Permutation (FP)
+        private static byte[] byteFP = {
             40,  8,   48,    16,    56,   24,    64,   32,
             39,  7,   47,    15,    55,   23,    63,   31,
             38,  6,   46,    14,    54,   22,    62,   30,
@@ -359,7 +324,7 @@ namespace Cryptool.DESVisualisation
             33,  1,   41,     9,    49,   17,    57,   25,
         };
 
-        /* E BIT-SELECTION TABLE */
+        // Expansion Function (E)
         private static byte[] byteE = {
             32,  1,  2,  3,  4,  5,
             4,   5,  6,  7,  8,  9,
@@ -371,7 +336,7 @@ namespace Cryptool.DESVisualisation
             28, 29, 30, 31, 32,  1
         };
 
-        /* PERMUTATION FUNCTION P */
+        // Permutation Function (P)
         private static byte[] byteP = {
             16,  7, 20, 21,
             29, 12, 28, 17,
@@ -383,7 +348,7 @@ namespace Cryptool.DESVisualisation
             22, 11,  4, 25
         };
 
-        // Schedule of left shifts for C and D blocks
+        // Schedule of cyclic left shifts for C and D blocks
         public static byte[] byteShifts = { 1, 1, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 1 };
 
         // S-Boxes
@@ -431,81 +396,88 @@ namespace Cryptool.DESVisualisation
 
         #endregion DES Tables
 
-        /////////////////////////////////////////////////////////////
-        #region Operations - DES
+        #region  DES Operations
 
-        private bool IsValidDESInput(byte[] Input)
+        /// <summary>
+        /// Check the correctness of the DES input. It must contain 8 bytes.
+        /// </summary>
+        private bool IsValidDESInput(byte[] input)
         {
-            if (Input == null)
+            if (input == null)
                 return false;
-            if (Input.Length != KEY_BYTE_LENGTH)
+            if (input.Length != KeyByteLength)
                 return false;
 
             // Return success
             return true;
         }
 
+        /// <summary>
+        /// High level method to start the DES encryption process.
+        /// </summary>
         public void DES()
         {
 
-            // Shortcuts
-            if (!IsValidDESInput(this.Inputkey))
+            // Check correctness of Input
+            if (!IsValidDESInput(inputKey))
+            {
                 throw new Exception("ERROR: Invalid DES key.");
-            if (!IsValidDESInput(this.Inputmessage))
+            }
+            if (!IsValidDESInput(inputMessage))
+            {
                 throw new Exception("ERROR: Invalid DES message.");
+            }
 
             // Expand the keys into Kn
-            KEY_SET[] Kn = new KEY_SET[1] {
-                _expandKey(this.Inputkey, 0)
-            };
+            KeySet kn = ExpandKey(inputKey);
 
             // Apply DES keys
-            _desAlgorithm(this.Inputmessage, Kn);
+            DesAlgorithm(inputMessage, kn);
 
         }
 
-        #endregion Operations - DES
+        #endregion DES-Operations
 
-        /////////////////////////////////////////////////////////////
-        #region Low-level Operations
+        #region Low-level DES Operations
 
-        private KEY_SET _expandKey(byte[] Key, int iOffset)
+        /// <summary>
+        /// Expand an 8 byte DES key into a set of permuted round keys.
+        /// </summary>
+        /// <param name="key">8 byte DES key</param>
+        /// <returns>KeySet instance containing the round keys</returns>
+        private KeySet ExpandKey(byte[] key)
         {
 
-            //
-            // Expand an 8 byte DES key into a set of permuted round keys
-            //
-
             // Declare return variable
-            KEY_SET Ftmp = new KEY_SET();
+            KeySet tmp = new KeySet();
 
             // Declaration of local variables
-            int iTableOffset, iArrayOffset, iPermOffset, iByteOffset, iBitOffset;
-            bool bBit;
+            int tableOffset, arrayOffset, permOffset, byteOffset, bitOffset;
+            bool bit;
 
             // Put key into an 8-bit block
-            BLOCK8BYTE K = new BLOCK8BYTE();
-            K.Set(Key, iOffset);
+            ByteBlock k = new ByteBlock();
+            k.Set(key, 0);
 
             //Fill String Attribute
-            key = K.ToBinaryString(64,0);
+            this.key = k.ToBinaryString(64,0);
 
             // Permutate Kp with PC1
-            BLOCK8BYTE Kp = new BLOCK8BYTE();
-            for (iArrayOffset = 0; iArrayOffset < bytePC1.Length; iArrayOffset++)
+            ByteBlock kp = new ByteBlock();
+            for (arrayOffset = 0; arrayOffset < bytePC1.Length; arrayOffset++)
             {
 
                 // Get permute offset
-                iPermOffset = bytePC1[iArrayOffset];
-                iPermOffset--;
+                permOffset = bytePC1[arrayOffset];
+                permOffset--;
 
                 // Get and set bit
-                Kp.SetBit(
-                    _bitAddressToByteOffset(iArrayOffset, 7),
-                    _bitAddressToBitOffset(iArrayOffset, 7),
-                    K.GetBit(
-                        _bitAddressToByteOffset(iPermOffset, 8),
-                        _bitAddressToBitOffset(iPermOffset, 8)
+                kp.SetBit(
+                    BitAddressToByteOffset(arrayOffset, 7),
+                    BitAddressToBitOffset(arrayOffset, 7),
+                    k.GetBit(
+                        BitAddressToByteOffset(permOffset, 8),
+                        BitAddressToBitOffset(permOffset, 8)
                     )
                 );
 
@@ -513,333 +485,326 @@ namespace Cryptool.DESVisualisation
 
 
             // Create 17 blocks of C and D from Kp
-            BLOCK8BYTE[] KpCn = new BLOCK8BYTE[17];
-            BLOCK8BYTE[] KpDn = new BLOCK8BYTE[17];
-            for (iArrayOffset = 0; iArrayOffset < 17; iArrayOffset++)
+            ByteBlock[] kpCn = new ByteBlock[17];
+            ByteBlock[] kpDn = new ByteBlock[17];
+            for (arrayOffset = 0; arrayOffset < 17; arrayOffset++)
             {
-                KpCn[iArrayOffset] = new BLOCK8BYTE();
-                KpDn[iArrayOffset] = new BLOCK8BYTE();
+                kpCn[arrayOffset] = new ByteBlock();
+                kpDn[arrayOffset] = new ByteBlock();
             }
-            for (iArrayOffset = 0; iArrayOffset < 32; iArrayOffset++)
+            for (arrayOffset = 0; arrayOffset < 32; arrayOffset++)
             {
 
                 // Set bit in KpCn
-                iByteOffset = _bitAddressToByteOffset(iArrayOffset, 8);
-                iBitOffset = _bitAddressToBitOffset(iArrayOffset, 8);
-                bBit = Kp.GetBit(iByteOffset, iBitOffset);
-                KpCn[0].SetBit(iByteOffset, iBitOffset, bBit);
+                byteOffset = BitAddressToByteOffset(arrayOffset, 8);
+                bitOffset = BitAddressToBitOffset(arrayOffset, 8);
+                bit = kp.GetBit(byteOffset, bitOffset);
+                kpCn[0].SetBit(byteOffset, bitOffset, bit);
 
                 // Set bit in KpDn
-                bBit = Kp.GetBit(iByteOffset + 4, iBitOffset);
-                KpDn[0].SetBit(iByteOffset, iBitOffset, bBit);
+                bit = kp.GetBit(byteOffset + 4, bitOffset);
+                kpDn[0].SetBit(byteOffset, bitOffset, bit);
 
             }
 
-            for (iArrayOffset = 1; iArrayOffset < 17; iArrayOffset++)
+            for (arrayOffset = 1; arrayOffset < 17; arrayOffset++)
             {
 
                 // Shift left wrapped
-                KpCn[iArrayOffset].ShiftLeftWrapped(KpCn[iArrayOffset - 1], byteShifts[iArrayOffset - 1]);
-                KpDn[iArrayOffset].ShiftLeftWrapped(KpDn[iArrayOffset - 1], byteShifts[iArrayOffset - 1]);
+                kpCn[arrayOffset].ShiftLeftWrapped(kpCn[arrayOffset - 1], byteShifts[arrayOffset - 1]);
+                kpDn[arrayOffset].ShiftLeftWrapped(kpDn[arrayOffset - 1], byteShifts[arrayOffset - 1]);
 
             }
 
-            // Cn und Dn in Key Schedule füllen
-            for (iArrayOffset = 0; iArrayOffset < 17; iArrayOffset++)
+            // Fill Cn und Dn  binary strings into KeySchedule
+            for (arrayOffset = 0; arrayOffset < 17; arrayOffset++)
             {
-                KeySchedule[iArrayOffset, 0] = KpCn[iArrayOffset].ToBinaryString(29,8).Remove(28, 1);
-                KeySchedule[iArrayOffset, 1] = KpDn[iArrayOffset].ToBinaryString(29,8).Remove(28, 1);
+                keySchedule[arrayOffset, 0] = kpCn[arrayOffset].ToBinaryString(29,8).Remove(28, 1);
+                keySchedule[arrayOffset, 1] = kpDn[arrayOffset].ToBinaryString(29,8).Remove(28, 1);
             }
 
             
             // Create 17 keys Kn
-            for (iArrayOffset = 0; iArrayOffset < 17; iArrayOffset++)
+            for (arrayOffset = 0; arrayOffset < 17; arrayOffset++)
             {
 
                 // Loop through the bits
-                for (iTableOffset = 0; iTableOffset < 48; iTableOffset++)
+                for (tableOffset = 0; tableOffset < 48; tableOffset++)
                 {
 
-                    // Get address if bit
-                    iPermOffset = bytePC2[iTableOffset];
-                    iPermOffset--;
+                    // Get address of bit
+                    permOffset = bytePC2[tableOffset];
+                    permOffset--;
 
                     // Convert to byte and bit offsets
-                    iByteOffset = _bitAddressToByteOffset(iPermOffset, 7);
-                    iBitOffset = _bitAddressToBitOffset(iPermOffset, 7);
+                    byteOffset = BitAddressToByteOffset(permOffset, 7);
+                    bitOffset = BitAddressToBitOffset(permOffset, 7);
 
                     // Get bit
-                    if (iByteOffset < 4)
-                        bBit = KpCn[iArrayOffset].GetBit(iByteOffset, iBitOffset);
+                    if (byteOffset < 4)
+                        bit = kpCn[arrayOffset].GetBit(byteOffset, bitOffset);
                     else
-                        bBit = KpDn[iArrayOffset].GetBit(iByteOffset - 4, iBitOffset);
+                        bit = kpDn[arrayOffset].GetBit(byteOffset - 4, bitOffset);
 
                     // Set bit
-                    iByteOffset = _bitAddressToByteOffset(iTableOffset, 6);
-                    iBitOffset = _bitAddressToBitOffset(iTableOffset, 6);
-                    Ftmp.GetAt(iArrayOffset).SetBit(iByteOffset, iBitOffset, bBit);
+                    byteOffset = BitAddressToByteOffset(tableOffset, 6);
+                    bitOffset = BitAddressToBitOffset(tableOffset, 6);
+                    tmp.GetAt(arrayOffset).SetBit(byteOffset, bitOffset, bit);
                 }
 
             }
 
-            // Kn Rundenschlüssel in Key Schedule füllen
-            for (iArrayOffset = 0; iArrayOffset < 16; iArrayOffset++)
+            // Fill in binary strings into RoundKeys
+            for (arrayOffset = 0; arrayOffset < 16; arrayOffset++)
             {
-                RoundKeys[iArrayOffset] = Ftmp.GetAt(iArrayOffset+1).ToBinaryString2(7,8);
-
+                roundKeys[arrayOffset] = tmp.GetAt(arrayOffset+1).ToBinaryString(48,7);
             }
 
-            // Return variable
-            return Ftmp;
+            // Return filled KeySet variable tmp
+            return tmp;
 
         }
 
-        private void _desAlgorithm(byte[] Message, KEY_SET[] KeySets)
+        /// <summary>
+        /// Apply the DES encryption algorithm to the message with the calculated RoundKeys.
+        /// </summary>
+        /// <param name="message">8 byte DES message to encrypt</param>
+        /// <param name="keySets">Set of the 16 RoundKeys needed for encryption</param>
+        private void DesAlgorithm(byte[] message, KeySet keySet)
         {
 
-            //
-            // Apply the DES algorithm to Message
-            //
+            // Declare a WorkingSet
+            WorkingSet workingSet = new WorkingSet();
+            ByteBlock msg =new ByteBlock();
+            msg.Set(message,0);
+            workingSet.inputBlock.Set(msg);
 
-            // Declare a workset set of variables
-            WORKING_SET workingSet = new WORKING_SET();
-            BLOCK8BYTE msg =new BLOCK8BYTE();
-            msg.Set(Message,0);
-            workingSet.DataBlockIn.Set(msg);
-            message = msg.ToBinaryString(64, 0);
+            // Set binary string of message
+            this.message = msg.ToBinaryString(64, 0);
             
             // Apply the algorithm
-            _lowLevel_desAlgorithm(workingSet, KeySets);
+            LowLevelDesAlgorithm(workingSet, keySet);
 
         }
 
-        private void _lowLevel_desAlgorithm(WORKING_SET workingSet, KEY_SET[] KeySets)
+        /// <summary>
+        /// Apply the low level DES encryption algorithm to a WorkingSet with the calculated RoundKeys.
+        /// </summary>
+        /// <param name="workingSet">Contains the information needed in the encryption process</param>
+        /// <param name="keySet">Set of the 16 RoundKeys needed for encryption</param>
+        private void LowLevelDesAlgorithm(WorkingSet workingSet, KeySet keySet)
         {
 
-            //
-            // Apply 1 or 3 keys to a block of data
-            //
-
             // Declaration of local variables
-            int iTableOffset;
-            int iArrayOffset;
-            int iPermOffset;
-            int iByteOffset;
-            int iBitOffset;
+            int tableOffset;
+            int arrayOffset;
+            int permOffset;
+            int byteOffset;
+            int bitOffset;
 
-            // Loop through keys
-            for (int iKeySetOffset = 0; iKeySetOffset < KeySets.Length; iKeySetOffset++)
+            // Permute with byteIP
+            for (tableOffset = 0; tableOffset < byteIP.Length; tableOffset++)
             {
 
-                // Permute with byteIP
-                for (iTableOffset = 0; iTableOffset < byteIP.Length; iTableOffset++)
-                {
+                // Get perm offset
+                permOffset = byteIP[tableOffset];
+                permOffset--;
 
-                    // Get perm offset
-                    iPermOffset = byteIP[iTableOffset];
-                    iPermOffset--;
-
-                    // Get and set bit
-                    workingSet.IP.SetBit(
-                        _bitAddressToByteOffset(iTableOffset, 8),
-                        _bitAddressToBitOffset(iTableOffset, 8),
-                        workingSet.DataBlockIn.GetBit(
-                            _bitAddressToByteOffset(iPermOffset, 8),
-                            _bitAddressToBitOffset(iPermOffset, 8)
-                        )
-                    );
-
-                }
-
-                // Create Ln[0] and Rn[0]
-                for (iArrayOffset = 0; iArrayOffset < 32; iArrayOffset++)
-                {
-                    iByteOffset = _bitAddressToByteOffset(iArrayOffset, 8);
-                    iBitOffset = _bitAddressToBitOffset(iArrayOffset, 8);
-                    workingSet.Ln[0].SetBit(iByteOffset, iBitOffset, workingSet.IP.GetBit(iByteOffset, iBitOffset));
-                    workingSet.Rn[0].SetBit(iByteOffset, iBitOffset, workingSet.IP.GetBit(iByteOffset + 4, iBitOffset));
-                }
-
-                // Loop through 17 interations
-                for (int iBlockOffset = 1; iBlockOffset < 17; iBlockOffset++)
-                {
-
-                    // Get the array offset
-                    int iKeyOffset;
-                    if (true != (iKeySetOffset == 1))
-                        iKeyOffset = iBlockOffset;
-                    else
-                        iKeyOffset = 17 - iBlockOffset;
-
-                    // Set Ln[N] = Rn[N-1]
-                    workingSet.Ln[iBlockOffset].Set(workingSet.Rn[iBlockOffset - 1]);
-
-                    // Set Rn[N] = Ln[0] + f(R[N-1],K[N])
-                    for (iTableOffset = 0; iTableOffset < byteE.Length; iTableOffset++)
-                    {
-
-                        // Get perm offset
-                        iPermOffset = byteE[iTableOffset];
-                        iPermOffset--;
-
-                        // Get and set bit
-                        workingSet.RnExpand.SetBit(
-                            _bitAddressToByteOffset(iTableOffset, 6),
-                            _bitAddressToBitOffset(iTableOffset, 6),
-                            workingSet.Rn[iBlockOffset - 1].GetBit(
-                                _bitAddressToByteOffset(iPermOffset, 8),
-                                _bitAddressToBitOffset(iPermOffset, 8)
-                            )
-                        );
-
-                    }
-
-                    //Fill String Attribute
-                    RoundDetails[iBlockOffset - 1, 0] = workingSet.RnExpand.ToBinaryString2(7, 8);
-
-                    // XOR expanded block with K-block
-                    workingSet.XorBlock.Xor(workingSet.RnExpand, KeySets[iKeySetOffset].GetAt(iKeyOffset));
-
-                    //Fill String Attribute
-                    RoundDetails[iBlockOffset - 1, 1] = workingSet.XorBlock.ToBinaryString2(7, 8);
-
-                    // Set S-Box values
-                    workingSet.SBoxValues.Reset();
-                    for (iTableOffset = 0; iTableOffset < 8; iTableOffset++)
-                    {
-                        
-                        //Fill String Attribute
-                        String tmp = RoundDetails[iBlockOffset - 1, 1];
-                        SBoxStringDetails[iBlockOffset-1, iTableOffset * 4] = Convert.ToString(workingSet.XorBlock.m_data[iTableOffset], 2).PadLeft(8, '0').Remove(6,2);
-
-                        // Calculate m and n
-                        int m = ((workingSet.XorBlock.GetBit(iTableOffset, 7) ? 1 : 0) << 1) | (workingSet.XorBlock.GetBit(iTableOffset, 2) ? 1 : 0);
-                        int n = (workingSet.XorBlock.m_data[iTableOffset] >> 3) & 0x0F;
-
-                        // Get s-box value
-                        iPermOffset = byteSBox[(iTableOffset * 4) + m, n];
-                        workingSet.SBoxValues.m_data[iTableOffset] = (byte)(iPermOffset << 4);
-
-                        //Fill String Attributes
-                        SBoxNumberDetails[iBlockOffset-1, iTableOffset * 3] = (byte) (m);
-                        SBoxStringDetails[iBlockOffset-1, (iTableOffset * 4) + 1] = Convert.ToString(m,2).PadLeft(2,'0');
-                        SBoxNumberDetails[iBlockOffset-1, (iTableOffset * 3) + 1] = (byte) (n);
-                        SBoxStringDetails[iBlockOffset-1, (iTableOffset * 4) + 2] = Convert.ToString(n, 2).PadLeft(4, '0');
-                        SBoxNumberDetails[iBlockOffset-1, (iTableOffset * 3) + 2] = (byte)(workingSet.SBoxValues.m_data[iTableOffset] >> 4);
-                        SBoxStringDetails[iBlockOffset-1, (iTableOffset * 4) + 3] = Convert.ToString((byte)(workingSet.SBoxValues.m_data[iTableOffset] >> 4), 2).PadLeft(4, '0');
-
-                    }
-
-                    //Fill String Attributes
-                    RoundDetails[iBlockOffset - 1, 2] = workingSet.SBoxValues.ToBinaryString4(5, 6, 7, 8);
-
-                    // Permute with P -> f
-                    workingSet.f.Reset();
-                    for (iTableOffset = 0; iTableOffset < byteP.Length; iTableOffset++)
-                    {
-
-                        // Get perm offset
-                        iPermOffset = byteP[iTableOffset];
-                        iPermOffset--;
-
-                        // Get and set bit
-                        workingSet.f.SetBit(
-                            _bitAddressToByteOffset(iTableOffset, 4),
-                            _bitAddressToBitOffset(iTableOffset, 4),
-                            workingSet.SBoxValues.GetBit(
-                                _bitAddressToByteOffset(iPermOffset, 4),
-                                _bitAddressToBitOffset(iPermOffset, 4)
-                            )
-                        );
-
-                    }
-
-                    //Fill String Attributes
-                    RoundDetails[iBlockOffset - 1, 3] = workingSet.f.ToBinaryString4(5,6,7, 8);
-
-                    // Rn[N] = Ln[N-1] ^ f
-                    workingSet.Rn[iBlockOffset].Reset();
-                    for (iTableOffset = 0; iTableOffset < 8; iTableOffset++)
-                    {
-
-                        // Get Ln[N-1] -> A
-                        byte A = workingSet.Ln[iBlockOffset - 1].m_data[(iTableOffset >> 1)];
-                        if ((iTableOffset % 2) == 0)
-                            A >>= 4;
-                        else
-                            A &= 0x0F;
-
-                        // Get f -> B
-                        byte B = Convert.ToByte(workingSet.f.m_data[iTableOffset] >> 4);
-
-                        // Update Rn[N]
-                        if ((iTableOffset % 2) == 0)
-                            workingSet.Rn[iBlockOffset].m_data[iTableOffset >> 1] |= Convert.ToByte((A ^ B) << 4);
-                        else
-                            workingSet.Rn[iBlockOffset].m_data[iTableOffset >> 1] |= Convert.ToByte(A ^ B);
-
-                    }
-
-                }
-
-                // X = R16 L16
-                workingSet.X.Reset();
-                for (iTableOffset = 0; iTableOffset < 4; iTableOffset++)
-                {
-                    workingSet.X.m_data[iTableOffset] = workingSet.Rn[16].m_data[iTableOffset];
-                    workingSet.X.m_data[iTableOffset + 4] = workingSet.Ln[16].m_data[iTableOffset];
-                }
-
-                // C = X perm IP
-                workingSet.DataBlockOut.Reset();
-                for (iTableOffset = 0; iTableOffset < byteRFP.Length; iTableOffset++)
-                {
-
-                    // Get perm offset
-                    iPermOffset = byteRFP[iTableOffset];
-                    iPermOffset--;
-
-                    // Get and set bit
-                    workingSet.DataBlockOut.SetBit(
-                        _bitAddressToByteOffset(iTableOffset, 8),
-                        _bitAddressToBitOffset(iTableOffset, 8),
-                        workingSet.X.GetBit(
-                            _bitAddressToByteOffset(iPermOffset, 8),
-                            _bitAddressToBitOffset(iPermOffset, 8)
-                        )
-                    );
-
-                }
-                Outputciphertext = workingSet.DataBlockOut.m_data;
-
-                //Fill String Attribute
-                ciphertext = workingSet.DataBlockOut.ToBinaryString(64,0);
+                // Get and set bit
+                workingSet.ip.SetBit(
+                    BitAddressToByteOffset(tableOffset, 8),
+                    BitAddressToBitOffset(tableOffset, 8),
+                    workingSet.inputBlock.GetBit(
+                        BitAddressToByteOffset(permOffset, 8),
+                        BitAddressToBitOffset(permOffset, 8)
+                    )
+                );
 
             }
+
+            // Create Ln[0] and Rn[0]
+            for (arrayOffset = 0; arrayOffset < 32; arrayOffset++)
+            {
+                byteOffset = BitAddressToByteOffset(arrayOffset, 8);
+                bitOffset = BitAddressToBitOffset(arrayOffset, 8);
+                workingSet.ln[0].SetBit(byteOffset, bitOffset, workingSet.ip.GetBit(byteOffset, bitOffset));
+                workingSet.rn[0].SetBit(byteOffset, bitOffset, workingSet.ip.GetBit(byteOffset + 4, bitOffset));
+            }
+
+            // Loop through 17 interations
+            for (int blockOffset = 1; blockOffset < 17; blockOffset++)
+            {
+                // Get the array offset
+                int iKeyOffset = blockOffset;
+
+                // Set Ln[N] = Rn[N-1]
+                workingSet.ln[blockOffset].Set(workingSet.rn[blockOffset - 1]);
+
+                // Set Rn[N] = Ln[0] + f(R[N-1],K[N])
+                for (tableOffset = 0; tableOffset < byteE.Length; tableOffset++)
+                {
+
+                    // Get perm offset
+                    permOffset = byteE[tableOffset];
+                    permOffset--;
+
+                    // Get and set bit
+                    workingSet.rnExpand.SetBit(
+                        BitAddressToByteOffset(tableOffset, 6),
+                        BitAddressToBitOffset(tableOffset, 6),
+                        workingSet.rn[blockOffset - 1].GetBit(
+                            BitAddressToByteOffset(permOffset, 8),
+                            BitAddressToBitOffset(permOffset, 8)
+                        )
+                    );
+
+                }
+
+                //Fill String Attribute
+                roundDetails[blockOffset - 1, 0] = workingSet.rnExpand.ToBinaryString(48, 7);
+
+                // XOR expanded block with K-block
+                workingSet.xorBlock.Xor(workingSet.rnExpand, keySet.GetAt(iKeyOffset));
+
+                //Fill String Attribute
+                roundDetails[blockOffset - 1, 1] = workingSet.xorBlock.ToBinaryString(48, 7);
+
+                // Set S-Box values
+                workingSet.sBoxValues.Reset();
+                for (tableOffset = 0; tableOffset < 8; tableOffset++)
+                {
+
+                    //Fill String Attribute
+                    sBoxStringDetails[blockOffset-1, tableOffset * 4] = Convert.ToString(workingSet.xorBlock.data[tableOffset], 2).PadLeft(8, '0').Remove(6,2);
+
+                    // Calculate m and n
+                    int m = ((workingSet.xorBlock.GetBit(tableOffset, 7) ? 1 : 0) << 1) | (workingSet.xorBlock.GetBit(tableOffset, 2) ? 1 : 0);
+                    int n = (workingSet.xorBlock.data[tableOffset] >> 3) & 0x0F;
+
+                    // Get s-box value
+                    permOffset = byteSBox[(tableOffset * 4) + m, n];
+                    workingSet.sBoxValues.data[tableOffset] = (byte)(permOffset << 4);
+
+                    //Fill String Attributes
+                    sBoxNumberDetails[blockOffset-1, tableOffset * 3] = (byte) (m);
+                    sBoxStringDetails[blockOffset-1, (tableOffset * 4) + 1] = Convert.ToString(m,2).PadLeft(2,'0');
+                    sBoxNumberDetails[blockOffset-1, (tableOffset * 3) + 1] = (byte) (n);
+                    sBoxStringDetails[blockOffset-1, (tableOffset * 4) + 2] = Convert.ToString(n, 2).PadLeft(4, '0');
+                    sBoxNumberDetails[blockOffset-1, (tableOffset * 3) + 2] = (byte)(workingSet.sBoxValues.data[tableOffset] >> 4);
+                    sBoxStringDetails[blockOffset-1, (tableOffset * 4) + 3] = Convert.ToString((byte)(workingSet.sBoxValues.data[tableOffset] >> 4), 2).PadLeft(4, '0');
+
+                }
+
+                //Fill String Attributes
+                roundDetails[blockOffset - 1, 2] = workingSet.sBoxValues.ToBinaryString(32,5);
+
+                // Permute with P -> f
+                workingSet.f.Reset();
+                for (tableOffset = 0; tableOffset < byteP.Length; tableOffset++)
+                {
+
+                    // Get perm offset
+                    permOffset = byteP[tableOffset];
+                    permOffset--;
+
+                    // Get and set bit
+                    workingSet.f.SetBit(
+                        BitAddressToByteOffset(tableOffset, 4),
+                        BitAddressToBitOffset(tableOffset, 4),
+                        workingSet.sBoxValues.GetBit(
+                            BitAddressToByteOffset(permOffset, 4),
+                            BitAddressToBitOffset(permOffset, 4)
+                        )
+                    );
+
+                }
+
+                //Fill String Attributes
+                roundDetails[blockOffset - 1, 3] = workingSet.f.ToBinaryString(32,5);
+
+                // Rn[N] = Ln[N-1] ^ f
+                workingSet.rn[blockOffset].Reset();
+                for (tableOffset = 0; tableOffset < 8; tableOffset++)
+                {
+
+                    // Get Ln[N-1] -> A
+                    byte a = workingSet.ln[blockOffset - 1].data[(tableOffset >> 1)];
+                    if ((tableOffset % 2) == 0)
+                        a >>= 4;
+                    else
+                        a &= 0x0F;
+
+                    // Get f -> B
+                    byte b = Convert.ToByte(workingSet.f.data[tableOffset] >> 4);
+
+                    // Update Rn[N]
+                    if ((tableOffset % 2) == 0)
+                       workingSet.rn[blockOffset].data[tableOffset >> 1] |= Convert.ToByte((a ^ b) << 4);
+                    else
+                       workingSet.rn[blockOffset].data[tableOffset >> 1] |= Convert.ToByte(a ^ b);
+
+                }
+
+            }
+
+            // X = R16 L16
+            workingSet.x.Reset();
+            for (tableOffset = 0; tableOffset < 4; tableOffset++)
+            {
+                workingSet.x.data[tableOffset] = workingSet.rn[16].data[tableOffset];
+                workingSet.x.data[tableOffset + 4] = workingSet.ln[16].data[tableOffset];
+            }
+
+            // C = X perm IP
+            workingSet.outputBlock.Reset();
+            for (tableOffset = 0; tableOffset < byteFP.Length; tableOffset++)
+            {
+
+                // Get perm offset
+                permOffset = byteFP[tableOffset];
+                permOffset--;
+
+                // Get and set bit
+                workingSet.outputBlock.SetBit(
+                    BitAddressToByteOffset(tableOffset, 8),
+                    BitAddressToBitOffset(tableOffset, 8),
+                    workingSet.x.GetBit(
+                        BitAddressToByteOffset(permOffset, 8),
+                        BitAddressToBitOffset(permOffset, 8)
+                    )
+                );
+
+            }
+            outputCiphertext = workingSet.outputBlock.data;
+
+            //Fill String Attribute
+            ciphertext = workingSet.outputBlock.ToBinaryString(64,0);
+
 
             //Fill String Attributes
             for (int i = 0; i < 17; i++) {
-                LR_Data[i, 0] = workingSet.Ln[i].ToBinaryString(32, 0);
-                LR_Data[i, 1] = workingSet.Rn[i].ToBinaryString(32, 0);
+                lrData[i, 0] = workingSet.ln[i].ToBinaryString(32, 0);
+                lrData[i, 1] = workingSet.rn[i].ToBinaryString(32, 0);
             }
         }
 
         #endregion Low-level Operations
 
-        /////////////////////////////////////////////////////////////
-        // Helper Operations
+        #region Helper Operations
 
-        private int _bitAddressToByteOffset(int iTableAddress, int iTableWidth)
+        private int BitAddressToByteOffset(int tableAddress, int tableWidth)
         {
-            int iFtmp = iTableAddress / iTableWidth;
-            return iFtmp;
+            int tmp = tableAddress / tableWidth;
+            return tmp;
         }
 
-        private int _bitAddressToBitOffset(int iTableAddress, int iTableWidth)
+        private int BitAddressToBitOffset(int tableAddress, int tableWidth)
         {
-            int iFtmp = BITS_PER_BYTE - 1 - (iTableAddress % iTableWidth);
-            return iFtmp;
+            int tmp = BitsPerByte - 1 - (tableAddress % tableWidth);
+            return tmp;
         }
+
+        #endregion Helper Operations
 
     }
 }

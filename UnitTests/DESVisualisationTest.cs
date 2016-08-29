@@ -31,7 +31,7 @@ namespace Tests.TemplateAndPluginTests
 
         struct TestVector
         {
-            public String key, text, output;
+            public string key, text, output;
             public int n;
         }
 

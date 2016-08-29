@@ -36,7 +36,7 @@
 
         <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="640" Height="340" >
-                <Label x:Name="title" Content="" FontSize="21.333" Margin="0,15,0,0" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" FontWeight="Bold"/>
+                <Label x:Name="Title" Content="" FontSize="21.333" Margin="0,15,0,0" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" FontWeight="Bold"/>
             </Grid>
         </Viewbox>
 
@@ -184,8 +184,8 @@
                     <Path Width="411.711" Height="229.175" Canvas.Left="283.791" Canvas.Top="26.142" Stretch="Fill" StrokeThickness="0.382792" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 695.31,255.126C 658.159,234.469 321.134,46.9952 283.982,26.3334"/>
                     <Path Width="508.221" Height="229.94" Canvas.Left="198.004" Canvas.Top="25.7624" Stretch="Fill" StrokeThickness="0.382792" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 706.034,255.511C 662.373,235.615 241.471,45.4647 198.195,25.9538"/>
                     <Path Width="604.345" Height="229.94" Canvas.Left="112.219" Canvas.Top="25.7624" Stretch="Fill" StrokeThickness="0.382792" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 716.373,255.511C 668.118,237.147 160.279,43.9329 112.41,25.9538"/>
-                    <TextBlock x:Name="IP_top" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" FontFamily="Helvetica Mono" FontSize="20" Canvas.Top="6" HorizontalAlignment="Center"/>
-                    <TextBlock x:Name="IP_bottom" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" Canvas.Top="254" FontFamily="Helvetica Mono" FontSize="20" Visibility="Hidden"/>
+                    <TextBlock x:Name="IpTop" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" FontFamily="Helvetica Mono" FontSize="20" Canvas.Top="6" HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="IpBottom" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" Canvas.Top="254" FontFamily="Helvetica Mono" FontSize="20" Visibility="Hidden"/>
                 </Canvas>
             </Viewbox>
         </Grid>
@@ -249,8 +249,8 @@
                     <Path Width="298.856" Height="184.895" Canvas.Left="212.072" Canvas.Top="102.981" Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 2120.67,888.667C 2002,812.667 992.667,168.667 875.333,92.6667" StrokeThickness="0.5"/>
                     <Path Width="379.401" Height="185.207" Canvas.Left="141" Canvas.Top="103.79" Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 2158,890C 2018,820.667 715.333,162 576.667,92.6667" StrokeThickness="0.5"/>
                     <Path Width="459.628" Height="185.828" Canvas.Left="70.186" Canvas.Top="103" Stretch="Fill" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 2194,891.333C 2035.33,824.667 435.333,156.667 278,91.3334" StrokeThickness="0.5"/>
-                    <TextBlock x:Name="PC1_top" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="16.64" Canvas.Left="34" Canvas.Top="87"/>
-                    <TextBlock x:Name="PC1_bottom" Text="10110101101101011011010110110101101101011011010110110101" Canvas.Left="35" Canvas.Top="289" FontFamily="Helvetica Mono" FontSize="16.64" Visibility="Hidden"/>
+                    <TextBlock x:Name="Pc1Top" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="16.64" Canvas.Left="34" Canvas.Top="87"/>
+                    <TextBlock x:Name="Pc1Bottom" Text="10110101101101011011010110110101101101011011010110110101" Canvas.Left="35" Canvas.Top="289" FontFamily="Helvetica Mono" FontSize="16.64" Visibility="Hidden"/>
 
                     <Label Content="X" Canvas.Top="81" FontFamily="Arial" FontSize="17.333" Canvas.Left="91"/>
                     <Label Content="X" Canvas.Top="81" FontFamily="Arial" FontSize="17.333" Canvas.Left="162"/>
@@ -324,7 +324,7 @@
                             </TransformGroup>
                         </Path.RenderTransform>
                     </Path>
-                    <Label x:Name="KeyScheduleDRoundName" Content="D1:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="817" Canvas.Top="220" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" FontFamily="Arial"/>
+                    <Label x:Name="KeyScheduleDRoundName" Content="D1:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="819" Canvas.Top="220" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" FontFamily="Arial"/>
                     <Label x:Name="KeyScheduleCRoundName"  Content="C1:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="309" Canvas.Top="220" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" FontFamily="Arial"/>
                     <Path Width="10" Height="11.26" Canvas.Left="549.528" Canvas.Top="348" Stretch="Fill" Fill="#FF000000" Data="F1 M 932.496,226.484C 932.496,226.724 932.496,226.884 932.496,226.964C 932.416,227.124 932.416,227.204 932.416,227.284C 932.336,227.284 932.336,227.284 932.256,227.284C 932.176,227.284 932.096,227.284 932.016,227.204L 922.816,222.564C 922.736,222.564 922.656,222.404 922.576,222.244C 922.576,222.164 922.496,221.924 922.496,221.604C 922.496,221.524 922.576,221.364 922.576,221.284C 922.576,221.204 922.576,221.124 922.576,221.044C 922.656,220.964 922.656,220.884 922.736,220.804L 922.816,220.724L 932.016,216.084C 932.176,216.004 932.336,216.004 932.416,216.084C 932.496,216.164 932.496,216.404 932.496,216.804C 932.496,217.044 932.496,217.204 932.496,217.364C 932.496,217.444 932.416,217.604 932.416,217.684C 932.416,217.764 932.336,217.844 932.256,217.844C 932.256,217.924 932.176,217.924 932.096,218.004L 924.576,221.684L 932.016,225.284C 932.176,225.364 932.256,225.444 932.256,225.444C 932.336,225.524 932.416,225.524 932.416,225.684C 932.416,225.684 932.496,225.844 932.496,226.004C 932.496,226.084 932.496,226.324 932.496,226.484 Z "/>
                     <Path Width="10" Height="11.26" Canvas.Left="561.528" Canvas.Top="348" Stretch="Fill" Fill="#FF000000" Data="F1 M 944.496,226.484C 944.496,226.724 944.496,226.884 944.496,226.964C 944.416,227.124 944.416,227.204 944.416,227.284C 944.336,227.284 944.336,227.284 944.256,227.284C 944.176,227.284 944.096,227.284 944.016,227.204L 934.816,222.564C 934.736,222.564 934.656,222.404 934.576,222.244C 934.576,222.164 934.496,221.924 934.496,221.604C 934.496,221.524 934.576,221.364 934.576,221.284C 934.576,221.204 934.576,221.124 934.576,221.044C 934.656,220.964 934.656,220.884 934.736,220.804L 934.816,220.724L 944.016,216.084C 944.176,216.004 944.336,216.004 944.416,216.084C 944.496,216.164 944.496,216.404 944.496,216.804C 944.496,217.044 944.496,217.204 944.496,217.364C 944.496,217.444 944.416,217.604 944.416,217.684C 944.416,217.764 944.336,217.844 944.256,217.844C 944.256,217.924 944.176,217.924 944.096,218.004L 936.576,221.684L 944.016,225.284C 944.176,225.364 944.256,225.444 944.256,225.444C 944.336,225.524 944.416,225.524 944.416,225.684C 944.416,225.684 944.496,225.844 944.496,226.004C 944.496,226.084 944.496,226.324 944.496,226.484 Z "/>
@@ -450,8 +450,8 @@
                     <Path Width="117.52" Height="183.855" Canvas.Left="462.24" Canvas.Top="118.292" Stretch="Fill" StrokeThickness="0.437827" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 567.228,161.463C 550.567,141.792 466.807,41.2492 450.146,21.1458"/>
                     <Path Width="214" Height="186.133" Canvas.Left="376" Canvas.Top="117.146" Stretch="Fill" StrokeThickness="0.437827" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 578.192,162.332C 551.443,144.411 390.943,37.3165 364.63,20.2699"/>
                     <Path Width="189.88" Height="186.133" Canvas.Left="413.06" Canvas.Top="117.146" Stretch="Fill" StrokeThickness="0.437827" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 590.911,162.332C 566.354,143.974 426.026,38.6296 401.468,20.2699"/>
-                    <TextBlock x:Name="PC2_top" Text="10110101101101011011010110110101101101011011010110110101" Canvas.Left="22" FontFamily="Helvetica Mono" FontSize="22.933" Canvas.Top="95"/>
-                    <TextBlock x:Name="PC2_bottom" Text="101101011011010110110101101101011011010110110101" Canvas.Left="22" Canvas.Top="302" FontFamily="Helvetica Mono" FontSize="22.933" Height="37" Visibility="Hidden"/>
+                    <TextBlock x:Name="Pc2Top" Text="10110101101101011011010110110101101101011011010110110101" Canvas.Left="22" FontFamily="Helvetica Mono" FontSize="22.933" Canvas.Top="95"/>
+                    <TextBlock x:Name="Pc2Bottom" Text="101101011011010110110101101101011011010110110101" Canvas.Left="22" Canvas.Top="302" FontFamily="Helvetica Mono" FontSize="22.933" Height="37" Visibility="Hidden"/>
 
                     <Label Content="X" Canvas.Left="114" FontFamily="Arial" FontSize="24" Canvas.Top="89"/>
                     <Label Content="X" Canvas.Left="225" FontFamily="Arial" FontSize="24" Canvas.Top="89"/>
@@ -467,10 +467,10 @@
             </Viewbox>
         </Grid>
 
-        <Grid x:Name="Shift1Screen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0" Visibility="Hidden">
+        <Grid x:Name="ShiftScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0" Visibility="Hidden">
             <Viewbox Stretch="Uniform" Margin="0,0,0,0">
                 <Canvas Width="692" Height="292">
-                    <Canvas x:Name="singleShift" Width="596" Height="128" Canvas.Left="68" Canvas.Top="28">
+                    <Canvas x:Name="SingleShift" Width="596" Height="128" Canvas.Left="68" Canvas.Top="28">
                         <Rectangle Width="21.3333" Height="21.3333" Canvas.Left="256.081" Canvas.Top="19.6956" Stretch="Fill" Fill="#FFFFFFFF"/>
                         <Rectangle Width="22.4" Height="22.4" Canvas.Left="255.548" Canvas.Top="19.1627" Stretch="Fill" StrokeThickness="1.06667" StrokeLineJoin="Round" Stroke="#FF000000"/>
                         <Rectangle Width="21.3333" Height="21.3333" Canvas.Left="277.415" Canvas.Top="19.6956" Stretch="Fill" Fill="#FFFFFFFF"/>
@@ -641,7 +641,7 @@
                         <Path Width="10.0307" Height="13.5627" Canvas.Left="9.94535" Canvas.Top="70.3369" Stretch="Fill" Fill="#FF000000" Data="M 19.976,74.6289L 9.94535,83.8996L 11.5814,70.3369C 13.128,73.4303 16.524,75.1489 19.976,74.6289 Z "/>
                     </Canvas>
 
-                    <Canvas x:Name="doubleShift" Width="596" Height="128" Canvas.Left="68" Canvas.Top="28" Visibility="Hidden">
+                    <Canvas x:Name="DoubleShift" Width="596" Height="128" Canvas.Left="68" Canvas.Top="28" Visibility="Hidden">
                         <Rectangle Width="21.3333" Height="21.3333" Canvas.Left="256.081" Canvas.Top="19.6956" Stretch="Fill" Fill="#FFFFFFFF"/>
                         <Rectangle Width="22.4" Height="22.4" Canvas.Left="255.548" Canvas.Top="19.1627" Stretch="Fill" StrokeThickness="1.06667" StrokeLineJoin="Round" Stroke="#FF000000"/>
                         <Rectangle Width="21.3333" Height="21.3333" Canvas.Left="277.415" Canvas.Top="19.6956" Stretch="Fill" Fill="#FFFFFFFF"/>
@@ -812,10 +812,10 @@
                         <Path Width="12.2867" Height="12.5053" Canvas.Left="225.071" Canvas.Top="71.6956" Stretch="Fill" Fill="#FF000000" Data="M 237.357,78.2329L 225.071,84.2009L 230.565,71.6956C 231.148,75.1023 233.904,77.7329 237.357,78.2329 Z "/>
                     </Canvas>
 
-                    <Label x:Name="Shift_topName" Content="C 0" Canvas.Top="44" FontSize="18.667" FontWeight="Bold" FontFamily="Arial" Canvas.Left="24"/>
-                    <Label x:Name="Shift_bottomName" Content="C 1" Canvas.Top="108" FontSize="18.667" FontWeight="Bold" FontFamily="Arial" Canvas.Left="24"/>
-                    <TextBlock x:Name="Shift_top" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="48" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73"/>
-                    <TextBlock x:Name="Shift_bottom" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="112" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73" Visibility="Hidden"/>
+                    <Label x:Name="ShiftTopName" Content="C 0" Canvas.Top="44" FontSize="18.667" FontWeight="Bold" FontFamily="Arial" Canvas.Left="24"/>
+                    <Label x:Name="ShiftBottomName" Content="C 1" Canvas.Top="108" FontSize="18.667" FontWeight="Bold" FontFamily="Arial" Canvas.Left="24"/>
+                    <TextBlock x:Name="ShiftTop" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="48" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73"/>
+                    <TextBlock x:Name="ShiftBottom" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="112" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73" Visibility="Hidden"/>
                     <Label Content="Round:   1   2   3   4   5   6   7   8   9   10   11   12   13   14   15   16 &#xD;&#xA; Shifts:&#x9;1   1   2   2   2   2   2   2   1    2     2     2     2     2     2     1   " Canvas.Top="194" FontFamily="Times New Roman" FontSize="17.333" FontWeight="Bold" Canvas.Left="105"/>
                     <Rectangle x:Name="RoundTable" Height="50" Canvas.Left="173" Canvas.Top="194" Width="21" Stroke="Red"/>
                     <Rectangle Height="50" Canvas.Left="100" Canvas.Top="194" Width="489" Stroke="Black"/>
@@ -845,7 +845,7 @@
                     <Path Width="99.4426" Height="10.4803" Canvas.Left="26.9607" Canvas.Top="234.246" Stretch="Fill" Fill="Black" Data="F1 M 37.521,234.246L 26.9607,239.446L 37.521,244.727L 37.521,241.206L 126.403,241.206L 126.403,237.686L 37.521,237.686L 37.521,234.246 Z "/>
                     <Path Width="87.4423" Height="10.5603" Canvas.Left="585.216" Canvas.Top="236" Stretch="Fill" Fill="#FF000000" Data="F1 M 595.696,237.686L 585.216,242.966L 595.696,248.247L 595.696,244.727L 672.658,244.727L 672.658,241.206L 595.696,241.206L 595.696,237.686 Z "/>
                     <Path Width="10.48" Height="196.805" Canvas.Left="346" Canvas.Top="28.097" Stretch="Fill" Fill="#FFFF0000" Data="F1 M 348.489,28.4008L 352.009,28.4008L 352.009,214.646L 355.529,214.646L 350.249,225.206L 345.049,214.646L 348.489,214.646L 348.489,28.4008 Z "/>
-                    <Path x:Name="FScreenXORPath" Width="31.6008" Height="31.6008" Canvas.Left="335.209" Canvas.Top="224.406" Stretch="Fill" StrokeThickness="1.43999" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 335.929,240.166C 335.929,231.846 342.649,225.126 350.969,225.126C 359.29,225.126 366.09,231.846 366.09,240.166C 366.09,248.487 359.29,255.287 350.969,255.287C 342.649,255.287 335.929,248.487 335.929,240.166 Z "/>
+                    <Path x:Name="FScreenXorPath" Width="31.6008" Height="31.6008" Canvas.Left="335.209" Canvas.Top="224.406" Stretch="Fill" StrokeThickness="1.43999" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 335.929,240.166C 335.929,231.846 342.649,225.126 350.969,225.126C 359.29,225.126 366.09,231.846 366.09,240.166C 366.09,248.487 359.29,255.287 350.969,255.287C 342.649,255.287 335.929,248.487 335.929,240.166 Z "/>
                     <Path Width="31.2008" Height="1.43999" Canvas.Left="335.209" Canvas.Top="239.126" Stretch="Fill" StrokeThickness="1.43999" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 335.929,239.846L 365.69,239.846"/>
                     <Path Width="1.43999" Height="31.2008" Canvas.Left="350.569" Canvas.Top="224.406" Stretch="Fill" StrokeThickness="1.43999" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 351.289,254.887L 351.289,225.126"/>
                     <Path x:Name="ExpansionPath" Width="103.763" Height="132.563" Canvas.Left="481.773" Canvas.Top="173.925" Stretch="Fill" StrokeThickness="1.43999" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 482.493,174.645L 584.816,200.245L 584.816,280.167L 482.493,305.768L 482.493,174.645 Z "/>
@@ -905,7 +905,7 @@
                     <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="260" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                     <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="282" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                     <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="305" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="P&#xD;&#xA;e&#xD;&#xA;r&#xD;&#xA;m&#xD;&#xA;u&#xD;&#xA;t&#xD;&#xA;a&#xD;&#xA;t&#xD;&#xA;i&#xD;&#xA;o&#xD;&#xA;n" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="131" Canvas.Top="160" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" FontWeight="Bold" HorizontalContentAlignment="Center" Width="31"/>
+                    <TextBlock Text="P&#xD;&#xA;e&#xD;&#xA;r&#xD;&#xA;m&#xD;&#xA;u&#xD;&#xA;t&#xD;&#xA;a&#xD;&#xA;t&#xD;&#xA;i&#xD;&#xA;o&#xD;&#xA;n" Canvas.Left="131" Canvas.Top="166" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" FontWeight="Bold" Width="31" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"/>
                     <Label Content="S-Boxes" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="180" Canvas.Top="131" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                     <Label Content="32 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="50" Canvas.Top="219" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                 </Canvas>
@@ -916,14 +916,23 @@
         <Grid x:Name="XORScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
             <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,90,5,0" HorizontalAlignment="Center">
                 <Canvas Width="784" Height="349">
-                    <Label x:Name="XOROperator1Name" Content="K1:" Canvas.Top="48" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial"/>
-                    <TextBlock x:Name="XOROperator1" Text="" Canvas.Top="57" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="88" Width="696" TextAlignment="Center"/>
-                    <Label x:Name="XORSymbol" Content="⊕" Canvas.Top="92" FontFamily="Arial" FontSize="80" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,5" ToolTip="XOR" Canvas.Left="402"/>
-                    <TextBlock x:Name="XOROperator2" Text="" Canvas.Top="197" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="88" Width="696" TextAlignment="Center"/>
-                    <Label Content="_________________________________________________________________________________________________________" Canvas.Top="221" FontFamily="Arial" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Width="787" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" FontWeight="Bold" Canvas.Left="-3"/>
-                    <TextBlock x:Name="XORResult" Text="" Canvas.Left="88" Canvas.Top="283" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Width="696" TextAlignment="Center" Visibility="Hidden"/>
-                    <Label x:Name="XOROperator2Name" Content="K1:" Canvas.Top="187" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial"/>
-                    <Label x:Name="XORResultName" Content="R2:" Canvas.Top="274" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" Visibility="Hidden" FontFamily="Arial"/>
+                    <Label x:Name="XorOperator1Name" Content="K1:" Canvas.Top="50" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial"/>
+                    <TextBlock x:Name="XorOperator1" Text="" Canvas.Top="55" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="88" Width="696" TextAlignment="Center"/>
+                    <Label Content="⊕" Canvas.Top="88" FontFamily="Arial" FontSize="66.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="0,0,0,5" ToolTip="XOR" Canvas.Left="408"/>
+                    <TextBlock x:Name="XorOperator2" Text="" Canvas.Top="177" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="88" Width="696" TextAlignment="Center"/>
+                    <Border Width="777" Background="Black" Height="2" Canvas.Left="2" Canvas.Top="234" RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleY="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                    </Border>
+                    <TextBlock x:Name="XorResult" Text="" Canvas.Left="88" Canvas.Top="263" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Width="696" TextAlignment="Center" Visibility="Hidden"/>
+                    <Label x:Name="XorOperator2Name" Content="K1:" Canvas.Top="171" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial"/>
+                    <Label x:Name="XorResultName" Content="R2:" Canvas.Top="258" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial" Visibility="Hidden"/>
                 </Canvas>
 
             </Viewbox>
@@ -984,15 +993,15 @@
                     <Path Width="210.493" Height="251.725" Canvas.Left="488.927" Canvas.Top="35.1206" Stretch="Fill" StrokeThickness="0.51466" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 699.163,286.589C 674.976,257.114 513.371,64.3977 489.184,35.378"/>
                     <Path Width="210.495" Height="251.725" Canvas.Left="503.337" Canvas.Top="35.1206" Stretch="Fill" StrokeThickness="0.51466" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 713.575,286.589C 689.387,257.114 527.783,64.3977 503.595,35.378"/>
                     <Path Width="668.54" Height="255.351" Canvas.Left="58.156" Canvas.Top="33.308" Stretch="Fill" StrokeThickness="0.51466" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 726.439,288.401C 669.313,266.637 116.569,55.3298 58.4133,33.5653"/>
-                    <TextBlock x:Name="Expansion_top" Text="10110101101101011011010110110101" Canvas.Left="46" Canvas.Top="8" FontFamily="Helvetica Mono" FontSize="26.667"/>
-                    <TextBlock x:Name="Expansion_bottom" Text="101101011011010110110101101101011011010110110101" Canvas.Left="46" Canvas.Top="286" FontFamily="Helvetica Mono" FontSize="26.667" Height="37" Visibility="Hidden"/>
+                    <TextBlock x:Name="ExpansionTop" Text="10110101101101011011010110110101" Canvas.Left="46" Canvas.Top="8" FontFamily="Helvetica Mono" FontSize="26.667"/>
+                    <TextBlock x:Name="ExpansionBottom" Text="101101011011010110110101101101011011010110110101" Canvas.Left="46" Canvas.Top="286" FontFamily="Helvetica Mono" FontSize="26.667" Height="37" Visibility="Hidden"/>
                 </Canvas>
             </Viewbox>
         </Grid>
 
         <Grid x:Name="SBoxScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Visibility="Hidden">
             <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
-                <Canvas x:Name="SBoxCanvas" Width="784" Height="349">
+                <Canvas Width="784" Height="349">
                     <Label x:Name="SLabel" Content="" FontFamily="Times New Roman" FontSize="25" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Canvas.Top="20" Canvas.Left="35" />
                     <Label Content="        0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15" FontFamily="Times New Roman" FontSize="17.333" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Canvas.Left="45" Canvas.Top="25" />
                     <Label x:Name="S1Box" Content="       14  4  13  1   2  15 11  8   3  10   6   12   5    9    0    7&#xD;&#xA;        0  15  7   4  14  2  13  1  10  6   12  11   9    5    3    8&#xD;&#xA;        4   1  14  8  13  6   2  11 15 12   9    7    3   10   5    0&#xD;&#xA;       15 12  8   2   4   9   1   7   5  11   3   14  10   0    6   13" FontFamily="Times New Roman" FontSize="17.333" VerticalAlignment="Center" HorizontalAlignment="Left" Canvas.Left="45" Canvas.Top="61"/>
@@ -1021,7 +1030,7 @@
             </Viewbox>
         </Grid>
 
-        <Grid x:Name="PPScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
+        <Grid x:Name="PScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
             <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,100,5,0" HorizontalAlignment="Center">
                 <Canvas Width="599" Height="294">
                     <Path Width="255.822" Height="186.492" Canvas.Left="30.8018" Canvas.Top="38.8739" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 31.1164,225.051C 61.9182,202.498 255.507,61.3523 286.309,39.1884"/>
@@ -1056,8 +1065,8 @@
                     <Path Width="324.958" Height="187.271" Canvas.Left="207.426" Canvas.Top="38.4844" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 532.069,225.441C 494.355,203.662 244.825,60.1848 207.741,38.799"/>
                     <Path Width="465.754" Height="188.046" Canvas.Left="84.2292" Canvas.Top="38.095" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 549.669,225.826C 500.643,206.387 133.57,57.8529 84.5438,38.4095"/>
                     <Path Width="118.796" Height="185.325" Canvas.Left="451.301" Canvas.Top="39.2625" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 569.783,224.273C 554.069,200.163 467.329,64.0728 451.616,39.5771"/>
-                    <TextBlock x:Name="PP_top" Text="10110101101101011011010110110101" Canvas.Left="23" FontFamily="Helvetica Mono" FontSize="32" Canvas.Top="3"/>
-                    <TextBlock x:Name="PP_bottom" Text="10110101101101011011010110110101" Canvas.Left="23" Canvas.Top="221" FontFamily="Helvetica Mono" FontSize="32" Visibility="Hidden"/>
+                    <TextBlock x:Name="PTop" Text="10110101101101011011010110110101" Canvas.Left="23" FontFamily="Helvetica Mono" FontSize="32" Canvas.Top="3"/>
+                    <TextBlock x:Name="PBottom" Text="10110101101101011011010110110101" Canvas.Left="23" Canvas.Top="223" FontFamily="Helvetica Mono" FontSize="32" Visibility="Hidden"/>
                 </Canvas>
             </Viewbox>
         </Grid>
@@ -1129,8 +1138,8 @@
                     <Path Width="476.091" Height="251.774" Canvas.Left="219" Canvas.Top="66.113" Stretch="Fill" StrokeThickness="0.383414" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 695.374,278.84C 654.009,256.966 260.651,49.3243 219.666,27.4496"/>
                     <Path Width="62.436" Height="247.94" Canvas.Left="646" Canvas.Top="68.03" Stretch="Fill" StrokeThickness="0.383414" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 708.4,276.923C 701.119,247.752 653.244,58.9189 646.348,29.3669"/>
                     <Path Width="411.748" Height="251.774" Canvas.Left="305.126" Canvas.Top="66.113" Stretch="Fill" StrokeThickness="0.383414" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 716.827,278.84C 679.671,255.814 342.614,50.0949 305.462,27.4496"/>
-                    <TextBlock x:Name="FP_top" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" FontFamily="Helvetica Mono" FontSize="20" Canvas.Top="44"/>
-                    <TextBlock x:Name="FP_bottom" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="39" Canvas.Top="316" FontFamily="Helvetica Mono" FontSize="20"/>
+                    <TextBlock x:Name="FpTop" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="37" FontFamily="Helvetica Mono" FontSize="20" Canvas.Top="44"/>
+                    <TextBlock x:Name="FpBottom" Text="1011010110110101101101011011010110110101101101011011010110110101" Canvas.Left="39" Canvas.Top="316" FontFamily="Helvetica Mono" FontSize="20"/>
                     <Label Content="R 16" Canvas.Left="185" FontWeight="Bold" FontSize="20" Canvas.Top="8"/>
                     <Label Content="L 16" Canvas.Left="530" FontWeight="Bold" FontSize="20" Canvas.Top="8"/>
                 </Canvas>
@@ -1140,7 +1149,7 @@
         <Grid x:Name="InfoScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Visibility="Hidden">
             <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
                 <Canvas Width="765" Height="297">
-                    <Label x:Name="InfoText" Content="DES is a modern symmetric-key block cipher which encrypts one message block &#xD;&#xA;of 64 bit with a 64 bit key into a 64 bit ciphertext. &#xA;&#xD;&#xA;Each 8th bit (least significant bit) is used solely for checking parity and are &#xD;&#xA;thereafter discarded. These aren't actually used by the algorithm and so the &#xD;&#xA;effective key length for encryption is only 56 bits.&#xA;&#xA;The key is fully responsible for the security of the cipher.&#xA;&#xA;The overall structure of the algorithm has 16 identical stages of processing,&#xD;&#xA;termed rounds. These rounds are organised in a  Feistel scheme.&#xD;&#xA;This ensures that decryption and encryption are very similar processes." Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Visibility="Hidden" />
+                    <Label x:Name="InfoText" Content="DES is a modern symmetric-key block cipher which encrypts one message &#xD;&#xA;block of 64 bit with a 64 bit key into a 64 bit ciphertext. &#xA;&#xA;Each 8th bit (least significant bit) is used solely for checking parity and are &#xA;thereafter discarded. These aren't actually used by the algorithm and so the &#xA;effective key length for encryption is only 56 bits.&#xA;&#xA;The key is fully responsible for the security of the cipher.&#xA;&#xA;The overall structure of the algorithm has 16 identical stages of processing,&#xA;termed rounds. These rounds are organised in a &quot;Feistel&quot; scheme.&#xA;This ensures that decryption and encryption are very similar processes." Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Visibility="Hidden" />
                     <Label x:Name="HistoryText" Content="- In 1973 the NBS (National Bureau of Standards) started to develop or search&#xD;&#xA;  for an official standard algorithm for data encryption and decryption. &#xA;  One of the possible candidates was an algorithm based on IBM's &quot;Lucifer&quot;.&#xA;&#xA;- To check and verify the security of this algorithm the NSA (National Security &#xA;   Agency) was asked for help.&#xA;&#xA;- After changes of the key length and the used S-boxes this algorithm became&#xD;&#xA;  the official Data Encryption Standard on 23 November 1976.&#xA;&#xA;- On 2 October 2000 DES was replaced by an belgian algorithm called &#xD;&#xA;  &quot;Rijndael&quot; which became the AES (Advanced Encryption Standard)." Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Height="285" Visibility="Hidden" />
                 </Canvas>
             </Viewbox>
@@ -1154,7 +1163,7 @@
             </Viewbox>
         </Grid>
 
-        <Grid x:Name="DataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+        <Grid x:Name="InputDataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
             <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
                 <Grid x:Name="DiffusionGrid" Width="780" Height="300">
                     <Grid.RowDefinitions>
@@ -1163,7 +1172,6 @@
                         <RowDefinition Height="8*"/>
                         <RowDefinition Height="15*"/>
                         <RowDefinition Height="15*"/>
-
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="20*"/>
                         <RowDefinition Height="8*"/>
@@ -1372,9 +1380,10 @@
                     <CheckBox Grid.Row="9" Grid.Column="63" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" Click="CheckBox_Click"/>
                     <CheckBox Grid.Row="9" Grid.Column="64" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" Click="CheckBox_Click"/>
 
-                    <ToggleButton x:Name="DiffusionTButton" Content="Diffusion-Visualizer" Grid.Row="0" Grid.Column="51" Grid.ColumnSpan="14" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" FontWeight="Bold" Click="DiffusionTButton_Click" FontFamily="Arial"/>
-                    <Button x:Name="DiffusionClearButton" Content="Clear" Grid.Row="10" Grid.Column="55" Grid.ColumnSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffusionClearButton_Click" Visibility="Hidden" FontFamily="Arial" />
-                    <Button x:Name="DiffusionOKButton" Content="OK" Grid.Row="10" Grid.Column="61" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffusionOKButton_Click" Visibility="Hidden" FontFamily="Arial" />
+                    <ToggleButton x:Name="DiffTButton" Content="Diffusion-Visualizer" Grid.Row="0" Grid.Column="51" Grid.ColumnSpan="14" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" FontWeight="Bold" Click="DiffTButton_Click" FontFamily="Arial"/>
+                    <Button x:Name="DiffClearButton" Content="Clear" Grid.Row="10" Grid.Column="60" Grid.ColumnSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffClearButton_Click" FontFamily="Arial" Visibility="Hidden" />
+                    <Button x:Name="DiffOkButton" Content="OK" Grid.Row="10" Grid.Column="55" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffOKButton_Click" FontFamily="Arial" Visibility="Hidden" />
+                    <Label x:Name="DiffInfoLabel" Content="Click OK to accept changes!" Grid.Row="10" Grid.Column="37" Grid.ColumnSpan="18" FontSize="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" Visibility="Hidden"/>
 
                     <Label Content="Message  (64 Bit):" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="14" FontWeight="Bold" FontSize="18" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial"/>
                     <TextBlock x:Name="DataMessage" Text="" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="64" FontFamily="Helvetica Mono" FontSize="21.6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" />
@@ -1441,7 +1450,6 @@
         <Grid x:Name="RoundKeyDataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,11,0,0" Visibility="Hidden">
             <Viewbox Stretch="Uniform" Margin="0">
                 <Grid x:Name="RoundKeyDataGrid" Width="632" Height="350">
-
                     <TextBlock x:Name="K1" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,220"/>
                     <TextBlock x:Name="K2" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,190" Visibility="Hidden"/>
                     <TextBlock x:Name="K3" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,160" Visibility="Hidden"/>
@@ -1479,7 +1487,7 @@
             <Viewbox Stretch="Uniform">
                 <Canvas Width="454" Height="241">
                     <Canvas.Resources>
-                        <LinearGradientBrush x:Key="linearGradient2895" MappingMode="RelativeToBoundingBox" StartPoint="1,1" EndPoint="1,-1">
+                        <LinearGradientBrush x:Key="LinearGradient2895" MappingMode="RelativeToBoundingBox" StartPoint="1,1" EndPoint="1,-1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1487,7 +1495,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2935" MappingMode="RelativeToBoundingBox" StartPoint="1,1" EndPoint="1,-1">
+                        <LinearGradientBrush x:Key="LinearGradient2935" MappingMode="RelativeToBoundingBox" StartPoint="1,1" EndPoint="1,-1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1495,7 +1503,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2736" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0">
+                        <LinearGradientBrush x:Key="LinearGradient2736" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,0" EndPoint="0,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#000000" Offset="0"/>
@@ -1503,7 +1511,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2943" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="0,0">
+                        <LinearGradientBrush x:Key="LinearGradient2943" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="0,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1511,7 +1519,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient3080" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+                        <LinearGradientBrush x:Key="LinearGradient3080" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1519,7 +1527,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient3084" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="0,0">
+                        <LinearGradientBrush x:Key="LinearGradient3084" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="0,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1527,7 +1535,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2951" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,0">
+                        <LinearGradientBrush x:Key="LinearGradient2951" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1535,7 +1543,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient3086" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,1" EndPoint="0,1">
+                        <LinearGradientBrush x:Key="LinearGradient3086" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,1" EndPoint="0,1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#000000" Offset="0"/>
@@ -1543,7 +1551,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2707" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,1" EndPoint="1,1">
+                        <LinearGradientBrush x:Key="LinearGradient2707" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="0,1" EndPoint="1,1">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#A47C44" Offset="0"/>
@@ -1552,31 +1560,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2780" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="#FFFFFF" Offset="0"/>
-                                    <GradientStop Color="#00FFFFFF" Offset="1"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient3057" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="#282828" Offset="0"/>
-                                    <GradientStop Color="#00282828" Offset="1"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2834" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="#FFE19C" Offset="0"/>
-                                    <GradientStop Color="#00B79E4F" Offset="1"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2713" MappingMode="RelativeToBoundingBox" StartPoint="0,0" EndPoint="1,1">
+                        <LinearGradientBrush x:Key="LinearGradient2732" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="1,0" EndPoint="1,0">
                             <LinearGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#000000" Offset="0"/>
@@ -1584,15 +1568,7 @@
                                 </GradientStopCollection>
                             </LinearGradientBrush.GradientStops>
                         </LinearGradientBrush>
-                        <LinearGradientBrush x:Key="linearGradient2732" MappingMode="RelativeToBoundingBox" SpreadMethod="Reflect" StartPoint="1,0" EndPoint="1,0">
-                            <LinearGradientBrush.GradientStops>
-                                <GradientStopCollection>
-                                    <GradientStop Color="#000000" Offset="0"/>
-                                    <GradientStop Color="#FFFFFF" Offset="1"/>
-                                </GradientStopCollection>
-                            </LinearGradientBrush.GradientStops>
-                        </LinearGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient3063" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
+                        <RadialGradientBrush x:Key="RadialGradient3063" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#282828" Offset="0"/>
@@ -1603,7 +1579,7 @@
                                 <MatrixTransform Matrix="7.5313 0 0 .53795 3.9743 -.012826"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2821" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2821" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1614,7 +1590,7 @@
                                 <MatrixTransform Matrix=".62140 0 0 1.8821 -16.512 -15.97"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient3069" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
+                        <RadialGradientBrush x:Key="RadialGradient3069" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#282828" Offset="0"/>
@@ -1625,7 +1601,7 @@
                                 <MatrixTransform Matrix="7.5313 0 0 .53795 3.9743 -2.0257"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2813" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2813" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1636,7 +1612,7 @@
                                 <MatrixTransform Matrix=".50007 0 0 1.6752 23.904 -11.668"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient3071" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
+                        <RadialGradientBrush x:Key="RadialGradient3071" MappingMode="Absolute" Center="8,232" RadiusX="7.4833" RadiusY="7.4833">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#282828" Offset="0"/>
@@ -1647,7 +1623,7 @@
                                 <MatrixTransform Matrix="7.5313 0 0 .67244 3.9743 -34.231"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2959" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
+                        <RadialGradientBrush x:Key="RadialGradient2959" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFE19C" Offset="0"/>
@@ -1658,7 +1634,7 @@
                                 <MatrixTransform Matrix="-2.8463 0 0 2.0879 139.53 -3.5862"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2869" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
+                        <RadialGradientBrush x:Key="RadialGradient2869" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFE19C" Offset="0"/>
@@ -1669,7 +1645,7 @@
                                 <MatrixTransform Matrix="2.3666 0 0 1.7265 -.40436 -.012826"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2873" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
+                        <RadialGradientBrush x:Key="RadialGradient2873" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFE19C" Offset="0"/>
@@ -1680,7 +1656,7 @@
                                 <MatrixTransform Matrix="-2.3666 0 0 1.7265 129.12 -.11292"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2955" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
+                        <RadialGradientBrush x:Key="RadialGradient2955" MappingMode="Absolute" Center="22,9" RadiusX="6.0679" RadiusY="6.0679">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFE19C" Offset="0"/>
@@ -1691,7 +1667,7 @@
                                 <MatrixTransform Matrix="3.085 0 0 2.0529 -15.985 -3.1493"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2819" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2819" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1702,7 +1678,7 @@
                                 <MatrixTransform Matrix=".50007 0 0 1.6752 -13.898 -11.668"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2811" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2811" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1713,7 +1689,7 @@
                                 <MatrixTransform Matrix=".43334 0 0 1.435 25.311 -6.6735"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2815" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2815" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1724,7 +1700,7 @@
                                 <MatrixTransform Matrix=".62140 0 0 1.8821 21.29 -15.97"/>
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
-                        <RadialGradientBrush x:Key="radialGradient2817" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
+                        <RadialGradientBrush x:Key="RadialGradient2817" MappingMode="Absolute" Center="20,23" RadiusX="15.157" RadiusY="15.157">
                             <RadialGradientBrush.GradientStops>
                                 <GradientStopCollection>
                                     <GradientStop Color="#FFFFFF" Offset="0"/>
@@ -1736,161 +1712,161 @@
                             </RadialGradientBrush.Transform>
                         </RadialGradientBrush>
                     </Canvas.Resources>
-                    <Canvas Name="layer2" Canvas.Left="159" Canvas.Top="45">
-                        <Canvas Name="g45">
-                            <Path Name="rect2723" Fill="#FF282828" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Canvas.Left="1">
+                    <Canvas Canvas.Left="159" Canvas.Top="45">
+                        <Canvas>
+                            <Path Fill="#FF282828" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 2c-20.072 0-36.231 16.159-36.231 36.231v40.256h10.064v-40.256c0-14.496 11.67-26.167 26.167-26.167 14.496 0 26.167 11.67 26.167 26.167v40.256h10.064v-40.256c0-20.072-16.159-36.231-36.231-36.231z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path3082" Fill="{StaticResource linearGradient3084}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".65" Canvas.Left="1">
+                            <Path Fill="{StaticResource LinearGradient3084}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".65" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 4.6292c-18.957 0-34.218 16.307-34.218 34.909v37.528c0 14.089 8.7764 26.05 21.26 31.047-8.9449-4.0729-15.222-12.8-15.222-23.147v-47.404c0-14.225 11.67-26.621 26.167-26.621h4.0256c14.496 0 26.167 12.396 26.167 26.621v47.404c0 10.347-6.2771 19.074-15.222 23.147 12.484-4.9976 21.26-16.958 21.26-31.047v-37.528c0-18.602-15.261-34.909-34.218-34.909z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2931" Fill="{StaticResource linearGradient2951}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
+                            <Path Fill="{StaticResource LinearGradient2951}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 2.8539c-19.51 0-35.217 15.601-35.217 34.98v39.095c0 14.677 9.0325 27.137 21.881 32.344-9.206-4.2429-15.666-13.334-15.666-24.113v-49.383c0-14.819 12.011-29.082 26.93-29.082h4.1431c14.919 0 26.93 14.263 26.93 29.082v49.383c0 10.779-6.4603 19.87-15.666 24.113 12.848-5.2063 21.881-17.666 21.881-32.344v-39.095c0-19.379-15.707-34.98-35.217-34.98z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
-                        <Path Name="path2861" Fill="{StaticResource radialGradient2869}" Opacity=".8" Canvas.Left="1">
+                        <Path Fill="{StaticResource RadialGradient2869}" Opacity=".8" Canvas.Left="1">
                             <Path.Data>
                                 <PathGeometry Figures="m49.471 12.003c-5.4384 3.4052-8.4987 9.2101-7.8995 11.145 0.64564 2.085 4.4667-7.2336 15.283-10.119 8.3406-2.2253-0.0005-5.6487-7.3837-1.0257z" FillRule="evenodd"/>
                             </Path.Data>
                         </Path>
-                        <Path Name="path2871" Fill="{StaticResource radialGradient2873}" Opacity=".8" Canvas.Left="1">
+                        <Path Fill="{StaticResource RadialGradient2873}" Opacity=".8" Canvas.Left="1">
                             <Path.Data>
                                 <PathGeometry Figures="m79.248 11.903c5.4384 3.4052 8.4987 9.2101 7.8995 11.145-0.64565 2.085-4.4667-7.2336-15.283-10.119-8.3406-2.2253 0.000488-5.6487 7.3837-1.0257z" FillRule="evenodd"/>
                             </Path.Data>
                         </Path>
-                        <Canvas Name="g52">
-                            <Path Name="rect2875" Fill="{StaticResource linearGradient2943}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
+                        <Canvas>
+                            <Path Fill="{StaticResource LinearGradient2943}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 6.2794c-18.957 0-34.218 12.995-34.218 31.952v38.244c0 14.358 8.7764 26.546 21.26 31.639-8.9449-4.1505-15.222-13.044-15.222-23.588v-48.308c0-14.496 11.67-26.182 26.167-26.182h4.0256c14.496 0 26.167 11.686 26.167 26.182v48.308c0 10.544-6.2771 19.437-15.222 23.588 12.484-5.0929 21.26-17.281 21.26-31.639v-38.244c0-18.957-15.261-31.952-34.218-31.952z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2933" Fill="{StaticResource linearGradient2935}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".8" Canvas.Left="1">
+                            <Path Fill="{StaticResource LinearGradient2935}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".8" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 4.0389c-26.762 0-32.938 23.315-32.938 33.86 0 31.634 2.0586 31.634 2.0586 0 0-23.199 16.463-32.355 30.879-32.355s30.879 10.103 30.879 32.355c0 31.634 2.0586 31.634 2.0586 0 0-10.545-6.1758-33.86-32.938-33.86z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2885" Fill="{StaticResource linearGradient2895}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".6" Canvas.Left="1">
+                            <Path Fill="{StaticResource LinearGradient2895}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".6" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m64.359 7.0913c-26.167 0-32.205 22.3-32.205 31.987 0 29.062 2.0128 29.062 2.0128 0 0-21.312 16.097-30.605 30.192-30.605 14.096 0 30.192 10.162 30.192 30.605 0 29.062 2.0128 29.062 2.0128 0 0-9.6873-6.0385-31.987-32.205-31.987z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
-                        <Canvas Name="g57">
-                            <Path Name="path2897" Fill="#FFFFFFFF" Opacity=".8" Canvas.Left="1">
+                        <Canvas >
+                            <Path Fill="#FFFFFFFF" Opacity=".8" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m36.98 16.488c-2.8752 5.2482 3.0271 1.9311 4.398 0.27382 3.8539-4.659 10.368-8.0363 16.085-9.1385 4.7947-0.92436 5.5258-2.7757 1.5775-3.0822-7.8721-0.61105-19.304 6.9156-22.061 11.947z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2901" Fill="#FFFFFFFF" Opacity=".6" Canvas.Left="1">
+                            <Path Fill="#FFFFFFFF" Opacity=".6" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m32.623 25.156c0.30478 2.5648 5.2635-5.7978 9.1677-9.7237 4.7683-4.7948 11.996-8.1508 15.474-8.5942 6.1984-0.79048 3.2564-3.828-0.62867-3.0606-14.12 2.7892-24.79 14.838-24.012 21.378z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2909" Fill="#FFFFFFFF" Opacity=".8" Canvas.Left="1">
+                            <Path Fill="#FFFFFFFF" Opacity=".8" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m91.58 16.452c2.8946 5.2376-3.0199 1.9423-4.3969 0.29-3.871-4.6448-10.397-7.9981-16.119-9.0792-4.7981-0.9067-6.1484-2.7521-2.2014-3.0732 7.8698-0.64002 19.942 6.8412 22.717 11.862z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path2911" Fill="#FFFFFFFF" Opacity=".6" Canvas.Left="1">
+                            <Path Fill="#FFFFFFFF" Opacity=".6" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m95.798 24.925c-0.29533 2.5659-5.2848-5.7784-9.2035-9.6899-4.786-4.7772-12.026-8.1066-15.505-8.5372-6.2013-0.76765-3.2924-3.6952 0.61676-3.0622 14.142 2.3014 24.845 14.746 24.092 21.289z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
-                        <Path Name="path2953" Fill="{StaticResource radialGradient2955}" Opacity=".4" Canvas.Left="1">
+                        <Path Fill="{StaticResource RadialGradient2955}" Opacity=".4" Canvas.Left="1">
                             <Path.Data>
                                 <PathGeometry Figures="m49.032 11.138c-7.0895 4.049-11.079 10.951-10.298 13.252 0.84166 2.4791 5.8227-8.601 19.923-12.032 10.873-2.6459-0.000652-6.7166-9.6253-1.2196z" FillRule="evenodd"/>
                             </Path.Data>
                         </Path>
-                        <Path Name="path2957" Fill="{StaticResource radialGradient2959}" Opacity=".4" Canvas.Left="1">
+                        <Path Fill="{StaticResource RadialGradient2959}" Opacity=".4" Canvas.Left="1">
                             <Path.Data>
                                 <PathGeometry Figures="m79.54 10.945c6.5408 4.1181 10.222 11.138 9.5008 13.478-0.77652 2.5214-5.3721-8.7479-18.381-12.238-10.031-2.6911 0.000587-6.8312 8.8804-1.2405z" FillRule="evenodd"/>
                             </Path.Data>
                         </Path>
-                        <Canvas Name="g65">
-                            <Path Name="path3055" Fill="{StaticResource radialGradient3063}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
+                        <Canvas>
+                            <Path Fill="{StaticResource RadialGradient3063}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m120.72 124.78a56.359 4.0256 0 1 1 -112.72 0 56.359 4.0256 0 1 1 112.72 0z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path3065" Fill="{StaticResource radialGradient3071}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
+                            <Path Fill="{StaticResource RadialGradient3071}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m120.72 121.76a56.359 5.0321 0 1 1 -112.72 0 56.359 5.0321 0 1 1 112.72 0z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
-                            <Path Name="path3067" Fill="{StaticResource radialGradient3069}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
+                            <Path Fill="{StaticResource RadialGradient3069}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".4" Canvas.Left="1">
                                 <Path.Data>
                                     <PathGeometry Figures="m120.72 122.77a56.359 4.0256 0 1 1 -112.72 0 56.359 4.0256 0 1 1 112.72 0z" FillRule="evenodd"/>
                                 </Path.Data>
                             </Path>
                         </Canvas>
                     </Canvas>
-                    <Canvas Name="layer1" Canvas.Left="159" Canvas.Top="48">
-                        <Canvas Name="g71">
-                            <Canvas Name="g73">
-                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Name="rect1941" Fill="{StaticResource linearGradient2707}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
-                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Name="rect2709" Fill="{StaticResource linearGradient2732}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
-                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Name="rect2734" Fill="{StaticResource linearGradient2736}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
-                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Name="rect2738" Fill="{StaticResource linearGradient3086}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
-                                <Path Name="path2727" Fill="#FFFFFFFF" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
+                    <Canvas Canvas.Left="159" Canvas.Top="48">
+                        <Canvas>
+                            <Canvas>
+                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Fill="{StaticResource LinearGradient2707}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Fill="{StaticResource LinearGradient2732}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
+                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Fill="{StaticResource LinearGradient2736}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
+                                <Rectangle Canvas.Left="25" Canvas.Top="57" Width="81" Height="66" RadiusX=".5" RadiusY=".5" Fill="{StaticResource LinearGradient3086}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".03"/>
+                                <Path Fill="#FFFFFFFF" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m26.619 57.359c1.8101 2.1216 18.145 3.7862 38.655 3.7862 20.229 0 36.293-1.6472 38.484-3.7271-0.03083-0.00322-0.025513-0.059158-0.05719-0.059158h-77.082z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
                             </Canvas>
-                            <Canvas Name="g2798">
+                            <Canvas>
                                 <Canvas.RenderTransform>
                                     <MatrixTransform Matrix="1.7195 0 0 1.9816 4.4209 1.4876"/>
                                 </Canvas.RenderTransform>
-                                <Path Name="path2778" Fill="{StaticResource radialGradient2817}" Opacity=".403" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2817}" Opacity=".403" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.971 30.767c-0.43955 2.6295-0.93088 19.309 0.69644 22.88 1.5919 3.4933 1.3929-16.667 5.273-19.84 3.9212-3.2069-5.555-5.52-5.9695-3.04z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
-                                <Path Name="path2790" Fill="{StaticResource radialGradient2819}" Opacity=".3" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2819}" Opacity=".3" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.729 30.942c-0.50723 3.0697-1.0742 22.541 0.80369 26.71 1.837 4.0782 1.6074-19.457 6.0851-23.162 4.525-3.7437-6.4104-6.4441-6.8888-3.5489z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
-                                <Path Name="path2794" Fill="{StaticResource radialGradient2821}" Opacity=".2" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2821}" Opacity=".2" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.232 31.092c-0.6303 3.4488-1.3349 25.325 0.99868 30.009 2.2827 4.5818 1.9974-21.86 7.5614-26.022 5.6229-4.206-7.9657-7.2399-8.5601-3.9872z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
                             </Canvas>
-                            <Canvas Name="g2803">
+                            <Canvas>
                                 <Canvas.RenderTransform>
                                     <MatrixTransform Matrix="-1.7195 0 0 1.9816 124.3 1.4876"/>
                                 </Canvas.RenderTransform>
-                                <Path Name="path2805" Fill="{StaticResource radialGradient2811}" Opacity=".403" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2811}" Opacity=".403" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.971 30.767c-0.43955 2.6295-0.93088 19.309 0.69644 22.88 1.5919 3.4933 1.3929-16.667 5.273-19.84 3.9212-3.2069-5.555-5.52-5.9695-3.04z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
-                                <Path Name="path2807" Fill="{StaticResource radialGradient2813}" Opacity=".3" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2813}" Opacity=".3" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.729 30.942c-0.50723 3.0697-1.0742 22.541 0.80369 26.71 1.837 4.0782 1.6074-19.457 6.0851-23.162 4.525-3.7437-6.4104-6.4441-6.8888-3.5489z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
-                                <Path Name="path2809" Fill="{StaticResource radialGradient2815}" Opacity=".2" Canvas.Left="1">
+                                <Path Fill="{StaticResource RadialGradient2815}" Opacity=".2" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m13.232 31.092c-0.6303 3.4488-1.3349 25.325 0.99868 30.009 2.2827 4.5818 1.9974-21.86 7.5614-26.022 5.6229-4.206-7.9657-7.2399-8.5601-3.9872z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
                             </Canvas>
-                            <Canvas Name="g88">
-                                <Path Name="rect3077" Fill="{StaticResource linearGradient3080}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".25" Canvas.Left="1">
+                            <Canvas>
+                                <Path Fill="{StaticResource LinearGradient3080}" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".25" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m103.12 114.72v7.8872c0 0.55756-0.43214 1.0064-0.96891 1.0064h-75.575c-0.53678 0-0.96891-0.44886-0.96891-1.0064v-28.015c0 29.516 77.513-20.879 77.513 20.128z" FillRule="evenodd"/>
                                     </Path.Data>
                                 </Path>
-                                <Path Name="path2768" Fill="#000000" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
+                                <Path Fill="#000000" StrokeThickness=".625" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" Opacity=".5" Canvas.Left="1">
                                     <Path.Data>
                                         <PathGeometry Figures="m25.646 123.62c1.8101-2.1216 18.145-3.7862 38.655-3.7862 20.229 0 36.293 1.6472 38.484 3.7271-0.03083 0.00322-0.025497 0.059158-0.057175 0.059158h-77.082z" FillRule="evenodd"/>
                                     </Path.Data>
@@ -1911,15 +1887,20 @@
 
         </Grid>
 
+        <TextBlock x:Name="DiffusionActiveLabel" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="3" FontFamily="Arial" TextAlignment="Right" FontWeight="Bold" Margin="0,0,5,0" Padding="0,2,0,0" Visibility="Hidden">
+            Diffusion <Run Foreground="#FF00B200">Active</Run>!
+        </TextBlock>
+
         <!-- Region Button -->
         <Button x:Name="PrevButton" Content="Prev. Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <ToggleButton x:Name="AutoButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="AutoButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="1.5" IsEnabled="True" Padding="0" Margin="1" Maximum="3" ToolTip="Auto Speed Regulation" FontFamily="Arial" FontSize="11.333"/>
+        <ToggleButton x:Name="AutoTButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="AutoTButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" ToolTip="Auto Speed Regulation" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
         <Button x:Name="NextButton" Content="Next Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="SkipStepButton" Content="Skip Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipStepButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="SkipButton" Content="Skip Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
 
-        <Button x:Name="ShiftButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ShiftButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="PC2Button" Visibility="Hidden" Content="PC 2" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="PC2Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 2"/>
+        <Button x:Name="ShiftCButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ShiftCButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="ShiftDButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="ShiftDButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="PC2Button" Visibility="Hidden" Content="PC 2" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC2Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 2"/>
         <Button x:Name="ExpansionButton" Visibility="Hidden" Content="Expansion" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ExpansionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="KeyAdditionButton" Visibility="Hidden" Content="Key Addition" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="KeyAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="SBoxButton" Visibility="Hidden" Content="S-Boxes" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="SBoxButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
@@ -1935,23 +1916,23 @@
         <Button x:Name="FPButton" Content="FP" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Grid.ColumnSpan="2" Click="FPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Final Permutation"/>
         <Button x:Name="SummaryButton" Content="Summary" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Grid.ColumnSpan="2" Click="SummaryButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
 
-        <Label x:Name="RoundButtonLabel" Grid.Row="4"  Grid.Column="0" Content="Round" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
-        <Button x:Name="round1Button" Content="1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round2Button" Content="2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round3Button" Content="3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round4Button" Content="4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round5Button" Content="5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round6Button" Content="6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round7Button" Content="7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round8Button" Content="8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round9Button" Content="9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round10Button" Content="10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round11Button" Content="11" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round12Button" Content="12" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round13Button" Content="13" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round14Button" Content="14" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round15Button" Content="15" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="round16Button" Content="16" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Label Grid.Row="4"  Grid.Column="0" Content="Round" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
+        <Button x:Name="Round1Button" Content="1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round2Button" Content="2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round3Button" Content="3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round4Button" Content="4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round5Button" Content="5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round6Button" Content="6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round7Button" Content="7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round8Button" Content="8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round9Button" Content="9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round10Button" Content="10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round11Button" Content="11" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round12Button" Content="12" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round13Button" Content="13" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round14Button" Content="14" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round15Button" Content="15" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round16Button" Content="16" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
         <!-- EndRegion -->
 
     </Grid>

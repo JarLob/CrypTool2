@@ -59,5 +59,86 @@ namespace DESVisualisation.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DESVisualisation ähnelt.
+        /// </summary>
+        internal static string DESVisualisationCaption {
+            get {
+                return ResourceManager.GetString("DESVisualisationCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visualisation of DES encryption ähnelt.
+        /// </summary>
+        internal static string DESVisualisationTooltip {
+            get {
+                return ResourceManager.GetString("DESVisualisationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input the key used for encryption ähnelt.
+        /// </summary>
+        internal static string inputKeyDescription {
+            get {
+                return ResourceManager.GetString("inputKeyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key input ähnelt.
+        /// </summary>
+        internal static string inputKeyName {
+            get {
+                return ResourceManager.GetString("inputKeyName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input the text to be encrypted ähnelt.
+        /// </summary>
+        internal static string inputTextDescription {
+            get {
+                return ResourceManager.GetString("inputTextDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Text input ähnelt.
+        /// </summary>
+        internal static string inputTextName {
+            get {
+                return ResourceManager.GetString("inputTextName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die University of Mannheim ähnelt.
+        /// </summary>
+        internal static string institute {
+            get {
+                return ResourceManager.GetString("institute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output the Ciphertext after encryption with the DES algorithm ähnelt.
+        /// </summary>
+        internal static string outputCiphertextDescription {
+            get {
+                return ResourceManager.GetString("outputCiphertextDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext output ähnelt.
+        /// </summary>
+        internal static string outputCiphertextName {
+            get {
+                return ResourceManager.GetString("outputCiphertextName", resourceCulture);
+            }
+        }
     }
 }
