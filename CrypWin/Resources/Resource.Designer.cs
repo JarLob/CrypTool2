@@ -366,9 +366,9 @@ namespace Cryptool.CrypWin.Resources {
         ///caption{background:#E7E7E7;border:#666666;border-bottom:2px solid #666666;text-transform:uppercase;padding:10px;font:15px &apos;Verdana&apos;, Arial, Helvetica, sans-serif;font-style:italic;font-weight:bold;}
         ///td, th{padding:4px [rest of string was truncated]&quot;;.
         /// </summary>
-        public static string table_temlate {
+        public static string table_template {
             get {
-                return ResourceManager.GetString("table_temlate", resourceCulture);
+                return ResourceManager.GetString("table_template", resourceCulture);
             }
         }
         

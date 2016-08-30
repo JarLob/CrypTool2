@@ -375,7 +375,7 @@ namespace Cryptool.CrypWin
                         .Where(m => listFilter.Contains(m.LogLevel))
                         .Select(m => string.Format(Resource.row_template, new object[] { LogMessage.Color(m.LogLevel), m.Nr.ToString(), m.LogLevel.ToString(), m.Time, m.Plugin, m.Title, m.Message }));
 
-                    string html = Resource.table_temlate.Replace("{0}", messages.Count().ToString()).Replace("{1}", String.Join("", messages));
+                    string html = Resource.table_template.Replace("{0}", messages.Count().ToString()).Replace("{1}", String.Join("", messages));
 
                     FileStream stream = File.Open(dlg.FileName, FileMode.Create);
                     StreamWriter sWriter = new StreamWriter(stream);
