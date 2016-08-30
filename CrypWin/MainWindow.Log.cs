@@ -368,34 +368,18 @@ namespace Cryptool.CrypWin
                 dlg.InitialDirectory = Settings.Default.LastPath;
                 dlg.Filter = Resource.HTML_fileFilter;
                 dlg.FileName = Resource.fileName_LogMessages;
+
                 if (dlg.ShowDialog() == true)
                 {
-                    StringBuilder sbList = new StringBuilder();
-                    int count = 0;
-                    foreach (LogMessage logMessage in collectionLogMessages)
-                    {
-                        if (listFilter.Contains(logMessage.LogLevel))
-                        {
-                            sbList.Append(string.Format(Resource.row_template,
-                              new object[] 
-                  { 
-                    LogMessage.Color(logMessage.LogLevel), 
-                    logMessage.Nr.ToString(), 
-                    logMessage.LogLevel.ToString(), 
-                    logMessage.Time, 
-                    logMessage.Plugin, 
-                    logMessage.Title, 
-                    logMessage.Message
-                  }));
-                            count++;
-                        }
-                    };
+                    var messages = collectionLogMessages
+                        .Where(m => listFilter.Contains(m.LogLevel))
+                        .Select(m => string.Format(Resource.row_template, new object[] { LogMessage.Color(m.LogLevel), m.Nr.ToString(), m.LogLevel.ToString(), m.Time, m.Plugin, m.Title, m.Message }));
+
+                    string html = Resource.table_temlate.Replace("{0}", messages.Count().ToString()).Replace("{1}", String.Join("", messages));
 
                     FileStream stream = File.Open(dlg.FileName, FileMode.Create);
                     StreamWriter sWriter = new StreamWriter(stream);
-                    string temp1 = Resource.table_temlate.Replace("{0}", count.ToString());
-                    string temp2 = temp1.Replace("{1}", sbList.ToString());
-                    sWriter.Write(temp2);
+                    sWriter.Write(html);
                     sWriter.Close();
                 }
             }
