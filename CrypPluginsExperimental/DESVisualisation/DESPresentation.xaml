@@ -1894,7 +1894,7 @@
         <!-- Region Button -->
         <Button x:Name="PrevButton" Content="{Loc PrevStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <ToggleButton x:Name="AutoTButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="AutoTButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" ToolTip="Auto Speed Regulation" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
+        <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
         <Button x:Name="NextButton" Content="{Loc NextStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="SkipButton" Content="{Loc SkipStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
 
