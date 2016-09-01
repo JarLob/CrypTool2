@@ -61,7 +61,133 @@ namespace Cryptool.DESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DESVisualisation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die active ähnelt.
+        /// </summary>
+        internal static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Background ähnelt.
+        /// </summary>
+        internal static string Background {
+            get {
+                return ResourceManager.GetString("Background", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 32 bit ähnelt.
+        /// </summary>
+        internal static string Bit32 {
+            get {
+                return ResourceManager.GetString("Bit32", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 48 bit ähnelt.
+        /// </summary>
+        internal static string Bit48 {
+            get {
+                return ResourceManager.GetString("Bit48", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 6 bit ähnelt.
+        /// </summary>
+        internal static string Bit6 {
+            get {
+                return ResourceManager.GetString("Bit6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bitwise XOR Operation ähnelt.
+        /// </summary>
+        internal static string BitwiseXOROperation {
+            get {
+                return ResourceManager.GetString("BitwiseXOROperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
+        /// </summary>
+        internal static string Ciphertext {
+            get {
+                return ResourceManager.GetString("Ciphertext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clear ähnelt.
+        /// </summary>
+        internal static string Clear {
+            get {
+                return ResourceManager.GetString("Clear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Column: ähnelt.
+        /// </summary>
+        internal static string Column {
+            get {
+                return ResourceManager.GetString("Column", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cyclic Shift ähnelt.
+        /// </summary>
+        internal static string CyclicShift {
+            get {
+                return ResourceManager.GetString("CyclicShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data ähnelt.
+        /// </summary>
+        internal static string Data {
+            get {
+                return ResourceManager.GetString("Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key  (64 bit): ähnelt.
+        /// </summary>
+        internal static string DataKey {
+            get {
+                return ResourceManager.GetString("DataKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Message  (64 bit): ähnelt.
+        /// </summary>
+        internal static string DataMessage {
+            get {
+                return ResourceManager.GetString("DataMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DES Encryption ähnelt.
+        /// </summary>
+        internal static string DESEncryption {
+            get {
+                return ResourceManager.GetString("DESEncryption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DESVisualization ähnelt.
         /// </summary>
         internal static string DESVisualisationCaption {
             get {
@@ -70,11 +196,130 @@ namespace Cryptool.DESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Visualisation of DES encryption ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visualization of DES encryption ähnelt.
         /// </summary>
         internal static string DESVisualisationTooltip {
             get {
                 return ResourceManager.GetString("DESVisualisationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click Ok to flip the checked bits ähnelt.
+        /// </summary>
+        internal static string DiffInfo {
+            get {
+                return ResourceManager.GetString("DiffInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show Diffusion Visualizer ähnelt.
+        /// </summary>
+        internal static string DiffusionVisualizer {
+            get {
+                return ResourceManager.GetString("DiffusionVisualizer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hide Diffusion Visualizer ähnelt.
+        /// </summary>
+        internal static string DiffusionVisualizerHide {
+            get {
+                return ResourceManager.GetString("DiffusionVisualizerHide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext  (64 bit): ähnelt.
+        /// </summary>
+        internal static string FinalCiphertext {
+            get {
+                return ResourceManager.GetString("FinalCiphertext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Function f(K  ,R  )
+        ///Round      /16 ähnelt.
+        /// </summary>
+        internal static string FunctionLabel {
+            get {
+                return ResourceManager.GetString("FunctionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General Information ähnelt.
+        /// </summary>
+        internal static string GeneralInformation {
+            get {
+                return ResourceManager.GetString("GeneralInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die General Structure ähnelt.
+        /// </summary>
+        internal static string GeneralStructure {
+            get {
+                return ResourceManager.GetString("GeneralStructure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die - In 1973 the NBS (National Bureau of Standards) started to develop or search
+        ///  for an official standard algorithm for data encryption and decryption. 
+        ///  One of the possible candidates was an algorithm based on IBM&apos;s &quot;Lucifer&quot;.
+        ///
+        ///- To check and verify the security of this algorithm the NSA (National Security 
+        ///  Agency) was asked for help.
+        ///
+        ///- After changes of the key length and the used S-boxes this algorithm became
+        ///  the official Data Encryption Standard on 23 November 1976.
+        ///
+        ///- On 2 October 2000 DE [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string HistoryText {
+            get {
+                return ResourceManager.GetString("HistoryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DES is a modern symmetric-key block cipher which encrypts one message
+        ///block of 64 bit with a 64 bit key into a 64 bit ciphertext. 
+        ///
+        ///Each 8th bit (least significant bit) is used solely for checking parity and is 
+        ///thereafter discarded. These 8 least significant bits aren&apos;t actually used by the
+        ///algorithm and so the effective key length for encryption is only 56 bits.
+        ///
+        ///The key is fully responsible for the security of the cipher.
+        ///
+        ///The overall structure of the algorithm has 16 identical stages of process [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string InfoText {
+            get {
+                return ResourceManager.GetString("InfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input: ähnelt.
+        /// </summary>
+        internal static string Input {
+            get {
+                return ResourceManager.GetString("Input", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input Data ähnelt.
+        /// </summary>
+        internal static string InputData {
+            get {
+                return ResourceManager.GetString("InputData", resourceCulture);
             }
         }
         
@@ -106,7 +351,7 @@ namespace Cryptool.DESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Text input ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext input ähnelt.
         /// </summary>
         internal static string inputTextName {
             get {
@@ -120,6 +365,87 @@ namespace Cryptool.DESVisualisation.Properties {
         internal static string institute {
             get {
                 return ResourceManager.GetString("institute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Intro ähnelt.
+        /// </summary>
+        internal static string Intro {
+            get {
+                return ResourceManager.GetString("Intro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block Cipher Visualization ähnelt.
+        /// </summary>
+        internal static string IntroBottom {
+            get {
+                return ResourceManager.GetString("IntroBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Introduction ähnelt.
+        /// </summary>
+        internal static string Introduction {
+            get {
+                return ResourceManager.GetString("Introduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
+        /// </summary>
+        internal static string Key {
+            get {
+                return ResourceManager.GetString("Key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key Addition ähnelt.
+        /// </summary>
+        internal static string KeyAddition {
+            get {
+                return ResourceManager.GetString("KeyAddition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key Schedule ähnelt.
+        /// </summary>
+        internal static string KeySchedule {
+            get {
+                return ResourceManager.GetString("KeySchedule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Message ähnelt.
+        /// </summary>
+        internal static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output: ähnelt.
+        /// </summary>
+        internal static string Output {
+            get {
+                return ResourceManager.GetString("Output", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output all S-Boxes: ähnelt.
+        /// </summary>
+        internal static string OutputAll {
+            get {
+                return ResourceManager.GetString("OutputAll", resourceCulture);
             }
         }
         
@@ -138,6 +464,151 @@ namespace Cryptool.DESVisualisation.Properties {
         internal static string outputCiphertextName {
             get {
                 return ResourceManager.GetString("outputCiphertextName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Permutation Function ähnelt.
+        /// </summary>
+        internal static string PermutationFunction {
+            get {
+                return ResourceManager.GetString("PermutationFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Prev. Step ähnelt.
+        /// </summary>
+        internal static string PrevStep {
+            get {
+                return ResourceManager.GetString("PrevStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round ähnelt.
+        /// </summary>
+        internal static string Round {
+            get {
+                return ResourceManager.GetString("Round", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 1 ähnelt.
+        /// </summary>
+        internal static string Round1 {
+            get {
+                return ResourceManager.GetString("Round1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round 16 ähnelt.
+        /// </summary>
+        internal static string Round16 {
+            get {
+                return ResourceManager.GetString("Round16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round                              L                                                    R ähnelt.
+        /// </summary>
+        internal static string RoundData {
+            get {
+                return ResourceManager.GetString("RoundData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Roundfunction ähnelt.
+        /// </summary>
+        internal static string Roundfunction {
+            get {
+                return ResourceManager.GetString("Roundfunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round Key ähnelt.
+        /// </summary>
+        internal static string RoundKey {
+            get {
+                return ResourceManager.GetString("RoundKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round                                           Round Key ähnelt.
+        /// </summary>
+        internal static string RoundKeyData {
+            get {
+                return ResourceManager.GetString("RoundKeyData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round:   1   2   3   4   5   6   7   8   9   10   11   12   13   14   15   16 
+        ///Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2     1 ähnelt.
+        /// </summary>
+        internal static string RoundShift {
+            get {
+                return ResourceManager.GetString("RoundShift", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Row: ähnelt.
+        /// </summary>
+        internal static string Row {
+            get {
+                return ResourceManager.GetString("Row", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round {0}/16 ähnelt.
+        /// </summary>
+        internal static string Runde_16 {
+            get {
+                return ResourceManager.GetString("Runde_16", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die S-Boxes ähnelt.
+        /// </summary>
+        internal static string SBoxesLabel {
+            get {
+                return ResourceManager.GetString("SBoxesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip Round ähnelt.
+        /// </summary>
+        internal static string SkipRound {
+            get {
+                return ResourceManager.GetString("SkipRound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip Step ähnelt.
+        /// </summary>
+        internal static string SkipStep {
+            get {
+                return ResourceManager.GetString("SkipStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Summary ähnelt.
+        /// </summary>
+        internal static string Summary {
+            get {
+                return ResourceManager.GetString("Summary", resourceCulture);
             }
         }
     }

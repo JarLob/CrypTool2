@@ -15,6 +15,7 @@ namespace Cryptool.DESVisualisation
     /// <summary>
     /// Interaction logic for DESPresentation.xaml
     /// </summary>
+    [Cryptool.PluginBase.Attributes.Localization("Cryptool.DESVisualisation.Properties.Resources")]
     public partial class DESPresentation : UserControl
     {
 
@@ -130,11 +131,7 @@ namespace Cryptool.DESVisualisation
                     }
                     else if (nextStepCounter == 4)
                     {
-                        roundCounter = 0;
-                        ShowDESRoundScreen(1);
-                        roundCounter = 15;
-                        ShowDESRoundScreen(1);
-                        ShowRoundDataScreen(1);
+                        ShowFPScreen(1);
                     }
                     break;
                 case 2:
@@ -144,8 +141,8 @@ namespace Cryptool.DESVisualisation
                         ShowIntroScreen();
 
                     break;
-                case 3: ShowChapterScreen(1); break;
-                case 4: ShowInfoScreen(1); break;
+                case 3: ShowInfoScreen(1); break;
+                case 4: ShowInfoScreen(2); break;
                 case 5:
                     if (nextStepCounter == 1)
                         ShowStructureScreen();
@@ -156,7 +153,7 @@ namespace Cryptool.DESVisualisation
                 case 6:
                     if (nextStepCounter == 1 && roundCounter == 0)
                     {
-                        ShowChapterScreen(2);
+                        ShowPC1Screen(1);
                     }
                     else if (nextStepCounter == 1 && roundCounter != 0)
                     {
@@ -175,15 +172,15 @@ namespace Cryptool.DESVisualisation
                     }
                     else if (nextStepCounter == 3)
                     {
-                        ShowKeyScheduleScreen(2);
+                        ShowShiftScreen(1);
                     }
                     else if (nextStepCounter == 4)
                     {
-                        ShowKeyScheduleScreen(3);
+                        ShowShiftScreen(3);
                     }
                     else if (nextStepCounter == 5)
                     {
-                        ShowKeyScheduleScreen(4);
+                        ShowPC2Screen(1);
                     }
                     break;
                 case 7:
@@ -237,7 +234,7 @@ namespace Cryptool.DESVisualisation
                 case 11:
                     if (nextStepCounter == 1 && roundCounter == 0)
                     {
-                        ShowChapterScreen(3);
+                        ShowIPScreen(1);
                     }
                     else if (nextStepCounter == 1 && roundCounter != 0)
                     {
@@ -260,7 +257,7 @@ namespace Cryptool.DESVisualisation
                     }
                     else if (nextStepCounter == 4)
                     {
-                        ShowDESRoundScreen(3);
+                        ShowXORScreen(3);
                     }
 
                     break;
@@ -276,19 +273,20 @@ namespace Cryptool.DESVisualisation
                     }
                     else if (nextStepCounter == 3)
                     {
-                        ShowRoundFunctionScreen(2);
+                        ShowExpansionScreen(1);
                     }
                     else if (nextStepCounter == 4)
                     {
-                        ShowRoundFunctionScreen(3);
+                        ShowXORScreen(1);
                     }
                     else if (nextStepCounter == 5)
                     {
-                        ShowRoundFunctionScreen(4);
+                        nextStepCounter = 39;
+                        ShowSBoxScreen(nextStepCounter);
                     }
                     else if (nextStepCounter == 6)
                     {
-                        ShowRoundFunctionScreen(5);
+                        ShowPScreen(1);
                     }
                     break;
                 case 13:
@@ -310,8 +308,14 @@ namespace Cryptool.DESVisualisation
                 case 15:
                     if (nextStepCounter == 1)
                         ShowXORScreen(1);
-                    else if (nextStepCounter != 1)
+                    else if (nextStepCounter == 2)
                         ShowRoundFunctionScreen(4);
+                    else if (nextStepCounter > 2)
+                    {
+                        nextStepCounter = nextStepCounter - 2;
+                        ShowSBoxScreen(nextStepCounter);
+                    }
+                        
                     break;
                 case 16:
                     if (nextStepCounter == 1)
@@ -530,7 +534,7 @@ namespace Cryptool.DESVisualisation
 
         // Button Row 4
 
-        private void roundButton_Click(object sender, RoutedEventArgs e)
+        private void RoundButton_Click(object sender, RoutedEventArgs e)
         {
 
             roundCounter = Grid.GetColumn((Button)sender) - 1;
@@ -551,6 +555,7 @@ namespace Cryptool.DESVisualisation
                 ShowDiffusionBoxes(true);
                 DiffOkButton.Visibility = Visibility.Visible;
                 DiffClearButton.Visibility = Visibility.Visible;
+                DiffTButton.Content = Properties.Resources.DiffusionVisualizerHide;
             }
             else
             {
@@ -558,7 +563,7 @@ namespace Cryptool.DESVisualisation
                 DiffOkButton.Visibility = Visibility.Hidden;
                 DiffClearButton.Visibility = Visibility.Hidden;
                 DiffInfoLabel.Visibility = Visibility.Hidden;
-                DiffTButton.ClearValue(BackgroundProperty);
+                DiffTButton.Content = Properties.Resources.DiffusionVisualizer;
             }
         }
 
@@ -650,8 +655,8 @@ namespace Cryptool.DESVisualisation
             DiffOkButton.Visibility = Visibility.Hidden;
             DiffClearButton.Visibility = Visibility.Hidden;
             DiffInfoLabel.Visibility = Visibility.Hidden;
-            DiffTButton.ClearValue(BackgroundProperty);
             DiffTButton.IsChecked = false;
+            DiffTButton.Content = Properties.Resources.DiffusionVisualizer;
         }
 
         #endregion Button-Methods
@@ -660,7 +665,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowIntroScreen()
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             IntroScreen.Visibility = Visibility.Visible;
             nextScreenID = 1;
             nextStepCounter = 1;
@@ -668,21 +673,21 @@ namespace Cryptool.DESVisualisation
 
         public void ShowInfoScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             progress = 0;
             InfoScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
 
             if (step == 1)
             {
-                Title.Content = "Background";
+                Title.Content = Properties.Resources.Background;
                 HistoryText.Visibility = Visibility.Visible;
                 nextScreenID = 2;
                 nextStepCounter = 2;
             }
             else if (step == 2)
             {
-                Title.Content = "General Informations";
+                Title.Content = Properties.Resources.GeneralInformation;
                 InfoText.Visibility = Visibility.Visible;
                 nextScreenID = 3;
                 nextStepCounter = 1;
@@ -691,12 +696,12 @@ namespace Cryptool.DESVisualisation
 
         public void ShowChapterScreen(int step)
         {
-            ResetAllScreens(true);
-            ExecutionScreen.Visibility = Visibility.Visible;
+            ResetAllScreens();
+            ChapterScreen.Visibility = Visibility.Visible;
             switch (step)
             {
                 case 1:
-                    ExecutionLabel.Content = "Introduction";
+                    ChapterLabel.Content = Properties.Resources.Introduction;
                     ClearButtonsColor(false);
                     IntroButton.Background = buttonBrush;
                     nextScreenID = 2;
@@ -704,13 +709,13 @@ namespace Cryptool.DESVisualisation
                     progress = 0;
                     break;
                 case 2:
-                    ExecutionLabel.Content = "Key Schedule";
+                    ChapterLabel.Content = Properties.Resources.KeySchedule;
                     nextScreenID = 5;
                     nextStepCounter = 1;
                     progress = 0.0625;
                     break;
                 case 3:
-                    ExecutionLabel.Content = "DES Encryption";
+                    ChapterLabel.Content = Properties.Resources.DESEncryption;
                     nextScreenID = 10;
                     nextStepCounter = 1;
                     roundCounter = 0;
@@ -720,11 +725,11 @@ namespace Cryptool.DESVisualisation
                     ShiftDButton.Visibility = Visibility.Hidden;
                     ShiftCButton.Visibility = Visibility.Hidden;
                     PC2Button.Visibility = Visibility.Hidden;
-                    SkipButton.Content = "Skip Step";
+                    SkipButton.Content = Properties.Resources.SkipStep;
                     progress = 0.4875;
                     break;
                 case 4:
-                    ExecutionLabel.Content = "Summary";
+                    ChapterLabel.Content = Properties.Resources.Summary;
                     ClearButtonsColor(false);
                     SummaryButton.Background = buttonBrush;
                     nextScreenID = 9;
@@ -737,7 +742,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowFinalScreen()
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             progress = 1;
             FinalScreen.Visibility = Visibility.Visible;
             if (diffusionIsActive)
@@ -765,11 +770,11 @@ namespace Cryptool.DESVisualisation
 
         public void ShowInputDataScreen()
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             progress = 0;
             InputDataScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "Input Data";
+            Title.Content = Properties.Resources.InputData;
 
             if (diffusionIsActive == false)
             {
@@ -834,7 +839,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowRoundDataScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             RoundDataScreen.Visibility = Visibility.Visible;
             ArrowRounds.Margin = new Thickness(0, 0, 579, 220 - roundCounter * 30);
             IEnumerable<TextBlock> textChilds = RoundDataGrid.Children.OfType<TextBlock>();
@@ -886,9 +891,9 @@ namespace Cryptool.DESVisualisation
 
         public void ShowRoundKeyDataScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             RoundKeyDataScreen.Visibility = Visibility.Visible;
-            ArrowSubKeys.Margin = new Thickness(0, 0, 579, 220 - (roundCounter - 1) * 30);
+            ArrowSubKeys.Margin = new Thickness(30, 0, 579, 220 - (roundCounter - 1) * 30);
             IEnumerable<TextBlock> textChilds = RoundKeyDataGrid.Children.OfType<TextBlock>();
             IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
             for (int i = 0; i < roundCounter; i++)
@@ -932,14 +937,11 @@ namespace Cryptool.DESVisualisation
         {
             int sBoxctr = (int) (step-1) / 5;
             int sBoxstep = (step - 1) % 5;
-            if (step - 1 == 0)
-                ResetAllScreens(true);
-            else
-                ResetAllScreens(false);
+            ResetAllScreens();
 
             SBoxScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "S-Boxes";
+            Title.Content = Properties.Resources.SBoxesLabel;
             SLabel.Content = "S" + (sBoxctr + 1);
             switch (sBoxctr)
             {
@@ -956,13 +958,27 @@ namespace Cryptool.DESVisualisation
             if (sBoxstep >= 0)
             {
                 SBoxInput.Visibility = Visibility.Visible;
+                StringBuilder builder = new StringBuilder();
                 if (diffusionIsActive)
                 {
+                    for (int i = 0; i < sBoxctr; i++)
+                    {
+                        builder.Append(encDiffusion.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
+                    }
+                    SBoxOut.Text = builder.ToString();
+                    ColorText(SBoxOut, CompareStrings(encDiffusion.roundDetails[roundCounter - 1, 2], encOriginal.roundDetails[roundCounter - 1, 2]));
+
                     SBoxInput.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
                     ColorText(SBoxInput, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0]));
                 }
                 else
                 {
+                    for (int i = 0; i < sBoxctr; i++)
+                    {
+                        builder.Append(encOriginal.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
+                    }
+                    SBoxOut.Text = builder.ToString();
+
                     SBoxInput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
                 }
                 if (sBoxctr == 0)
@@ -1032,7 +1048,7 @@ namespace Cryptool.DESVisualisation
             if (sBoxstep >= 4)
             {
                 SBoxOut.Visibility = Visibility.Visible;
-
+                
                 if (diffusionIsActive)
                 {
                     SBoxOut.Text += encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
@@ -1058,12 +1074,12 @@ namespace Cryptool.DESVisualisation
 
         public void ShowShiftScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             bool firstShift = step < 3;
             int shiftStep = (step - 1) % 2;
             ShiftScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "Cyclic Shift";
+            Title.Content = Properties.Resources.CyclicShift;
             if (DESImplementation.byteShifts[roundCounter - 1] == 1)
                 SingleShift.Visibility = Visibility.Visible;
             else
@@ -1149,11 +1165,11 @@ namespace Cryptool.DESVisualisation
 
         public void ShowStructureScreen()
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             progress = 0.03125;
             StructureScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "General Structure";
+            Title.Content = Properties.Resources.GeneralStructure;
 
             nextScreenID = 1;
             nextStepCounter = 2;
@@ -1161,7 +1177,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowKeyScheduleScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             ClearButtonsColor(true);
             if (step == 1)
             {
@@ -1173,7 +1189,7 @@ namespace Cryptool.DESVisualisation
                     ClearButtonsColor(false);
                     ActivateRoundButtons(true);
                     keyScheduleIsRunning = true;
-                    SkipButton.Content = "Skip Round";
+                    SkipButton.Content = Properties.Resources.SkipRound;
                 }
                 ShiftDButton.Visibility = Visibility.Visible;
                 ShiftDButton.Content = "Shift(D" + (roundCounter - 1) + ")";
@@ -1187,7 +1203,7 @@ namespace Cryptool.DESVisualisation
             }
             KeyScheduleScreen.Visibility = Visibility.Visible;
             KeyScheduleRoundKey.Content = "" + roundCounter;
-            KeyScheduleLabel.Content = "Round " + roundCounter + "/16";
+            KeyScheduleLabel.Content = string.Format(Properties.Resources.Runde_16, roundCounter);
             KeyScheduleCRoundName.Content = "C" + (roundCounter - 1) + ":";
             KeyScheduleDRoundName.Content = "D" + (roundCounter - 1) + ":";
             if (diffusionIsActive)
@@ -1262,7 +1278,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowDESRoundScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             ClearButtonsColor(true);
             if (step == 1)
             {
@@ -1274,7 +1290,7 @@ namespace Cryptool.DESVisualisation
                     ClearButtonsColor(false);
                     ActivateRoundButtons(true);
                     desRoundsIsRunning = true;
-                    SkipButton.Content = "Skip Round";
+                    SkipButton.Content = Properties.Resources.SkipRound;
                 }
                 ExpansionButton.Visibility = Visibility.Visible;
                 KeyAdditionButton.Visibility = Visibility.Visible;
@@ -1290,7 +1306,7 @@ namespace Cryptool.DESVisualisation
 
             DESRoundScreen.Visibility = Visibility.Visible;
             DESRoundKey.Content = "" + roundCounter;
-            DESRoundLabel.Content = "Round " + roundCounter + "/16";
+            DESRoundLabel.Content = string.Format(Properties.Resources.Runde_16, roundCounter);
             DESRoundR0Name.Content = "R" + (roundCounter - 1) + ":";
             DESRoundL0Name.Content = "L" + (roundCounter - 1) + ":";
             DESRoundR1Name.Content = "R" + (roundCounter) + ":";
@@ -1357,7 +1373,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowRoundFunctionScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             ClearButtonsColor(true);
             RoundFunctionScreen.Visibility = Visibility.Visible;
             FScreenFunctionR.Content = "" + (roundCounter - 1);
@@ -1444,12 +1460,12 @@ namespace Cryptool.DESVisualisation
 
         public void ShowXORScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             bool keyAddition = step < 3;
             int xorStep = (step - 1) % 2;
             XORScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "Bitwise XOR Operation";
+            Title.Content = Properties.Resources.BitwiseXOROperation;
             if (keyAddition)
             {
                 XorOperator1Name.Content = "K" + roundCounter + ":";
@@ -1540,7 +1556,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowIPScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             IPScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
             Title.Content = "Initial Permutation";
@@ -1579,7 +1595,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowPC1Screen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             PC1Screen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
             Title.Content = "Permuted Choice 1";
@@ -1618,7 +1634,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowPC2Screen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             PC2Screen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
             Title.Content = "Permuted Choice 2";
@@ -1655,7 +1671,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowExpansionScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             ExpansionScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
             Title.Content = "Expansion";
@@ -1690,10 +1706,10 @@ namespace Cryptool.DESVisualisation
 
         public void ShowPScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             PScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
-            Title.Content = "Permutation Function";
+            Title.Content = Properties.Resources.PermutationFunction;
 
             if (diffusionIsActive)
             {
@@ -1725,7 +1741,7 @@ namespace Cryptool.DESVisualisation
 
         public void ShowFPScreen(int step)
         {
-            ResetAllScreens(true);
+            ResetAllScreens();
             FPScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
             Title.Content = "Final Permutation";
@@ -1761,7 +1777,7 @@ namespace Cryptool.DESVisualisation
                 ActivateRoundButtons(false);
                 ClearButtonsColor(true);
                 roundCounter = 0;
-                SkipButton.Content = "Skip Step";
+                SkipButton.Content = Properties.Resources.SkipStep;
                 ExpansionButton.Visibility = Visibility.Hidden;
                 KeyAdditionButton.Visibility = Visibility.Hidden;
                 SBoxButton.Visibility = Visibility.Hidden;
@@ -1792,8 +1808,8 @@ namespace Cryptool.DESVisualisation
 
         public void ResetChapterScreen()
         {
-            ExecutionScreen.Visibility = Visibility.Hidden;
-            ExecutionLabel.Content = "";
+            ChapterScreen.Visibility = Visibility.Hidden;
+            ChapterLabel.Content = "";
         }
 
         public void ResetFinalScreen()
@@ -1808,7 +1824,7 @@ namespace Cryptool.DESVisualisation
         {
             InputDataScreen.Visibility = Visibility.Hidden;
             DiffTButton.IsChecked = false;
-            DiffTButton.ClearValue(BackgroundProperty);
+            DiffTButton.Content = Properties.Resources.DiffusionVisualizer;
             DiffClearButton.Visibility = Visibility.Hidden;
             DiffOkButton.Visibility = Visibility.Hidden;
             DiffInfoLabel.Visibility = Visibility.Hidden;
@@ -1933,7 +1949,7 @@ namespace Cryptool.DESVisualisation
             ArrowSubKeys.Visibility = Visibility.Visible;
         }
 
-        public void ResetSBoxScreen(bool full)
+        public void ResetSBoxScreen()
         {
             SBoxScreen.Visibility = Visibility.Hidden;
             S1Box.Visibility = Visibility.Hidden;
@@ -1957,13 +1973,8 @@ namespace Cryptool.DESVisualisation
             Canvas.SetTop(SBoxJumper, 63);
             Title.Content = "";
             Title.Visibility = Visibility.Hidden;
-            if (full)
-            {
-                SBoxOut.Visibility = Visibility.Hidden;
-                SBoxOut.Text = "";
-                SBoxOut.TextEffects.Clear();
-            }
-                
+            SBoxOut.Text = "";
+            SBoxOut.TextEffects.Clear();
         }
 
         public void ResetShiftScreen()
@@ -2163,7 +2174,7 @@ namespace Cryptool.DESVisualisation
                 DataKey.Text = encOriginal.key;
                 DataMessage.Text = encOriginal.message;
             }
-            ResetAllScreens(true);
+            ResetAllScreens();
             nextStepCounter = 0;
             nextScreenID = 0;
             roundCounter = 0;
@@ -2179,7 +2190,7 @@ namespace Cryptool.DESVisualisation
 
         }
 
-        private void ResetAllScreens(bool sBoxfullReset)
+        private void ResetAllScreens()
         {
             ResetIntroScreen();
             ResetInfoScreen();
@@ -2196,7 +2207,7 @@ namespace Cryptool.DESVisualisation
             ResetRoundFunctionScreen();
             ResetExpansionScreen();
             ResetXORScreen();
-            ResetSBoxScreen(sBoxfullReset);
+            ResetSBoxScreen();
             ResetPScreen();
             ResetRoundDataScreen();
             ResetFPScreen();

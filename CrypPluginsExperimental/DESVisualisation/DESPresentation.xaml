@@ -36,15 +36,15 @@
 
         <Viewbox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform">
             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Width="640" Height="340" >
-                <Label x:Name="Title" Content="" FontSize="21.333" Margin="0,15,0,0" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden" FontWeight="Bold"/>
+                <Label x:Name="Title" Content="" FontSize="21.333" Margin="0,15,0,0" FontFamily="Arial" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Visibility="Hidden"/>
             </Grid>
         </Viewbox>
 
         <Grid x:Name="IntroScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
             <Viewbox Stretch="Uniform">
                 <Grid>
-                    <Label Content="Data Encryption Standard" HorizontalAlignment="Center" Margin="56,90,41,173" VerticalAlignment="Center" FontSize="42.667" FontWeight="Bold" FontFamily="Arial"/>
-                    <Label Content="Block Cipher Visualisation" HorizontalAlignment="Center" Margin="149,231,135,64" VerticalAlignment="Center"  FontSize="26.667" FontFamily="Arial" />
+                    <Label Content="Data Encryption Standard&#xD;&#xA;                 (DES)" HorizontalAlignment="Center" Margin="46,90,51,174" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" FontFamily="Arial" HorizontalContentAlignment="Center"/>
+                    <Label Content="{Loc IntroBottom}" HorizontalAlignment="Center" Margin="240,262,243,69" VerticalAlignment="Center"  FontSize="26.667" FontFamily="Arial" />
                 </Grid>
             </Viewbox>
         </Grid>
@@ -96,19 +96,19 @@
                     <Path Width="38.571" Height="9.897" Canvas.Left="130.214" Canvas.Top="279.856" Stretch="Fill" Fill="#FF000000" Data="F1 M 151.417,565.912L 131.417,575.912L 151.417,585.912L 151.417,579.245L 209.193,579.245L 209.193,572.579L 151.417,572.579"/>
                     <Path Width="85.664" Height="9.9" Canvas.Left="346" Canvas.Top="225" Stretch="Fill" Fill="#FFFF0000" Data="F1 M 587.417,473.912L 567.417,463.912L 587.417,453.912L 587.417,460.579L 740.145,460.579L 740.145,467.245L 587.417,467.245"/>
 
-                    <Label Content="Message" Canvas.Left="63" Canvas.Top="82" FontWeight="Bold" FontFamily="Arial" FontSize="13.333"/>
-                    <Label Content="Key" Canvas.Left="550" Canvas.Top="81" FontWeight="Bold" FontFamily="Arial" FontSize="13.333"/>
-                    <Label Content="Ciphertext" Canvas.Top="273" FontWeight="Bold" FontFamily="Arial" Canvas.Left="54" FontSize="13.333"/>
+                    <Label Content="{Loc Message}" Canvas.Left="59" Canvas.Top="82" FontWeight="Bold" FontFamily="Arial" FontSize="13.333" HorizontalContentAlignment="Right"/>
+                    <Label Content="{Loc Key}" Canvas.Left="552" Canvas.Top="81" FontWeight="Bold" FontFamily="Arial" FontSize="13.333"/>
+                    <Label Content="{Loc Ciphertext}" Canvas.Top="273" FontWeight="Bold" FontFamily="Arial" Canvas.Left="50" FontSize="13.333" HorizontalContentAlignment="Right"/>
                     <Label Content="Permuted&#xD;&#xA; Choice 1" Canvas.Left="447" Canvas.Top="77" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                    <Label Content="Round 16" Canvas.Left="248" Canvas.Top="218" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF2E75B6" FontWeight="Bold"/>
+                    <Label Content="{Loc Round16}" Canvas.Left="248" Canvas.Top="218" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF2E75B6" FontWeight="Bold"/>
                     <Label Content="      Final&#xD;&#xA;Permutation" Canvas.Left="169" Canvas.Top="267" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold"/>
                     <Label Content="     Initial&#xD;&#xA;Permutation" Canvas.Left="168" Canvas.Top="76" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                    <Label Content="Round 1" Canvas.Left="251" Canvas.Top="140" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF2E75B6" FontWeight="Bold"/>
+                    <Label Content="{Loc Round1}" Canvas.Left="251" Canvas.Top="140" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF2E75B6" FontWeight="Bold"/>
                     <Label Content=". . ." Canvas.Left="266" Canvas.Top="173" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF2E75B6"/>
                     <Label Content=". . ." Canvas.Left="381" Canvas.Top="173" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
                     <Label Content="Key Schedule" Canvas.Left="437" Canvas.Top="177" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontWeight="Bold"/>
-                    <Label Content="Round Key" Canvas.Left="360" Canvas.Top="131" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
-                    <Label Content="Round Key" Canvas.Left="360" Canvas.Top="210" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
+                    <Label Content="{Loc RoundKey}" Canvas.Left="358" Canvas.Top="133" FontFamily="Arial" FontSize="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" Width="71"/>
+                    <Label Content="{Loc RoundKey}" Canvas.Left="358" Canvas.Top="212" FontFamily="Arial" FontSize="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" Width="71"/>
                     <Label Content="K" Canvas.Left="381" Canvas.Top="227" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
                     <Label Content="16" Canvas.Left="388" Canvas.Top="232" FontFamily="Arial" FontSize="8" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
                     <Label Content="K" Canvas.Left="383" Canvas.Top="148" FontFamily="Arial" FontSize="10.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"/>
@@ -118,7 +118,7 @@
         </Grid>
 
         <Grid x:Name="IPScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="0,70,0,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="0,70,0,0">
                 <Canvas Width="770" Height="281" VerticalAlignment="Bottom" HorizontalAlignment="Center">
                     <Path Width="604.351" Height="229.94" Canvas.Left="47.8747" Canvas.Top="25.7624" Stretch="Fill" StrokeThickness="0.382792" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 48.0661,255.511C 95.9407,237.526 603.774,44.3179 652.034,25.9538"/>
                     <Path Width="508.221" Height="229.94" Canvas.Left="58.5987" Canvas.Top="25.7624" Stretch="Fill" StrokeThickness="0.382792" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 58.7901,255.511C 102.066,236.001 522.967,45.8497 566.629,25.9538"/>
@@ -286,7 +286,7 @@
                     <Path x:Name="KeyScheduleDownArrow1" Width="20" Height="343" Canvas.Left="557" Canvas.Top="376" Stretch="Fill" Fill="#FF000000" Data="F1 M 948.016,244.644L 941.376,244.644L 941.376,700.012L 934.656,700.012L 944.656,720.012L 954.656,700.012L 948.016,700.012L 948.016,244.644 Z " Visibility="Hidden"/>
                     <Path Width="20.404" Height="63" Canvas.Left="810" Canvas.Top="352" Stretch="Fill" Fill="#FF000000" Data="F1 M 1041.38,222.004L 1041.38,249.444L 1034.66,249.444L 1044.66,269.445L 1054.66,249.444L 1048.02,249.444L 1048.02,222.004L 1041.38,222.004 Z "/>
                     <Path Width="230" Height="6.64" Canvas.Left="594" Canvas.Top="352.18" Stretch="Fill" StrokeThickness="6.63992" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 1048.66,223.364L 972.657,223.364"/>
-                    <Label x:Name="KeyScheduleLabel" Content="Round 01/16" FontSize="40" FontWeight="Bold" HorizontalContentAlignment="Right" Canvas.Top="39" FontFamily="Arial" Canvas.Left="52"/>
+                    <Label x:Name="KeyScheduleLabel" Content="" FontSize="40" FontWeight="Bold" HorizontalContentAlignment="Right" Canvas.Top="39" FontFamily="Arial" Canvas.Left="52"/>
                     <TextBlock x:Name="KeyScheduleCRound" Text="1011011010011010010110101010" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="375" Canvas.Top="224" FontFamily="Helvetica Mono" FontSize="29" />
                     <TextBlock x:Name="KeyScheduleDRound" Text="1011011010011010010110101010" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="884" Canvas.Top="224" FontFamily="Helvetica Mono" FontSize="29" />
                     <Label x:Name="KeyScheduleRoundKey" Content="1" Canvas.Left="163" Canvas.Top="443" FontSize="32" Foreground="Red" FontWeight="Bold" Margin="0" FontFamily="Arial"/>
@@ -390,7 +390,7 @@
                     <TextBlock x:Name="DESRoundL1" Text="10101101101011011010110110101101" Canvas.Left="136" Canvas.Top="584" FontFamily="Helvetica Mono" FontSize="25.333" Visibility="Hidden" />
                     <TextBlock x:Name="DESRoundR1" Text="10101101101011011010110110101101" Canvas.Left="644" Canvas.Top="584" FontFamily="Helvetica Mono" FontSize="25.333" Margin="0" Visibility="Hidden" />
                     <Path Width="2.64" Height="50.64" Canvas.Left="578.18" Canvas.Top="573.18" Stretch="Fill" StrokeThickness="2.63997" StrokeMiterLimit="2.75" Stroke="#FF000000" Data="F1 M 349.366,110.642L 349.366,158.643"/>
-                    <Label Content="Roundfunction" Canvas.Left="518" Canvas.Top="348" FontWeight="Bold" FontSize="16" FontFamily="Arial"/>
+                    <Label Content="{Loc Roundfunction}" Canvas.Left="518" Canvas.Top="348" FontWeight="Bold" FontSize="16" FontFamily="Arial" HorizontalContentAlignment="Center"/>
                     <Label x:Name="DESRoundR0Name" Content="R0:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="575" Canvas.Top="113" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" FontFamily="Arial"/>
                     <Label x:Name="DESRoundL0Name"  Content="L0:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="66" Canvas.Top="113" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" FontFamily="Arial"/>
                     <Label x:Name="DESRoundR1Name" Content="R1:" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="577" Canvas.Top="573" FontSize="26.667" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Width="70" Visibility="Hidden"/>
@@ -468,7 +468,7 @@
         </Grid>
 
         <Grid x:Name="ShiftScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,70,0,0" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" Margin="0,0,0,0">
+            <Viewbox Stretch="Uniform">
                 <Canvas Width="692" Height="292">
                     <Canvas x:Name="SingleShift" Width="596" Height="128" Canvas.Left="68" Canvas.Top="28">
                         <Rectangle Width="21.3333" Height="21.3333" Canvas.Left="256.081" Canvas.Top="19.6956" Stretch="Fill" Fill="#FFFFFFFF"/>
@@ -816,7 +816,7 @@
                     <Label x:Name="ShiftBottomName" Content="C 1" Canvas.Top="108" FontSize="18.667" FontWeight="Bold" FontFamily="Arial" Canvas.Left="24"/>
                     <TextBlock x:Name="ShiftTop" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="48" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73"/>
                     <TextBlock x:Name="ShiftBottom" Text="1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  1  0  1  0  0  0  1  1  0  1  0" Canvas.Top="112" FontFamily="Helvetica Mono" FontSize="19.6" Canvas.Left="73" Visibility="Hidden"/>
-                    <Label Content="Round:   1   2   3   4   5   6   7   8   9   10   11   12   13   14   15   16 &#xD;&#xA; Shifts:&#x9;1   1   2   2   2   2   2   2   1    2     2     2     2     2     2     1   " Canvas.Top="194" FontFamily="Times New Roman" FontSize="17.333" FontWeight="Bold" Canvas.Left="105"/>
+                    <Label Content="{Loc RoundShift}" Canvas.Top="194" FontFamily="Times New Roman" FontSize="17.333" FontWeight="Bold" Canvas.Left="105"/>
                     <Rectangle x:Name="RoundTable" Height="50" Canvas.Left="173" Canvas.Top="194" Width="21" Stroke="Red"/>
                     <Rectangle Height="50" Canvas.Left="100" Canvas.Top="194" Width="489" Stroke="Black"/>
                 </Canvas>
@@ -886,35 +886,35 @@
                     <Path Width="21.8406" Height="4.24011" Canvas.Left="166.884" Canvas.Top="164.084" Stretch="Fill" Fill="Black" Data="F1 M 171.125,168.324L 166.884,166.164L 171.125,164.084L 171.125,165.524L 188.725,165.524L 188.725,166.884L 171.125,166.884L 171.125,168.324 Z "/>
                     <Path Width="327.528" Height="3.52" Canvas.Left="347.736" Canvas.Top="27.24" Stretch="Fill" StrokeThickness="3.51998" StrokeMiterLimit="2.75" Stroke="#FFFF0000" Data="F1 M 672.898,28.4008L 348.889,28.4008"/>
                     <Label x:Name="FScreenFunctionKey" Content="1" Canvas.Left="328" Canvas.Top="81" Background="{x:Null}" Foreground="Red" FontWeight="Bold" FontFamily="Arial" FontSize="13.333"/>
-                    <Label Content="Function f(K  ,R  )&#xA;Round      /16" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" FontSize="22.667" Canvas.Left="10" Canvas.Top="10"/>
+                    <Label Content="{Loc FunctionLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" FontSize="22.667" Canvas.Left="10" Canvas.Top="10"/>
                     <Label x:Name="FScreenFunctionInfoKey" Content="1" Canvas.Left="144" Canvas.Top="25" Background="{x:Null}" Foreground="Black" FontWeight="Bold" FontFamily="Arial" FontSize="10.667" VerticalContentAlignment="Center"/>
                     <Label x:Name="FScreenFunctionInfoR" Content="0" Canvas.Left="179" Canvas.Top="25" Background="{x:Null}" Foreground="Black" FontSize="10.667" FontWeight="Bold" FontFamily="Arial" VerticalContentAlignment="Center"/>
                     <Label x:Name="FScreenFunctionInfoRound" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="Arial" FontWeight="Bold" FontSize="22.667" Canvas.Left="92" Canvas.Top="36" Width="34" HorizontalContentAlignment="Center"/>
                     <Label Content="R" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="628" Canvas.Top="213" FontWeight="Bold" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" FontSize="16"/>
                     <Label x:Name="FScreenFunctionR" Content="0" Canvas.Left="640" Canvas.Top="220" Background="{x:Null}" Foreground="Black" FontWeight="Bold" FontFamily="Arial" FontSize="13.333"/>
                     <Label Content="Expansion" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="495" Canvas.Top="228" FontWeight="Bold" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" FontSize="13.333"/>
-                    <Label Content="48 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="404" Canvas.Top="220" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="48 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="352" Canvas.Top="78" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" Foreground="Red"/>
+                    <Label Content="{Loc Bit48}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="404" Canvas.Top="220" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit48}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="352" Canvas.Top="78" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" Foreground="Red"/>
                     <Label Content="K" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="317" Canvas.Top="74" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" Foreground="Red" FontWeight="Bold" FontSize="16"/>
-                    <Label Content="32 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="622" Canvas.Top="239" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="155" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="176" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="198" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="220" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="240" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="260" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="282" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="6 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="305" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit32}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="622" Canvas.Top="239" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="155" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="176" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="198" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="220" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="240" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="260" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="282" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit6}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="259" Canvas.Top="305" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                     <TextBlock Text="P&#xD;&#xA;e&#xD;&#xA;r&#xD;&#xA;m&#xD;&#xA;u&#xD;&#xA;t&#xD;&#xA;a&#xD;&#xA;t&#xD;&#xA;i&#xD;&#xA;o&#xD;&#xA;n" Canvas.Left="131" Canvas.Top="166" RenderTransformOrigin="0.51,0.475" FontFamily="Arial" FontWeight="Bold" Width="31" HorizontalAlignment="Left" VerticalAlignment="Top" TextAlignment="Center"/>
-                    <Label Content="S-Boxes" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="180" Canvas.Top="131" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
-                    <Label Content="32 Bit" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="50" Canvas.Top="219" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc SBoxesLabel}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="180" Canvas.Top="131" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
+                    <Label Content="{Loc Bit32}" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="50" Canvas.Top="219" RenderTransformOrigin="0.51,0.475" FontFamily="Arial"/>
                 </Canvas>
             </Viewbox>
 
         </Grid>
 
         <Grid x:Name="XORScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,90,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,90,5,0">
                 <Canvas Width="784" Height="349">
                     <Label x:Name="XorOperator1Name" Content="K1:" Canvas.Top="50" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" FontWeight="Bold" Canvas.Left="-3" FontFamily="Arial"/>
                     <TextBlock x:Name="XorOperator1" Text="" Canvas.Top="55" FontFamily="Helvetica Mono" FontSize="26.667" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Left="88" Width="696" TextAlignment="Center"/>
@@ -939,7 +939,7 @@
         </Grid>
 
         <Grid x:Name="ExpansionScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,90,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,90,5,0">
                 <Canvas Width="784" Height="349">
                     <Path Width="438.488" Height="253.534" Canvas.Left="58.156" Canvas.Top="34.2161" Stretch="Fill" StrokeThickness="0.51466" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 58.4133,287.493C 101.643,262.552 453.157,58.9598 496.387,34.4734"/>
                     <Path Width="13.8947" Height="249.909" Canvas.Left="54.0413" Canvas.Top="36.0287" Stretch="Fill" StrokeThickness="0.51466" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 67.6787,285.68C 66.132,253.939 55.84,68.481 54.2987,36.286"/>
@@ -1000,7 +1000,7 @@
         </Grid>
 
         <Grid x:Name="SBoxScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,70,5,0">
                 <Canvas Width="784" Height="349">
                     <Label x:Name="SLabel" Content="" FontFamily="Times New Roman" FontSize="25" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Canvas.Top="20" Canvas.Left="35" />
                     <Label Content="        0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15" FontFamily="Times New Roman" FontSize="17.333" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Canvas.Left="45" Canvas.Top="25" />
@@ -1015,12 +1015,12 @@
                     <Label Content="0&#xD;&#xA;1&#xD;&#xA;2&#xD;&#xA;3" FontFamily="Times New Roman" FontSize="17.333" HorizontalAlignment="Left" VerticalAlignment="Center" FontWeight="Bold" Canvas.Left="45" Canvas.Top="60" />
                     <Rectangle Height="130" Width="418" Stroke="Black" RenderTransformOrigin="0.109,0.072" Canvas.Top="20" Canvas.Left="35"/>
                     <Rectangle Height="90" Width="378" Stroke="Black" RenderTransformOrigin="0.109,0.072" Canvas.Top="60" Canvas.Left="75"/>
-                    <Label Content="Input: " Canvas.Left="483" Canvas.Top="15" FontFamily="Arial" FontSize="20"/>
-                    <Label Content="Row: " Canvas.Left="483" Canvas.Top="53" FontFamily="Arial" FontSize="20"/>
-                    <Label Content="Column: " Canvas.Left="483" Canvas.Top="87" FontFamily="Arial" FontSize="20"/>
-                    <Label Content="Output: " Canvas.Left="483" Canvas.Top="121" FontFamily="Arial" FontSize="20"/>
+                    <Label Content="{Loc Input}" Canvas.Left="483" Canvas.Top="15" FontFamily="Arial" FontSize="20"/>
+                    <Label Content="{Loc Row}" Canvas.Left="483" Canvas.Top="53" FontFamily="Arial" FontSize="20"/>
+                    <Label Content="{Loc Column}" Canvas.Left="483" Canvas.Top="87" FontFamily="Arial" FontSize="20"/>
+                    <Label Content="{Loc Output}" Canvas.Left="483" Canvas.Top="121" FontFamily="Arial" FontSize="20"/>
                     <Rectangle x:Name="SBoxJumper" Height="25" Width="25" Stroke="Red" RenderTransformOrigin="0.109,0.072" Canvas.Top="63" Canvas.Left="77" Visibility="Hidden"/>
-                    <Label Content="Output all S-Boxes:" Canvas.Left="33" Canvas.Top="256" FontFamily="Arial" FontSize="21.333" FontWeight="Bold"/>
+                    <Label Content="{Loc OutputAll}" Canvas.Left="33" Canvas.Top="253" FontFamily="Arial" FontSize="21.333" FontWeight="Bold"/>
                     <TextBlock x:Name="SBoxOut" FontSize="21.333" Text=""  Canvas.Left="311" Canvas.Top="259" FontFamily="Helvetica Mono" Visibility="Hidden"/>
                     <TextBlock x:Name="SBoxInput" Canvas.Left="603" TextWrapping="Wrap" FontFamily="Helvetica Mono" Text="" Canvas.Top="20" FontSize="20" Visibility="Hidden"/>
                     <TextBlock x:Name="SBoxRow" Canvas.Left="603" TextWrapping="Wrap" FontFamily="Helvetica Mono" Text="" Canvas.Top="57" FontSize="20" Visibility="Hidden"/>
@@ -1031,7 +1031,7 @@
         </Grid>
 
         <Grid x:Name="PScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,15" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,100,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,100,5,0">
                 <Canvas Width="599" Height="294">
                     <Path Width="255.822" Height="186.492" Canvas.Left="30.8018" Canvas.Top="38.8739" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 31.1164,225.051C 61.9182,202.498 255.507,61.3523 286.309,39.1884"/>
                     <Path Width="84.853" Height="184.939" Canvas.Left="45.89" Canvas.Top="39.6487" Stretch="Fill" StrokeThickness="0.6291" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 46.2045,224.273C 57.5166,199.778 119.116,64.4622 130.428,39.9632"/>
@@ -1072,7 +1072,7 @@
         </Grid>
 
         <Grid x:Name="FPScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,70,5,0">
                 <Canvas Width="765" Height="358">
                     <Path Width="411.748" Height="251.774" Canvas.Left="48.126" Canvas.Top="66.113" Stretch="Fill" StrokeThickness="0.383414" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 48.0719,278.84C 85.2235,256.2 422.281,50.4763 459.436,27.4496"/>
                     <Path Width="62.43" Height="247.94" Canvas.Left="56" Canvas.Top="68.03" Stretch="Fill" StrokeThickness="0.383414" StrokeLineJoin="Round" Stroke="#FF000000" Data="F1 M 56.4986,276.923C 63.395,247.371 111.27,58.5376 118.546,29.3669"/>
@@ -1147,24 +1147,24 @@
         </Grid>
 
         <Grid x:Name="InfoScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,20" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,70,5,0">
                 <Canvas Width="765" Height="297">
-                    <Label x:Name="InfoText" Content="DES is a modern symmetric-key block cipher which encrypts one message &#xD;&#xA;block of 64 bit with a 64 bit key into a 64 bit ciphertext. &#xA;&#xA;Each 8th bit (least significant bit) is used solely for checking parity and are &#xA;thereafter discarded. These aren't actually used by the algorithm and so the &#xA;effective key length for encryption is only 56 bits.&#xA;&#xA;The key is fully responsible for the security of the cipher.&#xA;&#xA;The overall structure of the algorithm has 16 identical stages of processing,&#xA;termed rounds. These rounds are organised in a &quot;Feistel&quot; scheme.&#xA;This ensures that decryption and encryption are very similar processes." Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Visibility="Hidden" />
-                    <Label x:Name="HistoryText" Content="- In 1973 the NBS (National Bureau of Standards) started to develop or search&#xD;&#xA;  for an official standard algorithm for data encryption and decryption. &#xA;  One of the possible candidates was an algorithm based on IBM's &quot;Lucifer&quot;.&#xA;&#xA;- To check and verify the security of this algorithm the NSA (National Security &#xA;   Agency) was asked for help.&#xA;&#xA;- After changes of the key length and the used S-boxes this algorithm became&#xD;&#xA;  the official Data Encryption Standard on 23 November 1976.&#xA;&#xA;- On 2 October 2000 DES was replaced by an belgian algorithm called &#xD;&#xA;  &quot;Rijndael&quot; which became the AES (Advanced Encryption Standard)." Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Height="285" Visibility="Hidden" />
+                    <Label x:Name="InfoText" Content="{Loc InfoText}" Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Visibility="Hidden" />
+                    <Label x:Name="HistoryText" Content="{Loc HistoryText}" Canvas.Left="28" FontFamily="Arial" FontSize="20" Canvas.Top="2" Width="715" Height="285" Visibility="Hidden" />
                 </Canvas>
             </Viewbox>
         </Grid>
 
-        <Grid x:Name="ExecutionScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,0" HorizontalAlignment="Center">
+        <Grid x:Name="ChapterScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
+            <Viewbox Stretch="Uniform" Margin="5,0">
                 <Grid Width="765" Height="297">
-                    <Label x:Name="ExecutionLabel" Content="Key Schedule" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" FontFamily="Arial"/>
+                    <Label x:Name="ChapterLabel" Content="Key Schedule" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" FontFamily="Arial"/>
                 </Grid>
             </Viewbox>
         </Grid>
 
         <Grid x:Name="InputDataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" VerticalAlignment="Center" Margin="5,70,5,0" HorizontalAlignment="Center">
+            <Viewbox Stretch="Uniform" Margin="5,70,5,0" >
                 <Grid x:Name="DiffusionGrid" Width="780" Height="300">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
@@ -1380,21 +1380,21 @@
                     <CheckBox Grid.Row="9" Grid.Column="63" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" Click="CheckBox_Click"/>
                     <CheckBox Grid.Row="9" Grid.Column="64" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" Click="CheckBox_Click"/>
 
-                    <ToggleButton x:Name="DiffTButton" Content="Diffusion-Visualizer" Grid.Row="0" Grid.Column="51" Grid.ColumnSpan="14" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" FontWeight="Bold" Click="DiffTButton_Click" FontFamily="Arial"/>
-                    <Button x:Name="DiffClearButton" Content="Clear" Grid.Row="10" Grid.Column="60" Grid.ColumnSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffClearButton_Click" FontFamily="Arial" Visibility="Hidden" />
-                    <Button x:Name="DiffOkButton" Content="OK" Grid.Row="10" Grid.Column="55" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffOKButton_Click" FontFamily="Arial" Visibility="Hidden" />
-                    <Label x:Name="DiffInfoLabel" Content="Click OK to accept changes!" Grid.Row="10" Grid.Column="37" Grid.ColumnSpan="18" FontSize="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" Visibility="Hidden"/>
+                    <ToggleButton x:Name="DiffTButton" Content="{Loc DiffusionVisualizer}" Grid.Row="0" Grid.Column="49" Grid.ColumnSpan="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14" Click="DiffTButton_Click" FontFamily="Arial"/>
+                    <Button x:Name="DiffClearButton" Content="{Loc Clear}" Grid.Row="10" Grid.Column="60" Grid.ColumnSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffClearButton_Click" FontFamily="Arial" Visibility="Hidden" />
+                    <Button x:Name="DiffOkButton" Content="Ok" Grid.Row="10" Grid.Column="55" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffOKButton_Click" FontFamily="Arial" Visibility="Hidden" />
+                    <Label x:Name="DiffInfoLabel" Content="{Loc DiffInfo}" Grid.Row="10" Grid.Column="25" Grid.ColumnSpan="29" FontSize="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Right"/>
 
-                    <Label Content="Message  (64 Bit):" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="14" FontWeight="Bold" FontSize="18" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial"/>
+                    <Label Content="{Loc DataMessage}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="14" FontWeight="Bold" FontSize="18" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial"/>
                     <TextBlock x:Name="DataMessage" Text="" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="64" FontFamily="Helvetica Mono" FontSize="21.6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" />
-                    <Label Content="Key  (64 Bit):"  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="14" FontSize="18" FontWeight="Bold" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" />
+                    <Label Content="{Loc DataKey}"  Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="14" FontSize="18" FontWeight="Bold" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" />
                     <TextBlock x:Name="DataKey" Text="" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="64" FontFamily="Helvetica Mono" FontSize="21.6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" />
                 </Grid>
             </Viewbox>
         </Grid>
 
         <Grid x:Name="RoundDataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="11,10,0,0" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" Margin="0">
+            <Viewbox Stretch="Uniform">
                 <Grid x:Name="RoundDataGrid" Width="632" Height="350">
                     <TextBlock x:Name="L0" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,220" Visibility="Hidden"/>
                     <TextBlock x:Name="R0" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="300,0,0,220" Visibility="Hidden"/>
@@ -1430,9 +1430,9 @@
                     <TextBlock x:Name="R15" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="300,0,0,-230" Visibility="Hidden"/>
                     <TextBlock x:Name="L16" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,200,-260" Visibility="Hidden"/>
                     <TextBlock x:Name="R16" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="300,0,0,-260" Visibility="Hidden"/>
-                    <Label Content="Round                              L                                                     R" FontFamily="Arial" FontSize="16.667" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,0,280" />
-                    <Label Content="0&#xD;&#xA;1&#xD;&#xA;2&#xD;&#xA;3&#xD;&#xA;4&#xD;&#xA;5&#xD;&#xA;6&#xD;&#xA;7&#xD;&#xA;8&#xD;&#xA;9&#xD;&#xA;10&#xD;&#xA;11&#xD;&#xA;12&#xD;&#xA;13&#xD;&#xA;14&#xD;&#xA;15&#xD;&#xA;16" FontFamily="Arial" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="38,52,570,29" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"/>
-                    <Path x:Name="ArrowRounds" Width="19" Height="10" Stretch="Fill" Fill="#FF000000" Data="F1 M 1125.86,320.245L 1106.02,310.005L 1126.18,300.245L 1126.1,306.885L 1141.86,307.125L 1141.78,313.765L 1125.94,313.605L 1125.86,320.245 Z " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,579,220" RenderTransformOrigin="0.5,0.5">
+                    <Label Content="{Loc RoundData}" FontFamily="Arial" FontSize="16.667" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="22,20,0,300" />
+                    <TextBlock Text="0&#xD;&#xA;1&#xD;&#xA;2&#xD;&#xA;3&#xD;&#xA;4&#xD;&#xA;5&#xD;&#xA;6&#xD;&#xA;7&#xD;&#xA;8&#xD;&#xA;9&#xD;&#xA;10&#xD;&#xA;11&#xD;&#xA;12&#xD;&#xA;13&#xD;&#xA;14&#xD;&#xA;15&#xD;&#xA;16" FontFamily="Arial" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="38,52,570,29" FontWeight="Bold" TextAlignment="Center"/>
+                    <Path x:Name="ArrowRounds" Width="19" Height="10" Stretch="Fill" Fill="#FF000000" Data="F1 M 1125.86,320.245L 1106.02,310.005L 1126.18,300.245L 1126.1,306.885L 1141.86,307.125L 1141.78,313.765L 1125.94,313.605L 1125.86,320.245 Z " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="21,60,592,280" RenderTransformOrigin="0.5,0.5">
                         <Path.RenderTransform>
                             <TransformGroup>
                                 <ScaleTransform/>
@@ -1442,13 +1442,13 @@
                             </TransformGroup>
                         </Path.RenderTransform>
                     </Path>
-                    <Rectangle Width="601" Height="312" Margin="0,0,10,10" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Rectangle Width="602" Height="312" Margin="14,14,16,24" Stroke="Black" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Grid>
             </Viewbox>
         </Grid>
 
         <Grid x:Name="RoundKeyDataScreen" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="17" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,11,0,0" Visibility="Hidden">
-            <Viewbox Stretch="Uniform" Margin="0">
+            <Viewbox Stretch="Uniform">
                 <Grid x:Name="RoundKeyDataGrid" Width="632" Height="350">
                     <TextBlock x:Name="K1" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,220"/>
                     <TextBlock x:Name="K2" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,190" Visibility="Hidden"/>
@@ -1466,8 +1466,8 @@
                     <TextBlock x:Name="K14" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,-170" Visibility="Hidden"/>
                     <TextBlock x:Name="K15" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,-200" Visibility="Hidden"/>
                     <TextBlock x:Name="K16" Text="" FontFamily="Helvetica Mono" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="45,0,0,-230" Visibility="Hidden"/>
-                    <Label Content="Round                                           Roundkey" FontFamily="Arial" FontSize="16.667" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,280" />
-                    <Label Content="1&#xD;&#xA;2&#xD;&#xA;3&#xD;&#xA;4&#xD;&#xA;5&#xD;&#xA;6&#xD;&#xA;7&#xD;&#xA;8&#xD;&#xA;9&#xD;&#xA;10&#xD;&#xA;11&#xD;&#xA;12&#xD;&#xA;13&#xD;&#xA;14&#xD;&#xA;15&#xD;&#xA;16" FontFamily="Arial" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,490,0" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch"/>
+                    <Label Content="{Loc RoundKeyData}" FontFamily="Arial" FontSize="16.667" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,280" />
+                    <TextBlock Text="1&#xD;&#xA;2&#xD;&#xA;3&#xD;&#xA;4&#xD;&#xA;5&#xD;&#xA;6&#xD;&#xA;7&#xD;&#xA;8&#xD;&#xA;9&#xD;&#xA;10&#xD;&#xA;11&#xD;&#xA;12&#xD;&#xA;13&#xD;&#xA;14&#xD;&#xA;15&#xD;&#xA;16" FontFamily="Arial" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,490,0" FontWeight="Bold" TextAlignment="Center" />
                     <Path x:Name="ArrowSubKeys" Width="19" Height="10" Stretch="Fill" Fill="#FF000000" Data="F1 M 1125.86,320.245L 1106.02,310.005L 1126.18,300.245L 1126.1,306.885L 1141.86,307.125L 1141.78,313.765L 1125.94,313.605L 1125.86,320.245 Z " VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30,0,579,220" RenderTransformOrigin="0.5,0.5">
                         <Path.RenderTransform>
                             <TransformGroup>
@@ -1875,10 +1875,10 @@
                         </Canvas>
                     </Canvas>
                     <Label Content="DES" FontFamily="Times New Roman" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="119" Canvas.Left="196" FontWeight="Bold"/>
-                    <Label Content="Ciphertext  (64 Bit):" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Top="171" FontFamily="Arial" Canvas.Left="158" />
-                    <Label Content="Message  (64 Bit):" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Canvas.Left="44" Canvas.Top="24" />
+                    <Label Content="{Loc FinalCiphertext}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Top="171" FontFamily="Arial" Canvas.Left="137" HorizontalContentAlignment="Center" Width="175" />
+                    <Label Content="{Loc DataMessage}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Canvas.Left="35" Canvas.Top="24" HorizontalContentAlignment="Center" Width="140"/>
                     <TextBlock x:Name="FinalMessage" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Width="140" TextWrapping="Wrap" Canvas.Left="35"/>
-                    <Label Content="Key  (64 Bit):" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Canvas.Left="298" FontFamily="Arial" Canvas.Top="24" />
+                    <Label Content="{Loc DataKey}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Canvas.Left="274" FontFamily="Arial" Canvas.Top="24" HorizontalContentAlignment="Center" Width="140"/>
                     <TextBlock x:Name="FinalKey" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Canvas.Left="274" Width="140" TextWrapping="Wrap"/>
                     <TextBlock x:Name="FinalCiphertext" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="199" FontSize="10.667" Canvas.Left="41"/>
                     <Rectangle HorizontalAlignment="Left" Height="20" Stroke="Black" VerticalAlignment="Top" Width="377" Canvas.Top="195" Canvas.Left="36"/>
@@ -1888,51 +1888,51 @@
         </Grid>
 
         <TextBlock x:Name="DiffusionActiveLabel" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="3" FontFamily="Arial" TextAlignment="Right" FontWeight="Bold" Margin="0,0,5,0" Padding="0,2,0,0" Visibility="Hidden">
-            Diffusion <Run Foreground="#FF00B200">Active</Run>!
+            Diffusion: <Run Foreground="#FF00B200" Text="{Loc Active}"/>
         </TextBlock>
 
         <!-- Region Button -->
-        <Button x:Name="PrevButton" Content="Prev. Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="PrevButton" Content="{Loc PrevStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <ToggleButton x:Name="AutoTButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="AutoTButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" ToolTip="Auto Speed Regulation" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
-        <Button x:Name="NextButton" Content="Next Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="SkipButton" Content="Skip Step" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="NextButton" Content="{Loc NextStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="SkipButton" Content="{Loc SkipStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
 
         <Button x:Name="ShiftCButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ShiftCButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="ShiftDButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="ShiftDButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="PC2Button" Visibility="Hidden" Content="PC 2" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC2Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 2"/>
         <Button x:Name="ExpansionButton" Visibility="Hidden" Content="Expansion" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ExpansionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="KeyAdditionButton" Visibility="Hidden" Content="Key Addition" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="KeyAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="SBoxButton" Visibility="Hidden" Content="S-Boxes" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="SBoxButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="KeyAdditionButton" Visibility="Hidden" Content="{Loc KeyAddition}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="KeyAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="SBoxButton" Visibility="Hidden" Content="{Loc SBoxesLabel}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="SBoxButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="PermutationButton" Visibility="Hidden"  Content="Permutation" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="PermutationButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="RoundAdditionButton" Visibility="Hidden" Content="L ⊕ F" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="RoundAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
 
-        <Button x:Name="IntroButton" Content="Intro" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="IntroButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Introduction"/>
-        <Button x:Name="DataButton" Content="Data" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="DataButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="IntroButton" Content="{Loc Intro}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="IntroButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="DataButton" Content="{Loc Data}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="DataButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="PC1Button" Content="PC 1" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC1Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 1"/>
         <Button x:Name="KeyScheduleButton" Content="Key Schedule" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="KeyScheduleButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="IPButton" Content="IP" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="IPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Initial Permutation" />
         <Button x:Name="DESButton" Content="DES" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Grid.ColumnSpan="2" Click="DESButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
         <Button x:Name="FPButton" Content="FP" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Grid.ColumnSpan="2" Click="FPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Final Permutation"/>
-        <Button x:Name="SummaryButton" Content="Summary" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Grid.ColumnSpan="2" Click="SummaryButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
+        <Button x:Name="SummaryButton" Content="{Loc Summary}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Grid.ColumnSpan="2" Click="SummaryButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
 
-        <Label Grid.Row="4"  Grid.Column="0" Content="Round" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
-        <Button x:Name="Round1Button" Content="1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round2Button" Content="2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round3Button" Content="3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round4Button" Content="4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round5Button" Content="5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round6Button" Content="6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round7Button" Content="7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round8Button" Content="8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round9Button" Content="9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round10Button" Content="10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round11Button" Content="11" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round12Button" Content="12" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round13Button" Content="13" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round14Button" Content="14" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round15Button" Content="15" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round16Button" Content="16" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="roundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Label Grid.Row="4"  Grid.Column="0" Content="{Loc Round}" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
+        <Button x:Name="Round1Button" Content="1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round2Button" Content="2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round3Button" Content="3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round4Button" Content="4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round5Button" Content="5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round6Button" Content="6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round7Button" Content="7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round8Button" Content="8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round9Button" Content="9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round10Button" Content="10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round11Button" Content="11" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round12Button" Content="12" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round13Button" Content="13" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round14Button" Content="14" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round15Button" Content="15" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round16Button" Content="16" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
         <!-- EndRegion -->
 
     </Grid>
