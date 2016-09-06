@@ -391,7 +391,7 @@
     <value>Wird ausgeführt...</value>
   </data>
   <data name="BinSettingsVisual_BinSettingsVisual_No_Settings_available_" xml:space="preserve">
-    <value>Keine Parameter vorhanden.</value>
+    <value>Diese Komponente hat keine Parameter.</value>
   </data>
   <data name="Bring_to_FrontTooltip" xml:space="preserve">
     <value>In den Vordergrund</value>

@@ -391,7 +391,7 @@
     <value>Executing...</value>
   </data>
   <data name="BinSettingsVisual_BinSettingsVisual_No_Settings_available_" xml:space="preserve">
-    <value>No parameters available.</value>
+    <value>This component has no parameters.</value>
   </data>
   <data name="ElevateTooltip" xml:space="preserve">
     <value>Elevate</value>
