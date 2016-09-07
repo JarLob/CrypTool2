@@ -37,7 +37,8 @@ namespace Cryptool.VigenereAnalyzer
     {
         Trigrams = 0,
         Quadgrams = 1,
-        Both = 2
+        Both = 2,
+        IoC = 3
     }
 
     public enum UnknownSymbolHandlingMode
@@ -156,7 +157,7 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("CostFunction", "CostFunctionTooltio", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both" })]
+        [TaskPane("CostFunction", "CostFunctionTooltio", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both", "IoC" })]
         public CostFunction CostFunction
         {
             get

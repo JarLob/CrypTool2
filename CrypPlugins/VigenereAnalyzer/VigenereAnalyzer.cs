@@ -26,6 +26,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace Cryptool.VigenereAnalyzer
 {
@@ -244,30 +245,34 @@ namespace Cryptool.VigenereAnalyzer
             var lasttime = DateTime.Now;
             var keys = 0;
 
+            var runkey = new int[keylength];
+
             while (restarts > 0)
             {
-                //generate random key:
-                var runkey = new int[keylength];
+                // generate random key
                 for (var i = 0; i < runkey.Length; i++)
-                {
-                    runkey[i] = numalphabet[random.Next(0, alphabetlength)];
-                }
+                    runkey[i] = numalphabet[random.Next(alphabetlength)];
+
                 bool foundbetter;
                 var bestkeycost = double.MinValue;
 
-                var plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) :
-                               DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+                var plaintext = _settings.Mode == Mode.Vigenere 
+                    ? DecryptVigenereOwnAlphabet(ciphertext, runkey, numvigalphabet) 
+                    : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+
                 do
                 {
                     foundbetter = false;
-                    //permutate key:                     
+                    // permute key
                     for (var i = 0; i < keylength; i++)
                     {
                         for (var j = 0; j < alphabetlength; j++)
                         {
                             var oldLetter = runkey[i];
                             runkey[i] = j;
-                            plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext) : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
+                            plaintext = _settings.Mode == Mode.Vigenere
+                                ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
+                                : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
                             keys++;
                             var costvalue = 0.0;
                             switch (_settings.CostFunction)
@@ -283,6 +288,9 @@ namespace Cryptool.VigenereAnalyzer
                                     var quad = CalculateQuadgramCost(_quadgrams, plaintext) + (_settings.KeyStyle == KeyStyle.NaturalLanguage ? CalculateQuadgramCost(_quadgrams, runkey) : 0);
                                     costvalue += (0.5 * tri + 0.5 * quad);
                                     break;
+                                case CostFunction.IoC:
+                                    costvalue = CalculateIoC(plaintext);
+                                    break;
                             }                            
                             
                             if (costvalue > bestkeycost)
@@ -297,14 +305,18 @@ namespace Cryptool.VigenereAnalyzer
                                 runkey[i] = oldLetter;
                                 if (j == alphabetlength - 1)
                                 {
-                                    plaintext = _settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext) : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
+                                    plaintext = _settings.Mode == Mode.Vigenere
+                                        ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
+                                        : DecryptAutokeyOwnAlphabet(ciphertext, runkey, numvigalphabet);
                                 }
                             }
+
                             if (_stopped)
                             {
                                 return;
                             }
-                            //print keys/sec in the ui
+
+                            // print keys/sec in the ui
                             if (DateTime.Now >= lasttime.AddMilliseconds(1000))
                             {
                                 var keysDispatcher = keys;
@@ -523,12 +535,33 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         /// <summary>
+        /// Calculate cost value based on index of coincidence
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <returns></returns>
+        public static double CalculateIoC(int[] plaintext)
+        {
+            Dictionary<int, UInt64> countChars = new Dictionary<int, UInt64>();
+
+            foreach (int c in plaintext)
+                if (countChars.ContainsKey(c)) countChars[c]++; else countChars.Add(c, 1);
+            
+            UInt64 value = 0;
+
+            foreach (UInt64 cnt in countChars.Values)
+                value += cnt * (cnt - 1);
+
+            UInt64 N = (UInt64)plaintext.Length;
+            return (double)value/(N*(N-1));
+        }
+
+        /// <summary>
         /// Calculate cost value based on 3-grams
         /// </summary>
         /// <param name="ngrams3"></param>
         /// <param name="plaintext"></param>
         /// <returns></returns>
-        public static double CalculateTrigramCost(double[, ,] ngrams3, int[] plaintext)
+        public static double CalculateTrigramCost(double[,,] ngrams3, int[] plaintext)
         {
             double value = 0;
             var end = plaintext.Length - 2;
