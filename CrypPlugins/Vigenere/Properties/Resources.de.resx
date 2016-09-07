@@ -195,10 +195,10 @@
   <data name="ActionList2" xml:space="preserve">
     <value>Entschlüsselung</value>
   </data>
-  <data name="ModeList1" xml:space="preserve">
+  <data name="ModeList2" xml:space="preserve">
     <value>Selbstschlüssel-Verfahren (Autokey)</value>
   </data>
-  <data name="ModeList2" xml:space="preserve">
+  <data name="ModeList1" xml:space="preserve">
     <value>Klassisch</value>
   </data>
   <data name="UnknownSymbolHandlingList1" xml:space="preserve">

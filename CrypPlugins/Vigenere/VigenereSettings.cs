@@ -74,7 +74,7 @@ namespace Cryptool.Vigenere
 
         #region Private variables
         private int selectedAction = 0;
-        private int _selectedMode = 1;
+        private int _selectedMode = 0;
         private string upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private string lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
         private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -114,12 +114,7 @@ namespace Cryptool.Vigenere
         {
             try
             {
-                string[] offsetStr = offsetString.Split(',');
-                int[] offset = new int[offsetStr.Length];
-                for (int i = 0; i < offsetStr.Length; i++)
-                {
-                    offset[i] = int.Parse(offsetStr[i]);
-                }
+                int[] offset = offsetString.Split(',').Select(s => int.Parse(s)).ToArray();
                 setKeyByValue(offset);
             }
             catch (Exception e)
@@ -137,19 +132,9 @@ namespace Cryptool.Vigenere
         {
             try
             {
-                //making sure the shift value lies within the alphabet range
-                for (int i = 0; i < offset.Length; i++)
-                    offset[i] = offset[i]%alphabet.Length;
-
-                //set the new shiftChar
-                keyChars = new char[offset.Length];
-                for (int i = 0; i < offset.Length; i++)
-                    keyChars[i] = alphabet[offset[i]];
-
-                //set the new shiftValue
-                keyShiftValues = new int[offset.Length];
-                for (int i = 0; i < offset.Length; i++)
-                    keyShiftValues[i] = offset[i];
+                //set the new shiftValue and shiftChar
+                keyShiftValues = offset.Select(o => o % alphabet.Length).ToArray();
+                keyChars = keyShiftValues.Select(o => alphabet[o]).ToArray();
 
                 //Anounnce this to the settings pane
                 OnPropertyChanged("ShiftValue");
@@ -157,12 +142,12 @@ namespace Cryptool.Vigenere
 
                 //print some info in the log.
                 LogMessage(
-                    "Accepted new shift values " + intArrayToString(offset) + "! (Adjusted key to '" +
+                    "Accepted new shift values " + intArrayToString(keyShiftValues) + "! (Adjusted key to '" +
                     charArrayToString(keyChars) + ")'", NotificationLevel.Info);
             }
             catch (Exception ex)
             {
-                LogMessage("Bad shift value \"" + intArrayToString(offset) + "\"!", NotificationLevel.Error);
+                LogMessage("Bad shift value \"" + intArrayToString(keyShiftValues) + "\"!", NotificationLevel.Error);
             }
         }
 
@@ -257,17 +242,7 @@ namespace Cryptool.Vigenere
         [TaskPane("ShiftValueTPCaption", "ShiftValueTPTooltip", null, 3, false, ControlType.TextBox, null)]
         public string ShiftValue
         {
-            get
-            {
-                StringBuilder str = new StringBuilder(string.Empty);
-                for (int i = 0; i < this.keyShiftValues.Length; i++)
-                {
-                    str.Append(this.keyShiftValues[i].ToString());
-                    if (i != this.keyShiftValues.Length - 1)
-                        str.Append(",");
-                }
-                return str.ToString();
-            }
+            get { return intArrayToString(keyShiftValues); }
             set { setKeyByValue(value); }
         }
 

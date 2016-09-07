@@ -35,6 +35,8 @@ namespace Cryptool.Vigenere
         private string outputString;
         private enum VigenereMode { encrypt, decrypt, autoencrypt, autodecrypt };
 
+        private string topAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
         #endregion
 
         #region Public interface
@@ -222,23 +224,14 @@ namespace Cryptool.Vigenere
                     //get plaintext char which is currently processed
                     char currentChar = inputString[i];
 
-                    //remember if it is upper case (ohterwise lowercase is assumed)
+                    //remember if it is upper case (otherwise lowercase is assumed)
                     bool uppercase = char.IsUpper(currentChar);
-                    
+
                     //get the position of the plaintext character in the alphabet
-                    int ppos = 0;
-                    if (cfg.CaseSensitiveAlphabet)
-                    {
-                        ppos = alphabet.IndexOf(currentChar);
-                    }
-                    else
-                    {
-                        ppos = alphabet.IndexOf(char.ToUpper(currentChar));
-                    }
+                    int ppos = alphabet.IndexOf((cfg.CaseSensitiveAlphabet) ? currentChar : char.ToUpper(currentChar));
 
                     if (ppos >= 0)
                     {
-
                         //found the plaintext character in the alphabet, begin shifting
                         int cpos = 0;
                         switch (mode)
@@ -247,7 +240,7 @@ namespace Cryptool.Vigenere
 
                                 cpos = (ppos + cfg.ShiftKey[shiftPos]) % alphabet.Length;
 
-                                //inkrement shiftPos to map inputString whith all keys
+                                //increment shiftPos to map inputString whith all keys
                                 //if shiftPos > ShiftKey.Length, begin again at the beginning
                                 shiftPos++;
                                 if (shiftPos >= cfg.ShiftKey.Length) shiftPos = 0;
@@ -257,7 +250,7 @@ namespace Cryptool.Vigenere
 
                                 cpos = (ppos - cfg.ShiftKey[shiftPos] + alphabet.Length) % alphabet.Length;
                                 
-                                //inkrement shiftPos to map inputString whith all keys
+                                //increment shiftPos to map inputString whith all keys
                                 //if shiftPos > ShiftKey.Length, begin again at the beginning
                                 shiftPos++;
                                 if (shiftPos >= cfg.ShiftKey.Length) shiftPos = 0;
@@ -323,23 +316,12 @@ namespace Cryptool.Vigenere
                                 break;
                         }
 
-                                                 
+
                         //we have the position of the ciphertext character, now we have to output it in the right case
-                        if (cfg.CaseSensitiveAlphabet)
-                        {
-                            output.Append(alphabet[cpos]);
-                        }
-                        else
-                        {
-                            if (uppercase)
-                            {
-                                output.Append(char.ToUpper(alphabet[cpos]));
-                            }
-                            else
-                            {
-                                output.Append(char.ToLower(alphabet[cpos]));
-                            }
-                        }
+                        char c = alphabet[cpos];
+                        if (!cfg.CaseSensitiveAlphabet)
+                            c = uppercase ? char.ToUpper(c) : char.ToLower(c);
+                        output.Append(c);
                     }
                     else
                     {
@@ -390,24 +372,8 @@ namespace Cryptool.Vigenere
         {
            switch (settings.Mode)
            {
-               //Autokey Mode
-               case 0:
-
-                    switch (settings.Action)
-                    {
-                        case 0:
-                            AutoKeyEncrypt();
-                            break;
-                        case 1:
-                            AutoKeyDecrypt();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-
                //Classic Mode
-               case 1:
+               case 0:
 
                     switch (settings.Action)
                     {
@@ -416,6 +382,22 @@ namespace Cryptool.Vigenere
                             break;
                         case 1:
                             Decrypt();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+
+               //Autokey Mode
+               case 1:
+
+                    switch (settings.Action)
+                    {
+                        case 0:
+                            AutoKeyEncrypt();
+                            break;
+                        case 1:
+                            AutoKeyDecrypt();
                             break;
                         default:
                             break;

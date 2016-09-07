@@ -205,7 +205,7 @@ namespace Cryptool.Vigenere.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Autokey ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Classic ähnelt.
         /// </summary>
         internal static string ModeList1 {
             get {
@@ -214,7 +214,7 @@ namespace Cryptool.Vigenere.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Classic ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Autokey ähnelt.
         /// </summary>
         internal static string ModeList2 {
             get {
