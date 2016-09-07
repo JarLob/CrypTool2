@@ -157,7 +157,7 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("CostFunction", "CostFunctionTooltio", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both", "IoC" })]
+        [TaskPane("CostFunction", "CostFunctionTooltip", null, 6, false, ControlType.ComboBox, new string[] { "Trigrams", "Quadgrams", "Both", "IoC" })]
         public CostFunction CostFunction
         {
             get

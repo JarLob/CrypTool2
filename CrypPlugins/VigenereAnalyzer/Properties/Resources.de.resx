@@ -144,6 +144,9 @@
   <data name="CostFunction" xml:space="preserve">
     <value>Kostenfunktion</value>
   </data>
+  <data name="CostFunctionTooltip" xml:space="preserve">
+    <value>Die Kostenfunktion für die Bewertung des mutmaßlichen Klartextes.</value>
+  </data>
   <data name="CurrentAnalysedKeylengthLabel" xml:space="preserve">
     <value>Aktuell analysierte Schlüssellänge:</value>
   </data>
@@ -194,7 +197,7 @@ wurde.</value>
     <value>Sprache</value>
   </data>
   <data name="LanguageTooltip" xml:space="preserve">
-    <value>Benutze diese Sprache für die Quadgramm-Bewertung.</value>
+    <value>Benutze diese Sprache für die Kostenfunktion.</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Analyse</value>
