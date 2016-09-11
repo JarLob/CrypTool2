@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">
+    A virtual machine, which allows to execute encrypted software, qualifies for secret program execution.<newline />
+    If a user wants to get his program executed by a third party without revealing the input, output or the program itself, he can achieve that by encrypting his program (this only works for batch programs without later user interaction). The requirement of not knowing the input or output is not a mandatory one.
+    In both cases the third party receives the encrypted program, which can be executed using the virtual machine. The encrypted result will then be returned to the user.<newline />
+    To be able to execute an encrypted program, homomorphic encryption is used.<newline />
+    The process of executing a program can be described as follows:
+    <enum>
+      <item>Generate keys <!-- (<docRef item="Cryptool.Plugins.EncryptedVMKeyGen"/>) --></item>
+	  <item>Assemble and encrypt program code into machine code <!-- (<docRef item="Cryptool.Plugins.EncryptedVMAssembler"/>) --></item>
+	  <item><b>Execute the machine code</b></item>
+	  <item>Decrypt and interpret the result <!-- (<docRef item="Cryptool.Plugins.EncryptedVMMemoryDisplay"/>) --></item>
+    </enum>
+	All these steps are available by using plugins in <i>CrypTool 2</i>.<newline />
+	The used virtual machine is based on <i>ShapeCPU</i> and works in conjunction with <i>SEAL</i> (Simple Encrypted Arithmetic Library), which implements the Fan-Vercauteren homomorphic cryptosystem.
+	
+	<section headline="Machine">
+	  The virtual machine processes encrypted machine code and returns the resulting memory content.
+	</section>  	
+  </introduction>
+
+  <introduction lang="de-DE">
+    Eine verschlüsselt arbeitende virtuelle Maschine erlaubt es, das auszuführende Programm zu verbergen.<newline />
+    Möchte ein Nutzer sein Programm von einer dritten Partei ausführen lassen, ohne dass diese die Eingabe, den Algorithmus oder auch die Ausgabe kennt, so kann er dies durch die Verschlüsselung seines Programms samt Daten erreichen (dies geht nur für Batchprogramme ohne spätere User-Interaktion). Die Forderung nach der Unkenntlichmachung der Eingabe/Ausgabe kann aber auch entfallen.
+    In beiden Fällen erhält die dritte Partei das verschlüsselte Programm und führt es mittels der virtuellen Maschine aus. Das verschlüsselte Ergebnis wird danach an den Nutzer zurückübermittelt.<newline />
+    Die Möglichkeit, ein verschlüsseltes Programm auszuführen, wird durch die Nutzung eines homomorphen Kryptosystems erreicht.<newline />
+    Der Ablauf beim Ausführen eines verschlüsselten Programms sieht wie folgt aus:
+    <enum>
+      <item>Schlüsselgenerierung <!-- (<docRef item="Cryptool.Plugins.EncryptedVMKeyGen"/>) --></item>
+	  <item>Assemblierung und Verschlüsselung des Programmcodes in Maschinencode <!-- (<docRef item="Cryptool.Plugins.EncryptedVMAssembler"/>) --></item>
+	  <item><b>Ausführen des Maschinencodes</b></item>
+	  <item>Entschlüsselung und Interpretation des Ergebnisses <!-- (<docRef item="Cryptool.Plugins.EncryptedVMMemoryDisplay"/>) --></item>
+    </enum>
+    Alle diese Schritte sind einzeln als Plugins im <i>CrypTool 2</i> verfügbar.<newline />
+    Die verschlüsselt arbeitende virtuelle Maschine basiert auf <i>ShapeCPU</i> und wird in Kombination mit der Kryptobibliothek <i>SEAL</i> (Simple Encrypted Arithmetic Library), welche die homomorphe Verschlüsselung nach <i>Fan-Vercauteren</i> umsetzt, genutzt.
+
+    <section headline="Maschine">
+	  Die virtuelle Maschine verarbeitet verschlüsselten Maschinencode und gibt den resultierenden Speicherinhalt zurück.
+	</section>
+  </introduction>
+
+  <usage lang="en">
+	<section headline="Input">
+	  The encrypted machine code input should be connected to the corresponding output of the <i>Assembler</i>.
+	  All keys and the encryption parameters should be connected to the <i>Key Generator</i>.
+    </section>
+
+    <section headline="Output">
+	  The result of the evaluated program is the encrypted content of the memory. This should be supplied to the <i>Memory Display</i>.
+    </section>
+	
+	<section headline="Cycles">
+	  The number of instructions which the machine should execute.
+    </section>
+	
+	<section headline="Progress bar">
+      <list>
+        <item>0%: Start of the plugin.</item>
+        <item>20%: The machine is initialized</item>
+        <item>25%: Loading of the machine is finished.</item>
+	    <item>100%: The machine code has been processed.</item>
+      </list>
+    </section>	
+  </usage>
+
+  <usage lang="de-DE">
+  	<section headline="Eingabe">
+	  Der vom <i>Assembler</i> generierte, verschlüsselte Maschinencode ist vom Assembler zuzuführen<newline />
+	  Alle Schlüssel und die dazugehörigen Parameter sind vom  <i>Schlüsselgenerator</i> zuzuführen.
+    </section>
+	
+    <section headline="Ausgabe">
+	  Der Speicherinhalt nach Abschluss der Berechnungen des Programms ist mit der Komponente <i>Speicher Anzeige</i> zu verbinden.
+    </section>
+	
+	<section headline="Zyklen">
+	  Die Anzahl der zu verarbeitenden Instruktionen.
+    </section>
+	
+	<section headline="Fortschrittsanzeige">
+      <list>
+        <item>0%: Start des Plugins.</item>
+        <item>20%: Die Initialisierung ist erledigt.</item>
+        <item>25%: Laden des Programms abgeschlossen.</item>
+	    <item>100%: Der Maschinencode wurde verarbeitet.</item>
+      </list>
+    </section>
+  </usage>
+  
+  <presentation lang="en">
+  </presentation>
+  
+  <presentation lang="de-DE">
+  </presentation>
+  
+  <references>
+    <linkReference>
+	  <link url="https://en.wikipedia.org/wiki/Homomorphic_encryption" lang="en" />
+      <caption lang="en">Homomorphic encryption (Wikipedia)</caption>
+      <link url="https://de.wikipedia.org/wiki/Homomorphe_Verschlüsselung" lang="de-DE" />
+	  <caption lang="de-DE">Homomorphe Verschlüsselung (Wikipedia)</caption>
+    </linkReference>
+    <linkReference>
+     <link url="http://shapecpu.de/shape-cpu/" />
+     <caption lang="en">ShapeCPU</caption>
+    </linkReference>
+	<linkReference>
+     <link url="https://sealcrypto.codeplex.com/" />
+     <caption lang="en">Simple Encrypted Arithmetic Library (SEAL)</caption>
+    </linkReference>
+	<linkReference>
+     <link url="https://eprint.iacr.org/2012/144" />
+     <caption lang="en">Somewhat Practical Fully Homomorphic Encryption (Fan-Vercauteren)</caption>
+    </linkReference>
+  </references>
+</documentation>
