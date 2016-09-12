@@ -145,8 +145,84 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
-            executeThread = new Thread(execution);
-            executeThread.Start();
+            //executeThread = new Thread(execution);
+            //executeThread.Start();
+            //presThread = new Thread(pres.execute);
+            keysize = settings.Keysize;
+            pres.keysize = keysize;
+            language = settings.Language;
+            pres.language = language;
+            pres.setLanguage();
+            checkKeysize();
+            checkTextLength();
+            outputStreamWriter = new CStreamWriter();
+            roundNumber = 1;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                pres.invisible();
+                pres.buttonVisible();
+                pres.hideButton();
+            }, null);
+            ProgressChanged(0, 1);
+            OutputStream = outputStreamWriter;
+            OnPropertyChanged("OutputStream");
+            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            setRoundConstant();
+            byte[] tempState = text;
+            int r = 0;
+            int t = 0;
+            foreach (byte b in key)
+            {
+                if (keyList[r] == null)
+                {
+                    keyList[r] = new byte[16];
+                }
+                keyList[r][t] = b;
+                t++;
+                if (t == 16)
+                {
+                    t = 0;
+                    r++;
+                }
+            }
+            states[0] = addKey(tempState, keyList[0]);
+            pres.tempState = tempState;
+            pres.roundConstant = this.roundConstant;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.createSBox();
+                pres.StartCanvas.Visibility = Visibility.Hidden;
+                pres.showButton();
+            }, null);
+            switch (keysize)
+            {
+                case 0:
+                    expandKey();
+                    break;
+                case 1:
+                    expandKey192();
+                    break;
+                case 2:
+                    expandKey256();
+                    break;
+                default:
+                    break;
+            }
+            setStates();
+            roundNumber = 1;
+            pres.states = states;
+            pres.keyList = keyList;
+            //presThread.Start();
+            pres.execute();
+            //while (presThread.IsAlive)
+            //{
+            //    ProgressChanged(pres.progress, 1);
+            //}
+            outputStreamWriter.Write(states[39 + 8 * keysize]);
+            outputStreamWriter.Close();
+            buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            ProgressChanged(1, 1);
             //if (aborted)
             //{
             //    outputStreamWriter.Write();
@@ -169,13 +245,24 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Stop()
         {
             aborted = true;
-            presThread.Abort();          
-            executeThread.Abort();
-            newPresentationThread = new Thread(newPresentation);
-            newPresentationThread.SetApartmentState(ApartmentState.STA);
-            newPresentationThread.Start();
-            //pres.cleanUp();
-            //pres.reset();
+            pres.autostep = false;
+            pres.skip = true;
+            pres.finish = true;
+            pres.buttonNextClickedEvent.Set();
+            //presThread.Abort();          
+            //executeThread.Abort();
+            //newPresentationThread = new Thread(newPresentation);
+            //newPresentationThread.SetApartmentState(ApartmentState.STA);
+            //newPresentationThread.Start();
+            ////pres.cleanUp();
+            ////pres.reset();
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.toStart();
+                pres.StartingImage.Visibility = Visibility.Visible;
+                pres.hideButton();
+            }, null);
+            pres.cleanUp();
             outputStreamWriter.Close();
         }
 
@@ -185,7 +272,7 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Initialize()
         {
             pres = new AESPresentation();
-            presThread = new Thread(pres.exectue);
+            presThread = new Thread(pres.execute);
         }
 
         /// <summary>
@@ -1661,7 +1748,7 @@ namespace Cryptool.Plugins.AESVisualisation
 
         private void execution()
         {
-            presThread = new Thread(pres.exectue);
+            //presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
             pres.keysize = keysize;
             language = settings.Language;
@@ -1728,10 +1815,10 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.states = states;
             pres.keyList = keyList;
             presThread.Start();
-            while (presThread.IsAlive)
-            {
-                ProgressChanged(pres.progress, 1);
-            }
+            //while (presThread.IsAlive)
+            //{
+            //    ProgressChanged(pres.progress, 1);
+            //}
             outputStreamWriter.Write(states[39 + 8 * keysize]);
             outputStreamWriter.Close();
             buttonNextClickedEvent = pres.buttonNextClickedEvent;
