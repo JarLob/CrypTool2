@@ -50,7 +50,7 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
-        [TaskPane("Sprache", "SpracheTooltip", null, 2, false, ControlType.ComboBox, new String[] { "English", "Deutsch"})]
+        [TaskPane("Sprache", "SpracheTooltip", null, 2, false, ControlType.ComboBox, new String[] { "Deutsch", "English"})]
         public int Language
         {
             get { return this.language; }

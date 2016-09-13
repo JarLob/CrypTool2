@@ -61,7 +61,7 @@
         </Style>
     </UserControl.Resources>
     <Grid Background="#FF9DEDFF">
-        <Image Name="StartingImage" Source="images/Starting.png" Visibility="Visible" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image Name="StartingImage" Source="images/Starting.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Image Name="EncryptionImage" Source="images/Encryption.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="KeyExpansionImage" Source="images/KeyExpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
         <Image Name="VerschlüsselungImage" Source="images/Verschlüsselung.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
@@ -92,11 +92,53 @@
                 <ColumnDefinition Width="80*" />
                 <ColumnDefinition Width="80*" />
             </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="11" Background="White" Name="startGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="115*"/>
+                    <RowDefinition Height="115*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190*"/>
+                    <ColumnDefinition Width="500*"/>
+                    <ColumnDefinition Width="190*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox Stretch="Uniform" Grid.Row="0" Grid.Column="1">
+                    <TextBlock Name="startTextBlock">
+                         Advanced Encryption Standard
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Grid.Row="1" Stretch="Uniform" Grid.Column="1" Margin="0,25,0,25">
+                    <TextBlock Name="startTextBlock1">
+                         (AES)
+                    </TextBlock>
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="11" Background="White" Name="startGrid1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="110*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="110*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190*"/>
+                    <ColumnDefinition Width="500*"/>
+                    <ColumnDefinition Width="190*"/>
+                </Grid.ColumnDefinitions>
+                <Viewbox Grid.Row="1" Stretch="Uniform" Grid.Column="1">
+                    <TextBlock Name="startTextBlock2">
+                         Visualisierung dieser modernen Blockchiffre
+                    </TextBlock>
+                </Viewbox>
+            </Grid>
             <Canvas Name="StartCanvas" Visibility="Visible" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="11" >
                 <!--<Image Name="StartImage" Source="images/Start.png" Visibility="Visible" Width="713" Canvas.Left="10" Canvas.Top="10" Height="402"/>-->
             </Canvas>
             <!-- Region Button -->
-            <Button x:Name="keyButton" Content="Key Expansion" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="keyButton_Click"/>
+            <Button x:Name="keyButton"  Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="keyButton_Click">
+                <Viewbox Stretch="Fill" Margin="2,2,2,2" >
+                    <TextBlock Name="keyExpansionTextBlock" Text="Key Expansion"/>
+                </Viewbox>
+            </Button>
             <Button x:Name="round1Button" Content="Round1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="round1Button_Click" />
             <Button x:Name="round2Button" Content="Round2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="round2Button_Click" />
             <Button x:Name="round3Button" Content="Round3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="round3Button_Click" />
@@ -107,11 +149,23 @@
             <Button x:Name="round8Button" Content="Round8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="round8Button_Click" />
             <Button x:Name="round9Button" Content="Round9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="round9Button_Click" />
             <Button x:Name="round10Button" Content="Round10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="round10Button_Click" />
-            <Button x:Name="playButton" Content="Next" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click" />
-            <Button x:Name="pauseButton" Content="Auto" Grid.Row="3" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="pauseButton_Click"  />
-            <Button x:Name="nextStepButton" Content="Skip Step" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click" />
+            <Button x:Name="playButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click">
+                <Viewbox Stretch="Uniform" Margin="2,2,2,2" >
+                    <TextBlock Name="playTextBlock" Text="Next"/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="pauseButton" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="pauseButton_Click" >
+                <Viewbox Stretch="Uniform" Margin="2,2,2,2">
+                    <TextBlock Name="autoTextBlock" Text="Auto"/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="nextStepButton"  Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="nextStepButton_Click">
+                <Viewbox Stretch="Fill" Margin="2,2,2,2" >
+                    <TextBlock Name="nextStepTextBlock" Text="Skip Step"/>
+                </Viewbox>
+            </Button>
             <Button x:Name="prevStepButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="prevStepButton_Click" >
-                <Viewbox Stretch="UniformToFill" Margin="2,2,2,2">
+                <Viewbox Stretch="Fill" Margin="2,2,2,2" >
                     <TextBlock Name="prevStepTextBlock" Text="Prev. Round"/>
                 </Viewbox>
             </Button>
@@ -141,7 +195,7 @@
             <Button x:Name="endButton" Content="End" Grid.Row="3"  HorizontalAlignment="Stretch" Grid.Column="10" Click="endButton_Click" />
             <Slider x:Name="autostepSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="3" Grid.RowSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="autostepSpeedSlider_ValueChanged" Value="30" IsEnabled="False"/>
             <Viewbox Stretch="Fill" Margin="2,2,2,2" Grid.Row="0" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="1">
-                <TextBlock Name="expansionEncryptionTextBlock" Text="Key Expansion" Visibility="Visible"/>
+                <TextBlock Name="expansionEncryptionTextBlock" Text="Key Expansion" Visibility="Hidden"/>
             </Viewbox>
             <Viewbox Stretch="Fill" Margin="2,2,2,2" Grid.Row="0" Grid.RowSpan="1" Grid.Column="1" Grid.ColumnSpan="1">
                 <TextBlock Name="InitialRoundTextBlock" Text="Initial Round" Visibility="Hidden"/>

@@ -150,7 +150,7 @@ namespace Cryptool.Plugins.AESVisualisation
             //presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
             pres.keysize = keysize;
-            language = settings.Language;
+            language = 1 - settings.Language;
             pres.language = language;
             pres.setLanguage();
             checkKeysize();

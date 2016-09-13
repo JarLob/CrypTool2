@@ -60,7 +60,7 @@ namespace AESVisualisation
             buttonNextClickedEvent = new AutoResetEvent(false);
             autostep = false;
             autostepSpeedSlider.IsEnabled = true;
-            keyButton.Content = "Skip Expansion";
+            keyExpansionTextBlock.Text = "Skip Expansion";
             buttonVisible();
             hideButton();
 
@@ -5221,7 +5221,9 @@ namespace AESVisualisation
             int saveRoundNumber = 11 - keysize * 2;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                StartingImage.Visibility = Visibility.Hidden;
+                //StartingImage.Visibility = Visibility.Hidden;
+                startGrid.Visibility = Visibility.Hidden;
+                startGrid1.Visibility = Visibility.Hidden;
                 expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
             while (expansion && !finish)
@@ -5231,11 +5233,11 @@ namespace AESVisualisation
                     switch (language)
                     {
                         case 0:
-                            keyButton.Content = "Skip Expansion";
+                            keyExpansionTextBlock.Text = "Skip Expansion";
                             expansionEncryptionTextBlock.Text = "Key Expansion";
                             break;
                         case 1:
-                            keyButton.Content = "Generierung Überspringen";
+                            keyExpansionTextBlock.Text = "Generierung Überspringen";
                             expansionEncryptionTextBlock.Text = "Schlüsselergenerierung";
                             break;
                     }
@@ -5529,11 +5531,11 @@ namespace AESVisualisation
                     switch (language)
                     {
                         case 0:
-                            keyButton.Content = "Key Expansion";
+                            keyExpansionTextBlock.Text = "Key Expansion";
                             expansionEncryptionTextBlock.Text = "Encryption";
                             break;
                         case 1:
-                            keyButton.Content = "Schlüsselgenerierung";
+                            keyExpansionTextBlock.Text = "Schlüsselgenerierung";
                             expansionEncryptionTextBlock.Text = "Verschlüsselung";
                             break;
                     }
@@ -6150,9 +6152,9 @@ namespace AESVisualisation
                         round2Button.Content = "Round 2";
                         round1Button.Content = "Round 1";
                         endButton.Content = "End";
-                        playButton.Content = "Next";
-                        nextStepButton.Content = "Skip Round";
-                        prevStepButton.Content = "Prev. Round";
+                        playTextBlock.Text = "Next";
+                        nextStepTextBlock.Text = "Skip Round";
+                        prevStepTextBlock.Text = "Prev. Round";
 
                     }, null);
                     break;
@@ -6170,9 +6172,9 @@ namespace AESVisualisation
                         round2Button.Content = "Runde 2";
                         round1Button.Content = "Runde 1";
                         endButton.Content = "Ende";
-                        playButton.Content = "Weiter";
-                        keyButton.Content = "Schlüsselerweiterung";
-                        nextStepButton.Content = "Runde überspringen";
+                        playTextBlock.Text = "Weiter";
+                        keyExpansionTextBlock.Text = "Schlüsselerweiterung";
+                        nextStepTextBlock.Text = "Runde überspringen";
                         prevStepTextBlock.Text = "Vorherige Runde";
                     }, null);
                     break;
