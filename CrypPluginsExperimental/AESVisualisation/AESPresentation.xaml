@@ -210,10 +210,10 @@
             <!-- Region ShiftRow -->
             <Grid Grid.Row="1" Grid.Column="7" Grid.ColumnSpan="3" Margin="0, 0, 0, 0">
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="shiftRowExplanation" Visibility="Hidden" Text=" First, the second Row is shifted once to the left. Then the third row is shifted two towards the left and finally the third row is shifted three to the left. Then the overlapping bytes are transferred to the right to form a 4 x 4 matrix." TextWrapping="Wrap" Width="140" />
+                    <TextBlock Name="shiftRowExplanation" Visibility="Hidden" Text=" First, the second row is shifted once to the left. Then, the third row is shifted twice towards the left, and finally the forth row is shifted three times to the left. The overlapping bytes are transferred to the right to form a 4 x 4 matrix." TextWrapping="Wrap" Width="140" />
                 </Viewbox>
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="shiftRowExplanationDE" Visibility="Hidden" Text="Zuerst werden die Zeilen der Matrix nach links verschoben. Die Anzahl der verschobenen Splaten erhöht sich immer um eins und beginnt bei null. Danach werden die überstehenden Bytes nach rechts übertragen um wieder eine 4 x 4 Matrix zu erzeugen." TextWrapping="Wrap" Width="140" />
+                    <TextBlock Name="shiftRowExplanationDE" Visibility="Hidden" Text="Zuerst werden die Zeilen der Matrix nach links verschoben. Die erste Zeile um 0, die zweite um 1, die dritte um 2 und die vierte um 3. Danach werden die überstehenden Bytes nach rechts übertragen, um wieder eine 4 x 4 Matrix zu bilden." TextWrapping="Wrap" Width="140" />
                 </Viewbox>
             </Grid>
             <!--<TextBlock Name="shiftRowExplanation" Visibility="Visible" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="230" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="7" Margin="27.137,10,10.863,160">
@@ -349,7 +349,7 @@
                     <TextBlock Name="addKeyExplanation" Visibility="Hidden" Text="The round key is added to the current state by XORing the bytes." TextWrapping="Wrap" Width="90" />
                 </Viewbox>
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="addKeyExplanationDE" Visibility="Hidden" Text="Der Rundenschlüssel wird angewendet, indem die einzelnen Bytes miteinander per XOR verrechnet werden" TextWrapping="Wrap" Width="90" />
+                    <TextBlock Name="addKeyExplanationDE" Visibility="Hidden" Text="Der Rundenschlüssel wird addiert, indem die einzelnen Bytes miteinander per XOR verrechnet werden" TextWrapping="Wrap" Width="90" />
                 </Viewbox>
             </Grid>
             <!--<TextBlock Name="addKeyExplanation" Visibility="Visible" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="120" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="4" Grid.Column="7" Margin="30.188,19,13.812,71" >
@@ -568,7 +568,7 @@
             </TextBlock>-->
             <Grid Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Margin="0, 10, 0, 60">
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="subByteExplanation1" Visibility="Hidden" Text="The corresponding byte in the S-Box is determined and placed into the result matrix." TextWrapping="Wrap" Width="120" />
+                    <TextBlock Name="subByteExplanation1" Visibility="Hidden" Text="The corresponding byte in the S-box is determined and placed into the result matrix." TextWrapping="Wrap" Width="120" />
                 </Viewbox>
                 <Viewbox Stretch="Uniform">
                     <TextBlock Name="subByteExplanation1DE" Visibility="Hidden" Text="Das entsprechende Byte aus der S-Box wird ermittelt und in die Ergebnismatrix übertragen." TextWrapping="Wrap" Width="120" />
@@ -577,7 +577,7 @@
             <!--<TextBlock Name="subByteExplanation1" Visibility="Visible" FontSize="16" TextWrapping="Wrap" Width="160" Height="160" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="2" Margin="54,0,0.5,40" >
             The corresponding byte in the S-Box is determined and placed into the result matrix.
             </TextBlock>-->
-            <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="340" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="0" VerticalAlignment="Stretch"  Grid.RowSpan="3" HorizontalAlignment="Stretch" Visibility="Hidden">
+            <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="330" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="0" VerticalAlignment="Stretch"  Grid.RowSpan="3" HorizontalAlignment="Stretch" Visibility="Hidden">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="20"/>
                     <RowDefinition MinHeight="20"/>
@@ -596,7 +596,7 @@
                     <RowDefinition MinHeight="20"/>
                     <RowDefinition MinHeight="20"/>
                     <RowDefinition MinHeight="20"/>
-                    <RowDefinition MinHeight="20"/>
+                    <RowDefinition MinHeight="10"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="10"/>
@@ -617,9 +617,12 @@
                     <ColumnDefinition MinWidth="10"/>
                     <ColumnDefinition MinWidth="10"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="17" Grid.ColumnSpan="4">
-                sBox
-                </TextBlock>
+                <Viewbox  Grid.Row="17" Grid.ColumnSpan="4" Stretch="Uniform">
+                    <TextBlock Name="sBoxTextBlock">
+                       S-Box
+                    </TextBlock>
+                </Viewbox>
+                
                 <!-- Region Row0 -->
                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" x:Name="sBorder0" Background="Yellow">
                     <TextBlock x:Name="sTextBlock0"  Text="" TextAlignment="Center"/>
@@ -2433,7 +2436,7 @@
             </Grid>
             <Grid Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Margin="0, 20, 0, 30">
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="expansionExplanation1" Visibility="Hidden" Text="Every byte is exchanged with the corresponding byte from the sBox" TextWrapping="Wrap" Width="100" />
+                    <TextBlock Name="expansionExplanation1" Visibility="Hidden" Text="Every byte is exchanged with the corresponding byte from the S-box" TextWrapping="Wrap" Width="100" />
                 </Viewbox>
                 <Viewbox Stretch="Uniform">
                     <TextBlock Name="expansionExplanation1DE" Visibility="Hidden" Text="Jedes Byte wird mit dem entsprechenden Byte aus der S-Box ausgetauscht." TextWrapping="Wrap" Width="100" />
@@ -2478,7 +2481,7 @@
                     <TextBlock Name="mixColExplanation1" Visibility="Hidden" Text="Then it is multiplied with the multiplication matrix to determine the next column of the next state." TextWrapping="Wrap" Width="120" />
                 </Viewbox>
                 <Viewbox Stretch="Uniform">
-                    <TextBlock Name="mixColExplanation1DE" Visibility="Hidden" Text="Danach wird sie mit der Multiplikationsmatrix verrechnet um die nächste Spalte des nächsten Zustandes zu ermitteln." TextWrapping="Wrap" Width="120" />
+                    <TextBlock Name="mixColExplanation1DE" Visibility="Hidden" Text="Danach wird sie mit der Multiplikationsmatrix verrechnet, um die nächste Spalte des nächsten Zustandes zu ermitteln." TextWrapping="Wrap" Width="120" />
                 </Viewbox>
             </Grid>
             <!--<TextBlock Name="mixColExplanation" Visibility="Visible" FontSize="16" TextWrapping="Wrap" Width="200" MinHeight="130" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Column="7" Margin="30.188,19,13.812,253" >

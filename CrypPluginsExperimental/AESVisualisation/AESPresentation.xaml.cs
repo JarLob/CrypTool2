@@ -6194,7 +6194,7 @@ namespace AESVisualisation
                         nextStepTextBlock.Text = "Skip Round";
                         prevStepTextBlock.Text = "Prev. Round";
                         languageTextBlock.Text = "Deutsch";
-
+                        sBoxTextBlock.Text = "S-box";
                     }, null);
                     break;
                 case 1:
@@ -6216,6 +6216,7 @@ namespace AESVisualisation
                         nextStepTextBlock.Text = "Runde überspringen";
                         prevStepTextBlock.Text = "Vorherige Runde";
                         languageTextBlock.Text = "English";
+                        sBoxTextBlock.Text = "S-Box";
                     }, null);
                     break;
             }
