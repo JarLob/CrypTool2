@@ -807,6 +807,25 @@ namespace AESVisualisation
             toStart();
         }
 
+        private void languageButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool auto = false;
+            auto = autostep;
+            autostep = false;
+            switch (language)
+            {
+                case 0:
+                    language = 1;
+                    break;
+                case 1:
+                    language = 0;
+                    break;
+                default:
+                    break;
+            }
+            setLanguage();
+            autostep = auto;
+        }
         #endregion Buttons
 
         #region Methods
@@ -5237,8 +5256,8 @@ namespace AESVisualisation
                             expansionEncryptionTextBlock.Text = "Key Expansion";
                             break;
                         case 1:
-                            keyExpansionTextBlock.Text = "Generierung Überspringen";
-                            expansionEncryptionTextBlock.Text = "Schlüsselergenerierung";
+                            keyExpansionTextBlock.Text = "Generierung überspringen";
+                            expansionEncryptionTextBlock.Text = "Schlüsselgenerierung";
                             break;
                     }
                     showButton();
@@ -6155,6 +6174,7 @@ namespace AESVisualisation
                         playTextBlock.Text = "Next";
                         nextStepTextBlock.Text = "Skip Round";
                         prevStepTextBlock.Text = "Prev. Round";
+                        languageTextBlock.Text = "Deutsch";
 
                     }, null);
                     break;
@@ -6176,6 +6196,7 @@ namespace AESVisualisation
                         keyExpansionTextBlock.Text = "Schlüsselerweiterung";
                         nextStepTextBlock.Text = "Runde überspringen";
                         prevStepTextBlock.Text = "Vorherige Runde";
+                        languageTextBlock.Text = "English";
                     }, null);
                     break;
             }   
@@ -6293,8 +6314,8 @@ namespace AESVisualisation
 
             }
         }
+
         #endregion
 
-       
     }
 }
