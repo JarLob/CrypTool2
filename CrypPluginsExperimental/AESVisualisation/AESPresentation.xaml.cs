@@ -51,6 +51,7 @@ namespace AESVisualisation
         public int language;
         private Boolean start = true;
         private Boolean initialRound = true;
+        private int displayedExplanation = 0;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -1896,6 +1897,7 @@ namespace AESVisualisation
                         default:
                             break;
                     }
+                    displayedExplanation = language + 13;
                     tb.Background = Brushes.Green;
                 }, null);
                 wait();
@@ -2172,6 +2174,7 @@ namespace AESVisualisation
                 default:
                     break;
             }
+            displayedExplanation = language + 11;
             List<TextBlock> temp = createTextBlockList(4);
             byte[] state = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
             int x = 0;
@@ -2497,6 +2500,7 @@ namespace AESVisualisation
                 default:
                     break;
             }
+            displayedExplanation = language + 15;
         }
 
         private void rowSetBlockText(byte[] block)
@@ -2638,6 +2642,7 @@ namespace AESVisualisation
                 default:
                     break;
             }
+            displayedExplanation = language + 17;
             mixColButton.Background = Brushes.Aqua;
             setMixStateTransition(arrangeText(states[(roundNumber - 1) * 4 + action - 1]));
             mixColMatrixGrid.Visibility = Visibility.Visible;
@@ -2676,6 +2681,7 @@ namespace AESVisualisation
                     default:
                         break;
                 }
+                displayedExplanation = language + 17;
                 mixColExplanation1.Visibility = Visibility.Hidden;
                 mixColExplanation1DE.Visibility = Visibility.Hidden;
                 while (x < 16)
@@ -2708,6 +2714,7 @@ namespace AESVisualisation
             {
                 mixColExplanation.Visibility = Visibility.Hidden;
                 mixColExplanationDE.Visibility = Visibility.Hidden;
+                displayedExplanation = 0;
                 while (x < 16)
                 {
                     if (x == 0 + z || x == 4 + z || x == 8 + z || x == 12 + z)
@@ -2732,6 +2739,7 @@ namespace AESVisualisation
                     default:
                         break;
                 }
+                displayedExplanation = language + 19;
                 while (y < 4)
                 {
                     matrixList[y].Background = Brushes.Green;
@@ -2864,6 +2872,7 @@ namespace AESVisualisation
                 default:
                     break;
             }
+            displayedExplanation = language + 21;
             if(roundNumber == 0)
             {
                 keySetBlockText(arrangeText(tempState), key);
@@ -4547,6 +4556,7 @@ namespace AESVisualisation
                 keyBorders[7].Background = Brushes.Green;
                 keyBorders[11].Background = Brushes.Green;
                 keyBorders[15].Background = Brushes.Green;
+                displayedExplanation = language + 1;
                 switch (language)
                 {
                     case 0:
@@ -4612,6 +4622,7 @@ namespace AESVisualisation
                 transitionBorders[1].Background = Brushes.Transparent;
                 expansionExplanation.Visibility = Visibility.Hidden;
                 expansionExplanationDE.Visibility = Visibility.Hidden;
+                displayedExplanation = 0;
             }, null);
             wait();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -4629,6 +4640,7 @@ namespace AESVisualisation
                     default:
                         break;
                 }
+                displayedExplanation = language + 3;
 
             }, null);
             wait();
@@ -4883,6 +4895,7 @@ namespace AESVisualisation
                     default:
                         break;
                 }
+                displayedExplanation = language + 5;
                 transition1Borders[0].Visibility = Visibility.Visible;
                 transition1Borders[3].Visibility = Visibility.Visible;
                 transition1Borders[6].Visibility = Visibility.Visible;
@@ -4947,6 +4960,7 @@ namespace AESVisualisation
                     default:
                         break;
                 }
+                displayedExplanation = language + 7;
             }, null);
             wait();
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -5067,6 +5081,7 @@ namespace AESVisualisation
                             default:
                                 break;
                         }
+                        displayedExplanation = language + 9;
                         transition1Blocks[0].Text = "";
                         transition1Blocks[2].Text = "";
                         transition1Blocks[3].Text = "";
@@ -5154,6 +5169,7 @@ namespace AESVisualisation
             {
                 expansionExplanation4.Visibility = Visibility.Hidden;
                 expansionExplanation4DE.Visibility = Visibility.Hidden;
+                displayedExplanation = 0;
                 transition1Blocks[0].Text = "";
                 transition1Blocks[2].Text = "";
                 transition1Blocks[3].Text = "";
@@ -5669,6 +5685,7 @@ namespace AESVisualisation
             keyButton.Visibility = Visibility.Hidden;
             startButton.Visibility = Visibility.Hidden;
             endButton.Visibility = Visibility.Hidden;
+            languageButton.Visibility = Visibility.Hidden;
         }
         public void showButton()
         {
@@ -5687,7 +5704,8 @@ namespace AESVisualisation
             round8Button.Visibility = Visibility.Visible;
             startButton.Visibility = Visibility.Visible;
             endButton.Visibility = Visibility.Visible;
-            if(!expansion || keysize == 0)
+            languageButton.Visibility = Visibility.Visible;
+            if (!expansion || keysize == 0)
             {
                 round9Button.Visibility = Visibility.Visible;
                 round10Button.Visibility = Visibility.Visible;
@@ -6134,6 +6152,7 @@ namespace AESVisualisation
                 default:
                     break;
             }
+            displayedExplanation = 0;
         }
 
         public void reset()
@@ -6199,9 +6218,128 @@ namespace AESVisualisation
                         languageTextBlock.Text = "English";
                     }, null);
                     break;
-            }   
-            
-            
+            }
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                switch (displayedExplanation)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        expansionExplanation.Visibility = Visibility.Hidden;
+                        expansionExplanationDE.Visibility = Visibility.Visible;
+                        displayedExplanation = 2;
+                        break;
+                    case 2:
+                        expansionExplanation.Visibility = Visibility.Visible;
+                        expansionExplanationDE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 1;
+                        break;
+                    case 3:
+                        expansionExplanation1.Visibility = Visibility.Hidden;
+                        expansionExplanation1DE.Visibility = Visibility.Visible;
+                        displayedExplanation = 4;
+                        break;
+                    case 4:
+                        expansionExplanation1.Visibility = Visibility.Visible;
+                        expansionExplanation1DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 3;
+                        break;
+                    case 5:
+                        expansionExplanation2.Visibility = Visibility.Hidden;
+                        expansionExplanation2DE.Visibility = Visibility.Visible;
+                        displayedExplanation = 6;
+                        break;
+                    case 6:
+                        expansionExplanation2.Visibility = Visibility.Visible;
+                        expansionExplanation2DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 5;
+                        break;
+                    case 7:
+                        expansionExplanation3.Visibility = Visibility.Hidden;
+                        expansionExplanation3DE.Visibility = Visibility.Visible;
+                        displayedExplanation = 8;
+                        break;
+                    case 8:
+                        expansionExplanation3.Visibility = Visibility.Visible;
+                        expansionExplanation3DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 7;
+                        break;
+                    case 9:
+                        expansionExplanation4.Visibility = Visibility.Hidden;
+                        expansionExplanation4DE.Visibility = Visibility.Visible;
+                        displayedExplanation = 10;
+                        break;
+                    case 10:
+                        expansionExplanation4.Visibility = Visibility.Visible;
+                        expansionExplanation4DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 9;
+                        break;
+                    case 11:
+                        subByteExplanationDE.Visibility = Visibility.Visible;
+                        subByteExplanation.Visibility = Visibility.Hidden;
+                        displayedExplanation = 12;
+                        break;
+                    case 12:
+                        subByteExplanation.Visibility = Visibility.Visible;
+                        subByteExplanationDE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 11;
+                        break;
+                    case 13:
+                        subByteExplanation1DE.Visibility = Visibility.Visible;
+                        subByteExplanation1.Visibility = Visibility.Hidden;
+                        displayedExplanation = 14;
+                        break;
+                    case 14:
+                        subByteExplanation1.Visibility = Visibility.Visible;
+                        subByteExplanation1DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 13;
+                        break;
+                    case 15:
+                        shiftRowExplanationDE.Visibility = Visibility.Visible;
+                        shiftRowExplanation.Visibility = Visibility.Hidden;
+                        displayedExplanation = 16;
+                        break;
+                    case 16:
+                        shiftRowExplanation.Visibility = Visibility.Visible;
+                        shiftRowExplanationDE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 15;
+                        break;
+                    case 17:
+                        mixColExplanationDE.Visibility = Visibility.Visible;
+                        mixColExplanation.Visibility = Visibility.Hidden;
+                        displayedExplanation = 18;
+                        break;
+                    case 18:
+                        mixColExplanation.Visibility = Visibility.Visible;
+                        mixColExplanationDE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 17;
+                        break;
+                    case 19:
+                        mixColExplanation1DE.Visibility = Visibility.Visible;
+                        mixColExplanation1.Visibility = Visibility.Hidden;
+                        displayedExplanation = 20;
+                        break;
+                    case 20:
+                        mixColExplanation1.Visibility = Visibility.Visible;
+                        mixColExplanation1DE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 19;
+                        break;
+                    case 21:
+                        addKeyExplanationDE.Visibility = Visibility.Visible;
+                        addKeyExplanation.Visibility = Visibility.Hidden;
+                        displayedExplanation = 22;
+                        break;
+                    case 22:
+                        addKeyExplanation.Visibility = Visibility.Visible;
+                        addKeyExplanationDE.Visibility = Visibility.Hidden;
+                        displayedExplanation = 21;
+                        break;
+                    default:
+                        break;
+                }
+            }, null);
+
         }
 
         public void introduction()
