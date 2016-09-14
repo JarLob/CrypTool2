@@ -60,18 +60,13 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid Background="#FF9DEDFF">
+    <Grid >
         <Image Name="StartingImage" Source="images/Starting.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Image Name="EncryptionImage" Source="images/Encryption.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="KeyExpansionImage" Source="images/KeyExpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="VerschlüsselungImage" Source="images/Verschlüsselung.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="SchlüsselexpansionImage" Source="images/Schlüsselexpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="Intro1DEImage" Source="images/Intro1.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="Intro2DEImage" Source="images/Intro2.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="Intro3DEImage" Source="images/Intro3.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="Intro3ENImage" Source="images/Intro3EN.jpg" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Image Name="Intro1ENImage" Source="images/Intro1EN.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <Grid Margin="10,10,10,10">
+        <!--<Image Name="EncryptionImage" Source="images/Encryption.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image Name="KeyExpansionImage" Source="images/KeyExpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+        <!--<Image Name="VerschlüsselungImage" Source="images/Verschlüsselung.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Image Name="SchlüsselexpansionImage" Source="images/Schlüsselexpansion.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+        <Grid Margin="10,10,10,10" Background="#FF9DEDFF">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*" MaxHeight="40"/>
                 <RowDefinition Height="210*" />
@@ -92,16 +87,42 @@
                 <ColumnDefinition Width="80*" />
                 <ColumnDefinition Width="80*" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="11" Background="White" Name="startGrid">
+            <Image Name="Intro1DEImage" Source="images/Intro1.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="5" Grid.ColumnSpan="11" />
+            <Image Name="Intro2DEImage" Source="images/Intro2.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="5" Grid.ColumnSpan="11" />
+            <Image Name="Intro3DEImage" Source="images/Intro3.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="5" Grid.ColumnSpan="11" />
+            <Grid Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="11" Name="startGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="115*"/>
                     <RowDefinition Height="115*"/>
+                    <RowDefinition Height="110*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="110*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="190*"/>
                     <ColumnDefinition Width="500*"/>
                     <ColumnDefinition Width="190*"/>
                 </Grid.ColumnDefinitions>
+                <Image Name="Intro1ENImage" Source="images/Intro1EN.png" Visibility="Hidden" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3">
+                    <TextBlock Name="Intro1ENTextBlock" TextWrapping="Wrap" Width="200" Visibility="Hidden">
+                        AES is a modern block cipher. <LineBreak/>
+                        AES takes two inputs. The plaintext that is to be encrypted and a key. <LineBreak/>
+                        After the encryption AES outputs the ciphertext.
+                    </TextBlock>
+                </Viewbox>
+                <Image Name="Intro3ENImage" Source="images/Intro3EN.jpg" Visibility="Hidden" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400"  />
+                <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" Margin="200,0,0,0" Stretch="Uniform">
+                    <TextBlock Name="Intro2ENTextBlock" TextWrapping="Wrap" Width="180" Visibility="Hidden">
+                        AES starts with the "Key Expansion" in which round keys are derived from the original key. <LineBreak/>
+                        <LineBreak/>
+                        After the expansion an initiale round takes place, in which the original key is applied to the plaintext. <LineBreak/>
+                        <LineBreak/>
+                        Depending on the key length the algorithm will go through 9, 11 or 13 rounds. Each rounds consists of the four operation: "SubBytes", "ShiftRow", "MixColumns" and "AddRoundKey".<LineBreak/>
+                        <LineBreak/>
+                        Once those rounds are completed one last final round takes place, in which there is no "MixColumn" step.
+                    </TextBlock>
+                </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.Column="1">
                     <TextBlock Name="startTextBlock">
                          Advanced Encryption Standard
@@ -112,24 +133,48 @@
                          (AES)
                     </TextBlock>
                 </Viewbox>
-            </Grid>
-            <Grid Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="11" Background="White" Name="startGrid1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="110*"/>
-                    <RowDefinition Height="30*"/>
-                    <RowDefinition Height="110*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="190*"/>
-                    <ColumnDefinition Width="500*"/>
-                    <ColumnDefinition Width="190*"/>
-                </Grid.ColumnDefinitions>
-                <Viewbox Grid.Row="1" Stretch="Uniform" Grid.Column="1">
+                <Viewbox Grid.Row="3" Stretch="Uniform" Grid.Column="1">
                     <TextBlock Name="startTextBlock2">
                          Visualisierung dieser modernen Blockchiffre
                     </TextBlock>
                 </Viewbox>
+                <Viewbox Grid.Row="3" Stretch="Uniform" Grid.Column="1">
+                    <TextBlock Name="startTextBlock2EN" Visibility="Hidden">
+                         Visualisation of this modern block cipher
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Width="40" Grid.Column="1">
+                    <TextBlock Name="expansionTextBlock" Visibility="Hidden">
+                        A
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Name="expansionTextBlock2" Visibility="Hidden">
+                        Schlüsselerweiterung
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Name="expansionTextBlock2EN" Visibility="Hidden">
+                        Key Expansion
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Width="40" Grid.Column="1">
+                    <TextBlock Name="encryptionTextBlock" Visibility="Hidden">
+                        B
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Name="encryptionTextBlock2" Visibility="Hidden">
+                        Verschlüsselung
+                    </TextBlock>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Name="encryptionTextBlock2EN" Visibility="Hidden">
+                        Encryption
+                    </TextBlock>
+                </Viewbox>
             </Grid>
+
             <Canvas Name="StartCanvas" Visibility="Visible" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="11" >
                 <!--<Image Name="StartImage" Source="images/Start.png" Visibility="Visible" Width="713" Canvas.Left="10" Canvas.Top="10" Height="402"/>-->
             </Canvas>
@@ -622,7 +667,7 @@
                        S-Box
                     </TextBlock>
                 </Viewbox>
-                
+
                 <!-- Region Row0 -->
                 <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.Row="0" x:Name="sBorder0" Background="Yellow">
                     <TextBlock x:Name="sTextBlock0"  Text="" TextAlignment="Center"/>

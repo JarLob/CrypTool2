@@ -5257,8 +5257,10 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 //StartingImage.Visibility = Visibility.Hidden;
-                startGrid.Visibility = Visibility.Hidden;
-                startGrid1.Visibility = Visibility.Hidden;
+                //startGrid.Visibility = Visibility.Hidden;
+                startTextBlock.Visibility = Visibility.Hidden;
+                startTextBlock1.Visibility = Visibility.Hidden;
+                startTextBlock2.Visibility = Visibility.Hidden;
                 expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
             while (expansion && !finish)
@@ -5272,7 +5274,7 @@ namespace AESVisualisation
                             expansionEncryptionTextBlock.Text = "Key Expansion";
                             break;
                         case 1:
-                            keyExpansionTextBlock.Text = "Generierung überspringen";
+                            keyExpansionTextBlock.Text = "Zur Verschlüsselung";
                             expansionEncryptionTextBlock.Text = "Schlüsselgenerierung";
                             break;
                     }
@@ -5295,10 +5297,16 @@ namespace AESVisualisation
                         switch (language)
                         {
                             case 0:
-                                KeyExpansionImage.Visibility = Visibility.Visible;
+                                startGrid.Visibility = Visibility.Visible;
+                                expansionTextBlock.Visibility = Visibility.Visible;
+                                expansionTextBlock2EN.Visibility = Visibility.Visible;
+                                //KeyExpansionImage.Visibility = Visibility.Visible;
                                 break;
                             case 1:
-                                SchlüsselexpansionImage.Visibility = Visibility.Visible;
+                                startGrid.Visibility = Visibility.Visible;
+                                expansionTextBlock.Visibility = Visibility.Visible;
+                                expansionTextBlock2.Visibility = Visibility.Visible;
+                                //SchlüsselexpansionImage.Visibility = Visibility.Visible;
                                 break;
                             default:
                                 break;
@@ -5312,10 +5320,16 @@ namespace AESVisualisation
                         switch (language)
                         {
                             case 0:
-                                KeyExpansionImage.Visibility = Visibility.Hidden;
+                                startGrid.Visibility = Visibility.Hidden;
+                                expansionTextBlock.Visibility = Visibility.Hidden;
+                                expansionTextBlock2EN.Visibility = Visibility.Hidden;
+                                //KeyExpansionImage.Visibility = Visibility.Hidden;
                                 break;
                             case 1:
-                                SchlüsselexpansionImage.Visibility = Visibility.Hidden; 
+                                startGrid.Visibility = Visibility.Hidden;
+                                expansionTextBlock.Visibility = Visibility.Hidden;
+                                expansionTextBlock2.Visibility = Visibility.Hidden;
+                                //SchlüsselexpansionImage.Visibility = Visibility.Hidden; 
                                 break;
                             default:
                                 break;
@@ -5498,10 +5512,16 @@ namespace AESVisualisation
                         switch (language)
                         {
                             case 0:
-                                EncryptionImage.Visibility = Visibility.Visible;
+                                //EncryptionImage.Visibility = Visibility.Visible;
+                                startGrid.Visibility = Visibility.Visible;
+                                encryptionTextBlock.Visibility = Visibility.Visible;
+                                encryptionTextBlock2EN.Visibility = Visibility.Visible;
                                 break;
                             case 1:
-                                VerschlüsselungImage.Visibility = Visibility.Visible;
+                                //VerschlüsselungImage.Visibility = Visibility.Visible;
+                                startGrid.Visibility = Visibility.Visible;
+                                encryptionTextBlock.Visibility = Visibility.Visible;
+                                encryptionTextBlock2.Visibility = Visibility.Visible;
                                 break;
                             default:
                                 break;
@@ -5512,8 +5532,12 @@ namespace AESVisualisation
                     autostep = false;
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        EncryptionImage.Visibility = Visibility.Hidden;
-                        VerschlüsselungImage.Visibility = Visibility.Hidden;
+                        startGrid.Visibility = Visibility.Hidden;
+                        encryptionTextBlock2EN.Visibility = Visibility.Hidden;
+                        encryptionTextBlock2.Visibility = Visibility.Hidden;
+                        encryptionTextBlock.Visibility = Visibility.Hidden;
+                        //EncryptionImage.Visibility = Visibility.Hidden;
+                        //VerschlüsselungImage.Visibility = Visibility.Hidden;
                         playButton.SetValue(Grid.RowProperty, 3);
                         showButton();
                         buttonVisible();
@@ -5566,11 +5590,11 @@ namespace AESVisualisation
                     switch (language)
                     {
                         case 0:
-                            keyExpansionTextBlock.Text = "Key Expansion";
+                            keyExpansionTextBlock.Text = "To Expansion";
                             expansionEncryptionTextBlock.Text = "Encryption";
                             break;
                         case 1:
-                            keyExpansionTextBlock.Text = "Schlüsselgenerierung";
+                            keyExpansionTextBlock.Text = "Zur Expansion";
                             expansionEncryptionTextBlock.Text = "Verschlüsselung";
                             break;
                     }
@@ -5930,6 +5954,15 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 invisible();
+                startGrid.Visibility = Visibility.Hidden;
+                expansionTextBlock.Visibility = Visibility.Hidden;
+                expansionTextBlock2EN.Visibility = Visibility.Hidden;
+                expansionTextBlock.Visibility = Visibility.Hidden;
+                expansionTextBlock2.Visibility = Visibility.Hidden;
+                encryptionTextBlock2EN.Visibility = Visibility.Hidden;
+                encryptionTextBlock2.Visibility = Visibility.Hidden;
+                encryptionTextBlock.Visibility = Visibility.Hidden;
+                expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
             if (expansion)
             {
@@ -6191,8 +6224,18 @@ namespace AESVisualisation
                         round1Button.Content = "Round 1";
                         endButton.Content = "End";
                         playTextBlock.Text = "Next";
-                        nextStepTextBlock.Text = "Skip Round";
-                        prevStepTextBlock.Text = "Prev. Round";
+                        if (expansion)
+                        {
+                            nextStepTextBlock.Text = "Skip Round";
+                            prevStepTextBlock.Text = "Prev. Round";
+                            keyExpansionTextBlock.Text = "Skip Expansion";
+                        }
+                        else
+                        {
+                            nextStepTextBlock.Text = "Skip Operation";
+                            prevStepTextBlock.Text = "Prev. Operation";
+                            keyExpansionTextBlock.Text = "To Expansion";
+                        }
                         languageTextBlock.Text = "Deutsch";
                         sBoxTextBlock.Text = "S-box";
                     }, null);
@@ -6213,8 +6256,18 @@ namespace AESVisualisation
                         endButton.Content = "Ende";
                         playTextBlock.Text = "Weiter";
                         keyExpansionTextBlock.Text = "Schlüsselerweiterung";
-                        nextStepTextBlock.Text = "Runde überspringen";
-                        prevStepTextBlock.Text = "Vorherige Runde";
+                        if (expansion)
+                        {
+                            nextStepTextBlock.Text = "Runde überspringen";
+                            prevStepTextBlock.Text = "Vorherige Runde";
+                            keyExpansionTextBlock.Text = "Zur Verschlüsselung";
+                        }
+                        else
+                        {
+                            nextStepTextBlock.Text = "Operation überspringen";
+                            prevStepTextBlock.Text = "Vorherige Operation";
+                            keyExpansionTextBlock.Text = "Zur Expansion";
+                        }
                         languageTextBlock.Text = "English";
                         sBoxTextBlock.Text = "S-Box";
                     }, null);
@@ -6351,7 +6404,9 @@ namespace AESVisualisation
                 case 0:
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
+                        startGrid.Visibility = Visibility.Visible;
                         Intro1ENImage.Visibility = Visibility.Visible;
+                        Intro1ENTextBlock.Visibility = Visibility.Visible;
                         hideButton();
                         playButton.Visibility = Visibility.Visible;
                         playButton.SetValue(Grid.RowProperty, 4);
@@ -6360,24 +6415,34 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         Intro1ENImage.Visibility = Visibility.Hidden;
+                        Intro1ENTextBlock.Visibility = Visibility.Hidden;
                         Intro3ENImage.Visibility = Visibility.Visible;
+                        Intro2ENTextBlock.Visibility = Visibility.Visible;
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         Intro3ENImage.Visibility = Visibility.Hidden;
-                        KeyExpansionImage.Visibility = Visibility.Visible;
+                        //KeyExpansionImage.Visibility = Visibility.Visible;
+                        expansionTextBlock.Visibility = Visibility.Visible;
+                        expansionTextBlock2EN.Visibility = Visibility.Visible;
+                        Intro2ENTextBlock.Visibility = Visibility.Hidden;
+                        
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         playButton.SetValue(Grid.RowProperty, 3);
-                        KeyExpansionImage.Visibility = Visibility.Hidden;
+                        //KeyExpansionImage.Visibility = Visibility.Hidden;
+                        expansionTextBlock2EN.Visibility = Visibility.Hidden;
+                        expansionTextBlock.Visibility = Visibility.Hidden;
+                        startGrid.Visibility = Visibility.Hidden;
                     }, null);
                     break;
                 case 1:
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
+                        startGrid.Visibility = Visibility.Hidden;
                         Intro1DEImage.Visibility = Visibility.Visible;
                         hideButton();
                         playButton.Visibility = Visibility.Visible;
@@ -6399,13 +6464,19 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         Intro3DEImage.Visibility = Visibility.Hidden;
-                        SchlüsselexpansionImage.Visibility = Visibility.Visible;
+                        startGrid.Visibility = Visibility.Visible;
+                        expansionTextBlock.Visibility = Visibility.Visible;
+                        expansionTextBlock2.Visibility = Visibility.Visible;
+                        //SchlüsselexpansionImage.Visibility = Visibility.Visible;
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         playButton.SetValue(Grid.RowProperty, 3);
-                        SchlüsselexpansionImage.Visibility = Visibility.Hidden;
+                        expansionTextBlock2EN.Visibility = Visibility.Hidden;
+                        expansionTextBlock.Visibility = Visibility.Hidden;
+                        startGrid.Visibility = Visibility.Hidden;
+                        //SchlüsselexpansionImage.Visibility = Visibility.Hidden;
                     }, null);
                     break;
             }
