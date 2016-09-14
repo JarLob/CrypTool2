@@ -667,6 +667,8 @@ namespace Cryptool.DESVisualisation
         {
             ResetAllScreens();
             IntroScreen.Visibility = Visibility.Visible;
+            PrevButton.IsEnabled = false;
+            ClearButtonsColor(false);
             nextScreenID = 1;
             nextStepCounter = 1;
         }
@@ -675,6 +677,8 @@ namespace Cryptool.DESVisualisation
         {
             ResetAllScreens();
             progress = 0;
+            ClearButtonsColor(false);
+            IntroButton.Background = buttonBrush;
             InfoScreen.Visibility = Visibility.Visible;
             Title.Visibility = Visibility.Visible;
 
@@ -710,6 +714,7 @@ namespace Cryptool.DESVisualisation
                     break;
                 case 2:
                     ChapterLabel.Content = Properties.Resources.KeySchedule;
+                    ClearButtonsColor(false);
                     nextScreenID = 5;
                     nextStepCounter = 1;
                     progress = 0.0625;
@@ -722,6 +727,7 @@ namespace Cryptool.DESVisualisation
                     ActivateRoundButtons(false);
                     keyScheduleIsRunning = false;
                     ClearButtonsColor(true);
+                    ClearButtonsColor(false);
                     ShiftDButton.Visibility = Visibility.Hidden;
                     ShiftCButton.Visibility = Visibility.Hidden;
                     PC2Button.Visibility = Visibility.Hidden;
@@ -744,6 +750,9 @@ namespace Cryptool.DESVisualisation
         {
             ResetAllScreens();
             progress = 1;
+            AutoTButton.IsEnabled = false;
+            NextButton.IsEnabled = false;
+            SkipButton.IsEnabled = false;
             FinalScreen.Visibility = Visibility.Visible;
             if (diffusionIsActive)
             {
@@ -915,7 +924,6 @@ namespace Cryptool.DESVisualisation
             {
                 nextScreenID = 1;
                 nextStepCounter = 3;
-                roundCounter = 0;
                 ClearButtonsColor(true);
             }
             else if (roundCounter < 16 && step == 1)
@@ -1795,6 +1803,7 @@ namespace Cryptool.DESVisualisation
         public void ResetIntroScreen()
         {
             IntroScreen.Visibility = Visibility.Hidden;
+            PrevButton.IsEnabled = true;
         }
 
         public void ResetInfoScreen()
@@ -1817,7 +1826,10 @@ namespace Cryptool.DESVisualisation
             FinalScreen.Visibility = Visibility.Hidden;
             FinalCiphertext.TextEffects.Clear();
             FinalKey.TextEffects.Clear();
-            FinalMessage.TextEffects.Clear();    
+            FinalMessage.TextEffects.Clear();
+            AutoTButton.IsEnabled = true;
+            NextButton.IsEnabled = true;
+            SkipButton.IsEnabled = true;
         }
 
         public void ResetInputDataScreen()

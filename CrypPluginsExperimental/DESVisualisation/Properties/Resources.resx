@@ -319,4 +319,7 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   <data name="SkipRound" xml:space="preserve">
     <value>Skip Round</value>
   </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Next Step</value>
+  </data>
 </root>

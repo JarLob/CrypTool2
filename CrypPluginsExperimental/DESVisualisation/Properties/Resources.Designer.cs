@@ -432,6 +432,15 @@ namespace Cryptool.DESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Next Step ähnelt.
+        /// </summary>
+        internal static string NextStep {
+            get {
+                return ResourceManager.GetString("NextStep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Output: ähnelt.
         /// </summary>
         internal static string Output {

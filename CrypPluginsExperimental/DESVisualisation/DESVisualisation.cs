@@ -136,7 +136,7 @@ namespace Cryptool.DESVisualisation
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     pres.ActivateNavigationButtons(true);
-                    //pres.ShowChapterScreen(1);
+                    pres.PrevButton.IsEnabled = false;
                 }, null);
                 output = pres.encOriginal.outputCiphertext;
                 Ciphertext = new byte[8];
