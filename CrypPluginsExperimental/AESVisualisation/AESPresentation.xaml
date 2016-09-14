@@ -116,11 +116,11 @@
                     <TextBlock Name="Intro2ENTextBlock" TextWrapping="Wrap" Width="180" Visibility="Hidden">
                         AES starts with the "Key Expansion" in which round keys are derived from the original key. <LineBreak/>
                         <LineBreak/>
-                        After the expansion an initiale round takes place, in which the original key is applied to the plaintext. <LineBreak/>
+                        After the expansion an initial round takes place, in which the original key is applied to the plaintext.<LineBreak/>
                         <LineBreak/>
-                        Depending on the key length the algorithm will go through 9, 11 or 13 rounds. Each rounds consists of the four operation: "SubBytes", "ShiftRow", "MixColumns" and "AddRoundKey".<LineBreak/>
+                        Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey".<LineBreak/>
                         <LineBreak/>
-                        Once those rounds are completed one last final round takes place, in which there is no "MixColumn" step.
+                        Once these rounds are completed one last round takes place, in which there is no "MixColumn" step.
                     </TextBlock>
                 </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.Column="1">
@@ -140,7 +140,7 @@
                 </Viewbox>
                 <Viewbox Grid.Row="3" Stretch="Uniform" Grid.Column="1">
                     <TextBlock Name="startTextBlock2EN" Visibility="Hidden">
-                         Visualisation of this modern block cipher
+                         Visualization of this modern block cipher
                     </TextBlock>
                 </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Width="40" Grid.Column="1">
