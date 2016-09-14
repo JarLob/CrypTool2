@@ -274,13 +274,12 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   </data>
   <data name="Runde_16" xml:space="preserve">
     <value>Runde {0}/16</value>
-    <comment>??</comment>
   </data>
   <data name="SBoxesLabel" xml:space="preserve">
     <value>S-Boxen</value>
   </data>
   <data name="SkipStep" xml:space="preserve">
-    <value>Überspr. Schritt</value>
+    <value>Überspringe Schritt</value>
   </data>
   <data name="Summary" xml:space="preserve">
     <value>Zusammenfassung</value>
@@ -319,6 +318,6 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
     <value>Permutationsfunktion</value>
   </data>
   <data name="SkipRound" xml:space="preserve">
-    <value>Überspr. Runde</value>
+    <value>Überspringe Runde</value>
   </data>
 </root>

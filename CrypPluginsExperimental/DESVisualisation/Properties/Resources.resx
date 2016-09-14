@@ -272,7 +272,6 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   </data>
   <data name="Runde_16" xml:space="preserve">
     <value>Round {0}/16</value>
-    <comment>??</comment>
   </data>
   <data name="SBoxesLabel" xml:space="preserve">
     <value>S-Boxes</value>

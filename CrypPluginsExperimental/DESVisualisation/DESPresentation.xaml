@@ -11,6 +11,7 @@
             <RowDefinition Height="20*" MaxHeight="40"/>
             <RowDefinition Height="340*" />
             <RowDefinition Height="20*" MaxHeight="40"/>
+            <RowDefinition Height="4" MaxHeight="40"/>
             <RowDefinition Height="20*" MaxHeight="40"/>
             <RowDefinition Height="20*" MaxHeight="40"/>
         </Grid.RowDefinitions>
@@ -1177,7 +1178,7 @@
                         <RowDefinition Height="8*"/>
                         <RowDefinition Height="15*"/>
                         <RowDefinition Height="15*"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="25"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="15*" />
@@ -1381,7 +1382,7 @@
                     <CheckBox Grid.Row="9" Grid.Column="64" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Hidden" Click="CheckBox_Click"/>
 
                     <ToggleButton x:Name="DiffTButton" Content="{Loc DiffusionVisualizer}" Grid.Row="0" Grid.Column="49" Grid.ColumnSpan="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14" Click="DiffTButton_Click" FontFamily="Arial"/>
-                    <Button x:Name="DiffClearButton" Content="{Loc Clear}" Grid.Row="10" Grid.Column="60" Grid.ColumnSpan="5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffClearButton_Click" FontFamily="Arial" Visibility="Hidden" />
+                    <Button x:Name="DiffClearButton" Content="{Loc Clear}" Grid.Row="10" Grid.Column="59" Grid.ColumnSpan="6" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffClearButton_Click" FontFamily="Arial" Margin="6,0,0,0" Visibility="Hidden" />
                     <Button x:Name="DiffOkButton" Content="Ok" Grid.Row="10" Grid.Column="55" Grid.ColumnSpan="4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" FontSize="14.667" Click="DiffOKButton_Click" FontFamily="Arial" Visibility="Hidden" />
                     <Label x:Name="DiffInfoLabel" Content="{Loc DiffInfo}" Grid.Row="10" Grid.Column="25" Grid.ColumnSpan="29" FontSize="16" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Padding="0" VerticalContentAlignment="Center" FontFamily="Arial" HorizontalContentAlignment="Right"/>
 
@@ -1892,47 +1893,47 @@
         </TextBlock>
 
         <!-- Region Button -->
-        <Button x:Name="PrevButton" Content="{Loc PrevStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <ToggleButton x:Name="AutoTButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="AutoTButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Slider x:Name="AutoSpeedSlider" Grid.Column="4" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
-        <Button x:Name="NextButton" Content="{Loc NextStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="SkipButton" Content="{Loc SkipStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="PrevButton" Content="{Loc PrevStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Grid.ColumnSpan="2" Click="PrevButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <ToggleButton x:Name="AutoTButton" Content="Auto" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.ColumnSpan="2" Click="AutoTButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Slider x:Name="AutoSpeedSlider" Grid.Column="7" HorizontalAlignment="Stretch" Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Top" RenderTransformOrigin="0.083,-3.556" ValueChanged="AutoSpeedSlider_ValueChanged" Value="2" IsEnabled="True" Padding="0" Margin="1" Maximum="4" FontFamily="Arial" FontSize="11.333" Minimum="0.5"/>
+        <Button x:Name="NextButton" Content="{Loc NextStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Grid.ColumnSpan="3" Click="NextButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" Margin="0,0,30,0"/>
+        <Button x:Name="SkipButton" Content="{Loc SkipStep}" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Grid.ColumnSpan="3" Click="SkipButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" Margin="11,0,0,0"/>
 
         <Button x:Name="ShiftCButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ShiftCButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="ShiftDButton" Visibility="Hidden" Content="Shift" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="ShiftDButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
         <Button x:Name="PC2Button" Visibility="Hidden" Content="PC 2" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC2Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 2"/>
         <Button x:Name="ExpansionButton" Visibility="Hidden" Content="Expansion" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="ExpansionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="KeyAdditionButton" Visibility="Hidden" Content="{Loc KeyAddition}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="KeyAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="SBoxButton" Visibility="Hidden" Content="{Loc SBoxesLabel}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="SBoxButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="PermutationButton" Visibility="Hidden"  Content="Permutation" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="PermutationButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="RoundAdditionButton" Visibility="Hidden" Content="L ⊕ F" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="RoundAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="KeyAdditionButton" Visibility="Hidden" Content="{Loc KeyAddition}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="3" Click="KeyAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="SBoxButton" Visibility="Hidden" Content="{Loc SBoxesLabel}" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Grid.ColumnSpan="2" Click="SBoxButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="PermutationButton" Visibility="Hidden"  Content="Permutation" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Grid.ColumnSpan="2" Click="PermutationButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="RoundAdditionButton" Visibility="Hidden" Content="L ⊕ F" Grid.Row="0"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Grid.ColumnSpan="2" Click="RoundAdditionButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
 
-        <Button x:Name="IntroButton" Content="{Loc Intro}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="IntroButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="DataButton" Content="{Loc Data}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="DataButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="PC1Button" Content="PC 1" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC1Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 1"/>
-        <Button x:Name="KeyScheduleButton" Content="Key Schedule" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="KeyScheduleButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="IPButton" Content="IP" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="IPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Initial Permutation" />
-        <Button x:Name="DESButton" Content="DES" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Grid.ColumnSpan="2" Click="DESButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
-        <Button x:Name="FPButton" Content="FP" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Grid.ColumnSpan="2" Click="FPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Final Permutation"/>
-        <Button x:Name="SummaryButton" Content="{Loc Summary}" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Grid.ColumnSpan="2" Click="SummaryButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
+        <Button x:Name="IntroButton" Content="{Loc Intro}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="2" Click="IntroButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="DataButton" Content="{Loc Data}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Grid.ColumnSpan="2" Click="DataButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="PC1Button" Content="PC 1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Grid.ColumnSpan="2" Click="PC1Button_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Permuted Choice 1"/>
+        <Button x:Name="KeyScheduleButton" Content="Key Schedule" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Grid.ColumnSpan="2" Click="KeyScheduleButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="IPButton" Content="IP" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Grid.ColumnSpan="2" Click="IPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Initial Permutation" />
+        <Button x:Name="DESButton" Content="DES" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Grid.ColumnSpan="2" Click="DESButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
+        <Button x:Name="FPButton" Content="FP" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Grid.ColumnSpan="2" Click="FPButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" ToolTip="Final Permutation"/>
+        <Button x:Name="SummaryButton" Content="{Loc Summary}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Grid.ColumnSpan="3" Click="SummaryButton_Click" Padding="0" FontFamily="Arial" FontSize="11.333" />
 
-        <Label Grid.Row="4"  Grid.Column="0" Content="{Loc Round}" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
-        <Button x:Name="Round1Button" Content="1" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round2Button" Content="2" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round3Button" Content="3" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round4Button" Content="4" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round5Button" Content="5" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round6Button" Content="6" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round7Button" Content="7" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round8Button" Content="8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round9Button" Content="9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round10Button" Content="10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round11Button" Content="11" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round12Button" Content="12" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round13Button" Content="13" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round14Button" Content="14" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round15Button" Content="15" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
-        <Button x:Name="Round16Button" Content="16" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Label Grid.Row="5"  Grid.Column="0" Content="{Loc Round}" Margin="0" Padding="0" FontWeight="Bold" FontSize="11.333" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial"/>
+        <Button x:Name="Round1Button" Content="1" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round2Button" Content="2" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round3Button" Content="3" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="3" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round4Button" Content="4" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="4" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round5Button" Content="5" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="5" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round6Button" Content="6" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="6" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round7Button" Content="7" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="7" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round8Button" Content="8" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round9Button" Content="9" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round10Button" Content="10" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round11Button" Content="11" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="11" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round12Button" Content="12" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="12" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round13Button" Content="13" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="13" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round14Button" Content="14" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="14" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round15Button" Content="15" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="15" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
+        <Button x:Name="Round16Button" Content="16" Grid.Row="5"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="16" Click="RoundButton_Click" Padding="0" IsEnabled="False" FontFamily="Arial" FontSize="11.333"/>
         <!-- EndRegion -->
 
     </Grid>
