@@ -88,7 +88,7 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die AES Visualization ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Visualization of AES encryption ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

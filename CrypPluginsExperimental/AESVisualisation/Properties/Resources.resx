@@ -127,6 +127,6 @@
     <value>AES Visualization</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>AES Visualization</value>
+    <value>Visualization of AES encryption</value>
   </data>
 </root>

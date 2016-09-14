@@ -124,9 +124,9 @@
     <value>Geben Sie die Größe des Schlüssels an.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>AES Visualisierung</value>
+    <value>AES-Visualisierung</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>AES Visualisierung</value>
+    <value>Visualisierung der AES-Verschlüsselung</value>
   </data>
 </root>
