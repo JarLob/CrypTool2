@@ -325,15 +325,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Border Background="#77ffffff" BorderBrush="#ccc" BorderThickness="0,0,0,0.5" Padding="10">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="Category: " FontFamily="Corbel" FontSize="18" Foreground="#666" Margin="0,0,5,0"></TextBlock>
-                        <TextBlock Text="{Binding Path=SelectedCategory.Name, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged}"
-                                   FontFamily="Corbel" FontSize="20" Foreground="#666" FontWeight="ExtraBold"></TextBlock>
-                    </StackPanel>
-                </Border>
-                
+                </Grid.RowDefinitions>                               
                 <ListView  x:Name="VideoListView" Grid.Row="1" Style="{StaticResource ResourceKey=ComponentListStyle}" ItemsSource="{Binding Path=Videos}"
                               SelectionMode="Single"  SelectionChanged="SelectionChanged"></ListView>
             </Grid>
