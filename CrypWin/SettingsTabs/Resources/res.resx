@@ -121,7 +121,7 @@
     <value>This is a balloon</value>
   </data>
   <data name="MainSettings" xml:space="preserve">
-    <value>Main</value>
+    <value>General Settings</value>
   </data>
   <data name="NotificationIconSettings" xml:space="preserve">
     <value>Notification Icon</value>
@@ -190,13 +190,13 @@
     <value>Check this to show the error log messages in the tray icon balloon!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Reopen last opened files on startup</value>
+    <value>Reopen last opened projects on startup</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
     <value>Check this to reopen the last opened file on CrypTool 2 startup</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
-    <value>Components</value>
+    <value>Settings to single components</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
     <value>Hide in background when closing while projects are running</value>

@@ -121,7 +121,7 @@
     <value>Das ist eine Sprechblase!</value>
   </data>
   <data name="MainSettings" xml:space="preserve">
-    <value>Haupteinstellungen</value>
+    <value>Generelle Einstellungen</value>
   </data>
   <data name="NotificationIconSettings" xml:space="preserve">
     <value>Benachrichtigungssymbol</value>
@@ -190,13 +190,13 @@
     <value>Markieren Sie dies, um Fehlernachrichten in der Trayicon-Sprechblase anzuzeigen!</value>
   </data>
   <data name="Reopen_last_opened_file" xml:space="preserve">
-    <value>Öffne die letzten offenen Dateien beim Start</value>
+    <value>Öffne die letzten offenen Projekte beim Start</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
     <value>Markieren Sie dies, um die letzte offene Datei beim CrypTool 2 Start wieder zu öffnen.</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
-    <value>Komponenten</value>
+    <value>Einstellungen zu Einzel-Komponenten</value>
   </data>
   <data name="BackgroundingContent" xml:space="preserve">
     <value>Im Hintergrund verstecken, wenn beim Schließen Projekte ausgeführt werden</value>
@@ -205,7 +205,7 @@
     <value>Hintergrundausführungseinstellungen:</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
-    <value>Markieren, um bei Schließen im Hintergrund auszuführen, falls noch Workspaces aktiv sind.</value>
+    <value>Markieren, um beim Schließen laufende Projekte weiter ausführen zu lassen.</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
     <value>Energiesparoptionen:</value>
