@@ -285,7 +285,7 @@ Berechnungen.</value>
     <value>Anzahl der Arbeitsthreads:</value>
   </data>
   <data name="CrypCloudSettings" xml:space="preserve">
-    <value>CrypCloud-Einstellungen</value>
+    <value>CrypCloud</value>
   </data>
   <data name="_JobList_btn_download" xml:space="preserve">
     <value>Laden</value>
@@ -319,5 +319,8 @@ Berechnungen.</value>
   </data>
   <data name="OpenCLDevice" xml:space="preserve">
     <value>OpenCL Gerät:</value>
+  </data>
+  <data name="WritePerformanceLog" xml:space="preserve">
+    <value>Schreibe Performance-Log</value>
   </data>
 </root>

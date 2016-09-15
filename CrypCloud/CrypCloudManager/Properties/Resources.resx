@@ -284,7 +284,7 @@
     <value>Amount of workers:</value>
   </data>
   <data name="CrypCloudSettings" xml:space="preserve">
-    <value>CrypCloud settings</value>
+    <value>CrypCloud</value>
   </data>
   <data name="_JobList_btn_download" xml:space="preserve">
     <value>Load</value>
