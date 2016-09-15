@@ -327,7 +327,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>                               
                 <ListView  x:Name="VideoListView" Grid.Row="1" Style="{StaticResource ResourceKey=ComponentListStyle}" ItemsSource="{Binding Path=Videos}"
-                              SelectionMode="Single"  SelectionChanged="SelectionChanged"></ListView>
+                              SelectionMode="Single"  SelectionChanged="SelectionChanged" MouseDoubleClick="VideoListView_MouseDoubleClick"></ListView>
             </Grid>
             
 

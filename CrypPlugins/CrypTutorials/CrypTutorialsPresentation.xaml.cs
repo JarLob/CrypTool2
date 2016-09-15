@@ -295,6 +295,14 @@ namespace Cryptool.CrypTutorials
                 VlcLoad.retry(folderPath);
             }
         }
+
+        private void VideoListView_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (VideoListView.SelectedItem != null)
+            {
+                PlayingItem = (VideoInfo)VideoListView.SelectedItem;
+            }
+        }
     }
 
     public static class VlcLoad
