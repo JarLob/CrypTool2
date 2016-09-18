@@ -193,7 +193,7 @@
     <value>Öffne die letzten offenen Projekte beim Start</value>
   </data>
   <data name="Reopen_last_opened_file_tooltip" xml:space="preserve">
-    <value>Markieren Sie dies, um die letzte offene Datei beim CrypTool 2 Start wieder zu öffnen.</value>
+    <value>Markieren Sie dies, um die letzten offenen Projekte beim nächsten Start von CrypTool 2 wieder zu öffnen.</value>
   </data>
   <data name="PluginSettings" xml:space="preserve">
     <value>Einstellungen zu Einzel-Komponenten</value>
@@ -205,7 +205,7 @@
     <value>Hintergrundausführungseinstellungen:</value>
   </data>
   <data name="BackgroundingToolTip" xml:space="preserve">
-    <value>Markieren, um beim Schließen laufende Projekte weiter ausführen zu lassen.</value>
+    <value>Markieren, um auch nach dem Schließen laufende Projekte im Hintergrund weiter auszuführen.</value>
   </data>
   <data name="PowerModeLabelContent" xml:space="preserve">
     <value>Energiesparoptionen:</value>
