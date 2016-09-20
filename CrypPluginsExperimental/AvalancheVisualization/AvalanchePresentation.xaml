@@ -8,12 +8,10 @@
              mc:Ignorable="d" 
              MinHeight="400" MinWidth="650" IsEnabled="True">
     <UserControl.Resources>
+        
         <Style x:Key="buttonStyle" TargetType="Button">
-
-
             <Setter Property="Background" Value="#534b4f"/>
             <Setter Property="FontStyle" Value="Normal"/>
-
             <Setter Property="Margin" Value="1"/>
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="Foreground" Value="White" />
@@ -34,24 +32,188 @@
                     <Setter Property="FontWeight" Value="Bold" />
                 </Trigger>
             </Style.Triggers>
+        </Style>
 
-        </Style>
-        <Style x:Key="buttonStyle2" TargetType="Button">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{x:Null}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
         <Style x:Key="textBlockStyle" TargetType="TextBlock">
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="15"/>
         </Style>
+
         <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="9"/>
+        </Style>
+
+        <Style x:Key="LineButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="#534b4f" BorderBrush="#534b4f" 
+            BorderThickness="1" CornerRadius="5">
+                            <Path HorizontalAlignment="Center" 
+              VerticalAlignment="Center" 
+              Data="{Binding Path=Content,
+                     RelativeSource={RelativeSource TemplatedParent}}" 
+              Fill="white" >
+                            </Path>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PageButton" TargetType="{x:Type RepeatButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                        <Border Background="#66000000" BorderBrush="#66000000"
+                         BorderThickness="1" CornerRadius="3" Opacity="0.5">
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollThumb" TargetType="{x:Type Thumb}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Grid>
+                            <Rectangle RadiusX="3" RadiusY="3" Fill="#534b4f">
+                            </Rectangle>
+                            <Border CornerRadius="3" BorderBrush="#534b4f">
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="18"></RowDefinition>
+                                <RowDefinition Height="0.00001*"></RowDefinition>
+                                <RowDefinition Height="18"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Border Grid.RowSpan="3" Width="10" CornerRadius="3" BorderBrush="#534b4f" 
+                                    BorderThickness="1" Opacity="0.6">
+                            </Border>
+                            <RepeatButton Grid.Row="0" Style="{StaticResource LineButton}" Height="18" Width="10" 
+                                          Command="ScrollBar.LineUpCommand" Content="M 0 4 L 8 4 L 4 0 Z">
+                            </RepeatButton>
+                            <Track Name="PART_Track" Grid.Row="1" IsDirectionReversed="True">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource PageButton}" Width="10" Command="ScrollBar.PageUpCommand" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollThumb}" Width="10" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource PageButton}" Width="10" Command="ScrollBar.PageDownCommand" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                            <RepeatButton Grid.Row="2" Style="{StaticResource LineButton}" Height="18" Width="10" 
+                                          Command="ScrollBar.LineDownCommand" Content="M 0 0 L 4 4 L 8 0 Z">
+                            </RepeatButton>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollBar}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="18"></ColumnDefinition>
+                                <ColumnDefinition Width="0.00001*"></ColumnDefinition>
+                                <ColumnDefinition Width="18"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.ColumnSpan="3" CornerRadius="3" BorderBrush="#534b4f" BorderThickness="1" Opacity="0.6" >
+                            </Border>
+                            <RepeatButton Grid.Column="0" 
+                      Style="{StaticResource LineButton}" 
+                      Width="18" Height="13" Command="ScrollBar.LineLeftCommand" 
+                      Content="M 4 0 L 4 8 L 0 4 Z">
+                            </RepeatButton>
+                            <Track Name="PART_Track" Grid.Column="1" IsDirectionReversed="False">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource PageButton}" 
+                              Command="ScrollBar.PageLeftCommand" />
+                                </Track.DecreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollThumb}" />
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Style="{StaticResource PageButton}" 
+                              Command="ScrollBar.PageRightCommand" />
+                                </Track.IncreaseRepeatButton>
+                            </Track>
+                            <RepeatButton Grid.Column="2" 
+                      Style="{StaticResource LineButton}"
+                      Width="18" Height="13" Command="ScrollBar.LineRightCommand"
+                      Content="M 0 0 L 4 4 L 0 8 Z">
+                            </RepeatButton>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="RightScrollViewer" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Border BorderThickness="0,1,1,1" Grid.Column="1">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="{DynamicResource BorderMediumColor}" />
+                                </Border.BorderBrush>
+                                <ScrollContentPresenter />
+                            </Border>
+                            <ScrollBar x:Name="PART_VerticalScrollBar"
+                     Grid.Column="2"
+                     Style="{StaticResource VerticalScrollBar}"
+                     Value="{TemplateBinding VerticalOffset}"
+                     Maximum="{TemplateBinding ScrollableHeight}"
+                     ViewportSize="{TemplateBinding ViewportHeight}"
+                     Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                            <ScrollBar x:Name="PART_HorizontalScrollBar"
+                     Orientation="Horizontal"
+                     Grid.Row="1"
+                     Grid.Column="1"
+                     Style="{StaticResource HorizontalScrollBar}"
+                     Value="{TemplateBinding HorizontalOffset}"
+                     Maximum="{TemplateBinding ScrollableWidth}"
+                     ViewportSize="{TemplateBinding ViewportWidth}"
+                     Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </UserControl.Resources>
@@ -92,23 +254,36 @@
         <Button x:Name="goBackButton" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="Go back"  Grid.Row="1"   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,0,30" Click="goBackButton_Click"  Visibility="Hidden"/>
         <Button x:Name="changePropagationButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="     change&#xa; propagation" FontSize="18" Grid.ColumnSpan="2" Visibility="Hidden" Click="changePropagation_Click" />
         <Button x:Name="avalancheAESButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="  Avalanche&#xa;     effect"  FontSize="18" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center"   Click="avalancheAESButton_Click"  Visibility="Hidden"/>
-     
 
-        <StackPanel x:Name="buttonsPanel" Grid.Column="2" Grid.RowSpan="2" Width="62" HorizontalAlignment="Right" Margin="0,35,0,0" Visibility="Hidden" >
 
-            <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round1"    Click="afterRound1Button_Click" />
-            <Button x:Name="round3Button"  Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round2"   Click="round3Button_Click" />
-            <Button x:Name="round4Button" Style="{StaticResource buttonStyle}"  Width="60" Height="34" Content=" After&#xa;round3" Click="round4Button_Click" />
-            <Button x:Name="round5Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round4"   Click="round5Button_Click" />
-            <Button x:Name="round6Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round5"   Click="round6Button_Click" />
-            <Button x:Name="round7Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round6"  Click="round7Button_Click" />
-            <Button x:Name="round8Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round7" Click="round8Button_Click" />
-            <Button x:Name="round9Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round8" Click="round9Button_Click" />
-            <Button x:Name="round10Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round9"  Click="round10Button_Click" />
-            <Button x:Name="afterlastRoundButton" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round10"  Click="afterlastRoundButton_Click"></Button>
-        </StackPanel>
+        <ScrollViewer x:Name="buttonsSV"  Grid.Column="2" Grid.RowSpan="2" 
+                      Style="{StaticResource RightScrollViewer}"  
+                      Width="80" Height="365" Margin="0,0,8,10" 
+                      HorizontalAlignment="Right"   HorizontalScrollBarVisibility="Disabled"  
+                      VerticalScrollBarVisibility="Hidden" Visibility="Hidden" >
+            <!-- <ScrollViewer.Resources>
+              <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</sys:Double>
+              </ScrollViewer.Resources>-->
 
-      
+            <StackPanel x:Name="buttonsPanel" Height="360">
+                <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round1"    Click="afterRound1Button_Click" />
+                <Button x:Name="afterRound2Button"  Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round2"   Click="afterRound2Button_Click" />
+                <Button x:Name="afterRound3Button" Style="{StaticResource buttonStyle}"  Width="60" Height="34" Content=" After&#xa;round3" Click="afterRound3Button_Click" />
+                <Button x:Name="afterRound4Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round4"   Click="afterRound4Button_Click" />
+                <Button x:Name="afterRound5Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round5"   Click="afterRound5Button_Click" />
+                <Button x:Name="afterRound6Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round6"  Click="afterRound6Button_Click" />
+                <Button x:Name="afterRound7Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round7" Click="afterRound7Button_Click" />
+                <Button x:Name="afterRound8Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round8" Click="afterRound8Button_Click" />
+                <Button x:Name="afterRound9Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round9"  Click="afterRound9Button_Click" />
+                <Button x:Name="afterRound10Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round10"  Click="afterRound10Button_Click"></Button>
+                <Button x:Name="afterRound11Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round11"  Click="afterRound11Button_Click" Visibility="Hidden"></Button>
+                <Button x:Name="afterRound12Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round12"  Click="afterRound12Button_Click" Visibility="Hidden"></Button>
+                <Button x:Name="afterRound13Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round13"  Click="afterRound13Button_Click" Visibility="Hidden"></Button>
+                <Button x:Name="afterRound14Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round14"  Click="afterRound14Button_Click" Visibility="Hidden"></Button>
+            </StackPanel>
+        </ScrollViewer>
+
+
         <TextBlock Name="showByteDependencyText" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how many byte changes are triggered by a single change in an input byte." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="0,30,60,0" Visibility="Hidden">
         </TextBlock>
         <TextBlock Name="avalancheEffectAESText" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how strong the avalanche effect is in every single AES-128 round." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="30,0,0,0" Visibility="Hidden">
@@ -122,7 +297,7 @@
         </Line>
 
         <!-- -->
-        
+
         <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="2" Width="170" Height="170" >
             <local:PieChart.ToolTip>
                 <ToolTip x:Name="tp1" Height="40" Background="#6082b6" Foreground="White" FontWeight="Bold">
@@ -178,14 +353,17 @@
                 <DropShadowBitmapEffect Color="Black" Direction="260" ShadowDepth="5" Opacity="0.5" Softness="0.6"  />
             </StackPanel.BitmapEffect>
 
-            <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Hidden">
+            <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   
+                           VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
                 <TextBox x:Name="TB1" FontFamily="Courier New"  FontSize="20" FontWeight="Medium"  IsReadOnly="True" />
             </ScrollViewer>
-            <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" >
+            <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" 
+                          VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
                 <TextBox Name="TB2" FontFamily="Courier New" FontSize="20" FontWeight="Medium" IsReadOnly="True"  />
             </ScrollViewer>
 
-            <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" >
+            <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged"
+                          VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Style="{StaticResource RightScrollViewer}">
                 <TextBox x:Name="TB3"  FontFamily="Courier New" FontSize="20" FontWeight="Medium" Foreground="Red" IsReadOnly="True" />
             </ScrollViewer>
         </StackPanel>
@@ -220,7 +398,7 @@
 
         <TextBlock Name="modifyTxtBlock" Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Top" Margin="10,50" Foreground="#534b4f"  Visibility="Hidden"> You can modify the text input plugin in order to proceed.
         </TextBlock>
-  
+
 
 
         <Grid Name="initialStateGrid" Grid.Column="1" Grid.RowSpan="2"  Visibility="Hidden" >
@@ -612,9 +790,9 @@
 
 
 
-        <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0.111,-7,0.333,7">
+        <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0.111,-7,0.333,7" >
 
-            <ScrollViewer VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Visible" Height="100" Width="300" HorizontalAlignment="Left" Margin="46,134,0,200.667">
+            <ScrollViewer Name="bitRepresentationSV" Style="{StaticResource RightScrollViewer}"  VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Visible" Height="100" Width="300" HorizontalAlignment="Left" Margin="46,134,0,200.667">
 
                 <UniformGrid Columns="128" Rows="3" >
 

@@ -192,188 +192,211 @@ namespace Cryptool.Plugins.AvalancheVisualization
             //Console.WriteLine(string.Format("Property {0} just changed", e.PropertyName));
         }
 
-      
+
         public void Execute()
         {
             byte[] buffer = new byte[UnchangedCipher.Length];
 
 
 
-            switch (settings.CryptAlgorithm)
+            switch (settings.SelectedCategory)
             {
-                case AvalancheVisualizationSettings.Category.AES:
+                case AvalancheVisualizationSettings.Category.Modern:
 
-
-                    string originalMessage = Encoding.Default.GetString(text);
-                    //running = true;
-
-
-                    if (textChanged)
+                    if (settings.Subcategory == 0)
                     {
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+
+                        string originalMessage = Encoding.Default.GetString(text);
+                        //running = true;
+
+
+                        if (textChanged)
                         {
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
 
-                           
-                            //pres.originalMsg.Text = originalMessage;
-                            pres.modifiedMsg.Text = originalMessage;
-                            pres.getTextBoxContent();
-                            pres.modifyTxtBlock.Visibility = Visibility.Hidden;
-                        },null);
-                        pres.textB = text;
-                        checkTextLength();
-                        roundNumber = 1;
 
-                        // ProgressChanged(0, 1);
+                                //pres.originalMsg.Text = originalMessage;
+                                pres.modifiedMsg.Text = originalMessage;
+                                pres.getTextBoxContent();
+                                pres.modifyTxtBlock.Visibility = Visibility.Hidden;
+                            }, null);
+                            pres.textB = text;
+                            checkTextLength();
+                            roundNumber = 1;
 
-                        byte[] tempState = text;
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            // ProgressChanged(0, 1);
+
+                            byte[] tempState = text;
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setRoundConstant();
+                                pres.loadInitialState(tempState, false);
+
+                            }, null);
+
+
+                            statesB[0] = addKey(tempState, keyList[0]);
+
+                            //pres.tempState = tempState;
+
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                pres.createSBox();
+
+
+                            }, null);
+
+                            //
+
+                            //expandKey();
+                            setStatesTest(false);
+                            //roundNumber = 1;
+
+                            pres.statesB = statesB;
+
+
+
+                            // ProgressChanged(1, 1);
+
+
+
+                            //pres.keyList = keyList;
+
+                        }
+                        else
                         {
+                            textChanged = true;
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+
+                                pres.comparisonPaneAES();
+                                pres.originalMsg.Text = originalMessage;
+
+                            }, null);
+
+
+                            pres.textA = text;
+
+                            var encoding = Encoding.GetEncoding(437);
+                            keysize = settings.KeyLength;
+
+                            pres.keysize = keysize;
+                            checkKeysize();
+                            //padding PKCS7
+                            checkTextLength();
+
+
+
+                            roundNumber = 1;
+
+                            // ProgressChanged(0, 1);
                             setRoundConstant();
-                            pres.loadInitialState(tempState, false);
+                            byte[] tempState = text;
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
 
-                        }, null);
+                                pres.loadInitialState(tempState, true);
 
-
-                        statesB[0] = addKey(tempState, keyList[0]);
-                 
-                        //pres.tempState = tempState;
-
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            pres.createSBox();
+                            }, null);
 
 
-                        }, null);
+                            int r = 0;
+                            int t = 0;
+                            foreach (byte b in key)
+                            {
+                                if (keyList[r] == null)
+                                {
+                                    keyList[r] = new byte[16];
+                                }
+                                keyList[r][t] = b;
+                                t++;
+                                if (t == 16)
+                                {
+                                    t = 0;
+                                    r++;
+                                }
+                            }
 
-                        //
-                       
-                        //expandKey();
-                        setStatesTest(false);
-                        //roundNumber = 1;
-                      
-                        pres.statesB = statesB;
+                            //   
+                            /* CStreamWriter writer = new CStreamWriter();
+                             OutputStream = writer;
+                             writer.Write(text);
+                             writer.Close();*/
 
+                            //OnPropertyChanged("OutputStream");
+                            states[0] = addKey(tempState, keyList[0]);
 
+                            pres.tempState = tempState;
 
-                        // ProgressChanged(1, 1);
-
-                       
-
-                        //pres.keyList = keyList;
-
-                    }
-                    else
-                    {
-                        textChanged = true;
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-
-                            pres.comparisonPaneAES();
-                            pres.originalMsg.Text = originalMessage;
-                          
-                        },null);
-
-                       
-                        pres.textA = text;
-
-                        var encoding = Encoding.GetEncoding(437);
-                        keysize = 0;
-                        pres.keysize = keysize;
-                        //checkKeysize();
-                        //padding PKCS7
-                        checkTextLength();
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                pres.createSBox();
 
 
+                            }, null);
 
-                        roundNumber = 1;
+                            switch (keysize)
+                            {
+                                case 0:
+                                    expandKey();
+                                    break;
+                                case 1:
+                                    expandKey192();
+                                    break;
+                                case 2:
+                                    expandKey256();
+                                    break;
+                                default:
+                                    break;
 
-                        // ProgressChanged(0, 1);
-                        setRoundConstant();
-                        byte[] tempState = text;
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
+                            }
                             
-                            pres.loadInitialState(tempState, true);
-
-                        }, null);
 
 
-                        int r = 0;
-                        int t = 0;
-                        foreach (byte b in key)
-                        {
-                            if (keyList[r] == null)
-                            {
-                                keyList[r] = new byte[16];
-                            }
-                            keyList[r][t] = b;
-                            t++;
-                            if (t == 16)
-                            {
-                                t = 0;
-                                r++;
-                            }
+
+
+                            // ProgressChanged(1, 1);
+
+                            setStatesTest(true);
+                            roundNumber = 1;
+                            pres.states = states;
+
+
+                            pres.keyList = keyList;
+
+
                         }
 
-                        //   
-                       /* CStreamWriter writer = new CStreamWriter();
-                        OutputStream = writer;
-                        writer.Write(text);
-                        writer.Close();*/
-
-                        //OnPropertyChanged("OutputStream");
-                        states[0] = addKey(tempState, keyList[0]);
-               
-                        pres.tempState = tempState;
-
-                        pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            pres.createSBox();
-
-
-                        }, null);
-
-                        //
-                        expandKey();
 
 
 
 
-                        // ProgressChanged(1, 1);
 
-                        setStatesTest(true);
-                        roundNumber = 1;
-                        pres.states = states;
-                   
-                        
-                        pres.keyList = keyList;
 
-                  
+
+                        if (!running)
+                            return;
+                        // while (pres.unfinished)
+                        //{
+                        //  ProgressChanged(0.5, 1);
+                        //}
+
+                        //outputStreamWriter.Write(states[39 + 8 * keysize]);
+
+
+                        GuiLogMessage("Output" + outputStreamWriter.ToString(), NotificationLevel.Info);
                     }
-                    
-                  
-                  
-                  
-                         
 
-                  
-                 
-                    if (!running)
-                        return;
-                    // while (pres.unfinished)
-                    //{
-                    //  ProgressChanged(0.5, 1);
-                    //}
-
-                    //outputStreamWriter.Write(states[39 + 8 * keysize]);
+                    if (settings.Subcategory == 2)
+                    {
+                        goto case AvalancheVisualizationSettings.Category.Hash;
+                    }
+                    break;
+                //TODO
+                //else--> DES
 
 
-                    GuiLogMessage("Output" + outputStreamWriter.ToString(), NotificationLevel.Info);
-                    
-                        break;
-
-
-                case AvalancheVisualizationSettings.Category.Modern:
                 case AvalancheVisualizationSettings.Category.Hash:
 
 
@@ -422,7 +445,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     textChanged = true;
 
-               
+
                     break;
 
                 case AvalancheVisualizationSettings.Category.Classic:
@@ -490,7 +513,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         bool stop = true;
         public void PostExecution()
         {
-           // running = false;
+            // running = false;
         }
 
         /// <summary>
@@ -504,7 +527,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             {
 
                 pres.removeElements();
-               // pres.modifyTxtBlock.Visibility = Visibility.Visible;
+                // pres.modifyTxtBlock.Visibility = Visibility.Visible;
                 //textChanged = false;
                 //pres.modifiedMsg.IsReadOnly = false;
 
@@ -853,7 +876,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (original)
                         {
                             temp = states[x];
-                        }else
+                        }
+                        else
                         {
                             temp = statesB[x];
                         }
@@ -868,7 +892,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (original)
                         {
                             states[x] = result;
-                        }else
+                        }
+                        else
                         {
                             statesB[x] = result;
                         }
@@ -880,7 +905,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         {
                             temp = states[x];
                         }
-                   else
+                        else
                         {
                             temp = statesB[x];
                         }
@@ -906,7 +931,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         {
                             states[x] = result;
                         }
-                     else
+                        else
                         {
                             statesB[x] = result;
                         }
@@ -921,20 +946,22 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             if (original)
                             {
                                 result = mixColumn(states[x]);
-                            }else
+                            }
+                            else
                             {
                                 result = mixColumn(statesB[x]);
                             }
-                           
+
                             x++;
                             if (original)
                             {
                                 states[x] = result;
-                            }else
+                            }
+                            else
                             {
                                 statesB[x] = result;
                             }
-                           
+
                         }
                         y = 3;
                         break;
@@ -944,11 +971,12 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (original)
                         {
                             result = addKey(states[x], keyList[roundNumber]);
-                        }else
+                        }
+                        else
                         {
                             result = addKey(statesB[x], keyList[roundNumber]);
                         }
-                      
+
                         x++;
                         if (original)
                         {
@@ -1594,6 +1622,193 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
+        private void expandKey192()
+        {
+            byte[] tempkey = new byte[216];
+            tempkey[0] = keyList[0][0];
+            tempkey[1] = keyList[0][1];
+            tempkey[2] = keyList[0][2];
+            tempkey[3] = keyList[0][3];
+            tempkey[4] = keyList[0][4];
+            tempkey[5] = keyList[0][5];
+            tempkey[6] = keyList[0][6];
+            tempkey[7] = keyList[0][7];
+            tempkey[8] = keyList[0][8];
+            tempkey[9] = keyList[0][9];
+            tempkey[10] = keyList[0][10];
+            tempkey[11] = keyList[0][11];
+            tempkey[12] = keyList[0][12];
+            tempkey[13] = keyList[0][13];
+            tempkey[14] = keyList[0][14];
+            tempkey[15] = keyList[0][15];
+            tempkey[16] = keyList[1][0];
+            tempkey[17] = keyList[1][1];
+            tempkey[18] = keyList[1][2];
+            tempkey[19] = keyList[1][3];
+            tempkey[20] = keyList[1][4];
+            tempkey[21] = keyList[1][5];
+            tempkey[22] = keyList[1][6];
+            tempkey[23] = keyList[1][7];
+            byte[] calc = new byte[4];
+            int x = 23;
+            int y = 0;
+            int z = 0;
+            byte[] roundConst;
+            byte[] temp = new byte[4];
+            while (x < 192)
+            {
+                roundConst = roundConstant[y];
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x - 2])][getSBoxYPosition(tempkey[x - 2])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x - 1])][getSBoxYPosition(tempkey[x - 1])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x])][getSBoxYPosition(tempkey[x])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x - 3])][getSBoxYPosition(tempkey[x - 3])];
+                z = 0;
+                while (z < 4)
+                {
+                    temp[z] = (byte)(calc[z] ^ roundConst[z]);
+                    z++;
+                }
+                tempkey[x + 1] = (byte)(temp[0] ^ tempkey[x - 23]);
+                tempkey[x + 2] = (byte)(temp[1] ^ tempkey[x - 22]);
+                tempkey[x + 3] = (byte)(temp[2] ^ tempkey[x - 21]);
+                tempkey[x + 4] = (byte)(temp[3] ^ tempkey[x - 20]);
+                tempkey[x + 5] = (byte)(tempkey[x + 1] ^ tempkey[x - 19]);
+                tempkey[x + 6] = (byte)(tempkey[x + 2] ^ tempkey[x - 18]);
+                tempkey[x + 7] = (byte)(tempkey[x + 3] ^ tempkey[x - 17]);
+                tempkey[x + 8] = (byte)(tempkey[x + 4] ^ tempkey[x - 16]);
+                tempkey[x + 9] = (byte)(tempkey[x + 5] ^ tempkey[x - 15]);
+                tempkey[x + 10] = (byte)(tempkey[x + 6] ^ tempkey[x - 14]);
+                tempkey[x + 11] = (byte)(tempkey[x + 7] ^ tempkey[x - 13]);
+                tempkey[x + 12] = (byte)(tempkey[x + 8] ^ tempkey[x - 12]);
+                tempkey[x + 13] = (byte)(tempkey[x + 9] ^ tempkey[x - 11]);
+                tempkey[x + 14] = (byte)(tempkey[x + 10] ^ tempkey[x - 10]);
+                tempkey[x + 15] = (byte)(tempkey[x + 11] ^ tempkey[x - 9]);
+                tempkey[x + 16] = (byte)(tempkey[x + 12] ^ tempkey[x - 8]);
+                tempkey[x + 17] = (byte)(tempkey[x + 13] ^ tempkey[x - 7]);
+                tempkey[x + 18] = (byte)(tempkey[x + 14] ^ tempkey[x - 6]);
+                tempkey[x + 19] = (byte)(tempkey[x + 15] ^ tempkey[x - 5]);
+                tempkey[x + 20] = (byte)(tempkey[x + 16] ^ tempkey[x - 4]);
+                tempkey[x + 21] = (byte)(tempkey[x + 17] ^ tempkey[x - 3]);
+                tempkey[x + 22] = (byte)(tempkey[x + 18] ^ tempkey[x - 2]);
+                tempkey[x + 23] = (byte)(tempkey[x + 19] ^ tempkey[x - 1]);
+                tempkey[x + 24] = (byte)(tempkey[x + 20] ^ tempkey[x]);
+                x += 24;
+                y++;
+            }
+            x = 0;
+            y = 0;
+            z = 0;
+            pres.keyBytes = tempkey;
+            while (x < 208)
+            {
+                while (y < 16)
+                {
+                    if (keyList[z] == null)
+                    {
+                        keyList[z] = new byte[16];
+                    }
+                    keyList[z][y] = tempkey[x];
+                    x++;
+                    y++;
+                }
+                y = 0;
+                z++;
+            }
+        }
+
+        private void expandKey256()
+        {
+            byte[] tempkey = new byte[350];
+            int x = 0;
+            int y = 0;
+            for (int r = 0; r < 32; r++)
+            {
+                tempkey[r] = keyList[x][y];
+                y++;
+                if (y == 16)
+                {
+                    y = 0;
+                    x++;
+                }
+            }
+            byte[] calc = new byte[4];
+            x = 31;
+            y = 0;
+            int z = 0;
+            byte[] roundConst;
+            byte[] temp = new byte[4];
+            while (x < 256)
+            {
+                roundConst = roundConstant[y];
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x - 2])][getSBoxYPosition(tempkey[x - 2])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x - 1])][getSBoxYPosition(tempkey[x - 1])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x])][getSBoxYPosition(tempkey[x])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x - 3])][getSBoxYPosition(tempkey[x - 3])];
+                z = 0;
+                while (z < 4)
+                {
+                    temp[z] = (byte)(calc[z] ^ roundConst[z]);
+                    z++;
+                }
+                tempkey[x + 1] = (byte)(temp[0] ^ tempkey[x - 31]);
+                tempkey[x + 2] = (byte)(temp[1] ^ tempkey[x - 30]);
+                tempkey[x + 3] = (byte)(temp[2] ^ tempkey[x - 29]);
+                tempkey[x + 4] = (byte)(temp[3] ^ tempkey[x - 28]);
+                tempkey[x + 5] = (byte)(tempkey[x + 1] ^ tempkey[x - 27]);
+                tempkey[x + 6] = (byte)(tempkey[x + 2] ^ tempkey[x - 26]);
+                tempkey[x + 7] = (byte)(tempkey[x + 3] ^ tempkey[x - 25]);
+                tempkey[x + 8] = (byte)(tempkey[x + 4] ^ tempkey[x - 24]);
+                tempkey[x + 9] = (byte)(tempkey[x + 5] ^ tempkey[x - 23]);
+                tempkey[x + 10] = (byte)(tempkey[x + 6] ^ tempkey[x - 22]);
+                tempkey[x + 11] = (byte)(tempkey[x + 7] ^ tempkey[x - 21]);
+                tempkey[x + 12] = (byte)(tempkey[x + 8] ^ tempkey[x - 20]);
+                tempkey[x + 13] = (byte)(tempkey[x + 9] ^ tempkey[x - 19]);
+                tempkey[x + 14] = (byte)(tempkey[x + 10] ^ tempkey[x - 18]);
+                tempkey[x + 15] = (byte)(tempkey[x + 11] ^ tempkey[x - 17]);
+                tempkey[x + 16] = (byte)(tempkey[x + 12] ^ tempkey[x - 16]);
+                calc[0] = pres.sBox[getSBoxXPosition(tempkey[x + 13])][getSBoxYPosition(tempkey[x + 13])];
+                calc[1] = pres.sBox[getSBoxXPosition(tempkey[x + 14])][getSBoxYPosition(tempkey[x + 14])];
+                calc[2] = pres.sBox[getSBoxXPosition(tempkey[x + 15])][getSBoxYPosition(tempkey[x + 15])];
+                calc[3] = pres.sBox[getSBoxXPosition(tempkey[x + 16])][getSBoxYPosition(tempkey[x + 16])];
+                tempkey[x + 17] = (byte)(calc[0] ^ tempkey[x - 15]);
+                tempkey[x + 18] = (byte)(calc[1] ^ tempkey[x - 14]);
+                tempkey[x + 19] = (byte)(calc[2] ^ tempkey[x - 13]);
+                tempkey[x + 20] = (byte)(calc[3] ^ tempkey[x - 12]);
+                tempkey[x + 21] = (byte)(tempkey[x + 17] ^ tempkey[x - 11]);
+                tempkey[x + 22] = (byte)(tempkey[x + 18] ^ tempkey[x - 10]);
+                tempkey[x + 23] = (byte)(tempkey[x + 19] ^ tempkey[x - 9]);
+                tempkey[x + 24] = (byte)(tempkey[x + 20] ^ tempkey[x - 8]);
+                tempkey[x + 25] = (byte)(tempkey[x + 21] ^ tempkey[x - 7]);
+                tempkey[x + 26] = (byte)(tempkey[x + 22] ^ tempkey[x - 6]);
+                tempkey[x + 27] = (byte)(tempkey[x + 23] ^ tempkey[x - 5]);
+                tempkey[x + 28] = (byte)(tempkey[x + 24] ^ tempkey[x - 4]);
+                tempkey[x + 29] = (byte)(tempkey[x + 25] ^ tempkey[x - 3]);
+                tempkey[x + 30] = (byte)(tempkey[x + 26] ^ tempkey[x - 2]);
+                tempkey[x + 31] = (byte)(tempkey[x + 27] ^ tempkey[x - 1]);
+                tempkey[x + 32] = (byte)(tempkey[x + 28] ^ tempkey[x]);
+                x += 32;
+                y++;
+            }
+            x = 0;
+            y = 0;
+            z = 0;
+            pres.keyBytes = tempkey;
+            while (x < 240)
+            {
+                while (y < 16)
+                {
+                    if (keyList[z] == null)
+                    {
+                        keyList[z] = new byte[16];
+                    }
+                    keyList[z][y] = tempkey[x];
+                    x++;
+                    y++;
+                }
+                y = 0;
+                z++;
+            }
+        }
 
 
         private void setRoundConstant()
