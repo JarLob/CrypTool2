@@ -213,4 +213,10 @@
   <data name="Open_the_ct_book_" xml:space="preserve">
     <value>Open the CrypTool Book.</value>
   </data>
+  <data name="CollapseAll" xml:space="preserve">
+    <value>Collapse all</value>
+  </data>
+  <data name="ExpandAll" xml:space="preserve">
+    <value>Expand all</value>
+  </data>
 </root>

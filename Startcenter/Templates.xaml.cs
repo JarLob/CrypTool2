@@ -543,6 +543,40 @@ namespace Startcenter
             var rel = GetRelativePathBySubtracting(_templatesDir, infos.Key);
             OnlineHelp.InvokeShowDocPage(new OnlineHelp.TemplateType(rel));
         }
+
+        private void ExpandAll_Click(object sender, RoutedEventArgs e)
+        {
+            SetTreeViewItems(TemplatesTreeView, true);
+        }
+
+        private void CollapseAll_Click(object sender, RoutedEventArgs e)
+        {
+            SetTreeViewItems(TemplatesTreeView, false);
+        }
+
+        void SetTreeViewItems(object obj, bool expand)
+        {
+            if (obj is TreeViewItem)
+            {
+                ((TreeViewItem)obj).IsExpanded = expand;
+                foreach (object obj2 in ((TreeViewItem)obj).Items)
+                    SetTreeViewItems(obj2, expand);
+            }
+            else if (obj is ItemsControl)
+            {
+                foreach (object obj2 in ((ItemsControl)obj).Items)
+                {
+                    if (obj2 != null)
+                    {
+                        SetTreeViewItems(((ItemsControl)obj).ItemContainerGenerator.ContainerFromItem(obj2), expand);
+
+                        TreeViewItem item = obj2 as TreeViewItem;
+                        if (item != null)
+                            item.IsExpanded = expand;
+                    }
+                }
+            }
+        }
     }
 
     public class TemplateOpenEventArgs : EventArgs
