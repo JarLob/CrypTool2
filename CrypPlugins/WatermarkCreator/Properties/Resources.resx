@@ -137,7 +137,7 @@
     <value>Watermark Creator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Component to write and extract a digital watermark to an image.</value>
+    <value>Writes or extracts a digital watermark of an image</value>
   </data>
   <data name="ModificationTypeDes" xml:space="preserve">
     <value>Choose what kind of modification should be applied to the input image</value>

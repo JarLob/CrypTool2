@@ -181,7 +181,7 @@
     <value>Wasserzeichen-Generator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente um ein digitales Wasserzeichnen zu schreiben oder extrahieren.</value>
+    <value>Schreibt oder extrahiert ein digitales Wasserzeichen eines Bildes</value>
   </data>
   <data name="Seed" xml:space="preserve">
     <value>Wähle eine Zufallszahl</value>
