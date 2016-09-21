@@ -19,6 +19,9 @@ namespace WorkspaceManager.View.VisualComponents
 
         public BottomBox()
         {
+            // necessary for correct language dependent formatting of percentage in global progress bar
+            this.Language = System.Windows.Markup.XmlLanguage.GetLanguage(System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag);
+
             InitializeComponent();
         }
 
