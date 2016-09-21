@@ -1,45 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
 	<title lang="en">Watermark Creator -- invisible watermark</title>
-	<summary lang="en">Usage of the <i>Watermark Creator</i>
-component</summary>
-	<description lang="en">This template shows the usage of Watermark
-Creator component embedding a text as an invisible watermark into an
-image.</description>
-<keywords lang="en">Watermark</keywords>
+	<summary lang="en">Usage of the <i>Watermark Creator</i> component</summary>
+	<description lang="en">This template shows the usage of Watermark Creator component embedding a text as an invisible watermark into an image.</description>
+	<keywords lang="en">Watermark</keywords>
 
-<title lang="de">Wasserzeichen-Erzeuger -- Unsichtbares
-Wasserzeichen</title>
-<summary lang="de">Benutzung des
-<i>Wasserzeichen-Erzeugers</i></summary>
-<description lang="de">Diese Vorlage zeigt, wie man m.H des
-Wasserzeichen-Erzeugers ein unsichtbares Wasserzeichen in ein Bild
-einfügen kann.</description>
+	<title lang="de">Wasserzeichen-Erzeuger -- Unsichtbares Wasserzeichen</title>
+	<summary lang="de">Benutzung des <i>Wasserzeichen-Erzeugers</i></summary>
+	<description lang="de">Diese Vorlage zeigt, wie man mit einem Wasserzeichen-Erzeuger ein unsichtbares Wasserzeichen in ein Bild einfügen kann.</description>
 
-  <keywords lang="de">Wasserzeichen</keywords>
+	<keywords lang="de">Wasserzeichen</keywords>
 
-  <icon file="WatermarkCreator.png" />
-  <relevantPlugins>
-    <plugin name="WatermarkCreator" />
-  </relevantPlugins>
+	<icon file="WatermarkCreator.png" />
+	<relevantPlugins>
+		<plugin name="WatermarkCreator" />
+	</relevantPlugins>
 
-  <replacements lang="de">
-    <replacement key="$File Input$" value="Dateieingabe"/>
-    <replacement key="$Watermark Text$" value="Wasserzeichen-Text"/>
-    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
-    <replacement key="$Picture Output$" value="Bildausgabe"/>
-    <replacement key="$Read Watermark Text$" value="Lese Wasserzeichen-Text"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
-	 <replacement key="$memo$" value="Diese Vorlage demonstriert, wie man ein Bild mit einem unsichtbaren Wasserzeichen versehen kann. In der &quot;Dateieingabe&quot;-Komponente kann das zu verwendende Bild ausgewählt werden und in der &quot;Texteingabe&quot;-Komponente kann der zu verwendende Text angegeben werden. Wenn in der Komponente &quot;Wasserzeichen-Generator&quot; der &quot;Expertenmodus&quot; aktiviert ist, werden in den Einstellungen der Komponente einige Optionen angeboten, andernfalls werden die Grundeinstellungen verwendet.\line Das Wasserzeichen kann auch von einer anderen &quot;Wasserzeichen-Generator&quot;-Komponente gelesen und in einer &quot;Textausgabe&quot;-Komponente angezeigt werden."/>
-  </replacements>
-  <replacements lang="en">
-    <replacement key="$File Input$" value="File Input"/>
-    <replacement key="$Watermark Text$" value="Watermark Text"/>
-    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
-    <replacement key="$Picture Output$" value="Picture Output"/>
-    <replacement key="$Read Watermark Text$" value="Read Watermark Text"/>
-    <replacement key="$Converter$" value="Converter"/>
-	 <replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;TextInput&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another &quot;WatermarkCreator&quot; component and displayed in another TextOutput component."/>
-  </replacements>
+	<replacements lang="de">
+		<replacement key="$File Input$" value="Dateieingabe"/>
+		<replacement key="$Watermark Text$" value="Wasserzeichen-Text"/>
+		<replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+		<replacement key="$Picture Output$" value="Bildausgabe"/>
+		<replacement key="$Read Watermark Text$" value="Lese Wasserzeichen-Text"/>
+		<replacement key="$Converter$" value="Konvertierer"/>
+		<replacement key="$memo$" value="Diese Vorlage demonstriert, wie man ein Bild mit einem unsichtbaren Wasserzeichen versehen kann. In der &quot;Dateieingabe&quot;-Komponente kann das zu verwendende Bild ausgewählt werden und in der &quot;Texteingabe&quot;-Komponente kann der zu verwendende Text angegeben werden. Wenn in der Komponente &quot;Wasserzeichen-Generator&quot; der &quot;Expertenmodus&quot; aktiviert ist, werden in den Einstellungen der Komponente einige Optionen angeboten, andernfalls werden die Grundeinstellungen verwendet.\line Das Wasserzeichen kann auch von einer anderen &quot;Wasserzeichen-Generator&quot;-Komponente gelesen und in einer &quot;Textausgabe&quot;-Komponente angezeigt werden."/>
+	</replacements>
+	<replacements lang="en">
+		<replacement key="$File Input$" value="File Input"/>
+		<replacement key="$Watermark Text$" value="Watermark Text"/>
+		<replacement key="$Watermark Creator$" value="Watermark Creator"/>
+		<replacement key="$Picture Output$" value="Picture Output"/>
+		<replacement key="$Read Watermark Text$" value="Read Watermark Text"/>
+		<replacement key="$Converter$" value="Converter"/>
+		<replacement key="$memo$" value="This template demonstrates how to add an invisible watermark to an image. In the &quot;File input&quot; component you can select the image to be used and in the &quot;TextInput&quot; component you can modify the text to be used. The component offers some settings in case you choose &quot;Advanced mode&quot;, otherwise it'll use the default settings.\line The watermark is also read by another &quot;WatermarkCreator&quot; component and displayed in another TextOutput component."/>
+	</replacements>
 
 </sample>

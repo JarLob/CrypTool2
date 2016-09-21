@@ -1,44 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="de">Wasserzeichen-Ersteller -- Robustheit</title>
-  <summary lang="de">Benutzung des
-<i>Wasserzeichen-Erstellers</i></summary>
-  <description lang="de">Diese Vorlage zeigt die Robustheit eines
-unsichtbaren Wasserzeichens, das in ein Bild eingebettet
-wurde.</description>
-  <keywords>Watermark</keywords>
+	<title lang="en">Watermark Creator -- Robustness</title>
+	<summary lang="en">Usage of the <i>Watermark Creator</i> component</summary>
+	<description lang="en">This template shows the robustness of an invisible watermark that was embedded into an image.</description>
+	<keywords lang="en">Watermark</keywords>
 
-<title lang="de">Wasserzeichen-Erzeuger -- Robustheit</title>
-  <summary lang="de">Benutzung des
-<i>Wasserzeichen-Erzeugers</i></summary>
-  <description lang="de">Diese Vorlage zeigt die Robustheit eines
-unsichtbaren Wasserzeichens, das in ein Bild eingebettet
-wurde.</description>
+	<title lang="de">Wasserzeichen-Erzeuger -- Robustheit</title>
+	<summary lang="de">Benutzung des <i>Wasserzeichen-Erzeugers</i></summary>
+	<description lang="de">Diese Vorlage zeigt die Robustheit eines unsichtbaren Wasserzeichens, das in ein Bild eingebettet wurde.</description>
+	<keywords lang="de">Wasserzeichen</keywords>
 
-  <keywords lang="de">Wasserzeichen</keywords>
+	<icon file="WatermarkCreator.png" />
+	<relevantPlugins>
+		<plugin name="WatermarkCreator" />
+	</relevantPlugins>
 
-  <icon file="WatermarkCreator.png" />
-  <relevantPlugins>
-    <plugin name="WatermarkCreator" />
-  </relevantPlugins>
-
-  <replacements lang="de">
-    <replacement key="$File Input$" value="Dateieingabe"/>
-    <replacement key="$Text Input$" value="Texteingabe"/>
-    <replacement key="$Text Output$" value="Textausgabe"/>
-    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
-    <replacement key="$Image Processor$" value="Bildbearbeitung"/>
-    <replacement key="$Picture Output$" value="Bildausgabe"/>
-	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Robustheit des Wasserzeichens. Rechts ist das von der Komponente &quot;Bildbearbeitung&quot; manipulierte Bild zu sehen (Grauwerte). Links davon ist das Originalbild mit dem eingebetteten Wasserzeichen. Die Komponente kann den Text des Wasserzeichens vom manipulierten Bild immer noch extrahieren."/>
-  </replacements>
-  <replacements lang="en">
-    <replacement key="$File Input$" value="File Input"/>
-    <replacement key="$Text Input$" value="Text Input"/>
-    <replacement key="$Text Output$" value="Text Output"/>
-    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
-    <replacement key="$Image Processor$" value="Image Processor"/>
-    <replacement key="$Picture Output$" value="Picture Output"/>
-	 <replacement key="$memo$" value="This template demonstrates the robustness of the watermark. At the very right you can see the image, manipulated (grayscale) by the &quot;Image processor&quot;. Left to it you can see the original image with the watermark added. As you can see, the component still manages to extract the watermark text from the manipulated image."/>
-  </replacements>
+	<replacements lang="de">
+		<replacement key="$File Input$" value="Dateieingabe"/>
+		<replacement key="$Text Input$" value="Texteingabe"/>
+		<replacement key="$Text Output$" value="Textausgabe"/>
+		<replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+		<replacement key="$Image Processor$" value="Bildbearbeitung"/>
+		<replacement key="$Picture Output$" value="Bildausgabe"/>
+		<replacement key="$memo$" value="Diese Vorlage demonstriert die Robustheit des Wasserzeichens. Rechts ist das von der Komponente &quot;Bildbearbeitung&quot; manipulierte Bild zu sehen (Grauwerte). Links davon ist das Originalbild mit dem eingebetteten Wasserzeichen. Die Komponente kann den Text des Wasserzeichens vom manipulierten Bild immer noch extrahieren."/>
+	</replacements>
+		<replacements lang="en">
+		<replacement key="$File Input$" value="File Input"/>
+		<replacement key="$Text Input$" value="Text Input"/>
+		<replacement key="$Text Output$" value="Text Output"/>
+		<replacement key="$Watermark Creator$" value="Watermark Creator"/>
+		<replacement key="$Image Processor$" value="Image Processor"/>
+		<replacement key="$Picture Output$" value="Picture Output"/>
+		<replacement key="$memo$" value="This template demonstrates the robustness of the watermark. At the very right you can see the image, manipulated (grayscale) by the &quot;Image processor&quot;. Left to it you can see the original image with the watermark added. As you can see, the component still manages to extract the watermark text from the manipulated image."/>
+	</replacements>
 
 </sample>

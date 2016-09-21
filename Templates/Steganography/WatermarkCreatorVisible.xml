@@ -1,41 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-<title lang="en">Watermark Creator -- visible watermark</title>
-  <summary lang="en">Usage of the <i>Watermark Creator</i></summary>
-  <description lang="en">This template shows the usage of the Watermark
-Creator component embedding a text as a visible watermark into an
-image.</description>
-  <keywords>Watermark</keywords>
+	<title lang="en">Watermark Creator -- visible watermark</title>
+	<summary lang="en">Usage of the <i>Watermark Creator</i></summary>
+	<description lang="en">This template shows the usage of the Watermark Creator component embedding a text as a visible watermark into an image.</description>
+	<keywords>Watermark</keywords>
 
-<title lang="de">Wasserzeichen-Erzeuger -- Sichtbares
-Wasserzeichen</title>
-  <summary lang="de">Benutzung des
-<i>Wasserzeichen-Erzeugers</i></summary>
-  <description lang="de">Diese Vorlage zeigt, wie man m.H. des
-Wasserzeichen-Erzeugers ein sichtbares Wasserzeichen in ein Bild
-einfügen kann.</description>
-  <keywords lang="de">Wasserzeichen</keywords>
+	<title lang="de">Wasserzeichen-Erzeuger -- Sichtbares Wasserzeichen</title>
+	<summary lang="de">Benutzung des <i>Wasserzeichen-Erzeugers</i></summary>
+	<description lang="de">Diese Vorlage zeigt, wie man mit einem Wasserzeichen-Erzeuger ein sichtbares Wasserzeichen in ein Bild einfügen kann.</description>
+	<keywords lang="de">Wasserzeichen</keywords>
 
-  <icon file="WatermarkCreator.png" />
-  <relevantPlugins>
-    <plugin name="WatermarkCreator" />
-  </relevantPlugins>
+	<icon file="WatermarkCreator.png" />
+	<relevantPlugins>
+		<plugin name="WatermarkCreator" />
+	</relevantPlugins>
 
-  <replacements lang="de">
-    <replacement key="$File Input$" value="Dateieingabe"/>
-    <replacement key="$Text Input$" value="Texteingabe"/>
-    <replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
-    <replacement key="$Picture Output$" value="Bildausgabe"/>
-	 <replacement key="$memo1$" value="Diese Vorlage demonstriert, wie man einen sichtbaren Text als Wasserzeichen in ein Bild einbetten kann. In der &quot;Dateieingabe&quot;-Komponente kann das zu verwendende Bild angegeben werden. In der &quot;Texteingabe&quot;-Komponente kann man den Text eingeben, der dem Bild als Wasserzeichen hinzugefügt werden soll. Dieser Text kann geändert werden, während die Vorlage ausgeführt wird."/>
-	 <replacement key="$memo2$" value="In den Einstellungen der Komponente kann von oben nach unten folgendes festgelegt werden:\line\line - Die Position des Wasserzeichens\line - Die maximale Textgröße für den Wasserzeichen-Text\line - Der Zeichensatz für das Wasserzeichen\line - Die Platzierung des Wasserzeichens im Bild"/>
-  </replacements>
-  <replacements lang="en">
-    <replacement key="$File Input$" value="File Input"/>
-    <replacement key="$Text Input$" value="Text Input"/>
-    <replacement key="$Watermark Creator$" value="Watermark Creator"/>
-    <replacement key="$Picture Output$" value="Picture Output"/>
-	 <replacement key="$memo1$" value="This template shows how to embed a visible text as a watermark into an image. In the &quot;File input&quot; component you can choose the image to be used. In the &quot;Text input&quot; component you can write a text that is added to the image as an watermark. This text can be changed while the component is being executed."/>
-	 <replacement key="$memo2$" value="In the component's settings you can select (from top to bottom):\line\line - The position of the watermark\line - The maximum text size to be used for the watermark text\line - The font to be used for the watermark\line - The location of the watermark on the image"/>
-  </replacements>
+	<replacements lang="de">
+		<replacement key="$File Input$" value="Dateieingabe"/>
+		<replacement key="$Text Input$" value="Texteingabe"/>
+		<replacement key="$Watermark Creator$" value="Wasserzeichen-Generator"/>
+		<replacement key="$Picture Output$" value="Bildausgabe"/>
+		<replacement key="$memo1$" value="Diese Vorlage demonstriert, wie man einen sichtbaren Text als Wasserzeichen in ein Bild einbetten kann. In der &quot;Dateieingabe&quot;-Komponente kann das zu verwendende Bild angegeben werden. In der &quot;Texteingabe&quot;-Komponente kann man den Text eingeben, der dem Bild als Wasserzeichen hinzugefügt werden soll. Dieser Text kann geändert werden, während die Vorlage ausgeführt wird."/>
+		<replacement key="$memo2$" value="In den Einstellungen der Komponente kann von oben nach unten folgendes festgelegt werden:\line\line - Die Position des Wasserzeichens\line - Die maximale Textgröße für den Wasserzeichen-Text\line - Der Zeichensatz für das Wasserzeichen\line - Die Platzierung des Wasserzeichens im Bild"/>
+	</replacements>
+	<replacements lang="en">
+		<replacement key="$File Input$" value="File Input"/>
+		<replacement key="$Text Input$" value="Text Input"/>
+		<replacement key="$Watermark Creator$" value="Watermark Creator"/>
+		<replacement key="$Picture Output$" value="Picture Output"/>
+		<replacement key="$memo1$" value="This template shows how to embed a visible text as a watermark into an image. In the &quot;File input&quot; component you can choose the image to be used. In the &quot;Text input&quot; component you can write a text that is added to the image as an watermark. This text can be changed while the component is being executed."/>
+		<replacement key="$memo2$" value="In the component's settings you can select (from top to bottom):\line\line - The position of the watermark\line - The maximum text size to be used for the watermark text\line - The font to be used for the watermark\line - The location of the watermark on the image"/>
+	</replacements>
 
 </sample>
