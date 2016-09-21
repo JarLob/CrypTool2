@@ -270,4 +270,13 @@
   <data name="Copy_line" xml:space="preserve">
     <value>Copy selected line</value>
   </data>
+  <data name="CharacterForColumn" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="CharacterForRow" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="ModeHeader" xml:space="preserve">
+    <value>Mode</value>
+  </data>
 </root>

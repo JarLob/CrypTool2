@@ -115,6 +115,24 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die C ähnelt.
+        /// </summary>
+        public static string CharacterForColumn {
+            get {
+                return ResourceManager.GetString("CharacterForColumn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die R ähnelt.
+        /// </summary>
+        public static string CharacterForRow {
+            get {
+                return ResourceManager.GetString("CharacterForRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die C-C-C ähnelt.
         /// </summary>
         public static string ColumnColumnColumnCaption {
@@ -381,6 +399,15 @@ namespace TranspositionAnalyser.Properties {
         public static string MaxLengthTooltip {
             get {
                 return ResourceManager.GetString("MaxLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mode ähnelt.
+        /// </summary>
+        public static string ModeHeader {
+            get {
+                return ResourceManager.GetString("ModeHeader", resourceCulture);
             }
         }
         

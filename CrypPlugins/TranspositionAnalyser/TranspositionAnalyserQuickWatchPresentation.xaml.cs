@@ -55,6 +55,7 @@ namespace TranspositionAnalyser
             return "Rank: " + entry.Ranking + "\n" +
                    "Value: " + entry.Value + "\n" +
                    key + "\n" +
+                   "Mode: " + entry.Mode + "\n" +
                    "Text: " + entry.Text;
         }
 

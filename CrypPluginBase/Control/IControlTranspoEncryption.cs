@@ -25,5 +25,6 @@ namespace Cryptool.PluginBase.Control
     {
         byte[] Decrypt(byte[] ciphertext, byte[] key);
         void changeSettings(string setting, object value);
+        object getSettings(string setting);
     }
 }

@@ -256,14 +256,23 @@ namespace TranspositionAnalyser
             DateTime endTime = new DateTime();
             double secstodo;
 
+            bool endsInInfinity = true;
             double keysPerSec = doneKeys / totalSeconds;
             if (keysPerSec > 0)
             {
+                endsInInfinity = false;
                 if (totalKeys < doneKeys) totalKeys = doneKeys;
                 secstodo = (totalKeys - doneKeys) / keysPerSec;
                 timeleft = new TimeSpan((long)secstodo * ticksPerSecond);
-                endTime = DateTime.Now.AddSeconds(secstodo);
-                endTime = new DateTime(endTime.Ticks - (endTime.Ticks % ticksPerSecond));   // truncate to seconds
+                try
+                {
+                    endTime = DateTime.Now.AddSeconds(secstodo);
+                    endTime = new DateTime(endTime.Ticks - (endTime.Ticks % ticksPerSecond));   // truncate to seconds
+                }
+                catch (Exception ex)
+                {
+                    endsInInfinity = true;
+                }
             }
 
             ((TranspositionAnalyserQuickWatchPresentation)Presentation).Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -271,12 +280,12 @@ namespace TranspositionAnalyser
                 var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
                 myPresentation.startTime.Content = "" + startTime;
+                myPresentation.elapsedTime.Content = "" + elapsedtime;
                 myPresentation.keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSec);
 
-                if (keysPerSec > 0)
+                if (!endsInInfinity)
                 {
                     myPresentation.timeLeft.Content = "" + timeleft;
-                    myPresentation.elapsedTime.Content = "" + elapsedtime;
                     myPresentation.endTime.Content = "" + endTime;
                 }
                 else
@@ -296,6 +305,7 @@ namespace TranspositionAnalyser
                     entry.Value = String.Format("{0:0.00000}", v.score);
                     entry.KeyArray = v.key;
                     entry.Key = "[" + String.Join(",", v.key) + "]";
+                    entry.Mode = v.mode;
                     entry.Text = Encoding.GetEncoding(1252).GetString(v.plaintext);
 
                     myPresentation.entries.Add(entry);
@@ -1148,6 +1158,9 @@ namespace TranspositionAnalyser
             vk.key = key;
             vk.plaintext = this.controlMaster.Decrypt(this.input, vk.key);
             vk.score = this.costMaster.CalculateCost(vk.plaintext);
+            vk.mode = (((ReadInMode)this.controlMaster.getSettings("ReadIn") == ReadInMode.byColumn) ? Properties.Resources.CharacterForColumn : Properties.Resources.CharacterForRow ) + "-"
+                    + (((PermutationMode)this.controlMaster.getSettings("Permute") == PermutationMode.byColumn) ? Properties.Resources.CharacterForColumn : Properties.Resources.CharacterForRow) + "-"
+                    + (((ReadOutMode)this.controlMaster.getSettings("ReadOut") == ReadOutMode.byColumn) ? Properties.Resources.CharacterForColumn : Properties.Resources.CharacterForRow);
         }
 
         private ValueKey createKey(byte[] key)
@@ -1164,6 +1177,7 @@ namespace TranspositionAnalyser
         public string Value { get; set; }
         public string Key { get; set; }
         public byte[] KeyArray { get; set; }
+        public string Mode { get; set; }
         public string Text { get; set; }
     }
 }

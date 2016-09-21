@@ -11,6 +11,9 @@
         <Style x:Key="ValueRow2">
             <Setter Property="Label.Margin" Value="80,0,0,0" />
         </Style>
+        <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
     </UserControl.Resources>
     
     <Viewbox>
@@ -93,7 +96,14 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn Header="{x:Static properties:Resources.TextHeader}" DisplayMemberBinding="{Binding Path=Text}">
+                                <GridViewColumn Header="{x:Static properties:Resources.ModeHeader}" DisplayMemberBinding="{Binding Path=Mode}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{x:Static properties:Resources.TextHeader}" DisplayMemberBinding="{Binding Path=Text}" HeaderContainerStyle="{StaticResource hcs}">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label/>

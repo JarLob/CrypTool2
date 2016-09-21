@@ -8,6 +8,7 @@ namespace TranspositionAnalyser
         public byte[] key;
         public double score;
         public byte[] plaintext;
+        public string mode;
 
         public int CompareTo(object obj)
         {
@@ -30,6 +31,7 @@ namespace TranspositionAnalyser
             v.score = score;
             v.key = (byte[])key.Clone();
             v.plaintext = (byte[])plaintext.Clone();
+            v.mode = mode;
 
             return v;
         }

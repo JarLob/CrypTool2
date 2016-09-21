@@ -270,4 +270,15 @@
   <data name="Copy_line" xml:space="preserve">
     <value>Kopiere ganze Zeile</value>
   </data>
+  <data name="CharacterForColumn" xml:space="preserve">
+    <value>S</value>
+    <comment>S für Spalte</comment>
+  </data>
+  <data name="CharacterForRow" xml:space="preserve">
+    <value>Z</value>
+    <comment>Z für Zeile</comment>
+  </data>
+  <data name="ModeHeader" xml:space="preserve">
+    <value>Modus</value>
+  </data>
 </root>

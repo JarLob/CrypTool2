@@ -1145,8 +1145,16 @@ namespace Transposition
             if (setting.Equals("ReadIn")) settings.ReadIn = (int)value;
             else if (setting.Equals("Permute")) settings.Permutation = (int)value;
             else if (setting.Equals("ReadOut")) settings.ReadOut = (int)value;
-
         }
+
+        public object getSettings(string setting)
+        {
+            if (setting.Equals("ReadIn")) return settings.ReadIn;
+            else if (setting.Equals("Permute")) return settings.Permutation;
+            else if (setting.Equals("ReadOut")) return settings.ReadOut;
+            return null;
+        }
+
         # endregion
 
         private IControlTranspoEncryption controlSlave;
@@ -1197,6 +1205,11 @@ namespace Transposition
         public void changeSettings(string setting, object value)
         {
             plugin.changeSettings(setting, value);
+        }
+
+        public object getSettings(string setting)
+        {
+            return plugin.getSettings(setting);
         }
 
         public event IControlStatusChangedEventHandler OnStatusChanged;
