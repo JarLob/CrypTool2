@@ -79,6 +79,24 @@ namespace WatermarkCreator.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No ähnelt.
+        /// </summary>
+        internal static string AdvancedModeList1 {
+            get {
+                return ResourceManager.GetString("AdvancedModeList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes ähnelt.
+        /// </summary>
+        internal static string AdvancedModeList2 {
+            get {
+                return ResourceManager.GetString("AdvancedModeList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Locate watermark at the bottom of the image ähnelt.
         /// </summary>
         internal static string BotLoc {

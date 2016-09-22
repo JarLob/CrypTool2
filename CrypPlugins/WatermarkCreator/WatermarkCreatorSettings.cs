@@ -217,7 +217,7 @@ namespace Cryptool.Plugins.WatermarkCreator
             }
         }
 
-        [TaskPane("AdvancedModeCap", "AdvancedModeDes", null, 5, false, ControlType.ComboBox, new string[] { "No", "Yes" })]
+        [TaskPane("AdvancedModeCap", "AdvancedModeDes", null, 5, false, ControlType.ComboBox, new string[] { "AdvancedModeList1", "AdvancedModeList2" })]
         public int AdvancedMode
         {
             get

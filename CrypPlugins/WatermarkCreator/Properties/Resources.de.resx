@@ -123,6 +123,12 @@
   <data name="AdvancedModeDes" xml:space="preserve">
     <value>Nutze den Expertenmodus, um mehr Einstellungen vornehmen zu können.</value>
   </data>
+  <data name="AdvancedModeList1" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="AdvancedModeList2" xml:space="preserve">
+    <value>Ja</value>
+  </data>
   <data name="BotLoc" xml:space="preserve">
     <value>Platziere das Wasserzeichen am unteren Bildrand</value>
   </data>

@@ -236,4 +236,10 @@
   <data name="WatermarkTooltip" xml:space="preserve">
     <value>Text to be added to the image as a watermark</value>
   </data>
+  <data name="AdvancedModeList1" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="AdvancedModeList2" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>
