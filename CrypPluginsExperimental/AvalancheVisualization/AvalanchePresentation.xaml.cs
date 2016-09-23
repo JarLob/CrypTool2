@@ -416,8 +416,8 @@ namespace AvalancheVisualization
                 {
                     sb.Append(str);
                 }
-                string differentBits = Regex.Replace(sb.ToString(), ".{8}", "$0 ");
-                TB3.Text = differentBits;
+                string differentBits2 = Regex.Replace(sb.ToString(), ".{8}", "$0 ");
+                TB3.Text = differentBits2;
             }
 
         }
