@@ -272,9 +272,11 @@
   </data>
   <data name="CharacterForColumn" xml:space="preserve">
     <value>C</value>
+    <comment>C for column</comment>
   </data>
   <data name="CharacterForRow" xml:space="preserve">
     <value>R</value>
+    <comment>R for row</comment>
   </data>
   <data name="ModeHeader" xml:space="preserve">
     <value>Mode</value>
