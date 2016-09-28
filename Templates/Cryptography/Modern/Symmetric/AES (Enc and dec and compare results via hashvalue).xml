@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">AES Cipher with SHA hashes</title>
+  <summary lang="en">Verifying the correctness of the <i>AES</i> cipher by comparing the <i>SHA</i> hashes of the plaintext and the decrypted ciphertext</summary>
+  <description lang="en">This template demonstrates the correctness of the AES cipher. If the AES component works correctly, encrypting a plaintext and then decrypting it again should produce the original plaintext. To compare the two texts, the template calculates their SHA hash values and compares them.</description>
+  <keywords>advanced, Daemen, Rijmen, Rijndael, symmetric, nist, hash, comparison, compare</keywords>
+
+  <title lang="de">AES-Chiffre mit SHA-Hashwerten</title>
+  <summary lang="de">Test der Korrektheit der <i>AES</i>-Chiffre durch Vergleich der Hashwerte des Klartextes und des entschlüsselten Geheimtextes</summary>
+  <description lang="de">Diese Vorlage demonstriert die Korrektheit der AES-Chiffre. Wenn die AES-Komponente korrekt arbeitet, so muss das Verschlüsseln und anschliessende Entschlüsseln eines Klartextes wieder den ursprünglichen Klartext ergeben. Um die beiden Texte zu vergleichen berechnet die Vorlage deren SHA-Hashwerte und vergleicht dann diese miteinander.</description>
+  <keywords lang="de">symmetrisch, vergleich</keywords>
+
+  <icon file="AES.png" />
+
+  <relevantPlugins>
+    <plugin name="AES" />
+    <plugin name="SHA" />
+    <plugin name="Comparator" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Random IV$" value="Zufälliger IV"/>
+    <replacement key="$Comparator$" value="Vergleicher"/>
+    <replacement key="$AES Decrypt$" value="AES-Verschlüsselung"/>
+    <replacement key="$AES Encrypt$" value="AES-Entschlüsselung"/>
+	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Korrektheit der AES-Chiffre. Wenn die AES-Komponente korrekt arbeitet, so muss das Verschlüsseln und anschliessende Entschlüsseln eines Klartextes wieder den ursprünglichen Klartext ergeben. Um die beiden Texte zu vergleichen berechnet die Vorlage deren SHA-Hashwerte und vergleicht dann diese miteinander."/>
+ </replacements>
+ <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Random IV$" value="Random IV"/>
+    <replacement key="$Comparator$" value="Comparator"/>
+    <replacement key="$AES Decrypt$" value="AES Decrypt"/>
+    <replacement key="$AES Encrypt$" value="AES Encrypt"/>
+	 <replacement key="$memo$" value="This template demonstrates the correctness of the AES cipher. If the AES component works correctly, encrypting a plaintext and then decrypting it again should produce the original plaintext. To compare the two texts, the template calculates their SHA hash values and compares them."/>
+ </replacements>
+
+</sample>
