@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Reflection;
 using System.Security.Principal;
 using System.Text;
@@ -69,6 +70,7 @@ namespace Cryptool.Core
             var sb = new StringBuilder();
             sb.AppendLine(string.Format("Operating System: {0}", System.Environment.OSVersion.ToString()));
             //sb.AppendLine(string.Format("Plattform: {0}", Environment.OSVersion.Platform)); // always Win32NT
+            sb.AppendLine(string.Format("Processorname: {0}", GetProcessorName()));
             sb.AppendLine(string.Format("Processors: {0}", System.Environment.ProcessorCount));
             //sb.AppendLine(string.Format("Process Info: {0}", (System.Environment.Is64BitProcess ? "64 Bit" : "32 Bit"))); // always 32 Bit
             sb.AppendLine(string.Format("Administrative Rights: {0}", hasAdministrativeRight));
@@ -110,6 +112,38 @@ namespace Cryptool.Core
             sb.AppendLine(_systemInfos);
 
             SendInformations.Text = sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns the concatenated names of all processors
+        /// </summary>
+        /// <returns></returns>
+        private string GetProcessorName()
+        {
+            try
+            {
+                var query = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+                string name = String.Empty;
+                var collection = query.Get();
+                var i = 1;
+                foreach (var processor in collection)
+                {
+                    if (processor["name"] != null)
+                    {
+                        name += processor["name"].ToString();
+                        if (i < collection.Count)
+                        {
+                            name += ", ";
+                        }
+                    }
+                    i++;
+                }
+                return name;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

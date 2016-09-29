@@ -2040,6 +2040,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Processor name ähnelt.
+        /// </summary>
+        internal static string SI_Processor_Name {
+            get {
+                return ResourceManager.GetString("SI_Processor_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Processors ähnelt.
         /// </summary>
         internal static string SI_Processors {

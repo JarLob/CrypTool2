@@ -13,6 +13,7 @@ using System.Windows.Input;
 using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Security.Cryptography.X509Certificates;
+using System.Management;
 
 namespace Cryptool.CrypWin
 {
@@ -54,7 +55,8 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_System_Type, Value = System.Environment.Is64BitOperatingSystem ? Properties.Resources.SI_System_Type_64 : Properties.Resources.SI_System_Type_32 });
             //informations.Add(new Info() { Description = "Platform", Value = Environment.OSVersion.Platform.ToString() }); // always Win32NT
             //informations.Add(new Info() { Description = Properties.Resources.SI_Machine_Name, Value = System.Environment.MachineName });      //personal information
-            informations.Add(new Info() { Description = Properties.Resources.SI_Processors, Value = System.Environment.ProcessorCount.ToString() });
+            informations.Add(new Info() { Description = Properties.Resources.SI_Processor_Name, Value = GetProcessorName() });
+            informations.Add(new Info() { Description = Properties.Resources.SI_Processors, Value = System.Environment.ProcessorCount.ToString() });            
             //informations.Add(new Info() { Description = "Process Info", Value = (System.Environment.Is64BitProcess ? "64 Bit" : "32 Bit") }); // always 32 Bit
             informations.Add(new Info() { Description = Properties.Resources.SI_Administrative_Rights, Value = hasAdministrativeRight ? Properties.Resources.SI_yes : Properties.Resources.SI_no });
             //informations.Add(new Info() { Description = Properties.Resources.SI_Unique_Identifier, Value = uniqueID });       //personal information
@@ -154,6 +156,38 @@ namespace Cryptool.CrypWin
             {
                 informations[timeIndex] = new Info() { Description = Properties.Resources.SI_System_Time, Value = DateTime.Now.ToShortTimeString() };
                 InfoGrid.Items.Refresh();
+            }
+        }
+
+        /// <summary>
+        /// Returns the concatenated names of all processors
+        /// </summary>
+        /// <returns></returns>
+        private string GetProcessorName()
+        {
+            try
+            {
+                var query = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+                string name = String.Empty;
+                var collection = query.Get();
+                var i = 1;
+                foreach (var processor in collection)
+                {
+                    if (processor["name"] != null)
+                    {
+                        name += processor["name"].ToString();
+                        if (i < collection.Count)
+                        {
+                            name += ", ";
+                        }
+                    }
+                    i++;
+                }
+                return name;
+            }
+            catch (Exception ex)
+            {
+                return null;
             }
         }
     }
