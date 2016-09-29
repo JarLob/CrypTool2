@@ -25,13 +25,14 @@ namespace Cryptool.Plugins.EncryptedVM
         public const int ARRAY_ROWS = 256;
         public const int ARRAY_COLS = 8;
 
-        public BigPolyArray[,] cellarray { get; private set; } = new BigPolyArray[ARRAY_ROWS, WORD_SIZE];
+        public BigPolyArray[,] cellarray { get; private set; }
 
         private BigPolyArray ZERO;
         private BigPolyArray[] r = new BigPolyArray[ARRAY_ROWS];
 
         public Memory(Util p_sealutil, Functions p_functions)
         {
+            cellarray = new BigPolyArray[ARRAY_ROWS, WORD_SIZE];
             sealutil = p_sealutil;
             functions = p_functions;
             ZERO = sealutil.enc_enc(0);

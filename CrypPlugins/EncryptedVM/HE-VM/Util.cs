@@ -16,10 +16,12 @@ namespace Cryptool.Plugins.EncryptedVM
         private BigPolyArray pubkey;
         private BigPoly seckey;
         private EvaluationKeys evalkeys;
-        public int numofreencrypts { get; private set; } = 0;
+        public int numofreencrypts { get; private set; }
 
         public Util(EncryptionParameters p_encparms = null, BigPolyArray p_pubkey = null, EvaluationKeys p_evalkeys = null, BigPoly p_seckey = null)
         {
+            numofreencrypts = 0;
+
             if (p_encparms == null)
             {
                 encparms = new EncryptionParameters();
@@ -59,6 +61,8 @@ namespace Cryptool.Plugins.EncryptedVM
 
         public Util(Stream p_encparms = null, Stream p_pubkey = null, Stream p_evalkeys = null, Stream p_seckey = null)
         {
+            numofreencrypts = 0;
+
             encparms = new EncryptionParameters();
             if (p_encparms == null)
             {
