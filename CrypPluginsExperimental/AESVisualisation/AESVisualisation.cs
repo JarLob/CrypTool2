@@ -54,10 +54,12 @@ namespace Cryptool.Plugins.AESVisualisation
         private Boolean execute = true;
         private Boolean aborted = false;
         private int language;
+        private bool executing = false;
         int keysize;
-        Thread presThread;
+        //Thread presThread;
         Thread executeThread;
         Thread newPresentationThread;
+        Thread workerThread;
 
 
 
@@ -145,9 +147,16 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
-            //executeThread = new Thread(execution);
-            //executeThread.Start();
-            //presThread = new Thread(pres.execute);
+            pres.abort = false;
+            pres.expansion = true;
+            pres.finish = false;
+            pres.roundNumber = 1;
+            pres.first = true;
+            pres.operationCounter = 0;
+            pres.operationCounter1 = 0;
+            pres.operationCounter2 = 0;
+            aborted = false;
+            Thread presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
             pres.keysize = keysize;
             language = 1 - settings.Language;
@@ -155,6 +164,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.setLanguage();
             checkKeysize();
             checkTextLength();
+            executing = true;
             outputStreamWriter = new CStreamWriter();
             roundNumber = 1;
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -213,29 +223,25 @@ namespace Cryptool.Plugins.AESVisualisation
             roundNumber = 1;
             pres.states = states;
             pres.keyList = keyList;
-            //presThread.Start();
-            pres.execute();
-            //while (presThread.IsAlive)
-            //{
-            //    ProgressChanged(pres.progress, 1);
-            //}
+            presThread.Start();
+            while (presThread.IsAlive)
+            {
+                ProgressChanged(pres.progress, 1);
+            }
+            presThread.Join();
+            if (aborted)
+            {
+                outputStreamWriter.Close();
+                return;
+            }
             outputStreamWriter.Write(states[39 + 8 * keysize]);
             outputStreamWriter.Close();
-            buttonNextClickedEvent = pres.buttonNextClickedEvent;
             ProgressChanged(1, 1);
-            //if (aborted)
-            //{
-            //    outputStreamWriter.Write();
-            //    outputStreamWriter.Close();
-            //    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            //    ProgressChanged(1, 1);
-            //}
         }
 
         public void PostExecution()
         {
-            executeThread.Abort();
-            //pres = new AESPresentation();
+            
         }
 
         /// <summary>
@@ -245,25 +251,44 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Stop()
         {
             aborted = true;
-            pres.autostep = false;
-            pres.skip = true;
+            pres.abort = true;
+            pres.expansion = false;
             pres.finish = true;
             pres.buttonNextClickedEvent.Set();
-            //presThread.Abort();          
-            //executeThread.Abort();
-            //newPresentationThread = new Thread(newPresentation);
-            //newPresentationThread.SetApartmentState(ApartmentState.STA);
-            //newPresentationThread.Start();
-            ////pres.cleanUp();
-            ////pres.reset();
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.toStart();
-                pres.StartingImage.Visibility = Visibility.Visible;
-                pres.hideButton();
-            }, null);
-            pres.cleanUp();
-            outputStreamWriter.Close();
+            pres.buttonNextClickedEvent.Set();
+            pres.initialState();
+            //pres.stop();
+            //aborted = true;
+            //if(workerThread != null)
+            //{
+            //    workerThread.Abort();
+            //}
+            //aborted = true;
+            //pres.autostep = false;
+            //pres.skip = true;
+            //pres.finish = true;
+            //pres.expansion = false;
+            //pres.buttonNextClickedEvent.Set();
+            //executing = false;
+            //presThread.Abort();
+            //pres.cleanUp();
+            //pres.reset();
+            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            //{
+            //    pres.toStart();
+            //    pres.startGrid.Visibility = Visibility.Visible;
+            //    pres.startTextBlock1.Visibility = Visibility.Visible;
+            //    pres.startTextBlock2.Visibility = Visibility.Visible;
+            //    pres.hideButton();
+            //}, null);
+            //pres.cleanUp();
+            //outputStreamWriter.Close();
+            //presThread.Abort();
+            //Thread endThread = new Thread(newPresentation);
+            //endThread.SetApartmentState(ApartmentState.STA);
+            //endThread.Start();
+            //endThread.Join();
+            //aborted = true;
         }
 
         /// <summary>
@@ -272,7 +297,7 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Initialize()
         {
             pres = new AESPresentation();
-            presThread = new Thread(pres.execute);
+            //presThread = new Thread(pres.execute);
         }
 
         /// <summary>
@@ -285,175 +310,16 @@ namespace Cryptool.Plugins.AESVisualisation
         #endregion
 
         #region Methods
-        private void setSBox()
-        {
-            int x = 0;
-            while (x < 16)
-            {
-                this.sBox[x] = new byte[16];
-                x++;
-            }
-            x = 0;
-            List<int> temp = new List<int>();
-            while (x < 256)
-            {
-                temp.Add(x);
-                x++;
-            }
-            int y = 0;
-            x = 0;
-            int z;
-            while (y < 16)
-            {
-                while (x < 16)
-                {
-                    z = rnd.Next(temp.Count);
-                    sBox[y][x] = Convert.ToByte(temp[z]);
-                    temp.RemoveAt(z);
-                    x++;
-                }
-                y++;
-                x = 0;
-            }
-            x = 0;
-            y = 0;
-            List<TextBlock> blockList = pres.textBlockList[2];
-            foreach (TextBlock tb in blockList)
-            {
 
-                tb.Text = sBox[y][x].ToString("X2");
-                x++;
-                if (x > 15)
-                {
-                    x = 0;
-                    y++;
-                }
-                if (y > 15)
-                {
-                    break;
-                }
-            }
-        }
-        private int getSBoxXPosition(byte temp)
+        private void newPresentation()
         {
-            int x = 0;
-            string tempString = temp.ToString("X2");
-            tempString = tempString.Substring(0, 1);
-            switch (tempString)
-            {
-                case "0":
-                    x = 0;
-                    break;
-                case "1":
-                    x = 1;
-                    break;
-                case "2":
-                    x = 2;
-                    break;
-                case "3":
-                    x = 3;
-                    break;
-                case "4":
-                    x = 4;
-                    break;
-                case "5":
-                    x = 5;
-                    break;
-                case "6":
-                    x = 6;
-                    break;
-                case "7":
-                    x = 7;
-                    break;
-                case "8":
-                    x = 8;
-                    break;
-                case "9":
-                    x = 9;
-                    break;
-                case "A":
-                    x = 10;
-                    break;
-                case "B":
-                    x = 11;
-                    break;
-                case "C":
-                    x = 12;
-                    break;
-                case "D":
-                    x = 13;
-                    break;
-                case "E":
-                    x = 14;
-                    break;
-                case "F":
-                    x = 15;
-                    break;
-                default:
-                    break;
-            }
-            return x;
+            pres = new AESPresentation();
+            //presThread = new Thread(pres.execute);
         }
-        private int getSBoxYPosition(byte temp)
-        {
-            int x = 0;
-            string tempString = temp.ToString("X2");
-            tempString = tempString.Substring(1, 1);
-            switch (tempString)
-            {
-                case "0":
-                    x = 0;
-                    break;
-                case "1":
-                    x = 1;
-                    break;
-                case "2":
-                    x = 2;
-                    break;
-                case "3":
-                    x = 3;
-                    break;
-                case "4":
-                    x = 4;
-                    break;
-                case "5":
-                    x = 5;
-                    break;
-                case "6":
-                    x = 6;
-                    break;
-                case "7":
-                    x = 7;
-                    break;
-                case "8":
-                    x = 8;
-                    break;
-                case "9":
-                    x = 9;
-                    break;
-                case "A":
-                    x = 10;
-                    break;
-                case "B":
-                    x = 11;
-                    break;
-                case "C":
-                    x = 12;
-                    break;
-                case "D":
-                    x = 13;
-                    break;
-                case "E":
-                    x = 14;
-                    break;
-                case "F":
-                    x = 15;
-                    break;
-                default:
-                    break;
-            }
-            return x;
-        }
+        /*
+        This method is responsible for the encryption and the storage of the results after each operation (SubBytes, ShiftRow, MixCol, AddKey).
+        Each case of the switch statement represents one operation.
+        */
         private void setStates()
         {
             int x = 0;
@@ -465,6 +331,7 @@ namespace Cryptool.Plugins.AESVisualisation
             {
                 switch (y)
                 {
+                    //SubBytes
                     case 0:
                         temp = new byte[16];
                         temp = states[x];
@@ -479,6 +346,7 @@ namespace Cryptool.Plugins.AESVisualisation
                         states[x] = result;
                         y = 1;
                         break;
+                    //ShiftRow
                     case 1:
                         temp = new byte[16];
                         temp = states[x];
@@ -503,6 +371,7 @@ namespace Cryptool.Plugins.AESVisualisation
                         states[x] = result;
                         y = 2;
                         break;
+                    //MixCol
                     case 2:
                         temp = new byte[16];
                         result = new byte[16];
@@ -515,6 +384,7 @@ namespace Cryptool.Plugins.AESVisualisation
                         }
                         y = 3;
                         break;
+                    //AddKey
                     case 3:
                         temp = new byte[16];
                         result = new byte[16];
@@ -532,6 +402,10 @@ namespace Cryptool.Plugins.AESVisualisation
                 }
             }
         }
+
+        /*
+        This methods implements the "AddKey" operation.
+        */
         private byte[] addKey(byte[] block, byte[] key)
         {
             byte[] temp = new byte[16];
@@ -544,416 +418,10 @@ namespace Cryptool.Plugins.AESVisualisation
             return temp;
 
         }
-        public List<TextBlock> createTextBlockList(int textBlockList)
-        {
-            List<TextBlock> list = new List<TextBlock>();
-            int x;
-            string temp;
-            switch (textBlockList)
-            {
-                case 0:
-                    list.Add(pres.keyTextBlock1);
-                    list.Add(pres.keyTextBlock2);
-                    list.Add(pres.keyTextBlock3);
-                    list.Add(pres.keyTextBlock4);
-                    list.Add(pres.keyTextBlock5);
-                    list.Add(pres.keyTextBlock6);
-                    list.Add(pres.keyTextBlock7);
-                    list.Add(pres.keyTextBlock8);
-                    list.Add(pres.keyTextBlock9);
-                    list.Add(pres.keyTextBlock10);
-                    list.Add(pres.keyTextBlock11);
-                    list.Add(pres.keyTextBlock12);
-                    list.Add(pres.keyTextBlock13);
-                    list.Add(pres.keyTextBlock14);
-                    list.Add(pres.keyTextBlock5);
-                    list.Add(pres.keyTextBlock6);
-                    break;
-                case 1:
-                    list.Add(pres.keyTextBlock7);
-                    list.Add(pres.keyTextBlock8);
-                    list.Add(pres.keyTextBlock9);
-                    list.Add(pres.keyTextBlock20);
-                    list.Add(pres.keyTextBlock21);
-                    list.Add(pres.keyTextBlock22);
-                    list.Add(pres.keyTextBlock23);
-                    list.Add(pres.keyTextBlock24);
-                    list.Add(pres.keyTextBlock25);
-                    list.Add(pres.keyTextBlock26);
-                    list.Add(pres.keyTextBlock27);
-                    list.Add(pres.keyTextBlock28);
-                    list.Add(pres.keyTextBlock29);
-                    list.Add(pres.keyTextBlock30);
-                    list.Add(pres.keyTextBlock31);
-                    list.Add(pres.keyTextBlock32);
-                    break;
-                case 2:
-                    list.Add(pres.keyTextBlock33);
-                    list.Add(pres.keyTextBlock34);
-                    list.Add(pres.keyTextBlock35);
-                    list.Add(pres.keyTextBlock36);
-                    list.Add(pres.keyTextBlock37);
-                    list.Add(pres.keyTextBlock38);
-                    list.Add(pres.keyTextBlock39);
-                    list.Add(pres.keyTextBlock40);
-                    list.Add(pres.keyTextBlock41);
-                    list.Add(pres.keyTextBlock42);
-                    list.Add(pres.keyTextBlock43);
-                    list.Add(pres.keyTextBlock44);
-                    list.Add(pres.keyTextBlock45);
-                    list.Add(pres.keyTextBlock46);
-                    list.Add(pres.keyTextBlock47);
-                    list.Add(pres.keyTextBlock48);
-                    break;
-                case 3:
-                    x = 19;
-                    temp = "sTextBlock";
-                    while (x < 306)
-                    {
-                        if (x % 18 != 0 && (x + 1) % 18 != 0)
-                        {
-                            string y = temp + x;
-                            list.Add((TextBlock)pres.FindName(y));
-                            x++;
-                        }
-                        else
-                        {
-                            x++;
-                        }
-                    }
-                    break;
-                case 4:
-                    x = 1;
-                    temp = "sStateTextBlock";
-                    while (x < 17)
-                    {
-                        string y = temp + x;
-                        list.Add((TextBlock)pres.FindName(y));
-                        x++;
-                    }
-                    break;
-                case 5:
-                    x = 1;
-                    temp = "sResultTextBlock";
-                    while (x < 17)
-                    {
-                        string y = temp + x;
-                        list.Add((TextBlock)pres.FindName(y));
-                        x++;
-                    }
-                    break;
-                case 6:
-                    x = 1;
-                    temp = "mStateTextBlock";
-                    while (x < 17)
-                    {
-                        string y = temp + x;
-                        list.Add((TextBlock)pres.FindName(y));
-                        x++;
-                    }
-                    break;
-                case 7:
-                    x = 1;
-                    temp = "mTransitionTextBlock";
-                    while (x < 17)
-                    {
-                        string y = temp + x;
-                        list.Add((TextBlock)pres.FindName(y));
-                        x++;
-                    }
-                    break;
-                case 8:
-                    x = 1;
-                    temp = "mResultTextBlock";
-                    while (x < 17)
-                    {
-                        string y = temp + x;
-                        list.Add((TextBlock)pres.FindName(y));
-                        x++;
-                    }
-                    break;
-                default:
-                    break;
-            }
 
-            return list;
-        }
-        public void subBytes()
-        {
-            
-            List<TextBlock> sState = pres.textBlockList[4];
-            List<TextBlock> sResult = pres.textBlockList[5];
-            List<Border> tempBordes = new List<Border>();
-            int r;
-            int x = 0;
-            int y = 0;
-            int z = 0;
-            foreach (TextBlock tb in sState)
-            {
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    tb.Background = Brushes.Green;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.sTransitionTextBlock3.Text = tb.Text;
-                    pres.sTransitionTextBlock3.Background = Brushes.Green;
-                    pres.sTransitionBorder3.Visibility = Visibility.Visible;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    tb.Background = Brushes.Transparent;
-                    pres.sTransitionTextBlock3.Background = Brushes.Transparent;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.sTransitionBorder3.Visibility = Visibility.Hidden;
-                    pres.sTransitionTextBlock1.Text = pres.sTransitionTextBlock3.Text.Substring(0, 1);
-                    pres.sTransitionTextBlock2.Text = pres.sTransitionTextBlock3.Text.Substring(1, 1);
-                    pres.sTransitionTextBlock3.Text = "";
-                    pres.sTransitionBorder1.Visibility = Visibility.Visible;
-                    pres.sTransitionBorder2.Visibility = Visibility.Visible;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.sTransitionTextBlock2.Background = Brushes.Transparent;
-                    pres.sTransitionTextBlock1.Background = Brushes.Green;
-                }, null);
-                wait();               
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (pres.sTransitionTextBlock1.Text)
-                    {
-                        case "0":
-                            x = 0;
-                            pres.sBorder18.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder18);
-                            break;
-                        case "1":
-                            x = 1;
-                            pres.sBorder36.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder36);
-                            break;
-                        case "2":
-                            x = 2;
-                            pres.sBorder54.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder54);
-                            break;
-                        case "3":
-                            x = 3;
-                            pres.sBorder72.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder72);
-                            break;
-                        case "4":
-                            x = 4;
-                            pres.sBorder90.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder90);
-                            break;
-                        case "5":
-                            x = 5;
-                            pres.sBorder108.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder108);
-                            break;
-                        case "6":
-                            x = 6;
-                            pres.sBorder126.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder126);
-                            break;
-                        case "7":
-                            x = 7;
-                            pres.sBorder144.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder144);
-                            break;
-                        case "8":
-                            x = 8;
-                            pres.sBorder162.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder162);
-                            break;
-                        case "9":
-                            x = 9;
-                            pres.sBorder180.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder180);
-                            break;
-                        case "A":
-                            x = 10;
-                            pres.sBorder198.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder198);
-                            break;
-                        case "B":
-                            x = 11;
-                            pres.sBorder216.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder216);
-                            break;
-                        case "C":
-                            x = 12;
-                            pres.sBorder234.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder234);
-                            break;
-                        case "D":
-                            x = 13;
-                            pres.sBorder252.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder252);
-                            break;
-                        case "E":
-                            x = 14;
-                            pres.sBorder270.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder270);
-                            break;
-                        case "F":
-                            x = 15;
-                            pres.sBorder288.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder288);
-                            break;
-                        default:
-                            break;
-                    }
-                    pres.sTransitionTextBlock1.Background = Brushes.Transparent;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.sTransitionTextBlock2.Background = Brushes.Green;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (pres.sTransitionTextBlock2.Text)
-                    {
-                        case "0":
-                            y = 0;
-                            pres.sBorder1.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder1);
-                            break;
-                        case "1":
-                            y = 1;
-                            pres.sBorder2.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder2);
-                            break;
-                        case "2":
-                            y = 2;
-                            pres.sBorder3.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder3);
-                            break;
-                        case "3":
-                            y = 3;
-                            pres.sBorder4.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder4);
-                            break;
-                        case "4":
-                            y = 4;
-                            pres.sBorder5.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder5);
-                            break;
-                        case "5":
-                            y = 5;
-                            pres.sBorder6.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder6);
-                            break;
-                        case "6":
-                            y = 6;
-                            pres.sBorder7.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder7);
-                            break;
-                        case "7":
-                            y = 7;
-                            pres.sBorder8.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder8);
-                            break;
-                        case "8":
-                            y = 8;
-                            pres.sBorder9.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder9);
-                            break;
-                        case "9":
-                            y = 9;
-                            pres.sBorder10.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder10);
-                            break;
-                        case "A":
-                            y = 10;
-                            pres.sBorder11.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder11);
-                            break;
-                        case "B":
-                            y = 11;
-                            pres.sBorder12.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder12);
-                            break;
-                        case "C":
-                            y = 12;
-                            pres.sBorder13.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder13);
-                            break;
-                        case "D":
-                            y = 13;
-                            pres.sBorder14.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder14);
-                            break;
-                        case "E":
-                            y = 14;
-                            pres.sBorder15.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder15);
-                            break;
-                        case "F":
-                            y = 15;
-                            pres.sBorder16.Background = Brushes.Green;
-                            tempBordes.Add(pres.sBorder16);
-                            break;
-                        default:
-                            break;
-                    }
-                    pres.sTransitionTextBlock2.Background = Brushes.Transparent;
-                }, null);
-                wait();
-                r = (x + 1) * 18 + y + 1 - 19 - 2*x;                                    
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {                  
-                    pres.textBlockList[3][r].Background = Brushes.Green;
-                }, null);
-                wait();              
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal,(SendOrPostCallback)delegate
-                {
-                    sResult[z].Text = sBox[x][y].ToString("X2");
-                    sResult[z].Background = Brushes.Green;
-                    pres.sTransitionBorder1.Visibility = Visibility.Hidden;
-                    pres.sTransitionBorder2.Visibility = Visibility.Hidden;
-                }, null);
-                wait();
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    sResult[z].Background = Brushes.Transparent;
-                    foreach (Border br in tempBordes)
-                    {
-                        br.Background = Brushes.Yellow;
-                    }
-                    tempBordes.Clear();
-                    z++;
-                    pres.sTransitionTextBlock1.Text = "";
-                    pres.sTransitionTextBlock2.Text = "";
-                    pres.textBlockList[3][r].Background = Brushes.Transparent;
-                }, null);
-                wait();
-            }
-        }
-
-        private void wait()
-        {
-            if (!pres.autostep)
-            {
-                buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                buttonNextClickedEvent.WaitOne();
-            }
-            else
-            {
-                buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                buttonNextClickedEvent.WaitOne(pres.autostepSpeed);
-            }
-        }
-
+        /*
+        This method implements the "MixCol" operation
+        */
         private byte[] mixColumn(byte[] state)
         {
             byte[] result = new byte[16];
@@ -972,7 +440,7 @@ namespace Cryptool.Plugins.AESVisualisation
             BitArray tempBit4;
             BitArray tempBit5;
             bool add;
-            while(z < 4)
+            while (z < 4)
             {
                 switch (z)
                 {
@@ -1370,10 +838,141 @@ namespace Cryptool.Plugins.AESVisualisation
                         break;
                 }
             }
-            result = rearrangeText(result);         
+            result = rearrangeText(result);
             return result;
         }
 
+        /*
+        Method us to find correct byte in the S-Box during byte substitution
+        */
+        private int getSBoxXPosition(byte temp)
+        {
+            int x = 0;
+            string tempString = temp.ToString("X2");
+            tempString = tempString.Substring(0, 1);
+            switch (tempString)
+            {
+                case "0":
+                    x = 0;
+                    break;
+                case "1":
+                    x = 1;
+                    break;
+                case "2":
+                    x = 2;
+                    break;
+                case "3":
+                    x = 3;
+                    break;
+                case "4":
+                    x = 4;
+                    break;
+                case "5":
+                    x = 5;
+                    break;
+                case "6":
+                    x = 6;
+                    break;
+                case "7":
+                    x = 7;
+                    break;
+                case "8":
+                    x = 8;
+                    break;
+                case "9":
+                    x = 9;
+                    break;
+                case "A":
+                    x = 10;
+                    break;
+                case "B":
+                    x = 11;
+                    break;
+                case "C":
+                    x = 12;
+                    break;
+                case "D":
+                    x = 13;
+                    break;
+                case "E":
+                    x = 14;
+                    break;
+                case "F":
+                    x = 15;
+                    break;
+                default:
+                    break;
+            }
+            return x;
+        }
+
+        /*
+        Method us to find correct byte in the S-Box during byte substitution
+        */
+        private int getSBoxYPosition(byte temp)
+        {
+            int x = 0;
+            string tempString = temp.ToString("X2");
+            tempString = tempString.Substring(1, 1);
+            switch (tempString)
+            {
+                case "0":
+                    x = 0;
+                    break;
+                case "1":
+                    x = 1;
+                    break;
+                case "2":
+                    x = 2;
+                    break;
+                case "3":
+                    x = 3;
+                    break;
+                case "4":
+                    x = 4;
+                    break;
+                case "5":
+                    x = 5;
+                    break;
+                case "6":
+                    x = 6;
+                    break;
+                case "7":
+                    x = 7;
+                    break;
+                case "8":
+                    x = 8;
+                    break;
+                case "9":
+                    x = 9;
+                    break;
+                case "A":
+                    x = 10;
+                    break;
+                case "B":
+                    x = 11;
+                    break;
+                case "C":
+                    x = 12;
+                    break;
+                case "D":
+                    x = 13;
+                    break;
+                case "E":
+                    x = 14;
+                    break;
+                case "F":
+                    x = 15;
+                    break;
+                default:
+                    break;
+            }
+            return x;
+        } 
+
+        /*
+        This method takes a BitArray performs a left Shift on it and returns the result.
+        */
         private BitArray leftShift(BitArray temp)
         {
             BitArray result = new BitArray(8);
@@ -1388,6 +987,9 @@ namespace Cryptool.Plugins.AESVisualisation
             return result;
         }
 
+        /*
+        This method takes a BitArray and transforms it into a Byte.
+        */
         private byte convertToByte(BitArray bits)
         {
             byte[] bytes = new byte[1];
@@ -1395,6 +997,9 @@ namespace Cryptool.Plugins.AESVisualisation
             return bytes[0];
         }
 
+        /*
+        A method needed to make shure the input is used correctly.
+        */
         private byte[] arrangeText(byte[] input)
         {
             byte[] result = new byte[16];
@@ -1417,6 +1022,9 @@ namespace Cryptool.Plugins.AESVisualisation
             return result;
         }
 
+        /*
+        The counterpart to arrangeText(byte[] inpunt). 
+        */
         private byte[] rearrangeText(byte[] input)
         {
             byte[] result = new byte[16];
@@ -1439,6 +1047,9 @@ namespace Cryptool.Plugins.AESVisualisation
             return result;
         }
 
+        /*
+        This methods implements the key expansion algorithm for 128 bit keys.
+        */
         private void expandKey()
         {
             byte[] calc = new byte[4];
@@ -1483,6 +1094,9 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
+        /*
+        This method implements the key expansion algorithm for 192 bit keys.
+        */
         private void expandKey192()
         {
             byte[] tempkey = new byte[216];
@@ -1576,6 +1190,9 @@ namespace Cryptool.Plugins.AESVisualisation
             }        
         }
 
+        /*
+        This method implements the key expansion algorithm for 256 bit keys.
+        */
         private void expandKey256()
         {
             byte[] tempkey = new byte[350];
@@ -1670,6 +1287,9 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
+        /*
+        This methods sets the round constants needed for the key expansion.
+        */
         private void setRoundConstant()
         {          
             roundConstant[0] = new byte[] { 1, 0, 0, 0 };
@@ -1684,6 +1304,11 @@ namespace Cryptool.Plugins.AESVisualisation
             roundConstant[9] = new byte[] { 54, 0, 0, 0 };
         }
 
+        /*
+        This methods checks whether the key given by the user fits the length chosen by the user.
+        If the key is too short it gets padded with "0".
+        If the key is too long it gets cut off at the chosen length.
+        */
         private void checkKeysize()
         {
             if (key.Length != 16 + 8 * keysize)
@@ -1715,6 +1340,11 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
+        /*
+        This methods checks whether the input text has the right length.
+        If the text is too short it gets padded with "0".
+        If the text is too long it gets cut off at the chosen length.
+        */
         private void checkTextLength()
         {
             if(text.Length != 16)
@@ -1744,91 +1374,6 @@ namespace Cryptool.Plugins.AESVisualisation
                 }
                 text = temp;
             }
-        }
-
-        private void execution()
-        {
-            //presThread = new Thread(pres.execute);
-            keysize = settings.Keysize;
-            pres.keysize = keysize;
-            language = settings.Language;
-            pres.language = language;
-            pres.setLanguage();
-            checkKeysize();
-            checkTextLength();
-            outputStreamWriter = new CStreamWriter();
-            roundNumber = 1;
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                pres.invisible();
-                pres.buttonVisible();
-                pres.hideButton();
-            }, null);
-            ProgressChanged(0, 1);
-            OutputStream = outputStreamWriter;
-            OnPropertyChanged("OutputStream");
-            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            setRoundConstant();
-            byte[] tempState = text;
-            int r = 0;
-            int t = 0;
-            foreach (byte b in key)
-            {
-                if (keyList[r] == null)
-                {
-                    keyList[r] = new byte[16];
-                }
-                keyList[r][t] = b;
-                t++;
-                if (t == 16)
-                {
-                    t = 0;
-                    r++;
-                }
-            }
-            states[0] = addKey(tempState, keyList[0]);
-            pres.tempState = tempState;
-            pres.roundConstant = this.roundConstant;
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                pres.createSBox();
-                pres.StartCanvas.Visibility = Visibility.Hidden;
-                pres.showButton();
-            }, null);
-            switch (keysize)
-            {
-                case 0:
-                    expandKey();
-                    break;
-                case 1:
-                    expandKey192();
-                    break;
-                case 2:
-                    expandKey256();
-                    break;
-                default:
-                    break;
-            }
-            setStates();
-            roundNumber = 1;
-            pres.states = states;
-            pres.keyList = keyList;
-            presThread.Start();
-            //while (presThread.IsAlive)
-            //{
-            //    ProgressChanged(pres.progress, 1);
-            //}
-            outputStreamWriter.Write(states[39 + 8 * keysize]);
-            outputStreamWriter.Close();
-            buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            ProgressChanged(1, 1);
-        }
-
-        private void newPresentation()
-        {
-            pres = null;
-            pres = new AESPresentation();
         }
 
         #endregion
