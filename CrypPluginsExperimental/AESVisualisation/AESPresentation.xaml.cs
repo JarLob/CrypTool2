@@ -53,11 +53,11 @@ namespace AESVisualisation
         private Boolean initialRound = true;
         private int displayedExplanation = 0;
         private Boolean end = false;
-        private volatile bool _stop = false;
         public int operationCounter = 0;
         public int operationCounter1 = 0;
         public int operationCounter2 = 0;
         public bool abort = false;
+        public bool stopp = false;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -1255,6 +1255,10 @@ namespace AESVisualisation
                     roundNumber = saveRoundNumber;
                 }
                 expansion = false;
+                if (stopp)
+                {
+                    return;
+                }
                 if (!finish)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -1407,6 +1411,10 @@ namespace AESVisualisation
                 if (roundNumber == 0)
                 {
                     roundNumber++;
+                }
+                if (stopp)
+                {
+                    return;
                 }
             }
             progress = 1;
@@ -3338,36 +3346,36 @@ namespace AESVisualisation
                     case 3:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            transitionBorders[10].Background = Brushes.Green;
+                            transitionBorders[1].Background = Brushes.Green;
                         }, null);
                         break;
                     case 4:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            transitionBorders[10].Background = Brushes.Transparent;
-                            transitionBlocks[10].Text = "";
+                            transitionBorders[1].Background = Brushes.Transparent;
+                            transitionBlocks[1].Text = "";
                         }, null);
                         break;
                     case 5:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            transitionBlocks[1].Text = "";
-                            transitionBlocks[4].Text = keyBlocks[3].Text;
-                            transitionBlocks[7].Text = keyBlocks[7].Text;
-                            transitionBlocks[10].Text = keyBlocks[11].Text;
+                            transitionBlocks[1].Text = keyBlocks[7].Text;
+                            transitionBlocks[4].Text = keyBlocks[11].Text;
+                            transitionBlocks[7].Text = keyBlocks[15].Text;
+                            transitionBlocks[10].Text = "";
                         }, null);
                         break;
                     case 6:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            transitionBlocks[1].Text = keyBlocks[15].Text;
-                            transitionBorders[1].Background = Brushes.Green;
+                            transitionBlocks[10].Text = keyBlocks[3].Text;
+                            transitionBorders[10].Background = Brushes.Green;
                         }, null);
                         break;
                     case 7:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            transitionBorders[1].Background = Brushes.Transparent;
+                            transitionBorders[10].Background = Brushes.Transparent;
                             expansionExplanation.Visibility = Visibility.Hidden;
                             expansionExplanationDE.Visibility = Visibility.Hidden;
                             displayedExplanation = 0;
@@ -3863,7 +3871,7 @@ namespace AESVisualisation
                                                             transition1Borders[z * 3].Background = Brushes.Transparent;
                                                             transition1Borders[z * 3 + 2].Background = Brushes.Transparent;
                                                             resultBorders[z * 4 + x].Background = Brushes.Green;
-                                                            resultBlocks[z * 4 + x].Text = keyList[roundNumber][z * 4 + x].ToString("X2");
+                                                            resultBlocks[z * 4 + x].Text = arrangeText(keyList[roundNumber])[z * 4 + x].ToString("X2");
                                                         }, null);
                                                         break;
                                                     case 3:
@@ -6870,7 +6878,7 @@ namespace AESVisualisation
             int x;
             if(keysize == 0)
             {
-                prevKey = keyList[roundNumber - 1];
+                prevKey = arrangeText(keyList[roundNumber - 1]);
                 x = 0;
                 foreach (TextBlock tb in keyBlockList)
                 {
@@ -7698,11 +7706,6 @@ namespace AESVisualisation
                 skip = true;
 
             }
-        }
-
-        public void requestStop()
-        {
-            _stop = true;
         }
 
         public void stop()

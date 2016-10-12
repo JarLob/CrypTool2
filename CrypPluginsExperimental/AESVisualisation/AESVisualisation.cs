@@ -152,9 +152,14 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.finish = false;
             pres.roundNumber = 1;
             pres.first = true;
+            pres.stopp = false;
             pres.operationCounter = 0;
             pres.operationCounter1 = 0;
             pres.operationCounter2 = 0;
+            keyList = new byte[15][];
+            states = new byte[56][];
+            roundNumber = 1;
+            action = 1;
             aborted = false;
             Thread presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
@@ -253,6 +258,7 @@ namespace Cryptool.Plugins.AESVisualisation
             aborted = true;
             pres.abort = true;
             pres.expansion = false;
+            pres.stopp = true;
             pres.finish = true;
             pres.buttonNextClickedEvent.Set();
             pres.buttonNextClickedEvent.Set();
