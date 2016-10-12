@@ -111,6 +111,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if(keysize == 0)
+            {
+                action = 1;
+                roundNumber = 1;
+                removeColors();
+                lightRemoveColor();
+                round1Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             skip = true;
             cleanUp();
             removeColors();
@@ -152,6 +163,17 @@ namespace AESVisualisation
                 {
                     setUpExpansion();
                 }, null);
+                return;
+            }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 2;
+                removeColors();
+                lightRemoveColor();
+                round2Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
                 return;
             }
             skip = true;
@@ -196,6 +218,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 3;
+                removeColors();
+                lightRemoveColor();
+                round3Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             skip = true;
             cleanUp();
             removeColors();
@@ -236,6 +269,17 @@ namespace AESVisualisation
                 {
                     setUpExpansion();
                 }, null);
+                return;
+            }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 4;
+                removeColors();
+                lightRemoveColor();
+                round4Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
                 return;
             }
             skip = true;
@@ -280,6 +324,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 5;
+                removeColors();
+                lightRemoveColor();
+                round5Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             skip = true;
             cleanUp();
             removeColors();
@@ -320,6 +375,17 @@ namespace AESVisualisation
                 {
                     setUpExpansion();
                 }, null);
+                return;
+            }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 6;
+                removeColors();
+                lightRemoveColor();
+                round6Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
                 return;
             }
             skip = true;
@@ -364,6 +430,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 7;
+                removeColors();
+                lightRemoveColor();
+                round7Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             skip = true;
             cleanUp();
             removeColors();
@@ -404,6 +481,17 @@ namespace AESVisualisation
                 {
                     setUpExpansion();
                 }, null);
+                return;
+            }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 8;
+                removeColors();
+                lightRemoveColor();
+                round8Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
                 return;
             }
             skip = true;
@@ -448,6 +536,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 9;
+                removeColors();
+                lightRemoveColor();
+                round9Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             skip = true;
             cleanUp();
             removeColors();
@@ -486,6 +585,17 @@ namespace AESVisualisation
                 }, null);
                 return;
             }
+            if (keysize == 0)
+            {
+                action = 1;
+                roundNumber = 10;
+                removeColors();
+                lightRemoveColor();
+                round10Button.Background = Brushes.Aqua;
+                abort = true;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             checkInitialRound();
             skip = true;
             cleanUp();
@@ -511,6 +621,10 @@ namespace AESVisualisation
             autostep = false;
             checkInitialRound();
             initialRound = true;
+            expansion = !expansion;
+            abort = true;
+            buttonNextClickedEvent.Set();
+            return;
             cleanUp();
             expansion = !expansion;
             buttonNextClickedEvent.Set();
@@ -525,6 +639,10 @@ namespace AESVisualisation
             {
                 return;
             }
+            action = 1;
+            abort = true;
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             lightRemoveColor();
@@ -539,6 +657,10 @@ namespace AESVisualisation
             {
                 return;
             }
+            action = 2;
+            abort = true;
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             lightRemoveColor();
@@ -553,6 +675,10 @@ namespace AESVisualisation
             {
                 return;
             }
+            action = 3;
+            abort = true;
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             lightRemoveColor();
@@ -567,6 +693,10 @@ namespace AESVisualisation
             {
                 return;
             }
+            action = 4;
+            abort = true;
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             lightRemoveColor();
@@ -594,12 +724,9 @@ namespace AESVisualisation
                 if(roundNumber > 1)
                 {
                     roundNumber--;
-                    skip = true;
-                    cleanUp();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
+                    abort = true;
+                    buttonNextClickedEvent.Set();
+                    buttonNextClickedEvent.Set();
                     return;
                 }
                 return;
@@ -608,6 +735,21 @@ namespace AESVisualisation
             {
                 return;
             }
+            action--;
+            if (action == 0)
+            {
+                action = 4;
+                roundNumber--;
+            }
+            if (roundNumber == 10 && action == 3)
+            {
+                action = 2;
+            }
+            abort = true;
+            changeRoundButton();
+            buttonNextClickedEvent.Set();
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             switch (action)
@@ -693,12 +835,10 @@ namespace AESVisualisation
                 if (roundNumber < 10 && keysize == 0)
                 {
                     roundNumber++;
-                    skip = true;
-                    cleanUp();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
+                    abort = true;
+                    changeRoundButton();
+                    buttonNextClickedEvent.Set();
+                    buttonNextClickedEvent.Set();
                     return;
                 }
                 else if(roundNumber < 8 && keysize == 1)
@@ -744,6 +884,21 @@ namespace AESVisualisation
             {
                 return;
             }
+            action++;
+            if(action == 5)
+            {
+                action = 1;
+                roundNumber++;
+            }
+            if(roundNumber == 10 && action == 3)
+            {
+                action = 4;
+            }
+            abort = true;
+            changeRoundButton();
+            buttonNextClickedEvent.Set();
+            buttonNextClickedEvent.Set();
+            return;
             skip = true;
             cleanUp();
             switch (action)
@@ -1290,7 +1445,20 @@ namespace AESVisualisation
                         case 1:
                             //encryptionThread = new Thread(subBytes);
                             skip = false;
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setUpSubByte(states);                           
+                            }, null);
+                            autostep = false;
+                            wait();
                             subBytes();
+                            if (!abort)
+                            {
+                                action = 2;
+                                autostep = false;
+                                wait();
+                            }
+                            cleanUp();
                             //encryptionThread.Start();
                             //while (encryptionThread.IsAlive)
                             //{
@@ -1299,20 +1467,21 @@ namespace AESVisualisation
                             //        encryptionThread.Abort();                                  
                             //    }
                             //}
-                            if (!skip)
-                            {
-                                autostep = false;
-                                wait();
-                                action = 2;
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    setUpShiftRows();
-                                    enableButtons();
-                                }, null);
-                                autostep = false;
-                                wait();
-                            }
-                            skip = false;
+                            //if (!skip)
+                            //{
+                            //    autostep = false;
+                            //    wait();
+                            //    action = 2;
+                            //    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //    {
+                            //        setUpShiftRows();
+                            //        enableButtons();
+                            //    }, null);
+                            //    autostep = false;
+                            //    wait();
+                            //}
+                            //skip = false;
+                            abort = false;
                             if (expansion)
                             {
                                 return;
@@ -1329,39 +1498,56 @@ namespace AESVisualisation
                             //            encryptionThread.Abort();
                             //        }
                             //    }
-                            shiftRow();
-                            if (!skip)
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                autostep = false;
-                                wait();
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    shiftRowGrid.Visibility = Visibility.Hidden;
-                                    lightRemoveColor();
-                                    resetShiftRow();
-                                }, null);
+                                setUpShiftRows();                               
+                            }, null);
+                            autostep = false;
+                            wait();
+                            shiftRow();
+                            if (!abort)
+                            {
                                 if (roundNumber < 10 + keysize * 2)
-                                {
                                     action = 3;
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                    {
-                                        setUpMixColumns();
-                                        enableButtons();
-                                    }, null);
-                                }
                                 else
-                                {
                                     action = 4;
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                    {
-                                        setUpAddKey();
-                                        enableButtons();
-                                    }, null);
-                                }
                                 autostep = false;
                                 wait();
                             }
-                            skip = false;                       
+                            cleanUp();
+                            //if (!skip)
+                            //{
+                            //    autostep = false;
+                            //    wait();
+                            //    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //    {
+                            //        shiftRowGrid.Visibility = Visibility.Hidden;
+                            //        lightRemoveColor();
+                            //        resetShiftRow();
+                            //    }, null);
+                            //    if (roundNumber < 10 + keysize * 2)
+                            //    {
+                            //        action = 3;
+                            //        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //        {
+                            //            setUpMixColumns();
+                            //            enableButtons();
+                            //        }, null);
+                            //    }
+                            //    else
+                            //    {
+                            //        action = 4;
+                            //        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //        {
+                            //            setUpAddKey();
+                            //            enableButtons();
+                            //        }, null);
+                            //    }
+                            //    autostep = false;
+                            //    wait();
+                            //}
+                            //skip = false;   
+                            abort = false;
                             if (expansion)
                             {
                                 return;
@@ -1378,26 +1564,48 @@ namespace AESVisualisation
                             //        encryptionThread.Abort();
                             //    }
                             //}
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                setUpMixColumns();
+                            }, null);
+                            autostep = false;
+                            wait();
                             mixColumns();
-                            if (!skip)
+                            if (!abort)
                             {
                                 action = 4;
                                 autostep = false;
                                 wait();
-                                List<TextBlock> resultBoxes = textBlockList[8];
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    foreach (TextBlock tb in resultBoxes)
-                                    {
-                                        tb.Text = "";
-                                    }
-                                    setUpAddKey();
-                                    enableButtons();
-                                }, null);
-                                autostep = false;
-                                wait();
                             }
-                            skip = false;
+                            cleanUp();
+                            List<TextBlock> resultBoxes = textBlockList[8];
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                foreach (TextBlock tb in resultBoxes)
+                                {
+                                    tb.Text = "";
+                                }
+                            }, null);
+                            //if (!skip)
+                            //{
+                            //    action = 4;
+                            //    autostep = false;
+                            //    wait();
+                            //    List<TextBlock> resultBoxes = textBlockList[8];
+                            //    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //    {
+                            //        foreach (TextBlock tb in resultBoxes)
+                            //        {
+                            //            tb.Text = "";
+                            //        }
+                            //        setUpAddKey();
+                            //        enableButtons();
+                            //    }, null);
+                            //    autostep = false;
+                            //    wait();
+                            //}
+                            //skip = false;
+                            abort = false;
                             if (expansion)
                             {
                                 return;
@@ -1414,21 +1622,16 @@ namespace AESVisualisation
                             //        encryptionThread.Abort();                                  
                             //    }     
                             //}
-                            addKey();
-                            if (!skip)
+                            abort = false;
+                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                autostep = false;
-                                wait();
-                                if (initialRound)
-                                {
-                                    initialRound = false;
-                                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                    {
-                                        InitialRoundTextBlock.Visibility = Visibility.Hidden;
-                                        addKeyButton.SetValue(Grid.ColumnProperty, 4);
-                                        buttonVisible();
-                                    }, null);
-                                }
+                                setUpAddKey();
+                            }, null);
+                            autostep = false;
+                            wait();
+                            addKey();
+                            if (!abort)
+                            {
                                 if (roundNumber < 10 + keysize * 2)
                                 {
                                     action = 1;
@@ -1444,23 +1647,73 @@ namespace AESVisualisation
                                         }
                                         removeColors();
                                         changeRoundButton();
-                                        setUpSubByte(states);
                                         enableButtons();
                                     }, null);
-                                    autostep = false;
-                                    wait();
-                                    if (expansion)
-                                    {
-                                        return;
-                                    }
                                 }
                                 else
                                 {
                                     action = 5;
                                 }
+                                autostep = false;
+                                wait(); 
                             }
-                            skip = false;
- 
+                            if (initialRound)
+                            {
+                                initialRound = false;
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                {
+                                    InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                                    addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                    buttonVisible();
+                                }, null);
+                            }
+                            cleanUp();
+                            //if (!skip)
+                            //{
+                            //    autostep = false;
+                            //    wait();
+                            //    if (initialRound)
+                            //    {
+                            //        initialRound = false;
+                            //        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //        {
+                            //            InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                            //            addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                            //            buttonVisible();
+                            //        }, null);
+                            //    }
+                            //    if (roundNumber < 10 + keysize * 2)
+                            //    {
+                            //        action = 1;
+                            //        roundNumber++;
+                            //        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            //        {
+                            //            if (roundNumber > 6 && keysize == 1)
+                            //            {
+                            //                if (keysize == 1)
+                            //                {
+                            //                    shiftButtons(1);
+                            //                }
+                            //            }
+                            //            removeColors();
+                            //            changeRoundButton();
+                            //            setUpSubByte(states);
+                            //            enableButtons();
+                            //        }, null);
+                            //        autostep = false;
+                            //        wait();
+                            //        if (expansion)
+                            //        {
+                            //            return;
+                            //        }
+                            //    }
+                            //    else
+                            //    {
+                            //        action = 5;
+                            //    }
+                            //}
+                            //skip = false;
+                            abort = false;
                             if (expansion)
                             {
                                 return;
