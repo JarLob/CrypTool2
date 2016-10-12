@@ -153,6 +153,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.roundNumber = 1;
             pres.first = true;
             pres.stopp = false;
+            pres.start = true;
             pres.operationCounter = 0;
             pres.operationCounter1 = 0;
             pres.operationCounter2 = 0;
@@ -262,7 +263,6 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.finish = true;
             pres.buttonNextClickedEvent.Set();
             pres.buttonNextClickedEvent.Set();
-            pres.initialState();
             //pres.stop();
             //aborted = true;
             //if(workerThread != null)

@@ -175,7 +175,7 @@
                 </Viewbox>
             </Grid>
 
-            <Canvas Name="StartCanvas" Visibility="Visible" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="11" >
+            <Canvas Name="StartCanvas" Visibility="Hidden" Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="11" >
                 <!--<Image Name="StartImage" Source="images/Start.png" Visibility="Visible" Width="713" Canvas.Left="10" Canvas.Top="10" Height="402"/>-->
             </Canvas>
             <!-- Region Button -->

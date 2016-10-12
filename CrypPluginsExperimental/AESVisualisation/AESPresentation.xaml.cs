@@ -49,7 +49,7 @@ namespace AESVisualisation
         public bool skip = false;
         public bool finish = false;
         public int language;
-        private Boolean start = true;
+        public Boolean start = true;
         private Boolean initialRound = true;
         private int displayedExplanation = 0;
         private Boolean end = false;
@@ -1257,6 +1257,7 @@ namespace AESVisualisation
                 expansion = false;
                 if (stopp)
                 {
+                    initialState();
                     return;
                 }
                 if (!finish)
@@ -1414,6 +1415,7 @@ namespace AESVisualisation
                 }
                 if (stopp)
                 {
+                    initialState();
                     return;
                 }
             }
@@ -7741,11 +7743,15 @@ namespace AESVisualisation
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
+                expansion = true;
                 cleanUp();
+                hideButton();
+                startGrid.Visibility = Visibility.Visible;
+                expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
                 startTextBlock.Visibility = Visibility.Visible;
                 startTextBlock1.Visibility = Visibility.Visible;
                 startTextBlock2.Visibility = Visibility.Visible;
-                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
         }
 
