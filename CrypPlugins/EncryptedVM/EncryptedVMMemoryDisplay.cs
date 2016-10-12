@@ -12,7 +12,7 @@ using Microsoft.Research.SEAL;
 
 namespace Cryptool.Plugins.EncryptedVM
 {
-    [Author("Robert Stark", "robert.stark@student.uni-siegen.de", "", "")]
+    [Author("Robert Stark", "robert.stark@rub.de", "", "")]
     [PluginInfo("Cryptool.Plugins.EncryptedVM.Properties.Resources", "EncryptedVM_MemoryDisplay_Name", "EncryptedVM_MemoryDisplay_Tooltip", "EncryptedVM/doc/display.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class EncryptedVMMemoryDisplay : ICrypComponent

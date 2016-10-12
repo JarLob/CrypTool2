@@ -8,7 +8,7 @@ using Microsoft.Research.SEAL;
 
 namespace Cryptool.Plugins.EncryptedVM
 {
-    [Author("Robert Stark", "robert.stark@student.uni-siegen.de", "", "")]
+    [Author("Robert Stark", "robert.stark@rub.de", "", "")]
     [PluginInfo("Cryptool.Plugins.EncryptedVM.Properties.Resources", "EncryptedVM_Machine_Name", "EncryptedVM_Machine_Tooltip", "EncryptedVM/doc/machine.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class EncryptedVMMachine : ICrypComponent
