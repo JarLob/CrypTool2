@@ -1219,25 +1219,26 @@ namespace AESVisualisation
                             skip = false;
                         }
                         skip = false;
-                        expansionThread = new Thread(keyExpansion256);
-                        expansionThread.Start();
-                        while (expansionThread.IsAlive)
-                        {
-                            if (skip)
-                            {
-                                expansionThread.Abort();
-                                skip = false;
-                                if (!expansion)
-                                {
-                                    saveRoundNumber = roundNumber;
-                                    roundNumber = 8;
-                                }
-                                if (start)
-                                {
-                                    roundNumber = 1;
-                                }
-                            }
-                        }
+                        keyExpansion256();
+                        //expansionThread = new Thread(keyExpansion256);
+                        //expansionThread.Start();
+                        //while (expansionThread.IsAlive)
+                        //{
+                        //    if (skip)
+                        //    {
+                        //        expansionThread.Abort();
+                        //        skip = false;
+                        //        if (!expansion)
+                        //        {
+                        //            saveRoundNumber = roundNumber;
+                        //            roundNumber = 8;
+                        //        }
+                        //        if (start)
+                        //        {
+                        //            roundNumber = 1;
+                        //        }
+                        //    }
+                        //}
                         progress = roundNumber * 0.5 / 7;
                         if (roundNumber < 8 && !start)
                         {
@@ -1768,872 +1769,1038 @@ namespace AESVisualisation
             {
                 return;
             }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            while (!abort && operationCounter < 22)
             {
-                transition2Blocks[1].Text = keyBlocks[28].Text;
-                transition2Blocks[4].Text = keyBlocks[29].Text;
-                transition2Blocks[7].Text = keyBlocks[30].Text;
-                transition2Blocks[10].Text = keyBlocks[31].Text;
-            }, null);
-            markBorders2(14, new int[] { 28, 29, 30, 31 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                expansionTransitionGrid2.Visibility = Visibility.Visible;
-            }, null);
-            unmarkBorders2(14, new int[] { 28, 29, 30, 31 });
-            markBorders2(16, new int[] { 1, 4, 7, 10 });
-            wait();
-            unmarkBorders2(16, new int[] { 1, 4, 7, 10 });
-            wait();
-            markBorders2(16, new int[] { 1 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition2Blocks[1].Text = "";
-            }, null);
-            unmarkBorders2(16, new int[] { 1 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition2Blocks[1].Text = keyBlocks[29].Text;
-                transition2Blocks[4].Text = keyBlocks[30].Text;
-                transition2Blocks[7].Text = keyBlocks[31].Text;
-                transition2Blocks[10].Text = "";
-            }, null);
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition2Blocks[10].Text = keyBlocks[28].Text;
-            }, null);
-            markBorders2(16, new int[] { 10 });
-            wait();
-            unmarkBorders2(16, new int[] { 10 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                sBoxGrid.Visibility = Visibility.Visible;
-                expansionTransitionGrid1.Visibility = Visibility.Visible;
-            }, null);
-            wait();
-            for (int r = 0; r < 4; r++)
-            {
-                markBorders2(16, new int[] { 1 + 3 * r });
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                switch (operationCounter)
                 {
-                    transition2Borders[1 + 3 * r].Visibility = Visibility.Hidden;
-                    transition2Borders[3 * r].Visibility = Visibility.Visible;
-                    transition2Borders[2 + 3 * r].Visibility = Visibility.Visible;
-                    transition2Blocks[3 * r].Text = transition2Blocks[3 * r + 1].Text.Substring(0, 1);
-                    transition2Blocks[3 * r + 2].Text = transition2Blocks[3 * r + 1].Text.Substring(1, 1);
-                }, null);
-                unmarkBorders2(16, new int[] { 1 + 3 * r });
-                wait();
-                markBorders2(16, new int[] { 3 * r });
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (transition2Blocks[3 * r].Text)
-                    {
-                        case "0":
-                            x = 0;
-                            sBorder18.Background = Brushes.Green;
-                            tempBordes.Add(sBorder18);
-                            break;
-                        case "1":
-                            x = 1;
-                            sBorder36.Background = Brushes.Green;
-                            tempBordes.Add(sBorder36);
-                            break;
-                        case "2":
-                            x = 2;
-                            sBorder54.Background = Brushes.Green;
-                            tempBordes.Add(sBorder54);
-                            break;
-                        case "3":
-                            x = 3;
-                            sBorder72.Background = Brushes.Green;
-                            tempBordes.Add(sBorder72);
-                            break;
-                        case "4":
-                            x = 4;
-                            sBorder90.Background = Brushes.Green;
-                            tempBordes.Add(sBorder90);
-                            break;
-                        case "5":
-                            x = 5;
-                            sBorder108.Background = Brushes.Green;
-                            tempBordes.Add(sBorder108);
-                            break;
-                        case "6":
-                            x = 6;
-                            sBorder126.Background = Brushes.Green;
-                            tempBordes.Add(sBorder126);
-                            break;
-                        case "7":
-                            x = 7;
-                            sBorder144.Background = Brushes.Green;
-                            tempBordes.Add(sBorder144);
-                            break;
-                        case "8":
-                            x = 8;
-                            sBorder162.Background = Brushes.Green;
-                            tempBordes.Add(sBorder162);
-                            break;
-                        case "9":
-                            x = 9;
-                            sBorder180.Background = Brushes.Green;
-                            tempBordes.Add(sBorder180);
-                            break;
-                        case "A":
-                            x = 10;
-                            sBorder198.Background = Brushes.Green;
-                            tempBordes.Add(sBorder198);
-                            break;
-                        case "B":
-                            x = 11;
-                            sBorder216.Background = Brushes.Green;
-                            tempBordes.Add(sBorder216);
-                            break;
-                        case "C":
-                            x = 12;
-                            sBorder234.Background = Brushes.Green;
-                            tempBordes.Add(sBorder234);
-                            break;
-                        case "D":
-                            x = 13;
-                            sBorder252.Background = Brushes.Green;
-                            tempBordes.Add(sBorder252);
-                            break;
-                        case "E":
-                            x = 14;
-                            sBorder270.Background = Brushes.Green;
-                            tempBordes.Add(sBorder270);
-                            break;
-                        case "F":
-                            x = 15;
-                            sBorder288.Background = Brushes.Green;
-                            tempBordes.Add(sBorder288);
-                            break;
-                        default:
-                            break;
-                    }
-                    unmarkBorders2(16, new int[] { 3 * r });
-                }, null);
-                wait();
-                markBorders2(16, new int[] { 2 + 3 * r });
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (transition2Blocks[3 * r + 2].Text)
-                    {
-                        case "0":
-                            y = 0;
-                            sBorder1.Background = Brushes.Green;
-                            tempBordes.Add(sBorder1);
-                            break;
-                        case "1":
-                            y = 1;
-                            sBorder2.Background = Brushes.Green;
-                            tempBordes.Add(sBorder2);
-                            break;
-                        case "2":
-                            y = 2;
-                            sBorder3.Background = Brushes.Green;
-                            tempBordes.Add(sBorder3);
-                            break;
-                        case "3":
-                            y = 3;
-                            sBorder4.Background = Brushes.Green;
-                            tempBordes.Add(sBorder4);
-                            break;
-                        case "4":
-                            y = 4;
-                            sBorder5.Background = Brushes.Green;
-                            tempBordes.Add(sBorder5);
-                            break;
-                        case "5":
-                            y = 5;
-                            sBorder6.Background = Brushes.Green;
-                            tempBordes.Add(sBorder6);
-                            break;
-                        case "6":
-                            y = 6;
-                            sBorder7.Background = Brushes.Green;
-                            tempBordes.Add(sBorder7);
-                            break;
-                        case "7":
-                            y = 7;
-                            sBorder8.Background = Brushes.Green;
-                            tempBordes.Add(sBorder8);
-                            break;
-                        case "8":
-                            y = 8;
-                            sBorder9.Background = Brushes.Green;
-                            tempBordes.Add(sBorder9);
-                            break;
-                        case "9":
-                            y = 9;
-                            sBorder10.Background = Brushes.Green;
-                            tempBordes.Add(sBorder10);
-                            break;
-                        case "A":
-                            y = 10;
-                            sBorder11.Background = Brushes.Green;
-                            tempBordes.Add(sBorder11);
-                            break;
-                        case "B":
-                            y = 11;
-                            sBorder12.Background = Brushes.Green;
-                            tempBordes.Add(sBorder12);
-                            break;
-                        case "C":
-                            y = 12;
-                            sBorder13.Background = Brushes.Green;
-                            tempBordes.Add(sBorder13);
-                            break;
-                        case "D":
-                            y = 13;
-                            sBorder14.Background = Brushes.Green;
-                            tempBordes.Add(sBorder14);
-                            break;
-                        case "E":
-                            y = 14;
-                            sBorder15.Background = Brushes.Green;
-                            tempBordes.Add(sBorder15);
-                            break;
-                        case "F":
-                            y = 15;
-                            sBorder16.Background = Brushes.Green;
-                            tempBordes.Add(sBorder16);
-                            break;
-                        default:
-                            break;
-                    }
-                    unmarkBorders2(16, new int[] { 2 + 3 * r });
-                }, null);
-                wait();
-                z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    textBlockList[3][z].Background = Brushes.Green;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transition1Blocks[r * 3 + 2].Text = sBox[x][y].ToString("X2");
-                    transition1Blocks[r * 3 + 2].Background = Brushes.Green;
-                    transition2Borders[3 * r].Visibility = Visibility.Hidden;
-                    transition2Borders[2 + 3 * r].Visibility = Visibility.Hidden;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transition1Blocks[r * 3 + 2].Background = Brushes.Transparent;
-                    foreach (Border br in tempBordes)
-                    {
-                        br.Background = Brushes.Yellow;
-                    }
-                    tempBordes.Clear();
-                    transition2Blocks[3 * r].Text = "";
-                    transition2Blocks[3 * r + 2].Text = "";
-                    textBlockList[3][z].Background = Brushes.Transparent;
-                }, null);
-                wait();
-            }
-            byte[] constant = roundConstant[roundNumber - 1];
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition1Borders[0].Visibility = Visibility.Visible;
-                transition1Borders[3].Visibility = Visibility.Visible;
-                transition1Borders[6].Visibility = Visibility.Visible;
-                transition1Borders[9].Visibility = Visibility.Visible;
-                transition1Blocks[0].Text = constant[0].ToString("X2");
-                transition1Blocks[3].Text = constant[1].ToString("X2");
-                transition1Blocks[6].Text = constant[2].ToString("X2");
-                transition1Blocks[9].Text = constant[3].ToString("X2");
-                expansionResultGrid256.Visibility = Visibility.Visible;
-                sBoxGrid.Visibility = Visibility.Hidden;
-            }, null);
-            wait();
-            for (z = 0; z < 4; z++)
-            {
-                markBorders2(10, new int[] { z * 3 });
-                wait();
-                markBorders2(10, new int[] { z * 3 + 2 });
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    unmarkBorders2(10, new int[] { z * 3, z * 3 + 2 });
-                    markBorders2(15, new int[] { z });
-                    byte[] l = StringToByteArray(transition1Blocks[z * 3].Text);
-                    byte m = StringToByteArray(transition1Blocks[z * 3 + 2].Text)[0];
-                    byte n = (byte)(l[0] ^ m);
-                    resultBlocks[z].Text = n.ToString("X2");
-                }, null);
-                wait();
-                unmarkBorders2(15, new int[] { z });
-                wait();
-            }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition1Blocks[0].Text = "";
-                transition1Blocks[2].Text = "";
-                transition1Blocks[3].Text = "";
-                transition1Blocks[5].Text = "";
-                transition1Blocks[6].Text = "";
-                transition1Blocks[8].Text = "";
-                transition1Blocks[9].Text = "";
-                transition1Blocks[11].Text = "";
-            }, null);
-            wait();
-            markBorders2(15, new int[] { 0, 1, 2, 3 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                tempString[0] = resultBlocks[0].Text;
-                tempString[1] = resultBlocks[1].Text;
-                tempString[2] = resultBlocks[2].Text;
-                tempString[3] = resultBlocks[3].Text;
-                resultBlocks[0].Text = "";
-                resultBlocks[1].Text = "";
-                resultBlocks[2].Text = "";
-                resultBlocks[3].Text = "";
-            }, null);
-            unmarkBorders2(15, new int[] { 0, 1, 2, 3 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition1Blocks[2].Text = tempString[0];
-                transition1Blocks[5].Text = tempString[1];
-                transition1Blocks[8].Text = tempString[2];
-                transition1Blocks[11].Text = tempString[3];
-            }, null);
-            markBorders2(10, new int[] { 2, 5, 8, 11 });
-            wait();
-            unmarkBorders2(10, new int[] { 2, 5, 8, 11 });
-            markBorders2(14, new int[] { 0, 1, 2, 3 });
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transition1Blocks[0].Text = keyBlocks[0].Text;
-                transition1Blocks[3].Text = keyBlocks[1].Text;
-                transition1Blocks[6].Text = keyBlocks[2].Text;
-                transition1Blocks[9].Text = keyBlocks[3].Text;
-            }, null);
-            markBorders2(10, new int[] { 0, 3, 6, 9 });
-            unmarkBorders2(14, new int[] { 0, 1, 2, 3 });
-            wait();
-            unmarkBorders2(10, new int[] { 0, 3, 6, 9 });
-            wait();
-            x = 0;
-            while (x < 4)
-            {
-                for (z = 0; z < 4; z++)
-                {
-                    markBorders2(10, new int[] { z * 3 });
-                    wait();
-                    markBorders2(10, new int[] { z * 3 + 2 });
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        unmarkBorders2(10, new int[] { z * 3, z * 3 + 2 });
-                        markBorders2(15, new int[] { z + 4 * x });
-                        if (x == 4)
+                    case 0:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            resultBlocks[z + x * 4].Text = ((Byte)(keyBytes[(roundNumber) * 32 + (x - 1) * 4 + z] ^ keyBytes[(roundNumber) * 32 - 16 + z])).ToString("X2");
-                        }
-                        else
+                            transition2Blocks[1].Text = keyBlocks[28].Text;
+                            transition2Blocks[4].Text = keyBlocks[29].Text;
+                            transition2Blocks[7].Text = keyBlocks[30].Text;
+                            transition2Blocks[10].Text = keyBlocks[31].Text;
+                        }, null);
+                        markBorders2(14, new int[] { 28, 29, 30, 31 });
+                        break;
+                    case 1:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            resultBlocks[z + x * 4].Text = keyBytes[(roundNumber) * 32 + x * 4 + z].ToString("X2");
+                            expansionTransitionGrid2.Visibility = Visibility.Visible;
+                        }, null);
+                        unmarkBorders2(14, new int[] { 28, 29, 30, 31 });
+                        markBorders2(16, new int[] { 1, 4, 7, 10 });
+                        break;
+                    case 2:
+                        unmarkBorders2(16, new int[] { 1, 4, 7, 10 });
+                        break;
+                    case 3:
+                        markBorders2(16, new int[] { 1 });
+                        break;
+                    case 4:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition2Blocks[1].Text = "";
+                        }, null);
+                        unmarkBorders2(16, new int[] { 1 });
+                        break;
+                    case 5:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition2Blocks[1].Text = keyBlocks[29].Text;
+                            transition2Blocks[4].Text = keyBlocks[30].Text;
+                            transition2Blocks[7].Text = keyBlocks[31].Text;
+                            transition2Blocks[10].Text = "";
+                        }, null);
+                        break;
+                    case 6:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition2Blocks[10].Text = keyBlocks[28].Text;
+                        }, null);
+                        markBorders2(16, new int[] { 10 });
+                        break;
+                    case 7:
+                        unmarkBorders2(16, new int[] { 10 });
+                        break;
+                    case 8:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            sBoxGrid.Visibility = Visibility.Visible;
+                            expansionTransitionGrid1.Visibility = Visibility.Visible;
+                        }, null);
+                        break;
+                    case 9:
+                        for (int r = 0; r < 4; r++)
+                        {
+                            while (!abort && operationCounter1 < 9)
+                            {
+                                switch (operationCounter1)
+                                {
+                                    case 0:
+                                        markBorders2(16, new int[] { 1 + 3 * r });
+                                        break;
+                                    case 1:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transition2Borders[1 + 3 * r].Visibility = Visibility.Hidden;
+                                            transition2Borders[3 * r].Visibility = Visibility.Visible;
+                                            transition2Borders[2 + 3 * r].Visibility = Visibility.Visible;
+                                            transition2Blocks[3 * r].Text = transition2Blocks[3 * r + 1].Text.Substring(0, 1);
+                                            transition2Blocks[3 * r + 2].Text = transition2Blocks[3 * r + 1].Text.Substring(1, 1);
+                                        }, null);
+                                        unmarkBorders2(16, new int[] { 1 + 3 * r });
+                                        break;
+                                    case 2:
+                                        markBorders2(16, new int[] { 3 * r });
+                                        break;
+                                    case 3:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            switch (transition2Blocks[3 * r].Text)
+                                            {
+                                                case "0":
+                                                    x = 0;
+                                                    sBorder18.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder18);
+                                                    break;
+                                                case "1":
+                                                    x = 1;
+                                                    sBorder36.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder36);
+                                                    break;
+                                                case "2":
+                                                    x = 2;
+                                                    sBorder54.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder54);
+                                                    break;
+                                                case "3":
+                                                    x = 3;
+                                                    sBorder72.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder72);
+                                                    break;
+                                                case "4":
+                                                    x = 4;
+                                                    sBorder90.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder90);
+                                                    break;
+                                                case "5":
+                                                    x = 5;
+                                                    sBorder108.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder108);
+                                                    break;
+                                                case "6":
+                                                    x = 6;
+                                                    sBorder126.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder126);
+                                                    break;
+                                                case "7":
+                                                    x = 7;
+                                                    sBorder144.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder144);
+                                                    break;
+                                                case "8":
+                                                    x = 8;
+                                                    sBorder162.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder162);
+                                                    break;
+                                                case "9":
+                                                    x = 9;
+                                                    sBorder180.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder180);
+                                                    break;
+                                                case "A":
+                                                    x = 10;
+                                                    sBorder198.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder198);
+                                                    break;
+                                                case "B":
+                                                    x = 11;
+                                                    sBorder216.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder216);
+                                                    break;
+                                                case "C":
+                                                    x = 12;
+                                                    sBorder234.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder234);
+                                                    break;
+                                                case "D":
+                                                    x = 13;
+                                                    sBorder252.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder252);
+                                                    break;
+                                                case "E":
+                                                    x = 14;
+                                                    sBorder270.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder270);
+                                                    break;
+                                                case "F":
+                                                    x = 15;
+                                                    sBorder288.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder288);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            unmarkBorders2(16, new int[] { 3 * r });
+                                        }, null);
+                                        break;
+                                    case 4:
+                                        markBorders2(16, new int[] { 2 + 3 * r });
+                                        break;
+                                    case 5:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            switch (transition2Blocks[3 * r + 2].Text)
+                                            {
+                                                case "0":
+                                                    y = 0;
+                                                    sBorder1.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder1);
+                                                    break;
+                                                case "1":
+                                                    y = 1;
+                                                    sBorder2.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder2);
+                                                    break;
+                                                case "2":
+                                                    y = 2;
+                                                    sBorder3.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder3);
+                                                    break;
+                                                case "3":
+                                                    y = 3;
+                                                    sBorder4.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder4);
+                                                    break;
+                                                case "4":
+                                                    y = 4;
+                                                    sBorder5.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder5);
+                                                    break;
+                                                case "5":
+                                                    y = 5;
+                                                    sBorder6.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder6);
+                                                    break;
+                                                case "6":
+                                                    y = 6;
+                                                    sBorder7.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder7);
+                                                    break;
+                                                case "7":
+                                                    y = 7;
+                                                    sBorder8.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder8);
+                                                    break;
+                                                case "8":
+                                                    y = 8;
+                                                    sBorder9.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder9);
+                                                    break;
+                                                case "9":
+                                                    y = 9;
+                                                    sBorder10.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder10);
+                                                    break;
+                                                case "A":
+                                                    y = 10;
+                                                    sBorder11.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder11);
+                                                    break;
+                                                case "B":
+                                                    y = 11;
+                                                    sBorder12.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder12);
+                                                    break;
+                                                case "C":
+                                                    y = 12;
+                                                    sBorder13.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder13);
+                                                    break;
+                                                case "D":
+                                                    y = 13;
+                                                    sBorder14.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder14);
+                                                    break;
+                                                case "E":
+                                                    y = 14;
+                                                    sBorder15.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder15);
+                                                    break;
+                                                case "F":
+                                                    y = 15;
+                                                    sBorder16.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder16);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            unmarkBorders2(16, new int[] { 2 + 3 * r });
+                                        }, null);
+                                        break;
+                                    case 6:
+                                        z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            textBlockList[3][z].Background = Brushes.Green;
+                                        }, null);
+                                        break;
+                                    case 7:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transition1Blocks[r * 3 + 2].Text = sBox[x][y].ToString("X2");
+                                            transition1Blocks[r * 3 + 2].Background = Brushes.Green;
+                                            transition2Borders[3 * r].Visibility = Visibility.Hidden;
+                                            transition2Borders[2 + 3 * r].Visibility = Visibility.Hidden;
+                                        }, null);
+                                        break;
+                                    case 8:
+                                        z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transition1Blocks[r * 3 + 2].Background = Brushes.Transparent;
+                                            foreach (Border br in tempBordes)
+                                            {
+                                                br.Background = Brushes.Yellow;
+                                            }
+                                            tempBordes.Clear();
+                                            transition2Blocks[3 * r].Text = "";
+                                            transition2Blocks[3 * r + 2].Text = "";
+                                            textBlockList[3][z].Background = Brushes.Transparent;
+                                        }, null);
+                                        break;
+                                    default: break;
+                                }
+                                operationCounter1++;
+                                wait();
+                            }
+                            operationCounter1 = 0;
                         }
-                    }, null);
-                    wait();
-                    unmarkBorders2(15, new int[] { z + 4 * x });
-                    wait();
+                        byte[] constant = roundConstant[roundNumber - 1];
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition1Borders[0].Visibility = Visibility.Visible;
+                            transition1Borders[3].Visibility = Visibility.Visible;
+                            transition1Borders[6].Visibility = Visibility.Visible;
+                            transition1Borders[9].Visibility = Visibility.Visible;
+                            transition1Blocks[0].Text = constant[0].ToString("X2");
+                            transition1Blocks[3].Text = constant[1].ToString("X2");
+                            transition1Blocks[6].Text = constant[2].ToString("X2");
+                            transition1Blocks[9].Text = constant[3].ToString("X2");
+                            expansionResultGrid256.Visibility = Visibility.Visible;
+                            sBoxGrid.Visibility = Visibility.Hidden;
+                        }, null);
+                        break;
+                    case 10:
+                        for (z = 0; z < 4; z++)
+                        {
+                            while (!abort && operationCounter1 < 4)
+                            {
+                                switch (operationCounter1)
+                                {
+                                    case 0:
+                                        markBorders2(10, new int[] { z * 3 });
+                                        break;
+                                    case 1:
+                                        markBorders2(10, new int[] { z * 3 + 2 });
+                                        break;
+                                    case 2:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            unmarkBorders2(10, new int[] { z * 3, z * 3 + 2 });
+                                            markBorders2(15, new int[] { z });
+                                            byte[] l = StringToByteArray(transition1Blocks[z * 3].Text);
+                                            byte m = StringToByteArray(transition1Blocks[z * 3 + 2].Text)[0];
+                                            byte n = (byte)(l[0] ^ m);
+                                            resultBlocks[z].Text = n.ToString("X2");
+                                        }, null);
+                                        break;
+                                    case 3:
+                                        unmarkBorders2(15, new int[] { z });
+                                        break;
+                                    default: break;
+                                }
+                                operationCounter1++;
+                                wait();
+                            }
+                            operationCounter1 = 0;
+                        }
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition1Blocks[0].Text = "";
+                            transition1Blocks[2].Text = "";
+                            transition1Blocks[3].Text = "";
+                            transition1Blocks[5].Text = "";
+                            transition1Blocks[6].Text = "";
+                            transition1Blocks[8].Text = "";
+                            transition1Blocks[9].Text = "";
+                            transition1Blocks[11].Text = "";
+                        }, null);
+                        break;
+                    case 11:
+                        markBorders2(15, new int[] { 0, 1, 2, 3 });
+                        break;
+                    case 12:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            tempString[0] = resultBlocks[0].Text;
+                            tempString[1] = resultBlocks[1].Text;
+                            tempString[2] = resultBlocks[2].Text;
+                            tempString[3] = resultBlocks[3].Text;
+                            resultBlocks[0].Text = "";
+                            resultBlocks[1].Text = "";
+                            resultBlocks[2].Text = "";
+                            resultBlocks[3].Text = "";
+                        }, null);
+                        unmarkBorders2(15, new int[] { 0, 1, 2, 3 });
+                        break;
+                    case 13:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition1Blocks[2].Text = tempString[0];
+                            transition1Blocks[5].Text = tempString[1];
+                            transition1Blocks[8].Text = tempString[2];
+                            transition1Blocks[11].Text = tempString[3];
+                        }, null);
+                        markBorders2(10, new int[] { 2, 5, 8, 11 });
+                        break;
+                    case 14:
+                        unmarkBorders2(10, new int[] { 2, 5, 8, 11 });
+                        markBorders2(14, new int[] { 0, 1, 2, 3 });
+                        break;
+                    case 15:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transition1Blocks[0].Text = keyBlocks[0].Text;
+                            transition1Blocks[3].Text = keyBlocks[1].Text;
+                            transition1Blocks[6].Text = keyBlocks[2].Text;
+                            transition1Blocks[9].Text = keyBlocks[3].Text;
+                        }, null);
+                        markBorders2(10, new int[] { 0, 3, 6, 9 });
+                        unmarkBorders2(14, new int[] { 0, 1, 2, 3 });
+                        break;
+                    case 16:
+                        unmarkBorders2(10, new int[] { 0, 3, 6, 9 });
+                        break;
+                    case 17:
+                        x = 0;
+                        while (x < 4)
+                        {
+                            for (z = 0; z < 4; z++)
+                            {
+                                while (!abort && operationCounter1 < 4)
+                                {
+                                    switch (operationCounter1)
+                                    {
+                                        case 0:
+                                            markBorders2(10, new int[] { z * 3 });
+                                            break;
+                                        case 1:
+                                            markBorders2(10, new int[] { z * 3 + 2 });
+                                            break;
+                                        case 2:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                unmarkBorders2(10, new int[] { z * 3, z * 3 + 2 });
+                                                markBorders2(15, new int[] { z + 4 * x });
+                                                if (x == 4)
+                                                {
+                                                    resultBlocks[z + x * 4].Text = ((Byte)(keyBytes[(roundNumber) * 32 + (x - 1) * 4 + z] ^ keyBytes[(roundNumber) * 32 - 16 + z])).ToString("X2");
+                                                }
+                                                else
+                                                {
+                                                    resultBlocks[z + x * 4].Text = keyBytes[(roundNumber) * 32 + x * 4 + z].ToString("X2");
+                                                }
+                                            }, null);
+                                            break;
+                                        case 3:
+                                            unmarkBorders2(15, new int[] { z + 4 * x });
+                                            break;
+                                        default: break;
+                                    }
+                                    operationCounter1++;
+                                    wait();
+                                }
+                                operationCounter1 = 0;
+                            }
+                            if (x < 3)
+                            {
+                                while (!abort && operationCounter1 < 7)
+                                {
+                                    switch (operationCounter1)
+                                    {
+                                        case 0:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Blocks[0].Text = "";
+                                                transition1Blocks[2].Text = "";
+                                                transition1Blocks[3].Text = "";
+                                                transition1Blocks[5].Text = "";
+                                                transition1Blocks[6].Text = "";
+                                                transition1Blocks[8].Text = "";
+                                                transition1Blocks[9].Text = "";
+                                                transition1Blocks[11].Text = "";
+                                            }, null);
+                                            break;
+                                        case 1:
+                                            markBorders2(15, new int[] { 0 + 4 * x, 1 + 4 * x, 2 + 4 * x, 3 + 4 * x });
+                                            break;
+                                        case 2:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                tempString[0] = resultBlocks[0 + 4 * x].Text;
+                                                tempString[1] = resultBlocks[1 + 4 * x].Text;
+                                                tempString[2] = resultBlocks[2 + 4 * x].Text;
+                                                tempString[3] = resultBlocks[3 + 4 * x].Text;
+                                            }, null);
+                                            unmarkBorders2(15, new int[] { 0 + 4 * x, 1 + 4 * x, 2 + 4 * x, 3 + 4 * x });
+                                            break;
+                                        case 3:
+                                            markBorders2(10, new int[] { 2, 5, 8, 11 });
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Blocks[2].Text = tempString[0];
+                                                transition1Blocks[5].Text = tempString[1];
+                                                transition1Blocks[8].Text = tempString[2];
+                                                transition1Blocks[11].Text = tempString[3];
+                                            }, null);
+                                            break;
+                                        case 4:
+                                            unmarkBorders2(10, new int[] { 2, 5, 8, 11 });
+                                            markBorders2(14, new int[] { 4 + 4 * x, 5 + 4 * x, 6 + 4 * x, 7 + 4 * x });
+                                            break;
+                                        case 5:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
+                                                transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
+                                                transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
+                                                transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
+                                            }, null);
+                                            markBorders2(10, new int[] { 0, 3, 6, 9 });
+                                            unmarkBorders2(14, new int[] { 4 + 4 * x, 5 + 4 * x, 6 + 4 * x, 7 + 4 * x });
+                                            break;
+                                        case 6:
+                                            unmarkBorders2(10, new int[] { 0, 3, 6, 9 });
+                                            break;
+                                        default: break;
+                                    }
+                                    operationCounter1++;
+                                    wait();
+                                }
+                                operationCounter1 = 0;
+                            }
+                            x++;
+                        }
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            transitionBlocks[1].Text = resultBlocks[12].Text;
+                            transitionBlocks[4].Text = resultBlocks[13].Text;
+                            transitionBlocks[7].Text = resultBlocks[14].Text;
+                            transitionBlocks[10].Text = resultBlocks[15].Text;
+                            markBorders(new List<Border> { resultBorders[12], resultBorders[13], resultBorders[14], resultBorders[15] });
+                        }, null);
+                        break;
+                    case 18:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            expansionTransitionGrid.Visibility = Visibility.Visible;
+                            expansionKeyGrid256.Visibility = Visibility.Hidden;
+                            unmarkBorders(new List<Border> { resultBorders[12], resultBorders[13], resultBorders[14], resultBorders[15] });
+                            markBorders(new List<Border> { transitionBorders[1], transitionBorders[4], transitionBorders[7], transitionBorders[10] });
+                            transitionBorders[1].Visibility = Visibility.Visible;
+                            transitionBorders[4].Visibility = Visibility.Visible;
+                            transitionBorders[7].Visibility = Visibility.Visible;
+                            transitionBorders[11].Visibility = Visibility.Visible;
+                            transitionBorders[12].Visibility = Visibility.Hidden;
+                        }, null);
+                        break;
+                    case 19:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            unmarkBorders(new List<Border> { transitionBorders[1], transitionBorders[4], transitionBorders[7], transitionBorders[10] });
+                            sBoxGrid.Visibility = Visibility.Visible;
+                            expansionResultGrid256.SetValue(Grid.ColumnProperty, 2);
+                            expansionTransitionGrid1.Visibility = Visibility.Visible;
+                            transition1Blocks[0].Text = "";
+                            transition1Blocks[2].Text = "";
+                            transition1Blocks[3].Text = "";
+                            transition1Blocks[5].Text = "";
+                            transition1Blocks[6].Text = "";
+                            transition1Blocks[8].Text = "";
+                            transition1Blocks[9].Text = "";
+                            transition1Blocks[11].Text = "";
+                        }, null);
+                        break;
+                    case 20:
+                        for (int r = 0; r < 4; r++)
+                        {
+                            while (!abort && operationCounter1 < 9)
+                            {
+                                switch (operationCounter1)
+                                {
+                                    case 0:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transitionBorders[1 + 3 * r].Background = Brushes.Green;
+                                        }, null);
+                                        break;
+                                    case 1:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transitionBorders[1 + 3 * r].Visibility = Visibility.Hidden;
+                                            transitionBorders[3 * r].Visibility = Visibility.Visible;
+                                            transitionBorders[2 + 3 * r].Visibility = Visibility.Visible;
+                                            transitionBlocks[3 * r].Text = transitionBlocks[3 * r + 1].Text.Substring(0, 1);
+                                            transitionBlocks[3 * r + 2].Text = transitionBlocks[3 * r + 1].Text.Substring(1, 1);
+                                            transitionBorders[1 + 3 * r].Background = Brushes.Transparent;
+                                        }, null);
+                                        break;
+                                    case 2:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transitionBorders[3 * r].Background = Brushes.Green;
+                                        }, null);
+                                        break;
+                                    case 3:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            switch (transitionBlocks[3 * r].Text)
+                                            {
+                                                case "0":
+                                                    x = 0;
+                                                    sBorder18.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder18);
+                                                    break;
+                                                case "1":
+                                                    x = 1;
+                                                    sBorder36.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder36);
+                                                    break;
+                                                case "2":
+                                                    x = 2;
+                                                    sBorder54.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder54);
+                                                    break;
+                                                case "3":
+                                                    x = 3;
+                                                    sBorder72.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder72);
+                                                    break;
+                                                case "4":
+                                                    x = 4;
+                                                    sBorder90.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder90);
+                                                    break;
+                                                case "5":
+                                                    x = 5;
+                                                    sBorder108.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder108);
+                                                    break;
+                                                case "6":
+                                                    x = 6;
+                                                    sBorder126.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder126);
+                                                    break;
+                                                case "7":
+                                                    x = 7;
+                                                    sBorder144.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder144);
+                                                    break;
+                                                case "8":
+                                                    x = 8;
+                                                    sBorder162.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder162);
+                                                    break;
+                                                case "9":
+                                                    x = 9;
+                                                    sBorder180.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder180);
+                                                    break;
+                                                case "A":
+                                                    x = 10;
+                                                    sBorder198.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder198);
+                                                    break;
+                                                case "B":
+                                                    x = 11;
+                                                    sBorder216.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder216);
+                                                    break;
+                                                case "C":
+                                                    x = 12;
+                                                    sBorder234.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder234);
+                                                    break;
+                                                case "D":
+                                                    x = 13;
+                                                    sBorder252.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder252);
+                                                    break;
+                                                case "E":
+                                                    x = 14;
+                                                    sBorder270.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder270);
+                                                    break;
+                                                case "F":
+                                                    x = 15;
+                                                    sBorder288.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder288);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            transitionBorders[3 * r].Background = Brushes.Transparent;
+                                        }, null);
+                                        break;
+                                    case 4:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transitionBorders[3 * r + 2].Background = Brushes.Green;
+                                        }, null);
+                                        break;
+                                    case 5:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            switch (transitionBlocks[3 * r + 2].Text)
+                                            {
+                                                case "0":
+                                                    y = 0;
+                                                    sBorder1.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder1);
+                                                    break;
+                                                case "1":
+                                                    y = 1;
+                                                    sBorder2.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder2);
+                                                    break;
+                                                case "2":
+                                                    y = 2;
+                                                    sBorder3.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder3);
+                                                    break;
+                                                case "3":
+                                                    y = 3;
+                                                    sBorder4.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder4);
+                                                    break;
+                                                case "4":
+                                                    y = 4;
+                                                    sBorder5.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder5);
+                                                    break;
+                                                case "5":
+                                                    y = 5;
+                                                    sBorder6.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder6);
+                                                    break;
+                                                case "6":
+                                                    y = 6;
+                                                    sBorder7.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder7);
+                                                    break;
+                                                case "7":
+                                                    y = 7;
+                                                    sBorder8.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder8);
+                                                    break;
+                                                case "8":
+                                                    y = 8;
+                                                    sBorder9.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder9);
+                                                    break;
+                                                case "9":
+                                                    y = 9;
+                                                    sBorder10.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder10);
+                                                    break;
+                                                case "A":
+                                                    y = 10;
+                                                    sBorder11.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder11);
+                                                    break;
+                                                case "B":
+                                                    y = 11;
+                                                    sBorder12.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder12);
+                                                    break;
+                                                case "C":
+                                                    y = 12;
+                                                    sBorder13.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder13);
+                                                    break;
+                                                case "D":
+                                                    y = 13;
+                                                    sBorder14.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder14);
+                                                    break;
+                                                case "E":
+                                                    y = 14;
+                                                    sBorder15.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder15);
+                                                    break;
+                                                case "F":
+                                                    y = 15;
+                                                    sBorder16.Background = Brushes.Green;
+                                                    tempBordes.Add(sBorder16);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            transitionBorders[3 * r + 2].Background = Brushes.Transparent;
+                                        }, null);
+                                        break;
+                                    case 6:
+                                        z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            textBlockList[3][z].Background = Brushes.Green;
+                                        }, null);
+                                        break;
+                                    case 7:
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transition1Blocks[r * 3 + 2].Text = sBox[x][y].ToString("X2");
+                                            transition1Blocks[r * 3 + 2].Background = Brushes.Green;
+                                            transitionBorders[3 * r].Visibility = Visibility.Hidden;
+                                            transitionBorders[2 + 3 * r].Visibility = Visibility.Hidden;
+                                        }, null);
+                                        break;
+                                    case 8:
+                                        z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
+                                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                        {
+                                            transition1Blocks[r * 3 + 2].Background = Brushes.Transparent;
+                                            foreach (Border br in tempBordes)
+                                            {
+                                                br.Background = Brushes.Yellow;
+                                            }
+                                            tempBordes.Clear();
+                                            transitionBlocks[3 * r].Text = "";
+                                            transitionBlocks[3 * r + 2].Text = "";
+                                            textBlockList[3][z].Background = Brushes.Transparent;
+                                        }, null);
+                                        break;
+                                    default: break;
+                                }
+                                operationCounter1++;
+                                wait();
+                            }
+                            operationCounter1 = 0;
+                        }
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            expansionTransitionGrid.Visibility = Visibility.Hidden;
+                            expansionKeyGrid256.Visibility = Visibility.Visible;
+                            expansionResultGrid256.SetValue(Grid.ColumnProperty, 3);
+                            expansionTransitionGrid1.Visibility = Visibility.Visible;
+                            sBoxGrid.Visibility = Visibility.Hidden;
+                        }, null);
+                        break;
+                    case 21:
+                        x = 3;
+                        while (x < 8)
+                        {
+                            if (x == 3)
+                            {
+                                while (!abort && operationCounter1 < 3)
+                                {
+                                    switch (operationCounter1)
+                                    {
+                                        case 0:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                keyBorders[4 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[5 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[6 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[7 + 4 * x].Background = Brushes.Green;
+                                            }, null);
+                                            break;
+                                        case 1:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[0].Background = Brushes.Green;
+                                                transition1Borders[3].Background = Brushes.Green;
+                                                transition1Borders[6].Background = Brushes.Green;
+                                                transition1Borders[9].Background = Brushes.Green;
+                                                transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
+                                                transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
+                                                transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
+                                                transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
+                                                keyBorders[4 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[5 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[6 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[7 + 4 * x].Background = Brushes.Transparent;
+                                            }, null);
+                                            break;
+                                        case 2:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[0].Background = Brushes.Transparent;
+                                                transition1Borders[3].Background = Brushes.Transparent;
+                                                transition1Borders[6].Background = Brushes.Transparent;
+                                                transition1Borders[9].Background = Brushes.Transparent;
+                                            }, null);
+                                            x = 4;
+                                            break;
+                                        default: break;
+                                    }
+                                    operationCounter1++;
+                                    wait();
+                                }
+                                operationCounter1 = 0;
+                            }
+                            for (z = 0; z < 4; z++)
+                            {
+                                while (!abort && operationCounter1 < 4)
+                                {
+                                    switch (operationCounter1)
+                                    {
+                                        case 0:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[z * 3].Background = Brushes.Green;
+                                            }, null);
+                                            break;
+                                        case 1:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[z * 3 + 2].Background = Brushes.Green;
+                                            }, null);
+                                            break;
+                                        case 2:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[z * 3].Background = Brushes.Transparent;
+                                                transition1Borders[z * 3 + 2].Background = Brushes.Transparent;
+                                                resultBorders[z + 4 * x].Background = Brushes.Green;
+                                                resultBlocks[z + x * 4].Text = keyBytes[(roundNumber) * 32 + x * 4 + z].ToString("X2");
+                                            }, null);
+                                            break;
+                                        case 3:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                resultBorders[z + 4 * x].Background = Brushes.Transparent;
+                                            }, null);
+                                            break;
+                                        default: break;
+                                    }
+                                    operationCounter1++;
+                                    wait();
+                                }
+                                operationCounter1 = 0;
+                            }
+                            if (x < 7)
+                            {
+                                while (!abort && operationCounter1 < 7)
+                                {
+                                    switch (operationCounter1)
+                                    {
+                                        case 0:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Blocks[0].Text = "";
+                                                transition1Blocks[2].Text = "";
+                                                transition1Blocks[3].Text = "";
+                                                transition1Blocks[5].Text = "";
+                                                transition1Blocks[6].Text = "";
+                                                transition1Blocks[8].Text = "";
+                                                transition1Blocks[9].Text = "";
+                                                transition1Blocks[11].Text = "";
+                                            }, null);
+                                            break;
+                                        case 1:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                resultBorders[0 + 4 * x].Background = Brushes.Green;
+                                                resultBorders[1 + 4 * x].Background = Brushes.Green;
+                                                resultBorders[2 + 4 * x].Background = Brushes.Green;
+                                                resultBorders[3 + 4 * x].Background = Brushes.Green;
+                                            }, null);
+                                            break;
+                                        case 2:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                tempString[0] = resultBlocks[0 + 4 * x].Text;
+                                                tempString[1] = resultBlocks[1 + 4 * x].Text;
+                                                tempString[2] = resultBlocks[2 + 4 * x].Text;
+                                                tempString[3] = resultBlocks[3 + 4 * x].Text;
+                                                resultBorders[0 + 4 * x].Background = Brushes.Transparent;
+                                                resultBorders[1 + 4 * x].Background = Brushes.Transparent;
+                                                resultBorders[2 + 4 * x].Background = Brushes.Transparent;
+                                                resultBorders[3 + 4 * x].Background = Brushes.Transparent;
+                                            }, null);
+                                            break;
+                                        case 3:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[2].Background = Brushes.Green;
+                                                transition1Borders[5].Background = Brushes.Green;
+                                                transition1Borders[8].Background = Brushes.Green;
+                                                transition1Borders[11].Background = Brushes.Green;
+                                                transition1Blocks[2].Text = tempString[0];
+                                                transition1Blocks[5].Text = tempString[1];
+                                                transition1Blocks[8].Text = tempString[2];
+                                                transition1Blocks[11].Text = tempString[3];
+                                            }, null);
+                                            break;
+                                        case 4:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[2].Background = Brushes.Transparent;
+                                                transition1Borders[5].Background = Brushes.Transparent;
+                                                transition1Borders[8].Background = Brushes.Transparent;
+                                                transition1Borders[11].Background = Brushes.Transparent;
+                                                keyBorders[4 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[5 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[6 + 4 * x].Background = Brushes.Green;
+                                                keyBorders[7 + 4 * x].Background = Brushes.Green;
+                                            }, null);
+                                            break;
+                                        case 5:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[0].Background = Brushes.Green;
+                                                transition1Borders[3].Background = Brushes.Green;
+                                                transition1Borders[6].Background = Brushes.Green;
+                                                transition1Borders[9].Background = Brushes.Green;
+                                                transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
+                                                transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
+                                                transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
+                                                transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
+                                                keyBorders[4 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[5 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[6 + 4 * x].Background = Brushes.Transparent;
+                                                keyBorders[7 + 4 * x].Background = Brushes.Transparent;
+                                            }, null);
+                                            break;
+                                        case 6:
+                                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                            {
+                                                transition1Borders[0].Background = Brushes.Transparent;
+                                                transition1Borders[3].Background = Brushes.Transparent;
+                                                transition1Borders[6].Background = Brushes.Transparent;
+                                                transition1Borders[9].Background = Brushes.Transparent;
+                                            }, null);
+                                            break;
+                                        default: break;
+                                    }
+                                    operationCounter1++;
+                                    wait();
+                                }
+                                operationCounter1 = 0;
+                            }
+                            x++;
+                        }
+                        autostep = false;
+                        break;
+                    default: break;
                 }
-                if (x < 3)
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Blocks[0].Text = "";
-                        transition1Blocks[2].Text = "";
-                        transition1Blocks[3].Text = "";
-                        transition1Blocks[5].Text = "";
-                        transition1Blocks[6].Text = "";
-                        transition1Blocks[8].Text = "";
-                        transition1Blocks[9].Text = "";
-                        transition1Blocks[11].Text = "";
-                    }, null);
-                    wait();
-                    markBorders2(15, new int[] { 0 + 4 * x, 1 + 4 * x, 2 + 4 * x, 3 + 4 * x });
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        tempString[0] = resultBlocks[0 + 4 * x].Text;
-                        tempString[1] = resultBlocks[1 + 4 * x].Text;
-                        tempString[2] = resultBlocks[2 + 4 * x].Text;
-                        tempString[3] = resultBlocks[3 + 4 * x].Text;
-                    }, null);
-                    unmarkBorders2(15, new int[] { 0 + 4 * x, 1 + 4 * x, 2 + 4 * x, 3 + 4 * x });
-                    wait();
-                    markBorders2(10, new int[] { 2, 5, 8, 11 });
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Blocks[2].Text = tempString[0];
-                        transition1Blocks[5].Text = tempString[1];
-                        transition1Blocks[8].Text = tempString[2];
-                        transition1Blocks[11].Text = tempString[3];
-                    }, null);
-                    wait();
-                    unmarkBorders2(10, new int[] { 2, 5, 8, 11 });
-                    markBorders2(14, new int[] { 4 + 4 * x, 5 + 4 * x, 6 + 4 * x, 7 + 4 * x });
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
-                        transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
-                        transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
-                        transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
-                    }, null);
-                    markBorders2(10, new int[] { 0, 3, 6, 9 });
-                    unmarkBorders2(14, new int[] { 4 + 4 * x, 5 + 4 * x, 6 + 4 * x, 7 + 4 * x });
-                    wait();
-                    unmarkBorders2(10, new int[] { 0, 3, 6, 9 });
-                    wait();
-                }
-                x++;
+                operationCounter++;
+                wait();
             }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                transitionBlocks[1].Text = resultBlocks[12].Text;
-                transitionBlocks[4].Text = resultBlocks[13].Text;
-                transitionBlocks[7].Text = resultBlocks[14].Text;
-                transitionBlocks[10].Text = resultBlocks[15].Text;
-                markBorders(new List<Border> { resultBorders[12], resultBorders[13], resultBorders[14], resultBorders[15] });
-            }, null);
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                expansionTransitionGrid.Visibility = Visibility.Visible;
-                expansionKeyGrid256.Visibility = Visibility.Hidden;
-                unmarkBorders(new List<Border> { resultBorders[12], resultBorders[13], resultBorders[14], resultBorders[15] });
-                markBorders(new List<Border> { transitionBorders[1], transitionBorders[4], transitionBorders[7], transitionBorders[10] });
-            }, null);
-            wait();
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                unmarkBorders(new List<Border> { transitionBorders[1], transitionBorders[4], transitionBorders[7], transitionBorders[10] });
-                sBoxGrid.Visibility = Visibility.Visible;
-                expansionResultGrid256.SetValue(Grid.ColumnProperty, 2);
-                expansionTransitionGrid1.Visibility = Visibility.Visible;
-                transition1Blocks[0].Text = "";
-                transition1Blocks[2].Text = "";
-                transition1Blocks[3].Text = "";
-                transition1Blocks[5].Text = "";
-                transition1Blocks[6].Text = "";
-                transition1Blocks[8].Text = "";
-                transition1Blocks[9].Text = "";
-                transition1Blocks[11].Text = "";
-            }, null);
-            wait();
-            for (int r = 0; r < 4; r++)
-            {
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transitionBorders[1 + 3 * r].Background = Brushes.Green;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transitionBorders[1 + 3 * r].Visibility = Visibility.Hidden;
-                    transitionBorders[3 * r].Visibility = Visibility.Visible;
-                    transitionBorders[2 + 3 * r].Visibility = Visibility.Visible;
-                    transitionBlocks[3 * r].Text = transitionBlocks[3 * r + 1].Text.Substring(0, 1);
-                    transitionBlocks[3 * r + 2].Text = transitionBlocks[3 * r + 1].Text.Substring(1, 1);
-                    transitionBorders[1 + 3 * r].Background = Brushes.Transparent;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transitionBorders[3 * r].Background = Brushes.Green;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (transitionBlocks[3 * r].Text)
-                    {
-                        case "0":
-                            x = 0;
-                            sBorder18.Background = Brushes.Green;
-                            tempBordes.Add(sBorder18);
-                            break;
-                        case "1":
-                            x = 1;
-                            sBorder36.Background = Brushes.Green;
-                            tempBordes.Add(sBorder36);
-                            break;
-                        case "2":
-                            x = 2;
-                            sBorder54.Background = Brushes.Green;
-                            tempBordes.Add(sBorder54);
-                            break;
-                        case "3":
-                            x = 3;
-                            sBorder72.Background = Brushes.Green;
-                            tempBordes.Add(sBorder72);
-                            break;
-                        case "4":
-                            x = 4;
-                            sBorder90.Background = Brushes.Green;
-                            tempBordes.Add(sBorder90);
-                            break;
-                        case "5":
-                            x = 5;
-                            sBorder108.Background = Brushes.Green;
-                            tempBordes.Add(sBorder108);
-                            break;
-                        case "6":
-                            x = 6;
-                            sBorder126.Background = Brushes.Green;
-                            tempBordes.Add(sBorder126);
-                            break;
-                        case "7":
-                            x = 7;
-                            sBorder144.Background = Brushes.Green;
-                            tempBordes.Add(sBorder144);
-                            break;
-                        case "8":
-                            x = 8;
-                            sBorder162.Background = Brushes.Green;
-                            tempBordes.Add(sBorder162);
-                            break;
-                        case "9":
-                            x = 9;
-                            sBorder180.Background = Brushes.Green;
-                            tempBordes.Add(sBorder180);
-                            break;
-                        case "A":
-                            x = 10;
-                            sBorder198.Background = Brushes.Green;
-                            tempBordes.Add(sBorder198);
-                            break;
-                        case "B":
-                            x = 11;
-                            sBorder216.Background = Brushes.Green;
-                            tempBordes.Add(sBorder216);
-                            break;
-                        case "C":
-                            x = 12;
-                            sBorder234.Background = Brushes.Green;
-                            tempBordes.Add(sBorder234);
-                            break;
-                        case "D":
-                            x = 13;
-                            sBorder252.Background = Brushes.Green;
-                            tempBordes.Add(sBorder252);
-                            break;
-                        case "E":
-                            x = 14;
-                            sBorder270.Background = Brushes.Green;
-                            tempBordes.Add(sBorder270);
-                            break;
-                        case "F":
-                            x = 15;
-                            sBorder288.Background = Brushes.Green;
-                            tempBordes.Add(sBorder288);
-                            break;
-                        default:
-                            break;
-                    }
-                    transitionBorders[3 * r].Background = Brushes.Transparent;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transitionBorders[3 * r + 2].Background = Brushes.Green;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    switch (transitionBlocks[3 * r + 2].Text)
-                    {
-                        case "0":
-                            y = 0;
-                            sBorder1.Background = Brushes.Green;
-                            tempBordes.Add(sBorder1);
-                            break;
-                        case "1":
-                            y = 1;
-                            sBorder2.Background = Brushes.Green;
-                            tempBordes.Add(sBorder2);
-                            break;
-                        case "2":
-                            y = 2;
-                            sBorder3.Background = Brushes.Green;
-                            tempBordes.Add(sBorder3);
-                            break;
-                        case "3":
-                            y = 3;
-                            sBorder4.Background = Brushes.Green;
-                            tempBordes.Add(sBorder4);
-                            break;
-                        case "4":
-                            y = 4;
-                            sBorder5.Background = Brushes.Green;
-                            tempBordes.Add(sBorder5);
-                            break;
-                        case "5":
-                            y = 5;
-                            sBorder6.Background = Brushes.Green;
-                            tempBordes.Add(sBorder6);
-                            break;
-                        case "6":
-                            y = 6;
-                            sBorder7.Background = Brushes.Green;
-                            tempBordes.Add(sBorder7);
-                            break;
-                        case "7":
-                            y = 7;
-                            sBorder8.Background = Brushes.Green;
-                            tempBordes.Add(sBorder8);
-                            break;
-                        case "8":
-                            y = 8;
-                            sBorder9.Background = Brushes.Green;
-                            tempBordes.Add(sBorder9);
-                            break;
-                        case "9":
-                            y = 9;
-                            sBorder10.Background = Brushes.Green;
-                            tempBordes.Add(sBorder10);
-                            break;
-                        case "A":
-                            y = 10;
-                            sBorder11.Background = Brushes.Green;
-                            tempBordes.Add(sBorder11);
-                            break;
-                        case "B":
-                            y = 11;
-                            sBorder12.Background = Brushes.Green;
-                            tempBordes.Add(sBorder12);
-                            break;
-                        case "C":
-                            y = 12;
-                            sBorder13.Background = Brushes.Green;
-                            tempBordes.Add(sBorder13);
-                            break;
-                        case "D":
-                            y = 13;
-                            sBorder14.Background = Brushes.Green;
-                            tempBordes.Add(sBorder14);
-                            break;
-                        case "E":
-                            y = 14;
-                            sBorder15.Background = Brushes.Green;
-                            tempBordes.Add(sBorder15);
-                            break;
-                        case "F":
-                            y = 15;
-                            sBorder16.Background = Brushes.Green;
-                            tempBordes.Add(sBorder16);
-                            break;
-                        default:
-                            break;
-                    }
-                    transitionBorders[3 * r + 2].Background = Brushes.Transparent;
-                }, null);
-                wait();
-                z = (x + 1) * 18 + y + 1 - 19 - 2 * x;
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    textBlockList[3][z].Background = Brushes.Green;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transition1Blocks[r * 3 + 2].Text = sBox[x][y].ToString("X2");
-                    transition1Blocks[r * 3 + 2].Background = Brushes.Green;
-                    transitionBorders[3 * r].Visibility = Visibility.Hidden;
-                    transitionBorders[2 + 3 * r].Visibility = Visibility.Hidden;
-                }, null);
-                wait();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    transition1Blocks[r * 3 + 2].Background = Brushes.Transparent;
-                    foreach (Border br in tempBordes)
-                    {
-                        br.Background = Brushes.Yellow;
-                    }
-                    tempBordes.Clear();
-                    transitionBlocks[3 * r].Text = "";
-                    transitionBlocks[3 * r + 2].Text = "";
-                    textBlockList[3][z].Background = Brushes.Transparent;
-                }, null);
-                wait();
-            }
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                expansionTransitionGrid.Visibility = Visibility.Hidden;
-                expansionKeyGrid256.Visibility = Visibility.Visible;
-                expansionResultGrid256.SetValue(Grid.ColumnProperty, 3);
-                expansionTransitionGrid1.Visibility = Visibility.Visible;
-                sBoxGrid.Visibility = Visibility.Hidden;
-            }, null);
-            wait();
-            x = 3;
-            while (x < 8)
-            {
-                if (x == 3)
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        keyBorders[4 + 4 * x].Background = Brushes.Green;
-                        keyBorders[5 + 4 * x].Background = Brushes.Green;
-                        keyBorders[6 + 4 * x].Background = Brushes.Green;
-                        keyBorders[7 + 4 * x].Background = Brushes.Green;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[0].Background = Brushes.Green;
-                        transition1Borders[3].Background = Brushes.Green;
-                        transition1Borders[6].Background = Brushes.Green;
-                        transition1Borders[9].Background = Brushes.Green;
-                        transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
-                        transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
-                        transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
-                        transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
-                        keyBorders[4 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[5 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[6 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[7 + 4 * x].Background = Brushes.Transparent;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[0].Background = Brushes.Transparent;
-                        transition1Borders[3].Background = Brushes.Transparent;
-                        transition1Borders[6].Background = Brushes.Transparent;
-                        transition1Borders[9].Background = Brushes.Transparent;
-                    }, null);
-                    x = 4;
-                    wait();
-                }
-                for (z = 0; z < 4; z++)
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[z * 3].Background = Brushes.Green;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[z * 3 + 2].Background = Brushes.Green;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[z * 3].Background = Brushes.Transparent;
-                        transition1Borders[z * 3 + 2].Background = Brushes.Transparent;
-                        resultBorders[z + 4 * x].Background = Brushes.Green;
-                        resultBlocks[z + x * 4].Text = keyBytes[(roundNumber) * 32 + x * 4 + z].ToString("X2");
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        resultBorders[z + 4 * x].Background = Brushes.Transparent;
-                    }, null);
-                    wait();
-                }
-                if (x < 7)
-                {
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Blocks[0].Text = "";
-                        transition1Blocks[2].Text = "";
-                        transition1Blocks[3].Text = "";
-                        transition1Blocks[5].Text = "";
-                        transition1Blocks[6].Text = "";
-                        transition1Blocks[8].Text = "";
-                        transition1Blocks[9].Text = "";
-                        transition1Blocks[11].Text = "";
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        resultBorders[0 + 4 * x].Background = Brushes.Green;
-                        resultBorders[1 + 4 * x].Background = Brushes.Green;
-                        resultBorders[2 + 4 * x].Background = Brushes.Green;
-                        resultBorders[3 + 4 * x].Background = Brushes.Green;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        tempString[0] = resultBlocks[0 + 4 * x].Text;
-                        tempString[1] = resultBlocks[1 + 4 * x].Text;
-                        tempString[2] = resultBlocks[2 + 4 * x].Text;
-                        tempString[3] = resultBlocks[3 + 4 * x].Text;
-                        resultBorders[0 + 4 * x].Background = Brushes.Transparent;
-                        resultBorders[1 + 4 * x].Background = Brushes.Transparent;
-                        resultBorders[2 + 4 * x].Background = Brushes.Transparent;
-                        resultBorders[3 + 4 * x].Background = Brushes.Transparent;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[2].Background = Brushes.Green;
-                        transition1Borders[5].Background = Brushes.Green;
-                        transition1Borders[8].Background = Brushes.Green;
-                        transition1Borders[11].Background = Brushes.Green;
-                        transition1Blocks[2].Text = tempString[0];
-                        transition1Blocks[5].Text = tempString[1];
-                        transition1Blocks[8].Text = tempString[2];
-                        transition1Blocks[11].Text = tempString[3];
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[2].Background = Brushes.Transparent;
-                        transition1Borders[5].Background = Brushes.Transparent;
-                        transition1Borders[8].Background = Brushes.Transparent;
-                        transition1Borders[11].Background = Brushes.Transparent;
-                        keyBorders[4 + 4 * x].Background = Brushes.Green;
-                        keyBorders[5 + 4 * x].Background = Brushes.Green;
-                        keyBorders[6 + 4 * x].Background = Brushes.Green;
-                        keyBorders[7 + 4 * x].Background = Brushes.Green;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[0].Background = Brushes.Green;
-                        transition1Borders[3].Background = Brushes.Green;
-                        transition1Borders[6].Background = Brushes.Green;
-                        transition1Borders[9].Background = Brushes.Green;
-                        transition1Blocks[0].Text = keyBlocks[4 + 4 * x].Text;
-                        transition1Blocks[3].Text = keyBlocks[5 + 4 * x].Text;
-                        transition1Blocks[6].Text = keyBlocks[6 + 4 * x].Text;
-                        transition1Blocks[9].Text = keyBlocks[7 + 4 * x].Text;
-                        keyBorders[4 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[5 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[6 + 4 * x].Background = Brushes.Transparent;
-                        keyBorders[7 + 4 * x].Background = Brushes.Transparent;
-                    }, null);
-                    wait();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        transition1Borders[0].Background = Brushes.Transparent;
-                        transition1Borders[3].Background = Brushes.Transparent;
-                        transition1Borders[6].Background = Brushes.Transparent;
-                        transition1Borders[9].Background = Brushes.Transparent;
-                    }, null);
-                    wait();
-                }
-                x++;
-            }
-            autostep = false;
-            wait();
+            operationCounter = 0;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 expansionExplanation4.Visibility = Visibility.Hidden;
