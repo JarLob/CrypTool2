@@ -150,6 +150,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.abort = false;
             pres.expansion = true;
             pres.finish = false;
+            pres.endstep = false;
             pres.roundNumber = 1;
             pres.first = true;
             pres.stopp = false;
@@ -256,12 +257,13 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Stop()
         {
+            pres.autostep = false;
             aborted = true;
             pres.abort = true;
             pres.expansion = false;
             pres.stopp = true;
             pres.finish = true;
-            pres.buttonNextClickedEvent.Set();
+            pres.endstep = true;
             pres.buttonNextClickedEvent.Set();
             //pres.stop();
             //aborted = true;

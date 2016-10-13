@@ -58,6 +58,7 @@ namespace AESVisualisation
         public int operationCounter2 = 0;
         public bool abort = false;
         public bool stopp = false;
+        public bool endstep = false;
         Thread expansionThread;
         Thread encryptionThread;
 
@@ -94,21 +95,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if(keysize == 0)
-                {
-                    roundNumber = 1;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 1;
-                cleanUp();
-                skip = true;
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if(keysize == 0)
@@ -148,21 +138,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 2;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 2;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -201,21 +180,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 3;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 3;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -254,21 +222,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 4;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 4;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -307,21 +264,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 5;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 5;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -360,21 +306,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 6;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 6;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -413,21 +348,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 7;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 7;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -466,21 +390,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 8;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 8;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -519,21 +432,10 @@ namespace AESVisualisation
             checkInitialRound();
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 9;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 9;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -568,21 +470,10 @@ namespace AESVisualisation
             autostep = false;
             if (expansion)
             {
-                if (keysize == 0)
-                {
-                    roundNumber = 10;
-                    abort = true;
-                    buttonNextClickedEvent.Set();
-                    buttonNextClickedEvent.Set();
-                    return;
-                }
                 roundNumber = 10;
-                skip = true;
-                cleanUp();
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    setUpExpansion();
-                }, null);
+                abort = true;
+                buttonNextClickedEvent.Set();
+                buttonNextClickedEvent.Set();
                 return;
             }
             if (keysize == 0)
@@ -1137,12 +1028,12 @@ namespace AESVisualisation
                                 setUpExpansion();
                             }, null);
                         }
+                        abort = false;
                         if (roundNumber < 11 && !start && !abort)
                         {
                             autostep = false;
                             wait();
                         }
-                        abort = false;
                     }
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -1192,6 +1083,7 @@ namespace AESVisualisation
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
+                                cleanUp();
                                 setUpExpansion();
                             }, null);
                         }
@@ -1200,8 +1092,11 @@ namespace AESVisualisation
                             autostep = false;
                             wait();
                         }
+                        if(expansion)
+                            abort = false;
                     }
                     roundNumber = saveRoundNumber;
+
                 }
                 else
                 {
@@ -1245,6 +1140,7 @@ namespace AESVisualisation
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
+                                cleanUp();
                                 setUpExpansion();
                             }, null);
                         }
@@ -1253,6 +1149,8 @@ namespace AESVisualisation
                             autostep = false;
                             wait();
                         }
+                        if(expansion)
+                            abort = false;
                     }
                     roundNumber = saveRoundNumber;
                 }
@@ -2313,8 +2211,8 @@ namespace AESVisualisation
                             transitionBorders[1].Visibility = Visibility.Visible;
                             transitionBorders[4].Visibility = Visibility.Visible;
                             transitionBorders[7].Visibility = Visibility.Visible;
-                            transitionBorders[11].Visibility = Visibility.Visible;
-                            transitionBorders[12].Visibility = Visibility.Hidden;
+                            transitionBorders[10].Visibility = Visibility.Visible;
+                            transitionBorders[11].Visibility = Visibility.Hidden;
                         }, null);
                         break;
                     case 19:
@@ -2830,7 +2728,10 @@ namespace AESVisualisation
                 expansionTransitionGrid1.Visibility = Visibility.Hidden;
             }, null);
             x = 0;
-            roundNumber++;
+            if (!abort)
+            {
+                roundNumber++;
+            }
         }
 
        /*
@@ -3517,7 +3418,10 @@ namespace AESVisualisation
                 expansionTransitionGrid.Visibility = Visibility.Hidden;
                 expansionTransitionGrid1.Visibility = Visibility.Hidden;
             }, null);
-            roundNumber++;
+            if (!abort)
+            {
+                roundNumber++;
+            }
             progress = roundNumber * 0.5 / 8;
             if (!expansion)
             {
@@ -6454,6 +6358,10 @@ namespace AESVisualisation
         */
         private void wait()
         {
+            if (endstep)
+            {
+                return;
+            }
             if (!autostep)
             {              
                 buttonNextClickedEvent.WaitOne();
