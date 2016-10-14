@@ -166,9 +166,9 @@ namespace Cryptool.Plugins.AESVisualisation
             Thread presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
             pres.keysize = keysize;
-            language = 1 - settings.Language;
+            language = 1; /*- settings.Language;*/
             pres.language = language;
-            pres.setLanguage();
+            //pres.setLanguage();
             checkKeysize();
             checkTextLength();
             executing = true;

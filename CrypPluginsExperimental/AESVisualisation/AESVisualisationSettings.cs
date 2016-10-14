@@ -50,19 +50,19 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
-        [TaskPane("Sprache", "SpracheTooltip", null, 2, false, ControlType.ComboBox, new String[] { "Deutsch", "English"})]
-        public int Language
-        {
-            get { return this.language; }
-            set
-            {
-                if (((int)value) != language)
-                {
-                    this.language = (int)value;
-                    OnPropertyChanged("Sprache");
-                }
-            }
-        }
+        //[TaskPane("Sprache", "SpracheTooltip", null, 2, false, ControlType.ComboBox, new String[] { "Deutsch", "English"})]
+        //public int Language
+        //{
+        //    get { return this.language; }
+        //    set
+        //    {
+        //        if (((int)value) != language)
+        //        {
+        //            this.language = (int)value;
+        //            OnPropertyChanged("Sprache");
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Events

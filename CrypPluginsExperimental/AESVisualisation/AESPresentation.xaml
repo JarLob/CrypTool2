@@ -194,11 +194,11 @@
             <Button x:Name="round8Button" Content="Round8" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="round8Button_Click" />
             <Button x:Name="round9Button" Content="Round9" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="round9Button_Click" />
             <Button x:Name="round10Button" Content="Round10" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="round10Button_Click" />
-            <Button Name="languageButton" Grid.Row="0" Grid.Column="10" Click="languageButton_Click">
+            <!--<Button Name="languageButton" Grid.Row="0" Grid.Column="10" Click="languageButton_Click">
                 <Viewbox Stretch="Uniform">
                     <TextBlock Name="languageTextBlock" Text="English"/>
                 </Viewbox>
-            </Button>
+            </Button>-->
             <Button x:Name="playButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click">
                 <Viewbox Stretch="Uniform" Margin="2,2,2,2" >
                     <TextBlock Name="playTextBlock" Text="Next"/>
