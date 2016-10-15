@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              MinHeight="400" MinWidth="650" IsEnabled="True">
     <UserControl.Resources>
-        
+
         <Style x:Key="buttonStyle" TargetType="Button">
             <Setter Property="Background" Value="#534b4f"/>
             <Setter Property="FontStyle" Value="Normal"/>
@@ -43,7 +43,7 @@
         <Style x:Key="RadioButtonStyle" TargetType="RadioButton">
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="FontSize" Value="10"/>
         </Style>
 
         <Style x:Key="LineButton" TargetType="{x:Type RepeatButton}">
@@ -174,7 +174,7 @@
 
         <Style x:Key="RightScrollViewer" TargetType="{x:Type ScrollViewer}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
-           
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -238,7 +238,7 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Grid.Column="0"  Visibility="Visible">
+        <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Visible">
             <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Margin="50">
                 <TextBlock.BitmapEffect>
                     <DropShadowBitmapEffect  Direction="330" Color="Black" ShadowDepth="5" Opacity="0.5" Softness="0.30" />
@@ -250,38 +250,49 @@
 
         </Canvas>
 
-        <Button x:Name="afterInitRoundButton" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After initial&#xa;    round" Grid.Row="1"  VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="10,10,0,30"  Click="afterInitRoundButton_Click" Visibility="Hidden" />
-        <Button x:Name="goBackButton" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="Go back"  Grid.Row="1"   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,0,30" Click="goBackButton_Click"  Visibility="Hidden"/>
+        <Button x:Name="afterInitRoundButton" Style="{StaticResource buttonStyle}" Width="100" Height="20" Content=" After initial round" Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Center"   Click="afterInitRoundButton_Click" Visibility="Hidden" />
+        <!-- <Button x:Name="goBackButton" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="Go back"  Grid.Row="1"   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,0,30" Click="goBackButton_Click"  Visibility="Hidden"/>-->
         <Button x:Name="changePropagationButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="     change&#xa; propagation" FontSize="18" Grid.ColumnSpan="2" Visibility="Hidden" Click="changePropagation_Click" />
         <Button x:Name="avalancheAESButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="  Avalanche&#xa;     effect"  FontSize="18" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center"   Click="avalancheAESButton_Click"  Visibility="Hidden"/>
-
-
-        <ScrollViewer x:Name="buttonsSV"  Grid.Column="2" Grid.RowSpan="2" 
+        <Button x:Name="singleBitButton" Style="{StaticResource buttonStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Height="50" FontSize="14" VerticalAlignment="Top" Content="enable single&#xa; bit changes" Visibility="Hidden" Click="singleBitButton_Click"/>
+        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="25" Content="done" FontSize="13" Margin="0,120,30,0" Visibility="Hidden" Click="doneButton_Click"/>
+        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Width="60" Height="25" Content="clear" FontSize="13" Margin="0,120,0,0" Visibility="Hidden"/>
+        <!--<ScrollViewer x:Name="buttonsSV"  Grid.Row="1" Grid.ColumnSpan="3"                     
                       Style="{StaticResource RightScrollViewer}"  
-                      Width="80" Height="365" Margin="0,0,8,10" 
-                      HorizontalAlignment="Right"   HorizontalScrollBarVisibility="Disabled"  
-                      VerticalScrollBarVisibility="Hidden" Visibility="Hidden" >
-            <!-- <ScrollViewer.Resources>
+                      Width="640" Height="60" Margin="0,30" 
+                      VerticalAlignment="Bottom"
+                      HorizontalScrollBarVisibility="Hidden"  
+                      VerticalScrollBarVisibility="Disabled" Visibility="Hidden" >-->
+        <!-- <ScrollViewer.Resources>
               <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</sys:Double>
               </ScrollViewer.Resources>-->
 
-            <StackPanel x:Name="buttonsPanel" Height="360">
-                <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round1"    Click="afterRound1Button_Click" />
-                <Button x:Name="afterRound2Button"  Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round2"   Click="afterRound2Button_Click" />
-                <Button x:Name="afterRound3Button" Style="{StaticResource buttonStyle}"  Width="60" Height="34" Content=" After&#xa;round3" Click="afterRound3Button_Click" />
-                <Button x:Name="afterRound4Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round4"   Click="afterRound4Button_Click" />
-                <Button x:Name="afterRound5Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round5"   Click="afterRound5Button_Click" />
-                <Button x:Name="afterRound6Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round6"  Click="afterRound6Button_Click" />
-                <Button x:Name="afterRound7Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round7" Click="afterRound7Button_Click" />
-                <Button x:Name="afterRound8Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round8" Click="afterRound8Button_Click" />
-                <Button x:Name="afterRound9Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content=" After&#xa;round9"  Click="afterRound9Button_Click" />
-                <Button x:Name="afterRound10Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round10"  Click="afterRound10Button_Click"></Button>
-                <Button x:Name="afterRound11Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round11"  Click="afterRound11Button_Click" Visibility="Hidden"></Button>
-                <Button x:Name="afterRound12Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round12"  Click="afterRound12Button_Click" Visibility="Hidden"></Button>
-                <Button x:Name="afterRound13Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round13"  Click="afterRound13Button_Click" Visibility="Hidden"></Button>
-                <Button x:Name="afterRound14Button" Style="{StaticResource buttonStyle}" Width="60" Height="34" Content="  After&#xa;round14"  Click="afterRound14Button_Click" Visibility="Hidden"></Button>
-            </StackPanel>
-        </ScrollViewer>
+        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3"  VerticalAlignment="Bottom" Margin="10,20" Visibility="Hidden">
+
+            <Button x:Name="afterRound0Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="0"  Click="afterRound0Button_Click" />
+            <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="1"  Click="afterRound1Button_Click" />
+            <Button x:Name="afterRound2Button"  Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="2"   Click="afterRound2Button_Click" />
+            <Button x:Name="afterRound3Button" Style="{StaticResource buttonStyle}"  Width="30" Height="30" Content="3" Click="afterRound3Button_Click" />
+            <Button x:Name="afterRound4Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="4"   Click="afterRound4Button_Click" />
+            <Button x:Name="afterRound5Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="5"   Click="afterRound5Button_Click" />
+            <Button x:Name="afterRound6Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="6"  Click="afterRound6Button_Click" />
+            <Button x:Name="afterRound7Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="7" Click="afterRound7Button_Click" />
+            <Button x:Name="afterRound8Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="8" Click="afterRound8Button_Click" />
+            <Button x:Name="afterRound9Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="9"  Click="afterRound9Button_Click" />
+            <Button x:Name="afterRound10Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="10"  Click="afterRound10Button_Click"></Button>
+            <Button x:Name="afterRound11Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="11"  Click="afterRound11Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="afterRound12Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="12"  Click="afterRound12Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="afterRound13Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="13"  Click="afterRound13Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="afterRound14Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="14"  Click="afterRound14Button_Click" Visibility="Collapsed"></Button>
+            <Line x:Name="line" Stroke="#008000" StrokeThickness="3" X1="0" Y1="0" X2="10" Y2="30" Visibility="Visible">
+                <Line.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="5" Opacity="0.8" Softness="0.4"  />
+                </Line.BitmapEffect>
+            </Line>
+            <Button x:Name="inputDataButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Input data"/>
+            <Button x:Name="summaryButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Summary"/>
+        </StackPanel>
+
 
 
         <TextBlock Name="showByteDependencyText" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how many byte changes are triggered by a single change in an input byte." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="0,30,60,0" Visibility="Hidden">
@@ -289,7 +300,14 @@
         <TextBlock Name="avalancheEffectAESText" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how strong the avalanche effect is in every single AES-128 round." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="30,0,0,0" Visibility="Hidden">
         </TextBlock>
         <TextBlock Name="comparisonTxtBlock" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Foreground="#534b4f" Width="250" Margin="30" FontSize="14" TextWrapping="Wrap" TextAlignment="Center" Visibility="Hidden">You can modify the original input connected to the algorithm's plugin.</TextBlock>
-
+        <TextBlock Name="buttonsTitle" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#534b4f" FontWeight="DemiBold" Text="Check avalanche effect after round" Visibility="Hidden" Margin="10,55">
+        </TextBlock>
+        <TextBlock Name="initStateTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Input data AES-" Visibility="Hidden" >
+        </TextBlock>
+        <TextBlock Name="afterRoundsTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" TextAlignment="Center" Visibility="Hidden" >
+        </TextBlock>
+        <TextBlock Name="afterRoundsSubtitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="20" Foreground="#534b4f" HorizontalAlignment="Center" TextAlignment="Center" Text="after round "  Visibility="Hidden" Margin="0,30" >
+        </TextBlock>
         <Line x:Name="divideLine" Grid.Column="1" Grid.RowSpan="2" Stroke="White" StrokeThickness="5" X1="110" Y1="150" X2="110" Y2="300" Visibility="Hidden">
             <Line.BitmapEffect>
                 <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="5" Opacity="0.8" Softness="0.4"  />
@@ -298,7 +316,7 @@
 
         <!-- -->
 
-        <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="2" Width="170" Height="170" >
+        <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="170" Height="170" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="80,15" >
             <local:PieChart.ToolTip>
                 <ToolTip x:Name="tp1" Height="40" Background="#6082b6" Foreground="White" FontWeight="Bold">
                 </ToolTip>
@@ -309,7 +327,7 @@
 
         </local:PieChart>
 
-        <local:PieChart  x:Name="unflippedBitsPiece" Grid.Row="1" Grid.Column="2" Width="170" Height="170" >
+        <local:PieChart  x:Name="unflippedBitsPiece" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Width="170" Height="170" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="80,15" >
             <local:PieChart.ToolTip>
                 <ToolTip x:Name="tp2" Height="40" Background="#6082b6" Foreground="White" FontWeight="Bold">
                 </ToolTip>
@@ -319,7 +337,49 @@
             </local:PieChart.Effect>
         </local:PieChart>
 
+        <Canvas Name="curvedLinesCanvas" Visibility="Hidden">
+            <Path Stroke="#534b4f" StrokeThickness="3">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="185,229">
+                                <!--<BezierSegment Point1="180,180" Point2="185,200" Point3="230,155"></BezierSegment>-->
+                                <QuadraticBezierSegment Point1="180,180" Point2="240,161"/>
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
 
+            <Path Stroke="#534b4f" StrokeThickness="3">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="189,80">
+                                <QuadraticBezierSegment Point1="190,110" Point2="240,130"></QuadraticBezierSegment>
+                                <!--<QuadraticBezierSegment Point1="195,150" Point2="230,120"/>-->
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+
+            <Polygon Points="240,120 250,130, 240,140" StrokeThickness="2"  Stroke="#534b4f" Fill="#007fff" Visibility="Visible" >
+            </Polygon>
+            <Polygon Points="240,151 250,161, 240,171" StrokeThickness="2"  Stroke="#534b4f" Fill="#007fff" Visibility="Visible" >
+            </Polygon>
+        </Canvas>
+
+
+
+        <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Visibility="Hidden">
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Padding="5">Display information in
+            </TextBlock>
+            <RadioButton Name="radioDecimal" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="5" Checked="radioButton2Checked" Content=" Decimal">
+            </RadioButton>
+            <RadioButton Name="radioHexa" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="5" Checked="radioButton3Checked"  Content=" Hexadecimal">
+            </RadioButton>
+        </StackPanel>
 
         <StackPanel Name="encryptedTextStackPanel" Height="325" HorizontalAlignment="Left" Grid.RowSpan="2" Visibility="Hidden" Margin="0,0,0,20">
             <TextBlock Style="{StaticResource textBlockStyle}" FontSize="10" Padding="5">Display information in
@@ -369,17 +429,17 @@
         </StackPanel>
 
 
-        <StackPanel Name="MessagesStackPanel" Grid.RowSpan="2" Margin="10,27,-5,85"  Height="325" Visibility="Hidden" >
+        <StackPanel Name="MessagesStackPanel" Grid.RowSpan="2" Margin="10,27,-5,85"  Height="320" Visibility="Hidden" >
             <TextBlock Style="{StaticResource textBlockStyle}" FontSize="10" Padding="5">Display information in
 
             </TextBlock>
 
-            <StackPanel Name="radioButtonPanel" Orientation="Horizontal" Margin="10,0">
+            <StackPanel Name="radioButtonPanelq" Orientation="Horizontal" Margin="10,0">
 
-                <RadioButton Name="radioBinary" Style="{StaticResource RadioButtonStyle}"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
-                <RadioButton Name="radioDecimal" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                <RadioButton Name="radioBinaryq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
+                <RadioButton Name="radioDecimalq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
                 </RadioButton>
-                <RadioButton Name="radioHexa" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                <RadioButton Name="radioHexaq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
                 </RadioButton>
             </StackPanel>
 
@@ -401,18 +461,23 @@
 
 
 
-        <Grid Name="initialStateGrid" Grid.Column="1" Grid.RowSpan="2"  Visibility="Hidden" >
+        <Grid Name="OrigInitialStateGrid"  Grid.RowSpan="2"  Visibility="Hidden" Margin="0,70">
 
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="17" Text="Initial state" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="50" Margin="0,60,30,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="17" Text="original message" HorizontalAlignment="Center" Margin="0,0,20,0" >
+            </TextBlock>
+            <TextBlock  Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="17" Text="original key" HorizontalAlignment="Center" Margin="0,10,30,0" >
             </TextBlock>
 
-            <Grid Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" Height="240" Width="150" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="0,25,0,0" >
+            <Grid Grid.Row="1" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left" >
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -426,112 +491,710 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-
-
-
                 <Border Grid.Row="0" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock1"  Text="" TextAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock2"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock3"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock4"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f" BorderThickness="2" >
-                    <TextBlock x:Name="initStateTxtBlock5"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock6"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock7"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock8"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock9"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock10"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock11"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock12"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock13"  Text="" TextAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock14"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock15"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock16"  Text="" TextAlignment="Center" ></TextBlock>
+                    <TextBlock x:Name="initStateTxtBlock16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+            </Grid>
+
+
+            <Grid x:Name="originalKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock25"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock26"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock27"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock28"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
 
-                <Border Grid.Row="5" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock17"  Text="" TextAlignment="Center" ></TextBlock>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock29"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock18"  Text="" TextAlignment="Center" ></TextBlock>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock30"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock19"  Text="" TextAlignment="Center" ></TextBlock>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock31"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock20"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock21"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock22"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock23"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock24"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock25"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock26"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock27"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock28"  Text="" TextAlignment="Center" ></TextBlock>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
 
-                <Border Grid.Row="8" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock29"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock30"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock31"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateTxtBlock32"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
 
             </Grid>
         </Grid>
 
-        <Grid Name="afterInitialRoundGrid" Grid.Column="2" Grid.RowSpan="2"   Visibility="Hidden">
+        <Grid Name="modifiedInitialStateGrid" Grid.Column="1" Grid.RowSpan="2"  Visibility="Hidden" Margin="0,70">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="23" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="33"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="17" Text="modified message" HorizontalAlignment="Center" Margin="0,0,20,0" >
+            </TextBlock>
+            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="17" Text="modified key" HorizontalAlignment="Center" Margin="0,10,30,0" >
+            </TextBlock>
+
+            <Grid Grid.Row="1" Height="100" Width="160" HorizontalAlignment="Left" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock33"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock34"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock35"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock36"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f" BorderThickness="2" >
+                    <TextBlock x:Name="initStateTxtBlock37"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock38"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock39"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock40"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock41"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock42"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock43"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock44"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock45"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock46"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock47"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock48"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+            </Grid>
+
+
+            <Grid x:Name="modifiedKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock49"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock50"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock51"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock52"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock53"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock54"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock55"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock56"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock57"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock58"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock59"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock60"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock61"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock62"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock63"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateTxtBlock64"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+
+            </Grid>
+        </Grid>
+
+        <Grid Name="inputInBits"  Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0,70">
+            <Grid Grid.Row="1" Height="100" Width="445" VerticalAlignment="Top" Margin="0,25,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit1"  Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit2" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit3" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit4" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit5" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit6" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit7" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit8" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                    </StackPanel>
+                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+                </Border>
+                <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Name="bit9" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="bit10" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit11" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit12" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit13" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit14" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit15" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit16" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit17" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit18" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit19" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit20" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit21" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit22" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit23" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit24" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit25" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit26" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit27" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit28" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit29" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit30" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit31" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit32" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1"  BorderBrush="#534b4f" BorderThickness="2" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit33" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit34" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit35" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit36" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit37" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit38" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit39" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit40" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Name="bit41" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit42" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit43" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit44" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit45" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit46" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit47" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit48" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit49" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit50" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit51" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit52" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit53" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit54" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit55" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit56" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit57" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit58" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit59" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit60" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit61" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit62" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit63" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit64" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit65" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit66" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit67" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit68" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit69" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit70" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit71" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit72" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit73" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit74" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit75" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit76" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit77" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit78" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit79" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit80" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit81" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit82" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit83" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit84" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit85" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit86" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit87" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit88" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit89" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit90" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit91" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit92" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit93" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit94" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit95" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit96" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit97" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit98" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit99" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit100" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit101" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit102" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit103" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit104" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit105" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit106" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit107" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit108" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit109" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit110" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit111" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit112" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit113" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit114" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit115" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit116" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit117" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit118" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit119" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit120" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="bit121" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit122" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit123" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit124" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit125" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit126" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit127" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="bit128" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Name="keyGrid" Grid.Row="1" Height="100" Width="445" VerticalAlignment="Bottom" Margin="0,35">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit1"  Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit2" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit3" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit4" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit5" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit6" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit7" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit8" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                    </StackPanel>
+                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+                </Border>
+                <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Name="keyBit9" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit10" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit11" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit12" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit13" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit14" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit15" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit16" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit17" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit18" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit19" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit20" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit21" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit22" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit23" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit24" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit25" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit26" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit27" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit28" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit29" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit30" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit31" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit32" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1"  BorderBrush="#534b4f" BorderThickness="2" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit33" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit34" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit35" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit36" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit37" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit38" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit39" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit40" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Name="keyBit41" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit42" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit43" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit44" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit45" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit46" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit47" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit48" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit49" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit50" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit51" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit52" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit53" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit54" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit55" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit56" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit57" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit58" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit59" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit60" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit61" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit62" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit63" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit64" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit65" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit66" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit67" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit68" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit69" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit70" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit71" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit72" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit73" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit74" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit75" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit76" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit77" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit78" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit79" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit80" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit81" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit82" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit83" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit84" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit85" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit86" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit87" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit88" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit89" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit90" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit91" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit92" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit93" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit94" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit95" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit96" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit97" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit98" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit99" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit100" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit101" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit102" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit103" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit104" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit105" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit106" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit107" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit108" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit109" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit110" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit111" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit112" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit113" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit114" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit115" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit116" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit117" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit118" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit119" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit120" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit121" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit122" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit123" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit124" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit125" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit126" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit127" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit128" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+
+        </Grid>
+
+        <TextBlock Name="instructionsTxtBlock" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Height="90" HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Visibility="Hidden" TextAlignment="Justify" Width="330"  Foreground="#534b4f" FontSize="16" FontWeight="DemiBold" TextWrapping="Wrap"
+                   Text="In order to proceed you can either make changes directly to the input plugins or you can modify single text and key bits." Margin="10,100">
+
+        </TextBlock>
+
+        <TextBlock Name="instructionsTxtBlock2" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Height="30" HorizontalAlignment="Center" 
+                   Visibility="Hidden" TextAlignment="Justify" Width="400"  Foreground="#534b4f" FontSize="15" FontWeight="DemiBold" TextWrapping="Wrap"
+                   Text="Click on the bit(s) that you would like to change." Margin="0,70,0,0">
+
+        </TextBlock>
+
+        <Grid Name="afterInitialRoundGrid" Grid.Column="2" Grid.RowSpan="2" Height="280"  Visibility="Hidden">
             <TextBlock Style="{StaticResource textBlockStyle}"  FontSize="17" Text="After initial round" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,55,0"  Height="30">
             </TextBlock>
             <Grid Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" Height="240" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,25,0,0"  >
@@ -660,17 +1323,24 @@
         </Grid>
 
 
-        <Grid Name="afterRoundsGrid" Grid.Column="0" Grid.RowSpan="2" Visibility="Hidden">
-            <TextBlock Name="txtBlockafterRounds" Style="{StaticResource textBlockStyle }" FontSize="20"
-                      Text="After round " HorizontalAlignment="Center" Margin="50,40,0,0">
+        <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="Hidden"  VerticalAlignment="Center" Margin="0,0,0,70">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Name="txtBlockafterRounds" Style="{StaticResource textBlockStyle }" FontSize="12"
+                      Text=" cipher state&#xa;original msg.  " HorizontalAlignment="Center" >
             </TextBlock>
-            <Grid Grid.Row="0" Grid.Column="1" Height="280" Width="190" VerticalAlignment="Center" Margin="0,0,0,10" >
+            <TextBlock Grid.Row="2" Name="txtBlockafterRoundsB" Style="{StaticResource textBlockStyle }"  FontSize="12"
+                      Text=" cipher state&#xa;modified msg.  " HorizontalAlignment="Center" Margin="10,10,0,0">
+            </TextBlock>
+
+
+            <Grid Grid.Row="1"  Height="110" Width="170" VerticalAlignment="Center" >
                 <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -683,8 +1353,6 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-
-
 
                 <Border Grid.Row="0" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt1"  Text="" TextAlignment="Center" ></TextBlock>
@@ -734,54 +1402,69 @@
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt16"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
+            </Grid>
 
-                <Border Grid.Row="5" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+            <Grid Grid.Row="3"  Height="110" Width="170" VerticalAlignment="Center"  >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt17"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt18"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="0" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt19"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="5" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="0" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt20"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="6" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt21"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="6" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt22"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="6" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt23"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="6" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt24"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="7" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt25"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="7" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt26"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="7" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt27"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="7" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt28"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
 
-                <Border Grid.Row="8" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt29"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="8" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt30"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="8" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt31"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
-                <Border Grid.Row="8" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="afterRoundTxt32"  Text="" TextAlignment="Center" ></TextBlock>
                 </Border>
 
@@ -790,11 +1473,12 @@
 
 
 
-        <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0.111,-7,0.333,7" >
+        <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Height="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40">
 
-            <ScrollViewer Name="bitRepresentationSV" Style="{StaticResource RightScrollViewer}"  VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Visible" Height="100" Width="300" HorizontalAlignment="Left" Margin="46,134,0,200.667">
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Text="binary values" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Margin="0,50" ></TextBlock>
+            <ScrollViewer Name="bitRepresentationSV" Style="{StaticResource RightScrollViewer}"  VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Visible" Height="100" Width="415" Margin="10,0">
 
-                <UniformGrid Columns="128" Rows="3" >
+                <UniformGrid Name="UGrid" Columns="128" Rows="3" >
 
                     <Border  BorderThickness="2" Width="15" >
                         <TextBlock Name="txt0" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
@@ -1954,7 +2638,7 @@
         </Grid>
         <!--#endregion-->
 
-        <Grid Name="dataGrid" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Hidden" Margin="40,30,0,20">
+        <Grid Name="dataGrid" Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2"  Visibility="Hidden"  Height="170" VerticalAlignment="Top" Margin="10,0,0,0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="175"/>
                 <ColumnDefinition/>
@@ -1963,12 +2647,12 @@
 
 
 
-            <TextBlock x:Name="bitsData" FontSize="12" TextWrapping="Wrap"></TextBlock>
+            <TextBlock x:Name="bitsData" FontSize="12" TextWrapping="Wrap" Margin="0,25,0,0" />
 
 
 
-            <CheckBox Grid.Column="2" VerticalAlignment="Bottom" Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False" Margin="65,50,60,30"/>
-            <CheckBox Grid.Column="2" VerticalAlignment="Bottom" Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False"  Margin="65,60,60,10"/>
+            <CheckBox Grid.Column="2" Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False" Margin="5,0,40.1,40" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <CheckBox Grid.Column="2"  Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False"  Margin="5,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
 

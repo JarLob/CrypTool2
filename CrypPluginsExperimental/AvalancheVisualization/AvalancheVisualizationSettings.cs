@@ -21,7 +21,7 @@ using System.Windows;
 
 namespace Cryptool.Plugins.AvalancheVisualization
 {
-    // HOWTO: rename class (click name, press F2)
+   
     public class AvalancheVisualizationSettings : ISettings
     {
 
