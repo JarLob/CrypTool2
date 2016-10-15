@@ -1346,7 +1346,10 @@ namespace AvalancheVisualization
                         txtBlockList.Add((TextBlock)this.FindName("txt" + i));
                     }
                     break;
-
+                case 6:
+                    for (int i = 1; i < 129; i++)
+                        txtBlockList.Add((TextBlock)this.FindName("bit" + i));
+                        break;
                 default:
                     break;
 
@@ -1612,6 +1615,7 @@ namespace AvalancheVisualization
 
 
             //aesDiffusion.text = newText;
+            aesDiffusion.checkKeysize();
             byte[] temporaryB = aesDiffusion.checkTextLength();
             aesDiffusion.executeAES(false);
 
@@ -3710,6 +3714,11 @@ namespace AvalancheVisualization
             //buttonsPanel.Width = 530.0;
             // buttonsSV.ScrollToHorizontalOffset(0.0);
             bitRepresentationSV.ScrollToHorizontalOffset(0.0);
+            List<TextBlock> tmp = createTxtBlockList(6);
+
+            foreach (TextBlock txtB in tmp)
+                txtB.Foreground = Brushes.Black;
+
             UGrid.Columns = 128;
 
             StartCanvas.Visibility = Visibility.Visible;
