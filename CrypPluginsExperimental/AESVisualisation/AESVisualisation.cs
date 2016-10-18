@@ -260,7 +260,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.autostep = false;
             aborted = true;
             pres.abort = true;
-            pres.expansion = false;
+            pres.expansion = !pres.expansion;
             pres.stopp = true;
             pres.finish = true;
             pres.endstep = true;
