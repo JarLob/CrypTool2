@@ -6705,6 +6705,16 @@ namespace AESVisualisation
                 shiftRowButton.Visibility = Visibility.Hidden;
                 mixColButton.Visibility = Visibility.Hidden;
                 addKeyButton.Visibility = Visibility.Hidden;
+                expansionExplanation.Visibility = Visibility.Hidden;
+                expansionExplanation1.Visibility = Visibility.Hidden;
+                expansionExplanation2.Visibility = Visibility.Hidden;
+                expansionExplanation3.Visibility = Visibility.Hidden;
+                expansionExplanation4.Visibility = Visibility.Hidden;
+                expansionExplanationDE.Visibility = Visibility.Hidden;
+                expansionExplanation1DE.Visibility = Visibility.Hidden;
+                expansionExplanation2DE.Visibility = Visibility.Hidden;
+                expansionExplanation3DE.Visibility = Visibility.Hidden;
+                expansionExplanation4DE.Visibility = Visibility.Hidden;
             }, null);
             if (expansion)
             {

@@ -180,6 +180,8 @@ namespace Cryptool.Plugins.AESVisualisation
                 pres.invisible();
                 pres.buttonVisible();
                 pres.hideButton();
+                pres.InitialRoundTextBlock.Text = "Ergebnis";
+                pres.InitialRoundTextBlock.Visibility = Visibility.Hidden;
             }, null);
             ProgressChanged(0, 1);
             OutputStream = outputStreamWriter;
