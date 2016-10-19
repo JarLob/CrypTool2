@@ -106,6 +106,7 @@ namespace AESVisualisation
             roundNumber = 1 + shift * 2 * keysize;
             removeColors();
             lightRemoveColor();
+            buttonVisible();
             round1Button.Background = Brushes.Aqua;
             abort = true;
             buttonNextClickedEvent.Set();
@@ -114,35 +115,6 @@ namespace AESVisualisation
                 shiftButtons(0);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 1;
-                removeColors();
-                lightRemoveColor();
-                round1Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round1Button.Background = Brushes.Aqua;
-            subByteButton.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 1 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(0);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round2Button_Click(object sender, RoutedEventArgs e)
@@ -160,6 +132,7 @@ namespace AESVisualisation
             action = 1;
             roundNumber = 2 + shift * 2 * keysize;
             removeColors();
+            buttonVisible();
             lightRemoveColor();
             round2Button.Background = Brushes.Aqua;
             abort = true;
@@ -169,34 +142,6 @@ namespace AESVisualisation
                 shiftButtons(0);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 2;
-                removeColors();
-                lightRemoveColor();
-                round2Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round2Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 2 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(0);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round3Button_Click(object sender, RoutedEventArgs e)
@@ -214,6 +159,7 @@ namespace AESVisualisation
             action = 1;
             roundNumber = 3 + shift * 2 * keysize;
             removeColors();
+            buttonVisible();
             lightRemoveColor();
             round3Button.Background = Brushes.Aqua;
             abort = true;
@@ -223,34 +169,6 @@ namespace AESVisualisation
                 shiftButtons(0);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 3;
-                removeColors();
-                lightRemoveColor();
-                round3Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round3Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 3 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(0);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round4Button_Click(object sender, RoutedEventArgs e)
@@ -268,6 +186,7 @@ namespace AESVisualisation
             action = 1;
             roundNumber = 4 + shift * 2 * keysize;
             removeColors();
+            buttonVisible();
             lightRemoveColor();
             round4Button.Background = Brushes.Aqua;
             abort = true;
@@ -277,34 +196,6 @@ namespace AESVisualisation
                 shiftButtons(0);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 4;
-                removeColors();
-                lightRemoveColor();
-                round4Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round4Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 4 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(0);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round5Button_Click(object sender, RoutedEventArgs e)
@@ -322,39 +213,12 @@ namespace AESVisualisation
             action = 1;
             roundNumber = 5 + shift * 2 * keysize;
             removeColors();
+            buttonVisible();
             lightRemoveColor();
             round5Button.Background = Brushes.Aqua;
             abort = true;
             buttonNextClickedEvent.Set();
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 5;
-                removeColors();
-                lightRemoveColor();
-                round5Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round5Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 5 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            //if (keysize == 1 && shift == 0)
-            //{
-            //    shiftButtons(0);
-            //}
-            mixColButton.IsEnabled = true;
         }
 
         private void round6Button_Click(object sender, RoutedEventArgs e)
@@ -376,35 +240,7 @@ namespace AESVisualisation
             round6Button.Background = Brushes.Aqua;
             abort = true;
             buttonNextClickedEvent.Set();
-            return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 6;
-                removeColors();
-                lightRemoveColor();
-                round6Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round6Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 6 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            //if (keysize == 1)
-            //{
-            //    shiftButtons(0);
-            //}
-            mixColButton.IsEnabled = true;
+            return;            
         }
 
         private void round7Button_Click(object sender, RoutedEventArgs e)
@@ -431,34 +267,6 @@ namespace AESVisualisation
                 shiftButtons(1);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 7;
-                removeColors();
-                lightRemoveColor();
-                round7Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round7Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 7 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            { 
-                shiftButtons(1);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round8Button_Click(object sender, RoutedEventArgs e)
@@ -485,34 +293,6 @@ namespace AESVisualisation
                 shiftButtons(1);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 8;
-                removeColors();
-                lightRemoveColor();
-                round8Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round8Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 8 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(1);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round9Button_Click(object sender, RoutedEventArgs e)
@@ -539,31 +319,6 @@ namespace AESVisualisation
                 shiftButtons(1);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 9;
-                removeColors();
-                lightRemoveColor();
-                round9Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round9Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 9 + shift * 2 * keysize;
-            action = 1;
-            setUpSubByte(states);
-            if (keysize != 0)
-            {
-                shiftButtons(1);
-            }
-            mixColButton.IsEnabled = true;
         }
 
         private void round10Button_Click(object sender, RoutedEventArgs e)
@@ -589,35 +344,6 @@ namespace AESVisualisation
                 shiftButtons(1);
             }
             return;
-            if (keysize == 0)
-            {
-                action = 1;
-                roundNumber = 10;
-                removeColors();
-                lightRemoveColor();
-                round10Button.Background = Brushes.Aqua;
-                abort = true;
-                buttonNextClickedEvent.Set();
-                return;
-            }
-            checkInitialRound();
-            skip = true;
-            cleanUp();
-            removeColors();
-            lightRemoveColor();
-            round10Button.Background = Brushes.Aqua;
-            buttonVisible();
-            roundNumber = 10 + shift * 2 * keysize;
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states);
-            }, null);
-            if (keysize != 0)
-            {
-                shiftButtons(1);
-            }
-            mixColButton.IsEnabled = false;
         }
 
         private void keyButton_Click(object sender, RoutedEventArgs e)
@@ -630,11 +356,6 @@ namespace AESVisualisation
             skipStep = true;
             buttonNextClickedEvent.Set();
             return;
-            cleanUp();
-            expansion = !expansion;
-            buttonNextClickedEvent.Set();
-            skip = true;
-
         }
 
         private void subByteButton_Click(object sender, RoutedEventArgs e)
@@ -648,11 +369,6 @@ namespace AESVisualisation
             abort = true;
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            lightRemoveColor();
-            action = 1;
-            setUpSubByte(states);
         }
 
         private void shiftRowButton_Click(object sender, RoutedEventArgs e)
@@ -666,11 +382,6 @@ namespace AESVisualisation
             abort = true;
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            lightRemoveColor();
-            action = 2;
-            setUpShiftRows();
         }
 
         private void mixColButton_Click(object sender, RoutedEventArgs e)
@@ -684,11 +395,6 @@ namespace AESVisualisation
             abort = true;
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            lightRemoveColor();
-            action = 3;
-            setUpMixColumns();
         }
 
         private void addKeyButton_Click(object sender, RoutedEventArgs e)
@@ -702,11 +408,6 @@ namespace AESVisualisation
             abort = true;
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            lightRemoveColor();
-            action = 4;
-            setUpAddKey();
         }
 
         private void playButton_Click(object sender, RoutedEventArgs e)
@@ -746,7 +447,7 @@ namespace AESVisualisation
                 action = 4;
                 roundNumber--;
             }
-            if (roundNumber == 10 && action == 3)
+            if (roundNumber == 10 + keysize * 2 && action == 3)
             {
                 action = 2;
             }
@@ -755,80 +456,6 @@ namespace AESVisualisation
             buttonNextClickedEvent.Set();
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            switch (action)
-            {
-                case 1:                    
-                    roundNumber--;
-                    if(roundNumber == 0)
-                    {
-                        initialRound = true;
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            InitialRoundTextBlock.Visibility = Visibility.Visible;
-                            addKeyButton.SetValue(Grid.ColumnProperty, 2);
-                            subByteButton.Visibility = Visibility.Hidden;
-                            shiftRowButton.Visibility = Visibility.Hidden;
-                            mixColButton.Visibility = Visibility.Hidden;
-                        }, null);
-                    }
-                    if(roundNumber < 7 && keysize == 1)
-                    {
-                        if (keysize == 1)
-                        {
-                            shiftButtons(0);
-                        }
-                    }
-                    action = 4;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpAddKey();
-                        changeRoundButton();
-                    }, null);
-                    if(roundNumber == 9+ 2 * keysize)
-                    {
-                        mixColButton.IsEnabled = true;
-                    }
-                    encryptionProgress();
-                    break;
-                case 2:
-                    action = 1;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        removeColors();
-                        changeRoundButton();
-                        setUpSubByte(states);
-                    }, null);
-                    break;
-                case 3:
-                    action = 2;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpShiftRows();
-                    }, null);
-                    break;
-                case 4:
-                    if (roundNumber == 10)
-                    {
-                        action = 2;
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            setUpShiftRows();
-                        }, null);
-                    }
-                    else
-                    {
-                        action = 3;
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            setUpMixColumns();
-                        }, null);
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
 
         private void nextStepButton_Click(object sender, RoutedEventArgs e)
@@ -853,19 +480,6 @@ namespace AESVisualisation
                     changeRoundButton();
                     buttonNextClickedEvent.Set();
                     buttonNextClickedEvent.Set();
-                    return;
-                    roundNumber++;
-                    skip = true;
-                    cleanUp();
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
-                    return;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpExpansion();
-                    }, null);
                     return;
                 }
                 else if(roundNumber < 7 && keysize == 2)
@@ -897,7 +511,7 @@ namespace AESVisualisation
                 buttonNextClickedEvent.Set();
                 return;
             }
-            if (action == 4 && roundNumber == 10)
+            if (action == 4 && roundNumber == 10 + keysize * 2)
             {
                 return;
             }
@@ -907,7 +521,7 @@ namespace AESVisualisation
                 action = 1;
                 roundNumber++;
             }
-            if(roundNumber == 10 && action == 3)
+            if(roundNumber == 10 + keysize * 2 && action == 3)
             {
                 action = 4;
             }
@@ -916,66 +530,6 @@ namespace AESVisualisation
             buttonNextClickedEvent.Set();
             buttonNextClickedEvent.Set();
             return;
-            skip = true;
-            cleanUp();
-            switch (action)
-            {
-                case 1:
-                    action = 2;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpShiftRows();                        
-                    }, null);                                        
-                    break;
-                case 2:
-                    if (roundNumber == 10)
-                    {
-                        action = 4;
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            setUpAddKey();                        
-                        }, null);
-                    }
-                    else
-                    {
-                        action = 3;
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            setUpMixColumns();                            
-                        }, null);
-                    }                 
-                    break;
-                case 3:
-                    action = 4;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpAddKey();
-                    }, null);
-                    break;
-                case 4:
-                    action = 1;
-                    roundNumber++;
-                    if(roundNumber > 6 && keysize == 1)
-                    {
-                        if (keysize == 1)
-                        {
-                            shiftButtons(1);
-                        }
-                    }
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        removeColors();
-                        changeRoundButton();
-                        setUpSubByte(states);
-                    }, null);
-                    if(roundNumber == 10)
-                    {
-                        mixColButton.IsEnabled = false;
-                    }
-                    break;
-                default:
-                    break;
-            }
         }
 
         private void pauseButton_Click(object sender, RoutedEventArgs e)
@@ -1437,7 +991,9 @@ namespace AESVisualisation
                             skip = false;
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                setUpSubByte(states);                           
+                                setUpSubByte(states);
+                                buttonVisible();
+                                InitialRoundTextBlock.Visibility = Visibility.Visible;
                             }, null);
                             autostep = false;
                             wait();
@@ -1459,7 +1015,9 @@ namespace AESVisualisation
                             case 2:
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                setUpShiftRows();                               
+                                setUpShiftRows();
+                                InitialRoundTextBlock.Visibility = Visibility.Visible;
+                                buttonVisible();
                             }, null);
                             autostep = false;
                             wait();
@@ -1485,6 +1043,8 @@ namespace AESVisualisation
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpMixColumns();
+                                InitialRoundTextBlock.Visibility = Visibility.Visible;
+                                buttonVisible();
                             }, null);
                             autostep = false;
                             wait();
@@ -1516,6 +1076,11 @@ namespace AESVisualisation
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpAddKey();
+                                if (!initialRound)
+                                {
+                                    InitialRoundTextBlock.Visibility = Visibility.Visible;
+                                    buttonVisible();
+                                }
                             }, null);
                             autostep = false;
                             wait();
