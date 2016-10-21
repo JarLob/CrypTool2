@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="inputKeyDescription" xml:space="preserve">
+    <value>Input of the key used for the encryption</value>
+  </data>
+  <data name="inputKeyName" xml:space="preserve">
+    <value>Key input</value>
+  </data>
+  <data name="inputTextDescription" xml:space="preserve">
+    <value>Input of the text that is to be encrypted</value>
+  </data>
+  <data name="inputTextName" xml:space="preserve">
+    <value>Text input</value>
+  </data>
   <data name="KeysizeCaption" xml:space="preserve">
     <value>Keysize</value>
   </data>
   <data name="KeysizeTooltip" xml:space="preserve">
     <value>Select the size of the key.</value>
+  </data>
+  <data name="OutputStreamCaption" xml:space="preserve">
+    <value>Text output</value>
+  </data>
+  <data name="OutputStreamTooltip" xml:space="preserve">
+    <value>Output of the ciphertext</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>AES Visualization</value>

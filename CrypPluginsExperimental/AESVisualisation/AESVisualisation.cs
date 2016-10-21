@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.AESVisualisation
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Text input", "Input the key", true)]
+        [PropertyInfo(Direction.InputData, "inputKeyName", "inputKeyDescription", true)]
         public byte[] Key
         {
             get
@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.AESVisualisation
             }
         }
 
-        [PropertyInfo(Direction.InputData, "Text input", "Input the text to be encrypted", true)]
+        [PropertyInfo(Direction.InputData, "inputTextName", "inputTextDescription", true)]
         public byte[] Text
         {
             get
