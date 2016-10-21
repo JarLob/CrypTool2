@@ -147,4 +147,136 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Visualisierung der AES-Verschlüsselung</value>
   </data>
+  <data name="addKeyButton" xml:space="preserve">
+    <value>Add Key</value>
+  </data>
+  <data name="addKeyExplanation" xml:space="preserve">
+    <value>Der Rundenschlüssel wird addiert, indem die einzelnen Bytes miteinander per XOR verrechnet werden</value>
+  </data>
+  <data name="autoButton" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="encButton" xml:space="preserve">
+    <value>Zur Verschlüsselung</value>
+  </data>
+  <data name="encTextBlock" xml:space="preserve">
+    <value>Verschlüsselung</value>
+  </data>
+  <data name="endButton" xml:space="preserve">
+    <value>Ende</value>
+  </data>
+  <data name="expansionExplanation" xml:space="preserve">
+    <value>Zuerst werden die letzten vier Bytes des vorherigen Schlüssels genommen und das letzte Byte an den Anfang gestellt.</value>
+  </data>
+  <data name="expansionExplanation1" xml:space="preserve">
+    <value>Jedes Byte wird mit dem entsprechenden Byte aus der S-Box ausgetauscht.</value>
+  </data>
+  <data name="expansionExplanation2" xml:space="preserve">
+    <value>Die Rundenkonstante wird addiert.</value>
+  </data>
+  <data name="expansionExplanation3" xml:space="preserve">
+    <value>Die ersten vier Bytes des vorherigen Schlüssels werden addiert. Das Ergebnis sind die ersten vier Bytes des neuen Schlüssels.</value>
+  </data>
+  <data name="expansionExplanation4" xml:space="preserve">
+    <value>Für Spalte x des neuen Schlüssels wird Spalte x des vorherigen Schlüssels mit Spalte x-1 des neuen Schlüssels per XOR verrechnet.</value>
+  </data>
+  <data name="expButton" xml:space="preserve">
+    <value>Zur Expansion</value>
+  </data>
+  <data name="expTextBlock" xml:space="preserve">
+    <value>Expansion</value>
+  </data>
+  <data name="initialRoundTextBlock" xml:space="preserve">
+    <value>Initialrunde</value>
+  </data>
+  <data name="mixColButton" xml:space="preserve">
+    <value>Mix Col.</value>
+  </data>
+  <data name="mixColExplanation" xml:space="preserve">
+    <value>Eine Spalte des aktuellen Zustandes wird genommen und neben der Multiplikationsmatrix platziert.</value>
+  </data>
+  <data name="mixColExplanation1" xml:space="preserve">
+    <value>Danach wird sie mit der Multiplikationsmatrix verrechnet, um die nächste Spalte des nächsten Zustandes zu ermitteln.</value>
+  </data>
+  <data name="playButton" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="prevOperationButton" xml:space="preserve">
+    <value>Vorherige Operation</value>
+  </data>
+  <data name="prevRoundButton" xml:space="preserve">
+    <value>Vorherige Runde</value>
+  </data>
+  <data name="Round1" xml:space="preserve">
+    <value>Runde 1</value>
+  </data>
+  <data name="Round10" xml:space="preserve">
+    <value>Runde 10</value>
+  </data>
+  <data name="Round11" xml:space="preserve">
+    <value>Runde 11</value>
+  </data>
+  <data name="Round12" xml:space="preserve">
+    <value>Runde 12</value>
+  </data>
+  <data name="Round13" xml:space="preserve">
+    <value>Runde13</value>
+  </data>
+  <data name="Round14" xml:space="preserve">
+    <value>Runde14</value>
+  </data>
+  <data name="Round2" xml:space="preserve">
+    <value>Runde 2</value>
+  </data>
+  <data name="Round3" xml:space="preserve">
+    <value>Runde 3</value>
+  </data>
+  <data name="Round4" xml:space="preserve">
+    <value>Runde 4</value>
+  </data>
+  <data name="Round5" xml:space="preserve">
+    <value>Runde 5</value>
+  </data>
+  <data name="Round6" xml:space="preserve">
+    <value>Runde 6</value>
+  </data>
+  <data name="Round7" xml:space="preserve">
+    <value>Runde 7</value>
+  </data>
+  <data name="Round8" xml:space="preserve">
+    <value>Runde 8</value>
+  </data>
+  <data name="Round9" xml:space="preserve">
+    <value>Runde 9</value>
+  </data>
+  <data name="ShiftLeftButton" xml:space="preserve">
+    <value>&lt;&lt;</value>
+  </data>
+  <data name="shiftRightButton" xml:space="preserve">
+    <value>&gt;&gt;</value>
+  </data>
+  <data name="shiftRowButton" xml:space="preserve">
+    <value>Shift Row</value>
+  </data>
+  <data name="shiftRowExplanation" xml:space="preserve">
+    <value>Zuerst werden die Zeilen der Matrix nach links verschoben. Die erste Zeile um 0, die zweite um 1, die dritte um 2 und die vierte um 3. Danach werden die überstehenden Bytes nach rechts übertragen, um wieder eine 4 x 4 Matrix zu bilden.</value>
+  </data>
+  <data name="skipOperationButton" xml:space="preserve">
+    <value>Operation überspringen</value>
+  </data>
+  <data name="skipRoundButton" xml:space="preserve">
+    <value>Runde überspringen</value>
+  </data>
+  <data name="startButton" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="subBytesButton" xml:space="preserve">
+    <value>Sub. Bytes</value>
+  </data>
+  <data name="subBytesExplanation" xml:space="preserve">
+    <value>Zuerst wird ein Byte aus der Zustandsmatrix genommen und aufgeteilt.</value>
+  </data>
+  <data name="subBytesExplanation1" xml:space="preserve">
+    <value>Das entsprechende Byte aus der S-Box wird ermittelt und in die Ergebnismatrix übertragen.</value>
+  </data>
 </root>

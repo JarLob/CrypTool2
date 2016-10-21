@@ -147,4 +147,67 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Visualization of AES encryption</value>
   </data>
+  <data name="addKeyExplanation" xml:space="preserve">
+    <value>The round key is added to the current state by XORing the bytes.</value>
+  </data>
+  <data name="expansionExplanation" xml:space="preserve">
+    <value>First, the last four bytes of the previous key are taken. Afterwards, the last byte is placed at the front.</value>
+  </data>
+  <data name="expansionExplanation1" xml:space="preserve">
+    <value>Every byte is exchanged with the corresponding byte from the S-box</value>
+  </data>
+  <data name="expansionExplanation2" xml:space="preserve">
+    <value>A round constant is added</value>
+  </data>
+  <data name="expansionExplanation3" xml:space="preserve">
+    <value>Adding the first four bytes of the previous key gives you the first four bytes of the next key.</value>
+  </data>
+  <data name="expansionExplanation4" xml:space="preserve">
+    <value>For column x of the new key you XOR column x from the previous key with column x-1 from the new key.</value>
+  </data>
+  <data name="mixColExplanation" xml:space="preserve">
+    <value>One column is taken from the current state and placed next to the multiplication matrix.</value>
+  </data>
+  <data name="mixColExplanation1" xml:space="preserve">
+    <value>Then it is multiplied with the multiplication matrix to determine the next column of the next state.</value>
+  </data>
+  <data name="Round1" xml:space="preserve">
+    <value>Round 1</value>
+  </data>
+  <data name="Round10" xml:space="preserve">
+    <value>Round 10</value>
+  </data>
+  <data name="Round2" xml:space="preserve">
+    <value>Round 2</value>
+  </data>
+  <data name="Round3" xml:space="preserve">
+    <value>Round 3</value>
+  </data>
+  <data name="Round4" xml:space="preserve">
+    <value>Round 4</value>
+  </data>
+  <data name="Round5" xml:space="preserve">
+    <value>Round 5</value>
+  </data>
+  <data name="Round6" xml:space="preserve">
+    <value>Round 6</value>
+  </data>
+  <data name="Round7" xml:space="preserve">
+    <value>Round 7</value>
+  </data>
+  <data name="Round8" xml:space="preserve">
+    <value>Round 8</value>
+  </data>
+  <data name="Round9" xml:space="preserve">
+    <value>Round 9</value>
+  </data>
+  <data name="shiftRowExplanation" xml:space="preserve">
+    <value>First, the second row is shifted once to the left. Then, the third row is shifted twice towards the left, and finally the forth row is shifted three times to the left. The overlapping bytes are transferred to the right to form a 4 x 4 matrix.</value>
+  </data>
+  <data name="subBytesExplanation" xml:space="preserve">
+    <value>First, a byte is transferred from the state matrix to the transition spot and split up.</value>
+  </data>
+  <data name="subBytesExplanation1" xml:space="preserve">
+    <value>The corresponding byte in the S-box is determined and placed into the result matrix.</value>
+  </data>
 </root>
