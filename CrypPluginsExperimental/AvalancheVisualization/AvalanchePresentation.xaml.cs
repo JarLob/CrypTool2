@@ -30,42 +30,41 @@ namespace AvalancheVisualization
         public byte[][] keyList = new byte[11][];
         public string[,] lrData = new string[17, 2];
         public string[,] lrDataB = new string[17, 2];
+
         public byte[] tempState;
         public byte[] textA;
         public byte[] textB;
+        public byte[] keyA;
+        public byte[] key;
         public byte[] unchangedCipher;
         public byte[] changedCipher;
-        public byte[] tempStateB;
-        public string originalText;
-        public string modifiedText;
-        public string unchangedCipherString;
-        public string changedCipherString;
         public string[] differentBits;
-        public int textChanges = 0;
         public int sequencePosition;
         public double avgNrDiffBit;
         double avalanche;
         static Random rnd = new Random();
-        public byte[] key;
-        public bool otherAlgo = false;
+
         public byte[][] roundConstant = new byte[12][];
         public int keysize;
         public double progress;
         public int shift = 0;
-        public byte[] keyBytes;
-        public bool unfinished = true;
+        public int mode;
+        // public byte[] keyBytes;
+
         public bool lostFocus = false;
         public int slideNr = 1;
-        public bool goneBack = false;
-        //public DES des = new DES();
-        public AES aes = new AES();
+        public DES desDiffusion;
         public AES aesDiffusion;
         public int roundDES;
         public bool singleBitChange = false;
-        // public AES aes;
 
 
-        Stream DataStream;
+        public string[] leftHalf = new string[32];
+        public string[] rightHalf = new string[32];
+        public string[] leftHalfB = new string[32];
+        public string[] rightHalfB = new string[32];
+        public byte[] seqA;
+        public byte[] seqB;
 
         #endregion
 
@@ -76,7 +75,8 @@ namespace AvalancheVisualization
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
             inputInBits.IsVisibleChanged += onVisibleChanged;
-            doneButton.IsVisibleChanged += onButtonChanged;
+            initStateTitle.IsVisibleChanged += onTitleChanged;
+            modificationGridDES.IsVisibleChanged += onTitleChanged;
             //ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
         }
         #endregion
@@ -84,59 +84,216 @@ namespace AvalancheVisualization
         #region methods
 
         //loads initial unchanged text
-        public void loadInitialState(byte[] initState, bool messageA)
+        public void loadInitialState(byte[] initState, byte[] initKey)
         {
             int i = 1;
             int j = 17;
-            int k = 33;
-            int l = 49;
+            int k = 1;
+
+            string binSequence = binaryAsString(initState).Replace(" ", "");
+            string keyBinSequence = binaryAsString(initKey).Replace(" ", "");
 
 
-
-            if (messageA)
+            if (mode == 0)
             {
-                while (i <= 16 && j <= 32)
+                while (i <= 16)
                 {
-
                     ((TextBlock)this.FindName("initStateTxtBlock" + i)).Text = initState[i - 1].ToString("X2");
-                    ((TextBlock)this.FindName("initStateTxtBlock" + j)).Text = key[i - 1].ToString("X2");
                     i++;
-                    j++;
                 }
 
-                string binSequence = binaryAsString(initState).Replace(" ", "");
+                if (keysize == 0)
+                {
+                    int index128 = 0;
+
+                    while (j <= 32 && index128 < 16)
+                    {
+                        ((TextBlock)this.FindName("initStateTxtBlock" + j)).Text = initKey[index128].ToString("X2");
+                        j++;
+                        index128++;
+                    }
 
 
-                for (int a = 1; a <= binSequence.Length; a++)
-                    ((TextBlock)this.FindName(string.Format("bit{0}", a))).Text = binSequence[a - 1].ToString();
+                    for (int a = 1; a <= binSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("bit{0}", a))).Text = binSequence[a - 1].ToString();
+                    for (int a = 1; a <= keyBinSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("keyBit{0}", a))).Text = keyBinSequence[a - 1].ToString();
+                }
+                else if (keysize == 1)
+                {
 
+
+                    while (k <= 24)
+                    {
+                        ((TextBlock)this.FindName("initStateKey192_" + k)).Text = initKey[k - 1].ToString("X2");
+                        k++;
+
+                    }
+
+
+                    for (int a = 1; a <= binSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("bit{0}", a))).Text = binSequence[a - 1].ToString();
+                    for (int a = 1; a <= keyBinSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("keyBit192_{0}", a))).Text = keyBinSequence[a - 1].ToString();
+                }
+                else
+                {
+                    while (k <= 32)
+                    {
+                        ((TextBlock)this.FindName("initStateKey256_" + k)).Text = initKey[k - 1].ToString("X2");
+                        k++;
+
+                    }
+
+                    for (int a = 1; a <= binSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("bit{0}", a))).Text = binSequence[a - 1].ToString();
+
+                    for (int a = 1; a <= keyBinSequence.Length; a++)
+                        ((TextBlock)this.FindName(string.Format("keyBit256_{0}", a))).Text = keyBinSequence[a - 1].ToString();
+                }
 
             }
             else
             {
+                for (int a = 1; a <= binSequence.Length; a++)
+                    ((TextBlock)this.FindName(string.Format("desBit{0}", a))).Text = binSequence[a - 1].ToString();
+                for (int a = 1; a <= keyBinSequence.Length; a++)
+                    ((TextBlock)this.FindName(string.Format("desKeyBit{0}", a))).Text = keyBinSequence[a - 1].ToString();
+
+                string firstHalf = binSequence.Substring(0, 32);
+                string secondHalf = binSequence.Substring(32, 32);
+                string firstKeyHalf = keyBinSequence.Substring(0, 32);
+                string secondKeyHalf = keyBinSequence.Substring(32, 32);
+
+                origTextDES.Text = string.Format("{0}{1}{2}", firstHalf, Environment.NewLine, secondHalf);
+                origKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalf, Environment.NewLine, secondKeyHalf);
+            }
+        }
+
+        public void loadChangedMsg(byte[] msg, bool textChanged)
+        {
+            int k = 33;
+            int l = 49;
+            int i = 1;
+
+            if (mode == 0)
+            {
+
                 while (k <= 48 && l <= 64)
                 {
-                    ((TextBlock)this.FindName("initStateTxtBlock" + k)).Text = initState[i - 1].ToString("X2");
-                    // ((TextBlock)this.FindName("initStateTxtBlock" + j)).Text = key[i - 1].ToString("X2");
+                    if (textChanged)
+                        ((TextBlock)this.FindName("initStateTxtBlock" + k)).Text = msg[i - 1].ToString("X2");
+                    else
+                        ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = key[i - 1].ToString("X2");
                     i++;
                     k++;
                     l++;
                 }
 
             }
+            else
+            {
+                string binSequence = binaryAsString(msg).Replace(" ", "");
+                string firstHalf = binSequence.Substring(0, 32);
+                string secondHalf = binSequence.Substring(32, 32);
+
+                modTextDES.Text = string.Format("{0}{1}{2}", firstHalf, Environment.NewLine, secondHalf);
+            }
+        }
+
+        public void loadChangedKey(byte[] newKey)
+        {
+
+            if (mode == 0)
+            {
+                if (keysize == 1)
+                {
+
+                    int i = 1;
+
+                    while (i <= 24)
+                    {
+                        ((TextBlock)this.FindName("modKey192_" + i)).Text = newKey[i - 1].ToString("X2");
+                        i++;
+
+                    }
+
+                }
+                else if (keysize == 2)
+                {
+                    int i = 1;
+
+                    while (i <= 32)
+                    {
+                        ((TextBlock)this.FindName("modKey256_" + i)).Text = newKey[i - 1].ToString("X2");
+                        i++;
+
+                    }
+                }
+                else
+                {
+
+                    int l = 49;
+                    int i = 1;
+
+                    while (l <= 64)
+                    {
+                        ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = newKey[i - 1].ToString("X2");
+                        l++;
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+
+                string keyBinSequence = binaryAsString(newKey).Replace(" ", "");
+
+                string firstKeyHalf = keyBinSequence.Substring(0, 32);
+                string secondKeyHalf = keyBinSequence.Substring(32, 32);
+
+                modKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalf, Environment.NewLine, secondKeyHalf);
+            }
         }
 
         public void setAndLoadButtons()
         {
-            instructionsTxtBlock.Visibility = Visibility.Hidden;
-            singleBitButton.Visibility = Visibility.Hidden;
-            modifiedInitialStateGrid.Visibility = Visibility.Visible;
-            radioButtons.Visibility = Visibility.Visible;
-            setButtonsScrollViewer();
 
-            buttonsPanel.Visibility = Visibility.Visible;
-            buttonsTitle.Visibility = Visibility.Visible;
+
+            if (mode == 0)
+            {
+                aesCheckBox.Visibility = Visibility.Hidden;
+                inputInBits.Visibility = Visibility.Hidden;
+                explanationTxt.Visibility = Visibility.Hidden;
+
+
+                modifiedInitialStateGrid.Visibility = Visibility.Visible;
+                radioButtons.Visibility = Visibility.Visible;
+                setButtonsScrollViewer();
+
+                buttonsPanel.Visibility = Visibility.Visible;
+                buttonsTitle.Visibility = Visibility.Visible;
+
+                if (keysize == 1)
+                    modifiedKeyGrid192.Visibility = Visibility.Visible;
+                else if (keysize == 2)
+                    modifiedKeyGrid256.Visibility = Visibility.Visible;
+                else
+                    modifiedKeyGrid.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+
+
+                inputGridDES.Visibility = Visibility.Hidden;
+                modificationGridDES.Visibility = Visibility.Visible;
+                buttonsPanel.Visibility = Visibility.Visible;
+                buttonsTitle.Visibility = Visibility.Visible;
+                setButtonsScrollViewer();
+            }
         }
+
         //Loads byte information into the respective columns
         public void loadBytePropagationData()
         {
@@ -326,7 +483,11 @@ namespace AvalancheVisualization
         //average number of flipped bits per byte
         public double avgNrperByte(int flippedBits)
         {
-            avgNrDiffBit = ((double)flippedBits / 16);
+            if (mode == 0)
+                avgNrDiffBit = ((double)flippedBits / 16);
+            else
+                avgNrDiffBit = ((double)flippedBits / 8);
+
             avgNrDiffBit = Math.Round(avgNrDiffBit, 1, MidpointRounding.AwayFromZero);
 
             return avgNrDiffBit;
@@ -389,19 +550,14 @@ namespace AvalancheVisualization
         //prints out current statistical values of cipher
         public void showStatistics(int bitsFlipped, int longestLength, Tuple<string, string> strTuple)
         {
-
-            bitsData.Inlines.Add(new Run(bitsFlipped.ToString()) { Foreground = Brushes.Red });
-            bitsData.Inlines.Add(new Run(string.Format(" bit flipped (out of {0}.)", strTuple.Item1.Length)));
-            bitsData.Inlines.Add(new LineBreak());
-            bitsData.Inlines.Add(new Run(string.Format("Avalanche effect of {0} %", avalanche)));
-            bitsData.Inlines.Add(new LineBreak());
-            bitsData.Inlines.Add(new LineBreak());
-            bitsData.Inlines.Add(new Run(string.Format("Length of longest identical bit sequence: {0}. Starting at index {1}.", longestLength.ToString(), sequencePosition)));
-            if (!otherAlgo)
+            stats1.Inlines.Add(new Run(" " + bitsFlipped.ToString()) { Foreground = Brushes.Red, FontWeight = FontWeights.DemiBold });
+            stats1.Inlines.Add(new Run(string.Format(" bit flipped (out of {0}.)", strTuple.Item1.Length)));
+            stats1.Inlines.Add(new LineBreak());
+            stats1.Inlines.Add(new Run(string.Format(" Avalanche effect of {0}%", avalanche)));
+            stats2.Inlines.Add(new Run(string.Format(" Length of longest identical bit  sequence: {0}. Offset {1}.", longestLength.ToString(), sequencePosition)));
+            if (mode != 2)
             {
-                bitsData.Inlines.Add(new LineBreak());
-                bitsData.Inlines.Add(new LineBreak());
-                bitsData.Inlines.Add(new Run(string.Format("Average nr. of differing bits per byte: {0} ", avgNrDiffBit)));
+                stats3.Inlines.Add(new Run(string.Format(" Average nr. of differing bits per   byte: {0} ", avgNrDiffBit)));
             }
         }
 
@@ -457,25 +613,25 @@ namespace AvalancheVisualization
             else if (mode == 1)
             {
                 int a = 0;
-                int b = 128;
+                int b = 129;
 
-                while (a < 64 && b < 192)
+                while (a < 64 && b < 193)
                 {
-                    ((TextBlock)this.FindName("txt" + b)).Text = diffBits[a].ToString();
-                    ((TextBlock)this.FindName("txt" + b)).Foreground = Brushes.Red;
+                    ((TextBlock)this.FindName("desTxt" + b)).Text = diffBits[a].ToString();
+                    ((TextBlock)this.FindName("desTxt" + b)).Foreground = Brushes.Red;
                     a++;
                     b++;
                 }
 
-                int j = 0;
-                int k = 64;
+                int j = 1;
+                int k = 65;
 
                 while (j < 64 && k < 128)
                 {
-                    if (diffBits[j] == "X")
+                    if (diffBits[j - 1] == "X")
                     {
-                        ((TextBlock)this.FindName("txt" + j)).Background = (Brush)new BrushConverter().ConvertFromString("#faebd7");
-                        ((TextBlock)this.FindName("txt" + k)).Background = (Brush)new BrushConverter().ConvertFromString("#fe6f5e");
+                        ((TextBlock)this.FindName("desTxt" + j)).Background = (Brush)new BrushConverter().ConvertFromString("#faebd7");
+                        ((TextBlock)this.FindName("desTxt" + k)).Background = (Brush)new BrushConverter().ConvertFromString("#fe6f5e");
 
                     }
                     j++;
@@ -527,10 +683,6 @@ namespace AvalancheVisualization
             string C = lrDataB[round, 0];
             string D = lrDataB[round, 1];
 
-            //MessageBox.Show(lrData[1,0]);
-            //it works!!!
-            //MessageBox.Show(lrData[1,1]);
-            //MessageBox.Show(lrDataB[round, 1]);
 
             for (int i = 0; i < 32; i++)
             {
@@ -541,31 +693,24 @@ namespace AvalancheVisualization
 
             }
 
-            /*StringBuilder sb = new StringBuilder();
-            StringBuilder sb2 = new StringBuilder();
-            foreach (string item in rightHalfB)
-            {
-                sb.Append(item);
-                
-                    
-            }
+            string bitSeqA = string.Concat(A, B);
+            string bitseqB = string.Concat(C, D);
 
-            MessageBox.Show(sb.ToString());*/
-            msgA = new string[leftHalf.Length + rightHalf.Length];
-            leftHalf.CopyTo(msgA, 0);
-            rightHalf.CopyTo(msgA, leftHalf.Length);
-
-            msgB = new string[leftHalfB.Length + rightHalfB.Length];
-            leftHalf.CopyTo(msgB, 0);
-            rightHalf.CopyTo(msgB, leftHalfB.Length);
-
+            seqA = getByteArray(bitSeqA);
+            seqB = getByteArray(bitseqB);
         }
-        public string[] leftHalf = new string[32];
-        public string[] rightHalf = new string[32];
-        public string[] leftHalfB = new string[32];
-        public string[] rightHalfB = new string[32];
-        public string[] msgA;
-        public string[] msgB;
+
+
+
+        public byte[] getByteArray(string str)
+        {
+            byte[] byteArray = new byte[8];
+
+            for (int i = 0; i < 8; i++)
+                byteArray[i] = Convert.ToByte(str.Substring(8 * i, 8), 2);
+
+            return byteArray;
+        }
 
         public void displayBinaryValuesDES()
         {
@@ -579,7 +724,7 @@ namespace AvalancheVisualization
                 b++;
             }*/
 
-
+            bitGridDES.Visibility = Visibility.Visible;
 
             int a = 0;
             int b = 32;
@@ -589,9 +734,6 @@ namespace AvalancheVisualization
             {
 
                 ((TextBlock)this.FindName("txt" + a)).Text = leftHalf[a];
-                //txt32.Text = "H";
-                //txt64.Text = "I";
-                //txt96.Text = "J";
                 ((TextBlock)this.FindName("txt" + b)).Text = rightHalf[a];
                 ((TextBlock)this.FindName("txt" + c)).Text = leftHalfB[a];
                 ((TextBlock)this.FindName("txt" + d)).Text = rightHalfB[a];
@@ -600,6 +742,24 @@ namespace AvalancheVisualization
                 b++;
                 c++;
                 d++;
+            }
+
+
+            int i = 1;
+            int j = 33;
+            int k = 65;
+            int l = 97;
+            while (i < 33 && j < 65 && k < 97 && l < 129)
+            {
+                ((TextBlock)this.FindName("desTxt" + i)).Text = leftHalf[i - 1];
+                ((TextBlock)this.FindName("desTxt" + j)).Text = rightHalf[i - 1];
+                ((TextBlock)this.FindName("desTxt" + k)).Text = leftHalfB[i - 1];
+                ((TextBlock)this.FindName("desTxt" + l)).Text = rightHalfB[i - 1];
+
+                i++;
+                j++;
+                k++;
+                l++;
             }
 
             //txt0.Text = lrData[1, 0];
@@ -633,18 +793,14 @@ namespace AvalancheVisualization
         {
             StringBuilder sb = new StringBuilder();
             sb = new StringBuilder();
-            int i = 0;
-            foreach (byte b in byteSequence)
-            {
-                if (byteSequence[i] < 100)
-                    sb.Append(b.ToString().PadLeft(3, '0') + " ");
-                else
-                    sb.Append(b.ToString() + " ");
 
-                i++;
-            }
-            return sb.ToString();
+            foreach (byte b in byteSequence)
+                sb.AppendFormat("{0:D3}{1}", b, " ");
+
+            return sb.ToString(); ;
+
         }
+
 
         //string of hexadecimal values
         public string hexaAsString(byte[] byteSequence)
@@ -652,9 +808,8 @@ namespace AvalancheVisualization
             StringBuilder sb = new StringBuilder();
 
             foreach (var v in byteSequence)
-            {
-                sb.Append(v.ToString("X2") + " ");
-            }
+                sb.AppendFormat("{0:X2}{1}", v, " ");
+
             return sb.ToString();
         }
 
@@ -696,23 +851,6 @@ namespace AvalancheVisualization
             return result;
         }
 
-
-        //calculates all cipher states of modified message
-        public void AESTextB()
-        {
-
-
-
-            padding();
-            tempStateB = textB;
-            //statesB[0] = addKey(tempStateB, keyList[0]);
-            //setStatesB();
-
-        }
-
-
-
-
         //returns a tuple of strings
         public Tuple<string, string> binaryStrings(byte[] cipherStateA, byte[] cipherStateB)
         {
@@ -721,10 +859,6 @@ namespace AvalancheVisualization
             string encryptionStateA = "";
             string encryptionStateB = "";
 
-
-
-
-
             if (mode == 0)
             {
                 textToArrange = arrangeText(cipherStateA);
@@ -732,9 +866,8 @@ namespace AvalancheVisualization
                 encryptionStateA = binaryAsString(textToArrange).Replace(" ", "");
                 encryptionStateB = binaryAsString(textToArrangeB).Replace(" ", "");
 
-
             }
-            else if (mode == 2)
+            else if (mode == 2 || mode == 3 || mode == 4)
             {
                 encryptionStateA = binaryAsString(cipherStateA).Replace(" ", "");
                 encryptionStateB = binaryAsString(cipherStateB).Replace(" ", "");
@@ -747,10 +880,7 @@ namespace AvalancheVisualization
 
             }
 
-
             var tuple = new Tuple<string, string>(encryptionStateA, encryptionStateB);
-
-
 
             return tuple;
 
@@ -781,23 +911,16 @@ namespace AvalancheVisualization
             }
             else
             {
-
-
-                int a = 0;
-                int b = 64;
-                // int c = 128;
-                while (a < 64 && b < 128)
+                int j = 1;
+                int k = 65;
+                while (j < 65 && k < 129)
                 {
-
-                    ((TextBlock)this.FindName("txt" + a)).Background = Brushes.Transparent;
-                    ((TextBlock)this.FindName("txt" + b)).Background = Brushes.Transparent;
-                    //((TextBlock)this.FindName("txt" + c)).Text = String.Empty;
-                    a++;
-                    b++;
-                    // c++;
+                    ((TextBlock)this.FindName("desTxt" + j)).Background = Brushes.Transparent;
+                    ((TextBlock)this.FindName("desTxt" + k)).Background = Brushes.Transparent;
+                    j++;
+                    k++;
                 }
-
-
+                modificationGridDES.Visibility = Visibility.Hidden;
 
             }
 
@@ -809,31 +932,49 @@ namespace AvalancheVisualization
 
             afterRoundsTitle.Text = afterRoundsTitle.Text.TrimEnd('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
             afterRoundsSubtitle.Text = afterRoundsSubtitle.Text.TrimEnd('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-            if (keysize == 1)
-                afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-192"));
-            else if (keysize == 2)
-                afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-256"));
+            if (mode == 0)
+            {
+                if (keysize == 1)
+                    afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-192"));
+                else if (keysize == 2)
+                    afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-256"));
+                else
+                    afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-128"));
+            }
             else
-                afterRoundsTitle.Inlines.Add(new Run("Avalanche effect AES-128"));
+                if (mode == 1)
+                afterRoundsTitle.Inlines.Add(new Run("Avalanche effect DES"));
 
 
             afterRoundsSubtitle.Inlines.Add(new Run(string.Format("{0}", number)));
-
-
-
-
 
         }
 
         public void changeTitle()
         {
-            initStateTitle.Text = initStateTitle.Text.TrimEnd('1', '2', '5', '6', '8', '9');
-            if (keysize == 1)
-                initStateTitle.Inlines.Add(new Run("192") { Foreground = Brushes.White });
-            else if (keysize == 2)
-                initStateTitle.Inlines.Add(new Run("256") { Foreground = Brushes.White });
+            if (mode == 0)
+            {
+                initStateTitle.Text = initStateTitle.Text.TrimEnd('1', '2', '5', '6', '8', '9');
+                if (keysize == 1)
+                    initStateTitle.Inlines.Add(new Run("192") { Foreground = Brushes.White });
+                else if (keysize == 2)
+                    initStateTitle.Inlines.Add(new Run("256") { Foreground = Brushes.White });
+                else
+                    initStateTitle.Inlines.Add(new Run("128") { Foreground = Brushes.White });
+            }
             else
-                initStateTitle.Inlines.Add(new Run("128") { Foreground = Brushes.White });
+            {
+                if (mode == 2)
+                {
+                    othersOrigTitle.Text = "Original hash function";
+                    othersModTitle.Text = "Modified hash function";
+                    lbl.Text = "Original hash function";
+                    lbl2.Text = "Modified hash function";
+                    othersSubtitle.Text = "(Hash functions)";
+                }
+                if (mode == 4)
+                    othersSubtitle.Text = ("Modern ciphers");
+            }
         }
 
         //new position after shiftrows operation
@@ -1158,26 +1299,40 @@ namespace AvalancheVisualization
 
         public void clearElements()
         {
-            MessagesStackPanel.Visibility = Visibility.Hidden;
-            OrigInitialStateGrid.Visibility = Visibility.Hidden;
-            modifiedInitialStateGrid.Visibility = Visibility.Hidden;
-            afterInitialRoundGrid.Visibility = Visibility.Hidden;
+            if (mode == 0)
+            {
+                OrigInitialStateGrid.Visibility = Visibility.Hidden;
+                modifiedInitialStateGrid.Visibility = Visibility.Hidden;
+                afterInitialRoundGrid.Visibility = Visibility.Hidden;
+                afterInitRoundButton.Visibility = Visibility.Hidden;
+                initStateTitle.Visibility = Visibility.Hidden;
+                radioButtons.Visibility = Visibility.Hidden;
+            }
+            else
+                modificationGridDES.Visibility = Visibility.Hidden;
+
+
             afterRoundsTitle.Text = string.Empty;
-            afterInitRoundButton.Visibility = Visibility.Hidden;
-            initStateTitle.Visibility = Visibility.Hidden;
-            radioButtons.Visibility = Visibility.Hidden;
+
+
         }
 
         public void showElements()
         {
-            afterRoundsGrid.Visibility = Visibility.Visible;
-            bitRepresentationGrid.Visibility = Visibility.Visible;
-            dataGrid.Visibility = Visibility.Visible;
-            afterRoundsTitle.Visibility = Visibility.Visible;
-            afterRoundsSubtitle.Visibility = Visibility.Visible;
+            if (mode == 0)
+            {
+                afterRoundsGrid.Visibility = Visibility.Visible;
+                bitRepresentationGrid.Visibility = Visibility.Visible;
+                curvedLinesCanvas.Visibility = Visibility.Visible;
+            }
+
+            bitsData.Visibility = Visibility.Visible;
+            Cb1.Visibility = Visibility.Visible;
+            Cb2.Visibility = Visibility.Visible;
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
-            curvedLinesCanvas.Visibility = Visibility.Visible;
+            afterRoundsTitle.Visibility = Visibility.Visible;
+            afterRoundsSubtitle.Visibility = Visibility.Visible;
 
         }
 
@@ -1348,8 +1503,19 @@ namespace AvalancheVisualization
                     break;
                 case 6:
                     for (int i = 1; i < 129; i++)
+                    {
                         txtBlockList.Add((TextBlock)this.FindName("bit" + i));
-                        break;
+                        txtBlockList.Add((TextBlock)this.FindName("keyBit" + i));
+
+                    }
+                    break;
+                case 7:
+                    for (int i = 1; i < 65; i++)
+                    {
+                        txtBlockList.Add((TextBlock)this.FindName("desBit" + i));
+                        txtBlockList.Add((TextBlock)this.FindName("desKeyBit" + i));
+                    }
+                    break;
                 default:
                     break;
 
@@ -1360,55 +1526,33 @@ namespace AvalancheVisualization
 
         public void setButtonsScrollViewer()
         {
-
-            if (keysize == 1)
+            if (mode == 0)
             {
-                afterRound11Button.Visibility = Visibility.Visible;
-                afterRound12Button.Visibility = Visibility.Visible;
-                //buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
-                //buttonsSV.Width = 599.0;
-                //buttonsPanel.Width = 640.0;
+                if (keysize == 1)
+                {
+                    afterRound11Button.Visibility = Visibility.Visible;
+                    afterRound12Button.Visibility = Visibility.Visible;
 
+                }
+                else if (keysize == 2)
+                {
+                    afterRound11Button.Visibility = Visibility.Visible;
+                    afterRound12Button.Visibility = Visibility.Visible;
+                    afterRound13Button.Visibility = Visibility.Visible;
+                    afterRound14Button.Visibility = Visibility.Visible;
 
-
-
+                }
             }
-            else if (keysize == 2)
+            else
             {
                 afterRound11Button.Visibility = Visibility.Visible;
                 afterRound12Button.Visibility = Visibility.Visible;
                 afterRound13Button.Visibility = Visibility.Visible;
                 afterRound14Button.Visibility = Visibility.Visible;
-                //buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
-
-
-                //buttonsSV.Width = 635.0;
-                //buttonsPanel.Width = 640.0;
+                afterRound15Button.Visibility = Visibility.Visible;
+                afterRound16Button.Visibility = Visibility.Visible;
             }
-
-
-
-
-
         }
-
-
-
-        public void hideButton()
-        {
-            afterInitRoundButton.Visibility = Visibility.Hidden;
-            afterRound1Button.Visibility = Visibility.Hidden;
-            afterRound2Button.Visibility = Visibility.Hidden;
-            afterRound3Button.Visibility = Visibility.Hidden;
-            afterRound4Button.Visibility = Visibility.Hidden;
-            afterRound5Button.Visibility = Visibility.Hidden;
-            afterRound6Button.Visibility = Visibility.Hidden;
-            afterRound7Button.Visibility = Visibility.Hidden;
-            afterRound8Button.Visibility = Visibility.Hidden;
-            afterRound9Button.Visibility = Visibility.Hidden;
-
-        }
-
 
 
         private byte[] arrangeColumn(byte[] input)
@@ -1481,11 +1625,6 @@ namespace AvalancheVisualization
         #endregion
 
         // #region AES methods
-
-
-
-
-
         public void createSBox()
         {
             int x = 0;
@@ -1550,148 +1689,267 @@ namespace AvalancheVisualization
 
 
         #region Event handlers 
-        private void singleBitButton_Click(object sender, RoutedEventArgs e)
-        {
-            instructionsTxtBlock.Visibility = Visibility.Hidden;
-            singleBitButton.Visibility = Visibility.Hidden;
-            inputInBits.Visibility = Visibility.Visible;
-            doneButton.Visibility = Visibility.Visible;
-            clearButton.Visibility = Visibility.Visible;
-            instructionsTxtBlock2.Visibility = Visibility.Visible;
-        }
 
 
 
         private void doneButton_Click(object sender, RoutedEventArgs e)
         {
 
-            inputInBits.Visibility = Visibility.Hidden;
+            instructionsTxtBlock2.Visibility = Visibility.Hidden;
             doneButton.Visibility = Visibility.Hidden;
             clearButton.Visibility = Visibility.Hidden;
-            instructionsTxtBlock2.Visibility = Visibility.Hidden;
 
-
-            string[] strSequence = new string[128];
-            string[] result = new string[16];
-            string[][] textBits = new string[16][];
-            string input;
-            StringBuilder sb;
-            int l = 0;
-
-            byte[] inputText;
-
-
-            for (int i = 1; i < 129; i++)
-                strSequence[i - 1] = ((TextBlock)this.FindName(string.Format("bit{0}", i))).Text;
-
-            string bitSequence = string.Join("", strSequence);
-
-            for (int j = 0; j < 16; j++)
-                textBits[j] = new string[8];
-
-
-            for (int k = 0; k < 16; k++)
+            if (mode == 0)
             {
-                result[k] = bitSequence.Substring(l, 8);
-                l += 8;
+                inputInBits.Visibility = Visibility.Hidden;
+
+                string[] strSequence = new string[128];
+                string[] result = new string[16];
+                string[][] textBits = new string[16][];
+
+                int l = 0;
+
+                for (int i = 1; i < 129; i++)
+                    strSequence[i - 1] = ((TextBlock)this.FindName(string.Format("bit{0}", i))).Text;
+
+                string bitSequence = string.Join("", strSequence);
+
+                /*for (int j = 0; j < 16; j++)
+                    textBits[j] = new string[8];*/
+
+                for (int k = 0; k < 16; k++)
+                {
+                    result[k] = bitSequence.Substring(l, 8);
+                    l += 8;
+                }
+
+                /*for (int i = 0; i < 16; i++)
+                    textBits[i] = result;*/
+
+                byte[] newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
+
+                textB = newText;
+                string keyBitSequence = "";
+                string[] keyResult = new string[key.Length];
+                string[][] keyBits = new string[key.Length][];
+
+                string bitName = "keyBit{0}";
+                int bits = 129;
+
+                int m = 0;
+
+                if (keysize == 1)
+                {
+                    string[] strKeySequence2 = new string[192];
+
+                    for (int i = 1; i < 193; i++)
+                        strKeySequence2[i - 1] = ((TextBlock)this.FindName(string.Format("keyBit192_{0}", i))).Text;
+
+                    keyBitSequence = string.Join("", strKeySequence2);
+                }
+                else if (keysize == 2)
+                {
+
+                    string[] strKeySequence3 = new string[256];
+
+                    for (int i = 1; i < 257; i++)
+                        strKeySequence3[i - 1] = ((TextBlock)this.FindName(string.Format("keyBit256_{0}", i))).Text;
+
+                    keyBitSequence = string.Join("", strKeySequence3);
+                }
+                else
+                {
+                    string[] strKeySequence = new string[128];
+
+                    for (int i = 1; i < bits; i++)
+                        strKeySequence[i - 1] = ((TextBlock)this.FindName(string.Format(bitName, i))).Text;
+
+                    keyBitSequence = string.Join("", strKeySequence);
+                }
+
+                for (int j = 0; j < 16; j++)
+                    keyBits[j] = new string[8];
+
+
+                for (int k = 0; k < key.Length; k++)
+                {
+                    keyResult[k] = keyBitSequence.Substring(m, 8);
+                    m += 8;
+                }
+
+
+                byte[] newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
+                key = newKey;
+                aesDiffusion = new AES(newKey, newText);
+
+
+                aesDiffusion.checkKeysize();
+                byte[] temporaryB = aesDiffusion.checkTextLength();
+                aesDiffusion.executeAES(false);
+
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    loadChangedMsg(temporaryB, true);
+                    loadChangedKey(newKey);
+                    setAndLoadButtons();
+
+                }, null);
+
+                statesB = aesDiffusion.statesB;
+                int z = 0;
+
+
             }
-
-            for (int i = 0; i < 16; i++)
-                textBits[i] = result;
-
-
-
-
-
-
-            byte[] newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
-            byte[] newKey = key;
-            //aes.text = textA;
-            //aes.key = key;
-
-            // aesDiffusion = new AES();
-
-            aesDiffusion = new AES(newKey, newText);
-
-
-            //aesDiffusion.text = newText;
-            aesDiffusion.checkKeysize();
-            byte[] temporaryB = aesDiffusion.checkTextLength();
-            aesDiffusion.executeAES(false);
-
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            else
             {
 
+                string[] strSequence = new string[64];
+                string[] result = new string[8];
+                string keyBitSequence = "";
+                string[] keyResult = new string[key.Length];
 
-                //loadInitialState(temporary, true);
-                loadInitialState(temporaryB, false);
-                setAndLoadButtons();
+                int l = 0;
+                int m = 0;
+                for (int i = 1; i < 65; i++)
+                    strSequence[i - 1] = ((TextBlock)this.FindName(string.Format("desBit{0}", i))).Text;
+
+                string bitSequence = string.Join("", strSequence);
+
+                /*for (int j = 0; j < 16; j++)
+                    textBits[j] = new string[8];*/
 
 
+                for (int k = 0; k < 8; k++)
+                {
+                    result[k] = bitSequence.Substring(l, 8);
+                    l += 8;
+                }
 
-            }, null);
+                /*for (int i = 0; i < 16; i++)
+                    textBits[i] = result;*/
 
-            statesB = aesDiffusion.statesB;
-            int z = 0;
+                byte[] newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
+
+                textB = newText;
+
+                string[] strKeySequence = new string[64];
+
+                for (int i = 1; i < 65; i++)
+                    strKeySequence[i - 1] = ((TextBlock)this.FindName(string.Format("desKeyBit{0}", i))).Text;
+
+                keyBitSequence = string.Join("", strKeySequence);
+
+
+                for (int k = 0; k < key.Length; k++)
+                {
+                    keyResult[k] = keyBitSequence.Substring(m, 8);
+                    m += 8;
+                }
+
+                byte[] newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
+
+                desDiffusion = new DES(newText, newKey);
+                desDiffusion.textChanged = true;
+                desDiffusion.DESProcess();
+
+
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+
+                    loadChangedMsg(newText, true);
+                    loadChangedKey(newKey);
+                    setAndLoadButtons();
+
+                }, null);
+
+                lrDataB = desDiffusion.lrDataB;
+
+            }
+        }
+
+        private void clearButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
-       
+
+        private void inputDataButton_Click(object sender, RoutedEventArgs e)
+        {
+            afterRoundsTitle.Visibility = Visibility.Hidden;
+            afterRoundsSubtitle.Visibility = Visibility.Hidden;
+            flippedBitsPiece.Visibility = Visibility.Hidden;
+            unflippedBitsPiece.Visibility = Visibility.Hidden;
+            bitsData.Visibility = Visibility.Hidden;
+            Cb1.Visibility = Visibility.Hidden;
+            Cb2.Visibility = Visibility.Hidden;
+            buttonsTitle.Visibility = Visibility.Hidden;
+            buttonsPanel.Visibility = Visibility.Hidden;
+
+            if (mode == 0)
+            {
+                afterRoundsGrid.Visibility = Visibility.Hidden;
+                bitRepresentationGrid.Visibility = Visibility.Hidden;
+                curvedLinesCanvas.Visibility = Visibility.Hidden;
+                OrigInitialStateGrid.Visibility = Visibility.Visible;
+
+            }
+            else
+                bitGridDES.Visibility = Visibility.Hidden;
+
+
+            comparisonPane();
+
+            if ((bool)aesCheckBox.IsChecked || (bool)desCheckBox.IsChecked)
+            {
+                instructionsTxtBlock2.Visibility = Visibility.Visible;
+                doneButton.Visibility = Visibility.Visible;
+                clearButton.Visibility = Visibility.Visible;
+            }
+
+
+        }
 
         private void afterInitRoundButton_Click(object sender, RoutedEventArgs e)
         {
 
-
-
-
-
             OrigInitialStateGrid.Visibility = Visibility.Visible;
-
             setButtonsScrollViewer();
-            //buttonsSV.Visibility = Visibility.Visible;
             buttonsPanel.Visibility = Visibility.Visible;
-
-
-
-
 
             roundNumber = 1 + shift * 2 * keysize;
 
             action = 1;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-
-
-
                 setUpSubByte(states, statesB);
 
-
             }, null);
-
-
         }
 
-        public void getTextBoxContent()
-        {
-            modifiedText = modifiedMsg.Text;
-            originalText = originalMsg.Text;
-        }
+
 
         private void afterRound0Button_Click(object sender, RoutedEventArgs e)
         {
-            afterInitialRoundGrid.Visibility = Visibility.Visible;
+            //afterInitialRoundGrid.Visibility = Visibility.Visible;
+        }
+
+        public void emptyInformation()
+        {
+            stats1.Text = string.Empty;
+            stats2.Text = string.Empty;
+            stats3.Text = string.Empty;
         }
 
         private void afterRound1Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[4], statesB[4]);
 
+            clearElements();
+            changeRoundNr(1);
+            showElements();
+            removeColors();
+
             if (mode == 0)
             {
-
-                clearElements();
-                changeRoundNr(1);
-                showElements();
-                removeColors();
 
                 roundNumber = 2 + shift * 2 * keysize;
                 action = 1;
@@ -1703,7 +1961,7 @@ namespace AvalancheVisualization
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
@@ -1726,12 +1984,26 @@ namespace AvalancheVisualization
                 roundDES = 1;
                 strings = binaryStrings(states[4], statesB[4]);
 
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    removeColors();
-                    toStringArray(roundDES);
+
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
             }
         }
@@ -1740,13 +2012,13 @@ namespace AvalancheVisualization
         {
 
             var strings = binaryStrings(states[8], statesB[8]);
+            clearElements();
+            changeRoundNr(2);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(2);
-                removeColors();
 
                 roundNumber = 3 + shift * 2 * keysize;
                 action = 1;
@@ -1755,7 +2027,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -1778,14 +2050,26 @@ namespace AvalancheVisualization
                 roundDES = 2;
                 strings = binaryStrings(states[4], statesB[4]);
 
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
+                toStringArray(roundDES);
 
-                    removeColors();
-                    toStringArray(roundDES);
-                    displayBinaryValuesDES();
-                    showBitSequence(strings);
-                }, null);
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
+
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                 {
+                     displayBinaryValuesDES();
+                     showBitSequence(strings);
+                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                     showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                     setColors();
+                     setAngles(angle_1, angle_2);
+                     setToolTips();
+                 }, null);
 
             }
         }
@@ -1793,13 +2077,13 @@ namespace AvalancheVisualization
         private void afterRound3Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[12], statesB[12]);
+            clearElements();
+            changeRoundNr(3);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(3);
-                removeColors();
 
                 roundNumber = 4 + shift * 2 * keysize;
                 action = 1;
@@ -1808,7 +2092,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -1830,14 +2114,26 @@ namespace AvalancheVisualization
             {
                 roundDES = 3;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
@@ -1846,14 +2142,13 @@ namespace AvalancheVisualization
         private void afterRound4Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[12], statesB[12]);
+            clearElements();
+            changeRoundNr(4);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(4);
-                removeColors();
-
                 roundNumber = 5 + shift * 2 * keysize;
                 action = 1;
 
@@ -1861,7 +2156,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -1884,14 +2179,26 @@ namespace AvalancheVisualization
             {
                 roundDES = 4;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
@@ -1900,14 +2207,13 @@ namespace AvalancheVisualization
         private void afterRound5Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[20], statesB[20]);
+            clearElements();
+            changeRoundNr(5);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(5);
-                removeColors();
-
                 roundNumber = 6 + shift * 2 * keysize;
                 action = 1;
 
@@ -1915,7 +2221,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -1938,14 +2244,26 @@ namespace AvalancheVisualization
             {
                 roundDES = 5;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
@@ -1954,13 +2272,13 @@ namespace AvalancheVisualization
         private void afterRound6Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[24], statesB[24]);
+            clearElements();
+            changeRoundNr(6);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(6);
-                removeColors();
                 roundNumber = 7 + shift * 2 * keysize;
                 action = 1;
 
@@ -1968,9 +2286,10 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
+
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     printIntermediateStates(states, statesB);
@@ -1990,14 +2309,27 @@ namespace AvalancheVisualization
             {
                 roundDES = 6;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2006,13 +2338,13 @@ namespace AvalancheVisualization
         private void afterRound7Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[28], statesB[28]);
+            clearElements();
+            changeRoundNr(7);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(7);
-                removeColors();
 
                 roundNumber = 8 + shift * 2 * keysize;
                 action = 1;
@@ -2021,7 +2353,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2045,14 +2377,25 @@ namespace AvalancheVisualization
             {
                 roundDES = 7;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
@@ -2061,14 +2404,13 @@ namespace AvalancheVisualization
         private void afterRound8Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[32], statesB[32]);
+            clearElements();
+            changeRoundNr(8);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(8);
-                removeColors();
-
                 roundNumber = 9 + shift * 2 * keysize;
                 action = 1;
 
@@ -2076,7 +2418,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2099,14 +2441,26 @@ namespace AvalancheVisualization
             {
                 roundDES = 8;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
+
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
@@ -2115,14 +2469,13 @@ namespace AvalancheVisualization
         private void afterRound9Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[36], statesB[36]);
+            clearElements();
+            changeRoundNr(9);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(9);
-                removeColors();
-
                 roundNumber = 10 + shift * 2 * keysize;
                 action = 1;
 
@@ -2130,7 +2483,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2153,14 +2506,28 @@ namespace AvalancheVisualization
             {
                 roundDES = 9;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
+
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2170,14 +2537,13 @@ namespace AvalancheVisualization
         private void afterRound10Button_Click(object sender, RoutedEventArgs e)
         {
             Tuple<string, string> strings;
+            clearElements();
+            changeRoundNr(10);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(10);
-                removeColors();
-
                 roundNumber = 11 + shift * 2 * keysize;
                 action = 1;
 
@@ -2185,7 +2551,7 @@ namespace AvalancheVisualization
                 double angle_1;
                 double angle_2;
                 int lengthIdentSequence;
-                bitsData.Text = string.Empty;
+                emptyInformation();
 
                 if (keysize == 0)
                 {
@@ -2238,23 +2604,33 @@ namespace AvalancheVisualization
 
                     }, null);
                 }
-
-
-
                 slideNr = 5;
             }
             else
             {
                 roundDES = 10;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2263,14 +2639,13 @@ namespace AvalancheVisualization
         private void afterRound11Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[4], statesB[4]);
+            clearElements();
+            changeRoundNr(11);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(11);
-                removeColors();
-
                 roundNumber = 12 + shift * 2 * keysize;
                 action = 1;
 
@@ -2278,7 +2653,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2302,14 +2677,26 @@ namespace AvalancheVisualization
 
                 roundDES = 11;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2318,14 +2705,13 @@ namespace AvalancheVisualization
         private void afterRound12Button_Click(object sender, RoutedEventArgs e)
         {
             Tuple<string, string> strings;
+            clearElements();
+            changeRoundNr(12);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(12);
-                removeColors();
-
                 roundNumber = 13 + shift * 2 * keysize;
                 action = 1;
 
@@ -2333,7 +2719,7 @@ namespace AvalancheVisualization
                 double angle_1;
                 double angle_2;
                 int lengthIdentSequence;
-                bitsData.Text = string.Empty;
+                emptyInformation();
 
 
                 if (keysize == 1)
@@ -2387,8 +2773,6 @@ namespace AvalancheVisualization
                     }, null);
                 }
 
-
-
                 slideNr = 5;
 
             }
@@ -2396,14 +2780,26 @@ namespace AvalancheVisualization
             {
                 roundDES = 12;
                 strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2413,14 +2809,15 @@ namespace AvalancheVisualization
 
         private void afterRound13Button_Click(object sender, RoutedEventArgs e)
         {
-            var strings = binaryStrings(states[52], statesB[52]);
+            clearElements();
+            changeRoundNr(13);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(13);
-                removeColors();
+                var strings = binaryStrings(states[52], statesB[52]);
+
 
                 roundNumber = 14 + shift * 2 * keysize;
                 action = 1;
@@ -2429,7 +2826,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2451,15 +2848,28 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 13;
-                strings = binaryStrings(states[4], statesB[4]);
+                var strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
                 }, null);
 
             }
@@ -2467,15 +2877,14 @@ namespace AvalancheVisualization
 
         private void afterRound14Button_Click(object sender, RoutedEventArgs e)
         {
-            var strings = binaryStrings(states[55], statesB[55]);
+            clearElements();
+            changeRoundNr(14);
+            showElements();
+            removeColors();
 
             if (mode == 0)
             {
-                clearElements();
-                showElements();
-                changeRoundNr(14);
-                removeColors();
-
+                var strings = binaryStrings(states[55], statesB[55]);
 
                 action = 1;
 
@@ -2483,7 +2892,7 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
                 avalanche = calcAvalancheEffect(nrDiffBits, strings);
-                bitsData.Text = string.Empty;
+                emptyInformation();
                 int lengthIdentSequence;
                 avgNrDiffBit = avgNrperByte(nrDiffBits);
 
@@ -2506,17 +2915,93 @@ namespace AvalancheVisualization
             {
 
                 roundDES = 14;
+                var strings = binaryStrings(states[4], statesB[4]);
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
 
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-
-                    removeColors();
-                    toStringArray(roundDES);
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
                 }, null);
 
             }
+        }
+
+        private void afterRound15Button_Click(object sender, RoutedEventArgs e)
+        {
+            clearElements();
+            changeRoundNr(15);
+            showElements();
+            removeColors();
+
+            roundDES = 15;
+            var strings = binaryStrings(states[4], statesB[4]);
+            toStringArray(roundDES);
+
+            int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+            double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+            double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+            avalanche = calcAvalancheEffect(nrDiffBits, strings);
+            int lengthIdentSequenceDes;
+            avgNrDiffBit = avgNrperByte(nrDiffBits);
+            emptyInformation();
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                displayBinaryValuesDES();
+                showBitSequence(strings);
+                lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                setColors();
+                setAngles(angle_1, angle_2);
+                setToolTips();
+            }, null);
+        }
+
+        private void afterRound16Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            clearElements();
+            changeRoundNr(16);
+            showElements();
+            removeColors();
+
+            roundDES = 16;
+            var strings = binaryStrings(states[4], statesB[4]);
+            toStringArray(roundDES);
+
+            int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+            double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+            double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+            avalanche = calcAvalancheEffect(nrDiffBits, strings);
+            int lengthIdentSequenceDes;
+            avgNrDiffBit = avgNrperByte(nrDiffBits);
+            emptyInformation();
+
+
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                displayBinaryValuesDES();
+                showBitSequence(strings);
+                lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                setColors();
+                setAngles(angle_1, angle_2);
+                setToolTips();
+            }, null);
         }
 
         public void final()
@@ -2562,93 +3047,196 @@ namespace AvalancheVisualization
                 j++;
             }
 
-
-
-
         }
 
         private void radioButton1Checked(object sender, RoutedEventArgs e)
         {
-            if (textB != null && !otherAlgo)
-            {
-                var encoding = Encoding.GetEncoding(437);
+            string strA = binaryAsString(textA).Replace(" ", "");
+            string strB = binaryAsString(textB).Replace(" ", "");
 
-                textA = encoding.GetBytes(originalText);
-                string messageA = binaryAsString(textA);
-                originalMsg.Text = messageA;
+            string firstHalf = strA.Substring(0, 32);
+            string secondHalf = strA.Substring(32, 32);
+            string firstHalfB = strB.Substring(0, 32);
+            string secondHalfB = strB.Substring(32, 32);
 
-                textB = encoding.GetBytes(modifiedText);
-                string messageB = binaryAsString(textB);
-                modifiedMsg.Text = messageB;
-            }
+            origTextDES.Text = string.Format("{0}{1}{2}", firstHalf, Environment.NewLine, secondHalf);
+            modTextDES.Text = string.Format("{0}{1}{2}", firstHalfB, Environment.NewLine, secondHalfB);
 
-            if (otherAlgo)
-            {
-                string cipherA = binaryAsString(unchangedCipher);
-                originalCipher.Text = cipherA;
-                string cipherB = binaryAsString(changedCipher);
-                modifiedCipher.Text = cipherB;
-            }
+
+            string keyStrA = binaryAsString(keyA).Replace(" ", "");
+            string keyStrB = binaryAsString(key).Replace(" ", "");
+
+            string firstKeyHalf = strA.Substring(0, 32);
+            string secondKeyHalf = strA.Substring(32, 32);
+            string firstKeyHalfB = strB.Substring(0, 32);
+            string secondKeyHalfB = strB.Substring(32, 32);
+
+            origKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalf, Environment.NewLine, secondKeyHalf);
+            modKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalfB, Environment.NewLine, secondKeyHalfB);
+
         }
+
 
 
         private void radioButton2Checked(object sender, RoutedEventArgs e)
         {
-            if (textB != null && !otherAlgo)
+            if (mode == 0)
             {
                 var encoding = Encoding.GetEncoding(437);
 
+                int i = 1;
+                int j = 33;
+                while (i <= 16 && j <= 48)
+                {
+                    ((TextBlock)this.FindName("initStateTxtBlock" + i)).Text = textA[i - 1].ToString();
+                    ((TextBlock)this.FindName("initStateTxtBlock" + j)).Text = textB[i - 1].ToString();
 
-                textA = encoding.GetBytes(originalText);
-                string messageA = decimalAsString(textA);
-                originalMsg.Text = messageA;
+                    i++;
+                    j++;
+                }
 
-                textB = encoding.GetBytes(modifiedText);
-                string messageB = decimalAsString(textB);
-                modifiedMsg.Text = messageB;
+                if (keysize == 0)
+                {
+                    int k = 1;
+                    int l = 17;
+                    int m = 49;
+                    while (k <= 16 && l <= 32 && m <= 64)
+                    {
+                        ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = keyA[k - 1].ToString();
+                        ((TextBlock)this.FindName("initStateTxtBlock" + m)).Text = key[k - 1].ToString();
+                        k++;
+                        l++;
+                        m++;
+                    }
+                }
+                else if (keysize == 1)
+                {
+                    int k = 1;
+
+
+                    while (k <= 24)
+                    {
+                        ((TextBlock)this.FindName("initStateKey192_" + k)).Text = keyA[k - 1].ToString();
+                        ((TextBlock)this.FindName("modKey192_" + k)).Text = key[k - 1].ToString();
+                        k++;
+
+                    }
+                }
+                else
+                {
+                    int k = 1;
+
+
+                    while (k <= 32)
+                    {
+                        ((TextBlock)this.FindName("initStateKey256_" + k)).Text = keyA[k - 1].ToString();
+                        ((TextBlock)this.FindName("modKey256_" + k)).Text = key[k - 1].ToString();
+                        k++;
+
+                    }
+                }
             }
-
-            if (otherAlgo)
+            else if (mode == 1)
             {
-                string cipherA = decimalAsString(unchangedCipher);
-                originalCipher.Text = cipherA;
-                string cipherB = decimalAsString(changedCipher);
-                modifiedCipher.Text = cipherB;
+
+                string strA = decimalAsString(textA);
+                string strB = decimalAsString(textB);
+
+                origTextDES.Text = strA;
+                modTextDES.Text = strB;
+
+                string keyStrA = decimalAsString(keyA);
+                string keyStrB = decimalAsString(key);
+
+                origKeyDES.Text = keyStrA;
+                modKeyDES.Text = keyStrB;
+            }
+            else
+            {
+                originalMsg.Text = decimalAsString(unchangedCipher);
+                modifiedMsg.Text = decimalAsString(changedCipher);
             }
         }
 
 
         private void radioButton3Checked(object sender, RoutedEventArgs e)
         {
-            if (textB != null && !otherAlgo)
+            if (mode == 0)
             {
 
-                var encoding = Encoding.GetEncoding(437);
+                int i = 1;
+                int j = 33;
+                while (i <= 16 && j <= 48)
+                {
+                    ((TextBlock)this.FindName("initStateTxtBlock" + i)).Text = textA[i - 1].ToString("X2");
+                    ((TextBlock)this.FindName("initStateTxtBlock" + j)).Text = textB[i - 1].ToString("X2");
+                    i++;
+                    j++;
+                }
+
+                if (keysize == 0)
+                {
+                    int k = 1;
+                    int l = 17;
+                    int m = 49;
+                    while (k <= 16 && l <= 32 && m <= 64)
+                    {
+                        ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = keyA[k - 1].ToString("X2");
+                        ((TextBlock)this.FindName("initStateTxtBlock" + m)).Text = key[k - 1].ToString("X2");
+                        k++;
+                        l++;
+                        m++;
+                    }
+                }
+                else if (keysize == 1)
+                {
+                    int k = 1;
 
 
-                textA = encoding.GetBytes(originalText);
-                string messageA = hexaAsString(textA);
-                originalMsg.Text = messageA;
+                    while (k <= 24)
+                    {
+                        ((TextBlock)this.FindName("initStateKey192_" + k)).Text = keyA[k - 1].ToString("X2");
+                        ((TextBlock)this.FindName("modKey192_" + k)).Text = key[k - 1].ToString("X2");
+                        k++;
+
+                    }
+                }
+                else
+                {
+                    int k = 1;
 
 
-                textB = encoding.GetBytes(modifiedText);
-                string messageB = hexaAsString(textB);
-                modifiedMsg.Text = messageB;
+                    while (k <= 32)
+                    {
+                        ((TextBlock)this.FindName("initStateKey256_" + k)).Text = keyA[k - 1].ToString("X2");
+                        ((TextBlock)this.FindName("modKey256_" + k)).Text = key[k - 1].ToString("X2");
+                        k++;
 
+                    }
+                }
 
             }
-
-            if (otherAlgo)
+            else if (mode == 1)
             {
-                string cipherA = hexaAsString(unchangedCipher);
-                originalCipher.Text = cipherA;
-                string cipherB = hexaAsString(changedCipher);
-                modifiedCipher.Text = cipherB;
+                string strA = hexaAsString(textA);
+                string strB = hexaAsString(textB);
+
+                origTextDES.Text = strA;
+                modTextDES.Text = strB;
+
+                string keyStrA = hexaAsString(keyA);
+                string keyStrB = hexaAsString(key);
+
+                origKeyDES.Text = keyStrA;
+                modKeyDES.Text = keyStrB;
             }
+            else
+            {
+                originalMsg.Text = hexaAsString(unchangedCipher);
+                modifiedMsg.Text = hexaAsString(changedCipher);
+            }
+
         }
-
-
-
 
 
         private void txtBox1_GotFocus(object sender, RoutedEventArgs e)
@@ -3468,135 +4056,11 @@ namespace AvalancheVisualization
                     break;
             }
         }
+  
 
-
-
-
-        private void AESButton_Click(object sender, RoutedEventArgs e)
-        {
-            StartCanvas.Visibility = Visibility.Hidden;
-
-            changePropagationButton.Visibility = Visibility.Visible;
-            avalancheAESButton.Visibility = Visibility.Visible;
-            avalancheEffectAESText.Visibility = Visibility.Visible;
-            showByteDependencyText.Visibility = Visibility.Visible;
-            divideLine.Visibility = Visibility.Visible;
-            //goBackButton.Visibility = Visibility.Visible;
-            slideNr = 2;
-        }
-
-
-        private void goBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            TextBox source = e.Source as TextBox;
-
-            switch (slideNr)
-            {
-                case 2:
-
-
-                    //goBackButton.Visibility = Visibility.Hidden;
-                    changePropagationButton.Visibility = Visibility.Hidden;
-                    avalancheAESButton.Visibility = Visibility.Hidden;
-                    avalancheEffectAESText.Visibility = Visibility.Hidden;
-                    showByteDependencyText.Visibility = Visibility.Hidden;
-                    divideLine.Visibility = Visibility.Hidden;
-                    StartCanvas.Visibility = Visibility.Visible;
-
-                    break;
-                case 3:
-                    changePropagationGrid.Visibility = Visibility.Hidden;
-                    informationGrid.Visibility = Visibility.Hidden;
-                    goBackButton2.Visibility = Visibility.Hidden;
-
-                    // buttonsSV.Visibility = Visibility.Hidden;
-                    flippedBitsPiece.Visibility = Visibility.Hidden;
-                    unflippedBitsPiece.Visibility = Visibility.Hidden;
-                    dataGrid.Visibility = Visibility.Hidden;
-                    bitRepresentationGrid.Visibility = Visibility.Hidden;
-                    afterRoundsGrid.Visibility = Visibility.Hidden;
-                    MessagesStackPanel.Visibility = Visibility.Hidden;
-                    OrigInitialStateGrid.Visibility = Visibility.Hidden;
-                    afterInitRoundButton.Visibility = Visibility.Hidden;
-                    afterInitialRoundGrid.Visibility = Visibility.Hidden;
-                    MessagesStackPanel.Visibility = Visibility.Hidden;
-                    modifyTxtBlock.Visibility = Visibility.Hidden;
-                    changePropagationButton.Visibility = Visibility.Visible;
-                    avalancheAESButton.Visibility = Visibility.Visible;
-                    avalancheEffectAESText.Visibility = Visibility.Visible;
-                    showByteDependencyText.Visibility = Visibility.Visible;
-                    divideLine.Visibility = Visibility.Visible;
-                    slideNr = 2;
-                    break;
-                case 4:
-                    MessagesStackPanel.Visibility = Visibility.Hidden;
-                    afterInitRoundButton.Visibility = Visibility.Hidden;
-                    OrigInitialStateGrid.Visibility = Visibility.Hidden;
-                    afterInitialRoundGrid.Visibility = Visibility.Hidden;
-                    // buttonsSV.Visibility = Visibility.Hidden;
-                    changePropagationButton.Visibility = Visibility.Visible;
-                    avalancheAESButton.Visibility = Visibility.Visible;
-                    avalancheEffectAESText.Visibility = Visibility.Visible;
-                    showByteDependencyText.Visibility = Visibility.Visible;
-                    divideLine.Visibility = Visibility.Visible;
-                    slideNr = 2;
-                    break;
-                case 5:
-                    // buttonsSV.Visibility = Visibility.Hidden;
-                    flippedBitsPiece.Visibility = Visibility.Hidden;
-                    unflippedBitsPiece.Visibility = Visibility.Hidden;
-                    dataGrid.Visibility = Visibility.Hidden;
-                    bitRepresentationGrid.Visibility = Visibility.Hidden;
-                    afterRoundsGrid.Visibility = Visibility.Hidden;
-                    MessagesStackPanel.Visibility = Visibility.Visible;
-                    //initialStateGrid.Visibility = Visibility.Visible;
-                    afterInitRoundButton.Visibility = Visibility.Visible;
-                    goneBack = true;
-                    slideNr = 3;
-                    break;
-
-            }
-        }
-
-        private void changePropagation_Click(object sender, RoutedEventArgs e)
-        {
-
-            changePropagationButton.Visibility = Visibility.Hidden;
-            avalancheAESButton.Visibility = Visibility.Hidden;
-            avalancheEffectAESText.Visibility = Visibility.Hidden;
-            showByteDependencyText.Visibility = Visibility.Hidden;
-            divideLine.Visibility = Visibility.Hidden;
-            //goBackButton.Visibility = Visibility.Hidden;
-            goBackButton2.Visibility = Visibility.Visible;
-            changePropagationGrid.Visibility = Visibility.Visible;
-            informationGrid.Visibility = Visibility.Visible;
-            loadBytePropagationData();
-
-            slideNr = 3;
-        }
-
-        private void avalancheAESButton_Click(object sender, RoutedEventArgs e)
-        {
-            changePropagationButton.Visibility = Visibility.Hidden;
-            avalancheAESButton.Visibility = Visibility.Hidden;
-            avalancheEffectAESText.Visibility = Visibility.Hidden;
-            showByteDependencyText.Visibility = Visibility.Hidden;
-            divideLine.Visibility = Visibility.Hidden;
-            MessagesStackPanel.Visibility = Visibility.Visible;
-            modifyTxtBlock.Visibility = Visibility.Visible;
-            //goBackButton.Visibility = Visibility.Visible;
-            afterInitRoundButton.Visibility = Visibility.Visible;
-
-
-
-            slideNr = 4;
-        }
-
-        public int mode;
-
+      
         public void comparisonPane()
         {
-
 
             StartCanvas.Visibility = Visibility.Hidden;
 
@@ -3604,14 +4068,29 @@ namespace AvalancheVisualization
             {
                 //AES
                 case 0:
-                    //changePropagationButton.Visibility = Visibility.Visible;
-                    //avalancheAESButton.Visibility = Visibility.Visible;
-                    //avalancheEffectAESText.Visibility = Visibility.Visible;
-                    //showByteDependencyText.Visibility = Visibility.Visible;
-                    //divideLine.Visibility = Visibility.Visible;
                     OrigInitialStateGrid.Visibility = Visibility.Visible;
-                    instructionsTxtBlock.Visibility = Visibility.Visible;
-                    singleBitButton.Visibility = Visibility.Visible;
+                    aesCheckBox.Visibility = Visibility.Visible;
+                    inputInBits.Visibility = Visibility.Visible;
+                    explanationTxt.Visibility = Visibility.Visible;
+
+                
+                    if (keysize == 1)
+                    {
+                        originalKeyGrid192.Visibility = Visibility.Visible;
+                        BitKeyGrid192.Visibility = Visibility.Visible;
+                    }
+                    else if (keysize == 2)
+                    {
+                        originalKeyGrid256.Visibility = Visibility.Visible;
+                        BitKeyGrid256.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        originalKeyGrid.Visibility = Visibility.Visible;
+                        BitKeyGrid.Visibility = Visibility.Visible;
+                    }
+
+
                     initStateTitle.Visibility = Visibility.Visible;
 
                     changeTitle();
@@ -3625,55 +4104,40 @@ namespace AvalancheVisualization
                         a++;
                         b++;
                     }
-                    slideNr = 2;
+                  
                     break;
                 case 1:
 
-                    UGrid.Columns = 64;
-                    bitRepresentationGrid.Visibility = Visibility.Visible;
-                    // buttonsSV.Visibility = Visibility.Visible;
+                    inputGridDES.Visibility = Visibility.Visible;
+                    
                     break;
                 case 2:
-                    encryptedTextStackPanel.Visibility = Visibility.Visible;
-                    bitComparisonStkPanel.Visibility = Visibility.Visible;
-                    //goBackButton.Visibility = Visibility.Visible;
-                    otherAlgo = true;
+                case 3:
+                case 4:
+                    
+                    othersGrid.Visibility = Visibility.Visible;
+                    changeTitle();
+
                     break;
                 default:
                     break;
 
             }
 
-
-
-
-
-
         }
 
-        public void show(string str)
-        {
-            TB1.Text = str;
-        }
-
-
-
+  
         public void removeElements()
         {
             TB1.Text = string.Empty;
             TB2.Text = string.Empty;
             TB3.Text = string.Empty;
-            modifiedCipher.Text = string.Empty;
-            originalCipher.Text = string.Empty;
+
             modifiedMsg.Text = string.Empty;
             originalMsg.Text = string.Empty;
-            dataGrid.Visibility = Visibility.Hidden;
+            bitsData.Visibility = Visibility.Hidden;
             flippedBitsPiece.Visibility = Visibility.Hidden;
             unflippedBitsPiece.Visibility = Visibility.Hidden;
-            bitComparisonStkPanel.Visibility = Visibility.Hidden;
-            modifyTxtBlock.Visibility = Visibility.Hidden;
-            changePropagationButton.Visibility = Visibility.Hidden;
-            avalancheAESButton.Visibility = Visibility.Hidden;
             avalancheEffectAESText.Visibility = Visibility.Hidden;
             showByteDependencyText.Visibility = Visibility.Hidden;
             divideLine.Visibility = Visibility.Hidden;
@@ -3681,12 +4145,12 @@ namespace AvalancheVisualization
             OrigInitialStateGrid.Visibility = Visibility.Hidden;
             afterInitialRoundGrid.Visibility = Visibility.Hidden;
             afterRoundsGrid.Visibility = Visibility.Hidden;
-            MessagesStackPanel.Visibility = Visibility.Hidden;
-            encryptedTextStackPanel.Visibility = Visibility.Hidden;
+            //MessagesStackPanel.Visibility = Visibility.Hidden;
+            Cb1.Visibility = Visibility.Hidden;
+            Cb2.Visibility = Visibility.Hidden;
             afterInitRoundButton.Visibility = Visibility.Hidden;
-            // buttonsSV.Visibility = Visibility.Hidden;
-            //goBackButton.Visibility = Visibility.Hidden;
-            goBackButton2.Visibility = Visibility.Hidden;
+            
+          
             changePropagationGrid.Visibility = Visibility.Hidden;
             informationGrid.Visibility = Visibility.Hidden;
             comparisonTxtBlock.Visibility = Visibility.Hidden;
@@ -3694,9 +4158,10 @@ namespace AvalancheVisualization
             afterRound12Button.Visibility = Visibility.Collapsed;
             afterRound13Button.Visibility = Visibility.Collapsed;
             afterRound14Button.Visibility = Visibility.Collapsed;
+            afterRound15Button.Visibility = Visibility.Collapsed;
+            afterRound16Button.Visibility = Visibility.Collapsed;
             OrigInitialStateGrid.Visibility = Visibility.Hidden;
-            instructionsTxtBlock.Visibility = Visibility.Hidden;
-            singleBitButton.Visibility = Visibility.Hidden;
+
             initStateTitle.Visibility = Visibility.Hidden;
             modifiedInitialStateGrid.Visibility = Visibility.Hidden;
             buttonsPanel.Visibility = Visibility.Hidden;
@@ -3709,6 +4174,21 @@ namespace AvalancheVisualization
             instructionsTxtBlock2.Visibility = Visibility.Hidden;
             doneButton.Visibility = Visibility.Hidden;
             clearButton.Visibility = Visibility.Hidden;
+            originalKeyGrid.Visibility = Visibility.Collapsed;
+            originalKeyGrid192.Visibility = Visibility.Collapsed;
+            originalKeyGrid256.Visibility = Visibility.Collapsed;
+            BitKeyGrid.Visibility = Visibility.Collapsed;
+            BitKeyGrid192.Visibility = Visibility.Collapsed;
+            BitKeyGrid256.Visibility = Visibility.Collapsed;
+            modifiedKeyGrid.Visibility = Visibility.Collapsed;
+            modifiedKeyGrid192.Visibility = Visibility.Collapsed;
+            modifiedKeyGrid256.Visibility = Visibility.Collapsed;
+            radioDecimal.IsChecked = false;
+            radioHexa.IsChecked = false;
+            singleBitChange = false;
+            aesCheckBox.Visibility = Visibility.Hidden;
+            explanationTxt.Visibility = Visibility.Hidden;
+            aesCheckBox.IsChecked = false;
             // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             //buttonsSV.Width = 535.0;
             //buttonsPanel.Width = 530.0;
@@ -3719,20 +4199,128 @@ namespace AvalancheVisualization
             foreach (TextBlock txtB in tmp)
                 txtB.Foreground = Brushes.Black;
 
+
+            int k = 33;
+            int l = 49;
+            int i = 1;
+
+
+            while (k <= 48 && l <= 64)
+            {
+
+                ((TextBlock)this.FindName("initStateTxtBlock" + k)).Text = string.Empty;
+
+                ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = string.Empty;
+                i++;
+                k++;
+                l++;
+            }
+
+            int j = 1;
+
+            while (j <= 24)
+            {
+                ((TextBlock)this.FindName("modKey192_" + j)).Text = string.Empty;
+                j++;
+
+            }
+
+            int m = 1;
+
+            while (m <= 32)
+            {
+                ((TextBlock)this.FindName("modKey256_" + m)).Text = string.Empty;
+                m++;
+
+            }
+
             UGrid.Columns = 128;
+
+            //DES
+
+
+            inputGridDES.Visibility = Visibility.Hidden;
+            doneButtonDES.Visibility = Visibility.Hidden;
+            clearButtonDES.Visibility = Visibility.Hidden;
+            desCheckBox.IsChecked = false;
+            modificationGridDES.Visibility = Visibility.Hidden;
+            bitGridDES.Visibility = Visibility.Hidden;
+
+            othersGrid.Visibility = Visibility.Hidden;
+            readjustStats();
+            mode = 0;
 
             StartCanvas.Visibility = Visibility.Visible;
 
 
+            List<TextBlock> tmpDES = createTxtBlockList(7);
+
+            foreach (TextBlock txtB in tmpDES)
+                txtB.Foreground = Brushes.Black;
 
         }
 
+        public void adjustStats()
+        {
+
+            Grid.SetColumn(bitsData, 0);
+            Grid.SetColumnSpan(bitsData, 2);
+            bitsData.HorizontalAlignment = HorizontalAlignment.Center;
+            bitsData.VerticalAlignment = VerticalAlignment.Center;
+
+            Thickness margin = bitsData.Margin;
+            margin.Top = 40;
+            bitsData.Margin = margin;
+
+            stats3Bullet.Visibility = Visibility.Collapsed;
+
+            flippedBitsPiece.VerticalAlignment = VerticalAlignment.Bottom;
+            unflippedBitsPiece.VerticalAlignment = VerticalAlignment.Bottom;
+
+            flippedBitsPiece.Margin = new Thickness(80, -14, 80, 0);
+            unflippedBitsPiece.Margin = new Thickness(80, -14, 80, 0);
+
+            Cb1.VerticalAlignment = VerticalAlignment.Bottom;
+            Cb2.VerticalAlignment = VerticalAlignment.Bottom;
+            Cb1.Margin = new Thickness(5, 0, 10, 100);
+            Cb2.Margin = new Thickness(5, 0, 10, 80);
+        }
+
+        public void readjustStats()
+        {
+
+
+            Grid.SetColumn(bitsData, 1);
+            Grid.SetColumnSpan(bitsData, 1);
+            bitsData.HorizontalAlignment = HorizontalAlignment.Stretch;
+            bitsData.VerticalAlignment = VerticalAlignment.Stretch;
+
+            Thickness margin = bitsData.Margin;
+            margin.Top = 25;
+            bitsData.Margin = margin;
+
+            stats3Bullet.Visibility = Visibility.Visible;
+
+            flippedBitsPiece.VerticalAlignment = VerticalAlignment.Top;
+            unflippedBitsPiece.VerticalAlignment = VerticalAlignment.Top;
+
+            flippedBitsPiece.Margin = new Thickness(80, 15, 80, 0);
+            unflippedBitsPiece.Margin = new Thickness(80, 15, 80, 0);
+
+            Cb1.VerticalAlignment = VerticalAlignment.Center;
+            Cb2.VerticalAlignment = VerticalAlignment.Center;
+            Cb1.Margin = new Thickness(5, 0, 10, 80);
+            Cb2.Margin = new Thickness(5, 0, 10, 40);
+        }
 
         public void comparison()
         {
-            bitsData.Text = string.Empty;
-            comparisonTxtBlock.Visibility = Visibility.Hidden;
-            dataGrid.Visibility = Visibility.Visible;
+            emptyInformation();
+
+            adjustStats();
+            bitsData.Visibility = Visibility.Visible;
+            Cb1.Visibility = Visibility.Visible;
+            Cb2.Visibility = Visibility.Visible;
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
             var strings = binaryStrings(unchangedCipher, changedCipher);
@@ -3763,60 +4351,107 @@ namespace AvalancheVisualization
 
 
 
-
-
         private void TextBlock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             TextBlock txtBlock = sender as TextBlock;
-            
 
 
-
-            if (txtBlock.Text == "0")
+            if ((bool)desCheckBox.IsChecked || (bool)aesCheckBox.IsChecked)
             {
-                txtBlock.Text = "1";
 
-                if (txtBlock.Foreground != Brushes.Red)
-                    txtBlock.Foreground = Brushes.Red;
+                if (txtBlock.Text == "0")
+                {
+                    txtBlock.Text = "1";
+
+                    if (txtBlock.Foreground != Brushes.Red)
+                        txtBlock.Foreground = Brushes.Red;
+                    else
+                        txtBlock.Foreground = Brushes.Black;
+                }
                 else
-                    txtBlock.Foreground = Brushes.Black;
+                {
+                    txtBlock.Text = "0";
+
+                    if (txtBlock.Foreground != Brushes.Red)
+                        txtBlock.Foreground = Brushes.Red;
+                    else
+                        txtBlock.Foreground = Brushes.Black;
+                }
+
             }
-            else
-            {
-                txtBlock.Text = "0";
-
-                if (txtBlock.Foreground != Brushes.Red)
-                    txtBlock.Foreground = Brushes.Red;
-                else
-                    txtBlock.Foreground = Brushes.Black;
-            }
-
-
 
         }
-
 
 
 
         private void onVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (inputInBits.IsVisible)
-                singleBitChange = true;
+            {
+                
+                arrow1.Visibility = Visibility.Visible;
+                arrow2.Visibility = Visibility.Visible;
+            }
             else
-                singleBitChange = false;
+            {
+                
+                arrow1.Visibility = Visibility.Hidden;
+                arrow2.Visibility = Visibility.Hidden;
+            }
+
 
 
 
         }
-        private void onButtonChanged(object sender, DependencyPropertyChangedEventArgs e)
+
+        private void onTitleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            if (initStateTitle.IsVisible || modificationGridDES.IsVisible)
+                inputDataButton.IsEnabled = false;
+            else
+                inputDataButton.IsEnabled = true;
 
+            if (!modificationGridDES.IsVisible && mode == 1)
+                radioBinaryDes.IsChecked = true;
+        }
+    
 
+        private void checkBox_Checked(object sender, RoutedEventArgs e)
+        {
+            singleBitChange = true;
 
+            if (keysize == 0 || keysize == 1 || keysize == 2)
+            {
+                doneButton.Visibility = Visibility.Visible;
+                clearButton.Visibility = Visibility.Visible;
+                instructionsTxtBlock2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                doneButtonDES.Visibility = Visibility.Visible;
+                clearButtonDES.Visibility = Visibility.Visible;
+            }
 
         }
 
+        private void checkBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            singleBitChange = false;
 
+            if (keysize == 0 || keysize == 1 || keysize == 2)
+            {
+                doneButton.Visibility = Visibility.Hidden;
+                clearButton.Visibility = Visibility.Hidden;
+                instructionsTxtBlock2.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                doneButtonDES.Visibility = Visibility.Hidden;
+                clearButtonDES.Visibility = Visibility.Hidden;
+            }
+        }
+
+        
     }
 }
 #endregion

@@ -48,14 +48,17 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private readonly AvalancheVisualizationSettings settings = new AvalancheVisualizationSettings();
         private byte[] text;
         private byte[] key;
+        byte[] originalText;
+        byte[] originalKey;
         private ICryptoolStream unchangedCipher;
+        private byte[] inputObject = { };
         private ICryptoolStream outputStream;
         private AES aes = new AES();
-        private DES des;
+        private DES des = new DES();
         private AvalanchePresentation pres = new AvalanchePresentation();
         private CStreamWriter outputStreamWriter = new CStreamWriter();
         private bool textChanged = false;
-       
+
 
 
 
@@ -106,7 +109,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
             }
         }
-
 
 
 
@@ -207,6 +209,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (textChanged && !pres.singleBitChange)
                         {
                             aes.text = text;
+                            aes.key = key;
 
                             //pres.myMethod(aes);
                             // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
@@ -220,15 +223,25 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                              }, null);*/
 
-                            pres.textB = text;
+
+                            // pres.key = key;
                             byte[] temporary = aes.checkTextLength();
+                            byte[] tmpKey = aes.checkKeysize();
+                            pres.key = tmpKey;
+                            pres.textB = temporary;
                             aes.executeAES(false);
 
 
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                pres.loadInitialState(temporary, false);
                                 pres.setAndLoadButtons();
+
+                                if (!originalText.Equals(text))
+                                    pres.loadChangedMsg(temporary, true);
+                                if (!originalKey.Equals(tmpKey))
+                                    pres.loadChangedKey(tmpKey);
+
+
 
 
 
@@ -241,8 +254,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         {
                             textChanged = true;
 
-                           aes.text = text;
-                           aes.key = key;
+                            originalText = text;
+
+                            aes.text = text;
+                            aes.key = key;
 
                             pres.keysize = settings.KeyLength;
 
@@ -257,17 +272,20 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                             pres.textA = text;
-                            pres.key = key;
+                            //pres.key = key;
 
                             AES.keysize = settings.KeyLength;
                             //pres.keysize = settings.KeyLength;
-                            aes.checkKeysize();
+                            byte[] tmpKey = aes.checkKeysize();
+                            originalKey = tmpKey;
+                            pres.key = tmpKey;
+                            pres.keyA = tmpKey;
                             byte[] temporary = aes.checkTextLength();
                             aes.executeAES(true);
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                
-                                pres.loadInitialState(temporary, true);
+
+                                pres.loadInitialState(temporary, tmpKey);
 
 
                             }, null);
@@ -289,19 +307,28 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         if (textChanged)
                         {
+                            des.inputKey = key;
                             des.inputMessage = text;
+
                             des.textChanged = true;
                             des.DESProcess();
 
-                            pres.lrDataB = des.lrDataB;
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
 
                                 pres.setAndLoadButtons();
 
+                                if (!originalText.Equals(text))
+                                    pres.loadChangedMsg(text, true);
+                                if (!originalKey.Equals(key))
+                                    pres.loadChangedKey(key);
+
                             }, null);
 
-                            // MessageBox.Show(pres.lrDataB[1, 0]);
+                            pres.textB = text;
+                            pres.lrDataB = des.lrDataB;
+                          
+                          
                         }
                         else
                         {
@@ -309,17 +336,28 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                             des.inputKey = key;
                             des.inputMessage = text;
+                            byte[] tmpKey = key;
+                            byte[] tmpText = text;
+                            originalText = tmpText;
+                            originalKey = tmpKey;
+
+                            //des.textChanged = false;
+
                             des.DESProcess();
-                            pres.lrData = des.lrData;
+
+                            pres.key = tmpKey;
+                            pres.keyA = tmpKey;
                             textChanged = true;
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 pres.comparisonPane();
-
+                                pres.loadInitialState(text, key);
                                 //MessageBox.Show(des.lrData[1, 0]);
 
                             }, null);
                             //MessageBox.Show(pres.lrData[1, 0]);
+                            pres.textA = text;
+                            pres.lrData = des.lrData;
                         }
 
 
@@ -330,6 +368,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     else
                     {
+                        pres.mode = 4;
                         goto case AvalancheVisualizationSettings.Category.Hash;
                     }
                     break;
@@ -338,7 +377,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                 case AvalancheVisualizationSettings.Category.Hash:
 
-                    pres.mode = 2;
+
+                    if (pres.mode != 4)
+                        pres.mode = 2;
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -349,40 +390,44 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         }
 
+
+
                         pres.comparisonPane();
-                        //string otherText = Encoding.Default.GetString(buffer);
-                        //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+                         //string otherText = Encoding.Default.GetString(buffer);
 
-                        //pres.unchangedCipher = buffer;
 
-                        if (textChanged)
+                         if (textChanged)
                         {
                             string cipherB = pres.binaryAsString(buffer);
-                            pres.modifiedCipher.Text = pres.hexaAsString(buffer);
+                            pres.modifiedMsg.Text = pres.hexaAsString(buffer);
                             pres.TB2.Text = cipherB;
                             pres.changedCipher = buffer;
                             pres.comparison();
                         }
                         else
                         {
-                            //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+
                             string cipherA = pres.binaryAsString(buffer);
-                            pres.originalCipher.Text = pres.hexaAsString(buffer);
+                            pres.originalMsg.Text = pres.hexaAsString(buffer);
                             pres.TB1.Text = cipherA;
                             pres.unchangedCipher = buffer;
-                            pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
-                        }
+
+                             //  string cipherA = pres.binaryAsString(inputObject);
+                             //  pres.originalMsg.Text = pres.hexaAsString(inputObject);
+                         }
 
 
-                        /*CStreamWriter writer2 = new CStreamWriter();
-                        OutputStream = writer2;
-                        writer2.Write(buffer);
-                        OnPropertyChanged("OutputStream");
-                        writer2.Close();*/
+                         /*CStreamWriter writer2 = new CStreamWriter();
+                         OutputStream = writer2;
+                         writer2.Write(buffer);
+                         OnPropertyChanged("OutputStream");
+                         writer2.Close();*/
 
                     }, null);
 
                     textChanged = true;
+
+
 
 
                     break;
@@ -391,7 +436,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        pres.mode = 2;
+
+                        pres.mode = 3;
 
                         using (CStreamReader reader = UnchangedCipher.CreateReader())
                         {
@@ -408,21 +454,21 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         if (textChanged)
                         {
-                            //string cipherB = pres.binaryAsString(buffer);
-                            pres.modifiedCipher.Text = otherText;
-                            //pres.TB2.Text = cipherB;
+                            string cipherB = pres.binaryAsString(buffer);
+                            pres.modifiedMsg.Text = otherText;
+                            pres.TB2.Text = cipherB;
                             pres.changedCipher = buffer;
                             resize();
                             pres.comparison();
                         }
                         else
                         {
-                            GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+                            //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
                             string cipherA = pres.binaryAsString(buffer);
-                            pres.originalCipher.Text = otherText;
+                            pres.originalMsg.Text = otherText;
                             pres.TB1.Text = cipherA;
                             pres.unchangedCipher = buffer;
-                            pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
+                            // pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
 
                         }
 
@@ -463,6 +509,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Stop()
         {
             textChanged = false;
+
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
 
@@ -515,7 +562,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                 listA.AddRange(fillArray(arrLength));
             }
             else
-             if (countB < countA)
+
+
+           if (countB < countA)
             {
                 int arrLength = countA - countB;
                 listB.AddRange(fillArray(arrLength));

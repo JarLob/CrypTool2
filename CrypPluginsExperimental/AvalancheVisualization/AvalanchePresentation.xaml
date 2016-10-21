@@ -239,7 +239,7 @@
 
         </Grid.ColumnDefinitions>
         <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Visible">
-            <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Margin="50">
+            <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Canvas.Left="56" Canvas.Top="52">
                 <TextBlock.BitmapEffect>
                     <DropShadowBitmapEffect  Direction="330" Color="Black" ShadowDepth="5" Opacity="0.5" Softness="0.30" />
                 </TextBlock.BitmapEffect>
@@ -252,11 +252,10 @@
 
         <Button x:Name="afterInitRoundButton" Style="{StaticResource buttonStyle}" Width="100" Height="20" Content=" After initial round" Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Center"   Click="afterInitRoundButton_Click" Visibility="Hidden" />
         <!-- <Button x:Name="goBackButton" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="Go back"  Grid.Row="1"   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,0,30" Click="goBackButton_Click"  Visibility="Hidden"/>-->
-        <Button x:Name="changePropagationButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="     change&#xa; propagation" FontSize="18" Grid.ColumnSpan="2" Visibility="Hidden" Click="changePropagation_Click" />
-        <Button x:Name="avalancheAESButton" Style="{StaticResource buttonStyle}" Width="150" Height="60" Content="  Avalanche&#xa;     effect"  FontSize="18" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center"   Click="avalancheAESButton_Click"  Visibility="Hidden"/>
-        <Button x:Name="singleBitButton" Style="{StaticResource buttonStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Width="100" Height="50" FontSize="14" VerticalAlignment="Top" Content="enable single&#xa; bit changes" Visibility="Hidden" Click="singleBitButton_Click"/>
-        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Width="60" Height="25" Content="done" FontSize="13" Margin="0,120,30,0" Visibility="Hidden" Click="doneButton_Click"/>
-        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Width="60" Height="25" Content="clear" FontSize="13" Margin="0,120,0,0" Visibility="Hidden"/>
+       
+
+        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1"  Width="60" Height="25" Content="done" FontSize="13" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="20,45" Visibility="Hidden" Click="doneButton_Click"/>
+        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="60" Height="25" Content="clear" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,45" Visibility="Hidden" Click="clearButton_Click"/>
         <!--<ScrollViewer x:Name="buttonsSV"  Grid.Row="1" Grid.ColumnSpan="3"                     
                       Style="{StaticResource RightScrollViewer}"  
                       Width="640" Height="60" Margin="0,30" 
@@ -284,13 +283,15 @@
             <Button x:Name="afterRound12Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="12"  Click="afterRound12Button_Click" Visibility="Collapsed"></Button>
             <Button x:Name="afterRound13Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="13"  Click="afterRound13Button_Click" Visibility="Collapsed"></Button>
             <Button x:Name="afterRound14Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="14"  Click="afterRound14Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="afterRound15Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="15"  Click="afterRound15Button_Click" Visibility="Collapsed"></Button>
+            <Button x:Name="afterRound16Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="16"  Click="afterRound16Button_Click" Visibility="Collapsed"></Button>
             <Line x:Name="line" Stroke="#008000" StrokeThickness="3" X1="0" Y1="0" X2="10" Y2="30" Visibility="Visible">
                 <Line.BitmapEffect>
                     <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="5" Opacity="0.8" Softness="0.4"  />
                 </Line.BitmapEffect>
             </Line>
-            <Button x:Name="inputDataButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Input data"/>
-            <Button x:Name="summaryButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Summary"/>
+            <Button x:Name="inputDataButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Input data" Click="inputDataButton_Click"/>
+            <Button x:Name="overviewButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="8" Content=" General&#xa; overview"/>
         </StackPanel>
 
 
@@ -370,94 +371,105 @@
             </Polygon>
         </Canvas>
 
+        <Polygon Name="arrow1" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Right"  Visibility="Hidden"  Margin="20,70,0,0">
+        </Polygon>
+        <Polygon Name="arrow2" Grid.Row="1" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden"  Margin="20,50,0,0">
+        </Polygon>
+        <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="Enable single bit changes"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
 
-        <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Visibility="Hidden">
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Padding="5">Display information in
+        <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden">
+            <TextBlock Foreground="#534b4f" FontSize="14" Padding="5">Display information in
             </TextBlock>
-            <RadioButton Name="radioDecimal" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="5" Checked="radioButton2Checked" Content=" Decimal">
-            </RadioButton>
-            <RadioButton Name="radioHexa" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="5" Checked="radioButton3Checked"  Content=" Hexadecimal">
-            </RadioButton>
-        </StackPanel>
-
-        <StackPanel Name="encryptedTextStackPanel" Height="325" HorizontalAlignment="Left" Grid.RowSpan="2" Visibility="Hidden" Margin="0,0,0,20">
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="10" Padding="5">Display information in
-
-            </TextBlock>
-
-            <StackPanel  Orientation="Horizontal" Margin="10,0">
-
-                <RadioButton Name="radioBin" Style="{StaticResource RadioButtonStyle}"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
-                <RadioButton Name="radioDec" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+            <StackPanel Name="radioButtonPanel" Orientation="Horizontal" Margin="10,0">
+               <!-- <RadioButton Name="radioBinary" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>-->
+                <RadioButton Name="radioDecimal" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
                 </RadioButton>
-                <RadioButton Name="radioHex" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                <RadioButton Name="radioHexa" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
                 </RadioButton>
             </StackPanel>
-
-            <TextBlock  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Original cipher" Margin="20,41,20,5">
-            </TextBlock>
-            <TextBox Name="originalCipher" Width="180" Height="100"  IsReadOnly="True" TextWrapping="Wrap" >
-            </TextBox>
-
-            <TextBox Name="modifiedCipher" Width="180" Height="100" Margin="5" IsReadOnly="True" TextWrapping="Wrap" >
-
-            </TextBox>
-            <TextBlock  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Modified cipher" Margin="20,0,20,0" >
-            </TextBlock>
         </StackPanel>
 
 
-        <StackPanel x:Name="bitComparisonStkPanel" Height="100" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Visibility="Hidden">
-            <StackPanel.BitmapEffect>
-                <DropShadowBitmapEffect Color="Black" Direction="260" ShadowDepth="5" Opacity="0.5" Softness="0.6"  />
-            </StackPanel.BitmapEffect>
+        <Grid Name="othersGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="110"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Name="explanationTxt_others"  Width="160" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Input changes can be done by directly modifying the input plugin."  Foreground="#534b4f"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="12,15"></TextBlock>
+            <TextBlock Name="title_Other"  Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Avalanche effect ">
+            </TextBlock>
+            <TextBlock Grid.Row="1" Text="Input Data" HorizontalAlignment="Center" Foreground="#534b4f" FontSize="17" FontWeight="DemiBold"/>
+            <TextBlock Name="othersSubtitle" Text="(Classic ciphers)" Foreground="#534b4f" FontSize="15" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,18,0,0"></TextBlock>
+            <TextBlock Name="othersOrigTitle"  Grid.Row="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Encryption original message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="150,0,0,0">
+            </TextBlock>
 
-            <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   
+            <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Encryption modified message" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
+            </TextBlock>
+
+            <TextBlock Name="lbl" Grid.Row="3" Text="Encryption original message" Foreground="#534b4f" Margin="20"></TextBlock>
+            <TextBlock Name="lbl2" Grid.Row="3" Text="Encryption modified message" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
+            <TextBlock Name="lbl3" Grid.Row="3" Text="Changed bits" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
+            
+            <StackPanel Grid.Row="3" x:Name="bitComparisonStkPanel" Height="100" Margin="0,20,0,0">
+                <StackPanel.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Direction="260" ShadowDepth="5" Opacity="0.5" Softness="0.6"  />
+                </StackPanel.BitmapEffect>
+
+                
+
+                <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   
                            VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
-                <TextBox x:Name="TB1" FontFamily="Courier New"  FontSize="20" FontWeight="Medium"  IsReadOnly="True" />
-            </ScrollViewer>
-            <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" 
+                    <TextBox x:Name="TB1" FontFamily="Courier New"  FontSize="20" FontWeight="Medium"  IsReadOnly="True" />
+                </ScrollViewer>
+                <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" 
                           VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
-                <TextBox Name="TB2" FontFamily="Courier New" FontSize="20" FontWeight="Medium" IsReadOnly="True"  />
-            </ScrollViewer>
+                    <TextBox Name="TB2" FontFamily="Courier New" FontSize="20" FontWeight="Medium" IsReadOnly="True"  />
+                </ScrollViewer>
 
-            <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged"
+                <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged"
                           VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Style="{StaticResource RightScrollViewer}">
-                <TextBox x:Name="TB3"  FontFamily="Courier New" FontSize="20" FontWeight="Medium" Foreground="Red" IsReadOnly="True" />
-            </ScrollViewer>
-        </StackPanel>
-
-
-        <StackPanel Name="MessagesStackPanel" Grid.RowSpan="2" Margin="10,27,-5,85"  Height="320" Visibility="Hidden" >
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="10" Padding="5">Display information in
-
-            </TextBlock>
-
-            <StackPanel Name="radioButtonPanelq" Orientation="Horizontal" Margin="10,0">
-
-                <RadioButton Name="radioBinaryq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
-                <RadioButton Name="radioDecimalq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
-                </RadioButton>
-                <RadioButton Name="radioHexaq" Style="{StaticResource RadioButtonStyle}"  Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
-                </RadioButton>
+                    <TextBox x:Name="TB3"  FontFamily="Courier New" FontSize="20" FontWeight="Medium" Foreground="Red" IsReadOnly="True" />
+                </ScrollViewer>
             </StackPanel>
 
-            <TextBlock  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Original message" Margin="20,41,20,5">
-            </TextBlock>
-            <TextBox Name="originalMsg" Width="180" Height="100"  IsReadOnly="True" TextWrapping="Wrap" >
-            </TextBox>
+            <StackPanel Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="10,20,0,0" >
+                <TextBlock Foreground="#534b4f" FontSize="12" Padding="5">Display info. in
+                </TextBlock>
+                <StackPanel >
+                    <!-- <RadioButton Name="radioBinary" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>-->
+                    <RadioButton Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                    </RadioButton>
+                    <RadioButton Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                    </RadioButton>
+                </StackPanel>
+            </StackPanel>
 
-            <TextBox Name="modifiedMsg" Width="180" Height="100" Margin="5"  TextWrapping="Wrap" IsReadOnly="True">
-            </TextBox>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+              
+
+                    <TextBox Name="originalMsg" Width="200" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalScrollBarVisibility="Auto">
+                </TextBox>
+
+                <TextBox Grid.Column="2" Width="200" Name="modifiedMsg"  TextWrapping="Wrap" IsReadOnly="True" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalScrollBarVisibility="Auto">
+                </TextBox>
 
 
-            <TextBlock  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Modified message" Margin="20,0,20,0" >
-            </TextBlock>
-        </StackPanel>
+            </Grid>
+            
+        </Grid>
 
-        <TextBlock Name="modifyTxtBlock" Grid.Column="1"  Grid.Row="2" Grid.ColumnSpan="2"  VerticalAlignment="Top" Margin="10,50" Foreground="#534b4f"  Visibility="Hidden"> You can modify the text input plugin in order to proceed.
-        </TextBlock>
+
 
 
 
@@ -542,7 +554,7 @@
             </Grid>
 
 
-            <Grid x:Name="originalKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left">
+            <Grid x:Name="originalKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center" Visibility="Collapsed" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -606,6 +618,228 @@
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="initStateTxtBlock32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
+
+
+            </Grid>
+
+
+
+
+
+
+
+            <Grid x:Name="originalKeyGrid192" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,0,35,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey192_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+
+            </Grid>
+
+
+            <Grid x:Name="originalKeyGrid256" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,0,35,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_25"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_26"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_27"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_28"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_29"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_30"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_31"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="initStateKey256_32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
 
 
             </Grid>
@@ -691,7 +925,7 @@
             </Grid>
 
 
-            <Grid x:Name="modifiedKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left">
+            <Grid x:Name="modifiedKeyGrid" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -758,9 +992,224 @@
 
 
             </Grid>
+
+            <Grid x:Name="modifiedKeyGrid192" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey192_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+
+            </Grid>
+
+            <Grid x:Name="modifiedKeyGrid256" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="10,0" Visibility="Collapsed" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_25"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_26"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_27"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_28"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_29"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_30"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_31"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
+                    <TextBlock x:Name="modKey256_32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                </Border>
+            </Grid>
         </Grid>
 
+
         <Grid Name="inputInBits"  Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0,70">
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="binary representation" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ></TextBlock>
+
             <Grid Grid.Row="1" Height="100" Width="445" VerticalAlignment="Top" Margin="0,25,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -970,7 +1419,7 @@
                 </Border>
             </Grid>
 
-            <Grid Name="keyGrid" Grid.Row="1" Height="100" Width="445" VerticalAlignment="Bottom" Margin="0,35">
+            <Grid Name="BitKeyGrid" Grid.Row="1" Height="100" Width="445" VerticalAlignment="Bottom" Visibility="Collapsed" Margin="0,35">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -1180,19 +1629,728 @@
             </Grid>
 
 
+            <Grid Name="BitKeyGrid192" Grid.Row="1" Height="100" Width="445" Visibility="Collapsed" VerticalAlignment="Bottom" Margin="0,35">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_1"  Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_2" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_3" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_4" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_5" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_6" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_7" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_8" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                    </StackPanel>
+                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+                </Border>
+                <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Name="keyBit192_9" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit192_10" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_11" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_12" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_13" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_14" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_15" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_16" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_17" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_18" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_19" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_20" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_21" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_22" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_23" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_24" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_25" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_26" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_27" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_28" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_29" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_30" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_31" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_32" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1"  BorderBrush="#534b4f" BorderThickness="2" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_33" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_34" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_35" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_36" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_37" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_38" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_39" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_40" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock  Name="keyBit192_41" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_42" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_43" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_44" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_45" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_46" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_47" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_48" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_49" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_50" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_51" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_52" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_53" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_54" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_55" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_56" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_57" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_58" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_59" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_60" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_61" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_62" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_63" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_64" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_65" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_66" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_67" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_68" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_69" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_70" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_71" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_72" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_73" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_74" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_75" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_76" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_77" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_78" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_79" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_80" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_81" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_82" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_83" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_84" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_85" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_86" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_87" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_88" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_89" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_90" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_91" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_92" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_93" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_94" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_95" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_96" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_97" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_98" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_99" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_100" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_101" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_102" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_103" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_104" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_105" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_106" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_107" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_108" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_109" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_110" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_111" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_112" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_113" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_114" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_115" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_116" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_117" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_118" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_119" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_120" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_121" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_122" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_123" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_124" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_125" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_126" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_127" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_128" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_129" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_130" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_131" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_132" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_133" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_134" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_135" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_136" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_137" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_138" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_139" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_140" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_141" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_142" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_143" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_144" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_145" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_146" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_147" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_148" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_149" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_150" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_151" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_152" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_153" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_154" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_155" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_156" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_157" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_158" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_159" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_160" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_161" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_162" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_163" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_164" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_165" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_166" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_167" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_168" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_169" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_170" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_171" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_172" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_173" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_174" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_175" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_176" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_177" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_178" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_179" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_180" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_181" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_182" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_183" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_184" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit192_185" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_186" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_187" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_188" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_189" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_190" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_191" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit192_192" Width="8.5" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Name="BitKeyGrid256" Grid.Row="1" Height="100" Width="445" Visibility="Collapsed" VerticalAlignment="Bottom" Margin="0,35">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Border BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_1"  Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_2" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_3" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_4" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_5" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_6" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_7" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_8" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                    </StackPanel>
+                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+                </Border>
+                <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Name="keyBit256_9" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
+                        <TextBlock Name="keyBit256_10" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_11" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_12" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_13" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_14" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_15" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_16" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_17" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_18" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_19" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_20" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_21" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_22" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_23" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_24" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_25" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_26" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_27" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_28" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_29" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_30" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_31" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_32" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1"  BorderBrush="#534b4f" BorderThickness="2" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_33" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_34" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_35" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_36" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_37" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_38" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_39" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_40" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_41" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_42" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_43" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_44" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_45" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_46" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_47" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_48" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_49" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_50" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_51" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_52" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_53" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_54" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_55" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_56" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_57" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_58" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_59" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_60" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_61" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_62" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_63" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_64" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2"  BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_65" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_66" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_67" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_68" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_69" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_70" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_71" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_72" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_73" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_74" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_75" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_76" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_77" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_78" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_79" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_80" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_81" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_82" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_83" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_84" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_85" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_86" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_87" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_88" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_89" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_90" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_91" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_92" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_93" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_94" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_95" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_96" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_97" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_98" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_99" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_100" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_101" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_102" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_103" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_104" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_105" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_106" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_107" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_108" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_109" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_110" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_111" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_112" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_113" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_114" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_115" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_116" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_117" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_118" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_119" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_120" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_121" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_122" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_123" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_124" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_125" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_126" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_127" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_128" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_129" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_130" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_131" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_132" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_133" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_134" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_135" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_136" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_137" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_138" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_139" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_140" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_141" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_142" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_143" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_144" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_145" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_146" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_147" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_148" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_149" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_150" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_151" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_152" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_153" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_154" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_155" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_156" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_157" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_158" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_159" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_160" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_161" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_162" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_163" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_164" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_165" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_166" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_167" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_168" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_169" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_170" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_171" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_172" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_173" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_174" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_175" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_176" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_177" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_178" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_179" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_180" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_181" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_182" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_183" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_184" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_185" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_186" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_187" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_188" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_189" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_190" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_191" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_192" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border  Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_193" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_194" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_195" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_196" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_197" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_198" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_199" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_200" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_201" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_202" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_203" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_204" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_205" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_206" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_207" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_208" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_209" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_210" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_211" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_212" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_213" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_214" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_215" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_216" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_217" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_218" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_219" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_220" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_221" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_222" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_223" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_224" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_225" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_226" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_227" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_228" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_229" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_230" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_231" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_232" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_233" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_234" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_235" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_236" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_237" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_238" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_239" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_240" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_241" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_242" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_243" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_244" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_245" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_246" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_247" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_248" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Name="keyBit256_249" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_250" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_251" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_252" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_253" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_254" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_255" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="keyBit256_256" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
         </Grid>
 
-        <TextBlock Name="instructionsTxtBlock" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Height="90" HorizontalAlignment="Center" VerticalAlignment="Top"
-                   Visibility="Hidden" TextAlignment="Justify" Width="330"  Foreground="#534b4f" FontSize="16" FontWeight="DemiBold" TextWrapping="Wrap"
-                   Text="In order to proceed you can either make changes directly to the input plugins or you can modify single text and key bits." Margin="10,100">
 
-        </TextBlock>
 
         <TextBlock Name="instructionsTxtBlock2" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Height="30" HorizontalAlignment="Center" 
                    Visibility="Hidden" TextAlignment="Justify" Width="400"  Foreground="#534b4f" FontSize="15" FontWeight="DemiBold" TextWrapping="Wrap"
                    Text="Click on the bit(s) that you would like to change." Margin="0,70,0,0">
 
         </TextBlock>
+        <TextBlock Name="explanationTxt"  Grid.Column="2" Width="200" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Text and key changes can be done either by directly modifying the input plugins or by clicking on single bits."  Foreground="#534b4f"  VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="10,25,10,0" Visibility="Hidden"></TextBlock>
 
         <Grid Name="afterInitialRoundGrid" Grid.Column="2" Grid.RowSpan="2" Height="280"  Visibility="Hidden">
             <TextBlock Style="{StaticResource textBlockStyle}"  FontSize="17" Text="After initial round" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,55,0"  Height="30">
@@ -2638,31 +3796,498 @@
         </Grid>
         <!--#endregion-->
 
-        <Grid Name="dataGrid" Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2"  Visibility="Hidden"  Height="170" VerticalAlignment="Top" Margin="10,0,0,0" >
+        <Grid Name="bitGridDES" Grid.ColumnSpan="3"  Visibility="Hidden" Height="250"  >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="175"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBlock  Grid.Row="3" Style="{StaticResource textBlockStyle}" VerticalAlignment="Bottom" FontSize="12" Text="c.s. original msg."></TextBlock>
+            <TextBlock  Grid.Row="4" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top" FontSize="12" Text="c.s. modified msg."></TextBlock>
+            <TextBlock  Grid.Row="5" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top"  FontSize="12" Text="Flipped bits"></TextBlock>
+
+            <Border Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="290" Background="Beige" Opacity="0.7">
+                <TextBlock  HorizontalAlignment="Center" Text="Left half" FontWeight="Bold" Foreground="Black" >
+                </TextBlock>
+            </Border>
+            <Border Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Background="CadetBlue" Width="290" Opacity="0.7">
+                <TextBlock   HorizontalAlignment="Center" Text="Right half" FontWeight="Bold" Foreground="White" >
+                </TextBlock>
+            </Border>
+
+            <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Name="desTxt1" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt2" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt3" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt4" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt5" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt6" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt7" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt8" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt9" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt10" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt11" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt12" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt13" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt14" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt15" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt16" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt17" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt18" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt19" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt20" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt21" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt22" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt23" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt24" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt25" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt26" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt27" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt28" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt29" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt30" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt31" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt32" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
+                <TextBlock Name="desTxt33" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt34" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt35" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt36" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt37" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt38" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt39" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt40" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt41" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt42" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt43" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt44" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt45" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt46" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt47" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt48" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt49" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt50" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt51" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt52" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt53" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt54" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt55" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt56" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt57" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt58" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt59" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt60" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt61" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt62" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt63" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt64" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Name="desTxt65" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt66" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt67" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt68" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt69" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt70" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt71" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt72" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt73" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt74" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt75" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt76" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt77" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt78" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt79" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt80" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt81" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt82" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt83" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt84" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt85" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt86" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt87" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt88" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt89" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt90" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt91" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt92" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt93" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt94" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt95" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt96" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Top" Grid.Row="4" Grid.Column="3" Orientation="Horizontal">
+                <TextBlock Name="desTxt97" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt98" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt99" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt100" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt101" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt102" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt103" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt104" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt105" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt106" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt107" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt108" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt109" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt110" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt111" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt112" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt113" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt114" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt115" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt116" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt117" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt118" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt119" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt120" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt121" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt122" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt123" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt124" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt125" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt126" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt127" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt128" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Top" Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Name="desTxt129" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt130" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt131" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt132" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt133" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt134" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt135" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt136" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt137" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt138" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt139" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt140" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt141" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt142" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt143" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt144" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt145" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt146" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt147" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt148" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt149" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt150" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt151" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt152" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt153" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt154" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt155" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt156" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt157" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt158" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt159" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt160" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Top" Grid.Row="5" Grid.Column="3" Orientation="Horizontal">
+                <TextBlock Name="desTxt161" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt162" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt163" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt164" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt165" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt166" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt167" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt168" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt169" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt170" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt171" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt172" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt173" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt174" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt175" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt176" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt177" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt178" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt179" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt180" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt181" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt182" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt183" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt184" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt185" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt186" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt187" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt188" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt189" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt190" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt191" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+                <TextBlock Name="desTxt192" FontFamily="Courier New" FontSize="15"  Grid.Row="2"></TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel x:Name="bitsData" Grid.Row="2" Grid.Column="1" Visibility="Hidden" Margin="0,25">
+            <BulletDecorator >
+                <BulletDecorator.Bullet>
+                    <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
+                </BulletDecorator.Bullet>
+                <TextBlock Name="stats1" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" 21 bits flipped (out of 128). &#xa; Avalanche effect of 56% "/>
+            </BulletDecorator>
+            <BulletDecorator >
+                <BulletDecorator.Bullet>
+                    <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
+                </BulletDecorator.Bullet>
+                <TextBlock Name="stats2" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" Length of longest identical bit sequence:5 . Offset 100."/>
+            </BulletDecorator>
+            <BulletDecorator Name="stats3Bullet" >
+                <BulletDecorator.Bullet>
+                    <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
+                </BulletDecorator.Bullet>
+                <TextBlock Name="stats3" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" Average nr. of differing bits per byte:"/>
+
+
+            </BulletDecorator>
+
+        </StackPanel>
+
+
+        <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="110" Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False" Margin="5,0,10,80" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Hidden"/>
+        <CheckBox Name="Cb2" Grid.Row="1" Grid.Column="2" Width="110"  Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False"  Margin="5,0,10,40" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Hidden"/>
 
 
 
 
-            <TextBlock x:Name="bitsData" FontSize="12" TextWrapping="Wrap" Margin="0,25,0,0" />
+
+        
+
+        <Grid Name="inputGridDES" Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Hidden">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Name="dataInputDESTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Input data DES">
+                </TextBlock>
+
+                <TextBlock Grid.Row="1" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="Message (64 bit):" Height="30"  Margin="10,0"></TextBlock>
+                <CheckBox Name="desCheckBox"  Grid.Row="5" Foreground="#534b4f" Content="Enable single bit change" Margin="20" Width="160" HorizontalAlignment="Left" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"  >
+                </CheckBox>
+                <TextBlock Grid.Row="3" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="Key (64 bit):" Height="30"  Margin="10,0"></TextBlock>
+                <Button x:Name="doneButtonDES" Grid.Row="5" Style="{StaticResource buttonStyle}"  Width="60" Height="25" Content="done" FontSize="13" Click="doneButton_Click" HorizontalAlignment="Left" Margin="50,0" Visibility="Hidden"/>
+                <Button x:Name="clearButtonDES" Grid.Row="5" Style="{StaticResource buttonStyle}"  Width="60" Height="25" Content="clear" FontSize="13"  HorizontalAlignment="Left" Visibility="Hidden" Margin="130,0"/>
+
+                <TextBlock Grid.RowSpan="2" Width="200" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Text and key changes can be done either by directly modifying the input plugins or by clicking on single bits."  Foreground="#534b4f" VerticalAlignment="Bottom" HorizontalAlignment="Right"  Margin="10,0,10,0"></TextBlock>
+
+                <Border Grid.Row="2" BorderBrush="#534b4f"  BorderThickness="2" Height="50" Width="550" >
+                    <StackPanel Orientation="Horizontal" Margin="13,0">
+                        <TextBlock Name="desBit1" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit2" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit3" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit4" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit5" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit6" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit7" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit8" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit9" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit10" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit11" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit12" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit13" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit14" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit15" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit16" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit17" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit18" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit19" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit20" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit21" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit22" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit23" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit24" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit25" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit26" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit27" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit28" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit29" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit30" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit31" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit32" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit33" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit34" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit35" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit36" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit37" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit38" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit39" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit40" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit41" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit42" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit43" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit44" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit45" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit46" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit47" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit48" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit49" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit50" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit51" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit52" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit53" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit54" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit55" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit56" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit57" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit58" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit59" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit60"  FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit61" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit62" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit63" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desBit64" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
 
 
+                <Border Grid.Row="4" BorderBrush="#534b4f"  BorderThickness="2" Height="50" Width="550" >
+                    <StackPanel Orientation="Horizontal" Margin="13,0">
+                        <TextBlock Name="desKeyBit1" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit2" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit3" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit4" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit5" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit6" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit7" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit8" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit9" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit10" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit11" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit12" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit13" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit14" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit15" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit16" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit17" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit18" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit19" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit20" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit21" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit22" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit23" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit24" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit25" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit26" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit27" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit28" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit29" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit30" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit31" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit32" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit33" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit34" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit35" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit36" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit37" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit38" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit39" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit40" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit41" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit42" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit43" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit44" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit45" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit46" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit47" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit48" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit49" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit50" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit51" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit52" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit53" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit54" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit55" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit56" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit57" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit58" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit59" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit60"  FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit61" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit62" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit63" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                        <TextBlock Name="desKeyBit64" FontSize="15"  TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
 
-            <CheckBox Grid.Column="2" Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False" Margin="5,0,40.1,40" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            <CheckBox Grid.Column="2"  Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False"  Margin="5,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <Grid Name="modificationGridDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden" >
 
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Style="{StaticResource textBlockStyle}" Grid.ColumnSpan="2"  FontSize="25" HorizontalAlignment="Center" Text="Input data DES">
+            </TextBlock>
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="original message:" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="modified message:" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" Text="original key:" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="modified key:" VerticalAlignment="Bottom" Margin="20,0"/>
 
+            <Border Grid.Row="1" BorderBrush="#534b4f"  BorderThickness="2" Height="60" Width="300" >
+                <TextBlock Name="origTextDES" FontSize="16" Padding="7">
 
+                </TextBlock>
+            </Border>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2" Height="60" Width="300" >
+                <TextBlock Name="modTextDES" FontSize="16" Padding="7">
 
+                </TextBlock>
+            </Border>
+            <Border Grid.Row="3" BorderBrush="#534b4f"  BorderThickness="2" Height="60" Width="300" >
+                <TextBlock Name="origKeyDES" FontSize="16" Padding="7">
+
+                </TextBlock>
+            </Border>
+            <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2" Height="60" Width="300" >
+                <TextBlock Name="modKeyDES" FontSize="16" Padding="7">
+
+                </TextBlock>
+            </Border>
+
+            <StackPanel Grid.Row="4" Name="rbDes"  Grid.ColumnSpan="2"  VerticalAlignment="Center"  HorizontalAlignment="Center"  >
+                <TextBlock Foreground="#534b4f" FontSize="14" Padding="5">Display information in
+                </TextBlock>
+                <StackPanel  Orientation="Horizontal" Margin="10,0">
+                    <RadioButton Name="radioBinaryDes" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
+                    <RadioButton Name="radioDecimalDes" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                    </RadioButton>
+                    <RadioButton Name="radioHexaDes" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                    </RadioButton>
+                </StackPanel>
+            </StackPanel>
 
         </Grid>
 
         <Grid x:Name="changePropagationGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
 
-            <Button x:Name="goBackButton2" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="go back"  VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,10,25" Click="goBackButton_Click"  Visibility="Hidden"/>
+            
 
             <ScrollViewer Width="450" Height="410" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Margin="10,0,0,10">
 

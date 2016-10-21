@@ -8,7 +8,7 @@ namespace AvalancheVisualization
         public byte[] inputMessage;
         public byte[] inputKey; 
         public byte[] outputCiphertext;
-        public bool textChanged;
+        public bool textChanged = false;
         AvalanchePresentation pres;
 
         // Row, Column and Output of each S-Box for all 16 rounds saved as bytes
@@ -43,11 +43,19 @@ namespace AvalancheVisualization
         public const int KeyByteLength = 8;
         public const int BitsPerByte = 8;
 
-       
+        public DES()
+        {
 
-      
+        }
 
-       
+        public DES(byte[] message, byte[] keyInput)
+        {
+            inputMessage = message;
+            inputKey = keyInput;
+        }
+
+
+
 
         #region Nested classes
 

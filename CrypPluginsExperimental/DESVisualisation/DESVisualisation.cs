@@ -132,7 +132,7 @@ namespace Cryptool.DESVisualisation
             pres.encOriginal = new DESImplementation(key, text);
             try
             {
-                pres.encOriginal.DES();
+                pres.encOriginal.DES(); 
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     pres.ActivateNavigationButtons(true);

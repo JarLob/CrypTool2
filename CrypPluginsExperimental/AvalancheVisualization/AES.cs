@@ -1445,7 +1445,7 @@ namespace AvalancheVisualization
             roundConstant[9] = new byte[] { 54, 0, 0, 0 };
         }
 
-        public void checkKeysize()
+        public byte[] checkKeysize()
         {
             if (key.Length != 16 + 8 * keysize)
             {
@@ -1474,6 +1474,7 @@ namespace AvalancheVisualization
                 }
                 key = temp;
             }
+            return key;
         }
 
         public byte[] checkTextLength()
