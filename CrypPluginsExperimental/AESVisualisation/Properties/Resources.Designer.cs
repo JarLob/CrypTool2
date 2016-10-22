@@ -61,11 +61,74 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Key.
+        /// </summary>
+        internal static string addKeyButton {
+            get {
+                return ResourceManager.GetString("addKeyButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The round key is added to the current state by XORing the bytes..
         /// </summary>
         internal static string addKeyExplanation {
             get {
                 return ResourceManager.GetString("addKeyExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        internal static string autoButton {
+            get {
+                return ResourceManager.GetString("autoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Expansion.
+        /// </summary>
+        internal static string encButton {
+            get {
+                return ResourceManager.GetString("encButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to B.
+        /// </summary>
+        internal static string encryptionIntro {
+            get {
+                return ResourceManager.GetString("encryptionIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption.
+        /// </summary>
+        internal static string encryptionIntro1 {
+            get {
+                return ResourceManager.GetString("encryptionIntro1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption.
+        /// </summary>
+        internal static string encTextBlock {
+            get {
+                return ResourceManager.GetString("encTextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        internal static string endButton {
+            get {
+                return ResourceManager.GetString("endButton", resourceCulture);
             }
         }
         
@@ -79,7 +142,7 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Every byte is exchanged with the corresponding byte from the S-box.
+        ///   Looks up a localized string similar to Every byte is exchanged with the corresponding byte from the S-box..
         /// </summary>
         internal static string expansionExplanation1 {
             get {
@@ -88,7 +151,7 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A round constant is added.
+        ///   Looks up a localized string similar to A round constant is added..
         /// </summary>
         internal static string expansionExplanation2 {
             get {
@@ -111,6 +174,51 @@ namespace AESVisualisation.Properties {
         internal static string expansionExplanation4 {
             get {
                 return ResourceManager.GetString("expansionExplanation4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A.
+        /// </summary>
+        internal static string expansionIntro {
+            get {
+                return ResourceManager.GetString("expansionIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Expansion.
+        /// </summary>
+        internal static string expansionIntro1 {
+            get {
+                return ResourceManager.GetString("expansionIntro1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Expansion.
+        /// </summary>
+        internal static string expButton {
+            get {
+                return ResourceManager.GetString("expButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expansion.
+        /// </summary>
+        internal static string expTextBlock {
+            get {
+                return ResourceManager.GetString("expTextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial Round.
+        /// </summary>
+        internal static string initialRoundTextBlock {
+            get {
+                return ResourceManager.GetString("initialRoundTextBlock", resourceCulture);
             }
         }
         
@@ -151,6 +259,33 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced Encryption Standard.
+        /// </summary>
+        internal static string introduction {
+            get {
+                return ResourceManager.GetString("introduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (AES).
+        /// </summary>
+        internal static string introduction1 {
+            get {
+                return ResourceManager.GetString("introduction1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visualization of this modern block cipher.
+        /// </summary>
+        internal static string introduction2 {
+            get {
+                return ResourceManager.GetString("introduction2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keysize.
         /// </summary>
         internal static string KeysizeCaption {
@@ -165,6 +300,15 @@ namespace AESVisualisation.Properties {
         internal static string KeysizeTooltip {
             get {
                 return ResourceManager.GetString("KeysizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mix Col..
+        /// </summary>
+        internal static string mixColButton {
+            get {
+                return ResourceManager.GetString("mixColButton", resourceCulture);
             }
         }
         
@@ -205,6 +349,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        internal static string playButton {
+            get {
+                return ResourceManager.GetString("playButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AES Visualization.
         /// </summary>
         internal static string PluginCaption {
@@ -223,6 +376,24 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prev. Operation.
+        /// </summary>
+        internal static string prevOperationButton {
+            get {
+                return ResourceManager.GetString("prevOperationButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prev. Round.
+        /// </summary>
+        internal static string prevRoundButton {
+            get {
+                return ResourceManager.GetString("prevRoundButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Round 1.
         /// </summary>
         internal static string Round1 {
@@ -237,6 +408,42 @@ namespace AESVisualisation.Properties {
         internal static string Round10 {
             get {
                 return ResourceManager.GetString("Round10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round 11.
+        /// </summary>
+        internal static string Round11 {
+            get {
+                return ResourceManager.GetString("Round11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round 12.
+        /// </summary>
+        internal static string Round12 {
+            get {
+                return ResourceManager.GetString("Round12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round13.
+        /// </summary>
+        internal static string Round13 {
+            get {
+                return ResourceManager.GetString("Round13", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round14.
+        /// </summary>
+        internal static string Round14 {
+            get {
+                return ResourceManager.GetString("Round14", resourceCulture);
             }
         }
         
@@ -313,11 +520,74 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;&lt;.
+        /// </summary>
+        internal static string shiftLeftButton {
+            get {
+                return ResourceManager.GetString("shiftLeftButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;&gt;.
+        /// </summary>
+        internal static string shiftRightButton {
+            get {
+                return ResourceManager.GetString("shiftRightButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shift Row.
+        /// </summary>
+        internal static string shiftRowButton {
+            get {
+                return ResourceManager.GetString("shiftRowButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First, the second row is shifted once to the left. Then, the third row is shifted twice towards the left, and finally the forth row is shifted three times to the left. The overlapping bytes are transferred to the right to form a 4 x 4 matrix..
         /// </summary>
         internal static string shiftRowExplanation {
             get {
                 return ResourceManager.GetString("shiftRowExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Operation .
+        /// </summary>
+        internal static string skipOperationButton {
+            get {
+                return ResourceManager.GetString("skipOperationButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Round.
+        /// </summary>
+        internal static string skipRoundButton {
+            get {
+                return ResourceManager.GetString("skipRoundButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string startButton {
+            get {
+                return ResourceManager.GetString("startButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub. Bytes.
+        /// </summary>
+        internal static string subBytesButton {
+            get {
+                return ResourceManager.GetString("subBytesButton", resourceCulture);
             }
         }
         
