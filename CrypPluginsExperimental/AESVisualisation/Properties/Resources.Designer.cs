@@ -394,6 +394,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result.
+        /// </summary>
+        internal static string resultTextBlock {
+            get {
+                return ResourceManager.GetString("resultTextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Round 1.
         /// </summary>
         internal static string Round1 {

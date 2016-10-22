@@ -54,15 +54,13 @@ namespace AESVisualisation
         public Boolean start = true;
         private Boolean initialRound = true;
         private int displayedExplanation = 0;
-        private Boolean end = false;
+        public Boolean end = false;
         public int operationCounter = 0;
         public int operationCounter1 = 0;
         public int operationCounter2 = 0;
         public bool abort = false;
         public bool stopp = false;
         public bool endstep = false;
-        Thread expansionThread;
-        Thread encryptionThread;
 
         public AESPresentation()
         {
@@ -578,25 +576,6 @@ namespace AESVisualisation
             toStart();
         }
 
-        //private void languageButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    bool auto = false;
-        //    auto = autostep;
-        //    autostep = false;
-        //    switch (language)
-        //    {
-        //        case 0:
-        //            language = 1;
-        //            break;
-        //        case 1:
-        //            language = 0;
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //    setLanguage();
-        //    autostep = auto;
-        //}
         #endregion Buttons
 
         #region Methods
@@ -621,17 +600,9 @@ namespace AESVisualisation
                 skipStep = false;
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    switch (language)
-                    {
-                        case 0:
-                            keyExpansionTextBlock.Text = "Skip Expansion";
-                            expansionEncryptionTextBlock.Text = "Key Expansion";
-                            break;
-                        case 1:
-                            keyExpansionTextBlock.Text = "Zur Verschlüsselung";
-                            expansionEncryptionTextBlock.Text = "Schlüsselgenerierung";
-                            break;
-                    }
+                    InitialRoundTextBlock.Text = AESVisualisation.Properties.Resources.initialRoundTextBlock;
+                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
+                    expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
                     showButton();
                     invisible();
                     changeRoundButton();
@@ -648,42 +619,18 @@ namespace AESVisualisation
                         hideButton();
                         playButton.Visibility = Visibility.Visible;
                         playButton.SetValue(Grid.RowProperty, 4);
-                        switch (language)
-                        {
-                            case 0:
-                                startGrid.Visibility = Visibility.Visible;
-                                expansionTextBlock.Visibility = Visibility.Visible;
-                                expansionTextBlock2EN.Visibility = Visibility.Visible;                                
-                                break;
-                            case 1:
-                                startGrid.Visibility = Visibility.Visible;
-                                expansionTextBlock.Visibility = Visibility.Visible;
-                                expansionTextBlock2.Visibility = Visibility.Visible;
-                                break;
-                            default:
-                                break;
-                        }
+                        startGrid.Visibility = Visibility.Visible;
+                        expansionTextBlock.Visibility = Visibility.Visible;
+                        expansionTextBlock2.Visibility = Visibility.Visible;
                     }, null);
                     wait();
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         showButton();
                         playButton.SetValue(Grid.RowProperty, 3);
-                        switch (language)
-                        {
-                            case 0:
-                                startGrid.Visibility = Visibility.Hidden;
-                                expansionTextBlock.Visibility = Visibility.Hidden;
-                                expansionTextBlock2EN.Visibility = Visibility.Hidden;
-                                break;
-                            case 1:
-                                startGrid.Visibility = Visibility.Hidden;
-                                expansionTextBlock.Visibility = Visibility.Hidden;
-                                expansionTextBlock2.Visibility = Visibility.Hidden;
-                                break;
-                            default:
-                                break;
-                        }
+                        startGrid.Visibility = Visibility.Hidden;
+                        expansionTextBlock.Visibility = Visibility.Hidden;
+                        expansionTextBlock2.Visibility = Visibility.Hidden;
                     }, null);
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -832,21 +779,9 @@ namespace AESVisualisation
                         expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
                         hideButton();
                         playButton.Visibility = Visibility.Visible;
-                        switch (language)
-                        {
-                            case 0:
-                                startGrid.Visibility = Visibility.Visible;
-                                encryptionTextBlock.Visibility = Visibility.Visible;
-                                encryptionTextBlock2EN.Visibility = Visibility.Visible;
-                                break;
-                            case 1:
-                                startGrid.Visibility = Visibility.Visible;
-                                encryptionTextBlock.Visibility = Visibility.Visible;
-                                encryptionTextBlock2.Visibility = Visibility.Visible;
-                                break;
-                            default:
-                                break;
-                        }
+                        startGrid.Visibility = Visibility.Visible;
+                        encryptionTextBlock.Visibility = Visibility.Visible;
+                        encryptionTextBlock2.Visibility = Visibility.Visible;
                         playButton.SetValue(Grid.RowProperty, 4);
                     }, null);
                     wait();
@@ -854,7 +789,6 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         startGrid.Visibility = Visibility.Hidden;
-                        encryptionTextBlock2EN.Visibility = Visibility.Hidden;
                         encryptionTextBlock2.Visibility = Visibility.Hidden;
                         encryptionTextBlock.Visibility = Visibility.Hidden;
                         playButton.SetValue(Grid.RowProperty, 3);
@@ -906,17 +840,8 @@ namespace AESVisualisation
                     autostep = false;
                     expansionKeyGrid.Visibility = Visibility.Hidden;
                     showButton();
-                    switch (language)
-                    {
-                        case 0:
-                            keyExpansionTextBlock.Text = "To Expansion";
-                            expansionEncryptionTextBlock.Text = "Encryption";
-                            break;
-                        case 1:
-                            keyExpansionTextBlock.Text = "Zur Expansion";
-                            expansionEncryptionTextBlock.Text = "Verschlüsselung";
-                            break;
-                    }
+                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.expButton;
+                    expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
                     changeRoundButton();
                     buttonVisible();
                 }, null);
@@ -3725,7 +3650,6 @@ namespace AESVisualisation
                                 {
                                     Intro3ENImage.Visibility = Visibility.Hidden;
                                     expansionTextBlock.Visibility = Visibility.Visible;
-                                    expansionTextBlock2EN.Visibility = Visibility.Visible;
                                     Intro2ENTextBlock.Visibility = Visibility.Hidden;
 
                                 }, null);
@@ -3739,7 +3663,6 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         playButton.SetValue(Grid.RowProperty, 3);
-                        expansionTextBlock2EN.Visibility = Visibility.Hidden;
                         expansionTextBlock.Visibility = Visibility.Hidden;
                         startGrid.Visibility = Visibility.Hidden;
                     }, null);
@@ -3791,7 +3714,6 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         playButton.SetValue(Grid.RowProperty, 3);
-                        expansionTextBlock2EN.Visibility = Visibility.Hidden;
                         expansionTextBlock.Visibility = Visibility.Hidden;
                         startGrid.Visibility = Visibility.Hidden;
                     }, null);
@@ -5986,44 +5908,44 @@ namespace AESVisualisation
             shift = shifting;
             if(shift == 0)
             {
-                round1Button.Content = "Round 1";
-                round2Button.Content = "Round 2";
-                round3Button.Content = "Round 3";
-                round4Button.Content = "Round 4";
-                round5Button.Content = "Round 5";
-                round6Button.Content = "Round 6";
-                round7Button.Content = "Round 7";
-                round8Button.Content = "Round 8";
-                round9Button.Content = "Round 9";
-                round10Button.Content = "Round 10";
+                round1Button.Content = AESVisualisation.Properties.Resources.Round1;
+                round2Button.Content = AESVisualisation.Properties.Resources.Round2;
+                round3Button.Content = AESVisualisation.Properties.Resources.Round3;
+                round4Button.Content = AESVisualisation.Properties.Resources.Round4;
+                round5Button.Content = AESVisualisation.Properties.Resources.Round5;
+                round6Button.Content = AESVisualisation.Properties.Resources.Round6;
+                round7Button.Content = AESVisualisation.Properties.Resources.Round7;
+                round8Button.Content = AESVisualisation.Properties.Resources.Round8;
+                round9Button.Content = AESVisualisation.Properties.Resources.Round9;
+                round10Button.Content = AESVisualisation.Properties.Resources.Round10;
             }
             else if(shift == 1)
             {
                 if (keysize == 1)
                 {
-                    round1Button.Content = "Round 3";
-                    round2Button.Content = "Round 4";
-                    round3Button.Content = "Round 5";
-                    round4Button.Content = "Round 6";
-                    round5Button.Content = "Round 7";
-                    round6Button.Content = "Round 8";
-                    round7Button.Content = "Round 9";
-                    round8Button.Content = "Round 10";
-                    round9Button.Content = "Round 11";
-                    round10Button.Content = "Round 12";
+                    round1Button.Content = AESVisualisation.Properties.Resources.Round3;
+                    round2Button.Content = AESVisualisation.Properties.Resources.Round4;
+                    round3Button.Content = AESVisualisation.Properties.Resources.Round5;
+                    round4Button.Content = AESVisualisation.Properties.Resources.Round6;
+                    round5Button.Content = AESVisualisation.Properties.Resources.Round7;
+                    round6Button.Content = AESVisualisation.Properties.Resources.Round8;
+                    round7Button.Content = AESVisualisation.Properties.Resources.Round9;
+                    round8Button.Content = AESVisualisation.Properties.Resources.Round10;
+                    round9Button.Content = AESVisualisation.Properties.Resources.Round11;
+                    round10Button.Content = AESVisualisation.Properties.Resources.Round12;
                 }
                 else
                 {
-                    round1Button.Content = "Round 5";
-                    round2Button.Content = "Round 6";
-                    round3Button.Content = "Round 7";
-                    round4Button.Content = "Round 8";
-                    round5Button.Content = "Round 9";
-                    round6Button.Content = "Round 10";
-                    round7Button.Content = "Round 11";
-                    round8Button.Content = "Round 13";
-                    round9Button.Content = "Round 12";
-                    round10Button.Content = "Round 14";
+                    round1Button.Content = AESVisualisation.Properties.Resources.Round5;
+                    round2Button.Content = AESVisualisation.Properties.Resources.Round6;
+                    round3Button.Content = AESVisualisation.Properties.Resources.Round7;
+                    round4Button.Content = AESVisualisation.Properties.Resources.Round8;
+                    round5Button.Content = AESVisualisation.Properties.Resources.Round9;
+                    round6Button.Content = AESVisualisation.Properties.Resources.Round10;
+                    round7Button.Content = AESVisualisation.Properties.Resources.Round11;
+                    round8Button.Content = AESVisualisation.Properties.Resources.Round12;
+                    round9Button.Content = AESVisualisation.Properties.Resources.Round13;
+                    round10Button.Content = AESVisualisation.Properties.Resources.Round14;
                 }
             }
             changeRoundButton();
@@ -6118,10 +6040,8 @@ namespace AESVisualisation
                 invisible();
                 startGrid.Visibility = Visibility.Hidden;
                 expansionTextBlock.Visibility = Visibility.Hidden;
-                expansionTextBlock2EN.Visibility = Visibility.Hidden;
                 expansionTextBlock.Visibility = Visibility.Hidden;
                 expansionTextBlock2.Visibility = Visibility.Hidden;
-                encryptionTextBlock2EN.Visibility = Visibility.Hidden;
                 encryptionTextBlock2.Visibility = Visibility.Hidden;
                 encryptionTextBlock.Visibility = Visibility.Hidden;
                 expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
@@ -6380,197 +6300,6 @@ namespace AESVisualisation
             keyList = new byte[11][];
     }
 
-        //public void setLanguage()
-        //{
-        //    switch (language)
-        //    {
-        //        case 0:
-        //            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-        //            {
-        //                round10Button.Content = "Round 10";
-        //                round9Button.Content = "Round 9";
-        //                round8Button.Content = "Round 8";
-        //                round7Button.Content = "Round 7";
-        //                round6Button.Content = "Round 6";
-        //                round5Button.Content = "Round 5";
-        //                round4Button.Content = "Round 4";
-        //                round3Button.Content = "Round 3";
-        //                round2Button.Content = "Round 2";
-        //                round1Button.Content = "Round 1";
-        //                endButton.Content = "End";
-        //                playTextBlock.Text = "Next";
-        //                if (expansion)
-        //                {
-        //                    nextStepTextBlock.Text = "Skip Round";
-        //                    prevStepTextBlock.Text = "Prev. Round";
-        //                    keyExpansionTextBlock.Text = "Skip Expansion";
-        //                }
-        //                else
-        //                {
-        //                    nextStepTextBlock.Text = "Skip Operation";
-        //                    prevStepTextBlock.Text = "Prev. Operation";
-        //                    keyExpansionTextBlock.Text = "To Expansion";
-        //                }
-        //                languageTextBlock.Text = "Deutsch";
-        //                sBoxTextBlock.Text = "S-box";
-        //            }, null);
-        //            break;
-        //        case 1:
-        //            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-        //            {
-        //                round10Button.Content = "Runde 10";
-        //                round9Button.Content = "Runde 9";
-        //                round8Button.Content = "Runde 8";
-        //                round7Button.Content = "Runde 7";
-        //                round6Button.Content = "Runde 6";
-        //                round5Button.Content = "Runde 5";
-        //                round4Button.Content = "Runde 4";
-        //                round3Button.Content = "Runde 3";
-        //                round2Button.Content = "Runde 2";
-        //                round1Button.Content = "Runde 1";
-        //                endButton.Content = "Ende";
-        //                playTextBlock.Text = "Weiter";
-        //                keyExpansionTextBlock.Text = "Schlüsselerweiterung";
-        //                if (expansion)
-        //                {
-        //                    nextStepTextBlock.Text = "Runde überspringen";
-        //                    prevStepTextBlock.Text = "Vorherige Runde";
-        //                    keyExpansionTextBlock.Text = "Zur Verschlüsselung";
-        //                }
-        //                else
-        //                {
-        //                    nextStepTextBlock.Text = "Operation überspringen";
-        //                    prevStepTextBlock.Text = "Vorherige Operation";
-        //                    keyExpansionTextBlock.Text = "Zur Expansion";
-        //                }
-        //                languageTextBlock.Text = "English";
-        //                sBoxTextBlock.Text = "S-Box";
-        //            }, null);
-        //            break;
-        //    }
-        //    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-        //    {
-        //        switch (displayedExplanation)
-        //        {
-        //            case 0:
-        //                break;
-        //            case 1:
-        //                expansionExplanation.Visibility = Visibility.Hidden;
-        //                expansionExplanationDE.Visibility = Visibility.Visible;
-        //                displayedExplanation = 2;
-        //                break;
-        //            case 2:
-        //                expansionExplanation.Visibility = Visibility.Visible;
-        //                expansionExplanationDE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 1;
-        //                break;
-        //            case 3:
-        //                expansionExplanation1.Visibility = Visibility.Hidden;
-        //                expansionExplanation1DE.Visibility = Visibility.Visible;
-        //                displayedExplanation = 4;
-        //                break;
-        //            case 4:
-        //                expansionExplanation1.Visibility = Visibility.Visible;
-        //                expansionExplanation1DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 3;
-        //                break;
-        //            case 5:
-        //                expansionExplanation2.Visibility = Visibility.Hidden;
-        //                expansionExplanation2DE.Visibility = Visibility.Visible;
-        //                displayedExplanation = 6;
-        //                break;
-        //            case 6:
-        //                expansionExplanation2.Visibility = Visibility.Visible;
-        //                expansionExplanation2DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 5;
-        //                break;
-        //            case 7:
-        //                expansionExplanation3.Visibility = Visibility.Hidden;
-        //                expansionExplanation3DE.Visibility = Visibility.Visible;
-        //                displayedExplanation = 8;
-        //                break;
-        //            case 8:
-        //                expansionExplanation3.Visibility = Visibility.Visible;
-        //                expansionExplanation3DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 7;
-        //                break;
-        //            case 9:
-        //                expansionExplanation4.Visibility = Visibility.Hidden;
-        //                expansionExplanation4DE.Visibility = Visibility.Visible;
-        //                displayedExplanation = 10;
-        //                break;
-        //            case 10:
-        //                expansionExplanation4.Visibility = Visibility.Visible;
-        //                expansionExplanation4DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 9;
-        //                break;
-        //            case 11:
-        //                subByteExplanationDE.Visibility = Visibility.Visible;
-        //                subByteExplanation.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 12;
-        //                break;
-        //            case 12:
-        //                subByteExplanation.Visibility = Visibility.Visible;
-        //                subByteExplanationDE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 11;
-        //                break;
-        //            case 13:
-        //                subByteExplanation1DE.Visibility = Visibility.Visible;
-        //                subByteExplanation1.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 14;
-        //                break;
-        //            case 14:
-        //                subByteExplanation1.Visibility = Visibility.Visible;
-        //                subByteExplanation1DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 13;
-        //                break;
-        //            case 15:
-        //                shiftRowExplanationDE.Visibility = Visibility.Visible;
-        //                shiftRowExplanation.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 16;
-        //                break;
-        //            case 16:
-        //                shiftRowExplanation.Visibility = Visibility.Visible;
-        //                shiftRowExplanationDE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 15;
-        //                break;
-        //            case 17:
-        //                mixColExplanationDE.Visibility = Visibility.Visible;
-        //                mixColExplanation.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 18;
-        //                break;
-        //            case 18:
-        //                mixColExplanation.Visibility = Visibility.Visible;
-        //                mixColExplanationDE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 17;
-        //                break;
-        //            case 19:
-        //                mixColExplanation1DE.Visibility = Visibility.Visible;
-        //                mixColExplanation1.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 20;
-        //                break;
-        //            case 20:
-        //                mixColExplanation1.Visibility = Visibility.Visible;
-        //                mixColExplanation1DE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 19;
-        //                break;
-        //            case 21:
-        //                addKeyExplanationDE.Visibility = Visibility.Visible;
-        //                addKeyExplanation.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 22;
-        //                break;
-        //            case 22:
-        //                addKeyExplanation.Visibility = Visibility.Visible;
-        //                addKeyExplanationDE.Visibility = Visibility.Hidden;
-        //                displayedExplanation = 21;
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //    }, null);
-
-        //}
-
         private void checkInitialRound()
         {
             if (initialRound)
@@ -6630,19 +6359,9 @@ namespace AESVisualisation
             expansion = false;
             abort = true;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                switch (language)
-                {
-                    case 0:
-                        InitialRoundTextBlock.Text = "Result";
-                        break;
-                    case 1:
-                        expansionEncryptionTextBlock.Text = "Verschlüsselung";
-                        InitialRoundTextBlock.Text = "Ergebnis";
-                        break;
-                    default:
-                        break;
-                }
+            {              
+                expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
+                InitialRoundTextBlock.Text = AESVisualisation.Properties.Resources.resultTextBlock;
                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                 InitialRoundTextBlock.Visibility = Visibility.Visible;
             }, null);

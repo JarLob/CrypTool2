@@ -147,6 +147,7 @@ namespace Cryptool.Plugins.AESVisualisation
         /// </summary>
         public void Execute()
         {
+            pres.end = false;
             pres.abort = false;
             pres.expansion = true;
             pres.finish = false;

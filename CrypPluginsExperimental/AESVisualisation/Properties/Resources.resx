@@ -300,4 +300,7 @@
   <data name="subBytesExplanation1" xml:space="preserve">
     <value>The corresponding byte in the S-box is determined and placed into the result matrix.</value>
   </data>
+  <data name="resultTextBlock" xml:space="preserve">
+    <value>Result</value>
+  </data>
 </root>
