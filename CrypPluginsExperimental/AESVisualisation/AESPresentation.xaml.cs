@@ -345,6 +345,7 @@ namespace AESVisualisation
             removeColors();
             lightRemoveColor();
             round10Button.Background = Brushes.Aqua;
+            addKeyButton.SetValue(Grid.ColumnProperty, 4);
             abort = true;
             if(roundNumber == 10 + keysize * 2)
             {
@@ -666,6 +667,7 @@ namespace AESVisualisation
                             {
                                 cleanUp();
                                 setUpExpansion();
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             }, null);
                         }
                         abort = false;
@@ -691,6 +693,7 @@ namespace AESVisualisation
                             introduction();
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 setUpExpansion();
                                 showButton();
                                 buttonVisible();
@@ -710,6 +713,7 @@ namespace AESVisualisation
                             {
                                 cleanUp();
                                 setUpExpansion();
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             }, null);
                         }
                         if (roundNumber < 9 && !start)
@@ -735,6 +739,7 @@ namespace AESVisualisation
                                 setUpExpansion();
                                 showButton();
                                 buttonVisible();
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             }, null);
                             start = false;
                             skip = false;
@@ -752,6 +757,7 @@ namespace AESVisualisation
                             {
                                 cleanUp();
                                 setUpExpansion();
+                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             }, null);
                         }
                         if (roundNumber < 8 && !start)
@@ -883,10 +889,31 @@ namespace AESVisualisation
                     return;
                 }
                 if (start)
+                {
                     roundNumber = 1;
                     expansion = true;
+                }
+
             }
             progress = 1;
+            action = 4;
+            roundNumber = 10 + keysize * 2;
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                setUpAddKey();
+            }, null);
+            byte[] result1;
+            result1 = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
+            List<TextBlock> resultList1 = textBlockList[2];
+            int y1 = 0;
+            foreach (TextBlock tb in resultList1)
+            {
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    renameTextBlock(tb, result1[y1]);
+                }, null);
+                y1++;
+            }
         }
 
         #region PresentationMethods
@@ -1011,6 +1038,7 @@ namespace AESVisualisation
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpAddKey();
+                                buttonVisible();
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 if (!initialRound)
                                 {
@@ -5207,7 +5235,7 @@ namespace AESVisualisation
         {
             List<Border> borders = createBorderList(3);
             int temp = 4;
-            wait();
+            //wait();
             while (!abort && operationCounter < 8)
             {
                 switch (operationCounter)
@@ -5302,7 +5330,8 @@ namespace AESVisualisation
                     default: break;
                 }
                 operationCounter++;
-                wait();
+                if(!abort)
+                    wait();
             }
             operationCounter = 0;            
         }
