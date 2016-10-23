@@ -3646,6 +3646,54 @@ namespace AESVisualisation
         public void introduction()
         {
             progress = 0;
+            while (!abort && operationCounter < 3)
+            {
+                switch (operationCounter)
+                {
+                    case 0:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            startGrid.Visibility = Visibility.Visible;
+                            Intro1ENImage.Visibility = Visibility.Visible;
+                            Intro1ENTextBlock.Visibility = Visibility.Visible;
+                            hideButton();
+                            playButton.Visibility = Visibility.Visible;
+                            playButton.SetValue(Grid.RowProperty, 4);
+                        }, null);
+                        break;
+                    case 1:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            Intro1ENImage.Visibility = Visibility.Hidden;
+                            Intro1ENTextBlock.Visibility = Visibility.Hidden;
+                            Intro3ENImage.Visibility = Visibility.Visible;
+                            Intro2ENTextBlock.Visibility = Visibility.Visible;
+                        }, null);
+                        break;
+                    case 2:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            Intro3ENImage.Visibility = Visibility.Hidden;
+                            startGrid.Visibility = Visibility.Visible;
+                            expansionTextBlock.Visibility = Visibility.Visible;
+                            expansionTextBlock2.Visibility = Visibility.Visible;
+                            Intro2ENTextBlock.Visibility = Visibility.Hidden;
+
+                        }, null);
+                        break;
+                    default: break;
+                }
+                operationCounter++;
+                wait();
+            }
+            operationCounter = 0;
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                playButton.SetValue(Grid.RowProperty, 3);
+                expansionTextBlock.Visibility = Visibility.Hidden;
+                startGrid.Visibility = Visibility.Hidden;
+            }, null);
+            return;
             switch (language)
             {
                 case 0:

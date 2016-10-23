@@ -101,23 +101,23 @@
                 </Grid.ColumnDefinitions>
                 <Image Name="Intro1ENImage" Source="images/Intro1EN.png" Visibility="Hidden" Grid.Row="2" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10,10,10,10" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="3">
-                    <TextBlock Name="Intro1ENTextBlock" TextWrapping="Wrap" Width="200" Visibility="Hidden">
-                        AES is a modern block cipher. <LineBreak/>
+                    <TextBlock Name="Intro1ENTextBlock" TextWrapping="Wrap" Width="200" Visibility="Hidden" Text="{Loc introTextBlock}"/>
+                    <!--AES is a modern block cipher. <LineBreak/>
                         AES takes two inputs. The plaintext that is to be encrypted and a key. <LineBreak/>
                         After the encryption AES outputs the ciphertext.
-                    </TextBlock>
+                    </TextBlock>-->
                 </Viewbox>
-                <Image Name="Intro3ENImage" Source="images/Intro3EN.jpg" Visibility="Hidden" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400"  />
+                <Image Name="Intro3ENImage" Source="images/AES_Fig_1.jpg" Visibility="Hidden" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400"  />
                 <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="5" Margin="200,0,0,0" Stretch="Uniform">
-                    <TextBlock Name="Intro2ENTextBlock" TextWrapping="Wrap" Width="180" Visibility="Hidden">
-                        AES starts with the "Key Expansion" in which round keys are derived from the original key. <LineBreak/>
+                    <TextBlock Name="Intro2ENTextBlock" TextWrapping="Wrap" Width="180" Visibility="Hidden" Text="{Loc introTextBlock1}"/>
+                    <!--AES starts with the "Key Expansion" in which round keys are derived from the original key. <LineBreak/>
                         <LineBreak/>
                         After the expansion an initial round takes place, in which the original key is applied to the plaintext.<LineBreak/>
                         <LineBreak/>
                         Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey".<LineBreak/>
                         <LineBreak/>
                         Once these rounds are completed one last round takes place, in which there is no "MixColumn" step.
-                    </TextBlock>
+                    </TextBlock>-->
                 </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.Column="1">
                     <TextBlock Name="startTextBlock" Text="{Loc introduction}"/>

@@ -303,4 +303,16 @@
   <data name="resultTextBlock" xml:space="preserve">
     <value>Result</value>
   </data>
+  <data name="introTextBlock" xml:space="preserve">
+    <value>AES is a modern block cipher.  AES takes two inputs. The plaintext that is to be encrypted and a key.  After the encryption AES outputs the ciphertext.</value>
+  </data>
+  <data name="introTextBlock1" xml:space="preserve">
+    <value>AES starts with the "Key Expansion" in which round keys are derived from the original key. 
+
+After the expansion an initial round takes place, in which the original key is applied to the plaintext. 
+
+Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey". 
+
+Once these rounds are completed one last round takes place, in which there is no "MixColumn" step.</value>
+  </data>
 </root>

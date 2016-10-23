@@ -286,6 +286,30 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AES is a modern block cipher.  AES takes two inputs. The plaintext that is to be encrypted and a key.  After the encryption AES outputs the ciphertext..
+        /// </summary>
+        internal static string introTextBlock {
+            get {
+                return ResourceManager.GetString("introTextBlock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AES starts with the &quot;Key Expansion&quot; in which round keys are derived from the original key. 
+        ///
+        ///After the expansion an initial round takes place, in which the original key is applied to the plaintext. 
+        ///
+        ///Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: &quot;SubBytes&quot;, &quot;ShiftRow&quot;, &quot;MixColumns&quot;, and &quot;AddRoundKey&quot;. 
+        ///
+        ///Once these rounds are completed one last round takes place, in which there is no &quot;MixColumn&quot; step..
+        /// </summary>
+        internal static string introTextBlock1 {
+            get {
+                return ResourceManager.GetString("introTextBlock1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Keysize.
         /// </summary>
         internal static string KeysizeCaption {
