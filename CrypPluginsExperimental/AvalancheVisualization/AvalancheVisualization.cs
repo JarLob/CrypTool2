@@ -236,14 +236,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             {
                                 pres.setAndLoadButtons();
 
-                                if (!originalText.Equals(text))
+                                //if (!originalText.Equals(text))
                                     pres.loadChangedMsg(temporary, true);
-                                if (!originalKey.Equals(tmpKey))
+                                //if (!originalKey.Equals(tmpKey))
                                     pres.loadChangedKey(tmpKey);
 
-
-
-
+                                pres.coloringText();
+                                pres.coloringKey();
 
                             }, null);
 
@@ -271,7 +270,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             }, null);
 
 
-                            pres.textA = text;
+                           // pres.textA = text;
                             //pres.key = key;
 
                             AES.keysize = settings.KeyLength;
@@ -281,6 +280,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             pres.key = tmpKey;
                             pres.keyA = tmpKey;
                             byte[] temporary = aes.checkTextLength();
+                            pres.textA = temporary;
                             aes.executeAES(true);
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {

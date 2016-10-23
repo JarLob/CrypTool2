@@ -278,88 +278,167 @@ namespace AvalancheVisualization
         {
             clearKeyEffect();
 
-
-            if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked==true)
+            switch (mode)
             {
-                for (byte i = 0; i < keyA.Length; i++)
-                {
-                    if (keyA[i] != key[i])
+
+                case 0:
+
+                    clearKeyColors();
+
+                    if (keysize == 0)
                     {
-                        List<int> positions = arrangePos();
-                        TextEffect ti = new TextEffect();
 
-                        ti.PositionStart = positions[i];
-                        ti.Foreground = Brushes.Red;
+                        IEnumerable<Border> gridChildren = originalKeyGrid.Children.OfType<Border>();
+                        IEnumerable<Border> gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
 
-                        if (radioDecimalDes.IsChecked == true)
-                            ti.PositionCount = 4;
-                        if (radioHexaDes.IsChecked == true)
-                            ti.PositionCount = 2;
+                        int a = 0;
+                        int b = 0;
 
-                        origKeyDES.TextEffects.Add(ti);
-                        modKeyDES.TextEffects.Add(ti);
+                        foreach (Border bor in gridChildren)
+                        {
+                            if (keyA[a] != key[a])
+                                bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
+
+                            a++;
+                        }
+
+                        foreach (Border bor in gridChildren2)
+                        {
+                            if (keyA[b] != key[b])
+                                bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
+
+                            b++;
+                        }
+
                     }
-                }
-            }
-            else
-            {
-                for (byte i = 0; i < origKeyDES.Text.Length; i++)
-                {
-                    if (origKeyDES.Text[i] != modKeyDES.Text[i])
+                    break;
+
+                case 1:
+
+                    if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked == true)
                     {
-                        TextEffect ti2 = new TextEffect();
-                        ti2.PositionStart = i;
-                        ti2.PositionCount = 1;
-                        ti2.Foreground = Brushes.Red;
-                        origKeyDES.TextEffects.Add(ti2);
-                        modKeyDES.TextEffects.Add(ti2);
-                    }
-                }
-            }
+                        for (byte i = 0; i < keyA.Length; i++)
+                        {
+                            if (keyA[i] != key[i])
+                            {
+                                List<int> positions = arrangePos();
+                                TextEffect ti = new TextEffect();
 
+                                ti.PositionStart = positions[i];
+                                ti.Foreground = Brushes.Red;
+
+                                if (radioDecimalDes.IsChecked == true)
+                                    ti.PositionCount = 4;
+                                if (radioHexaDes.IsChecked == true)
+                                    ti.PositionCount = 2;
+
+                                origKeyDES.TextEffects.Add(ti);
+                                modKeyDES.TextEffects.Add(ti);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (byte i = 0; i < origKeyDES.Text.Length; i++)
+                        {
+                            if (origKeyDES.Text[i] != modKeyDES.Text[i])
+                            {
+                                TextEffect ti2 = new TextEffect();
+                                ti2.PositionStart = i;
+                                ti2.PositionCount = 1;
+                                ti2.Foreground = Brushes.Red;
+                                origKeyDES.TextEffects.Add(ti2);
+                                modKeyDES.TextEffects.Add(ti2);
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void coloringText()
         {
             clearTextEffect();
 
-            if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked == true)
+            switch (mode)
             {
 
-                for (byte i = 0; i < textA.Length; i++)
-                {
-                    if (textA[i] != textB[i])
+                case 0:
+
+                    clearColors();
+
+                    IEnumerable<Border> gridChildren = Grid1.Children.OfType<Border>();
+                    IEnumerable<Border> gridChildren2 = Grid2.Children.OfType<Border>();
+
+                    int a= 0;
+                    int b = 0;
+
+                    foreach (Border bor in gridChildren)
                     {
-                        List<int> positions = arrangePos();
-                        TextEffect ti = new TextEffect();
-                        ti.PositionStart = positions[i];
-                        ti.Foreground = Brushes.Red;
+                        if (textA[a] != textB[a])
+                            bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
 
-                        if (radioDecimalDes.IsChecked == true)
-                            ti.PositionCount = 4;
-                        if (radioHexaDes.IsChecked == true)
-                            ti.PositionCount = 3;
-
-                        origTextDES.TextEffects.Add(ti);
-                        modTextDES.TextEffects.Add(ti);
+                        a++;
                     }
-                }
-            }
-            else
-            {
 
-                for (byte i = 0; i < origTextDES.Text.Length; i++)
-                {
-                    if (origTextDES.Text[i] != modTextDES.Text[i])
+                    foreach(Border bor in gridChildren2)
                     {
-                        TextEffect ti = new TextEffect();
-                        ti.PositionStart = i;
-                        ti.Foreground = Brushes.Red;
-                        ti.PositionCount = 1;
-                        origTextDES.TextEffects.Add(ti);
-                        modTextDES.TextEffects.Add(ti);
+                        if(textA[b]!= textB[b])
+                            bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
+
+                        b++;
                     }
-                }
+
+                    break;
+
+                case 1:
+
+                    if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked == true)
+                    {
+
+                        for (byte i = 0; i < textA.Length; i++)
+                        {
+                            if (textA[i] != textB[i])
+                            {
+                                List<int> positions = arrangePos();
+                                TextEffect ti = new TextEffect();
+                                ti.PositionStart = positions[i];
+                                ti.Foreground = Brushes.Red;
+
+                                if (radioDecimalDes.IsChecked == true)
+                                    ti.PositionCount = 4;
+                                if (radioHexaDes.IsChecked == true)
+                                    ti.PositionCount = 3;
+
+                                origTextDES.TextEffects.Add(ti);
+                                modTextDES.TextEffects.Add(ti);
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                        for (byte i = 0; i < origTextDES.Text.Length; i++)
+                        {
+                            if (origTextDES.Text[i] != modTextDES.Text[i])
+                            {
+                                TextEffect ti = new TextEffect();
+                                ti.PositionStart = i;
+                                ti.Foreground = Brushes.Red;
+                                ti.PositionCount = 1;
+                                origTextDES.TextEffects.Add(ti);
+                                modTextDES.TextEffects.Add(ti);
+                            }
+                        }
+
+                    }
+                    break;
+
+                default:
+                    break;
 
             }
         }
@@ -418,15 +497,52 @@ namespace AvalancheVisualization
             int[] decPos = new int[] { 0, 4, 7, 11, 15, 19, 23, 27 };
             int[] hexPos = new int[] { 0, 3, 6, 9, 12, 15, 18, 21 };
 
-            if (radioDecimalDes.IsChecked == true)
-                intList.AddRange(decPos);
-            if (radioHexaDes.IsChecked == true)
+            if (mode == 1)
+            {
+                if (radioDecimalDes.IsChecked == true)
+                    intList.AddRange(decPos);
+                if (radioHexaDes.IsChecked == true)
+                    intList.AddRange(hexPos);
+            }
+            else
+            {
                 intList.AddRange(hexPos);
-
+            }
 
 
             return intList;
         }
+
+        public void clearColors()
+        {
+            IEnumerable<Border> gridChildren = Grid1.Children.OfType<Border>();
+            IEnumerable<Border> gridChildren2 = Grid2.Children.OfType<Border>();
+
+          
+            foreach (Border bor in gridChildren)
+                bor.Background = Brushes.Transparent;
+
+            foreach (Border bor in gridChildren2)
+                    bor.Background = Brushes.Transparent;
+
+            
+        }
+
+        public void clearKeyColors()
+        {
+
+            IEnumerable<Border> gridChildren = originalKeyGrid.Children.OfType<Border>();
+            IEnumerable<Border> gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
+
+
+            foreach (Border bor in gridChildren)
+                bor.Background = Brushes.Transparent;
+
+            foreach (Border bor in gridChildren2)      
+                    bor.Background = Brushes.Transparent;
+
+        }
+
         //Loads byte information into the respective columns
         public void loadBytePropagationData()
         {
@@ -497,7 +613,8 @@ namespace AvalancheVisualization
                     }
                     while (x < 16)
                     {
-                        temp[x] = (byte)padding;
+                        // temp[x] = (byte)padding;
+                        temp[x] = 0;
                         x++;
                     }
                 }
@@ -1442,9 +1559,10 @@ namespace AvalancheVisualization
                 radioButtons.Visibility = Visibility.Hidden;
             }
             else
+            {
                 modificationGridDES.Visibility = Visibility.Hidden;
-
-
+                generalViewDES.Visibility = Visibility.Hidden;
+            }
             afterRoundsTitle.Text = string.Empty;
 
 
@@ -1928,8 +2046,10 @@ namespace AvalancheVisualization
 
                 }, null);
 
+                coloringText();
+                coloringKey();
                 statesB = aesDiffusion.statesB;
-                int z = 0;
+            
 
 
             }
@@ -2029,9 +2149,10 @@ namespace AvalancheVisualization
 
             }
             else
+            {
                 bitGridDES.Visibility = Visibility.Hidden;
-
-
+                generalViewDES.Visibility = Visibility.Hidden;
+            }
             comparisonPane();
 
             if ((bool)aesCheckBox.IsChecked || (bool)desCheckBox.IsChecked)
@@ -2061,19 +2182,58 @@ namespace AvalancheVisualization
             }, null);
         }
 
-
-
-        private void afterRound0Button_Click(object sender, RoutedEventArgs e)
-        {
-            //afterInitialRoundGrid.Visibility = Visibility.Visible;
-        }
-
         public void emptyInformation()
         {
             stats1.Text = string.Empty;
             stats2.Text = string.Empty;
             stats3.Text = string.Empty;
         }
+
+        private void afterRound0Button_Click(object sender, RoutedEventArgs e)
+        {
+            var strings = binaryStrings(states[0], statesB[0]);
+
+            clearElements();
+            changeRoundNr(0);
+            showElements();
+            removeColors();
+
+            if (mode == 0)
+            {
+
+
+            }
+            else
+            {
+                roundDES = 0;
+                strings = binaryStrings(states[4], statesB[4]);
+
+                toStringArray(roundDES);
+
+                int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequenceDes;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+
+                    displayBinaryValuesDES();
+                    showBitSequence(strings);
+                    lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequenceDes, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
+                }, null);
+            }
+            //afterInitialRoundGrid.Visibility = Visibility.Visible;
+        }
+
+
 
         private void afterRound1Button_Click(object sender, RoutedEventArgs e)
         {
@@ -4350,6 +4510,8 @@ namespace AvalancheVisualization
             aesCheckBox.Visibility = Visibility.Hidden;
             explanationTxt.Visibility = Visibility.Hidden;
             aesCheckBox.IsChecked = false;
+            clearColors();
+            clearKeyColors();
             // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             //buttonsSV.Width = 535.0;
             //buttonsPanel.Width = 530.0;
@@ -4406,6 +4568,7 @@ namespace AvalancheVisualization
             desCheckBox.IsChecked = false;
             modificationGridDES.Visibility = Visibility.Hidden;
             bitGridDES.Visibility = Visibility.Hidden;
+            generalViewDES.Visibility = Visibility.Hidden;
 
             othersGrid.Visibility = Visibility.Hidden;
             readjustStats();
@@ -4616,7 +4779,89 @@ namespace AvalancheVisualization
             }
         }
 
+        public void colorOverviewText(TextBlock txtB, List<byte> pos)
+        {
+            byte[] changePos = pos.ToArray();
+            txtB.TextEffects.Clear();
 
+            for (byte i = 0; i < changePos.Length; i++)
+            {
+                TextEffect te = new TextEffect();
+                te.PositionStart = changePos[i];
+                te.Foreground = Brushes.Red;
+                te.PositionCount = 1;
+                txtB.TextEffects.Add(te);
+            }
+        }
+
+        public void showGeneralOverview()
+        {
+            generalViewDES.Visibility = Visibility.Visible;
+            IEnumerable<TextBlock> textChilds = overviewDES.Children.OfType<TextBlock>();
+            IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
+
+            for (int i = 0; i < 17; i++)
+            {
+                enumerator.MoveNext();
+                enumerator.Current.Visibility = Visibility.Visible;
+                enumerator.Current.Text = lrDataB[i, 0];
+
+                List<byte> tmp = new List<byte>();
+                char[] oldArr = lrData[i, 0].ToCharArray();
+                char[] changedArr = lrDataB[i, 0].ToCharArray();
+
+
+                for (byte j = 0; j < lrData[i, 0].Length; j++)
+                {
+                    bool booly = oldArr[i].Equals(changedArr[i]);
+                    if (!oldArr[j].Equals(changedArr[j]))
+                        tmp.Add(j);
+
+                    colorOverviewText(enumerator.Current, tmp);
+                }
+            }
+
+            for (int i = 0; i < 17; i++)
+            {
+                enumerator.MoveNext();
+                enumerator.Current.Visibility = Visibility.Visible;
+                enumerator.Current.Text = lrDataB[i, 1];
+
+                List<byte> tmp = new List<byte>();
+                char[] oldArr = lrData[i, 1].ToCharArray();
+                char[] changedArr = lrDataB[i, 1].ToCharArray();
+
+
+                for (byte j = 0; j < lrData[i, 1].Length; j++)
+                {
+                    bool booly = oldArr[i].Equals(changedArr[i]);
+                    if (!oldArr[j].Equals(changedArr[j]))
+                        tmp.Add(j);
+
+                    colorOverviewText(enumerator.Current, tmp);
+                }
+            }
+
+        }
+
+        private void overviewButton_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            if (mode == 1)
+            {
+                bitGridDES.Visibility = Visibility.Hidden;
+                bitsData.Visibility = Visibility.Hidden;
+                Cb1.Visibility = Visibility.Hidden;
+                Cb2.Visibility = Visibility.Hidden;
+                afterRoundsSubtitle.Visibility = Visibility.Hidden;
+                flippedBitsPiece.Visibility = Visibility.Hidden;
+                unflippedBitsPiece.Visibility = Visibility.Hidden;
+
+                clearElements();
+                showGeneralOverview();
+            }
+        }
     }
 }
 #endregion

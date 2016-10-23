@@ -1493,7 +1493,8 @@ namespace AvalancheVisualization
                     }
                     while (x < 16)
                     {
-                        temp[x] = (byte)padding;
+                        // temp[x] = (byte)padding;
+                        temp[x] = 0;
                         x++;
                     }
                 }
