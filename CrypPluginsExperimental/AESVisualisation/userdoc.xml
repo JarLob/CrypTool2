@@ -34,21 +34,24 @@
       If an input is too long it will be cut off at the correct length. If it is too short it will be padded with 0s.
       The output will display the 128 bit ciphertext once the presentation is completed. <newline/>
     </section>
+    
     <section headline="Parameters">
       You can choose between three keylength (128 bit, 192 bit, and 256 bit) in the parameter panel.
     </section>
+    
   </usage>
 
   <usage lang="de-DE">
     <section headline="Eingabe und Ausgabe">
-      Das Plugin hat zwei Eingaben und eine Ausgabe. Eine Eingabe ist für den Text, der verschlüsselt werden soll, und die andere für den Schlüssel. <newline/>
-      Beide Eingaben müssen die Form einer Zeichenkette im Hexadezimalformat haben. <newline/>
-      Für den Text benötigt man 16 bytes (128 bits), wobei jedes Byte durch zwei Zeichen dargestellt wird. <newline/>
-      Die Länge des Schlüssels hängt von der vorher getroffenen Auswahl ab. <newline/>
-      Wenn eine Eingabe zu lang ist, wird sie bei der korrekten Länge abgeschnitten. Ist die Eingabe zu kurz, wird sie mit "0" aufgefüllt. <newline/>
-      Am Ende der Präsentation zeigt die Ausgabe den 128 bit langen Geheimtext an.
+      das plugin hat zwei eingaben und eine ausgabe. eine eingabe ist für den text, der verschlüsselt werden soll, und die andere für den schlüssel. <newline/>
+      beide eingaben müssen die form einer zeichenkette im hexadezimalformat haben. <newline/>
+      für den text benötigt man 16 bytes (128 bits), wobei jedes byte durch zwei zeichen dargestellt wird. <newline/>
+      die länge des schlüssels hängt von der vorher getroffenen auswahl ab. <newline/>
+      wenn eine eingabe zu lang ist, wird sie bei der korrekten länge abgeschnitten. ist die eingabe zu kurz, wird sie mit "0" aufgefüllt. <newline/>
+      am ende der präsentation zeigt die ausgabe den 128 bit langen geheimtext an.
     </section>
-    <section Headline="Parameter">
+
+    <section headline="Parameter">
       Man kann zwischen drei möglichen Schlüssellängen (128 bit, 192 bit und 256 bit) wählen. Die Auswahl findet im Parameterfenster statt.
     </section>
   </usage>
@@ -57,7 +60,8 @@
     The goal of the plugin is to visualize how AES works.<newline/>
     The presentation is mainly separated into two parts.<newline/>
     After a brief introduction the first part begins.<newline/>
-    <section Headline="Key Expansion">
+    
+    <section headline="Key Expansion">
       The first part of the presentation is the key expansion.<newline/>
       It is separated into several rounds depending on the keylength. (128 bit = 10 rounds, 192 bit = 8 rounds, and 256 bits = 7 rounds).<newline/>
       There are two rows of buttons on the bottom of the screen. In the bottom row you have several "Round buttons" which enable you to choose between the different rounds.
@@ -67,11 +71,13 @@
       The buttons between "Auto" and the slider let you skip the current round or return to the previous one.<newline/>
       On the right there are two more buttons. One will bring you back to the beginning of the plugin and the other will bring you to the end and output the ciphertext.
     </section>
-    <section Headline="Encryption">
+    
+    <section headline="Encryption">
       During the encryption process (after the initial round) four more buttons appear on the top left. These four let you jump between the different operations of a round ("SubBytes", "ShiftRow", "MixCol", and "AddKey").<newline/>
       If you choose 192 or 256 bit there will also be two more buttons which let you "shift" through the "Round Buttons".<newline/>
       The button on the bottom left now lets you go back to the expansion instead of skipping it.
     </section>
+    
     In addition to the navigational purpose of the "Round Buttons" and "Operation Buttons" they also indicate which round and operation is currently shown by highlighting the corresponding button <newline/>
     You can always stop the plugin if you press the "Stop" icon on the top of the CrypTool window. Once you have done so you can change the input or keep the previous one before restarting the plugin via the "Play" icon  on the top of the CrypTool window.
   </presentation>
@@ -80,7 +86,8 @@
     Die Präsentation des AES ist der Hauptbestandteil des Plugins. Ihr Ziel ist es, zu visualisieren wie AES arbeitet und dadurch das Verständnis für dieses Verfahren zu unterstützen.<newline/>
     Die Präsentation ist in zwei Bestandteile aufgeteilt.<newline/>
     Nach einer kurzen Einleitung beginnt der erste Teil.<newline/>
-    <section Headline="Schlüsselerweiterung">
+    
+    <section headline="Schlüsselerweiterung">
       Der erste Teil ist die Schlüsselerweiterung.<newline/>
       Sie ist in mehrere Runden unterteilt -- abhängig von der gewählten Schlüssellänge (128 bit = 10 Runden, 192 bit = 8 Runden und 256 bit = 7 Runden).<newline/>
       Es gibt zwei Reihen mit Buttons am unteren Rand des Plugins. In der unteren Reihe befinden sich die Runden-Buttons, mit denen man auswählen kann, welche Runde visualisiert wird.<newline/>
@@ -90,13 +97,15 @@
       Direkt daneben sind außerdem zwei Buttons, mit denen man die aktuelle Runde überspringen oder zur vorheringen zurückkehren kann.<newline/>
       Die letzten beiden Button bringen einen entweder zurück zu Anfang des Plugins oder ganz ans Ende.
     </section>
-    <section Headline="Verschlüsselung">
+    
+    <section headline="Verschlüsselung">
       Der zweite Teil ist die eigentliche Verschlüsselung.<newline/>
       Während der Verschlüsselung erscheinen (nach der Initialrunde) vier weitere Buttons am oberen Rand des Plugins.<newline/>
       Diese lassen den User durch die verschiedenen Operationen einer Runde sprigen.<newline/>
       Werden als Schlüssellänge 192 oder 256 bits gewählt, erscheinen außerdem noch zwei weitere Buttons, mit deren Hilfe man durch die Runden-Buttons schalten kann.<newline/>
       Der Button unten links bringt einen nun zurück zur Schlüsselerweiterung.
     </section>
+    
     Abgesehen von der Navigation dienen die Runden- und Operations-Button auch der Orientierung. Abhängig von der aktuellen Runde und Operation werden die entsprechenden Buttons farblich hervorgehoben.<newline/>
     Das Plugin kann immer durch die Stop-Ikone oben im CrypTool-Fenster beendet werden. Danach kann man es mithilfe der Play-Ikone mit neuen oder den bisherigen Werten wieder starten.
   </presentation>
