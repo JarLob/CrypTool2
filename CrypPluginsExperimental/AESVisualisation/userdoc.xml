@@ -46,7 +46,7 @@
       Das Plugin hat zwei Eingaben und eine Ausgabe. Eine Eingabe ist für den Text, der verschlüsselt werden soll, und die andere für den Schlüssel. <newline/>
       Beide Eingaben müssen die Form einer Zeichenkette im Hexadezimalformat haben. <newline/>
       Für den Text benötigt man 16 bytes (128 bits), wobei jedes Byte durch zwei Zeichen dargestellt wird. <newline/>
-      Die länge des Schlüssels hängt von der vorher getroffenen Auswahl ab. <newline/>
+      Die Länge des Schlüssels hängt von der vorher getroffenen Auswahl ab. <newline/>
       Wenn eine Eingabe zu lang ist, wird sie bei der korrekten Länge abgeschnitten. Ist die Eingabe zu kurz, wird sie mit "0" aufgefüllt. <newline/>
       Am Ende der Präsentation zeigt die Ausgabe den 128 bit langen Geheimtext an.
     </section>
