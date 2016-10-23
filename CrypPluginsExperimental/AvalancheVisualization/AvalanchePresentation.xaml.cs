@@ -36,6 +36,7 @@ namespace AvalancheVisualization
         public byte[] textB;
         public byte[] keyA;
         public byte[] key;
+
         public byte[] unchangedCipher;
         public byte[] changedCipher;
         public string[] differentBits;
@@ -176,6 +177,7 @@ namespace AvalancheVisualization
             int l = 49;
             int i = 1;
 
+
             if (mode == 0)
             {
 
@@ -193,11 +195,21 @@ namespace AvalancheVisualization
             }
             else
             {
+
+
                 string binSequence = binaryAsString(msg).Replace(" ", "");
                 string firstHalf = binSequence.Substring(0, 32);
                 string secondHalf = binSequence.Substring(32, 32);
 
                 modTextDES.Text = string.Format("{0}{1}{2}", firstHalf, Environment.NewLine, secondHalf);
+
+
+
+
+
+
+
+
             }
         }
 
@@ -247,14 +259,112 @@ namespace AvalancheVisualization
             else
             {
 
+
                 string keyBinSequence = binaryAsString(newKey).Replace(" ", "");
 
                 string firstKeyHalf = keyBinSequence.Substring(0, 32);
                 string secondKeyHalf = keyBinSequence.Substring(32, 32);
 
                 modKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalf, Environment.NewLine, secondKeyHalf);
+
+
+
+
+
             }
         }
+
+        public void coloringKey()
+        {
+            clearKeyEffect();
+
+
+            if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked==true)
+            {
+                for (byte i = 0; i < keyA.Length; i++)
+                {
+                    if (keyA[i] != key[i])
+                    {
+                        List<int> positions = arrangePos();
+                        TextEffect ti = new TextEffect();
+
+                        ti.PositionStart = positions[i];
+                        ti.Foreground = Brushes.Red;
+
+                        if (radioDecimalDes.IsChecked == true)
+                            ti.PositionCount = 4;
+                        if (radioHexaDes.IsChecked == true)
+                            ti.PositionCount = 2;
+
+                        origKeyDES.TextEffects.Add(ti);
+                        modKeyDES.TextEffects.Add(ti);
+                    }
+                }
+            }
+            else
+            {
+                for (byte i = 0; i < origKeyDES.Text.Length; i++)
+                {
+                    if (origKeyDES.Text[i] != modKeyDES.Text[i])
+                    {
+                        TextEffect ti2 = new TextEffect();
+                        ti2.PositionStart = i;
+                        ti2.PositionCount = 1;
+                        ti2.Foreground = Brushes.Red;
+                        origKeyDES.TextEffects.Add(ti2);
+                        modKeyDES.TextEffects.Add(ti2);
+                    }
+                }
+            }
+
+        }
+
+        public void coloringText()
+        {
+            clearTextEffect();
+
+            if (radioDecimalDes.IsChecked == true || radioHexaDes.IsChecked == true)
+            {
+
+                for (byte i = 0; i < textA.Length; i++)
+                {
+                    if (textA[i] != textB[i])
+                    {
+                        List<int> positions = arrangePos();
+                        TextEffect ti = new TextEffect();
+                        ti.PositionStart = positions[i];
+                        ti.Foreground = Brushes.Red;
+
+                        if (radioDecimalDes.IsChecked == true)
+                            ti.PositionCount = 4;
+                        if (radioHexaDes.IsChecked == true)
+                            ti.PositionCount = 3;
+
+                        origTextDES.TextEffects.Add(ti);
+                        modTextDES.TextEffects.Add(ti);
+                    }
+                }
+            }
+            else
+            {
+
+                for (byte i = 0; i < origTextDES.Text.Length; i++)
+                {
+                    if (origTextDES.Text[i] != modTextDES.Text[i])
+                    {
+                        TextEffect ti = new TextEffect();
+                        ti.PositionStart = i;
+                        ti.Foreground = Brushes.Red;
+                        ti.PositionCount = 1;
+                        origTextDES.TextEffects.Add(ti);
+                        modTextDES.TextEffects.Add(ti);
+                    }
+                }
+
+            }
+        }
+
+
 
         public void setAndLoadButtons()
         {
@@ -294,6 +404,29 @@ namespace AvalancheVisualization
             }
         }
 
+        public bool stop = false;
+
+
+
+
+
+        private List<int> arrangePos()
+        {
+
+            List<int> intList = new List<int>();
+
+            int[] decPos = new int[] { 0, 4, 7, 11, 15, 19, 23, 27 };
+            int[] hexPos = new int[] { 0, 3, 6, 9, 12, 15, 18, 21 };
+
+            if (radioDecimalDes.IsChecked == true)
+                intList.AddRange(decPos);
+            if (radioHexaDes.IsChecked == true)
+                intList.AddRange(hexPos);
+
+
+
+            return intList;
+        }
         //Loads byte information into the respective columns
         public void loadBytePropagationData()
         {
@@ -1806,7 +1939,7 @@ namespace AvalancheVisualization
                 string[] strSequence = new string[64];
                 string[] result = new string[8];
                 string keyBitSequence = "";
-                string[] keyResult = new string[key.Length];
+                string[] keyResult = new string[keyA.Length];
 
                 int l = 0;
                 int m = 0;
@@ -1840,13 +1973,14 @@ namespace AvalancheVisualization
                 keyBitSequence = string.Join("", strKeySequence);
 
 
-                for (int k = 0; k < key.Length; k++)
+                for (int k = 0; k < keyA.Length; k++)
                 {
                     keyResult[k] = keyBitSequence.Substring(m, 8);
                     m += 8;
                 }
 
                 byte[] newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
+                key = newKey;
 
                 desDiffusion = new DES(newText, newKey);
                 desDiffusion.textChanged = true;
@@ -1862,6 +1996,8 @@ namespace AvalancheVisualization
 
                 }, null);
 
+                coloringText();
+                coloringKey();
                 lrDataB = desDiffusion.lrDataB;
 
             }
@@ -3051,6 +3187,7 @@ namespace AvalancheVisualization
 
         private void radioButton1Checked(object sender, RoutedEventArgs e)
         {
+
             string strA = binaryAsString(textA).Replace(" ", "");
             string strB = binaryAsString(textB).Replace(" ", "");
 
@@ -3066,13 +3203,16 @@ namespace AvalancheVisualization
             string keyStrA = binaryAsString(keyA).Replace(" ", "");
             string keyStrB = binaryAsString(key).Replace(" ", "");
 
-            string firstKeyHalf = strA.Substring(0, 32);
-            string secondKeyHalf = strA.Substring(32, 32);
-            string firstKeyHalfB = strB.Substring(0, 32);
-            string secondKeyHalfB = strB.Substring(32, 32);
+            string firstKeyHalf = keyStrA.Substring(0, 32);
+            string secondKeyHalf = keyStrA.Substring(32, 32);
+            string firstKeyHalfB = keyStrB.Substring(0, 32);
+            string secondKeyHalfB = keyStrB.Substring(32, 32);
 
             origKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalf, Environment.NewLine, secondKeyHalf);
             modKeyDES.Text = string.Format("{0}{1}{2}", firstKeyHalfB, Environment.NewLine, secondKeyHalfB);
+
+            coloringText();
+            coloringKey();
 
         }
 
@@ -3150,6 +3290,10 @@ namespace AvalancheVisualization
 
                 origKeyDES.Text = keyStrA;
                 modKeyDES.Text = keyStrB;
+
+                coloringText();
+                coloringKey();
+
             }
             else
             {
@@ -3218,6 +3362,7 @@ namespace AvalancheVisualization
             }
             else if (mode == 1)
             {
+
                 string strA = hexaAsString(textA);
                 string strB = hexaAsString(textB);
 
@@ -3229,6 +3374,10 @@ namespace AvalancheVisualization
 
                 origKeyDES.Text = keyStrA;
                 modKeyDES.Text = keyStrB;
+
+                coloringText();
+                coloringKey();
+
             }
             else
             {
@@ -3238,6 +3387,18 @@ namespace AvalancheVisualization
 
         }
 
+        private void clearTextEffect()
+        {
+            modTextDES.TextEffects.Clear();
+            origTextDES.TextEffects.Clear();
+
+        }
+
+        private void clearKeyEffect()
+        {
+            origKeyDES.TextEffects.Clear();
+            modKeyDES.TextEffects.Clear();
+        }
 
         private void txtBox1_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -4056,9 +4217,9 @@ namespace AvalancheVisualization
                     break;
             }
         }
-  
 
-      
+
+
         public void comparisonPane()
         {
 
@@ -4073,7 +4234,7 @@ namespace AvalancheVisualization
                     inputInBits.Visibility = Visibility.Visible;
                     explanationTxt.Visibility = Visibility.Visible;
 
-                
+
                     if (keysize == 1)
                     {
                         originalKeyGrid192.Visibility = Visibility.Visible;
@@ -4104,17 +4265,17 @@ namespace AvalancheVisualization
                         a++;
                         b++;
                     }
-                  
+
                     break;
                 case 1:
 
                     inputGridDES.Visibility = Visibility.Visible;
-                    
+
                     break;
                 case 2:
                 case 3:
                 case 4:
-                    
+
                     othersGrid.Visibility = Visibility.Visible;
                     changeTitle();
 
@@ -4126,7 +4287,7 @@ namespace AvalancheVisualization
 
         }
 
-  
+
         public void removeElements()
         {
             TB1.Text = string.Empty;
@@ -4149,8 +4310,8 @@ namespace AvalancheVisualization
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
             afterInitRoundButton.Visibility = Visibility.Hidden;
-            
-          
+
+
             changePropagationGrid.Visibility = Visibility.Hidden;
             informationGrid.Visibility = Visibility.Hidden;
             comparisonTxtBlock.Visibility = Visibility.Hidden;
@@ -4249,6 +4410,10 @@ namespace AvalancheVisualization
             othersGrid.Visibility = Visibility.Hidden;
             readjustStats();
             mode = 0;
+
+
+
+            // clearTextEffect();
 
             StartCanvas.Visibility = Visibility.Visible;
 
@@ -4388,13 +4553,13 @@ namespace AvalancheVisualization
         {
             if (inputInBits.IsVisible)
             {
-                
+
                 arrow1.Visibility = Visibility.Visible;
                 arrow2.Visibility = Visibility.Visible;
             }
             else
             {
-                
+
                 arrow1.Visibility = Visibility.Hidden;
                 arrow2.Visibility = Visibility.Hidden;
             }
@@ -4414,7 +4579,7 @@ namespace AvalancheVisualization
             if (!modificationGridDES.IsVisible && mode == 1)
                 radioBinaryDes.IsChecked = true;
         }
-    
+
 
         private void checkBox_Checked(object sender, RoutedEventArgs e)
         {
@@ -4451,7 +4616,7 @@ namespace AvalancheVisualization
             }
         }
 
-        
+
     }
 }
 #endregion

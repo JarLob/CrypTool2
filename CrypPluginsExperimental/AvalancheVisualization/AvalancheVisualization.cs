@@ -305,47 +305,54 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     {
                         pres.mode = 1;
 
+                        bool valid = validSize();
+
                         if (textChanged)
                         {
+
                             des.inputKey = key;
                             des.inputMessage = text;
 
                             des.textChanged = true;
                             des.DESProcess();
-
+                            pres.key = key;
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
 
                                 pres.setAndLoadButtons();
 
-                                if (!originalText.Equals(text))
-                                    pres.loadChangedMsg(text, true);
-                                if (!originalKey.Equals(key))
-                                    pres.loadChangedKey(key);
 
+                                pres.loadChangedMsg(text, true);
+
+                                pres.loadChangedKey(key);
+
+                                pres.coloringText();
+                                pres.coloringKey();
                             }, null);
 
                             pres.textB = text;
                             pres.lrDataB = des.lrDataB;
-                          
-                          
+
+
                         }
-                        else
+                        else if (!textChanged)
                         {
 
 
                             des.inputKey = key;
                             des.inputMessage = text;
+
+
                             byte[] tmpKey = key;
                             byte[] tmpText = text;
                             originalText = tmpText;
                             originalKey = tmpKey;
 
-                            //des.textChanged = false;
+                            des.textChanged = false;
 
                             des.DESProcess();
 
-                            pres.key = tmpKey;
+                            //pres.key = tmpKey;
                             pres.keyA = tmpKey;
                             textChanged = true;
                             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -393,10 +400,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                         pres.comparisonPane();
-                         //string otherText = Encoding.Default.GetString(buffer);
+                        //string otherText = Encoding.Default.GetString(buffer);
 
 
-                         if (textChanged)
+                        if (textChanged)
                         {
                             string cipherB = pres.binaryAsString(buffer);
                             pres.modifiedMsg.Text = pres.hexaAsString(buffer);
@@ -412,16 +419,16 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             pres.TB1.Text = cipherA;
                             pres.unchangedCipher = buffer;
 
-                             //  string cipherA = pres.binaryAsString(inputObject);
-                             //  pres.originalMsg.Text = pres.hexaAsString(inputObject);
-                         }
+                            //  string cipherA = pres.binaryAsString(inputObject);
+                            //  pres.originalMsg.Text = pres.hexaAsString(inputObject);
+                        }
 
 
-                         /*CStreamWriter writer2 = new CStreamWriter();
-                         OutputStream = writer2;
-                         writer2.Write(buffer);
-                         OnPropertyChanged("OutputStream");
-                         writer2.Close();*/
+                        /*CStreamWriter writer2 = new CStreamWriter();
+                        OutputStream = writer2;
+                        writer2.Write(buffer);
+                        OnPropertyChanged("OutputStream");
+                        writer2.Close();*/
 
                     }, null);
 
@@ -545,6 +552,19 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #endregion
 
         #region Methods
+        public bool validSize()
+        {
+            if (key.Length != 8)
+                throw new Exception("Invalid key");
+            if (text.Length != 8)
+                throw new Exception("Invalid text");
+            if (key.Length == 8 && text.Length == 8)
+                return true;
+
+            return false;
+        }
+
+
 
         public void resize()
         {
