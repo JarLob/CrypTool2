@@ -36,8 +36,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #endregion
 
 
-
-
         public enum Category
         {
             Modern = 0,

@@ -285,32 +285,44 @@ namespace AvalancheVisualization
 
                     clearKeyColors();
 
+                    IEnumerable<Border> gridChildren;
+                    IEnumerable<Border> gridChildren2;
+
                     if (keysize == 0)
                     {
-
-                        IEnumerable<Border> gridChildren = originalKeyGrid.Children.OfType<Border>();
-                        IEnumerable<Border> gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
-
-                        int a = 0;
-                        int b = 0;
-
-                        foreach (Border bor in gridChildren)
-                        {
-                            if (keyA[a] != key[a])
-                                bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
-
-                            a++;
-                        }
-
-                        foreach (Border bor in gridChildren2)
-                        {
-                            if (keyA[b] != key[b])
-                                bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
-
-                            b++;
-                        }
-
+                        gridChildren = originalKeyGrid.Children.OfType<Border>();
+                        gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
                     }
+                    else if (keysize == 1)
+                    {
+                        gridChildren = originalKeyGrid192.Children.OfType<Border>();
+                        gridChildren2 = modifiedKeyGrid192.Children.OfType<Border>();
+                    }
+                    else
+                    {
+                        gridChildren = originalKeyGrid256.Children.OfType<Border>();
+                        gridChildren2 = modifiedKeyGrid256.Children.OfType<Border>();
+                    }
+
+                    int a = 0;
+                    int b = 0;
+
+                    foreach (Border bor in gridChildren)
+                    {
+                        if (keyA[a] != key[a])
+                            bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
+
+                        a++;
+                    }
+
+                    foreach (Border bor in gridChildren2)
+                    {
+                        if (keyA[b] != key[b])
+                            bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
+
+                        b++;
+                    }
+
                     break;
 
                 case 1:
@@ -373,7 +385,7 @@ namespace AvalancheVisualization
                     IEnumerable<Border> gridChildren = Grid1.Children.OfType<Border>();
                     IEnumerable<Border> gridChildren2 = Grid2.Children.OfType<Border>();
 
-                    int a= 0;
+                    int a = 0;
                     int b = 0;
 
                     foreach (Border bor in gridChildren)
@@ -384,9 +396,9 @@ namespace AvalancheVisualization
                         a++;
                     }
 
-                    foreach(Border bor in gridChildren2)
+                    foreach (Border bor in gridChildren2)
                     {
-                        if(textA[b]!= textB[b])
+                        if (textA[b] != textB[b])
                             bor.Background = (Brush)new BrushConverter().ConvertFromString("#f5f5dc");
 
                         b++;
@@ -518,29 +530,44 @@ namespace AvalancheVisualization
             IEnumerable<Border> gridChildren = Grid1.Children.OfType<Border>();
             IEnumerable<Border> gridChildren2 = Grid2.Children.OfType<Border>();
 
-          
+
             foreach (Border bor in gridChildren)
                 bor.Background = Brushes.Transparent;
 
             foreach (Border bor in gridChildren2)
-                    bor.Background = Brushes.Transparent;
+                bor.Background = Brushes.Transparent;
 
-            
+
         }
 
         public void clearKeyColors()
         {
+            IEnumerable<Border> gridChildren;
+            IEnumerable<Border> gridChildren2;
 
-            IEnumerable<Border> gridChildren = originalKeyGrid.Children.OfType<Border>();
-            IEnumerable<Border> gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
+            if (keysize == 0)
+            {
+                gridChildren = originalKeyGrid.Children.OfType<Border>();
+                gridChildren2 = modifiedKeyGrid.Children.OfType<Border>();
+            }
 
+            else if (keysize == 1)
+            {
+                gridChildren = originalKeyGrid192.Children.OfType<Border>();
+                gridChildren2 = modifiedKeyGrid192.Children.OfType<Border>();
+            }
+
+            else
+            {
+                gridChildren = originalKeyGrid256.Children.OfType<Border>();
+                gridChildren2 = modifiedKeyGrid256.Children.OfType<Border>();
+            }
 
             foreach (Border bor in gridChildren)
                 bor.Background = Brushes.Transparent;
 
-            foreach (Border bor in gridChildren2)      
-                    bor.Background = Brushes.Transparent;
-
+            foreach (Border bor in gridChildren2)
+                bor.Background = Brushes.Transparent;
         }
 
         //Loads byte information into the respective columns
@@ -2049,7 +2076,7 @@ namespace AvalancheVisualization
                 coloringText();
                 coloringKey();
                 statesB = aesDiffusion.statesB;
-            
+
 
 
             }
@@ -4718,13 +4745,20 @@ namespace AvalancheVisualization
             {
 
                 arrow1.Visibility = Visibility.Visible;
-                arrow2.Visibility = Visibility.Visible;
+
+                if (keysize == 2)
+                    arrow3.Visibility = Visibility.Visible;
+                else
+                    arrow2.Visibility = Visibility.Visible;
             }
             else
             {
-
                 arrow1.Visibility = Visibility.Hidden;
-                arrow2.Visibility = Visibility.Hidden;
+
+                if (keysize == 2)
+                    arrow3.Visibility = Visibility.Hidden;
+                else
+                    arrow2.Visibility = Visibility.Hidden;
             }
 
 

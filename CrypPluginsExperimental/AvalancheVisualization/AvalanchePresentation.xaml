@@ -238,7 +238,7 @@
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
-        <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Hidden">
+        <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Visible">
             <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Canvas.Left="56" Canvas.Top="52">
                 <TextBlock.BitmapEffect>
                     <DropShadowBitmapEffect  Direction="330" Color="Black" ShadowDepth="5" Opacity="0.5" Softness="0.30" />
@@ -374,6 +374,8 @@
         <Polygon Name="arrow1" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Right"  Visibility="Hidden"  Margin="20,70,0,0">
         </Polygon>
         <Polygon Name="arrow2" Grid.Row="1" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden"  Margin="20,50,0,0">
+        </Polygon>
+        <Polygon Name="arrow3" Grid.Row="1" Grid.ColumnSpan="2" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"  Margin="10,50,0,0">
         </Polygon>
         <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="Enable single bit changes"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
@@ -723,7 +725,7 @@
             </Grid>
 
 
-            <Grid x:Name="originalKeyGrid256" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,0,35,0">
+            <Grid x:Name="originalKeyGrid256" Grid.Row="3" Height="100" Width="190" VerticalAlignment="Center"  HorizontalAlignment="Left" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -743,101 +745,101 @@
                 </Grid.ColumnDefinitions>
 
                 <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_1"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_2"  Text=""  TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_3"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_4"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_5"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_6"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_7"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_8"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_9"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_10"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_11"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_12"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
 
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_13"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_14"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_15"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_16"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_17"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_18"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_19"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_20"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_21"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_22"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_23"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_24"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_25"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_25"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_26"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_26"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_27"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_27"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_28"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_28"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_29"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_29"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_30"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_30"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_31"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_31"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="initStateKey256_32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="initStateKey256_32"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
 
 
@@ -1087,7 +1089,7 @@
 
             </Grid>
 
-            <Grid x:Name="modifiedKeyGrid256" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="10,0" Visibility="Collapsed" >
+            <Grid x:Name="modifiedKeyGrid256" Grid.Row="3" Height="100" Width="190" VerticalAlignment="Center"  HorizontalAlignment="Left" Visibility="Collapsed" >
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
@@ -1107,101 +1109,101 @@
                 </Grid.ColumnDefinitions>
 
                 <Border  Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_1"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_1"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_2"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_2"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_3"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_3"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border  Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_4"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_4"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_5"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_5"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_6"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_6"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_7"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_7"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_8"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_8"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_9"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_9"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_10"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_10"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="modKey256_11"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_12"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_12"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
 
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_13"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_13"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_14"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_14"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_15"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_15"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_16"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_16"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_17"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_17"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_18"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_18"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_19"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_19"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="5" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_20"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_20"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_21"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_21"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_22"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_22"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_23"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_23"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_24"  Text="" TextAlignment="Center"  FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_25"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_25"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_26"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_26"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_27"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_27"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="7" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_28"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_28"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_29"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_29"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_30"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_30"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_31"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_31"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="modKey256_32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock x:Name="modKey256_32"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
             </Grid>
         </Grid>
