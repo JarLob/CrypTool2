@@ -314,15 +314,15 @@
     <value>Ergebnis</value>
   </data>
   <data name="introTextBlock" xml:space="preserve">
-    <value>AES ist eine moderen Blockchiffre. Es gibt zwei Eingabewerte. Zum einen den Klartext, der verschlüsselt werden soll und zum anderen den Schlüssel. Nach der Verschlüsselung gibt AES den Geheimtext aus.</value>
+    <value>AES ist eine moderne Blockchiffre. Es gibt zwei Eingabewerte. Zum einen den Klartext, der verschlüsselt werden soll und zum anderen den Schlüssel. Nach der Verschlüsselung gibt AES den Geheimtext aus.</value>
   </data>
   <data name="introTextBlock1" xml:space="preserve">
-    <value>AES beginnt mit der Schlüsselexpansion, in der die Rundenschlüssel vom Haupschlüssel abgeleitet werden.
+    <value>AES beginnt mit der Schlüsselexpansion, in der die Rundenschlüssel vom Hauptschlüssel abgeleitet werden.
 
 Danach gibt es eine Initialrunde, in der der Hauptschlüssel mit dem Klartext verrechnet wird.
 
-Als nächstes gibt es abhängig von der Schlüssellänge 9, 11 oder 13 Hauptrunden. Jede Runde besteht aus vier Operationen: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey".
+Als nächstes gibt es -- abhängig von der Schlüssellänge -- 9, 11 oder 13 Hauptrunden. Jede Runde besteht aus vier Operationen: "SubBytes", "ShiftRow", "MixColumns", und "AddRoundKey".
 
-Nach dem diese Runden abgeschlossen sind gibt es noch eine letzte Runde ohne "MixColumns"-Operation.</value>
+Nachdem diese Runden abgeschlossen sind, gibt es noch eine letzte Runde ohne "MixColumns"-Operation.</value>
   </data>
 </root>

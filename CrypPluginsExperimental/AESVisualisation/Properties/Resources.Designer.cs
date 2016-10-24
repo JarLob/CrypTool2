@@ -301,7 +301,7 @@ namespace AESVisualisation.Properties {
         ///
         ///Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: &quot;SubBytes&quot;, &quot;ShiftRow&quot;, &quot;MixColumns&quot;, and &quot;AddRoundKey&quot;. 
         ///
-        ///Once these rounds are completed one last round takes place, in which there is no &quot;MixColumn&quot; step..
+        ///Once these rounds are completed one last round is performed, which has no &quot;MixColumn&quot; step..
         /// </summary>
         internal static string introTextBlock1 {
             get {
