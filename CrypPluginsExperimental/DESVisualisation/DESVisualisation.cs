@@ -37,7 +37,7 @@ namespace Cryptool.DESVisualisation
         // Constructor
         public DESVisualisation()
         {
-            pres = new DESPresentation();
+            pres = new DESPresentation(this);
             isRunning = false;
         }
 
@@ -216,7 +216,7 @@ namespace Cryptool.DESVisualisation
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        public void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }

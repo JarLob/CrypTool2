@@ -320,4 +320,13 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   <data name="SkipRound" xml:space="preserve">
     <value>Überspringe Runde</value>
   </data>
+  <data name="DiffOkLabel" xml:space="preserve">
+    <value>Bestätige das Flippen der ausgewählten Bits.</value>
+  </data>
+  <data name="SBoxResultLong" xml:space="preserve">
+    <value>→ Ergebnis für die S-Box-Anwendung</value>
+  </data>
+  <data name="SBoxJumpButton" xml:space="preserve">
+    <value>Springe zum Operationsende</value>
+  </data>
 </root>

@@ -20,10 +20,11 @@ namespace Cryptool.DESVisualisation
     {
 
         // Constructor
-        public DESPresentation()
+        public DESPresentation(DESVisualisation des)
         {
             InitializeComponent();
 
+            desVisualisation = des;
             playTimer.Tick += PlayTimer_Tick;
             playTimer.Interval = TimeSpan.FromSeconds(2);
             playTimer.IsEnabled = false;
@@ -48,6 +49,7 @@ namespace Cryptool.DESVisualisation
         public DESImplementation encOriginal;
         private DESImplementation encDiffusion;
         private bool diffusionIsActive;
+        private DESVisualisation desVisualisation;
 
         public double progress;
 
@@ -364,7 +366,7 @@ namespace Cryptool.DESVisualisation
 
         private void AutoSpeedSlider_ValueChanged(object sender, RoutedEventArgs e)
         {
-            playTimer.Interval = TimeSpan.FromSeconds(AutoSpeedSlider.Value);
+            playTimer.Interval = TimeSpan.FromSeconds(4.5 - AutoSpeedSlider.Value);
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -546,6 +548,15 @@ namespace Cryptool.DESVisualisation
             ExecuteNextStep();
         }
 
+        // Buttons in SBoxScreen
+
+        private void SBoxJumpButton_Click(object sender, RoutedEventArgs e)
+        {
+            nextScreenID = 15;
+            nextStepCounter = 40;
+            ExecuteNextStep();
+        }
+
         // Buttons in DataScreen
 
         private void DiffTButton_Click(object sender, RoutedEventArgs e)
@@ -578,6 +589,10 @@ namespace Cryptool.DESVisualisation
                 {
                     ColorTextSingle(DataKey, (byte)(pos));
                     SwitchStringBit(DataKey, pos);
+                    if ((pos+1) % 8 == 0)
+                    {
+                        desVisualisation.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
+                    }
                 }
                 else
                 {
@@ -599,6 +614,10 @@ namespace Cryptool.DESVisualisation
                             tmp = enumerator.Current;
                     }
                     DataKey.TextEffects.Remove(tmp);
+                    if ((pos+1) % 8 == 0)
+                    {
+                        desVisualisation.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
+                    }
 
                 }
                 else
@@ -966,28 +985,48 @@ namespace Cryptool.DESVisualisation
             if (sBoxstep >= 0)
             {
                 SBoxInput.Visibility = Visibility.Visible;
-                StringBuilder builder = new StringBuilder();
+                Canvas.SetLeft(SBoxInMarker, 91 + (sBoxctr * 75));
+
+                StringBuilder builderInOrig = new StringBuilder();
+                for (int i = 0; i < 8; i++)
+                {
+                    builderInOrig.Append(encOriginal.sBoxStringDetails[roundCounter - 1, i * 4]);
+                    builderInOrig.Append(" ");
+                }
+                StringBuilder builderOut = new StringBuilder();
                 if (diffusionIsActive)
                 {
                     for (int i = 0; i < sBoxctr; i++)
                     {
-                        builder.Append(encDiffusion.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
+                        builderOut.Append(encDiffusion.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
                     }
-                    SBoxOut.Text = builder.ToString();
+                    SBoxOut.Text = builderOut.ToString();
                     ColorText(SBoxOut, CompareStrings(encDiffusion.roundDetails[roundCounter - 1, 2], encOriginal.roundDetails[roundCounter - 1, 2]));
 
                     SBoxInput.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
                     ColorText(SBoxInput, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0]));
+
+                    StringBuilder builderInDiff = new StringBuilder();
+                    for (int i = 0; i < 8; i++)
+                    {
+                        builderInDiff.Append(encDiffusion.sBoxStringDetails[roundCounter - 1, i * 4]);
+                        builderInDiff.Append(" ");
+                    }
+
+                    SBoxIn.Text = builderInDiff.ToString();
+                    ColorText(SBoxIn, CompareStrings(SBoxIn.Text, builderInOrig.ToString()));
                 }
                 else
                 {
                     for (int i = 0; i < sBoxctr; i++)
                     {
-                        builder.Append(encOriginal.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
+                        builderOut.Append(encOriginal.sBoxStringDetails[roundCounter - 1, i * 4 + 3]);
                     }
-                    SBoxOut.Text = builder.ToString();
+                    SBoxOut.Text = builderOut.ToString();
 
                     SBoxInput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 0];
+
+                    SBoxIn.Text = builderInOrig.ToString();
                 }
                 if (sBoxctr == 0)
                 {
@@ -1001,13 +1040,13 @@ namespace Cryptool.DESVisualisation
                 SBoxRow.Visibility = Visibility.Visible;
                 if (diffusionIsActive)
                 {
-                    SBoxRow.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1];
-                    ColorText(SBoxRow, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1]));
-                    SBoxRow.Text += "         ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1].Insert(1, "_____"); //        
+                    ColorText(SBoxRow, CompareStrings(SBoxRow.Text, encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1].Insert(1, "_____")));
+                    SBoxRow.Text += "     ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
                 else
                 {
-                    SBoxRow.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1] + "         ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+                    SBoxRow.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 1].Insert(1, "_____") + "     ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
 
             }
@@ -1016,31 +1055,43 @@ namespace Cryptool.DESVisualisation
                 SBoxColumn.Visibility = Visibility.Visible;
                 if (diffusionIsActive)
                 {
-                    SBoxColumn.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2];
-                    ColorText(SBoxColumn, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2]));
-                    SBoxColumn.Text += "     ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text = "_" + encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "_";
+                    ColorText(SBoxColumn, CompareStrings(SBoxColumn.Text, "_" + encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "_"));
+                    SBoxColumn.Text += "      ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
                 else
                 {
-                    SBoxColumn.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2] + "     ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    SBoxColumn.Text = "_" + encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 2]+"_" + "      ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                 }
 
             }
             if (sBoxstep >= 3)
             {
                 SBoxOutput.Visibility = Visibility.Visible;
+
                 int column, row;
                 if (diffusionIsActive)
                 {
                     SBoxOutput.Text = encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3];
                     ColorText(SBoxOutput, CompareStrings(encDiffusion.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3], encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3]));
-                    SBoxOutput.Text += "     ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    SBoxOutput.Text += "         ≙ " + encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
                     column = encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                     row = encDiffusion.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+
+                    int columnAlt = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
+                    int rowAlt = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
+
+                    // Set alternative SBoxJumper at the right place                
+                    SBoxJumperAlt.Visibility = Visibility.Visible;
+                    if (columnAlt < 10)
+                        Canvas.SetLeft(SBoxJumperAlt, 77 + columnAlt * 21.556);
+                    else
+                        Canvas.SetLeft(SBoxJumperAlt, 297 + (columnAlt % 10) * 25.4);
+                    Canvas.SetTop(SBoxJumperAlt, 137 + rowAlt * 20.45);
                 }
                 else
                 {
-                    SBoxOutput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "     ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
+                    SBoxOutput.Text = encOriginal.sBoxStringDetails[roundCounter - 1, sBoxctr * 4 + 3] + "         ≙ " + encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 2];
                     column = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 1];
                     row = encOriginal.sBoxNumberDetails[roundCounter - 1, sBoxctr * 3 + 0];
                 }
@@ -1050,7 +1101,7 @@ namespace Cryptool.DESVisualisation
                     Canvas.SetLeft(SBoxJumper, 77 + column * 21.556);
                 else
                     Canvas.SetLeft(SBoxJumper, 297 + (column % 10) * 25.4);
-                Canvas.SetTop(SBoxJumper, 63 + row * 20.45);
+                Canvas.SetTop(SBoxJumper, 137 + row * 20.45);
 
             }
             if (sBoxstep >= 4)
@@ -1478,7 +1529,7 @@ namespace Cryptool.DESVisualisation
             {
                 XorOperator1Name.Content = "K" + roundCounter + ":";
                 XorOperator2Name.Content = "Exp:";
-                XorResultName.Content = "SBox:";
+                XorResultName.Content = "";
                 if (diffusionIsActive)
                 {
                     XorOperator1.Text = encDiffusion.roundKeys[roundCounter - 1];
@@ -1538,6 +1589,7 @@ namespace Cryptool.DESVisualisation
                 XorResultName.Visibility = Visibility.Visible;
                 if (keyAddition)
                 {
+                    XorResultNameLong.Visibility = Visibility.Visible;
                     nextScreenID = 12;
                     nextStepCounter = 4;
                 }
@@ -1972,6 +2024,7 @@ namespace Cryptool.DESVisualisation
             S6Box.Visibility = Visibility.Hidden;
             S7Box.Visibility = Visibility.Hidden;
             S8Box.Visibility = Visibility.Hidden;
+            SBoxIn.TextEffects.Clear();
             SBoxInput.Visibility = Visibility.Hidden;
             SBoxInput.TextEffects.Clear();
             SBoxRow.Visibility = Visibility.Hidden;
@@ -1981,8 +2034,11 @@ namespace Cryptool.DESVisualisation
             SBoxOutput.Visibility = Visibility.Hidden;
             SBoxOutput.TextEffects.Clear();
             SBoxJumper.Visibility = Visibility.Hidden;
-            Canvas.SetLeft(SBoxJumper, 53);
-            Canvas.SetTop(SBoxJumper, 63);
+            Canvas.SetLeft(SBoxJumper, 77);
+            Canvas.SetTop(SBoxJumper, 137);
+            SBoxJumperAlt.Visibility = Visibility.Hidden;
+            Canvas.SetLeft(SBoxJumperAlt, 77);
+            Canvas.SetTop(SBoxJumperAlt, 137);
             Title.Content = "";
             Title.Visibility = Visibility.Hidden;
             SBoxOut.Text = "";
@@ -2085,6 +2141,7 @@ namespace Cryptool.DESVisualisation
             XORScreen.Visibility = Visibility.Hidden;
             XorResult.Visibility = Visibility.Hidden;
             XorResultName.Visibility = Visibility.Hidden;
+            XorResultNameLong.Visibility = Visibility.Hidden;
             XorOperator1.TextEffects.Clear();
             XorOperator2.TextEffects.Clear();
             XorResult.TextEffects.Clear();

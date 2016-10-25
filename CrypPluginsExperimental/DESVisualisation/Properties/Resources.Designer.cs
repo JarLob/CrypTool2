@@ -214,6 +214,15 @@ namespace Cryptool.DESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Confirm flipping of selected bits. ähnelt.
+        /// </summary>
+        internal static string DiffOkLabel {
+            get {
+                return ResourceManager.GetString("DiffOkLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show Diffusion Visualizer ähnelt.
         /// </summary>
         internal static string DiffusionVisualizer {
@@ -591,6 +600,24 @@ namespace Cryptool.DESVisualisation.Properties {
         internal static string SBoxesLabel {
             get {
                 return ResourceManager.GetString("SBoxesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Jump to end of current operation ähnelt.
+        /// </summary>
+        internal static string SBoxJumpButton {
+            get {
+                return ResourceManager.GetString("SBoxJumpButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die → Result for S-Box application ähnelt.
+        /// </summary>
+        internal static string SBoxResultLong {
+            get {
+                return ResourceManager.GetString("SBoxResultLong", resourceCulture);
             }
         }
         

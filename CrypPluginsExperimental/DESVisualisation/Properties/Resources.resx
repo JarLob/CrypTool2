@@ -321,4 +321,13 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   <data name="NextStep" xml:space="preserve">
     <value>Next Step</value>
   </data>
+  <data name="DiffOkLabel" xml:space="preserve">
+    <value>Confirm flipping of selected bits.</value>
+  </data>
+  <data name="SBoxResultLong" xml:space="preserve">
+    <value>→ Result for S-Box application</value>
+  </data>
+  <data name="SBoxJumpButton" xml:space="preserve">
+    <value>Jump to end of current operation</value>
+  </data>
 </root>
