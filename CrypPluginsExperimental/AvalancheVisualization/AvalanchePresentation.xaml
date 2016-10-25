@@ -4421,11 +4421,74 @@
 
         </Grid>
 
+        <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
+            <Grid x:Name="overviewAES" Width="630" Height="370">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Border>
+                    <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="1">
+                    <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="2">
+                    <TextBlock Text="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="3">
+                    <TextBlock Text="3" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="4">
+                    <TextBlock Text="4" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="5">
+                    <TextBlock Text="5" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="6">
+                    <TextBlock Text="6" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="7">
+                    <TextBlock Text="7" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="8">
+                    <TextBlock Text="8" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="9">
+                    <TextBlock Text="9" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="10">
+                    <TextBlock Text="10" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <TextBlock Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Name="last" Grid.Row="10" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Grid>
 
+        
         <Grid x:Name="changePropagationGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-
-
-
             <ScrollViewer Width="450" Height="410" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Margin="10,0,0,10">
 
                 <Grid x:Name="byteDependency"  Height="390" VerticalAlignment="Top" Margin="0,10,0,0">

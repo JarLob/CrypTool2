@@ -1584,6 +1584,7 @@ namespace AvalancheVisualization
                 afterInitRoundButton.Visibility = Visibility.Hidden;
                 initStateTitle.Visibility = Visibility.Hidden;
                 radioButtons.Visibility = Visibility.Hidden;
+                generalViewAES.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -2173,7 +2174,7 @@ namespace AvalancheVisualization
                 bitRepresentationGrid.Visibility = Visibility.Hidden;
                 curvedLinesCanvas.Visibility = Visibility.Hidden;
                 OrigInitialStateGrid.Visibility = Visibility.Visible;
-
+                generalViewAES.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -4539,6 +4540,7 @@ namespace AvalancheVisualization
             aesCheckBox.IsChecked = false;
             clearColors();
             clearKeyColors();
+            generalViewAES.Visibility = Visibility.Hidden;
             // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             //buttonsSV.Width = 535.0;
             //buttonsPanel.Width = 530.0;
@@ -4828,6 +4830,108 @@ namespace AvalancheVisualization
             }
         }
 
+        public byte[][] loadInfo()
+        {
+            byte[] byteArr = arrangeColumn(statesB[0]);
+            byte[] byteArr1 = arrangeColumn(statesB[4]);
+            byte[] byteArr2 = arrangeColumn(statesB[8]);
+            byte[] byteArr3 = arrangeColumn(statesB[12]);
+            byte[] byteArr4 = arrangeColumn(statesB[16]);
+            byte[] byteArr5 = arrangeColumn(statesB[20]);
+            byte[] byteArr6 = arrangeColumn(statesB[24]);
+            byte[] byteArr7 = arrangeColumn(statesB[28]);
+            byte[] byteArr8 = arrangeColumn(statesB[32]);
+            byte[] byteArr9 = arrangeColumn(statesB[36]);
+            byte[] byteArr10 = arrangeColumn(statesB[39]);
+
+            byte[][] multDimArr = new byte[11][];
+
+            multDimArr[0] = byteArr;
+            multDimArr[1] = byteArr1;
+            multDimArr[2] = byteArr2;
+            multDimArr[3] = byteArr3;
+            multDimArr[4] = byteArr4;
+            multDimArr[5] = byteArr5;
+            multDimArr[6] = byteArr6;
+            multDimArr[7] = byteArr7;
+            multDimArr[8] = byteArr8;
+            multDimArr[9] = byteArr9;
+            multDimArr[10] = byteArr10;
+
+            return multDimArr;
+        }
+
+        public void showGeneralOverviewAES()
+        {
+
+            generalViewAES.Visibility = Visibility.Visible;
+
+            byte[][] roundsInfo = loadInfo();
+
+
+            IEnumerable<TextBlock> textChilds = overviewAES.Children.OfType<TextBlock>();
+            IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
+
+
+            for (int i = 0; i <= 10; i++)
+            {
+                List<string> strList = new List<string>();
+
+                enumerator.MoveNext();
+                enumerator.Current.Visibility = Visibility.Visible;
+
+                foreach (byte b in roundsInfo[i])
+                    strList.Add(b.ToString("X2"));
+
+                string cipherState = string.Join("-", strList.ToArray());
+                enumerator.Current.Text = cipherState;
+
+
+            }
+
+            IEnumerator<TextBlock> enumerator2 = textChilds.GetEnumerator();
+
+            for (byte j = 0; j < 39; j += 4)
+            {
+                enumerator2.MoveNext();
+                enumerator2.Current.Visibility = Visibility.Visible;
+
+                List<byte> tmp = new List<byte>();
+
+
+
+                for (byte k = 0; k < statesB[k].Length; k++)
+                {
+
+                    if (states[j][k]!=statesB[j][k])
+                    {
+
+                        List<int> changePos = changePosition();
+                        TextEffect te = new TextEffect();
+                        te.PositionStart = changePos[k];
+                        te.Foreground = Brushes.Red;
+                        te.PositionCount = 2;
+                        enumerator2.Current.TextEffects.Add(te);
+                    }
+
+                }
+
+            }
+
+            last.Foreground = Brushes.Red;
+
+        }
+
+        public List<int> changePosition()
+        {
+            List<int> intList = new List<int>();
+
+            int[] hexPos = new int[] { 0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45 };
+            intList.AddRange(hexPos);
+
+            return intList;
+        }
+
         public void showGeneralOverview()
         {
             generalViewDES.Visibility = Visibility.Visible;
@@ -4880,20 +4984,26 @@ namespace AvalancheVisualization
 
         private void overviewButton_Click(object sender, RoutedEventArgs e)
         {
+            Cb1.Visibility = Visibility.Hidden;
+            Cb2.Visibility = Visibility.Hidden;
+            afterRoundsSubtitle.Visibility = Visibility.Hidden;
+            flippedBitsPiece.Visibility = Visibility.Hidden;
+            unflippedBitsPiece.Visibility = Visibility.Hidden;
+            bitsData.Visibility = Visibility.Hidden;
 
+            clearElements();
 
             if (mode == 1)
             {
                 bitGridDES.Visibility = Visibility.Hidden;
-                bitsData.Visibility = Visibility.Hidden;
-                Cb1.Visibility = Visibility.Hidden;
-                Cb2.Visibility = Visibility.Hidden;
-                afterRoundsSubtitle.Visibility = Visibility.Hidden;
-                flippedBitsPiece.Visibility = Visibility.Hidden;
-                unflippedBitsPiece.Visibility = Visibility.Hidden;
-
-                clearElements();
                 showGeneralOverview();
+            }
+            else
+            {
+                afterRoundsGrid.Visibility = Visibility.Hidden;
+                bitRepresentationGrid.Visibility = Visibility.Hidden;
+                curvedLinesCanvas.Visibility = Visibility.Hidden;
+                showGeneralOverviewAES();
             }
         }
     }
