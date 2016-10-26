@@ -10,21 +10,21 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace Cryptool.DESVisualisation
+namespace Cryptool.DESVisualization
 {
     /// <summary>
     /// Interaction logic for DESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("Cryptool.DESVisualisation.Properties.Resources")]
+    [Cryptool.PluginBase.Attributes.Localization("Cryptool.DESVisualization.Properties.Resources")]
     public partial class DESPresentation : UserControl
     {
 
         // Constructor
-        public DESPresentation(DESVisualisation des)
+        public DESPresentation(DESVisualization des)
         {
             InitializeComponent();
 
-            desVisualisation = des;
+            desVisualization = des;
             playTimer.Tick += PlayTimer_Tick;
             playTimer.Interval = TimeSpan.FromSeconds(2);
             playTimer.IsEnabled = false;
@@ -49,7 +49,7 @@ namespace Cryptool.DESVisualisation
         public DESImplementation encOriginal;
         private DESImplementation encDiffusion;
         private bool diffusionIsActive;
-        private DESVisualisation desVisualisation;
+        private DESVisualization desVisualization;
 
         public double progress;
 
@@ -591,7 +591,7 @@ namespace Cryptool.DESVisualisation
                     SwitchStringBit(DataKey, pos);
                     if ((pos+1) % 8 == 0)
                     {
-                        desVisualisation.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
+                        desVisualization.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
                     }
                 }
                 else
@@ -616,7 +616,7 @@ namespace Cryptool.DESVisualisation
                     DataKey.TextEffects.Remove(tmp);
                     if ((pos+1) % 8 == 0)
                     {
-                        desVisualisation.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
+                        desVisualization.GuiLogMessage("A parity bit in the key was flipped. (Bit " + (pos + 1) + ")", PluginBase.NotificationLevel.Info);
                     }
 
                 }

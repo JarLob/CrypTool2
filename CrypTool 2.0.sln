@@ -433,7 +433,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvalancheVisualization", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptedVM", "CrypPlugins\EncryptedVM\EncryptedVM.csproj", "{A0C14415-299F-4507-8891-159F5E8100C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESVisualisation", "CrypPlugins\DESVisualisation\DESVisualisation.csproj", "{857A9B3E-9ED9-4D1E-90B1-2508C30C3A3A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DESVisualization", "CrypPlugins\DESVisualization\DESVisualization.csproj", "{857A9B3E-9ED9-4D1E-90B1-2508C30C3A3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

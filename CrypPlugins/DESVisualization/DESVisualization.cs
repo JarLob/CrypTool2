@@ -22,20 +22,20 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.Threading;
 using System.Windows.Threading;
 
-namespace Cryptool.DESVisualisation
+namespace Cryptool.DESVisualization
 {
 
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Lars Hoffmann", "lars.hoff94@gmail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    [PluginInfo("Cryptool.DESVisualisation.Properties.Resources", "DESVisualisationCaption", "DESVisualisationTooltip", "DESVisualisation/userdoc.xml", new[] { "DESVisualisation/images/icon.png" })]
+    [PluginInfo("Cryptool.DESVisualization.Properties.Resources", "DESVisualizationCaption", "DESVisualizationTooltip", "DESVisualization/userdoc.xml", new[] { "DESVisualization/images/icon.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class DESVisualisation : ICrypComponent
+    public class DESVisualization : ICrypComponent
     {
         
         // Constructor
-        public DESVisualisation()
+        public DESVisualization()
         {
             pres = new DESPresentation(this);
             isRunning = false;

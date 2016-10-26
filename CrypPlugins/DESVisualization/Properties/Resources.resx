@@ -117,216 +117,217 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DESVisualisationCaption" xml:space="preserve">
-    <value>DES-Visualisierung</value>
+  <data name="DESVisualizationCaption" xml:space="preserve">
+    <value>DESVisualization</value>
   </data>
-  <data name="DESVisualisationTooltip" xml:space="preserve">
-    <value>Visualisierung der DES-Verschlüsselung</value>
+  <data name="DESVisualizationTooltip" xml:space="preserve">
+    <value>Visualization of DES encryption</value>
   </data>
   <data name="inputKeyDescription" xml:space="preserve">
-    <value>Eingabe des Schlüssels für die Verschlüsselung</value>
+    <value>Input the key used for encryption</value>
   </data>
   <data name="inputKeyName" xml:space="preserve">
-    <value>Schlüsseleingabe</value>
+    <value>Key input</value>
   </data>
   <data name="inputTextDescription" xml:space="preserve">
-    <value>Eingabe des Klartextes, der verschlüsselt werden soll</value>
+    <value>Input the text to be encrypted</value>
   </data>
   <data name="inputTextName" xml:space="preserve">
-    <value>Klartexteingabe</value>
+    <value>Plaintext input</value>
   </data>
   <data name="institute" xml:space="preserve">
-    <value>Universität Mannheim</value>
+    <value>University of Mannheim</value>
   </data>
   <data name="IntroBottom" xml:space="preserve">
-    <value>Blockchiffre-Visualisierung</value>
+    <value>Block Cipher Visualization</value>
   </data>
   <data name="outputCiphertextDescription" xml:space="preserve">
-    <value>Ausgabe des Geheimtextes nach Anwendung der DES-Verschlüsselung</value>
+    <value>Output the Ciphertext after encryption with the DES algorithm</value>
   </data>
   <data name="outputCiphertextName" xml:space="preserve">
-    <value>Geheimtextausgabe</value>
+    <value>Ciphertext output</value>
   </data>
   <data name="Active" xml:space="preserve">
-    <value>aktiv</value>
+    <value>active</value>
   </data>
   <data name="Bit32" xml:space="preserve">
-    <value>32 Bit</value>
+    <value>32 bit</value>
   </data>
   <data name="Bit48" xml:space="preserve">
-    <value>48 Bit</value>
+    <value>48 bit</value>
   </data>
   <data name="Bit6" xml:space="preserve">
-    <value>6 Bit</value>
+    <value>6 bit</value>
   </data>
   <data name="Ciphertext" xml:space="preserve">
-    <value>Geheimtext</value>
+    <value>Ciphertext</value>
   </data>
   <data name="Clear" xml:space="preserve">
-    <value>Löschen</value>
+    <value>Clear</value>
   </data>
   <data name="Column" xml:space="preserve">
-    <value>Spalte:</value>
+    <value>Column:</value>
   </data>
   <data name="Data" xml:space="preserve">
-    <value>Daten</value>
+    <value>Data</value>
   </data>
   <data name="DataKey" xml:space="preserve">
-    <value>Schlüssel (64 Bit):</value>
+    <value>Key  (64 bit):</value>
   </data>
   <data name="DataMessage" xml:space="preserve">
-    <value>Nachricht (64 Bit):</value>
+    <value>Message  (64 bit):</value>
   </data>
   <data name="DiffInfo" xml:space="preserve">
-    <value>Klick Ok zum Flippen markierter Bits</value>
+    <value>Click Ok to flip the checked bits</value>
   </data>
   <data name="DiffusionVisualizer" xml:space="preserve">
-    <value>Zeige Diffusionsanzeige</value>
+    <value>Show Diffusion Visualizer</value>
   </data>
   <data name="FinalCiphertext" xml:space="preserve">
-    <value>Geheimtext (64  Bit):</value>
+    <value>Ciphertext  (64 bit):</value>
   </data>
   <data name="FunctionLabel" xml:space="preserve">
-    <value>Funktion f(K  ,R  )
-Runde      /16</value>
+    <value>Function f(K  ,R  )
+Round      /16</value>
   </data>
   <data name="HistoryText" xml:space="preserve">
-    <value>- 1972 begann das NBS (National Bureau of Standards) einen für jeden 
-  zugänglichen Verschlüsselungsstandard zu suchen bzw. entwickeln.
-  Darunter war ein Algorithmus, der auf dem IBM-Projekt "Lucifer" basierte.
+    <value>- In 1973 the NBS (National Bureau of Standards) started to develop or search
+  for an official standard algorithm for data encryption and decryption. 
+  One of the possible candidates was an algorithm based on IBM's "Lucifer".
 
-- Um die Sicherheit des Algorithmus zu testen wurde die NSA (National Security
-  Agency) um Hilfe gebeten.
+- To check and verify the security of this algorithm the NSA (National Security 
+  Agency) was asked for help.
 
-- Nach Änderungen an der Schlüssellänge und den S-Boxen wurde dieser
-  Algorithmus am 23. November 1976 zum Data Encryption Standard.
+- After changes of the key length and the used S-boxes this algorithm became
+  the official Data Encryption Standard on 23 November 1976.
 
-- Am 2. Oktober 2000 wurde der DES durch den belgischen Algorithmus 
-  "Rijndael" ersetzt, der den AES (Advanced Encrytption Standard) darstellt.</value>
+- On 2 October 2000 DES was replaced by an Belgian algorithm called
+  "Rijndael" which became the AES (Advanced Encryption Standard).</value>
   </data>
   <data name="InfoText" xml:space="preserve">
-    <value>DES ist ein Blockchiffrieralgorithmus, der 64 Bit-Klartextblöcke mit einem
-64 Bit-Schlüssel ver- bzw. entschlüsselt.
-Jedes 8. Bit (least significant bit) im Schlüssel wird als Paritätsbit genutzt.
-Diese acht Bits werden vom Algorithmus nicht verwendet. Daraus ergibt sich
-eine effektive Schlüssellänge von nur 56 Bit. 
+    <value>DES is a modern symmetric-key block cipher which encrypts one message
+block of 64 bit with a 64 bit key into a 64 bit ciphertext. 
 
-Die gesamte Sicherheit liegt im Schlüssel.
+Each 8th bit (least significant bit) is used solely for checking parity and is 
+thereafter discarded. These 8 least significant bits aren't actually used by the
+algorithm and so the effective key length for encryption is only 56 bits.
 
-Der Algorithmus besteht nur aus Permutationen und Substitutionen. Der
-gesamte Ablauf benötigt insgesamt 16 Runden, die in einem Feistel-Netzwerk
-organisiert sind. Damit sind Ver- und Entschlüsselung sehr ähnliche Prozesse.</value>
+The key is fully responsible for the security of the cipher.
+
+The overall structure of the algorithm has 16 identical stages of processing,
+termed rounds. These rounds are organized in a Feistel scheme.
+This ensures that decryption and encryption are very similar processes.</value>
   </data>
   <data name="Input" xml:space="preserve">
-    <value>Eingabe:</value>
+    <value>Input:</value>
   </data>
   <data name="Intro" xml:space="preserve">
-    <value>Einführung</value>
+    <value>Intro</value>
   </data>
   <data name="Key" xml:space="preserve">
-    <value>Schlüssel</value>
+    <value>Key</value>
   </data>
   <data name="KeyAddition" xml:space="preserve">
-    <value>Schlüsseladdition</value>
+    <value>Key Addition</value>
   </data>
   <data name="Message" xml:space="preserve">
-    <value>Nachricht</value>
-  </data>
-  <data name="NextStep" xml:space="preserve">
-    <value>Nächster Schritt</value>
+    <value>Message</value>
   </data>
   <data name="Output" xml:space="preserve">
-    <value>Ausgabe:</value>
+    <value>Output:</value>
   </data>
   <data name="OutputAll" xml:space="preserve">
-    <value>Ausgabe aller S-Boxen:</value>
+    <value>Output all S-Boxes:</value>
   </data>
   <data name="PrevStep" xml:space="preserve">
-    <value>Schritt zurück</value>
+    <value>Prev. Step</value>
   </data>
   <data name="Round" xml:space="preserve">
-    <value>Runde</value>
+    <value>Round</value>
   </data>
   <data name="Round1" xml:space="preserve">
-    <value>Runde 1</value>
+    <value>Round 1</value>
   </data>
   <data name="Round16" xml:space="preserve">
-    <value>Runde 16</value>
+    <value>Round 16</value>
   </data>
   <data name="RoundData" xml:space="preserve">
-    <value>Runde                              L                                                    R</value>
+    <value>Round                              L                                                    R</value>
   </data>
   <data name="Roundfunction" xml:space="preserve">
-    <value>Rundenfunktion</value>
+    <value>Roundfunction</value>
   </data>
   <data name="RoundKey" xml:space="preserve">
-    <value>Rundenschlüssel</value>
+    <value>Round Key</value>
   </data>
   <data name="RoundKeyData" xml:space="preserve">
-    <value>Runde                                     Rundenschlüssel</value>
+    <value>Round                                           Round Key</value>
   </data>
   <data name="RoundShift" xml:space="preserve">
-    <value>Runde:   1   2   3   4   5   6   7   8   9   10   11   12   13   14   15   16 
+    <value>Round:   1   2   3   4   5   6   7   8   9   10   11   12   13   14   15   16 
 Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2     1</value>
   </data>
   <data name="Row" xml:space="preserve">
-    <value>Reihe:</value>
+    <value>Row:</value>
   </data>
   <data name="Runde_16" xml:space="preserve">
-    <value>Runde {0}/16</value>
+    <value>Round {0}/16</value>
   </data>
   <data name="SBoxesLabel" xml:space="preserve">
-    <value>S-Boxen</value>
+    <value>S-Boxes</value>
   </data>
   <data name="SkipStep" xml:space="preserve">
-    <value>Überspringe Schritt</value>
+    <value>Skip Step</value>
   </data>
   <data name="Summary" xml:space="preserve">
-    <value>Zusammenfassung</value>
+    <value>Summary</value>
   </data>
   <data name="Background" xml:space="preserve">
-    <value>Hintergrund</value>
+    <value>Background</value>
   </data>
   <data name="BitwiseXOROperation" xml:space="preserve">
-    <value>Bitweise XOR-Operation</value>
+    <value>Bitwise XOR Operation</value>
   </data>
   <data name="CyclicShift" xml:space="preserve">
-    <value>Zyklischer Shift</value>
+    <value>Cyclic Shift</value>
   </data>
   <data name="DESEncryption" xml:space="preserve">
-    <value>DES-Verschlüsselung</value>
+    <value>DES Encryption</value>
   </data>
   <data name="DiffusionVisualizerHide" xml:space="preserve">
-    <value>Verstecke Diffusionsanzeige</value>
+    <value>Hide Diffusion Visualizer</value>
   </data>
   <data name="GeneralInformation" xml:space="preserve">
-    <value>Allgemeine Informationen</value>
+    <value>General Information</value>
   </data>
   <data name="GeneralStructure" xml:space="preserve">
-    <value>Allgemeine Struktur</value>
+    <value>General Structure</value>
   </data>
   <data name="InputData" xml:space="preserve">
-    <value>Eingabedaten</value>
+    <value>Input Data</value>
   </data>
   <data name="Introduction" xml:space="preserve">
-    <value>Einführung</value>
+    <value>Introduction</value>
   </data>
   <data name="KeySchedule" xml:space="preserve">
-    <value>Key-Schedule-Algorithmus</value>
+    <value>Key Schedule</value>
   </data>
   <data name="PermutationFunction" xml:space="preserve">
-    <value>Permutationsfunktion</value>
+    <value>Permutation Function</value>
   </data>
   <data name="SkipRound" xml:space="preserve">
-    <value>Überspringe Runde</value>
+    <value>Skip Round</value>
+  </data>
+  <data name="NextStep" xml:space="preserve">
+    <value>Next Step</value>
   </data>
   <data name="DiffOkLabel" xml:space="preserve">
-    <value>Bestätige das Flippen der ausgewählten Bits.</value>
+    <value>Confirm flipping of selected bits.</value>
   </data>
   <data name="SBoxResultLong" xml:space="preserve">
-    <value>→ Ergebnis für die S-Box-Anwendung</value>
+    <value>→ Result for S-Box application</value>
   </data>
   <data name="SBoxJumpButton" xml:space="preserve">
-    <value>Springe zum Operationsende</value>
+    <value>Jump to end of current operation</value>
   </data>
 </root>

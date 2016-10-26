@@ -8,8 +8,8 @@
     <ProjectGuid>{857A9B3E-9ED9-4D1E-90B1-2508C30C3A3A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cryptool.DESVisualisation</RootNamespace>
-    <AssemblyName>DESVisualisation</AssemblyName>
+    <RootNamespace>Cryptool.DESVisualization</RootNamespace>
+    <AssemblyName>DESVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -81,7 +81,7 @@
     <Compile Include="DESPresentation.xaml.cs">
       <DependentUpon>DESPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DESVisualisation.cs" />
+    <Compile Include="DESVisualization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>

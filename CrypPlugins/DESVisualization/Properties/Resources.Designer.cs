@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cryptool.DESVisualisation.Properties {
+namespace Cryptool.DESVisualization.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Cryptool.DESVisualisation.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.DESVisualisation.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.DESVisualization.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -189,18 +189,18 @@ namespace Cryptool.DESVisualisation.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die DESVisualization ähnelt.
         /// </summary>
-        internal static string DESVisualisationCaption {
+        internal static string DESVisualizationCaption {
             get {
-                return ResourceManager.GetString("DESVisualisationCaption", resourceCulture);
+                return ResourceManager.GetString("DESVisualizationCaption", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Visualization of DES encryption ähnelt.
         /// </summary>
-        internal static string DESVisualisationTooltip {
+        internal static string DESVisualizationTooltip {
             get {
-                return ResourceManager.GetString("DESVisualisationTooltip", resourceCulture);
+                return ResourceManager.GetString("DESVisualizationTooltip", resourceCulture);
             }
         }
         

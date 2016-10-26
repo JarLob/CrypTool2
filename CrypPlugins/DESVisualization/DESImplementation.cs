@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Cryptool.DESVisualisation
+namespace Cryptool.DESVisualization
 {
 
     /// <summary>

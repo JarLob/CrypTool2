@@ -47,7 +47,7 @@
 
   <usage lang="de-DE">
     Beim DES-Verschlüsselungsalgorithmus hat sowohl der Datenblock als auch der Schlüssel eine Länge von 64 Bits (8 Bytes).
-    Da das eigentliche Ziel des Plugins die Visualisierung des DES-Algorithmus ist, wurden Methoden des Padding und Betriebsmodi nicht integriert. Das bedeutet, dass das Plugin genau ein Block mit 64 Bits als Klartext
+    Da das eigentliche Ziel des Plugins die Visualisierung des DES-Algorithmus ist, wurden Methoden des Padding und Betriebsmodi nicht integriert. Das bedeutet, dass das Plugin genau einen Block mit 64 Bits als Klartext
     erwartet.
     <newline/>
     <newline/>
