@@ -14,10 +14,10 @@
   erwartet.</description>
   <keywords lang="de">symmetrisch, modern, Blockchiffre, Verschlüsselung, Lucifer, Visualisierung, DES</keywords>
 
-  <icon file="DESVisualisation.png" />
+  <icon file="DESVisualization.png" />
 
   <relevantPlugins>
-    <plugin name="DESVisualisation" />
+    <plugin name="DESVisualization" />
   </relevantPlugins>
 
   <replacements lang="de">
@@ -27,7 +27,7 @@
     <replacement value="Text-Decodierer" key="$TextDecoder$"/>
     <replacement value="Schlüssel-Decodierer" key="$KeyDecoder$"/>
     <replacement value="Ausgabe-Codierer" key="$OutputEncoder$"/>
-    <replacement value="DES-Visualisierung" key="$DESVisualisation$"/>
+    <replacement value="DES-Visualisierung" key="$DESVisualization$"/>
   </replacements>
   <replacements lang="en">
     <replacement value="Plaintext (hex)" key="$Text$"/>
@@ -36,7 +36,7 @@
     <replacement value="Text Decoder" key="$TextDecoder$"/>
     <replacement value="Key Decoder" key="$KeyDecoder$"/>
     <replacement value="Output Encoder" key="$OutputEncoder$"/>
-    <replacement value="DES Visualization" key="$DESVisualisation$"/>
+    <replacement value="DES Visualization" key="$DESVisualization$"/>
   </replacements>
 
 </sample>
