@@ -10,16 +10,16 @@ using Cryptool.Plugins.Cryptography.Encryption;
 namespace Tests.TemplateAndPluginTests
 {
     [TestClass]
-    public class DESVisualisationTest
+    public class DESVisualizationTest
     {
-        public DESVisualisationTest()
+        public DESVisualizationTest()
         {
         }
 
         [TestMethod]
-        public void DESVisualisationTestMethod()
+        public void DESVisualizationTestMethod()
         {
-            var pluginInstance = TestHelpers.GetPluginInstance("DESVisualisation");
+            var pluginInstance = TestHelpers.GetPluginInstance("DESVisualization");
             var scenario = new PluginTestScenario(pluginInstance, new[] { "Text", "Key" }, new[] { "Ciphertext" });
 
             foreach (TestVector vector in testvectors)
