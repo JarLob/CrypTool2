@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NetworkCapture")]
-[assembly: AssemblyCopyright("Copyright © 2011 Matthäus Wander")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Universität Duisburg-Essen")]
 [assembly: AssemblyProduct("Enigma")]
-[assembly: AssemblyCopyright("Copyright © Universität Duisburg-Essen 2009")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

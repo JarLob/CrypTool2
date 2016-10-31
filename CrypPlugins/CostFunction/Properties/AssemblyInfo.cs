@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Distributed Systems")]
 [assembly: AssemblyProduct("CostFunction")]
-[assembly: AssemblyCopyright("Copyright © Distributed Systems 2009")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

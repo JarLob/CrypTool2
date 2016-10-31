@@ -7,10 +7,10 @@ using System.Windows;
 [assembly: AssemblyTitle("CrypTool 2")]
 [assembly: AssemblyDescription("CrypTool 2")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CrypTool2")] // this attribute is being used to determine the local directory for the user.config
+[assembly: AssemblyCompany("CrypTool 2")] // this attribute is being used to determine the local directory for the user.config
 [assembly: AssemblyProduct("CrypTool 2.1 (Developer Build)")]
-[assembly: AssemblyCopyright("Copyright © 1998 - 2014 Deutsche Bank / Contributors")]
-[assembly: AssemblyTrademark("Copyright © 1998 - 2014 Deutsche Bank / Contributors")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
+[assembly: AssemblyTrademark("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 

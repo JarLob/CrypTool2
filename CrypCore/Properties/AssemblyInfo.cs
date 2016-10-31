@@ -21,6 +21,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("CrypTool CrypCore")]
 [assembly: AssemblyCompany("CrypTool2 Team")]
 [assembly: AssemblyProduct("CrypTool CrypCore")]
-[assembly: AssemblyCopyright("Copyright © 1998 - 2014 Deutsche Bank / Contributors")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.1.0.0")]

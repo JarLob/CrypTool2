@@ -20,8 +20,8 @@ using Cryptool.PluginBase.Attributes;
 
 [assembly: AssemblyTitle("CrypTool Plugin Base")]
 [assembly: AssemblyCompany("Lehrstuhl Verteilte Systeme - Universität Duisburg-Essen")]
-[assembly: AssemblyProduct("CrypTool 2.0 (Developer Build)")]
-[assembly: AssemblyCopyright("Copyright © Martin Saternus 2008")]
+[assembly: AssemblyProduct("CrypTool 2.1 (Developer Build)")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: ComVisible(false)]
 [assembly: AssemblyVersion("2.0.0.0")]
 

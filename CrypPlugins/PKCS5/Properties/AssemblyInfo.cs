@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CrypTool.org")]
 [assembly: AssemblyProduct("PKCS5 Plugin")]
-[assembly: AssemblyCopyright("Copyright © 2008 CrypTool.org")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyTrademark("CrypTool.org")]
 [assembly: AssemblyCulture("")]
 

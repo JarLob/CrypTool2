@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CT Team")]
 [assembly: AssemblyProduct("Survey")]
-[assembly: AssemblyCopyright("Copyright © 2010")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: InternalsVisibleTo("UnitTests")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

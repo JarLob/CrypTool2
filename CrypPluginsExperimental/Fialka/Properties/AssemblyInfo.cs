@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("FEI STU Bratislava")]
 [assembly: AssemblyProduct("Fialka")]
-[assembly: AssemblyCopyright("Copyright © 2016 FEI STU Bratislava")]
+[assembly: AssemblyCopyright("Copyright © 2016 CrypTool 2 Team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
