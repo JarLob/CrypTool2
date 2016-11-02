@@ -43,7 +43,7 @@
     <replacement key="$Converter$" value="Converter"/>
     <replacement key="$Dictionary$" value="Dictionary"/>
     <replacement key="$Concat$" value="Concat"/>
-    <replacement key="$Cost function$" value="$Cost function$"/>
+    <replacement key="$Cost function$" value="Cost function"/>
     <replacement key="$Actual value$" value="Actual value"/>
     <replacement key="$Threshold$" value="Threshold"/>
     <replacement key="$CoincidenceGate$" value="CoincidenceGate"/>

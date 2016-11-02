@@ -63,6 +63,34 @@ namespace Cryptool.ADFGVX
             set;
         }
 
+        [PropertyInfo(Direction.InputData, "SubstitutionPassCaption", "SubstitutionPassTooltip", false)]
+        public string SubstitutionPass
+        {
+            get { return this.settings.SubstitutionPass; }
+            set
+            {
+                if (value != null && value != settings.SubstitutionPass)
+                {
+                    this.settings.SubstitutionPass = value;
+                    OnPropertyChanged("SubstitutionPass");
+                }
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "TranspositionPassCaption", "TranspositionPassTooltip", false)]
+        public string TranspositionPass
+        {
+            get { return this.settings.TranspositionPass; }
+            set
+            {
+                if (value != null && value != settings.TranspositionPass)
+                {
+                    this.settings.TranspositionPass = value;
+                    OnPropertyChanged("TranspositionPass");
+                }
+            }
+        }
+
         [PropertyInfo(Direction.OutputData, "OutputStringCaption", "OutputStringTooltip", false)]
         public string OutputString
         {

@@ -36,7 +36,7 @@ namespace Cryptool.ADFGVX
 
         private const string CIPHER_ALPHABET5 = "ADFGX";
         private const string CIPHER_ALPHABET6 = "ADFGVX";
-
+        
         public string Alphabet
         {
             get; set;
@@ -50,6 +50,9 @@ namespace Cryptool.ADFGVX
         public ADFGVXSettings()
         {
             updateAlphabet();
+
+            SubstitutionPass = "SUBSTITUTION";
+            TranspositionPass = "TRANSPOSITION";
         }
 
         public enum ActionEnum
