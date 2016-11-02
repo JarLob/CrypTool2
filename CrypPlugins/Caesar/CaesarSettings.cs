@@ -100,11 +100,7 @@ namespace Cryptool.Caesar
         public void SetKeyByValue(int offset, bool firePropertyChanges = true)
         {
             // making sure the shift value lies within the alphabet range      
-            shiftValue = offset % alphabet.Length;
-            if (shiftValue < 0)
-            {
-                shiftValue = alphabet.Length - 1;
-            }
+            shiftValue = ((offset % alphabet.Length) + alphabet.Length) % alphabet.Length;
             shiftString = "A -> " + alphabet[shiftValue];
 
             // Anounnce this to the settings pane

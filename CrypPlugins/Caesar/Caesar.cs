@@ -91,7 +91,7 @@ namespace Cryptool.Caesar
           get { return settings.ShiftKey; }
           set 
           {
-              settings.SetKeyByValue(value,false);
+              settings.SetKeyByValue(value,true);
           }
         }
        
