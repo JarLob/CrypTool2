@@ -249,7 +249,7 @@
                     </TextBlock>
                     <Border Background="{StaticResource ResourceKey=DescriptionBG}" Grid.Row="2">
                         <TextBlock Text="{Binding Path=Description}" Foreground="White" FontSize="10" LineHeight="11" 
-                                   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
+                                   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,2"></TextBlock>
                     </Border>
                 </Grid>
             </Grid>
