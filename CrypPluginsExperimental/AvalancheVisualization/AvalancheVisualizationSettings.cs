@@ -29,7 +29,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         private int keyLength;
         private int language;
-        private int subcategory;
+        private int prepSelection;
+        private int unprepSelection;
         private Category selectedCategory;
 
 
@@ -38,9 +39,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         public enum Category
         {
-            Modern = 0,
-            Classic = 1,
-            Hash = 2,
+            Prepared = 0,
+            Unprepared = 1,
+            //Hash = 2,
 
         };
 
@@ -52,7 +53,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// </summary>
 
 
-        [TaskPane("Category", "select the category of the algorithm whose avalanche effect you would like to test", "Test avalanche effect of", 0, false, ControlType.ComboBox, new String[] { "Modern ciphers", "Classic ciphers", "Hash functions" })]
+        [TaskPane("Category", "Select the desired category", "Test Avalanche Effect", 0, false, ControlType.ComboBox, new String[] { "Prepared Methods", "Unprepared Methods"})]
         public Category SelectedCategory
         {
             get { return this.selectedCategory; }
@@ -70,17 +71,35 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Cryptographic algorithm", "select the algorithm whose avalanche effect you would like to test", "Test avalanche effect of", 1, false, ControlType.ComboBox, new String[] { "AES", "DES", "Other" })]
-        public int Subcategory
+        [TaskPane("Selection", "Select the method whose avalanche effect you would like to test", "Test Avalanche Effect", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
+        public int PrepSelection
         {
-            get { return this.subcategory; }
+            get { return this.prepSelection; }
             set
             {
 
-                if (value != subcategory)
+                if (value != prepSelection)
                 {
-                    this.subcategory = value;
-                    OnPropertyChanged("Subcategory");
+                    this.prepSelection = value;
+                    OnPropertyChanged("PrepSelecction");
+                }
+
+                setSettings();
+
+            }
+        }
+
+        [TaskPane("Selection", "Select the category of the method whose avalanche effect you would like to test", "Test Avalanche Effect", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
+        public int UnprepSelection
+        {
+            get { return this.unprepSelection; }
+            set
+            {
+
+                if (value != unprepSelection)
+                {
+                    this.unprepSelection = value;
+                    OnPropertyChanged("UnprepSelecction");
                 }
 
                 setSettings();
@@ -89,7 +108,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
 
-        [TaskPane("Key length", "Select the length of the key to be entered", "Test avalanche effect of", 3, false, ControlType.ComboBox, new String[] { "128 bit", "192 bit", "256 bit" })]
+        [TaskPane("Key length", "Select the length of the key to be entered", "Test Avalanche Effect", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
         public int KeyLength
         {
             get { return this.keyLength; }
@@ -103,7 +122,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Language", "Select the desired language", "Plugin language", 3, false, ControlType.ComboBox, new String[] { "Deutsch", "English" })]
+    /*    [TaskPane("Language", "Select the desired language", "Plugin language", 3, false, ControlType.ComboBox, new String[] { "Deutsch", "English" })]
         public int Language
         {
             get { return this.language; }
@@ -116,7 +135,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     OnPropertyChanged("Language");
                 }
             }
-        }
+        }*/
 
         #endregion
 
@@ -127,25 +146,27 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
             switch (this.SelectedCategory)
             {
-                case Category.Classic:
-                case Category.Hash:
-                    disableSettingsElements("KeyLength");
-                    disableSettingsElements("Subcategory");
-                    break;
-                case Category.Modern:
-                    enableSettingsElements("Subcategory");
+                case Category.Unprepared:
 
-                    switch (subcategory)
-                    {
-                        case 0:
-                            enableSettingsElements("KeyLength");
-                            break;
-                        case 1:
-                        case 2:
-                            disableSettingsElements("KeyLength");
-                            break;
-                    }
+                    disableSettingsElements("KeyLength");
+                    disableSettingsElements("PrepSelection");
+                    enableSettingsElements("UnprepSelection");
+
                     break;
+
+                case Category.Prepared:
+
+
+                    disableSettingsElements("UnprepSelection");
+                    enableSettingsElements("PrepSelection");
+
+                    if (prepSelection == 0)
+                        enableSettingsElements("KeyLength");
+                    else
+                        disableSettingsElements("KeyLength");
+                   
+                            break;
+
                 default:
                     break;
             }
