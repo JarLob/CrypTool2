@@ -82,7 +82,7 @@ namespace AvalancheVisualization
             initStateTitle.IsVisibleChanged += onTitleChanged;
             modificationGridDES.IsVisibleChanged += onTitleChanged;
             buttonsPanel.IsVisibleChanged += onTitleChanged;
-         
+
             //ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
         }
         #endregion
@@ -3894,9 +3894,49 @@ namespace AvalancheVisualization
 
         private void clearTextEffect()
         {
-            modTextDES.TextEffects.Clear();
-            origTextDES.TextEffects.Clear();
+            if (mode == 1)
+            {
+                modTextDES.TextEffects.Clear();
+                origTextDES.TextEffects.Clear();
+            }
 
+            if (mode == 0)
+            {
+                switch (keysize)
+                {
+
+                    case 0:
+
+                        IEnumerable<TextBlock> textChilds = overviewAES.Children.OfType<TextBlock>();
+
+                        foreach (TextBlock tb in textChilds)
+                            tb.TextEffects.Clear();
+
+                        break;
+                    case 1:
+
+                        IEnumerable<TextBlock> textChilds192 = overviewAES192.Children.OfType<TextBlock>();
+
+                        foreach (TextBlock tb in textChilds192)
+                            tb.TextEffects.Clear();
+
+                        break;
+                    case 2:
+
+                        IEnumerable<TextBlock> textChilds256 = overviewAES256.Children.OfType<TextBlock>();
+
+                        foreach (TextBlock tb in textChilds256)
+                            tb.TextEffects.Clear();
+
+                        break;
+                    default:
+                        break;
+                }
+
+
+
+
+            }
         }
 
         private void clearKeyEffect()
@@ -4862,6 +4902,9 @@ namespace AvalancheVisualization
             modifiedKeyGrid.Visibility = Visibility.Collapsed;
             modifiedKeyGrid192.Visibility = Visibility.Collapsed;
             modifiedKeyGrid256.Visibility = Visibility.Collapsed;
+            overviewAES.Visibility = Visibility.Collapsed;
+            overviewAES192.Visibility = Visibility.Collapsed;
+            overviewAES256.Visibility = Visibility.Collapsed;
             radioDecimal.IsChecked = false;
             radioHexa.IsChecked = false;
             canModify = false;
@@ -4874,6 +4917,7 @@ namespace AvalancheVisualization
             clearColors();
             clearKeyColors();
             generalViewAES.Visibility = Visibility.Hidden;
+
             // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             //buttonsSV.Width = 535.0;
             //buttonsPanel.Width = 530.0;
@@ -4985,13 +5029,13 @@ namespace AvalancheVisualization
             else
             {
 
-                
+
                 Grid.SetColumn(bitsData, 0);
                 bitsData.HorizontalAlignment = HorizontalAlignment.Center;
                 bitsData.VerticalAlignment = VerticalAlignment.Center;
 
-                
-                bitsData.Margin = new Thickness(0,60,0,75);
+
+                bitsData.Margin = new Thickness(0, 60, 0, 75);
 
                 stats4Bullet.Visibility = Visibility.Collapsed;
 
@@ -5012,7 +5056,7 @@ namespace AvalancheVisualization
                 Cb2.VerticalAlignment = VerticalAlignment.Bottom;
                 Cb1.HorizontalAlignment = HorizontalAlignment.Center;
                 Cb2.HorizontalAlignment = HorizontalAlignment.Center;
-                Cb1.Margin = new Thickness(45,0,0,100);
+                Cb1.Margin = new Thickness(45, 0, 0, 100);
                 Cb2.Margin = new Thickness(45, 0, 0, 80);
 
             }
@@ -5181,8 +5225,8 @@ namespace AvalancheVisualization
                 doneButton.Visibility = Visibility.Hidden;
             }
 
-        
-               
+
+
         }
 
 
@@ -5235,6 +5279,7 @@ namespace AvalancheVisualization
 
         public byte[][] loadInfo()
         {
+
             byte[] byteArr = arrangeColumn(statesB[0]);
             byte[] byteArr1 = arrangeColumn(statesB[4]);
             byte[] byteArr2 = arrangeColumn(statesB[8]);
@@ -5245,9 +5290,35 @@ namespace AvalancheVisualization
             byte[] byteArr7 = arrangeColumn(statesB[28]);
             byte[] byteArr8 = arrangeColumn(statesB[32]);
             byte[] byteArr9 = arrangeColumn(statesB[36]);
-            byte[] byteArr10 = arrangeColumn(statesB[39]);
+            byte[] byteArr10 = new byte[16];
+            byte[] byteArr11 = new byte[16];
+            byte[] byteArr12 = new byte[16];
+            byte[] byteArr13 = new byte[16];
+            byte[] byteArr14 = new byte[16];
 
-            byte[][] multDimArr = new byte[11][];
+            switch (keysize)
+            {
+                case 0:
+                    byteArr10 = arrangeColumn(statesB[39]);
+                    break;
+                case 1:
+                    byteArr10 = arrangeColumn(statesB[40]);
+                    byteArr11 = arrangeColumn(statesB[44]);
+                    byteArr12 = arrangeColumn(statesB[47]);
+                    break;
+                case 2:
+                    byteArr10 = arrangeColumn(statesB[40]);
+                    byteArr11 = arrangeColumn(statesB[44]);
+                    byteArr12 = arrangeColumn(statesB[48]);
+                    byteArr13 = arrangeColumn(statesB[52]);
+                    byteArr14 = arrangeColumn(statesB[55]);
+                    break;
+                default:
+                    break;
+            }
+
+
+            byte[][] multDimArr = new byte[15][];
 
             multDimArr[0] = byteArr;
             multDimArr[1] = byteArr1;
@@ -5260,54 +5331,86 @@ namespace AvalancheVisualization
             multDimArr[8] = byteArr8;
             multDimArr[9] = byteArr9;
             multDimArr[10] = byteArr10;
+            multDimArr[11] = byteArr11;
+            multDimArr[12] = byteArr12;
+            multDimArr[13] = byteArr13;
+            multDimArr[14] = byteArr14;
 
             return multDimArr;
         }
 
         public void showGeneralOverviewAES()
         {
+            clearTextEffect();
 
             generalViewAES.Visibility = Visibility.Visible;
 
             byte[][] roundsInfo = loadInfo();
 
-
-            IEnumerable<TextBlock> textChilds = overviewAES.Children.OfType<TextBlock>();
-            IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
-
-
-            for (int i = 0; i <= 10; i++)
+            if (keysize == 0)
             {
-                List<string> strList = new List<string>();
 
-                enumerator.MoveNext();
-                enumerator.Current.Visibility = Visibility.Visible;
+                overviewAES.Visibility = Visibility.Visible;
 
-                foreach (byte b in roundsInfo[i])
-                    strList.Add(b.ToString("X2"));
-
-                string cipherState = string.Join("-", strList.ToArray());
-                enumerator.Current.Text = cipherState;
+                IEnumerable<TextBlock> textChilds = overviewAES.Children.OfType<TextBlock>();
+                IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
 
 
-            }
+                for (int i = 0; i <= 10; i++)
+                {
+                    List<string> strList = new List<string>();
 
-            IEnumerator<TextBlock> enumerator2 = textChilds.GetEnumerator();
+                    enumerator.MoveNext();
+                    enumerator.Current.Visibility = Visibility.Visible;
 
-            for (byte j = 0; j < 39; j += 4)
-            {
+                    foreach (byte b in roundsInfo[i])
+                        strList.Add(b.ToString("X2"));
+
+                    string cipherState = string.Join("-", strList.ToArray());
+                    enumerator.Current.Text = cipherState;
+
+
+                }
+
+                IEnumerator<TextBlock> enumerator2 = textChilds.GetEnumerator();
+
+                for (byte j = 0; j < 39; j += 4)
+                {
+                    enumerator2.MoveNext();
+                    enumerator2.Current.Visibility = Visibility.Visible;
+
+                    List<byte> tmp = new List<byte>();
+
+
+
+                    for (byte k = 0; k < statesB[k].Length; k++)
+                    {
+
+                        if (states[j][k] != statesB[j][k])
+                        {
+
+                            List<int> changePos = changePosition();
+                            TextEffect te = new TextEffect();
+                            te.PositionStart = changePos[k];
+                            te.Foreground = Brushes.Red;
+                            te.PositionCount = 2;
+                            enumerator2.Current.TextEffects.Add(te);
+                        }
+
+                    }
+
+                }
+
+
                 enumerator2.MoveNext();
-                enumerator2.Current.Visibility = Visibility.Visible;
-
-                List<byte> tmp = new List<byte>();
-
-
 
                 for (byte k = 0; k < statesB[k].Length; k++)
                 {
+             
 
-                    if (states[j][k] != statesB[j][k])
+                    if (states[39][k] != statesB[39][k])
                     {
+                        
 
                         List<int> changePos = changePosition();
                         TextEffect te = new TextEffect();
@@ -5316,13 +5419,155 @@ namespace AvalancheVisualization
                         te.PositionCount = 2;
                         enumerator2.Current.TextEffects.Add(te);
                     }
-
                 }
 
             }
 
-            last.Foreground = Brushes.Red;
+            else if (keysize == 1)
+            {
+                overviewAES192.Visibility = Visibility.Visible;
 
+                IEnumerable<TextBlock> textChilds = overviewAES192.Children.OfType<TextBlock>();
+                IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
+
+
+                for (int i = 0; i <= 14; i++)
+                {
+                    List<string> strList = new List<string>();
+
+                    enumerator.MoveNext();
+                    enumerator.Current.Visibility = Visibility.Visible;
+
+                    foreach (byte b in roundsInfo[i])
+                        strList.Add(b.ToString("X2"));
+
+                    string cipherState = string.Join("-", strList.ToArray());
+                    enumerator.Current.Text = cipherState;
+
+
+                }
+
+                IEnumerator<TextBlock> enumerator2 = textChilds.GetEnumerator();
+
+                for (byte j = 0; j < 47; j += 4)
+                {
+                    enumerator2.MoveNext();
+                    enumerator2.Current.Visibility = Visibility.Visible;
+
+                    List<byte> tmp = new List<byte>();
+
+
+
+                    for (byte k = 0; k < statesB[k].Length; k++)
+                    {
+
+                        if (states[j][k] != statesB[j][k])
+                        {
+
+                            List<int> changePos = changePosition();
+                            TextEffect te = new TextEffect();
+                            te.PositionStart = changePos[k];
+                            te.Foreground = Brushes.Red;
+                            te.PositionCount = 2;
+                            enumerator2.Current.TextEffects.Add(te);
+                        }
+
+                    }
+
+                }
+
+
+        
+                enumerator2.MoveNext();
+
+                for (byte k = 0; k < statesB[k].Length; k++)
+                {
+                    if (states[47][k] != statesB[47][k])
+                    {
+                      
+
+                        List<int> changePos = changePosition();
+                        TextEffect te = new TextEffect();
+                        te.PositionStart = changePos[k];
+                        te.Foreground = Brushes.Red;
+                        te.PositionCount = 2;
+                        enumerator2.Current.TextEffects.Add(te);
+                    }
+                }
+
+            }
+
+            else
+            {
+                overviewAES256.Visibility = Visibility.Visible;
+
+                IEnumerable<TextBlock> textChilds = overviewAES256.Children.OfType<TextBlock>();
+                IEnumerator<TextBlock> enumerator = textChilds.GetEnumerator();
+
+                for (int i = 0; i <= 14; i++)
+                {
+                    List<string> strList = new List<string>();
+
+                    enumerator.MoveNext();
+                    enumerator.Current.Visibility = Visibility.Visible;
+
+                    foreach (byte b in roundsInfo[i])
+                        strList.Add(b.ToString("X2"));
+
+                    string cipherState = string.Join("-", strList.ToArray());
+                    enumerator.Current.Text = cipherState;
+
+
+                }
+
+                IEnumerator<TextBlock> enumerator2 = textChilds.GetEnumerator();
+
+                for (byte j = 0; j < 55; j += 4)
+                {
+                    enumerator2.MoveNext();
+                    enumerator2.Current.Visibility = Visibility.Visible;
+
+                    List<byte> tmp = new List<byte>();
+
+
+
+                    for (byte k = 0; k < statesB[k].Length; k++)
+                    {
+
+                        if (states[j][k] != statesB[j][k])
+                        {
+
+                            List<int> changePos = changePosition();
+                            TextEffect te = new TextEffect();
+                            te.PositionStart = changePos[k];
+                            te.Foreground = Brushes.Red;
+                            te.PositionCount = 2;
+                            enumerator2.Current.TextEffects.Add(te);
+                        }
+
+                    }
+
+                }
+
+
+                enumerator2.MoveNext();
+
+                for (byte k = 0; k < statesB[k].Length; k++)
+                {
+                    if (states[55][k] != statesB[55][k])
+                    {
+                        List<int> changePos = changePosition();
+                        TextEffect te = new TextEffect();
+                        te.PositionStart = changePos[k];
+                        te.Foreground = Brushes.Red;
+                        te.PositionCount = 2;
+                        enumerator2.Current.TextEffects.Add(te);
+                    }
+                }
+
+
+
+            }
         }
 
         public List<int> changePosition()
@@ -5333,6 +5578,138 @@ namespace AvalancheVisualization
             intList.AddRange(hexPos);
 
             return intList;
+        }
+
+        public void percentageChanged()
+        {
+            List<double> percentages = new List<double>();
+
+
+
+            if (mode == 1)
+            {
+                var strings = binaryStrings(states[4], statesB[4]);
+
+                for (int desRound = 0; desRound < 17; desRound++)
+                {
+                    toStringArray(desRound);
+                    int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
+                    avalanche = calcAvalancheEffect(nrDiffBits, strings);
+
+                    percentages.Add(avalanche);
+                }
+
+                int i = 0;
+
+                foreach (double dl in percentages)
+                {
+                    //((TextBlock)this.FindName("percent" + i)).Text = dl.ToString();
+                    ((TextBlock)this.FindName(string.Format("percent{0}", i))).Text = string.Format("{0} %", dl.ToString());
+                    i++;
+                }
+            }
+
+            if (mode == 0)
+            {
+
+
+                switch (keysize)
+                {
+
+                    case 0:
+
+                        Tuple<string, string> strings;
+
+                        for (int aesRound = 0; aesRound <= 36; aesRound += 4)
+                        {
+
+                            strings = binaryStrings(states[aesRound], statesB[aesRound]);
+                            int nrDiffBits = nrOfBitsFlipped(states[aesRound], statesB[aesRound]);
+                            avalanche = calcAvalancheEffect(nrDiffBits, strings);
+
+                            percentages.Add(avalanche);
+                        }
+
+                        strings = binaryStrings(states[39], statesB[39]);
+                        int nrDiffBits2 = nrOfBitsFlipped(states[39], statesB[39]);
+                        avalanche = calcAvalancheEffect(nrDiffBits2, strings);
+
+                        percentages.Add(avalanche);
+
+                        int i = 0;
+
+                        foreach (double dl in percentages)
+                        {
+                            ((TextBlock)this.FindName(string.Format("percentAes{0}", i))).Text = string.Format("{0} %", dl.ToString());
+                            i++;
+                        }
+
+                        break;
+
+                    case 1:
+
+                        Tuple<string, string> strings2;
+
+                        for (int aesRound = 0; aesRound <= 44; aesRound += 4)
+                        {
+
+                            strings2 = binaryStrings(states[aesRound], statesB[aesRound]);
+                            int nrDiffBits = nrOfBitsFlipped(states[aesRound], statesB[aesRound]);
+                            avalanche = calcAvalancheEffect(nrDiffBits, strings2);
+
+                            percentages.Add(avalanche);
+                        }
+
+                        strings2 = binaryStrings(states[47], statesB[47]);
+                        int nrDiffBits192 = nrOfBitsFlipped(states[47], statesB[47]);
+                        avalanche = calcAvalancheEffect(nrDiffBits192, strings2);
+
+                        percentages.Add(avalanche);
+
+                        int j = 0;
+
+                        foreach (double dl in percentages)
+                        {
+                            ((TextBlock)this.FindName(string.Format("percentAes192_{0}", j))).Text = string.Format("{0} %", dl.ToString());
+                            j++;
+                        }
+
+                        break;
+
+                    case 2:
+
+                        Tuple<string, string> strings3;
+
+                        for (int aesRound = 0; aesRound <= 52; aesRound += 4)
+                        {
+
+                            strings3 = binaryStrings(states[aesRound], statesB[aesRound]);
+                            int nrDiffBits = nrOfBitsFlipped(states[aesRound], statesB[aesRound]);
+                            avalanche = calcAvalancheEffect(nrDiffBits, strings3);
+
+                            percentages.Add(avalanche);
+                        }
+
+                        strings3 = binaryStrings(states[55], statesB[55]);
+                        int nrDiffBits256 = nrOfBitsFlipped(states[55], statesB[55]);
+                        avalanche = calcAvalancheEffect(nrDiffBits256, strings3);
+
+                        percentages.Add(avalanche);
+
+                        int k = 0;
+
+                        foreach (double dl in percentages)
+                        {
+                            ((TextBlock)this.FindName(string.Format("percentAes256_{0}", k))).Text = string.Format("{0} %", dl.ToString());
+                            k++;
+                        }
+
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         public void showGeneralOverview()
@@ -5400,6 +5777,7 @@ namespace AvalancheVisualization
             {
                 bitGridDES.Visibility = Visibility.Hidden;
                 showGeneralOverview();
+                percentageChanged();
             }
             else
             {
@@ -5407,6 +5785,7 @@ namespace AvalancheVisualization
                 bitRepresentationGrid.Visibility = Visibility.Hidden;
                 curvedLinesCanvas.Visibility = Visibility.Hidden;
                 showGeneralOverviewAES();
+                percentageChanged();
             }
         }
 

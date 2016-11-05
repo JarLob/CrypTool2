@@ -68,7 +68,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Key", "Input key", false)]
+        [PropertyInfo(Direction.InputData, "Key", "Enter key", false)]
         public ICryptoolStream Key
         {
             get
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [PropertyInfo(Direction.InputData, "Message", "Input message", true)]
+        [PropertyInfo(Direction.InputData, "Message", "Enter message", true)]
         public ICryptoolStream Text
         {
             get

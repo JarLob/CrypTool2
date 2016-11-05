@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// </summary>
 
 
-        [TaskPane("Category", "Select the desired category", "Test Avalanche Effect", 0, false, ControlType.ComboBox, new String[] { "Prepared Methods", "Unprepared Methods"})]
+        [TaskPane("Category", "Select the desired category", "Test Avalanche effect", 0, false, ControlType.ComboBox, new String[] { "Prepared methods", "Unprepared methods"})]
         public Category SelectedCategory
         {
             get { return this.selectedCategory; }
@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "Select the method whose avalanche effect you would like to test", "Test Avalanche Effect", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
+        [TaskPane("Selection", "Select the method whose avalanche effect you would like to test", "Test Avalanche effect", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
         public int PrepSelection
         {
             get { return this.prepSelection; }
@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "Select the category of the method whose avalanche effect you would like to test", "Test Avalanche Effect", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
+        [TaskPane("Selection", "Select the category of the method whose avalanche effect you would like to test", "Test Avalanche effect", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
         public int UnprepSelection
         {
             get { return this.unprepSelection; }
@@ -108,7 +108,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
 
-        [TaskPane("Key length", "Select the length of the key to be entered", "Test Avalanche Effect", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
+        [TaskPane("Key length", "Select the length of the key to be entered", "Test Avalanche effect", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
         public int KeyLength
         {
             get { return this.keyLength; }
@@ -122,20 +122,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-    /*    [TaskPane("Language", "Select the desired language", "Plugin language", 3, false, ControlType.ComboBox, new String[] { "Deutsch", "English" })]
-        public int Language
-        {
-            get { return this.language; }
-            set
-            {
-                if (((int)value) != language
-                    )
-                {
-                    this.language = (int)value;
-                    OnPropertyChanged("Language");
-                }
-            }
-        }*/
 
         #endregion
 

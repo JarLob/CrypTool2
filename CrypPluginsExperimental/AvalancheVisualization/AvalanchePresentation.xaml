@@ -501,14 +501,14 @@
             </TextBlock>
             <TextBlock Grid.Row="1" Text="Input Data" HorizontalAlignment="Center" Foreground="#534b4f" FontSize="17" FontWeight="DemiBold"/>
             <TextBlock Name="othersSubtitle" Text="(Classic ciphers)" Foreground="#534b4f" FontSize="15" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,18,0,0"></TextBlock>
-            <TextBlock Name="othersOrigTitle"  Grid.Row="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Encryption initial message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="150,0,0,0">
+            <TextBlock Name="othersOrigTitle"  Grid.Row="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Encryption of initial message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="150,0,0,0">
             </TextBlock>
 
-            <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Encryption modified message" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
+            <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Encryption of modified message" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
             </TextBlock>
 
-            <TextBlock Name="lbl" Grid.Row="3" Text="Encryption initial message" Foreground="#534b4f" Margin="20"></TextBlock>
-            <TextBlock Name="lbl2" Grid.Row="3" Text="Encryption modified message" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
+            <TextBlock Name="lbl" Grid.Row="3" Text="Encryption of initial message" Foreground="#534b4f" Margin="20"></TextBlock>
+            <TextBlock Name="lbl2" Grid.Row="3" Text="Encryption of modified message" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
             <TextBlock Name="lbl3" Grid.Row="3" Text="Flipped bits" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
 
             <StackPanel Grid.Row="3" x:Name="bitComparisonStkPanel" Height="100" Margin="0,20,0,0">
@@ -4147,25 +4147,25 @@
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats1" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" 21 bits flipped (out of 128). Avalanche effect of 56% "/>
+                <TextBlock Name="stats1" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
             </BulletDecorator>
             <BulletDecorator >
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats2" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" Length of longest identical bit sequence:5 . Offset 100."/>
+                <TextBlock Name="stats2" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
             </BulletDecorator>
             <BulletDecorator>
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats3" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" Length of longest flipped bit sequence:10. Offset 100."/>
+                <TextBlock Name="stats3" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
             </BulletDecorator>
             <BulletDecorator Name="stats4Bullet" >
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats4" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=" Average number of differing bits per byte:"/>
+                <TextBlock Name="stats4" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
             </BulletDecorator>
         </StackPanel>
 
@@ -4417,9 +4417,9 @@
         </Grid>
 
         <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-            <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview"  FontSize="20" HorizontalAlignment="Center"  Visibility="Visible" >
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview DES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
             </TextBlock>
-            <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,13">
+            <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
                     <RowDefinition/>
@@ -4442,9 +4442,10 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="260"/>
                     <ColumnDefinition Width="5"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="260"/>
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border>
                     <TextBlock Text="Round" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
@@ -4458,7 +4459,7 @@
                 <Border Grid.Row="3">
                     <TextBlock Text="2" TextAlignment="Center" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
                 </Border>
-                <Border Grid.Row="4"> 
+                <Border Grid.Row="4">
                     <TextBlock Text="3" TextAlignment="Center" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="5">
@@ -4508,6 +4509,10 @@
                     <TextBlock   HorizontalAlignment="Center" Text="Right half" FontSize="11" FontWeight="Bold" Foreground="White" >
                     </TextBlock>
                 </Border>
+                <Border Grid.Column="4"  Background="Orange" Opacity="0.7" Margin="5,0">
+                    <TextBlock   HorizontalAlignment="Center" Text="% changed" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
 
                 <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
@@ -4545,17 +4550,38 @@
                 <TextBlock Grid.Row="15" Grid.Column="3" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="16" Grid.Column="3" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="17" Grid.Column="3" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
-            </Grid>
 
+                <TextBlock x:Name="percent0" Grid.Row="1" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent1" Grid.Row="2" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent2" Grid.Row="3" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent3" Grid.Row="4" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent4" Grid.Row="5" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent5" Grid.Row="6" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent6" Grid.Row="7" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent7" Grid.Row="8" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent8" Grid.Row="9" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent9" Grid.Row="10" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent10" Grid.Row="11" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent11" Grid.Row="12" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent12" Grid.Row="13" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent13" Grid.Row="14" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent14" Grid.Row="15" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent15" Grid.Row="16" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percent16" Grid.Row="17" Grid.Column="4" FontFamily="DejaVu Sans Light" Text="" FontStretch="ExtraExpanded" FontSize="12" HorizontalAlignment="Center"></TextBlock>
+            </Grid>
         </Grid>
 
         <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-            <Grid x:Name="overviewAES" Width="630" Height="370">
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview AES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
+            </TextBlock>
+                <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="405"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
@@ -4569,39 +4595,51 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Border>
-                    <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="1">
-                    <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="2">
-                    <TextBlock Text="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="3">
-                    <TextBlock Text="3" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="4">
-                    <TextBlock Text="4" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="3" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="5">
-                    <TextBlock Text="5" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="4" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="6">
-                    <TextBlock Text="6" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="5" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="7">
-                    <TextBlock Text="7" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="6" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="8">
-                    <TextBlock Text="8" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="7" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="9">
-                    <TextBlock Text="9" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="8" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="10">
+                    <TextBlock Text="9" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="11">
                     <TextBlock Text="10" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
-                <TextBlock Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <Border  Grid.Column="1"  Width="400" Background="Beige" Opacity="0.7">
+                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+                <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
+                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+
+
                 <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
@@ -4611,7 +4649,239 @@
                 <TextBlock Grid.Row="7" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="8" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
                 <TextBlock Grid.Row="9" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
-                <TextBlock Name="last" Grid.Row="10" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="1" FontFamily="Courier New" FontSize="14" VerticalAlignment="Center"></TextBlock>
+
+                <TextBlock x:Name="percentAes0" Grid.Row="1" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes1" Grid.Row="2" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes2" Grid.Row="3" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes3" Grid.Row="4" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes4" Grid.Row="5" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes5" Grid.Row="6" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes6" Grid.Row="7" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes7" Grid.Row="8" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes8" Grid.Row="9" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes9" Grid.Row="10" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes10" Grid.Row="11" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+            </Grid>
+
+            <Grid x:Name="overviewAES192" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="405"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                    <RowDefinition Height="22"/>
+                </Grid.RowDefinitions>
+                <Border>
+                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="1">
+                    <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="2">
+                    <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="3">
+                    <TextBlock Text="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="4">
+                    <TextBlock Text="3" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="5">
+                    <TextBlock Text="4" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="6">
+                    <TextBlock Text="5" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="7">
+                    <TextBlock Text="6" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="8">
+                    <TextBlock Text="7" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="9">
+                    <TextBlock Text="8" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="10">
+                    <TextBlock Text="9" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="11">
+                    <TextBlock Text="10" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="12">
+                    <TextBlock Text="11" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="13">
+                    <TextBlock Text="12" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border  Grid.Column="1"   Background="Beige" Opacity="0.7">
+                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+                <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
+                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+
+
+                <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="12" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="13" Grid.Column="1" FontFamily="Courier New" FontSize="13" VerticalAlignment="Center"></TextBlock>
+
+                <TextBlock x:Name="percentAes192_0" Grid.Row="1" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_1" Grid.Row="2" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_2" Grid.Row="3" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_3" Grid.Row="4" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_4" Grid.Row="5" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_5" Grid.Row="6" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_6" Grid.Row="7" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_7" Grid.Row="8" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_8" Grid.Row="9" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_9" Grid.Row="10" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_10" Grid.Row="11" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_11" Grid.Row="12" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes192_12" Grid.Row="13" Grid.Column="2" FontFamily="DejaVu Sans Light" FontSize="13" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+            </Grid>
+
+            <Grid x:Name="overviewAES256" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="405"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+                <Border>
+                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="1">
+                    <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="2">
+                    <TextBlock Text="1" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="3">
+                    <TextBlock Text="2" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="4">
+                    <TextBlock Text="3" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="5">
+                    <TextBlock Text="4" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="6">
+                    <TextBlock Text="5" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="7">
+                    <TextBlock Text="6" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="8">
+                    <TextBlock Text="7" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="9">
+                    <TextBlock Text="8" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="10">
+                    <TextBlock Text="9" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="11">
+                    <TextBlock Text="10" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="12">
+                    <TextBlock Text="11" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="13">
+                    <TextBlock Text="12" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="14">
+                    <TextBlock Text="13" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border Grid.Row="15">
+                    <TextBlock Text="14" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
+                </Border>
+                <Border  Grid.Column="1"   Background="Beige" Opacity="0.7">
+                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+                <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
+                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    </TextBlock>
+                </Border>
+
+
+                <TextBlock Grid.Row="1" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" FontFamily="Courier New" VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="5" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="6" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="7" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="8" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="9" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="10" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="11" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="12" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="13" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="14" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+                <TextBlock Grid.Row="15" Grid.Column="1" FontFamily="Courier New"  VerticalAlignment="Center"></TextBlock>
+
+                <TextBlock x:Name="percentAes256_0" Grid.Row="1" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_1" Grid.Row="2" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_2" Grid.Row="3" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_3" Grid.Row="4" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_4" Grid.Row="5" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_5" Grid.Row="6" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_6" Grid.Row="7" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_7" Grid.Row="8" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_8" Grid.Row="9" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_9" Grid.Row="10" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_10" Grid.Row="11" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_11" Grid.Row="12" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_12" Grid.Row="13" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_13" Grid.Row="14" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                <TextBlock x:Name="percentAes256_14" Grid.Row="15" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
             </Grid>
         </Grid>
 
