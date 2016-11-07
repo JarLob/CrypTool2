@@ -88,6 +88,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skip Expansion.
         /// </summary>
         internal static string encButton {
@@ -97,7 +106,7 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to B.
+        ///   Looks up a localized string similar to 3.
         /// </summary>
         internal static string encryptionIntro {
             get {
@@ -178,7 +187,7 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A.
+        ///   Looks up a localized string similar to 2.
         /// </summary>
         internal static string expansionIntro {
             get {
@@ -255,6 +264,24 @@ namespace AESVisualisation.Properties {
         internal static string inputTextName {
             get {
                 return ResourceManager.GetString("inputTextName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        internal static string intro {
+            get {
+                return ResourceManager.GetString("intro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Intro.
+        /// </summary>
+        internal static string intro1 {
+            get {
+                return ResourceManager.GetString("intro1", resourceCulture);
             }
         }
         

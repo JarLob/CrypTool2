@@ -160,7 +160,7 @@
     <value>Skip Expansion</value>
   </data>
   <data name="encryptionIntro" xml:space="preserve">
-    <value>B</value>
+    <value>3</value>
   </data>
   <data name="encryptionIntro1" xml:space="preserve">
     <value>Encryption</value>
@@ -187,7 +187,7 @@
     <value>For column x of the new key you XOR column x from the previous key with column x-1 from the new key.</value>
   </data>
   <data name="expansionIntro" xml:space="preserve">
-    <value>A</value>
+    <value>2</value>
   </data>
   <data name="expansionIntro1" xml:space="preserve">
     <value>Key Expansion</value>
@@ -314,5 +314,14 @@ After the expansion an initial round takes place, in which the original key is a
 Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey". 
 
 Once these rounds are completed one last round is performed, which has no "MixColumn" step.</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="intro" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="intro1" xml:space="preserve">
+    <value>Intro</value>
   </data>
 </root>

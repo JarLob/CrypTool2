@@ -160,7 +160,7 @@
     <value>Zur Verschlüsselung</value>
   </data>
   <data name="encryptionIntro" xml:space="preserve">
-    <value>B</value>
+    <value>3</value>
   </data>
   <data name="encryptionIntro1" xml:space="preserve">
     <value>Verschlüsselung</value>
@@ -187,7 +187,7 @@
     <value>Für Spalte x des neuen Schlüssels wird Spalte x des vorherigen Schlüssels mit Spalte x-1 des neuen Schlüssels per XOR verrechnet.</value>
   </data>
   <data name="expansionIntro" xml:space="preserve">
-    <value>A</value>
+    <value>2</value>
   </data>
   <data name="expansionIntro1" xml:space="preserve">
     <value>Schlüsselerweiterung</value>
@@ -324,5 +324,14 @@ Danach gibt es eine Initialrunde, in der der Hauptschlüssel mit dem Klartext ve
 Als nächstes gibt es -- abhängig von der Schlüssellänge -- 9, 11 oder 13 Hauptrunden. Jede Runde besteht aus vier Operationen: "SubBytes", "ShiftRow", "MixColumns" und "AddRoundKey".
 
 Nachdem diese Runden abgeschlossen sind, gibt es noch eine letzte Runde ohne "MixColumns"-Operation.</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="intro" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="intro11" xml:space="preserve">
+    <value>Intro</value>
   </data>
 </root>

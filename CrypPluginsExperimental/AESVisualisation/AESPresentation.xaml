@@ -129,6 +129,12 @@
                     <TextBlock Name="startTextBlock2" Text="{Loc introduction2}"/>
                 </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Width="40" Grid.Column="1">
+                    <TextBlock Name="introTextBlock" Visibility="Hidden" Text="{Loc intro}"/>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
+                    <TextBlock Name="introTextBlock1" Visibility="Hidden" Text="{Loc intro1}"/>
+                </Viewbox>
+                <Viewbox Stretch="Uniform" Grid.Row="0" Grid.RowSpan="2" Width="40" Grid.Column="1">
                     <TextBlock Name="expansionTextBlock" Visibility="Hidden" Text="{Loc expansionIntro}"/>
                 </Viewbox>
                 <Viewbox Stretch="Uniform" Grid.Row="2" Grid.Column="1">
@@ -160,6 +166,7 @@
             <Button x:Name="round8Button" Content="{Loc Round8}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="8" Click="round8Button_Click" />
             <Button x:Name="round9Button" Content="{Loc Round9}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="9" Click="round9Button_Click" />
             <Button x:Name="round10Button" Content="{Loc Round10}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="round10Button_Click" />
+            <Button x:Name="backButton" Visibility="Hidden" Content="{Loc Back}" Grid.Row="4"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="10" Click="backButton_Click"/>
             <Button x:Name="playButton" Grid.Row="3"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0" Click="playButton_Click">
                 <Viewbox Stretch="Uniform" Margin="2,2,2,2" >
                     <TextBlock Name="playTextBlock" Text="{Loc playButton}"/>
