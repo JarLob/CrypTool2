@@ -115,6 +115,37 @@ namespace Cryptool.DESVisualization.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die - The &quot;DES Encryption&quot; is the 2nd main part of the algorithm: Here the message
+        ///  is encrypted during 16 rounds.
+        ///
+        ///- The buttons in the two lines at the bottom also show where you are: As long
+        ///  as you are in this 2nd main part of DES, either one of the buttons &quot;IP&quot;, &quot;DES&quot;
+        ///  or &quot;FP&quot; is blue. ähnelt.
+        /// </summary>
+        internal static string ChapterTextDES {
+            get {
+                return ResourceManager.GetString("ChapterTextDES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die - The &quot;Key Schedule&quot; is the 1st main part of the algorithm: Here the given key is
+        ///  used to generate a key for each round of DES (these round keys are then
+        ///  used in the 2nd main part of DES which is the actual encryption process).
+        ///
+        ///- The buttons in the two lines at the bottom have two purposes: They show
+        ///  where you are, and they allow a direct navigation.
+        ///
+        ///- As long as you are in this 1st main part of DES, the button &quot;Key Schedule&quot;
+        ///  in the 2nd line is blue (to show you, where you are). ähnelt.
+        /// </summary>
+        internal static string ChapterTextKS {
+            get {
+                return ResourceManager.GetString("ChapterTextKS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
         /// </summary>
         internal static string Ciphertext {
@@ -304,9 +335,8 @@ namespace Cryptool.DESVisualization.Properties {
         ///thereafter discarded. These 8 least significant bits aren&apos;t actually used by the
         ///algorithm and so the effective key length for encryption is only 56 bits.
         ///
-        ///The key is fully responsible for the security of the cipher.
-        ///
-        ///The overall structure of the algorithm has 16 identical stages of process [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///The overall structure of the algorithm has 16 identical stages of processing,
+        ///termed rounds. These rounds are organized in a Feistel net [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string InfoText {
             get {
@@ -459,7 +489,7 @@ namespace Cryptool.DESVisualization.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output all S-Boxes: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output all S-boxes: ähnelt.
         /// </summary>
         internal static string OutputAll {
             get {
@@ -540,7 +570,7 @@ namespace Cryptool.DESVisualization.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Roundfunction ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Round function ähnelt.
         /// </summary>
         internal static string Roundfunction {
             get {
@@ -613,7 +643,7 @@ namespace Cryptool.DESVisualization.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die → Result for S-Box application ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die → Result for S-box application ähnelt.
         /// </summary>
         internal static string SBoxResultLong {
             get {
@@ -645,6 +675,15 @@ namespace Cryptool.DESVisualization.Properties {
         internal static string Summary {
             get {
                 return ResourceManager.GetString("Summary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Switch Hex-Binary ähnelt.
+        /// </summary>
+        internal static string Switch {
+            get {
+                return ResourceManager.GetString("Switch", resourceCulture);
             }
         }
     }

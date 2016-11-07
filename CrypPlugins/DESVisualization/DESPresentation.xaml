@@ -1166,6 +1166,8 @@
             <Viewbox Stretch="Uniform" Margin="5,0">
                 <Grid Width="765" Height="297">
                     <Label x:Name="ChapterLabel" Content="Key Schedule" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" FontFamily="Arial"/>
+                    <Label x:Name="ChapterTextKS" Content="{Loc ChapterTextKS}" FontFamily="Arial" FontSize="20" Width="715" VerticalAlignment="Bottom" Visibility="Hidden" />
+                    <Label x:Name="ChapterTextDES" Content="{Loc ChapterTextDES}" FontFamily="Arial" FontSize="20" Width="715" VerticalAlignment="Center" Visibility="Hidden"  />
                 </Grid>
             </Viewbox>
         </Grid>
@@ -1893,14 +1895,14 @@
                     <Label Content="DES" FontFamily="Times New Roman" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="119" Canvas.Left="196" FontWeight="Bold"/>
                     <Label Content="{Loc FinalCiphertext}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Canvas.Top="171" FontFamily="Arial" Canvas.Left="137" HorizontalContentAlignment="Center" Width="175" />
                     <Label Content="{Loc DataMessage}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Arial" Canvas.Left="35" Canvas.Top="24" HorizontalContentAlignment="Center" Width="140"/>
-                    <TextBlock x:Name="FinalMessage" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Width="140" TextWrapping="Wrap" Canvas.Left="35"/>
+                    <TextBlock x:Name="FinalMessage" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Width="140" TextWrapping="Wrap" Canvas.Left="35" TextAlignment="Center"/>
                     <Label Content="{Loc DataKey}" FontSize="13.333" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0" Canvas.Left="274" FontFamily="Arial" Canvas.Top="24" HorizontalContentAlignment="Center" Width="140"/>
-                    <TextBlock x:Name="FinalKey" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Canvas.Left="274" Width="140" TextWrapping="Wrap"/>
-                    <TextBlock x:Name="FinalCiphertext" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="199" FontSize="10.667" Canvas.Left="41"/>
-                    <Rectangle HorizontalAlignment="Left" Height="20" Stroke="Black" VerticalAlignment="Top" Width="377" Canvas.Top="195" Canvas.Left="36"/>
+                    <TextBlock x:Name="FinalKey" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" FontSize="8" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="54" Canvas.Left="274" Width="140" TextWrapping="Wrap" TextAlignment="Center"/>
+                    <TextBlock x:Name="FinalCiphertext" Text="1011010110110101101101011011010110110101101101011011010110110101" FontFamily="Helvetica Mono" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="199" FontSize="10.667" Canvas.Left="41" TextAlignment="Center" Width="368"/>
+                    <Rectangle x:Name="FinalCiphertextRec" HorizontalAlignment="Left" Height="20" Stroke="Black" VerticalAlignment="Top" Width="377" Canvas.Top="195" Canvas.Left="36"/>
+                    <Button x:Name="FinalSwitchButton" Content="{Loc Switch}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FinalSwitchButton_Click" Padding="2" FontFamily="Arial" FontSize="8" Canvas.Left="37" Canvas.Top="121"/>
                 </Canvas>
             </Viewbox>
-
         </Grid>
 
         <TextBlock x:Name="DiffusionActiveLabel" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="3" FontFamily="Arial" TextAlignment="Right" FontWeight="Bold" Margin="0,0,5,0" Padding="0,2,0,0" Visibility="Hidden">

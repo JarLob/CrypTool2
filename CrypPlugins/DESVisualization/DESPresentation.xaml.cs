@@ -39,6 +39,7 @@ namespace Cryptool.DESVisualization
 
         private bool keyScheduleIsRunning;
         private bool desRoundsIsRunning;
+        private bool binFinal;
 
         private IEnumerable<CheckBox> diffusionBoxes;
         private SolidColorBrush greenBrush = new SolidColorBrush(Colors.LightGreen);
@@ -548,13 +549,66 @@ namespace Cryptool.DESVisualization
             ExecuteNextStep();
         }
 
-        // Buttons in SBoxScreen
+        // Button in SBoxScreen
 
         private void SBoxJumpButton_Click(object sender, RoutedEventArgs e)
         {
             nextScreenID = 15;
             nextStepCounter = 40;
             ExecuteNextStep();
+        }
+
+        // Button in FinalScreen
+
+        private void FinalSwitchButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (binFinal)
+            {
+                FinalMessage.FontSize = 10.667;
+                FinalKey.FontSize = 10.667;
+                FinalCiphertextRec.Width = 123;
+                Canvas.SetLeft(FinalCiphertextRec,164);
+                if (diffusionIsActive)
+                {
+                    FinalCiphertext.Text = BinStringToHexString(encDiffusion.ciphertext);
+                    ColorText(FinalCiphertext, CompareStrings(BinStringToHexString(encOriginal.ciphertext), FinalCiphertext.Text));
+
+                    FinalMessage.Text = BinStringToHexString(encDiffusion.message);
+                    ColorText(FinalMessage, CompareStrings(BinStringToHexString(encOriginal.message), FinalMessage.Text));
+                    FinalKey.Text = BinStringToHexString(encDiffusion.key);
+                    ColorText(FinalKey, CompareStrings(BinStringToHexString(encOriginal.key), FinalKey.Text));
+                }
+                else
+                {
+                    FinalCiphertext.Text = BinStringToHexString(encOriginal.ciphertext);
+                    FinalMessage.Text = BinStringToHexString(encOriginal.message);
+                    FinalKey.Text = BinStringToHexString(encOriginal.key);
+                }
+            }
+            else
+            {
+                FinalMessage.FontSize = 8;
+                FinalKey.FontSize = 8;
+                FinalCiphertextRec.Width = 377;
+                Canvas.SetLeft(FinalCiphertextRec, 36);
+                if (diffusionIsActive)
+                {
+                    FinalCiphertext.Text = encDiffusion.ciphertext;
+                    ColorText(FinalCiphertext, CompareStrings(encOriginal.ciphertext, encDiffusion.ciphertext));
+
+                    FinalMessage.Text = encDiffusion.message;
+                    ColorText(FinalMessage, CompareStrings(encOriginal.message, FinalMessage.Text));
+                    FinalKey.Text = encDiffusion.key;
+                    ColorText(FinalKey, CompareStrings(encOriginal.key, FinalKey.Text));
+                }
+                else
+                {
+                    FinalCiphertext.Text = encOriginal.ciphertext;
+                    FinalMessage.Text = encOriginal.message;
+                    FinalKey.Text = encOriginal.key;
+                }
+            }
+            binFinal = !binFinal;
         }
 
         // Buttons in DataScreen
@@ -733,6 +787,8 @@ namespace Cryptool.DESVisualization
                     break;
                 case 2:
                     ChapterLabel.Content = Properties.Resources.KeySchedule;
+                    ChapterLabel.VerticalAlignment = VerticalAlignment.Top;
+                    ChapterTextKS.Visibility = Visibility.Visible;
                     ClearButtonsColor(false);
                     nextScreenID = 5;
                     nextStepCounter = 1;
@@ -740,6 +796,8 @@ namespace Cryptool.DESVisualization
                     break;
                 case 3:
                     ChapterLabel.Content = Properties.Resources.DESEncryption;
+                    ChapterLabel.VerticalAlignment = VerticalAlignment.Top;
+                    ChapterTextDES.Visibility = Visibility.Visible;
                     nextScreenID = 10;
                     nextStepCounter = 1;
                     roundCounter = 0;
@@ -772,6 +830,7 @@ namespace Cryptool.DESVisualization
             AutoTButton.IsEnabled = false;
             NextButton.IsEnabled = false;
             SkipButton.IsEnabled = false;
+            binFinal = true;
             FinalScreen.Visibility = Visibility.Visible;
             if (diffusionIsActive)
             {
@@ -1870,6 +1929,9 @@ namespace Cryptool.DESVisualization
         public void ResetChapterScreen()
         {
             ChapterScreen.Visibility = Visibility.Hidden;
+            ChapterTextKS.Visibility = Visibility.Hidden;
+            ChapterTextDES.Visibility = Visibility.Hidden;
+            ChapterLabel.VerticalAlignment = VerticalAlignment.Center;
             ChapterLabel.Content = "";
         }
 
@@ -1879,6 +1941,10 @@ namespace Cryptool.DESVisualization
             FinalCiphertext.TextEffects.Clear();
             FinalKey.TextEffects.Clear();
             FinalMessage.TextEffects.Clear();
+            FinalMessage.FontSize = 8;
+            FinalKey.FontSize = 8;
+            FinalCiphertextRec.Width = 377;
+            Canvas.SetLeft(FinalCiphertextRec, 36);
             AutoTButton.IsEnabled = true;
             NextButton.IsEnabled = true;
             SkipButton.IsEnabled = true;
@@ -2429,6 +2495,20 @@ namespace Cryptool.DESVisualization
             }
             return byteBytes;
 
+        }
+
+        private string BinStringToHexString(string strBinary)
+        {
+            string strHex = Convert.ToInt64(strBinary, 2).ToString("X");
+            while (strHex.Length<16)
+            {
+                strHex = strHex.Insert(0, "0");
+            }
+            for (int i = 14; i >= 2; i=i-2)
+            {
+                strHex = strHex.Insert(i, " ");
+            }
+            return strHex;
         }
 
         private string InsertSpaces(string str)

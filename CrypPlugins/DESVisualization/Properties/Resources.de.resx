@@ -211,11 +211,11 @@ Jedes 8. Bit (least significant bit) im Schlüssel wird als Paritätsbit genutzt
 Diese acht Bits werden vom Algorithmus nicht verwendet. Daraus ergibt sich
 eine effektive Schlüssellänge von nur 56 Bit. 
 
-Die gesamte Sicherheit liegt im Schlüssel.
-
 Der Algorithmus besteht nur aus Permutationen und Substitutionen. Der
 gesamte Ablauf benötigt insgesamt 16 Runden, die in einem Feistel-Netzwerk
-organisiert sind. Damit sind Ver- und Entschlüsselung sehr ähnliche Prozesse.</value>
+organisiert sind.
+
+Damit sind Ver- und Entschlüsselung sehr ähnliche Prozesse.</value>
   </data>
   <data name="Input" xml:space="preserve">
     <value>Eingabe:</value>
@@ -328,5 +328,27 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   </data>
   <data name="SBoxJumpButton" xml:space="preserve">
     <value>Springe zum Operationsende</value>
+  </data>
+  <data name="Switch" xml:space="preserve">
+    <value>Tausche Hex-Binär</value>
+  </data>
+  <data name="ChapterTextDES" xml:space="preserve">
+    <value>- Die "DES-Verschlüsselung" ist der zweite Hauptteil des Algorithmus: Hier wird
+  die Nachricht innerhalb von 16 Runden verschlüsselt.
+
+- Die Knöpfe in den untersten beiden Reihen zeigen dir zusätzlich, wo du dich
+  gerade befindest: Solange du dich in diesem zweiten Hauptteil des DES
+  befindest, ist einer der Knöpfe "IP", "DES" oder "FP" blau hinterlegt.</value>
+  </data>
+  <data name="ChapterTextKS" xml:space="preserve">
+    <value>- Der "Key Schedule" ist der erste Hauptteil des Algorithmus: Hier wird aus  
+  dem gegebenen Schlüssel ein Schlüssel für jede Runde des DES generiert
+  (diese Rundenschlüssel werden im zweiten Hauptteil des DES, der den
+  eigentlichen Verschlüsselungsprozess darstellt, benutzt).
+
+- Die Knöpfe in den untersten beiden Reihen haben zwei Aufgaben: Sie geben 
+  an wo du dich gerade befindest, und sie erlauben eine direkte Navigation:
+  Solange du dich in diesem ersten Hauptteil des DES befindest, ist der Knopf
+  "Key Schedule" in der zweituntersten Reihe blau hinterlegt.</value>
   </data>
 </root>

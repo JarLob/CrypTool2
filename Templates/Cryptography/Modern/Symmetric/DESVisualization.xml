@@ -22,7 +22,8 @@
 
   <replacements lang="de">
     <replacement value="Klartext (Hexwerte)" key="$Text$"/>
-    <replacement value="Geheimtext (Hexwerte)" key="$Ciphertext$"/>
+    <replacement value="Geheimtext nach letzter Runde (Hexwerte)" key="$Ciphertext$"/>
+    <replacement value="Geheimtext nach letzter Runde (Binärwerte)" key="$CiphertextBin$"/>
     <replacement value="Schlüssel (Hexwerte)" key="$Key$"/>
     <replacement value="Text-Decodierer" key="$TextDecoder$"/>
     <replacement value="Schlüssel-Decodierer" key="$KeyDecoder$"/>
@@ -31,7 +32,8 @@
   </replacements>
   <replacements lang="en">
     <replacement value="Plaintext (hex)" key="$Text$"/>
-    <replacement value="Ciphertext (hex)" key="$Ciphertext$"/>
+    <replacement value="Ciphertext after last round (hex)" key="$Ciphertext$"/>
+    <replacement value="Ciphertext after last round (bin)" key="$CiphertextBin$"/>
     <replacement value="Key (hex)" key="$Key$"/>
     <replacement value="Text Decoder" key="$TextDecoder$"/>
     <replacement value="Key Decoder" key="$KeyDecoder$"/>
