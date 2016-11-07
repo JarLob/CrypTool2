@@ -347,7 +347,7 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   eigentlichen Verschlüsselungsprozess darstellt, benutzt).
 
 - Die Knöpfe in den untersten beiden Reihen haben zwei Aufgaben: Sie geben 
-  an wo du dich gerade befindest, und sie erlauben eine direkte Navigation:
+  an, wo du dich gerade befindest, und sie erlauben eine direkte Navigation:
   Solange du dich in diesem ersten Hauptteil des DES befindest, ist der Knopf
   "Key Schedule" in der zweituntersten Reihe blau hinterlegt.</value>
   </data>

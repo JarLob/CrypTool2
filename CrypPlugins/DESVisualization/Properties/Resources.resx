@@ -338,7 +338,7 @@ Shifts:     1   1   2   2   2   2   2   2   1    2     2     2     2     2     2
   is encrypted during 16 rounds.
 
 - The buttons in the two lines at the bottom also show where you are: As long
-  as you are in this 2nd main part of DES, either one of the buttons "IP", "DES"
+  as you are in this 2nd main part of DES, either one of the buttons "IP", "DES",
   or "FP" is blue.</value>
   </data>
   <data name="ChapterTextKS" xml:space="preserve">

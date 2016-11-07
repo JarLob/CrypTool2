@@ -119,7 +119,7 @@ namespace Cryptool.DESVisualization.Properties {
         ///  is encrypted during 16 rounds.
         ///
         ///- The buttons in the two lines at the bottom also show where you are: As long
-        ///  as you are in this 2nd main part of DES, either one of the buttons &quot;IP&quot;, &quot;DES&quot;
+        ///  as you are in this 2nd main part of DES, either one of the buttons &quot;IP&quot;, &quot;DES&quot;,
         ///  or &quot;FP&quot; is blue. ähnelt.
         /// </summary>
         internal static string ChapterTextDES {
