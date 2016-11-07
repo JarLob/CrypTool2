@@ -563,7 +563,7 @@
                     <TextBlock Name="subByteExplanation1" Visibility="Hidden" Text="{Loc subBytesExplanation1}" TextWrapping="Wrap" Width="120" />
                 </Viewbox>
             </Grid>
-            <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="298" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="0" VerticalAlignment="Stretch"  Grid.RowSpan="3" HorizontalAlignment="Stretch" Visibility="Visible">
+            <Grid x:Name="sBoxGrid" MinWidth="175" MinHeight="298" Grid.ColumnSpan="5" Grid.Column="6"  Grid.Row="0" VerticalAlignment="Stretch"  Grid.RowSpan="3" HorizontalAlignment="Stretch" Visibility="Hidden">
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="18"/>
                     <RowDefinition MinHeight="18"/>
