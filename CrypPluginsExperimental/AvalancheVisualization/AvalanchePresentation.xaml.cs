@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,9 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Documents;
-using System.IO;
 using System.Linq;
-
+using Cryptool.PluginBase.IO;
 
 
 namespace AvalancheVisualization
@@ -18,10 +18,13 @@ namespace AvalancheVisualization
     /// <summary>
     /// Interaction logic for AvaAESPresentation.xaml
     /// </summary>
+    [Cryptool.PluginBase.Attributes.Localization("AvalancheVisualization.Properties")]
     public partial class AvalanchePresentation : UserControl
     {
 
+
         #region variables
+        public CStreamWriter debugStream = new CStreamWriter();
         public int roundNumber = 1;
         public int action = 1;
         public AutoResetEvent buttonNextClickedEvent;
@@ -66,8 +69,13 @@ namespace AvalancheVisualization
         public string[] rightHalf = new string[32];
         public string[] leftHalfB = new string[32];
         public string[] rightHalfB = new string[32];
+
         public byte[] seqA;
         public byte[] seqB;
+        public byte[] newText;
+        public byte[] newKey;
+
+
 
         #endregion
 
@@ -958,6 +966,100 @@ namespace AvalancheVisualization
 
         }
 
+        public int countOccurrence(string[] str)
+        {
+            int occurence = new int();
+
+            if (mode == 1)
+            {
+                int count = 0;
+                int count2 = 0;
+                int i = 0;
+                int j = 32;
+
+                while (i <= 31)
+                {
+
+                    if (str[i].Equals("X"))
+                        count++;
+
+                    i++;
+                }
+
+                while (j <= 63)
+                {
+                    if (str[j].Equals("X"))
+                        count2++;
+
+                    j++;
+                }
+
+                //only left half
+                if (!count.Equals(0) && count2.Equals(0))
+                    occurence = 0;
+                //only right half
+                else if (!count2.Equals(0) && count.Equals(0))
+                    occurence = 1;
+                //no changes
+                else if (count.Equals(0) && count2.Equals(0))
+                    occurence = 2;
+                else
+                    occurence = 3;
+            }
+
+            else
+            {
+                int count = 0;
+
+                foreach (string st in str)
+                {
+                    if (st.Equals("X"))
+                        count++;
+                }
+
+                if (count == 0)
+                    occurence = 2;
+
+            }
+
+
+            return occurence;
+
+        }
+
+        public void showOccurence(int occurrence)
+        {
+            extraordinaryOccur.Text = string.Empty;
+
+            if (occurrence != 3)
+            {
+                if (mode == 1)
+                    extraordinaryOccur.Visibility = Visibility.Visible;
+
+                if (occurrence == 0)
+                    extraordinaryOccur.Text = "Changes occurred only on the left half of the cipher!";
+                else if (occurrence == 1)
+                    extraordinaryOccur.Text = "Changes occurred only on the right half of the cipher!";
+                else
+                {
+                    if (mode == 1)
+                        extraordinaryOccur.Text = "No changes occurred at all!";
+
+                    if (mode == 0)
+                    {
+                        extraordinaryOccurAes.Visibility = Visibility.Visible;
+                        extraordinaryOccurAes.Text = "No changes occurred at all!";
+                    }
+                }
+            }
+
+            else
+            {
+                extraordinaryOccur.Visibility = Visibility.Hidden;
+                extraordinaryOccurAes.Visibility = Visibility.Hidden;
+            }
+
+        }
         //set colors of pie chart
         public void setColors()
         {
@@ -984,7 +1086,7 @@ namespace AvalancheVisualization
         {
             stats1.Inlines.Add(new Run(" " + bitsFlipped.ToString()) { Foreground = Brushes.Red, FontWeight = FontWeights.DemiBold });
 
-            if (bitsFlipped > 1)
+            if (bitsFlipped > 1 || bitsFlipped == 0)
                 stats1.Inlines.Add(new Run(string.Format(" bits flipped (out of {0}). Avalanche effect of {1}%", strTuple.Item1.Length, avalanche)));
             else
                 stats1.Inlines.Add(new Run(string.Format(" bit flipped (out of {0}). Avalanche effect of {1}%", strTuple.Item1.Length, avalanche)));
@@ -1198,11 +1300,11 @@ namespace AvalancheVisualization
                 l++;
             }
 
-            //txt0.Text = lrData[1, 0];
-            //txt0.Text = des.lrData[round, 0];
+           
 
 
         }
+
         //transforms to string of binary values
         public string binaryAsString(byte[] byteSequence)
         {
@@ -1445,302 +1547,14 @@ namespace AvalancheVisualization
             return txtBlock;
         }
 
-        //highlight columns
-        public void brushColumns(int position, int round)
-        {
-            Brush greenBrush = (Brush)new BrushConverter().ConvertFromString("#059033");
-
-            int posA = 0;
-            int posB = 0;
-            int posC = 0;
-            int posD = 0;
-
-
-            switch (position)
-            {
-                case 1:
-                    posA = 1; posB = 2; posC = 3; posD = 4;
-                    break;
-                case 13:
-                    posA = 13; posB = 14; posC = 15; posD = 16;
-                    break;
-                case 9:
-                    posA = 9; posB = 10; posC = 11; posD = 12;
-                    break;
-                case 5:
-                    posA = 5; posB = 6; posC = 7; posD = 8;
-                    break;
-                default:
-                    break;
-            }
-
-
-
-           ((TextBlock)this.FindName("mixColumns" + round + "_" + posA)).Background = greenBrush;
-            ((TextBlock)this.FindName("mixColumns" + round + "_" + posB)).Background = greenBrush;
-            ((TextBlock)this.FindName("mixColumns" + round + "_" + posC)).Background = greenBrush;
-            ((TextBlock)this.FindName("mixColumns" + round + "_" + posD)).Background = greenBrush;
-
-            ((TextBlock)this.FindName("addKey" + round + "_" + posA)).Background = greenBrush;
-            ((TextBlock)this.FindName("addKey" + round + "_" + posB)).Background = greenBrush;
-            ((TextBlock)this.FindName("addKey" + round + "_" + posC)).Background = greenBrush;
-            ((TextBlock)this.FindName("addKey" + round + "_" + posD)).Background = greenBrush;
-
-
-        }
-
-        //shows connecting lines according to selected byte
-        public void connectingLines(int bytePos, bool clear)
-        {
-            List<Border> tmp1 = createBorderList(2);
-            List<Border> tmp2 = createBorderList(6);
-            List<Border> tmp3 = createBorderList(10);
-            List<Border> tmp4 = createBorderList(13);
-            List<Border> tmp5 = createBorderList(20);
-            List<Border> tmp6 = createBorderList(23);
-            List<Border> tmp7 = createBorderList(1);
-            List<Border> tmp8 = createBorderList(9);
-            List<Border> tmp9 = createBorderList(16);
-            List<Border> tmp10 = createBorderList(19);
-            List<Border> tmp11 = createBorderList(22);
-            List<Border> tmp12 = createBorderList(5);
-            List<Border> tmp13 = createBorderList(4);
-            List<Border> tmp14 = createBorderList(8);
-            List<Border> tmp15 = createBorderList(12);
-            List<Border> tmp16 = createBorderList(21);
-            List<Border> tmp17 = createBorderList(18);
-            List<Border> tmp18 = createBorderList(15);
-            List<Border> tmp19 = createBorderList(3);
-            List<Border> tmp20 = createBorderList(7);
-            List<Border> tmp21 = createBorderList(11);
-            List<Border> tmp22 = createBorderList(14);
-            List<Border> tmp23 = createBorderList(17);
-            List<Border> tmp24 = createBorderList(24);
-
-            switch (bytePos)
-            {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                    for (int i = 1; i <= 32; i++)
-                    {
-                        if (clear)
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Hidden;
-                        else
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Visible;
-                    }
-                    break;
-
-                case 5:
-                case 10:
-                case 15:
-                    for (int i = 1; i <= 7; i++)
-                    {
-                        if (clear)
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Hidden;
-                            byte4_8.Visibility = Visibility.Hidden;
-
-                            foreach (Border br in tmp1)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp2)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp3)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp4)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp5)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp6)
-                                br.Visibility = Visibility.Hidden;
-
-                        }
-                        else
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Visible;
-                            byte4_8.Visibility = Visibility.Visible;
-
-                            foreach (Border br in tmp1)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp2)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp3)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp4)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp5)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp6)
-                                br.Visibility = Visibility.Visible;
-                        }
-                    }
-                    break;
-                case 6:
-                case 11:
-                case 16:
-                    for (int i = 1; i <= 7; i++)
-                    {
-
-                        if (clear)
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Hidden;
-                            byte1_8.Visibility = Visibility.Hidden;
-
-                            foreach (Border br in tmp7)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp8)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp9)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp10)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp11)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp12)
-                                br.Visibility = Visibility.Hidden;
-                        }
-                        else
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Visible;
-                            byte1_8.Visibility = Visibility.Visible;
-
-                            foreach (Border br in tmp7)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp8)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp9)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp10)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp11)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp12)
-                                br.Visibility = Visibility.Visible;
-                        }
-                    }
-                    break;
-                case 7:
-                case 12:
-                case 13:
-                    for (int i = 1; i <= 7; i++)
-                    {
-
-                        if (clear)
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Hidden;
-                            byte2_8.Visibility = Visibility.Hidden;
-
-                            foreach (Border br in tmp13)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp14)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp15)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp16)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp17)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp18)
-                                br.Visibility = Visibility.Hidden;
-                        }
-                        else
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Visible;
-                            byte2_8.Visibility = Visibility.Visible;
-
-                            foreach (Border br in tmp13)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp14)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp15)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp16)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp17)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp18)
-                                br.Visibility = Visibility.Visible;
-                        }
-                    }
-                    break;
-                case 8:
-                case 9:
-                case 14:
-                    for (int i = 1; i <= 7; i++)
-                    {
-
-                        if (clear)
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Hidden;
-                            byte3_8.Visibility = Visibility.Hidden;
-
-                            foreach (Border br in tmp19)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp20)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp21)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp22)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp23)
-                                br.Visibility = Visibility.Hidden;
-                            foreach (Border br in tmp24)
-                                br.Visibility = Visibility.Hidden;
-                        }
-                        else
-                        {
-                            ((Border)this.FindName("byte" + bytePos + "_" + i)).Visibility = Visibility.Visible;
-                            byte3_8.Visibility = Visibility.Visible;
-
-                            foreach (Border br in tmp19)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp20)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp21)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp22)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp23)
-                                br.Visibility = Visibility.Visible;
-                            foreach (Border br in tmp24)
-                                br.Visibility = Visibility.Visible;
-                        }
-                    }
-                    break;
-                default:
-                    break;
-
-            }
-        }
-
-
-        public void brushRemainingColumns()
-        {
-            Brush greenBrush = (Brush)new BrushConverter().ConvertFromString("#059033");
-            int a = 1;
-
-            while (a <= 16)
-            {
-                ((TextBlock)this.FindName("mixColumns2_" + a)).Background = greenBrush;
-                ((TextBlock)this.FindName("addKey2_" + a)).Background = greenBrush;
-                ((TextBlock)this.FindName("sBoxRound3_" + a)).Background = greenBrush;
-                ((TextBlock)this.FindName("shiftRowRound3_" + a)).Background = greenBrush;
-                ((TextBlock)this.FindName("mixColumns3_" + a)).Background = greenBrush;
-                ((TextBlock)this.FindName("addKey3_" + a)).Background = greenBrush;
-
-                a++;
-            }
-        }
+      
 
         public void clearElements()
         {
             if (mode == 0)
             {
                 OrigInitialStateGrid.Visibility = Visibility.Hidden;
-                modifiedInitialStateGrid.Visibility = Visibility.Hidden;
-                afterInitialRoundGrid.Visibility = Visibility.Hidden;
-                afterInitRoundButton.Visibility = Visibility.Hidden;
+                modifiedInitialStateGrid.Visibility = Visibility.Hidden;             
                 initStateTitle.Visibility = Visibility.Hidden;
                 radioButtons.Visibility = Visibility.Hidden;
                 generalViewAES.Visibility = Visibility.Hidden;
@@ -2169,7 +1983,7 @@ namespace AvalancheVisualization
                 /*for (int i = 0; i < 16; i++)
                     textBits[i] = result;*/
 
-                byte[] newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
+                newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
 
                 textB = newText;
                 string keyBitSequence = "";
@@ -2221,7 +2035,7 @@ namespace AvalancheVisualization
                 }
 
 
-                byte[] newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
+                newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
                 key = newKey;
                 aesDiffusion = new AES(newKey, newText);
 
@@ -2241,7 +2055,6 @@ namespace AvalancheVisualization
                 coloringText();
                 coloringKey();
                 statesB = aesDiffusion.statesB;
-
 
 
             }
@@ -2273,7 +2086,7 @@ namespace AvalancheVisualization
                 /*for (int i = 0; i < 16; i++)
                     textBits[i] = result;*/
 
-                byte[] newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
+                newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
 
                 textB = newText;
 
@@ -2291,7 +2104,7 @@ namespace AvalancheVisualization
                     m += 8;
                 }
 
-                byte[] newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
+                newKey = keyResult.Select(s => Convert.ToByte(s, 2)).ToArray();
                 key = newKey;
 
                 desDiffusion = new DES(newText, newKey);
@@ -2313,6 +2126,10 @@ namespace AvalancheVisualization
                 lrDataB = desDiffusion.lrDataB;
 
             }
+
+
+            //   buttonNextClickedEvent.Set();
+
         }
 
         public void updateDataColor()
@@ -2411,6 +2228,7 @@ namespace AvalancheVisualization
                 curvedLinesCanvas.Visibility = Visibility.Hidden;
                 OrigInitialStateGrid.Visibility = Visibility.Visible;
                 generalViewAES.Visibility = Visibility.Hidden;
+                extraordinaryOccurAes.Visibility = Visibility.Hidden;
 
                 if (aesCheckBox.IsChecked == false)
                 {
@@ -2424,6 +2242,7 @@ namespace AvalancheVisualization
             {
                 bitGridDES.Visibility = Visibility.Hidden;
                 generalViewDES.Visibility = Visibility.Hidden;
+                extraordinaryOccur.Visibility = Visibility.Hidden;
             }
 
             comparisonPane();
@@ -2443,22 +2262,7 @@ namespace AvalancheVisualization
 
         }
 
-        private void afterInitRoundButton_Click(object sender, RoutedEventArgs e)
-        {
-
-            OrigInitialStateGrid.Visibility = Visibility.Visible;
-            setButtonsScrollViewer();
-            buttonsPanel.Visibility = Visibility.Visible;
-
-            roundNumber = 1 + shift * 2 * keysize;
-
-            action = 1;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpSubByte(states, statesB);
-
-            }, null);
-        }
+       
 
         public void emptyInformation()
         {
@@ -2471,6 +2275,7 @@ namespace AvalancheVisualization
         private void afterRound0Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[0], statesB[0]);
+            int occurrence;
 
             clearElements();
             changeRoundNr(0);
@@ -2479,7 +2284,36 @@ namespace AvalancheVisualization
 
             if (mode == 0)
             {
+                roundNumber = 1 + shift * 2 * keysize;
+                action = 1;
 
+
+                int nrDiffBits = nrOfBitsFlipped(states[0], statesB[0]);
+                double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
+                avalanche = calcAvalancheEffect(nrDiffBits, strings);
+                int lengthIdentSequence;
+                int lengthFlippedSequence;
+                avgNrDiffBit = avgNrperByte(nrDiffBits);
+                emptyInformation();
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+
+                    printIntermediateStates(states, statesB);
+                    displayBinaryValues(states[0], statesB[0]);
+                    showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
+                    lengthIdentSequence = longestIdenticalSequence(differentBits);
+                    lengthFlippedSequence = longestFlippedSequence(differentBits);
+                    showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
+                    setColors();
+                    setAngles(angle_1, angle_2);
+                    setToolTips();
+
+                }, null);
+
+                slideNr = 5;
 
             }
             else
@@ -2502,6 +2336,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequence, strings);
@@ -2511,6 +2347,8 @@ namespace AvalancheVisualization
 
                 }, null);
             }
+
+
             //afterInitialRoundGrid.Visibility = Visibility.Visible;
         }
 
@@ -2519,6 +2357,7 @@ namespace AvalancheVisualization
         private void afterRound1Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[4], statesB[4]);
+            int occurrence;
 
             clearElements();
             changeRoundNr(1);
@@ -2546,6 +2385,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[4], statesB[4]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2578,6 +2419,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2593,6 +2436,8 @@ namespace AvalancheVisualization
         {
 
             var strings = binaryStrings(states[8], statesB[8]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(2);
             showElements();
@@ -2618,6 +2463,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[8], statesB[8]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2648,6 +2495,8 @@ namespace AvalancheVisualization
                  {
                      displayBinaryValuesDES();
                      showBitSequence(strings);
+                     occurrence = countOccurrence(differentBits);
+                     showOccurence(occurrence);
                      lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                      lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                      showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2662,6 +2511,8 @@ namespace AvalancheVisualization
         private void afterRound3Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[12], statesB[12]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(3);
             showElements();
@@ -2687,6 +2538,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[12], statesB[12]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2717,6 +2570,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2731,6 +2586,8 @@ namespace AvalancheVisualization
         private void afterRound4Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[12], statesB[12]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(4);
             showElements();
@@ -2755,6 +2612,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[16], statesB[16]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2786,6 +2645,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2800,6 +2661,8 @@ namespace AvalancheVisualization
         private void afterRound5Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[20], statesB[20]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(5);
             showElements();
@@ -2824,6 +2687,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[20], statesB[20]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2855,6 +2720,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2869,6 +2736,8 @@ namespace AvalancheVisualization
         private void afterRound6Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[24], statesB[24]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(6);
             showElements();
@@ -2893,6 +2762,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[24], statesB[24]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2924,6 +2795,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -2939,6 +2812,8 @@ namespace AvalancheVisualization
         private void afterRound7Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[28], statesB[28]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(7);
             showElements();
@@ -2964,6 +2839,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[28], statesB[28]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -2995,6 +2872,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3009,6 +2888,8 @@ namespace AvalancheVisualization
         private void afterRound8Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[32], statesB[32]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(8);
             showElements();
@@ -3033,6 +2914,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[32], statesB[32]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3064,6 +2947,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3078,6 +2963,8 @@ namespace AvalancheVisualization
         private void afterRound9Button_Click(object sender, RoutedEventArgs e)
         {
             var strings = binaryStrings(states[36], statesB[36]);
+            int occurrence;
+
             clearElements();
             changeRoundNr(9);
             showElements();
@@ -3102,6 +2989,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[36], statesB[36]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3134,6 +3023,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3150,6 +3041,8 @@ namespace AvalancheVisualization
         private void afterRound10Button_Click(object sender, RoutedEventArgs e)
         {
             Tuple<string, string> strings;
+            int occurrence;
+
             clearElements();
             changeRoundNr(10);
             showElements();
@@ -3183,6 +3076,8 @@ namespace AvalancheVisualization
                         final();
                         displayBinaryValues(states[39], statesB[39]);
                         showBitSequence(strings);
+                        occurrence = countOccurrence(differentBits);
+                        showOccurence(occurrence);
                         lengthIdentSequence = longestIdenticalSequence(differentBits);
                         lengthFlippedSequence = longestFlippedSequence(differentBits);
                         showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3209,6 +3104,8 @@ namespace AvalancheVisualization
                         printIntermediateStates(states, statesB);
                         displayBinaryValues(states[40], statesB[40]);
                         showBitSequence(strings);
+                        occurrence = countOccurrence(differentBits);
+                        showOccurence(occurrence);
                         lengthIdentSequence = longestIdenticalSequence(differentBits);
                         lengthFlippedSequence = longestFlippedSequence(differentBits);
                         showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3242,6 +3139,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3256,6 +3155,7 @@ namespace AvalancheVisualization
 
         private void afterRound11Button_Click(object sender, RoutedEventArgs e)
         {
+            int occurrence;
 
             clearElements();
             changeRoundNr(11);
@@ -3282,6 +3182,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[44], statesB[44]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3312,6 +3214,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3327,6 +3231,8 @@ namespace AvalancheVisualization
         private void afterRound12Button_Click(object sender, RoutedEventArgs e)
         {
             Tuple<string, string> strings;
+            int occurrence;
+
             clearElements();
             changeRoundNr(12);
             showElements();
@@ -3360,6 +3266,8 @@ namespace AvalancheVisualization
                         final();
                         displayBinaryValues(states[47], statesB[47]);
                         showBitSequence(strings);
+                        occurrence = countOccurrence(differentBits);
+                        showOccurence(occurrence);
                         lengthIdentSequence = longestIdenticalSequence(differentBits);
                         lengthFlippedSequence = longestFlippedSequence(differentBits);
                         showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3386,6 +3294,8 @@ namespace AvalancheVisualization
                         printIntermediateStates(states, statesB);
                         displayBinaryValues(states[48], statesB[48]);
                         showBitSequence(strings);
+                        occurrence = countOccurrence(differentBits);
+                        showOccurence(occurrence);
                         lengthIdentSequence = longestIdenticalSequence(differentBits);
                         lengthFlippedSequence = longestFlippedSequence(differentBits);
                         showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3420,6 +3330,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3436,6 +3348,8 @@ namespace AvalancheVisualization
 
         private void afterRound13Button_Click(object sender, RoutedEventArgs e)
         {
+            int occurrence;
+
             clearElements();
             changeRoundNr(13);
             showElements();
@@ -3463,6 +3377,8 @@ namespace AvalancheVisualization
                     printIntermediateStates(states, statesB);
                     displayBinaryValues(states[52], statesB[52]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3494,6 +3410,8 @@ namespace AvalancheVisualization
 
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3508,6 +3426,8 @@ namespace AvalancheVisualization
 
         private void afterRound14Button_Click(object sender, RoutedEventArgs e)
         {
+            int occurrence;
+
             clearElements();
             changeRoundNr(14);
             showElements();
@@ -3533,6 +3453,8 @@ namespace AvalancheVisualization
                     final();
                     displayBinaryValues(states[55], statesB[55]);
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequence = longestIdenticalSequence(differentBits);
                     lengthFlippedSequence = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequence, lengthFlippedSequence, strings);
@@ -3564,6 +3486,8 @@ namespace AvalancheVisualization
                 {
                     displayBinaryValuesDES();
                     showBitSequence(strings);
+                    occurrence = countOccurrence(differentBits);
+                    showOccurence(occurrence);
                     lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                     lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                     showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3592,6 +3516,7 @@ namespace AvalancheVisualization
             avalanche = calcAvalancheEffect(nrDiffBits, strings);
             int lengthIdentSequenceDes;
             int lengthFlippedSequenceDes;
+            int occurrence;
             avgNrDiffBit = avgNrperByte(nrDiffBits);
             emptyInformation();
 
@@ -3599,6 +3524,8 @@ namespace AvalancheVisualization
             {
                 displayBinaryValuesDES();
                 showBitSequence(strings);
+                occurrence = countOccurrence(differentBits);
+                showOccurence(occurrence);
                 lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                 lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                 showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3626,6 +3553,7 @@ namespace AvalancheVisualization
             avalanche = calcAvalancheEffect(nrDiffBits, strings);
             int lengthIdentSequenceDes;
             int lengthFlippedSequenceDes;
+            int occurrence;
             avgNrDiffBit = avgNrperByte(nrDiffBits);
             emptyInformation();
 
@@ -3634,6 +3562,8 @@ namespace AvalancheVisualization
             {
                 displayBinaryValuesDES();
                 showBitSequence(strings);
+                occurrence = countOccurrence(differentBits);
+                showOccurence(occurrence);
                 lengthIdentSequenceDes = longestIdenticalSequence(differentBits);
                 lengthFlippedSequenceDes = longestFlippedSequence(differentBits);
                 showStatistics(nrDiffBits, lengthIdentSequenceDes, lengthFlippedSequenceDes, strings);
@@ -3892,6 +3822,18 @@ namespace AvalancheVisualization
 
         }
 
+
+        private void radioText_Checked(object sender, RoutedEventArgs e)
+        {
+
+
+            string strA= Encoding.UTF8.GetString(unchangedCipher);
+            string strB= Encoding.UTF8.GetString(changedCipher);
+            originalMsg.Text = strA;
+            modifiedMsg.Text = strB;
+        }
+
+
         private void clearTextEffect()
         {
             if (mode == 1)
@@ -3945,823 +3887,7 @@ namespace AvalancheVisualization
             modKeyDES.TextEffects.Clear();
         }
 
-        private void txtBox1_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox source = e.Source as TextBox;
-
-            string txtBoxName = source.Name;
-            Brush greenBrush = (Brush)new BrushConverter().ConvertFromString("#059033");
-
-            switch (txtBoxName)
-            {
-                case "txtBox1":
-                    source.Background = greenBrush;
-                    roundZero1.Background = greenBrush;
-                    sBoxRound1_1.Background = greenBrush;
-                    afterShifting(1, 1).Background = greenBrush;
-
-                    brushColumns(1, 1);
-
-                    sBoxRound2_1.Background = greenBrush;
-                    sBoxRound2_2.Background = greenBrush;
-                    sBoxRound2_3.Background = greenBrush;
-                    sBoxRound2_4.Background = greenBrush;
-
-                    afterShifting(1, 2).Background = greenBrush;
-                    afterShifting(2, 2).Background = greenBrush;
-                    afterShifting(3, 2).Background = greenBrush;
-                    afterShifting(4, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(1, false);
-                    break;
-                case "txtBox2":
-                    source.Background = greenBrush;
-                    roundZero2.Background = greenBrush;
-                    sBoxRound1_2.Background = greenBrush;
-                    afterShifting(2, 1).Background = greenBrush;
-
-                    brushColumns(13, 1);
-
-                    sBoxRound2_13.Background = greenBrush;
-                    sBoxRound2_14.Background = greenBrush;
-                    sBoxRound2_15.Background = greenBrush;
-                    sBoxRound2_16.Background = greenBrush;
-
-                    afterShifting(13, 2).Background = greenBrush;
-                    afterShifting(14, 2).Background = greenBrush;
-                    afterShifting(15, 2).Background = greenBrush;
-                    afterShifting(16, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(2, false);
-                    break;
-                case "txtBox3":
-                    source.Background = greenBrush;
-                    roundZero3.Background = greenBrush;
-                    sBoxRound1_3.Background = greenBrush;
-                    afterShifting(3, 1).Background = greenBrush;
-
-
-                    brushColumns(9, 1);
-
-                    sBoxRound2_9.Background = greenBrush;
-                    sBoxRound2_10.Background = greenBrush;
-                    sBoxRound2_11.Background = greenBrush;
-                    sBoxRound2_12.Background = greenBrush;
-
-                    afterShifting(9, 2).Background = greenBrush;
-                    afterShifting(10, 2).Background = greenBrush;
-                    afterShifting(11, 2).Background = greenBrush;
-                    afterShifting(12, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(3, false);
-                    break;
-                case "txtBox4":
-                    source.Background = greenBrush;
-                    roundZero4.Background = greenBrush;
-                    sBoxRound1_4.Background = greenBrush;
-                    afterShifting(4, 1).Background = greenBrush;
-
-                    brushColumns(5, 1);
-
-                    sBoxRound2_5.Background = greenBrush;
-                    sBoxRound2_6.Background = greenBrush;
-                    sBoxRound2_7.Background = greenBrush;
-                    sBoxRound2_8.Background = greenBrush;
-
-                    afterShifting(5, 2).Background = greenBrush;
-                    afterShifting(6, 2).Background = greenBrush;
-                    afterShifting(7, 2).Background = greenBrush;
-                    afterShifting(8, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(4, false);
-
-                    break;
-                case "txtBox5":
-                    source.Background = greenBrush;
-                    roundZero5.Background = greenBrush;
-                    sBoxRound1_5.Background = greenBrush;
-                    afterShifting(5, 1).Background = greenBrush;
-
-                    brushColumns(5, 1);
-
-                    sBoxRound2_5.Background = greenBrush;
-                    sBoxRound2_6.Background = greenBrush;
-                    sBoxRound2_7.Background = greenBrush;
-                    sBoxRound2_8.Background = greenBrush;
-
-                    afterShifting(5, 2).Background = greenBrush;
-                    afterShifting(6, 2).Background = greenBrush;
-                    afterShifting(7, 2).Background = greenBrush;
-                    afterShifting(8, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(5, false);
-                    break;
-                case "txtBox6":
-                    source.Background = greenBrush;
-                    roundZero6.Background = greenBrush;
-                    sBoxRound1_6.Background = greenBrush;
-                    afterShifting(6, 1).Background = greenBrush;
-
-                    brushColumns(1, 1);
-
-                    sBoxRound2_1.Background = greenBrush;
-                    sBoxRound2_2.Background = greenBrush;
-                    sBoxRound2_3.Background = greenBrush;
-                    sBoxRound2_4.Background = greenBrush;
-
-                    afterShifting(1, 2).Background = greenBrush;
-                    afterShifting(2, 2).Background = greenBrush;
-                    afterShifting(3, 2).Background = greenBrush;
-                    afterShifting(4, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(6, false);
-                    break;
-                case "txtBox7":
-                    source.Background = greenBrush;
-                    roundZero7.Background = greenBrush;
-                    sBoxRound1_7.Background = greenBrush;
-                    afterShifting(7, 1).Background = greenBrush;
-
-                    brushColumns(13, 1);
-
-                    sBoxRound2_13.Background = greenBrush;
-                    sBoxRound2_14.Background = greenBrush;
-                    sBoxRound2_15.Background = greenBrush;
-                    sBoxRound2_16.Background = greenBrush;
-
-
-                    afterShifting(13, 2).Background = greenBrush;
-                    afterShifting(14, 2).Background = greenBrush;
-                    afterShifting(15, 2).Background = greenBrush;
-                    afterShifting(16, 2).Background = greenBrush;
-
-
-                    brushRemainingColumns();
-                    connectingLines(7, false);
-                    break;
-                case "txtBox8":
-                    source.Background = greenBrush;
-                    roundZero8.Background = greenBrush;
-                    sBoxRound1_8.Background = greenBrush;
-                    afterShifting(8, 1).Background = greenBrush;
-
-                    brushColumns(9, 1);
-
-                    sBoxRound2_9.Background = greenBrush;
-                    sBoxRound2_10.Background = greenBrush;
-                    sBoxRound2_11.Background = greenBrush;
-                    sBoxRound2_12.Background = greenBrush;
-
-
-                    afterShifting(9, 2).Background = greenBrush;
-                    afterShifting(10, 2).Background = greenBrush;
-                    afterShifting(11, 2).Background = greenBrush;
-                    afterShifting(12, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(8, false);
-                    break;
-                case "txtBox9":
-                    source.Background = greenBrush;
-                    roundZero9.Background = greenBrush;
-                    sBoxRound1_9.Background = greenBrush;
-                    afterShifting(9, 1).Background = greenBrush;
-
-                    brushColumns(9, 1);
-
-                    sBoxRound2_9.Background = greenBrush;
-                    sBoxRound2_10.Background = greenBrush;
-                    sBoxRound2_11.Background = greenBrush;
-                    sBoxRound2_12.Background = greenBrush;
-
-
-                    afterShifting(9, 2).Background = greenBrush;
-                    afterShifting(10, 2).Background = greenBrush;
-                    afterShifting(11, 2).Background = greenBrush;
-                    afterShifting(12, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(9, false);
-                    break;
-                case "txtBox10":
-                    source.Background = greenBrush;
-                    roundZero10.Background = greenBrush;
-                    sBoxRound1_10.Background = greenBrush;
-                    afterShifting(10, 1).Background = greenBrush;
-
-                    brushColumns(5, 1);
-
-                    sBoxRound2_5.Background = greenBrush;
-                    sBoxRound2_6.Background = greenBrush;
-                    sBoxRound2_7.Background = greenBrush;
-                    sBoxRound2_8.Background = greenBrush;
-
-                    afterShifting(5, 2).Background = greenBrush;
-                    afterShifting(6, 2).Background = greenBrush;
-                    afterShifting(7, 2).Background = greenBrush;
-                    afterShifting(8, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(10, false);
-                    break;
-                case "txtBox11":
-                    source.Background = greenBrush;
-                    roundZero11.Background = greenBrush;
-                    sBoxRound1_11.Background = greenBrush;
-                    afterShifting(11, 1).Background = greenBrush;
-
-                    brushColumns(1, 1);
-
-                    sBoxRound2_1.Background = greenBrush;
-                    sBoxRound2_2.Background = greenBrush;
-                    sBoxRound2_3.Background = greenBrush;
-                    sBoxRound2_4.Background = greenBrush;
-
-                    afterShifting(1, 2).Background = greenBrush;
-                    afterShifting(2, 2).Background = greenBrush;
-                    afterShifting(3, 2).Background = greenBrush;
-                    afterShifting(4, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(11, false);
-                    break;
-                case "txtBox12":
-                    source.Background = greenBrush;
-                    roundZero12.Background = greenBrush;
-                    sBoxRound1_12.Background = greenBrush;
-                    afterShifting(12, 1).Background = greenBrush;
-
-                    brushColumns(13, 1);
-
-                    sBoxRound2_13.Background = greenBrush;
-                    sBoxRound2_14.Background = greenBrush;
-                    sBoxRound2_15.Background = greenBrush;
-                    sBoxRound2_16.Background = greenBrush;
-
-
-                    afterShifting(13, 2).Background = greenBrush;
-                    afterShifting(14, 2).Background = greenBrush;
-                    afterShifting(15, 2).Background = greenBrush;
-                    afterShifting(16, 2).Background = greenBrush;
-                    brushRemainingColumns();
-                    connectingLines(12, false);
-                    break;
-                case "txtBox13":
-                    source.Background = greenBrush;
-                    roundZero13.Background = greenBrush;
-                    sBoxRound1_13.Background = greenBrush;
-                    afterShifting(13, 1).Background = greenBrush;
-
-                    brushColumns(13, 1);
-
-                    sBoxRound2_13.Background = greenBrush;
-                    sBoxRound2_14.Background = greenBrush;
-                    sBoxRound2_15.Background = greenBrush;
-                    sBoxRound2_16.Background = greenBrush;
-
-                    afterShifting(13, 2).Background = greenBrush;
-                    afterShifting(14, 2).Background = greenBrush;
-                    afterShifting(15, 2).Background = greenBrush;
-                    afterShifting(16, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(13, false);
-                    break;
-                case "txtBox14":
-                    source.Background = greenBrush;
-                    roundZero14.Background = greenBrush;
-                    sBoxRound1_14.Background = greenBrush;
-                    afterShifting(14, 1).Background = greenBrush;
-
-
-                    brushColumns(9, 1);
-
-                    sBoxRound2_9.Background = greenBrush;
-                    sBoxRound2_10.Background = greenBrush;
-                    sBoxRound2_11.Background = greenBrush;
-                    sBoxRound2_12.Background = greenBrush;
-
-                    afterShifting(9, 2).Background = greenBrush;
-                    afterShifting(10, 2).Background = greenBrush;
-                    afterShifting(11, 2).Background = greenBrush;
-                    afterShifting(12, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(14, false);
-                    break;
-                case "txtBox15":
-                    source.Background = greenBrush;
-                    roundZero15.Background = greenBrush;
-                    sBoxRound1_15.Background = greenBrush;
-                    afterShifting(15, 1).Background = greenBrush;
-
-                    brushColumns(5, 1);
-
-                    sBoxRound2_5.Background = greenBrush;
-                    sBoxRound2_6.Background = greenBrush;
-                    sBoxRound2_7.Background = greenBrush;
-                    sBoxRound2_8.Background = greenBrush;
-
-                    afterShifting(5, 2).Background = greenBrush;
-                    afterShifting(6, 2).Background = greenBrush;
-                    afterShifting(7, 2).Background = greenBrush;
-                    afterShifting(8, 2).Background = greenBrush;
-
-
-                    brushRemainingColumns();
-                    connectingLines(15, false);
-                    break;
-                case "txtBox16":
-                    source.Background = greenBrush;
-                    roundZero16.Background = greenBrush;
-                    sBoxRound1_16.Background = greenBrush;
-                    afterShifting(16, 1).Background = greenBrush;
-
-                    brushColumns(1, 1);
-
-                    sBoxRound2_1.Background = greenBrush;
-                    sBoxRound2_2.Background = greenBrush;
-                    sBoxRound2_3.Background = greenBrush;
-                    sBoxRound2_4.Background = greenBrush;
-
-                    afterShifting(1, 2).Background = greenBrush;
-                    afterShifting(2, 2).Background = greenBrush;
-                    afterShifting(3, 2).Background = greenBrush;
-                    afterShifting(4, 2).Background = greenBrush;
-
-                    brushRemainingColumns();
-                    connectingLines(16, false);
-                    break;
-
-                default:
-                    break;
-            }
-
-
-        }
-
-        private void txtBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox source = e.Source as TextBox;
-            string txtBoxName = source.Name;
-
-            switch (txtBoxName)
-            {
-                case "txtBox1":
-                    source.Background = Brushes.Transparent;
-                    roundZero1.Background = Brushes.Transparent;
-                    sBoxRound1_1.Background = Brushes.Transparent;
-                    shiftRowRound1_1.Background = Brushes.Transparent;
-
-                    mixColumns1_1.Background = Brushes.Transparent;
-                    mixColumns1_2.Background = Brushes.Transparent;
-                    mixColumns1_3.Background = Brushes.Transparent;
-                    mixColumns1_4.Background = Brushes.Transparent;
-
-
-                    addKey1_1.Background = Brushes.Transparent;
-                    addKey1_2.Background = Brushes.Transparent;
-                    addKey1_3.Background = Brushes.Transparent;
-                    addKey1_4.Background = Brushes.Transparent;
-
-                    sBoxRound2_1.Background = Brushes.Transparent;
-                    sBoxRound2_2.Background = Brushes.Transparent;
-                    sBoxRound2_3.Background = Brushes.Transparent;
-                    sBoxRound2_4.Background = Brushes.Transparent;
-
-
-                    shiftRowRound2_1.Background = Brushes.Transparent;
-                    shiftRowRound2_8.Background = Brushes.Transparent;
-                    shiftRowRound2_11.Background = Brushes.Transparent;
-                    shiftRowRound2_14.Background = Brushes.Transparent;
-                    connectingLines(1, true);
-                    break;
-                case "txtBox2":
-                    source.Background = Brushes.Transparent;
-                    roundZero2.Background = Brushes.Transparent;
-                    sBoxRound1_2.Background = Brushes.Transparent;
-                    shiftRowRound1_14.Background = Brushes.Transparent;
-
-                    mixColumns1_13.Background = Brushes.Transparent;
-                    mixColumns1_14.Background = Brushes.Transparent;
-                    mixColumns1_15.Background = Brushes.Transparent;
-                    mixColumns1_16.Background = Brushes.Transparent;
-
-
-                    addKey1_13.Background = Brushes.Transparent;
-                    addKey1_14.Background = Brushes.Transparent;
-                    addKey1_15.Background = Brushes.Transparent;
-                    addKey1_16.Background = Brushes.Transparent;
-
-                    sBoxRound2_13.Background = Brushes.Transparent;
-                    sBoxRound2_14.Background = Brushes.Transparent;
-                    sBoxRound2_15.Background = Brushes.Transparent;
-                    sBoxRound2_16.Background = Brushes.Transparent;
-
-                    shiftRowRound2_13.Background = Brushes.Transparent;
-                    shiftRowRound2_10.Background = Brushes.Transparent;
-                    shiftRowRound2_7.Background = Brushes.Transparent;
-                    shiftRowRound2_4.Background = Brushes.Transparent;
-
-                    connectingLines(2, true);
-                    break;
-                case "txtBox3":
-                    source.Background = Brushes.Transparent;
-                    roundZero3.Background = Brushes.Transparent;
-                    sBoxRound1_3.Background = Brushes.Transparent;
-                    shiftRowRound1_11.Background = Brushes.Transparent;
-
-                    mixColumns1_9.Background = Brushes.Transparent;
-                    mixColumns1_10.Background = Brushes.Transparent;
-                    mixColumns1_11.Background = Brushes.Transparent;
-                    mixColumns1_12.Background = Brushes.Transparent;
-
-                    addKey1_9.Background = Brushes.Transparent;
-                    addKey1_10.Background = Brushes.Transparent;
-                    addKey1_11.Background = Brushes.Transparent;
-                    addKey1_12.Background = Brushes.Transparent;
-
-                    sBoxRound2_9.Background = Brushes.Transparent;
-                    sBoxRound2_10.Background = Brushes.Transparent;
-                    sBoxRound2_11.Background = Brushes.Transparent;
-                    sBoxRound2_12.Background = Brushes.Transparent;
-
-
-                    shiftRowRound2_9.Background = Brushes.Transparent;
-                    shiftRowRound2_6.Background = Brushes.Transparent;
-                    shiftRowRound2_3.Background = Brushes.Transparent;
-                    shiftRowRound2_16.Background = Brushes.Transparent;
-                    connectingLines(3, true);
-                    break;
-                case "txtBox4":
-                    source.Background = Brushes.Transparent;
-                    roundZero4.Background = Brushes.Transparent;
-                    sBoxRound1_4.Background = Brushes.Transparent;
-                    shiftRowRound1_8.Background = Brushes.Transparent;
-
-                    mixColumns1_5.Background = Brushes.Transparent;
-                    mixColumns1_6.Background = Brushes.Transparent;
-                    mixColumns1_7.Background = Brushes.Transparent;
-                    mixColumns1_8.Background = Brushes.Transparent;
-
-                    addKey1_5.Background = Brushes.Transparent;
-                    addKey1_6.Background = Brushes.Transparent;
-                    addKey1_7.Background = Brushes.Transparent;
-                    addKey1_8.Background = Brushes.Transparent;
-
-                    sBoxRound2_5.Background = Brushes.Transparent;
-                    sBoxRound2_6.Background = Brushes.Transparent;
-                    sBoxRound2_7.Background = Brushes.Transparent;
-                    sBoxRound2_8.Background = Brushes.Transparent;
-
-                    shiftRowRound2_5.Background = Brushes.Transparent;
-                    shiftRowRound2_2.Background = Brushes.Transparent;
-                    shiftRowRound2_15.Background = Brushes.Transparent;
-                    shiftRowRound2_12.Background = Brushes.Transparent;
-                    connectingLines(4, true);
-                    break;
-                case "txtBox5":
-                    source.Background = Brushes.Transparent;
-                    roundZero5.Background = Brushes.Transparent;
-                    sBoxRound1_5.Background = Brushes.Transparent;
-                    shiftRowRound1_5.Background = Brushes.Transparent;
-
-                    mixColumns1_5.Background = Brushes.Transparent;
-                    mixColumns1_6.Background = Brushes.Transparent;
-                    mixColumns1_7.Background = Brushes.Transparent;
-                    mixColumns1_8.Background = Brushes.Transparent;
-
-                    addKey1_5.Background = Brushes.Transparent;
-                    addKey1_6.Background = Brushes.Transparent;
-                    addKey1_7.Background = Brushes.Transparent;
-                    addKey1_8.Background = Brushes.Transparent;
-
-                    sBoxRound2_5.Background = Brushes.Transparent;
-                    sBoxRound2_6.Background = Brushes.Transparent;
-                    sBoxRound2_7.Background = Brushes.Transparent;
-                    sBoxRound2_8.Background = Brushes.Transparent;
-
-                    shiftRowRound2_5.Background = Brushes.Transparent;
-                    shiftRowRound2_2.Background = Brushes.Transparent;
-                    shiftRowRound2_15.Background = Brushes.Transparent;
-                    shiftRowRound2_12.Background = Brushes.Transparent;
-                    connectingLines(5, true);
-                    break;
-                case "txtBox6":
-                    source.Background = Brushes.Transparent;
-                    roundZero6.Background = Brushes.Transparent;
-                    sBoxRound1_6.Background = Brushes.Transparent;
-                    shiftRowRound1_2.Background = Brushes.Transparent;
-
-                    mixColumns1_1.Background = Brushes.Transparent;
-                    mixColumns1_2.Background = Brushes.Transparent;
-                    mixColumns1_3.Background = Brushes.Transparent;
-                    mixColumns1_4.Background = Brushes.Transparent;
-
-                    addKey1_1.Background = Brushes.Transparent;
-                    addKey1_2.Background = Brushes.Transparent;
-                    addKey1_3.Background = Brushes.Transparent;
-                    addKey1_4.Background = Brushes.Transparent;
-
-                    sBoxRound2_1.Background = Brushes.Transparent;
-                    sBoxRound2_2.Background = Brushes.Transparent;
-                    sBoxRound2_3.Background = Brushes.Transparent;
-                    sBoxRound2_4.Background = Brushes.Transparent;
-
-                    shiftRowRound2_1.Background = Brushes.Transparent;
-                    shiftRowRound2_8.Background = Brushes.Transparent;
-                    shiftRowRound2_11.Background = Brushes.Transparent;
-                    shiftRowRound2_14.Background = Brushes.Transparent;
-                    connectingLines(6, true);
-                    break;
-                case "txtBox7":
-                    source.Background = Brushes.Transparent;
-                    roundZero7.Background = Brushes.Transparent;
-                    sBoxRound1_7.Background = Brushes.Transparent;
-                    shiftRowRound1_15.Background = Brushes.Transparent;
-
-                    mixColumns1_13.Background = Brushes.Transparent;
-                    mixColumns1_14.Background = Brushes.Transparent;
-                    mixColumns1_15.Background = Brushes.Transparent;
-                    mixColumns1_16.Background = Brushes.Transparent;
-
-                    addKey1_13.Background = Brushes.Transparent;
-                    addKey1_14.Background = Brushes.Transparent;
-                    addKey1_15.Background = Brushes.Transparent;
-                    addKey1_16.Background = Brushes.Transparent;
-
-                    sBoxRound2_13.Background = Brushes.Transparent;
-                    sBoxRound2_14.Background = Brushes.Transparent;
-                    sBoxRound2_15.Background = Brushes.Transparent;
-                    sBoxRound2_16.Background = Brushes.Transparent;
-
-                    shiftRowRound2_13.Background = Brushes.Transparent;
-                    shiftRowRound2_10.Background = Brushes.Transparent;
-                    shiftRowRound2_7.Background = Brushes.Transparent;
-                    shiftRowRound2_4.Background = Brushes.Transparent;
-                    connectingLines(7, true);
-                    break;
-                case "txtBox8":
-                    source.Background = Brushes.Transparent;
-                    roundZero8.Background = Brushes.Transparent;
-                    sBoxRound1_8.Background = Brushes.Transparent;
-                    shiftRowRound1_12.Background = Brushes.Transparent;
-
-
-                    mixColumns1_9.Background = Brushes.Transparent;
-                    mixColumns1_10.Background = Brushes.Transparent;
-                    mixColumns1_11.Background = Brushes.Transparent;
-                    mixColumns1_12.Background = Brushes.Transparent;
-
-                    addKey1_9.Background = Brushes.Transparent;
-                    addKey1_10.Background = Brushes.Transparent;
-                    addKey1_11.Background = Brushes.Transparent;
-                    addKey1_12.Background = Brushes.Transparent;
-
-                    sBoxRound2_9.Background = Brushes.Transparent;
-                    sBoxRound2_10.Background = Brushes.Transparent;
-                    sBoxRound2_11.Background = Brushes.Transparent;
-                    sBoxRound2_12.Background = Brushes.Transparent;
-
-
-                    shiftRowRound2_9.Background = Brushes.Transparent;
-                    shiftRowRound2_6.Background = Brushes.Transparent;
-                    shiftRowRound2_3.Background = Brushes.Transparent;
-                    shiftRowRound2_16.Background = Brushes.Transparent;
-                    connectingLines(8, true);
-                    break;
-                case "txtBox9":
-                    source.Background = Brushes.Transparent;
-                    roundZero9.Background = Brushes.Transparent;
-                    sBoxRound1_9.Background = Brushes.Transparent;
-                    shiftRowRound1_9.Background = Brushes.Transparent;
-
-
-                    mixColumns1_9.Background = Brushes.Transparent;
-                    mixColumns1_10.Background = Brushes.Transparent;
-                    mixColumns1_11.Background = Brushes.Transparent;
-                    mixColumns1_12.Background = Brushes.Transparent;
-
-                    addKey1_9.Background = Brushes.Transparent;
-                    addKey1_10.Background = Brushes.Transparent;
-                    addKey1_11.Background = Brushes.Transparent;
-                    addKey1_12.Background = Brushes.Transparent;
-
-                    sBoxRound2_9.Background = Brushes.Transparent;
-                    sBoxRound2_10.Background = Brushes.Transparent;
-                    sBoxRound2_11.Background = Brushes.Transparent;
-                    sBoxRound2_12.Background = Brushes.Transparent;
-
-
-                    shiftRowRound2_9.Background = Brushes.Transparent;
-                    shiftRowRound2_6.Background = Brushes.Transparent;
-                    shiftRowRound2_3.Background = Brushes.Transparent;
-                    shiftRowRound2_16.Background = Brushes.Transparent;
-                    connectingLines(9, true);
-                    break;
-                case "txtBox10":
-                    source.Background = Brushes.Transparent;
-                    roundZero10.Background = Brushes.Transparent;
-                    sBoxRound1_10.Background = Brushes.Transparent;
-                    shiftRowRound1_6.Background = Brushes.Transparent;
-
-                    mixColumns1_5.Background = Brushes.Transparent;
-                    mixColumns1_6.Background = Brushes.Transparent;
-                    mixColumns1_7.Background = Brushes.Transparent;
-                    mixColumns1_8.Background = Brushes.Transparent;
-
-                    addKey1_5.Background = Brushes.Transparent;
-                    addKey1_6.Background = Brushes.Transparent;
-                    addKey1_7.Background = Brushes.Transparent;
-                    addKey1_8.Background = Brushes.Transparent;
-
-                    sBoxRound2_5.Background = Brushes.Transparent;
-                    sBoxRound2_6.Background = Brushes.Transparent;
-                    sBoxRound2_7.Background = Brushes.Transparent;
-                    sBoxRound2_8.Background = Brushes.Transparent;
-
-                    shiftRowRound2_5.Background = Brushes.Transparent;
-                    shiftRowRound2_2.Background = Brushes.Transparent;
-                    shiftRowRound2_15.Background = Brushes.Transparent;
-                    shiftRowRound2_12.Background = Brushes.Transparent;
-
-                    connectingLines(10, true);
-                    break;
-                case "txtBox11":
-                    source.Background = Brushes.Transparent;
-                    roundZero11.Background = Brushes.Transparent;
-                    sBoxRound1_11.Background = Brushes.Transparent;
-                    shiftRowRound1_3.Background = Brushes.Transparent;
-
-                    mixColumns1_1.Background = Brushes.Transparent;
-                    mixColumns1_2.Background = Brushes.Transparent;
-                    mixColumns1_3.Background = Brushes.Transparent;
-                    mixColumns1_4.Background = Brushes.Transparent;
-
-                    addKey1_1.Background = Brushes.Transparent;
-                    addKey1_2.Background = Brushes.Transparent;
-                    addKey1_3.Background = Brushes.Transparent;
-                    addKey1_4.Background = Brushes.Transparent;
-
-                    sBoxRound2_1.Background = Brushes.Transparent;
-                    sBoxRound2_2.Background = Brushes.Transparent;
-                    sBoxRound2_3.Background = Brushes.Transparent;
-                    sBoxRound2_4.Background = Brushes.Transparent;
-
-                    shiftRowRound2_1.Background = Brushes.Transparent;
-                    shiftRowRound2_8.Background = Brushes.Transparent;
-                    shiftRowRound2_11.Background = Brushes.Transparent;
-                    shiftRowRound2_14.Background = Brushes.Transparent;
-                    connectingLines(11, true);
-                    break;
-                case "txtBox12":
-                    source.Background = Brushes.Transparent;
-                    roundZero12.Background = Brushes.Transparent;
-                    sBoxRound1_12.Background = Brushes.Transparent;
-                    shiftRowRound1_16.Background = Brushes.Transparent;
-
-                    mixColumns1_13.Background = Brushes.Transparent;
-                    mixColumns1_14.Background = Brushes.Transparent;
-                    mixColumns1_15.Background = Brushes.Transparent;
-                    mixColumns1_16.Background = Brushes.Transparent;
-
-                    addKey1_13.Background = Brushes.Transparent;
-                    addKey1_14.Background = Brushes.Transparent;
-                    addKey1_15.Background = Brushes.Transparent;
-                    addKey1_16.Background = Brushes.Transparent;
-
-                    sBoxRound2_13.Background = Brushes.Transparent;
-                    sBoxRound2_14.Background = Brushes.Transparent;
-                    sBoxRound2_15.Background = Brushes.Transparent;
-                    sBoxRound2_16.Background = Brushes.Transparent;
-
-                    shiftRowRound2_13.Background = Brushes.Transparent;
-                    shiftRowRound2_10.Background = Brushes.Transparent;
-                    shiftRowRound2_7.Background = Brushes.Transparent;
-                    shiftRowRound2_4.Background = Brushes.Transparent;
-                    connectingLines(12, true);
-                    break;
-                case "txtBox13":
-                    source.Background = Brushes.Transparent;
-                    roundZero13.Background = Brushes.Transparent;
-                    sBoxRound1_13.Background = Brushes.Transparent;
-                    shiftRowRound1_13.Background = Brushes.Transparent;
-
-                    mixColumns1_13.Background = Brushes.Transparent;
-                    mixColumns1_14.Background = Brushes.Transparent;
-                    mixColumns1_15.Background = Brushes.Transparent;
-                    mixColumns1_16.Background = Brushes.Transparent;
-
-                    addKey1_13.Background = Brushes.Transparent;
-                    addKey1_14.Background = Brushes.Transparent;
-                    addKey1_15.Background = Brushes.Transparent;
-                    addKey1_16.Background = Brushes.Transparent;
-
-                    sBoxRound2_13.Background = Brushes.Transparent;
-                    sBoxRound2_14.Background = Brushes.Transparent;
-                    sBoxRound2_15.Background = Brushes.Transparent;
-                    sBoxRound2_16.Background = Brushes.Transparent;
-
-                    shiftRowRound2_13.Background = Brushes.Transparent;
-                    shiftRowRound2_10.Background = Brushes.Transparent;
-                    shiftRowRound2_7.Background = Brushes.Transparent;
-                    shiftRowRound2_4.Background = Brushes.Transparent;
-                    connectingLines(13, true);
-                    break;
-                case "txtBox14":
-                    source.Background = Brushes.Transparent;
-                    roundZero14.Background = Brushes.Transparent;
-                    sBoxRound1_14.Background = Brushes.Transparent;
-                    shiftRowRound1_10.Background = Brushes.Transparent;
-
-
-                    mixColumns1_9.Background = Brushes.Transparent;
-                    mixColumns1_10.Background = Brushes.Transparent;
-                    mixColumns1_11.Background = Brushes.Transparent;
-                    mixColumns1_12.Background = Brushes.Transparent;
-
-                    addKey1_9.Background = Brushes.Transparent;
-                    addKey1_10.Background = Brushes.Transparent;
-                    addKey1_11.Background = Brushes.Transparent;
-                    addKey1_12.Background = Brushes.Transparent;
-
-                    sBoxRound2_9.Background = Brushes.Transparent;
-                    sBoxRound2_10.Background = Brushes.Transparent;
-                    sBoxRound2_11.Background = Brushes.Transparent;
-                    sBoxRound2_12.Background = Brushes.Transparent;
-
-
-                    shiftRowRound2_9.Background = Brushes.Transparent;
-                    shiftRowRound2_6.Background = Brushes.Transparent;
-                    shiftRowRound2_3.Background = Brushes.Transparent;
-                    shiftRowRound2_16.Background = Brushes.Transparent;
-                    connectingLines(14, true);
-                    break;
-                case "txtBox15":
-                    source.Background = Brushes.Transparent;
-                    roundZero15.Background = Brushes.Transparent;
-                    sBoxRound1_15.Background = Brushes.Transparent;
-                    shiftRowRound1_7.Background = Brushes.Transparent;
-
-                    mixColumns1_5.Background = Brushes.Transparent;
-                    mixColumns1_6.Background = Brushes.Transparent;
-                    mixColumns1_7.Background = Brushes.Transparent;
-                    mixColumns1_8.Background = Brushes.Transparent;
-
-                    addKey1_5.Background = Brushes.Transparent;
-                    addKey1_6.Background = Brushes.Transparent;
-                    addKey1_7.Background = Brushes.Transparent;
-                    addKey1_8.Background = Brushes.Transparent;
-
-                    sBoxRound2_5.Background = Brushes.Transparent;
-                    sBoxRound2_6.Background = Brushes.Transparent;
-                    sBoxRound2_7.Background = Brushes.Transparent;
-                    sBoxRound2_8.Background = Brushes.Transparent;
-
-                    shiftRowRound2_5.Background = Brushes.Transparent;
-                    shiftRowRound2_2.Background = Brushes.Transparent;
-                    shiftRowRound2_15.Background = Brushes.Transparent;
-                    shiftRowRound2_12.Background = Brushes.Transparent;
-                    connectingLines(15, true);
-                    break;
-                case "txtBox16":
-                    source.Background = Brushes.Transparent;
-                    roundZero16.Background = Brushes.Transparent;
-                    sBoxRound1_16.Background = Brushes.Transparent;
-                    shiftRowRound1_4.Background = Brushes.Transparent;
-
-                    mixColumns1_1.Background = Brushes.Transparent;
-                    mixColumns1_2.Background = Brushes.Transparent;
-                    mixColumns1_3.Background = Brushes.Transparent;
-                    mixColumns1_4.Background = Brushes.Transparent;
-
-                    addKey1_1.Background = Brushes.Transparent;
-                    addKey1_2.Background = Brushes.Transparent;
-                    addKey1_3.Background = Brushes.Transparent;
-                    addKey1_4.Background = Brushes.Transparent;
-
-                    sBoxRound2_1.Background = Brushes.Transparent;
-                    sBoxRound2_2.Background = Brushes.Transparent;
-                    sBoxRound2_3.Background = Brushes.Transparent;
-                    sBoxRound2_4.Background = Brushes.Transparent;
-
-                    shiftRowRound2_1.Background = Brushes.Transparent;
-                    shiftRowRound2_8.Background = Brushes.Transparent;
-                    shiftRowRound2_11.Background = Brushes.Transparent;
-                    shiftRowRound2_14.Background = Brushes.Transparent;
-                    connectingLines(16, true);
-                    break;
-
-                default:
-                    break;
-            }
-        }
+         
 
         public void instructions()
         {
@@ -4833,6 +3959,9 @@ namespace AvalancheVisualization
                     othersGrid.Visibility = Visibility.Visible;
                     changeTitle();
 
+                    if (mode == 3)
+                        radioText.Visibility = Visibility.Visible;
+
                     break;
                 default:
                     break;
@@ -4857,22 +3986,20 @@ namespace AvalancheVisualization
             bitsData.Visibility = Visibility.Hidden;
             flippedBitsPiece.Visibility = Visibility.Hidden;
             unflippedBitsPiece.Visibility = Visibility.Hidden;
-            avalancheEffectAESText.Visibility = Visibility.Hidden;
-            showByteDependencyText.Visibility = Visibility.Hidden;
-            divideLine.Visibility = Visibility.Hidden;
+         
             bitRepresentationGrid.Visibility = Visibility.Hidden;
             OrigInitialStateGrid.Visibility = Visibility.Hidden;
-            afterInitialRoundGrid.Visibility = Visibility.Hidden;
+           
             afterRoundsGrid.Visibility = Visibility.Hidden;
-            //MessagesStackPanel.Visibility = Visibility.Hidden;
+           
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
-            afterInitRoundButton.Visibility = Visibility.Hidden;
+            Cbclass1.Visibility = Visibility.Hidden;
+            Cbclass2.Visibility = Visibility.Hidden;
+         
+            updateDataColor();
 
-
-            changePropagationGrid.Visibility = Visibility.Hidden;
-            informationGrid.Visibility = Visibility.Hidden;
-            //comparisonTxtBlock.Visibility = Visibility.Hidden;
+         
             afterRound11Button.Visibility = Visibility.Collapsed;
             afterRound12Button.Visibility = Visibility.Collapsed;
             afterRound13Button.Visibility = Visibility.Collapsed;
@@ -4905,6 +4032,7 @@ namespace AvalancheVisualization
             overviewAES.Visibility = Visibility.Collapsed;
             overviewAES192.Visibility = Visibility.Collapsed;
             overviewAES256.Visibility = Visibility.Collapsed;
+            extraordinaryOccurAes.Visibility = Visibility.Hidden;
             radioDecimal.IsChecked = false;
             radioHexa.IsChecked = false;
             canModify = false;
@@ -4980,9 +4108,9 @@ namespace AvalancheVisualization
             othersGrid.Visibility = Visibility.Hidden;
             readjustStats();
             mode = 0;
-
+            extraordinaryOccur.Visibility = Visibility.Hidden;
             InstructionsUnprep.Visibility = Visibility.Hidden;
-
+            radioText.Visibility = Visibility.Collapsed;
             // clearTextEffect();
 
             StartCanvas.Visibility = Visibility.Visible;
@@ -5005,23 +4133,23 @@ namespace AvalancheVisualization
                 bitsData.HorizontalAlignment = HorizontalAlignment.Center;
 
                 Thickness margin = bitsData.Margin;
-                bitsData.Margin = new Thickness(10, 30, 0, 75);
+                bitsData.Margin = new Thickness(10, 20, 0, 75);
 
                 Grid.SetColumn(flippedBitsPiece, 1);
                 Grid.SetColumnSpan(flippedBitsPiece, 2);
                 Grid.SetColumn(unflippedBitsPiece, 1);
                 Grid.SetColumnSpan(unflippedBitsPiece, 2);
 
-                flippedBitsPiece.Margin = new Thickness(80, 15, 80, 15);
-                unflippedBitsPiece.Margin = new Thickness(80, 15, 80, 15);
+                flippedBitsPiece.Margin = new Thickness(80, 15, 80, 20);
+                unflippedBitsPiece.Margin = new Thickness(80, 15, 80, 20);
 
                 Cb1.HorizontalAlignment = HorizontalAlignment.Right;
                 Cb1.VerticalAlignment = VerticalAlignment.Center;
                 Cb2.HorizontalAlignment = HorizontalAlignment.Right;
                 Cb2.VerticalAlignment = VerticalAlignment.Center;
 
-                Cb1.Margin = new Thickness(5, 0, 10, 80);
-                Cb2.Margin = new Thickness(5, 0, 10, 40);
+                Cb1.Margin = new Thickness(5, 0, 10, 100);
+                Cb2.Margin = new Thickness(5, 0, 10, 60);
 
 
             }
@@ -5104,24 +4232,161 @@ namespace AvalancheVisualization
 
             adjustStats();
             bitsData.Visibility = Visibility.Visible;
-            Cb1.Visibility = Visibility.Visible;
-            Cb2.Visibility = Visibility.Visible;
+          
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
-            var strings = binaryStrings(unchangedCipher, changedCipher);
-            int bitsFlipped = nrOfBitsFlipped(unchangedCipher, changedCipher);
-            int lengthIdentSequence;
-            int lengthFlippedSequence;
-            avalanche = calcAvalancheEffect(bitsFlipped, strings);
-            double angle_1 = flippedBitsPiece.calculateAngle(bitsFlipped, strings);
-            double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - bitsFlipped, strings);
-            showBitSequence(strings);
-            lengthIdentSequence = longestIdenticalSequence(differentBits);
-            lengthFlippedSequence = longestFlippedSequence(differentBits);
-            showStatistics(bitsFlipped, lengthIdentSequence, lengthFlippedSequence, strings);
-            setColors();
-            setAngles(angle_1, angle_2);
-            setToolTips();
+
+            if (mode != 3)
+            {
+                Cb1.Visibility = Visibility.Visible;
+                Cb2.Visibility = Visibility.Visible;
+                var strings = binaryStrings(unchangedCipher, changedCipher);
+                int bitsFlipped = nrOfBitsFlipped(unchangedCipher, changedCipher);
+                int lengthIdentSequence;
+                int lengthFlippedSequence;
+                avalanche = calcAvalancheEffect(bitsFlipped, strings);
+                double angle_1 = flippedBitsPiece.calculateAngle(bitsFlipped, strings);
+                double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - bitsFlipped, strings);
+                showBitSequence(strings);
+                lengthIdentSequence = longestIdenticalSequence(differentBits);
+                lengthFlippedSequence = longestFlippedSequence(differentBits);
+                showStatistics(bitsFlipped, lengthIdentSequence, lengthFlippedSequence, strings);
+                setColors();
+                setAngles(angle_1, angle_2);
+                setToolTips();
+            }
+            else
+            {
+
+                Cbclass1.Visibility = Visibility.Visible;
+                Cbclass2.Visibility = Visibility.Visible;
+
+                var strings = binaryStrings(unchangedCipher, changedCipher);
+                int nrBytesFlipped = bytesFlipped();
+                avalanche = avalancheEffectBytes(nrBytesFlipped);
+
+
+                double angle_1 = flippedBitsPiece.calculateAngleClassic(nrBytesFlipped, unchangedCipher);
+                double angle_2 = unflippedBitsPiece.calculateAngleClassic(unchangedCipher.Length - nrBytesFlipped, unchangedCipher);
+                showBitSequence(strings);
+                int LIBS= longestIdentSequenceBytes();
+                int LFBS = longestFlippedSequenceBytes();
+                classicStats(nrBytesFlipped,LIBS,LFBS);
+                setColors();
+                setAngles(angle_1, angle_2);
+                setToolTips();
+            }
+           
+        }
+
+        public void classicStats(int bytesFlipped, int longestLength, int longestflipped)
+        {
+            stats1.Inlines.Add(new Run(" " + bytesFlipped.ToString()) { Foreground = Brushes.Red, FontWeight = FontWeights.DemiBold });
+
+            if (bytesFlipped > 1 || bytesFlipped == 0)
+                stats1.Inlines.Add(new Run(string.Format(" bytes flipped (out of {0}). Avalanche effect of {1}%", changedCipher.Length, avalanche)));
+            else
+                stats1.Inlines.Add(new Run(string.Format(" byte flipped (out of {0}). Avalanche effect of {1}%", changedCipher.Length, avalanche)));
+
+            stats2.Inlines.Add(new Run(string.Format(" Length of longest identical byte sequence: {0}. Offset {1}.", longestLength.ToString(), sequencePosition)));
+            stats3.Inlines.Add(new Run(string.Format(" Length of longest flipped byte sequence: {0}. Offset {1}.", longestflipped.ToString(), flippedSeqPosition)));
+           
+        }
+
+
+        public int bytesFlipped()
+        {
+            int count = 0;
+
+            for(int i=0; i< changedCipher.Length; i++)
+            {
+                if (changedCipher[i] != unchangedCipher[i])
+                    count++;
+
+            }
+            
+
+
+            return count;
+        }
+
+  
+
+        public double avalancheEffectBytes(int bytesFlipped)
+        {
+
+            double avalancheEffect = ((double)bytesFlipped / unchangedCipher.Length) * 100;
+            double roundUp = Math.Round(avalancheEffect, 1, MidpointRounding.AwayFromZero);
+
+            return roundUp;
+        }
+
+        public int longestIdentSequenceBytes()
+        {
+            int lastCount = 0;
+            int longestCount = 0;
+            int i = 0;
+
+            int offset = 0;
+
+            while (i < unchangedCipher.Length)
+            {
+                if (unchangedCipher[i] == changedCipher[i])
+                {
+                    lastCount++;
+
+                    if (lastCount > longestCount)
+                    {
+                        longestCount = lastCount;
+                        offset = i - lastCount + 1;
+                    }
+                }
+                else
+                {
+                    lastCount = 0;
+                }
+
+                i++;
+            }
+
+            sequencePosition = offset;
+
+            return longestCount;
+           
+        }
+
+        public int longestFlippedSequenceBytes()
+        {
+            int lastCount = 0;
+            int longestCount = 0;
+            int i = 0;
+
+            int offset = 0;
+
+            while (i < unchangedCipher.Length)
+            {
+                if (unchangedCipher[i] != changedCipher[i])
+                {
+                    lastCount++;
+
+                    if (lastCount > longestCount)
+                    {
+                        longestCount = lastCount;
+                        offset = i - lastCount + 1;
+                    }
+                }
+                else
+                {
+                    lastCount = 0;
+                }
+
+                i++;
+            }
+
+            flippedSeqPosition = offset;
+
+            return longestCount;
+
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
@@ -5176,12 +4441,14 @@ namespace AvalancheVisualization
             if (inputInBits.IsVisible)
             {
 
+
                 arrow1.Visibility = Visibility.Visible;
 
                 if (keysize == 2)
                     arrow3.Visibility = Visibility.Visible;
                 else
                     arrow2.Visibility = Visibility.Visible;
+
             }
             else
             {
@@ -5191,6 +4458,8 @@ namespace AvalancheVisualization
                     arrow3.Visibility = Visibility.Hidden;
                 else
                     arrow2.Visibility = Visibility.Hidden;
+
+                buttonNextClickedEvent.Set();
             }
 
             if (!InstructionsPrep.IsVisible)
@@ -5406,11 +4675,11 @@ namespace AvalancheVisualization
 
                 for (byte k = 0; k < statesB[k].Length; k++)
                 {
-             
+
 
                     if (states[39][k] != statesB[39][k])
                     {
-                        
+
 
                         List<int> changePos = changePosition();
                         TextEffect te = new TextEffect();
@@ -5477,14 +4746,14 @@ namespace AvalancheVisualization
                 }
 
 
-        
+
                 enumerator2.MoveNext();
 
                 for (byte k = 0; k < statesB[k].Length; k++)
                 {
                     if (states[47][k] != statesB[47][k])
                     {
-                      
+
 
                         List<int> changePos = changePosition();
                         TextEffect te = new TextEffect();
@@ -5710,6 +4979,8 @@ namespace AvalancheVisualization
                         break;
                 }
             }
+
+
         }
 
         public void showGeneralOverview()
@@ -5775,12 +5046,14 @@ namespace AvalancheVisualization
 
             if (mode == 1)
             {
+                extraordinaryOccur.Visibility = Visibility.Hidden;
                 bitGridDES.Visibility = Visibility.Hidden;
                 showGeneralOverview();
                 percentageChanged();
             }
             else
             {
+                extraordinaryOccurAes.Visibility = Visibility.Hidden;
                 afterRoundsGrid.Visibility = Visibility.Hidden;
                 bitRepresentationGrid.Visibility = Visibility.Hidden;
                 curvedLinesCanvas.Visibility = Visibility.Hidden;
@@ -5805,7 +5078,7 @@ namespace AvalancheVisualization
 
         }
 
-
+       
     }
 }
 #endregion

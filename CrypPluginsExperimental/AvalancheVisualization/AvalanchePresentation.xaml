@@ -215,11 +215,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </UserControl.Resources>
 
     <Grid Name="MainGrid" >
-
         <Grid.Background>
             <LinearGradientBrush EndPoint="0,0" StartPoint="0,1">
                 <GradientStop Color="#1ab3ff" Offset="1"/>
@@ -227,47 +225,35 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.RowDefinitions>
-
             <RowDefinition Height="210"  />
             <RowDefinition Height="225" />
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="210"/>
             <ColumnDefinition Width="210"/>
             <ColumnDefinition Width="*"/>
-
         </Grid.ColumnDefinitions>
+
+        <!--Home View-->
         <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Visible">
             <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Canvas.Left="56" Canvas.Top="52">
                 <TextBlock.BitmapEffect>
                     <DropShadowBitmapEffect  Direction="330" Color="Black" ShadowDepth="5" Opacity="0.5" Softness="0.30" />
                 </TextBlock.BitmapEffect>
             </TextBlock>
-            <TextBlock Name="initExplanationText" Canvas.Top="200" Canvas.Left="135" Width="400" Foreground="#534b4f" FontSize="16" Text="A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.&#xa;You can select in the settings the category of the algorithm whose avalanche effect you would like to test." TextAlignment="Justify" TextWrapping="Wrap" Visibility="Visible">
+            <TextBlock Name="initExplanationText" Canvas.Top="200" Canvas.Left="135" Width="400" Foreground="#534b4f" FontSize="16" Text="{Loc Intro}" TextAlignment="Justify" TextWrapping="Wrap" Visibility="Visible">
             </TextBlock>
 
             <CheckBox x:Name="skip" Canvas.Left="130" Canvas.Bottom="50" Foreground="#534b4f" FontSize="13" Content="Skip Instructions">
             </CheckBox>
         </Canvas>
 
-        <Button x:Name="afterInitRoundButton" Style="{StaticResource buttonStyle}" Width="100" Height="20" Content=" After initial round" Grid.Row="0"  VerticalAlignment="Top" HorizontalAlignment="Center"   Click="afterInitRoundButton_Click" Visibility="Hidden" />
-        <!-- <Button x:Name="goBackButton" Style="{StaticResource buttonStyle}" Width="60" Height="35" Content="Go back"  Grid.Row="1"   VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,10,0,30" Click="goBackButton_Click"  Visibility="Hidden"/>-->
+        <!--Buttons-->
+        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1"  Width="60" Height="25" Content="{Loc DoneButton}" FontSize="13" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="0,45" Visibility="Hidden" Click="doneButton_Click"/>
+        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="60" Height="25" Content="{Loc ClearButton}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,45" Visibility="Hidden" Click="clearButton_Click"/>
 
-        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1"  Width="60" Height="25" Content="Done" FontSize="13" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="0,45" Visibility="Hidden" Click="doneButton_Click"/>
-        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="60" Height="25" Content="Clear" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,45" Visibility="Hidden" Click="clearButton_Click"/>
-        <!--<ScrollViewer x:Name="buttonsSV"  Grid.Row="1" Grid.ColumnSpan="3"                     
-                      Style="{StaticResource RightScrollViewer}"  
-                      Width="640" Height="60" Margin="0,30" 
-                      VerticalAlignment="Bottom"
-                      HorizontalScrollBarVisibility="Hidden"  
-                      VerticalScrollBarVisibility="Disabled" Visibility="Hidden" >-->
-        <!-- <ScrollViewer.Resources>
-              <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">8</sys:Double>
-              </ScrollViewer.Resources>-->
 
         <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3"  VerticalAlignment="Bottom" Margin="10,20" Visibility="Hidden">
-
             <Button x:Name="afterRound0Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="0"  Click="afterRound0Button_Click" />
             <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="1"  Click="afterRound1Button_Click" />
             <Button x:Name="afterRound2Button"  Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="2"   Click="afterRound2Button_Click" />
@@ -294,18 +280,17 @@
             <Button x:Name="overviewButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="8" Content=" General&#xa; Overview" Click="overviewButton_Click"/>
         </StackPanel>
 
+        <!--Instructions-->
         <Grid Name="InstructionsPrep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition />
-                
-                
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="Instructions" />
             <TextBlock Grid.Row="1" Foreground="White" FontSize="20"   Text="Prepared methods:" Margin="70,0"/>
             <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="(AES, DES)" HorizontalAlignment="Center" Margin="0,3,130,0"/>
-         
+
             <StackPanel Grid.Row="2">
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
@@ -338,11 +323,8 @@
                     <TextBlock Foreground="#534b4f" FontSize="16"  Text=" Check avalanche effect." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
             </StackPanel>
-            
-           
+
             <Button Name="continueButton" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="Continue" Click="continueButton_Click" Margin="0,40"/>
-
-
         </Grid>
 
         <Grid Name="InstructionsUnprep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
@@ -391,10 +373,7 @@
             <Button  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="Continue" Click="continueButton_Click" Margin="0,40"/>
         </Grid>
 
-        <TextBlock Name="showByteDependencyText" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how many byte changes are triggered by a single change in an input byte." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="0,30,60,0" Visibility="Hidden">
-        </TextBlock>
-        <TextBlock Name="avalancheEffectAESText" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="Check how strong the avalanche effect is in every single AES-128 round." FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Justify" TextWrapping="Wrap" Width="230" Margin="30,0,0,0" Visibility="Hidden">
-        </TextBlock>
+        <!--Titles -->
         <TextBlock Name="buttonsTitle" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#534b4f" FontWeight="DemiBold" Text="Check avalanche effect after round ..." Visibility="Hidden" Margin="10,55,0,55">
         </TextBlock>
         <TextBlock Name="initStateTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Input Data AES-" Visibility="Hidden" >
@@ -403,13 +382,9 @@
         </TextBlock>
         <TextBlock Name="afterRoundsSubtitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="20" Foreground="#534b4f" HorizontalAlignment="Center" TextAlignment="Center" Text="After round "  Visibility="Hidden" Margin="0,30" >
         </TextBlock>
-        <Line x:Name="divideLine" Grid.Column="1" Grid.RowSpan="2" Stroke="White" StrokeThickness="5" X1="110" Y1="150" X2="110" Y2="300" Visibility="Hidden">
-            <Line.BitmapEffect>
-                <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="5" Opacity="0.8" Softness="0.4"  />
-            </Line.BitmapEffect>
-        </Line>
 
-        <!-- -->
+
+        <!--Pie Chart -->
 
         <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="2"  Width="170" Height="170" VerticalAlignment="Top"  HorizontalAlignment="Right" Margin="10,15">
             <local:PieChart.ToolTip>
@@ -473,12 +448,11 @@
         </Polygon>
         <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="Enable single bit changes"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
-
+        <!--RadioButtons-->
         <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden">
             <TextBlock Foreground="#534b4f" FontSize="14" Padding="5">Display information in
             </TextBlock>
             <StackPanel Name="radioButtonPanel" Orientation="Horizontal" Margin="10,0">
-                <!-- <RadioButton Name="radioBinary" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>-->
                 <RadioButton Name="radioDecimal" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
                 </RadioButton>
                 <RadioButton Name="radioHexa" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
@@ -486,7 +460,7 @@
             </StackPanel>
         </StackPanel>
 
-
+        <!--Unprepared Methods-->
         <Grid Name="othersGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -496,7 +470,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock Name="explanationTxt_others"  Width="160" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Input changes can be done by directly modifying the input plugin."  Foreground="#534b4f"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="12,15"></TextBlock>
+            <TextBlock Name="explanationTxt_others"  Width="160" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Input changes can be done by directly modifying the input feed."  Foreground="#534b4f"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="12,15"></TextBlock>
             <TextBlock Name="title_Other"  Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Avalanche Effect ">
             </TextBlock>
             <TextBlock Grid.Row="1" Text="Input Data" HorizontalAlignment="Center" Foreground="#534b4f" FontSize="17" FontWeight="DemiBold"/>
@@ -533,11 +507,11 @@
                 </ScrollViewer>
             </StackPanel>
 
-            <StackPanel Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="10,20,0,0" >
+            <StackPanel Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" >
                 <TextBlock Foreground="#534b4f" FontSize="12" Padding="5">Display info. in
                 </TextBlock>
                 <StackPanel >
-                    <!-- <RadioButton Name="radioBinary" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>-->
+                    <RadioButton x:Name="radioText" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioText_Checked" Content="Text" Visibility="Collapsed"></RadioButton>
                     <RadioButton x:Name="radioDecOthers" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
                     </RadioButton>
                     <RadioButton x:Name="radioHexOthers" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
@@ -552,22 +526,15 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-
-
                 <TextBox Name="originalMsg" Width="200" IsReadOnly="True" TextWrapping="Wrap" HorizontalAlignment="Right" Margin="0,0,20,0" VerticalScrollBarVisibility="Auto">
                 </TextBox>
-
                 <TextBox Grid.Column="2" Width="200" Name="modifiedMsg"  TextWrapping="Wrap" IsReadOnly="True" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalScrollBarVisibility="Auto">
                 </TextBox>
-
-
             </Grid>
-
         </Grid>
 
 
-
-
+        <!--Prepared Methods, AES-->
 
         <Grid Name="OrigInitialStateGrid"  Grid.RowSpan="2"  Visibility="Hidden" Margin="0,70">
 
@@ -714,15 +681,7 @@
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="initStateTxtBlock32"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-
-
             </Grid>
-
-
-
-
-
-
 
             <Grid x:Name="originalKeyGrid192" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Center" Visibility="Collapsed" Margin="0,0,35,0">
                 <Grid.RowDefinitions>
@@ -814,8 +773,6 @@
                 <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="initStateKey192_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-
-
             </Grid>
 
 
@@ -935,14 +892,10 @@
                 <Border Grid.Row="3" Grid.Column="8" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="initStateKey256_32"  Text="" TextAlignment="Center" FontSize="11" VerticalAlignment="Center"></TextBlock>
                 </Border>
-
-
-
             </Grid>
         </Grid>
 
         <Grid Name="modifiedInitialStateGrid" Grid.Column="1" Grid.RowSpan="2"  Visibility="Hidden" Margin="0,70">
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="23" />
                 <RowDefinition Height="Auto"/>
@@ -1085,8 +1038,6 @@
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="initStateTxtBlock64"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-
-
             </Grid>
 
             <Grid x:Name="modifiedKeyGrid192" Grid.Row="3" Height="100" Width="160" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Visibility="Collapsed">
@@ -1179,8 +1130,6 @@
                 <Border Grid.Row="3" Grid.Column="6" BorderBrush="#534b4f"  BorderThickness="2">
                     <TextBlock x:Name="modKey192_24"  Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </Border>
-
-
             </Grid>
 
             <Grid x:Name="modifiedKeyGrid256" Grid.Row="3" Height="100" Width="190" VerticalAlignment="Center"  HorizontalAlignment="Left" Visibility="Collapsed" >
@@ -1302,7 +1251,7 @@
             </Grid>
         </Grid>
 
-
+        <!--Bit Representation AES-->
         <Grid Name="inputInBits"  Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0,70">
 
             <TextBlock Style="{StaticResource textBlockStyle}" Text="Binary representation" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ></TextBlock>
@@ -1541,7 +1490,7 @@
                         <TextBlock Name="keyBit7" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                         <TextBlock Name="keyBit8" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                     </StackPanel>
-                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+
                 </Border>
                 <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <StackPanel Orientation="Horizontal" >
@@ -2441,10 +2390,9 @@
         </Grid>
 
 
-
         <TextBlock Name="instructionsTxtBlock2" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Height="30" Visibility="Hidden" Width="250"  Foreground="#534b4f" FontSize="15" FontWeight="DemiBold" TextWrapping="Wrap" Text="Click on the bit(s) you like to flip." Margin="0,70,0,0">
         </TextBlock>
-        
+
         <StackPanel x:Name="changeMsgAes" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="50,100,50,0" Visibility="Hidden">
             <TextBlock Text="Message and key changes can be made in two ways:"  Foreground="#534b4f" ></TextBlock>
             <BulletDecorator Margin="0,5,0,2">
@@ -2460,134 +2408,6 @@
                 <TextBlock    Text=" Click on single bits -- only possible after checking checkbox."  Foreground="#534b4f" ></TextBlock>
             </BulletDecorator>
         </StackPanel>
-        
-        <Grid Name="afterInitialRoundGrid" Grid.Column="2" Grid.RowSpan="2" Height="280"  Visibility="Hidden">
-            <TextBlock Style="{StaticResource textBlockStyle}"  FontSize="17" Text="After initial round" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,60,55,0"  Height="30">
-            </TextBlock>
-            <Grid Grid.Row="0" Grid.Column="1"  Grid.RowSpan="2" Height="240" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,25,0,0"  >
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-
-
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey1"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey2"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey3"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="0" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey4"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="#534b4f" BorderThickness="2" >
-                    <TextBlock x:Name="afterAddKey5"  Text="" TextAlignment="Center" ></TextBlock>
-
-                </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey6"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey7"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey8"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey9"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey10"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey11"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey12"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="3" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey13"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey14"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="3" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey15"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="3" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey16"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-
-                <Border Grid.Row="5" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey17"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="5" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey18"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="5" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey19"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="5" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey20"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey21"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey22"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey23"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="6" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey24"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey25"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey26"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey27"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="7" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey28"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-
-                <Border Grid.Row="8" Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey29"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="2" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey30"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="3" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey31"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-                <Border Grid.Row="8" Grid.Column="4" BorderBrush="#534b4f"  BorderThickness="2">
-                    <TextBlock x:Name="afterAddKey32"  Text="" TextAlignment="Center" ></TextBlock>
-                </Border>
-
-            </Grid>
-        </Grid>
 
 
         <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="Hidden"  VerticalAlignment="Center" Margin="0,0,0,70">
@@ -2738,8 +2558,7 @@
             </Grid>
         </Grid>
 
-
-
+        <!--Bit Representation intermediate states AES -->
         <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Height="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40">
 
             <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Text="Binary values" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Margin="0,50" ></TextBlock>
@@ -3901,10 +3720,9 @@
                     </Border>
                 </UniformGrid>
             </ScrollViewer>
-
         </Grid>
-        <!--#endregion-->
 
+        <!--Bit Representation Intermediate States DES-->
         <Grid Name="bitGridDES" Grid.ColumnSpan="3"  Visibility="Hidden" Height="250"  >
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -4141,7 +3959,7 @@
             </StackPanel>
         </Grid>
 
-
+        <!--Statistical Data-->
         <StackPanel x:Name="bitsData" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Hidden" Margin="0,25,180,75">
             <BulletDecorator>
                 <BulletDecorator.Bullet>
@@ -4161,7 +3979,7 @@
                 </BulletDecorator.Bullet>
                 <TextBlock Name="stats3" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
             </BulletDecorator>
-            <BulletDecorator Name="stats4Bullet" >
+            <BulletDecorator Name="stats4Bullet">
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
@@ -4169,20 +3987,16 @@
             </BulletDecorator>
         </StackPanel>
 
-
-
-
+        <TextBlock x:Name="extraordinaryOccurAes" Grid.Row="1" Grid.Column="1" FontSize="15" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Left"  Width="200" Text="" Visibility="Hidden" />
+        <TextBlock x:Name="extraordinaryOccur" Grid.Row="1" Grid.ColumnSpan="2" FontSize="15" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="45,20,0,0" Width="340" Visibility="Hidden" />
 
 
         <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="110" Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False" Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
         <CheckBox Name="Cb2" Grid.Row="1" Grid.Column="2" Width="110"  Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False"  Margin="45,0,0,60" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <CheckBox Name="Cbclass1" Grid.Row="1" Grid.Column="2" Width="115" Background="#4cbb17" Content="Unchanged bytes" IsHitTestVisible="False" Margin="45,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <CheckBox Name="Cbclass2" Grid.Row="1" Grid.Column="2" Width="115"  Background="#ff2800" Content="Flipped bytes" IsHitTestVisible="False"  Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
 
-
-
-
-
-
-
+        <!--Input Representation DES-->
         <Grid Name="inputGridDES" Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Hidden">
             <Grid>
                 <Grid.RowDefinitions>
@@ -4218,7 +4032,7 @@
                         <TextBlock    Text=" Click on single bits -- only possible after checking checkbox."  Foreground="#534b4f" ></TextBlock>
                     </BulletDecorator>
                 </StackPanel>
-                
+
                 <Border Grid.Row="2" BorderBrush="#534b4f"  BorderThickness="2" Height="50" Width="550" >
                     <StackPanel Orientation="Horizontal" Margin="13,0">
                         <TextBlock Name="desBit1" FontSize="15" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown"></TextBlock>
@@ -4361,7 +4175,6 @@
         </Grid>
 
         <Grid Name="modificationGridDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden" >
-
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
@@ -4416,6 +4229,7 @@
 
         </Grid>
 
+        <!-- General Overview-->
         <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview DES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
             </TextBlock>
@@ -4574,7 +4388,7 @@
         <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview AES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
             </TextBlock>
-                <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
+            <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>
                     <ColumnDefinition Width="405"/>
@@ -4884,1890 +4698,7 @@
                 <TextBlock x:Name="percentAes256_14" Grid.Row="15" Grid.Column="2" FontFamily="DejaVu Sans Light"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
             </Grid>
         </Grid>
-
-        
-        <Grid x:Name="changePropagationGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-            <ScrollViewer Width="450" Height="410" Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Margin="10,0,0,10">
-
-                <Grid x:Name="byteDependency"  Height="390" VerticalAlignment="Top" Margin="0,10,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-                        <RowDefinition Height="17"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="30"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="20"/>
-                    </Grid.ColumnDefinitions>
-
-
-
-                    <Border Grid.Row="17" Grid.Column="4" Background="Beige" Grid.ColumnSpan="7">
-                        <TextBlock FontStretch="Expanded"  HorizontalAlignment="Center" Text="round  1" FontWeight="Bold" Foreground="#6e7f80" >
-                        </TextBlock>
-                    </Border>
-                    <Border Grid.Row="17" Grid.Column="12" Background="Orange"  Grid.ColumnSpan="7">
-                        <TextBlock FontStretch="Expanded"  HorizontalAlignment="Center" Text="round  2" FontWeight="Bold" Foreground="#6e7f80" >
-                        </TextBlock>
-                    </Border>
-                    <Border Grid.Row="17" Grid.Column="20" Background="Bisque" Grid.ColumnSpan="7">
-                        <TextBlock FontStretch="Expanded"  HorizontalAlignment="Center" Text="round  3" FontWeight="Bold" Foreground="#6e7f80" >
-                        </TextBlock>
-                    </Border>
-
-
-
-                    <TextBlock Text="Input text"  FontSize="10" Foreground="White" Height="60" Margin="0,0,0.333,0" VerticalAlignment="Bottom" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-
-                    <TextBox x:Name="txtBox1" Grid.Row="1"    Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox  x:Name="txtBox2" Grid.Row="2"  Background="Transparent"  IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox3" Grid.Row="3"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox4" Grid.Row="4"  Background="Transparent" IsReadOnly="True" BorderThickness="0,0,0,1" BorderBrush="#534b4f"  GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox5" Grid.Row="5" Background="Transparent" IsReadOnly="True" BorderThickness="0,1,0,0" BorderBrush="#534b4f"  GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox6" Grid.Row="6"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox7" Grid.Row="7"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox8" Grid.Row="8"  Background="Transparent" IsReadOnly="True" BorderThickness="0,0,0,1" BorderBrush="#534b4f" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox9" Grid.Row="9"  Background="Transparent" IsReadOnly="True" BorderThickness="0,1,0,0" BorderBrush="#534b4f" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox10" Grid.Row="10"   Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox11" Grid.Row="11" Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox12" Grid.Row="12"   Background="Transparent" IsReadOnly="True" BorderThickness="0,0,0,1" BorderBrush="#534b4f"  GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox13" Grid.Row="13"   Background="Transparent" IsReadOnly="True" BorderThickness="0,1,0,0" BorderBrush="#534b4f" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus"  TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox14" Grid.Row="14"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox15" Grid.Row="15"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-                    <TextBox x:Name="txtBox16" Grid.Row="16"  Background="Transparent" IsReadOnly="True" BorderThickness="0" GotFocus="txtBox1_GotFocus" LostFocus="txtBox_LostFocus" TextAlignment="Center">
-                    </TextBox>
-
-
-                    <Border x:Name="byte1_1"  Grid.Row="1" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte2_1" Grid.Row="2" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1">
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte3_1" Grid.Row="3" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte4_1" Grid.Row="4" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte5_1" Grid.Row="5" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte6_1" Grid.Row="6" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte7_1" Grid.Row="7" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte8_1" Grid.Row="8" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte9_1" Grid.Row="9" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte10_1" Grid.Row="10" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte11_1" Grid.Row="11" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte12_1" Grid.Row="12" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte13_1" Grid.Row="13" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte14_1" Grid.Row="14" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte15_1" Grid.Row="15" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border x:Name="byte16_1" Grid.Row="16" Grid.Column="1" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" >
-                        </Line>
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="1" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="1" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="1" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-                    <Border x:Name="byte1_2" Grid.Row="1" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte2_2" Grid.Row="2" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte3_2" Grid.Row="3" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte4_2" Grid.Row="4" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte5_2" Grid.Row="5" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte6_2" Grid.Row="6" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte7_2" Grid.Row="7" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte8_2" Grid.Row="8" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte9_2" Grid.Row="9" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte10_2" Grid.Row="10" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte11_2" Grid.Row="11" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte12_2" Grid.Row="12" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte13_2" Grid.Row="13" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte14_2" Grid.Row="14" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte15_2" Grid.Row="15" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte16_2" Grid.Row="16" Grid.Column="3" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="3" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="3" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="3" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="3" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-                    <Border x:Name="byte1_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte2_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="30" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="30" Y2="179" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte4_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="30" Y2="128" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte5_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="30" Y2="77" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte6_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="30" Y2="26" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte7_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="30" Y2="249" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte8_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="30" Y2="196" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte9_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="30" Y2="145" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte10_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="30" Y2="94" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte11_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="30" Y2="43" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte12_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="30" Y2="267" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte13_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="30" Y2="215" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte14_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="30" Y2="162" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte15_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="30" Y2="112" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte16_3" Grid.Row="1" Grid.Column="5" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="30" Y2="60" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="5" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="5" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="5" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="5" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="5" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="5" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-                    <Border x:Name="byte1_4"  Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="10" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_5"  Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="30" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="232" X2="30" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="232" X2="30" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="30" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="232" X2="30" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="179" X2="30" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="179" X2="30" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="179" X2="30" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="179" X2="30" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="128" X2="30" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="128" X2="30" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="128" X2="30" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="128" X2="30" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte5_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="77" X2="30" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte5_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="77" X2="30" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte5_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="77" X2="30" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte5_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="77" X2="30" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte6_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="26" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte6_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="26" X2="30" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte6_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="26" X2="30" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte6_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="26" X2="30" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte7_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="249" X2="30" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte7_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="249" X2="30" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte7_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="249" X2="30" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte7_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="249" X2="30" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte8_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="196" X2="30" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte8_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="196" X2="30" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte8_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="196" X2="30" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte8_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="196" X2="30" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte9_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="145" X2="30" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte9_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="145" X2="30" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte9_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="145" X2="30" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte9_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="145" X2="30" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte10_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="94" X2="30" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte10_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="94" X2="30" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte10_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="94" X2="30" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte10_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="94" X2="30" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte11_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="43" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte11_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="43" X2="30" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte11_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="43" X2="30" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte11_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="43" X2="30" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte12_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="267" X2="30" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte12_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="267" X2="30" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte12_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="267" X2="30" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte12_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="267" X2="30" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte13_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="215" X2="30" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte13_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="215" X2="30" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte13_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="215" X2="30" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte13_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="215" X2="30" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte14_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="162" X2="30" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte14_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="162" X2="30" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte14_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="162" X2="30" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte14_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="162" X2="30" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte15_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="112" X2="30" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte15_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="112" X2="30" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte15_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="112" X2="30" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte15_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="112" X2="30" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte16_4" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="60" X2="30" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte16_5" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="60" X2="30" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte16_6" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="60" X2="30" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte16_7" Grid.Row="1" Grid.Column="7" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="60" X2="30" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="7" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="7" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="7" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="7" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="7" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="7" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-                    <Border  x:Name="byte1_8" Grid.Row="1" Grid.Column="9" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="34" X2="30" Y2="34" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte2_8" Grid.Row="1" Grid.Column="9" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="240" X2="30" Y2="240" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte3_8" Grid.Row="1" Grid.Column="9" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="170" X2="30" Y2="170" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte4_8" Grid.Row="1" Grid.Column="9" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="102" X2="30" Y2="102" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="9" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="9" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="9" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="9" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="9" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="9" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-                    <Border  x:Name="byte1_9" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte1_10" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte1_11" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="43" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_12" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_9" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden" >
-                        <Line X1="0" Y1="215" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_10" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="232" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte2_11" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="249" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte2_12" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_9" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_10" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_11" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_12" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_9" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_10" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_11" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_12" Grid.Row="1" Grid.Column="11" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="11" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="11" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="11" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="11" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="11" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="11" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-                    <Border x:Name="byte1_13" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_14" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_15" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border  x:Name="byte1_16" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="128" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte2_13" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="40" Y2="215" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte2_14" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="162" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte2_15" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="112" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte2_16" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="60" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte3_13" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="145" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte3_14" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="94" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte3_15" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="43" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte3_16" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="267" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte4_13" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="77" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte4_14" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="26" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte4_15" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="249" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte4_16" Grid.Row="1" Grid.Column="13" Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="196" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-
-
-                    <Border Grid.Row="4" Grid.Column="13" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="13" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="13" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="13" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="13" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="13" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-                    <Border x:Name="byte1_17" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="10" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_18" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="26" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_19" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="43" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_20" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="10" X2="40" Y2="60" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-
-
-                    <Border x:Name="byte1_21" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="77" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_22" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="94" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_23" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="112" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_24" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="128" X2="40" Y2="128" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-
-
-                    <Border x:Name="byte1_25" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="145" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_26" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="162" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_27" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="179" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_28" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="179" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte1_29"  Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="215" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border x:Name="byte1_30"  Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="232" Stroke="Red" StrokeThickness="1"/>
-                    </Border>
-                    <Border  x:Name="byte1_31" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte1_32" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="232" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte2_17" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_18" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_19" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_20" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="60" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte2_21" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_22" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_23" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_24" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="112" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte2_25" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_26" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_27" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_28" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="162" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte2_29" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_30" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_31" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte2_32" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="215" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte3_17" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_18" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_19" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_20" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="43" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte3_21" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_22" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_23" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_24" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="94" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte3_25" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_26" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_27" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_28" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="145" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte3_29" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_30" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_31" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte3_32" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="267" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-
-                    <Border x:Name="byte4_17" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_18" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_19" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="43" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_20" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="26" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte4_21" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_22" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_23" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_24" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="77" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte4_25" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_26" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_27" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_28" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="196" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border x:Name="byte4_29" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_30" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_31" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border x:Name="byte4_32" Grid.Row="1" Grid.Column="15"  Grid.RowSpan="16" Visibility="Hidden">
-                        <Line X1="0" Y1="249" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="15" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="15" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="15" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="15" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="15" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-                    <Border   Grid.Row="1" Grid.Column="17"  Grid.RowSpan="16" >
-                        <Line X1="0" Y1="34" X2="40" Y2="34" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border    Grid.Row="1" Grid.Column="17"  Grid.RowSpan="16" >
-                        <Line X1="0" Y1="102" X2="40" Y2="102" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border   Grid.Row="1" Grid.Column="17"  Grid.RowSpan="16" >
-                        <Line X1="0" Y1="170" X2="40" Y2="170" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border   Grid.Row="1" Grid.Column="17"  Grid.RowSpan="16" >
-                        <Line X1="0" Y1="240" X2="40" Y2="240" Stroke="Red" StrokeThickness="1" />
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="17" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-
-
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="10" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="26" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="43" X2="40" Y2="43" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="60" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="77" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="94" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="112" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="128" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="145" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="162" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="179" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="196" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="215" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="232" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="249" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="19"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="267" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="19" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="10" X2="40" Y2="10" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="26" X2="40" Y2="232" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="43" X2="40" Y2="179" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="60" X2="40" Y2="128" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="77" X2="40" Y2="77" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="94" X2="40" Y2="26" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="112" X2="40" Y2="249" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="128" X2="40" Y2="196" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="145" X2="40" Y2="145" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="162" X2="40" Y2="94" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="179" X2="40" Y2="43" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="196" X2="40" Y2="267" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="215" X2="40" Y2="215" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="232" X2="40" Y2="162" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="249" X2="40" Y2="112" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-                    <Border Grid.Row="1" Grid.Column="21"  Grid.RowSpan="16">
-                        <Line X1="0" Y1="267" X2="40" Y2="60" Stroke="Red" StrokeThickness="1" Visibility="Visible"/>
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="21" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="23" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="25" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Row="5" Grid.Column="15" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="17" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="19" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="21" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="23" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="25" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Row="8" Grid.Column="17" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="19" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="21" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="23" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="25" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-
-                    <Border Grid.Row="9" Grid.Column="17" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="19" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="21" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="23" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="25" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Row="12" Grid.Column="17" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="19" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="21" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="23" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="25" BorderThickness="0,0,0,1" BorderBrush="#534b4f" >
-                    </Border>
-
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Row="13" Grid.Column="17" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="19" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="21" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="25" BorderThickness="0,1,0,0" BorderBrush="#534b4f" >
-                    </Border>
-
-
-                    <TextBlock Text="After &#xa;round 0" Grid.Column="2" Grid.ColumnSpan="2" FontSize="10" Foreground="White" Margin="-5,-5,5.667,5" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1" Grid.Column="2">
-                        <TextBlock x:Name="roundZero1" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="2">
-                        <TextBlock x:Name="roundZero2"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3" Grid.Column="2">
-                        <TextBlock x:Name="roundZero3"  TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero4"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero5"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6" Grid.Column="2">
-                        <TextBlock x:Name="roundZero6"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7" Grid.Column="2">
-                        <TextBlock x:Name="roundZero7"  TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <Border Grid.Row="8" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero8"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero9"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10" Grid.Column="2">
-                        <TextBlock x:Name="roundZero10"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11" Grid.Column="2">
-                        <TextBlock x:Name="roundZero11"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero12"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="roundZero13"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14" Grid.Column="2">
-                        <TextBlock x:Name="roundZero14"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15" Grid.Column="2">
-                        <TextBlock x:Name="roundZero15"  TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16" Grid.Column="2">
-                        <TextBlock x:Name="roundZero16"  TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-                    <TextBlock Text="After S-Box" Grid.Column="4" Grid.ColumnSpan="2" FontSize="10" Foreground="White"  >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_1"  TextAlignment="Center" Height="19" Margin="0,0,0,-0.333" VerticalAlignment="Top"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <Border Grid.Row="4" Grid.Column="4" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound1_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound1_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_7"   TextAlignment="Center"></TextBlock>
-
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="4" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound1_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-
-                        <TextBlock x:Name="sBoxRound1_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="4" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound1_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound1_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16" Grid.Column="4">
-                        <TextBlock x:Name="sBoxRound1_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-
-                    <TextBlock Text="After shift&#xa;  rows" Grid.ColumnSpan="2" Grid.Column="6"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_1"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_2"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_3"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="6" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_4"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="6" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_6"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="6" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="6" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_9"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_10"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_11"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="6" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_12"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="6" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound1_13"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_14"    TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16" Grid.Column="6">
-                        <TextBlock x:Name="shiftRowRound1_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-
-                    <TextBlock Text="After mix&#xa;columns" Grid.Column="8" Grid.ColumnSpan="2" FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="8" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="8" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="8" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="8" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="8" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="8" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns1_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16" Grid.Column="8">
-                        <TextBlock x:Name="mixColumns1_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After add key" Grid.Column="10"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4" Grid.Column="10" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5" Grid.Column="10" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8" Grid.Column="10" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9" Grid.Column="10" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12" Grid.Column="10" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13" Grid.Column="10" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey1_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16" Grid.Column="10">
-                        <TextBlock x:Name="addKey1_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-                    <TextBlock Text="After S-Box" Grid.Column="12"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="12" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="12" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="12" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="12" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="12" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="12" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound2_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="12">
-                        <TextBlock x:Name="sBoxRound2_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-
-                    <TextBlock Text="After shift&#xa;  rows" Grid.Column="14" Grid.ColumnSpan="2" FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="14" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="14" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <Border Grid.Row="8"  Grid.Column="14" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="14" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="14" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="14" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound2_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="14">
-                        <TextBlock x:Name="shiftRowRound2_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After mix&#xa;columns" Grid.Column="16" Grid.ColumnSpan="2" FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="16" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="16" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="16" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="16" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="16" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="16" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns2_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="16">
-                        <TextBlock x:Name="mixColumns2_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After add key" Grid.Column="18"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="18" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="18" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="18" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="18" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="18" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="18" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey2_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="18">
-
-                        <TextBlock x:Name="addKey2_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="18">
-                        <TextBlock x:Name="addKey2_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-
-                    <TextBlock Text="After S-Box" Grid.Column="20"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="20" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="20" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="20" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="20" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="20" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="20" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="sBoxRound3_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="20">
-                        <TextBlock x:Name="sBoxRound3_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After shift&#xa;  rows" Grid.Column="22" Grid.ColumnSpan="2" FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_1"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_2"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_3"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="22" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_4"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="22" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_5"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_6"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_7"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="22" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_8"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="22" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_9"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_10"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_11"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="22" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_12"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="22" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="shiftRowRound3_13"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_14"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_15"   TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="22">
-                        <TextBlock x:Name="shiftRowRound3_16"   TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After mix&#xa;columns" Grid.ColumnSpan="2" Grid.Column="24"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_1" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_2" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_3" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="24" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_4" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="24" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_5" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_6" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_7" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="24" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_8" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="24" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_9" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_10" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_11" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="24" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_12" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="24" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="mixColumns3_13" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_14" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_15" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="24">
-                        <TextBlock x:Name="mixColumns3_16" TextAlignment="Center"></TextBlock>
-                    </Border>
-
-                    <TextBlock Text="After add key"  Grid.Column="26"  FontSize="10" Foreground="White" >
-                        <TextBlock.LayoutTransform>
-                            <RotateTransform Angle="-85"/>
-                        </TextBlock.LayoutTransform>
-                    </TextBlock>
-                    <Border Grid.Row="1"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_1" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="2"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_2" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="3"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_3" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="4"  Grid.Column="26" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_4" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="5"  Grid.Column="26" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_5" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="6"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_6" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="7"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_7" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="8"  Grid.Column="26" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_8" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="9"  Grid.Column="26" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_9" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="10"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_10" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="11"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_11" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="12"  Grid.Column="26" BorderThickness="0,0,0,1" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_12" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="13"  Grid.Column="26" BorderThickness="0,1,0,0" BorderBrush="#534b4f">
-                        <TextBlock x:Name="addKey3_13" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="14"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_14" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="15"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_15" TextAlignment="Center"></TextBlock>
-                    </Border>
-                    <Border Grid.Row="16"  Grid.Column="26">
-                        <TextBlock x:Name="addKey3_16" TextAlignment="Center"></TextBlock>
-                    </Border>
-                </Grid>
-
-            </ScrollViewer>
-
-        </Grid>
-
-
-        <Grid Name="informationGrid" Height="270" Width="170" Grid.Column="2" Grid.RowSpan="2" VerticalAlignment="Center" Margin="0,0,-20,0" Visibility="Hidden">
-
-            <Border  BorderBrush="White" Height="240" Width="160" BorderThickness="5" CornerRadius="5">
-                <Border.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="3" Opacity="2" Softness="7"  />
-                </Border.BitmapEffect>
-            </Border>
-            <StackPanel  Height="235" Width="155"  >
-
-                <TextBlock Margin="15,10" TextWrapping="Wrap">Select one single byte from the input column on the left hand side to check which bytes would be changed if the selected byte were to be modified.</TextBlock>
-                <TextBlock Margin="15,0" TextWrapping="Wrap"> you can use the scroll bar on the bottom to see the rest of the cipher state up to round 3.</TextBlock>
-            </StackPanel>
-        </Grid>
-
-
     </Grid>
-
-
 </UserControl>
 
 

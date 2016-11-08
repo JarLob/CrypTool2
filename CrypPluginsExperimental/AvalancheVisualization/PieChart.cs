@@ -13,8 +13,10 @@ namespace AvalancheVisualization
         public double pieceRotation;
         public Point startingPointOfArc;
         public Point endPointOfArc;
+    
 
-
+  
+      
         protected override Geometry DefiningGeometry
         {
             get
@@ -54,7 +56,24 @@ namespace AvalancheVisualization
         //calculates share of the pie chart to be occupied
         public double calculateAngle(int bits, Tuple<string, string> strTuple)
         {
+            
             double angleDegree = ((double)bits / strTuple.Item1.Length) * 360;
+           
+            
+           
+            double roundUpAngle = Math.Round(angleDegree, 0, MidpointRounding.AwayFromZero);
+
+            return roundUpAngle;
+        }
+
+
+        public double calculateAngleClassic(int bytes, byte[] cipher)
+        {
+
+            double angleDegree = ((double)bytes / cipher.Length) * 360;
+
+
+      
             double roundUpAngle = Math.Round(angleDegree, 0, MidpointRounding.AwayFromZero);
 
             return roundUpAngle;

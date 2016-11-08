@@ -28,7 +28,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #region Private Variables
 
         private int keyLength;
-        private int language;
         private int prepSelection;
         private int unprepSelection;
         private Category selectedCategory;
@@ -53,7 +52,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// </summary>
 
 
-        [TaskPane("Category", "Select the desired category", "Test Avalanche effect", 0, false, ControlType.ComboBox, new String[] { "Prepared methods", "Unprepared methods"})]
+        [TaskPane("Category", "CategoryTooltip", "GroupName", 0, false, ControlType.ComboBox, new String[] { "Prepared methods", "Unprepared methods"})]
         public Category SelectedCategory
         {
             get { return this.selectedCategory; }
@@ -71,7 +70,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "Select the method whose avalanche effect you would like to test", "Test Avalanche effect", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
+        [TaskPane("Selection", "SelectionTooltip", "GroupName", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
         public int PrepSelection
         {
             get { return this.prepSelection; }
@@ -89,7 +88,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "Select the category of the method whose avalanche effect you would like to test", "Test Avalanche effect", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
+        [TaskPane("Selection", "SelectionTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
         public int UnprepSelection
         {
             get { return this.unprepSelection; }
@@ -108,7 +107,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
 
-        [TaskPane("Key length", "Select the length of the key to be entered", "Test Avalanche effect", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
+        [TaskPane("KeyLength", "KeyLengthTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "128 bits", "192 bits", "256 bits" })]
         public int KeyLength
         {
             get { return this.keyLength; }

@@ -13,6 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
+
+
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
@@ -22,12 +25,9 @@ using System.Collections.Generic;
 using System.Threading;
 using Cryptool.PluginBase.IO;
 using System.Windows.Threading;
-using System.Collections;
 using System.Text;
 using AvalancheVisualization;
 using System.Linq;
-using System.Windows;
-
 
 namespace Cryptool.Plugins.AvalancheVisualization
 {
@@ -35,7 +35,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
     [Author("Camilo Echeverri", "cechever@mail.uni-mannheim.de", "University of Mannheim", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("AvalancheVisualization", "Tests the avalanche effect property of some cryptographic algorithms", "AvalancheVisualization/userdoc.xml", new[] { "AvalancheVisualization/Images/Avalanche.png" })]
+    [PluginInfo("AvalancheVisualization.Properties.Resources","PluginCaption", "AvalancheTooltip", "AvalancheVisualization/userdoc.xml", new[] { "AvalancheVisualization/Images/Avalanche.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class AvalancheVisualization : ICrypComponent
@@ -49,18 +49,20 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private readonly AvalancheVisualizationSettings settings = new AvalancheVisualizationSettings();
         private ICryptoolStream text;
         private ICryptoolStream key;
+        private ICryptoolStream outputStream;
+
         byte[] originalText;
         byte[] originalKey;
-        private byte[] inputObject = { };
+        byte[] textInput;
+        byte[] keyInput;
         string msgA;
         string msgB;
-        private ICryptoolStream outputStream;
+
         private AES aes = new AES();
         private DES des = new DES();
         private AvalanchePresentation pres = new AvalanchePresentation();
-        private CStreamWriter outputStreamWriter = new CStreamWriter();
         private bool textChanged = false;
-
+    
 
 
 
@@ -68,7 +70,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "Key", "Enter key", false)]
+        [PropertyInfo(Direction.InputData, "InputKey", "InputKeyDescription", false)]
         public ICryptoolStream Key
         {
             get
@@ -96,29 +98,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-     /*   [PropertyInfo(Direction.InputData, "Text input", "third input", false)]
-        public ICryptoolStream UnchangedCipher
-        {
-            get
-            {
-                return unchangedCipher;
-            }
-            set
-            {
 
-                this.unchangedCipher = value;
-                OnPropertyChanged("UnchangedCipher");
-
-            }
-        }*/
-
-
-
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
-       /* [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", false)]
+        [PropertyInfo(Direction.OutputData, "Outputstream", "output", false)]
         public ICryptoolStream OutputStream
         {
             get
@@ -128,9 +109,29 @@ namespace Cryptool.Plugins.AvalancheVisualization
             set
             {
                 this.outputStream = value;
-                // empty
+                OnPropertyChanged("OutputStream");
             }
-        }*/
+        }
+
+
+
+        /// <summary>
+        /// HOWTO: Output interface to write the output data.
+        /// You can add more output properties ot other type if needed.
+        /// </summary>
+        /* [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", false)]
+         public ICryptoolStream OutputStream
+         {
+             get
+             {
+                 return outputStream;
+             }
+             set
+             {
+                 this.outputStream = value;
+                 // empty
+             }
+         }*/
 
         #endregion
 
@@ -184,6 +185,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void d_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
 
+
             GuiLogMessage("property changed", NotificationLevel.Info);
             //Console.WriteLine(string.Format("Property {0} just changed", e.PropertyName));
         }
@@ -192,218 +194,258 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Execute()
         {
 
-           
-           // byte[] buffer = new byte[UnchangedCipher.Length];
-            byte[] textInput = new byte[Text.Length];
-      
+            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
+            // byte[] buffer = new byte[UnchangedCipher.Length];
+            textInput = new byte[Text.Length];
+
 
             switch (settings.SelectedCategory)
             {
                 case AvalancheVisualizationSettings.Category.Prepared:
 
-               
-                        byte[] keyInput = new byte[Key.Length];
 
-                        using (CStreamReader reader = Text.CreateReader())
+                    keyInput = new byte[Key.Length];
+
+                    using (CStreamReader reader = Text.CreateReader())
+                    {
+                        reader.Read(textInput);
+                    }
+
+                    using (CStreamReader reader = Key.CreateReader())
+                    {
+                        reader.Read(keyInput);
+                    }
+
+
+
+                    if (settings.PrepSelection == 0)
+                    {
+                        pres.mode = 0;
+
+
+
+                        string inputMessage = Encoding.Default.GetString(textInput);
+
+
+                        if (textChanged && pres.canModify)
                         {
-                            reader.Read(textInput);
-                        }
+                            aes.text = textInput;
+                            aes.key = keyInput;
 
-                        using (CStreamReader reader = Key.CreateReader())
-                        {
-                            reader.Read(keyInput);
-                        }
+                            //pres.myMethod(aes);
+                            // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
 
+                            /* pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                             {
+                                 //pres.modifiedMsg.Text = inputMessage;                               
+                                 pres.getTextBoxContent();
+                                 //pres.loadInitialState(temporary, false);
+                                 //pres.modifyTxtBlock.Visibility = Visibility.Hidden;
 
-                        if (settings.PrepSelection == 0)
-                        {
-                            pres.mode = 0;
-
-
-
-                            string inputMessage = Encoding.Default.GetString(textInput);
+                             }, null);*/
 
 
+                            // pres.key = key;
+                            byte[] temporary = aes.checkTextLength();
+                            byte[] tmpKey = aes.checkKeysize();
+                            pres.key = tmpKey;
+                            pres.textB = temporary;
+                            aes.executeAES(false);
 
-                            if (textChanged && pres.canModify)
+
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                aes.text = textInput;
-                                aes.key = keyInput;
-
-                                //pres.myMethod(aes);
-                                // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
-
-                                /* pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                 {
-                                     //pres.modifiedMsg.Text = inputMessage;                               
-                                     pres.getTextBoxContent();
-                                     //pres.loadInitialState(temporary, false);
-                                     //pres.modifyTxtBlock.Visibility = Visibility.Hidden;
-
-                                 }, null);*/
-
-
-                                // pres.key = key;
-                                byte[] temporary = aes.checkTextLength();
-                                byte[] tmpKey = aes.checkKeysize();
-                                pres.key = tmpKey;
-                                pres.textB = temporary;
-                                aes.executeAES(false);
-
-
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    pres.setAndLoadButtons();
+                                pres.setAndLoadButtons();
 
                                 //if (!originalText.Equals(text))
-                                    pres.loadChangedMsg(temporary, true);
+                                pres.loadChangedMsg(temporary, true);
                                 //if (!originalKey.Equals(tmpKey))
-                                    pres.loadChangedKey(tmpKey);
+                                pres.loadChangedKey(tmpKey);
 
-                                    pres.coloringText();
-                                    pres.coloringKey();
-                                    pres.updateDataColor();
-                                }, null);
+                                pres.coloringText();
+                                pres.coloringKey();
+                                pres.updateDataColor();
+                            }, null);
 
-                                pres.statesB = aes.statesB;
+                            pres.statesB = aes.statesB;
 
-                            }
-                            else if (!textChanged && !pres.canModify)
+
+                            using (CStreamWriter CSWriter = new CStreamWriter())
                             {
-                                textChanged = true;
 
-                                originalText = textInput;
+                                OutputStream = CSWriter;
+                                // buttonNextClickedEvent.WaitOne();
 
-                                aes.text = textInput;
-                                aes.key = keyInput;
+                                CSWriter.Write(generatedData(0));
+                                CSWriter.Write(generatedData(1));
 
-                                pres.keysize = settings.KeyLength;
+                                OnPropertyChanged("OutputStream");
+                                CSWriter.Close();
+                            }
 
-                               
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    if (pres.skip.IsChecked == true)
-                                        pres.comparisonPane();
-                                    else
+
+
+
+
+
+                            ///////////////////////////////////////////////////////
+
+                        }
+                        else if (!textChanged && !pres.canModify)
+                        {
+                            textChanged = true;
+
+                            originalText = textInput;
+
+                            aes.text = textInput;
+                            aes.key = keyInput;
+
+                            pres.keysize = settings.KeyLength;
+
+
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                                if (pres.skip.IsChecked == true)
+                                    pres.comparisonPane();
+                                else
                                     pres.instructions();
-                                   // pres.comparisonPane();
+                                // pres.comparisonPane();
                                 //pres.originalMsg.Text = inputMessage;
 
 
                             }, null);
 
 
-                                // pres.textA = text;
-                                //pres.key = key;
+                            // pres.textA = text;
+                            //pres.key = key;
 
-                                AES.keysize = settings.KeyLength;
-                                //pres.keysize = settings.KeyLength;
-                                byte[] tmpKey = aes.checkKeysize();
-                                originalKey = tmpKey;
-                                pres.key = tmpKey;
-                                pres.keyA = tmpKey;
-                                byte[] temporary = aes.checkTextLength();
-                                pres.textA = temporary;
-                                aes.executeAES(true);
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
+                            AES.keysize = settings.KeyLength;
+                            //pres.keysize = settings.KeyLength;
+                            byte[] tmpKey = aes.checkKeysize();
+                            originalKey = tmpKey;
+                            pres.key = tmpKey;
+                            pres.keyA = tmpKey;
+                            byte[] temporary = aes.checkTextLength();
+                            pres.textA = temporary;
+                            aes.executeAES(true);
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
 
-                                    pres.loadInitialState(temporary, tmpKey);
+                                pres.loadInitialState(temporary, tmpKey);
 
 
-                                }, null);
+                            }, null);
 
-                                pres.states = aes.states;
-                                pres.keyList = aes.keyList;
+                            pres.states = aes.states;
+                            pres.keyList = aes.keyList;
 
-                            }
-
-                            if (!running)
-                                return;
-
-                            // GuiLogMessage("Output" + outputStreamWriter.ToString(), NotificationLevel.Info);
                         }
-                        // if settings==1
-                        else 
+
+
+
+
+
+
+
+                        if (!running)
+                            return;
+
+
+                    }
+                    // if settings==1
+                    else
+                    {
+                        pres.mode = 1;
+
+                        bool valid = validSize();
+
+                        if (textChanged && pres.canModify)
                         {
-                            pres.mode = 1;
 
-                            bool valid = validSize();
+                            des.inputKey = keyInput;
+                            des.inputMessage = textInput;
 
-                            if (textChanged && pres.canModify)
+                            des.textChanged = true;
+                            des.DESProcess();
+                            pres.key = keyInput;
+                            pres.textB = textInput;
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
 
-                                des.inputKey = keyInput;
-                                des.inputMessage = textInput;
-
-                                des.textChanged = true;
-                                des.DESProcess();
-                                pres.key = keyInput;
-                                pres.textB = textInput;
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-
-                                    pres.setAndLoadButtons();
+                                pres.setAndLoadButtons();
 
 
-                                    pres.loadChangedMsg(textInput, true);
+                                pres.loadChangedMsg(textInput, true);
 
-                                    pres.loadChangedKey(keyInput);
+                                pres.loadChangedKey(keyInput);
 
-                                    pres.coloringText();
-                                    pres.coloringKey();
+                                pres.coloringText();
+                                pres.coloringKey();
 
-                                    pres.updateDataColor();
-                                }, null);
-
-                           
-                                pres.lrDataB = des.lrDataB;
+                                pres.updateDataColor();
+                            }, null);
 
 
+                            pres.lrDataB = des.lrDataB;
+
+
+                            using (CStreamWriter Writer = new CStreamWriter())
+                            {
+
+                                OutputStream = Writer;
+                                // buttonNextClickedEvent.WaitOne();
+
+                                Writer.Write(generatedData(0));
+                                Writer.Write(generatedData(1));
+
+                                OnPropertyChanged("OutputStream");
+                                Writer.Close();
                             }
-                            else if (!textChanged && !pres.canModify)
+
+                        }
+                        else if (!textChanged && !pres.canModify)
+                        {
+
+
+                            des.inputKey = keyInput;
+                            des.inputMessage = textInput;
+
+
+                            byte[] tmpKey = keyInput;
+                            byte[] tmpText = textInput;
+                            originalText = tmpText;
+                            originalKey = tmpKey;
+
+                            des.textChanged = false;
+
+                            des.DESProcess();
+
+                            //pres.key = tmpKey;
+                            pres.keyA = tmpKey;
+                            textChanged = true;
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
+                                if (pres.skip.IsChecked == true)
+                                    pres.comparisonPane();
+                                else
+                                    pres.instructions();
 
-
-                                des.inputKey = keyInput;
-                                des.inputMessage = textInput;
-
-
-                                byte[] tmpKey = keyInput;
-                                byte[] tmpText = textInput;
-                                originalText = tmpText;
-                                originalKey = tmpKey;
-
-                                des.textChanged = false;
-
-                                des.DESProcess();
-
-                                //pres.key = tmpKey;
-                                pres.keyA = tmpKey;
-                                textChanged = true;
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    if (pres.skip.IsChecked == true)
-                                        pres.comparisonPane();
-                                    else
-                                        pres.instructions();
-
-                                    pres.loadInitialState(textInput, keyInput);
+                                pres.loadInitialState(textInput, keyInput);
                                 //MessageBox.Show(des.lrData[1, 0]);
 
                             }, null);
-                                //MessageBox.Show(pres.lrData[1, 0]);
-                                pres.textA = textInput;
-                                pres.lrData = des.lrData;
-                            }
-
-
-                            if (!running)
-                                return;
-
+                            //MessageBox.Show(pres.lrData[1, 0]);
+                            pres.textA = textInput;
+                            pres.lrData = des.lrData;
                         }
-                    
-                    
+
+
+                        if (!running)
+                            return;
+
+                    }
+
+
                     break;
 
 
@@ -411,151 +453,174 @@ namespace Cryptool.Plugins.AvalancheVisualization
                 case AvalancheVisualizationSettings.Category.Unprepared:
 
 
-                 
-                   
+
+
 
                     switch (settings.UnprepSelection)
                     {
                         //Hash functions
                         case 0:
 
+
+
+                            //      MemoryStream mStream = new MemoryStream();
+
+
                             if (pres.mode != 4)
                                 pres.mode = 2;
 
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+
+                                using (CStreamReader reader = Text.CreateReader())
                                 {
+                                    reader.Read(textInput);
 
-                                    using (CStreamReader reader = Text.CreateReader())
+                                }
+
+
+                                //string otherText = Encoding.Default.GetString(buffer);
+
+
+                                if (textChanged)
+                                {
+                                    string cipherB = pres.binaryAsString(textInput);
+                                    pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+                                    pres.TB2.Text = cipherB;
+                                    pres.changedCipher = textInput;
+                                    pres.radioHexOthers.IsChecked = true;
+                                    pres.comparison();
+
+
+
+                                    using (CStreamWriter CSWriter2 = new CStreamWriter())
                                     {
-                                        reader.Read(textInput);
+                                        OutputStream = CSWriter2;
 
+                                        for (int i = 0; i < 2; i++)
+                                            CSWriter2.Write(generatedData(i));
+
+                                        OnPropertyChanged("OutputStream");
+                                        CSWriter2.Close();
                                     }
 
 
-                                    //string otherText = Encoding.Default.GetString(buffer);
+                                }
+                                else
+                                {
+                                    if (pres.skip.IsChecked == true)
+                                        pres.comparisonPane();
+                                    else
+                                        pres.instructions();
+
+                                    originalText = textInput;
+                                    string cipherA = pres.binaryAsString(textInput);
+                                    pres.originalMsg.Text = pres.hexaAsString(textInput);
+                                    pres.TB1.Text = cipherA;
+                                    pres.unchangedCipher = textInput;
+
+                                }
 
 
-                                    if (textChanged)
+                            }, null);
+
+                            textChanged = true;
+                            break;
+
+                        //classic
+                        case 1:
+
+                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            {
+                              
+                                pres.mode = 3;
+
+                                using (CStreamReader reader = Text.CreateReader())
+                                {
+                                    reader.Read(textInput);
+
+                                }
+
+
+
+                                string otherText = Encoding.Default.GetString(textInput);
+                                //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+
+
+
+                                if (textChanged)
+                                {
+                                    msgB = otherText;
+                                    bool validEntry = checkSize(msgA, msgB);
+
+                                    if (validEntry)
                                     {
                                         string cipherB = pres.binaryAsString(textInput);
-                                        pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+                                        pres.modifiedMsg.Text = otherText;
                                         pres.TB2.Text = cipherB;
                                         pres.changedCipher = textInput;
-                                        pres.radioHexOthers.IsChecked = true;
+                                        pres.radioText.IsChecked = true;
                                         pres.comparison();
-                                   
-                                        
-                                       
-                                    }
-                                    else
-                                    {
-                                        if (pres.skip.IsChecked == true)
-                                            pres.comparisonPane();
-                                        else
-                                            pres.instructions();
 
-                                        string cipherA = pres.binaryAsString(textInput);
-                                        pres.originalMsg.Text = pres.hexaAsString(textInput);
-                                        pres.TB1.Text = cipherA;
-                                        pres.unchangedCipher = textInput;
-                                     
-                                        //  string cipherA = pres.binaryAsString(inputObject);
-                                        //  pres.originalMsg.Text = pres.hexaAsString(inputObject);
-                                    }
-
-
-                                    /*CStreamWriter writer2 = new CStreamWriter();
-                                    OutputStream = writer2;
-                                    writer2.Write(buffer);
-                                    OnPropertyChanged("OutputStream");
-                                    writer2.Close();*/
-
-                                }, null);
-
-                                textChanged = true;
-                                break;
-
-                            //classic
-                            case 1:
-
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-
-                                    pres.mode = 3;
-
-                                    using (CStreamReader reader = Text.CreateReader())
-                                    {
-                                        reader.Read(textInput);
-
-                                    }
-
-
-                                 
-                                    string otherText = Encoding.Default.GetString(textInput);
-                                    //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
-
-
-
-                                    if (textChanged)
-                                    {
-                                        msgB = otherText;
-                                        bool validEntry= checkSize(msgA,msgB);
-
-                                        if (validEntry)
+                                        using (CStreamWriter CSWriter2 = new CStreamWriter())
                                         {
-                                            string cipherB = pres.binaryAsString(textInput);
-                                            pres.modifiedMsg.Text = otherText;
-                                            pres.TB2.Text = cipherB;
-                                            pres.changedCipher = textInput;
-                                            //resize();
-                                            pres.comparison();
-                                        }else
-                                        {
-                                            GuiLogMessage("Modification must have same length as the initial input.",NotificationLevel.Warning);
+                                            OutputStream = CSWriter2;
+
+                                            for (int i = 0; i < 2; i++)
+                                                CSWriter2.Write(generatedData(i));
+
+                                            OnPropertyChanged("OutputStream");
+                                            CSWriter2.Close();
                                         }
                                     }
                                     else
                                     {
-                                        if (pres.skip.IsChecked == true)
-                                            pres.comparisonPane();
-                                        else
-                                            pres.instructions();
-                                        //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
-                                        string cipherA = pres.binaryAsString(textInput);
-                                        pres.originalMsg.Text = otherText;
-                                        msgA = otherText;
-                                        pres.TB1.Text = cipherA;
-                                        pres.unchangedCipher = textInput;
-                                        // pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
-
+                                        GuiLogMessage("Modification must have same length as the initial input.", NotificationLevel.Warning);
                                     }
+                                }
+                                else
+                                {
+                                    if (pres.skip.IsChecked == true)
+                                        pres.comparisonPane();
+                                    else
+                                        pres.instructions();
+                                    //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+                                    string cipherA = pres.binaryAsString(textInput);
+                                    pres.originalMsg.Text = otherText;
+                                    msgA = otherText;
+                                    pres.TB1.Text = cipherA;
+                                    pres.unchangedCipher = textInput;
+                                    //pieChart.classicInput = textInput;
+                                    // pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
+
+                                }
 
 
-                                    /*CStreamWriter writer2 = new CStreamWriter();
-                                    OutputStream = writer2;
-                                    writer2.Write(buffer);
-                                    OnPropertyChanged("OutputStream");
-                                    writer2.Close();*/
+                                /*CStreamWriter writer2 = new CStreamWriter();
+                                OutputStream = writer2;
+                                writer2.Write(buffer);
+                                OnPropertyChanged("OutputStream");
+                                writer2.Close();*/
 
-                                }, null);
+                            }, null);
 
-                                textChanged = true;
-                                break;
+                            textChanged = true;
+                            break;
 
-                                //modern
-                            case 2:
+                        //modern
+                        case 2:
                             pres.mode = 4;
-                                goto case 0;
+                            goto case 0;
 
-                            default:
-                                break;
+                        default:
+                            break;
 
                     }
 
                     break;
-                  
+
                 default:
-                    break;   
+                    break;
             }
         }
 
@@ -609,9 +674,347 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #endregion
 
         #region Methods
+        public string[] sequence(Tuple<string, string> strTuple)
+        {
+            string[] diffBits = new string[strTuple.Item1.Length];
+
+
+            for (int i = 0; i < strTuple.Item1.Length; i++)
+            {
+                if (strTuple.Item1[i] != strTuple.Item2[i])
+                {
+                    diffBits[i] = "X";
+                }
+                else
+                    diffBits[i] = " ";
+
+            }
+
+            string[] differentBits = diffBits;
+
+            return differentBits;
+        }
+
+        public Tuple<string, string> tupleDES(int roundDES)
+        {
+           string encryptionStateA = pres.lrData[roundDES, 0] + pres.lrData[roundDES, 1];
+           string encryptionStateB = pres.lrDataB[roundDES, 0] + pres.lrDataB[roundDES, 1];
+
+            var tuple = new Tuple<string, string>(encryptionStateA, encryptionStateB);
+
+            return tuple;
+        }
+
+        public byte[] generatedData(int pos)
+        {
+            List<byte[]> bl = new List<byte[]>();
+
+
+            switch (settings.SelectedCategory)
+
+            {
+                case AvalancheVisualizationSettings.Category.Prepared:
+
+                    string initialtxt = string.Format("Initial message:{0}", Environment.NewLine);
+                    string modifiedtxt = string.Format("Modified message:{0}", Environment.NewLine);
+                    string initialkey = string.Format("Initial key:{0}", Environment.NewLine);
+                    string modifiedkey = string.Format("Modified key:{0}", Environment.NewLine);
+
+
+                    string inputMessage = Encoding.ASCII.GetString(originalText);
+
+
+
+                    string initial = string.Format("{0}{1}", inputMessage, Environment.NewLine);
+                    string initialk = string.Format("{0}{1}{2}", pres.hexaAsString(originalKey), Environment.NewLine, Environment.NewLine);
+                    string modified = "";
+                    string modifiedk = "";
+
+                    if (pres.newText != null && pres.newKey != null)
+
+                    {
+                        string inputMessageB = Encoding.ASCII.GetString(pres.newText);
+                        modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                        modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(pres.newKey), Environment.NewLine, Environment.NewLine);
+
+
+                    }
+
+                    else
+
+                    {
+                        string inputMessageB = Encoding.ASCII.GetString(textInput);
+                        modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                        modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(keyInput), Environment.NewLine, Environment.NewLine);
+
+                    }
+
+
+                    byte[] inputArr = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}", initialtxt, initial, initialkey, initialk, modifiedtxt, modified, modifiedkey, modifiedk));
+
+                    bl.Add(inputArr);
+
+                    if (settings.PrepSelection == 0)
+                    {
+                       
+
+                        List<object> information = new List<object>();
+                        List<byte> byteList = new List<byte>();
+                        byte[] statsArray = new byte[100];
+                        Tuple<string, string> strings;
+                        int number = 0;
+                        int rounds = 0;
+
+                        switch (settings.KeyLength)
+                        {
+                            case 0:
+                                number = 36;
+                               rounds = 11;
+                                break;
+                            case 1:
+                                number = 44;
+                                rounds = 13;
+                                break;
+                            case 2:
+                                number = 52;
+                                rounds = 15;
+                                break;
+                            default:
+                                break;
+                        }
+
+                        for (int aesRound = 0; aesRound <= number; aesRound += 4)
+                        {
+
+                            strings = pres.binaryStrings(pres.states[aesRound], pres.statesB[aesRound]);
+                            int nrDiffBits = pres.nrOfBitsFlipped(pres.states[aesRound], pres.statesB[aesRound]);
+                            double avalanche = pres.calcAvalancheEffect(nrDiffBits, strings);
+                            string[] differentBits = sequence(strings);
+                            int lengthIdentSequence = pres.longestIdenticalSequence(differentBits);
+                            int lengthFlippedSequence = pres.longestFlippedSequence(differentBits);
+
+                            information.Add(nrDiffBits);
+                            information.Add(avalanche);
+                            information.Add(lengthIdentSequence);
+                            information.Add(pres.sequencePosition);
+                            information.Add(lengthFlippedSequence);
+                            information.Add(pres.flippedSeqPosition);
+                        }
+
+
+                        strings = pres.binaryStrings(pres.states[number + 3], pres.statesB[number + 3]);
+                        int nrDiffBits2 = pres.nrOfBitsFlipped(pres.states[number + 3], pres.statesB[number + 3]);
+                        double avalanche2 = pres.calcAvalancheEffect(nrDiffBits2, strings);
+                        string[] differentBits2 = sequence(strings);
+                        int lengthIdentSequence2 = pres.longestIdenticalSequence(differentBits2);
+                        int lengthFlippedSequence2 = pres.longestFlippedSequence(differentBits2);
+
+                        information.Add(nrDiffBits2);
+                        information.Add(avalanche2);
+                        information.Add(lengthIdentSequence2);
+                        information.Add(pres.sequencePosition);
+                        information.Add(lengthFlippedSequence2);
+                        information.Add(pres.flippedSeqPosition);
+
+                        object[] data = information.ToArray();
+
+                        StringBuilder sb = new StringBuilder();
+
+                        int i = 0;
+
+                        for (int round = 0; round < rounds; round++)
+                        {
+
+                            sb.AppendFormat("After round {0}:{1}", round, Environment.NewLine);
+
+                            sb.AppendFormat("Flipped bits: {0}. Avalanche effect: {1}%{2}", data[i].ToString(), data[i + 1].ToString(), Environment.NewLine);
+
+                            sb.AppendFormat("Length of longest identical bit sequence: {0}. Offset: {1}.{2}", data[i + 2].ToString(), data[i + 3].ToString(), Environment.NewLine);
+
+                            sb.AppendFormat("Length of longest flipped bit sequence: {0}. Offset: {1}.{2}", data[i + 4].ToString(), data[i + 5].ToString(), Environment.NewLine);
+
+                            sb.AppendFormat("{0}", Environment.NewLine);
+
+                            i += 6;
+                        }
+
+
+
+                        string newString = sb.ToString();
+
+                        statsArray = Encoding.UTF8.GetBytes(string.Format("{0}", newString));
+
+
+
+
+                        bl.Add(statsArray);
+                    }
+
+                    else
+                    {
+                        List<object> information = new List<object>();
+                        List<byte> byteList = new List<byte>();
+                        byte[] dataArray = new byte[120];
+                        Tuple<string, string> strings;
+                       
+
+                        for (int desRound = 0; desRound < 17; desRound++)
+                        {
+                            strings = tupleDES(desRound);
+                            pres.toStringArray(desRound);
+                            int nrDiffBits = pres.nrOfBitsFlipped(pres.seqA,pres.seqB);
+                            double avalanche = pres.calcAvalancheEffect(nrDiffBits, strings);
+                            string[] differentBits = sequence(strings);
+                            int lengthIdentSequence = pres.longestIdenticalSequence(differentBits);
+                            int lengthFlippedSequence = pres.longestFlippedSequence(differentBits);
+
+                            information.Add(nrDiffBits);
+                            information.Add(avalanche);
+                            information.Add(lengthIdentSequence);
+                            information.Add(pres.sequencePosition);
+                            information.Add(lengthFlippedSequence);
+                            information.Add(pres.flippedSeqPosition);
+                        }
+
+                        object[] dat = information.ToArray();
+
+                        StringBuilder sbuilder = new StringBuilder();
+
+                        int j = 0;
+
+                        for (int round = 0; round < 17; round++)
+                        {
+
+                            sbuilder.AppendFormat("After round {0}:{1}", round, Environment.NewLine);
+
+                            sbuilder.AppendFormat("Flipped bits: {0}. Avalanche effect: {1}%{2}", dat[j].ToString(), dat[j + 1].ToString(), Environment.NewLine);
+
+                            sbuilder.AppendFormat("Length of longest identical bit sequence: {0}. Offset: {1}.{2}", dat[j + 2].ToString(), dat[j + 3].ToString(), Environment.NewLine);
+
+                            sbuilder.AppendFormat("Length of longest flipped bit sequence: {0}. Offset: {1}.{2}", dat[j + 4].ToString(), dat[j + 5].ToString(), Environment.NewLine);
+
+                            sbuilder.AppendFormat("{0}", Environment.NewLine);
+
+                            j += 6;
+                        }
+
+                        string newStr = sbuilder.ToString();
+
+                        dataArray = Encoding.UTF8.GetBytes(string.Format("{0}", newStr));
+
+
+
+
+                        bl.Add(dataArray);
+                    }
+
+                    // return bl[pos].ToArray();
+                    break;
+
+                case AvalancheVisualizationSettings.Category.Unprepared:
+
+                    if (settings.UnprepSelection == 0 || settings.UnprepSelection == 2)
+                    {
+
+                        string initialCaption = "";
+                        string modifiedCaption = "";
+
+                        if (pres.mode == 2)
+                        {
+                            initialCaption = string.Format("Initial hash function:{0}", Environment.NewLine);
+                            modifiedCaption = string.Format("Modified hash function:{0}", Environment.NewLine);
+                        }
+
+                        if (pres.mode == 4)
+                        {
+                            initialCaption = string.Format("Encryption of initial message:{0}", Environment.NewLine);
+                            modifiedCaption = string.Format("Encryption of modified message:{0}", Environment.NewLine);
+
+                        }
+
+                        string init = string.Format("{0}{1}", pres.hexaAsString(originalText), Environment.NewLine);
+                        string mod = string.Format("{0}{1}{2}", pres.hexaAsString(textInput), Environment.NewLine, Environment.NewLine);
+
+                        byte[] inputArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}", initialCaption, init, modifiedCaption, mod));
+
+
+                        bl.Add(inputArray);
+
+
+
+                        //hash & modern
+
+
+
+                        var strings = pres.binaryStrings(pres.unchangedCipher, pres.changedCipher);
+                        int bitsFlipped = pres.nrOfBitsFlipped(pres.unchangedCipher, pres.changedCipher);
+                        double avalanche = pres.calcAvalancheEffect(bitsFlipped, strings);
+                        pres.showBitSequence(strings);
+                        int lengthIdentSequence = pres.longestIdenticalSequence(pres.differentBits);
+                        int lengthFlippedSequence = pres.longestFlippedSequence(pres.differentBits);
+
+                        string flippedBits = string.Format("Flipped bits: {0}. Avalanche effect: {1}% {2}", bitsFlipped, avalanche, Environment.NewLine);
+                        string identSeq = string.Format("Length of longest identical bit sequence: {0}. Offset {1}.{2}", lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
+                        string flippedSeq = string.Format("Length of longest flipped bit sequence: {0}. Offset {1}.{2}", lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
+
+                        byte[] statsArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq));
+
+                        bl.Add(statsArray);
+                    }
+
+                    else
+                    {
+                   
+                     
+                         string   initialCaption = string.Format("Encryption of initial message:{0}", Environment.NewLine);
+                         string   modifiedCaption = string.Format("Encryption of modified message:{0}", Environment.NewLine);
+
+                        
+
+                        string init = string.Format("{0}{1}", msgA, Environment.NewLine);
+                        string mod = string.Format("{0}{1}{2}", msgB, Environment.NewLine, Environment.NewLine);
+
+                        byte[] inputArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}", initialCaption, init, modifiedCaption, mod));
+
+
+                        bl.Add(inputArray);
+
+
+
+                        //classic
+
+
+
+                        var strings = pres.binaryStrings(pres.unchangedCipher, pres.changedCipher);
+                        int nrBytesFlipped = pres.bytesFlipped();
+                        double avalanche = pres.avalancheEffectBytes(nrBytesFlipped);
+                        pres.showBitSequence(strings);
+                        int lengthIdentSequence = pres.longestIdentSequenceBytes();
+                        int lengthFlippedSequence = pres.longestFlippedSequenceBytes();
+
+                        string flippedBits = string.Format("Flipped bytes: {0}. Avalanche effect: {1}% {2}", nrBytesFlipped, avalanche, Environment.NewLine);
+                        string identSeq = string.Format("Length of longest identical byte sequence: {0}. Offset {1}.{2}", lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
+                        string flippedSeq = string.Format("Length of longest flipped byte sequence: {0}. Offset {1}.{2}", lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
+
+                        byte[] statsArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq));
+
+                        bl.Add(statsArray);
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            return bl[pos].ToArray();
+
+        }
+
+
         public bool checkSize(string A, string B)
         {
-            if(A.Length!=B.Length)
+            if (A.Length != B.Length)
                 return false;
 
             return true;
