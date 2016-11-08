@@ -236,7 +236,7 @@
 
         <!--Home View-->
         <Canvas Name="StartCanvas"  Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Visible">
-            <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="VISUALIZATION OF THE AVALANCHE EFFECT" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Canvas.Left="56" Canvas.Top="52">
+            <TextBlock Name="StartImage" Style="{StaticResource textBlockStyle}" Text="{Loc HomeTitle}" TextAlignment="Center" TextWrapping="Wrap" FontSize="50"  Width="569" Height="383" Canvas.Left="56" Canvas.Top="52">
                 <TextBlock.BitmapEffect>
                     <DropShadowBitmapEffect  Direction="330" Color="Black" ShadowDepth="5" Opacity="0.5" Softness="0.30" />
                 </TextBlock.BitmapEffect>
@@ -244,7 +244,7 @@
             <TextBlock Name="initExplanationText" Canvas.Top="200" Canvas.Left="135" Width="400" Foreground="#534b4f" FontSize="16" Text="{Loc Intro}" TextAlignment="Justify" TextWrapping="Wrap" Visibility="Visible">
             </TextBlock>
 
-            <CheckBox x:Name="skip" Canvas.Left="130" Canvas.Bottom="50" Foreground="#534b4f" FontSize="13" Content="Skip Instructions">
+            <CheckBox x:Name="skip" Canvas.Left="130" Canvas.Bottom="50" Foreground="#534b4f" FontSize="13" Content="{Loc SkipInstructions}">
             </CheckBox>
         </Canvas>
 
@@ -287,44 +287,44 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="Instructions" />
-            <TextBlock Grid.Row="1" Foreground="White" FontSize="20"   Text="Prepared methods:" Margin="70,0"/>
-            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="(AES, DES)" HorizontalAlignment="Center" Margin="0,3,130,0"/>
+            <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="{Loc InstructionsTitle}" />
+            <TextBlock Grid.Row="1" Foreground="White" FontSize="20"   Text="{Loc InstructionsPrep}" Margin="70,0"/>
+            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="{Loc InstructionsPrepSubtitle}" HorizontalAlignment="Center" Margin="0,3,130,0"/>
 
             <StackPanel Grid.Row="2">
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Use key and message entries." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet1}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Provide key in hex format:&#xa; 16, 24, or 32 bytes (AES)   -    8 bytes (DES)." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet2}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Foreground="#534b4f" FontSize="16"  Text=" Input data initially shown in:&#xa; Hex and binary format (AES)    -   binary format (DES)." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet3}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Foreground="#534b4f" FontSize="16"  Text=" Modify initial input." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet4}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Foreground="#534b4f" FontSize="16"  Text=" Check avalanche effect." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet5}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
             </StackPanel>
 
-            <Button Name="continueButton" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="Continue" Click="continueButton_Click" Margin="0,40"/>
+            <Button Name="continueButton" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="{Loc ContinueButton}" Click="continueButton_Click" Margin="0,40"/>
         </Grid>
 
         <Grid Name="InstructionsUnprep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">

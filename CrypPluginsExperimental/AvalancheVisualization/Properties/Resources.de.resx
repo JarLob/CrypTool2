@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AES" xml:space="preserve">
+    <value>AES</value>
+  </data>
   <data name="AvalancheTooltip" xml:space="preserve">
     <value>Visualisierung des Avalanche-Effekts bei kryptographischen Verfahren und Hashfunktionen.</value>
   </data>
@@ -126,14 +129,29 @@
   <data name="CategoryTooltip" xml:space="preserve">
     <value>Gewünschte Kategorie auswählen.</value>
   </data>
+  <data name="ClassicCipher" xml:space="preserve">
+    <value>Klassische Verfahren</value>
+  </data>
   <data name="ClearButton" xml:space="preserve">
     <value>Löschen</value>
+  </data>
+  <data name="ContinueButton" xml:space="preserve">
+    <value>Fortfahren</value>
+  </data>
+  <data name="DES" xml:space="preserve">
+    <value>DES</value>
   </data>
   <data name="DoneButton" xml:space="preserve">
     <value>Fertig</value>
   </data>
   <data name="GroupName" xml:space="preserve">
     <value>Avalanche-Effekt testen</value>
+  </data>
+  <data name="HashFunction" xml:space="preserve">
+    <value>Hash-Funktionen</value>
+  </data>
+  <data name="HomeTitle" xml:space="preserve">
+    <value>VISUALISIERUNG DES AVALANCHE-EFFEKTS</value>
   </data>
   <data name="InputKey" xml:space="preserve">
     <value>Schlüssel</value>
@@ -147,8 +165,35 @@
   <data name="InputMessageDescription" xml:space="preserve">
     <value>Nachricht eingeben</value>
   </data>
+  <data name="InstructionsPrep" xml:space="preserve">
+    <value>Aufbereitete Verfahren:</value>
+  </data>
+  <data name="InstructionsPrepBullet1" xml:space="preserve">
+    <value>Schlüssel- und Nachricht-Eingabe nutzen.</value>
+  </data>
+  <data name="InstructionsPrepBullet2" xml:space="preserve">
+    <value>Schlüssel im hex-Format eingeben:
+ 16, 24, oder 32 bytes (AES)   -    8 bytes (DES).</value>
+  </data>
+  <data name="InstructionsPrepBullet3" xml:space="preserve">
+    <value>Inputeingaben anfangs wie folgt angezeigt:
+ Hex- und Binär-Format (AES)    -    Binär-Format (DES).</value>
+  </data>
+  <data name="InstructionsPrepBullet4" xml:space="preserve">
+    <value>Initiale Eingabe modifizieren.</value>
+  </data>
+  <data name="InstructionsPrepBullet5" xml:space="preserve">
+    <value>Avalanche-Effekt testen.</value>
+  </data>
+  <data name="InstructionsPrepSubtitle" xml:space="preserve">
+    <value>                (AES, DES)</value>
+  </data>
+  <data name="InstructionsTitle" xml:space="preserve">
+    <value>Anleitung</value>
+  </data>
   <data name="Intro" xml:space="preserve">
-    <value>Ein starker Avalanche-Effekt wird erreicht, wenn eine geringfügige Änderung der Eingabe zu einer signifikanten Änderung der Ausgabe führt.&amp;#xa;In den Einstellungen können Sie die Kategorie des Verfahrens auswählen, dessen Avalanche-Effekt getestet wird.</value>
+    <value>Ein starker Avalanche-Effekt wird erreicht, wenn eine geringfügige Änderung der Eingabe zu einer signifikanten Änderung der Ausgabe führt. 
+Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen Avalanche-Effekt getestet wird.</value>
   </data>
   <data name="KeyLength" xml:space="preserve">
     <value>Schlüssellänge</value>
@@ -156,19 +201,31 @@
   <data name="KeyLengthTooltip" xml:space="preserve">
     <value>Schlüssellänge für AES auswählen</value>
   </data>
+  <data name="ModernCipher" xml:space="preserve">
+    <value>Moderne Verfahren</value>
+  </data>
   <data name="OutputStream" xml:space="preserve">
     <value>Ausgabe</value>
   </data>
   <data name="OutputStreamDescription" xml:space="preserve">
-    <value>Erzeugte statistischen Daten</value>
+    <value>Erzeugte statistische Daten</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Avalanche-Visualisierung</value>
+  </data>
+  <data name="PreparedCaption" xml:space="preserve">
+    <value>Aufbereitete Verfahren</value>
   </data>
   <data name="Selection" xml:space="preserve">
     <value>Auswahl</value>
   </data>
   <data name="SelectionTooltip" xml:space="preserve">
-    <value>Methode auswählen, deren Avalanche-Effekt getestet wird.</value>
+    <value>Verfahren auswählen, dessen Avalanche-Effekt getestet wird.</value>
+  </data>
+  <data name="SkipInstructions" xml:space="preserve">
+    <value>Anleitung überspringen</value>
+  </data>
+  <data name="UnpreparedCaption" xml:space="preserve">
+    <value>Nicht-aufbereitete Verfahren</value>
   </data>
 </root>

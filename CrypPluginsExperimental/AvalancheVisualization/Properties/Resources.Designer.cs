@@ -61,6 +61,15 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AES.
+        /// </summary>
+        internal static string AES {
+            get {
+                return ResourceManager.GetString("AES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Visualization of the avalanche effect property in cryptographic algorithms and hash functions..
         /// </summary>
         internal static string AvalancheTooltip {
@@ -88,11 +97,38 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Classic Ciphers.
+        /// </summary>
+        internal static string ClassicCipher {
+            get {
+                return ResourceManager.GetString("ClassicCipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         internal static string ClearButton {
             get {
                 return ResourceManager.GetString("ClearButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        internal static string ContinueButton {
+            get {
+                return ResourceManager.GetString("ContinueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DES.
+        /// </summary>
+        internal static string DES {
+            get {
+                return ResourceManager.GetString("DES", resourceCulture);
             }
         }
         
@@ -111,6 +147,24 @@ namespace AvalancheVisualization.Properties {
         internal static string GroupName {
             get {
                 return ResourceManager.GetString("GroupName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hash Functions.
+        /// </summary>
+        internal static string HashFunction {
+            get {
+                return ResourceManager.GetString("HashFunction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VISUALIZATION OF THE AVALANCHE EFFECT.
+        /// </summary>
+        internal static string HomeTitle {
+            get {
+                return ResourceManager.GetString("HomeTitle", resourceCulture);
             }
         }
         
@@ -151,7 +205,82 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.&amp;#xa;You can select in the settings the category of the algorithm whose avalanche effect you would like to test..
+        ///   Looks up a localized string similar to Prepared methods:.
+        /// </summary>
+        internal static string InstructionsPrep {
+            get {
+                return ResourceManager.GetString("InstructionsPrep", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use key and message entries..
+        /// </summary>
+        internal static string InstructionsPrepBullet1 {
+            get {
+                return ResourceManager.GetString("InstructionsPrepBullet1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provide key in hex format:
+        /// 16, 24, or 32 bytes (AES)   -    8 bytes (DES)..
+        /// </summary>
+        internal static string InstructionsPrepBullet2 {
+            get {
+                return ResourceManager.GetString("InstructionsPrepBullet2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input data initially shown in:
+        /// Hex and binary format (AES)    -    binary format (DES)..
+        /// </summary>
+        internal static string InstructionsPrepBullet3 {
+            get {
+                return ResourceManager.GetString("InstructionsPrepBullet3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify initial input..
+        /// </summary>
+        internal static string InstructionsPrepBullet4 {
+            get {
+                return ResourceManager.GetString("InstructionsPrepBullet4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check avalanche effect..
+        /// </summary>
+        internal static string InstructionsPrepBullet5 {
+            get {
+                return ResourceManager.GetString("InstructionsPrepBullet5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (AES, DES).
+        /// </summary>
+        internal static string InstructionsPrepSubtitle {
+            get {
+                return ResourceManager.GetString("InstructionsPrepSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instructions.
+        /// </summary>
+        internal static string InstructionsTitle {
+            get {
+                return ResourceManager.GetString("InstructionsTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
+        ///You can select in the settings the category of the algorithm whose avalanche effect you would like to test..
         /// </summary>
         internal static string Intro {
             get {
@@ -174,6 +303,15 @@ namespace AvalancheVisualization.Properties {
         internal static string KeyLengthTooltip {
             get {
                 return ResourceManager.GetString("KeyLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modern Ciphers.
+        /// </summary>
+        internal static string ModernCipher {
+            get {
+                return ResourceManager.GetString("ModernCipher", resourceCulture);
             }
         }
         
@@ -205,6 +343,15 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prepared methods.
+        /// </summary>
+        internal static string PreparedCaption {
+            get {
+                return ResourceManager.GetString("PreparedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selection.
         /// </summary>
         internal static string Selection {
@@ -214,11 +361,29 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the method whose avalanche effect you would like to test.
+        ///   Looks up a localized string similar to Select the method whose avalanche effect you would like to test..
         /// </summary>
         internal static string SelectionTooltip {
             get {
                 return ResourceManager.GetString("SelectionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip Instructions.
+        /// </summary>
+        internal static string SkipInstructions {
+            get {
+                return ResourceManager.GetString("SkipInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unprepared methods.
+        /// </summary>
+        internal static string UnpreparedCaption {
+            get {
+                return ResourceManager.GetString("UnpreparedCaption", resourceCulture);
             }
         }
     }

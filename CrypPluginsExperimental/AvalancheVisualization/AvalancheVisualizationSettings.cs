@@ -52,7 +52,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// </summary>
 
 
-        [TaskPane("Category", "CategoryTooltip", "GroupName", 0, false, ControlType.ComboBox, new String[] { "Prepared methods", "Unprepared methods"})]
+        [TaskPane("Category", "CategoryTooltip", "GroupName", 0, false, ControlType.ComboBox, new String[] { "PreparedCaption", "UnpreparedCaption"})]
         public Category SelectedCategory
         {
             get { return this.selectedCategory; }
@@ -88,7 +88,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "SelectionTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "Hash Functions", "Classic Ciphers","Modern Ciphers" })]
+        [TaskPane("Selection", "SelectionTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "HashFunction", "ClassicCipher","ModernCipher" })]
         public int UnprepSelection
         {
             get { return this.unprepSelection; }

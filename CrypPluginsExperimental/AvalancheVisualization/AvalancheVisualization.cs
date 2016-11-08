@@ -222,7 +222,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     {
                         pres.mode = 0;
 
-
+                      
 
                         string inputMessage = Encoding.Default.GetString(textInput);
 

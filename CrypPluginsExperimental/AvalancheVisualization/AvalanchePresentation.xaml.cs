@@ -1300,7 +1300,7 @@ namespace AvalancheVisualization
                 l++;
             }
 
-           
+
 
 
         }
@@ -1547,14 +1547,14 @@ namespace AvalancheVisualization
             return txtBlock;
         }
 
-      
+
 
         public void clearElements()
         {
             if (mode == 0)
             {
                 OrigInitialStateGrid.Visibility = Visibility.Hidden;
-                modifiedInitialStateGrid.Visibility = Visibility.Hidden;             
+                modifiedInitialStateGrid.Visibility = Visibility.Hidden;
                 initStateTitle.Visibility = Visibility.Hidden;
                 radioButtons.Visibility = Visibility.Hidden;
                 generalViewAES.Visibility = Visibility.Hidden;
@@ -2262,7 +2262,7 @@ namespace AvalancheVisualization
 
         }
 
-       
+
 
         public void emptyInformation()
         {
@@ -3827,8 +3827,8 @@ namespace AvalancheVisualization
         {
 
 
-            string strA= Encoding.UTF8.GetString(unchangedCipher);
-            string strB= Encoding.UTF8.GetString(changedCipher);
+            string strA = Encoding.UTF8.GetString(unchangedCipher);
+            string strB = Encoding.UTF8.GetString(changedCipher);
             originalMsg.Text = strA;
             modifiedMsg.Text = strB;
         }
@@ -3887,7 +3887,7 @@ namespace AvalancheVisualization
             modKeyDES.TextEffects.Clear();
         }
 
-         
+
 
         public void instructions()
         {
@@ -3986,20 +3986,20 @@ namespace AvalancheVisualization
             bitsData.Visibility = Visibility.Hidden;
             flippedBitsPiece.Visibility = Visibility.Hidden;
             unflippedBitsPiece.Visibility = Visibility.Hidden;
-         
+
             bitRepresentationGrid.Visibility = Visibility.Hidden;
             OrigInitialStateGrid.Visibility = Visibility.Hidden;
-           
+
             afterRoundsGrid.Visibility = Visibility.Hidden;
-           
+
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
             Cbclass1.Visibility = Visibility.Hidden;
             Cbclass2.Visibility = Visibility.Hidden;
-         
+
             updateDataColor();
 
-         
+
             afterRound11Button.Visibility = Visibility.Collapsed;
             afterRound12Button.Visibility = Visibility.Collapsed;
             afterRound13Button.Visibility = Visibility.Collapsed;
@@ -4232,7 +4232,7 @@ namespace AvalancheVisualization
 
             adjustStats();
             bitsData.Visibility = Visibility.Visible;
-          
+
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
 
@@ -4269,14 +4269,14 @@ namespace AvalancheVisualization
                 double angle_1 = flippedBitsPiece.calculateAngleClassic(nrBytesFlipped, unchangedCipher);
                 double angle_2 = unflippedBitsPiece.calculateAngleClassic(unchangedCipher.Length - nrBytesFlipped, unchangedCipher);
                 showBitSequence(strings);
-                int LIBS= longestIdentSequenceBytes();
+                int LIBS = longestIdentSequenceBytes();
                 int LFBS = longestFlippedSequenceBytes();
-                classicStats(nrBytesFlipped,LIBS,LFBS);
+                classicStats(nrBytesFlipped, LIBS, LFBS);
                 setColors();
                 setAngles(angle_1, angle_2);
                 setToolTips();
             }
-           
+
         }
 
         public void classicStats(int bytesFlipped, int longestLength, int longestflipped)
@@ -4290,7 +4290,7 @@ namespace AvalancheVisualization
 
             stats2.Inlines.Add(new Run(string.Format(" Length of longest identical byte sequence: {0}. Offset {1}.", longestLength.ToString(), sequencePosition)));
             stats3.Inlines.Add(new Run(string.Format(" Length of longest flipped byte sequence: {0}. Offset {1}.", longestflipped.ToString(), flippedSeqPosition)));
-           
+
         }
 
 
@@ -4298,19 +4298,19 @@ namespace AvalancheVisualization
         {
             int count = 0;
 
-            for(int i=0; i< changedCipher.Length; i++)
+            for (int i = 0; i < changedCipher.Length; i++)
             {
                 if (changedCipher[i] != unchangedCipher[i])
                     count++;
 
             }
-            
+
 
 
             return count;
         }
 
-  
+
 
         public double avalancheEffectBytes(int bytesFlipped)
         {
@@ -4352,7 +4352,7 @@ namespace AvalancheVisualization
             sequencePosition = offset;
 
             return longestCount;
-           
+
         }
 
         public int longestFlippedSequenceBytes()
@@ -4459,14 +4459,14 @@ namespace AvalancheVisualization
                 else
                     arrow2.Visibility = Visibility.Hidden;
 
-                buttonNextClickedEvent.Set();
+                //  buttonNextClickedEvent.Set();
             }
 
             if (!InstructionsPrep.IsVisible)
-                canModify = true;
-            else
-                canModify = false;
-
+                   canModify = true;
+            if(InstructionsPrep.IsVisible)
+                   canModify = false;
+                   
         }
 
         private void onTitleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -5070,7 +5070,7 @@ namespace AvalancheVisualization
             else
                 InstructionsUnprep.Visibility = Visibility.Hidden;
 
-
+           
 
             comparisonPane();
 
@@ -5078,7 +5078,7 @@ namespace AvalancheVisualization
 
         }
 
-       
+
     }
 }
 #endregion

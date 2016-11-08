@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AES" xml:space="preserve">
+    <value>AES</value>
+  </data>
   <data name="AvalancheTooltip" xml:space="preserve">
     <value>Visualization of the avalanche effect property in cryptographic algorithms and hash functions.</value>
   </data>
@@ -126,14 +129,29 @@
   <data name="CategoryTooltip" xml:space="preserve">
     <value>Select the desired category.</value>
   </data>
+  <data name="ClassicCipher" xml:space="preserve">
+    <value>Classic Ciphers</value>
+  </data>
   <data name="ClearButton" xml:space="preserve">
     <value>Clear</value>
+  </data>
+  <data name="ContinueButton" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="DES" xml:space="preserve">
+    <value>DES</value>
   </data>
   <data name="DoneButton" xml:space="preserve">
     <value>Done</value>
   </data>
   <data name="GroupName" xml:space="preserve">
     <value>Test Avalanche effect</value>
+  </data>
+  <data name="HashFunction" xml:space="preserve">
+    <value>Hash Functions</value>
+  </data>
+  <data name="HomeTitle" xml:space="preserve">
+    <value>VISUALIZATION OF THE AVALANCHE EFFECT</value>
   </data>
   <data name="InputKey" xml:space="preserve">
     <value>Key</value>
@@ -147,14 +165,44 @@
   <data name="InputMessageDescription" xml:space="preserve">
     <value>Enter message</value>
   </data>
+  <data name="InstructionsPrep" xml:space="preserve">
+    <value>Prepared methods:</value>
+  </data>
+  <data name="InstructionsPrepBullet1" xml:space="preserve">
+    <value>Use key and message entries.</value>
+  </data>
+  <data name="InstructionsPrepBullet2" xml:space="preserve">
+    <value>Provide key in hex format:
+ 16, 24, or 32 bytes (AES)   -    8 bytes (DES).</value>
+  </data>
+  <data name="InstructionsPrepBullet3" xml:space="preserve">
+    <value>Input data initially shown in:
+ Hex and binary format (AES)    -    binary format (DES).</value>
+  </data>
+  <data name="InstructionsPrepBullet4" xml:space="preserve">
+    <value>Modify initial input.</value>
+  </data>
+  <data name="InstructionsPrepBullet5" xml:space="preserve">
+    <value>Check avalanche effect.</value>
+  </data>
+  <data name="InstructionsPrepSubtitle" xml:space="preserve">
+    <value>(AES, DES)</value>
+  </data>
+  <data name="InstructionsTitle" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
   <data name="Intro" xml:space="preserve">
-    <value>A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.&amp;#xa;You can select in the settings the category of the algorithm whose avalanche effect you would like to test.</value>
+    <value>A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
+You can select in the settings the category of the algorithm whose avalanche effect you would like to test.</value>
   </data>
   <data name="KeyLength" xml:space="preserve">
     <value>Key length</value>
   </data>
   <data name="KeyLengthTooltip" xml:space="preserve">
     <value>Select the key length for AES</value>
+  </data>
+  <data name="ModernCipher" xml:space="preserve">
+    <value>Modern Ciphers</value>
   </data>
   <data name="OutputStream" xml:space="preserve">
     <value>Output</value>
@@ -165,10 +213,19 @@
   <data name="PluginCaption" xml:space="preserve">
     <value>Avalanche Visualization</value>
   </data>
+  <data name="PreparedCaption" xml:space="preserve">
+    <value>Prepared methods</value>
+  </data>
   <data name="Selection" xml:space="preserve">
     <value>Selection</value>
   </data>
   <data name="SelectionTooltip" xml:space="preserve">
-    <value>Select the method whose avalanche effect you would like to test</value>
+    <value>Select the method whose avalanche effect you would like to test.</value>
+  </data>
+  <data name="SkipInstructions" xml:space="preserve">
+    <value>Skip Instructions</value>
+  </data>
+  <data name="UnpreparedCaption" xml:space="preserve">
+    <value>Unprepared methods</value>
   </data>
 </root>
