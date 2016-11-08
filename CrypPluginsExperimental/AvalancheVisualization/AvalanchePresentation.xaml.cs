@@ -18,7 +18,7 @@ namespace AvalancheVisualization
     /// <summary>
     /// Interaction logic for AvaAESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AvalancheVisualization.Properties")]
+    [Cryptool.PluginBase.Attributes.Localization("AvalancheVisualization.Properties.Resources")]
     public partial class AvalanchePresentation : UserControl
     {
 
