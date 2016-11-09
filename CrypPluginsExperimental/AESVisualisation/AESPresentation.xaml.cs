@@ -602,10 +602,7 @@ namespace AESVisualisation
             endstep = false;
             skipStep = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                startTextBlock.Visibility = Visibility.Hidden;
-                startTextBlock1.Visibility = Visibility.Hidden;
-                startTextBlock2.Visibility = Visibility.Hidden;
+            {              
                 expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
             }, null);
             while (expansion && !finish)
@@ -969,9 +966,9 @@ namespace AESVisualisation
                 return;
             }
             //11 + 2 * keysize will give you the required number of rounds + 1
-            while (roundNumber < 11 + 2 * keysize && !end && !expansion)
+            while (roundNumber < 11 + 2 * keysize && !end && !expansion && !start)
             {
-                while (action < 5 && !end && !expansion)
+                while (action < 5 && !end && !expansion && !start)
                 {
                     skipStep = false;
                     switch (action)
@@ -3683,7 +3680,9 @@ namespace AESVisualisation
         public void introduction()
         {
             progress = 0;
-            while (!abort && operationCounter < 4)
+            abort = false;
+            skip = false;
+            while (!abort && operationCounter < 5)
             {
                 switch (operationCounter)
                 {
@@ -3691,21 +3690,36 @@ namespace AESVisualisation
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
                             startGrid.Visibility = Visibility.Visible;
+                            startTextBlock.Visibility = Visibility.Visible;
+                            startTextBlock1.Visibility = Visibility.Visible;
+                            startTextBlock2.Visibility = Visibility.Visible;
+                            hideButton();
+                            playButton.Visibility = Visibility.Visible;
+                            playButton.SetValue(Grid.RowProperty, 4);
+                        }, null);
+                        if (second > 0)
+                        {
+                            wait();
+                        }
+                        second = 0;
+                        break;
+                    case 1:
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            startTextBlock.Visibility = Visibility.Hidden;
+                            startTextBlock1.Visibility = Visibility.Hidden;
+                            startTextBlock2.Visibility = Visibility.Hidden;
+                            startGrid.Visibility = Visibility.Visible;
                             Intro1ENImage.Visibility = Visibility.Hidden;
                             Intro1ENTextBlock.Visibility = Visibility.Hidden;
                             introTextBlock.Visibility = Visibility.Visible;
                             introTextBlock1.Visibility = Visibility.Visible;
                             hideButton();
                             playButton.Visibility = Visibility.Visible;
-                            playButton.SetValue(Grid.RowProperty, 4);
-                            if(second > 0)
-                            {
-                                wait();
-                            }
-                            second = 0;
+                            playButton.SetValue(Grid.RowProperty, 4);                            
                         }, null);
                         break;
-                    case 1:
+                    case 2:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
                             introTextBlock.Visibility = Visibility.Hidden;
@@ -3720,7 +3734,7 @@ namespace AESVisualisation
                             playButton.SetValue(Grid.RowProperty, 4);
                         }, null);
                         break;
-                    case 2:
+                    case 3:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
                             Intro1ENImage.Visibility = Visibility.Hidden;
@@ -3731,7 +3745,7 @@ namespace AESVisualisation
                             expansionTextBlock2.Visibility = Visibility.Hidden;
                         }, null);
                         break;
-                    case 3:
+                    case 4:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
                             Intro3ENImage.Visibility = Visibility.Hidden;
@@ -3755,107 +3769,6 @@ namespace AESVisualisation
                 startGrid.Visibility = Visibility.Hidden;
             }, null);
             return;
-            switch (language)
-            {
-                case 0:
-                    while (!abort && operationCounter < 3)
-                    {
-                        switch (operationCounter)
-                        {
-                            case 0:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    startGrid.Visibility = Visibility.Visible;
-                                    Intro1ENImage.Visibility = Visibility.Visible;
-                                    Intro1ENTextBlock.Visibility = Visibility.Visible;
-                                    hideButton();
-                                    playButton.Visibility = Visibility.Visible;
-                                    playButton.SetValue(Grid.RowProperty, 4);
-                                }, null);
-                                break;
-                            case 1:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    Intro1ENImage.Visibility = Visibility.Hidden;
-                                    Intro1ENTextBlock.Visibility = Visibility.Hidden;
-                                    Intro3ENImage.Visibility = Visibility.Visible;
-                                    Intro2ENTextBlock.Visibility = Visibility.Visible;
-                                }, null);
-                                break;
-                            case 2:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    Intro3ENImage.Visibility = Visibility.Hidden;
-                                    expansionTextBlock.Visibility = Visibility.Visible;
-                                    Intro2ENTextBlock.Visibility = Visibility.Hidden;
-
-                                }, null);
-                                break;
-                            default: break;
-                        }
-                        operationCounter++;
-                        wait();
-                    }
-                    operationCounter = 0;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        playButton.SetValue(Grid.RowProperty, 3);
-                        expansionTextBlock.Visibility = Visibility.Hidden;
-                        startGrid.Visibility = Visibility.Hidden;
-                    }, null);
-                    break;
-                case 1:
-                    while (!abort && operationCounter < 4)
-                    {
-                        switch (operationCounter)
-                        {
-                            case 0:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    startGrid.Visibility = Visibility.Hidden;
-                                    Intro1DEImage.Visibility = Visibility.Visible;
-                                    hideButton();
-                                    playButton.Visibility = Visibility.Visible;
-                                    playButton.SetValue(Grid.RowProperty, 4);
-                                }, null);
-                                break;
-                            case 1:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    Intro1DEImage.Visibility = Visibility.Hidden;
-                                    Intro2DEImage.Visibility = Visibility.Visible;
-                                }, null);
-                                break;
-                            case 2:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    Intro2DEImage.Visibility = Visibility.Hidden;
-                                    Intro3DEImage.Visibility = Visibility.Visible;
-                                }, null);
-                                break;
-                            case 3:
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    Intro3DEImage.Visibility = Visibility.Hidden;
-                                    startGrid.Visibility = Visibility.Visible;
-                                    expansionTextBlock.Visibility = Visibility.Visible;
-                                    expansionTextBlock2.Visibility = Visibility.Visible;
-                                }, null);
-                                break;
-                            default: break;
-                        }
-                        operationCounter++;
-                        wait();
-                    }
-                    operationCounter = 0;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        playButton.SetValue(Grid.RowProperty, 3);
-                        expansionTextBlock.Visibility = Visibility.Hidden;
-                        startGrid.Visibility = Visibility.Hidden;
-                    }, null);
-                    break;
-            }
         }
 
         #endregion
@@ -6176,6 +6089,8 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 invisible();
+                introTextBlock.Visibility = Visibility.Hidden;
+                introTextBlock1.Visibility = Visibility.Hidden;
                 startGrid.Visibility = Visibility.Hidden;
                 expansionTextBlock.Visibility = Visibility.Hidden;
                 expansionTextBlock.Visibility = Visibility.Hidden;
@@ -6478,7 +6393,6 @@ namespace AESVisualisation
             progress = 0;
             start = true;
             abort = true;
-            second = 1;
             if (!expansion)
             {
                 autostep = false;
@@ -6492,6 +6406,7 @@ namespace AESVisualisation
             }
             else
             {
+                second = 1;
                 expansion = false;
                 buttonNextClickedEvent.Set();
                 buttonNextClickedEvent.Set();
