@@ -19,7 +19,7 @@
     <replacement key="$Prime number$" value="Primzahl"/>
     <replacement key="$Private key$" value="Privater Schlüssel"/>
     <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted ciphertext$" value="Entschlüssleter Geheimtext"/>
+    <replacement key="$Decrypted ciphertext$" value="Entschlüsselter Geheimtext"/>
 	 <replacement key="$memo$" value="Diese Vorlage demonstriert den RSA-Algorithmus -- aufgebaut mit einfachen mathematischen Komponenten.\line\line RSA verwendet einen öffentlichen Exponenten {\b e} und einen privaten Exponenten {\b d}. Der Exponent {\b e} ist Teil des öffentlichen Schlüssels {\b (e, N)}, den jeder wissen darf. Nachrichten, die mit dem öffentlichen Schlüssel {\b e} verschlüsselt wurden, können nur mit dem privaten Schlüssel {\b d} wieder entschlüsselt werden.\line\line Um eine Nachricht {\b m} zu verschlüsseln, wird die Zahl {\b c} berechnet durch {\b c = m^e mod N}, wobei {\b N} das Produkt zweier zufällig gewählten Primzahlen ist: {\b N = p * q}.\line\line Um einen Geheimtext {\b c} zu entschlüsseln, wird die Nachricht {\b m} berechnet durch {\b m = c^d mod N}.\line\line {\b d} ist dann die multiplikative Inverse von {\b e mod \u966?(N)}, wobei {\b \u966?(N) = (p-1)(q-1)}.\line\line Um einen abgehörten Geheimtext zu entschlüsseln, muss ein Angreifer {\b d} berechnen. Da er aber nur {\b N} und {\b e} kennt, nicht aber {\b p}, {\b q} oder {\b \u966?(N)}, muss er {\b N} faktorisieren, um den Schlüssel berechnen zu können. Dies würde für große {\b N} (mit mehr als 1024 Bits) jedoch Jahrhunderte dauern."/>
   </replacements>
   <replacements lang="en">
