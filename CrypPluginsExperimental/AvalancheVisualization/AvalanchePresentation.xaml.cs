@@ -3732,8 +3732,16 @@ namespace AvalancheVisualization
             }
             else
             {
-                originalMsg.Text = decimalAsString(unchangedCipher);
-                modifiedMsg.Text = decimalAsString(changedCipher);
+                if (modifiedMsg.Text != "")
+                {
+                    originalMsg.Text = decimalAsString(unchangedCipher);
+                    modifiedMsg.Text = decimalAsString(changedCipher);
+                }
+
+                else
+                    originalMsg.Text = decimalAsString(unchangedCipher);
+
+
             }
         }
 
@@ -3816,8 +3824,16 @@ namespace AvalancheVisualization
             }
             else
             {
-                originalMsg.Text = hexaAsString(unchangedCipher);
-                modifiedMsg.Text = hexaAsString(changedCipher);
+
+                if (modifiedMsg.Text != "")
+                {
+                    originalMsg.Text = hexaAsString(unchangedCipher);
+                    modifiedMsg.Text = hexaAsString(changedCipher);
+                }
+
+                else
+
+                    originalMsg.Text = hexaAsString(unchangedCipher);
             }
 
         }
@@ -3826,11 +3842,17 @@ namespace AvalancheVisualization
         private void radioText_Checked(object sender, RoutedEventArgs e)
         {
 
-
             string strA = Encoding.UTF8.GetString(unchangedCipher);
-            string strB = Encoding.UTF8.GetString(changedCipher);
-            originalMsg.Text = strA;
-            modifiedMsg.Text = strB;
+
+            if (modifiedMsg.Text != "")
+            {
+                string strB = Encoding.UTF8.GetString(changedCipher);
+                originalMsg.Text = strA;
+                modifiedMsg.Text = strB;
+            }
+
+            else
+                originalMsg.Text = strA;
         }
 
 
@@ -5082,6 +5104,11 @@ namespace AvalancheVisualization
         }
 
 
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            buttonNextClickedEvent.Set();
+
+        }
     }
 }
 #endregion

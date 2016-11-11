@@ -4229,7 +4229,8 @@
         <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <TextBlock Style="{StaticResource textBlockStyle}" Text="{Loc OverviewDES}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
             </TextBlock>
-            <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
+            <Button x:Name="nextButton" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="45" Height="25" Content="Next" Margin="4"  Click="NextButton_Click" />
+                <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
                     <RowDefinition/>
@@ -4384,7 +4385,8 @@
         <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <TextBlock x:Name="genOverviewAES" Style="{StaticResource textBlockStyle}" Text="{Loc OverviewAES128}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
             </TextBlock>
-            <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
+            <Button x:Name="nextButton128" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="45" Height="25" Content="Next" Margin="4"  Click="NextButton_Click" />
+            <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>
                     <ColumnDefinition Width="405"/>

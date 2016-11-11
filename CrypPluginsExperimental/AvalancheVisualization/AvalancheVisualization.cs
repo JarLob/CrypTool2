@@ -271,8 +271,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 }, null);
 
                                 pres.statesB = aes.statesB;
-
-
+                                /*
+                                //////////////////////////////////////////////
                                 using (CStreamWriter CSWriter = new CStreamWriter())
                                 {
 
@@ -285,7 +285,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     OnPropertyChanged("OutputStream");
                                     CSWriter.Close();
                                 }
-
+                                */
 
 
 
@@ -345,6 +345,18 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             }
 
 
+                            using (CStreamWriter CSWriter = new CStreamWriter())
+                            {
+
+                                OutputStream = CSWriter;
+                                buttonNextClickedEvent.WaitOne();
+
+                                CSWriter.Write(generatedData(0));
+                                CSWriter.Write(generatedData(1));
+
+                                OnPropertyChanged("OutputStream");
+                                CSWriter.Close();
+                            }
 
 
 
@@ -395,18 +407,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 pres.lrDataB = des.lrDataB;
 
 
-                                using (CStreamWriter Writer = new CStreamWriter())
-                                {
-
-                                    OutputStream = Writer;
-                                    // buttonNextClickedEvent.WaitOne();
-
-                                    Writer.Write(generatedData(0));
-                                    Writer.Write(generatedData(1));
-
-                                    OnPropertyChanged("OutputStream");
-                                    Writer.Close();
-                                }
+                        
 
                             }
                             else if (!textChanged && !pres.canModify)
@@ -445,6 +446,19 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 pres.lrData = des.lrData;
                             }
 
+
+                            using (CStreamWriter Writer = new CStreamWriter())
+                            {
+
+                                OutputStream = Writer;
+                                buttonNextClickedEvent.WaitOne();
+
+                                Writer.Write(generatedData(0));
+                                Writer.Write(generatedData(1));
+
+                                OnPropertyChanged("OutputStream");
+                                Writer.Close();
+                            }
 
                             if (!running)
                                 return;
@@ -491,10 +505,15 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 if (textChanged)
                                 {
                                     string cipherB = pres.binaryAsString(textInput);
+
+                                    if(pres.radioDecOthers.IsChecked==true)
+                                        pres.modifiedMsg.Text = pres.decimalAsString(textInput);
+                                    if(pres.radioHexOthers.IsChecked==true)
                                     pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+
                                     pres.TB2.Text = cipherB;
                                     pres.changedCipher = textInput;
-                                    pres.radioHexOthers.IsChecked = true;
+                                  
                                     pres.comparison();
 
 
@@ -524,6 +543,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.originalMsg.Text = pres.hexaAsString(textInput);
                                     pres.TB1.Text = cipherA;
                                     pres.unchangedCipher = textInput;
+                                    pres.radioHexOthers.IsChecked = true;
 
                                 }
 
@@ -550,9 +570,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                                 string otherText = Encoding.Default.GetString(textInput);
-                                //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
-
-
+                               
 
                                 if (textChanged)
                                 {
@@ -561,11 +579,19 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                     if (validEntry)
                                     {
+                                        
                                         string cipherB = pres.binaryAsString(textInput);
+
+                                        if(pres.radioText.IsChecked == true)
                                         pres.modifiedMsg.Text = otherText;
+                                        if (pres.radioDecOthers.IsChecked == true)
+                                            pres.modifiedMsg.Text = pres.decimalAsString(textInput);
+                                        if (pres.radioHexOthers.IsChecked == true)
+                                            pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+
                                         pres.TB2.Text = cipherB;
                                         pres.changedCipher = textInput;
-                                        pres.radioText.IsChecked = true;
+                                       
                                         pres.comparison();
 
                                         using (CStreamWriter CSWriter2 = new CStreamWriter())
@@ -590,23 +616,16 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                         pres.comparisonPane();
                                     else
                                         pres.instructions();
-                                    //GuiLogMessage(pres.decimalAsString(buffer), NotificationLevel.Info);
+                                   
                                     string cipherA = pres.binaryAsString(textInput);
                                     pres.originalMsg.Text = otherText;
                                     msgA = otherText;
                                     pres.TB1.Text = cipherA;
                                     pres.unchangedCipher = textInput;
-                                    //pieChart.classicInput = textInput;
-                                    // pres.comparisonTxtBlock.Visibility = System.Windows.Visibility.Visible;
-
+                                    pres.radioText.IsChecked = true;
                                 }
 
 
-                                /*CStreamWriter writer2 = new CStreamWriter();
-                                OutputStream = writer2;
-                                writer2.Write(buffer);
-                                OnPropertyChanged("OutputStream");
-                                writer2.Close();*/
 
                             }, null);
 
