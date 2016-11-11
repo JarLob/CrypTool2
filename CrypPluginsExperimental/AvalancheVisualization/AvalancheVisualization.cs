@@ -28,11 +28,12 @@ using System.Windows.Threading;
 using System.Text;
 using AvalancheVisualization;
 using System.Linq;
+using AvalancheVisualization.Properties;
 
 namespace Cryptool.Plugins.AvalancheVisualization
 {
     // HOWTO: Change author name, email address, organization and URL.
-    [Author("Camilo Echeverri", "cechever@mail.uni-mannheim.de", "University of Mannheim", "http://cryptool2.vs.uni-due.de")]
+    [Author("Camilo Echeverri", "caeche20@hotmail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("AvalancheVisualization.Properties.Resources","PluginCaption", "AvalancheTooltip", "AvalancheVisualization/userdoc.xml", new[] { "AvalancheVisualization/Images/Avalanche.png" })]
@@ -84,7 +85,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [PropertyInfo(Direction.InputData, "Message", "Enter message", true)]
+        [PropertyInfo(Direction.InputData, "InputMessage", "InputMessageDescription", true)]
         public ICryptoolStream Text
         {
             get
@@ -99,7 +100,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
 
-        [PropertyInfo(Direction.OutputData, "Outputstream", "output", false)]
+        [PropertyInfo(Direction.OutputData, "Output", "OutputTooltip", false)]
         public ICryptoolStream OutputStream
         {
             get
@@ -222,65 +223,125 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     {
                         pres.mode = 0;
 
-                      
+                        bool valid =validSize();
 
                         string inputMessage = Encoding.Default.GetString(textInput);
 
-
-                        if (textChanged && pres.canModify)
+                        if (valid)
                         {
-                            aes.text = textInput;
-                            aes.key = keyInput;
 
-                            //pres.myMethod(aes);
-                            // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
-
-                            /* pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                             {
-                                 //pres.modifiedMsg.Text = inputMessage;                               
-                                 pres.getTextBoxContent();
-                                 //pres.loadInitialState(temporary, false);
-                                 //pres.modifyTxtBlock.Visibility = Visibility.Hidden;
-
-                             }, null);*/
-
-
-                            // pres.key = key;
-                            byte[] temporary = aes.checkTextLength();
-                            byte[] tmpKey = aes.checkKeysize();
-                            pres.key = tmpKey;
-                            pres.textB = temporary;
-                            aes.executeAES(false);
-
-
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            if (textChanged && pres.canModify)
                             {
-                                pres.setAndLoadButtons();
+                                aes.text = textInput;
+                                aes.key = keyInput;
 
-                                //if (!originalText.Equals(text))
-                                pres.loadChangedMsg(temporary, true);
-                                //if (!originalKey.Equals(tmpKey))
-                                pres.loadChangedKey(tmpKey);
+                                //pres.myMethod(aes);
+                                // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
 
-                                pres.coloringText();
-                                pres.coloringKey();
-                                pres.updateDataColor();
-                            }, null);
+                                /* pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                 {
+                                     //pres.modifiedMsg.Text = inputMessage;                               
+                                     pres.getTextBoxContent();
+                                     //pres.loadInitialState(temporary, false);
+                                     //pres.modifyTxtBlock.Visibility = Visibility.Hidden;
+    
+                                 }, null);*/
 
-                            pres.statesB = aes.statesB;
+
+                                // pres.key = key;
+                                byte[] temporary = aes.checkTextLength();
+                                byte[] tmpKey = aes.checkKeysize();
+                                pres.key = tmpKey;
+                                pres.textB = temporary;
+                                aes.executeAES(false);
 
 
-                            using (CStreamWriter CSWriter = new CStreamWriter())
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                                {
+                                    pres.setAndLoadButtons();
+
+                                    //if (!originalText.Equals(text))
+                                    pres.loadChangedMsg(temporary, true);
+                                    //if (!originalKey.Equals(tmpKey))
+                                    pres.loadChangedKey(tmpKey);
+
+                                    pres.coloringText();
+                                    pres.coloringKey();
+                                    pres.updateDataColor();
+                                }, null);
+
+                                pres.statesB = aes.statesB;
+
+
+                                using (CStreamWriter CSWriter = new CStreamWriter())
+                                {
+
+                                    OutputStream = CSWriter;
+                                    // buttonNextClickedEvent.WaitOne();
+
+                                    CSWriter.Write(generatedData(0));
+                                    CSWriter.Write(generatedData(1));
+
+                                    OnPropertyChanged("OutputStream");
+                                    CSWriter.Close();
+                                }
+
+
+
+
+
+
+                                ///////////////////////////////////////////////////////
+
+                            }
+                            else if (!textChanged && !pres.canModify)
                             {
+                                textChanged = true;
 
-                                OutputStream = CSWriter;
-                                // buttonNextClickedEvent.WaitOne();
+                                originalText = textInput;
 
-                                CSWriter.Write(generatedData(0));
-                                CSWriter.Write(generatedData(1));
+                                aes.text = textInput;
+                                aes.key = keyInput;
 
-                                OnPropertyChanged("OutputStream");
-                                CSWriter.Close();
+                                pres.keysize = settings.KeyLength;
+
+
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                                {
+                                    if (pres.skip.IsChecked == true)
+                                        pres.comparisonPane();
+                                    else
+                                        pres.instructions();
+                                    // pres.comparisonPane();
+                                    //pres.originalMsg.Text = inputMessage;
+
+
+                                }, null);
+
+
+                                // pres.textA = text;
+                                //pres.key = key;
+
+                                AES.keysize = settings.KeyLength;
+                                //pres.keysize = settings.KeyLength;
+                                byte[] tmpKey = aes.checkKeysize();
+                                originalKey = tmpKey;
+                                pres.key = tmpKey;
+                                pres.keyA = tmpKey;
+                                byte[] temporary = aes.checkTextLength();
+                                pres.textA = temporary;
+                                aes.executeAES(true);
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                                {
+
+                                    pres.loadInitialState(temporary, tmpKey);
+
+
+                                }, null);
+
+                                pres.states = aes.states;
+                                pres.keyList = aes.keyList;
+
                             }
 
 
@@ -288,69 +349,11 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
 
-                            ///////////////////////////////////////////////////////
+
+                            if (!running)
+                                return;
 
                         }
-                        else if (!textChanged && !pres.canModify)
-                        {
-                            textChanged = true;
-
-                            originalText = textInput;
-
-                            aes.text = textInput;
-                            aes.key = keyInput;
-
-                            pres.keysize = settings.KeyLength;
-
-
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                            {
-                                if (pres.skip.IsChecked == true)
-                                    pres.comparisonPane();
-                                else
-                                    pres.instructions();
-                                // pres.comparisonPane();
-                                //pres.originalMsg.Text = inputMessage;
-
-
-                            }, null);
-
-
-                            // pres.textA = text;
-                            //pres.key = key;
-
-                            AES.keysize = settings.KeyLength;
-                            //pres.keysize = settings.KeyLength;
-                            byte[] tmpKey = aes.checkKeysize();
-                            originalKey = tmpKey;
-                            pres.key = tmpKey;
-                            pres.keyA = tmpKey;
-                            byte[] temporary = aes.checkTextLength();
-                            pres.textA = temporary;
-                            aes.executeAES(true);
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                            {
-
-                                pres.loadInitialState(temporary, tmpKey);
-
-
-                            }, null);
-
-                            pres.states = aes.states;
-                            pres.keyList = aes.keyList;
-
-                        }
-
-
-
-
-
-
-
-                        if (!running)
-                            return;
-
-
                     }
                     // if settings==1
                     else
@@ -359,90 +362,93 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         bool valid = validSize();
 
-                        if (textChanged && pres.canModify)
+                        if (valid)
                         {
 
-                            des.inputKey = keyInput;
-                            des.inputMessage = textInput;
-
-                            des.textChanged = true;
-                            des.DESProcess();
-                            pres.key = keyInput;
-                            pres.textB = textInput;
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            if (textChanged && pres.canModify)
                             {
 
-                                pres.setAndLoadButtons();
+                                des.inputKey = keyInput;
+                                des.inputMessage = textInput;
+
+                                des.textChanged = true;
+                                des.DESProcess();
+                                pres.key = keyInput;
+                                pres.textB = textInput;
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                                {
+
+                                    pres.setAndLoadButtons();
 
 
-                                pres.loadChangedMsg(textInput, true);
+                                    pres.loadChangedMsg(textInput, true);
 
-                                pres.loadChangedKey(keyInput);
+                                    pres.loadChangedKey(keyInput);
 
-                                pres.coloringText();
-                                pres.coloringKey();
+                                    pres.coloringText();
+                                    pres.coloringKey();
 
-                                pres.updateDataColor();
-                            }, null);
-
-
-                            pres.lrDataB = des.lrDataB;
+                                    pres.updateDataColor();
+                                }, null);
 
 
-                            using (CStreamWriter Writer = new CStreamWriter())
+                                pres.lrDataB = des.lrDataB;
+
+
+                                using (CStreamWriter Writer = new CStreamWriter())
+                                {
+
+                                    OutputStream = Writer;
+                                    // buttonNextClickedEvent.WaitOne();
+
+                                    Writer.Write(generatedData(0));
+                                    Writer.Write(generatedData(1));
+
+                                    OnPropertyChanged("OutputStream");
+                                    Writer.Close();
+                                }
+
+                            }
+                            else if (!textChanged && !pres.canModify)
                             {
 
-                                OutputStream = Writer;
-                                // buttonNextClickedEvent.WaitOne();
 
-                                Writer.Write(generatedData(0));
-                                Writer.Write(generatedData(1));
+                                des.inputKey = keyInput;
+                                des.inputMessage = textInput;
 
-                                OnPropertyChanged("OutputStream");
-                                Writer.Close();
+
+                                byte[] tmpKey = keyInput;
+                                byte[] tmpText = textInput;
+                                originalText = tmpText;
+                                originalKey = tmpKey;
+
+                                des.textChanged = false;
+
+                                des.DESProcess();
+
+                                //pres.key = tmpKey;
+                                pres.keyA = tmpKey;
+                                textChanged = true;
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
+                                {
+                                    if (pres.skip.IsChecked == true)
+                                        pres.comparisonPane();
+                                    else
+                                        pres.instructions();
+
+                                    pres.loadInitialState(textInput, keyInput);
+                                    //MessageBox.Show(des.lrData[1, 0]);
+
+                                }, null);
+                                //MessageBox.Show(pres.lrData[1, 0]);
+                                pres.textA = textInput;
+                                pres.lrData = des.lrData;
                             }
 
+
+                            if (!running)
+                                return;
                         }
-                        else if (!textChanged && !pres.canModify)
-                        {
-
-
-                            des.inputKey = keyInput;
-                            des.inputMessage = textInput;
-
-
-                            byte[] tmpKey = keyInput;
-                            byte[] tmpText = textInput;
-                            originalText = tmpText;
-                            originalKey = tmpKey;
-
-                            des.textChanged = false;
-
-                            des.DESProcess();
-
-                            //pres.key = tmpKey;
-                            pres.keyA = tmpKey;
-                            textChanged = true;
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                            {
-                                if (pres.skip.IsChecked == true)
-                                    pres.comparisonPane();
-                                else
-                                    pres.instructions();
-
-                                pres.loadInitialState(textInput, keyInput);
-                                //MessageBox.Show(des.lrData[1, 0]);
-
-                            }, null);
-                            //MessageBox.Show(pres.lrData[1, 0]);
-                            pres.textA = textInput;
-                            pres.lrData = des.lrData;
-                        }
-
-
-                        if (!running)
-                            return;
-
                     }
 
 
@@ -575,7 +581,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     }
                                     else
                                     {
-                                        GuiLogMessage("Modification must have same length as the initial input.", NotificationLevel.Warning);
+                                        GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
                                     }
                                 }
                                 else
@@ -715,10 +721,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
             {
                 case AvalancheVisualizationSettings.Category.Prepared:
 
-                    string initialtxt = string.Format("Initial message:{0}", Environment.NewLine);
-                    string modifiedtxt = string.Format("Modified message:{0}", Environment.NewLine);
-                    string initialkey = string.Format("Initial key:{0}", Environment.NewLine);
-                    string modifiedkey = string.Format("Modified key:{0}", Environment.NewLine);
+                    string initialtxt = string.Format(Resources.OutputInitialMsg, Environment.NewLine);
+                    string modifiedtxt = string.Format(Resources.OutputModifiedMsg, Environment.NewLine);
+                    string initialkey = string.Format(Resources.OutputInitialKey, Environment.NewLine);
+                    string modifiedkey = string.Format(Resources.OutputModifiedKey, Environment.NewLine);
 
 
                     string inputMessage = Encoding.ASCII.GetString(originalText);
@@ -825,13 +831,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         for (int round = 0; round < rounds; round++)
                         {
 
-                            sb.AppendFormat("After round {0}:{1}", round, Environment.NewLine);
+                            sb.AppendFormat(Resources.AfterRound, round, Environment.NewLine);
 
-                            sb.AppendFormat("Flipped bits: {0}. Avalanche effect: {1}%{2}", data[i].ToString(), data[i + 1].ToString(), Environment.NewLine);
+                            sb.AppendFormat(Resources.OutputStats1, data[i].ToString(), data[i + 1].ToString(), Environment.NewLine);
 
-                            sb.AppendFormat("Length of longest identical bit sequence: {0}. Offset: {1}.{2}", data[i + 2].ToString(), data[i + 3].ToString(), Environment.NewLine);
+                            sb.AppendFormat(Resources.OutputStats2, data[i + 2].ToString(), data[i + 3].ToString(), Environment.NewLine);
 
-                            sb.AppendFormat("Length of longest flipped bit sequence: {0}. Offset: {1}.{2}", data[i + 4].ToString(), data[i + 5].ToString(), Environment.NewLine);
+                            sb.AppendFormat(Resources.OutputStats3, data[i + 4].ToString(), data[i + 5].ToString(), Environment.NewLine);
 
                             sb.AppendFormat("{0}", Environment.NewLine);
 
@@ -885,13 +891,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         for (int round = 0; round < 17; round++)
                         {
 
-                            sbuilder.AppendFormat("After round {0}:{1}", round, Environment.NewLine);
+                            sbuilder.AppendFormat(Resources.AfterRound, round, Environment.NewLine);
 
-                            sbuilder.AppendFormat("Flipped bits: {0}. Avalanche effect: {1}%{2}", dat[j].ToString(), dat[j + 1].ToString(), Environment.NewLine);
+                            sbuilder.AppendFormat(Resources.OutputStats1, dat[j].ToString(), dat[j + 1].ToString(), Environment.NewLine);
 
-                            sbuilder.AppendFormat("Length of longest identical bit sequence: {0}. Offset: {1}.{2}", dat[j + 2].ToString(), dat[j + 3].ToString(), Environment.NewLine);
+                            sbuilder.AppendFormat(Resources.OutputStats2, dat[j + 2].ToString(), dat[j + 3].ToString(), Environment.NewLine);
 
-                            sbuilder.AppendFormat("Length of longest flipped bit sequence: {0}. Offset: {1}.{2}", dat[j + 4].ToString(), dat[j + 5].ToString(), Environment.NewLine);
+                            sbuilder.AppendFormat(Resources.OutputStats3, dat[j + 4].ToString(), dat[j + 5].ToString(), Environment.NewLine);
 
                             sbuilder.AppendFormat("{0}", Environment.NewLine);
 
@@ -921,14 +927,14 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         if (pres.mode == 2)
                         {
-                            initialCaption = string.Format("Initial hash function:{0}", Environment.NewLine);
-                            modifiedCaption = string.Format("Modified hash function:{0}", Environment.NewLine);
+                            initialCaption = string.Format(Resources.InitialHashOutput, Environment.NewLine);
+                            modifiedCaption = string.Format(Resources.ModHashOutput, Environment.NewLine);
                         }
 
                         if (pres.mode == 4)
                         {
-                            initialCaption = string.Format("Encryption of initial message:{0}", Environment.NewLine);
-                            modifiedCaption = string.Format("Encryption of modified message:{0}", Environment.NewLine);
+                            initialCaption = string.Format(Resources.EncryptionInitialMsgOut, Environment.NewLine);
+                            modifiedCaption = string.Format(Resources.EncryptionModifiedlMsgOut, Environment.NewLine);
 
                         }
 
@@ -953,9 +959,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         int lengthIdentSequence = pres.longestIdenticalSequence(pres.differentBits);
                         int lengthFlippedSequence = pres.longestFlippedSequence(pres.differentBits);
 
-                        string flippedBits = string.Format("Flipped bits: {0}. Avalanche effect: {1}% {2}", bitsFlipped, avalanche, Environment.NewLine);
-                        string identSeq = string.Format("Length of longest identical bit sequence: {0}. Offset {1}.{2}", lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
-                        string flippedSeq = string.Format("Length of longest flipped bit sequence: {0}. Offset {1}.{2}", lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
+                        string flippedBits = string.Format(Resources.OutputStats1, bitsFlipped, avalanche, Environment.NewLine);
+                        string identSeq = string.Format(Resources.OutputStats2, lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
+                        string flippedSeq = string.Format(Resources.OutputStats3, lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
 
                         byte[] statsArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq));
 
@@ -966,8 +972,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     {
                    
                      
-                         string   initialCaption = string.Format("Encryption of initial message:{0}", Environment.NewLine);
-                         string   modifiedCaption = string.Format("Encryption of modified message:{0}", Environment.NewLine);
+                         string   initialCaption = string.Format(Resources.EncryptionInitialMsgOut, Environment.NewLine);
+                         string   modifiedCaption = string.Format(Resources.EncryptionModifiedlMsgOut, Environment.NewLine);
 
                         
 
@@ -992,9 +998,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         int lengthIdentSequence = pres.longestIdentSequenceBytes();
                         int lengthFlippedSequence = pres.longestFlippedSequenceBytes();
 
-                        string flippedBits = string.Format("Flipped bytes: {0}. Avalanche effect: {1}% {2}", nrBytesFlipped, avalanche, Environment.NewLine);
-                        string identSeq = string.Format("Length of longest identical byte sequence: {0}. Offset {1}.{2}", lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
-                        string flippedSeq = string.Format("Length of longest flipped byte sequence: {0}. Offset {1}.{2}", lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
+                        string flippedBits = string.Format(Resources.OutputStatsClassic1, nrBytesFlipped, avalanche, Environment.NewLine);
+                        string identSeq = string.Format(Resources.OutputStatsClassic2, lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
+                        string flippedSeq = string.Format(Resources.OutputStatsClassic3, lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
 
                         byte[] statsArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq));
 
@@ -1022,12 +1028,47 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         public bool validSize()
         {
-            if (key.Length != 8)
-                throw new Exception("Invalid key");
-            if (text.Length != 8)
-                throw new Exception("Invalid text");
-            if (key.Length == 8 && text.Length == 8)
-                return true;
+
+            if (pres.mode == 0)
+            {
+                switch (settings.KeyLength)
+                {
+                    case 0:
+                        if (key.Length != 16)
+                            GuiLogMessage(Resources.KeyLength128, NotificationLevel.Warning);
+                        else
+                            return true;
+                        break;
+                    case 1:
+                        if (key.Length != 24)
+                            GuiLogMessage(Resources.KeyLength192, NotificationLevel.Warning);
+                        else
+                            return true;
+                        break;
+                    case 2:
+                        if (key.Length != 32)
+                            GuiLogMessage(Resources.KeyLength256, NotificationLevel.Warning);
+                        else
+                            return true;
+                        break;
+                }
+                        
+
+                }
+            
+
+            if (pres.mode == 1)
+                {
+                    if(key.Length!=8)
+                        GuiLogMessage(Resources.KeyLengthDES, NotificationLevel.Warning);
+                    else
+                    {
+                        return true;
+                    }
+                }
+            
+           
+                
 
             return false;
         }

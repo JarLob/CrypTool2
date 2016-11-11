@@ -249,8 +249,8 @@
         </Canvas>
 
         <!--Buttons-->
-        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1"  Width="60" Height="25" Content="{Loc DoneButton}" FontSize="13" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Margin="0,45" Visibility="Hidden" Click="doneButton_Click"/>
-        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="60" Height="25" Content="{Loc ClearButton}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,45" Visibility="Hidden" Click="clearButton_Click"/>
+        <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"   Width="62" Height="27" Content="{Loc DoneButton}" FontSize="13" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="0,35,20,35" Visibility="hidden" Click="doneButton_Click"/>
+        <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="62" Height="27" Content="{Loc ClearButton}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,35,0,35" Visibility="hidden" Click="clearButton_Click"/>
 
 
         <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3"  VerticalAlignment="Bottom" Margin="10,20" Visibility="Hidden">
@@ -276,8 +276,8 @@
                     <DropShadowBitmapEffect Color="Black" Direction="300" ShadowDepth="5" Opacity="0.8" Softness="0.4"  />
                 </Line.BitmapEffect>
             </Line>
-            <Button x:Name="inputDataButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" Content="Input Data" Click="inputDataButton_Click"/>
-            <Button x:Name="overviewButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="8" Content=" General&#xa; Overview" Click="overviewButton_Click"/>
+            <Button x:Name="inputDataButton" Style="{StaticResource buttonStyle}" Width="64" Height="30" FontSize="8" Content="{Loc InputDataButton}" Click="inputDataButton_Click"/>
+            <Button x:Name="overviewButton" Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="8" Content="{Loc OverviewButton}" Click="overviewButton_Click"/>
         </StackPanel>
 
         <!--Instructions-->
@@ -324,7 +324,7 @@
                 </BulletDecorator>
             </StackPanel>
 
-            <Button Name="continueButton" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="{Loc ContinueButton}" Click="continueButton_Click" Margin="0,40"/>
+            <Button Name="continueButton" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="65" Height="30" FontSize="11" Content="{Loc ContinueButton}" Click="continueButton_Click" Margin="0,40"/>
         </Grid>
 
         <Grid Name="InstructionsUnprep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
@@ -333,60 +333,60 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="Instructions" />
-            <TextBlock Grid.Row="1" Foreground="white" FontSize="20"   Text="Unprepared methods:" Margin="70,0"/>
-            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="(Hash Functions, Classic Ciphers, Modern Ciphers)" HorizontalAlignment="Right" Margin="0,2,50,0"/>
+            <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="{Loc InstructionsTitle}" />
+            <TextBlock Grid.Row="1" Foreground="white" FontSize="20"   Text="{Loc InstructionsUnprep}" Margin="70,0"/>
+            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="{Loc InstructionsUnprepSubtitle}" HorizontalAlignment="Right" Margin="0,2,45,0"/>
 
             <StackPanel Grid.Row="2">
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Use message entry only." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsUnprepBullet1}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator  Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Input is received as result from other CT2 plugins." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsUnprepBullet2}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator  Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Input data initially shown in hex or text format, in accordance with the selection made." Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsUnprepBullet3}" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Modify initial input." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet4}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
                 <BulletDecorator Margin="70,5">
                     <BulletDecorator.Bullet>
                         <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text=" Check avalanche effect." TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
+                    <TextBlock  Foreground="#534b4f" FontSize="16"  Text="{Loc InstructionsPrepBullet5}" TextAlignment="Justify" Width="550" TextWrapping="Wrap"/>
                 </BulletDecorator>
             </StackPanel>
 
-            <Button  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="60" Height="30" FontSize="11" Content="Continue" Click="continueButton_Click" Margin="0,40"/>
+            <Button  Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource buttonStyle}" Width="65" Height="30" FontSize="11" Content="{Loc ContinueButton}" Click="continueButton_Click" Margin="0,40"/>
         </Grid>
 
         <!--Titles -->
-        <TextBlock Name="buttonsTitle" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#534b4f" FontWeight="DemiBold" Text="Check avalanche effect after round ..." Visibility="Hidden" Margin="10,55,0,55">
+        <TextBlock Name="buttonsTitle" Grid.Row="1" VerticalAlignment="Bottom" Foreground="#534b4f" FontWeight="DemiBold" Text="{Loc CheckAvalanche}" Visibility="Hidden" Margin="10,55,0,55">
         </TextBlock>
-        <TextBlock Name="initStateTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Input Data AES-" Visibility="Hidden" >
+        <TextBlock Name="initStateTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="{Loc InputTitleAES}" Visibility="Hidden" >
         </TextBlock>
         <TextBlock Name="afterRoundsTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" TextAlignment="Center" Visibility="Hidden" >
         </TextBlock>
-        <TextBlock Name="afterRoundsSubtitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="20" Foreground="#534b4f" HorizontalAlignment="Center" TextAlignment="Center" Text="After round "  Visibility="Hidden" Margin="0,30" >
+        <TextBlock Name="afterRoundsSubtitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="20" Foreground="#534b4f" HorizontalAlignment="Center" TextAlignment="Center" Text="{Loc AfterRoundSubtitle}"  Visibility="Hidden" Margin="0,30" >
         </TextBlock>
 
 
         <!--Pie Chart -->
 
-        <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="2"  Width="170" Height="170" VerticalAlignment="Top"  HorizontalAlignment="Right" Margin="10,15">
+        <local:PieChart  x:Name="flippedBitsPiece" Grid.Row="1" Grid.Column="2"  Width="170" Height="170" VerticalAlignment="Top"  HorizontalAlignment="Right" Margin="10,15,-15,15">
             <local:PieChart.ToolTip>
                 <ToolTip x:Name="tp1" Height="40" Background="#6082b6" Foreground="White" FontWeight="Bold">
                 </ToolTip>
@@ -397,7 +397,7 @@
 
         </local:PieChart>
 
-        <local:PieChart  x:Name="unflippedBitsPiece" Grid.Row="1" Grid.Column="2" Width="170" Height="170" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,15" >
+        <local:PieChart  x:Name="unflippedBitsPiece" Grid.Row="1" Grid.Column="2" Width="170" Height="170" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10,15,-15,15" >
             <local:PieChart.ToolTip>
                 <ToolTip x:Name="tp2" Height="40" Background="#6082b6" Foreground="White" FontWeight="Bold">
                 </ToolTip>
@@ -446,16 +446,16 @@
         </Polygon>
         <Polygon Name="arrow3" Grid.Row="1" Grid.ColumnSpan="2" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"  Margin="10,50,0,0">
         </Polygon>
-        <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="Enable single bit changes"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
+        <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="{Loc SingleBitCheckBox}"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
         <!--RadioButtons-->
         <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden">
-            <TextBlock Foreground="#534b4f" FontSize="14" Padding="5">Display information in
+            <TextBlock Foreground="#534b4f" FontSize="14" Padding="5" Text="{Loc DisplayInformation}">
             </TextBlock>
             <StackPanel Name="radioButtonPanel" Orientation="Horizontal" Margin="10,0">
-                <RadioButton Name="radioDecimal" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                <RadioButton Name="radioDecimal" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="{Loc Decimal}">
                 </RadioButton>
-                <RadioButton Name="radioHexa" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                <RadioButton Name="radioHexa" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="{Loc Hex}">
                 </RadioButton>
             </StackPanel>
         </StackPanel>
@@ -470,27 +470,25 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <TextBlock Name="explanationTxt_others"  Width="160" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="Input changes can be done by directly modifying the input feed."  Foreground="#534b4f"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="12,15"></TextBlock>
-            <TextBlock Name="title_Other"  Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Avalanche Effect ">
+            <TextBlock Name="explanationTxt_others"  Width="160" Height="50" TextWrapping="Wrap" TextAlignment="Justify" Text="{Loc ExplanationText}"  Foreground="#534b4f"  HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="3" Margin="12,15"></TextBlock>
+            <TextBlock Name="title_Other"  Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="{Loc AvalancheEffect}">
             </TextBlock>
-            <TextBlock Grid.Row="1" Text="Input Data" HorizontalAlignment="Center" Foreground="#534b4f" FontSize="17" FontWeight="DemiBold"/>
-            <TextBlock Name="othersSubtitle" Text="(Classic ciphers)" Foreground="#534b4f" FontSize="15" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,18,0,0"></TextBlock>
-            <TextBlock Name="othersOrigTitle"  Grid.Row="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="Encryption of initial message" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="150,0,0,0">
-            </TextBlock>
-
-            <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="Encryption of modified message" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
+            <TextBlock Grid.Row="1" Text="{Loc InputData}" HorizontalAlignment="Center" Foreground="#534b4f" FontSize="17" FontWeight="DemiBold"/>
+            <TextBlock Name="othersSubtitle" Text="{Loc ClassicCipherSubtitle}" Foreground="#534b4f" FontSize="15" FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,18,0,0"></TextBlock>
+            <TextBlock Name="othersOrigTitle"  Grid.Row="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80" FontSize="10" Text="{Loc EncryptionInitialMsg}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="150,0,0,0">
             </TextBlock>
 
-            <TextBlock Name="lbl" Grid.Row="3" Text="Encryption of initial message" Foreground="#534b4f" Margin="20"></TextBlock>
-            <TextBlock Name="lbl2" Grid.Row="3" Text="Encryption of modified message" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
-            <TextBlock Name="lbl3" Grid.Row="3" Text="Flipped bits" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
+            <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="{Loc EncryptionModifiedMsg}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
+            </TextBlock>
+
+            <TextBlock Name="lbl" Grid.Row="3" Text="{Loc EncryptionInit}" Foreground="#534b4f" Margin="20"></TextBlock>
+            <TextBlock Name="lbl2" Grid.Row="3" Text="{Loc EncryptionMod}" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
+            <TextBlock Name="lbl3" Grid.Row="3" Text="{Loc FlippedBits}" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
 
             <StackPanel Grid.Row="3" x:Name="bitComparisonStkPanel" Height="100" Margin="0,20,0,0">
                 <StackPanel.BitmapEffect>
                     <DropShadowBitmapEffect Color="Black" Direction="260" ShadowDepth="5" Opacity="0.5" Softness="0.6"  />
                 </StackPanel.BitmapEffect>
-
-
 
                 <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   
                            VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
@@ -508,13 +506,13 @@
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" >
-                <TextBlock Foreground="#534b4f" FontSize="12" Padding="5">Display info. in
+                <TextBlock Foreground="#534b4f" FontSize="12" Padding="5" Text="{Loc DisplayInfo}">
                 </TextBlock>
                 <StackPanel >
-                    <RadioButton x:Name="radioText" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioText_Checked" Content="Text" Visibility="Collapsed"></RadioButton>
-                    <RadioButton x:Name="radioDecOthers" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                    <RadioButton x:Name="radioText" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioText_Checked" Content="{Loc Text}" Visibility="Collapsed"></RadioButton>
+                    <RadioButton x:Name="radioDecOthers" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="{Loc Decimal}">
                     </RadioButton>
-                    <RadioButton x:Name="radioHexOthers" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                    <RadioButton x:Name="radioHexOthers" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="{Loc Hex}">
                     </RadioButton>
                 </StackPanel>
             </StackPanel>
@@ -546,9 +544,9 @@
             </Grid.RowDefinitions>
 
 
-            <TextBlock x:Name="initMsg" Style="{StaticResource textBlockStyle}" FontSize="15" Text="Initial message (in hex)" HorizontalAlignment="Center" Margin="0,0,20,0" >
+            <TextBlock x:Name="initMsg" Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc InitialMessageHex}" HorizontalAlignment="Center" Margin="0,0,20,0" >
             </TextBlock>
-            <TextBlock x:Name="initKey"  Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="Initial key (in hex)" HorizontalAlignment="Center" Margin="0,10,30,0" >
+            <TextBlock x:Name="initKey"  Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc InitialKeyHex}" HorizontalAlignment="Center" Margin="0,10,30,0" >
             </TextBlock>
 
             <Grid x:Name="Grid1" Grid.Row="1" Height="100" Width="160" VerticalAlignment="Center"  HorizontalAlignment="Left" >
@@ -903,9 +901,9 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="15" Text="Modified message" HorizontalAlignment="Center" Margin="0,0,20,0" >
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedMessage}" HorizontalAlignment="Center" Margin="0,0,20,0" >
             </TextBlock>
-            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="Modified key" HorizontalAlignment="Center" Margin="0,10,30,0" >
+            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedKey}" HorizontalAlignment="Center" Margin="0,10,30,0" >
             </TextBlock>
 
             <Grid x:Name="Grid2" Grid.Row="1" Height="100" Width="160" HorizontalAlignment="Left" >
@@ -1254,7 +1252,7 @@
         <!--Bit Representation AES-->
         <Grid Name="inputInBits"  Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Margin="0,70">
 
-            <TextBlock Style="{StaticResource textBlockStyle}" Text="Binary representation" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ></TextBlock>
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="{Loc BinaryRep}" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Top" Height="27" ></TextBlock>
 
             <Grid Grid.Row="1" Height="100" Width="445" VerticalAlignment="Top" Margin="0,25,0,0">
                 <Grid.RowDefinitions>
@@ -1281,7 +1279,7 @@
                         <TextBlock Name="bit7" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                         <TextBlock Name="bit8" Width="13" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                     </StackPanel>
-                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+
                 </Border>
                 <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <StackPanel Orientation="Horizontal" >
@@ -2011,7 +2009,7 @@
                         <TextBlock Name="keyBit256_7" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                         <TextBlock Name="keyBit256_8" Width="6.3" TextAlignment="Center" VerticalAlignment="Center" MouseDown="TextBlock_MouseDown" ></TextBlock>
                     </StackPanel>
-                    <!--<TextBlock   Text="" TextAlignment="Center" VerticalAlignment="Center"></TextBlock>-->
+
                 </Border>
                 <Border Grid.Column="1" BorderBrush="#534b4f"  BorderThickness="2">
                     <StackPanel Orientation="Horizontal" >
@@ -2390,22 +2388,22 @@
         </Grid>
 
 
-        <TextBlock Name="instructionsTxtBlock2" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Height="30" Visibility="Hidden" Width="250"  Foreground="#534b4f" FontSize="15" FontWeight="DemiBold" TextWrapping="Wrap" Text="Click on the bit(s) you like to flip." Margin="0,70,0,0">
+        <TextBlock Name="instructionsTxtBlock2" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Height="30" Visibility="hidden" Width="340"   Foreground="#534b4f" FontSize="15" FontWeight="DemiBold" TextAlignment="Center" Text="{Loc ClickOnBits}" Margin="50,70,0,0">
         </TextBlock>
 
         <StackPanel x:Name="changeMsgAes" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Right"  Margin="50,100,50,0" Visibility="Hidden">
-            <TextBlock Text="Message and key changes can be made in two ways:"  Foreground="#534b4f" ></TextBlock>
+            <TextBlock Text="{Loc ChangesText}"  Foreground="#534b4f" ></TextBlock>
             <BulletDecorator Margin="0,5,0,2">
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock   Text=" Modify external input feed directly."  Foreground="#534b4f" ></TextBlock>
+                <TextBlock   Text="{Loc ChangesTextBullet1}"  Foreground="#534b4f" ></TextBlock>
             </BulletDecorator>
             <BulletDecorator>
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock    Text=" Click on single bits -- only possible after checking checkbox."  Foreground="#534b4f" ></TextBlock>
+                <TextBlock    Text="{Loc ChangesTextBullet2}"  Foreground="#534b4f" ></TextBlock>
             </BulletDecorator>
         </StackPanel>
 
@@ -2419,10 +2417,10 @@
             </Grid.RowDefinitions>
 
             <TextBlock Name="txtBlockafterRounds" Style="{StaticResource textBlockStyle }" FontSize="12"
-                      Text="   Cipher state&#xa;initial message.  " HorizontalAlignment="Center" >
+                      Text="{Loc CipherStateInitMsg}" HorizontalAlignment="Center" >
             </TextBlock>
             <TextBlock Grid.Row="2" Name="txtBlockafterRoundsB" Style="{StaticResource textBlockStyle }"  FontSize="12"
-                      Text="     Cipher state&#xa;modified message.  " HorizontalAlignment="Center" Margin="10,10,0,0">
+                      Text="{Loc CipherStateModMsg}" HorizontalAlignment="Center" Margin="10,10,0,0">
             </TextBlock>
 
 
@@ -2561,7 +2559,7 @@
         <!--Bit Representation intermediate states AES -->
         <Grid Name="bitRepresentationGrid" Grid.Column="1"  Grid.ColumnSpan="2" Grid.RowSpan="2" Visibility="Hidden" Height="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40">
 
-            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Text="Binary values" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Margin="0,50" ></TextBlock>
+            <TextBlock Style="{StaticResource textBlockStyle}" FontSize="14" Text="{Loc BinaryValues}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Margin="0,50" ></TextBlock>
             <ScrollViewer Name="bitRepresentationSV" Style="{StaticResource RightScrollViewer}"  VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Visible" Height="100" Width="415" Margin="10,0">
 
                 <UniformGrid Name="UGrid" Columns="128" Rows="3" >
@@ -3740,16 +3738,16 @@
                 <ColumnDefinition Width="5"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock  Grid.Row="3" Style="{StaticResource textBlockStyle}" VerticalAlignment="Bottom" FontSize="12" Text="  Initial msg"></TextBlock>
-            <TextBlock  Grid.Row="4" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top" FontSize="12" Text="  Modified msg"></TextBlock>
-            <TextBlock  Grid.Row="5" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top"  FontSize="12" Text="  Flipped bits"></TextBlock>
+            <TextBlock  Grid.Row="3" Style="{StaticResource textBlockStyle}" VerticalAlignment="Bottom" FontSize="12" Text="{Loc InitialMsg}"></TextBlock>
+            <TextBlock  Grid.Row="4" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top" FontSize="12" Text="{Loc ModifiedMsg}"></TextBlock>
+            <TextBlock  Grid.Row="5" Style="{StaticResource textBlockStyle}" VerticalAlignment="Top"  FontSize="12" Text="{Loc FlippedBits_}"></TextBlock>
 
             <Border Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="290" Background="Beige" Opacity="0.7">
-                <TextBlock  HorizontalAlignment="Center" Text="Left half" FontWeight="Bold" Foreground="Black" >
+                <TextBlock  HorizontalAlignment="Center" Text="{Loc LeftHalf}" FontWeight="Bold" Foreground="Black" >
                 </TextBlock>
             </Border>
             <Border Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Background="CadetBlue" Width="290" Opacity="0.7">
-                <TextBlock   HorizontalAlignment="Center" Text="Right half" FontWeight="Bold" Foreground="White" >
+                <TextBlock   HorizontalAlignment="Center" Text="{Loc RightHalf}" FontWeight="Bold" Foreground="White" >
                 </TextBlock>
             </Border>
 
@@ -3960,18 +3958,18 @@
         </Grid>
 
         <!--Statistical Data-->
-        <StackPanel x:Name="bitsData" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Visibility="Hidden" Margin="0,25,180,75">
+        <StackPanel x:Name="bitsData" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" Visibility="Hidden" Margin="40,45,0,100" Width="345">
             <BulletDecorator>
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats1" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
+                <TextBlock Name="stats1" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap"  TextAlignment="Left"  Text=""/>
             </BulletDecorator>
             <BulletDecorator >
                 <BulletDecorator.Bullet>
                     <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Name="stats2" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"  Text=""/>
+                <TextBlock Name="stats2" Foreground="#534b4f" FontWeight="UltraLight" FontSize="13" TextWrapping="Wrap" TextAlignment="Left"   Text=""/>
             </BulletDecorator>
             <BulletDecorator>
                 <BulletDecorator.Bullet>
@@ -3987,14 +3985,14 @@
             </BulletDecorator>
         </StackPanel>
 
-        <TextBlock x:Name="extraordinaryOccurAes" Grid.Row="1" Grid.Column="1" FontSize="15" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Left"  Width="200" Text="" Visibility="Hidden" />
-        <TextBlock x:Name="extraordinaryOccur" Grid.Row="1" Grid.ColumnSpan="2" FontSize="15" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="45,20,0,0" Width="340" Visibility="Hidden" />
+        <TextBlock x:Name="extraordinaryOccurAes" Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2"  FontSize="14" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="" Visibility="Hidden" Margin="0,35,0,0" Width="250"/>
+        <TextBlock x:Name="extraordinaryOccur" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="45,20,0,0" Width="340" Visibility="Hidden" />
 
 
-        <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="110" Background="#4cbb17" Content="Unchanged bits" IsHitTestVisible="False" Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
-        <CheckBox Name="Cb2" Grid.Row="1" Grid.Column="2" Width="110"  Background="#ff2800" Content="Flipped bits" IsHitTestVisible="False"  Margin="45,0,0,60" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
-        <CheckBox Name="Cbclass1" Grid.Row="1" Grid.Column="2" Width="115" Background="#4cbb17" Content="Unchanged bytes" IsHitTestVisible="False" Margin="45,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
-        <CheckBox Name="Cbclass2" Grid.Row="1" Grid.Column="2" Width="115"  Background="#ff2800" Content="Flipped bytes" IsHitTestVisible="False"  Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="114" Background="#4cbb17" Content="{Loc UnchangedBits}" IsHitTestVisible="False" Margin="0,0,35,80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="hidden"/>
+        <CheckBox Name="Cb2" Grid.Row="1" Grid.Column="2" Width="114"  Background="#ff2800" Content="{Loc FlippedBits}" IsHitTestVisible="False"  Margin="0,0,35,60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <CheckBox Name="Cbclass1" Grid.Row="1" Grid.Column="2" Width="124" Background="#4cbb17" Content="{Loc UnchangedBytes}" IsHitTestVisible="False" Margin="45,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
+        <CheckBox Name="Cbclass2" Grid.Row="1" Grid.Column="2" Width="124"  Background="#ff2800" Content="{Loc FlippedBytes}" IsHitTestVisible="False"  Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
 
         <!--Input Representation DES-->
         <Grid Name="inputGridDES" Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Hidden">
@@ -4007,29 +4005,27 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Name="dataInputDESTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="Input Data DES">
+                <TextBlock Name="dataInputDESTitle" Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" HorizontalAlignment="Center" Text="{Loc InputTitleDES}">
                 </TextBlock>
 
-                <TextBlock Grid.Row="1" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="Initial message (64 bits):" Height="30"  Margin="10,0"></TextBlock>
-                <CheckBox Name="desCheckBox"  Grid.Row="5" Foreground="#534b4f" Content="Enable single bit change" Margin="20" Width="160" HorizontalAlignment="Left" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"  >
+                <TextBlock Grid.Row="1" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="{Loc InitialMessageDES}" Height="30"  Margin="10,0"></TextBlock>
+                <CheckBox Name="desCheckBox"  Grid.Row="5" Foreground="#534b4f" Content="{Loc SingleBitCheckBox}" Margin="20" Width="160" HorizontalAlignment="Left" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"  >
                 </CheckBox>
-                <TextBlock Grid.Row="3" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="Initial key (64 bits):" Height="30"  Margin="10,0"></TextBlock>
-                <Button x:Name="doneButtonDES" Grid.Row="5" Style="{StaticResource buttonStyle}"  Width="60" Height="25" Content="done" FontSize="13" Click="doneButton_Click" HorizontalAlignment="Left" Margin="50,0" Visibility="Hidden"/>
-                <Button x:Name="clearButtonDES" Grid.Row="5" Style="{StaticResource buttonStyle}"  Width="60" Height="25" Content="clear" FontSize="13"  HorizontalAlignment="Left" Visibility="Hidden" Margin="130,0"/>
-
+                <TextBlock Grid.Row="3" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="{Loc InitialKeyDES}" Height="30"  Margin="10,0"></TextBlock>
+                
                 <StackPanel x:Name="changeMsgDes" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="50,0" Visibility="Visible">
-                    <TextBlock Text="Message and key changes can be made in two ways:"  Foreground="#534b4f" ></TextBlock>
+                    <TextBlock Text="{Loc ChangesText}"  Foreground="#534b4f" ></TextBlock>
                     <BulletDecorator Margin="0,5,0,2">
                         <BulletDecorator.Bullet>
                             <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                         </BulletDecorator.Bullet>
-                        <TextBlock   Text=" Modify external input feed directly."  Foreground="#534b4f" ></TextBlock>
+                        <TextBlock   Text="{Loc ChangesTextBullet1}"  Foreground="#534b4f" ></TextBlock>
                     </BulletDecorator>
                     <BulletDecorator>
                         <BulletDecorator.Bullet>
                             <Ellipse Height="10" Width="10" Fill="#6e7f80"/>
                         </BulletDecorator.Bullet>
-                        <TextBlock    Text=" Click on single bits -- only possible after checking checkbox."  Foreground="#534b4f" ></TextBlock>
+                        <TextBlock    Text="{Loc ChangesTextBullet2}"  Foreground="#534b4f" ></TextBlock>
                     </BulletDecorator>
                 </StackPanel>
 
@@ -4187,12 +4183,12 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Style="{StaticResource textBlockStyle}" Grid.ColumnSpan="2"  FontSize="25" HorizontalAlignment="Center" Text="Input Data DES">
+            <TextBlock Style="{StaticResource textBlockStyle}" Grid.ColumnSpan="2"  FontSize="25" HorizontalAlignment="Center" Text="{Loc InputTitleDES}">
             </TextBlock>
-            <TextBlock Style="{StaticResource textBlockStyle}" Text="Initial message:" VerticalAlignment="Bottom" Margin="20,0"/>
-            <TextBlock Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="Modified message:" VerticalAlignment="Bottom" Margin="20,0"/>
-            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" Text="Initial key:" VerticalAlignment="Bottom" Margin="20,0"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="Modified key:" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="{Loc InitialMessageColon}" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="{Loc ModMessageColon}" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" Text="{Loc InitialKeyColon}" VerticalAlignment="Bottom" Margin="20,0"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource textBlockStyle}" Text="{Loc ModKeyColon}" VerticalAlignment="Bottom" Margin="20,0"/>
 
             <Border Grid.Row="1" BorderBrush="#534b4f"  BorderThickness="2" Height="60" Width="300" >
                 <TextBlock Name="origTextDES" FontSize="16" Padding="7">
@@ -4216,13 +4212,13 @@
             </Border>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4" Name="rbDes"  Grid.ColumnSpan="2"  VerticalAlignment="Center"  HorizontalAlignment="Center"  >
-                <TextBlock Foreground="#534b4f" FontSize="14" Padding="5">Display information in
+                <TextBlock Foreground="#534b4f" FontSize="14" Padding="5" Text="{Loc DisplayInformation}">
                 </TextBlock>
                 <StackPanel  Orientation="Horizontal" Margin="10,8">
-                    <RadioButton Name="radioBinaryDes" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="Binary"></RadioButton>
-                    <RadioButton Name="radioDecimalDes" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="Decimal">
+                    <RadioButton Name="radioBinaryDes" Foreground="#534b4f" FontSize="10"  Padding="0" Checked="radioButton1Checked" Content="{Loc Binary}"></RadioButton>
+                    <RadioButton Name="radioDecimalDes" Foreground="#534b4f" FontSize="10"  Padding="0" Margin="10,0" Checked="radioButton2Checked" Content="{Loc Decimal}">
                     </RadioButton>
-                    <RadioButton Name="radioHexaDes" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="Hexadecimal">
+                    <RadioButton Name="radioHexaDes" Foreground="#534b4f" FontSize="10" Padding="0" Margin="10,0" Checked="radioButton3Checked"  Content="{Loc Hex}">
                     </RadioButton>
                 </StackPanel>
             </StackPanel>
@@ -4231,7 +4227,7 @@
 
         <!-- General Overview-->
         <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-            <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview DES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
+            <TextBlock Style="{StaticResource textBlockStyle}" Text="{Loc OverviewDES}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
             </TextBlock>
             <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
                 <Grid.RowDefinitions>
@@ -4262,7 +4258,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border>
-                    <TextBlock Text="Round" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="{Loc Round}" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="1">
                     <TextBlock Text="0" TextAlignment="Center" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
@@ -4316,15 +4312,15 @@
                     <TextBlock Text="16" TextAlignment="Center" Foreground="#534b4f" FontSize="12" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border  Grid.Column="1" HorizontalAlignment="Left" Width="290" Background="Beige" Opacity="0.7">
-                    <TextBlock  HorizontalAlignment="Center" Text="Left half" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock  HorizontalAlignment="Center" Text="{Loc LeftHalf}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
                 <Border Grid.Column="3" HorizontalAlignment="Left" Background="CadetBlue" Width="290" Opacity="0.7">
-                    <TextBlock   HorizontalAlignment="Center" Text="Right half" FontSize="11" FontWeight="Bold" Foreground="White" >
+                    <TextBlock   HorizontalAlignment="Center" Text="{Loc RightHalf}" FontSize="11" FontWeight="Bold" Foreground="White" >
                     </TextBlock>
                 </Border>
                 <Border Grid.Column="4"  Background="Orange" Opacity="0.7" Margin="5,0">
-                    <TextBlock   HorizontalAlignment="Center" Text="% changed" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock   HorizontalAlignment="Center" Text="{Loc Percentage}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
 
@@ -4386,7 +4382,7 @@
         </Grid>
 
         <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
-            <TextBlock Style="{StaticResource textBlockStyle}" Text="General Overview AES"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock x:Name="genOverviewAES" Style="{StaticResource textBlockStyle}" Text="{Loc OverviewAES128}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
             </TextBlock>
             <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
@@ -4409,7 +4405,7 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Border>
-                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="{Loc Round}" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="1">
                     <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
@@ -4445,11 +4441,11 @@
                     <TextBlock Text="10" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="14" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border  Grid.Column="1"  Width="400" Background="Beige" Opacity="0.7">
-                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock  HorizontalAlignment="Center" Text="{Loc Cipher}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
                 <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
-                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock HorizontalAlignment="Center"  Text="{Loc PercentageFlipped}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
 
@@ -4502,7 +4498,7 @@
                     <RowDefinition Height="22"/>
                 </Grid.RowDefinitions>
                 <Border>
-                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="{Loc Round}" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="1">
                     <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
@@ -4544,11 +4540,11 @@
                     <TextBlock Text="12" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontSize="13" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border  Grid.Column="1"   Background="Beige" Opacity="0.7">
-                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock  HorizontalAlignment="Center" Text="{Loc Cipher}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
                 <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
-                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock HorizontalAlignment="Center"  Text="{Loc PercentageFlipped}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
 
@@ -4608,7 +4604,7 @@
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <Border>
-                    <TextBlock Text="Round" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontWeight="Medium" ></TextBlock>
+                    <TextBlock Text="{Loc Round}" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f" FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border Grid.Row="1">
                     <TextBlock Text="0" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
@@ -4656,11 +4652,11 @@
                     <TextBlock Text="14" TextAlignment="Center" VerticalAlignment="Center" Foreground="#534b4f"  FontWeight="Medium" ></TextBlock>
                 </Border>
                 <Border  Grid.Column="1"   Background="Beige" Opacity="0.7">
-                    <TextBlock  HorizontalAlignment="Center" Text="Cipher (in hex)" FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock  HorizontalAlignment="Center" Text="{Loc Cipher}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
                 <Border  Grid.Column="2" Background="Orange" Opacity="0.7" Margin="5,0">
-                    <TextBlock HorizontalAlignment="Center"  Text="% of flipped bits " FontSize="11" FontWeight="Bold" Foreground="Black" >
+                    <TextBlock HorizontalAlignment="Center"  Text="{Loc PercentageFlipped}" FontSize="11" FontWeight="Bold" Foreground="Black" >
                     </TextBlock>
                 </Border>
 

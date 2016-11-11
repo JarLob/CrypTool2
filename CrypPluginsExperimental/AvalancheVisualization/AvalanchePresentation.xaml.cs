@@ -586,8 +586,8 @@ namespace AvalancheVisualization
             {
                 initMsg.Text = string.Empty;
                 initKey.Text = string.Empty;
-                initMsg.Text = "Initial message";
-                initKey.Text = "Initial key";
+                initMsg.Text = Properties.Resources.Initial_Message;
+                initKey.Text = Properties.Resources.Initial_Key;
 
                 // radioHexa.IsChecked = true;
                 aesCheckBox.Visibility = Visibility.Hidden;
@@ -1037,18 +1037,18 @@ namespace AvalancheVisualization
                     extraordinaryOccur.Visibility = Visibility.Visible;
 
                 if (occurrence == 0)
-                    extraordinaryOccur.Text = "Changes occurred only on the left half of the cipher!";
+                    extraordinaryOccur.Text = Properties.Resources.OnlyLeft;
                 else if (occurrence == 1)
-                    extraordinaryOccur.Text = "Changes occurred only on the right half of the cipher!";
+                    extraordinaryOccur.Text = Properties.Resources.OnlyRight;
                 else
                 {
                     if (mode == 1)
-                        extraordinaryOccur.Text = "No changes occurred at all!";
+                        extraordinaryOccur.Text = Properties.Resources.NoChanges;
 
                     if (mode == 0)
                     {
                         extraordinaryOccurAes.Visibility = Visibility.Visible;
-                        extraordinaryOccurAes.Text = "No changes occurred at all!";
+                        extraordinaryOccurAes.Text = Properties.Resources.NoChanges;
                     }
                 }
             }
@@ -1087,15 +1087,15 @@ namespace AvalancheVisualization
             stats1.Inlines.Add(new Run(" " + bitsFlipped.ToString()) { Foreground = Brushes.Red, FontWeight = FontWeights.DemiBold });
 
             if (bitsFlipped > 1 || bitsFlipped == 0)
-                stats1.Inlines.Add(new Run(string.Format(" bits flipped (out of {0}). Avalanche effect of {1}%", strTuple.Item1.Length, avalanche)));
+                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet1_Plural, strTuple.Item1.Length, avalanche)));
             else
-                stats1.Inlines.Add(new Run(string.Format(" bit flipped (out of {0}). Avalanche effect of {1}%", strTuple.Item1.Length, avalanche)));
+                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet1 , strTuple.Item1.Length, avalanche)));
 
-            stats2.Inlines.Add(new Run(string.Format(" Length of longest identical bit sequence: {0}. Offset {1}.", longestLength.ToString(), sequencePosition)));
-            stats3.Inlines.Add(new Run(string.Format(" Length of longest flipped bit sequence: {0}. Offset {1}.", longestflipped.ToString(), flippedSeqPosition)));
+            stats2.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet2, longestLength.ToString(), sequencePosition)));
+            stats3.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet3, longestflipped.ToString(), flippedSeqPosition)));
             if (mode != 2)
             {
-                stats4.Inlines.Add(new Run(string.Format(" Average number of differing bits per byte: {0} ", avgNrDiffBit)));
+                stats4.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet4, avgNrDiffBit)));
             }
         }
 
@@ -1473,11 +1473,11 @@ namespace AvalancheVisualization
             if (mode == 0)
             {
                 if (keysize == 1)
-                    afterRoundsTitle.Inlines.Add(new Run("Avalanche Effect AES-192"));
+                    afterRoundsTitle.Inlines.Add(new Run(Properties.Resources.Title_AES192));
                 else if (keysize == 2)
-                    afterRoundsTitle.Inlines.Add(new Run("Avalanche Effect AES-256"));
+                    afterRoundsTitle.Inlines.Add(new Run(Properties.Resources.Title_AES256));
                 else
-                    afterRoundsTitle.Inlines.Add(new Run("Avalanche Effect AES-128"));
+                    afterRoundsTitle.Inlines.Add(new Run(Properties.Resources.Title_AES128));
             }
             else
                 if (mode == 1)
@@ -1504,14 +1504,14 @@ namespace AvalancheVisualization
             {
                 if (mode == 2)
                 {
-                    othersOrigTitle.Text = "Initial hash function";
-                    othersModTitle.Text = "Modified hash function";
-                    lbl.Text = "Initial hash function";
-                    lbl2.Text = "Modified hash function";
-                    othersSubtitle.Text = "(Hash functions)";
+                    othersOrigTitle.Text = Properties.Resources.HashFunctionInit;
+                    othersModTitle.Text = Properties.Resources.HashFunctionMod;
+                    lbl.Text = Properties.Resources.HashFunctionInit;
+                    lbl2.Text = Properties.Resources.HashFunctionMod;
+                    othersSubtitle.Text = Properties.Resources.HashFunctionSubtitle;
                 }
                 if (mode == 4)
-                    othersSubtitle.Text = ("Modern ciphers");
+                    othersSubtitle.Text = Properties.Resources.ModernCipherSubtitle;
             }
         }
 
@@ -2221,8 +2221,8 @@ namespace AvalancheVisualization
             {
                 clearColors();
                 clearKeyColors();
-                initMsg.Text = "Initial message (in hex)";
-                initKey.Text = "Initial key (in hex)";
+                initMsg.Text = Properties.Resources.InitialMessageHex;
+                initKey.Text = Properties.Resources.InitialKeyHex;
                 afterRoundsGrid.Visibility = Visibility.Hidden;
                 bitRepresentationGrid.Visibility = Visibility.Hidden;
                 curvedLinesCanvas.Visibility = Visibility.Hidden;
@@ -3977,8 +3977,8 @@ namespace AvalancheVisualization
             TB2.Text = string.Empty;
             TB3.Text = string.Empty;
 
-            initMsg.Text = "Initial message (in hex)";
-            initKey.Text = "Initial key (in hex)";
+            initMsg.Text = Properties.Resources.InitialMessageHex;
+            initKey.Text = Properties.Resources.InitialKeyHex;
             modifiedMsg.Text = string.Empty;
             originalMsg.Text = string.Empty;
             skip.IsChecked = false;
@@ -4045,7 +4045,7 @@ namespace AvalancheVisualization
             clearColors();
             clearKeyColors();
             generalViewAES.Visibility = Visibility.Hidden;
-
+            genOverviewAES.Text = Properties.Resources.OverviewAES128;
             // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
             //buttonsSV.Width = 535.0;
             //buttonsPanel.Width = 530.0;
@@ -4098,8 +4098,7 @@ namespace AvalancheVisualization
             changeMsgDes.Visibility = Visibility.Visible;
 
             inputGridDES.Visibility = Visibility.Hidden;
-            doneButtonDES.Visibility = Visibility.Hidden;
-            clearButtonDES.Visibility = Visibility.Hidden;
+          
             desCheckBox.IsChecked = false;
             modificationGridDES.Visibility = Visibility.Hidden;
             bitGridDES.Visibility = Visibility.Hidden;
@@ -4159,6 +4158,7 @@ namespace AvalancheVisualization
 
 
                 Grid.SetColumn(bitsData, 0);
+                Grid.SetColumnSpan(bitsData,2);
                 bitsData.HorizontalAlignment = HorizontalAlignment.Center;
                 bitsData.VerticalAlignment = VerticalAlignment.Center;
 
@@ -4194,17 +4194,18 @@ namespace AvalancheVisualization
         {
 
 
-            Grid.SetColumn(bitsData, 1);
-            Grid.SetColumnSpan(bitsData, 2);
+     
+            Grid.SetColumnSpan(bitsData, 3);
             Grid.SetColumn(flippedBitsPiece, 2);
             Grid.SetColumn(unflippedBitsPiece, 2);
             Grid.SetColumnSpan(flippedBitsPiece, 1);
             Grid.SetColumnSpan(unflippedBitsPiece, 1);
-            bitsData.HorizontalAlignment = HorizontalAlignment.Stretch;
+            
+            bitsData.HorizontalAlignment = HorizontalAlignment.Center;
             bitsData.VerticalAlignment = VerticalAlignment.Stretch;
 
 
-            bitsData.Margin = new Thickness(0, 25, 180, 75);
+            bitsData.Margin = new Thickness(40, 45, 0, 100);
 
             stats4Bullet.Visibility = Visibility.Visible;
 
@@ -4213,16 +4214,16 @@ namespace AvalancheVisualization
             flippedBitsPiece.HorizontalAlignment = HorizontalAlignment.Right;
             unflippedBitsPiece.HorizontalAlignment = HorizontalAlignment.Right;
 
-            flippedBitsPiece.Margin = new Thickness(10, 15, 10, 15);
-            unflippedBitsPiece.Margin = new Thickness(10, 15, 10, 15);
+            flippedBitsPiece.Margin = new Thickness(10, 15, -15, 15);
+            unflippedBitsPiece.Margin = new Thickness(10, 15, -15, 15);
 
             Cb1.VerticalAlignment = VerticalAlignment.Bottom;
             Cb2.VerticalAlignment = VerticalAlignment.Bottom;
-            Cb1.HorizontalAlignment = HorizontalAlignment.Center;
-            Cb2.HorizontalAlignment = HorizontalAlignment.Center;
+            Cb1.HorizontalAlignment = HorizontalAlignment.Right;
+            Cb2.HorizontalAlignment = HorizontalAlignment.Right;
 
-            Cb1.Margin = new Thickness(45, 0, 0, 80);
-            Cb2.Margin = new Thickness(45, 0, 0, 60);
+            Cb1.Margin = new Thickness(0, 0, 35, 80);
+            Cb2.Margin = new Thickness(0, 0, 35, 60);
 
         }
 
@@ -4284,12 +4285,12 @@ namespace AvalancheVisualization
             stats1.Inlines.Add(new Run(" " + bytesFlipped.ToString()) { Foreground = Brushes.Red, FontWeight = FontWeights.DemiBold });
 
             if (bytesFlipped > 1 || bytesFlipped == 0)
-                stats1.Inlines.Add(new Run(string.Format(" bytes flipped (out of {0}). Avalanche effect of {1}%", changedCipher.Length, avalanche)));
+                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsClassicBullet1_Plural, changedCipher.Length, avalanche)));
             else
-                stats1.Inlines.Add(new Run(string.Format(" byte flipped (out of {0}). Avalanche effect of {1}%", changedCipher.Length, avalanche)));
+                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsClassicBullet1, changedCipher.Length, avalanche)));
 
-            stats2.Inlines.Add(new Run(string.Format(" Length of longest identical byte sequence: {0}. Offset {1}.", longestLength.ToString(), sequencePosition)));
-            stats3.Inlines.Add(new Run(string.Format(" Length of longest flipped byte sequence: {0}. Offset {1}.", longestflipped.ToString(), flippedSeqPosition)));
+            stats2.Inlines.Add(new Run(string.Format(Properties.Resources.StatsClassicBullet2, longestLength.ToString(), sequencePosition)));
+            stats3.Inlines.Add(new Run(string.Format(Properties.Resources.StatsClassicBullet3, longestflipped.ToString(), flippedSeqPosition)));
 
         }
 
@@ -4618,7 +4619,7 @@ namespace AvalancheVisualization
 
             if (keysize == 0)
             {
-
+                genOverviewAES.Text = Properties.Resources.OverviewAES128;
                 overviewAES.Visibility = Visibility.Visible;
 
                 IEnumerable<TextBlock> textChilds = overviewAES.Children.OfType<TextBlock>();
@@ -4694,6 +4695,7 @@ namespace AvalancheVisualization
 
             else if (keysize == 1)
             {
+                genOverviewAES.Text = Properties.Resources.OverviewAES192;
                 overviewAES192.Visibility = Visibility.Visible;
 
                 IEnumerable<TextBlock> textChilds = overviewAES192.Children.OfType<TextBlock>();
@@ -4768,6 +4770,7 @@ namespace AvalancheVisualization
 
             else
             {
+                genOverviewAES.Text = Properties.Resources.OverviewAES256;
                 overviewAES256.Visibility = Visibility.Visible;
 
                 IEnumerable<TextBlock> textChilds = overviewAES256.Children.OfType<TextBlock>();
