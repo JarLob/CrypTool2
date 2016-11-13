@@ -534,7 +534,7 @@
 
         <!--Prepared Methods, AES-->
 
-        <Grid Name="OrigInitialStateGrid"  Grid.RowSpan="2"  Visibility="Hidden" Margin="0,70">
+        <Grid Name="OrigInitialStateGrid"  Grid.RowSpan="2"  Visibility="hidden" Margin="0,70">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="23" />
@@ -2408,7 +2408,7 @@
         </StackPanel>
 
 
-        <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="Hidden"  VerticalAlignment="Center" Margin="0,0,0,70">
+        <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="hidden"  VerticalAlignment="Center" Margin="0,0,0,70">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="Auto"/>
@@ -4226,11 +4226,10 @@
         </Grid>
 
         <!-- General Overview-->
-        <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
+        <Grid x:Name="generalViewDES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="hidden">
             <TextBlock Style="{StaticResource textBlockStyle}" Text="{Loc OverviewDES}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top" >
             </TextBlock>
-            <Button x:Name="nextButton" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="45" Height="25" Content="Next" Margin="4"  Click="NextButton_Click" />
-                <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
+            <Grid x:Name="overviewDES" Width="670" Height="325" Margin="0,0,0,35">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
                     <RowDefinition/>
@@ -4385,7 +4384,6 @@
         <Grid x:Name="generalViewAES" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <TextBlock x:Name="genOverviewAES" Style="{StaticResource textBlockStyle}" Text="{Loc OverviewAES128}"  FontSize="20" Height="40" HorizontalAlignment="Center" VerticalAlignment="Top">
             </TextBlock>
-            <Button x:Name="nextButton128" Style="{StaticResource buttonStyle}" HorizontalAlignment="Right" VerticalAlignment="Top"  Width="45" Height="25" Content="Next" Margin="4"  Click="NextButton_Click" />
             <Grid x:Name="overviewAES" Width="620" Height="325"  Margin="0,0,0,35" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="45"/>

@@ -63,6 +63,7 @@ namespace AvalancheVisualization
         public AES aesDiffusion;
         public int roundDES;
         public bool canModify = false;
+        public bool canModifyDES = false;
 
 
         public string[] leftHalf = new string[32];
@@ -86,11 +87,14 @@ namespace AvalancheVisualization
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
             inputInBits.IsVisibleChanged += onVisibleChanged;
-            InstructionsPrep.IsVisibleChanged += onVisibleChanged;
+            OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
+            modifiedInitialStateGrid.IsVisibleChanged += onVisibleChanged;
             initStateTitle.IsVisibleChanged += onTitleChanged;
-            modificationGridDES.IsVisibleChanged += onTitleChanged;
+            modificationGridDES.IsVisibleChanged += onVisibleChanged;
+            afterRoundsGrid.IsVisibleChanged += onVisibleChanged;
             buttonsPanel.IsVisibleChanged += onTitleChanged;
-
+            inputGridDES.IsVisibleChanged += modify;
+            modificationGridDES.IsVisibleChanged += modify;
             //ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
         }
         #endregion
@@ -2128,7 +2132,7 @@ namespace AvalancheVisualization
             }
 
 
-            //   buttonNextClickedEvent.Set();
+               buttonNextClickedEvent.Set();
 
         }
 
@@ -4058,6 +4062,7 @@ namespace AvalancheVisualization
             radioDecimal.IsChecked = false;
             radioHexa.IsChecked = false;
             canModify = false;
+            canModifyDES = false;
             aesCheckBox.Visibility = Visibility.Hidden;
 
             //the next two must be in this order!!!
@@ -4485,11 +4490,26 @@ namespace AvalancheVisualization
                 //  buttonNextClickedEvent.Set();
             }
 
-            if (!InstructionsPrep.IsVisible)
+            if (modifiedInitialStateGrid.IsVisible || inputInBits.IsVisible)
                    canModify = true;
-            if(InstructionsPrep.IsVisible)
-                   canModify = false;
+            if (afterRoundsGrid.IsVisible)
+                canModify = false;
                    
+        }
+
+        private void modify(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!modificationGridDES.IsVisible || !inputGridDES.IsVisible)
+            {
+                canModifyDES = false;
+                inputDataButton.IsEnabled = true;
+
+            }
+            if (modificationGridDES.IsVisible || inputGridDES.IsVisible)
+            {
+                canModifyDES = true;
+                inputDataButton.IsEnabled = false;
+            }
         }
 
         private void onTitleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -5106,7 +5126,7 @@ namespace AvalancheVisualization
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            buttonNextClickedEvent.Set();
+     
 
         }
     }

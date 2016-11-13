@@ -58,12 +58,15 @@ namespace Cryptool.Plugins.AvalancheVisualization
         byte[] keyInput;
         string msgA;
         string msgB;
+        
 
         private AES aes = new AES();
         private DES des = new DES();
-        private AvalanchePresentation pres = new AvalanchePresentation();
         private bool textChanged = false;
-    
+        private Thread outputThread;
+        private Thread desThread;
+        private AvalanchePresentation pres = new AvalanchePresentation();
+        private AutoResetEvent buttonNextClickedEvent;
 
 
 
@@ -195,7 +198,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Execute()
         {
 
-            AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
+           
             // byte[] buffer = new byte[UnchangedCipher.Length];
             textInput = new byte[Text.Length];
 
@@ -204,6 +207,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             {
                 case AvalancheVisualizationSettings.Category.Prepared:
 
+                    buttonNextClickedEvent= pres.buttonNextClickedEvent;
 
                     keyInput = new byte[Key.Length];
 
@@ -221,6 +225,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     if (settings.PrepSelection == 0)
                     {
+                        outputThread = new Thread(streamOut);
+                        Thread oThread = new Thread(streamOut);
                         pres.mode = 0;
 
                         bool valid =validSize();
@@ -230,25 +236,19 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (valid)
                         {
 
+                           
+
                             if (textChanged && pres.canModify)
                             {
+                               
+
+                                pres.newText = null;
+                                pres.newKey = null;
+                               
                                 aes.text = textInput;
                                 aes.key = keyInput;
 
-                                //pres.myMethod(aes);
-                                // GuiLogMessage(pres.decimalAsString(text), NotificationLevel.Info);
-
-                                /* pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                 {
-                                     //pres.modifiedMsg.Text = inputMessage;                               
-                                     pres.getTextBoxContent();
-                                     //pres.loadInitialState(temporary, false);
-                                     //pres.modifyTxtBlock.Visibility = Visibility.Hidden;
-    
-                                 }, null);*/
-
-
-                                // pres.key = key;
+                              
                                 byte[] temporary = aes.checkTextLength();
                                 byte[] tmpKey = aes.checkKeysize();
                                 pres.key = tmpKey;
@@ -259,10 +259,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
                                 {
                                     pres.setAndLoadButtons();
-
-                                    //if (!originalText.Equals(text))
+                            
                                     pres.loadChangedMsg(temporary, true);
-                                    //if (!originalKey.Equals(tmpKey))
+                          
                                     pres.loadChangedKey(tmpKey);
 
                                     pres.coloringText();
@@ -271,31 +270,18 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 }, null);
 
                                 pres.statesB = aes.statesB;
-                                /*
-                                //////////////////////////////////////////////
-                                using (CStreamWriter CSWriter = new CStreamWriter())
-                                {
 
-                                    OutputStream = CSWriter;
-                                    // buttonNextClickedEvent.WaitOne();
+                                buttonNextClickedEvent.Set();
 
-                                    CSWriter.Write(generatedData(0));
-                                    CSWriter.Write(generatedData(1));
-
-                                    OnPropertyChanged("OutputStream");
-                                    CSWriter.Close();
-                                }
-                                */
-
-
-
-
-
+                                
+                                oThread.Start();
                                 ///////////////////////////////////////////////////////
 
                             }
                             else if (!textChanged && !pres.canModify)
                             {
+                                
+
                                 textChanged = true;
 
                                 originalText = textInput;
@@ -312,18 +298,14 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                         pres.comparisonPane();
                                     else
                                         pres.instructions();
-                                    // pres.comparisonPane();
-                                    //pres.originalMsg.Text = inputMessage;
+                                 
 
 
                                 }, null);
 
 
-                                // pres.textA = text;
-                                //pres.key = key;
 
                                 AES.keysize = settings.KeyLength;
-                                //pres.keysize = settings.KeyLength;
                                 byte[] tmpKey = aes.checkKeysize();
                                 originalKey = tmpKey;
                                 pres.key = tmpKey;
@@ -342,24 +324,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 pres.states = aes.states;
                                 pres.keyList = aes.keyList;
 
+                                outputThread.Start();
                             }
 
-
-                            using (CStreamWriter CSWriter = new CStreamWriter())
-                            {
-
-                                OutputStream = CSWriter;
-                                buttonNextClickedEvent.WaitOne();
-
-                                CSWriter.Write(generatedData(0));
-                                CSWriter.Write(generatedData(1));
-
-                                OnPropertyChanged("OutputStream");
-                                CSWriter.Close();
-                            }
-
-
-
+                            
 
 
                             if (!running)
@@ -370,6 +338,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     // if settings==1
                     else
                     {
+                        desThread = new Thread(streamOut);
+                        Thread oDesThread = new Thread(streamOut);
                         pres.mode = 1;
 
                         bool valid = validSize();
@@ -377,8 +347,12 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (valid)
                         {
 
-                            if (textChanged && pres.canModify)
+                            if (textChanged && pres.canModifyDES)
                             {
+
+                      
+                                pres.newText = null;
+                                pres.newKey = null;
 
                                 des.inputKey = keyInput;
                                 des.inputMessage = textInput;
@@ -406,11 +380,12 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                 pres.lrDataB = des.lrDataB;
 
+                                buttonNextClickedEvent.Set();
 
-                        
-
+                                oDesThread.Start();
                             }
-                            else if (!textChanged && !pres.canModify)
+
+                            else if (!textChanged && !pres.canModifyDES)
                             {
 
 
@@ -427,7 +402,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                 des.DESProcess();
 
-                                //pres.key = tmpKey;
+                            
                                 pres.keyA = tmpKey;
                                 textChanged = true;
                                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
@@ -438,27 +413,17 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                         pres.instructions();
 
                                     pres.loadInitialState(textInput, keyInput);
-                                    //MessageBox.Show(des.lrData[1, 0]);
+             
 
                                 }, null);
-                                //MessageBox.Show(pres.lrData[1, 0]);
+                         
                                 pres.textA = textInput;
                                 pres.lrData = des.lrData;
+
+                                desThread.Start();
                             }
 
-
-                            using (CStreamWriter Writer = new CStreamWriter())
-                            {
-
-                                OutputStream = Writer;
-                                buttonNextClickedEvent.WaitOne();
-
-                                Writer.Write(generatedData(0));
-                                Writer.Write(generatedData(1));
-
-                                OnPropertyChanged("OutputStream");
-                                Writer.Close();
-                            }
+                            
 
                             if (!running)
                                 return;
@@ -663,6 +628,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Stop()
         {
             textChanged = false;
+            buttonNextClickedEvent.Set();
+            CStreamWriter writer = new CStreamWriter();
+
+
 
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -673,10 +642,22 @@ namespace Cryptool.Plugins.AvalancheVisualization
                 //pres.modifiedMsg.IsReadOnly = false;
 
             }, null);
-            //suspended = true;
-            // Array.Clear(pres.textA, 0, pres.textA.Length);
-            //Array.Clear(pres.textB, 0, pres.textB.Length);
 
+
+            using (writer)
+            {
+
+                byte[] outputArr = null;
+                OutputStream = writer;
+
+
+                writer.Write(outputArr);
+
+
+                OnPropertyChanged("OutputStream");
+
+            }
+            writer.Close();
 
         }
 
@@ -699,6 +680,29 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #endregion
 
         #region Methods
+
+        public void streamOut()
+        {
+            
+           
+
+                using (CStreamWriter writer = new CStreamWriter())
+                {
+
+                    OutputStream = writer;
+                    buttonNextClickedEvent.WaitOne();
+
+                    writer.Write(generatedData(0));
+                    writer.Write(generatedData(1));
+
+                    OnPropertyChanged("OutputStream");
+                    writer.Close();
+                }
+            
+
+      
+        }
+
         public string[] sequence(Tuple<string, string> strTuple)
         {
             string[] diffBits = new string[strTuple.Item1.Length];
