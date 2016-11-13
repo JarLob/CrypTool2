@@ -313,6 +313,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intro.
+        /// </summary>
+        internal static string IntroText {
+            get {
+                return ResourceManager.GetString("IntroText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AES is a modern block cipher.  AES takes two inputs. The plaintext that is to be encrypted and a key.  After the encryption AES outputs the ciphertext..
         /// </summary>
         internal static string introTextBlock {

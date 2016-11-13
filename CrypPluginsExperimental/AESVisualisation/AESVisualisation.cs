@@ -213,7 +213,7 @@ namespace Cryptool.Plugins.AESVisualisation
             {
                 pres.createSBox();
                 pres.StartCanvas.Visibility = Visibility.Hidden;
-                pres.showButton();
+                //pres.showButton();
             }, null);
             switch (keysize)
             {
@@ -268,38 +268,6 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.finish = true;
             pres.endstep = true;
             pres.buttonNextClickedEvent.Set();
-            //pres.stop();
-            //aborted = true;
-            //if(workerThread != null)
-            //{
-            //    workerThread.Abort();
-            //}
-            //aborted = true;
-            //pres.autostep = false;
-            //pres.skip = true;
-            //pres.finish = true;
-            //pres.expansion = false;
-            //pres.buttonNextClickedEvent.Set();
-            //executing = false;
-            //presThread.Abort();
-            //pres.cleanUp();
-            //pres.reset();
-            //pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            //{
-            //    pres.toStart();
-            //    pres.startGrid.Visibility = Visibility.Visible;
-            //    pres.startTextBlock1.Visibility = Visibility.Visible;
-            //    pres.startTextBlock2.Visibility = Visibility.Visible;
-            //    pres.hideButton();
-            //}, null);
-            //pres.cleanUp();
-            //outputStreamWriter.Close();
-            //presThread.Abort();
-            //Thread endThread = new Thread(newPresentation);
-            //endThread.SetApartmentState(ApartmentState.STA);
-            //endThread.Start();
-            //endThread.Join();
-            //aborted = true;
         }
 
         /// <summary>
@@ -308,7 +276,6 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Initialize()
         {
             pres = new AESPresentation();
-            //presThread = new Thread(pres.execute);
         }
 
         /// <summary>

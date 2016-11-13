@@ -324,4 +324,7 @@ Once these rounds are completed one last round is performed, which has no "MixCo
   <data name="intro1" xml:space="preserve">
     <value>Intro</value>
   </data>
+  <data name="IntroText" xml:space="preserve">
+    <value>Intro</value>
+  </data>
 </root>

@@ -62,6 +62,7 @@ namespace AESVisualisation
         public bool abort = false;
         public bool stopp = false;
         public bool endstep = false;
+        public bool intro = false;
 
         public AESPresentation()
         {
@@ -71,6 +72,7 @@ namespace AESVisualisation
             autostepSpeedSlider.IsEnabled = true;
             keyExpansionTextBlock.Text = "Skip Expansion";
             buttonVisible();
+            showButton();
             hideButton();
 
             for (int x = 0; x < 18; x++)
@@ -86,7 +88,7 @@ namespace AESVisualisation
                 borderList.Add(temp);
             }
             sBoxList = createSBoxList();
-            
+            hideButton();
         }
 
         #region Buttons
@@ -426,13 +428,13 @@ namespace AESVisualisation
 
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
-            disableButtons();
+            //disableButtons();
             buttonNextClickedEvent.Set();      
-            if(keysize == 2 && expansion)
-            {
-                enableButtons();
-            }
-            enableButtons();
+            //if(keysize == 2 && expansion)
+            //{
+            //    enableButtons();
+            //}
+            //enableButtons();
         }
 
         private void prevStepButton_Click(object sender, RoutedEventArgs e)
@@ -602,8 +604,9 @@ namespace AESVisualisation
             endstep = false;
             skipStep = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {              
-                expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
+            {
+                nextStepButton.IsEnabled = true;
+                backButton.IsEnabled = true;               
             }, null);
             while (expansion && !finish)
             {
@@ -614,6 +617,7 @@ namespace AESVisualisation
                     keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
                     expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
                     showButton();
+                    hideButton();
                     invisible();
                     changeRoundButton();
                     buttonVisible();
@@ -627,8 +631,8 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         hideButton();
-                        playButton.Visibility = Visibility.Visible;
-                        playButton.SetValue(Grid.RowProperty, 4);
+                        playButton.IsEnabled = true;
+                        //playButton.SetValue(Grid.RowProperty, 4);
                         startGrid.Visibility = Visibility.Visible;
                         expansionTextBlock.Visibility = Visibility.Visible;
                         expansionTextBlock2.Visibility = Visibility.Visible;
@@ -637,7 +641,7 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         showButton();
-                        playButton.SetValue(Grid.RowProperty, 3);
+                        //playButton.SetValue(Grid.RowProperty, 3);
                         startGrid.Visibility = Visibility.Hidden;
                         expansionTextBlock.Visibility = Visibility.Hidden;
                         expansionTextBlock2.Visibility = Visibility.Hidden;
@@ -655,7 +659,7 @@ namespace AESVisualisation
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                backButton.Visibility = Visibility.Visible;
+                                backButton.IsEnabled = true;
                             }, null);
                             introduction();
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -664,7 +668,7 @@ namespace AESVisualisation
                                 setUpExpansion();
                                 showButton();
                                 buttonVisible();
-                                backButton.Visibility = Visibility.Hidden;
+                                backButton.IsEnabled = false;
                             }, null);
                             start = false;
                         }
@@ -707,7 +711,7 @@ namespace AESVisualisation
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                backButton.Visibility = Visibility.Visible;
+                                backButton.IsEnabled = true;
                             }, null);
                             introduction();
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -716,7 +720,7 @@ namespace AESVisualisation
                                 setUpExpansion();
                                 showButton();
                                 buttonVisible();
-                                backButton.Visibility = Visibility.Hidden;
+                                backButton.IsEnabled = false;
                             }, null);
                             start = false;
                             skip = false;
@@ -756,7 +760,7 @@ namespace AESVisualisation
                         {
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
-                                backButton.Visibility = Visibility.Visible;
+                                backButton.IsEnabled = true;
                             }, null);
                             introduction();
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -768,7 +772,7 @@ namespace AESVisualisation
                             }, null);
                             start = false;
                             skip = false;
-                            backButton.Visibility = Visibility.Hidden;
+                            backButton.IsEnabled = false;
                         }
                         skipStep = false;
                         skip = false;
@@ -811,11 +815,13 @@ namespace AESVisualisation
                     {
                         expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
                         hideButton();
+                        playButton.IsEnabled = true;
+                        playButton.Foreground = Brushes.Black;
                         playButton.Visibility = Visibility.Visible;
                         startGrid.Visibility = Visibility.Visible;
                         encryptionTextBlock.Visibility = Visibility.Visible;
                         encryptionTextBlock2.Visibility = Visibility.Visible;
-                        playButton.SetValue(Grid.RowProperty, 4);
+                        //playButton.SetValue(Grid.RowProperty, 4);
                     }, null);
                     wait();
                     autostep = false;
@@ -824,7 +830,7 @@ namespace AESVisualisation
                         startGrid.Visibility = Visibility.Hidden;
                         encryptionTextBlock2.Visibility = Visibility.Hidden;
                         encryptionTextBlock.Visibility = Visibility.Hidden;
-                        playButton.SetValue(Grid.RowProperty, 3);
+                        //playButton.SetValue(Grid.RowProperty, 3);
                         showButton();
                         buttonVisible();
                         expansionEncryptionTextBlock.Visibility = Visibility.Visible;
@@ -888,13 +894,13 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         hideButton();
-                        addKeyButton.Visibility = Visibility.Hidden;
-                        subByteButton.Visibility = Visibility.Hidden;
-                        shiftRowButton.Visibility = Visibility.Hidden;
-                        mixColButton.Visibility = Visibility.Hidden;
-                        addKeyExplanation.Visibility = Visibility.Hidden;
-                        shiftLeftButton.Visibility = Visibility.Hidden;
-                        shiftRightButton.Visibility = Visibility.Hidden;
+                        //addKeyButton.Visibility = Visibility.Hidden;
+                        //subByteButton.Visibility = Visibility.Hidden;
+                        //shiftRowButton.Visibility = Visibility.Hidden;
+                        //mixColButton.Visibility = Visibility.Hidden;
+                        //addKeyExplanation.Visibility = Visibility.Hidden;
+                        //shiftLeftButton.Visibility = Visibility.Hidden;
+                        //shiftRightButton.Visibility = Visibility.Hidden;
                     }, null);
                 }
                 action = 1;
@@ -954,10 +960,13 @@ namespace AESVisualisation
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     InitialRoundTextBlock.Visibility = Visibility.Visible;
-                    addKeyButton.SetValue(Grid.ColumnProperty, 2);
-                    subByteButton.Visibility = Visibility.Hidden;
-                    shiftRowButton.Visibility = Visibility.Hidden;
-                    mixColButton.Visibility = Visibility.Hidden;
+                    addKeyButton.SetValue(Grid.ColumnProperty, 5);
+                    subByteButton.SetValue(Grid.ColumnProperty, 2);
+                    shiftRowButton.SetValue(Grid.ColumnProperty, 3);
+                    mixColButton.SetValue(Grid.ColumnProperty, 4);
+                    //subByteButton.Visibility = Visibility.Hidden;
+                    //shiftRowButton.Visibility = Visibility.Hidden;
+                    //mixColButton.Visibility = Visibility.Hidden;
                 }, null);
             }        
             wait();
@@ -982,6 +991,10 @@ namespace AESVisualisation
                                 buttonVisible();
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                                addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                subByteButton.SetValue(Grid.ColumnProperty, 1);
+                                shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                                mixColButton.SetValue(Grid.ColumnProperty, 3);
                             }, null);
                             autostep = false;
                             wait();
@@ -1006,6 +1019,10 @@ namespace AESVisualisation
                                 setUpShiftRows();
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                                addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                subByteButton.SetValue(Grid.ColumnProperty, 1);
+                                shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                                mixColButton.SetValue(Grid.ColumnProperty, 3);
                                 buttonVisible();
                             }, null);
                             autostep = false;
@@ -1085,6 +1102,9 @@ namespace AESVisualisation
                             {
                                 InitialRoundTextBlock.Visibility = Visibility.Hidden;
                                 addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                subByteButton.SetValue(Grid.ColumnProperty, 1);
+                                shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                                mixColButton.SetValue(Grid.ColumnProperty, 3);
                                 buttonVisible();
                             }, null);
                             if (!abort)
@@ -1121,6 +1141,9 @@ namespace AESVisualisation
                                 {
                                     InitialRoundTextBlock.Visibility = Visibility.Hidden;
                                     addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                                    subByteButton.SetValue(Grid.ColumnProperty, 1);
+                                    shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                                    mixColButton.SetValue(Grid.ColumnProperty, 3);
                                     buttonVisible();
                                 }, null);
                             }
@@ -3679,9 +3702,18 @@ namespace AESVisualisation
         */
         public void introduction()
         {
+            intro = true;
             progress = 0;
             abort = false;
             skip = false;
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                hideButton();
+                playButton.IsEnabled = true;
+                backButton.IsEnabled = true;
+                playButton.Foreground = Brushes.Black;
+                backButton.Foreground = Brushes.Black;
+            }, null);
             while (!abort && operationCounter < 5)
             {
                 switch (operationCounter)
@@ -3689,13 +3721,17 @@ namespace AESVisualisation
                     case 0:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
+                            backButton.IsEnabled = false;
+                            expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                            expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.IntroText; 
                             startGrid.Visibility = Visibility.Visible;
                             startTextBlock.Visibility = Visibility.Visible;
                             startTextBlock1.Visibility = Visibility.Visible;
                             startTextBlock2.Visibility = Visibility.Visible;
-                            hideButton();
-                            playButton.Visibility = Visibility.Visible;
-                            playButton.SetValue(Grid.RowProperty, 4);
+                            introTextBlock.Visibility = Visibility.Hidden;
+                            introTextBlock1.Visibility = Visibility.Hidden;
+                            //playButton.Visibility = Visibility.Visible;
+                            //playButton.SetValue(Grid.RowProperty, 4);
                         }, null);
                         if (second > 0)
                         {
@@ -3706,6 +3742,7 @@ namespace AESVisualisation
                     case 1:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
+                            backButton.IsEnabled = true;
                             startTextBlock.Visibility = Visibility.Hidden;
                             startTextBlock1.Visibility = Visibility.Hidden;
                             startTextBlock2.Visibility = Visibility.Hidden;
@@ -3714,9 +3751,9 @@ namespace AESVisualisation
                             Intro1ENTextBlock.Visibility = Visibility.Hidden;
                             introTextBlock.Visibility = Visibility.Visible;
                             introTextBlock1.Visibility = Visibility.Visible;
-                            hideButton();
-                            playButton.Visibility = Visibility.Visible;
-                            playButton.SetValue(Grid.RowProperty, 4);                            
+                            //hideButton();
+                            //playButton.Visibility = Visibility.Visible;
+                            //playButton.SetValue(Grid.RowProperty, 4);                            
                         }, null);
                         break;
                     case 2:
@@ -3729,9 +3766,9 @@ namespace AESVisualisation
                             Intro1ENTextBlock.Visibility = Visibility.Visible;
                             Intro3ENImage.Visibility = Visibility.Hidden;
                             Intro2ENTextBlock.Visibility = Visibility.Hidden;
-                            hideButton();
-                            playButton.Visibility = Visibility.Visible;
-                            playButton.SetValue(Grid.RowProperty, 4);
+                            //hideButton();
+                            //playButton.Visibility = Visibility.Visible;
+                            //playButton.SetValue(Grid.RowProperty, 4);
                         }, null);
                         break;
                     case 3:
@@ -3748,12 +3785,12 @@ namespace AESVisualisation
                     case 4:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
+                            expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
                             Intro3ENImage.Visibility = Visibility.Hidden;
                             startGrid.Visibility = Visibility.Visible;
                             expansionTextBlock.Visibility = Visibility.Visible;
                             expansionTextBlock2.Visibility = Visibility.Visible;
                             Intro2ENTextBlock.Visibility = Visibility.Hidden;
-
                         }, null);
                         break;
                     default: break;
@@ -3762,9 +3799,10 @@ namespace AESVisualisation
                 wait();
             }
             operationCounter = 0;
+            intro = false;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                playButton.SetValue(Grid.RowProperty, 3);
+                //playButton.SetValue(Grid.RowProperty, 3);
                 expansionTextBlock.Visibility = Visibility.Hidden;
                 startGrid.Visibility = Visibility.Hidden;
             }, null);
@@ -5795,25 +5833,37 @@ namespace AESVisualisation
         {
             if (expansion)
             {
-                subByteButton.Visibility = Visibility.Hidden;
-                shiftRowButton.Visibility = Visibility.Hidden;
-                mixColButton.Visibility = Visibility.Hidden;
-                addKeyButton.Visibility = Visibility.Hidden;
-                shiftRightButton.Visibility = Visibility.Hidden;
-                shiftLeftButton.Visibility = Visibility.Hidden;
+                subByteButton.IsEnabled = false;
+                shiftRowButton.IsEnabled = false;
+                mixColButton.IsEnabled = false;
+                addKeyButton.IsEnabled = false;
+                shiftRightButton.IsEnabled = false;
+                shiftLeftButton.IsEnabled = false;
+                subByteButton.Foreground = Brushes.Gray;
+                shiftRowButton.Foreground = Brushes.Gray;
+                mixColButton.Foreground = Brushes.Gray;
+                addKeyButton.Foreground = Brushes.Gray;
+                shiftLeftButton.Foreground = Brushes.Gray;
+                shiftRowButton.Foreground = Brushes.Gray;
                 startButton.SetValue(Grid.ColumnProperty, 9);
                 endButton.SetValue(Grid.ColumnProperty, 10);
             }
             else
             {
-                subByteButton.Visibility = Visibility.Visible;
-                shiftRowButton.Visibility = Visibility.Visible;
-                mixColButton.Visibility = Visibility.Visible;
-                addKeyButton.Visibility = Visibility.Visible;
-                if(keysize != 0)
+                subByteButton.IsEnabled = true;
+                shiftRowButton.IsEnabled = true;
+                mixColButton.IsEnabled = true;
+                addKeyButton.IsEnabled = true;
+                subByteButton.Foreground = Brushes.Black;
+                shiftRowButton.Foreground = Brushes.Black;
+                mixColButton.Foreground = Brushes.Black;
+                addKeyButton.Foreground = Brushes.Black;
+                shiftLeftButton.Foreground = Brushes.Black;
+                shiftRowButton.Foreground = Brushes.Black;
+                if (keysize != 0)
                 {
-                    shiftRightButton.Visibility = Visibility.Visible;
-                    shiftLeftButton.Visibility = Visibility.Visible;
+                    shiftRightButton.IsEnabled = true;
+                    shiftLeftButton.IsEnabled = true;
                     startButton.SetValue(Grid.ColumnProperty, 7);
                     endButton.SetValue(Grid.ColumnProperty, 8);
                 }
@@ -5822,92 +5872,166 @@ namespace AESVisualisation
 
         public void hideButton()
         {
-            autostepSpeedSlider.Visibility = Visibility.Hidden;
-            nextStepButton.Visibility = Visibility.Hidden;
-            playButton.Visibility = Visibility.Hidden;
-            prevStepButton.Visibility = Visibility.Hidden;
-            pauseButton.Visibility = Visibility.Hidden;
-            round1Button.Visibility = Visibility.Hidden;
-            round2Button.Visibility = Visibility.Hidden;
-            round3Button.Visibility = Visibility.Hidden;
-            round4Button.Visibility = Visibility.Hidden;
-            round5Button.Visibility = Visibility.Hidden;
-            round6Button.Visibility = Visibility.Hidden;
-            round7Button.Visibility = Visibility.Hidden;
-            round8Button.Visibility = Visibility.Hidden;
-            round9Button.Visibility = Visibility.Hidden;
-            round10Button.Visibility = Visibility.Hidden;
-            keyButton.Visibility = Visibility.Hidden;
-            startButton.Visibility = Visibility.Hidden;
-            endButton.Visibility = Visibility.Hidden;
-            //languageButton.Visibility = Visibility.Hidden;
+            autostepSpeedSlider.IsEnabled = false;
+            nextStepButton.IsEnabled = false;
+            playButton.IsEnabled = false;
+            prevStepButton.IsEnabled = false;
+            pauseButton.IsEnabled = false;
+            round1Button.IsEnabled = false;
+            round2Button.IsEnabled = false;
+            round3Button.IsEnabled = false;
+            round4Button.IsEnabled = false;
+            round5Button.IsEnabled = false;
+            round6Button.IsEnabled = false;
+            round7Button.IsEnabled = false;
+            round8Button.IsEnabled = false;
+            round9Button.IsEnabled = false;
+            round10Button.IsEnabled = false;
+            keyButton.IsEnabled = false;
+            startButton.IsEnabled = false;
+            endButton.IsEnabled = false;
+            backButton.IsEnabled = false;
+            playButton.Foreground = Brushes.Gray;
+            pauseButton.Foreground = Brushes.Gray;
+            subByteButton.Foreground = Brushes.Gray;
+            shiftRowButton.Foreground = Brushes.Gray;
+            mixColButton.Foreground = Brushes.Gray;
+            addKeyButton.Foreground = Brushes.Gray;
+            shiftLeftButton.Foreground = Brushes.Gray;
+            shiftRowButton.Foreground = Brushes.Gray;
+            prevStepButton.Foreground = Brushes.Gray;
+            nextStepButton.Foreground = Brushes.Gray;
+            keyButton.Foreground = Brushes.Gray;
+            //autostepSpeedSlider.Visibility = Visibility.Hidden;
+            //nextStepButton.Visibility = Visibility.Hidden;
+            //playButton.Visibility = Visibility.Hidden;
+            //prevStepButton.Visibility = Visibility.Hidden;
+            //pauseButton.Visibility = Visibility.Hidden;
+            //round1Button.Visibility = Visibility.Hidden;
+            //round2Button.Visibility = Visibility.Hidden;
+            //round3Button.Visibility = Visibility.Hidden;
+            //round4Button.Visibility = Visibility.Hidden;
+            //round5Button.Visibility = Visibility.Hidden;
+            //round6Button.Visibility = Visibility.Hidden;
+            //round7Button.Visibility = Visibility.Hidden;
+            //round8Button.Visibility = Visibility.Hidden;
+            //round9Button.Visibility = Visibility.Hidden;
+            //round10Button.Visibility = Visibility.Hidden;
+            //keyButton.Visibility = Visibility.Hidden;
+            //startButton.Visibility = Visibility.Hidden;
+            //endButton.Visibility = Visibility.Hidden;
         }
 
         public void showButton()
         {
-            autostepSpeedSlider.Visibility = Visibility.Visible;
-            nextStepButton.Visibility = Visibility.Visible;
-            playButton.Visibility = Visibility.Visible;
-            prevStepButton.Visibility = Visibility.Visible;
-            pauseButton.Visibility = Visibility.Visible;
-            round1Button.Visibility = Visibility.Visible;
-            round2Button.Visibility = Visibility.Visible;
-            round3Button.Visibility = Visibility.Visible;
-            round4Button.Visibility = Visibility.Visible;
-            round5Button.Visibility = Visibility.Visible;
-            round6Button.Visibility = Visibility.Visible;
-            round7Button.Visibility = Visibility.Visible;
-            round8Button.Visibility = Visibility.Visible;
-            startButton.Visibility = Visibility.Visible;
-            endButton.Visibility = Visibility.Visible;
-            //languageButton.Visibility = Visibility.Visible;
+            if (intro)
+            {
+                playButton.IsEnabled = true;
+                playButton.Foreground = Brushes.Black;
+                return;
+            }
+            //autostepSpeedSlider.Visibility = Visibility.Visible;
+            //nextStepButton.Visibility = Visibility.Visible;
+            //playButton.Visibility = Visibility.Visible;
+            //prevStepButton.Visibility = Visibility.Visible;
+            //pauseButton.Visibility = Visibility.Visible;
+            //round1Button.Visibility = Visibility.Visible;
+            //round2Button.Visibility = Visibility.Visible;
+            //round3Button.Visibility = Visibility.Visible;
+            //round4Button.Visibility = Visibility.Visible;
+            //round5Button.Visibility = Visibility.Visible;
+            //round6Button.Visibility = Visibility.Visible;
+            //round7Button.Visibility = Visibility.Visible;
+            //round8Button.Visibility = Visibility.Visible;
+            //startButton.Visibility = Visibility.Visible;
+            //endButton.Visibility = Visibility.Visible;          
+            //if (!expansion || keysize == 0)
+            //{
+            //    round9Button.Visibility = Visibility.Visible;
+            //    round10Button.Visibility = Visibility.Visible;
+            //    prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+
+            //}
+            //else if(keysize == 1)
+            //{
+            //    round10Button.Visibility = Visibility.Hidden;
+            //    round9Button.Visibility = Visibility.Hidden;
+            //    prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+            //}
+            //else
+            //{
+            //    round10Button.Visibility = Visibility.Hidden;
+            //    round9Button.Visibility = Visibility.Hidden;
+            //    round8Button.Visibility = Visibility.Hidden;
+            //    prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+            //}
+            //keyButton.Visibility = Visibility.Visible;
+
+            //autostepSpeedSlider.Visibility = Visibility.Visible;
+            nextStepButton.IsEnabled = true;
+            playButton.IsEnabled = true;
+            prevStepButton.IsEnabled = true;
+            pauseButton.IsEnabled = true;
+            round1Button.IsEnabled = true;
+            round2Button.IsEnabled = true;
+            round3Button.IsEnabled = true;
+            round4Button.IsEnabled = true;
+            round5Button.IsEnabled = true;
+            round6Button.IsEnabled = true;
+            round7Button.IsEnabled = true;
+            round8Button.IsEnabled = true;
+            startButton.IsEnabled = true;
+            endButton.IsEnabled = true;
+            nextStepButton.Foreground = Brushes.Black;
+            prevStepButton.Foreground = Brushes.Black;
+            keyButton.Foreground = Brushes.Black;
+            playButton.Foreground = Brushes.Black;
+            pauseButton.Foreground = Brushes.Black;
             if (!expansion || keysize == 0)
             {
-                round9Button.Visibility = Visibility.Visible;
-                round10Button.Visibility = Visibility.Visible;
-                prevStepButton.SetValue(Grid.RowProperty, 3);
-                prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                nextStepButton.SetValue(Grid.RowProperty, 3);
-                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+                round9Button.IsEnabled = true;
+                round10Button.IsEnabled = true;
+                //prevStepButton.SetValue(Grid.RowProperty, 3);
+                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                //nextStepButton.SetValue(Grid.RowProperty, 3);
+                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
 
             }
-            else if(keysize == 1)
+            else if (keysize == 1)
             {
-                round10Button.Visibility = Visibility.Hidden;
-                round9Button.Visibility = Visibility.Hidden;
-                prevStepButton.SetValue(Grid.RowProperty, 3);
-                prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                nextStepButton.SetValue(Grid.RowProperty, 3);
-                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-                //startButton.SetValue(Grid.ColumnProperty, 5);
-                //endButton.SetValue(Grid.ColumnProperty, 6);
-                //prevStepButton.SetValue(Grid.RowProperty, 4);
-                //prevStepButton.SetValue(Grid.ColumnProperty, 9);
-                //nextStepButton.SetValue(Grid.ColumnProperty, 10);
-                //nextStepButton.SetValue(Grid.RowProperty, 4);
-                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
+                round10Button.IsEnabled = true;
+                round9Button.IsEnabled = true;
+                //prevStepButton.SetValue(Grid.RowProperty, 3);
+                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                //nextStepButton.SetValue(Grid.RowProperty, 3);
+                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
             }
             else
             {
-                round10Button.Visibility = Visibility.Hidden;
-                round9Button.Visibility = Visibility.Hidden;
-                round8Button.Visibility = Visibility.Hidden;
-                prevStepButton.SetValue(Grid.RowProperty, 3);
-                prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                nextStepButton.SetValue(Grid.RowProperty, 3);
-                autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-                //startButton.SetValue(Grid.ColumnProperty, 5);
-                //endButton.SetValue(Grid.ColumnProperty, 6);
-                //prevStepButton.SetValue(Grid.RowProperty, 4);
-                //prevStepButton.SetValue(Grid.ColumnProperty, 8);
-                //nextStepButton.SetValue(Grid.ColumnProperty, 9);
-                //nextStepButton.SetValue(Grid.RowProperty, 4);
-                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 2);
+                round10Button.IsEnabled = true;
+                round9Button.IsEnabled = true;
+                round8Button.IsEnabled = true;
+                //prevStepButton.SetValue(Grid.RowProperty, 3);
+                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+                //nextStepButton.SetValue(Grid.RowProperty, 3);
+                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
             }
-            keyButton.Visibility = Visibility.Visible;
+            keyButton.IsEnabled = true;
         }
 
         private byte[] arrangeText(byte[] input)
@@ -6089,6 +6213,12 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 invisible();
+                InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                subByteButton.SetValue(Grid.ColumnProperty, 1);
+                shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                mixColButton.SetValue(Grid.ColumnProperty, 3);
+                lightRemoveColor();
                 introTextBlock.Visibility = Visibility.Hidden;
                 introTextBlock1.Visibility = Visibility.Hidden;
                 startGrid.Visibility = Visibility.Hidden;
@@ -6105,10 +6235,10 @@ namespace AESVisualisation
                 Intro1ENTextBlock.Visibility = Visibility.Hidden;
                 Intro2ENTextBlock.Visibility = Visibility.Hidden;
                 Intro3ENImage.Visibility = Visibility.Hidden;
-                subByteButton.Visibility = Visibility.Hidden;
-                shiftRowButton.Visibility = Visibility.Hidden;
-                mixColButton.Visibility = Visibility.Hidden;
-                addKeyButton.Visibility = Visibility.Hidden;
+                //subByteButton.Visibility = Visibility.Hidden;
+                //shiftRowButton.Visibility = Visibility.Hidden;
+                //mixColButton.Visibility = Visibility.Hidden;
+                //addKeyButton.Visibility = Visibility.Hidden;
                 expansionExplanation.Visibility = Visibility.Hidden;
                 expansionExplanation1.Visibility = Visibility.Hidden;
                 expansionExplanation2.Visibility = Visibility.Hidden;
@@ -6377,12 +6507,20 @@ namespace AESVisualisation
                 {
                     InitialRoundTextBlock.Visibility = Visibility.Hidden;
                     addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                    subByteButton.SetValue(Grid.ColumnProperty, 1);
+                    shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                    mixColButton.SetValue(Grid.ColumnProperty, 3);
+                    //addKeyButton.SetValue(Grid.ColumnProperty, 4);
                     buttonVisible();
                 }, null);
             }
             if (!initialRound)
             {
                 InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                addKeyButton.SetValue(Grid.ColumnProperty, 4);
+                subByteButton.SetValue(Grid.ColumnProperty, 1);
+                shiftRowButton.SetValue(Grid.ColumnProperty, 2);
+                mixColButton.SetValue(Grid.ColumnProperty, 3);
             }
         }
 

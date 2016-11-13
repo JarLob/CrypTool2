@@ -334,4 +334,7 @@ Nachdem diese Runden abgeschlossen sind, gibt es noch eine letzte Runde ohne "Mi
   <data name="intro11" xml:space="preserve">
     <value>Intro</value>
   </data>
+  <data name="IntroText" xml:space="preserve">
+    <value>Intro</value>
+  </data>
 </root>
