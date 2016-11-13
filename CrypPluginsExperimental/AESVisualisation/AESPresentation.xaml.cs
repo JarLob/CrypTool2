@@ -769,10 +769,11 @@ namespace AESVisualisation
                                 showButton();
                                 buttonVisible();
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                                backButton.IsEnabled = false;
                             }, null);
                             start = false;
                             skip = false;
-                            backButton.IsEnabled = false;
+                            
                         }
                         skipStep = false;
                         skip = false;
@@ -1186,7 +1187,7 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 setUpExpansion();
-                enableButtons();
+                //enableButtons();
             }, null);
             wait();
             if (!expansion)
@@ -2281,7 +2282,7 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 setUpExpansion();
-                enableButtons();
+                //enableButtons();
             }, null);
             wait();
             if (!expansion)
@@ -5992,6 +5993,8 @@ namespace AESVisualisation
             round6Button.IsEnabled = true;
             round7Button.IsEnabled = true;
             round8Button.IsEnabled = true;
+            round9Button.IsEnabled = true;
+            round10Button.IsEnabled = true;
             startButton.IsEnabled = true;
             endButton.IsEnabled = true;
             nextStepButton.Foreground = Brushes.Black;
@@ -5999,38 +6002,57 @@ namespace AESVisualisation
             keyButton.Foreground = Brushes.Black;
             playButton.Foreground = Brushes.Black;
             pauseButton.Foreground = Brushes.Black;
-            if (!expansion || keysize == 0)
+            if (expansion)
             {
-                round9Button.IsEnabled = true;
-                round10Button.IsEnabled = true;
-                //prevStepButton.SetValue(Grid.RowProperty, 3);
-                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                //nextStepButton.SetValue(Grid.RowProperty, 3);
-                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+                switch (keysize)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        round9Button.IsEnabled = false;
+                        round10Button.IsEnabled = false;
+                        break;
+                    case 2:
+                        round8Button.IsEnabled = false;
+                        round9Button.IsEnabled = false;
+                        round10Button.IsEnabled = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //if (!expansion || keysize == 0)
+            //{
+            //    round9Button.IsEnabled = true;
+            //    round10Button.IsEnabled = true;
+            //    //prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    //nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
 
-            }
-            else if (keysize == 1)
-            {
-                round10Button.IsEnabled = true;
-                round9Button.IsEnabled = true;
-                //prevStepButton.SetValue(Grid.RowProperty, 3);
-                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                //nextStepButton.SetValue(Grid.RowProperty, 3);
-                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-            }
-            else
-            {
-                round10Button.IsEnabled = true;
-                round9Button.IsEnabled = true;
-                round8Button.IsEnabled = true;
-                //prevStepButton.SetValue(Grid.RowProperty, 3);
-                //prevStepButton.SetValue(Grid.ColumnProperty, 2);
-                //nextStepButton.SetValue(Grid.ColumnProperty, 3);
-                //nextStepButton.SetValue(Grid.RowProperty, 3);
-                //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
-            }
+            //}
+            //else if (keysize == 1)
+            //{
+            //    round10Button.IsEnabled = false;
+            //    round9Button.IsEnabled = false;
+            //    //prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    //nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+            //}
+            //else
+            //{
+            //    round10Button.IsEnabled = false;
+            //    round9Button.IsEnabled = true;
+            //    round8Button.IsEnabled = true;
+            //    //prevStepButton.SetValue(Grid.RowProperty, 3);
+            //    //prevStepButton.SetValue(Grid.ColumnProperty, 2);
+            //    //nextStepButton.SetValue(Grid.ColumnProperty, 3);
+            //    //nextStepButton.SetValue(Grid.RowProperty, 3);
+            //    //autostepSpeedSlider.SetValue(Grid.ColumnProperty, 4);
+            //}
             keyButton.IsEnabled = true;
         }
 
