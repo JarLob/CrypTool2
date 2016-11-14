@@ -445,16 +445,16 @@ Overview</value>
     <value>(Modern ciphers)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>Overview Of The Encryption Results After All Rounds of AES-128</value>
+    <value>Overview of the Encryption Results after All Rounds of AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
-    <value>Overview Of The Encryption Results After All Rounds Of AES-192</value>
+    <value>Overview of the Encryption Results after All Rounds of AES-192</value>
   </data>
   <data name="OverviewAES256" xml:space="preserve">
-    <value>Overview Of The Encryption Results After All Rounds Of AES-256</value>
+    <value>Overview of the Encryption Results after All Rounds of AES-256</value>
   </data>
   <data name="OverviewDES" xml:space="preserve">
-    <value>Overview Of The Encryption Results After All DES Rounds</value>
+    <value>Overview of the Encryption Results after All DES Rounds</value>
   </data>
   <data name="Percentage" xml:space="preserve">
     <value>% changed</value>

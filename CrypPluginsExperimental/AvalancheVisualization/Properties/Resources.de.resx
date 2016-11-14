@@ -446,7 +446,7 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>(Moderne Verfahren)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>Übersicht der Verschlüsselungsergebnisse aller  Runden von AES-128</value>
+    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
     <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-192</value>

@@ -1137,7 +1137,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview Of The Encryption Results After All Rounds of AES-128.
+        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-128.
         /// </summary>
         internal static string OverviewAES128 {
             get {
@@ -1146,7 +1146,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview Of The Encryption Results After All Rounds Of AES-192.
+        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-192.
         /// </summary>
         internal static string OverviewAES192 {
             get {
@@ -1155,7 +1155,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview Of The Encryption Results After All Rounds Of AES-256.
+        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-256.
         /// </summary>
         internal static string OverviewAES256 {
             get {
@@ -1174,7 +1174,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview Of The Encryption Results After All DES Rounds.
+        ///   Looks up a localized string similar to Overview of the Encryption Results after All DES Rounds.
         /// </summary>
         internal static string OverviewDES {
             get {

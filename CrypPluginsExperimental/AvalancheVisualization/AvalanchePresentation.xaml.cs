@@ -67,7 +67,7 @@ namespace AvalancheVisualization
         public int roundDES;
         public bool canModify = false;
         public bool canModifyDES = false;
-     
+        public bool canStop = false;
 
         public string[] leftHalf = new string[32];
         public string[] rightHalf = new string[32];
@@ -196,7 +196,7 @@ namespace AvalancheVisualization
         {
             int k = 33;
             int i = 1;
-
+            
 
             if (mode == 0)
             {
@@ -393,12 +393,6 @@ namespace AvalancheVisualization
                     string keyStrB = hexaAsString(key);
                     modKeyDES.Text = keyStrB;
                 }
-
-
-
-                //radioBinaryDes.IsChecked = true;
-
-
 
             }
         }
@@ -2009,6 +2003,7 @@ namespace AvalancheVisualization
                 newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
 
                 textB = newText;
+                canStop = true;
                 string keyBitSequence = "";
                 string[] keyResult = new string[key.Length];
                 string[][] keyBits = new string[key.Length][];
@@ -2112,7 +2107,7 @@ namespace AvalancheVisualization
                 newText = result.Select(s => Convert.ToByte(s, 2)).ToArray();
 
                 textB = newText;
-
+                canStop = true;
                 string[] strKeySequence = new string[64];
 
                 for (int i = 1; i < 65; i++)
@@ -4078,153 +4073,163 @@ namespace AvalancheVisualization
 
         public void removeElements()
         {
-            TB1.Text = string.Empty;
-            TB2.Text = string.Empty;
-            TB3.Text = string.Empty;
 
-            removeBackground();
-            toGeneral.Visibility = Visibility.Hidden;
-            initMsg.Text = Properties.Resources.InitialMessageHex;
-            initKey.Text = Properties.Resources.InitialKeyHex;
-            modifiedMsg.Text = string.Empty;
-            originalMsg.Text = string.Empty;
             skip.IsChecked = false;
-            InstructionsPrep.Visibility = Visibility.Hidden;
-            bitsData.Visibility = Visibility.Hidden;
+
+
             flippedBitsPiece.Visibility = Visibility.Hidden;
-            unflippedBitsPiece.Visibility = Visibility.Hidden;
-
-            bitRepresentationGrid.Visibility = Visibility.Hidden;
-            OrigInitialStateGrid.Visibility = Visibility.Hidden;
-
-            afterRoundsGrid.Visibility = Visibility.Hidden;
-
+            unflippedBitsPiece.Visibility = Visibility.Hidden;         
+            bitsData.Visibility = Visibility.Hidden;
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
-            Cbclass1.Visibility = Visibility.Hidden;
-            Cbclass2.Visibility = Visibility.Hidden;
-
-            updateDataColor();
 
 
-            afterRound11Button.Visibility = Visibility.Collapsed;
-            afterRound12Button.Visibility = Visibility.Collapsed;
-            afterRound13Button.Visibility = Visibility.Collapsed;
-            afterRound14Button.Visibility = Visibility.Collapsed;
-            afterRound15Button.Visibility = Visibility.Collapsed;
-            afterRound16Button.Visibility = Visibility.Collapsed;
-            OrigInitialStateGrid.Visibility = Visibility.Hidden;
-
-            initStateTitle.Visibility = Visibility.Hidden;
-            modifiedInitialStateGrid.Visibility = Visibility.Hidden;
-            buttonsPanel.Visibility = Visibility.Hidden;
-            radioButtons.Visibility = Visibility.Hidden;
-            buttonsTitle.Visibility = Visibility.Hidden;
-            curvedLinesCanvas.Visibility = Visibility.Hidden;
-            afterRoundsTitle.Visibility = Visibility.Hidden;
-            afterRoundsSubtitle.Visibility = Visibility.Hidden;
-            inputInBits.Visibility = Visibility.Hidden;
-            instructionsTxtBlock2.Visibility = Visibility.Hidden;
-            doneButton.Visibility = Visibility.Hidden;
-            clearButton.Visibility = Visibility.Hidden;
-            originalKeyGrid.Visibility = Visibility.Collapsed;
-            originalKeyGrid192.Visibility = Visibility.Collapsed;
-            originalKeyGrid256.Visibility = Visibility.Collapsed;
-            BitKeyGrid.Visibility = Visibility.Collapsed;
-            BitKeyGrid192.Visibility = Visibility.Collapsed;
-            BitKeyGrid256.Visibility = Visibility.Collapsed;
-            modifiedKeyGrid.Visibility = Visibility.Collapsed;
-            modifiedKeyGrid192.Visibility = Visibility.Collapsed;
-            modifiedKeyGrid256.Visibility = Visibility.Collapsed;
-            overviewAES.Visibility = Visibility.Collapsed;
-            overviewAES192.Visibility = Visibility.Collapsed;
-            overviewAES256.Visibility = Visibility.Collapsed;
-            extraordinaryOccurAes.Visibility = Visibility.Hidden;
-            radioDecimal.IsChecked = false;
-            radioHexa.IsChecked = false;
-            canModify = false;
-            canModifyDES = false;
-            aesCheckBox.Visibility = Visibility.Hidden;
-
-            //the next two must be in this order!!!
-            aesCheckBox.IsChecked = false;
-            changeMsgAes.Visibility = Visibility.Hidden;
-
-            clearColors();
-            clearKeyColors();
-            generalViewAES.Visibility = Visibility.Hidden;
-            genOverviewAES.Text = Properties.Resources.OverviewAES128;
-          
-            bitRepresentationSV.ScrollToHorizontalOffset(0.0);
-            List<TextBlock> tmp = createTxtBlockList(6);
-
-            foreach (TextBlock txtB in tmp)
-                txtB.Foreground = Brushes.Black;
-
-
-            int k = 33;
-            int l = 49;
-            int i = 1;
-
-
-            while (k <= 48 && l <= 64)
+            if (mode == 0 || mode == 1)
             {
 
-                ((TextBlock)this.FindName("initStateTxtBlock" + k)).Text = string.Empty;
+                radioDecimal.IsChecked = false;
+                radioHexa.IsChecked = false;
+                canModify = false;
+                canModifyDES = false;
+                aesCheckBox.IsChecked = false;
+                desCheckBox.IsChecked = false;
 
-                ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = string.Empty;
-                i++;
-                k++;
-                l++;
+                toGeneral.Visibility = Visibility.Hidden;
+                InstructionsPrep.Visibility = Visibility.Hidden;
+                bitRepresentationGrid.Visibility = Visibility.Hidden;
+                OrigInitialStateGrid.Visibility = Visibility.Hidden;
+                afterRoundsGrid.Visibility = Visibility.Hidden;
+                initStateTitle.Visibility = Visibility.Hidden;
+                modifiedInitialStateGrid.Visibility = Visibility.Hidden;
+                buttonsPanel.Visibility = Visibility.Hidden;
+                radioButtons.Visibility = Visibility.Hidden;
+                buttonsTitle.Visibility = Visibility.Hidden;
+                curvedLinesCanvas.Visibility = Visibility.Hidden;
+                afterRoundsTitle.Visibility = Visibility.Hidden;
+                afterRoundsSubtitle.Visibility = Visibility.Hidden;
+                inputInBits.Visibility = Visibility.Hidden;
+                instructionsTxtBlock2.Visibility = Visibility.Hidden;
+                doneButton.Visibility = Visibility.Hidden;
+                clearButton.Visibility = Visibility.Hidden;
+                extraordinaryOccurAes.Visibility = Visibility.Hidden;
+                aesCheckBox.Visibility = Visibility.Hidden;
+                changeMsgAes.Visibility = Visibility.Hidden;
+                generalViewAES.Visibility = Visibility.Hidden;
+                inputGridDES.Visibility = Visibility.Hidden;
+                modificationGridDES.Visibility = Visibility.Hidden;
+                bitGridDES.Visibility = Visibility.Hidden;
+                generalViewDES.Visibility = Visibility.Hidden;
+                extraordinaryOccur.Visibility = Visibility.Hidden;
+
+
+                afterRound11Button.Visibility = Visibility.Collapsed;
+                afterRound12Button.Visibility = Visibility.Collapsed;
+                afterRound13Button.Visibility = Visibility.Collapsed;
+                afterRound14Button.Visibility = Visibility.Collapsed;
+                afterRound15Button.Visibility = Visibility.Collapsed;
+                afterRound16Button.Visibility = Visibility.Collapsed;
+                originalKeyGrid.Visibility = Visibility.Collapsed;
+                originalKeyGrid192.Visibility = Visibility.Collapsed;
+                originalKeyGrid256.Visibility = Visibility.Collapsed;
+                BitKeyGrid.Visibility = Visibility.Collapsed;
+                BitKeyGrid192.Visibility = Visibility.Collapsed;
+                BitKeyGrid256.Visibility = Visibility.Collapsed;
+                modifiedKeyGrid.Visibility = Visibility.Collapsed;
+                modifiedKeyGrid192.Visibility = Visibility.Collapsed;
+                modifiedKeyGrid256.Visibility = Visibility.Collapsed;
+                overviewAES.Visibility = Visibility.Collapsed;
+                overviewAES192.Visibility = Visibility.Collapsed;
+                overviewAES256.Visibility = Visibility.Collapsed;
+
+                changeMsgDes.Visibility = Visibility.Visible;
+
+                initMsg.Text = Properties.Resources.InitialMessageHex;
+                initKey.Text = Properties.Resources.InitialKeyHex;
+                genOverviewAES.Text = Properties.Resources.OverviewAES128;
+
+                clearColors();
+                clearKeyColors();
+                removeBackground();
+                readjustStats();
+
+                bitRepresentationSV.ScrollToHorizontalOffset(0.0);
+
+
+                if (canStop)
+                {
+                    updateDataColor();
+
+                    List<TextBlock> tmp = createTxtBlockList(6);
+
+                    foreach (TextBlock txtB in tmp)
+                        txtB.Foreground = Brushes.Black;
+
+
+                    int k = 33;
+                    int l = 49;
+                    int i = 1;
+
+
+                    while (k <= 48 && l <= 64)
+                    {
+
+                        ((TextBlock) this.FindName("initStateTxtBlock" + k)).Text = string.Empty;
+
+                        ((TextBlock) this.FindName("initStateTxtBlock" + l)).Text = string.Empty;
+                        i++;
+                        k++;
+                        l++;
+                    }
+
+                    int j = 1;
+
+                    while (j <= 24)
+                    {
+                        ((TextBlock) this.FindName("modKey192_" + j)).Text = string.Empty;
+                        j++;
+
+                    }
+
+                    int m = 1;
+
+                    while (m <= 32)
+                    {
+                        ((TextBlock) this.FindName("modKey256_" + m)).Text = string.Empty;
+                        m++;
+
+                    }
+
+                    List<TextBlock> tmpDES = createTxtBlockList(7);
+
+                    foreach (TextBlock txtB in tmpDES)
+                        txtB.Foreground = Brushes.Black;
+
+                }
+
+
             }
 
-            int j = 1;
-
-            while (j <= 24)
+            else
             {
-                ((TextBlock)this.FindName("modKey192_" + j)).Text = string.Empty;
-                j++;
+                TB1.Text = string.Empty;
+                TB2.Text = string.Empty;
+                TB3.Text = string.Empty;
+                modifiedMsg.Text = string.Empty;
+                originalMsg.Text = string.Empty;
+
+                InstructionsUnprep.Visibility = Visibility.Hidden;
+                Cbclass1.Visibility = Visibility.Hidden;
+                Cbclass2.Visibility = Visibility.Hidden;
+                othersGrid.Visibility = Visibility.Hidden;
+
+                radioText.Visibility = Visibility.Collapsed;
 
             }
 
-            int m = 1;
-
-            while (m <= 32)
-            {
-                ((TextBlock)this.FindName("modKey256_" + m)).Text = string.Empty;
-                m++;
-
-            }
-
-            UGrid.Columns = 128;
-
-            //DES
-
-            changeMsgDes.Visibility = Visibility.Visible;
-
-            inputGridDES.Visibility = Visibility.Hidden;
-          
-            desCheckBox.IsChecked = false;
-            modificationGridDES.Visibility = Visibility.Hidden;
-            bitGridDES.Visibility = Visibility.Hidden;
-            generalViewDES.Visibility = Visibility.Hidden;
-
-            othersGrid.Visibility = Visibility.Hidden;
-            readjustStats();
-            mode = 0;
-            extraordinaryOccur.Visibility = Visibility.Hidden;
-            InstructionsUnprep.Visibility = Visibility.Hidden;
-            radioText.Visibility = Visibility.Collapsed;
-            // clearTextEffect();
+           // mode = 0;
+            canStop = false;
 
             StartCanvas.Visibility = Visibility.Visible;
-
-
-            List<TextBlock> tmpDES = createTxtBlockList(7);
-
-            foreach (TextBlock txtB in tmpDES)
-                txtB.Foreground = Brushes.Black;
-
         }
 
         public void adjustStats()

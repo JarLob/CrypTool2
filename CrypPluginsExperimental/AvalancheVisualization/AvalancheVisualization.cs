@@ -240,7 +240,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         if (valid)
                         {
-                            //new
+                           
                             
 
                             if (textChanged && pres.canModify)
@@ -258,6 +258,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 byte[] tmpKey = aes.checkKeysize();
                                 pres.key = tmpKey;
                                 pres.textB = temporary;
+                                pres.canStop = true;
                                 aes.executeAES(false);
 
 
@@ -380,6 +381,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 des.DESProcess();
                                 pres.key = keyInput;
                                 pres.textB = textInput;
+                                pres.canStop = true;
                                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
                                 {
 
@@ -658,12 +660,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-
+               
                 pres.removeElements();
-                // pres.modifyTxtBlock.Visibility = Visibility.Visible;
-                //textChanged = false;
-                //pres.modifiedMsg.IsReadOnly = false;
-
+               
             }, null);
 
 
