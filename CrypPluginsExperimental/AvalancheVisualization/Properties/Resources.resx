@@ -172,7 +172,7 @@
     <value>Encryption of modified message</value>
   </data>
   <data name="ExplanationText" xml:space="preserve">
-    <value>Input changes can be done by directly modifying the input feed.</value>
+    <value>Input changes can be done by directly modifying the external input feed.</value>
   </data>
   <data name="FlippedBits" xml:space="preserve">
     <value>Flipped bits</value>
@@ -427,16 +427,16 @@ Overview</value>
     <value>Cipher (hex)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
-    <value>Encryption of initial message</value>
+    <value>Encryption of initial message (binary)</value>
   </data>
   <data name="EncryptionMod" xml:space="preserve">
-    <value>Encryption of modified message</value>
+    <value>Encryption of modified message (binary)</value>
   </data>
   <data name="HashFunctionInit" xml:space="preserve">
-    <value>Initial hash function</value>
+    <value>Initial hash value</value>
   </data>
   <data name="HashFunctionMod" xml:space="preserve">
-    <value>Modified hash function</value>
+    <value>Modified hash value</value>
   </data>
   <data name="HashFunctionSubtitle" xml:space="preserve">
     <value>(Hash functions)</value>
@@ -445,16 +445,16 @@ Overview</value>
     <value>(Modern ciphers)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>General Overview AES-128</value>
+    <value>Overview Of The Encryption Results After All Rounds of AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
-    <value>General Overview AES-192</value>
+    <value>Overview Of The Encryption Results After All Rounds Of AES-192</value>
   </data>
   <data name="OverviewAES256" xml:space="preserve">
-    <value>General Overview AES-256</value>
+    <value>Overview Of The Encryption Results After All Rounds Of AES-256</value>
   </data>
   <data name="OverviewDES" xml:space="preserve">
-    <value>General Overview DES</value>
+    <value>Overview Of The Encryption Results After All DES Rounds</value>
   </data>
   <data name="Percentage" xml:space="preserve">
     <value>% changed</value>
@@ -475,25 +475,25 @@ Overview</value>
     <value>Encryption of modified message:{0}</value>
   </data>
   <data name="InitialHashOutput" xml:space="preserve">
-    <value>Initial hash function:{0}</value>
+    <value>Initial hash value:{0}</value>
   </data>
   <data name="ModHashOutput" xml:space="preserve">
-    <value>Modified hash function:{0}</value>
+    <value>Modified hash value:{0}</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Output</value>
   </data>
-  <data name="OutputInitialKey" xml:space="preserve">
-    <value>Initial key:{0}</value>
+  <data name="OutputInitialDESKey" xml:space="preserve">
+    <value>Initial DES key:{0}</value>
   </data>
-  <data name="OutputInitialMsg" xml:space="preserve">
-    <value>Initial message:{0}</value>
+  <data name="OutputInitialDESMsg" xml:space="preserve">
+    <value>Initial DES message:{0}</value>
   </data>
-  <data name="OutputModifiedKey" xml:space="preserve">
-    <value>Modified key:{0}</value>
+  <data name="OutputModifiedDESKey" xml:space="preserve">
+    <value>Modified DES key:{0}</value>
   </data>
-  <data name="OutputModifiedMsg" xml:space="preserve">
-    <value>Modified message:{0}</value>
+  <data name="OutputModifiedDESMsg" xml:space="preserve">
+    <value>Modified DES message:{0}</value>
   </data>
   <data name="OutputStats1" xml:space="preserve">
     <value>Flipped bits: {0}. Avalanche effect: {1}%{2}</value>
@@ -545,5 +545,38 @@ Overview</value>
   </data>
   <data name="University" xml:space="preserve">
     <value>University of Mannheim</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>End of presentation!</value>
+  </data>
+  <data name="OutputInitialAESKey" xml:space="preserve">
+    <value>Initial AES key:{0}</value>
+  </data>
+  <data name="OutputInitialAESMsg" xml:space="preserve">
+    <value>Initial AES message:{0}</value>
+  </data>
+  <data name="OutputModifiedAESKey" xml:space="preserve">
+    <value>Modified AES key:{0}</value>
+  </data>
+  <data name="OutputModifiedAESMsg" xml:space="preserve">
+    <value>Modified AES message:{0}</value>
+  </data>
+  <data name="DESderivedFromInit" xml:space="preserve">
+    <value>{0}Final DES ciphertext derived from the initial message:{1}</value>
+  </data>
+  <data name="DESderivedFromMod" xml:space="preserve">
+    <value>Final DES ciphertext derived from the modified message:{0}</value>
+  </data>
+  <data name="AESDerivedFromInit" xml:space="preserve">
+    <value>{0}Final AES ciphertext derived from the initial message:{1}</value>
+  </data>
+  <data name="AESDerivedFromMod" xml:space="preserve">
+    <value>Final AES ciphertext derived from the modified message:{0}</value>
+  </data>
+  <data name="HashFunctionInitBin" xml:space="preserve">
+    <value>Initial hash value (binary)</value>
+  </data>
+  <data name="HashFunctionModBin" xml:space="preserve">
+    <value>Modified hash value (binary)</value>
   </data>
 </root>

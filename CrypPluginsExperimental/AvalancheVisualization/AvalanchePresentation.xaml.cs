@@ -10,7 +10,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Linq;
+using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
+using Cryptool.PluginBase.Miscellaneous;
 
 
 namespace AvalancheVisualization
@@ -28,6 +30,7 @@ namespace AvalancheVisualization
         public int roundNumber = 1;
         public int action = 1;
         public AutoResetEvent buttonNextClickedEvent;
+        public AutoResetEvent end;
         public byte[][] sBox = new byte[16][];
         public byte[][] states = new byte[40][];
         public byte[][] statesB = new byte[40][];
@@ -64,7 +67,7 @@ namespace AvalancheVisualization
         public int roundDES;
         public bool canModify = false;
         public bool canModifyDES = false;
-
+     
 
         public string[] leftHalf = new string[32];
         public string[] rightHalf = new string[32];
@@ -75,8 +78,8 @@ namespace AvalancheVisualization
         public byte[] seqB;
         public byte[] newText;
         public byte[] newKey;
-
-
+        public byte[] currentDES;
+       
 
         #endregion
 
@@ -86,6 +89,7 @@ namespace AvalancheVisualization
         {
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
+            end= new AutoResetEvent(false);
             inputInBits.IsVisibleChanged += onVisibleChanged;
             OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
             modifiedInitialStateGrid.IsVisibleChanged += onVisibleChanged;
@@ -1435,6 +1439,19 @@ namespace AvalancheVisualization
             tp2.Content = (100 - avalanche) + " %";
         }
 
+        private void removeBackground()
+        {
+            IEnumerable<Button> StackPanelChildren= buttonsPanel.Children.OfType<Button>();
+
+
+
+            foreach (Button button in StackPanelChildren)
+            {
+                button.ClearValue(BackgroundProperty);
+             //  button.Background = (Brush)new BrushConverter().ConvertFromString("#534b4f");
+            }
+        } 
+
         //clear background colors
         private void removeColors()
         {
@@ -1510,8 +1527,8 @@ namespace AvalancheVisualization
                 {
                     othersOrigTitle.Text = Properties.Resources.HashFunctionInit;
                     othersModTitle.Text = Properties.Resources.HashFunctionMod;
-                    lbl.Text = Properties.Resources.HashFunctionInit;
-                    lbl2.Text = Properties.Resources.HashFunctionMod;
+                    lbl.Text = Properties.Resources.HashFunctionInitBin;
+                    lbl2.Text = Properties.Resources.HashFunctionModBin;
                     othersSubtitle.Text = Properties.Resources.HashFunctionSubtitle;
                 }
                 if (mode == 4)
@@ -1555,6 +1572,8 @@ namespace AvalancheVisualization
 
         public void clearElements()
         {
+            toGeneral.Visibility = Visibility.Hidden;
+
             if (mode == 0)
             {
                 OrigInitialStateGrid.Visibility = Visibility.Hidden;
@@ -2060,7 +2079,7 @@ namespace AvalancheVisualization
                 coloringKey();
                 statesB = aesDiffusion.statesB;
 
-
+               
             }
             else
             {
@@ -2128,7 +2147,7 @@ namespace AvalancheVisualization
                 coloringText();
                 coloringKey();
                 lrDataB = desDiffusion.lrDataB;
-
+                currentDES = desDiffusion.outputCiphertext;
             }
 
 
@@ -2211,6 +2230,11 @@ namespace AvalancheVisualization
 
         private void inputDataButton_Click(object sender, RoutedEventArgs e)
         {
+            removeBackground();
+
+         
+
+            toGeneral.Visibility = Visibility.Hidden;
             afterRoundsTitle.Visibility = Visibility.Hidden;
             afterRoundsSubtitle.Visibility = Visibility.Hidden;
             flippedBitsPiece.Visibility = Visibility.Hidden;
@@ -2285,6 +2309,9 @@ namespace AvalancheVisualization
             changeRoundNr(0);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound0Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2367,6 +2394,10 @@ namespace AvalancheVisualization
             changeRoundNr(1);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound1Button.Background = Brushes.Coral;
+
 
             if (mode == 0)
             {
@@ -2446,6 +2477,9 @@ namespace AvalancheVisualization
             changeRoundNr(2);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound2Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2521,6 +2555,9 @@ namespace AvalancheVisualization
             changeRoundNr(3);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound3Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2596,6 +2633,9 @@ namespace AvalancheVisualization
             changeRoundNr(4);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound4Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2671,6 +2711,9 @@ namespace AvalancheVisualization
             changeRoundNr(5);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound5Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2746,6 +2789,9 @@ namespace AvalancheVisualization
             changeRoundNr(6);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound6Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2822,6 +2868,9 @@ namespace AvalancheVisualization
             changeRoundNr(7);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound7Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2898,6 +2947,9 @@ namespace AvalancheVisualization
             changeRoundNr(8);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound8Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -2973,6 +3025,9 @@ namespace AvalancheVisualization
             changeRoundNr(9);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound9Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -3051,6 +3106,9 @@ namespace AvalancheVisualization
             changeRoundNr(10);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound10Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -3066,7 +3124,7 @@ namespace AvalancheVisualization
 
                 if (keysize == 0)
                 {
-
+                    toGeneral.Visibility = Visibility.Visible;
                     strings = binaryStrings(states[39], statesB[39]);
                     nrDiffBits = nrOfBitsFlipped(states[39], statesB[39]);
                     angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
@@ -3165,6 +3223,9 @@ namespace AvalancheVisualization
             changeRoundNr(11);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound11Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -3241,6 +3302,9 @@ namespace AvalancheVisualization
             changeRoundNr(12);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound12Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -3257,6 +3321,7 @@ namespace AvalancheVisualization
 
                 if (keysize == 1)
                 {
+                    toGeneral.Visibility = Visibility.Visible;
                     strings = binaryStrings(states[47], statesB[47]);
                     nrDiffBits = nrOfBitsFlipped(states[47], statesB[47]);
                     angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
@@ -3358,6 +3423,9 @@ namespace AvalancheVisualization
             changeRoundNr(13);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound13Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
@@ -3436,13 +3504,16 @@ namespace AvalancheVisualization
             changeRoundNr(14);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound14Button.Background = Brushes.Coral;
 
             if (mode == 0)
             {
                 var strings = binaryStrings(states[55], statesB[55]);
 
                 action = 1;
-
+                toGeneral.Visibility = Visibility.Visible;
                 int nrDiffBits = nrOfBitsFlipped(states[55], statesB[55]);
                 double angle_1 = flippedBitsPiece.calculateAngle(nrDiffBits, strings);
                 double angle_2 = unflippedBitsPiece.calculateAngle(strings.Item1.Length - nrDiffBits, strings);
@@ -3509,6 +3580,9 @@ namespace AvalancheVisualization
             changeRoundNr(15);
             showElements();
             removeColors();
+            removeBackground();
+
+            afterRound15Button.Background = Brushes.Coral;
 
             roundDES = 15;
             var strings = binaryStrings(states[4], statesB[4]);
@@ -3546,6 +3620,11 @@ namespace AvalancheVisualization
             changeRoundNr(16);
             showElements();
             removeColors();
+            removeBackground();
+            
+            afterRound16Button.Background = Brushes.Coral;
+
+            toGeneral.Visibility = Visibility.Visible;
 
             roundDES = 16;
             var strings = binaryStrings(states[4], statesB[4]);
@@ -4003,6 +4082,8 @@ namespace AvalancheVisualization
             TB2.Text = string.Empty;
             TB3.Text = string.Empty;
 
+            removeBackground();
+            toGeneral.Visibility = Visibility.Hidden;
             initMsg.Text = Properties.Resources.InitialMessageHex;
             initKey.Text = Properties.Resources.InitialKeyHex;
             modifiedMsg.Text = string.Empty;
@@ -4073,10 +4154,7 @@ namespace AvalancheVisualization
             clearKeyColors();
             generalViewAES.Visibility = Visibility.Hidden;
             genOverviewAES.Text = Properties.Resources.OverviewAES128;
-            // buttonsSV.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-            //buttonsSV.Width = 535.0;
-            //buttonsPanel.Width = 530.0;
-            // buttonsSV.ScrollToHorizontalOffset(0.0);
+          
             bitRepresentationSV.ScrollToHorizontalOffset(0.0);
             List<TextBlock> tmp = createTxtBlockList(6);
 
@@ -5080,6 +5158,13 @@ namespace AvalancheVisualization
 
         private void overviewButton_Click(object sender, RoutedEventArgs e)
         {
+            end.Set();
+
+            removeBackground();
+
+            overviewButton.Background = Brushes.Coral;
+            toGeneral.Visibility = Visibility.Hidden;
+
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
             afterRoundsSubtitle.Visibility = Visibility.Hidden;
@@ -5124,11 +5209,7 @@ namespace AvalancheVisualization
         }
 
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-     
-
-        }
+        
     }
 }
 #endregion

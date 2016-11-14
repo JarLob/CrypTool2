@@ -9,7 +9,7 @@
              MinHeight="400" MinWidth="650" IsEnabled="True">
     <UserControl.Resources>
 
-        <Style x:Key="buttonStyle" TargetType="Button">
+        <Style x:Key="buttonStyle"  TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#534b4f"/>
             <Setter Property="FontStyle" Value="Normal"/>
             <Setter Property="Margin" Value="1"/>
@@ -19,19 +19,18 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border CornerRadius="10" Background="#534b4f"  Padding="5">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}"  Padding="5">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{x:Null}" />
-                    <Setter Property="BorderBrush" Value="{x:Null}" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                </Trigger>
-            </Style.Triggers>
+                    <Trigger Property="IsPressed"  Value="True">
+                        <Setter Property="Background" Value="Coral"/>
+                        </Trigger>
+                </Style.Triggers>
+            
         </Style>
 
         <Style x:Key="textBlockStyle" TargetType="TextBlock">
@@ -251,9 +250,9 @@
         <!--Buttons-->
         <Button x:Name="doneButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"   Width="62" Height="27" Content="{Loc DoneButton}" FontSize="13" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Margin="0,35,20,35" Visibility="hidden" Click="doneButton_Click"/>
         <Button x:Name="clearButton" Style="{StaticResource buttonStyle}" Grid.Row="1" Grid.Column="2"  Width="62" Height="27" Content="{Loc ClearButton}" FontSize="13" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="80,35,0,35" Visibility="hidden" Click="clearButton_Click"/>
+        <Button x:Name="toGeneral" Style="{StaticResource buttonStyle}" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Right"  Width="60" Height="30" Content="{Loc ContinueButton}"  Click="overviewButton_Click" Margin="10" Visibility="Hidden" />
 
-
-        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3"  VerticalAlignment="Bottom" Margin="10,20" Visibility="Hidden">
+        <StackPanel x:Name="buttonsPanel" Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3"  VerticalAlignment="Bottom" Margin="10,20" Visibility="hidden">
             <Button x:Name="afterRound0Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="0"  Click="afterRound0Button_Click" />
             <Button x:Name="afterRound1Button" Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="1"  Click="afterRound1Button_Click" />
             <Button x:Name="afterRound2Button"  Style="{StaticResource buttonStyle}" Width="30" Height="30" Content="2"   Click="afterRound2Button_Click" />
@@ -461,7 +460,7 @@
         </StackPanel>
 
         <!--Unprepared Methods-->
-        <Grid Name="othersGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
+        <Grid Name="othersGrid" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="30"/>
@@ -480,7 +479,8 @@
 
             <TextBlock Name="othersModTitle" Grid.Row="1" Grid.Column="1"  Style="{StaticResource textBlockStyle}" Foreground="#6e7f80"  FontSize="10" Text="{Loc EncryptionModifiedMsg}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="240,0,0,0">
             </TextBlock>
-
+            
+             
             <TextBlock Name="lbl" Grid.Row="3" Text="{Loc EncryptionInit}" Foreground="#534b4f" Margin="20"></TextBlock>
             <TextBlock Name="lbl2" Grid.Row="3" Text="{Loc EncryptionMod}" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
             <TextBlock Name="lbl3" Grid.Row="3" Text="{Loc FlippedBits}" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
@@ -3720,7 +3720,8 @@
             </ScrollViewer>
         </Grid>
 
-        <!--Bit Representation Intermediate States DES-->
+        
+            <!--Bit Representation Intermediate States DES-->
         <Grid Name="bitGridDES" Grid.ColumnSpan="3"  Visibility="Hidden" Height="250"  >
             <Grid.RowDefinitions>
                 <RowDefinition/>

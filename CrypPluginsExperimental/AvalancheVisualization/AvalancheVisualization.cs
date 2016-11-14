@@ -67,9 +67,11 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private Thread desThread;
         private AvalanchePresentation pres = new AvalanchePresentation();
         private AutoResetEvent buttonNextClickedEvent;
-
-
-
+        private AutoResetEvent end;
+        private int count = 0;
+        private bool isRunning;
+        private byte[] initialDES;
+        private byte[] current;
         #endregion
 
         #region Data Properties
@@ -201,13 +203,14 @@ namespace Cryptool.Plugins.AvalancheVisualization
            
             // byte[] buffer = new byte[UnchangedCipher.Length];
             textInput = new byte[Text.Length];
-
+            isRunning = true;
 
             switch (settings.SelectedCategory)
             {
                 case AvalancheVisualizationSettings.Category.Prepared:
 
                     buttonNextClickedEvent= pres.buttonNextClickedEvent;
+                    end = pres.end;
 
                     keyInput = new byte[Key.Length];
 
@@ -225,8 +228,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     if (settings.PrepSelection == 0)
                     {
+                        ProgressChanged(0,0);
                         outputThread = new Thread(streamOut);
-                        Thread oThread = new Thread(streamOut);
+                        Thread endThread = new Thread(progress);
+                        //Thread oThread = new Thread(streamOut);
                         pres.mode = 0;
 
                         bool valid =validSize();
@@ -235,8 +240,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         if (valid)
                         {
-
-                           
+                            //new
+                            
 
                             if (textChanged && pres.canModify)
                             {
@@ -273,8 +278,14 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                 buttonNextClickedEvent.Set();
 
+
                                 
+                                Thread oThread = new Thread(streamOut);
                                 oThread.Start();
+                               
+                               
+                                
+                                //oThread.Start();
                                 ///////////////////////////////////////////////////////
 
                             }
@@ -327,9 +338,17 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 outputThread.Start();
                             }
 
-                            
+                            /*  if (pres.IsVisible)
+                              {
+                                  while (isRunning)
+                                      ProgressChanged(0.5, 1);
 
-
+                                  if (pres.end)
+                                  isRunning=false;
+                              }*/
+                            ProgressChanged(0.5, 1);
+                          endThread.Start();
+                           
                             if (!running)
                                 return;
 
@@ -339,7 +358,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     else
                     {
                         desThread = new Thread(streamOut);
-                        Thread oDesThread = new Thread(streamOut);
+                        Thread endThread = new Thread(progress);
                         pres.mode = 1;
 
                         bool valid = validSize();
@@ -379,9 +398,11 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                                 pres.lrDataB = des.lrDataB;
+                                current = des.outputCiphertext;
 
                                 buttonNextClickedEvent.Set();
 
+                                Thread oDesThread = new Thread(streamOut);
                                 oDesThread.Start();
                             }
 
@@ -419,17 +440,18 @@ namespace Cryptool.Plugins.AvalancheVisualization
                          
                                 pres.textA = textInput;
                                 pres.lrData = des.lrData;
-
+                                initialDES = des.outputCiphertext;
                                 desThread.Start();
                             }
 
-                            
+                            endThread.Start();
 
                             if (!running)
                                 return;
                         }
                     }
 
+                  
 
                     break;
 
@@ -628,8 +650,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Stop()
         {
             textChanged = false;
-            buttonNextClickedEvent.Set();
-            CStreamWriter writer = new CStreamWriter();
+            //if (pres.mode == 0 || pres.mode == 1)
+            //buttonNextClickedEvent.Set();
+             CStreamWriter writer = new CStreamWriter();
 
 
 
@@ -658,7 +681,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
             }
             writer.Close();
-
+            
         }
 
         /// <summary>
@@ -681,6 +704,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         #region Methods
 
+        public void progress()
+        {
+            end.WaitOne();
+            GuiLogMessage(Resources.End,NotificationLevel.Info);
+            ProgressChanged(1, 1);
+        }
+
         public void streamOut()
         {
             
@@ -694,8 +724,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     writer.Write(generatedData(0));
                     writer.Write(generatedData(1));
+                writer.Write(generatedData(2));
 
-                    OnPropertyChanged("OutputStream");
+                OnPropertyChanged("OutputStream");
                     writer.Close();
                 }
             
@@ -744,48 +775,48 @@ namespace Cryptool.Plugins.AvalancheVisualization
             {
                 case AvalancheVisualizationSettings.Category.Prepared:
 
-                    string initialtxt = string.Format(Resources.OutputInitialMsg, Environment.NewLine);
-                    string modifiedtxt = string.Format(Resources.OutputModifiedMsg, Environment.NewLine);
-                    string initialkey = string.Format(Resources.OutputInitialKey, Environment.NewLine);
-                    string modifiedkey = string.Format(Resources.OutputModifiedKey, Environment.NewLine);
-
-
-                    string inputMessage = Encoding.ASCII.GetString(originalText);
-
-
-
-                    string initial = string.Format("{0}{1}", inputMessage, Environment.NewLine);
-                    string initialk = string.Format("{0}{1}{2}", pres.hexaAsString(originalKey), Environment.NewLine, Environment.NewLine);
-                    string modified = "";
-                    string modifiedk = "";
-
-                    if (pres.newText != null && pres.newKey != null)
-
-                    {
-                        string inputMessageB = Encoding.ASCII.GetString(pres.newText);
-                        modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
-                        modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(pres.newKey), Environment.NewLine, Environment.NewLine);
-
-
-                    }
-
-                    else
-
-                    {
-                        string inputMessageB = Encoding.ASCII.GetString(textInput);
-                        modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
-                        modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(keyInput), Environment.NewLine, Environment.NewLine);
-
-                    }
-
-
-                    byte[] inputArr = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}", initialtxt, initial, initialkey, initialk, modifiedtxt, modified, modifiedkey, modifiedk));
-
-                    bl.Add(inputArr);
+                  
 
                     if (settings.PrepSelection == 0)
                     {
-                       
+                        string initialtxt = string.Format(Resources.OutputInitialAESMsg, Environment.NewLine);
+                        string modifiedtxt = string.Format(Resources.OutputModifiedAESMsg, Environment.NewLine);
+                        string initialkey = string.Format(Resources.OutputInitialAESKey, Environment.NewLine);
+                        string modifiedkey = string.Format(Resources.OutputModifiedAESKey, Environment.NewLine);
+
+
+                        string inputMessage = Encoding.ASCII.GetString(originalText);
+
+
+
+                        string initial = string.Format("{0}{1}", inputMessage, Environment.NewLine);
+                        string initialk = string.Format("{0}{1}{2}", pres.hexaAsString(originalKey), Environment.NewLine, Environment.NewLine);
+                        string modified = "";
+                        string modifiedk = "";
+
+                        if (pres.newText != null && pres.newKey != null)
+
+                        {
+                            string inputMessageB = Encoding.ASCII.GetString(pres.newText);
+                            modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                            modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(pres.newKey), Environment.NewLine, Environment.NewLine);
+
+
+                        }
+
+                        else
+
+                        {
+                            string inputMessageB = Encoding.ASCII.GetString(textInput);
+                            modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                            modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(keyInput), Environment.NewLine, Environment.NewLine);
+
+                        }
+
+
+                        byte[] inputArr = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}", initialtxt, initial, initialkey, initialk, modifiedtxt, modified, modifiedkey, modifiedk));
+
+                        bl.Add(inputArr);
 
                         List<object> information = new List<object>();
                         List<byte> byteList = new List<byte>();
@@ -877,10 +908,74 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                         bl.Add(statsArray);
+
+
+                        string finalModified = "";
+                        string finalInitial = "";
+                        string finalAESInitial = string.Format(Resources.AESDerivedFromInit, Environment.NewLine, Environment.NewLine);
+                        string finalAESModified = string.Format(Resources.AESDerivedFromMod, Environment.NewLine);
+
+                        finalInitial =  string.Format("{0}{1}", pres.hexaAsString(aes.states[number + 3]), Environment.NewLine);
+
+                        if (pres.newKey!=null)
+                            finalModified = string.Format("{0}{1}", pres.hexaAsString(pres.aesDiffusion.statesB[number +3]), Environment.NewLine);
+                       else    
+                        finalModified = string.Format("{0}{1}", pres.hexaAsString(pres.statesB[number +3]), Environment.NewLine);
+                                
+                            
+        
+                        //   if (pres.currentDES != null)
+                       //     finalModified = string.Format("{0}{1}", pres.hexaAsString(pres.currentDES), Environment.NewLine);
+                        //else
+                          
+
+
+
+                     byte[] finalArrAES = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}", finalAESInitial, finalInitial, finalAESModified, finalModified));
+
+                        bl.Add(finalArrAES);
                     }
 
                     else
                     {
+                        string initialtxt = string.Format(Resources.OutputInitialDESMsg, Environment.NewLine);
+                        string modifiedtxt = string.Format(Resources.OutputModifiedDESMsg, Environment.NewLine);
+                        string initialkey = string.Format(Resources.OutputInitialDESKey, Environment.NewLine);
+                        string modifiedkey = string.Format(Resources.OutputModifiedDESKey, Environment.NewLine);
+                       
+                        string inputMessage = Encoding.ASCII.GetString(originalText);
+
+
+
+                        string initial = string.Format("{0}{1}", inputMessage, Environment.NewLine);
+                        string initialk = string.Format("{0}{1}{2}", pres.hexaAsString(originalKey), Environment.NewLine, Environment.NewLine);
+                        string modified = "";
+                        string modifiedk = "";
+
+                        if (pres.newText != null && pres.newKey != null)
+
+                        {
+                            string inputMessageB = Encoding.ASCII.GetString(pres.newText);
+                            modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                            modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(pres.newKey), Environment.NewLine, Environment.NewLine);
+
+
+                        }
+
+                        else
+
+                        {
+                            string inputMessageB = Encoding.ASCII.GetString(textInput);
+                            modified = string.Format("{0}{1}", inputMessageB, Environment.NewLine);
+                            modifiedk = string.Format("{0}{1}{2}", pres.hexaAsString(keyInput), Environment.NewLine, Environment.NewLine);
+
+                        }
+
+
+                        byte[] inputArr = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}{4}{5}{6}{7}", initialtxt, initial, initialkey, initialk, modifiedtxt, modified, modifiedkey, modifiedk));
+
+                        bl.Add(inputArr);
+
                         List<object> information = new List<object>();
                         List<byte> byteList = new List<byte>();
                         byte[] dataArray = new byte[120];
@@ -935,6 +1030,23 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
                         bl.Add(dataArray);
+
+                        string finalModified = "";
+                        string finalDESInitial = string.Format( Resources.DESderivedFromInit,Environment.NewLine, Environment.NewLine);
+                        string finalDESModified = string.Format(Resources.DESderivedFromMod, Environment.NewLine);
+
+                        string finalInitial = string.Format("{0}{1}", pres.hexaAsString(initialDES),Environment.NewLine);
+
+                        if(pres.currentDES!= null)
+                        finalModified = string.Format("{0}{1}", pres.hexaAsString(pres.currentDES), Environment.NewLine);
+                        else
+                        finalModified = string.Format("{0}{1}", pres.hexaAsString(current), Environment.NewLine);
+
+
+
+                        byte[] finalArr = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}{3}", finalDESInitial, finalInitial, finalDESModified, finalModified));
+
+                        bl.Add(finalArr);
                     }
 
                     // return bl[pos].ToArray();

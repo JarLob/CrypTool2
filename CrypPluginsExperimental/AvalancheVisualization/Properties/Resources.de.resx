@@ -428,16 +428,16 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Chiffrat (Hex-Format)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
-    <value>Verschlüsselung init. Nachricht</value>
+    <value>Verschlüsselung init. Nachricht (binär)</value>
   </data>
   <data name="EncryptionMod" xml:space="preserve">
-    <value>Verschlüsselung ver. Nachricht</value>
+    <value>Verschlüsselung ver. Nachricht (binär)</value>
   </data>
   <data name="HashFunctionInit" xml:space="preserve">
-    <value>Initiale Hash-Funktion</value>
+    <value>Initialer Hash-Wert</value>
   </data>
   <data name="HashFunctionMod" xml:space="preserve">
-    <value>Veränderte Hash-Funktion</value>
+    <value>Veränderter Hash-Wert</value>
   </data>
   <data name="HashFunctionSubtitle" xml:space="preserve">
     <value>(Hash-Funktionen)</value>
@@ -446,16 +446,16 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>(Moderne Verfahren)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>Allgemeine Übersicht AES-128</value>
+    <value>Übersicht der Verschlüsselungsergebnisse aller  Runden von AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
-    <value>Allgemeine Übersicht AES-192</value>
+    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-192</value>
   </data>
   <data name="OverviewAES256" xml:space="preserve">
-    <value>Allgemeine Übersicht AES-256</value>
+    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-256</value>
   </data>
   <data name="OverviewDES" xml:space="preserve">
-    <value>Allgemeine Übersicht DES</value>
+    <value>Übersicht der Verschlüsselungsergebnisse aller DES-Runden</value>
   </data>
   <data name="Percentage" xml:space="preserve">
     <value>% Änderung</value>
@@ -476,25 +476,25 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Verschlüsselung veränderter Nachricht:{0}</value>
   </data>
   <data name="InitialHashOutput" xml:space="preserve">
-    <value>Initiale Hash-Funktion:{0}</value>
+    <value>Initialer Hash-Wert:{0}</value>
   </data>
   <data name="ModHashOutput" xml:space="preserve">
-    <value>Veränderte Hash-Funktion:{0}</value>
+    <value>Veränderter Hash-Wert:{0}</value>
   </data>
   <data name="Output" xml:space="preserve">
     <value>Output</value>
   </data>
-  <data name="OutputInitialKey" xml:space="preserve">
-    <value>Initialer Schlüssel:{0}</value>
+  <data name="OutputInitialDESKey" xml:space="preserve">
+    <value>Initialer DES-Schlüssel:{0}</value>
   </data>
-  <data name="OutputInitialMsg" xml:space="preserve">
-    <value>Initiale Nachricht:{0}</value>
+  <data name="OutputInitialDESMsg" xml:space="preserve">
+    <value>Initiale DES-Nachricht:{0}</value>
   </data>
-  <data name="OutputModifiedKey" xml:space="preserve">
-    <value>Veränderter Schlüssel:{0}</value>
+  <data name="OutputModifiedDESKey" xml:space="preserve">
+    <value>Veränderter DES-Schlüssel:{0}</value>
   </data>
-  <data name="OutputModifiedMsg" xml:space="preserve">
-    <value>Veränderte Nachricht:{0}</value>
+  <data name="OutputModifiedDESMsg" xml:space="preserve">
+    <value>Veränderte DES-Nachricht:{0}</value>
   </data>
   <data name="OutputStats1" xml:space="preserve">
     <value>Geflippte Bits: {0}. Avalanche-Effekt: {1}%{2}</value>
@@ -546,5 +546,38 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
   </data>
   <data name="University" xml:space="preserve">
     <value>Universität Mannheim</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>Ende der Präsentation!</value>
+  </data>
+  <data name="OutputInitialAESKey" xml:space="preserve">
+    <value>Initialer AES-Schlüssel:{0}</value>
+  </data>
+  <data name="OutputInitialAESMsg" xml:space="preserve">
+    <value>Initiale AES-Nachricht:{0}</value>
+  </data>
+  <data name="OutputModifiedAESKey" xml:space="preserve">
+    <value>Veränderter AES-Schlüssel:{0}</value>
+  </data>
+  <data name="OutputModifiedAESMsg" xml:space="preserve">
+    <value>Veränderte AES-Nachricht:{0}</value>
+  </data>
+  <data name="DESderivedFromInit" xml:space="preserve">
+    <value>{0}Letzter DES-Chiffretext abgeleitet aus der initialen Nachricht:{1}</value>
+  </data>
+  <data name="DESderivedFromMod" xml:space="preserve">
+    <value>Letzter DES-Chiffretext abgeleitet aus der veränderten Nachricht:{0}</value>
+  </data>
+  <data name="AESDerivedFromInit" xml:space="preserve">
+    <value>{0}Letzter AES-Chiffretext abgeleitet aus der initialen Nachricht:{1}</value>
+  </data>
+  <data name="AESDerivedFromMod" xml:space="preserve">
+    <value>Letzter AES-Chiffretext abgeleitet aus der veränderten Nachricht:{0}</value>
+  </data>
+  <data name="HashFunctionInitBin" xml:space="preserve">
+    <value>Initialer Hash-Wert (binär)</value>
+  </data>
+  <data name="HashFunctionModBin" xml:space="preserve">
+    <value>Veränderter Hash-Wert (binär)</value>
   </data>
 </root>
