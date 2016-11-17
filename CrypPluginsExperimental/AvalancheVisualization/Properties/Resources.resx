@@ -427,10 +427,10 @@ Overview</value>
     <value>Cipher (hex)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
-    <value>Encryption of initial message (binary)</value>
+    <value>Encryption of init. message (bin)</value>
   </data>
   <data name="EncryptionMod" xml:space="preserve">
-    <value>Encryption of modified message (binary)</value>
+    <value>Encryption of mod. message (bin)</value>
   </data>
   <data name="HashFunctionInit" xml:space="preserve">
     <value>Initial hash value</value>

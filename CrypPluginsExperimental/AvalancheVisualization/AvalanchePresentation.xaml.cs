@@ -69,6 +69,7 @@ namespace AvalancheVisualization
         public bool canModifyDES = false;
         public bool canStop = false;
 
+
         public string[] leftHalf = new string[32];
         public string[] rightHalf = new string[32];
         public string[] leftHalfB = new string[32];
@@ -79,7 +80,6 @@ namespace AvalancheVisualization
         public byte[] newText;
         public byte[] newKey;
         public byte[] currentDES;
-       
 
         #endregion
 
@@ -89,7 +89,7 @@ namespace AvalancheVisualization
         {
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
-            end= new AutoResetEvent(false);
+            end = new AutoResetEvent(false);
             inputInBits.IsVisibleChanged += onVisibleChanged;
             OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
             modifiedInitialStateGrid.IsVisibleChanged += onVisibleChanged;
@@ -98,6 +98,7 @@ namespace AvalancheVisualization
             afterRoundsGrid.IsVisibleChanged += onVisibleChanged;
             buttonsPanel.IsVisibleChanged += onTitleChanged;
             inputGridDES.IsVisibleChanged += modify;
+            othersGrid.IsVisibleChanged += modifyOthers;
             modificationGridDES.IsVisibleChanged += modify;
             //ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
         }
@@ -196,7 +197,7 @@ namespace AvalancheVisualization
         {
             int k = 33;
             int i = 1;
-            
+
 
             if (mode == 0)
             {
@@ -1091,7 +1092,7 @@ namespace AvalancheVisualization
             if (bitsFlipped > 1 || bitsFlipped == 0)
                 stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet1_Plural, strTuple.Item1.Length, avalanche)));
             else
-                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet1 , strTuple.Item1.Length, avalanche)));
+                stats1.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet1, strTuple.Item1.Length, avalanche)));
 
             stats2.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet2, longestLength.ToString(), sequencePosition)));
             stats3.Inlines.Add(new Run(string.Format(Properties.Resources.StatsBullet3, longestflipped.ToString(), flippedSeqPosition)));
@@ -1435,16 +1436,16 @@ namespace AvalancheVisualization
 
         private void removeBackground()
         {
-            IEnumerable<Button> StackPanelChildren= buttonsPanel.Children.OfType<Button>();
+            IEnumerable<Button> StackPanelChildren = buttonsPanel.Children.OfType<Button>();
 
 
 
             foreach (Button button in StackPanelChildren)
             {
                 button.ClearValue(BackgroundProperty);
-             //  button.Background = (Brush)new BrushConverter().ConvertFromString("#534b4f");
+                //  button.Background = (Brush)new BrushConverter().ConvertFromString("#534b4f");
             }
-        } 
+        }
 
         //clear background colors
         private void removeColors()
@@ -1877,22 +1878,36 @@ namespace AvalancheVisualization
         }
 
 
-        private void encryptionProgress()
+        public void encryptionProgress(int roundNr)
         {
-            switch (keysize)
+            switch (mode)
             {
                 case 0:
-                    progress = (roundNumber - 1) * 0.05 + 0.5;
+
+                    if (keysize == 0)
+                        progress = (roundNr + 2) * 0.076;
+                    else if (keysize == 1)
+                        progress = (roundNr + 2) * 0.066;
+                    else
+                        progress = (roundNr + 2) * 0.058;
                     break;
+
                 case 1:
-                    progress = (roundNumber - 1) * 0.5 / 12 + 0.5;
+
+                    progress = (roundNr + 2) * 0.0526;
                     break;
+
                 case 2:
-                    progress = (roundNumber - 1) * 0.5 / 14 + 0.5;
+                case 3:
+                case 4:
+
+                    progress =  0.5;
                     break;
                 default:
                     break;
             }
+
+
         }
 
 
@@ -2066,7 +2081,7 @@ namespace AvalancheVisualization
                 {
                     loadChangedMsg(temporaryB, true);
                     loadChangedKey(newKey);
-                    setAndLoadButtons();
+                  //  setAndLoadButtons();
 
                 }, null);
 
@@ -2074,7 +2089,13 @@ namespace AvalancheVisualization
                 coloringKey();
                 statesB = aesDiffusion.statesB;
 
-               
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+
+                   setAndLoadButtons();
+
+                }, null);
+
             }
             else
             {
@@ -2135,7 +2156,7 @@ namespace AvalancheVisualization
 
                     loadChangedMsg(newText, true);
                     loadChangedKey(newKey);
-                    setAndLoadButtons();
+                   setAndLoadButtons();
 
                 }, null);
 
@@ -2143,10 +2164,11 @@ namespace AvalancheVisualization
                 coloringKey();
                 lrDataB = desDiffusion.lrDataB;
                 currentDES = desDiffusion.outputCiphertext;
+
             }
 
 
-               buttonNextClickedEvent.Set();
+            buttonNextClickedEvent.Set();
 
         }
 
@@ -2227,7 +2249,7 @@ namespace AvalancheVisualization
         {
             removeBackground();
 
-         
+
 
             toGeneral.Visibility = Visibility.Hidden;
             afterRoundsTitle.Visibility = Visibility.Hidden;
@@ -2307,6 +2329,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound0Button.Background = Brushes.Coral;
+            encryptionProgress(0);
 
             if (mode == 0)
             {
@@ -2345,6 +2368,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 0;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
 
                 toStringArray(roundDES);
@@ -2392,7 +2416,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound1Button.Background = Brushes.Coral;
-
+            encryptionProgress(1);
 
             if (mode == 0)
             {
@@ -2432,6 +2456,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 1;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
 
                 toStringArray(roundDES);
@@ -2475,6 +2500,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound2Button.Background = Brushes.Coral;
+            encryptionProgress(2);
 
             if (mode == 0)
             {
@@ -2511,6 +2537,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 2;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
 
                 toStringArray(roundDES);
@@ -2553,6 +2580,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound3Button.Background = Brushes.Coral;
+            encryptionProgress(3);
 
             if (mode == 0)
             {
@@ -2589,6 +2617,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 3;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -2631,6 +2660,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound4Button.Background = Brushes.Coral;
+            encryptionProgress(4);
 
             if (mode == 0)
             {
@@ -2667,6 +2697,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 4;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -2709,6 +2740,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound5Button.Background = Brushes.Coral;
+            encryptionProgress(5);
 
             if (mode == 0)
             {
@@ -2745,6 +2777,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 5;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -2787,6 +2820,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound6Button.Background = Brushes.Coral;
+            encryptionProgress(6);
 
             if (mode == 0)
             {
@@ -2823,6 +2857,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 6;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -2866,6 +2901,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound7Button.Background = Brushes.Coral;
+            encryptionProgress(7);
 
             if (mode == 0)
             {
@@ -2904,6 +2940,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 7;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -2945,6 +2982,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound8Button.Background = Brushes.Coral;
+            encryptionProgress(8);
 
             if (mode == 0)
             {
@@ -2981,6 +3019,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 8;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3023,6 +3062,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound9Button.Background = Brushes.Coral;
+            encryptionProgress(9);
 
             if (mode == 0)
             {
@@ -3059,6 +3099,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 9;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3104,6 +3145,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound10Button.Background = Brushes.Coral;
+            encryptionProgress(10);
 
             if (mode == 0)
             {
@@ -3179,6 +3221,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 10;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3221,6 +3264,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound11Button.Background = Brushes.Coral;
+            encryptionProgress(11);
 
             if (mode == 0)
             {
@@ -3259,6 +3303,7 @@ namespace AvalancheVisualization
             {
                 var strings = binaryStrings(states[4], statesB[4]);
                 roundDES = 11;
+                encryptionProgress(roundDES);
                 toStringArray(roundDES);
 
                 int nrDiffBits = nrOfBitsFlipped(seqA, seqB);
@@ -3300,6 +3345,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound12Button.Background = Brushes.Coral;
+            encryptionProgress(12);
 
             if (mode == 0)
             {
@@ -3378,6 +3424,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 12;
+                encryptionProgress(roundDES);
                 strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3421,6 +3468,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound13Button.Background = Brushes.Coral;
+            encryptionProgress(13);
 
             if (mode == 0)
             {
@@ -3460,6 +3508,7 @@ namespace AvalancheVisualization
             else
             {
                 roundDES = 13;
+                encryptionProgress(roundDES);
                 var strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3502,6 +3551,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             afterRound14Button.Background = Brushes.Coral;
+            encryptionProgress(14);
 
             if (mode == 0)
             {
@@ -3540,6 +3590,7 @@ namespace AvalancheVisualization
             {
 
                 roundDES = 14;
+                encryptionProgress(roundDES);
                 var strings = binaryStrings(states[4], statesB[4]);
                 toStringArray(roundDES);
 
@@ -3580,6 +3631,7 @@ namespace AvalancheVisualization
             afterRound15Button.Background = Brushes.Coral;
 
             roundDES = 15;
+            encryptionProgress(roundDES);
             var strings = binaryStrings(states[4], statesB[4]);
             toStringArray(roundDES);
 
@@ -3616,12 +3668,13 @@ namespace AvalancheVisualization
             showElements();
             removeColors();
             removeBackground();
-            
+
             afterRound16Button.Background = Brushes.Coral;
 
             toGeneral.Visibility = Visibility.Visible;
 
             roundDES = 16;
+            encryptionProgress(roundDES);
             var strings = binaryStrings(states[4], statesB[4]);
             toStringArray(roundDES);
 
@@ -4078,7 +4131,7 @@ namespace AvalancheVisualization
 
 
             flippedBitsPiece.Visibility = Visibility.Hidden;
-            unflippedBitsPiece.Visibility = Visibility.Hidden;         
+            unflippedBitsPiece.Visibility = Visibility.Hidden;
             bitsData.Visibility = Visibility.Hidden;
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
@@ -4173,9 +4226,9 @@ namespace AvalancheVisualization
                     while (k <= 48 && l <= 64)
                     {
 
-                        ((TextBlock) this.FindName("initStateTxtBlock" + k)).Text = string.Empty;
+                        ((TextBlock)this.FindName("initStateTxtBlock" + k)).Text = string.Empty;
 
-                        ((TextBlock) this.FindName("initStateTxtBlock" + l)).Text = string.Empty;
+                        ((TextBlock)this.FindName("initStateTxtBlock" + l)).Text = string.Empty;
                         i++;
                         k++;
                         l++;
@@ -4185,7 +4238,7 @@ namespace AvalancheVisualization
 
                     while (j <= 24)
                     {
-                        ((TextBlock) this.FindName("modKey192_" + j)).Text = string.Empty;
+                        ((TextBlock)this.FindName("modKey192_" + j)).Text = string.Empty;
                         j++;
 
                     }
@@ -4194,7 +4247,7 @@ namespace AvalancheVisualization
 
                     while (m <= 32)
                     {
-                        ((TextBlock) this.FindName("modKey256_" + m)).Text = string.Empty;
+                        ((TextBlock)this.FindName("modKey256_" + m)).Text = string.Empty;
                         m++;
 
                     }
@@ -4226,7 +4279,7 @@ namespace AvalancheVisualization
 
             }
 
-           // mode = 0;
+            // mode = 0;
             canStop = false;
 
             StartCanvas.Visibility = Visibility.Visible;
@@ -4268,7 +4321,7 @@ namespace AvalancheVisualization
 
 
                 Grid.SetColumn(bitsData, 0);
-                Grid.SetColumnSpan(bitsData,2);
+                Grid.SetColumnSpan(bitsData, 2);
                 bitsData.HorizontalAlignment = HorizontalAlignment.Center;
                 bitsData.VerticalAlignment = VerticalAlignment.Center;
 
@@ -4304,13 +4357,13 @@ namespace AvalancheVisualization
         {
 
 
-     
+
             Grid.SetColumnSpan(bitsData, 3);
             Grid.SetColumn(flippedBitsPiece, 2);
             Grid.SetColumn(unflippedBitsPiece, 2);
             Grid.SetColumnSpan(flippedBitsPiece, 1);
             Grid.SetColumnSpan(unflippedBitsPiece, 1);
-            
+
             bitsData.HorizontalAlignment = HorizontalAlignment.Center;
             bitsData.VerticalAlignment = VerticalAlignment.Stretch;
 
@@ -4343,6 +4396,7 @@ namespace AvalancheVisualization
 
             adjustStats();
             bitsData.Visibility = Visibility.Visible;
+            progress = 1;
 
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
@@ -4552,6 +4606,7 @@ namespace AvalancheVisualization
             if (inputInBits.IsVisible)
             {
 
+                encryptionProgress(-1);
 
                 arrow1.Visibility = Visibility.Visible;
 
@@ -4574,10 +4629,16 @@ namespace AvalancheVisualization
             }
 
             if (modifiedInitialStateGrid.IsVisible || inputInBits.IsVisible)
-                   canModify = true;
+                canModify = true;
             if (afterRoundsGrid.IsVisible)
                 canModify = false;
-                   
+
+        }
+
+        private void modifyOthers(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (othersGrid.IsVisible)
+                encryptionProgress(0);
         }
 
         private void modify(object sender, DependencyPropertyChangedEventArgs e)
@@ -4590,6 +4651,7 @@ namespace AvalancheVisualization
             }
             if (modificationGridDES.IsVisible || inputGridDES.IsVisible)
             {
+                encryptionProgress(-1);
                 canModifyDES = true;
                 inputDataButton.IsEnabled = false;
             }
@@ -5168,8 +5230,9 @@ namespace AvalancheVisualization
             removeBackground();
 
             overviewButton.Background = Brushes.Coral;
-            toGeneral.Visibility = Visibility.Hidden;
+            progress = 1;
 
+            toGeneral.Visibility = Visibility.Hidden;
             Cb1.Visibility = Visibility.Hidden;
             Cb2.Visibility = Visibility.Hidden;
             afterRoundsSubtitle.Visibility = Visibility.Hidden;
@@ -5181,6 +5244,7 @@ namespace AvalancheVisualization
 
             if (mode == 1)
             {
+
                 extraordinaryOccur.Visibility = Visibility.Hidden;
                 bitGridDES.Visibility = Visibility.Hidden;
                 showGeneralOverview();
@@ -5188,6 +5252,7 @@ namespace AvalancheVisualization
             }
             else
             {
+
                 extraordinaryOccurAes.Visibility = Visibility.Hidden;
                 afterRoundsGrid.Visibility = Visibility.Hidden;
                 bitRepresentationGrid.Visibility = Visibility.Hidden;
@@ -5205,7 +5270,7 @@ namespace AvalancheVisualization
             else
                 InstructionsUnprep.Visibility = Visibility.Hidden;
 
-           
+
 
             comparisonPane();
 
@@ -5214,7 +5279,7 @@ namespace AvalancheVisualization
         }
 
 
-        
+
     }
 }
 #endregion

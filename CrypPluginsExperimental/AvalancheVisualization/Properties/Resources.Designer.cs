@@ -342,7 +342,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption of initial message (binary).
+        ///   Looks up a localized string similar to Encryption of init. message (bin).
         /// </summary>
         internal static string EncryptionInit {
             get {
@@ -369,7 +369,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption of modified message (binary).
+        ///   Looks up a localized string similar to Encryption of mod. message (bin).
         /// </summary>
         internal static string EncryptionMod {
             get {

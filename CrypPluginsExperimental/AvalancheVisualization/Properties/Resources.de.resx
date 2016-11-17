@@ -428,10 +428,10 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Chiffrat (Hex-Format)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
-    <value>Verschlüsselung init. Nachricht (binär)</value>
+    <value>Verschlüsselung init. Nachr (bin)</value>
   </data>
   <data name="EncryptionMod" xml:space="preserve">
-    <value>Verschlüsselung ver. Nachricht (binär)</value>
+    <value>Verschlüsselung ver. Nachr (bin)</value>
   </data>
   <data name="HashFunctionInit" xml:space="preserve">
     <value>Initialer Hash-Wert</value>
