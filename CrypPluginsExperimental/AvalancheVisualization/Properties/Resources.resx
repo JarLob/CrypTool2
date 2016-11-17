@@ -198,14 +198,14 @@
   <data name="InputKey" xml:space="preserve">
     <value>Key</value>
   </data>
-  <data name="InputKeyDescription" xml:space="preserve">
+  <data name="InputKeyTooltip" xml:space="preserve">
     <value>Enter key</value>
   </data>
   <data name="InputMessage" xml:space="preserve">
-    <value>Message</value>
+    <value>Message/ Hash value</value>
   </data>
-  <data name="InputMessageDescription" xml:space="preserve">
-    <value>Enter message</value>
+  <data name="InputMessageTooltip" xml:space="preserve">
+    <value>Enter message or hash value</value>
   </data>
   <data name="InputTitleAES" xml:space="preserve">
     <value>Input Data AES-</value>

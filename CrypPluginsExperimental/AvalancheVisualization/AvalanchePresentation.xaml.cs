@@ -30,7 +30,7 @@ namespace AvalancheVisualization
         public int roundNumber = 1;
         public int action = 1;
         public AutoResetEvent buttonNextClickedEvent;
-        public AutoResetEvent end;
+       // public AutoResetEvent end;
         public byte[][] sBox = new byte[16][];
         public byte[][] states = new byte[40][];
         public byte[][] statesB = new byte[40][];
@@ -89,7 +89,7 @@ namespace AvalancheVisualization
         {
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
-            end = new AutoResetEvent(false);
+           // end = new AutoResetEvent(false);
             inputInBits.IsVisibleChanged += onVisibleChanged;
             OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
             modifiedInitialStateGrid.IsVisibleChanged += onVisibleChanged;
@@ -5225,7 +5225,7 @@ namespace AvalancheVisualization
 
         private void overviewButton_Click(object sender, RoutedEventArgs e)
         {
-            end.Set();
+          //  end.Set();
 
             removeBackground();
 

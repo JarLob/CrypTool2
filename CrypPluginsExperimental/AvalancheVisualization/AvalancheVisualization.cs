@@ -67,7 +67,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private Thread desThread;
         private AvalanchePresentation pres = new AvalanchePresentation();
         private AutoResetEvent buttonNextClickedEvent;
-        private AutoResetEvent end;
+       // private AutoResetEvent end;
         private int count = 0;
         private bool isRunning;
         private byte[] initialDES;
@@ -76,7 +76,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "InputKey", "InputKeyDescription", false)]
+        [PropertyInfo(Direction.InputData, "InputKey", "InputKeyTooltip", false)]
         public ICryptoolStream Key
         {
             get
@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [PropertyInfo(Direction.InputData, "InputMessage", "InputMessageDescription", true)]
+        [PropertyInfo(Direction.InputData, "InputMessage", "InputMessageTooltip", true)]
         public ICryptoolStream Text
         {
             get
@@ -120,25 +120,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
         }
 
 
-
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
-        /* [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", false)]
-         public ICryptoolStream OutputStream
-         {
-             get
-             {
-                 return outputStream;
-             }
-             set
-             {
-                 this.outputStream = value;
-                 // empty
-             }
-         }*/
-
         #endregion
 
         #region IPlugin Members
@@ -165,8 +146,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// </summary>
         public void PreExecution()
         {
-
-
 
 
 
@@ -210,7 +189,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                 case AvalancheVisualizationSettings.Category.Prepared:
 
                     buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    end = pres.end;
+                   // end = pres.end;
 
                     keyInput = new byte[Key.Length];
 
@@ -242,10 +221,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         {
 
 
-
                             if (textChanged && pres.canModify)
                             {
-
 
                                 pres.newText = null;
                                 pres.newKey = null;
@@ -264,7 +241,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                {
-                                 //  pres.setAndLoadButtons();
 
                                    pres.loadChangedMsg(temporary, true);
 
@@ -310,8 +286,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                        pres.comparisonPane();
                                    else
                                        pres.instructions();
-
-
 
                                }, null);
 
@@ -472,10 +446,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         case 0:
 
 
-
-                            //      MemoryStream mStream = new MemoryStream();
-
-
                             if (pres.mode != 4)
                                 pres.mode = 2;
 
@@ -487,8 +457,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     reader.Read(textInput);
 
                                 }
-
-
 
                                 //string otherText = Encoding.Default.GetString(buffer);
 
@@ -508,18 +476,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.comparison();
 
 
-
-                                    /*    using (CStreamWriter CSWriter2 = new CStreamWriter())
-                                        {
-                                            OutputStream = CSWriter2;
-
-                                            for (int i = 0; i < 2; i++)
-                                                CSWriter2.Write(generatedData(i));
-
-                                            OnPropertyChanged("OutputStream");
-                                            CSWriter2.Close();
-                                        }
-                                        */
                                     OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
                                 }
                                 else
@@ -585,17 +541,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                         pres.comparison();
 
-                                        /* using (CStreamWriter CSWriter2 = new CStreamWriter())
-                                         {
-                                             OutputStream = CSWriter2;
-
-                                             for (int i = 0; i < 2; i++)
-                                                 CSWriter2.Write(generatedData(i));
-
-                                             OnPropertyChanged("OutputStream");
-                                             CSWriter2.Close();
-                                         }
-                                         */
+                         
                                         OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
 
 
@@ -662,34 +608,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
             running = false;
             ProgressChanged(0, 1);
             pres.progress = 0;
-            //if (pres.mode == 0 || pres.mode == 1)
-            //buttonNextClickedEvent.Set();
-           // CStreamWriter writer = new CStreamWriter();
-
-
-
+        
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
 
                 pres.removeElements();
 
             }, null);
-
-
-            /*using (writer)
-            {
-
-                byte[] outputArr = ;
-                OutputStream = writer;
-
-
-                writer.Write(outputArr);
-
-
-                OnPropertyChanged("OutputStream");
-
-            }*/
-         //   writer.Close();
 
         }
 

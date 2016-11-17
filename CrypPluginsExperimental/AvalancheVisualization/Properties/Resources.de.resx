@@ -199,14 +199,14 @@
   <data name="InputKey" xml:space="preserve">
     <value>Schlüssel</value>
   </data>
-  <data name="InputKeyDescription" xml:space="preserve">
+  <data name="InputKeyTooltip" xml:space="preserve">
     <value>Schlüssel eingeben</value>
   </data>
   <data name="InputMessage" xml:space="preserve">
-    <value>Nachricht</value>
+    <value>Nachricht/ Hash-Wert</value>
   </data>
-  <data name="InputMessageDescription" xml:space="preserve">
-    <value>Nachricht eingeben</value>
+  <data name="InputMessageTooltip" xml:space="preserve">
+    <value>Nachricht bzw. Hash-Wert eingeben</value>
   </data>
   <data name="InputTitleAES" xml:space="preserve">
     <value>Eingabedaten AES-</value>

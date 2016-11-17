@@ -641,14 +641,14 @@ namespace AvalancheVisualization.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Enter key.
         /// </summary>
-        internal static string InputKeyDescription {
+        internal static string InputKeyTooltip {
             get {
-                return ResourceManager.GetString("InputKeyDescription", resourceCulture);
+                return ResourceManager.GetString("InputKeyTooltip", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Message.
+        ///   Looks up a localized string similar to Message/ Hash value.
         /// </summary>
         internal static string InputMessage {
             get {
@@ -657,11 +657,11 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter message.
+        ///   Looks up a localized string similar to Enter message or hash value.
         /// </summary>
-        internal static string InputMessageDescription {
+        internal static string InputMessageTooltip {
             get {
-                return ResourceManager.GetString("InputMessageDescription", resourceCulture);
+                return ResourceManager.GetString("InputMessageTooltip", resourceCulture);
             }
         }
         
