@@ -205,7 +205,7 @@
       Man kann die Änderung auch rückgängig machen, indem man auf den Löschen-Button klickt. Diese Aktion führt dazu, dass alle Bits zu ihrem ursprünglichen Zustand zurückkehren.
       <newline/>
       Nachdem der initiale Input verändert worden ist, erscheint eine neue Maske, welche die Unterschiede zwischen initialem und modifiziertem Input darstellt.
-      Hier kann man sich die Eingabedaten in unterschiedlichen Formaten anzeigen lassen (Binär, Dezimal, oder Hex).
+      Hier kann man sich die Eingabedaten in unterschiedlichen Formaten anzeigen lassen (binär, dezimal oder hex).
       Mittels der Folge von Buttons im unteren Fenster-Bereich kann man den Avalanche-Effekt nach jeder AES- bzw. DES-Runde testen.
       <newline/>
       Während man durch die verschiedenen Runden läuft, kann man sich den aktuellen Zustand des Verschlüsselungsprozesses im Binär-Format anschauen, sowohl für den ursprünglichen als auch für
@@ -223,7 +223,7 @@
       </list>
 
       <newline/>
-      Außerdem wird ein Kuchendiagramm, das das Verhältnis zwischen geflippten Bits (in rot) und unveränderten Bits (in grün) zeigt, darstellt.
+      Außerdem wird mit einem Kuchendiagramm das Verhältnis zwischen geflippten Bits (in rot) und unveränderten Bits (in grün) dargestellt.
       <newline/>
       Sobald der Allgemeine-Übersicht-Button gedrückt wird, kann man das Chiffrat nach jeder Verschlüsselungsrunde sowie die betroffenen Bits ansehen (in rot dargestellt).
       Die allgemeine Übersicht wird für AES nur im Hex-Format angezeigt, weil die Binärdarstellung zu viel Platz in Anspruch nimmt und es schnell unübersichtlich werden kann.
