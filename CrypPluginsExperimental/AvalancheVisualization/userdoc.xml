@@ -24,12 +24,12 @@
   </introduction>
 
   <introduction lang="de-DE">
-    Der Avalanche-Effekt (Lawineneffekt) bezeichnet man eine Eigenschaft, welche gute kryptographische Algorithmen sowie Hash-Funktionen aufweisen. <ref id="Wikipedia"/>
+    Der Avalanche-Effekt (Lawineneffekt) bezeichnet eine Eigenschaft, welche gute kryptographische Algorithmen sowie Hash-Funktionen aufweisen. <ref id="Wikipedia"/>
     <newline />
     <newline />
     Der Avalanche-Effekt wird als Parameter zur Messung der Auswirkung einer minimalen Eingabeänderung auf die Ausgabe benutzt.
     <newline />
-    In anderen Worten, kleine Veränderungen im Klartext sollen zur einer großen Veränderung im Chiffretext führen.
+    In anderen Worten, kleine Veränderungen im Klartext sollen zu einer großen Veränderung im Chiffretext führen.
     <newline />
     Ein starker Avalanche-Effekt deutet darauf hin, dass sich eine Änderung eines einzelnen Input-Bits schnell durch das ganze Verschlüsselungs- bzw. Hash-Verfahren ausbreitet. Dadurch wird eine gewisse Zufälligkeit der Chiffre bzw. des Hash-Wertes erzeugt.
     <newline />
@@ -37,7 +37,7 @@
     Somit wird das Brechen des Algorithmus erschwert. Aus diesem Grund ist der Avalanche-Effekt eine wünschenswerte Eigenschaft, die sichere Algorithmen haben sollten.
     <newline/>
     Der Zweck des Plugins ist es, ein Verständnis für die Avalanche-Effekt-Eigenschaft mittels einer Präsentation zu vermitteln.
-    Hierfür kann man gezielte Änderungen der Eingabe vornehmen und anschließend die Stärke dieser Eigenschaft für das ausgewählte Verfahren, prüfen.
+    Hierfür kann man gezielte Änderungen der Eingabe vornehmen und anschließend die Stärke dieser Eigenschaft für das ausgewählte Verfahren prüfen.
   </introduction>
 
   <usage lang="en">
@@ -89,19 +89,19 @@
     Das Avalanche-Plugin verfügt über zwei Eingaben (Schlüssel und Nachricht) und eine Ausgabe.
     <newline/>
     Die Komponente ist in zwei Haupt-Kategorien geteilt, nicht-aufbereitete und aufbereitete Verfahren.
-    Die Eingabe und Funktionalität des Plugins weichen geringfügig ab, entsprechend der ausgewählten Kategorie.
+    Die Eingabe und Funktionalität des Plugins unterscheiden sich entsprechend der ausgewählten Kategorie geringfügig.
     <newline/>
     <newline/>
     <section headline="Aufbereitete Verfahren">
       Sowohl die Nachricht- als auch die Schlüssel-Eingaben werden verwendet.
       <newline/>
       Das Avalanche Plugin kennt das ausgewählte Verfahren im Detail (AES oder DES).
-      Hier kann man den Avalanche-Effekt für jede einzelne Runde des Verschlüsselungsverfahrens, beobachten.
+      Hier kann man den Avalanche-Effekt für jede einzelne Runde des Verschlüsselungsverfahrens beobachten.
       <newline/>
       Für AES sollte der eingegebene Schlüssel 16, 24 oder 32 Bytes lang sein, entsprechend der ausgewählten Schlüssellänge (128, 192, oder 256). Für DES sollte er 8 Bytes lang sein.
       <newline/>
       <newline/>
-      Nachdem Play gedrückt wird, können Änderungen der initialen Nachricht- und Schlüsseleingaben auf unterschiedlicher Weise vorgenommen werden:
+      Nachdem Play gedrückt wird, können Änderungen der initialen Nachricht- und Schlüsseleingaben auf unterschiedliche Weise vorgenommen werden:
 
       <newline/>
       <list>
@@ -114,18 +114,18 @@
     <newline/>
     <newline/>
     <section headline="Nicht-aufbereitete Verfahren">
-      Hier wird nur die Nachricht-Eingabe verwendet.
+      Hier wird nur die Nachrichten-Eingabe verwendet.
       <newline/>
       Die Eingabedaten werden aus dem Ergebnis anderer CT2-Plugins bezogen.
       Deshalb wird die Länge des Inputs durch die externen Plugins, die gerade benutzt werden, bestimmt.
       <newline/>
       Unter der Kategorie -nicht-aufbereitete Verfahren- sind drei weitere Optionen zu finden (Hash-Funktionen, klassische Verfahren, und moderne Verfahren). Eine der Optionen wird
       ausgewählt, je nachdem, zu welcher dieser drei Kategorien das aktuelle externe Plugin gehört.
-      z.B., möchte man den Avalanche-Effekt von SHA-1 testen, sollte die Option "Hash-Funktionen" ausgewählt werden.
+      Möchte man beispielsweise den Avalanche-Effekt von SHA-1 testen, sollte die Option "Hash-Funktionen" ausgewählt werden.
       <newline/>
       Einfachheitshalber sind Vorlagen für die jeweiligen Kategorien vorhanden.
       <newline/>
-      Nachdem Play gedrückt wird, kann man die initiale Nachricht modifizieren, indem man Veränderungen direkt am externen Nachricht-Input vornimmt.
+      Nachdem Play gedrückt wird, kann man die initiale Nachricht modifizieren, indem man Veränderungen direkt am externen Nachrichten-Input vornimmt.
     </section>
 
   </usage>
@@ -152,12 +152,12 @@
       The differences between the two bit sequences (flipped bits) are highlighted in color.
       <newline/>
       A section with bullet points provides some statistical data based on the comparison carried out.
-      this information includes:
+      This information includes:
       <list>
-        <item>Number of flipped bits and avalanche effect.</item>
-        <item>Length of longest identical bit sequence.</item>
-        <item>Length of longest flipped bit sequence.</item>
-        <item>Average number of differing bits per byte.</item>
+        <item>Number of flipped bits and avalanche effect</item>
+        <item>Length of longest identical bit sequence</item>
+        <item>Length of longest flipped bit sequence</item>
+        <item>Average number of differing bits per byte</item>
       </list>
 
       <newline/>
@@ -189,64 +189,62 @@
   </presentation>
 
   <presentation lang="de-DE">
-    Das Ziel des Plugins besteht darin, die Auswirkung kleiner Änderungen in der Eingabe auf das ausgewähtle Verfahren, zu visualisieren.
+    Das Ziel des Plugins besteht darin, die Auswirkung kleiner Änderungen in der Eingabe auf das ausgewählte Verfahren zu visualisieren.
     Sobald das Plugin den ersten Input erhält, taucht eine neue Maske mit einer kurzen Anleitung auf.
-    Man kann die Anleitung überspringen, indem man die Checkbox auf der Home-View aktiviert.
+    Man kann die Anleitung überspringen, indem man die Checkbox auf der Startseite aktiviert.
 
     <newline/>
     <newline/>
     <section headline="Aufbereitete Verfahren">
 
-      Nach der Anleitung, können die initialen Eingabedaten von AES in Form einer Matrix sowohl im Hex-Format als auch im Binär-Format gesehen werden.
+      Nach der Anleitung können die initialen Eingabedaten von AES in Form einer Matrix sowohl im Hex-Format als auch im Binär-Format angezeigt werden.
       Bei DES werden die Eingabedaten zuerst im Binär-Format angezeigt.
       <newline/>
-      Danach können Änderungen am Input wie im Benutzung-Abschnitt beschrieben, vorgenommen werden.
-      Sobald ein einzelnes Bit geklickt wird, ändert sich seinen Zustand von "0" zu "1" oder umgekehrt und es wird rot.
-      Man kann auch die Änderung rückgängig machen, indem man auf das Löschen-Button klickt. Diese Aktion führt dazu, dass alle Bits zu ihrem ursprünglichen Zustand zurückkehren.
+      Danach können Änderungen am Input, wie im Abschnitt "Benutzung" beschrieben, vorgenommen werden.
+      Sobald ein einzelnes Bit geklickt wird, ändert sich sein Zustand von "0" zu "1" oder umgekehrt und es wird rot.
+      Man kann die Änderung auch rückgängig machen, indem man auf den Löschen-Button klickt. Diese Aktion führt dazu, dass alle Bits zu ihrem ursprünglichen Zustand zurückkehren.
       <newline/>
       Nachdem der initiale Input verändert worden ist, erscheint eine neue Maske, welche die Unterschiede zwischen initialem und modifiziertem Input darstellt.
-      Hier kann man sich die Eingabedaten auf unterschiedlichen Formaten anzeigen lassen (Binär, Dezimal, oder Hex).
-      Im unteren Fenster-Bereich eine Sequenz von Buttons deutet darauf hin, dass man den Avalanche-Effekt nach jeder AES- bzw. DES-Runde testen kann.
+      Hier kann man sich die Eingabedaten in unterschiedlichen Formaten anzeigen lassen (Binär, Dezimal, oder Hex).
+      Mittels der Folge von Buttons im unteren Fenster-Bereich kann man den Avalanche-Effekt nach jeder AES- bzw. DES-Runde testen.
       <newline/>
       Während man durch die verschiedenen Runden läuft, kann man sich den aktuellen Zustand des Verschlüsselungsprozesses im Binär-Format anschauen, sowohl für den ursprünglichen als auch für
       den modifizierten Input.
       Die Unterschiede zwischen den beiden Bit-Sequenzen (geflippte Bits) werden farblich hervorgehoben.
 
       <newline/>
-      Ein Teil der Maske enthält einige Aufzählungszeichen, welche wiederum statistische Daten aus dem ausgeführten Vergleich, enthalten.
-
-
+      Es werden einige statistische Daten über den ausgeführten Vergleich aufgelistet.
       Die Daten enthalten das Folgende:
       <list>
-        <item>Anzahl der geflippten Bits und Avalanche-Effekt.</item>
-        <item>Länge der längsten Sequenz identischer Bits.</item>
-        <item>Länge der längsten Sequent geflippter Bits.</item>
-        <item>Durchschnittszahl unterschiedlicher Bits pro Byte.</item>
+        <item>Anzahl der geflippten Bits und Avalanche-Effekt</item>
+        <item>Länge der längsten Sequenz identischer Bits</item>
+        <item>Länge der längsten Sequenz geflippter Bits</item>
+        <item>Durchschnittliche Anzahl unterschiedlicher Bits pro Byte</item>
       </list>
 
       <newline/>
-      Auf einem anderen Fenster-Bereich findet man ein Kuchendiagramm, das das Verhältnis zwischen geflippten Bits (in rot) und unveränderten Bits (in grün) darstellt.
+      Außerdem wird ein Kuchendiagramm, das das Verhältnis zwischen geflippten Bits (in rot) und unveränderten Bits (in grün) zeigt, darstellt.
       <newline/>
       Sobald der Allgemeine-Übersicht-Button gedrückt wird, kann man das Chiffrat nach jeder Verschlüsselungsrunde sowie die betroffenen Bits ansehen (in rot dargestellt).
-      Für AES die allgemeine Übersicht wird nur im Hex-Format angezeigt, weil die Binärdarstellung zu viel Platz in Anspruch nimmt und es schnell unübersichtlich werden kann.
+      Die allgemeine Übersicht wird für AES nur im Hex-Format angezeigt, weil die Binärdarstellung zu viel Platz in Anspruch nimmt und es schnell unübersichtlich werden kann.
       Für die beiden Block-Chiffren gibt es Informationen zum prozentualen Anteil der geflippten Bits nach jeder Runde (zu finden unter "% Änderung" auf der allgemeinen Übersicht für DES und unter "% geflippter Bits" auf der allgemeinen Übersicht für AES).
 
       <newline/>
-      Man hat auch die Möglichkeit entweder neue Veränderungen vorzunehmen oder die bereits gemachten Änderungen rückgängig zu machen. Dafür muss man auf den Eingabedaten-Button klicken, welcher einen zum ursprünglichen Input führt.
+      Man hat auch die Möglichkeit, entweder neue Veränderungen vorzunehmen oder die bereits gemachten Änderungen rückgängig zu machen. Dafür muss man auf den Eingabedaten-Button klicken, der zum ursprünglichen Input zurückführt.
 
     </section>
 
     <newline/>
     <newline/>
     <section headline="Nicht-aufbereitete Verfahren">
-      Die nicht-aufbereitete Verfahren haben neben der Anleitung-Maske nur eine einzige Maske, auf der der Bit-Vergleich stattfindet.
+      Die nicht-aufbereiteten Verfahren haben neben der Anleitungs-Maske nur eine einzige Maske, auf der der Bit-Vergleich stattfindet.
 
       Nach der Anleitung wird der initiale Input angezeigt.
       Sobald eine Änderung am Input vorgenommen wird, wird die veränderte Nachricht neben der initialen Nachricht angezeigt.
 
       Die Informationen können im Hex- und Dezimal-Format angezeigt werden. Für klassische Verfahren können sie zusätzlich im Text-Format angezeigt werden.
 
-      Nachdem das Plugin die veränderte Nachricht erhält, werden die statistischen Daten (wie im vorigen Abschnitt) auch angezeigt sowie der Kuchendiagramm.
+      Nachdem das Plugin die veränderte Nachricht erhalten hat, werden ebenfalls die statistischen Daten (wie im vorigen Abschnitt) und das Kuchendiagramm angezeigt.
 
       Nur bei klassischen Verfahren beziehen sich die statistischen Daten nicht auf Bit-, sondern auf Byte-Veränderungen.
 

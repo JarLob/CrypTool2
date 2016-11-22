@@ -185,92 +185,93 @@ namespace Cryptool.Plugins.AvalancheVisualization
             textInput = new byte[Text.Length];
             running = true;
 
-            switch (settings.SelectedCategory)
-            {
-                case AvalancheVisualizationSettings.Category.Prepared:
+            try {
+                switch (settings.SelectedCategory)
+                {
+                    case AvalancheVisualizationSettings.Category.Prepared:
 
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    // end = pres.end;
+                        buttonNextClickedEvent = pres.buttonNextClickedEvent;
+                        // end = pres.end;
 
-                    keyInput = new byte[Key.Length];
+                        keyInput = new byte[Key.Length];
 
-                    using (CStreamReader reader = Text.CreateReader())
-                    {
-                        reader.Read(textInput);
-                    }
+                        using (CStreamReader reader = Text.CreateReader())
+                        {
+                            reader.Read(textInput);
+                        }
 
-                    using (CStreamReader reader = Key.CreateReader())
-                    {
-                        reader.Read(keyInput);
-                    }
+                        using (CStreamReader reader = Key.CreateReader())
+                        {
+                            reader.Read(keyInput);
+                        }
 
-                    /*  pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                      {
-                          pres.ContinueHomeScreen.Visibility = Visibility.Visible;
-                      }, null);*/
+                        /*  pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                          {
+                              pres.ContinueHomeScreen.Visibility = Visibility.Visible;
+                          }, null);*/
 
-                    if (settings.PrepSelection == 0)
-                    {
-
-                        outputThread = new Thread(streamOut);
-                        Thread progressThread = new Thread(progress);
-
-                        pres.mode = 0;
-
-                        bool valid = validSize();
-
-                        string inputMessage = Encoding.Default.GetString(textInput);
-
-
-
-
-
-                        if (valid)
+                        if (settings.PrepSelection == 0)
                         {
 
+                            outputThread = new Thread(streamOut);
+                            Thread progressThread = new Thread(progress);
 
-                            if (textChanged && pres.canModify)
+                            pres.mode = 0;
+
+                            bool valid = validSize();
+
+                            string inputMessage = Encoding.Default.GetString(textInput);
+
+
+
+
+
+                            if (valid)
                             {
 
-                                pres.newText = null;
-                                pres.newKey = null;
-                                pres.newChanges = false;
 
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                if (textChanged && pres.canModify)
                                 {
-                                    pres.ChangesMadeButton.IsEnabled = true;
-                                    pres.ChangesMadeButton.Opacity = 1;
 
-                                }, null);
+                                    pres.newText = null;
+                                    pres.newKey = null;
+                                    pres.newChanges = false;
 
-                                aes.text = textInput;
-                                aes.key = keyInput;
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
+                                        pres.ChangesMadeButton.IsEnabled = true;
+                                        pres.ChangesMadeButton.Opacity = 1;
+
+                                    }, null);
+
+                                    aes.text = textInput;
+                                    aes.key = keyInput;
 
 
-                                byte[] temporary = aes.checkTextLength();
-                                byte[] tmpKey = aes.checkKeysize();
-                                pres.key = tmpKey;
-                                pres.textB = temporary;
-                                pres.canStop = true;
-                                aes.executeAES(false);
+                                    byte[] temporary = aes.checkTextLength();
+                                    byte[] tmpKey = aes.checkKeysize();
+                                    pres.key = tmpKey;
+                                    pres.textB = temporary;
+                                    pres.canStop = true;
+                                    aes.executeAES(false);
 
 
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                               {
-                                   pres.setAndLoadButtons();
-                                   pres.loadChangedMsg(temporary, true);
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                   {
+                                       pres.setAndLoadButtons();
+                                       pres.loadChangedMsg(temporary, true);
 
-                                   pres.loadChangedKey(tmpKey);
+                                       pres.loadChangedKey(tmpKey);
 
-                                   pres.coloringText();
-                                   pres.coloringKey();
-                                   pres.updateDataColor();
-                               }, null);
+                                       pres.coloringText();
+                                       pres.coloringKey();
+                                       pres.updateDataColor();
+                                   }, null);
 
-                                pres.statesB = aes.statesB;
+                                    pres.statesB = aes.statesB;
 
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
                                     //  pres.setAndLoadButtons();
 
 
@@ -278,124 +279,124 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
 
-                                OutputStream = string.Format("{0}{1}{2}", generatedData(0), generatedData(1), generatedData(2));
+                                    OutputStream = string.Format("{0}{1}{2}", generatedData(0), generatedData(1), generatedData(2));
 
+
+                                }
+                                else if (!textChanged && !pres.canModify)
+                                {
+
+
+                                    textChanged = true;
+
+                                    originalText = textInput;
+
+                                    aes.text = textInput;
+                                    aes.key = keyInput;
+
+                                    pres.keysize = settings.KeyLength;
+
+
+
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                   {
+
+
+                                       if (pres.skip.IsChecked == true)
+                                           pres.comparisonPane();
+                                       else
+                                           pres.instructions();
+
+                                   }, null);
+
+
+
+                                    AES.keysize = settings.KeyLength;
+                                    byte[] tmpKey = aes.checkKeysize();
+                                    originalKey = tmpKey;
+                                    pres.key = tmpKey;
+                                    pres.keyA = tmpKey;
+                                    byte[] temporary = aes.checkTextLength();
+                                    pres.textA = temporary;
+                                    aes.executeAES(true);
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                   {
+
+                                       pres.loadInitialState(temporary, tmpKey);
+
+
+                                   }, null);
+
+                                    pres.states = aes.states;
+                                    pres.keyList = aes.keyList;
+
+                                }
+
+                                outputThread.Start();
+
+                                progressThread.Start();
+
+                                //  if (!running)
+                                //    return;
 
                             }
-                            else if (!textChanged && !pres.canModify)
-                            {
-
-
-                                textChanged = true;
-
-                                originalText = textInput;
-
-                                aes.text = textInput;
-                                aes.key = keyInput;
-
-                                pres.keysize = settings.KeyLength;
-
-
-
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                               {
-
-
-                                   if (pres.skip.IsChecked == true)
-                                       pres.comparisonPane();
-                                   else
-                                       pres.instructions();
-
-                               }, null);
-
-
-
-                                AES.keysize = settings.KeyLength;
-                                byte[] tmpKey = aes.checkKeysize();
-                                originalKey = tmpKey;
-                                pres.key = tmpKey;
-                                pres.keyA = tmpKey;
-                                byte[] temporary = aes.checkTextLength();
-                                pres.textA = temporary;
-                                aes.executeAES(true);
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                               {
-
-                                   pres.loadInitialState(temporary, tmpKey);
-
-
-                               }, null);
-
-                                pres.states = aes.states;
-                                pres.keyList = aes.keyList;
-
-                            }
-
-                            outputThread.Start();
-
-                            progressThread.Start();
-
-                            //  if (!running)
-                            //    return;
-
                         }
-                    }
-                    // if settings==1
-                    else
-                    {
-
-                        desThread = new Thread(streamOut);
-                        Thread progressThr = new Thread(progress);
-                        pres.mode = 1;
-
-                        bool valid = validSize();
-
-                        if (valid)
+                        // if settings==1
+                        else
                         {
 
-                            if (textChanged && pres.canModifyDES)
+                            desThread = new Thread(streamOut);
+                            Thread progressThr = new Thread(progress);
+                            pres.mode = 1;
+
+                            bool valid = validSize();
+
+                            if (valid)
                             {
 
-
-                                pres.newText = null;
-                                pres.newKey = null;
-                                pres.newChanges = false;
-
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                if (textChanged && pres.canModifyDES)
                                 {
-                                    pres.ChangesMadeButton.IsEnabled = true;
-                                    pres.ChangesMadeButton.Opacity = 1;
-
-                                }, null);
-
-                                des.inputKey = keyInput;
-                                des.inputMessage = textInput;
-
-                                des.textChanged = true;
-                                des.DESProcess();
-                                pres.key = keyInput;
-                                pres.textB = textInput;
-                                pres.canStop = true;
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                               {
-
-                                   pres.setAndLoadButtons();
-                                   pres.loadChangedMsg(textInput, true);
-
-                                   pres.loadChangedKey(keyInput);
-
-                                   pres.coloringText();
-                                   pres.coloringKey();
-
-                                   pres.updateDataColor();
-                               }, null);
 
 
-                                pres.lrDataB = des.lrDataB;
-                                current = des.outputCiphertext;
+                                    pres.newText = null;
+                                    pres.newKey = null;
+                                    pres.newChanges = false;
 
-                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
+                                        pres.ChangesMadeButton.IsEnabled = true;
+                                        pres.ChangesMadeButton.Opacity = 1;
+
+                                    }, null);
+
+                                    des.inputKey = keyInput;
+                                    des.inputMessage = textInput;
+
+                                    des.textChanged = true;
+                                    des.DESProcess();
+                                    pres.key = keyInput;
+                                    pres.textB = textInput;
+                                    pres.canStop = true;
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                   {
+
+                                       pres.setAndLoadButtons();
+                                       pres.loadChangedMsg(textInput, true);
+
+                                       pres.loadChangedKey(keyInput);
+
+                                       pres.coloringText();
+                                       pres.coloringKey();
+
+                                       pres.updateDataColor();
+                                   }, null);
+
+
+                                    pres.lrDataB = des.lrDataB;
+                                    current = des.outputCiphertext;
+
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
 
                                     // pres.setAndLoadButtons();
 
@@ -403,152 +404,91 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
 
-                                OutputStream = string.Format("{0}{1}{2}", generatedData(0), generatedData(1), generatedData(2));
+                                    OutputStream = string.Format("{0}{1}{2}", generatedData(0), generatedData(1), generatedData(2));
+                                }
+
+                                else if (!textChanged && !pres.canModifyDES)
+                                {
+
+
+                                    des.inputKey = keyInput;
+                                    des.inputMessage = textInput;
+
+
+                                    byte[] tmpKey = keyInput;
+                                    byte[] tmpText = textInput;
+                                    originalText = tmpText;
+                                    originalKey = tmpKey;
+
+                                    des.textChanged = false;
+
+                                    des.DESProcess();
+
+
+                                    pres.keyA = tmpKey;
+                                    textChanged = true;
+
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                   {
+
+                                       if (pres.skip.IsChecked == true)
+                                           pres.comparisonPane();
+                                       else
+                                           pres.instructions();
+
+                                       pres.loadInitialState(textInput, keyInput);
+
+
+                                   }, null);
+
+                                    pres.textA = textInput;
+                                    pres.lrData = des.lrData;
+                                    initialDES = des.outputCiphertext;
+
+                                }
+
+
+                                progressThr.Start();
+                                desThread.Start();
+
+                                //if (!running)
+                                return;
                             }
-
-                            else if (!textChanged && !pres.canModifyDES)
-                            {
+                        }
 
 
-                                des.inputKey = keyInput;
-                                des.inputMessage = textInput;
+
+                        break;
 
 
-                                byte[] tmpKey = keyInput;
-                                byte[] tmpText = textInput;
-                                originalText = tmpText;
-                                originalKey = tmpKey;
 
-                                des.textChanged = false;
+                    case AvalancheVisualizationSettings.Category.Unprepared:
 
-                                des.DESProcess();
+                        Thread progThread = new Thread(progress);
+                        progThread.Start();
+
+                        using (CStreamReader reader = Text.CreateReader())
+                        {
+                            reader.Read(textInput);
+
+                        }
+
+                        switch (settings.UnprepSelection)
+                        {
+                            //Hash functions
+                            case 0:
 
 
-                                pres.keyA = tmpKey;
-                                textChanged = true;
+                                pres.mode = 2;
 
                                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                               {
-
-                                   if (pres.skip.IsChecked == true)
-                                       pres.comparisonPane();
-                                   else
-                                       pres.instructions();
-
-                                   pres.loadInitialState(textInput, keyInput);
-
-
-                               }, null);
-
-                                pres.textA = textInput;
-                                pres.lrData = des.lrData;
-                                initialDES = des.outputCiphertext;
-
-                            }
-
-
-                            progressThr.Start();
-                            desThread.Start();
-
-                            //if (!running)
-                            return;
-                        }
-                    }
-
-
-
-                    break;
-
-
-
-                case AvalancheVisualizationSettings.Category.Unprepared:
-
-                    Thread progThread = new Thread(progress);
-                    progThread.Start();
-
-                    using (CStreamReader reader = Text.CreateReader())
-                    {
-                        reader.Read(textInput);
-
-                    }
-
-                    switch (settings.UnprepSelection)
-                    {
-                        //Hash functions
-                        case 0:
-
-
-                            pres.mode = 2;
-
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                            {
-
-                                if (textChanged && pres.canModifyOthers)
                                 {
 
-                                    string cipherB = pres.binaryAsString(textInput);
-
-                                    if (pres.radioDecOthers.IsChecked == true)
-                                        pres.modifiedMsg.Text = pres.decimalAsString(textInput);
-                                    if (pres.radioHexOthers.IsChecked == true)
-                                        pres.modifiedMsg.Text = pres.hexaAsString(textInput);
-
-                                    pres.TB2.Text = cipherB;
-                                    pres.changedCipher = textInput;
-
-                                    pres.comparison();
-
-
-                                    OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
-
-                                }
-
-                                else if(!textChanged && !pres.canModifyOthers)
-                                {
-                                    if (pres.skip.IsChecked == true)
-                                        pres.comparisonPane();
-                                    else
-                                        pres.instructions();
-
-                                    originalText = textInput;
-                                    string cipherA = pres.binaryAsString(textInput);
-                                    pres.originalMsg.Text = pres.hexaAsString(textInput);
-                                    pres.TB1.Text = cipherA;
-                                    pres.unchangedCipher = textInput;
-                                    pres.radioHexOthers.IsChecked = true;
-
-                                }
-
-
-                            }, null);
-
-                            textChanged = true;
-                            break;
-
-                        //classic
-                        case 1:
-
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                            {
-
-                                pres.mode = 3;
-
-
-                                string otherText = Encoding.Default.GetString(textInput);
-
-
-                                if (textChanged && pres.canModifyOthers)
-                                {
-                                    msgB = otherText;
-                                    bool validEntry = checkSize(msgA, msgB);
-
-                                    if (validEntry)
+                                    if (textChanged && pres.canModifyOthers)
                                     {
 
                                         string cipherB = pres.binaryAsString(textInput);
 
-                                        if (pres.radioText.IsChecked == true)
-                                            pres.modifiedMsg.Text = otherText;
                                         if (pres.radioDecOthers.IsChecked == true)
                                             pres.modifiedMsg.Text = pres.decimalAsString(textInput);
                                         if (pres.radioHexOthers.IsChecked == true)
@@ -562,105 +502,171 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                         OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
 
-
                                     }
-                                    else
+
+                                    else if (!textChanged && !pres.canModifyOthers)
                                     {
-                                        GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
+                                        if (pres.skip.IsChecked == true)
+                                            pres.comparisonPane();
+                                        else
+                                            pres.instructions();
+
+                                        originalText = textInput;
+                                        string cipherA = pres.binaryAsString(textInput);
+                                        pres.originalMsg.Text = pres.hexaAsString(textInput);
+                                        pres.TB1.Text = cipherA;
+                                        pres.unchangedCipher = textInput;
+                                        pres.radioHexOthers.IsChecked = true;
+
                                     }
-                                }
-                                else if (!textChanged && !pres.canModifyOthers)
+
+
+                                }, null);
+
+                                textChanged = true;
+                                break;
+
+                            //classic
+                            case 1:
+
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                 {
-                                    if (pres.skip.IsChecked == true)
-                                        pres.comparisonPane();
-                                    else
-                                        pres.instructions();
 
-                                    string cipherA = pres.binaryAsString(textInput);
-                                    pres.originalMsg.Text = otherText;
-                                    msgA = otherText;
-                                    pres.TB1.Text = cipherA;
-                                    pres.unchangedCipher = textInput;
-                                    pres.radioText.IsChecked = true;
-
-                                }
+                                    pres.mode = 3;
 
 
-
-                            }, null);
-
-                            textChanged = true;
-                            break;
-
-                        //modern
-                        case 2:
-
-                            pres.mode = 4;
-
-                            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                           {
+                                    string otherText = Encoding.Default.GetString(textInput);
 
 
-                               if (textChanged && pres.canModifyOthers)
+                                    if (textChanged && pres.canModifyOthers)
+                                    {
+                                        msgB = otherText;
+                                        bool validEntry = checkSize(msgA, msgB);
+
+                                        if (validEntry)
+                                        {
+
+                                            string cipherB = pres.binaryAsString(textInput);
+
+                                            if (pres.radioText.IsChecked == true)
+                                                pres.modifiedMsg.Text = otherText;
+                                            if (pres.radioDecOthers.IsChecked == true)
+                                                pres.modifiedMsg.Text = pres.decimalAsString(textInput);
+                                            if (pres.radioHexOthers.IsChecked == true)
+                                                pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+
+                                            pres.TB2.Text = cipherB;
+                                            pres.changedCipher = textInput;
+
+                                            pres.comparison();
+
+
+                                            OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
+
+
+                                        }
+                                        else
+                                        {
+                                            GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
+                                        }
+                                    }
+                                    else if (!textChanged && !pres.canModifyOthers)
+                                    {
+                                        if (pres.skip.IsChecked == true)
+                                            pres.comparisonPane();
+                                        else
+                                            pres.instructions();
+
+                                        string cipherA = pres.binaryAsString(textInput);
+                                        pres.originalMsg.Text = otherText;
+                                        msgA = otherText;
+                                        pres.TB1.Text = cipherA;
+                                        pres.unchangedCipher = textInput;
+                                        pres.radioText.IsChecked = true;
+
+                                    }
+
+
+
+                                }, null);
+
+                                textChanged = true;
+                                break;
+
+                            //modern
+                            case 2:
+
+                                pres.mode = 4;
+
+                                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                {
 
-                                   bool validEntry = checkByteArray(pres.unchangedCipher, textInput);
 
-
-                                   if (validEntry)
+                                   if (textChanged && pres.canModifyOthers)
                                    {
-                                       string cipherB = pres.binaryAsString(textInput);
 
-                                       if (pres.radioDecOthers.IsChecked == true)
-                                           pres.modifiedMsg.Text = pres.decimalAsString(textInput);
-                                       if (pres.radioHexOthers.IsChecked == true)
-                                           pres.modifiedMsg.Text = pres.hexaAsString(textInput);
-
-                                       pres.TB2.Text = cipherB;
-                                       pres.changedCipher = textInput;
-
-                                       pres.comparison();
+                                       bool validEntry = checkByteArray(pres.unchangedCipher, textInput);
 
 
-                                       OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
+                                       if (validEntry)
+                                       {
+                                           string cipherB = pres.binaryAsString(textInput);
+
+                                           if (pres.radioDecOthers.IsChecked == true)
+                                               pres.modifiedMsg.Text = pres.decimalAsString(textInput);
+                                           if (pres.radioHexOthers.IsChecked == true)
+                                               pres.modifiedMsg.Text = pres.hexaAsString(textInput);
+
+                                           pres.TB2.Text = cipherB;
+                                           pres.changedCipher = textInput;
+
+                                           pres.comparison();
+
+
+                                           OutputStream = string.Format("{0}{1}", generatedData(0), generatedData(1));
+
+                                       }
+                                       else
+                                       {
+                                           GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
+                                       }
+                                   }
+                                   else if (!textChanged && !pres.canModifyOthers)
+                                   {
+                                       if (pres.skip.IsChecked == true)
+                                           pres.comparisonPane();
+                                       else
+                                           pres.instructions();
+
+                                       originalText = textInput;
+                                       string cipherA = pres.binaryAsString(textInput);
+                                       pres.originalMsg.Text = pres.hexaAsString(textInput);
+                                       pres.TB1.Text = cipherA;
+                                       pres.unchangedCipher = textInput;
+                                       pres.radioHexOthers.IsChecked = true;
 
                                    }
-                                   else
-                                   {
-                                       GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
-                                   }
-                               }
-                               else if (!textChanged && !pres.canModifyOthers)
-                               {
-                                   if (pres.skip.IsChecked == true)
-                                       pres.comparisonPane();
-                                   else
-                                       pres.instructions();
-
-                                   originalText = textInput;
-                                   string cipherA = pres.binaryAsString(textInput);
-                                   pres.originalMsg.Text = pres.hexaAsString(textInput);
-                                   pres.TB1.Text = cipherA;
-                                   pres.unchangedCipher = textInput;
-                                   pres.radioHexOthers.IsChecked = true;
-
-                               }
 
 
-                           }, null);
+                               }, null);
 
-                            textChanged = true;
+                                textChanged = true;
 
-                            break;
-                        default:
-                            break;
+                                break;
+                            default:
+                                break;
 
-                    }
+                        }
 
-                    break;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                GuiLogMessage(ex.Message, NotificationLevel.Error);
             }
         }
 
