@@ -751,7 +751,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (The methods in the category &quot;Prepared methods&quot; are implemented within the Avalanche plugin. So the plugin can show the changes not only for the last step, which is the result of the cryptographic function, but for all intermediate steps throughout the encryption process.).
+        ///   Looks up a localized string similar to (Methods in the category &quot;Prepared methods&quot; are implemented within the Avalanche plugin. So the plugin can show the changes not only for the result of the cryptographic function (last step), but also for all intermediate steps.).
         /// </summary>
         internal static string InstructionsPrepDescription {
             get {
@@ -787,7 +787,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Methods in the category &quot;Unprepared methods&quot; have no  implementation within the Avalanche plugin. So the plugin  evaluates only the Avalanche effect derived from the  comparison between the initial external input and the changed external input. This is very generic. Therefore only the message entry is used..
+        ///   Looks up a localized string similar to  Methods in the category &quot;Unprepared methods&quot; have no extra implementation within the Avalanche plugin. So the plugin evaluates the Avalanche effect only by comparing the initial and the changed external input. This is very generic. Here only the message entry is used..
         /// </summary>
         internal static string InstructionsUnprepBullet1 {
             get {
@@ -806,7 +806,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Modify Initial Input (for classic and modern ciphers the length of the message to  be evaluated by the Avalanche plugin, may not be changed)..
+        ///   Looks up a localized string similar to  Modify initial input (for classic and modern ciphers, the length of the message to be evaluated by the Avalanche plugin may not be changed)..
         /// </summary>
         internal static string InstructionsUnprepBullet3 {
             get {

@@ -237,7 +237,7 @@
     <value>Nicht-aufbereitete Verfahren:</value>
   </data>
   <data name="InstructionsUnprepBullet1" xml:space="preserve">
-    <value> Methoden unter dieser Kategorie sind nicht im Avalanche-Plugin  implementiert. Deswegen berechnet das Plugin nur den Avalanche- Effekt aus dem Vergleich zwischen der initialen externen Eingabe und  der veränderten externen Eingabe. Dies ist sehr generisch. Aus  diesem Grund wird nur die Nachricht-Eingabe verwendet. </value>
+    <value> Methoden unter dieser Kategorie sind nicht im Avalanche-Plugin implementiert. Deswegen berechnet das Plugin den Avalanche-Effekt nur aus dem Vergleich zwischen der initialen und der veränderten externen Eingabe. Dies ist sehr generisch. Hier wird nur die Nachricht-Eingabe verwendet. </value>
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
     <value> Eingabedaten werden zuerst wie folgt angezeigt: 
@@ -247,7 +247,7 @@
     <value> Initiale Eingabe modifizieren (bei klassischen und modernen Verfahren darf die Länge der modifizierten Nachricht nicht geändert werden) .</value>
   </data>
   <data name="InstructionsUnprepSubtitle" xml:space="preserve">
-    <value>Hash-, klassische, und moderne Verfahren</value>
+    <value>Hashverfahren, klassische und moderne Verschlüsselungsverfahren</value>
   </data>
   <data name="Intro" xml:space="preserve">
     <value>Ein starker Avalanche-Effekt wird erreicht, wenn eine geringfügige Änderung der Eingabe zu einer signifikanten Änderung der Ausgabe führt. 
@@ -561,16 +561,16 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value>Veränderte AES-Nachricht:{0}</value>
   </data>
   <data name="DESderivedFromInit" xml:space="preserve">
-    <value>{0}Letzter DES-Chiffretext abgeleitet aus der initialen Eingabe:{1}</value>
+    <value>{0}Letzter DES-Geheimtext abgeleitet aus der initialen Eingabe:{1}</value>
   </data>
   <data name="DESderivedFromMod" xml:space="preserve">
-    <value>Letzter DES-Chiffretext abgeleitet aus der veränderten Eingabe:{0}</value>
+    <value>Letzter DES-Geheimtext abgeleitet aus der veränderten Eingabe:{0}</value>
   </data>
   <data name="AESDerivedFromInit" xml:space="preserve">
-    <value>{0}Letzter AES-Chiffretext abgeleitet aus der initialen Eingabe:{1}</value>
+    <value>{0}Letzter AES-Geheimtext abgeleitet aus der initialen Eingabe:{1}</value>
   </data>
   <data name="AESDerivedFromMod" xml:space="preserve">
-    <value>Letzter AES-Chiffretext abgeleitet aus der veränderten Eingabe:{0}</value>
+    <value>Letzter AES-Geheimtext abgeleitet aus der veränderten Eingabe:{0}</value>
   </data>
   <data name="HashFunctionInitBin" xml:space="preserve">
     <value>Initialer Hash-Wert (binär)</value>
@@ -582,13 +582,13 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value>Anleitung</value>
   </data>
   <data name="InstructionsPrepDescription" xml:space="preserve">
-    <value>(Die Verfahren unter dieser Kategorie sind innerhalb des Avalanche-Plugins implementiert. Auf dieser Weise kann das Plugin nicht nur die Veränderungen für den letzten Schritt, welcher das Ergebnis der kryptographischen Funktion ist, sondern auch für alle Zwischenschritte des Verschlüsselungsprozesses, zeigen.)</value>
+    <value>(Die Verfahren unter dieser Kategorie sind innerhalb des Avalanche-Plugins implementiert. Deshalb kann das Plugin nicht nur die Veränderungen beim Endergebnis der kryptographischen Funktion (letzter Schritt) anzeigen, sondern auch für alle Zwischenschritte.)</value>
   </data>
   <data name="ShowChangeTitleAES" xml:space="preserve">
-    <value>Anzeige Veränderter Eingabedaten AES-</value>
+    <value>Anzeige veränderter Eingabedaten AES-</value>
   </data>
   <data name="ShowChangeTitleDES" xml:space="preserve">
-    <value>Anzeige Veränderter Eingabedaten DES</value>
+    <value>Anzeige veränderter Eingabedaten DES</value>
   </data>
   <data name="Title_DES" xml:space="preserve">
     <value>Avalanche-Effekt DES</value>
@@ -601,15 +601,15 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value>Eingabe nicht verändert.</value>
   </data>
   <data name="OutputNotModAESKey" xml:space="preserve">
-    <value>AES Schlüssel nicht verändert.</value>
+    <value>AES-Schlüssel nicht verändert.</value>
   </data>
   <data name="OutputNotModAESMsg" xml:space="preserve">
-    <value>AES Nachricht nicht verändert.</value>
+    <value>AES-Nachricht nicht verändert.</value>
   </data>
   <data name="OutputNotModDESKey" xml:space="preserve">
-    <value>DES Schlüssel nicht verändert.</value>
+    <value>DES-Schlüssel nicht verändert.</value>
   </data>
   <data name="OutputNotModDESMsg" xml:space="preserve">
-    <value>DES Nachricht nicht verändert.</value>
+    <value>DES-Nachricht nicht verändert.</value>
   </data>
 </root>

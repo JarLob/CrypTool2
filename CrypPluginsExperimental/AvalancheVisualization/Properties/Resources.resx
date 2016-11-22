@@ -237,14 +237,14 @@
     <value>Unprepared methods:</value>
   </data>
   <data name="InstructionsUnprepBullet1" xml:space="preserve">
-    <value> Methods in the category "Unprepared methods" have no  implementation within the Avalanche plugin. So the plugin  evaluates only the Avalanche effect derived from the  comparison between the initial external input and the changed external input. This is very generic. Therefore only the message entry is used.</value>
+    <value> Methods in the category "Unprepared methods" have no extra implementation within the Avalanche plugin. So the plugin evaluates the Avalanche effect only by comparing the initial and the changed external input. This is very generic. Here only the message entry is used.</value>
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
     <value> Input data initially shown in: 
  hex format (hash functions and modern ciphers)  -  text format (classic ciphers). </value>
   </data>
   <data name="InstructionsUnprepBullet3" xml:space="preserve">
-    <value> Modify Initial Input (for classic and modern ciphers the length of the message to  be evaluated by the Avalanche plugin, may not be changed).</value>
+    <value> Modify initial input (for classic and modern ciphers, the length of the message to be evaluated by the Avalanche plugin may not be changed).</value>
   </data>
   <data name="InstructionsUnprepSubtitle" xml:space="preserve">
     <value>General hash functions, classic ciphers, modern ciphers</value>
@@ -582,7 +582,7 @@ Message and key changes can be made in two ways:</value>
     <value>Instructions</value>
   </data>
   <data name="InstructionsPrepDescription" xml:space="preserve">
-    <value>(The methods in the category "Prepared methods" are implemented within the Avalanche plugin. So the plugin can show the changes not only for the last step, which is the result of the cryptographic function, but for all intermediate steps throughout the encryption process.)</value>
+    <value>(Methods in the category "Prepared methods" are implemented within the Avalanche plugin. So the plugin can show the changes not only for the result of the cryptographic function (last step), but also for all intermediate steps.)</value>
   </data>
   <data name="ShowChangeTitleAES" xml:space="preserve">
     <value>Show Changed Input Data AES-</value>

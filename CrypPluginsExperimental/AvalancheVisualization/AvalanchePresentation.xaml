@@ -287,14 +287,14 @@
         <Grid Name="InstructionsPrep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="35"/>
                 <RowDefinition Height="95"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="{Loc InstructionsTitle}" />
             <TextBlock Grid.Row="1" Foreground="White" FontSize="20"   Text="{Loc InstructionsPrep}" Margin="70,0"/>
             <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="18" FontWeight="ExtraLight" Text="{Loc InstructionsPrepSubtitle}" HorizontalAlignment="Center" Margin="0,3,130,0"/>
-            <TextBlock Grid.Row="2" Foreground="#534b4f" FontSize="15"  Text="{Loc InstructionsPrepDescription}" TextAlignment="Justify"  TextWrapping="Wrap" Width="550"></TextBlock>
+            <TextBlock Grid.Row="2" Foreground="#534b4f" FontSize="15"  Text="{Loc InstructionsPrepDescription}" TextAlignment="Justify"  TextWrapping="Wrap" Width="550" Margin="0,10,0,0"></TextBlock>
 
             <StackPanel Grid.Row="3" >
                 <BulletDecorator Margin="70,5">
@@ -332,16 +332,16 @@
             <Button Name="continueButton"  HorizontalAlignment="Right" VerticalAlignment="Top"  Style="{StaticResource buttonStyle}" Width="65" Height="30" FontSize="11" Content="{Loc ContinueButton}" Click="continueButton_Click" Margin="5"/>
         </Grid>
 
-        <Grid Name="InstructionsUnprep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="hidden">
+        <Grid Name="InstructionsUnprep" Grid.ColumnSpan="3" Grid.RowSpan="2" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="65"/>
                 <RowDefinition />
               
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource textBlockStyle}"  Grid.ColumnSpan="3" FontSize="25" FontWeight="DemiBold" HorizontalAlignment="Center" Text="{Loc InstructionsTitle}" />
             <TextBlock Grid.Row="1" Foreground="white" FontSize="20"   Text="{Loc InstructionsUnprep}" Margin="70,0"/>
-            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="17" FontWeight="ExtraLight" Text="{Loc InstructionsUnprepSubtitle}" HorizontalAlignment="Right" Margin="0,2,45,0"/>
+            <TextBlock Grid.Row="1" Foreground="#534b4f" FontSize="17" FontWeight="ExtraLight" Text="{Loc InstructionsUnprepSubtitle}" HorizontalAlignment="Left" Margin="80,25,0,0"/>
            
             <StackPanel Grid.Row="2">
                 <BulletDecorator Margin="70,5">
