@@ -148,7 +148,7 @@
     <value>Löschen</value>
   </data>
   <data name="ContinueButton" xml:space="preserve">
-    <value>Fortfahren</value>
+    <value>Weiter</value>
   </data>
   <data name="Decimal" xml:space="preserve">
     <value>Dezimal</value>
@@ -192,10 +192,6 @@
   <data name="InputData" xml:space="preserve">
     <value>Eingabedaten</value>
   </data>
-  <data name="InputDataButton" xml:space="preserve">
-    <value> Eingabe-
-  daten</value>
-  </data>
   <data name="InputKey" xml:space="preserve">
     <value>Schlüssel</value>
   </data>
@@ -209,7 +205,7 @@
     <value>Nachricht bzw. Hash-Wert eingeben</value>
   </data>
   <data name="InputTitleAES" xml:space="preserve">
-    <value>Eingabedaten AES-</value>
+    <value>Ändern der Eingabedaten AES-</value>
   </data>
   <data name="InstructionsPrep" xml:space="preserve">
     <value>Aufbereitete Verfahren:</value>
@@ -222,7 +218,7 @@
  16, 24, oder 32 bytes (AES)   -    8 bytes (DES).</value>
   </data>
   <data name="InstructionsPrepBullet3" xml:space="preserve">
-    <value> Inputeingaben werden zuerst wie folgt angezeigt:
+    <value> Dateneingaben werden zuerst wie folgt angezeigt:
  Hex- und Binär-Format (AES)    -    Binär-Format (DES).</value>
   </data>
   <data name="InstructionsPrepBullet4" xml:space="preserve">
@@ -232,7 +228,7 @@
     <value> Avalanche-Effekt testen.</value>
   </data>
   <data name="InstructionsPrepSubtitle" xml:space="preserve">
-    <value>                (AES, DES)</value>
+    <value>               AES, DES</value>
   </data>
   <data name="InstructionsTitle" xml:space="preserve">
     <value>Anleitung</value>
@@ -241,16 +237,17 @@
     <value>Nicht-aufbereitete Verfahren:</value>
   </data>
   <data name="InstructionsUnprepBullet1" xml:space="preserve">
-    <value> Nur Nachricht-Eingabe nutzen.</value>
+    <value> Methoden unter dieser Kategorie sind nicht im Avalanche-Plugin  implementiert. Deswegen berechnet das Plugin nur den Avalanche- Effekt aus dem Vergleich zwischen der initialen externen Eingabe und  der veränderten externen Eingabe. Dies ist sehr generisch. Aus  diesem Grund wird nur die Nachricht-Eingabe verwendet. </value>
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
-    <value> Eingabedaten werden aus dem Ergebnis anderer CT2-Plugins bezogen.</value>
+    <value> Eingabedaten werden zuerst wie folgt angezeigt: 
+ Hex-Format  (moderne und Hash-Verfahren)  -  Text-Format (klassische Verfahren).</value>
   </data>
   <data name="InstructionsUnprepBullet3" xml:space="preserve">
-    <value> Eingabedaten werden zuerst im Hex- oder  Text-Format angezeigt, entsprechend der ausgewählten Option.</value>
+    <value> Initiale Eingabe modifizieren (bei klassischen und modernen Verfahren darf die Länge der modifizierten Nachricht nicht geändert werden) .</value>
   </data>
   <data name="InstructionsUnprepSubtitle" xml:space="preserve">
-    <value>(Hash-, klassische, und moderne Verfahren)</value>
+    <value>Hash-, klassische, und moderne Verfahren</value>
   </data>
   <data name="Intro" xml:space="preserve">
     <value>Ein starker Avalanche-Effekt wird erreicht, wenn eine geringfügige Änderung der Eingabe zu einer signifikanten Änderung der Ausgabe führt. 
@@ -315,21 +312,22 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Binärwerte</value>
   </data>
   <data name="ChangesText" xml:space="preserve">
-    <value>Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
+    <value>Zum Fortfahren der Präsentation verändern Sie die Eingabedaten.
+Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
   </data>
   <data name="ChangesTextBullet1" xml:space="preserve">
-    <value> Änderung am externen Input.</value>
+    <value> Direkte Änderung am externen Input.</value>
   </data>
   <data name="ChangesTextBullet2" xml:space="preserve">
     <value> Änderung einzelner Bits -- nur möglich nach Checkbox-Aktivierung.</value>
   </data>
   <data name="CipherStateInitMsg" xml:space="preserve">
     <value>  Verschlüsselungszustand
-      initialer Nachricht</value>
+       initialer Eingabe</value>
   </data>
   <data name="CipherStateModMsg" xml:space="preserve">
     <value>Verschlüsselungszustand
-   veränderter Nachricht</value>
+    veränderter Eingabe</value>
   </data>
   <data name="ClickOnBits" xml:space="preserve">
     <value>Klicken Sie auf die Bits, die Sie flippen möchten.</value>
@@ -407,7 +405,7 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Initiale Nachricht (64 Bits):</value>
   </data>
   <data name="InputTitleDES" xml:space="preserve">
-    <value>Eingabedaten DES</value>
+    <value>Ändern der Eingabedaten DES</value>
   </data>
   <data name="ModKeyColon" xml:space="preserve">
     <value>Veränderter Schlüssel:</value>
@@ -424,8 +422,8 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
   <data name="Binary" xml:space="preserve">
     <value>Binär</value>
   </data>
-  <data name="Cipher" xml:space="preserve">
-    <value>Chiffrat (Hex-Format)</value>
+  <data name="Ciphertext" xml:space="preserve">
+    <value>Geheimtext (hex)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
     <value>Verschlüsselung init. Nachr (bin)</value>
@@ -446,16 +444,16 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>(Moderne Verfahren)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-128</value>
+    <value>Verschlüsselungsergebnisse aller Runden von AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
-    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-192</value>
+    <value>Verschlüsselungsergebnisse aller Runden von AES-192</value>
   </data>
   <data name="OverviewAES256" xml:space="preserve">
-    <value>Übersicht der Verschlüsselungsergebnisse aller Runden von AES-256</value>
+    <value>Verschlüsselungsergebnisse aller Runden von AES-256</value>
   </data>
   <data name="OverviewDES" xml:space="preserve">
-    <value>Übersicht der Verschlüsselungsergebnisse aller DES-Runden</value>
+    <value>Verschlüsselungsergebnisse aller DES-Runden</value>
   </data>
   <data name="Percentage" xml:space="preserve">
     <value>% Änderung</value>
@@ -470,10 +468,10 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Nach Runde {0}:{1}</value>
   </data>
   <data name="EncryptionInitialMsgOut" xml:space="preserve">
-    <value>Verschlüsselung initialer Nachricht:{0}</value>
+    <value>Verschlüsselung der initialen Eingabe:{0}</value>
   </data>
   <data name="EncryptionModifiedlMsgOut" xml:space="preserve">
-    <value>Verschlüsselung veränderter Nachricht:{0}</value>
+    <value>Verschlüsselung der veränderten Eingabe:{0}</value>
   </data>
   <data name="InitialHashOutput" xml:space="preserve">
     <value>Initialer Hash-Wert:{0}</value>
@@ -533,16 +531,16 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Modifizierte Nachricht muss genauso lang sein wie die initiale Nachricht.</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
-    <value>Schlüssel muss 16 Bytes lang sein.</value>
+    <value>Schlüssel muss 16 Bytes haben.</value>
   </data>
   <data name="KeyLength256" xml:space="preserve">
-    <value>Schlüssel muss 32 Bytes lang sein.</value>
+    <value>Schlüssel muss 32 Bytes haben.</value>
   </data>
-  <data name="KeyLength92" xml:space="preserve">
-    <value>Schlüssel muss 24 Bytes lang sein.</value>
+  <data name="KeyLength192" xml:space="preserve">
+    <value>Schlüssel muss 24 Bytes haben.</value>
   </data>
   <data name="KeyLengthDES" xml:space="preserve">
-    <value>Schlüssel muss 8 Bytes sein.</value>
+    <value>Schlüssel muss 8 Bytes haben.</value>
   </data>
   <data name="University" xml:space="preserve">
     <value>Universität Mannheim</value>
@@ -563,21 +561,55 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Veränderte AES-Nachricht:{0}</value>
   </data>
   <data name="DESderivedFromInit" xml:space="preserve">
-    <value>{0}Letzter DES-Chiffretext abgeleitet aus der initialen Nachricht:{1}</value>
+    <value>{0}Letzter DES-Chiffretext abgeleitet aus der initialen Eingabe:{1}</value>
   </data>
   <data name="DESderivedFromMod" xml:space="preserve">
-    <value>Letzter DES-Chiffretext abgeleitet aus der veränderten Nachricht:{0}</value>
+    <value>Letzter DES-Chiffretext abgeleitet aus der veränderten Eingabe:{0}</value>
   </data>
   <data name="AESDerivedFromInit" xml:space="preserve">
-    <value>{0}Letzter AES-Chiffretext abgeleitet aus der initialen Nachricht:{1}</value>
+    <value>{0}Letzter AES-Chiffretext abgeleitet aus der initialen Eingabe:{1}</value>
   </data>
   <data name="AESDerivedFromMod" xml:space="preserve">
-    <value>Letzter AES-Chiffretext abgeleitet aus der veränderten Nachricht:{0}</value>
+    <value>Letzter AES-Chiffretext abgeleitet aus der veränderten Eingabe:{0}</value>
   </data>
   <data name="HashFunctionInitBin" xml:space="preserve">
     <value>Initialer Hash-Wert (binär)</value>
   </data>
   <data name="HashFunctionModBin" xml:space="preserve">
     <value>Veränderter Hash-Wert (binär)</value>
+  </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>Anleitung</value>
+  </data>
+  <data name="InstructionsPrepDescription" xml:space="preserve">
+    <value>(Die Verfahren unter dieser Kategorie sind innerhalb des Avalanche-Plugins implementiert. Auf dieser Weise kann das Plugin nicht nur die Veränderungen für den letzten Schritt, welcher das Ergebnis der kryptographischen Funktion ist, sondern auch für alle Zwischenschritte des Verschlüsselungsprozesses, zeigen.)</value>
+  </data>
+  <data name="ShowChangeTitleAES" xml:space="preserve">
+    <value>Anzeige Veränderter Eingabedaten AES-</value>
+  </data>
+  <data name="ShowChangeTitleDES" xml:space="preserve">
+    <value>Anzeige Veränderter Eingabedaten DES</value>
+  </data>
+  <data name="Title_DES" xml:space="preserve">
+    <value>Avalanche-Effekt DES</value>
+  </data>
+  <data name="ChangedInput" xml:space="preserve">
+    <value>Veränderter
+    Input</value>
+  </data>
+  <data name="OutputNotMod" xml:space="preserve">
+    <value>Eingabe nicht verändert.</value>
+  </data>
+  <data name="OutputNotModAESKey" xml:space="preserve">
+    <value>AES Schlüssel nicht verändert.</value>
+  </data>
+  <data name="OutputNotModAESMsg" xml:space="preserve">
+    <value>AES Nachricht nicht verändert.</value>
+  </data>
+  <data name="OutputNotModDESKey" xml:space="preserve">
+    <value>DES Schlüssel nicht verändert.</value>
+  </data>
+  <data name="OutputNotModDESMsg" xml:space="preserve">
+    <value>DES Nachricht nicht verändert.</value>
   </data>
 </root>

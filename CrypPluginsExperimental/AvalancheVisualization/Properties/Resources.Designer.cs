@@ -70,7 +70,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}Final AES ciphertext derived from the initial message:{1}.
+        ///   Looks up a localized string similar to {0}Final AES ciphertext derived from the initial input:{1}.
         /// </summary>
         internal static string AESDerivedFromInit {
             get {
@@ -79,7 +79,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Final AES ciphertext derived from the modified message:{0}.
+        ///   Looks up a localized string similar to Final AES ciphertext derived from the modified input:{0}.
         /// </summary>
         internal static string AESDerivedFromMod {
             get {
@@ -169,7 +169,18 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Message and key changes can be made in two ways:.
+        ///   Looks up a localized string similar to Changed
+        ///  input.
+        /// </summary>
+        internal static string ChangedInput {
+            get {
+                return ResourceManager.GetString("ChangedInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Modify input in order to proceed with the presentation.
+        ///Message and key changes can be made in two ways:.
         /// </summary>
         internal static string ChangesText {
             get {
@@ -205,17 +216,8 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cipher (hex).
-        /// </summary>
-        internal static string Cipher {
-            get {
-                return ResourceManager.GetString("Cipher", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  Encryption state of
-        ///    initial message.
+        ///      initial input.
         /// </summary>
         internal static string CipherStateInitMsg {
             get {
@@ -225,11 +227,20 @@ namespace AvalancheVisualization.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to  Encryption state of
-        /// modified message.
+        ///    modified input.
         /// </summary>
         internal static string CipherStateModMsg {
             get {
                 return ResourceManager.GetString("CipherStateModMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphertext (hex).
+        /// </summary>
+        internal static string Ciphertext {
+            get {
+                return ResourceManager.GetString("Ciphertext", resourceCulture);
             }
         }
         
@@ -297,7 +308,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}Final DES ciphertext derived from the initial message:{1}.
+        ///   Looks up a localized string similar to {0}Final DES ciphertext derived from the initial input:{1}.
         /// </summary>
         internal static string DESderivedFromInit {
             get {
@@ -306,7 +317,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Final DES ciphertext derived from the modified message:{0}.
+        ///   Looks up a localized string similar to Final DES ciphertext derived from the modified input:{0}.
         /// </summary>
         internal static string DESderivedFromMod {
             get {
@@ -360,7 +371,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption of initial message:{0}.
+        ///   Looks up a localized string similar to Encryption of initial input:{0}.
         /// </summary>
         internal static string EncryptionInitialMsgOut {
             get {
@@ -378,7 +389,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption of modified message:{0}.
+        ///   Looks up a localized string similar to Encryption of modified input:{0}.
         /// </summary>
         internal static string EncryptionModifiedlMsgOut {
             get {
@@ -621,15 +632,6 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Data.
-        /// </summary>
-        internal static string InputDataButton {
-            get {
-                return ResourceManager.GetString("InputDataButton", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Key.
         /// </summary>
         internal static string InputKey {
@@ -666,7 +668,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Data AES-.
+        ///   Looks up a localized string similar to Change Input Data AES-.
         /// </summary>
         internal static string InputTitleAES {
             get {
@@ -675,11 +677,20 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Data DES.
+        ///   Looks up a localized string similar to Change Input Data DES.
         /// </summary>
         internal static string InputTitleDES {
             get {
                 return ResourceManager.GetString("InputTitleDES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instructions.
+        /// </summary>
+        internal static string Instructions {
+            get {
+                return ResourceManager.GetString("Instructions", resourceCulture);
             }
         }
         
@@ -740,7 +751,16 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (AES, DES).
+        ///   Looks up a localized string similar to (The methods in the category &quot;Prepared methods&quot; are implemented within the Avalanche plugin. So the plugin can show the changes not only for the last step, which is the result of the cryptographic function, but for all intermediate steps throughout the encryption process.).
+        /// </summary>
+        internal static string InstructionsPrepDescription {
+            get {
+                return ResourceManager.GetString("InstructionsPrepDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  AES, DES.
         /// </summary>
         internal static string InstructionsPrepSubtitle {
             get {
@@ -767,7 +787,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Use message entry only..
+        ///   Looks up a localized string similar to  Methods in the category &quot;Unprepared methods&quot; have no  implementation within the Avalanche plugin. So the plugin  evaluates only the Avalanche effect derived from the  comparison between the initial external input and the changed external input. This is very generic. Therefore only the message entry is used..
         /// </summary>
         internal static string InstructionsUnprepBullet1 {
             get {
@@ -776,7 +796,8 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Input is received as result from other CT2 plugins..
+        ///   Looks up a localized string similar to  Input data initially shown in: 
+        /// hex format (hash functions and modern ciphers)  -  text format (classic ciphers). .
         /// </summary>
         internal static string InstructionsUnprepBullet2 {
             get {
@@ -785,7 +806,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  Input data initially shown in hex or text format, in accordance with the selection made..
+        ///   Looks up a localized string similar to  Modify Initial Input (for classic and modern ciphers the length of the message to  be evaluated by the Avalanche plugin, may not be changed)..
         /// </summary>
         internal static string InstructionsUnprepBullet3 {
             get {
@@ -794,7 +815,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (Hash functions, classic ciphers, modern ciphers).
+        ///   Looks up a localized string similar to General hash functions, classic ciphers, modern ciphers.
         /// </summary>
         internal static string InstructionsUnprepSubtitle {
             get {
@@ -822,7 +843,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key must be 16 bytes long..
+        ///   Looks up a localized string similar to Key must have 16 bytes..
         /// </summary>
         internal static string KeyLength128 {
             get {
@@ -831,7 +852,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key must be 24 bytes long..
+        ///   Looks up a localized string similar to Key must have 24 bytes..
         /// </summary>
         internal static string KeyLength192 {
             get {
@@ -840,7 +861,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key must be 32 bytes long..
+        ///   Looks up a localized string similar to Key must have 32 bytes..
         /// </summary>
         internal static string KeyLength256 {
             get {
@@ -849,7 +870,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key must be 8 bytes long..
+        ///   Looks up a localized string similar to Key must have 8 bytes..
         /// </summary>
         internal static string KeyLengthDES {
             get {
@@ -1056,6 +1077,51 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input not modified..
+        /// </summary>
+        internal static string OutputNotMod {
+            get {
+                return ResourceManager.GetString("OutputNotMod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AES key not modified..
+        /// </summary>
+        internal static string OutputNotModAESKey {
+            get {
+                return ResourceManager.GetString("OutputNotModAESKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AES message not modified..
+        /// </summary>
+        internal static string OutputNotModAESMsg {
+            get {
+                return ResourceManager.GetString("OutputNotModAESMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DES key not modified..
+        /// </summary>
+        internal static string OutputNotModDESKey {
+            get {
+                return ResourceManager.GetString("OutputNotModDESKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DES message not modified..
+        /// </summary>
+        internal static string OutputNotModDESMsg {
+            get {
+                return ResourceManager.GetString("OutputNotModDESMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flipped bits: {0}. Avalanche effect: {1}%{2}.
         /// </summary>
         internal static string OutputStats1 {
@@ -1137,7 +1203,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-128.
+        ///   Looks up a localized string similar to Encryption Results after All Rounds of AES-128.
         /// </summary>
         internal static string OverviewAES128 {
             get {
@@ -1146,7 +1212,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-192.
+        ///   Looks up a localized string similar to Encryption Results after All Rounds of AES-192.
         /// </summary>
         internal static string OverviewAES192 {
             get {
@@ -1155,7 +1221,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview of the Encryption Results after All Rounds of AES-256.
+        ///   Looks up a localized string similar to Encryption Results after All Rounds of AES-256.
         /// </summary>
         internal static string OverviewAES256 {
             get {
@@ -1174,7 +1240,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Overview of the Encryption Results after All DES Rounds.
+        ///   Looks up a localized string similar to Encryption Results after All DES Rounds.
         /// </summary>
         internal static string OverviewDES {
             get {
@@ -1255,6 +1321,24 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Changed Input Data AES-.
+        /// </summary>
+        internal static string ShowChangeTitleAES {
+            get {
+                return ResourceManager.GetString("ShowChangeTitleAES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show Changed Input Data DES.
+        /// </summary>
+        internal static string ShowChangeTitleDES {
+            get {
+                return ResourceManager.GetString("ShowChangeTitleDES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable single bit changes.
         /// </summary>
         internal static string SingleBitCheckBox {
@@ -1264,7 +1348,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Skip Instructions.
+        ///   Looks up a localized string similar to Skip instructions.
         /// </summary>
         internal static string SkipInstructions {
             get {
@@ -1386,6 +1470,15 @@ namespace AvalancheVisualization.Properties {
         internal static string Title_AES256 {
             get {
                 return ResourceManager.GetString("Title_AES256", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avalanche Effect DES.
+        /// </summary>
+        internal static string Title_DES {
+            get {
+                return ResourceManager.GetString("Title_DES", resourceCulture);
             }
         }
         

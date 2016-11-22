@@ -192,9 +192,6 @@
   <data name="InputData" xml:space="preserve">
     <value>Input Data</value>
   </data>
-  <data name="InputDataButton" xml:space="preserve">
-    <value>Input Data</value>
-  </data>
   <data name="InputKey" xml:space="preserve">
     <value>Key</value>
   </data>
@@ -208,7 +205,7 @@
     <value>Enter message or hash value</value>
   </data>
   <data name="InputTitleAES" xml:space="preserve">
-    <value>Input Data AES-</value>
+    <value>Change Input Data AES-</value>
   </data>
   <data name="InstructionsPrep" xml:space="preserve">
     <value>Prepared methods:</value>
@@ -231,7 +228,7 @@
     <value> Check avalanche effect.</value>
   </data>
   <data name="InstructionsPrepSubtitle" xml:space="preserve">
-    <value>(AES, DES)</value>
+    <value> AES, DES</value>
   </data>
   <data name="InstructionsTitle" xml:space="preserve">
     <value>Instructions</value>
@@ -240,16 +237,17 @@
     <value>Unprepared methods:</value>
   </data>
   <data name="InstructionsUnprepBullet1" xml:space="preserve">
-    <value> Use message entry only.</value>
+    <value> Methods in the category "Unprepared methods" have no  implementation within the Avalanche plugin. So the plugin  evaluates only the Avalanche effect derived from the  comparison between the initial external input and the changed external input. This is very generic. Therefore only the message entry is used.</value>
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
-    <value> Input is received as result from other CT2 plugins.</value>
+    <value> Input data initially shown in: 
+ hex format (hash functions and modern ciphers)  -  text format (classic ciphers). </value>
   </data>
   <data name="InstructionsUnprepBullet3" xml:space="preserve">
-    <value> Input data initially shown in hex or text format, in accordance with the selection made.</value>
+    <value> Modify Initial Input (for classic and modern ciphers the length of the message to  be evaluated by the Avalanche plugin, may not be changed).</value>
   </data>
   <data name="InstructionsUnprepSubtitle" xml:space="preserve">
-    <value>(Hash functions, classic ciphers, modern ciphers)</value>
+    <value>General hash functions, classic ciphers, modern ciphers</value>
   </data>
   <data name="Intro" xml:space="preserve">
     <value>A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
@@ -290,7 +288,7 @@ Overview</value>
     <value>Enable single bit changes</value>
   </data>
   <data name="SkipInstructions" xml:space="preserve">
-    <value>Skip Instructions</value>
+    <value>Skip instructions</value>
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
@@ -314,7 +312,8 @@ Overview</value>
     <value>Binary values</value>
   </data>
   <data name="ChangesText" xml:space="preserve">
-    <value>Message and key changes can be made in two ways:</value>
+    <value>Modify input in order to proceed with the presentation.
+Message and key changes can be made in two ways:</value>
   </data>
   <data name="ChangesTextBullet1" xml:space="preserve">
     <value> Modify external input feed directly.</value>
@@ -324,11 +323,11 @@ Overview</value>
   </data>
   <data name="CipherStateInitMsg" xml:space="preserve">
     <value> Encryption state of
-    initial message</value>
+      initial input</value>
   </data>
   <data name="CipherStateModMsg" xml:space="preserve">
     <value> Encryption state of
- modified message</value>
+    modified input</value>
   </data>
   <data name="ClickOnBits" xml:space="preserve">
     <value>Click on the bit(s) you'd like to flip.</value>
@@ -406,7 +405,7 @@ Overview</value>
     <value>Initial message (64 bits):</value>
   </data>
   <data name="InputTitleDES" xml:space="preserve">
-    <value>Input Data DES</value>
+    <value>Change Input Data DES</value>
   </data>
   <data name="ModKeyColon" xml:space="preserve">
     <value>Modified key:</value>
@@ -423,8 +422,8 @@ Overview</value>
   <data name="Binary" xml:space="preserve">
     <value>Binary</value>
   </data>
-  <data name="Cipher" xml:space="preserve">
-    <value>Cipher (hex)</value>
+  <data name="Ciphertext" xml:space="preserve">
+    <value>Ciphertext (hex)</value>
   </data>
   <data name="EncryptionInit" xml:space="preserve">
     <value>Encryption of init. message (bin)</value>
@@ -445,16 +444,16 @@ Overview</value>
     <value>(Modern ciphers)</value>
   </data>
   <data name="OverviewAES128" xml:space="preserve">
-    <value>Overview of the Encryption Results after All Rounds of AES-128</value>
+    <value>Encryption Results after All Rounds of AES-128</value>
   </data>
   <data name="OverviewAES192" xml:space="preserve">
-    <value>Overview of the Encryption Results after All Rounds of AES-192</value>
+    <value>Encryption Results after All Rounds of AES-192</value>
   </data>
   <data name="OverviewAES256" xml:space="preserve">
-    <value>Overview of the Encryption Results after All Rounds of AES-256</value>
+    <value>Encryption Results after All Rounds of AES-256</value>
   </data>
   <data name="OverviewDES" xml:space="preserve">
-    <value>Overview of the Encryption Results after All DES Rounds</value>
+    <value>Encryption Results after All DES Rounds</value>
   </data>
   <data name="Percentage" xml:space="preserve">
     <value>% changed</value>
@@ -469,10 +468,10 @@ Overview</value>
     <value>After round {0}:{1}</value>
   </data>
   <data name="EncryptionInitialMsgOut" xml:space="preserve">
-    <value>Encryption of initial message:{0}</value>
+    <value>Encryption of initial input:{0}</value>
   </data>
   <data name="EncryptionModifiedlMsgOut" xml:space="preserve">
-    <value>Encryption of modified message:{0}</value>
+    <value>Encryption of modified input:{0}</value>
   </data>
   <data name="InitialHashOutput" xml:space="preserve">
     <value>Initial hash value:{0}</value>
@@ -532,16 +531,16 @@ Overview</value>
     <value>Modified message must be as long as the initial message.</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
-    <value>Key must be 16 bytes long.</value>
+    <value>Key must have 16 bytes.</value>
   </data>
   <data name="KeyLength192" xml:space="preserve">
-    <value>Key must be 24 bytes long.</value>
+    <value>Key must have 24 bytes.</value>
   </data>
   <data name="KeyLength256" xml:space="preserve">
-    <value>Key must be 32 bytes long.</value>
+    <value>Key must have 32 bytes.</value>
   </data>
   <data name="KeyLengthDES" xml:space="preserve">
-    <value>Key must be 8 bytes long.</value>
+    <value>Key must have 8 bytes.</value>
   </data>
   <data name="University" xml:space="preserve">
     <value>University of Mannheim</value>
@@ -562,21 +561,55 @@ Overview</value>
     <value>Modified AES message:{0}</value>
   </data>
   <data name="DESderivedFromInit" xml:space="preserve">
-    <value>{0}Final DES ciphertext derived from the initial message:{1}</value>
+    <value>{0}Final DES ciphertext derived from the initial input:{1}</value>
   </data>
   <data name="DESderivedFromMod" xml:space="preserve">
-    <value>Final DES ciphertext derived from the modified message:{0}</value>
+    <value>Final DES ciphertext derived from the modified input:{0}</value>
   </data>
   <data name="AESDerivedFromInit" xml:space="preserve">
-    <value>{0}Final AES ciphertext derived from the initial message:{1}</value>
+    <value>{0}Final AES ciphertext derived from the initial input:{1}</value>
   </data>
   <data name="AESDerivedFromMod" xml:space="preserve">
-    <value>Final AES ciphertext derived from the modified message:{0}</value>
+    <value>Final AES ciphertext derived from the modified input:{0}</value>
   </data>
   <data name="HashFunctionInitBin" xml:space="preserve">
     <value>Initial hash value (binary)</value>
   </data>
   <data name="HashFunctionModBin" xml:space="preserve">
     <value>Modified hash value (binary)</value>
+  </data>
+  <data name="Instructions" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
+  <data name="InstructionsPrepDescription" xml:space="preserve">
+    <value>(The methods in the category "Prepared methods" are implemented within the Avalanche plugin. So the plugin can show the changes not only for the last step, which is the result of the cryptographic function, but for all intermediate steps throughout the encryption process.)</value>
+  </data>
+  <data name="ShowChangeTitleAES" xml:space="preserve">
+    <value>Show Changed Input Data AES-</value>
+  </data>
+  <data name="ShowChangeTitleDES" xml:space="preserve">
+    <value>Show Changed Input Data DES</value>
+  </data>
+  <data name="Title_DES" xml:space="preserve">
+    <value>Avalanche Effect DES</value>
+  </data>
+  <data name="ChangedInput" xml:space="preserve">
+    <value>Changed
+  input</value>
+  </data>
+  <data name="OutputNotMod" xml:space="preserve">
+    <value>Input not modified.</value>
+  </data>
+  <data name="OutputNotModAESKey" xml:space="preserve">
+    <value>AES key not modified.</value>
+  </data>
+  <data name="OutputNotModAESMsg" xml:space="preserve">
+    <value>AES message not modified.</value>
+  </data>
+  <data name="OutputNotModDESKey" xml:space="preserve">
+    <value>DES key not modified.</value>
+  </data>
+  <data name="OutputNotModDESMsg" xml:space="preserve">
+    <value>DES message not modified.</value>
   </data>
 </root>
