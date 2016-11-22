@@ -411,26 +411,26 @@
                 </local:PieChart.Effect>
             </local:PieChart>
 
-            <Canvas Name="curvedLinesCanvas" Visibility="Hidden">
-                <Path Stroke="#534b4f" StrokeThickness="3">
+            <Canvas Name="curvedLinesCanvas"  Visibility="Hidden">
+                <Path Stroke="#534b4f" StrokeThickness="2" >
                     <Path.Data>
                         <PathGeometry>
                             <PathGeometry.Figures>
-                                <PathFigure StartPoint="185,237">
+                                <PathFigure StartPoint="181,236">
                                     <!--<BezierSegment Point1="180,180" Point2="185,200" Point3="230,155"></BezierSegment>-->
-                                    <QuadraticBezierSegment Point1="180,180" Point2="240,172"/>
+                                    <QuadraticBezierSegment Point1="180,183" Point2="240,171"/>
                                 </PathFigure>
                             </PathGeometry.Figures>
                         </PathGeometry>
                     </Path.Data>
                 </Path>
 
-                <Path Stroke="#534b4f" StrokeThickness="3">
+                <Path Stroke="#534b4f" StrokeThickness="2">
                     <Path.Data>
                         <PathGeometry>
                             <PathGeometry.Figures>
-                                <PathFigure StartPoint="189,80">
-                                    <QuadraticBezierSegment Point1="190,110" Point2="240,140"></QuadraticBezierSegment>
+                                <PathFigure StartPoint="185,129">
+                                    <QuadraticBezierSegment Point1="212,138" Point2="240,140"></QuadraticBezierSegment>
                                     <!--<QuadraticBezierSegment Point1="195,150" Point2="230,120"/>-->
                                 </PathFigure>
                             </PathGeometry.Figures>
@@ -448,7 +448,7 @@
             </Polygon>
             <Polygon Name="arrow2" Grid.Row="1" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Hidden"  Margin="20,50,0,0">
             </Polygon>
-            <Polygon Name="arrow3" Grid.Row="1" Grid.ColumnSpan="2" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"  Margin="10,50,0,0">
+            <Polygon Name="arrow3" Grid.Row="1" Grid.ColumnSpan="2" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="hidden"  Margin="0,50,50,0">
             </Polygon>
             <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="{Loc SingleBitCheckBox}"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
@@ -906,9 +906,9 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedMessage}" HorizontalAlignment="Center" Margin="0,0,20,0" >
+                <TextBlock Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedMessage}" HorizontalAlignment="Center" Margin="0,0,50,0" >
                 </TextBlock>
-                <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedKey}" HorizontalAlignment="Center" Margin="0,10,30,0" >
+                <TextBlock Grid.Row="2" Style="{StaticResource textBlockStyle}" FontSize="15" Text="{Loc ModifiedKey}" HorizontalAlignment="Center" Margin="0,10,50,0" >
                 </TextBlock>
 
                 <Grid x:Name="Grid2" Grid.Row="1" Height="100" Width="160" HorizontalAlignment="Left" >
@@ -2413,7 +2413,7 @@
             </StackPanel>
 
 
-            <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="hidden"  VerticalAlignment="Center" Margin="0,15,0,70">
+            <Grid Name="afterRoundsGrid"  Grid.RowSpan="2" Visibility="Hidden"  VerticalAlignment="Center" Margin="0,15,0,70">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40" />
                     <RowDefinition Height="Auto"/>
@@ -2429,7 +2429,7 @@
                 </TextBlock>
 
 
-                <Grid Grid.Row="1"  Height="110" Width="170" VerticalAlignment="Center" >
+                <Grid Grid.Row="1"  Height="110" Width="170" VerticalAlignment="Center" Margin="0,0,15,0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -2494,7 +2494,7 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="3"  Height="110" Width="170" VerticalAlignment="Center"  >
+                <Grid Grid.Row="3"  Height="110" Width="170" VerticalAlignment="Center" Margin="0,0,15,0"  >
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
