@@ -63,6 +63,9 @@
                     <DataTemplate DataType="{x:Type misc:SuggestionContainer}">
                         <Border x:Name="Border" BorderBrush="White" BorderThickness="1.5" CornerRadius="3" Margin="2" Background="#edf5ff">
                             <Grid x:Name="Background" Background="{StaticResource ResourceKey=BackgroundNormal}" Margin="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="40"/>
                                     <ColumnDefinition Width="*"/>
@@ -71,10 +74,25 @@
                                     <Image Source="{Binding Path=Icon.Source}" Margin="2.5"></Image>
                                 </Border>
                                 <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="0">
-                                    <TextBlock Text="{Binding Path=ComponentType.Name}" TextTrimming="WordEllipsis" Foreground="#555" 
-                                               FontWeight="Bold" FontSize="14" HorizontalAlignment="Center"></TextBlock>
-                                    <TextBlock Text="{Binding Path=ConnectorName}" TextTrimming="WordEllipsis" Foreground="#555" 
-                                               HorizontalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{Binding Path=ComponentCaption}" TextTrimming="WordEllipsis" Foreground="#555" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" />
+
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="18" VerticalAlignment="Center" Margin="0,0,4,0" FontFamily="Consolas">
+                                            <TextBlock.Style>
+                                                <Style TargetType="{x:Type TextBlock}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=IsInput}" Value="true">
+                                                            <Setter Property="Text" Value="►"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Path=IsInput}" Value="false">
+                                                            <Setter Property="Text" Value="◄"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Path=ConnectorCaption}" TextTrimming="WordEllipsis" Foreground="#555" VerticalAlignment="Center" />
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -89,19 +107,14 @@
             </Setter>
         </Style>
 
-        </UserControl.Resources>
+    </UserControl.Resources>
 
-    <Border BorderBrush="White" BorderThickness="1.5" Opacity="0.8"
-                CornerRadius="3" Margin="2" Background="#edf5ff">
+    <Border BorderBrush="White" BorderThickness="1.5" Opacity="0.8" CornerRadius="3" Margin="2" Background="#edf5ff">
         <Border.Effect>
-            <DropShadowEffect BlurRadius="5" Opacity="0.5" ShadowDepth="0"></DropShadowEffect>
+            <DropShadowEffect BlurRadius="5" Opacity="0.5" ShadowDepth="0" />
         </Border.Effect>
         <Grid x:Name="Background" Background="{StaticResource ResourceKey=BackgroundNormal}" VerticalAlignment="Top" Margin="2" HorizontalAlignment="Stretch">
-            <ListView x:Name="TopUsages" ItemsSource="{Binding Path=Suggestions}" 
-                          Style="{StaticResource ResourceKey=ComponentListStyle}"
-                          SelectionMode="Single">
-
-            </ListView>
+            <ListView x:Name="TopUsages" ItemsSource="{Binding Path=Suggestions}" Style="{StaticResource ResourceKey=ComponentListStyle}" SelectionMode="Single"/>
         </Grid>
     </Border>
 

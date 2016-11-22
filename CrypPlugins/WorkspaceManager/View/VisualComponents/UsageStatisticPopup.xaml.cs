@@ -156,33 +156,19 @@ namespace WorkspaceManager.View.VisualComponents
 
         void _editorSelectedConnectorChanged(object sender, EventArgs e)
         {
-            if (!Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition)
-                return;
+            if (!Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_ShowComponentConnectionProposition) return;
 
             window = Window.GetWindow(_editor);
-            if (window != null)
-            {
-                if (_editor.SelectedConnector == null)
-                {
-                    return;
-                }
-                SelectedConnector = this._editor.SelectedConnector;
+            if (window == null) return;
 
-                Suggestions = new ObservableCollection<SuggestionContainer>();
-                var list = ComponentConnectionStatistics.GetMostlyUsedComponentsFromConnector(SelectedConnector.Model.PluginModel.PluginType, SelectedConnector.Model.GetName());
-                
-                if (list == null)
-                {
-                    //we have no connectors accociated with this one. So we show AN EMPTY list...                    
-                    return;
-                }
-                foreach (var componentConnector in list)
-                {
-                    Type t = componentConnector.Component;
-                    string name = componentConnector.ConnectorName;
-                    Suggestions.Add(new SuggestionContainer(name, t));
-                }
-            }
+            if (_editor.SelectedConnector == null) return;
+            SelectedConnector = _editor.SelectedConnector;
+
+            var list = ComponentConnectionStatistics.GetMostlyUsedComponentsFromConnector(SelectedConnector.Model.PluginModel.PluginType, SelectedConnector.Model.GetName());
+
+            Suggestions = list != null
+                ? new ObservableCollection<SuggestionContainer>(list.Select(c => new SuggestionContainer(c.ConnectorName, c.Component)))
+                : new ObservableCollection<SuggestionContainer>();
         }
 
         private void Close()
@@ -203,31 +189,47 @@ namespace WorkspaceManager.View.VisualComponents
         {
             if (componentType == null) throw new ArgumentNullException("componentType");
 
-            ComponentType = componentType;
-            _plugin = componentType.CreateComponentInstance();
-            _icon = _plugin.GetImage(0);
-
             ConnectorName = connectorName;
+            ComponentType = componentType;
 
+            try
+            {
+                PluginInfoAttribute pluginfo = PluginExtension.GetPluginInfoAttribute(componentType);
+                pluginfo.PluginType = componentType;
+                ComponentCaption = pluginfo.Caption;
+
+                var propinfo = componentType.GetProperty(connectorName);
+                PropertyInfoAttribute attr = ((PropertyInfoAttribute[])propinfo.GetCustomAttributes(typeof(PropertyInfoAttribute), false))[0];
+                attr.PluginType = componentType;
+                ConnectorCaption = attr.Caption;
+
+                IsInput = attr.Direction == Direction.InputData;
+                
+                Icon = componentType.CreateComponentInstance().GetImage(0);
+            }
+            catch (Exception ex)
+            {
+                ComponentCaption = componentType.Name;
+                ConnectorCaption = connectorName;
+            }
         }
 
         public SuggestionContainer()
         {
             // TODO: Complete member initialization
         }
+        
+        public Image Icon { get; private set; }
+        public bool IsInput { get; private set; }
 
-        private ICrypComponent _plugin;
-        private Image _icon;
+        // language dependent names as used in connector statistics popup
+        public string ComponentCaption { get; set; }
+        public string ConnectorCaption { get; set; }
 
-        public Image Icon
-        {
-            get { return _icon; }
-        }
-
-        public string ConnectorName { get; set; }
-
+        // language independent names as used in component statistics file ccs.xml
         public Type ComponentType { get; set; }
-
+        public string ConnectorName { get; set; }
+        
         public string Test { get; set; }
     }
 
