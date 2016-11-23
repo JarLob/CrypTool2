@@ -189,7 +189,7 @@ namespace Cryptool.Core
                 }
                 catch (BadImageFormatException)
                 {
-                  SendExceptionMessage(string.Format(Resources.Exceptions.non_plugin_file, fileInfo.Name));
+                  SendExceptionMessage(string.Format(Resources.Exceptions.non_plugin_file, fileInfo.FullName));
                 }
                 catch (Exception ex)
                 {
