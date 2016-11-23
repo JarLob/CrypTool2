@@ -33,6 +33,8 @@ namespace OnlineDocumentationGenerator
             var currentCulture = Thread.CurrentThread.CurrentCulture;
             var currentUICulture = Thread.CurrentThread.CurrentUICulture;
 
+            generator.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
+
             try
             {
                 generator.OutputDir = baseDir;

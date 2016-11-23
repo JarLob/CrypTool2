@@ -378,23 +378,29 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             {
                 foreach (var lang in documentationPage.AvailableLanguages)
                 {
-                    var localizedEntityDocumentationPage = documentationPage.Localizations[lang];
+                    try {
+                        var localizedEntityDocumentationPage = documentationPage.Localizations[lang];
 
-                    var cultureInfo = new CultureInfo(lang);
-                    Thread.CurrentThread.CurrentCulture = cultureInfo;
-                    Thread.CurrentThread.CurrentUICulture = cultureInfo;
+                        var cultureInfo = new CultureInfo(lang);
+                        Thread.CurrentThread.CurrentCulture = cultureInfo;
+                        Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-                    var html = TagReplacer.ReplaceLanguageSwitchs(GetDocumentationTemplate(documentationPage), lang);
-                    html = TagReplacer.ReplaceDocItemTags(html, localizedEntityDocumentationPage, _objectConverter);
-                    var languageSelectionCode = GenerateLanguageSelectionCode(documentationPage, documentationPage.AvailableLanguages, lang);
-                    html = TagReplacer.ReplaceLanguageSelectionTag(html, languageSelectionCode);
-                    var localizedComponentDocumentationPage = localizedEntityDocumentationPage as LocalizedComponentDocumentationPage;
-                    if(localizedComponentDocumentationPage != null)
-                    {
-                        html = TagReplacer.ReplaceSectionSwitchs(html, localizedComponentDocumentationPage);
+                        var html = TagReplacer.ReplaceLanguageSwitchs(GetDocumentationTemplate(documentationPage), lang);
+                        html = TagReplacer.ReplaceDocItemTags(html, localizedEntityDocumentationPage, _objectConverter);
+                        var languageSelectionCode = GenerateLanguageSelectionCode(documentationPage, documentationPage.AvailableLanguages, lang);
+                        html = TagReplacer.ReplaceLanguageSelectionTag(html, languageSelectionCode);
+                        var localizedComponentDocumentationPage = localizedEntityDocumentationPage as LocalizedComponentDocumentationPage;
+                        if (localizedComponentDocumentationPage != null)
+                        {
+                            html = TagReplacer.ReplaceSectionSwitchs(html, localizedComponentDocumentationPage);
+                        }
+                        var filename = documentationPage.Localizations[lang].FilePath;
+                        StoreDocPage(html, filename);
                     }
-                    var filename = documentationPage.Localizations[lang].FilePath;
-                    StoreDocPage(html, filename);
+                    catch(Exception ex)
+                    {
+                        GuiLogMessage(ex.Message, NotificationLevel.Error);
+                    }
                 }
             }
         }
