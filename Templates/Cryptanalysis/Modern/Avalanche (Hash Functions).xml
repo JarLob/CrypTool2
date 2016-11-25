@@ -14,7 +14,7 @@
   <icon file="Avalanche.PNG" />
 
   <relevantPlugins>
-    <plugin name="Avalanche" />
+    <plugin name="AvalancheVisualization" />
   </relevantPlugins>
 
   <replacements lang="de">
