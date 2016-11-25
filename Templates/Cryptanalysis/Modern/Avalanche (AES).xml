@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Avalanche (AES)</title>
+  <summary lang="en">This template demonstrates the avalanche effect in the AES cipher.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in the AES cipher.</description>
+  <keywords>Avalanche, Analysis</keywords>
+
+  <title lang="de">Avalanche (AES)</title>
+  <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei der AES-Chiffre.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt in der AES-Chiffre demonstrieren kann.</description>
+  <keywords lang="de">Analyse</keywords>
+
+  <icon file="Avalanche.PNG" />
+
+  <relevantPlugins>
+    <plugin name="Avalanche" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
+    <replacement key="$AES Key (hex)$" value="AES-Schlüssel (hex)"/>
+    <replacement key="$AES Plaintext$" value="AES-Klartext"/>
+    <replacement key="$String Decoder$" value="String-Dekodierer"/>
+    <replacement key="$Generated Data$" value="Generierte Daten"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
+    <replacement key="$AES Key (hex)$" value="AES Key (hex)"/>
+    <replacement key="$AES Plaintext$" value="AES Plaintext"/>
+    <replacement key="$String Decoder$" value="String Decoder"/>
+    <replacement key="$Generated Data$" value="Generated Data"/>
+  </replacements>
+
+</sample>
