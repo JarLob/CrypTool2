@@ -528,7 +528,7 @@ Message and key changes can be made in two ways:</value>
     <value> Length of longest flipped byte sequence: {0}. Offset {1}.</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Modified message ({0} characters) must be as long as the initial message ({0} charachters).</value>
+    <value>Modified message ({0} characters) must be as long as the initial message ({0} characters).</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
     <value>Key must have 16 bytes.</value>
