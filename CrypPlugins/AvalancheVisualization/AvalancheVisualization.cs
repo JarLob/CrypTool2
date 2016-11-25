@@ -168,20 +168,13 @@ namespace Cryptool.Plugins.AvalancheVisualization
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
         /// 
-        public void d_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-
-
-            GuiLogMessage("property changed", NotificationLevel.Info);
-            //Console.WriteLine(string.Format("Property {0} just changed", e.PropertyName));
-        }
-
+    
 
         public void Execute()
         {
             ProgressChanged(0, 1);
 
-            // byte[] buffer = new byte[UnchangedCipher.Length];
+          
             textInput = new byte[Text.Length];
             running = true;
 
@@ -205,10 +198,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             reader.Read(keyInput);
                         }
 
-                        /*  pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                          {
-                              pres.ContinueHomeScreen.Visibility = Visibility.Visible;
-                          }, null);*/
+                
 
                         if (settings.PrepSelection == 0)
                         {
@@ -221,8 +211,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                             bool valid = validSize();
 
                             string inputMessage = Encoding.Default.GetString(textInput);
-
-
 
 
 
@@ -273,8 +261,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                     {
                                     //  pres.setAndLoadButtons();
-
-
                                 }, null);
 
 
@@ -397,9 +383,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                     {
-
                                     // pres.setAndLoadButtons();
-
                                 }, null);
 
 
@@ -437,7 +421,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                            pres.instructions();
 
                                        pres.loadInitialState(textInput, keyInput);
-
 
                                    }, null);
 
@@ -567,7 +550,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                         }
                                         else
                                         {
-                                            GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
+                                            GuiLogMessage(string.Format(Resources.Warning,pres.unchangedCipher.Length), NotificationLevel.Warning);
                                         }
                                     }
                                     else if (!textChanged && !pres.canModifyOthers)
@@ -628,7 +611,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                        }
                                        else
                                        {
-                                           GuiLogMessage(Resources.Warning, NotificationLevel.Warning);
+                                           GuiLogMessage(string.Format(Resources.Warning, pres.unchangedCipher.Length), NotificationLevel.Warning);
                                        }
                                    }
                                    else if (!textChanged && !pres.canModifyOthers)

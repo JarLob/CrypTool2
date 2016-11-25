@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Avalanche (classic ciphers)</title>
+  <summary lang="en">This template demonstrates the avalanche effect in classic ciphers.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in classic ciphers.</description>
+  <keywords>Avalanche, Analysis, classic</keywords>
+
+  <title lang="de">Avalanche (klassische Verfahren)</title>
+  <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei klassischen Verschlüsselungsverfahren.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt bei klassischen Verschlüsselungsverfahren demonstrieren kann.</description>
+  <keywords lang="de">Avalanche, Analyse, klassische</keywords>
+
+  <icon file="Avalanche.PNG" />
+
+  <relevantPlugins>
+    <plugin name="Avalanche" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Generated Data$" value="Generierte Daten"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Generated Data$" value="Generated Data"/>
+  </replacements>
+
+</sample>

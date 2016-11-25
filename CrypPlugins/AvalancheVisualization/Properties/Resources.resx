@@ -215,11 +215,11 @@
   </data>
   <data name="InstructionsPrepBullet2" xml:space="preserve">
     <value> Provide key in hex format:
- 16, 24, or 32 bytes (AES)   -    8 bytes (DES).</value>
+ 16, 24, or 32 bytes (AES)   --    8 bytes (DES).</value>
   </data>
   <data name="InstructionsPrepBullet3" xml:space="preserve">
     <value> Input data initially shown in:
- Hex and binary format (AES)    -    binary format (DES).</value>
+ Hex and binary format (AES)    --   binary format (DES).</value>
   </data>
   <data name="InstructionsPrepBullet4" xml:space="preserve">
     <value> Modify initial input.</value>
@@ -241,7 +241,7 @@
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
     <value> Input data initially shown in: 
- hex format (hash functions and modern ciphers)  -  text format (classic ciphers). </value>
+ hex format (hash functions and modern ciphers)  --  text format (classic ciphers). </value>
   </data>
   <data name="InstructionsUnprepBullet3" xml:space="preserve">
     <value> Modify initial input (for classic and modern ciphers, the length of the message to be evaluated by the Avalanche plugin may not be changed).</value>
@@ -528,7 +528,7 @@ Message and key changes can be made in two ways:</value>
     <value> Length of longest flipped byte sequence: {0}. Offset {1}.</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Modified message must be as long as the initial message.</value>
+    <value>Modified message ({0} characters) must be as long as the initial message ({0} charachters).</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
     <value>Key must have 16 bytes.</value>
@@ -582,7 +582,7 @@ Message and key changes can be made in two ways:</value>
     <value>Instructions</value>
   </data>
   <data name="InstructionsPrepDescription" xml:space="preserve">
-    <value>(Methods in the category "Prepared methods" are implemented within the Avalanche plugin. So the plugin can show the changes not only for the result of the cryptographic function (last step), but also for all intermediate steps.)</value>
+    <value>Methods in the category "Prepared methods" are implemented within the Avalanche plugin. So the plugin can show the changes not only for the result of the cryptographic function (last step), but also for all intermediate steps.</value>
   </data>
   <data name="ShowChangeTitleAES" xml:space="preserve">
     <value>Show Changed Input Data AES-</value>

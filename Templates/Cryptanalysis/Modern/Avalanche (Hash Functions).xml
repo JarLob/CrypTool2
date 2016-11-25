@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Avalanche (hash functions)</title>
+  <summary lang="en">This template demonstrates the avalanche effect in general hash functions.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in general hash functions.</description>
+  <keywords lang="en">Avalanche, Analysis, hash functions</keywords>
+
+  <title lang="de">Avalanche (Hashverfahren)</title>
+  <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei Hashverfahren.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt bei Hashverfahren demonstrieren kann.</description>
+  <keywords lang="de">Avalanche, Analyse, Hashverfahren</keywords>
+
+  <icon file="Avalanche.PNG" />
+
+  <relevantPlugins>
+    <plugin name="Avalanche" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Generated Data$" value="Generierte Daten"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Generated Data$" value="Generated Data"/>
+  </replacements>
+
+</sample>

@@ -215,11 +215,11 @@
   </data>
   <data name="InstructionsPrepBullet2" xml:space="preserve">
     <value> Schlüssel im Hex-Format eingeben:
- 16, 24, oder 32 bytes (AES)   -    8 bytes (DES).</value>
+ 16, 24 oder 32 Bytes (AES)   --   8 Bytes (DES).</value>
   </data>
   <data name="InstructionsPrepBullet3" xml:space="preserve">
     <value> Dateneingaben werden zuerst wie folgt angezeigt:
- Hex- und Binär-Format (AES)    -    Binär-Format (DES).</value>
+ Hex- und Binär-Format (AES)  --  Binär-Format (DES).</value>
   </data>
   <data name="InstructionsPrepBullet4" xml:space="preserve">
     <value> Initiale Eingabe modifizieren.</value>
@@ -237,11 +237,11 @@
     <value>Nicht-aufbereitete Verfahren:</value>
   </data>
   <data name="InstructionsUnprepBullet1" xml:space="preserve">
-    <value> Methoden unter dieser Kategorie sind nicht im Avalanche-Plugin implementiert. Deswegen berechnet das Plugin den Avalanche-Effekt nur aus dem Vergleich zwischen der initialen und der veränderten externen Eingabe. Dies ist sehr generisch. Hier wird nur die Nachricht-Eingabe verwendet. </value>
+    <value> Methoden unter der Kategorie "Nicht-aufbereitete Verfahren" sind nicht im Avalanche-Plugin implementiert. Deswegen berechnet das Plugin den Avalanche-Effekt nur aus dem Vergleich zwischen der initialen und der veränderten externen Eingabe. Dies ist sehr generisch. Hier wird nur die Nachricht-Eingabe verwendet. </value>
   </data>
   <data name="InstructionsUnprepBullet2" xml:space="preserve">
     <value> Eingabedaten werden zuerst wie folgt angezeigt: 
- Hex-Format  (moderne und Hash-Verfahren)  -  Text-Format (klassische Verfahren).</value>
+ Hex-Format  (moderne und Hash-Verfahren)  -- Text-Format (klassische Verfahren).</value>
   </data>
   <data name="InstructionsUnprepBullet3" xml:space="preserve">
     <value> Initiale Eingabe modifizieren (bei klassischen und modernen Verfahren darf die Länge der modifizierten Nachricht nicht geändert werden) .</value>
@@ -528,7 +528,7 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value> Länge der längsten Sequenz geflippter Bytes: {0}. Offset {1}.</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Modifizierte Nachricht muss genauso lang sein wie die initiale Nachricht.</value>
+    <value>Modifizierte Nachricht ({0} Zeichen) muss genauso lang sein wie die initiale Nachricht ({0} Zeichen).</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
     <value>Schlüssel muss 16 Bytes haben.</value>
@@ -582,7 +582,7 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value>Anleitung</value>
   </data>
   <data name="InstructionsPrepDescription" xml:space="preserve">
-    <value>(Die Verfahren unter dieser Kategorie sind innerhalb des Avalanche-Plugins implementiert. Deshalb kann das Plugin nicht nur die Veränderungen beim Endergebnis der kryptographischen Funktion (letzter Schritt) anzeigen, sondern auch für alle Zwischenschritte.)</value>
+    <value>Die Verfahren unter der Kategorie "Aufbereitete Verfahren" sind innerhalb des Avalanche-Plugins implementiert. Deshalb kann das Plugin nicht nur die Veränderungen beim Endergebnis der kryptographischen Funktion (letzter Schritt) anzeigen, sondern auch für alle Zwischenschritte.</value>
   </data>
   <data name="ShowChangeTitleAES" xml:space="preserve">
     <value>Anzeige veränderter Eingabedaten AES-</value>

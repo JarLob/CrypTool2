@@ -4,12 +4,12 @@
   <title lang="en">Avalanche (AES)</title>
   <summary lang="en">This template demonstrates the avalanche effect in the AES cipher.</summary>
   <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in the AES cipher.</description>
-  <keywords>Avalanche, Analysis</keywords>
+  <keywords>Avalanche, Analysis, AES</keywords>
 
   <title lang="de">Avalanche (AES)</title>
   <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei der AES-Chiffre.</summary>
   <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt in der AES-Chiffre demonstrieren kann.</description>
-  <keywords lang="de">Analyse</keywords>
+  <keywords lang="de">Avalanche, Analyse, AES</keywords>
 
   <icon file="Avalanche.PNG" />
 
