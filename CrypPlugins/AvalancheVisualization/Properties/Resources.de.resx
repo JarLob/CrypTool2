@@ -528,7 +528,7 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value> Länge der längsten Sequenz geflippter Bytes: {0}. Offset {1}.</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Modifizierte Nachricht ({0} Zeichen) muss genauso lang sein wie die initiale Nachricht ({0} Zeichen).</value>
+    <value>Modifizierte Nachricht ({0} Zeichen) muss genauso lang sein wie die initiale Nachricht ({1} Zeichen).</value>
   </data>
   <data name="KeyLength128" xml:space="preserve">
     <value>Schlüssel muss 16 Bytes haben.</value>

@@ -1519,7 +1519,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Modified message ({0} characters) must be as long as the initial message ({0} characters). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modified message ({0} characters) must be as long as the initial message ({1} characters). ähnelt.
         /// </summary>
         internal static string Warning {
             get {

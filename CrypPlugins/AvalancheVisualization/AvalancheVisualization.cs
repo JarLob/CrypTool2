@@ -550,7 +550,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                         }
                                         else
                                         {
-                                            GuiLogMessage(string.Format(Resources.Warning,pres.unchangedCipher.Length), NotificationLevel.Warning);
+                                            GuiLogMessage(string.Format(Resources.Warning,textInput.Length, pres.unchangedCipher.Length), NotificationLevel.Warning);
                                         }
                                     }
                                     else if (!textChanged && !pres.canModifyOthers)
@@ -611,7 +611,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                        }
                                        else
                                        {
-                                           GuiLogMessage(string.Format(Resources.Warning, pres.unchangedCipher.Length), NotificationLevel.Warning);
+                                           GuiLogMessage(string.Format(Resources.Warning, textInput.Length, pres.unchangedCipher.Length), NotificationLevel.Warning);
                                        }
                                    }
                                    else if (!textChanged && !pres.canModifyOthers)
