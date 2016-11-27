@@ -703,13 +703,10 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         public void progress()
         {
-            while (running)
-            {
-                // if (pres.desCheckBox.IsChecked == true)
+            while (running)          
                 ProgressChanged(pres.progress, 1);
 
-            }
-
+        
         }
 
         public void streamOut()
@@ -724,22 +721,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
             }
-            /* using (CStreamWriter writer = new CStreamWriter())
-             {
-
-                 OutputStream = writer;
-                 buttonNextClickedEvent.WaitOne();
-
-                 writer.Write(generatedData(0));
-                 writer.Write(generatedData(1));
-                 writer.Write(generatedData(2));
-
-                 OnPropertyChanged("OutputStream");
-                 writer.Close();
-             }*/
-
-
-
+         
         }
 
         public string[] sequence(Tuple<string, string> strTuple)
@@ -956,8 +938,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
 
 
-
-
                         string finalstrAES = string.Format("{0}{1}{2}{3}", finalAESInitial, finalInitial, finalAESModified, finalModified);
 
                         sl.Add(finalstrAES);
@@ -1151,8 +1131,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                         //hash & modern
 
-
-
                         var strings = pres.binaryStrings(pres.unchangedCipher, pres.changedCipher);
                         int bitsFlipped = pres.nrOfBitsFlipped(pres.unchangedCipher, pres.changedCipher);
                         double avalanche = pres.calcAvalancheEffect(bitsFlipped, strings);
@@ -1197,11 +1175,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         sl.Add(inputStr);
 
 
-
-
                         //classic
-
-
 
                         var strings = pres.binaryStrings(pres.unchangedCipher, pres.changedCipher);
                         int nrBytesFlipped = pres.bytesFlipped();
@@ -1214,9 +1188,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         string identSeq = string.Format(Resources.OutputStatsClassic2, lengthIdentSequence, pres.sequencePosition, Environment.NewLine);
                         string flippedSeq = string.Format(Resources.OutputStatsClassic3, lengthFlippedSequence, pres.flippedSeqPosition, Environment.NewLine);
 
-                        //byte[] statsArray = Encoding.UTF8.GetBytes(string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq));
+                    
                         string statsStr = string.Format("{0}{1}{2}", flippedBits, identSeq, flippedSeq);
-                        //bl.Add(statsArray);
+                
                         sl.Add(statsStr);
                     }
 
@@ -1249,6 +1223,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         public bool validSize()
         {
+
 
             if (pres.mode == 0)
             {
