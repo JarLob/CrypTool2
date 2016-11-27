@@ -733,7 +733,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  Modify initial input. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  Modify initial input (modifications are not taken into account if you are already checking the avalanche effect after each round). ähnelt.
         /// </summary>
         internal static string InstructionsPrepBullet4 {
             get {
