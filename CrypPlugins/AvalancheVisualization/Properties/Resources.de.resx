@@ -222,7 +222,7 @@
  Hex- und Binär-Format (AES)  --  Binär-Format (DES).</value>
   </data>
   <data name="InstructionsPrepBullet4" xml:space="preserve">
-    <value> Initiale Eingabe modifizieren (Veränderungen werden nicht berücksichtigt, wenn man sich bereits am Testen des Avalanche-Effekts nach jeder Runde befindet).</value>
+    <value> Initiale Eingabe modifizieren (wirkt nur, wenn die Maske "Ändern der Eingabe" angezeigt wird. Auch die Veränderungen an der externen Eingabe werden nicht berücksichtigt, wenn man sich bereits am Testen des Avalanche-Effekts nach jeder Runde befindet).</value>
   </data>
   <data name="InstructionsPrepBullet5" xml:space="preserve">
     <value> Avalanche-Effekt testen.</value>

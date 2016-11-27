@@ -222,10 +222,10 @@
  Hex and binary format (AES)    --   binary format (DES).</value>
   </data>
   <data name="InstructionsPrepBullet4" xml:space="preserve">
-    <value> Modify initial input (modifications are not taken into account if you are already checking the avalanche effect after each round).</value>
+    <value> Modify initial input (only effective when the screen "Change Input Data" is shown. Modifications from the external input are also not taken into account if you are already checking the Avalanche effect after each round).</value>
   </data>
   <data name="InstructionsPrepBullet5" xml:space="preserve">
-    <value> Check avalanche effect.</value>
+    <value> Check Avalanche effect.</value>
   </data>
   <data name="InstructionsPrepSubtitle" xml:space="preserve">
     <value> AES, DES</value>
