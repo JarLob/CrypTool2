@@ -192,20 +192,20 @@ namespace Cryptool.Plugins.Convertor
                     break;
 
                 case StringDecoderSettings.PresentationFormat.Octal:
-                    outputBytes = ToByteArray(value, ".{1,3}", "[^0-7]", 8);
+                    outputBytes = ToByteArray(value, 3, "[^0-7]", 8);
                     break;
 
                 case StringDecoderSettings.PresentationFormat.Decimal:
-                    outputBytes = ToByteArray(value, ".{1,3}", "[^0-9]", 10);
+                    outputBytes = ToByteArray(value, 3, "[^0-9]", 10);
                     break;
 
                 case StringDecoderSettings.PresentationFormat.Binary:
 
-                    outputBytes = ToByteArray(value, ".{1,8}", "[^01]", 2);
+                    outputBytes = ToByteArray(value, 8, "[^01]", 2);
                     break;
 
                 case StringDecoderSettings.PresentationFormat.Hex:
-                    outputBytes = ToByteArray(value, ".{1,2}", "[^a-fA-F0-9]", 16);
+                    outputBytes = ToByteArray(value, 2, "[^a-fA-F0-9]", 16);
                     break;
 
                 case StringDecoderSettings.PresentationFormat.Text:
@@ -224,29 +224,26 @@ namespace Cryptool.Plugins.Convertor
             OnPropertyChanged("OutputStream");
         }
 
-        private byte[] ToByteArray(string input, string pattern, string removepattern, int b)
+        private byte[] ToByteArray(string input, int blocksize, string removepattern, int b)
         {
             string[] matches;
 
             if (settings.UseSeparators)
             {
-                matches = input.Split((settings.Separators+"\n\r").ToCharArray(),StringSplitOptions.RemoveEmptyEntries);
+                matches = input.Split((settings.Separators + "\n\r").ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
             }
             else
             {
                 input = new Regex(removepattern).Replace(input, "");
-                MatchCollection matchcoll = new Regex(pattern).Matches(input);
-                matches = new string[matchcoll.Count];
-                for(int i=0;i<matchcoll.Count;i++)
-                    matches[i] = matchcoll[i].Value;
+                if (input.Length % blocksize != 0) {
+                    string prefix = new String('0', (blocksize - input.Length % blocksize) % blocksize);
+                    input = prefix + input;
+                }
+                string pattern = String.Format(".{{{0}}}", blocksize);
+                matches = new Regex(pattern).Matches(input).Cast<Match>().Select(m => m.Value).ToArray();
             }
 
-            byte[] bytes = new byte[matches.Length];
-
-            for (int i = 0; i < matches.Length; i++)
-                bytes[i] = Convert.ToByte(matches[i], b);
-            
-            return bytes;
+            return matches.Select(m => Convert.ToByte(m, b)).ToArray();
         }
 
         private void ShowStatusBarMessage(string message, NotificationLevel logLevel)
