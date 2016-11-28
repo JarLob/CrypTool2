@@ -3748,7 +3748,8 @@ namespace AESVisualisation
                             startTextBlock1.Visibility = Visibility.Hidden;
                             startTextBlock2.Visibility = Visibility.Hidden;
                             startGrid.Visibility = Visibility.Visible;
-                            Intro1ENImage.Visibility = Visibility.Hidden;
+                            introGrid.Visibility = Visibility.Hidden;
+                            //Intro1ENImage.Visibility = Visibility.Hidden;
                             Intro1ENTextBlock.Visibility = Visibility.Hidden;
                             introTextBlock.Visibility = Visibility.Visible;
                             introTextBlock1.Visibility = Visibility.Visible;
@@ -3763,7 +3764,8 @@ namespace AESVisualisation
                             introTextBlock.Visibility = Visibility.Hidden;
                             introTextBlock1.Visibility = Visibility.Hidden;
                             startGrid.Visibility = Visibility.Visible;
-                            Intro1ENImage.Visibility = Visibility.Visible;
+                            //Intro1ENImage.Visibility = Visibility.Visible;
+                            introGrid.Visibility = Visibility.Visible;
                             Intro1ENTextBlock.Visibility = Visibility.Visible;
                             Intro3ENImage.Visibility = Visibility.Hidden;
                             Intro2ENTextBlock.Visibility = Visibility.Hidden;
@@ -3775,7 +3777,8 @@ namespace AESVisualisation
                     case 3:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            Intro1ENImage.Visibility = Visibility.Hidden;
+                            //Intro1ENImage.Visibility = Visibility.Hidden;
+                            introGrid.Visibility = Visibility.Hidden;
                             Intro1ENTextBlock.Visibility = Visibility.Hidden;
                             Intro3ENImage.Visibility = Visibility.Visible;
                             Intro2ENTextBlock.Visibility = Visibility.Visible;
@@ -6235,6 +6238,7 @@ namespace AESVisualisation
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 invisible();
+                introGrid.Visibility = Visibility.Hidden;
                 InitialRoundTextBlock.Visibility = Visibility.Hidden;
                 addKeyButton.SetValue(Grid.ColumnProperty, 4);
                 subByteButton.SetValue(Grid.ColumnProperty, 1);
@@ -6253,7 +6257,7 @@ namespace AESVisualisation
                 Intro1DEImage.Visibility = Visibility.Hidden;
                 Intro2DEImage.Visibility = Visibility.Hidden;
                 Intro3DEImage.Visibility = Visibility.Hidden;
-                Intro1ENImage.Visibility = Visibility.Hidden;
+                //Intro1ENImage.Visibility = Visibility.Hidden;
                 Intro1ENTextBlock.Visibility = Visibility.Hidden;
                 Intro2ENTextBlock.Visibility = Visibility.Hidden;
                 Intro3ENImage.Visibility = Visibility.Hidden;

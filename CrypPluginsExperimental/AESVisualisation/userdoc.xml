@@ -101,7 +101,7 @@
     <section headline="Verschlüsselung">
       Der zweite Teil ist die eigentliche Verschlüsselung.<newline/>
       Während der Verschlüsselung erscheinen (nach der Initialrunde) vier weitere Buttons am oberen Rand des Plugins.<newline/>
-      Diese lassen den User durch die verschiedenen Operationen einer Runde sprigen.<newline/>
+      Mit ihnen kann der User durch die verschiedenen Operationen einer Runde springen.<newline/>
       Werden als Schlüssellänge 192 oder 256 bits gewählt, erscheinen außerdem noch zwei weitere Buttons, mit deren Hilfe man durch die Runden-Buttons schalten kann.<newline/>
       Der Button unten links bringt einen nun zurück zur Schlüsselerweiterung.
     </section>

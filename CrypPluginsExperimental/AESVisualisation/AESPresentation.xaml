@@ -83,25 +83,44 @@
                 <ColumnDefinition Width="80*" />
                 <ColumnDefinition Width="80*" />
             </Grid.ColumnDefinitions>
-            <Image Name="Intro1ENImage" Source="images/Intro1EN.png" Visibility="Hidden" Grid.Row="2" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <Viewbox Stretch="Uniform" Grid.Row="1" Grid.RowSpan="1" Grid.Column="0" Grid.ColumnSpan="11">
-                <TextBlock Name="Intro1ENTextBlock" TextWrapping="Wrap" Width="200" Visibility="Hidden" Text="{Loc introTextBlock}"/>
-                <!--AES is a modern block cipher. <LineBreak/>
-                        AES takes two inputs. The plaintext that is to be encrypted and a key. <LineBreak/>
-                        After the encryption AES outputs the ciphertext.
-                    </TextBlock>-->
+            <Grid Name="introGrid" Visibility="Hidden" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="11">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                    <ColumnDefinition Width="80*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="16*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="68*"/>
+                </Grid.RowDefinitions>
+                <Image Name="Intro1ENImage" Source="images/AES-Graph.jpg" Visibility="Visible" Margin="50,0,50,0" Grid.Column="0" Grid.ColumnSpan="11" Grid.Row="0" Grid.RowSpan="5"/>
+                <Viewbox Grid.Column="5" Grid.ColumnSpan="1" Grid.Row="1" Grid.RowSpan="1" Stretch="Uniform">
+                    <TextBlock Name="KeyText" TextWrapping="Wrap" Width="80" Visibility="Visible" Text="{Loc KeyText}" />
+                </Viewbox>
+                <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="1" Stretch="Uniform">
+                    <TextBlock Name="PlainText" TextWrapping="Wrap" Width="50" Visibility="Visible" Text="{Loc Plaintext}"/>
+                </Viewbox>
+                <Viewbox Grid.Column="8" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="1" Stretch="Uniform">
+                    <TextBlock Name="CipherText" TextWrapping="Wrap" Width="80" Visibility="Visible" Text="{Loc Ciphertext}"/>
+                </Viewbox>
+            </Grid>
+            <Viewbox Stretch="Uniform" Grid.Row="1" Grid.RowSpan="1" Grid.Column="1" Grid.ColumnSpan="9">
+                <TextBlock Name="Intro1ENTextBlock" TextWrapping="Wrap" Width="300" Visibility="Hidden" Text="{Loc introTextBlock}"/>
             </Viewbox>
             <Image Name="Intro3ENImage" Source="images/AES_Fig_1.jpg" Visibility="Hidden" Margin="0,20,0,20" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Center" VerticalAlignment="Center"  />
             <Viewbox Grid.Column="6" Grid.ColumnSpan="4" Grid.Row="0" Grid.RowSpan="3"  Stretch="Uniform">
                 <TextBlock Name="Intro2ENTextBlock" TextWrapping="Wrap" Width="180" Visibility="Hidden" Text="{Loc introTextBlock1}"/>
-                <!--AES starts with the "Key Expansion" in which round keys are derived from the original key. <LineBreak/>
-                        <LineBreak/>
-                        After the expansion an initial round takes place, in which the original key is applied to the plaintext.<LineBreak/>
-                        <LineBreak/>
-                        Depending on the key length the algorithm will go through 9, 11, or 13 rounds. Each round consists of the four operations: "SubBytes", "ShiftRow", "MixColumns", and "AddRoundKey".<LineBreak/>
-                        <LineBreak/>
-                        Once these rounds are completed one last round takes place, in which there is no "MixColumn" step.
-                    </TextBlock>-->
             </Viewbox>
             <Image Name="Intro1DEImage" Source="images/Intro1.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="5" Grid.ColumnSpan="11" />
             <Image Name="Intro2DEImage" Source="images/Intro2.png" Visibility="Hidden" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="5" Grid.ColumnSpan="11" />
@@ -119,7 +138,7 @@
                     <ColumnDefinition Width="500*"/>
                     <ColumnDefinition Width="190*"/>
                 </Grid.ColumnDefinitions>
-              
+
                 <Viewbox Stretch="Uniform" Grid.Row="0" Grid.Column="1">
                     <TextBlock Name="startTextBlock" Text="{Loc introduction}"/>
                 </Viewbox>

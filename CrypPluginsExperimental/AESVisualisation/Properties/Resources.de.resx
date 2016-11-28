@@ -337,4 +337,13 @@ Nachdem diese Runden abgeschlossen sind, gibt es noch eine letzte Runde ohne "Mi
   <data name="IntroText" xml:space="preserve">
     <value>Intro</value>
   </data>
+  <data name="Ciphertext" xml:space="preserve">
+    <value>Geheimtext</value>
+  </data>
+  <data name="KeyText" xml:space="preserve">
+    <value>Schlüssel</value>
+  </data>
+  <data name="Plaintext" xml:space="preserve">
+    <value>Klartext</value>
+  </data>
 </root>

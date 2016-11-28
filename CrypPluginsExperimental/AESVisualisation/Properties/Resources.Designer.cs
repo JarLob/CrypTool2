@@ -97,6 +97,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ciphertext.
+        /// </summary>
+        internal static string Ciphertext {
+            get {
+                return ResourceManager.GetString("Ciphertext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skip Expansion.
         /// </summary>
         internal static string encButton {
@@ -364,6 +373,15 @@ namespace AESVisualisation.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string KeyText {
+            get {
+                return ResourceManager.GetString("KeyText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mix Col..
         /// </summary>
         internal static string mixColButton {
@@ -405,6 +423,15 @@ namespace AESVisualisation.Properties {
         internal static string OutputStreamTooltip {
             get {
                 return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plaintext.
+        /// </summary>
+        internal static string Plaintext {
+            get {
+                return ResourceManager.GetString("Plaintext", resourceCulture);
             }
         }
         
@@ -675,6 +702,16 @@ namespace AESVisualisation.Properties {
         internal static string subBytesExplanation1 {
             get {
                 return ResourceManager.GetString("subBytesExplanation1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Temp {
+            get {
+                object obj = ResourceManager.GetObject("Temp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
