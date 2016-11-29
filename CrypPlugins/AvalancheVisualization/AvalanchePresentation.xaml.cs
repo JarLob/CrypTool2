@@ -4775,6 +4775,7 @@ namespace AvalancheVisualization
                 else
                     arrow2.Visibility = Visibility.Hidden;
 
+                encryptionProgress(-1);
                 //  buttonNextClickedEvent.Set();
             }
 

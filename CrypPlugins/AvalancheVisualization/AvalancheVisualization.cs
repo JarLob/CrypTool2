@@ -68,6 +68,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private DES des = new DES();
         private bool textChanged = false;      
         private AvalanchePresentation pres;
+   
 
         private int count = 0;
         private bool isRunning;
@@ -323,6 +324,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 }
 
 
+                             
                                 //  if (!running)
                                 //    return;
 
