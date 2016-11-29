@@ -1955,7 +1955,7 @@ namespace AvalancheVisualization
                 case 4:
 
                     progress = 0.5;
-                    if (changedCipher != null)
+                    if (!string.IsNullOrEmpty(TB2.Text))
                         progress = 1;
                     break;
                 default:
