@@ -29,6 +29,7 @@ using System.Text;
 using AvalancheVisualization;
 using System.Linq;
 using System.Windows;
+using Cryptool.PluginBase.Attributes;
 using AvalancheVisualization.Properties;
 
 namespace Cryptool.Plugins.AvalancheVisualization
@@ -39,6 +40,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("AvalancheVisualization.Properties.Resources", "PluginCaption", "AvalancheTooltip", "AvalancheVisualization/userdoc.xml", new[] { "AvalancheVisualization/Images/Avalanche.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [AutoAssumeFullEndProgress(false)]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class AvalancheVisualization : ICrypComponent
     {
