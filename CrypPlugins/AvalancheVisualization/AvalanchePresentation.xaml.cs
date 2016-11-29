@@ -60,7 +60,7 @@ namespace AvalancheVisualization
         public double progress;
         public int shift = 0;
         public int mode;
-      
+
         public bool lostFocus = false;
         public DES desDiffusion;
         public AES aesDiffusion;
@@ -93,7 +93,7 @@ namespace AvalancheVisualization
         public AvalanchePresentation(Cryptool.Plugins.AvalancheVisualization.AvalancheVisualization av)
         {
             InitializeComponent();
-          
+
             avalancheVisualization = av;
             inputInBits.IsVisibleChanged += onVisibleChanged;
             OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
@@ -1487,10 +1487,10 @@ namespace AvalancheVisualization
 
 
 
-            foreach (Button button in StackPanelChildren)            
+            foreach (Button button in StackPanelChildren)
                 button.ClearValue(BackgroundProperty);
-               
-            
+
+
         }
 
         //clear background colors
@@ -1955,12 +1955,14 @@ namespace AvalancheVisualization
                 case 4:
 
                     progress = 0.5;
+                    if (changedCipher != null)
+                        progress = 1;
                     break;
                 default:
                     break;
             }
 
-            avalancheVisualization.ProgressChanged(progress,1);
+            avalancheVisualization.ProgressChanged(progress, 1);
 
         }
 
@@ -2151,9 +2153,9 @@ namespace AvalancheVisualization
                {
                    loadChangedMsg(temporaryB, true);
                    loadChangedKey(newKey);
-                    //  setAndLoadButtons();
+                   //  setAndLoadButtons();
 
-                }, null);
+               }, null);
 
                 coloringText();
                 coloringKey();
@@ -4160,7 +4162,7 @@ namespace AvalancheVisualization
             StartCanvas.Visibility = Visibility.Hidden;
             backButton.Visibility = Visibility.Visible;
 
-           
+
 
             switch (mode)
             {
@@ -4756,8 +4758,6 @@ namespace AvalancheVisualization
             if (inputInBits.IsVisible)
             {
 
-                encryptionProgress(-1);
-
                 arrow1.Visibility = Visibility.Visible;
 
                 if (keysize == 2)
@@ -4775,12 +4775,14 @@ namespace AvalancheVisualization
                 else
                     arrow2.Visibility = Visibility.Hidden;
 
-                encryptionProgress(-1);
                 //  buttonNextClickedEvent.Set();
             }
 
             if (modifiedInitialStateGrid.IsVisible || inputInBits.IsVisible)
+            {
+                encryptionProgress(-1);
                 canModify = true;
+            }
             if (afterRoundsGrid.IsVisible)
                 canModify = false;
 

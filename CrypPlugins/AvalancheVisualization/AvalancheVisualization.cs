@@ -247,7 +247,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.textB = temporary;
                                     pres.canStop = true;
                                     aes.executeAES(false);
-
+                                    pres.encryptionProgress(-1);
                                    
 
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -365,8 +365,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.key = keyInput;
                                     pres.textB = textInput;
                                     pres.canStop = true;
+                                    pres.encryptionProgress(-1);
 
-                                   
 
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                    {
