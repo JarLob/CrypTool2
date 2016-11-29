@@ -46,6 +46,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         // HOWTO: You need to adapt the settings class as well, see the corresponding file.
 
 
+
         #region Private Variables
 
         private readonly AvalancheVisualizationSettings settings = new AvalancheVisualizationSettings();
@@ -63,17 +64,21 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
         private AES aes = new AES();
         private DES des = new DES();
-        private bool textChanged = false;
-        private Thread outputThread;
-        private Thread desThread;
-        private AvalanchePresentation pres = new AvalanchePresentation();
-        private AutoResetEvent buttonNextClickedEvent;
-        // private AutoResetEvent end;
+        private bool textChanged = false;      
+        private AvalanchePresentation pres;
+
         private int count = 0;
         private bool isRunning;
         private byte[] initialDES;
         private byte[] current;
         #endregion
+
+        //Constructor
+
+           public AvalancheVisualization()
+        {
+            pres= new AvalanchePresentation(this);
+        }
 
         #region Data Properties
 
@@ -183,9 +188,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                 {
                     case AvalancheVisualizationSettings.Category.Prepared:
 
-                        buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                        // end = pres.end;
-
+                    
                         keyInput = new byte[Key.Length];
 
                         using (CStreamReader reader = Text.CreateReader())
@@ -203,8 +206,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         if (settings.PrepSelection == 0)
                         {
 
-                            outputThread = new Thread(streamOut);
-                            Thread progressThread = new Thread(progress);
+                   
 
                             pres.mode = 0;
 
@@ -243,6 +245,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.canStop = true;
                                     aes.executeAES(false);
 
+                                   
 
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                    {
@@ -283,7 +286,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.keysize = settings.KeyLength;
 
 
-
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                    {
 
@@ -292,7 +294,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                            pres.comparisonPane();
                                        else
                                            pres.instructions();
-
+                                       
                                    }, null);
 
 
@@ -315,12 +317,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                                     pres.states = aes.states;
                                     pres.keyList = aes.keyList;
-
+                                   
                                 }
 
-                                outputThread.Start();
-
-                                progressThread.Start();
 
                                 //  if (!running)
                                 //    return;
@@ -331,8 +330,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                         else
                         {
 
-                            desThread = new Thread(streamOut);
-                            Thread progressThr = new Thread(progress);
+                   
                             pres.mode = 1;
 
                             bool valid = validSize();
@@ -363,6 +361,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                     pres.key = keyInput;
                                     pres.textB = textInput;
                                     pres.canStop = true;
+
+                                   
+
                                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                                    {
 
@@ -419,6 +420,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                            pres.comparisonPane();
                                        else
                                            pres.instructions();
+                                       
 
                                        pres.loadInitialState(textInput, keyInput);
 
@@ -431,8 +433,6 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                 }
 
 
-                                progressThr.Start();
-                                desThread.Start();
 
                                 //if (!running)
                                 return;
@@ -447,8 +447,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
 
                     case AvalancheVisualizationSettings.Category.Unprepared:
 
-                        Thread progThread = new Thread(progress);
-                        progThread.Start();
+                     
 
                         using (CStreamReader reader = Text.CreateReader())
                         {
@@ -493,6 +492,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                             pres.comparisonPane();
                                         else
                                             pres.instructions();
+                                        
 
                                         originalText = textInput;
                                         string cipherA = pres.binaryAsString(textInput);
@@ -559,6 +559,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                             pres.comparisonPane();
                                         else
                                             pres.instructions();
+                                        
 
                                         string cipherA = pres.binaryAsString(textInput);
                                         pres.originalMsg.Text = otherText;
@@ -618,8 +619,9 @@ namespace Cryptool.Plugins.AvalancheVisualization
                                    {
                                        if (pres.skip.IsChecked == true)
                                            pres.comparisonPane();
-                                       else
+                                       else  
                                            pres.instructions();
+                                       
 
                                        originalText = textInput;
                                        string cipherA = pres.binaryAsString(textInput);
@@ -687,7 +689,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         public void Initialize()
         {
             //aes.pres = this.pres;
-
+   
         }
 
         /// <summary>
@@ -700,29 +702,8 @@ namespace Cryptool.Plugins.AvalancheVisualization
         #endregion
 
         #region Methods
+ 
 
-        public void progress()
-        {
-            while (running)          
-                ProgressChanged(pres.progress, 1);
-
-        
-        }
-
-        public void streamOut()
-        {
-
-            while (running)
-            {
-
-
-                buttonNextClickedEvent.WaitOne();
-                OutputStream = string.Format("{0}{1}{2}", generatedData(0), generatedData(1), generatedData(2));
-
-
-            }
-         
-        }
 
         public string[] sequence(Tuple<string, string> strTuple)
         {
@@ -1342,7 +1323,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
-        private void ProgressChanged(double value, double max)
+        public void ProgressChanged(double value, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }

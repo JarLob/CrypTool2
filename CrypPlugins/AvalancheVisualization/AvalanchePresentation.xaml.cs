@@ -60,8 +60,7 @@ namespace AvalancheVisualization
         public double progress;
         public int shift = 0;
         public int mode;
-        // public byte[] keyBytes;
-
+      
         public bool lostFocus = false;
         public DES desDiffusion;
         public AES aesDiffusion;
@@ -86,15 +85,16 @@ namespace AvalancheVisualization
         public byte[] newKey;
         public byte[] currentDES;
 
+        private Cryptool.Plugins.AvalancheVisualization.AvalancheVisualization avalancheVisualization;
         #endregion
 
         #region constructor
 
-        public AvalanchePresentation()
+        public AvalanchePresentation(Cryptool.Plugins.AvalancheVisualization.AvalancheVisualization av)
         {
             InitializeComponent();
-            buttonNextClickedEvent = new AutoResetEvent(false);
-            // end = new AutoResetEvent(false);
+          
+            avalancheVisualization = av;
             inputInBits.IsVisibleChanged += onVisibleChanged;
             OrigInitialStateGrid.IsVisibleChanged += onVisibleChanged;
             modifiedInitialStateGrid.IsVisibleChanged += onVisibleChanged;
@@ -1960,6 +1960,7 @@ namespace AvalancheVisualization
                     break;
             }
 
+            avalancheVisualization.ProgressChanged(progress,1);
 
         }
 
@@ -2236,8 +2237,9 @@ namespace AvalancheVisualization
 
             }
 
+            avalancheVisualization.OutputStream = string.Format("{0}{1}{2}", avalancheVisualization.generatedData(0), avalancheVisualization.generatedData(1), avalancheVisualization.generatedData(2));
 
-            buttonNextClickedEvent.Set();
+            //  buttonNextClickedEvent.Set();
 
         }
 
@@ -4144,7 +4146,7 @@ namespace AvalancheVisualization
         {
             StartCanvas.Visibility = Visibility.Hidden;
             slide = 0;
-            progress = 0;
+            avalancheVisualization.ProgressChanged(0, 1);
 
             if (mode == 0 || mode == 1)
                 InstructionsPrep.Visibility = Visibility.Visible;
@@ -4529,7 +4531,7 @@ namespace AvalancheVisualization
 
             adjustStats();
             bitsData.Visibility = Visibility.Visible;
-            progress = 1;
+            avalancheVisualization.ProgressChanged(1, 1);
 
             flippedBitsPiece.Visibility = Visibility.Visible;
             unflippedBitsPiece.Visibility = Visibility.Visible;
@@ -5388,7 +5390,7 @@ namespace AvalancheVisualization
             removeBackground();
 
             overviewButton.Background = Brushes.Coral;
-            progress = 1;
+            avalancheVisualization.ProgressChanged(1, 1);
 
             toGeneral.Visibility = Visibility.Hidden;
             Cb1.Visibility = Visibility.Hidden;

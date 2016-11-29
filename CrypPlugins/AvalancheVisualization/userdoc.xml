@@ -71,10 +71,10 @@
       The input is received after it has gone through a cryptographic process or hash function implemented by other CT2 plugins.
       This is why the length of the input is determined by the external plugins being used.
       <newline/>
-      After selecting -unprepared methods- three additional options (hash functions, classic ciphers, and modern ciphers) can be found.
+      There are three options after selecting the category "Unprepared methods": hash functions, classic ciphers, and modern ciphers.
       <newline/>
-      One of these options is selected according to which category the current external plugin belongs to.
-      for instance, if you'd like to check the avalanche effect of SHA-1, you should select the option "hash functions".
+      One of these options is selected according to the type of the connected external plugin.
+      for instance, if you'd like to check the avalanche effect of SHA-1, then the option "hash functions" should be selected.
       <newline/>
       For practical reasons there are different templates available for the respective categories.
       <newline/>
@@ -119,9 +119,9 @@
       Die Eingabedaten werden aus dem Ergebnis anderer CT2-Plugins bezogen.
       Deshalb wird die Länge des Inputs durch die externen Plugins, die gerade benutzt werden, bestimmt.
       <newline/>
-      Unter der Kategorie -nicht-aufbereitete Verfahren- sind drei weitere Optionen zu finden (Hash-Funktionen, klassische Verfahren, und moderne Verfahren). Eine der Optionen wird
-      ausgewählt, je nachdem, zu welcher dieser drei Kategorien das aktuelle externe Plugin gehört.
-      Möchte man beispielsweise den Avalanche-Effekt von SHA-1 testen, sollte die Option "Hash-Funktionen" ausgewählt werden.
+      Unter der Kategorie "Nicht-aufbereitete Verfahren" gibt es drei Optionen: Hash-Funktionen, klassische Verschlüsselungsverfahren und moderne Verschlüsselungsverfahren. Eine der Optionen wird
+      ausgewählt, je nachdem, welchen Typ das annektierte externe Plugin hat.
+      Möchte man beispielsweise den Avalanche-Effekt von SHA-1 testen, ist die Option "Hash-Funktionen" auszuwählen.
       <newline/>
       Einfachheitshalber sind Vorlagen für die jeweiligen Kategorien vorhanden.
       <newline/>

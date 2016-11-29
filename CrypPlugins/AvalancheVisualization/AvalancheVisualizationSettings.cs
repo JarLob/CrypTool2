@@ -70,7 +70,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "SelectionTooltip", "GroupName", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
+        [TaskPane("Selection", "SelectionTooltipPrep", "GroupName", 1, false, ControlType.ComboBox, new String[] { "AES", "DES"})]
         public int PrepSelection
         {
             get { return this.prepSelection; }
@@ -88,7 +88,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
             }
         }
 
-        [TaskPane("Selection", "SelectionTooltip", "GroupName", 2, false, ControlType.ComboBox, new String[] { "HashFunction", "ClassicCipher","ModernCipher" })]
+        [TaskPane("Selection", "SelectionTooltipUnprep", "GroupName", 2, false, ControlType.ComboBox, new String[] { "HashFunction", "ClassicCipher","ModernCipher" })]
         public int UnprepSelection
         {
             get { return this.unprepSelection; }

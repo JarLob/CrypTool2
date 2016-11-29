@@ -127,7 +127,7 @@
     <value>Avalanche-Effekt</value>
   </data>
   <data name="AvalancheTooltip" xml:space="preserve">
-    <value>Visualisierung des Avalanche-Effekts bei kryptographischen Verfahren und Hash-Funktionen.</value>
+    <value>Visualisierung des Avalanche-Effekts bei Verschlüsselungsverfahren und Hash-Funktionen.</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Kategorie</value>
@@ -139,7 +139,7 @@
     <value>Avalanche-Effekt nach Runde ...</value>
   </data>
   <data name="ClassicCipher" xml:space="preserve">
-    <value>Klassische Verfahren</value>
+    <value>Klassische Verschlüsselungsverfahren</value>
   </data>
   <data name="ClassicCipherSubtitle" xml:space="preserve">
     <value>(Klassische Verfahren)</value>
@@ -260,7 +260,7 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
     <value>Schlüssellänge für AES auswählen.</value>
   </data>
   <data name="ModernCipher" xml:space="preserve">
-    <value>Moderne Verfahren</value>
+    <value>Moderne Verschlüsselungsverfahren</value>
   </data>
   <data name="OutputStream" xml:space="preserve">
     <value>Ausgabe</value>
@@ -281,8 +281,8 @@ Sie können in den Einstellungen die Kategorie des Verfahrens auswählen, dessen
   <data name="Selection" xml:space="preserve">
     <value>Auswahl</value>
   </data>
-  <data name="SelectionTooltip" xml:space="preserve">
-    <value>Verfahren auswählen, dessen Avalanche-Effekt getestet wird.</value>
+  <data name="SelectionTooltipPrep" xml:space="preserve">
+    <value>Verfahren aus der Kategorie "Aufbereitete Verfahren" auswählen, dessen Avalanche-Effekt getestet wird.</value>
   </data>
   <data name="SingleBitCheckBox" xml:space="preserve">
     <value>Flippen einzelner Bits</value>
@@ -611,5 +611,8 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
   </data>
   <data name="OutputNotModDESMsg" xml:space="preserve">
     <value>DES-Nachricht nicht verändert.</value>
+  </data>
+  <data name="SelectionTooltipUnprep" xml:space="preserve">
+    <value>Verfahren aus der Kategorie "Nicht-aufbereitete Verfahren" auswählen, dessen Avalanche-Effekt getestet wird.</value>
   </data>
 </root>

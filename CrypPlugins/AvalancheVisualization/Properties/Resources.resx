@@ -127,7 +127,7 @@
     <value>Avalanche Effect</value>
   </data>
   <data name="AvalancheTooltip" xml:space="preserve">
-    <value>Visualization of the avalanche effect property in cryptographic algorithms and hash functions.</value>
+    <value>Visualization of the Avalanche effect in cryptographic ciphers and hash functions.</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Category</value>
@@ -281,8 +281,8 @@ Overview</value>
   <data name="Selection" xml:space="preserve">
     <value>Selection</value>
   </data>
-  <data name="SelectionTooltip" xml:space="preserve">
-    <value>Select the method whose avalanche effect you would like to test.</value>
+  <data name="SelectionTooltipPrep" xml:space="preserve">
+    <value>Select the method from the category "Prepared methods" whose avalanche effect you would like to test.</value>
   </data>
   <data name="SingleBitCheckBox" xml:space="preserve">
     <value>Enable single bit changes</value>
@@ -611,5 +611,8 @@ Message and key changes can be made in two ways:</value>
   </data>
   <data name="OutputNotModDESMsg" xml:space="preserve">
     <value>DES message not modified.</value>
+  </data>
+  <data name="SelectionTooltipUnprep" xml:space="preserve">
+    <value>Select the method from the category "Unprepared methods" whose avalanche effect you would like to test.</value>
   </data>
 </root>
