@@ -824,7 +824,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
+        ///   Looks up a localized string similar to A good Avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
         ///You can select in the settings the category of the algorithm whose avalanche effect you would like to test..
         /// </summary>
         internal static string Intro {
@@ -1312,7 +1312,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the method from the category &quot;Prepared methods&quot; whose avalanche effect you would like to test..
+        ///   Looks up a localized string similar to Select the method from the category &quot;Prepared methods&quot; whose Avalanche effect you would like to test..
         /// </summary>
         internal static string SelectionTooltipPrep {
             get {
@@ -1321,7 +1321,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select the method from the category &quot;Unprepared methods&quot; whose avalanche effect you would like to test..
+        ///   Looks up a localized string similar to Select the method from the category &quot;Unprepared methods&quot; whose Avalanche effect you would like to test..
         /// </summary>
         internal static string SelectionTooltipUnprep {
             get {

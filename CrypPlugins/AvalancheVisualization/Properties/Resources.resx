@@ -250,7 +250,7 @@
     <value>General hash functions, classic ciphers, modern ciphers</value>
   </data>
   <data name="Intro" xml:space="preserve">
-    <value>A good avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
+    <value>A good Avalanche effect is achieved when a small change in the input results in a significant change of the encrypted text.
 You can select in the settings the category of the algorithm whose avalanche effect you would like to test.</value>
   </data>
   <data name="KeyLength" xml:space="preserve">
@@ -282,7 +282,7 @@ Overview</value>
     <value>Selection</value>
   </data>
   <data name="SelectionTooltipPrep" xml:space="preserve">
-    <value>Select the method from the category "Prepared methods" whose avalanche effect you would like to test.</value>
+    <value>Select the method from the category "Prepared methods" whose Avalanche effect you would like to test.</value>
   </data>
   <data name="SingleBitCheckBox" xml:space="preserve">
     <value>Enable single bit changes</value>
@@ -613,6 +613,6 @@ Message and key changes can be made in two ways:</value>
     <value>DES message not modified.</value>
   </data>
   <data name="SelectionTooltipUnprep" xml:space="preserve">
-    <value>Select the method from the category "Unprepared methods" whose avalanche effect you would like to test.</value>
+    <value>Select the method from the category "Unprepared methods" whose Avalanche effect you would like to test.</value>
   </data>
 </root>
