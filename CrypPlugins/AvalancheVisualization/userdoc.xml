@@ -132,15 +132,15 @@
 
   <presentation lang="en">
     The goal of the plugin is to visualize how a small input change affects the chosen cipher or hash function.
-    As soon as the plugin receives the first input, an new view with short instructions shows up. You can also skip the instruction by checking the checkbox on the home view.
+    As soon as the plugin receives the first input, a screen with short instructions shows up. You can also skip the instructions by checking the checkbox on the home view.
     <newline/>
     <newline/>
     <section headline="Prepared methods">
 
-      After the instructions the initial input data of AES can be seen in a matrix with its hex values and its corresponding binary representation.
+      After the instructions, the initial input data of AES can be seen in a matrix with its hex values and its corresponding binary representation.
       In the case of DES the input data is initially shown in binary format.
       <newline/>
-      Afterwards changes in the input can be made as described in the usage section.
+      Afterwards, changes in the input can be made as described in the usage section.
       When clicking on a single bit it flips from "0" to "1" or viceversa and it turns red.
       You can also undo the action by using the Clear button, which makes all flipped bits return to its initial state.
       <newline/>
