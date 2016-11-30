@@ -2,11 +2,11 @@
 <sample>
 
   <title lang="en">Avalanche (modern ciphers)</title>
-  <summary lang="en">This template demonstrates the avalanche effect in modern ciphers.</summary>
-  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in modern ciphers.</description>
+  <summary lang="en">This template demonstrates the Avalanche effect in modern ciphers.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in modern ciphers.</description>
   <keywords>Avalanche, Analysis, modern</keywords>
 
-  <title lang="de">Avalanche (moderne Verfahren)</title>
+  <title lang="de">Avalanche (moderne Verschlüsselungsverfahren)</title>
   <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.</summary>
   <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt bei modernen Verschlüsselungsverfahren demonstrieren kann.</description>
   <keywords lang="de">Avalanche, Analyse, moderne</keywords>

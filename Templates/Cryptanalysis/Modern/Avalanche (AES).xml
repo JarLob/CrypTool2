@@ -2,8 +2,8 @@
 <sample>
 
   <title lang="en">Avalanche (AES)</title>
-  <summary lang="en">This template demonstrates the avalanche effect in the AES cipher.</summary>
-  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in the AES cipher.</description>
+  <summary lang="en">This template demonstrates the Avalanche effect in the AES cipher.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in the AES cipher.</description>
   <keywords>Avalanche, Analysis, AES</keywords>
 
   <title lang="de">Avalanche (AES)</title>
