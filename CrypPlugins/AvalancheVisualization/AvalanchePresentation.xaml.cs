@@ -5443,7 +5443,7 @@ namespace AvalancheVisualization
             {
                 InstructionsUnprep.Visibility = Visibility.Hidden;
 
-                if (changedCipher != null)
+                if (!string.IsNullOrEmpty(TB2.Text))
                     comparison();
             }
 
