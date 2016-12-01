@@ -99,6 +99,50 @@ __global__ void kernelGER(long totalThreads, int* ciphertext, int textLength, in
 	}
 }
 
+__global__ void kernelES(long totalThreads, int* ciphertext, int textLength, int* runkey,
+	double* quadgrams, double* cuda_out)
+{
+	int x = blockIdx.x*blockDim.x + threadIdx.x;
+	int y = blockIdx.y*blockDim.y + threadIdx.y;
+	int index = x + y * blockDim.x;   //ThreadID. IMPORTANT: Build blocks (X*Y) with X=Y  !!! 2x2, 3x3 ...
+
+	int plaintext[10000];	// Must have constant Value, [textLength[0]] not possible. IMPORTANT: There wont be more then 10k Symbols loaded into kernel. Handeled in c# Code (HillclimbingAttacker).
+	int i = index / 27;		// With i and j the Algorithm Computes the Chiddkey(K*). See the Modifyblock 
+	int j = index % 27;
+	int temp;
+	double costvalue = 0;
+	int threadKey[27];
+
+	for (int k = 0; k < 27; k++)
+	{
+		threadKey[k] = runkey[k];
+	}
+
+	//K* = Modify K by swap position i and j
+	temp = threadKey[i];
+	threadKey[i] = threadKey[j];
+	threadKey[j] = temp;
+
+	//Plain = cipher, K*
+	for (int k = 0; k < textLength; k++)
+	{
+		plaintext[k] = threadKey[ciphertext[k]];
+	}
+
+	//Costfunction
+	int end = textLength - 3;
+	for (int k = 0; k < end; k++)
+	{
+		costvalue += quadgrams[plaintext[k] + (plaintext[k + 1] * 27) +
+			(plaintext[k + 2] * 27 * 27) + (plaintext[k + 3] * 27 * 27 * 27)];
+	}
+
+	//Output Return the Costvalue for each Thread
+	for (int k = 0; k < totalThreads; k++)
+	{
+		cuda_out[index] = costvalue;
+	}
+}
 
 int main()
 {

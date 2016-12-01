@@ -714,6 +714,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy  /Y "..\..\Lib" "Lib\"
 xcopy  /E /Y "..\..\Templates" "Templates\"
+xcopy  /E /Y "..\..\LanguageStatistics" "LanguageStatistics\"
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             this.root = new Node(amountOfCharacters);
             using (var ms = new MemoryStream())
             {
-                using (var fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open,FileAccess.Read))
+                using (var fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open,FileAccess.Read))
                 {
                     using (var zs = new GZipStream(fs, CompressionMode.Decompress))
                     {

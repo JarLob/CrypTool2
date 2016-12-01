@@ -196,7 +196,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Custom ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Spanish ähnelt.
         /// </summary>
         public static string ChooseAlphabetList3 {
             get {

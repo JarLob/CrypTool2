@@ -238,6 +238,9 @@ Hillclimbing.</value>
     <value>Anzahl der Neustarts, die während des Hillclimbings
 durchgeführt werden sollen.</value>
   </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanisch</value>
+  </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Schlüssel/Sekunde:</value>
   </data>

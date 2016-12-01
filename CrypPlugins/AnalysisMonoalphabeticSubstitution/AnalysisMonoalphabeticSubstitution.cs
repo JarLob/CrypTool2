@@ -76,6 +76,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         // Alphabet constants
         private const String English = "abcdefghijklmnopqrstuvwxyz";
         private const String German = "abcdefghijklmnopqrstuvwxyzäüöß";
+        private const String Spanish = "abcdefghijklmnopqrstuvwxyzñ";
 
         // Attackers
         private DictionaryAttacker dicAttacker;
@@ -199,7 +200,18 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 {
                     GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
                 }
-            }                   
+            }
+            else if (settings.Alphabet == 2)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("es-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }     
             // Add new case for another language
             // elseif (settings.Alphabet == 1)
             // {
@@ -403,12 +415,25 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             // Initialize analyzer
             this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
             this.hillAttacker.Restarts = settings.Restarts;
-            if (settings.Alphabet == 0) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyz";
-            if (settings.Alphabet == 1) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyzäüöß";
 
+            switch (settings.Alphabet)
+            {
+                case 0:
+                    this.hillAttacker.Alphabet = English;
+                    break;
+                case 1:
+                    this.hillAttacker.Alphabet = German;
+                    break;
+                case 2:
+                    this.hillAttacker.Alphabet = Spanish;
+                    break;
+                default:
+                    this.hillAttacker.Alphabet = English;
+                    break;
+            }
+            
             this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
             this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
-
 
             // Start attack
             lock (this.stopFlag)
@@ -458,8 +483,21 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             // Initialize analyzer
             this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
             this.hillAttacker.Restarts = settings.Restarts;
-            if (settings.Alphabet == 0) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyz";
-            if (settings.Alphabet == 1) this.hillAttacker.Alphabet = "abcdefghijklmnopqrstuvwxyzäüöß";
+            switch (settings.Alphabet)
+            {
+                case 0:
+                    this.hillAttacker.Alphabet = English;
+                    break;
+                case 1:
+                    this.hillAttacker.Alphabet = German;
+                    break;
+                case 2:
+                    this.hillAttacker.Alphabet = Spanish;
+                    break;
+                default:
+                    this.hillAttacker.Alphabet = English;
+                    break;
+            }
 
             this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
             this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
@@ -809,6 +847,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 alpha = AnalysisMonoalphabeticSubstitution.German;
             }
+            else if (lang == 2)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Spanish;
+            }
             // Add another case for a new language
             //else if ( lang == 1)
             //{
@@ -834,6 +876,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 lang = "de";
             }
+            else if (alpha_nr == 2)
+            {
+                lang = "es";
+            }
             // Add another case for a new language
             //else if (alpha_nr == 1)
             //{
@@ -852,7 +898,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             for (int i = 4; i > 2; i--)
             {
                 name = lang + "-" + i.ToString() + "gram-" + casesen + ".bin";
-                if (File.Exists(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, name)))
+                if (File.Exists(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, name)))
                 {
                     return name;
                 }

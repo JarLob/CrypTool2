@@ -93,11 +93,16 @@ namespace Cryptool.VigenereAnalyzer
             {
                 Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
                 Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-            }            
+            }
+            else if (_settings.Language == Language.Spanish)
+            {
+                Load3Grams("es-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ");
+                Load4Grams("es-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ");
+            }
             else
             {
                 Load3Grams("en-3gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");                
+                Load4Grams("en-4gram-nocs.bin", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
             }
             VigenereAlphabet = Alphabet;
         }
@@ -652,7 +657,7 @@ namespace Cryptool.VigenereAnalyzer
         private void Load3Grams(string filename, string alphabet)
         {
             _trigrams = new double[alphabet.Length, alphabet.Length, alphabet.Length];
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new BinaryReader(fileStream))
                 {
@@ -679,7 +684,7 @@ namespace Cryptool.VigenereAnalyzer
         private void Load4Grams(string filename, string alphabet)
         {
             _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new BinaryReader(fileStream))
                 {

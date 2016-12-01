@@ -30,7 +30,8 @@ namespace Cryptool.VigenereAnalyzer
     public enum Language
     {
         Englisch = 0,
-        German = 1
+        German = 1,
+        Spanish = 2
     };
 
     public enum CostFunction
@@ -140,7 +141,7 @@ namespace Cryptool.VigenereAnalyzer
             }
         }
 
-        [TaskPane("LanguageCaption", "LanguageTooltip", null, 5, false, ControlType.ComboBox, new string[]{"English","German"})]
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 5, false, ControlType.ComboBox, new string[]{"English","German", "Spanish"})]
         public Language Language
         {
             get

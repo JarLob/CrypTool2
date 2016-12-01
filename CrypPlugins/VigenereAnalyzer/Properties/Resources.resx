@@ -270,4 +270,7 @@
   <data name="CostFunctionTooltip" xml:space="preserve">
     <value>The costfunction for rating the putative cleartext.</value>
   </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
 </root>

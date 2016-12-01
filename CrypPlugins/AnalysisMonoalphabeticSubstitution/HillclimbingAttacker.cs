@@ -28,7 +28,14 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
          * there are 30 letters to be tested. Testing each pair is 30*30 = 900 = 3*3*10*10
         */
         const int GRIDDIMGER = 3;      // => x*x amount of Blocks ! Important, else there will be an error within the Kernel
-        const int BLOCKDIMGER = 10;     // => x*x Threads per Block! Important: maximum amount is 32. Because  32*32 = 1024  is the maximum amount of threads per block on todays GPU's      
+        const int BLOCKDIMGER = 10;     // => x*x Threads per Block! Important: maximum amount is 32. Because  32*32 = 1024  is the maximum amount of threads per block on todays GPU's
+
+        /* CudaVars if Alphabet is Spanish:
+         * there are 27 letters to be tested. Testing each pair is 27*27 = 729 = 3*3*3*3*3*3
+        */
+        const int GRIDDIMES = 3;      // => x*x amount of Blocks ! Important, else there will be an error within the Kernel
+        const int BLOCKDIMES = 9;      // => x*x Threads per Block! Important: maximum amount is 32. Because  32*32 = 1024  is the maximum amount of threads per block on todays GPU's 
+        
         #endregion Constants
 
         #region Variables
@@ -111,7 +118,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             long totalThreads = 0;
             int alphabetlength = alphabet.Length; //Implemented for Performance
             double globalBestCost = double.MinValue;
-            int[] ciphertext = PrepareCipherText(ciphertextString);
+            int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(),alphabet), alphabet);
             int[] ciphertextForCuda = CutCiphertext(ciphertext); //if the Ciphertextlength is > 1000, cut the text and ignore everything after the first 1k Symbols. (Performance and Cudaspecific needs).
             int textLength = ciphertextForCuda.Length;
 
@@ -119,6 +126,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             if (alphabetlength == 26)
             {
                 totalThreads = ((GRIDDIMENG * GRIDDIMENG) * (BLOCKDIMENG * BLOCKDIMENG));
+            }
+            if (alphabetlength == 27)
+            {
+                totalThreads = ((GRIDDIMES * GRIDDIMES) * (BLOCKDIMES * BLOCKDIMES));
             }
             else if (alphabetlength == 30)
             {
@@ -208,7 +219,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                         globalBestCost = bestkeycost;
                         //Add to bestlist-output:
                         KeyCandidate newKeyCan = new KeyCandidate(runkey, globalBestCost,
-                            ConverteNumbersToLetters(UseKeyOnCipher(ciphertext, runkey, ciphertext.Length)), ConverteNumbersToLetters(runkey));
+                            ConverteNumbersToLetters(UseKeyOnCipher(ciphertext, runkey, ciphertext.Length), alphabet), ConverteNumbersToLetters(runkey, alphabet));
                         //Note: in usekeyOnCipher Method i use chiphertext.length instead of textlength! Because textlength = Length Cuda uses != the whole ciphertext textlength
                         newKeyCan.HillAttack = true;
                         this.updateKeyDisplay(newKeyCan);
@@ -249,7 +260,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             Load4Grams();
 
             //Take input and prepare
-            int[] ciphertext = PrepareCipherText(ciphertextString);
+            int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(),alphabet), alphabet);
             int length = ciphertext.Length;
             int[] plaintext = new int[length];
             inplaceSpots = new int[alphabet.Length, length];
@@ -349,7 +360,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     globalbestkeycost = bestkeycost;
                     //Add to bestlist-output:
                     KeyCandidate newKeyCan = new KeyCandidate(bestkey, globalbestkeycost,
-                        ConverteNumbersToLetters(plaintext), ConverteNumbersToLetters(bestkey));
+                        ConverteNumbersToLetters(plaintext,alphabet), ConverteNumbersToLetters(bestkey,alphabet));
                     newKeyCan.HillAttack = true;
                     this.updateKeyDisplay(newKeyCan);
                 }
@@ -359,40 +370,29 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
         #region Methods & Functions
 
-        private int[] PrepareCipherText(string ciphertextString)
+        public static string RemoveInvalidChars(string text, string alphabet)
         {
-            int length = ciphertextString.Length;
-            int[] ciphertext = new int[length];
-            int counter = 0;
-
-            ciphertextString = ciphertextString.ToLower();
-
-            for (int i = 0; i < length; i++)
+            var builder = new StringBuilder();
+            foreach (var c in text)
             {
-
-                int ascii = (int)ciphertextString[i];
-                //97 <= ascii <= 122 97=a 122 =z
-                if ((ascii > 96) & (ascii < 123))
+                if (alphabet.Contains(c))
                 {
-                    ciphertext[counter] = (ascii - 97);
-                    counter++;
-                    continue;
+                    builder.Append(c);
                 }
-
-                if (ascii == 228) { ciphertext[counter] = (ascii - 202); counter++; continue; }
-                if (ascii == 252) { ciphertext[counter] = (ascii - 225); counter++; continue; }
-                if (ascii == 246) { ciphertext[counter] = (ascii - 218); counter++; continue; }
-                if (ascii == 223) { ciphertext[counter] = (ascii - 194); counter++; continue; }
             }
+            return builder.ToString();
+        }
 
-            int[] finishedCiphertext = new int[counter];
-
-            for (int i = 0; i < counter; i++)
+        public static int[] MapTextIntoNumberSpace(string text, string alphabet)
+        {
+            var numbers = new int[text.Length];
+            var position = 0;
+            foreach (var c in text)
             {
-                finishedCiphertext[i] = ciphertext[i];
+                numbers[position] = alphabet.IndexOf(c);
+                position++;
             }
-
-            return finishedCiphertext;
+            return numbers;
         }
 
         private int[] BuildRandomKey(Random randomdev)
@@ -472,110 +472,20 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             return plaintext;
         }
 
-        private string ConverteNumbersToLetters(int[] createdPlaintext)
+        /// <summary>
+        /// Maps a given array of numbers into the "textspace" defined by the alphabet
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <param name="alphabet"></param>
+        /// <returns></returns>
+        public static string ConverteNumbersToLetters(int[] numbers, string alphabet)
         {
-            string plaintext = "";
-            int length = createdPlaintext.Length;
-            for (int i = 0; i < length; i++)
+            var builder = new StringBuilder();
+            foreach (var i in numbers)
             {
-                switch (createdPlaintext[i])
-                {
-                    case 0:
-                        plaintext = plaintext + "a";
-                        break;
-                    case 1:
-                        plaintext = plaintext + "b";
-                        break;
-                    case 2:
-                        plaintext = plaintext + "c";
-                        break;
-                    case 3:
-                        plaintext = plaintext + "d";
-                        break;
-                    case 4:
-                        plaintext = plaintext + "e";
-                        break;
-                    case 5:
-                        plaintext = plaintext + "f";
-                        break;
-                    case 6:
-                        plaintext = plaintext + "g";
-                        break;
-                    case 7:
-                        plaintext = plaintext + "h";
-                        break;
-                    case 8:
-                        plaintext = plaintext + "i";
-                        break;
-                    case 9:
-                        plaintext = plaintext + "j";
-                        break;
-                    case 10:
-                        plaintext = plaintext + "k";
-                        break;
-                    case 11:
-                        plaintext = plaintext + "l";
-                        break;
-                    case 12:
-                        plaintext = plaintext + "m";
-                        break;
-                    case 13:
-                        plaintext = plaintext + "n";
-                        break;
-                    case 14:
-                        plaintext = plaintext + "o";
-                        break;
-                    case 15:
-                        plaintext = plaintext + "p";
-                        break;
-                    case 16:
-                        plaintext = plaintext + "q";
-                        break;
-                    case 17:
-                        plaintext = plaintext + "r";
-                        break;
-                    case 18:
-                        plaintext = plaintext + "s";
-                        break;
-                    case 19:
-                        plaintext = plaintext + "t";
-                        break;
-                    case 20:
-                        plaintext = plaintext + "u";
-                        break;
-                    case 21:
-                        plaintext = plaintext + "v";
-                        break;
-                    case 22:
-                        plaintext = plaintext + "w";
-                        break;
-                    case 23:
-                        plaintext = plaintext + "x";
-                        break;
-                    case 24:
-                        plaintext = plaintext + "y";
-                        break;
-                    case 25:
-                        plaintext = plaintext + "z";
-                        break;
-                    case 26:
-                        plaintext = plaintext + "ä";
-                        break;
-                    case 27:
-                        plaintext = plaintext + "ü";
-                        break;
-                    case 28:
-                        plaintext = plaintext + "ö";
-                        break;
-                    case 29:
-                        plaintext = plaintext + "ß";
-                        break;
-                    default:
-                        Console.WriteLine("Error: ConverteNumbersToletters Switch reached default");
-                        break;
-                }
+                builder.Append(alphabet[i]);
             }
-            return plaintext;
+            return builder.ToString();
         }
 
         private void AnalyseSymbolPlaces(int[] plaintext, int length)
@@ -727,11 +637,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         {
             string filename = "";
             if (alphabet.Length == 26) filename = "en-4gram-nocs.bin";
+            if (alphabet.Length == 27) filename = "es-4gram-nocs.bin";
             if (alphabet.Length == 30) filename = "de-4gram-nocs.bin";
 
             _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
 
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var reader = new BinaryReader(fileStream))
                 {
@@ -767,6 +678,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 gridsize = GRIDDIMENG * GRIDDIMENG;
                 blocksize = BLOCKDIMENG * BLOCKDIMENG;
             }
+            if (alphabet.Length == 27)
+            {
+                gridsize = GRIDDIMES * GRIDDIMES;
+                blocksize = BLOCKDIMES * BLOCKDIMES;
+            }
             else if (alphabet.Length == 30)
             {
                 gridsize = GRIDDIMGER * GRIDDIMGER;
@@ -782,6 +698,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             if (alphabet.Length == 26)//Algorithm for english version
             {
                 MajorKernel = new CudaKernel("_Z9kernelENGlPiiS_PdS0_", cumodule, cntxt);
+            }
+            else if (alphabet.Length == 27)//Algorithm for spanish version
+            {
+                MajorKernel = new CudaKernel("_Z8kernelESlPiiS_PdS0_", cumodule, cntxt);
             }
             else if (alphabet.Length == 30)//Algorithm for german version
             {

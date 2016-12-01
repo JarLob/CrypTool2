@@ -1022,7 +1022,7 @@ namespace Cryptool.M138Analyzer
         {
             int _tmpAlphabetLength = Alphabet.Length;
             double[, ,] Trigrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "en-3gram-nocs.bin"), FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "en-3gram-nocs.bin"), FileMode.Open, FileAccess.Read))
             {
                 using (BinaryReader reader = new BinaryReader(fileStream))
                 {
@@ -1046,7 +1046,7 @@ namespace Cryptool.M138Analyzer
         {
             int _tmpAlphabetLength = Alphabet.Length;
             double[, , ,] Quadgrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "en-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "en-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
             {
                 using (BinaryReader reader = new BinaryReader(fileStream))
                 {
@@ -1074,7 +1074,7 @@ namespace Cryptool.M138Analyzer
         {
             int _tmpAlphabetLength = Alphabet.Length;
             double[, , ,] Quadgrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "de-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "de-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
             {
                 using (BinaryReader reader = new BinaryReader(fileStream))
                 {
