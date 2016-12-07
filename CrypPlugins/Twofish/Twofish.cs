@@ -91,11 +91,19 @@ namespace Twofish
 
         public void Execute()
         {
-            Progress(0.0, 1.0);
+            Progress(0, 1);
+
+            GuiLogMessage("Start", NotificationLevel.Debug);
+            GuiLogMessage("IV = [" + String.Join(",", iv) + "]", NotificationLevel.Debug);
+            GuiLogMessage("Key: " + String.Join(" ", key) + "]", NotificationLevel.Debug);
 
             Crypt();
 
-            Progress(1.0, 1.0);
+            GuiLogMessage("End", NotificationLevel.Info);
+            GuiLogMessage("IV = [" + String.Join(",", iv) + "]", NotificationLevel.Debug);
+            GuiLogMessage("Key: " + String.Join(" ", key) + "]", NotificationLevel.Debug);
+
+            Progress(1, 1);
         }
 
         public void PostExecution()
@@ -210,6 +218,7 @@ namespace Twofish
 
             set
             {
+                //key = (byte[])value.Clone();
                 long len = value.Length;
                 key = new byte[len];
 
@@ -338,13 +347,20 @@ namespace Twofish
 
                 byte[] tmpInput = BlockCipherHelper.StreamToByteArray(inputdata);
                 byte[] outputData = new byte[tmpInput.Length];
-                byte[] IV = new byte[p_alg.IV.Length];
-                Array.Copy(p_alg.IV, IV, p_alg.IV.Length);
+                byte[] zero_iv = new byte[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                byte[] cur_iv = new byte[16];
+                Array.Copy(IV, cur_iv, IV.Length);
+
+                //if (settings.Mode != 0)
+                //{
+                //    //byte[] IV = new byte[p_alg.IV.Length];
+                //    Array.Copy(IV, p_alg.IV, IV.Length);
+                //}
                 int bs = p_alg.BlockSize >> 3;
 
                 if (settings.Mode == 0) // ECB
                 {
-                    p_encryptor = (settings.Action==0) ? p_alg.CreateEncryptor(p_alg.Key, p_alg.IV) : p_alg.CreateDecryptor(p_alg.Key, p_alg.IV);
+                    p_encryptor = (settings.Action==0) ? p_alg.CreateEncryptor(p_alg.Key, zero_iv) : p_alg.CreateDecryptor(p_alg.Key, zero_iv);
                     for (int pos = 0; pos < tmpInput.Length; pos += bs)
                     {
                         p_encryptor.TransformBlock(tmpInput, pos, bs, outputData, pos);
@@ -354,40 +370,41 @@ namespace Twofish
                 {
                     if (settings.Action == 0)
                     {
-                        p_encryptor = p_alg.CreateEncryptor(p_alg.Key, p_alg.IV);
+                        p_encryptor = p_alg.CreateEncryptor(p_alg.Key, zero_iv);
                         for (int pos = 0; pos < tmpInput.Length; pos += bs)
                         {
-                            for (int i = 0; i < bs; i++) tmpInput[pos + i] ^= IV[i];
+                            for (int i = 0; i < bs; i++) tmpInput[pos + i] ^= cur_iv[i];
                             p_encryptor.TransformBlock(tmpInput, pos, bs, outputData, pos);
-                            for (int i = 0; i < bs; i++) IV[i] = outputData[pos + i];
+                            for (int i = 0; i < bs; i++) cur_iv[i] = outputData[pos + i];
                         }
                     }
                     else
                     {
-                        p_encryptor = p_alg.CreateDecryptor(p_alg.Key, p_alg.IV);
+                        p_encryptor = p_alg.CreateDecryptor(p_alg.Key, zero_iv);
                         for (int pos = 0; pos < tmpInput.Length; pos += bs)
                         {
                             p_encryptor.TransformBlock(tmpInput, pos, bs, outputData, pos);
                             for (int i = 0; i < bs; i++)
                             {
-                                outputData[pos + i] ^= IV[i];
-                                IV[i] = tmpInput[pos + i];
+                                outputData[pos + i] ^= cur_iv[i];
+                                cur_iv[i] = tmpInput[pos + i];
                             }
                         }
                     }
                 }
                 else if (settings.Mode == 2) // CFB
                 {
-                    p_encryptor = p_alg.CreateEncryptor(p_alg.Key, p_alg.IV);
+                    p_encryptor = p_alg.CreateEncryptor(p_alg.Key, zero_iv);
+
                     if (settings.Action == 0)
                     {
                         for (int pos = 0; pos < tmpInput.Length; pos += bs)
                         {
-                            p_encryptor.TransformBlock(IV, 0, p_encryptor.InputBlockSize, outputData, pos);
+                            p_encryptor.TransformBlock(cur_iv, 0, p_encryptor.InputBlockSize, outputData, pos);
                             for (int i = 0; i < bs; i++)
                             {
                                 outputData[pos + i] ^= tmpInput[pos + i];
-                                IV[i] = outputData[pos + i];
+                                cur_iv[i] = outputData[pos + i];
                             }
                         }
                     }
@@ -395,10 +412,10 @@ namespace Twofish
                     {
                         for (int pos = 0; pos < tmpInput.Length; pos += bs)
                         {
-                            p_encryptor.TransformBlock(IV, 0, p_encryptor.InputBlockSize, outputData, pos);
+                            p_encryptor.TransformBlock(cur_iv, 0, p_encryptor.InputBlockSize, outputData, pos);
                             for (int i = 0; i < bs; i++)
                             {
-                                IV[i] = tmpInput[pos + i];
+                                cur_iv[i] = tmpInput[pos + i];
                                 outputData[pos + i] ^= tmpInput[pos + i];
                             }
                         }
@@ -406,13 +423,14 @@ namespace Twofish
                 } 
                 else if (settings.Mode == 3) // OFB
                 {
-                    p_encryptor = p_alg.CreateEncryptor(p_alg.Key, p_alg.IV);
+                    p_encryptor = p_alg.CreateEncryptor(p_alg.Key, zero_iv);
+
                     for (int pos = 0; pos < tmpInput.Length; pos += bs)
                     {
-                        p_encryptor.TransformBlock(IV, 0, p_encryptor.InputBlockSize, outputData, pos);
+                        p_encryptor.TransformBlock(cur_iv, 0, p_encryptor.InputBlockSize, outputData, pos);
                         for (int i = 0; i < bs; i++)
                         {
-                            IV[i] = outputData[pos + i];
+                            cur_iv[i] = outputData[pos + i];
                             outputData[pos + i] ^= tmpInput[pos + i];
                         }
                     }

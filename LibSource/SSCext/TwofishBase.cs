@@ -161,12 +161,12 @@ namespace System.Security.Cryptography
       protected void blockDecrypt(ref uint[] x)
       {
         uint t0,t1;
-        uint[] xtemp = new uint[4];
+        //uint[] xtemp = new uint[4];
 
-        if (cipherMode == CipherMode.CBC)
-        {
-          x.CopyTo(xtemp, 0);
-        }
+        //if (cipherMode == CipherMode.CBC)
+        //{
+        //  x.CopyTo(xtemp, 0);
+        //}
 
         for (int i=0; i < BLOCK_SIZE / 32; i++)	/* copy in the block, add whitening */
           x[i] ^= subKeys[OUTPUT_WHITEN + i];
@@ -195,11 +195,11 @@ namespace System.Security.Cryptography
         for (int i=0; i < BLOCK_SIZE / 32; i++)	/* copy out, with whitening */
         {
           x[i] ^= subKeys[INPUT_WHITEN + i];
-          if (cipherMode == CipherMode.CBC)
-          {
-            x[i] ^= IV[i];
-            IV[i] = xtemp[i];
-          }
+          //if (cipherMode == CipherMode.CBC)
+          //{
+          //  x[i] ^= IV[i];
+          //  IV[i] = xtemp[i];
+          //}
         }
       }
 
@@ -214,8 +214,8 @@ namespace System.Security.Cryptography
         for (int i=0; i < BLOCK_SIZE / 32; i++)	/* copy in the block, add whitening */
         {
           x[i] ^= subKeys[INPUT_WHITEN + i];
-          if (cipherMode == CipherMode.CBC)
-            x[i] ^= IV[i];
+          //if (cipherMode == CipherMode.CBC)
+          //  x[i] ^= IV[i];
         }
 
         for (int r=0; r < rounds; r++)			/* main Twofish encryption loop */ // 16==rounds
@@ -242,10 +242,10 @@ namespace System.Security.Cryptography
         for (int i=0; i < BLOCK_SIZE / 32; i++)	/* copy out, with whitening */
         {
           x[i] ^= subKeys[OUTPUT_WHITEN + i];
-          if (cipherMode == CipherMode.CBC)
-          {
-            IV[i] = x[i];
-          }
+          //if (cipherMode == CipherMode.CBC)
+          //{
+          //  IV[i] = x[i];
+          //}
         }
 
       }
@@ -289,7 +289,7 @@ namespace System.Security.Cryptography
       protected uint[] sboxKeys = new uint[MAX_KEY_BITS / 64];	/* key bits used for S-boxes */
       protected uint[] subKeys = new uint[TOTAL_SUBKEYS];		/* round subkeys, input/output whitening bits */
       protected uint[] Key = { 0, 0, 0, 0, 0, 0, 0, 0 };		//new int[MAX_KEY_BITS/32];
-      protected uint[] IV = { 0, 0, 0, 0 };						// this should be one block size
+      //protected uint[] IV = { 0, 0, 0, 0 };						// this should be one block size
       private int keyLength;
       private int rounds;
       protected CipherMode cipherMode = CipherMode.ECB;

@@ -43,17 +43,17 @@ namespace System.Security.Cryptography
         cipherMode = cMode;
 
         // we only need to convert our IV if we are using CBC
-        if (cipherMode == CipherMode.CBC)
-        {
-          for (int i=0; i < 4; i++)
-          {
-            IV[i] = 
-              (uint)(iv[i * 4 + 3] << 24) | 
-              (uint)(iv[i * 4 + 2] << 16) | 
-              (uint)(iv[i * 4 + 1] <<  8) | 
-              (uint)(iv[i * 4 + 0]      );
-          }
-        }
+        //if (cipherMode == CipherMode.CBC)
+        //{
+        //  for (int i=0; i < 4; i++)
+        //  {
+        //    IV[i] = 
+        //      (uint)(iv[i * 4 + 3] << 24) | 
+        //      (uint)(iv[i * 4 + 2] << 16) | 
+        //      (uint)(iv[i * 4 + 1] <<  8) | 
+        //      (uint)(iv[i * 4 + 0]      );
+        //  }
+        //}
 
         encryptionDirection = direction;
         reKey(keyLen, ref Key);

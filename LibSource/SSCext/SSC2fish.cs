@@ -53,6 +53,7 @@ namespace System.Security.Cryptography
     {
       key = new byte[KeySize   / 8]; // zeroed by default
       iv  = new byte[BlockSize / 8]; // zeroed by default
+      ModeValue = cipherMode;
     }
 
     public static new TwofishManaged Create()
@@ -86,7 +87,7 @@ namespace System.Security.Cryptography
         int kl = rgbKey.Length * 8;
         if (ValidKeySize(kl)) keySize = kl;
 
-      return new TwofishEncryption(keySize, ref key, ref iv, cipherMode, 
+      return new TwofishEncryption(keySize, ref key, ref iv, Mode, 
         TwofishManaged.EncryptionDirection.Decrypting);
     }
 
@@ -113,7 +114,7 @@ namespace System.Security.Cryptography
       int kl = rgbKey.Length * 8;
       if (ValidKeySize(kl)) keySize = kl;
 
-      return new TwofishEncryption(keySize, ref key, ref iv, cipherMode, 
+      return new TwofishEncryption(keySize, ref key, ref iv, Mode, 
         TwofishManaged.EncryptionDirection.Encrypting);
     }
 
