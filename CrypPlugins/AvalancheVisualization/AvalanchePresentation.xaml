@@ -450,7 +450,7 @@
             </Polygon>
             <Polygon Name="arrow3" Grid.Row="1" Grid.ColumnSpan="2" Points="175,125 190,140, 175,155" Width="25" Height="35" StrokeThickness="3" Stroke="#4cbb17" Stretch="Fill" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden"  Margin="0,50,50,0">
             </Polygon>
-            <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="{Loc SingleBitCheckBox}"  Width="160" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
+            <CheckBox Name="aesCheckBox" Grid.Row="1"  Foreground="#534b4f" Content="{Loc SingleBitCheckBox}"  Width="170" VerticalAlignment="Bottom" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked" Margin="20,50" Visibility="Hidden"/>
 
             <!--RadioButtons-->
             <StackPanel Name="radioButtons" Grid.Column="2" Grid.RowSpan="2"  VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="Hidden">
@@ -4034,14 +4034,14 @@
             <TextBlock x:Name="extraordinaryOccurAes" Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2"  FontSize="14" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="" Visibility="Hidden" Margin="0,35,0,0" Width="250"/>
             <TextBlock x:Name="extraordinaryOccur" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" Foreground="#534b4f" FontWeight="UltraLight" VerticalAlignment="Center" HorizontalAlignment="Center" Text="" Margin="45,20,0,0" Width="340" Visibility="Hidden" />
 
-
-            <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="114" Background="#4cbb17" Content="{Loc UnchangedBits}" IsHitTestVisible="False" Margin="0,0,35,80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="hidden"/>
+            
+            <CheckBox Name="Cb1" Grid.Row="1" Grid.Column="2" Width="114" Background="#4cbb17" Content="{Loc UnchangedBits}" IsHitTestVisible="False" Margin="0,0,35,80" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden"/>
             <CheckBox Name="Cb2" Grid.Row="1" Grid.Column="2" Width="114"  Background="#ff2800" Content="{Loc FlippedBits}" IsHitTestVisible="False"  Margin="0,0,35,60" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden"/>
             <CheckBox Name="Cbclass1" Grid.Row="1" Grid.Column="2" Width="124" Background="#4cbb17" Content="{Loc UnchangedBytes}" IsHitTestVisible="False" Margin="45,0,0,100" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
             <CheckBox Name="Cbclass2" Grid.Row="1" Grid.Column="2" Width="124"  Background="#ff2800" Content="{Loc FlippedBytes}" IsHitTestVisible="False"  Margin="45,0,0,80" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden"/>
 
             <!--Input Representation DES-->
-            <Grid Name="inputGridDES" Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="Hidden">
+            <Grid Name="inputGridDES" Grid.RowSpan="2" Grid.ColumnSpan="3" Visibility="hidden">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="65"/>
@@ -4055,7 +4055,7 @@
                     </TextBlock>
 
                     <TextBlock Grid.Row="1" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="{Loc InitialMessageDES}" Height="30"  Margin="10,0"></TextBlock>
-                    <CheckBox Name="desCheckBox"  Grid.Row="5" Foreground="#534b4f" Content="{Loc SingleBitCheckBox}" Margin="20" Width="160" HorizontalAlignment="Left" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"  >
+                    <CheckBox Name="desCheckBox"  Grid.Row="5" Foreground="#534b4f" Content="{Loc SingleBitCheckBox}" Margin="20" Width="170" HorizontalAlignment="Left" Checked="checkBox_Checked" Unchecked="checkBox_Unchecked"  >
                     </CheckBox>
                     <TextBlock Grid.Row="3" Style="{StaticResource textBlockStyle}" FontWeight="DemiBold" Text="{Loc InitialKeyDES}" Height="30"  Margin="10,0"></TextBlock>
 

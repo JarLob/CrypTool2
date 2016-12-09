@@ -615,4 +615,16 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
   <data name="SelectionTooltipUnprep" xml:space="preserve">
     <value>Verfahren aus der Kategorie "Nicht-aufbereitete Verfahren" auswählen, dessen Avalanche-Effekt getestet wird.</value>
   </data>
+  <data name="black_white" xml:space="preserve">
+    <value>Schwarz/Weiß</value>
+  </data>
+  <data name="Contrast" xml:space="preserve">
+    <value>Kontrast</value>
+  </data>
+  <data name="ContrastTooltip" xml:space="preserve">
+    <value>Kontrast für das Kuchendiagramm auswählen.</value>
+  </data>
+  <data name="red_green" xml:space="preserve">
+    <value>Rot/Grün</value>
+  </data>
 </root>

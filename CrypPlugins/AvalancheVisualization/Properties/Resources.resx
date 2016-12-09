@@ -285,7 +285,7 @@ Overview</value>
     <value>Select the method from the category "Prepared methods" whose Avalanche effect you would like to test.</value>
   </data>
   <data name="SingleBitCheckBox" xml:space="preserve">
-    <value>Enable single bit changes</value>
+    <value>Enable to change single bits</value>
   </data>
   <data name="SkipInstructions" xml:space="preserve">
     <value>Skip instructions</value>
@@ -614,5 +614,17 @@ Message and key changes can be made in two ways:</value>
   </data>
   <data name="SelectionTooltipUnprep" xml:space="preserve">
     <value>Select the method from the category "Unprepared methods" whose Avalanche effect you would like to test.</value>
+  </data>
+  <data name="black_white" xml:space="preserve">
+    <value>Black/white</value>
+  </data>
+  <data name="Constrast" xml:space="preserve">
+    <value>Constrast</value>
+  </data>
+  <data name="ContrastTooltip" xml:space="preserve">
+    <value>Choose contrast for the pie chart.</value>
+  </data>
+  <data name="red_green" xml:space="preserve">
+    <value>Red/green</value>
   </data>
 </root>

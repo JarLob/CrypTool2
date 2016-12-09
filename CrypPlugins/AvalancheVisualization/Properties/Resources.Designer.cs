@@ -151,6 +151,15 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black/white.
+        /// </summary>
+        internal static string black_white {
+            get {
+                return ResourceManager.GetString("black_white", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category.
         /// </summary>
         internal static string Category {
@@ -281,11 +290,29 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Constrast.
+        /// </summary>
+        internal static string Constrast {
+            get {
+                return ResourceManager.GetString("Constrast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         internal static string ContinueButton {
             get {
                 return ResourceManager.GetString("ContinueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose contrast for the pie chart..
+        /// </summary>
+        internal static string ContrastTooltip {
+            get {
+                return ResourceManager.GetString("ContrastTooltip", resourceCulture);
             }
         }
         
@@ -1285,6 +1312,15 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Red/green.
+        /// </summary>
+        internal static string red_green {
+            get {
+                return ResourceManager.GetString("red_green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Right half.
         /// </summary>
         internal static string RightHalf {
@@ -1348,7 +1384,7 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable single bit changes.
+        ///   Looks up a localized string similar to Enable to change single bits.
         /// </summary>
         internal static string SingleBitCheckBox {
             get {

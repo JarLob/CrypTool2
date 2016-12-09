@@ -185,6 +185,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
           
             textInput = new byte[Text.Length];
             running = true;
+            pres.contrast = settings.Contrast;
 
             try {
                 switch (settings.SelectedCategory)

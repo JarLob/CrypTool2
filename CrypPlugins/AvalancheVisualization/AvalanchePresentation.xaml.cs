@@ -66,6 +66,7 @@ namespace AvalancheVisualization
         public AES aesDiffusion;
         public int roundDES;
         public int slide;
+        public int contrast;
 
         public bool canModify = false;
         public bool canModifyDES = false;
@@ -1098,8 +1099,29 @@ namespace AvalancheVisualization
             SolidColorBrush brushA = new SolidColorBrush();
             SolidColorBrush brushB = new SolidColorBrush();
 
-            brushA.Color = Color.FromRgb(255, 40, 0);
-            brushB.Color = Color.FromRgb(76, 187, 23);
+            if (contrast == 1)
+            {
+                brushA.Color = Color.FromRgb(0, 0, 0);
+                brushB.Color = Color.FromRgb(255, 255, 255);
+
+                Cb1.Background = Brushes.White;
+                Cb2.Background = Brushes.Black;
+
+                Cbclass1.Background = Brushes.White;
+                Cbclass2.Background = Brushes.Black;
+            }
+            else
+            {
+                brushA.Color = Color.FromRgb(255, 40, 0);
+                brushB.Color = Color.FromRgb(76, 187, 23);
+
+                Cb1.Background = (Brush)new BrushConverter().ConvertFromString("#4cbb17");
+                Cb2.Background = (Brush)new BrushConverter().ConvertFromString("#ff2800");
+
+                Cbclass1.Background = (Brush)new BrushConverter().ConvertFromString("#4cbb17");
+                Cbclass2.Background = (Brush)new BrushConverter().ConvertFromString("#ff2800");
+            }
+
             flippedBitsPiece.Fill = brushA;
             unflippedBitsPiece.Fill = brushB;
         }
@@ -1111,6 +1133,11 @@ namespace AvalancheVisualization
             unflippedBitsPiece.angle = angle_B;
             flippedBitsPiece.pieceRotation = 0;
             unflippedBitsPiece.pieceRotation = angle_A;
+
+            if (avalanche == 0)
+                  unflippedBitsPiece.angle = 359.9;
+                 
+        
         }
 
         //prints out current statistical values of cipher

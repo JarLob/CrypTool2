@@ -30,6 +30,7 @@ namespace Cryptool.Plugins.AvalancheVisualization
         private int keyLength;
         private int prepSelection;
         private int unprepSelection;
+        private int contrast;
         private Category selectedCategory;
 
 
@@ -118,6 +119,18 @@ namespace Cryptool.Plugins.AvalancheVisualization
                     this.keyLength = (int)value;
                     OnPropertyChanged("KeyLength");
                 }
+            }
+        }
+
+        [TaskPane("Contrast", "ContrastTooltip", "GroupName", 3, false, ControlType.ComboBox, new String[] { "red_green", "black_white" })]
+        public int Contrast
+        {
+            get { return this.contrast; }
+            set
+            {
+                this.contrast = value;
+                    OnPropertyChanged("Contrast");
+                
             }
         }
 

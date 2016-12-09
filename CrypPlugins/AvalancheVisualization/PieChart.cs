@@ -58,9 +58,7 @@ namespace AvalancheVisualization
         {
             
             double angleDegree = ((double)bits / strTuple.Item1.Length) * 360;
-           
-            
-           
+                      
             double roundUpAngle = Math.Round(angleDegree, 0, MidpointRounding.AwayFromZero);
 
             return roundUpAngle;
