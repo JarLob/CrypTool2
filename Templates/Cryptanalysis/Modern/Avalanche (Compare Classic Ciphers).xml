@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Avalanche (compare classic ciphers)</title>
+  <summary lang="en">This template demonstrates the Avalanche effect in two different classic ciphers at the same time.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect of two different classic ciphers at the same time.</description>
+  <keywords>Avalanche, Analysis, compare classic</keywords>
+
+  <title lang="de">Avalanche (Vergleich klassischer Verschlüsselungsverfahren)</title>
+  <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt beim Vergleich von zwei unterschiedlichen klassischen Verschlüsselungsverfahren.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt beim Vergleich von zwei unterschiedlichen klassischen Verschlüsselungsverfahren demonstrieren kann.</description>
+  <keywords lang="de">Avalanche, Analyse, Vergleich klassisch</keywords>
+
+  <icon file="Avalanche.PNG" />
+
+  <relevantPlugins>
+    <plugin name="AvalancheVisualization" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Spanish Strip Cipher$" value="Spanische Strip-Chiffre"/>
+    <replacement key="$Generated Data$" value="Generierte Daten"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
+     <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Spanish Strip Cipher$" value="Spanish Strip Cipher"/>
+    <replacement key="$Generated Data$" value="Generated Data"/>
+  </replacements>
+
+</sample>
