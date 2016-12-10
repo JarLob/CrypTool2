@@ -618,8 +618,8 @@ Message and key changes can be made in two ways:</value>
   <data name="black_white" xml:space="preserve">
     <value>Black/white</value>
   </data>
-  <data name="Constrast" xml:space="preserve">
-    <value>Constrast</value>
+  <data name="Contrast" xml:space="preserve">
+    <value>Contrast</value>
   </data>
   <data name="ContrastTooltip" xml:space="preserve">
     <value>Choose contrast for the pie chart.</value>

@@ -290,20 +290,20 @@ namespace AvalancheVisualization.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Constrast.
-        /// </summary>
-        internal static string Constrast {
-            get {
-                return ResourceManager.GetString("Constrast", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         internal static string ContinueButton {
             get {
                 return ResourceManager.GetString("ContinueButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contrast.
+        /// </summary>
+        internal static string Contrast {
+            get {
+                return ResourceManager.GetString("Contrast", resourceCulture);
             }
         }
         
