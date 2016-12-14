@@ -71,6 +71,7 @@ namespace Cryptool.Plugins.SpanishStripCipher
         private List<int> numbersPerColTableOneAlphabet29    = new List<int>() { 3, 4, 3, 3, 4, 3, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 };
         private List<int> numbersPerColTableTwoAlphabet29    = new List<int>() { 3, 4, 3, 4, 4, 3, 4, 3, 4, 3, 3, 3, 3, 4, 4, 3, 4, 3, 3, 3, 4, 3, 4, 3, 3, 3, 3, 4, 4 };
         private string homophoneString = "";
+        private int homophoneSelection = 0; // 0=random, 1=round robin
         private Boolean flag = true;
         Random rand = new Random();
 
@@ -367,7 +368,21 @@ namespace Cryptool.Plugins.SpanishStripCipher
             }
         }
 
-        [TaskPane("OrderedAlphabetCaption", "OrderedAlphabetTooltip", null, 6, false, ControlType.TextBoxReadOnly, "")]
+        [TaskPane("HomophoneSelectionCaption", "HomophoneSelectionTooltip", null, 6, false, ControlType.ComboBox, new string[] { "HomophoneSelectionList1", "HomophoneSelectionList2" })]
+        public int HomophoneSelection
+        {
+            get { return homophoneSelection; }
+            set
+            {
+                if (value != this.homophoneSelection)
+                {
+                    homophoneSelection = value;
+                    OnPropertyChanged("HomophoneSelection");
+                }
+            }
+        }
+
+        [TaskPane("OrderedAlphabetCaption", "OrderedAlphabetTooltip", null, 7, false, ControlType.TextBoxReadOnly, "")]
         public string OrderedAlphabet
         {
             get { return orderedAlphabetPanel; }
@@ -381,7 +396,7 @@ namespace Cryptool.Plugins.SpanishStripCipher
             }
         }
 
-        [TaskPane("UnorderedAlphabetPanelCaption", "UnorderedAlphabetPanelTooltip", null, 7, false, ControlType.TextBoxReadOnly)]
+        [TaskPane("UnorderedAlphabetPanelCaption", "UnorderedAlphabetPanelTooltip", null, 8, false, ControlType.TextBoxReadOnly)]
         public string UnorderedAlphabetPanel
         {
             get { return unorderedAlphabetPanel; }
@@ -403,7 +418,7 @@ namespace Cryptool.Plugins.SpanishStripCipher
             }
         }
 
-        [TaskPane("HomophonesCaption", "HomophonesTooltip", null, 8, false, ControlType.TextBoxReadOnly)]
+        [TaskPane("HomophonesCaption", "HomophonesTooltip", null, 9, false, ControlType.TextBoxReadOnly)]
         public string Homophones
         {
             get { return homophoneString; }

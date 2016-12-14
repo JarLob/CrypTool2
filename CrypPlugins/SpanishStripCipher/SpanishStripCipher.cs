@@ -35,6 +35,8 @@ namespace Cryptool.Plugins.SpanishStripCipher
         
         private readonly SpanishStripCipherSettings settings = new SpanishStripCipherSettings();
 
+        Random rand = new Random();
+
         #endregion
 
         /// <summary>
@@ -131,7 +133,7 @@ namespace Cryptool.Plugins.SpanishStripCipher
 
             if (settings.Action == SpanishStripCipherSettings.CipherMode.Decrypt)
             {
-                Dictionary<string,string> number2char = settings.Number2Char;
+                Dictionary<string, string> number2char = settings.Number2Char;
 
                 string ciphertext = Regex.Replace(Input, "[^0-9]", "");
                 if (ciphertext.Length % 2 == 1)
@@ -153,14 +155,30 @@ namespace Cryptool.Plugins.SpanishStripCipher
                 List<List<string>> homophones = settings.getHomophones();
                 string plaintext = settings.mapDigraphs(Input.ToUpper());
 
-                foreach (char c in plaintext)
+                if (settings.HomophoneSelection == 0)   // random
                 {
-                    index = settings.unorderedAlphabet.IndexOf(c);
-                    if (index != -1)
+                    foreach (char c in plaintext)
                     {
-                        Output += homophones[index][0];
-                        homophones[index].Add(homophones[index][0]);
-                        homophones[index].RemoveAt(0);
+                        index = settings.unorderedAlphabet.IndexOf(c);
+                        if (index != -1)
+                        {
+                            int ofs = rand.Next(homophones[index].Count);
+                            Output += homophones[index][ofs];
+                        }
+                    }
+                }
+                else   // round robin
+                {
+                    int[] offsets = new int[homophones.Count];
+                    foreach (char c in plaintext)
+                    {
+                        index = settings.unorderedAlphabet.IndexOf(c);
+                        if (index != -1)
+                        {
+                            int ofs = offsets[index];
+                            offsets[index] = (offsets[index] + 1) % homophones[index].Count;
+                            Output += homophones[index][ofs];
+                        }
                     }
                 }
             }

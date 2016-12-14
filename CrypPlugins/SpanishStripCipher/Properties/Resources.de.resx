@@ -210,4 +210,16 @@
   <data name="OutputCaption" xml:space="preserve">
     <value>Ausgabe</value>
   </data>
+  <data name="HomophoneSelectionCaption" xml:space="preserve">
+    <value>Auswahl der Homophone</value>
+  </data>
+  <data name="HomophoneSelectionList1" xml:space="preserve">
+    <value>Zufall</value>
+  </data>
+  <data name="HomophoneSelectionList2" xml:space="preserve">
+    <value>Round Robin</value>
+  </data>
+  <data name="HomophoneSelectionTooltip" xml:space="preserve">
+    <value>Bestimen Sie die Methode, wie Homophone bei der Verschlüsselung aus der Liste der möglichen Homophone ausgewählt werden sollen.</value>
+  </data>
 </root>
