@@ -27,7 +27,7 @@
   <replacements lang="en">
     <replacement key="$Message Input$" value="Message Input"/>
     <replacement key="$MIDI File Input$" value="MIDI File Input"/>
-    <replacement key="$MIDI Carrier File Output$" value="$MIDI Carrier File Output"/>
+    <replacement key="$MIDI Carrier File Output$" value="MIDI Carrier File Output"/>
   </replacements>
 
 </sample>
