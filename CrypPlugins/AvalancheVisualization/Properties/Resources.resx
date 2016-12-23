@@ -157,10 +157,10 @@
     <value>DES</value>
   </data>
   <data name="DisplayInfo" xml:space="preserve">
-    <value>Display info. in:</value>
+    <value>Display input as:</value>
   </data>
   <data name="DisplayInformation" xml:space="preserve">
-    <value>Display information in:</value>
+    <value>Display input as:</value>
   </data>
   <data name="DoneButton" xml:space="preserve">
     <value>Done</value>

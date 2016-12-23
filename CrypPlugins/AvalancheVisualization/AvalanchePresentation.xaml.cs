@@ -33,6 +33,7 @@ namespace AvalancheVisualization
         public int action = 1;
         public AutoResetEvent buttonNextClickedEvent;
         // public AutoResetEvent end;
+        
         public byte[][] sBox = new byte[16][];
         public byte[][] states = new byte[40][];
         public byte[][] statesB = new byte[40][];
