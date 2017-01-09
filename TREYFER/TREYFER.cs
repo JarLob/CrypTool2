@@ -1,17 +1,6 @@
 ﻿/*                              
    Aditya Deshpande, University of Mannheim
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+   TREYFER Cipher
 */
 
 using System.Text;
@@ -79,32 +68,7 @@ namespace Cryptool.TREYFER
             get;
             set;
         }
-
-        //[PropertyInfo(Direction.InputData, "InputAlphabetCaption", "InputAlphabetTooltip", false)]
-        //public string AlphabetSymbols
-        //{
-        //    get { return this.settings.AlphabetSymbols; }
-        //    set
-        //    {
-        //        if (value != null && value != settings.AlphabetSymbols)
-        //        {
-        //            this.settings.AlphabetSymbols = value;
-        //            OnPropertyChanged("AlphabetSymbols");
-        //        }
-        //    }
-        //}
-
-        //[PropertyInfo(Direction.InputData, "ShiftKeyCaption", "ShiftKeyTooltip", false)]
-        //public int ShiftKey
-        //{
-        //    get { return settings.ShiftKey; }
-        //    set
-        //    {
-        //        settings.SetKeyByValue(value, true);
-        //    }
-        //}
-
-       //string cipherText;
+        
 
         #endregion
 
@@ -198,12 +162,9 @@ namespace Cryptool.TREYFER
             string cipherText;
             char[] inputChars = new char[9];
             char[] keyChars = new char[8];
-            //StringBuilder output = new StringBuilder();
+            
             cipherText = InputString;
-            // If we are working in case-insensitive mode, we will use only
-            // capital letters, hence we must transform the whole alphabet
-            // to uppercase.
-            //string alphabet = settings.CaseSensitive ? settings.AlphabetSymbols : settings.AlphabetSymbols.ToUpper();
+            
 
             for(int i=0;i<InputString.Length;i++)
             {
@@ -215,28 +176,17 @@ namespace Cryptool.TREYFER
             {
                 for (int j = 0; j < 32; j++)
                 {
-                    //char temp = cipherText[0];
+                    
                     inputChars[8] = inputChars[0];
                     for (int i = 0; i < InputString.Length; i++)
                     {
-                        //// Get the plaintext char currently being processed.
-                        //char currentchar = InputString[i];
-
-                        //// Store whether it is upper case.
-                        //bool uppercase = char.IsUpper(currentchar);
-
-                        //// Get the position of the plaintext character in the alphabet.
-                        //int ppos = alphabet.IndexOf(settings.CaseSensitive ? currentchar : char.ToUpper(currentchar));
-
                         int temp = (inputChars[i + 1] + substitution_box((keyChars[i] + inputChars[i + 1]))) % 256 << 1;
                         char tempChar = (char)temp;
                         inputChars[i + 1] = tempChar;
 
                         if (true)
                         {
-                            // We found the plaintext character in the alphabet,
-                            // hence we will commence shifting.
-                            //int cpos = 0; ;
+                            
                             switch (settings.Action)
                             {
                                 case TREYFERSettings.TREYFERMode.Encrypt:
@@ -247,33 +197,9 @@ namespace Cryptool.TREYFER
                                 //    break;
                             }
 
-                            // We have the position of the ciphertext character,
-                            // hence just output it in the correct case.
-                            //if (settings.CaseSensitive)
-                            //{
-                            //    output.Append(alphabet[cpos]);
-                            //}
-                            //else
-                            //{
-                            //    output.Append(uppercase ? char.ToUpper(alphabet[cpos]) : char.ToLower(alphabet[cpos]));
-                            //}
-
+                            
                         }
-                        //else
-                        //{
-                        //    // The plaintext character was not found in the alphabet,
-                        //    // hence proceed with handling unknown characters.
-                        //    switch (settings.UnknownSymbolHandling)
-                        //    {
-                        //        case TREYFERSettings.UnknownSymbolHandlingMode.Ignore:
-                        //            output.Append(InputString[i]);
-                        //            break;
-                        //        case TREYFERSettings.UnknownSymbolHandlingMode.Replace:
-                        //            output.Append('?');
-                        //            break;
-                        //    }
-                        //}
-
+                        
                         // Show the progress.
                         ProgressChanged(i, InputString.Length - 1);
 
@@ -281,7 +207,7 @@ namespace Cryptool.TREYFER
                     inputChars[0] = inputChars[8];
             }
                 string output = new string(inputChars);
-                //OutputString = settings.CaseSensitive | settings.MemorizeCase ? output.ToString() : output.ToString().ToUpper();
+                
                 OutputString = output;
                 OnPropertyChanged("OutputString");
             }
