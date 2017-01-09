@@ -184,19 +184,19 @@ namespace Cryptool.TREYFER
                         char tempChar = (char)temp;
                         inputChars[i + 1] = tempChar;
 
-                        if (true)
-                        {
+                        //if (true)
+                        //{
                             
-                            switch (settings.Action)
-                            {
-                                case TREYFERSettings.TREYFERMode.Encrypt:
+                        //    switch (settings.Action)
+                        //    {
+                        //        case TREYFERSettings.TREYFERMode.Encrypt:
                                     
-                                    break;
+                        //            break;
                                 
-                            }
+                        //    }
 
                             
-                        }
+                        //}
                         
                         // Show the progress.
                         ProgressChanged(i, InputString.Length - 1);
