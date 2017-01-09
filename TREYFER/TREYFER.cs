@@ -143,6 +143,7 @@ namespace Cryptool.TREYFER
             if (isPlayMode)
             {
                 Execute();
+                
             }
         }
 
@@ -154,7 +155,6 @@ namespace Cryptool.TREYFER
         public event StatusChangedEventHandler OnPluginStatusChanged;
 #pragma warning restore
         static int[,] s_box = new int[16, 16];
-
 
         public void Execute()
         {
@@ -190,11 +190,9 @@ namespace Cryptool.TREYFER
                             switch (settings.Action)
                             {
                                 case TREYFERSettings.TREYFERMode.Encrypt:
-                                    //cpos = (ppos + settings.ShiftKey) % alphabet.Length;
+                                    
                                     break;
-                                //case TREYFERSettings.TREYFERMode.Decrypt:
-                                //    cpos = (ppos - settings.ShiftKey + alphabet.Length) % alphabet.Length;
-                                //    break;
+                                
                             }
 
                             

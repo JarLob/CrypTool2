@@ -42,7 +42,7 @@ namespace Cryptool.TREYFER
 
         public TREYFERSettings()
         {
-           // SetKeyByValue(shiftValue);
+           
         }
 
         #endregion
