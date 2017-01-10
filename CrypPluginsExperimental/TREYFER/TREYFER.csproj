@@ -87,7 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
+    <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
@@ -120,7 +120,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Treyfer.jpg" />
+    <Resource Include="Images\Treyfer.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DetailedDescription\" />

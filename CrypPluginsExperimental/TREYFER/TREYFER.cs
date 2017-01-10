@@ -25,7 +25,7 @@ using System;
 namespace Cryptool.TREYFER
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
-    [PluginInfo("Cryptool.TREYFER.Properties.Resources", "PluginCaption", "PluginTooltip", "TREYFER/userdoc.xml",
+    [PluginInfo("TREYFER.Properties.Resources", "PluginCaption", "PluginTooltip", "TREYFER/userdoc.xml",
         new[] { "TREYFER/Images/Treyfer.jpg", "TREYFER/Images/Treyfer.jpg", "TREYFER/Images/Treyfer.jpg" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class TREYFER : ICrypComponent
