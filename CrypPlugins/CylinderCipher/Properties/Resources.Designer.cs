@@ -61,7 +61,7 @@ namespace Cryptool.CylinderCipher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Action ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypt / Decrypt ähnelt.
         /// </summary>
         internal static string ActionCaption {
             get {
@@ -70,11 +70,29 @@ namespace Cryptool.CylinderCipher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the Algorithm action ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select whether you want to encrypt or decrypt the input. ähnelt.
         /// </summary>
         internal static string ActionTooltip {
             get {
                 return ResourceManager.GetString("ActionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Case sensitivity ähnelt.
+        /// </summary>
+        internal static string CaseSensitivyCaption {
+            get {
+                return ResourceManager.GetString("CaseSensitivyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select whether the device should work case sensitive or not. ähnelt.
+        /// </summary>
+        internal static string CaseSensitivyTooltip {
+            get {
+                return ResourceManager.GetString("CaseSensitivyTooltip", resourceCulture);
             }
         }
         
@@ -133,6 +151,51 @@ namespace Cryptool.CylinderCipher.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handling of invalid characters ähnelt.
+        /// </summary>
+        internal static string InvalidCharacterHandlingCaption {
+            get {
+                return ResourceManager.GetString("InvalidCharacterHandlingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete ähnelt.
+        /// </summary>
+        internal static string InvalidCharacterHandlingList1 {
+            get {
+                return ResourceManager.GetString("InvalidCharacterHandlingList1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ignore ähnelt.
+        /// </summary>
+        internal static string InvalidCharacterHandlingList2 {
+            get {
+                return ResourceManager.GetString("InvalidCharacterHandlingList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Replace by &apos;?&apos; ähnelt.
+        /// </summary>
+        internal static string InvalidCharacterHandlingList3 {
+            get {
+                return ResourceManager.GetString("InvalidCharacterHandlingList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select how invalid characters that are not supported by the used strips should be handled. ähnelt.
+        /// </summary>
+        internal static string InvalidCharacterHandlingTooltip {
+            get {
+                return ResourceManager.GetString("InvalidCharacterHandlingTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Key input ähnelt.
         /// </summary>
         internal static string KeyCaption {
@@ -165,6 +228,42 @@ namespace Cryptool.CylinderCipher.Properties {
         internal static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator for offsets ähnelt.
+        /// </summary>
+        internal static string SeparatorOffCharCaption {
+            get {
+                return ResourceManager.GetString("SeparatorOffCharCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator used to separate the discs from the offset ähnelt.
+        /// </summary>
+        internal static string SeparatorOffCharTooltip {
+            get {
+                return ResourceManager.GetString("SeparatorOffCharTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator for discs ähnelt.
+        /// </summary>
+        internal static string SeparatorStripCaption {
+            get {
+                return ResourceManager.GetString("SeparatorStripCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Separator that is used to separate the different discs used from each other ähnelt.
+        /// </summary>
+        internal static string SeparatorStripTooltip {
+            get {
+                return ResourceManager.GetString("SeparatorStripTooltip", resourceCulture);
             }
         }
         

@@ -118,10 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ActionCaption" xml:space="preserve">
-    <value>Action</value>
+    <value>Encrypt / Decrypt</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
-    <value>Select the Algorithm action</value>
+    <value>Select whether you want to encrypt or decrypt the input.</value>
+  </data>
+  <data name="CaseSensitivyCaption" xml:space="preserve">
+    <value>Case sensitivity</value>
+  </data>
+  <data name="CaseSensitivyTooltip" xml:space="preserve">
+    <value>Select whether the device should work case sensitive or not.</value>
   </data>
   <data name="Decrypt" xml:space="preserve">
     <value>Decrypt</value>
@@ -141,6 +147,21 @@
   <data name="Encrypt" xml:space="preserve">
     <value>Encrypt</value>
   </data>
+  <data name="InvalidCharacterHandlingCaption" xml:space="preserve">
+    <value>Handling of invalid characters</value>
+  </data>
+  <data name="InvalidCharacterHandlingList1" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="InvalidCharacterHandlingList2" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="InvalidCharacterHandlingList3" xml:space="preserve">
+    <value>Replace by '?'</value>
+  </data>
+  <data name="InvalidCharacterHandlingTooltip" xml:space="preserve">
+    <value>Select how invalid characters that are not supported by the used strips should be handled.</value>
+  </data>
   <data name="KeyCaption" xml:space="preserve">
     <value>Key input</value>
   </data>
@@ -152,6 +173,18 @@
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Cylinder cipher encryption tool</value>
+  </data>
+  <data name="SeparatorOffCharCaption" xml:space="preserve">
+    <value>Separator for offsets</value>
+  </data>
+  <data name="SeparatorOffCharTooltip" xml:space="preserve">
+    <value>Separator used to separate the discs from the offset</value>
+  </data>
+  <data name="SeparatorStripCaption" xml:space="preserve">
+    <value>Separator for discs</value>
+  </data>
+  <data name="SeparatorStripTooltip" xml:space="preserve">
+    <value>Separator that is used to separate the different discs used from each other</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
     <value>Text input</value>

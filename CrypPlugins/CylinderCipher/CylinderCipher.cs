@@ -34,8 +34,8 @@ namespace Cryptool.CylinderCipher
     public class CylinderCipher : ICrypComponent
     {
         private CylinderCipherSettings _settings = new CylinderCipherSettings();
-        public static int[][] _cylinders;          // the current loaded cylinders
-        public static int[][] _cylindersIndexOf;   // helper data structure to speed up encryption/decryption
+        public int[][] _cylinders;          // the current loaded cylinders
+        public int[][] _cylindersIndexOf;   // helper data structure to speed up encryption/decryption
         private const string _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private List<string> _ignoredCharacters = new List<string>();
         private int[] _input = null;
@@ -158,26 +158,34 @@ namespace Cryptool.CylinderCipher
         {
             
         }
-        
+
         private int[] EncryptCylinderCipher(int[] cleartext, int[] key, int[] offsets)
         {
             var length = cleartext.Length;
             var ciphertext = new int[length];
             var offsetid = -1;
-
+            var j = 0;
             for (int i = 0; i < length; i++)
             {
-                //Change the offset every "key.Length" times
-                if (i % key.Length == 0)
-                {
-                    offsetid++;
-                    if (offsetid == offsets.Length)
+                if (cleartext[i] != -1)
+                {                    
+                    //Change the offset every "key.Length" times
+                    if (j % key.Length == 0)
                     {
-                        offsetid = 0;
+                        offsetid++;
+                        if (offsetid == offsets.Length)
+                        {
+                            offsetid = 0;
+                        }
                     }
+                    var index = _cylindersIndexOf[key[Mod(j, _key.Length)]][cleartext[i]];
+                    ciphertext[i] = _cylinders[key[Mod(j, _key.Length)]][Mod(index + offsets[offsetid], _cylinders[0].Length)];
+                    j++;
                 }
-                var index = _cylindersIndexOf[key[Mod(i, _key.Length)]][cleartext[i]];
-                ciphertext[i] = _cylinders[key[Mod(i, _key.Length)]][Mod(index + offsets[offsetid], _cylinders[0].Length)];            
+                else
+                {
+                    ciphertext[i] = -1;
+                }
             }
             return ciphertext;
         }
@@ -187,20 +195,28 @@ namespace Cryptool.CylinderCipher
             var length = ciphertext.Length;
             var cleartext = new int[length];
             var offsetid = -1;
-
+            var j = 0;
             for (int i = 0; i < length; i++)
             {
-                //Change the offset every "key.Length" times
-                if (i % key.Length == 0)
+                if (ciphertext[i] != -1)
                 {
-                    offsetid++;
-                    if (offsetid == offsets.Length)
+                    //Change the offset every "key.Length" times
+                    if (j % key.Length == 0)
                     {
-                        offsetid = 0;
+                        offsetid++;
+                        if (offsetid == offsets.Length)
+                        {
+                            offsetid = 0;
+                        }
                     }
+                    var index = _cylindersIndexOf[key[Mod(j, _key.Length)]][ciphertext[i]];
+                    cleartext[i] = _cylinders[key[Mod(j, _key.Length)]][Mod(index - offsets[offsetid], _cylinders[0].Length)];
+                    j++;
                 }
-                var index = _cylindersIndexOf[key[Mod(i, _key.Length)]][ciphertext[i]];
-                cleartext[i] = _cylinders[key[Mod(i, _key.Length)]][Mod(index - offsets[offsetid], _cylinders[0].Length)];              
+                else
+                {
+                    cleartext[i] = -1;
+                }
             }
             return cleartext;
         }
