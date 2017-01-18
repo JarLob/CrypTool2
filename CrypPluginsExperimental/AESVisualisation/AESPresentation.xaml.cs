@@ -364,6 +364,33 @@ namespace AESVisualisation
 
         private void keyButton_Click(object sender, RoutedEventArgs e)
         {
+            if (intro)
+            {
+                startTextBlock.Visibility = Visibility.Hidden;
+                startTextBlock1.Visibility = Visibility.Hidden;
+                startTextBlock2.Visibility = Visibility.Hidden;
+                if (operationCounter < 5)
+                {
+                    cleanUp();
+                    operationCounter = 4;
+                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
+                    buttonNextClickedEvent.Set();
+                    return;
+                }
+                if(operationCounter == 5)
+                {
+                    autostep = false;
+                    checkInitialRound();
+                    initialRound = true;
+                    expansion = false;
+                    abort = true;
+                    skipStep = true;
+                    buttonNextClickedEvent.Set();
+                    buttonNextClickedEvent.Set();
+                }
+                buttonNextClickedEvent.Set(); 
+                return;
+            }
             autostep = false;
             checkInitialRound();
             initialRound = true;
@@ -631,6 +658,8 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         hideButton();
+                        enabledStartEnd();
+                        keyButton.IsEnabled = true;
                         playButton.IsEnabled = true;
                         //playButton.SetValue(Grid.RowProperty, 4);
                         startGrid.Visibility = Visibility.Visible;
@@ -646,10 +675,13 @@ namespace AESVisualisation
                         expansionTextBlock.Visibility = Visibility.Hidden;
                         expansionTextBlock2.Visibility = Visibility.Hidden;
                     }, null);
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    if (expansion)
                     {
-                        setUpExpansion();
-                    }, null);
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            setUpExpansion();
+                        }, null);
+                    }
                 }
                 if (keysize == 0)
                 {
@@ -662,14 +694,21 @@ namespace AESVisualisation
                                 backButton.IsEnabled = true;
                             }, null);
                             introduction();
-                            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                            if (expansion)
                             {
-                                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                                setUpExpansion();
-                                showButton();
-                                buttonVisible();
-                                backButton.IsEnabled = false;
-                            }, null);
+                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                {
+                                    expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                                    setUpExpansion();
+                                    showButton();
+                                    buttonVisible();
+                                    backButton.IsEnabled = false;
+                                }, null);
+                            }
+                            else
+                            {
+                                roundNumber = 11;
+                            }
                             start = false;
                         }
                         skip = false;
@@ -814,9 +853,12 @@ namespace AESVisualisation
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        expansionEncryptionTextBlock.Visibility = Visibility.Hidden;
+                        expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                        expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
                         hideButton();
+                        enabledStartEnd();
                         playButton.IsEnabled = true;
+                        keyButton.IsEnabled = true;
                         playButton.Foreground = Brushes.Black;
                         playButton.Visibility = Visibility.Visible;
                         startGrid.Visibility = Visibility.Visible;
@@ -837,7 +879,7 @@ namespace AESVisualisation
                         expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                     }, null);
                 }
-                if (first && !finish && !end && !start)
+                if (first && !finish && !end && !start && !expansion)
                 {
                     roundNumber = 0;
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -846,14 +888,14 @@ namespace AESVisualisation
                     }, null);
                     first = false;
                 }
-                else if (!finish && !end && !start)
+                else if (!finish && !end && !start && !expansion)
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         setUpSubByte(states);
                     }, null);
                 }
-                else if (finish && end && !start)
+                else if (finish && end && !start && !expansion)
                 {
                     action = 4;
                     roundNumber = 10 + keysize * 2;
@@ -3712,9 +3754,12 @@ namespace AESVisualisation
                 hideButton();
                 playButton.IsEnabled = true;
                 backButton.IsEnabled = true;
+                keyButton.IsEnabled = true;
+                keyExpansionTextBlock.Text = "Skip Intro";
                 playButton.Foreground = Brushes.Black;
                 backButton.Foreground = Brushes.Black;
             }, null);
+            enabledStartEnd();
             while (!abort && operationCounter < 5)
             {
                 switch (operationCounter)
@@ -3790,6 +3835,7 @@ namespace AESVisualisation
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
                             expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
+                            expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             Intro3ENImage.Visibility = Visibility.Hidden;
                             startGrid.Visibility = Visibility.Visible;
                             expansionTextBlock.Visibility = Visibility.Visible;
@@ -6552,11 +6598,18 @@ namespace AESVisualisation
 
         public void toStart()
         {
+            if (intro)
+            {
+                cleanUp();
+                operationCounter = 0;
+                buttonNextClickedEvent.Set();
+                return;
+            }
             checkInitialRound();
             initialRound = true;
             progress = 0;
             start = true;
-            abort = true;
+            abort = true;   
             if (!expansion)
             {
                 autostep = false;
@@ -6620,8 +6673,17 @@ namespace AESVisualisation
             }, null);
         }
 
+        public void enabledStartEnd()
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                startButton.IsEnabled = true;
+                endButton.IsEnabled = true;
+            }, null);
+
+        }
         #endregion
-   
+
     }
   
 }

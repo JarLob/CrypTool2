@@ -292,7 +292,7 @@
     <value>Start</value>
   </data>
   <data name="subBytesButton" xml:space="preserve">
-    <value>Sub. Bytes</value>
+    <value>Sub Bytes</value>
   </data>
   <data name="subBytesExplanation" xml:space="preserve">
     <value>First, a byte is transferred from the state matrix to the transition spot and split up.</value>
@@ -304,7 +304,8 @@
     <value>Result</value>
   </data>
   <data name="introTextBlock" xml:space="preserve">
-    <value>AES is a modern block cipher.  AES takes two inputs. The plaintext that is to be encrypted and a key.  After the encryption AES outputs the ciphertext.</value>
+    <value>AES is a modern block cipher.  AES takes two inputs: 
+the plaintext that is to be encrypted and a key.  After the encryption AES outputs the ciphertext.</value>
   </data>
   <data name="introTextBlock1" xml:space="preserve">
     <value>AES starts with the "Key Expansion" in which round keys are derived from the original key. 

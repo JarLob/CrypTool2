@@ -302,7 +302,7 @@
     <value>Start</value>
   </data>
   <data name="subBytesButton" xml:space="preserve">
-    <value>Sub. Bytes</value>
+    <value>Sub Bytes</value>
   </data>
   <data name="subBytesExplanation" xml:space="preserve">
     <value>Zuerst wird ein Byte aus der Zustandsmatrix genommen und aufgeteilt.</value>
@@ -314,7 +314,7 @@
     <value>Ergebnis</value>
   </data>
   <data name="introTextBlock" xml:space="preserve">
-    <value>AES ist eine moderne Blockchiffre. Es gibt zwei Eingabewerte. Zum einen den Klartext, der verschlüsselt werden soll, und zum anderen den Schlüssel. Nach der Verschlüsselung gibt AES den Geheimtext aus.</value>
+    <value>AES ist eine moderne Blockchiffre. Es gibt zwei Eingabewerte: zum einen den Klartext, der verschlüsselt werden soll, und zum anderen den Schlüssel. Nach der Verschlüsselung gibt AES den Geheimtext aus.</value>
   </data>
   <data name="introTextBlock1" xml:space="preserve">
     <value>AES beginnt mit der Schlüsselexpansion, in der die Rundenschlüssel vom Hauptschlüssel abgeleitet werden.

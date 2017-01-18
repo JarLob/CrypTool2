@@ -2617,7 +2617,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="4" Grid.ColumnSpan="3">
+                <TextBlock Grid.Row="4" Grid.ColumnSpan="4">
                 Transition column
                 </TextBlock>
                 <Border Name="mTransitionBorder1" Visibility="Hidden" BorderBrush="Black" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1">
