@@ -261,6 +261,7 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Stop()
         {
             pres.autostep = false;
+            pres.cleanUp();
             aborted = true;
             pres.abort = true;
             pres.expansion = !pres.expansion;
