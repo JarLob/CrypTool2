@@ -658,7 +658,7 @@ namespace Cryptool.Enigma
         /// by the analysis settings
         /// </summary>
         /// <param name="i">The rotor number as integer</param>
-        /// <returns>True if this rotor shoudl be included, false otherwise</returns>
+        /// <returns>True if this rotor should be included, false otherwise</returns>
         private bool includeRotor(int i)
         {
             switch (i)
@@ -676,7 +676,7 @@ namespace Cryptool.Enigma
         }
 
         /// <summary>
-        /// Prints on the CrypTool console the currently best options for rotor usage, rotor settings
+        /// Prints on the CrypTool console the currently best options for rotor usage, rotor settings,
         /// ring settings, and plug settings
         /// </summary>
         private void printBestCandidates()
@@ -713,9 +713,9 @@ namespace Cryptool.Enigma
 
 
         /// <summary>
-        /// Creates a new Enigma nalyzer class
-        /// This analyzer performs an cipher-text-only analysis of a given enigma text.
-        /// It uses the method as described by James Gillogly in Cryptologia 1995
+        /// Creates a new EnigmaAnalyzer class
+        /// This analyzer performs a ciphertext-only analysis of a given enigma text.
+        /// It uses the method as described by James Gillogly in Cryptologia 1995.
         /// </summary>
         /// <param name="facade">The enimga plugin which controls this analyzer</param>
         public EnigmaAnalyzer(Enigma facade)
@@ -726,9 +726,9 @@ namespace Cryptool.Enigma
         }
 
         /// <summary>
-        /// Thsi method performs the entire analysis and returs the cleartext as detected by the algorithm
-        /// The provided string should be preformated, i.e. should not contain uncecessary characters;
-        /// unknown characters in the input will slow down the analysis process
+        /// This method performs the entire analysis and returns the cleartext as detected by the algorithm.
+        /// The provided string should be preformatted, i.e. should not contain uncecessary characters;
+        /// unknown characters in the input will slow down the analysis process.
         /// </summary>
         /// <param name="preformatedText">The preformated text for analysis</param>
         /// <returns>The cleartext as decoded with the analyzed key</returns>
