@@ -268,6 +268,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.stopp = true;
             pres.finish = true;
             pres.endstep = true;
+            pres.initialState();
             pres.buttonNextClickedEvent.Set();
         }
 
