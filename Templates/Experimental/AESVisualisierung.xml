@@ -16,4 +16,22 @@
     <plugin name="AES" />
   </relevantPlugins>
 
+  <replacements lang="de">
+    <replacement value="Schlüssel (hex)" key="$Key$"/>  
+    <replacement value="Klartext (hex)" key="$Plaintext$"/> 
+    <replacement value="Geheimtext (hex)" key="$Ciphertext$"/> 
+    <replacement value="Text-Decodierer" key="$TextDecoder$"/>
+    <replacement value="Schlüssel-Decodierer" key="$KeyDecoder$"/>
+    <replacement value="AES-Visualisierung" key="$AES$"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement value="Key (hex)" key="$Key$"/>
+    <replacement value="Plaintext (hex)" key="$Plaintext$"/> 
+    <replacement value="Ciphertext (hex)" key="$Ciphertext$"/>  
+    <replacement value="Text Decoder" key="$TextDecoder$"/>
+    <replacement value="Key Decoder" key="$KeyDecoder$"/>
+    <replacement value="AESVisualization" key="$AES$"/>
+  </replacements>
+
+
 </sample>
