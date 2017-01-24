@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.GrainV1Attack
 {
 
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("GrainV1Attack.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack.png" })]
+    [PluginInfo("GrainV1Attack.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
 
 
@@ -46,10 +46,12 @@ namespace Cryptool.Plugins.GrainV1Attack
 
         #region Data Properties
 
+        GrainV1AttackSettings settings = new GrainV1AttackSettings();
+
         public ISettings Settings
         {
-            get { return (ISettings)this.Settings; }
-            set { this.Settings = (GrainV1AttackSettings)value; }
+            get { return this.settings; }
+            set { this.settings = (GrainV1AttackSettings)value; }
         }
 
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]

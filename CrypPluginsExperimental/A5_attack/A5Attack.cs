@@ -22,7 +22,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.A5_attack
 {
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("A5_attack.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/DetailedDescription/doc.xml", new[] { "A5/gsm icon.png" })]
+    [PluginInfo("A5_attack.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class A5_attack : ICrypComponent
     {
@@ -35,9 +35,11 @@ namespace Cryptool.Plugins.A5_attack
         public int index;
         private int[][] registers;
 
+        A5AttackSettings settings = new A5AttackSettings();
+        
         public ISettings Settings
         {
-            get { return null; }
+            get { return settings; }
         }
 
         [PropertyInfo(Direction.InputData, " Text input ", " Input a string to be processed by the cipher ", false)]

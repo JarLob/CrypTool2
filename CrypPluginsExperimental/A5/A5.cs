@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
@@ -34,10 +35,10 @@ namespace Cryptool.Plugins.A5
 {
 
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/DetailedDescription/doc.xml", new[] { "A5/gsm icon.png" })]
+    [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
 
-    public class A5
+    public class A5 : ICrypComponent
     {
         public bool dbMode; //Debug mode
 
@@ -50,6 +51,7 @@ namespace Cryptool.Plugins.A5
 
         private int[][] uExponents; //exponents being used
 
+        private A5Settings settings = new A5Settings();
 
         public void Dispose()
         {
@@ -60,21 +62,26 @@ namespace Cryptool.Plugins.A5
             rIndexes = null;
 
         }
-
+        
+        public ISettings Settings
+        {
+            get { return this.settings; }
+            set { this.settings = (A5Settings)value; }
+        }
 
         ///* Main method for launching the cipher */
-        //public void Execute()
-        //{
-        //    ProgressChanged(0, 1);
+        public void Execute()
+        {
+            ProgressChanged(0, 1);
 
-        //    if (!checkParameters()) return;
+            //if (!checkParameters()) return;
 
-        //    init();
+            //init();
 
-        //    OutputData = encrypt(message);
+            //OutputData = encrypt(message);
 
-        //    ProgressChanged(1, 1);
-        //}
+            ProgressChanged(1, 1);
+        }
 
 
         /* --- Setting properties --- */
@@ -504,12 +511,11 @@ namespace Cryptool.Plugins.A5
 
             return regTSFBV;
         }
-
-
-
+        
         public void Initialize()
         {
         }
+
         public event StatusChangedEventHandler OnPluginStatusChanged;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
@@ -524,6 +530,20 @@ namespace Cryptool.Plugins.A5
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
+            //if (PropertyChanged != null)
+            //{
+            //  PropertyChanged(this, new PropertyChangedEventArgs(name));
+            //}
+        }
+
+        #endregion
 
         public void PostExecution()
         {
