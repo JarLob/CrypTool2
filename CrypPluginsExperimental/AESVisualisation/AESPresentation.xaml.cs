@@ -59,7 +59,7 @@ namespace AESVisualisation
         public bool abort = false;
         public bool intro = false;
         public bool start = true;
-        private bool initialRound = true;
+        public bool initialRound = true;
         public bool end = false;
         public bool expansion = true;
         public bool autostep;
@@ -438,13 +438,7 @@ namespace AESVisualisation
 
         private void playButton_Click(object sender, RoutedEventArgs e)
         {
-            //disableButtons();
             buttonNextClickedEvent.Set();      
-            //if(keysize == 2 && expansion)
-            //{
-            //    enableButtons();
-            //}
-            //enableButtons();
         }
 
         private void prevStepButton_Click(object sender, RoutedEventArgs e)
@@ -491,7 +485,6 @@ namespace AESVisualisation
 
         private void nextStepButton_Click(object sender, RoutedEventArgs e)
         {
-            checkInitialRound();
             autostep = false;
             if (expansion)
             {
@@ -860,8 +853,7 @@ namespace AESVisualisation
                     {
                         startGrid.Visibility = Visibility.Hidden;
                         encryptionTextBlock2.Visibility = Visibility.Hidden;
-                        encryptionTextBlock.Visibility = Visibility.Hidden;
-                        //playButton.SetValue(Grid.RowProperty, 3);
+                        encryptionTextBlock.Visibility = Visibility.Hidden;                     
                         showButton();
                         buttonVisible();
                         expansionEncryptionTextBlock.Visibility = Visibility.Visible;
@@ -1013,7 +1005,7 @@ namespace AESVisualisation
                         //subBytes
                         case 1:
                             abort = false;
-                            checkInitialRound();
+                            //checkInitialRound();
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 setUpSubByte(states);
@@ -1114,6 +1106,7 @@ namespace AESVisualisation
                             wait();
                             addKey();
                             initialRound = false;
+                            checkInitialRound();
                             if(roundNumber != 0)
                             {
                                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -1159,19 +1152,7 @@ namespace AESVisualisation
                                 autostep = false;
                                 wait(); 
                             }
-                            if (initialRound)
-                            {
-                                initialRound = false;
-                                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                                {
-                                    InitialRoundTextBlock.Visibility = Visibility.Hidden;
-                                    addKeyButton.SetValue(Grid.ColumnProperty, 4);
-                                    subByteButton.SetValue(Grid.ColumnProperty, 1);
-                                    shiftRowButton.SetValue(Grid.ColumnProperty, 2);
-                                    mixColButton.SetValue(Grid.ColumnProperty, 3);
-                                    buttonVisible();
-                                }, null);
-                            }
+                            checkInitialRound();
                             cleanUp();                            
                             abort = false;
                             if (expansion)
@@ -6138,6 +6119,12 @@ namespace AESVisualisation
                 if (end)
                 {
                     autostepSpeedSlider.IsEnabled = false;
+                    subByteButton.IsEnabled = false;
+                    shiftRowButton.IsEnabled = false;
+                    mixColButton.IsEnabled = false;
+                    addKeyButton.IsEnabled = false;
+                    shiftLeftButton.IsEnabled = false;
+                    shiftRightButton.IsEnabled = false;
                 }
                 invisible();
                 introGrid.Visibility = Visibility.Hidden;

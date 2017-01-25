@@ -149,6 +149,7 @@ namespace Cryptool.Plugins.AESVisualisation
         {
             pres.end = false;
             pres.abort = false;
+            pres.initialRound = true;
             pres.expansion = true;
             pres.roundNumber = 1;
             pres.start = true;
