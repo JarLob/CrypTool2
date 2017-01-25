@@ -151,7 +151,6 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.abort = false;
             pres.expansion = true;
             pres.roundNumber = 1;
-            pres.first = true;
             pres.start = true;
             pres.operationCounter = 0;
             pres.operationCounter1 = 0;
