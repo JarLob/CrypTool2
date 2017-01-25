@@ -822,11 +822,6 @@ namespace AESVisualisation
                 }
                 expansion = false;
                 abort = false;
-                if (end)
-                {
-                    initialState();
-                    return;
-                }
                 cleanUp();
                 if (!end && !start)
                 {
@@ -874,27 +869,6 @@ namespace AESVisualisation
                         setUpSubByte(states);
                     }, null);
                 }
-                else if (end && !start && !expansion)
-                {
-                    action = 4;
-                    roundNumber = 10 + keysize * 2;
-                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        setUpAddKey();
-                    }, null);
-                    byte[] result;
-                    result = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
-                    List<TextBlock> resultList = textBlockList[2];
-                    int y = 0;
-                    foreach (TextBlock tb in resultList)
-                    {
-                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                        {
-                            renameTextBlock(tb, result[y]);
-                        }, null);
-                        y++;
-                    }
-                }
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     expansionKeyGrid.Visibility = Visibility.Hidden;
@@ -915,8 +889,7 @@ namespace AESVisualisation
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        hideButton();
-                        
+                        hideButton();  
                     }, null);
                 }
                 action = 1;
@@ -931,11 +904,6 @@ namespace AESVisualisation
                 if (roundNumber == 0)
                 {
                     roundNumber++;
-                }
-                if (end)
-                {
-                    initialState();
-                    return;
                 }
                 if (start)
                 {
