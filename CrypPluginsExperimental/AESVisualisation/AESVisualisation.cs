@@ -150,11 +150,8 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.end = false;
             pres.abort = false;
             pres.expansion = true;
-            pres.finish = false;
-            pres.endstep = false;
             pres.roundNumber = 1;
             pres.first = true;
-            pres.stopp = false;
             pres.start = true;
             pres.operationCounter = 0;
             pres.operationCounter1 = 0;
@@ -167,9 +164,6 @@ namespace Cryptool.Plugins.AESVisualisation
             Thread presThread = new Thread(pres.execute);
             keysize = settings.Keysize;
             pres.keysize = keysize;
-            language = 1; /*- settings.Language;*/
-            pres.language = language;
-            //pres.setLanguage();
             checkKeysize();
             checkTextLength();
             executing = true;
@@ -212,8 +206,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 pres.createSBox();
-                pres.StartCanvas.Visibility = Visibility.Hidden;
-                //pres.showButton();
+                pres.StartCanvas.Visibility = Visibility.Hidden;      
             }, null);
             switch (keysize)
             {
@@ -265,9 +258,7 @@ namespace Cryptool.Plugins.AESVisualisation
             aborted = true;
             pres.abort = true;
             pres.expansion = !pres.expansion;
-            pres.stopp = true;
-            pres.finish = true;
-            pres.endstep = true;
+            pres.end = true;
             pres.initialState();
             pres.buttonNextClickedEvent.Set();
         }
