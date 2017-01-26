@@ -22,12 +22,16 @@
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$Spanish Strip Cipher$" value="Spanische Strip-Chiffre"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
+    <replacement key="$Key$" value="Schlüssel"/>
+    <replacement key="$Memo$" value="In dieser Vorlage nutzt die Spanische Strip-Chiffre das deterministische Verfahren Round Robin, um die Homophone auszuwählen."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
      <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$Spanish Strip Cipher$" value="Spanish Strip Cipher"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
+    <replacement key="$Key$" value="Key"/>
+    <replacement key="$Memo$" value="In this template the deterministic method Round Robin is used by the Spanish Strip Cipher in order to select the homophones."/>
   </replacements>
 
 </sample>
