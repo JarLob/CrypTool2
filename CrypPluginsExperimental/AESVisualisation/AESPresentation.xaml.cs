@@ -63,6 +63,8 @@ namespace AESVisualisation
         public bool end = false;
         public bool expansion = true;
         public bool autostep;
+        public bool finish = false;
+        public bool atEnd = false;
 
         public AESPresentation()
         {
@@ -351,6 +353,23 @@ namespace AESVisualisation
 
         private void keyButton_Click(object sender, RoutedEventArgs e)
         {
+            end = false;
+            if (atEnd)
+            {
+                roundNumber = 1;
+                expansion = true;
+                start = false;
+                finish = false;
+                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    backButton.IsEnabled = true;
+                    startTextBlock.Visibility = Visibility.Hidden;
+                    startTextBlock1.Visibility = Visibility.Hidden;
+                    startTextBlock2.Visibility = Visibility.Hidden;
+                }, null);
+                buttonNextClickedEvent.Set();
+                return;
+            }
             if (intro)
             {
                 startTextBlock.Visibility = Visibility.Hidden;
@@ -571,6 +590,7 @@ namespace AESVisualisation
 
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            end = false;
             toStart();
         }
 
@@ -594,7 +614,7 @@ namespace AESVisualisation
         */
         public void execute()
         {
-            
+            atEnd = false;
             int saveRoundNumber = 1;
             end = false;
             abort = false;
@@ -604,11 +624,13 @@ namespace AESVisualisation
                 nextStepButton.IsEnabled = true;
                 backButton.IsEnabled = true;               
             }, null);
-            while (expansion && !end)
+            while (expansion && !finish)
             {
+                atEnd = false;
                 abort = false;
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
+                    autostepSpeedSlider.IsEnabled = true; 
                     InitialRoundTextBlock.Text = AESVisualisation.Properties.Resources.initialRoundTextBlock;
                     keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
                     expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
@@ -701,7 +723,6 @@ namespace AESVisualisation
                         if (roundNumber < 11 && !start && !abort)
                         {
                             autostep = false;
-                            //wait();
                         }
                     }
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -889,7 +910,7 @@ namespace AESVisualisation
                 {
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        hideButton();  
+                        hideButton();
                     }, null);
                 }
                 action = 1;
@@ -910,46 +931,64 @@ namespace AESVisualisation
                     roundNumber = 1;
                     expansion = true;
                 }
-
-            }
-            progress = 1;
-            action = 4;
-            roundNumber = 10 + keysize * 2;
-            Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                setUpAddKey();
-            }, null);
-            byte[] result1;
-            result1 = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
-            List<TextBlock> resultList1 = textBlockList[2];
-            int y1 = 0;
-            foreach (TextBlock tb in resultList1)
-            {
-                Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                if(!start && !expansion)
                 {
-                    renameTextBlock(tb, result1[y1]);
-                }, null);
-                y1++;
+                    progress = 1;
+                    action = 4;
+                    roundNumber = 10 + keysize * 2;
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        setUpAddKey();
+                    }, null);
+                    byte[] result1;
+                    result1 = arrangeText(states[(roundNumber - 1) * 4 + action - 1]);
+                    List<TextBlock> resultList1 = textBlockList[2];
+                    int y1 = 0;
+                    foreach (TextBlock tb in resultList1)
+                    {
+                        Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            renameTextBlock(tb, result1[y1]);
+                        }, null);
+                        y1++;
+                    }
+                    Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        hideButton();
+                        startButton.IsEnabled = true;
+                        keyButton.IsEnabled = true;
+                        keyButton.Foreground = Brushes.Black;
+                        autostepSpeedSlider.IsEnabled = false;
+                        shiftLeftButton.IsEnabled = false;
+                        shiftRightButton.IsEnabled = false;
+                        addKeyButton.IsEnabled = false;
+                        mixColButton.IsEnabled = false;
+                        shiftRowButton.IsEnabled = false;
+                        subByteButton.IsEnabled = false;
+                        shiftRightButton.Foreground = Brushes.Gray;
+                        shiftLeftButton.Foreground = Brushes.Gray;
+                        addKeyButton.Foreground = Brushes.Gray;
+                        mixColButton.Foreground = Brushes.Gray;
+                        subByteButton.Foreground = Brushes.Gray;
+                        shiftRowButton.Foreground = Brushes.Gray;
+                        expansionEncryptionTextBlock.Visibility = Visibility.Visible;
+                        expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.resultTextBlock;
+                        InitialRoundTextBlock.Visibility = Visibility.Hidden;
+                    }, null);
+                    autostep = false;
+                    end = false;
+                    abort = false;
+                    atEnd = true;
+                    wait();
+                }               
             }
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                hideButton();
-                autostepSpeedSlider.IsEnabled = false;
-                shiftLeftButton.IsEnabled = false;
-                shiftRightButton.IsEnabled = false;
-                addKeyButton.IsEnabled = false;
-                mixColButton.IsEnabled = false;
-                shiftRowButton.IsEnabled = false;
-                subByteButton.IsEnabled = false;
-                shiftRightButton.Foreground = Brushes.Gray;
-                shiftLeftButton.Foreground = Brushes.Gray;
-                addKeyButton.Foreground = Brushes.Gray;
-                mixColButton.Foreground = Brushes.Gray;
-                subByteButton.Foreground = Brushes.Gray;
-                shiftRowButton.Foreground = Brushes.Gray;
-                expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.resultTextBlock;
-            }, null);            
+            {           
+                startButton.IsEnabled = false;
+                keyButton.IsEnabled = false;
+                keyButton.Foreground = Brushes.Gray;
+                initialState();            
+            }, null);
         }
 
         #region PresentationMethods
@@ -4499,24 +4538,24 @@ namespace AESVisualisation
         /*
         The interface of the plugin gets updated.
         */
-        public void updateUI()
-        {
+        //public void updateUI()
+        //{
 
-            DispatcherFrame frame = new DispatcherFrame();
+        //    DispatcherFrame frame = new DispatcherFrame();
 
-            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(delegate (object parameter)
+        //    Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Render, new DispatcherOperationCallback(delegate (object parameter)
 
-            {
+        //    {
 
-                frame.Continue = false;
+        //        frame.Continue = false;
 
-                return null;
+        //        return null;
 
-            }), null);
+        //    }), null);
 
-            Dispatcher.PushFrame(frame);
+        //    Dispatcher.PushFrame(frame);
 
-        }
+        //}
 
         /*
         The values of the S-Box are set filled into the displayed S-Box.
@@ -5107,7 +5146,7 @@ namespace AESVisualisation
         */
         private void wait()
         {
-            if (end || abort)
+            if (end || abort || finish)
             {
                 return;
             }

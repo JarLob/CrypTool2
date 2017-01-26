@@ -55,6 +55,7 @@ namespace Cryptool.Plugins.AESVisualisation
         private Boolean aborted = false;
         private int language;
         private bool executing = false;
+        private bool outputDone; 
         int keysize;
         //Thread presThread;
         Thread executeThread;
@@ -148,7 +149,9 @@ namespace Cryptool.Plugins.AESVisualisation
         public void Execute()
         {
             pres.end = false;
+            pres.atEnd = false;
             pres.abort = false;
+            pres.finish = false;
             pres.initialRound = true;
             pres.expansion = true;
             pres.roundNumber = 1;
@@ -156,6 +159,7 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.operationCounter = 0;
             pres.operationCounter1 = 0;
             pres.operationCounter2 = 0;
+            outputDone = false;
             keyList = new byte[15][];
             states = new byte[56][];
             roundNumber = 1;
@@ -229,14 +233,21 @@ namespace Cryptool.Plugins.AESVisualisation
             presThread.Start();
             while (presThread.IsAlive)
             {
-                ProgressChanged(pres.progress, 1);
+                ProgressChanged(pres.progress, 1);   
+                if(pres.atEnd && !outputDone)
+                {
+                    outputStreamWriter.Write(states[39 + 8 * keysize]);
+                    outputStreamWriter.Close();
+                    ProgressChanged(1, 1);
+                    outputDone = true;
+                }         
             }
             presThread.Join();
-            if (aborted)
-            {
-                outputStreamWriter.Close();
-                return;
-            }
+            //if (aborted)
+            //{
+            //    outputStreamWriter.Close();
+            //    return;
+            //}
             outputStreamWriter.Write(states[39 + 8 * keysize]);
             outputStreamWriter.Close();
             ProgressChanged(1, 1);
@@ -256,10 +267,11 @@ namespace Cryptool.Plugins.AESVisualisation
             pres.autostep = false;
             pres.cleanUp();
             aborted = true;
+            pres.finish = true;
             pres.abort = true;
             pres.expansion = !pres.expansion;
             pres.end = true;
-            pres.initialState();
+            //pres.initialState();
             pres.buttonNextClickedEvent.Set();
         }
 
