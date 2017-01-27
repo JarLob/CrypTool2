@@ -72,7 +72,7 @@ namespace AESVisualisation
             buttonNextClickedEvent = new AutoResetEvent(false);
             autostep = false;
             autostepSpeedSlider.IsEnabled = false;
-            keyExpansionTextBlock.Text = "Skip Expansion";
+            keyExpansionTextBlock.Text = "Skip Intro";
             buttonVisible();
             showButton();
             hideButton();
