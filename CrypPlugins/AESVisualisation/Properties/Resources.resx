@@ -328,10 +328,6 @@ Once these rounds are completed one last round is performed, which has no "MixCo
   <data name="IntroText" xml:space="preserve">
     <value>Intro</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Temp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Temp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Ciphertext" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
