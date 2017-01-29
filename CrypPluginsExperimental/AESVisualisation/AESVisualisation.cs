@@ -248,8 +248,11 @@ namespace Cryptool.Plugins.AESVisualisation
             //    outputStreamWriter.Close();
             //    return;
             //}
-            outputStreamWriter.Write(states[39 + 8 * keysize]);
-            outputStreamWriter.Close();
+            if (!outputStreamWriter.IsClosed)
+            {
+                outputStreamWriter.Write(states[39 + 8 * keysize]);
+                outputStreamWriter.Close();
+            }
             ProgressChanged(1, 1);
         }
 
