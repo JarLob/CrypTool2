@@ -156,7 +156,7 @@ namespace WorkspaceManager.View.Visuals
         {
             Icon = type.GetImage(0);
             Type = type;
-            ToolTip = type.Name;
+            ToolTip = type.GetPluginInfoAttribute().Caption;
         }
     }
 

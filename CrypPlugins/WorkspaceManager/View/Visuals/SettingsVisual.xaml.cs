@@ -104,7 +104,7 @@ namespace WorkspaceManager.View.Visuals
 
                     myGrid.Children.Add(tbC);
                     TabItem tbI = new TabItem();
-                    tbI.Header = bcv.Model.PluginType.Name;
+                    tbI.Header = bcv.Model.Plugin.GetPluginInfoAttribute().Caption;
                     tbI.Content = MyScrollViewer;
 
                     tbC.Items.Add(tbI);
@@ -172,7 +172,7 @@ namespace WorkspaceManager.View.Visuals
                     TabItem tbI = new TabItem();
                     tbI.Uid = master.ConnectorModel.PropertyName;
                     tbI.Content = new SettingsVisual(master.PluginModel.Plugin, bcv, false, isSideBar);
-                    tbI.Header = master.PluginModel.GetName();
+                    tbI.Header = master.PluginModel.Plugin.GetPluginInfoAttribute().Caption;
                     tbC.Items.Add(tbI);
                 }
             }
@@ -366,6 +366,7 @@ namespace WorkspaceManager.View.Visuals
 
                     if (ce.sfa == null)
                     {
+
                         title.Text = ce.tpa.Caption;
                         title.TextWrapping = TextWrapping.Wrap;
 
