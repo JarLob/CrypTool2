@@ -4,12 +4,12 @@
 	<language culture="en" />
 
   <introduction lang="en">
-    The <i>IDP Analyser</i> component implements an attack on a ciphertext that was encrypted with the double columnar transposition (DCT). It makes use of the <b>IDP</b> (Index of digraphic potential) method that was developed by George Lasry in 2013, 
+    The <i>IDP Analyzer</i> component implements an attack on a ciphertext that was encrypted with the double columnar transposition (DCT). It makes use of the <b>IDP</b> (Index of digraphic potential) method that was developed by George Lasry in 2013, 
     when he successfully solved the famous challenge cipher from Klaus Schmeh.
     <newline />
     <newline />
     A DCT consists of the application of two simple columnar transpositions (SCT), each having its own key. The success of the IDP method relies on the fact, that it can provide a measurement of the quality of the second key without 
-    knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the <i>IDP Analyser</i> component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase 
+    knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the <i>IDP Analyzer</i> component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase 
     and produces an intermediate ciphertext, that is basically also just a SCT and which can easily be solved in a second step with a classic Hill climbing attack.
   </introduction>
 
@@ -22,7 +22,7 @@
     <newline />
     <newline />
     In "Dictionary Search" mode, an array of keywords is expected at the second input of the component (typically provided by a <i>Dictionary</i> component).
-    The <i>IDP Analyser</i> component will then produce an intermediate ciphertext for each keyword by undoing the SCT on the ciphertext, that would result from the present keyword.
+    The <i>IDP Analyzer</i> component will then produce an intermediate ciphertext for each keyword by undoing the SCT on the ciphertext, that would result from the present keyword.
     It then tries to sort the columns of the intermediate ciphertext in a straightforward way and examines the bigrams, that would occur in this order of columns.
     If the bigrams that occur this way are frequent in the selected language, the attained score will be high and the examined keyword is a good candidate for decryption.
     <newline />

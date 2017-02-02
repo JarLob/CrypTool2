@@ -124,7 +124,7 @@
     <value>Reconstructed columns</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Spanish Strip Cipher Analyser</value>
+    <value>Spanish Strip Cipher Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>This plugin reconstructs some columns of the homophones table from a given ciphertext</value>
