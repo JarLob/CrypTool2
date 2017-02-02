@@ -11,7 +11,7 @@
   <description lang="de">Diese Vorlage zeigt, wie ein mit der <i>Solitaire</i>-Verschlüsselung verschlüsselter Text mit einem Wörterbuch-Angriff analysiert werden kann. Die Wörterbücher für die zu testenden Schlüsselwörter und für die Texterkennung können frei gewählt werden.</description>
   <keywords lang="de">Wörterbuch, Angriff</keywords>
 
-  <icon file="solitaireanalyser.jpg" />
+  <icon file="solitaireanalyzer.jpg" />
   <relevantPlugins>
     <plugin name="CryptoolDictionary" />
     <plugin name="SolitaireAnalyser" />

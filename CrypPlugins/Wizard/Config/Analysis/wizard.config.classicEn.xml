@@ -144,7 +144,7 @@ Zij Vgpyüywafoscw swe „IBHC“, lrx Xarl „kpkeaivzv“. Zqrx Gwykec-Vutobzw
       <item content="Vigenère-Selbstschlüssel-Verfahren" lang="de"/>
     </comboBox>
     
-    <sampleViewer image="Vigenere" file="Cryptanalysis\Classic\Vigenere_Analyser.cwm">
+    <sampleViewer image="Vigenere" file="Cryptanalysis\Classic\Vigenere_Analyzer.cwm">
       <name lang="en">Vigenère Analysis Output</name>
       <name lang="de">Vigenère-Analyse: Ausgabe</name>
       <description lang="en">Vigenère Analysis Output</description>

@@ -11,7 +11,7 @@
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>Vigenère</i>-Verschlüsselung. Es handelt sich hierbei um eine Ciphertext-only-Analyse, da keine Informationen über den Klartext bekannt sind.</description>
   <keywords lang="de">Vigenère, Vigenere, Polyalphabetisch, Substitution, Angriff, Analyse</keywords>
 
-  <icon file="Vigenere_Analyser.png" />
+  <icon file="Vigenere_Analyzer.png" />
   <relevantPlugins>
     <plugin name="Vigenere" />
     <plugin name="VigenereAutokeyAnalyser" />

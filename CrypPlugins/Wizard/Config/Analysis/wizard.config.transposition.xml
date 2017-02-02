@@ -68,7 +68,7 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <item content="Spaltenweise" lang="de"/>
     </comboBox>
 
-    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Bruteforce_Analyser.cwm">
+    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Bruteforce_Analyzer.cwm">
       <name lang="en">Brute-force Analysis</name>
       <name lang="de">Brute-force-Analyse</name>
       <description lang="en">Brute-force Analysis</description>
@@ -142,7 +142,7 @@ Diese Methode benötigt für die Analyse nur den Geheimtext ("Ciphertext-only-An
       <item content="Spaltenweise" lang="de"/>
     </comboBox>
 
-    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Genetic_Analyser.cwm">
+    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Genetic_Analyzer.cwm">
       <name lang="en">Genetic Analysis</name>
       <name lang="de">Genetische Analyse</name>
       <description lang="en">Genetic Analysis</description>
@@ -221,7 +221,7 @@ rtei.iaic]cg,aic m cowtss i twam cou c h dogs,hee i motatttd nsgatyjets ea'ttrni
       <item content="Spaltenweise" lang="de"/>
     </comboBox>
 
-    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Crib_Analyser.cwm">
+    <sampleViewer image="Transposition" file="Cryptanalysis\Classic\Transposition_Crib_Analyzer.cwm">
       <name lang="en">Crib Analysis</name>
       <name lang="de">Crib-Analyse</name>
       <description lang="en">Crib Analysis</description>
