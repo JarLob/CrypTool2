@@ -39,7 +39,7 @@
     <replacement key="$Sender Password$" value="Sender Password"/>
     <replacement key="$Receiver Password$" value="Receiver Password"/>
     <replacement key="$StringEncoder$" value="StringEncoder"/>
-    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext"/>
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
     <replacement key="$AES Encrypt$" value="AES Encrypt"/>
     <replacement key="$AES Decrypt$" value="AES Decrypt"/>
     <replacement key="$Test Result$" value="Test Result"/>
