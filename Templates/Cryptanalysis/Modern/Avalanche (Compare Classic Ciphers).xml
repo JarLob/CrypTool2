@@ -23,7 +23,7 @@
     <replacement key="$Spanish Strip Cipher$" value="Spanische Strip-Chiffre"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
     <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$Memo$" value="Nach dem Drücken von "Starten" drücken Sie zunächst auf “Weiter” in jeder der zwei AV-Komponenten. Anschließend können Sie Veränderungen an der Klartext-Komponente vornehmen. Sowohl der initiale als auch der veränderte Input werden durch beide Verschlüsselungskomponenten verschlüsselt und die Unterschiede zwischen beiden Geheimtexten werden durch die entsprechenden AV-Komponenten gezeigt. Anmerkung:In dieser Vorlage benutzt die Spanische Strip-Chiffre das deterministische Verfahren Round Robin, um die Homophone auszuwählen."/>
+    <replacement key="$Memo$" value="Nach dem Drücken von “Starten” drücken Sie zunächst auf “Weiter” in jeder der zwei AV-Komponenten. Anschließend können Sie Veränderungen an der Klartext-Komponente vornehmen. Sowohl der initiale als auch der veränderte Input werden durch beide Verschlüsselungskomponenten verschlüsselt und die Unterschiede zwischen beiden Geheimtexten werden durch die entsprechenden AV-Komponenten gezeigt. Anmerkung:In dieser Vorlage benutzt die Spanische Strip-Chiffre das deterministische Verfahren Round Robin, um die Homophone auszuwählen."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
