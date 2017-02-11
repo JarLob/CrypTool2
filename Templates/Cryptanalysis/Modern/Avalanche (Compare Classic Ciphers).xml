@@ -2,8 +2,8 @@
 <sample>
 
   <title lang="en">Avalanche (compare classic ciphers)</title>
-  <summary lang="en">This template demonstrates the Avalanche effect in two different classic ciphers at the same time.</summary>
-  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect of two different classic ciphers at the same time.</description>
+  <summary lang="en">This template demonstrates the avalanche effect in two different classic ciphers at the same time.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect of two different classic ciphers at the same time.</description>
   <keywords>Avalanche, Analysis, compare classic</keywords>
 
   <title lang="de">Avalanche (Vergleich klassischer Verschlüsselungsverfahren)</title>
@@ -23,7 +23,7 @@
     <replacement key="$Spanish Strip Cipher$" value="Spanische Strip-Chiffre"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
     <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$Memo$" value="In dieser Vorlage nutzt die Spanische Strip-Chiffre das deterministische Verfahren Round Robin, um die Homophone auszuwählen."/>
+    <replacement key="$Memo$" value="Nach dem Drücken von "Starten" drücken Sie zunächst auf "Weiter" in jeder der zwei AV-Komponenten. Anschließend können Sie Veränderungen an der Klartext-Komponente vornehmen. Sowohl der initiale als auch der veränderte Input werden durch beide Verschlüsselungskomponenten verschlüsselt und die Unterschiede zwischen beiden Geheimtexten werden durch die entsprechenden AV-Komponenten gezeigt. Anmerkung:In dieser Vorlage benutzt die Spanische Strip-Chiffre das deterministische Verfahren Round Robin, um die Homophone auszuwählen."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
@@ -31,7 +31,7 @@
     <replacement key="$Spanish Strip Cipher$" value="Spanish Strip Cipher"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
     <replacement key="$Key$" value="Key"/>
-    <replacement key="$Memo$" value="In this template the deterministic method Round Robin is used by the Spanish Strip Cipher in order to select the homophones."/>
+    <replacement key="$Memo$" value="After starting the template with “Play” first press the “Continue” button in each of the two AV components. Then you may change the text in the plaintext component. Both, the initial and the changed input are encrypted by both cipher components and the according AV components show the difference between the two ciphertexts. Remark: In this template the Spanish Strip Cipher uses the deterministic method Round Robin in order to select the homophones."/>
   </replacements>
 
 </sample>

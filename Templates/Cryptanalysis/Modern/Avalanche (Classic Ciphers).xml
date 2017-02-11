@@ -2,8 +2,8 @@
 <sample>
 
   <title lang="en">Avalanche (classic ciphers)</title>
-  <summary lang="en">This template demonstrates the Avalanche effect in classic ciphers.</summary>
-  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in classic ciphers.</description>
+  <summary lang="en">This template demonstrates the avalanche effect in classic ciphers.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in classic ciphers.</description>
   <keywords>Avalanche, Analysis, classic</keywords>
 
   <title lang="de">Avalanche (klassische Verschlüsselungsverfahren)</title>

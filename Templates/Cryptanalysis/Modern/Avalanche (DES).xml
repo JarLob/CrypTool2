@@ -2,8 +2,8 @@
 <sample>
 
   <title lang="en">Avalanche (DES)</title>
-  <summary lang="en">This template demonstrates the Avalanche effect in the DES cipher.</summary>
-  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in the DES cipher.</description>
+  <summary lang="en">This template demonstrates the avalanche effect in the DES cipher.</summary>
+  <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in the DES cipher.</description>
   <keywords>Avalanche, Analysis, DES</keywords>
 
   <title lang="de">Avalanche (DES)</title>

@@ -486,25 +486,25 @@
                 </TextBlock>
 
 
-                <TextBlock Name="lbl" Grid.Row="3" Text="{Loc EncryptionInit}" Foreground="#534b4f" Margin="20"></TextBlock>
-                <TextBlock Name="lbl2" Grid.Row="3" Text="{Loc EncryptionMod}" Foreground="#534b4f" Margin="20,45,0,0"></TextBlock>
-                <TextBlock Name="lbl3" Grid.Row="3" Text="{Loc FlippedBits}" Foreground="#534b4f" Margin="20,70,0,0"></TextBlock>
+                <TextBlock Name="lbl" Grid.Row="3" Text="{Loc EncryptionInit}" Foreground="#534b4f" Margin="20,25,0,0"></TextBlock>
+                <TextBlock Name="lbl2" Grid.Row="3" Text="{Loc EncryptionMod}" Foreground="#534b4f" Margin="20,50,0,0"></TextBlock>
+                <TextBlock Name="lbl3" Grid.Row="3" Text="{Loc FlippedBits}" Foreground="#534b4f" Margin="20,75,0,0"></TextBlock>
 
                 <StackPanel Grid.Row="3" x:Name="bitComparisonStkPanel" Height="100" Margin="0,20,0,0">
                     <StackPanel.BitmapEffect>
                         <DropShadowBitmapEffect Color="Black" Direction="260" ShadowDepth="5" Opacity="0.5" Softness="0.6"  />
                     </StackPanel.BitmapEffect>
 
-                    <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged"   
+                    <ScrollViewer  Name="bar1" Width="300" Height="25" ScrollChanged="ScrollViewer_ScrollChanged" Margin="35,0,0,0"
                            VerticalScrollBarVisibility="Disabled"  HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
                         <TextBox x:Name="TB1" FontFamily="Courier New"  FontSize="20" FontWeight="Medium"  IsReadOnly="True" />
                     </ScrollViewer>
-                    <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" 
+                    <ScrollViewer Name="bar2" Width="300" Height="25"  ScrollChanged="ScrollViewer_ScrollChanged" Margin="35,0,0,0"
                           VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Hidden" Style="{StaticResource RightScrollViewer}">
                         <TextBox Name="TB2" FontFamily="Courier New" FontSize="20" FontWeight="Medium" IsReadOnly="True"  />
                     </ScrollViewer>
 
-                    <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged"
+                    <ScrollViewer Name="bar3" Height="38" Width="300" ScrollChanged="ScrollViewer_ScrollChanged" Margin="35,0,0,0"
                           VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Visible" Style="{StaticResource RightScrollViewer}">
                         <TextBox x:Name="TB3"  FontFamily="Courier New" FontSize="20" FontWeight="Medium" Foreground="Red" IsReadOnly="True" />
                     </ScrollViewer>

@@ -390,7 +390,7 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value> Durchschnittszahl unterschiedlicher Bits pro Byte: {0}</value>
   </data>
   <data name="FlippedBytes" xml:space="preserve">
-    <value>Geflippte Bytes</value>
+    <value>Veränderte Bytes</value>
   </data>
   <data name="InitialKeyColon" xml:space="preserve">
     <value>Initialer Schlüssel:</value>
@@ -504,28 +504,28 @@ Nachricht- und Schlüsseländerungen können wie folgt erfolgen:</value>
     <value>Länge der längsten Sequenz geflippter Bits: {0}. Offset: {1}.{2}</value>
   </data>
   <data name="OutputStatsClassic1" xml:space="preserve">
-    <value>Geflippte Bytes: {0}. Avalanche-Effekt: {1}%{2}</value>
+    <value>Veränderte Bytes: {0}. Avalanche-Effekt: {1}%{2}</value>
   </data>
   <data name="OutputStatsClassic2" xml:space="preserve">
     <value>Länge der längsten Sequenz identischer Bytes: {0}. Offset: {1}.{2}</value>
   </data>
   <data name="OutputStatsClassic3" xml:space="preserve">
-    <value>Länge der längsten Sequenz geflippter Bytes: {0}. Offset: {1}.{2}</value>
+    <value>Länge der längsten Sequenz veränderter Bytes: {0}. Offset: {1}.{2}</value>
   </data>
   <data name="OutputTooltip" xml:space="preserve">
     <value>Erzeugte Daten</value>
   </data>
   <data name="StatsClassicBullet1" xml:space="preserve">
-    <value> Byte geflippt (von {0}). Avalanche-Effekt von {1}%</value>
+    <value> Byte verändert (von {0}). Avalanche-Effekt von {1}%</value>
   </data>
   <data name="StatsClassicBullet1_Plural" xml:space="preserve">
-    <value> Bytes geflippt (von {0}). Avalanche-Effekt von {1}%</value>
+    <value> Bytes verändert (von {0}). Avalanche-Effekt von {1}%</value>
   </data>
   <data name="StatsClassicBullet2" xml:space="preserve">
     <value> Länge der längsten Sequenz identischer Bytes: {0}. Offset {1}.</value>
   </data>
   <data name="StatsClassicBullet3" xml:space="preserve">
-    <value> Länge der längsten Sequenz geflippter Bytes: {0}. Offset {1}.</value>
+    <value> Länge der längsten Sequenz veränderter Bytes: {0}. Offset {1}.</value>
   </data>
   <data name="Warning" xml:space="preserve">
     <value>Modifizierte Nachricht ({0} Zeichen) muss genauso lang sein wie die initiale Nachricht ({1} Zeichen).</value>
