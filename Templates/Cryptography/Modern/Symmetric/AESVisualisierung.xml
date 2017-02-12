@@ -17,7 +17,7 @@
 
   <icon file="AES.png" />
   <relevantPlugins>
-    <plugin name="AESVisualisation" />
+    <plugin name="AESVisualization" />
   </relevantPlugins>
 
   <replacements lang="de">

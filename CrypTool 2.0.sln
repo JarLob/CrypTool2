@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypPluginBase", "CrypPluginBase\CrypPluginBase.csproj", "{25DB2B47-A457-4EC2-960B-395CE07AE093}"
 EndProject
@@ -439,7 +439,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A5Attack", "CrypPluginsExpe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrainV1Attack", "CrypPluginsExperimental\GrainV1Attack\GrainV1Attack.csproj", "{C4DF6554-BCD8-4601-9D30-DA9BAB2314DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AESVisualisation", "CrypPlugins\AESVisualisation\AESVisualisation.csproj", "{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AESVisualization", "CrypPlugins\AESVisualisation\AESVisualization.csproj", "{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

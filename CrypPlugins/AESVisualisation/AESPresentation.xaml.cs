@@ -1104,8 +1104,8 @@ namespace AESVisualisation
                                 setUpAddKey();        
                                 if(roundNumber == 10 + 2 * keysize)
                                 {
-                                    prevStepButton.IsEnabled = false;
-                                    prevStepButton.Foreground = Brushes.Gray;
+                                    nextStepButton.IsEnabled = false;
+                                    nextStepButton.Foreground = Brushes.Gray;
                                 }                             
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 if (roundNumber != 0)
@@ -1135,8 +1135,8 @@ namespace AESVisualisation
                                     shiftRowButton.Foreground = Brushes.Black;
                                     subByteButton.Foreground = Brushes.Black;
                                     buttonVisible();
-                                    prevStepButton.IsEnabled = true;
-                                    prevStepButton.Foreground = Brushes.Black;
+                                    nextStepButton.IsEnabled = true;
+                                    nextStepButton.Foreground = Brushes.Black;
                                 }, null);
                             }
                             if (!abort)
