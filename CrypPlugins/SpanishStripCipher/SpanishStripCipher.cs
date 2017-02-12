@@ -71,6 +71,20 @@ namespace Cryptool.Plugins.SpanishStripCipher
             set;
         }
 
+        [PropertyInfo(Direction.InputData, "KeywordCaption", "KeywordTooltip")]
+        public string Keyword
+        {
+            get { return settings.Keyword; }
+            set
+            {
+                if (settings.Keyword != value.ToUpper())
+                {
+                    settings.Keyword = value.ToUpper();
+                    OnPropertyChanged("Keyword");
+                }
+            }
+        }
+
         #endregion
 
         #region IPlugin Members
