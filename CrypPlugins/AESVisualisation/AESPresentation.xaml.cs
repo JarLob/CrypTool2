@@ -432,7 +432,7 @@ namespace AESVisualisation
         private void mixColButton_Click(object sender, RoutedEventArgs e)
         {
             autostep = false;
-            if (roundNumber == 0)
+            if (roundNumber == 0 || roundNumber == 10 + 2 * keysize)
             {
                 return;
             }
@@ -1101,7 +1101,12 @@ namespace AESVisualisation
                             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                             {
                                 checkInitialRound();
-                                setUpAddKey();                                     
+                                setUpAddKey();        
+                                if(roundNumber == 10 + 2 * keysize)
+                                {
+                                    prevStepButton.IsEnabled = false;
+                                    prevStepButton.Foreground = Brushes.Gray;
+                                }                             
                                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                                 if (roundNumber != 0)
                                 {
@@ -1130,6 +1135,8 @@ namespace AESVisualisation
                                     shiftRowButton.Foreground = Brushes.Black;
                                     subByteButton.Foreground = Brushes.Black;
                                     buttonVisible();
+                                    prevStepButton.IsEnabled = true;
+                                    prevStepButton.Foreground = Brushes.Black;
                                 }, null);
                             }
                             if (!abort)

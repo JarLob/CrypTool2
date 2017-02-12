@@ -3,17 +3,21 @@
 
   <title lang="en">AES Visualization</title>
   <summary lang="en">Usage of the <i>AES Visualization</i></summary>
-  <description lang="en"></description>
+  <description lang="en">With this template you can have a step-by-step look at the encryption process of the Advanced Encryption Standard (AES). As the plugin's goal is the actual
+ visualization of the AES algorithm, it does not offer the usage of padding. This means the plugin expects exactly one block with 128 bits as plaintext. The keylength is 128, 192 or 
+ 256 bits depending on the users selection.</description>
   <keywords>advanced, Daemen, Rijmen, Rijndael, symmetric, nist, visualization</keywords>
 
   <title lang="de">AES-Visualisierung</title>
   <summary lang="de">Benutzung der <i>AES-Visualisierung</i></summary>
-  <description lang="de"></description>
+  <description lang="de">Mit dieser Vorlagen können Sie sich den Verschlüsselungsprozess des Advanced Encryption Standards (AES) schrittweise anschauen. Da das eigentliche Ziel die
+ Visualisierung des AES-Algorithmus ist, wurden Methoden des Padding nicht integriert. Das bedeutet, dass das Plugin genau einen Block mit 128 Bits als Klartext erwartet.
+ Die Schlüssellänge ist je nach Auswahl 128, 192 oder 256 Bits.</description>
   <keywords lang="de">symmetrisch, Visualisierung</keywords>
 
   <icon file="AES.png" />
   <relevantPlugins>
-    <plugin name="AES" />
+    <plugin name="AESVisualisation" />
   </relevantPlugins>
 
   <replacements lang="de">
