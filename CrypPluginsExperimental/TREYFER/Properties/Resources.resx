@@ -156,4 +156,10 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>TREYFER: 64-bit block cipher with 64-bit key </value>
   </data>
+  <data name="InputRoundsCaption" xml:space="preserve">
+    <value>Number of Rounds</value>
+  </data>
+  <data name="InputRoundsTooltip" xml:space="preserve">
+    <value>Number of Rounds</value>
+  </data>
 </root>

@@ -124,6 +124,24 @@ namespace TREYFER.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of Rounds.
+        /// </summary>
+        internal static string InputRoundsCaption {
+            get {
+                return ResourceManager.GetString("InputRoundsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Rounds.
+        /// </summary>
+        internal static string InputRoundsTooltip {
+            get {
+                return ResourceManager.GetString("InputRoundsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 64-bit text input.
         /// </summary>
         internal static string InputStringCaption {

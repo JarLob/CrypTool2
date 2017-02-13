@@ -20,7 +20,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 
-namespace Cryptool.TREYFER
+namespace Cryptool.SlideAttackOnTreyfer
     {
     public class TREYFERSettings : ISettings
     {

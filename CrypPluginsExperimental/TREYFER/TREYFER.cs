@@ -21,8 +21,9 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
+using System.Collections.Generic;
 
-namespace Cryptool.TREYFER
+namespace Cryptool.SlideAttackOnTreyfer
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
     [PluginInfo("TREYFER.Properties.Resources", "PluginCaption", "PluginTooltip", "TREYFER/userdoc.xml",
@@ -58,6 +59,7 @@ namespace Cryptool.TREYFER
 
         private string _inputString;
         private string _key;
+        private int _numberOfRounds;
 
         [PropertyInfo(Direction.InputData, "InputStringCaption", "InputStringTooltip", true)]
         public string InputString
@@ -73,6 +75,13 @@ namespace Cryptool.TREYFER
             set { _key = value; }
         }
 
+        [PropertyInfo(Direction.InputData, "InputRoundsCaption", "InputRoundsTooltip", true)]
+        public int numberOfRounds
+        {
+            get { return _numberOfRounds; }
+            set { _numberOfRounds = value; }
+        }
+
         [PropertyInfo(Direction.OutputData, "OutputStringCaption", "OutputStringTooltip", false)]
         public string OutputString
         {
@@ -80,31 +89,7 @@ namespace Cryptool.TREYFER
             set;
         }
 
-        //[PropertyInfo(Direction.InputData, "InputAlphabetCaption", "InputAlphabetTooltip", false)]
-        //public string AlphabetSymbols
-        //{
-        //    get { return this.settings.AlphabetSymbols; }
-        //    set
-        //    {
-        //        if (value != null && value != settings.AlphabetSymbols)
-        //        {
-        //            this.settings.AlphabetSymbols = value;
-        //            OnPropertyChanged("AlphabetSymbols");
-        //        }
-        //    }
-        //}
-
-        //[PropertyInfo(Direction.InputData, "ShiftKeyCaption", "ShiftKeyTooltip", false)]
-        //public int ShiftKey
-        //{
-        //    get { return settings.ShiftKey; }
-        //    set
-        //    {
-        //        settings.SetKeyByValue(value, true);
-        //    }
-        //}
-
-       //string cipherText;
+       
 
         #endregion
 
@@ -198,12 +183,10 @@ namespace Cryptool.TREYFER
             string cipherText;
             char[] inputChars = new char[9];
             char[] keyChars = new char[8];
-            //StringBuilder output = new StringBuilder();
+            List<string> outputlist = new List<string>();
+           
             cipherText = InputString;
-            // If we are working in case-insensitive mode, we will use only
-            // capital letters, hence we must transform the whole alphabet
-            // to uppercase.
-            //string alphabet = settings.CaseSensitive ? settings.AlphabetSymbols : settings.AlphabetSymbols.ToUpper();
+          
 
             for(int i=0;i<InputString.Length;i++)
             {
@@ -213,93 +196,72 @@ namespace Cryptool.TREYFER
 
             if (!string.IsNullOrEmpty(InputString) && InputString.Length <= 8)
             {
-                for (int j = 0; j < 32; j++)
+                for (int j = 0; j < numberOfRounds; j++)
                 {
                     //char temp = cipherText[0];
                     inputChars[8] = inputChars[0];
                     for (int i = 0; i < InputString.Length; i++)
                     {
-                        //// Get the plaintext char currently being processed.
-                        //char currentchar = InputString[i];
-
-                        //// Store whether it is upper case.
-                        //bool uppercase = char.IsUpper(currentchar);
-
-                        //// Get the position of the plaintext character in the alphabet.
-                        //int ppos = alphabet.IndexOf(settings.CaseSensitive ? currentchar : char.ToUpper(currentchar));
-
-                        int temp = (inputChars[i + 1] + substitution_box((keyChars[i] + inputChars[i + 1]))) % 256 << 1;
+                        
+                        int temp = (inputChars[i + 1] + substitution_box((keyChars[i] + inputChars[i + 1]))) % 256;
                         char tempChar = (char)temp;
                         inputChars[i + 1] = tempChar;
 
                         if (true)
                         {
-                            // We found the plaintext character in the alphabet,
-                            // hence we will commence shifting.
-                            //int cpos = 0; ;
                             switch (settings.Action)
                             {
                                 case TREYFERSettings.TREYFERMode.Encrypt:
-                                    //cpos = (ppos + settings.ShiftKey) % alphabet.Length;
+
                                     break;
                                 //case TREYFERSettings.TREYFERMode.Decrypt:
-                                //    cpos = (ppos - settings.ShiftKey + alphabet.Length) % alphabet.Length;
-                                //    break;
+
                             }
 
-                            // We have the position of the ciphertext character,
-                            // hence just output it in the correct case.
-                            //if (settings.CaseSensitive)
-                            //{
-                            //    output.Append(alphabet[cpos]);
-                            //}
-                            //else
-                            //{
-                            //    output.Append(uppercase ? char.ToUpper(alphabet[cpos]) : char.ToLower(alphabet[cpos]));
-                            //}
+                           
 
                         }
-                        //else
-                        //{
-                        //    // The plaintext character was not found in the alphabet,
-                        //    // hence proceed with handling unknown characters.
-                        //    switch (settings.UnknownSymbolHandling)
-                        //    {
-                        //        case TREYFERSettings.UnknownSymbolHandlingMode.Ignore:
-                        //            output.Append(InputString[i]);
-                        //            break;
-                        //        case TREYFERSettings.UnknownSymbolHandlingMode.Replace:
-                        //            output.Append('?');
-                        //            break;
-                        //    }
-                        //}
+                        
 
                         // Show the progress.
                         ProgressChanged(i, InputString.Length - 1);
 
                     }
                     inputChars[0] = inputChars[8];
-            }
+
+                }
                 string output = new string(inputChars);
-                //OutputString = settings.CaseSensitive | settings.MemorizeCase ? output.ToString() : output.ToString().ToUpper();
+                output = output.Remove(output.Length - 1);
                 OutputString = output;
                 OnPropertyChanged("OutputString");
+
             }
         }
 
         public int substitution_box(int a)
         {
             // define a 8x8 s-box
+            //for (int i = 0; i < 16; i++)
+            //{
+            //    for (int j = 0; j < 16; j++)
+            //    {
+            //        int temp = i * j;
+            //        if (temp == 0)
+            //        {
+            //            temp = i + j;
+            //        }
+            //        s_box[i, j] = temp;
+            //    }
+
+            //}
+            int temp = 0;
             for (int i = 0; i < 16; i++)
             {
                 for (int j = 0; j < 16; j++)
                 {
-                    int temp = i * j;
-                    if (temp == 0)
-                    {
-                        temp = i + j;
-                    }
+
                     s_box[i, j] = temp;
+                    temp = temp + 1;
                 }
 
             }
