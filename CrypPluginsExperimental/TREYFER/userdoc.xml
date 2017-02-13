@@ -6,7 +6,6 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">    
-  </introduction>
   In cryptography, Treyfer is a block cipher/MAC designed in 1997 by Gideon Yuval.
   Aimed at smart card applications, the algorithm is extremely simple and compact; it can be implemented in just 29 bytes of 8051 machine code.
   Treyfer has a rather small key size and block size of 64 bits each. 
@@ -14,15 +13,18 @@
   The S-box is left undefined; the implementation can simply use whatever data is available in memory. 
   In each round, each byte has added to it the S-box value of the sum of a key byte and the previous data byte, then it is rotated left one bit. 
   The design attempts to compensate for the simplicity of this round transformation by using a large number of rounds: 32.
+  </introduction>
+  
   <introduction lang="de-DE">    
   </introduction>
 
   <usage lang="en">
-  </usage>
     The implemented CrypTool2 plugin for TREYFER attack takes three inputs; the plain text, the key (both of which must be of length 8) and an integer value indicating number of rounds (upto 32).  
     The input and key could be any character in ASCII table. After providing these two parameters and running the algorithm, the cipher text is produced as output in the field connected to output port of TREYFER.
     Rotation of bits (as it appears in the proposed algorithm) is not employed. 
-    A simple 8x8 S-box is implemented in the code. 
+    A simple 8x8 S-box is implemented in the code.
+  </usage>
+  
   <usage lang="de-DE">
   </usage>
   
@@ -33,7 +35,15 @@
   </presentation>
   
   <references>
-    https://en.wikipedia.org/wiki/Treyfer
-    David Wagner, Alex Biryukov (1999). "Slide Attacks"
+    <linkReference>
+      <link url="https://en.wikipedia.org/wiki/Treyfer" lang="en" />
+      <caption lang="en">Treyfer (Wikipedia)</caption>
+    </linkReference>
+    <bookReference>
+      <author lang="en">David Wagner, Alex Biryukov</author>
+      <publisher lang="de-DE">In: Knudsen L. (eds) Fast Software Encryption. FSE 1999. Lecture Notes in Computer Science, vol 1636. Springer, Berlin, Heidelberg</publisher>
+      <name lang="en">Slide Attacks</name>
+    </bookReference>
   </references>
+
 </documentation>

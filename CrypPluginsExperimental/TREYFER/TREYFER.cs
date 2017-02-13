@@ -23,7 +23,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.Collections.Generic;
 
-namespace Cryptool.SlideAttackOnTreyfer
+namespace Cryptool.TREYFER
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
     [PluginInfo("TREYFER.Properties.Resources", "PluginCaption", "PluginTooltip", "TREYFER/userdoc.xml",

@@ -26,10 +26,10 @@ using System.Collections.Generic;
 namespace Cryptool.SlideAttackOnTreyfer
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
-    [PluginInfo("SlideAttackOnTrefyer.Properties.Resources", "PluginCaption", "PluginTooltip", "SlideAttackOnTrefyer/userdoc.xml",
-        new[] { "SlideAttackOnTrefyer/Images/attack.jpg", "SlideAttackOnTrefyer/Images/attack.jpg", "SlideAttackOnTrefyer/Images/attack.jpg" })]
+    [PluginInfo("SlideAttackOnTreyfer.Properties.Resources", "PluginCaption", "PluginTooltip", "SlideAttackOnTreyfer/userdoc.xml",
+        new[] { "SlideAttackOnTreyfer/Images/attack.jpg", "SlideAttackOnTreyfer/Images/attack.jpg", "SlideAttackOnTreyfer/Images/attack.jpg" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class SlideAttackOnTrefyer : ICrypComponent
+    public class SlideAttackOnTreyfer : ICrypComponent
     {
         #region Private elements
 
@@ -43,7 +43,7 @@ namespace Cryptool.SlideAttackOnTreyfer
         /// <summary>
         /// Constructor
         /// </summary>
-        public SlideAttackOnTrefyer()
+        public SlideAttackOnTreyfer()
         {
             this.settings = new SlideAttackOnTreyferSettings();
             this.settings.LogMessage += GuiLogMessage;
