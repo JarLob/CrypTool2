@@ -22,33 +22,6 @@ namespace Cryptool.Plugins.A5_attack
 {
     public class A5AttackSettings : ISettings
     {
-        #region Private Variables
-
-        private int someParameter = 0;
-
-        #endregion
-
-        #region TaskPane Settings
-        
-        [TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
-        {
-            get
-            {
-                return someParameter;
-            }
-            set
-            {
-                if (someParameter != value)
-                {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
-                }
-            }
-        }
-
-        #endregion
 
         #region Events
 

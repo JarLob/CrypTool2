@@ -124,7 +124,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 }
                 //cycle works until the Success() function return  true
                 while (!Success());
-                GuiLogMessage("Attack was successfull", NotificationLevel.Info);
+                GuiLogMessage("Attack was successful", NotificationLevel.Info);
             }
             //if algorithm uses external generator
             else
@@ -217,6 +217,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
                     int t = Convert.ToInt32(a);
                     //then convert integer into byte
                     //-48 is used because when it converts '0' or '1' chars into integer it gets 48 and 49 (values of chars) 
+                    //48 is ASCII code for 0 and 49 is ASCII code for 1
                     nfsr[i] = Convert.ToByte(t - 48);
                     //incrementing counter
                     i++;

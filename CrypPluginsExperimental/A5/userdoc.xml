@@ -3,25 +3,29 @@
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
   <language culture="en"/>
-  <language culture="de-DE"/>
 
   <introduction lang="en">    
-  </introduction>
-
-  <introduction lang="de-DE">    
+    A5/1 is a modern stream cipher that provides privacy for the GSM mobile phone system. 
+    It consists of three linear shift registers (LFSR) that are mixed with the secret key and the IV (initialization vector),
+    in order to provide the keystream, which is later being XORed with the plaintext to give the ciphertext.
+  
   </introduction>
 
   <usage lang="en">
+    
+  After dragging the A5/1 component into the workspace, you need to attach the three text input components that correspond to
+  secret key, IV and plaintext to data sources. 
+  Then you have to connect a text output component to the "output" connector.
+  Message length must be 28 characters, the secret key must be 64 characters and the IV must be 22 characters.
+  
   </usage>
 
-  <usage lang="de-DE">
-  </usage>
+  
   
   <presentation lang="en">
   </presentation>
   
-  <presentation lang="de-DE">
-  </presentation>
+ 
   
   <references>
   </references>
