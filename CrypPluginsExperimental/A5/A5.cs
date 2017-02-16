@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Numerics;
 using Cryptool.PluginBase;
 using Cryptool.Plugins.A5;
 using Cryptool.PluginBase.IO;
