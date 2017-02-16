@@ -1,177 +1,115 @@
-﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-   
- * Instructions:
- * numRegisters     = The number of registers to use
- * maxRegLens       = The max register length for each register
- * regIndexes       = The clocking bits for each register
- * polynomialsArray = The polynomials to use for each register 
- * sourceArray      = Random binary bits (random bits are used for both key and IV)
-
-
-*/
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
-using System.Windows.Controls;
+﻿using System;
 using Cryptool.PluginBase;
+using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Windows.Controls;
+using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.A5
 {
-
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-
+    /**
+     * This Class generates the key stream for A5/1. The Stream is generated
+     * based on the given key and frame number given to LFSR  
+     *
+     * @author Kristian Ott
+     */
     public class A5 : ICrypComponent
     {
+
+        #region Algorithm variables
+
         public bool dbMode; //Debug mode
 
-        private int nRegisters; //number of registers
-        private int[] mRegLens; //max register lengths
-        private int[] sArray; //source array
-        private int[] rIndexes; //register indexes (clocking bits)
-        private string[] pArray; //polynomials
+        private int nRegisters = 3; //number of registers
+        private int[] mRegLens = new int[] { 19, 22, 23 }; //max register lengths
+        private int[] rIndexes = new int[] { 8, 10, 10 }; //register indexes (clocking bits)
+        private string[] pArray = new string[] { "x^18+x^17+x^16+x^13+1",
+                                                "x^21+x^20+1",
+                                                "x^22+x^21+x^20+x^7+1" }; //polynomials
         private int[][] registers; //registers (we are using this to create a table with the registers space for all 3 registers (1st row --> register 1 ; 2nd row --> register 2 etc)
+        private int[] iv;
+        private int[] key;
+        private int[] message;
+        private int[][] uExponents;
 
-        private int[][] uExponents; //exponents being used
+        private String messageInput;
+        private String output;
+        private String keyString = null;
+        private String initialVector = null;
+        private int BUFFERSIZE = 64;
+        private bool stop = false;
+        private A5Settings settings;
 
-        private A5Settings settings = new A5Settings();
+        #endregion
 
-        public void Dispose()
+
+
+
+        public A5()
         {
-            nRegisters = 0;
-            mRegLens = null;
-            sArray = null;
-            pArray = null;
-            rIndexes = null;
-
-        }
-        
-        public ISettings Settings
-        {
-            get { return this.settings; }
-            set { this.settings = (A5Settings)value; }
-        }
-
-        ///* Main method for launching the cipher */
-        public void Execute()
-        {
-            ProgressChanged(0, 1);
-
-            //if (!checkParameters()) return;
-
-            //init();
-
-            //OutputData = encrypt(message);
-
-            ProgressChanged(1, 1);
+            this.settings = new A5Settings();
         }
 
 
-        /* --- Setting properties --- */
-        public int numRegisters
+        [PropertyInfo(Direction.InputData, "InputKeyString", "InputKeyTooltip", true)]
+        public String KeyString
         {
-            get
-            { return nRegisters; }
+            get { return this.keyString; }
             set
-            { nRegisters = value; }
-        }
-
-        public int[] maxRegLens
-        {
-            get
-            { return mRegLens; }
-            set
-            { mRegLens = value; }
-        }
-
-        public int[] sourceArray
-        {
-            get
-            { return sArray; }
-            set
-            { sArray = value; }
-        }
-
-        public int[] regIndexes
-        {
-            get
-            { return rIndexes; }
-            set
-            { rIndexes = value; }
-        }
-
-        public string[] polynomialsArray
-        {
-            get
-            { return pArray; }
-            set
-            { pArray = value; }
-        }
-
-        public int[][] Registers
-        {
-            get
-            { return registers; }
-            set
-            { registers = value; }
-        }
-
-        /* --- Begin methods ---*/
-        private void slowText(string message)
-        {
-            foreach (char c in message.ToCharArray())
             {
-                Console.Write(c);
-                System.Threading.Thread.Sleep(60);
+                this.keyString = value;
+                OnPropertyChanged("KeyString");
             }
-
-            Console.WriteLine();
         }
 
-        public void Intro()
-        // this was just added to show gui on console, so it can omitted if we are showing result on cryptool
-
+        [PropertyInfo(Direction.InputData, "FrameNumberString", "FrameNumberTooltip", true)]
+        public String InitialVector
         {
-            string message = "#################################################################\n";
-            message += "#                      A5/1 Implementation                      #\n";
-            message += "#                                                               #\n";
-            message += "# Information: http://en.wikipedia.org/wiki/A5/1                #\n";
-            message += "# Released:    24th October 2008                                #\n";
-            message += "# App Options: -d [NumOfLoops] (Debugging mode)                 #\n";
-            message += "#                                                               #\n";
-            message += "# Written By: Brett Gervasoni (brett.gervasoni [at] gmail.com)  #\n";
-            message += "#################################################################\n";
-
-            Console.WriteLine(message);
-
-            string matrix = "Now you will see how deep the rabit hole really goes...";
-            slowText(matrix);
-
-            System.Threading.Thread.Sleep(2500);
+            get { return this.initialVector; }
+            set
+            {
+                this.initialVector = value;
+                OnPropertyChanged("FrameNumber");
+            }
         }
 
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
+        public String MessageInput
+        {
+            get { return this.messageInput; }
+            set
+            {
+                this.messageInput = value;
+                OnPropertyChanged("MessageInput");
+            }
+        }
 
-        // This function calculates the total length of all registers
-        // We are going to use this value to find whether the source array have enough data to fill
-        // All the registers should be filled completely with the source array values
+        [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip", true)]
+        public String Output
+        {
+            get
+            {
+                return output;
+            }
+            set
+            {
+                this.output = value;
+                OnPropertyChanged("Output");
+            }
+        }
 
+        #region A5
+        /**
+	 * 
+	 * @param fileToEncrypt
+	 * @param encryptKey
+	 * @param encryptFrameNumber
+	 * @return The filename of the encrypted file.
+	 */
         public int GetMaxRegLensTotal()
         {
             int total = 0;
@@ -194,8 +132,6 @@ namespace Cryptool.Plugins.A5
         }
 
         // Function to XOR registers' values, in order to get later the output values
-
-
         private int XorRegValues(int[] vToXor)
         {
             int final = 0;
@@ -206,11 +142,7 @@ namespace Cryptool.Plugins.A5
             return final;
         }
 
-
-
         // We created a table for registers. Here we remove any extra space acquired by register by looking at its index
-
-
         private int[][] RemoveIntArrElement(int[][] oArray, int index)
         {
             int[][] nArray = new int[oArray.Length - 1][];
@@ -230,12 +162,9 @@ namespace Cryptool.Plugins.A5
             return nArray;
         }
 
-
-
         // Polymomials are to show the register function/equations
         // We are performing a global search over the whole input string and return all the matches with their corresponding capture data,
         // we are using Regex to get a  MatchCollection which can be iterated over and processed 
-
         private int[][] ExtractPolyExponents(string[] polynomialsArray)
         {
             int[][] exponents = new int[polynomialsArray.Length][];
@@ -257,8 +186,6 @@ namespace Cryptool.Plugins.A5
             return exponents;
         }
 
-
-
         // the largest exponent in the register function/equation is checked in the polynomial selection class, it should not exceed the maximum register length
         private int FindLargestInt(int[] intArray)
         {
@@ -273,14 +200,7 @@ namespace Cryptool.Plugins.A5
             return largest;
         }
 
-
-
-
-
-
-
         // We are selecting polynomial function for each register
-
         private int[][] PolySelection()
         {
             int[][] exponents = ExtractPolyExponents(pArray);
@@ -316,29 +236,7 @@ namespace Cryptool.Plugins.A5
             return usingPolynomials;
         }
 
-
-
-        // Fill register with values until you reach the maximum count
-
-        private int[] RegisterFill(int offset, int regNum)
-        {
-            int[] outArray = new int[regNum];
-
-            for (int i = 0; i < regNum; i++)
-            {
-                outArray[i] = sArray[offset + i];
-            }
-
-            return outArray;
-        }
-
-
-
-
-
-
         // The loop has been created to store the index values of the 3 registers in the array. We get index from length of each register
-
         private int[] GetIndexValues()
         {
             int[] indexValues = new int[registers.Length];
@@ -350,8 +248,6 @@ namespace Cryptool.Plugins.A5
 
             return indexValues;
         }
-
-
 
         //shows the majority bit funtion
         // the index values of each register indicate the majority bit
@@ -372,59 +268,32 @@ namespace Cryptool.Plugins.A5
             return tally;
         }
 
-
-
-
-
-        //We are using source array(sArray) for both key and IV to fill the registers (nRegisters indicates the number of registers).
-
-        public int[][] CreateRegisters()
+        public void CreateRegisters()
         {
-            int[][] filledRegisters = new int[nRegisters][];
-            int offset = 0;
 
-            //Does source array have enough data to fill? The register should be filled completely with the source array values.
-
-            if (GetMaxRegLensTotal() <= sArray.Length)
+            registers = new int[nRegisters][];
+            for (int i = 0; i < nRegisters; i++)
             {
-                for (int i = 0; i < nRegisters; i++)
-                {
-                    filledRegisters[i] = RegisterFill(offset, mRegLens[i]);
-                    offset += mRegLens[i];
-                }
+                int[] newReg = new int[mRegLens[i]];
+                for (int k = 0; k < mRegLens[i]; k++)
+                    newReg[k] = 0;
+                registers[i] = newReg;
             }
-
-
-            //This is just an additional class called "debug mode". If debug mode is selected it will show step by step processes.
 
             uExponents = PolySelection();
+            MixKey();
+            MixIV();
 
-            if (dbMode)
+            for (int j = 0; j < 100; j++)
             {
-                //Exponents in use
-                int counter = 0;
-
-                Console.WriteLine("[exponents]");
-                foreach (int[] set in uExponents)
-                {
-                    Console.WriteLine("set: {0}", counter.ToString());
-
-                    foreach (int exp in set)
-                        Console.Write(exp.ToString() + " ");
-
-                    Console.WriteLine();
-                    counter++;
-                }
-
-                Console.WriteLine("[/exponents]");
+                int[] regTS = RegistersToShift();
+                int[] feedbackvalues = GetFeedbackValues(regTS);
+                RegisterShiftWithVal(regTS, feedbackvalues);
             }
 
-            return filledRegisters;
         }
 
-
         // This function returns keystream values after the registers' values are being XORed 
-
         public int GetOutValue()
         {
             int[] vToXor = new int[registers.Length];
@@ -435,13 +304,14 @@ namespace Cryptool.Plugins.A5
 
             outValue = XorRegValues(vToXor);
 
+            int[] regTS = RegistersToShift();
+            int[] feedbackset = GetFeedbackValues(regTS);
+            RegisterShiftWithVal(regTS, feedbackset);
+
             return outValue;
         }
 
-
-
         // This is for filling registers with data. We would know the length of register from getIndex so the that the function will know when to stop filling
-
         public int[] RegistersToShift()
         {
             int[] indexValues = GetIndexValues();
@@ -486,13 +356,37 @@ namespace Cryptool.Plugins.A5
             return (int[])regTS.ToArray(typeof(int));
         }
 
+        private void MixKey()
+        {
+            int[] regTS = new int[3] { 0, 1, 2 };
 
+            for (int i = 0; i < key.Length; i++)
+            {
+                int[] feedbackset = GetFeedbackValues(regTS);
+                for (int j = 0; j < feedbackset.Length; j++)
+                    feedbackset[j] = XorValues(feedbackset[j], key[i]);
 
+                RegisterShiftWithVal(regTS, feedbackset);
 
+            }
+        }
 
+        private void MixIV()
+        {
+            int[] regTS = new int[3] { 0, 1, 2 };
+
+            for (int i = 0; i < iv.Length; i++)
+            {
+                int[] feedbackset = GetFeedbackValues(regTS);
+                for (int j = 0; j < feedbackset.Length; j++)
+                    feedbackset[j] = XorValues(feedbackset[j], iv[i]);
+
+                RegisterShiftWithVal(regTS, feedbackset);
+            }
+
+        }
 
         // The feedback in registers are calculated from the bits that are taken out such as for example 13th, 16th, 17th,18th bits in first register
-
         private int[] GetFeedbackValues(int[] regTS)
         {
             int[] regTSFBV = new int[regTS.Length]; //Reg To Shift Feed Back Values (regTSFBV)
@@ -511,24 +405,125 @@ namespace Cryptool.Plugins.A5
 
             return regTSFBV;
         }
-        
-        public void Initialize()
+
+        public void RegisterShiftWithVal(int[] regTS, int[] val)
         {
+            for (int i = 0; i < regTS.Length; i++)
+            {
+                int[] regShifting = registers[regTS[i]]; //Alias the register to shift
+
+                //Creates new register with appropriate max reg length
+
+                int[] nRegister = new int[regShifting.Length]; //Could also use mRegLens[regTS[i]].Length
+
+                //Fill values to length -1
+
+                for (int x = regShifting.Length - 1; x > 0; x--)
+                    nRegister[x] = regShifting[x - 1]; //+1 Grabbing everything after position zero
+
+
+
+                //Now put feedback values on the end (former RegisterPush method)
+
+                nRegister[0] = val[i];
+
+                registers[regTS[i]] = nRegister; //assign to register (update)
+            }
         }
 
-        public event StatusChangedEventHandler OnPluginStatusChanged;
-
-        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
-        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        public int[] encrypt(int[] plaintext, int[] encryptKey, int[] initialvector)
         {
-            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+
+            CreateRegisters();
+            int[] encryptedText = new int[228];
+            for (int i = 0; i < 228; i++)
+            {
+                encryptedText[i] = (GetOutValue() + message[i]) % 2;
+            }
+            return encryptedText;
+            //		return outFile;
         }
 
-        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
-        private void ProgressChanged(double value, double max)
+        /**
+         * 
+         * @param fileToDecrypt
+         * @param decryptKey
+         * @param decryptFrameNumber
+         * @return The filename of the decrypted file.
+         */
+        public int[] decrypt(int[] ciphertext, int[] decryptKey, int[] initialvector)
         {
-            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+            CreateRegisters();
+            int[] decryptedText = new int[228];
+            for (int i = 0; i < 228; i++)
+            {
+                decryptedText[i] = (GetOutValue() + message[i]) % 2;
+            }
+            return decryptedText;
         }
+
+        /**
+         * Adds zeros to the MSB of the given string. If the string is
+         * too large, it will be truncated.
+         * @param inString
+         * @param bytes
+         * @return
+         */
+        private String padZeros(String inString, int bytes)
+        {
+            char[] initS = new char[bytes];
+            char[] inArray = inString.ToCharArray();
+
+            if (inString.Length > bytes)
+            {
+                int start = inString.Length - bytes;
+                Array.Copy(inArray, start, initS, 0, initS.Length);
+                //			System.arraycopy(inArray, start, initS, 0, initS.Length);
+            }
+            else
+            {
+                int diff = bytes - inString.Length;
+
+                for (int i = 0; i < bytes; i++) initS[i] = '0';
+                Array.Copy(inArray, 0, initS, diff, inArray.Length);
+                //			System.arraycopy(inArray, 0, initS, diff, inArray.Length);
+            }
+            return new String(initS);
+        }
+
+        /**
+         * Entry point to the system.
+         * 3 Input arguments:
+         * args[0]: /path/to/file.ext
+         * args[1]: key
+         * args[2]: frame number
+         * 
+         * @param args
+         * @throws IOException
+         */
+        public void main(String[] args)
+        {
+
+            //            String[] abc = {"e:/testImage.jpg","4E2F4D9C1EB88B3A","3AB3CB"};
+            //String[] abc = { "3AB3CB4E2F4D9C4E2F4E2F4D9C1EB88B3A4E2F4D9C1EBD9C1EB88B3A1EB88B3A", "4E2F4D9C1EB88B3A", "3AB3CB" };
+            //validateInput(abc);
+
+            //		String encryptedFile = encrypt(inputFile, key, frameNumber);
+            //                DataFileHandler dfh = new DataFileHandler(encryptedFile);
+            //String aa = "3AB3CB4E2F4D9C4E2F4E2F4D9C1EB88B3A4D9C1EB88B3A1EB88B3A";
+
+            //byte[] ttt = Encoding.ASCII.GetBytes(inputFile);
+            //byte[] encryptedd = encrypt(ttt, keyString, frameNumber);
+            ////byte[] a = aa.getBytes();
+            //byte[] decc = decrypt(encryptedd, keyString, frameNumber);
+
+
+            //for (int i = 0; i < encryptedd.Length; i++)
+            //    Console.WriteLine(encryptedd[i]);
+            //		String decryptedFile = decrypt(encryptedFile, key, frameNumber);
+        }
+
+        #endregion
 
         #region INotifyPropertyChanged Members
 
@@ -545,75 +540,155 @@ namespace Cryptool.Plugins.A5
 
         #endregion
 
-        public void PostExecution()
+        #region IPlugin Members
+
+        /// <summary>
+        /// Provide plugin-related parameters (per instance) or return null.
+        /// </summary>
+        public ISettings Settings
         {
-            Dispose();
+            get { return this.settings; }
+            set { this.settings = (A5Settings)value; }
         }
 
-        public void PreExecution()
-        {
-            Dispose();
-        }
-
+        /// <summary>
+        /// Provide custom presentation to visualize the execution or return null.
+        /// </summary>
         public UserControl Presentation
         {
             get { return null; }
         }
 
+        /// <summary>
+        /// Called once when workflow execution starts.
+        /// </summary>
+        public void PreExecution()
+        {
+            stop = false;
+        }
+
+        /// <summary>
+        /// Called every time this plugin is run in the workflow execution.
+        /// </summary>
+        public void Execute()
+        {
+            ProgressChanged(0, 1);
+            try
+            {
+                switch (settings.Action)
+                {
+                    case A5Settings.A5Mode.Encrypt:
+                        {
+
+                            if (!String.IsNullOrEmpty(messageInput) && !String.IsNullOrEmpty(keyString) && !String.IsNullOrEmpty(initialVector))
+                            {
+                                String outval = "";
+                                key = new int[64];
+                                iv = new int[22];
+                                message = new int[228];
+
+                                for (int i = 0; i < 64; i++)
+                                    key[i] = keyString[i] == '0' ? 0 : 1;
+                                for (int j = 0; j < 22; j++)
+                                    iv[j] = initialVector[j] == '0' ? 0 : 1;
+                                for (int k = 0; k < 228; k++)
+                                    message[k] = messageInput[k] == '0' ? 0 : 1;
+
+                                int[] result = encrypt(message, key, iv);
+
+                                for (int i = 0; i < result.Length; i++)
+                                    outval += result[i];
+
+                                Output = outval;
+                            }
+                            break;
+                        }
+                    case A5Settings.A5Mode.Decrypt:
+                        {
+                            if (!String.IsNullOrEmpty(messageInput) && !String.IsNullOrEmpty(keyString) && !String.IsNullOrEmpty(initialVector))
+                            {
+                                String outval = "";
+                                key = new int[64];
+                                iv = new int[22];
+
+                                for (int i = 0; i < 64; i++)
+                                    key[i] = keyString[i] == '0' ? 0 : 1;
+                                for (int j = 0; j < 22; j++)
+                                    iv[j] = initialVector[j] == '0' ? 0 : 1;
+                                for (int k = 0; k < 228; k++)
+                                    message[k] = messageInput[k] == '0' ? 0 : 1;
+
+                                int[] result = decrypt(message, key, iv);
+
+                                for (int i = 0; i < result.Length; i++)
+                                    outval += result[i];
+
+                                Output = outval;
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            throw new NotSupportedException("Unkown execution mode!");
+                            //break;
+                        }
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            ProgressChanged(1, 1);
+        }
+
+        public event StatusChangedEventHandler OnPluginStatusChanged;
+
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
+        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        {
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
+        }
+
+        public event PluginProgressChangedEventHandler OnPluginProgressChanged;
+        private void ProgressChanged(double value, double max)
+        {
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+        }
+
+        /// <summary>
+        /// Called once after workflow execution has stopped.
+        /// </summary>
+        public void PostExecution()
+        {
+
+        }
+
+        /// <summary>
+        /// Triggered time when user clicks stop button.
+        /// Shall abort long-running execution.
+        /// </summary>
         public void Stop()
         {
+            this.stop = true;
         }
 
-
-
-
-
-
-        // feedback value-- the value which is xor of key/iv and 13th , 16th , 17th and 18th bit in case of first register of A5/1
-        // regts--register to shift, the one that will play its role i.e the one with majority bit 1
-
-        public void RegisterShift(int[] regTS)
+        /// <summary>
+        /// Called once when plugin is loaded into editor workspace.
+        /// </summary>
+        public void Initialize()
         {
-            int[] shiftedElements = new int[regTS.Length];
-            int[] regTSFBV = GetFeedbackValues(regTS);
-
-            if (dbMode)
-            {
-                Console.WriteLine("[regTS]:");
-                foreach (int v in regTS)
-                    Console.Write(v.ToString() + " ");
-                Console.WriteLine("\n[/regTS]:");
-
-                Console.WriteLine("[regTSFBV]:");
-                foreach (int v in regTSFBV)
-                    Console.Write(v.ToString() + " ");
-                Console.WriteLine("\n[/regTSFBV]:");
-            }
-
-            for (int i = 0; i < regTS.Length; i++)
-            {
-                int[] regShifting = registers[regTS[i]]; //Alias the register to shift
-
-                shiftedElements[i] = registers[regTS[i]][0]; //Copy position zero value in registers to shift
-
-                //Creates new register with appropriate max reg length
-
-                int[] nRegister = new int[regShifting.Length]; //Could also use mRegLens[regTS[i]].Length
-
-                //Fill values to length -1
-
-                for (int x = 0; x < (regShifting.Length - 1); x++)
-                    nRegister[x] = regShifting[x + 1]; //+1 Grabbing everything after position zero
-
-
-
-                //Now put feedback values on the end (former RegisterPush method)
-
-                nRegister[nRegister.Length - 1] = regTSFBV[i];
-
-                registers[regTS[i]] = nRegister; //assign to register (update)
-            }
         }
+
+        /// <summary>
+        /// Called once when plugin is removed from editor workspace.
+        /// </summary>
+        public void Dispose()
+        {
+
+        }
+
+        #endregion
+
+
     }
 }
-

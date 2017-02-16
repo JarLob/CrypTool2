@@ -1,152 +1,157 @@
-﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
-
-
-using System;
+﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Collections;
+using System.IO;
 
-namespace Cryptool.Plugins.GrainV1Attack
+namespace Cryptool.Plugins.GrainV1.Attack
 {
-
+    //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("GrainV1Attack.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
 
 
-
+    //Class
     public class GrainV1Attack : ICrypComponent
     {
-        public uint[] lfsr;
-        public uint[] nfsr;
-        public byte[] inputData;
-        public byte[] inputKey;
-        public byte[] inputIV;
-        public byte[] outputData;
-        public uint index;
-        public byte[] outp;
+        //byte arrays for registers ( length=80, 1 byte stands for 1 bit)
+        public Byte[] lfsr;
+        public Byte[] nfsr;
+        //byte array for input(10 bytes)
+        public Byte[] inputNFSR;
+        //byte arrays for output
+        public Byte[] outputNFSR;
+        public Byte[] outputLFSR;
 
 
         #region Data Properties
-
-        GrainV1AttackSettings settings = new GrainV1AttackSettings();
-
+        //settings field 
+        GrainV1AttackSettings settings;
+        //Constructor
+        public GrainV1Attack()
+        {   //initializing settigs for our algorithm
+            settings = new GrainV1AttackSettings();
+        }
+        // Settings property (needed to be because of ICrypComponent interface implementing)
+        // sets and gets settings field
         public ISettings Settings
         {
             get { return this.settings; }
             set { this.settings = (GrainV1AttackSettings)value; }
         }
-
+        //Input property. Fills NFSR in 160 round.
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public byte[] InputData
+        public byte[] InputNFSR
         {
-            get { return this.inputData; }
+            get { return this.inputNFSR; }
             set
             {
-                this.inputData = value;
-                OnPropertyChanged("InputData");
+                this.inputNFSR = value;
+                OnPropertyChanged("InputNFSR");
             }
         }
-
-        [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
-        public byte[] InputKey
+        //Output property. Dispalys NFSR in 0 round.
+        [PropertyInfo(Direction.OutputData, "NFSR", "Outputs NFSR initial state", true)]
+        public byte[] OutputNFSR
         {
-            get { return this.inputKey; }
+            get { return nfsr; }
             set
             {
-                this.inputKey = value;
-                OnPropertyChanged("InputKey");
+                this.nfsr = value;
+                OnPropertyChanged("OutputNFSR");
             }
         }
-
-        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
-        public byte[] InputIV
+        //Output property. Dispalys LFSR in 0 round.
+        [PropertyInfo(Direction.OutputData, "LFSR", "Outputs LFSR initial state", true)]
+        public byte[] OutputLFSR
         {
-            get { return this.inputIV; }
+            get { return this.outputNFSR; }
             set
             {
-                this.inputIV = value;
-                OnPropertyChanged("InputIV");
-            }
-        }
-
-        [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip", true)]
-        public byte[] OutputData
-        {
-            get { return this.outputData; }
-            set
-            {
-                this.outputData = value;
-                OnPropertyChanged("OutputData");
+                this.outputNFSR = value;
+                OnPropertyChanged("OutputLFSR");
             }
         }
 
         #endregion
 
         // Check whether the parameters are entered correctly by the user
-
         private bool checkParameters()
-        {
-            if (inputData == null)
+        {   //checking if there is an input
+            if (inputNFSR == null)
             {
                 GuiLogMessage("No input given. Aborting.", NotificationLevel.Error);
                 return false;
             }
-
-            if (inputKey == null)
+            //checking how many bytes are in input(must be 10)
+            if (inputNFSR.Length != 10)
             {
-                GuiLogMessage("No key given. Aborting.", NotificationLevel.Error);
+                GuiLogMessage("Wrong NFSR length " + inputNFSR.Length + " bytes. Key length must be 10 bytes.", NotificationLevel.Error);
                 return false;
             }
-
-            if (inputIV == null)
-            {
-                GuiLogMessage("No IV given. Aborting.", NotificationLevel.Error);
-                return false;
-            }
-
-            if (inputKey.Length != 10)
-            {
-                GuiLogMessage("Wrong key length " + inputKey.Length + " bytes. Key length must be 10 bytes.", NotificationLevel.Error);
-                return false;
-            }
-
-            if (inputIV.Length != 8)
-            {
-                GuiLogMessage("Wrong IV length " + inputIV.Length + " bytes. IV length must be 8 bytes.", NotificationLevel.Error);
-                return false;
-            }
-
+            //if everything OK returning true
             return true;
-        }/* Main method for launching the cipher */
-        // After checking if the parameters are entered correctly, it begins to encrypt the input data
+        }
+        /* Main method for launching the cipher */
         public void Execute()
         {
+            //sets the progressbar
             ProgressChanged(0, 1);
-
-            if (!checkParameters()) return;
-
-            init();
-
-            OutputData = encrypt(inputData);
-
+            //if UseGenerator checkbox was selected
+            //we use C# random number generator to fill the NFSR
+            if (settings.UseGenerator)
+            {
+                GuiLogMessage("Using standart random number generator", NotificationLevel.Info);
+                //Creating new Random cass object
+                Random r = new Random();
+                //initialize input array of size 10
+                inputNFSR = new byte[10];
+                //starting the cycle
+                do
+                {
+                    //filling the array with random bytes
+                    r.NextBytes(inputNFSR);
+                    //initializing the algorithm (filling the LFSR with zeros)
+                    Init();
+                    //setting NFSR with generated values
+                    SetNFSR(InputNFSR);
+                    //making the attack
+                    Attack();
+                }
+                //cycle works until the Success() function return  true
+                while (!Success());
+                GuiLogMessage("Attack was successfull", NotificationLevel.Info);
+            }
+            //if algorithm uses external generator
+            else
+            {
+                //validates inputs
+                //if something wrong stops the executing
+                if (!checkParameters()) return;
+                //initializing the algorithm (filling the LFSR with zeros)
+                Init();
+                //setting NFSR with input values
+                SetNFSR(InputNFSR);
+                //making the attack
+                Attack();
+                //if attack was successful
+                if (Success())
+                {   //output the message about success
+                    GuiLogMessage("Attack was successfull", NotificationLevel.Info);
+                }
+                else
+                {   //otherwise outputs message about failure
+                    GuiLogMessage("Attack failed. Please try fill NFSR with another value ", NotificationLevel.Warning);
+                }
+            }
+            //sets the outputs with current values in registers
+            OutputLFSR = CompressBytes(10, lfsr);
+            OutputNFSR = CompressBytes(10, nfsr);
+            //set progressbar to 100%
             ProgressChanged(1, 1);
         }
 
@@ -155,198 +160,127 @@ namespace Cryptool.Plugins.GrainV1Attack
         /* Reset method */
         public void Dispose()
         {
-            inputData = null;
-            inputKey = null;
-            inputIV = null;
-            outputData = null;
+            inputNFSR = null;
+            outputLFSR = null;
+            outputNFSR = null;
         }
-
-        /* Main initialization method */
-        public void init()
-        {
-            index = 2;
-
-            /* Keysetup */
-            // fill nfsr with secret key
-            for (int i = 0; i < inputKey.Length; i += 2)
-                nfsr[i / 2] = (uint)(inputKey[i + 1] << 8 | inputKey[i]);
-            //fill lfsr with IV
-            for (int i = 0; i < inputIV.Length - 1; i += 2)
-                lfsr[i / 2] = (uint)(inputIV[i + 1] << 8 | inputIV[i]);
-            //fill remaining bits of lfsr with 1
-            lfsr[4] = 0xffff;
-
-            /* Clocking the cipher 160 times */
-            for (int i = 0; i < 10; i++)
-            {
-                uint output = getOutput();
-                nfsr = shift(nfsr, getOutputNFSR() ^ lfsr[0] ^ output);
-                lfsr = shift(lfsr, getOutputLFSR() ^ output);
-            }
-            // set lfsr to zero
-            Array.Clear(lfsr, 1, lfsr.Length);
-            // compute key and contents of lfsr and nfsr
-            for (int j = 150; j >= 0; j--)
-            {
-                uint[] Inputkey = exclusiveOR(lfsr, nfsr);
-                Console.WriteLine("lfsr ", lfsr);   // contents of lfsr
-                Console.WriteLine("nfsr ", nfsr);   // contents of nfsr
-            }
-
-            // Check whether lfsr has ones from position 64 to 79
-            // convert the bits (from position 64 to 79) to string
-            for (int k = 64; k < 80; k++)
-            {
-                foreach (uint value in lfsr)
-                {
-                    Console.WriteLine(value.ToString());
-                }
-
-
-                //If the key was not found, console will take input from user(readline is to take input).
-                //The user will indicate whether to keep searching for the key if not user can terminate the program.
-                //pos is just a parameter to store user input.
-
-                string pos = Console.ReadLine();
-
-                //fill random data in nfsr again
-
-                Random nfsrVal = new Random();
-                for (int ctr = 1; ctr <= 20; ctr++)
-                {
-                    Console.Write("{0,6}", nfsrVal.Next(0, 1));
-
-                }
-
-            }
-        }
-
-        // This function is from the orignal Grain code, it takes values from LFSR and NFSR and XOR them.
-
-        public static uint[] exclusiveOR(uint[] lfsr, uint[] nfsr)
-        {
-            if (lfsr.Length == nfsr.Length)
-            {
-                uint[] result = new uint[lfsr.Length];
-                for (int i = 0; i < lfsr.Length; i++)
-                {
-                    result[i] = (byte)(lfsr[i] ^ nfsr[i]);
-                }
-                // convert result to hex
-                uint[] hex = (result);
-                return hex;
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
-        }
-
-
-
-        /* Generate next NFSR bit */
-        public uint getOutputNFSR()
-        {
-            uint b0 = nfsr[0];
-            uint b9 = nfsr[0] >> 9 | nfsr[1] << 7;
-            uint b14 = nfsr[0] >> 14 | nfsr[1] << 2;
-            uint b15 = nfsr[0] >> 15 | nfsr[1] << 1;
-            uint b21 = nfsr[1] >> 5 | nfsr[2] << 11;
-            uint b28 = nfsr[1] >> 12 | nfsr[2] << 4;
-            uint b33 = nfsr[2] >> 1 | nfsr[3] << 15;
-            uint b37 = nfsr[2] >> 5 | nfsr[3] << 11;
-            uint b45 = nfsr[2] >> 13 | nfsr[3] << 3;
-            uint b52 = nfsr[3] >> 4 | nfsr[4] << 12;
-            uint b60 = nfsr[3] >> 12 | nfsr[4] << 4;
-            uint b62 = nfsr[3] >> 14 | nfsr[4] << 2;
-            uint b63 = nfsr[3] >> 15 | nfsr[4] << 1;
-
-            return (b62 ^ b60 ^ b52 ^ b45 ^ b37 ^ b33 ^ b28 ^ b21 ^ b14 ^ b9 ^ b0 ^ b63 & b60 ^ b37 & b33
-                ^ b15 & b9 ^ b60 & b52 & b45 ^ b33 & b28 & b21 ^ b63 & b45 & b28 & b9 ^ b60 & b52 & b37 & b33
-                ^ b63 & b60 & b21 & b15 ^ b63 & b60 & b52 & b45 & b37 ^ b33 & b28 & b21 & b15 & b9
-                ^ b52 & b45 & b37 & b33 & b28 & b21) & 0x0000FFFF;
-        }
-
-        /* Generate next LFSR bit */
-        public uint getOutputLFSR()
-        {
-            uint s0 = lfsr[0];
-            uint s13 = lfsr[0] >> 13 | lfsr[1] << 3;
-            uint s23 = lfsr[1] >> 7 | lfsr[2] << 9;
-            uint s38 = lfsr[2] >> 6 | lfsr[3] << 10;
-            uint s51 = lfsr[3] >> 3 | lfsr[4] << 13;
-            uint s62 = lfsr[3] >> 14 | lfsr[4] << 2;
-
-            return (s0 ^ s13 ^ s23 ^ s38 ^ s51 ^ s62) & 0x0000FFFF;
-        }
-
-        /* Generate update function output */
-        public uint getOutput()
-        {
-            uint b1 = nfsr[0] >> 1 | nfsr[1] << 15;
-            uint b2 = nfsr[0] >> 2 | nfsr[1] << 14;
-            uint b4 = nfsr[0] >> 4 | nfsr[1] << 12;
-            uint b10 = nfsr[0] >> 10 | nfsr[1] << 6;
-            uint b31 = nfsr[1] >> 15 | nfsr[2] << 1;
-            uint b43 = nfsr[2] >> 11 | nfsr[3] << 5;
-            uint b56 = nfsr[3] >> 8 | nfsr[4] << 8;
-            uint b63 = nfsr[3] >> 15 | nfsr[4] << 1;
-            uint s3 = lfsr[0] >> 3 | lfsr[1] << 13;
-            uint s25 = lfsr[1] >> 9 | lfsr[2] << 7;
-            uint s46 = lfsr[2] >> 14 | lfsr[3] << 2;
-            uint s64 = lfsr[4];
-
-            return (s25 ^ b63 ^ s3 & s64 ^ s46 & s64 ^ s64 & b63 ^ s3 & s25 & s46 ^ s3 & s46 & s64 ^ s3 & s46 & b63
-                ^ s25 & s46 & b63 ^ s46 & s64 & b63 ^ b1 ^ b2 ^ b4 ^ b10 ^ b31 ^ b43 ^ b56) & 0x0000FFFF;
-        }
-
-        /* Shifting the registers */
-        public uint[] shift(uint[] array, uint val)
-        {
-            array[0] = array[1];
-            array[1] = array[2];
-            array[2] = array[3];
-            array[3] = array[4];
-            array[4] = val;
-
-            return array;
-        }
-
-        /* One cipher round */
-        public void Round()
-        {
-            uint output = getOutput();
-            outp[0] = (byte)output;
-            outp[1] = (byte)(output >> 8);
-
-            nfsr = shift(nfsr, getOutputNFSR() ^ lfsr[0]);
-            lfsr = shift(lfsr, getOutputLFSR());
-        }
-
-        /* Generate key stream byte */
-        public byte getKeyStreamByte()
-        {
-            if (index > 1)
-            {
-                Round();
-                index = 0;
-            }
-            return outp[index++];
-        }
-
-        /* Generate ciphertext */
-        public byte[] encrypt(byte[] src)
-        {
-            byte[] dst = new byte[src.Length];
-
-            for (int i = 0; i < src.Length; i++)
-                dst[i] = (byte)(src[i] ^ getKeyStreamByte());
-
-            return dst;
-        }
-
+        //method needed by the ICrypComponent
         public void Initialize()
         {
+        }
+        //shifts the register values in another side and returns value of the previous last element in register(needed for algorithm)
+        private Byte ShiftBack(Byte[] registr)
+        {
+            //get previous last bit of register
+            Byte result = registr[79];
+            //cycle goes through all register
+            for (int i = 79; i > 0; i--)
+            {
+                registr[i] = registr[i - 1];
+            }
+            //sets 0-element with 0
+            registr[0] = 0;
+            return result;
+        }
+        //function gets 0-element of lfsr
+        private void GetNextLFSR(Byte last)
+        {   //the equation is the same as for new element, but instead of 0-element we use previous last element of register
+            Int32 result = last ^ lfsr[13] ^ lfsr[23] ^ lfsr[38] ^ lfsr[51] ^ lfsr[62] ^ OutputFunction();
+            lfsr[0] = Convert.ToByte(result);
+        }
+        //the same logic as for LFSR
+        private void GetNextNFSR(Byte last)
+        {
+            Int32 result = lfsr[0] ^ nfsr[62] ^ nfsr[60] ^ nfsr[52] ^ nfsr[45] ^ nfsr[37] ^ nfsr[33] ^ nfsr[28] ^ nfsr[21] ^ nfsr[14] ^ nfsr[9] ^ last ^ (nfsr[63] & nfsr[60]) ^ (nfsr[37] & nfsr[33]) ^ (nfsr[15] & nfsr[9]) ^ (nfsr[60] & nfsr[52] & nfsr[45]) ^ (nfsr[33] & nfsr[28] & nfsr[21]) ^ (nfsr[63] & nfsr[45] & nfsr[28] & nfsr[9]) ^ (nfsr[60] & nfsr[52] & nfsr[37] & nfsr[33]) ^ (nfsr[63] & nfsr[60] & nfsr[21] & nfsr[15]) ^ (nfsr[63] & nfsr[60] & nfsr[52] & nfsr[45] & nfsr[37]) ^ (nfsr[33] & nfsr[28] & nfsr[21] & nfsr[15] & nfsr[9]) ^ (nfsr[52] & nfsr[45] & nfsr[37] & nfsr[33] & nfsr[28] & nfsr[21]) ^ OutputFunction();
+            nfsr[0] = Convert.ToByte(result);
+        }
+        //run 160 rounds
+        public void Attack()
+        {
+            for (int i = 0; i < 160; i++)
+                TaktBack();
+        }
+        //makes 80 bits from 10-bytes array
+        public void SetNFSR(byte[] val)
+        {
+            //counter variable
+            Int32 i = 0;
+            //cycle goes through array
+            foreach (var c in val)
+            {
+                //convert value to binary form and padding left with '0' to get length in 8 bit
+                var tmp = Convert.ToString(c, 2).PadLeft(8, '0').Reverse();
+                //cycle goes through string with binary number
+                foreach (var a in tmp)
+                {
+                    //first convert char into integer 
+                    int t = Convert.ToInt32(a);
+                    //then convert integer into byte
+                    //-48 is used because when it converts '0' or '1' chars into integer it gets 48 and 49 (values of chars) 
+                    nfsr[i] = Convert.ToByte(t - 48);
+                    //incrementing counter
+                    i++;
+                }
+            }
+        }
+        //method for checking LFSR state
+        private Boolean Success()
+        {
+            //cycle runs through last 16 bits of LFSR
+            for (int i = 63; i < 80; i++)
+            {
+                //if any bit is 0 then returns false
+                if (lfsr[i] == 0)
+                    return false;
+            }
+            //if all bits are 1, return 1
+            return true;
+        }
+        //method compress byte array that represent bits into simple byte array
+        private Byte[] CompressBytes(Int32 size, Byte[] src)
+        {
+            //creating resulting array of size which was as argument
+            Byte[] res = new Byte[size];
+            //goes through every element in array
+            for (int i = 0; i < size; i++)
+            {
+                //sets current array element value to 0
+                res[i] = 0;
+                for (int j = 0; j < 8; j++)
+                {
+                    //set every bit for current byte as in src array(bit representation)
+                    res[i] |= Convert.ToByte(src[(i * 8) + j] << j);
+                }
+            }
+            //returning resulting array
+            return res;
+
+        }
+        //method makes one cycle back
+        private void TaktBack()
+        {
+            //shifting back registers
+            Byte lastLFSR = ShiftBack(lfsr);
+            Byte lastNFSR = ShiftBack(nfsr);
+            //sets 0-elements of registers 
+            GetNextLFSR(lastLFSR);
+            GetNextNFSR(lastNFSR);
+
+        }
+        //method counts resulting function of GrainV1
+        private Byte OutputFunction()
+        {
+            byte x0 = lfsr[3], x1 = lfsr[25], x2 = lfsr[46], x3 = lfsr[64], x4 = nfsr[63];
+            Int32 result = x1 ^ x4 ^ (x0 & x3) ^ (x2 & x3) ^ (x3 & x4) ^ (x0 & x1 & x2) ^ (x0 & x2 & x3) ^ (x0 & x2 & x4) ^ (x1 & x2 & x4) ^ (x2 & x3 & x4) ^ nfsr[1] ^ nfsr[2] ^ nfsr[4] ^ nfsr[10] ^ nfsr[31] ^ nfsr[43] ^ nfsr[56];
+            return Convert.ToByte(result);
+        }
+        //method initialize arrays and fills lfsr with '0'
+        public void Init()
+        {
+            nfsr = new byte[80];
+            lfsr = new byte[80];
+            for (int i = 0; i < 80; i++)
+                lfsr[i] = 0;
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
