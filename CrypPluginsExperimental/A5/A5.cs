@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.IO;
+using System.Numerics;
 using Cryptool.PluginBase;
+using Cryptool.Plugins.A5;
+using Cryptool.PluginBase.IO;
 using System.ComponentModel;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
+using System.Diagnostics;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.A5
 {
@@ -13,9 +20,10 @@ namespace Cryptool.Plugins.A5
     [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     /**
-     * This Class generates the keystream for A5/1. The Stream is generated
-     * based on the given key and frame number IV given to LFSRs  
+     * This Class generates the key stream for A5/1. The Stream is generated
+     * based on the given key and frame number given to LFSR  
      *
+     * @author Kristian Ott
      */
     public class A5 : ICrypComponent
     {
@@ -34,12 +42,12 @@ namespace Cryptool.Plugins.A5
         private int[] message;
 
         // bits that are tapped in each register (1st row -> Tapped bits of 1st Register and similarly the list follows till third register)
-        private int[][] tappedBits = new int[3][]
-        {
-            new int[] { 18, 17, 16, 13 },
-            new int[] { 21, 20 },
-            new int[] { 22, 21, 20, 7 }
-        };
+        private int[][] tappedBits = new int[3][] 
+        { 
+            new int[] { 18, 17, 16, 13 }, 
+            new int[] { 21, 20 }, 
+            new int[] { 22, 21, 20, 7 } 
+        }; 
 
         private String messageInput;
         private String output;
@@ -115,6 +123,8 @@ namespace Cryptool.Plugins.A5
 	 * @param encryptFrameNumber
 	 * @return The filename of the encrypted file.
 	 */
+
+            // get the maximum length of registers
         public int GetMaxRegLensTotal()
         {
             int total = 0;
@@ -146,9 +156,8 @@ namespace Cryptool.Plugins.A5
 
             return final;
         }
-
+        
         // The loop has been created to store the index values of the 3 registers in the array. We get index from length of each register
-        // We will use indexes later when we will shift registers
         private int[] GetIndexValues()
         {
             int[] indexValues = new int[registers.Length];
@@ -161,12 +170,12 @@ namespace Cryptool.Plugins.A5
             return indexValues;
         }
 
-        
-        // creates a vector that counts the frequency of 0s and 1s of the index values
-        // this function is going to be used later to indicate the majority bit
+        //This function is going to be used later for finding majority bit
+        // it stores the frequency of index values of the three registers
+
         private int[] FindFrequency(int[] indexValues)
         {
-            int[] tally = new int[2]; //size of 2 since it's just binary
+            int[] tally = new int[2]; //size of 2 since its just binary
 
             foreach (int val in indexValues)
             {
@@ -180,25 +189,23 @@ namespace Cryptool.Plugins.A5
         }
 
         public void CreateRegisters()
-        {
-
+        {           
+            // registers are initialized to zero 
             registers = new int[nRegisters][];
             for (int i = 0; i < nRegisters; i++)
             {
-                // define register's length
                 int[] newReg = new int[mRegLens[i]];
                 for (int k = 0; k < mRegLens[i]; k++)
-               // fill them initially with zero
                     newReg[k] = 0;
                 registers[i] = newReg;
             }
-            // after initializing the registers, we are mixing the secret key and the IV 
-            // (using XOR operations between tapped bits and secret key bits)
+            // after initializing to zero, the key is going to be mixed
             MixKey();
+            // after that, the IV is going to be mixed with the feedback of the registers
             MixIV();
-            // registers are then clocked 100 times
+
             for (int j = 0; j < 100; j++)
-            {
+            {// registers are being clocked 100 times, using the feedback values
                 int[] regTS = RegistersToShift();
                 int[] feedbackvalues = GetFeedbackValues(regTS);
                 RegisterShiftWithVal(regTS, feedbackvalues);
@@ -213,46 +220,44 @@ namespace Cryptool.Plugins.A5
             int outValue = 0;
 
             for (int i = 0; i < registers.Length; i++)
+                // from each register we are getting values to XOR
                 vToXor[i] = registers[i][0];
-
+            // after that we XOR these values
             outValue = XorRegValues(vToXor);
 
             int[] regTS = RegistersToShift();
             int[] feedbackset = GetFeedbackValues(regTS);
+            // registers are being shifted with the feedback set values of registers
             RegisterShiftWithVal(regTS, feedbackset);
 
             return outValue;
         }
-
-        // This is for filling registers with data. We would know the length of register from GetIndexValues so the that the function will know when to stop filling
+        
+        // This is for filling registers with data. We would know the length of register from getIndex so the that the function will know when to stop filling
         public int[] RegistersToShift()
-        {   // get index values 
+        {
             int[] indexValues = GetIndexValues();
-            // find the frequencies of the index values
             int[] tally = FindFrequency(indexValues);
 
             int highest = 0;
             int movVal = 0;
 
             if (dbMode)
-            {
+            {// write the index values of registers and their frequency
                 Console.WriteLine("[indexValues]:");
                 foreach (int v in indexValues)
-                    // convert index values to their string representation
                     Console.Write(v.ToString() + " ");
                 Console.WriteLine("\n[/indexValues]:");
 
                 Console.WriteLine("[tally]:");
                 foreach (int v in tally)
-                    // convert the majority bit to it's string representation
                     Console.Write(v.ToString() + " ");
                 Console.WriteLine("\n[/tally]:");
             }
-
-
-            //this loop is used to calculate the majority bit 
+            // here we find the majority bit
             // the index values of each register indicate the majority bit
             // eg. if the index values of the registers are (1,0,0) this means that the majority bit is 0
+
             foreach (int count in tally)
             {
                 if (count > highest)
@@ -264,11 +269,11 @@ namespace Cryptool.Plugins.A5
                 if (tally[i] == highest)
                     movVal = i;
             }
-            // registers in majority are being shifted
+
             ArrayList regTS = new ArrayList();
 
             for (int i = 0; i < indexValues.Length; i++)
-            {
+            { // only registers that are in majority will be clocked
                 if (indexValues[i] == movVal)
                     regTS.Add(i);
             }
@@ -278,52 +283,50 @@ namespace Cryptool.Plugins.A5
 
         private void MixKey()
         {
-            int[] regTS = new int[3] { 0, 1, 2 };
+            int[] regTS = new int[3] { 0,1,2};
 
-            for (int i = 0; i < key.Length; i++)
-            {
-                // get the feedback values
+            for (int i = 0; i < key.Length ; i++)
+            { // we get the feedback value of each register
                 int[] feedbackset = GetFeedbackValues(regTS);
-                // XOR secret key bits with feedback values bits
                 for (int j = 0; j < feedbackset.Length; j++)
+                    // the feedback values of registers are going to be XORed with the secret key bits
                     feedbackset[j] = XorValues(feedbackset[j], key[i]);
-                // shift registers 
+
                 RegisterShiftWithVal(regTS, feedbackset);
 
             }
         }
-        // function to XOR IV values with registers values
+
         private void MixIV()
         {
             int[] regTS = new int[3] { 0, 1, 2 };
 
             for (int i = 0; i < iv.Length; i++)
-            {    // get feedback values of registers (based on tapped bits)
+            {
                 int[] feedbackset = GetFeedbackValues(regTS);
                 for (int j = 0; j < feedbackset.Length; j++)
-                    // XOR feedback values of the registers with the IV bit values
+                    // feedback values of registers are going to be XORed with the IV bits
                     feedbackset[j] = XorValues(feedbackset[j], iv[i]);
-                // shift registers
+                // after XORing these values, the registers will be shifted 
                 RegisterShiftWithVal(regTS, feedbackset);
             }
-
+            
         }
 
-        // The feedback in registers are calculated from the tapped bits that are taken out
-        // such as for example 13th, 16th, 17th,18th bits in first register
+        // The feedback in registers are calculated from the bits that are taken out such as for example 13th, 16th, 17th,18th bits in first register
         private int[] GetFeedbackValues(int[] regTS)
         {
             int[] regTSFBV = new int[regTS.Length]; //Reg To Shift Feed Back Values (regTSFBV)
 
             for (int i = 0; i < regTS.Length; i++)
-            {   // get the tapped bits of each register
+            {    // the Feedback set of bits in each registers is received from the tapped bits
                 int[] feedbackSet = new int[tappedBits[regTS[i]].Length];
 
                 for (int x = 0; x < tappedBits[regTS[i]].Length; x++)
                 {
                     feedbackSet[x] = registers[regTS[i]][tappedBits[regTS[i]][x]];
                 }
-                // XOR values of feedback bits
+
                 regTSFBV[i] = XorRegValues(feedbackSet);
             }
 
@@ -342,7 +345,7 @@ namespace Cryptool.Plugins.A5
 
                 //Shifting values (the last bit is replaced with the second last bit and the rest of the bits are shifted to the right.)
 
-                for (int x = regShifting.Length - 1; x > 0; x--)
+                for (int x = regShifting.Length - 1; x > 0 ; x--)
                     nRegister[x] = regShifting[x - 1]; //
 
 
@@ -354,17 +357,17 @@ namespace Cryptool.Plugins.A5
                 registers[regTS[i]] = nRegister; //assign to register (update)
             }
         }
-
+        
         public int[] encrypt(int[] plaintext, int[] encryptKey, int[] initialvector)
         {
 
             CreateRegisters();
             int[] encryptedText = new int[228];
             for (int i = 0; i < 228; i++)
-            { // the keystream is being XORed with the plaintext to give the ciphertext
-                encryptedText[i] = (GetOutValue() + message[i]) % 2;
+            {// ciphertext is received by XORing the plaintext with the keystream
+                encryptedText[i] = (GetOutValue() + message[i]) % 2; 
             }
-            return encryptedText;
+                return encryptedText;
             //		return outFile;
         }
 
@@ -398,15 +401,14 @@ namespace Cryptool.Plugins.A5
             char[] initS = new char[bytes];
             char[] inArray = inString.ToCharArray();
 
-            // truncate the string if it is too big
             if (inString.Length > bytes)
-            {  
+            {
                 int start = inString.Length - bytes;
                 Array.Copy(inArray, start, initS, 0, initS.Length);
                 //			System.arraycopy(inArray, start, initS, 0, initS.Length);
             }
             else
-            { // else add zeros to the left most bit (MSB)
+            {
                 int diff = bytes - inString.Length;
 
                 for (int i = 0; i < bytes; i++) initS[i] = '0';
@@ -499,28 +501,28 @@ namespace Cryptool.Plugins.A5
         {
             ProgressChanged(0, 1);
             try
-            {  // check validity of input values
-                if (String.IsNullOrEmpty(messageInput) || messageInput.Length != 28)
-                {  // the plaintext must be 28 characters
-                    // because 28*8 bits=224 , 4 bits padded left to make it 228 bits
-                    GuiLogMessage("Message Length must be 28 characters! Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
+            {// check the validity of the parameters
+                if ( String.IsNullOrEmpty(messageInput) || messageInput.Length != 28)
+                { //28* 8 bits= 224 , 4 bits padded left to make it 228 bits 
+                  //Each char is 8 bits hence multiply by 8
+                    GuiLogMessage("Message Length must be 28 characters, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
                     return;
                 }
                 if (String.IsNullOrEmpty(keyString) || keyString.Length != 64)
                 {
-                    GuiLogMessage("Key Length must be 64 bits! Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
+                    GuiLogMessage("Key Length must be 64 bits, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
                     return;
                 }
                 if (String.IsNullOrEmpty(initialVector) || initialVector.Length != 22)
                 {
-                    GuiLogMessage("Initial Vector Length must be 22 bits! Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
+                    GuiLogMessage("Initial Vector Length must be 22 bits, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
                     return;
                 }
                 switch (settings.Action)
                 {
                     case A5Settings.A5Mode.Encrypt:
                         {
-
+                            
                             if (!String.IsNullOrEmpty(messageInput) && !String.IsNullOrEmpty(keyString) && !String.IsNullOrEmpty(initialVector))
                             {
                                 String outval = "";
@@ -590,9 +592,9 @@ namespace Cryptool.Plugins.A5
 
                                 if (messagebits.Length > 228)
                                 {
-                                    messagebits = messagebits.Remove(0, 4);
+                                    messagebits = messagebits.Remove(0,4);
                                 }
-                                //------//
+                                    //------//
 
                                 for (int i = 0; i < 64; i++)
                                     key[i] = keyString[i] == '0' ? 0 : 1;
@@ -658,7 +660,7 @@ namespace Cryptool.Plugins.A5
         /// </summary>
         public void PostExecution()
         {
-
+            
         }
 
         /// <summary>

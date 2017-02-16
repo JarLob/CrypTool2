@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.A5
     // HOWTO: rename class (click name, press F2)
     public class A5Settings : ISettings
     {
-        public enum A5Mode { Encrypt = 0, Decrypt = 1 };
+        public enum A5Mode {Encrypt = 0 ,  Decrypt = 1};
 
         private A5Mode selectedAction = A5Mode.Encrypt;
         public A5Settings()
@@ -169,7 +169,7 @@ namespace Cryptool.Plugins.A5
         //    }
         //}
 
-
+        
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
