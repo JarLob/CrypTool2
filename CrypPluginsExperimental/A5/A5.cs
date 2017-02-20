@@ -18,12 +18,8 @@ namespace Cryptool.Plugins.A5
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    /**
-     * This Class generates the key stream for A5/1. The Stream is generated
-     * based on the given key and frame number given to LFSR  
-     *
-     * @author Kristian Ott
-     */
+    
+
     public class A5 : ICrypComponent
     {
 
@@ -38,15 +34,15 @@ namespace Cryptool.Plugins.A5
         private int[][] registers; //registers (we are using this to create a table with the registers space for all 3 registers (1st row --> register 1 ; 2nd row --> register 2 etc)
         private int[] iv;
         private int[] key;
-        private int[] message;
+        private int[] message; //plaintext
 
         // bits that are tapped in each register (1st row -> Tapped bits of 1st Register and similarly the list follows till third register)
-        private int[][] tappedBits = new int[3][] 
-        { 
-            new int[] { 18, 17, 16, 13 }, 
-            new int[] { 21, 20 }, 
-            new int[] { 22, 21, 20, 7 } 
-        }; 
+        private int[][] tappedBits = new int[3][]
+        {
+            new int[] { 18, 17, 16, 13 },
+            new int[] { 21, 20 },
+            new int[] { 22, 21, 20, 7 }
+        };
 
         private String messageInput;
         private String output;
@@ -56,10 +52,23 @@ namespace Cryptool.Plugins.A5
         private bool stop = false;
         private A5Settings settings;
 
+        //modified
+        byte[] keyBytes;
+        byte[] ivBytes;
+        byte[] messageBytes;
+        byte[] outBytes;
         #endregion
-
-
-
+        //
+        //Converts byte array into string for future using
+        private String BytesArrToString(byte[] arr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var b in arr)
+            {
+                sb.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
+            }
+            return sb.ToString();
+        }
 
         public A5()
         {
@@ -67,40 +76,92 @@ namespace Cryptool.Plugins.A5
         }
 
 
-        [PropertyInfo(Direction.InputData, "InputKeyString", "InputKeyTooltip", true)]
+        [PropertyInfo(Direction.InputData, "Key", "Key length = 8 bytes", true)]
+        public Byte[] Key
+        {
+            get
+            {
+                return keyBytes;
+            }
+            set
+            {
+                keyBytes = value;
+                KeyString = BytesArrToString(keyBytes);
+                OnPropertyChanged("Key");
+            }
+        }
+
         public String KeyString
         {
             get { return this.keyString; }
             set
             {
                 this.keyString = value;
-                OnPropertyChanged("KeyString");
             }
         }
 
-        [PropertyInfo(Direction.InputData, "IV-String", "IV-Tooltip", true)]
+        [PropertyInfo(Direction.InputData, "IV", "IV length = 22 bits, (last two bits of last byte wont be calculated)", true)]
+        public Byte[] IV
+        {
+            get
+            {
+                return ivBytes;
+            }
+            set
+            {
+                ivBytes = value;
+                initialVector = BytesArrToString(ivBytes).Substring(0, 22);
+
+                OnPropertyChanged("IV");
+            }
+        }
+
         public String InitialVector
         {
             get { return this.initialVector; }
             set
             {
                 this.initialVector = value;
-                OnPropertyChanged("InitialVector");
             }
         }
 
-        [PropertyInfo(Direction.InputData, "InputMessageString", "InputMessageTooltip", true)]
+        [PropertyInfo(Direction.InputData, "InputMessage", "Input message bytes", true)]
+        public Byte[] Message
+        {
+            get
+            {
+                return messageBytes;
+            }
+            set
+            {
+                messageBytes = value;
+                OnPropertyChanged("InputMessage");
+            }
+        }
+
         public String MessageInput
         {
             get { return this.messageInput; }
             set
             {
                 this.messageInput = value;
-                OnPropertyChanged("MessageInput");
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputTooltip", true)]
+        [PropertyInfo(Direction.OutputData, "Output bytes", "Chipher text", true)]
+        public Byte[] Out
+        {
+            get
+            {
+                return outBytes;
+            }
+            set
+            {
+                outBytes = value;
+
+                OnPropertyChanged("Out");
+            }
+        }
         public String Output
         {
             get
@@ -110,7 +171,6 @@ namespace Cryptool.Plugins.A5
             set
             {
                 this.output = value;
-                OnPropertyChanged("Output");
             }
         }
 
@@ -123,7 +183,7 @@ namespace Cryptool.Plugins.A5
 	 * @return The filename of the encrypted file.
 	 */
 
-            // get the maximum length of registers
+        // get the maximum length of registers
         public int GetMaxRegLensTotal()
         {
             int total = 0;
@@ -155,7 +215,7 @@ namespace Cryptool.Plugins.A5
 
             return final;
         }
-        
+
         // The loop has been created to store the index values of the 3 registers in the array. We get index from length of each register
         private int[] GetIndexValues()
         {
@@ -188,7 +248,7 @@ namespace Cryptool.Plugins.A5
         }
 
         public void CreateRegisters()
-        {           
+        {
             // registers are initialized to zero 
             registers = new int[nRegisters][];
             for (int i = 0; i < nRegisters; i++)
@@ -202,7 +262,6 @@ namespace Cryptool.Plugins.A5
             MixKey();
             // after that, the IV is going to be mixed with the feedback of the registers
             MixIV();
-
             for (int j = 0; j < 100; j++)
             {// registers are being clocked 100 times, using the feedback values
                 int[] regTS = RegistersToShift();
@@ -231,7 +290,7 @@ namespace Cryptool.Plugins.A5
 
             return outValue;
         }
-        
+
         // This is for filling registers with data. We would know the length of register from getIndex so the that the function will know when to stop filling
         public int[] RegistersToShift()
         {
@@ -241,18 +300,6 @@ namespace Cryptool.Plugins.A5
             int highest = 0;
             int movVal = 0;
 
-            if (dbMode)
-            {// write the index values of registers and their frequency
-                Console.WriteLine("[indexValues]:");
-                foreach (int v in indexValues)
-                    Console.Write(v.ToString() + " ");
-                Console.WriteLine("\n[/indexValues]:");
-
-                Console.WriteLine("[tally]:");
-                foreach (int v in tally)
-                    Console.Write(v.ToString() + " ");
-                Console.WriteLine("\n[/tally]:");
-            }
             // here we find the majority bit
             // the index values of each register indicate the majority bit
             // eg. if the index values of the registers are (1,0,0) this means that the majority bit is 0
@@ -282,9 +329,9 @@ namespace Cryptool.Plugins.A5
 
         private void MixKey()
         {
-            int[] regTS = new int[3] { 0,1,2};
+            int[] regTS = new int[3] { 0, 1, 2 };
 
-            for (int i = 0; i < key.Length ; i++)
+            for (int i = 0; i < key.Length; i++)
             { // we get the feedback value of each register
                 int[] feedbackset = GetFeedbackValues(regTS);
                 for (int j = 0; j < feedbackset.Length; j++)
@@ -309,7 +356,7 @@ namespace Cryptool.Plugins.A5
                 // after XORing these values, the registers will be shifted 
                 RegisterShiftWithVal(regTS, feedbackset);
             }
-            
+
         }
 
         // The feedback in registers are calculated from the bits that are taken out such as for example 13th, 16th, 17th,18th bits in first register
@@ -344,7 +391,7 @@ namespace Cryptool.Plugins.A5
 
                 //Shifting values (the last bit is replaced with the second last bit and the rest of the bits are shifted to the right.)
 
-                for (int x = regShifting.Length - 1; x > 0 ; x--)
+                for (int x = regShifting.Length - 1; x > 0; x--)
                     nRegister[x] = regShifting[x - 1]; //
 
 
@@ -356,36 +403,17 @@ namespace Cryptool.Plugins.A5
                 registers[regTS[i]] = nRegister; //assign to register (update)
             }
         }
-        
+
         public int[] encrypt(int[] plaintext, int[] encryptKey, int[] initialvector)
         {
 
             CreateRegisters();
-            int[] encryptedText = new int[228];
-            for (int i = 0; i < 228; i++)
-            {// ciphertext is received by XORing the plaintext with the keystream
-                encryptedText[i] = (GetOutValue() + message[i]) % 2; 
-            }
-                return encryptedText;
-            //		return outFile;
-        }
-
-        /**
-         * 
-         * @param fileToDecrypt
-         * @param decryptKey
-         * @param decryptFrameNumber
-         * @return The filename of the decrypted file.
-         */
-        public int[] decrypt(int[] ciphertext, int[] decryptKey, int[] initialvector)
-        {
-            CreateRegisters();
-            int[] decryptedText = new int[228];
-            for (int i = 0; i < 228; i++)
+            int[] encryptedText = new int[plaintext.Length];
+            for (int i = 0; i < plaintext.Length; i++)
             {
-                decryptedText[i] = (GetOutValue() + message[i]) % 2;
+                encryptedText[i] = (GetOutValue() + message[i]) % 2;
             }
-            return decryptedText;
+            return encryptedText;
         }
 
         /**
@@ -404,7 +432,6 @@ namespace Cryptool.Plugins.A5
             {
                 int start = inString.Length - bytes;
                 Array.Copy(inArray, start, initS, 0, initS.Length);
-                //			System.arraycopy(inArray, start, initS, 0, initS.Length);
             }
             else
             {
@@ -412,42 +439,10 @@ namespace Cryptool.Plugins.A5
 
                 for (int i = 0; i < bytes; i++) initS[i] = '0';
                 Array.Copy(inArray, 0, initS, diff, inArray.Length);
-                //			System.arraycopy(inArray, 0, initS, diff, inArray.Length);
             }
             return new String(initS);
         }
 
-        /**
-         * Entry point to the system.
-         * 3 Input arguments:
-         * args[0]: /path/to/file.ext
-         * args[1]: key
-         * args[2]: frame number
-         * 
-         * @param args
-         * @throws IOException
-         */
-        public void main(String[] args)
-        {
-
-            //            String[] abc = {"e:/testImage.jpg","4E2F4D9C1EB88B3A","3AB3CB"};
-            //String[] abc = { "3AB3CB4E2F4D9C4E2F4E2F4D9C1EB88B3A4E2F4D9C1EBD9C1EB88B3A1EB88B3A", "4E2F4D9C1EB88B3A", "3AB3CB" };
-            //validateInput(abc);
-
-            //		String encryptedFile = encrypt(inputFile, key, frameNumber);
-            //                DataFileHandler dfh = new DataFileHandler(encryptedFile);
-            //String aa = "3AB3CB4E2F4D9C4E2F4E2F4D9C1EB88B3A4D9C1EB88B3A1EB88B3A";
-
-            //byte[] ttt = Encoding.ASCII.GetBytes(inputFile);
-            //byte[] encryptedd = encrypt(ttt, keyString, frameNumber);
-            ////byte[] a = aa.getBytes();
-            //byte[] decc = decrypt(encryptedd, keyString, frameNumber);
-
-
-            //for (int i = 0; i < encryptedd.Length; i++)
-            //    Console.WriteLine(encryptedd[i]);
-            //		String decryptedFile = decrypt(encryptedFile, key, frameNumber);
-        }
 
         #endregion
 
@@ -458,10 +453,7 @@ namespace Cryptool.Plugins.A5
         public void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
-            //if (PropertyChanged != null)
-            //{
-            //  PropertyChanged(this, new PropertyChangedEventArgs(name));
-            //}
+
         }
 
         #endregion
@@ -500,138 +492,49 @@ namespace Cryptool.Plugins.A5
         {
             ProgressChanged(0, 1);
             try
-            {// check the validity of the parameters
-                if ( String.IsNullOrEmpty(messageInput) || messageInput.Length != 28)
-                { //28* 8 bits= 224 , 4 bits padded left to make it 228 bits 
-                  //Each char is 8 bits hence multiply by 8
-                    GuiLogMessage("Message Length must be 28 characters, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
-                    return;
-                }
-                if (String.IsNullOrEmpty(keyString) || keyString.Length != 64)
+            {// check the validity of input data
+                if (keyBytes.Length != 8)
                 {
-                    GuiLogMessage("Key Length must be 64 bits, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
+                    GuiLogMessage("Key Length must be 64 bits, current length " + keyBytes.Length, NotificationLevel.Error);
                     return;
                 }
                 if (String.IsNullOrEmpty(initialVector) || initialVector.Length != 22)
                 {
-                    GuiLogMessage("Initial Vector Length must be 22 bits, Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
+                    GuiLogMessage("Initial Vector Length must be 22 bits, current length " + initialVector.Length, NotificationLevel.Error);
+                    GuiLogMessage(initialVector, NotificationLevel.Error);
                     return;
                 }
-                switch (settings.Action)
+
+                String outval = "";
+                key = new int[64];
+                iv = new int[22];
+                message = new int[messageBytes.Length * 8];
+
+                String messagebits = BytesArrToString(messageBytes);
+
+                //Convert text to binary sequence
+
+
+                for (int i = 0; i < 64; i++)
+                    key[i] = keyString[i] == '0' ? 0 : 1;
+                for (int j = 0; j < 22; j++)
+                    iv[j] = initialVector[j] == '0' ? 0 : 1;
+
+                for (int k = 0; k < messageBytes.Length * 8; k++)
                 {
-                    case A5Settings.A5Mode.Encrypt:
-                        {
-                            
-                            if (!String.IsNullOrEmpty(messageInput) && !String.IsNullOrEmpty(keyString) && !String.IsNullOrEmpty(initialVector))
-                            {
-                                String outval = "";
-                                key = new int[64];
-                                iv = new int[22];
-                                message = new int[228];
-
-                                String messagebits = "";
-
-                                //Convert text to binary sequence
-                                foreach (char c in messageInput)
-                                    messagebits += Convert.ToString((int)c, 2).PadLeft(8, '0');
-                                //-------//
-
-                                // Pad zeros to the bit sequence to create frame length 228 bits for A5/1
-                                if (messagebits.Length < 228)
-                                    messagebits = messagebits.PadLeft(228, '0');
-                                //------//
-
-                                for (int i = 0; i < 64; i++)
-                                    key[i] = keyString[i] == '0' ? 0 : 1;
-                                for (int j = 0; j < 22; j++)
-                                    iv[j] = initialVector[j] == '0' ? 0 : 1;
-                                for (int k = 0; k < 228; k++)
-                                    message[k] = messagebits[k] == '0' ? 0 : 1;
-
-                                int[] result = encrypt(message, key, iv);
-
-                                for (int i = 0; i < result.Length; i++)
-                                    outval += result[i];
-
-                                // padding 0 bits on left to create bit length of 232 to convert back to text, 
-                                // 228 bits if cipher can all be non-zero and to generate text out of 228 bits we need
-                                // the bit length to be multiple of 8 bits (byte)
-                                if (outval.Length == 228)
-                                    if (outval.Length % 8 != 0)
-                                        outval = outval.PadLeft(232, '0');
-
-                                // Convert Binary Sequence back to text
-                                List<Byte> byteList = new List<Byte>();
-                                for (int i = 0; i < outval.Length; i += 8)
-                                {
-                                    byteList.Add(Convert.ToByte(outval.Substring(i, 8), 2));
-                                }
-                                String cipher = Encoding.ASCII.GetString(byteList.ToArray());
-
-                                Output = cipher;
-                            }
-                            break;
-                        }
-                    case A5Settings.A5Mode.Decrypt:
-                        {
-                            if (!String.IsNullOrEmpty(messageInput) && !String.IsNullOrEmpty(keyString) && !String.IsNullOrEmpty(initialVector))
-                            {
-                                String outval = "";
-                                key = new int[64];
-                                iv = new int[22];
-
-                                String messagebits = "";
-
-                                //Convert text to binary sequence
-                                foreach (char c in messageInput)
-                                    messagebits += Convert.ToString((int)c, 2).PadLeft(8, '0');
-                                //-------//
-
-                                // Removing Padded zeros to the bit sequence to create frame length 228 bits for A5/1
-
-                                if (messagebits.Length > 228)
-                                {
-                                    messagebits = messagebits.Remove(0,4);
-                                }
-                                    //------//
-
-                                for (int i = 0; i < 64; i++)
-                                    key[i] = keyString[i] == '0' ? 0 : 1;
-                                for (int j = 0; j < 22; j++)
-                                    iv[j] = initialVector[j] == '0' ? 0 : 1;
-                                for (int k = 0; k < 228; k++)
-                                    message[k] = messagebits[k] == '0' ? 0 : 1;
-
-                                int[] result = decrypt(message, key, iv);
-
-                                for (int i = 0; i < result.Length; i++)
-                                    outval += result[i];
-
-                                // removing padded 0 bits on left to create bit length of 224 to convert back to text, 
-                                // in the plain text we added four bits to create 228 bits of length
-                                // the bit length to be multiple of 8 bits (byte)
-                                if (outval.Length == 228)
-                                    if (outval.Length % 8 != 0)
-                                        outval = outval.Remove(0, 4);
-
-                                // Convert Binary Sequence back to text
-                                List<Byte> byteList = new List<Byte>();
-                                for (int i = 0; i < outval.Length; i += 8)
-                                {
-                                    byteList.Add(Convert.ToByte(outval.Substring(i, 8), 2));
-                                }
-                                String plain = Encoding.ASCII.GetString(byteList.ToArray());
-
-                                Output = plain;
-                            }
-                            break;
-                        }
-                    default:
-                        {
-                            throw new NotSupportedException("Unkown execution mode!");
-                            //break;
-                        }
+                    message[k] = messagebits[k] == '0' ? 0 : 1;
                 }
+
+                int[] result = encrypt(message, key, iv);
+
+                for (int i = 0; i < result.Length; i++)
+                    outval += result[i];
+                List<Byte> byteList = new List<Byte>();
+                for (int i = 0; i < outval.Length; i += 8)
+                {
+                    byteList.Add(Convert.ToByte(outval.Substring(i, 8), 2));
+                }
+                Out = byteList.ToArray();
             }
             catch (Exception exception)
             {
@@ -659,7 +562,7 @@ namespace Cryptool.Plugins.A5
         /// </summary>
         public void PostExecution()
         {
-            
+
         }
 
         /// <summary>

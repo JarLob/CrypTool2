@@ -18,6 +18,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Text;
+using System.Collections.Generic;
 
 namespace Cryptool.Plugins.A5_attack
 {
@@ -32,15 +34,42 @@ namespace Cryptool.Plugins.A5_attack
         private String keyString = null;
         private String initialVector = null;
 
+        private byte[] keyBytes = null;
+        private byte[] ivBytes = null;
+        private byte[] guessBytes = null;
+        private byte[] outBytes = null;
+        private string guessCase = null;
 
         A5AttackSettings settings = new A5AttackSettings();
-
+        private String BytesArrToString(byte[] arr)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var b in arr)
+            {
+                sb.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
+            }
+            return sb.ToString();
+        }
         public ISettings Settings
         {
             get { return settings; }
         }
 
-        [PropertyInfo(Direction.InputData, "InputKeyString", "InputKeyTooltip", true)]
+        [PropertyInfo(Direction.InputData, "InputKeyBytes", "Key bytes", true)]
+        public Byte[] Key
+        {
+            get
+            {
+                return keyBytes;
+            }
+            set
+            {
+                keyBytes = value;
+                KeyString = BytesArrToString(keyBytes);
+                OnPropertyChanged("InputKeyBytes");
+            }
+        }
+
         public String KeyString
         {
             get { return this.keyString; }
@@ -51,18 +80,46 @@ namespace Cryptool.Plugins.A5_attack
             }
         }
 
-        [PropertyInfo(Direction.InputData, "IV-String", "IV-Tooltip", true)]
+        [PropertyInfo(Direction.InputData, "IVBytes", "IV-Tooltip", true)]
+        public Byte[] IV
+        {
+            get
+            {
+                return ivBytes;
+            }
+            set
+            {
+                ivBytes = value;
+                InitialVector = BytesArrToString(ivBytes).Substring(0, 22);
+
+                OnPropertyChanged("IVBytes");
+            }
+        }
+
         public String InitialVector
         {
             get { return this.initialVector; }
             set
             {
                 this.initialVector = value;
-                OnPropertyChanged("InitialVector");
+
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "OutputKeyCaption", "OutputKeyTooltip", true)]
+        [PropertyInfo(Direction.OutputData, "OutputKeyBytes", "", true)]
+        public Byte[] OutputKeyBytes
+        {
+            get
+            {
+                return outBytes;
+            }
+            set
+            {
+                outBytes = value;
+                OnPropertyChanged("OutputKeyBytes");
+            }
+        }
+
         public String OutputKey
         {
             get
@@ -72,11 +129,23 @@ namespace Cryptool.Plugins.A5_attack
             set
             {
                 this.outputKey = value;
-                OnPropertyChanged("OutputKey");
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "GuessKeyBitsCaption", "GuessKeyBitsTooltip", true)]
+        [PropertyInfo(Direction.OutputData, "GuessKeyBytes", "GuessKeyBitsTooltip", true)]
+        public Byte[] GuessKeyBytes
+        {
+            get
+            {
+                return guessBytes;
+            }
+            set
+            {
+                guessBytes = value;
+                OnPropertyChanged("GuessKeyBytes");
+            }
+        }
+
         public String GuessKeyBits
         {
             get
@@ -86,13 +155,27 @@ namespace Cryptool.Plugins.A5_attack
             set
             {
                 this.guessKeyBits = value;
-                OnPropertyChanged("GuessKeyBits");
             }
         }
 
+        [PropertyInfo(Direction.OutputData, "GuessCase", "Case used", true)]
+        public String GuessCase
+        {
+            get
+            {
+                return guessCase;
+            }
+            set
+            {
+                guessCase = value;
+                OnPropertyChanged("GuessCase");
+            }
+        }
 
         public void Execute()
-        { // check the input values validity
+        {
+            ProgressChanged(0, 1);
+            // check the validity of input data
             if (String.IsNullOrEmpty(keyString) || keyString.Length != 64)
             {
                 GuiLogMessage("Key Length must be 64 bits! Please stop the template and then Click Play after entering correct length.", NotificationLevel.Error);
@@ -120,7 +203,7 @@ namespace Cryptool.Plugins.A5_attack
 
                 bool keyEquals = true; // To check if the key created by any scenario is equal to the original key
 
-                // Case 0, where all registers are zero, we only need the IV to derive 64 bits of key
+                // Scenario 0 (represented as case 1) , where all registers are zero, we only need the IV to derive 64 bits of key
                 outKey = Scenario0(iv);
 
                 for (int i = 0; i < 64; i++)
@@ -132,11 +215,11 @@ namespace Cryptool.Plugins.A5_attack
                     }
                 }
 
-                if (!keyEquals) // If Case 0 is not met, then we start checking the Case 1, 2 and 3
+                if (!keyEquals) // If Scenario 0 is not met, then we start checking the Scenario 1, 2 and 3 (a.k.a case 2a, 2b, 2c)
                 {
 
                     // Creating a table of possible 23 bit sequence (guess bits/ free bits) which will be used for attack.
-                    // Note that we need 23 bits for Case 1 (Scenario 1), 22 bits for Case 2 (Scenario 2), 19 bits for Case 3 (Scenario 3).
+                    // Note that we need 23 bits for Case 2a (Scenario 1), 22 bits for Case 2b (Scenario 2), 19 bits for Case 2c (Scenario 3).
                     // This table of guess bits is created only once and can be used for all three cases by skipping the initial bits when not required depending on register length.
                     String[] guess = new String[(int)Math.Pow(2, 23)];
 
@@ -149,14 +232,14 @@ namespace Cryptool.Plugins.A5_attack
                     for (int j = 0; j < guess.Length; j++) // Loop through all possible guess bits generated
                     {
                         int[] k1;
-                        // for case 3, where register A is non-zero, we only need 19 guess bits, 
+                        // for case 2c (scenario 3), where register A is non-zero, we only need 19 guess bits, 
                         // which means we can skip the cases where the bit at index 3 becomes 1 in guess bits
-                        if (guess[j][3] != '1') 
+                        if (guess[j][3] != '1')
                         {
                             k1 = new int[19];
 
                             // we start the loop at position 4 because we created above a table for 23 possible bit sequence of free bits
-                            // and we only need 19 bits for case 3
+                            // and we only need 19 bits for case 2c 
                             for (int k = 4; k < 23; k++)
                                 k1[k - 4] = guess[j][k] == '0' ? 0 : 1;
                             // calculate the secret key bits using the IV and the guessed bits (and the formulas for scenario 3) 
@@ -175,7 +258,7 @@ namespace Cryptool.Plugins.A5_attack
                             {
                                 outKey = kk2; // the key generated is equal to actual key so we store it in the outKey variable and break the loop of guess bits.
                                 finalGuessbits = guess[j]; // the guess bits which played part in the generation of actual key
-                                caseUsed = "Case = 3";
+                                caseUsed = "Case = 2c";
                                 break;
                             }
                         }
@@ -202,7 +285,7 @@ namespace Cryptool.Plugins.A5_attack
                             {
                                 outKey = kk3; // the key generated is equal to actual key so we store it in the outKey variable and break the loop of guess bits.
                                 finalGuessbits = guess[j]; // the guess bits which played part in the generation of actual key
-                                caseUsed = "Case = 2";
+                                caseUsed = "Case = 2b";
                                 break;
                             }
                         }
@@ -228,40 +311,63 @@ namespace Cryptool.Plugins.A5_attack
                         {
                             outKey = kk4; // the key generated is equal to actual key so we store it in the outKey variable and break the loop of guess bits.
                             finalGuessbits = guess[j]; // the guess bits which played part in the generation of actual key
-                            caseUsed = "Case = 1";
+                            caseUsed = "Case = 2a";
                             break;
                         }
                     }
                 }
                 else
                     // if none of the above criterias meet,
-                    // we don't guess free bits to generate the key, we are in the case 0 (only IV is used)
-                    caseUsed = "Case 0"; 
+                    // we don't guess free bits to generate the key, we are in the scenario 0--case 1 (only IV is used)
+                    caseUsed = "Case 1";
 
                 // if key generated is not equal to the original key
                 if (keyEquals == false)
                 {
-                    OutputKey = "Key not found";
-                    GuessKeyBits = "Key not found";
+                    GuiLogMessage("Key not found", NotificationLevel.Info);
+                    OutputKey = "";
+                    GuessKeyBits = "";
                 }
                 else
                 { // if the generated key is equal to the original key,
-                 //  the case and the final guess bits are appearing in the screen
+                  //  the case and the final guess bits are appearing in the screen
                     string resultKey = "";
                     for (int i = 0; i < 64; i++)
                         resultKey += outKey[i];
 
-                    OutputKey = resultKey;
-                    if (caseUsed.Contains("0"))
-                        GuessKeyBits = caseUsed + " --- Only IV used to generate Key";
+                    List<Byte> byteList = new List<Byte>();
+                    for (int i = 0; i < resultKey.Length; i += 8)
+                    {
+                        byteList.Add(Convert.ToByte(resultKey.Substring(i, 8), 2));
+                    }
+                    OutputKeyBytes = byteList.ToArray();
+
+                    if (caseUsed.Contains("1"))
+                        GuiLogMessage("Only IV used to generate Key", NotificationLevel.Info);
                     else
-                        GuessKeyBits = caseUsed + " --- Guess Bits Used = " + finalGuessbits;
+                    {
+                        GuessKeyBits = finalGuessbits;
+                        List<Byte> guessbyteList = new List<Byte>();
+                        while (finalGuessbits.Length >= 8)
+                        {
+                            guessbyteList.Add(Convert.ToByte(finalGuessbits.Substring(0, 8), 2));
+                            finalGuessbits = finalGuessbits.Remove(0, 8);
+                        }
+                        if (finalGuessbits.Length != 0)
+                        {// in the final guessed bits we add padding bits on the right
+                            guessbyteList.Add(Convert.ToByte(finalGuessbits.PadRight(8, '0'), 2));
+                            GuiLogMessage("Last byte in guess bytes has " + finalGuessbits.Length + " important bits. Others are padding", NotificationLevel.Info);
+                        }
+                        GuessKeyBytes = guessbyteList.ToArray();
+                    }
+                    GuessCase = caseUsed;
                 }
 
             }
+            ProgressChanged(1, 1);
         }
 
-        // Case 0, Where Register A, B & C are all zeros
+        // Case 1 (scenario 0), Where Register A, B & C are all zeros
         // we only need the values of the IV to generate the key
         public int[] Scenario0(int[] v)
         {
@@ -352,7 +458,7 @@ namespace Cryptool.Plugins.A5_attack
             return x;
         }
 
-        // Case 1, Where Register A & B are all zeros and Register C contains non-zero values
+        // Case 2a (scenario 1), Where Register A & B are all zeros and Register C contains non-zero values
         public int[] Scenario1(int[] k, int[] v)
         {
 
@@ -411,7 +517,7 @@ namespace Cryptool.Plugins.A5_attack
 
             return x;
         }
-        // Case 2, Where Register A & C are all zeros and Register B contains non-zero values
+        // Case 2b-scenario 2, Where Register A & C are all zeros and Register B contains non-zero values
         public int[] Scenario2(int[] k, int[] v)
         {
             int[] x = new int[64];
@@ -476,7 +582,7 @@ namespace Cryptool.Plugins.A5_attack
             return x;
         }
 
-        // Case 3, Where Register B & C are all zeros and Register A contains non-zero values
+        // Case 2c--scenario 3, Where Register B & C are all zeros and Register A contains non-zero values
         public int[] Scenario3(int[] k, int[] v)
         {
 

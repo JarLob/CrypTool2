@@ -12,7 +12,7 @@
     The key size is 80 bits and the size of the initialization vector is 64 bits.
     According to the attack, we need to set the internal state of the LFSR in the final clock to zero state and then select NFSR randomly.
     Then in reverse we compute the keystream, LFSR, NFSR.
-    Attack terminates if the LFSR bits in positions 64 to 79 are always 1.
+    Attack terminates if the LFSR bits in positions 64 to 79 are 1.
   
   </introduction>
 
@@ -24,7 +24,7 @@
     the NFSR in the final clocking. You can add the data of the non-linear register manually but this is not very recommended, since it
     would take a lot of time until you'll find the weak key-IV pair.
     You can however, attach a random generator to data sources, which will keep generating random values for the NFSR until the attack results successful.
-    After that you have to connect two text output component to the 'Output' connectors, which correspond to the LFSR and NFSR at the initial state.
+    After that you have to connect three text output component to the 'Output' connectors, which correspond to the LFSR and NFSR at the initial state.
     NFSR bits in the output component indicate the secret key.
     LFSR bits from positions 0->63 in the output component indicate the IV.
     

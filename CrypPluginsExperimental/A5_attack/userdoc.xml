@@ -25,7 +25,7 @@
     
     Then you have to connect 2 text output component to "output" connectors. One of them will indicate the found secret key and the other will indicate
     the case and the corresponding guessed free bits.
-    The original secret key must be 64 characters and the IV must be 22 characters.
+    
 
   </usage>
 

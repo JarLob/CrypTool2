@@ -12,10 +12,10 @@ namespace Cryptool.Plugins.GrainV1.Attack
     //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("GrainV1Attack.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
-    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
+    [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
 
 
-    //Class
+    
     public class GrainV1Attack : ICrypComponent
     {
         //byte arrays for registers ( length=80, 1 byte stands for 1 bit)
@@ -25,6 +25,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
         public Byte[] inputNFSR;
         //byte arrays for output
         public Byte[] outputNFSR;
+        public Byte[] nfsr160State;
         public Byte[] outputLFSR;
 
 
@@ -54,7 +55,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 OnPropertyChanged("InputNFSR");
             }
         }
-        //Output property. Dispalys NFSR in 0 round.
+        //Output property. Displays NFSR in 0 round.
         [PropertyInfo(Direction.OutputData, "NFSR", "Outputs NFSR initial state", true)]
         public byte[] OutputNFSR
         {
@@ -65,7 +66,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 OnPropertyChanged("OutputNFSR");
             }
         }
-        //Output property. Dispalys LFSR in 0 round.
+        //Output property. Displays LFSR in 0 round.
         [PropertyInfo(Direction.OutputData, "LFSR", "Outputs LFSR initial state", true)]
         public byte[] OutputLFSR
         {
@@ -77,6 +78,16 @@ namespace Cryptool.Plugins.GrainV1.Attack
             }
         }
 
+        [PropertyInfo(Direction.OutputData, "NFSR160State", "Outputs LFSR initial state", true)]
+        public byte[] NFSR160State
+        {
+            get { return this.nfsr160State; }
+            set
+            {
+                this.nfsr160State = value;
+                OnPropertyChanged("NFSR160State");
+            }
+        }
         #endregion
 
         // Check whether the parameters are entered correctly by the user
@@ -115,6 +126,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 {
                     //filling the array with random bytes
                     r.NextBytes(inputNFSR);
+                    NFSR160State = inputNFSR;
                     //initializing the algorithm (filling the LFSR with zeros)
                     Init();
                     //setting NFSR with generated values
@@ -130,21 +142,22 @@ namespace Cryptool.Plugins.GrainV1.Attack
             else
             {
                 //validates inputs
-                //if something wrong stops the executing
+                //if something's wrong stops the executing
                 if (!checkParameters()) return;
                 //initializing the algorithm (filling the LFSR with zeros)
                 Init();
+                NFSR160State = InputNFSR;
                 //setting NFSR with input values
                 SetNFSR(InputNFSR);
                 //making the attack
                 Attack();
                 //if attack was successful
                 if (Success())
-                {   //output the message about success
-                    GuiLogMessage("Attack was successfull", NotificationLevel.Info);
+                {   //outputh the message about success
+                    GuiLogMessage("Attack was successful", NotificationLevel.Info);
                 }
                 else
-                {   //otherwise outputs message about failure
+                {   //otherwise outputs a message about failure
                     GuiLogMessage("Attack failed. Please try fill NFSR with another value ", NotificationLevel.Warning);
                 }
             }
@@ -184,7 +197,8 @@ namespace Cryptool.Plugins.GrainV1.Attack
         }
         //function gets 0-element of lfsr
         private void GetNextLFSR(Byte last)
-        {   //the equation is the same as for new element, but instead of 0-element we use previous last element of register
+        {   // the equation is the same as for new element (equations are given in the original Grain v1 cipher) 
+            // but instead of 0-element we use previous last element of register
             Int32 result = last ^ lfsr[13] ^ lfsr[23] ^ lfsr[38] ^ lfsr[51] ^ lfsr[62] ^ OutputFunction();
             lfsr[0] = Convert.ToByte(result);
         }
@@ -213,12 +227,8 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 //cycle goes through string with binary number
                 foreach (var a in tmp)
                 {
-                    //first convert char into integer 
-                    int t = Convert.ToInt32(a);
-                    //then convert integer into byte
-                    //-48 is used because when it converts '0' or '1' chars into integer it gets 48 and 49 (values of chars) 
-                    //48 is ASCII code for 0 and 49 is ASCII code for 1
-                    nfsr[i] = Convert.ToByte(t - 48);
+                    //first convert char into byte 
+                    nfsr[i] = Convert.ToByte(a.ToString(), 2);
                     //incrementing counter
                     i++;
                 }
@@ -257,7 +267,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
             return res;
 
         }
-        //method makes one cycle back
+        //method makes one takt back
         private void TaktBack()
         {
             //shifting back registers
