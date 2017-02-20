@@ -12,7 +12,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
     //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("GrainV1Attack.Properties.Resources", "PluginCaption", "PluginTooltip", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
-    [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
 
     
