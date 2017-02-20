@@ -151,7 +151,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Add memo (for decsciptions) to the workspace ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add memo (for descriptions) to the workspace ähnelt.
         /// </summary>
         public static string BBox_Add_Text_to_Workspace_Tooltip {
             get {
@@ -160,7 +160,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Fit to workspace size ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fit to workspace size (Ctrl+F) ähnelt.
         /// </summary>
         public static string BBox_Fit_to_Screen_Tooltip {
             get {

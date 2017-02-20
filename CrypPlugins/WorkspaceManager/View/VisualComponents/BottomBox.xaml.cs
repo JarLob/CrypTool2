@@ -46,8 +46,7 @@ namespace WorkspaceManager.View.VisualComponents
                 if (AddText != null)
                     AddText.Invoke(this, new AddTextEventArgs());
             }
-
-
+            
             if (btn.Name == "F2S")
             {
                 if (FitToScreen != null)
@@ -72,11 +71,7 @@ namespace WorkspaceManager.View.VisualComponents
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var p = (double)value;
-            if (p < 1)
-                return true;
-            else
-                return false;
+            return (double)value < 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -97,5 +92,4 @@ namespace WorkspaceManager.View.VisualComponents
     public class FitToScreenEventArgs : EventArgs
     {
     }
-
 }

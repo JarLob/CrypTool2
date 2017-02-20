@@ -81,6 +81,8 @@ namespace WorkspaceManager
         {
             if(e.Items != null)
                 this.SelectedPluginsList = new ObservableCollection<ComponentVisual>(e.Items.OfType<ComponentVisual>());
+            else
+                this.SelectedPluginsList = new ObservableCollection<ComponentVisual>();
         }
 
         private void OnSampleLoaded(string filename)

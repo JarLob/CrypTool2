@@ -1,31 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
+using System.Threading;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using WorkspaceManagerModel.Model.Interfaces;
-using WorkspaceManager.Model;
-using WorkspaceManager.View.Base;
-using System.ComponentModel;
-using WorkspaceManager.View.VisualComponents;
-using Cryptool.PluginBase.Editor;
-using WorkspaceManagerModel.Model.Operations;
-using Cryptool.PluginBase;
-using System.Collections.ObjectModel;
-using System.Windows.Threading;
-using System.Threading;
-using System.Collections.Specialized;
-using System.Windows;
 using System.Windows.Input;
-using System.Reflection;
-using Cryptool.Core;
 using System.Windows.Data;
-using WorkspaceManager.Base.Sort;
-using System.Windows.Controls.Primitives;
-using WorkspaceManager.View.VisualComponents.CryptoLineView;
-using WorkspaceManagerModel.Model.Tools;
+using System.Windows.Threading;
 using System.Windows.Documents;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
+using WorkspaceManager.Base.Sort;
+using WorkspaceManager.Model;
+using WorkspaceManager.View.VisualComponents;
+using WorkspaceManager.View.Base;
+using WorkspaceManager.View.VisualComponents.CryptoLineView;
+
+using WorkspaceManagerModel.Model.Tools;
+using WorkspaceManagerModel.Model.Interfaces;
+using WorkspaceManagerModel.Model.Operations;
+
+using Cryptool.Core;
+using Cryptool.PluginBase;
+using Cryptool.PluginBase.Editor;
+using Cryptool.PluginBase.Properties;
 
 namespace WorkspaceManager.View.Visuals
 {
@@ -564,7 +568,7 @@ namespace WorkspaceManager.View.Visuals
         }
 
         public static readonly DependencyProperty ZoomLevelProperty = DependencyProperty.Register("ZoomLevel",
-    typeof(double), typeof(EditorVisual), new FrameworkPropertyMetadata((double)1, OnZoomLevelChanged));
+            typeof(double), typeof(EditorVisual), new FrameworkPropertyMetadata((double)1, OnZoomLevelChanged));
 
         public double ZoomLevel
         {
@@ -701,7 +705,7 @@ namespace WorkspaceManager.View.Visuals
         }
 
         public static readonly DependencyProperty HasLoadingErrorProperty = DependencyProperty.Register("HasLoadingError",
-    typeof(bool), typeof(EditorVisual), new FrameworkPropertyMetadata(false, null));
+            typeof(bool), typeof(EditorVisual), new FrameworkPropertyMetadata(false, null));
 
         public bool HasLoadingError
         {
@@ -716,7 +720,7 @@ namespace WorkspaceManager.View.Visuals
         }
 
         public static readonly DependencyProperty LoadingErrorTextProperty = DependencyProperty.Register("LoadingErrorText",
-    typeof(string), typeof(EditorVisual), new FrameworkPropertyMetadata(string.Empty, null));
+            typeof(string), typeof(EditorVisual), new FrameworkPropertyMetadata(string.Empty, null));
 
         public string LoadingErrorText
         {
@@ -824,7 +828,7 @@ namespace WorkspaceManager.View.Visuals
 
             if (mode == 1)
             {
-                GeneralTransform g = new ScaleTransform(Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_EditScale, Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_EditScale, 0, 0);
+                GeneralTransform g = new ScaleTransform(Settings.Default.WorkspaceManager_EditScale, Settings.Default.WorkspaceManager_EditScale, 0, 0);
                 Point p = g.Transform(new Point(randomNumber(0, (int)(ActualWidth - bin.ActualWidth)), randomNumber(0, (int)(ActualHeight - bin.ActualHeight))));
                 bin.Position = p;
             }
@@ -916,6 +920,13 @@ namespace WorkspaceManager.View.Visuals
             }
         }
 
+        static public Rect BoundsRelativeTo(FrameworkElement element, Visual relativeTo)
+        {
+            return
+              element.TransformToVisual(relativeTo)
+                     .TransformBounds(LayoutInformation.GetLayoutSlot(element));
+        }
+
         /// <summary>
         /// TODO: Optimise this algorithm.
         /// </summary>
@@ -926,8 +937,7 @@ namespace WorkspaceManager.View.Visuals
 
             if (ScrollViewer.ScrollableWidth > 0 || ScrollViewer.ScrollableHeight > 0)
             {
-                while (ZoomLevel
-                    > Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MinScale
+                while (ZoomLevel > Settings.Default.WorkspaceManager_MinScale
                     && (ScrollViewer.ScrollableHeight > 0
                     || ScrollViewer.ScrollableWidth > 0))
                 {
@@ -937,8 +947,7 @@ namespace WorkspaceManager.View.Visuals
             }
             else
             {
-                while (ZoomLevel
-                    < Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MaxScale
+                while (ZoomLevel < Settings.Default.WorkspaceManager_MaxScale
                     && ScrollViewer.ScrollableHeight == 0
                     && ScrollViewer.ScrollableWidth == 0)
                 {
@@ -1644,14 +1653,14 @@ namespace WorkspaceManager.View.Visuals
         {
             if (State == BinEditorState.READY)
             {
-                packer = new ArevaloRectanglePacker(Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortWidth, Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortHeight);
+                packer = new ArevaloRectanglePacker(Settings.Default.WorkspaceManager_SortWidth, Settings.Default.WorkspaceManager_SortHeight);
                 foreach (var element in ComponentCollection)
                 {
                     Point point;
-                    if (packer.TryPack(element.ActualWidth + Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortPadding, element.ActualHeight + Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortPadding, out point))
+                    if (packer.TryPack(element.ActualWidth + Settings.Default.WorkspaceManager_SortPadding, element.ActualHeight + Settings.Default.WorkspaceManager_SortPadding, out point))
                     {
-                        point.X += Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortPadding;
-                        point.Y += Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_SortPadding;
+                        point.X += Settings.Default.WorkspaceManager_SortPadding;
+                        point.Y += Settings.Default.WorkspaceManager_SortPadding;
                         element.Position = point;
                     }
                 }
@@ -1710,20 +1719,31 @@ namespace WorkspaceManager.View.Visuals
         {
             if (Keyboard.Modifiers == ModifierKeys.Control)
             {
-                if (ZoomLevel + 0.05 < Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MaxScale &&
-                    e.Delta >= 0)
-                    ZoomLevel += 0.05;
+                ZoomLevel = (e.Delta > 0)
+                    ? Math.Min(ZoomLevel + 0.05, Settings.Default.WorkspaceManager_MaxScale)
+                    : Math.Max(ZoomLevel - 0.05, Settings.Default.WorkspaceManager_MinScale);
 
-                if (ZoomLevel - 0.05 > Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_MinScale &&
-                    e.Delta <= 0)
-                    ZoomLevel += -0.05;
-
+                Point pos = e.GetPosition(sender as FrameworkElement);
+                Point scrollpos = e.GetPosition(ScrollViewer);
+                ScrollViewer.ScrollToHorizontalOffset(pos.X * ZoomLevel - scrollpos.X);
+                ScrollViewer.ScrollToVerticalOffset(pos.Y * ZoomLevel - scrollpos.Y);
+                
                 e.Handled = true;
             }
         }
 
         private void MouseMoveHandler(object sender, MouseEventArgs e)
         {
+            Point pp = e.GetPosition(sender as FrameworkElement);
+            Point ps = e.GetPosition(ScrollViewer);
+            ItemsControl ic = (ItemsControl)(ScrollViewer.Content);
+            var bbox = new Rect(10, 10, 20, 20);
+            if (ComponentCollection.Count > 0)
+                bbox = BoundsRelativeTo(ComponentCollection[0], this);
+
+            MyEditor.GuiLogMessage(string.Format("Pos=[{0:0.##} {1:0.##}] Ofs=[{2:0.##} {3:0.##}] Scrollable=[{4:0.##} {5:0.##}] ScrollPos=[{6:0.##} {7:0.##}] Zoomlevel={8:0.##}", pp.X, pp.Y, ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset, ScrollViewer.ScrollableWidth, ScrollViewer.ScrollableHeight, ps.X, ps.Y, ZoomLevel), NotificationLevel.Debug);
+            MyEditor.GuiLogMessage(string.Format("SV.Viewport=[{0:0.##} {1:0.##}] SV.Extent=[{2:0.##} {3:0.##}] SV.ItemsControl=[{4:0.##} {5:0.##}] bbox=[({6:0.##} {7:0.##})({8:0.##} {9:0.##})]", ScrollViewer.ViewportWidth, ScrollViewer.ViewportHeight, ScrollViewer.ExtentWidth, ScrollViewer.ExtentHeight, ic.ActualWidth, ic.ActualHeight, bbox.Left, bbox.Top,bbox.Right,bbox.Bottom), NotificationLevel.Debug);
+            
             if (IsLinking)
             {
                 draggedLink.Line.EndPoint = e.GetPosition(sender as FrameworkElement);
@@ -2206,6 +2226,16 @@ namespace WorkspaceManager.View.Visuals
                     if (e.OriginalSource is EditorVisual)
                     {
                         SelectedItems = VisualsHelper.Visuals.OfType<ComponentVisual>().ToArray();
+                        e.Handled = true;
+                        return;
+                    }
+                }
+                // fit to screen
+                if (e.Key == Key.F)
+                {
+                    if (e.OriginalSource is EditorVisual)
+                    {
+                        FitToScreen();
                         e.Handled = true;
                         return;
                     }
