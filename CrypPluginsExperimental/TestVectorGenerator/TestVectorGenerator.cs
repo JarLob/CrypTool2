@@ -34,13 +34,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
     {
         #region Private Variables
 
-        private readonly TestVectorGeneratorSettings settings = new TestVectorGeneratorSettings();
-        private string textInput;
-        private int seedInput;
-        private string plaintextOutput;
-        private string textOutput2;
-        private string textOutput3;
-        private string[] keyOutput;
+        private readonly TestVectorGeneratorSettings _settings = new TestVectorGeneratorSettings();
+        private string _textInput;
+        private int _seedInput;
+        private string _plaintextOutput;
+        private string _textOutput2;
+        private string _textOutput3;
+        private string[] _keyOutput;
+
+        private int _progress;
+        private string[] _inputArray;
+        private System.Random _rand;
+        private int _startSentence;
+        
 
         #endregion
 
@@ -49,12 +55,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description")]
         public string TextInput
         {
-            get { return this.textInput; }
+            get { return this._textInput; }
             set
             {
-                if (textInput != value)
+                if (_textInput != value)
                 {
-                    this.textInput = value;
+                    this._textInput = value;
                     OnPropertyChanged("TextInput");
                 }
             }
@@ -63,15 +69,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description")]
         public string SeedInput
         {
-            get { return this.seedInput.ToString(); }
+            get { return this._seedInput.ToString(); }
             set
             {
                 try
                 {
                     int seed = System.Int32.Parse(value);
-                    if (seedInput != seed)
+                    if (_seedInput != seed)
                     {
-                        this.seedInput = seed;
+                        this._seedInput = seed;
                         OnPropertyChanged("SeedInput");
                     }
                 }
@@ -90,13 +96,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
         public string[] KeyOutput
         {
-            get { return this.keyOutput; }
+            get { return this._keyOutput; }
             set
             {
                 // TODO: check if test works and is necessary
-                if (keyOutput != value)
+                if (_keyOutput != value)
                 {
-                    this.keyOutput = value;
+                    this._keyOutput = value;
                     OnPropertyChanged("KeyOutput");
                 }
             }
@@ -105,13 +111,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
         public string PlaintextOutput
         {
-            get { return this.plaintextOutput; }
+            get { return this._plaintextOutput; }
             set
             {
                 // TODO: check if test works and is necessary
-                if (plaintextOutput != value)
+                if (_plaintextOutput != value)
                 {
-                    this.plaintextOutput = value;
+                    this._plaintextOutput = value;
                     OnPropertyChanged("PlaintextOutput");
                 }
             }
@@ -120,13 +126,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.OutputData, "TextOutput2", "textOutput tooltip description")]
         public string TextOutput2
         {
-            get { return this.textOutput2; }
+            get { return this._textOutput2; }
             set
             {
                 // TODO: check if test works and is necessary
-                if (textOutput2 != value)
+                if (_textOutput2 != value)
                 {
-                    this.textOutput2 = value;
+                    this._textOutput2 = value;
                     OnPropertyChanged("TextOutput2");
                 }
             }
@@ -135,13 +141,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.OutputData, "TextOutput3", "textOutput tooltip description")]
         public string TextOutput3
         {
-            get { return this.textOutput3; }
+            get { return this._textOutput3; }
             set
             {
                 // TODO: check if test works and is necessary
-                if (textOutput3 != value)
+                if (_textOutput3 != value)
                 {
-                    this.textOutput3 = value;
+                    this._textOutput3 = value;
                     OnPropertyChanged("TextOutput3");
                 }
             }
@@ -156,7 +162,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public ISettings Settings
         {
-            get { return settings; }
+            get { return _settings; }
         }
 
         /// <summary>
@@ -172,33 +178,33 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PreExecution()
         {
-            plaintextOutput = "";
-            textOutput2 = "";
-            textOutput3 = "";
-            keyOutput = null;
+            _plaintextOutput = "";
+            _textOutput2 = "";
+            _textOutput3 = "";
+            _keyOutput = null;
+            _progress = 0;
         }
 
-        /// <summary>
-        /// Called every time this plugin is run in the workflow execution.
-        /// </summary>
-        public void Execute()
+        public bool checkVariables()
         {
-            if (textInput.Length < settings.MinKeyLength)
-            {
-                GuiLogMessage("The input text is too small!", NotificationLevel.Error);
-                return;
-            }
-
-            if (settings.MinKeyLength < 1)
+            if (_settings.MinKeyLength < 1)
             {
                 GuiLogMessage("KeyLength has to be at least 1", NotificationLevel.Warning);
-                settings.MinKeyLength = 1;
+                _settings.MinKeyLength = 1;
             }
-            
-            ProgressChanged(0, 1);
-            int progress = 0;
 
-            // ##### PRE-PROCESSING of the text input #####
+            if (_textInput.Length < _settings.MinKeyLength)
+            {
+                GuiLogMessage("The input text is too small!", NotificationLevel.Error);
+                return false;
+            }
+
+            return true;
+        }
+
+        public void preProcessTextInput()
+        {
+            // replace double minus and newlines by space and ? and ! by full stops
             TextInput = TextInput.Replace("--", " ");
             TextInput = TextInput.Replace("?", ".");
             TextInput = TextInput.Replace("!", ".");
@@ -220,66 +226,67 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 TextOutput3 = TextInput.Substring(0, 10000);
 
             // split input text into sentences
-            string[] inputArray = TextInput.Split('.');
-            // ############################################
+            _inputArray = TextInput.Split('.');
+        }
 
-            // ##### Plaintext generation #################
-
-            var rand = new System.Random(seedInput);
-            int startSentence = rand.Next(0, inputArray.Length);
-            GuiLogMessage("seedInput: " + seedInput + ", rand: " + rand + 
-                ", Length: " + inputArray.Length + ", StartSentence: " + startSentence, NotificationLevel.Info);
-            for (int i = startSentence; i != startSentence -1; i = i == inputArray.Length-1 ? 0 : i+1)
+        public void generatePlaintext()
+        {
+            _rand = new System.Random(_seedInput);
+            _startSentence = _rand.Next(0, _inputArray.Length);
+            GuiLogMessage("_seedInput: " + _seedInput + ", _rand: " + _rand +
+                ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence, NotificationLevel.Info);
+            for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
-                plaintextOutput = plaintextOutput + inputArray[i] + ". ";
-                if (plaintextOutput.Length >= settings.TextLength)
+                _plaintextOutput = _plaintextOutput + _inputArray[i] + ". ";
+                if (_plaintextOutput.Length >= _settings.TextLength)
                 {
-                    PlaintextOutput = plaintextOutput.Substring(0, settings.TextLength);
+                    PlaintextOutput = _plaintextOutput.Substring(0, _settings.TextLength);
                     break;
                 }
             }
+        }
 
-            // ############################################
-
-            // ##### Key generation #######################
+        public void generateNaturalSpeechKeys()
+        {
             List<string> outputList = new List<string>();
             ConcurrentDictionary<int, int> occurences = new ConcurrentDictionary<int, int>();
-            startSentence = rand.Next(0, inputArray.Length);
-            GuiLogMessage("seedInput: " + seedInput + ", StartSentence: " + startSentence, NotificationLevel.Info);
+            _startSentence = _rand.Next(0, _inputArray.Length);
+            GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Info);
 
-            for (int i = settings.MinKeyLength; i <= settings.MaxKeyLength; i++)
+            for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
             {
-                    occurences.AddOrUpdate(i, 0, (id, count) => 0);
-                    //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
+                occurences.AddOrUpdate(i, 0, (id, count) => 0);
+                //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
             }
 
-            for (int i = startSentence; i != startSentence - 1; i = i == inputArray.Length-1 ? 0 : i + 1)
+            // for loop for sentence searching by length
+            for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
-                string sentence = inputArray[i].ToUpper().Replace(" ", "");
+                string sentence = _inputArray[i].ToUpper().Replace(" ", "");
                 //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
                 int sentenceLength = sentence.Length;
-                if (sentenceLength >= settings.MinKeyLength &&
-                    sentenceLength <= settings.MaxKeyLength)
+                if (sentenceLength >= _settings.MinKeyLength &&
+                    sentenceLength <= _settings.MaxKeyLength)
                 {
                     int sentenceOccurences = 0;
                     occurences.TryGetValue(sentenceLength, out sentenceOccurences);
 
-                    if (sentenceOccurences < settings.KeyAmountPerLength)
+                    if (sentenceOccurences < _settings.KeyAmountPerLength)
                     {
                         outputList.Add(sentence);
                         occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
-                        GuiLogMessage("i: " + i + " ("+ (i >= startSentence ? i-startSentence : i+inputArray.Length-startSentence-1) + 
-                            "/" + (inputArray.Length-1) + ") - Adding sentence: \"" + sentence +
-                            "\", occurences[" + sentenceLength + "]: " + occurences[sentenceLength], 
+                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i + _inputArray.Length - _startSentence - 1) +
+                            "/" + (_inputArray.Length - 1) + ") - Adding sentence: \"" + sentence +
+                            "\", occurences[" + sentenceLength + "]: " + occurences[sentenceLength],
                             NotificationLevel.Info);
 
 
 
-                        progress++;
+                        _progress++;
 
-                        ProgressChanged(progress / (settings.MaxKeyLength - settings.MinKeyLength + 1) *
-                            settings.KeyAmountPerLength, 1);
+                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
+                            _settings.KeyAmountPerLength, 1);
                     }
                 }
 
@@ -290,34 +297,35 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             if (!allKeysFound(occurences))
             {
-                for (int i = startSentence; i != startSentence - 1; i = i == inputArray.Length-1 ? 0 : i + 1)
+                // for loop for sentence searching by longer length and trimming down
+                for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
                 {
-                    string sentence = inputArray[i];
+                    string sentence = _inputArray[i].ToUpper().Replace(" ", "");
                     //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
                     int sentenceLength = sentence.Length;
-                    int smallestMissingLength = settings.MinKeyLength-1;
+                    int smallestMissingLength = _settings.MinKeyLength - 1;
 
-                    if (sentenceLength > settings.MaxKeyLength)
+                    if (sentenceLength > _settings.MaxKeyLength)
                     {
 
-                        int sentenceOccurences = settings.KeyAmountPerLength;
+                        int sentenceOccurences = _settings.KeyAmountPerLength;
 
-                        while (smallestMissingLength <= settings.MaxKeyLength &&
-                            sentenceOccurences == settings.KeyAmountPerLength)
+                        while (smallestMissingLength <= _settings.MaxKeyLength &&
+                            sentenceOccurences == _settings.KeyAmountPerLength)
                         {
                             smallestMissingLength++;
                             occurences.TryGetValue(smallestMissingLength, out sentenceOccurences);
                         }
 
                         // double check, should not happen
-                        if (smallestMissingLength <= settings.MaxKeyLength &&
-                            sentenceOccurences > settings.KeyAmountPerLength)
+                        if (smallestMissingLength <= _settings.MaxKeyLength &&
+                            sentenceOccurences > _settings.KeyAmountPerLength)
                         {
-                            GuiLogMessage("Too many sentences added for length: " + 
+                            GuiLogMessage("Too many sentences added for length: " +
                                 smallestMissingLength, NotificationLevel.Debug);
                         }
 
-                        if (smallestMissingLength > settings.MaxKeyLength)
+                        if (smallestMissingLength > _settings.MaxKeyLength)
                         {
                             if (allKeysFound(occurences))
                             {
@@ -325,7 +333,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                             }
                             else
                             {
-                                GuiLogMessage("Something went wrong! Some sentences are missing "+
+                                GuiLogMessage("Something went wrong! Some sentences are missing " +
                                     "(not correctly added?!)", NotificationLevel.Warning);
                                 break;
                             }
@@ -336,15 +344,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         outputList.Add(cutSentence);
                         occurences.AddOrUpdate(smallestMissingLength, 1, (id, count) => count + 1);
 
-                        GuiLogMessage("i: " + i + " (" + (i >= startSentence ? i - startSentence : i + 
-                            inputArray.Length - startSentence - 1) + ") - Adding cut sentence: \"" + 
-                            cutSentence + "\", occurences[" + smallestMissingLength + "]: " + 
+                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i +
+                            _inputArray.Length - _startSentence - 1) + ") - Adding cut sentence: \"" +
+                            cutSentence + "\", occurences[" + smallestMissingLength + "]: " +
                             occurences[smallestMissingLength], NotificationLevel.Info);
 
-                        progress++;
+                        _progress++;
 
-                        ProgressChanged(progress / (settings.MaxKeyLength - settings.MinKeyLength + 1) *
-                            settings.KeyAmountPerLength, 1);
+                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
+                            _settings.KeyAmountPerLength, 1);
                     }
 
 
@@ -357,36 +365,126 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
 
-            outputList.Sort();
-
             KeyOutput = outputList.ToArray();
 
-            if (settings.KeyFormat == FormatType.transformation)
-            {
-                List<string> transpositionList = new List<string>();
-                foreach (string str in KeyOutput)
-                {
-                    char[] chars = str.ToCharArray();
-                    string transpositionKey = "";
-                    foreach (char ch in chars)
-                    {
-                        try
-                        {
-                            string space = "";
-                            if (!String.IsNullOrEmpty(transpositionKey))
-                                space = " ";
-                            transpositionKey = transpositionKey + space + (Convert.ToInt32(ch) - Convert.ToInt32('A') + 1);
-                        }
-                        catch (OverflowException)
-                        {
-                            GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
-                        }
-                    }
+            Array.Sort(KeyOutput, (x, y) => x.Length.CompareTo(y.Length));
 
-                    transpositionList.Add(transpositionKey);
+            if (_settings.KeyFormat == FormatType.numbers)
+            {
+                replaceLettersByNumbersWithSpaces();
+            }
+        }
+
+        public void replaceLettersByNumbersWithSpaces()
+        {
+            List<string> transpositionList = new List<string>();
+            foreach (string str in KeyOutput)
+            {
+                char[] chars = str.ToCharArray();
+                string transpositionKey = "";
+                foreach (char ch in chars)
+                {
+                    try
+                    {
+                        string space = "";
+                        if (!String.IsNullOrEmpty(transpositionKey))
+                            space = " ";
+                        transpositionKey = transpositionKey + space + (Convert.ToInt32(ch) - Convert.ToInt32('A'));
+                    }
+                    catch (OverflowException)
+                    {
+                        GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
+                    }
                 }
 
-                KeyOutput = transpositionList.ToArray();
+                transpositionList.Add(transpositionKey);
+            }
+
+            KeyOutput = transpositionList.ToArray();
+        }
+
+        public void generateRandomKeys()
+        {
+            string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
+
+            if (_settings.KeyFormat == FormatType.lettersOnly)
+            {
+                GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
+
+                for (int i = 0; i < outputArray.Length; i++)
+                {
+                    string randomKey = "";
+                    for (int j = 0; j < (_settings.MinKeyLength + i / _settings.KeyAmountPerLength); j++)
+                    {
+                        char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
+                        randomKey = randomKey + ch;
+                    }
+                    GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), i: " + i, NotificationLevel.Info);
+
+                    outputArray[i] = randomKey;
+                }
+
+                KeyOutput = outputArray;
+            }
+            else
+            {
+                int upperLimit = 0;
+                if (_settings.KeyFormat == FormatType.binaryOnly)
+                {
+                    // 0 to 1 means binary
+                    upperLimit = 1;
+                } else if (_settings.KeyFormat == FormatType.digitsOnly)
+                {
+                    // 0 to 9 are all digits
+                    upperLimit = 9;
+                } else if (_settings.KeyFormat == FormatType.numbers)
+                {
+                    // from 0 to 25 for the 26 letters of the alphabet
+                    upperLimit = 25;
+                }
+                GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
+
+                for (int i = 0; i < outputArray.Length; i++)
+                {
+                    string randomKey = "";
+                    for (int j = 0; j < (_settings.MinKeyLength + i / _settings.KeyAmountPerLength); j++)
+                    {
+                        string space = "";
+                        if (!String.IsNullOrEmpty(randomKey))
+                            space = " ";
+                        int randomInt = (_rand.Next(0, upperLimit+1));
+                        randomKey = randomKey + space + randomInt;
+                    }
+                    GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), i: " + i, NotificationLevel.Info);
+
+                    outputArray[i] = randomKey;
+                }
+
+                KeyOutput = outputArray;
+            }
+        }
+
+        /// <summary>
+        /// Called every time this plugin is run in the workflow execution.
+        /// </summary>
+        public void Execute()
+        {
+            if (!checkVariables())
+                return;
+
+            preProcessTextInput();
+            
+            ProgressChanged(0, 1);
+
+            generatePlaintext();
+
+            if (_settings.KeyGeneration == GenerationType.naturalSpeech)
+            {
+                generateNaturalSpeechKeys();
+            }
+            else
+            {
+                generateRandomKeys();
             }
 
             ProgressChanged(1, 1);
@@ -396,7 +494,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             foreach (int key in dict.Keys)
             {
                 //GuiLogMessage("dict[" + key + "]: " + dict[key], NotificationLevel.Info);
-                if (dict[key] < settings.KeyAmountPerLength)
+                if (dict[key] < _settings.KeyAmountPerLength)
                     return false;
             }
 
