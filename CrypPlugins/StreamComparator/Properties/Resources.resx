@@ -145,13 +145,7 @@
     <value>Diff</value>
   </data>
   <data name="DiffTooltip" xml:space="preserve">
-    <value>Create diff - yes / no</value>
-  </data>
-  <data name="DiffTPCaption" xml:space="preserve">
-    <value>Create Diff</value>
-  </data>
-  <data name="DiffTPTooltip" xml:space="preserve">
-    <value>Create diff - yes / no.</value>
+    <value>Activate this checkbox to display a difference report in the component's presentation view.</value>
   </data>
   <data name="DiffList1" xml:space="preserve">
     <value>Create diff</value>

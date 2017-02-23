@@ -79,29 +79,11 @@ namespace Cryptool.StreamComparator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create diff - yes / no ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Activate this checkbox to display a difference report in the component&apos;s presentation view. ähnelt.
         /// </summary>
         internal static string DiffTooltip {
             get {
                 return ResourceManager.GetString("DiffTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create Diff ähnelt.
-        /// </summary>
-        internal static string DiffTPCaption {
-            get {
-                return ResourceManager.GetString("DiffTPCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Create diff - yes / no. ähnelt.
-        /// </summary>
-        internal static string DiffTPTooltip {
-            get {
-                return ResourceManager.GetString("DiffTPTooltip", resourceCulture);
             }
         }
         

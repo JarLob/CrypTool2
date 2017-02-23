@@ -145,13 +145,7 @@
     <value>Differenz</value>
   </data>
   <data name="DiffTooltip" xml:space="preserve">
-    <value>Berechne Differenz - ja / nein</value>
-  </data>
-  <data name="DiffTPCaption" xml:space="preserve">
-    <value>Differenz</value>
-  </data>
-  <data name="DiffTPTooltip" xml:space="preserve">
-    <value>Berechne Differenz - ja / nein</value>
+    <value>Wenn dieses Kontrollkästchen aktiviert ist, wird in der Präsentationsansicht der Komponente ein Differenzenbericht angezeigt.</value>
   </data>
   <data name="DiffList1" xml:space="preserve">
     <value>Berechne Differenz</value>
