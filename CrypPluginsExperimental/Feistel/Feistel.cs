@@ -26,8 +26,7 @@ using System.Collections.Generic;
 namespace Cryptool.Feistel
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
-    [PluginInfo("Feistel.Properties.Resources", "PluginCaption", "PluginTooltip", "Feistel/userdoc.xml",
-        new[] { "Feistel/Images/Feistel.jpg", "Feistel/Images/Feistel.jpg", "Feistel/Images/Feistel.jpg" })]
+    [PluginInfo("Feistel.Properties.Resources", "PluginCaption", "PluginTooltip", "Feistel/userdoc.xml", "Feistel/Images/Feistel.jpg")]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class Feistel : ICrypComponent
     {

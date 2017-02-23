@@ -8,8 +8,8 @@
     <ProjectGuid>{0A3F1FD2-B924-415C-8085-DF735D416258}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Feistal</RootNamespace>
-    <AssemblyName>Feistal</AssemblyName>
+    <RootNamespace>Feistel</RootNamespace>
+    <AssemblyName>Feistel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -116,7 +116,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Feistel.jpg" />
+    <Resource Include="Images\Feistel.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

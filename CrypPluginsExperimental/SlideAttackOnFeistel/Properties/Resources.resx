@@ -145,7 +145,7 @@
     <value>Input Plain text</value>
   </data>
   <data name="OutputStringCaption" xml:space="preserve">
-    <value>RetrivedKey</value>
+    <value>RetrievedKey</value>
   </data>
   <data name="OutputStringTooltip" xml:space="preserve">
     <value>The key retrieved after employing slide attack</value>

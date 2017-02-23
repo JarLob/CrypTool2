@@ -26,9 +26,8 @@ using System.Collections.Generic;
 namespace Cryptool.SlideAttackOnFeistel
 {
     [Author("Aditya Deshpande", "adeshpan@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/")]
-    [PluginInfo("SlideAttackOnFeistel.Properties.Resources", "PluginCaption", "PluginTooltip", "SlideAttackOnFeistel/userdoc.xml",
-        new[] { "SlideAttackOnFeistel/Images/SlideAttackOnFeistel.jpg", "SlideAttackOnFeistel/Images/SlideAttackOnFeistel.jpg", "SlideAttackOnFeistel/Images/SlideAttackOnFeistel.jpg" })]
-    [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
+    [PluginInfo("SlideAttackOnFeistel.Properties.Resources", "PluginCaption", "PluginTooltip", "SlideAttackOnFeistel/userdoc.xml", "SlideAttackOnFeistel/Images/SlideAttackOnFeistel.jpg")]
+    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class SlideAttackOnFeistel : ICrypComponent
     {
         #region Private elements

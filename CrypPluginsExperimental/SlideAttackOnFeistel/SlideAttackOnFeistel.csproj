@@ -114,7 +114,7 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\SlideAttackOnFeistel.jpg" />
+    <Resource Include="Images\SlideAttackOnFeistel.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
