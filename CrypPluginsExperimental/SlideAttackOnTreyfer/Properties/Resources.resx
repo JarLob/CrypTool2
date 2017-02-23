@@ -121,10 +121,10 @@
     <value>Action</value>
   </data>
   <data name="ActionList1" xml:space="preserve">
-    <value>Encrypt</value>
+    <value>Slide Attack</value>
   </data>
   <data name="ActionList2" xml:space="preserve">
-    <value>Decrypt</value>
+    <value>Slide Attack</value>
   </data>
   <data name="ActionTooltip" xml:space="preserve">
     <value>Select the Algorithm action</value>

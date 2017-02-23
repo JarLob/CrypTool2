@@ -176,6 +176,7 @@ namespace Cryptool.SlideAttackOnTreyfer
             char[] cipherText = new char[8];
             char[] key = new char[8];
             List<int> values = new List<int>();
+            int currentChar = 0;
 
             int[,] s_box = new int[16, 16];
             int temp = 0;
@@ -210,16 +211,18 @@ namespace Cryptool.SlideAttackOnTreyfer
 
                     for (int i = 0; i < 256; i++)
                     {
-                        if (g == 7)
+                        if (g == cipherText.Length-1)
                         {
-                            if ((plainText[0] + i) % 256 == cipherText[0])
+                            currentChar = plainText[0];
+                            if ((currentChar + i) % 256 == cipherText[0])
                             {
                                 values.Add(i);
                             }
                         }
                         else
                         {
-                            if ((plainText[g + 1] + i) % 256 == cipherText[g + 1])
+                            currentChar = plainText[g+1];
+                            if ((currentChar + i) % 256 == cipherText[g + 1])
                             {
                                 values.Add(i);
                             }
@@ -248,7 +251,7 @@ namespace Cryptool.SlideAttackOnTreyfer
 
                     string required = Convert.ToString(half1, 2).PadLeft(4, '0') + Convert.ToString(half2, 2).PadLeft(4, '0');
                     int final = Convert.ToInt32(required, 2);
-                    int last = final - plainText[g + 1];
+                    int last = final - currentChar;
                     key[g] = (char)last;
                    
 

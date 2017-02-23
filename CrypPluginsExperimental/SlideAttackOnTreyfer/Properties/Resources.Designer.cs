@@ -70,7 +70,7 @@ namespace SlideAttackOnTreyfer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encrypt.
+        ///   Looks up a localized string similar to Slide Attack.
         /// </summary>
         internal static string ActionList1 {
             get {
@@ -79,7 +79,7 @@ namespace SlideAttackOnTreyfer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Decrypt.
+        ///   Looks up a localized string similar to Slide Attack.
         /// </summary>
         internal static string ActionList2 {
             get {

@@ -15,7 +15,7 @@
 
   <usage lang="en">
       The slide attack on Treyfer in CrypTool2 takes two character inputs of lenght 8 each. 
-      These input represent a slid pair. Searching of slid pair is not included as part of the attack as this involves a huge number of inputs to be examined and searched. 
+      These inputs represent a slid pair. Searching of slid pair is not included as part of the attack as this involves a huge number of inputs to be examined and searched. 
       Once the slid pais is provided, the attack performes its operations and retrieves the key in the output field.
   </usage>
   
