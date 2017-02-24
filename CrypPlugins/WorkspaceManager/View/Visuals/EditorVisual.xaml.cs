@@ -1736,14 +1736,7 @@ namespace WorkspaceManager.View.Visuals
         {
             Point pp = e.GetPosition(sender as FrameworkElement);
             Point ps = e.GetPosition(ScrollViewer);
-            ItemsControl ic = (ItemsControl)(ScrollViewer.Content);
-            var bbox = new Rect(10, 10, 20, 20);
-            if (ComponentCollection.Count > 0)
-                bbox = BoundsRelativeTo(ComponentCollection[0], this);
 
-            MyEditor.GuiLogMessage(string.Format("Pos=[{0:0.##} {1:0.##}] Ofs=[{2:0.##} {3:0.##}] Scrollable=[{4:0.##} {5:0.##}] ScrollPos=[{6:0.##} {7:0.##}] Zoomlevel={8:0.##}", pp.X, pp.Y, ScrollViewer.HorizontalOffset, ScrollViewer.VerticalOffset, ScrollViewer.ScrollableWidth, ScrollViewer.ScrollableHeight, ps.X, ps.Y, ZoomLevel), NotificationLevel.Debug);
-            MyEditor.GuiLogMessage(string.Format("SV.Viewport=[{0:0.##} {1:0.##}] SV.Extent=[{2:0.##} {3:0.##}] SV.ItemsControl=[{4:0.##} {5:0.##}] bbox=[({6:0.##} {7:0.##})({8:0.##} {9:0.##})]", ScrollViewer.ViewportWidth, ScrollViewer.ViewportHeight, ScrollViewer.ExtentWidth, ScrollViewer.ExtentHeight, ic.ActualWidth, ic.ActualHeight, bbox.Left, bbox.Top,bbox.Right,bbox.Bottom), NotificationLevel.Debug);
-            
             if (IsLinking)
             {
                 draggedLink.Line.EndPoint = e.GetPosition(sender as FrameworkElement);
