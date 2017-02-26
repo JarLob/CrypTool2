@@ -72,23 +72,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._seedInput.ToString(); }
             set
             {
-                try
+                int seed = value.GetHashCode();
+                if (_seedInput != seed)
                 {
-                    int seed = System.Int32.Parse(value);
-                    if (_seedInput != seed)
-                    {
-                        this._seedInput = seed;
-                        OnPropertyChanged("SeedInput");
-                    }
+                    this._seedInput = seed;
+                    OnPropertyChanged("SeedInput");
                 }
-                catch (System.FormatException)
-                {
-                    GuiLogMessage(value+": Bad Format", NotificationLevel.Error);
-                }
-                catch (System.OverflowException)
-                {
-                    GuiLogMessage(value + ": Overflow", NotificationLevel.Error);
-                }  
                 
             }
         }
@@ -231,7 +220,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generatePlaintext()
         {
-            _rand = new System.Random(_seedInput);
+            _plaintextOutput = "";
             _startSentence = _rand.Next(0, _inputArray.Length);
             GuiLogMessage("_seedInput: " + _seedInput + ", _rand: " + _rand +
                 ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence, NotificationLevel.Info);
@@ -475,6 +464,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             preProcessTextInput();
             
             ProgressChanged(0, 1);
+
+            _rand = new System.Random(_seedInput);
+            GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
             generatePlaintext();
 
