@@ -22,7 +22,7 @@ using System.Windows;
 namespace Cryptool.Plugins.TestVectorGenerator
 {
     public enum FormatType { lettersOnly, digitsOnly, numbers, binaryOnly };
-    public enum GenerationType { random, naturalSpeech };
+    public enum GenerationType { regex, random, naturalSpeech };
 
     public class TestVectorGeneratorSettings : ISettings
     {
@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", null, 2, true, ControlType.ComboBox, new String[] { 
-            "random", "natural speech"})]
+            "random with reverse regex", "simple random", "natural speech"})]
         public GenerationType KeyGeneration
         {
             get
@@ -132,7 +132,25 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
             "letters only", "digits only", "numbers from 0 to 25", "binary only"})]
-        public FormatType KeyFormat
+        public FormatType KeyFormatRandom
+        {
+            get
+            {
+                return this._keyFormat;
+            }
+            set
+            {
+                if (value != _keyFormat)
+                {
+                    this._keyFormat = value;
+                    OnPropertyChanged("KeyFormatRandom");
+                }
+            }
+        }
+
+        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
+            "letters only", "numbers from 0 to 25"})]
+        public FormatType KeyFormatNaturalSpeech
         {
             get
             {
@@ -150,16 +168,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         internal void UpdateTaskPaneVisibility()
         {
-            settingChanged("KeyFormat", Visibility.Collapsed);
-
+            settingChanged("KeyFormatRandom", Visibility.Collapsed);
+            settingChanged("KeyFormatNaturalSpeech", Visibility.Collapsed);
             switch (KeyGeneration)
             {
                 case GenerationType.naturalSpeech: // natural speech
-                    settingChanged("KeyFormat", Visibility.Visible);
+                    _keyFormat = FormatType.lettersOnly;
+                    settingChanged("KeyFormatNaturalSpeech", Visibility.Visible);
                     break;
                 case GenerationType.random: // random generation
                     // TODO: change to invisible when input alphabet or regex is implemented
-                    settingChanged("KeyFormat", Visibility.Visible);
+                    settingChanged("KeyFormatRandom", Visibility.Visible);
                     break;
             }
         }

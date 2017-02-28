@@ -21,6 +21,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
+using Fare;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
@@ -37,6 +38,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private readonly TestVectorGeneratorSettings _settings = new TestVectorGeneratorSettings();
         private string _textInput;
         private int _seedInput;
+        private string _regexInput;
         private string _plaintextOutput;
         private string _textOutput2;
         private string _textOutput3;
@@ -52,7 +54,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description", true)]
         public string TextInput
         {
             get { return this._textInput; }
@@ -66,7 +68,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description", true)]
         public string SeedInput
         {
             get { return this._seedInput.ToString(); }
@@ -78,7 +80,22 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     this._seedInput = seed;
                     OnPropertyChanged("SeedInput");
                 }
-                
+
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "RegexInput", "RegexInput tooltip description")]
+        public string RegexInput
+        {
+            get { return this._regexInput; }
+            set
+            {
+                if (_regexInput != value)
+                {
+                    this._regexInput = value;
+                    OnPropertyChanged("RegexInput");
+                }
+
             }
         }
 
@@ -197,6 +214,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             TextInput = TextInput.Replace("--", " ");
             TextInput = TextInput.Replace("?", ".");
             TextInput = TextInput.Replace("!", ".");
+            TextInput = TextInput.Replace("..", ".");
             TextInput = TextInput.Replace(System.Environment.NewLine, " ");
 
             // delete all characters appart from letters, spaces and full stops
@@ -358,7 +376,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             Array.Sort(KeyOutput, (x, y) => x.Length.CompareTo(y.Length));
 
-            if (_settings.KeyFormat == FormatType.numbers)
+            if (_settings.KeyFormatRandom == FormatType.numbers)
             {
                 replaceLettersByNumbersWithSpaces();
             }
@@ -396,7 +414,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
 
-            if (_settings.KeyFormat == FormatType.lettersOnly)
+            if (_settings.KeyFormatRandom == FormatType.lettersOnly)
             {
                 GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
 
@@ -418,15 +436,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
             else
             {
                 int upperLimit = 0;
-                if (_settings.KeyFormat == FormatType.binaryOnly)
+                if (_settings.KeyFormatRandom == FormatType.binaryOnly)
                 {
                     // 0 to 1 means binary
                     upperLimit = 1;
-                } else if (_settings.KeyFormat == FormatType.digitsOnly)
+                } else if (_settings.KeyFormatRandom == FormatType.digitsOnly)
                 {
                     // 0 to 9 are all digits
                     upperLimit = 9;
-                } else if (_settings.KeyFormat == FormatType.numbers)
+                } else if (_settings.KeyFormatRandom == FormatType.numbers)
                 {
                     // from 0 to 25 for the 26 letters of the alphabet
                     upperLimit = 25;
@@ -453,6 +471,24 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        public void generateRandomKeysWithRegex()
+        {
+            for (int i = 0; i < (_settings.MaxKeyLength-_settings.MinKeyLength+1) * _settings.KeyAmountPerLength; i++)
+            {
+                int length = _settings.MinKeyLength + (i / _settings.KeyAmountPerLength);
+                GuiLogMessage("length: " + length, NotificationLevel.Warning);
+
+                // TODO: replace $amount
+                var str = "[a-zA-Z]{" + length + "}";
+                var regex = @str;
+                var xeger = new Fare.Xeger(regex);
+                var regexString = xeger.Generate();
+                GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+
+                var result = Regex.IsMatch(regexString, regex);
+            }
+        }
+
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
@@ -473,6 +509,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_settings.KeyGeneration == GenerationType.naturalSpeech)
             {
                 generateNaturalSpeechKeys();
+            }
+            else if (_settings.KeyGeneration == GenerationType.regex)
+            {
+                generateRandomKeysWithRegex();
             }
             else
             {

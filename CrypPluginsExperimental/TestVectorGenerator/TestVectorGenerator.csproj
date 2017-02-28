@@ -87,6 +87,10 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\LibSource\Fare\Fare.csproj">
+      <Project>{24033e0e-0304-4f06-94cd-6f6416eca509}</Project>
+      <Name>Fare</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
