@@ -473,19 +473,59 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeysWithRegex()
         {
-            for (int i = 0; i < (_settings.MaxKeyLength-_settings.MinKeyLength+1) * _settings.KeyAmountPerLength; i++)
+            if (_regexInput.Contains("$amount"))
             {
-                int length = _settings.MinKeyLength + (i / _settings.KeyAmountPerLength);
-                GuiLogMessage("length: " + length, NotificationLevel.Warning);
+                string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
 
-                // TODO: replace $amount
-                var str = "[a-zA-Z]{" + length + "}";
-                var regex = @str;
-                var xeger = new Fare.Xeger(regex);
-                var regexString = xeger.Generate();
-                GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+                for (int i = 0; i < outputArray.Length; i++)
+                {
+                    int length = _settings.MinKeyLength + (i / _settings.KeyAmountPerLength);
+                    //GuiLogMessage("length: " + length, NotificationLevel.Warning);
 
-                var result = Regex.IsMatch(regexString, regex);
+                    //var str = "[a-zA-Z]{" + length + "}";
+                    var str = _regexInput.Replace("$amount", length.ToString());
+                    var regex = @str;
+                    var xeger = new Fare.Xeger(regex);
+                    var regexString = xeger.Generate();
+
+                    // TESTING ONLY!
+                    regexString = regexString + " (" + regexString.Length + ", " + length.ToString() + ")";
+                    //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+
+                    if (!Regex.IsMatch(regexString, regex))
+                    {
+                        GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
+
+                    }
+
+                    outputArray[i] = regexString;
+                }
+
+                KeyOutput = outputArray;
+            }
+            else
+            {
+                string[] outputArray = new string[_settings.KeyAmountPerLength];
+
+                for (int i = 0; i < outputArray.Length; i++)
+                {
+                    var regex = @_regexInput;
+                    var xeger = new Fare.Xeger(regex);
+                    var regexString = xeger.Generate();
+
+                    // TESTING ONLY!
+                    regexString = regexString + " (" + regexString.Length.ToString() + ")";
+                    //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+
+                    if (!Regex.IsMatch(regexString, regex))
+                    {
+                        GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
+                    }
+
+                    outputArray[i] = regexString;
+                }
+
+                KeyOutput = outputArray;
             }
         }
 
