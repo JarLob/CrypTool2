@@ -21,6 +21,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
+using System.Windows.Threading;
 
 namespace Cryptool.Plugins.CryptoAnalysisAnalyser
 {
@@ -45,6 +46,7 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
         private string _keyOutput;
         private string _bestPlaintextOutput;
         private string _bestKeyOutput;
+        private int _keyCount = 0;
 
         private int _progress;
 
@@ -72,28 +74,17 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
             get { return this._seedInput.ToString(); }
             set
             {
-                try
+                int seed = value.GetHashCode();
+                if (_seedInput != seed)
                 {
-                    int seed = System.Int32.Parse(value);
-                    if (_seedInput != seed)
-                    {
-                        this._seedInput = seed;
-                        OnPropertyChanged("SeedInput");
-                    }
-                }
-                catch (System.FormatException)
-                {
-                    GuiLogMessage(value + ": Bad Format", NotificationLevel.Error);
-                }
-                catch (System.OverflowException)
-                {
-                    GuiLogMessage(value + ": Overflow", NotificationLevel.Error);
+                    this._seedInput = seed;
+                    OnPropertyChanged("SeedInput");
                 }
 
             }
         }
 
-        [PropertyInfo(Direction.InputData, "KeyInput", "KeyInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "KeyInput", "KeyInput tooltip description", true)]
         public string[] KeyInput
         {
             get { return this._keyInput; }
@@ -108,7 +99,7 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
             }
         }
 
-        [PropertyInfo(Direction.InputData, "PlaintextInput", "PlaintextInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "PlaintextInput", "PlaintextInput tooltip description", true)]
         public string PlaintextInput
         {
             get { return this._plaintextInput; }
@@ -238,7 +229,7 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
         /// </summary>
         public void PreExecution()
         {
-            GuiLogMessage("CAA: PreExecution()", NotificationLevel.Balloon);
+            _keyCount = 0;
             _plaintextOutput = "";
             _keyOutput = null;
             _progress = 0;
@@ -277,25 +268,37 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
         /// </summary>
         public void Execute()
         {
-            GuiLogMessage("CAA: Execute()", NotificationLevel.Balloon);
-            if (!checkVariables())
-            {
-                GuiLogMessage("CAA: Execute: checkVariables failed!", NotificationLevel.Balloon);
-                return;
-            }
             ProgressChanged(0, 1);
 
-            GuiLogMessage("CAA: PlaintextInput to PlaintextOutput", NotificationLevel.Debug);
-            PlaintextOutput = PlaintextInput;
-
-            foreach (string key in KeyInput)
+            if (_keyCount == 0)
             {
-                GuiLogMessage("Current Key: " + key, NotificationLevel.Info);
-                KeyOutput = key;
+                if (!checkVariables())
+                {
+                    GuiLogMessage("CAA: Execute: checkVariables failed!", NotificationLevel.Balloon);
+                    return;
+                }
+
+                PlaintextOutput = PlaintextInput;
+
+                foreach (string key in KeyInput)
+                {
+                    GuiLogMessage("Current Key: " + key, NotificationLevel.Info);
+                    KeyOutput = key;
+                }
+            }
+            else
+            {
+
+                ProgressChanged(1, 1);
+
+                GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
+                GuiLogMessage("Execute() keyCount: " + _keyCount, NotificationLevel.Info);
+                GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0, 50), NotificationLevel.Info);
+
+
             }
 
-
-            ProgressChanged(1, 1);
+            _keyCount++;
         }
 
         /// <summary>
@@ -303,8 +306,6 @@ namespace Cryptool.Plugins.CryptoAnalysisAnalyser
         /// </summary>
         public void PostExecution()
         {
-            GuiLogMessage("Best Key: " + BestKeyInput, NotificationLevel.Info);
-            GuiLogMessage("Best Plaintext: " + BestPlaintextInput, NotificationLevel.Info);
         }
 
         /// <summary>
