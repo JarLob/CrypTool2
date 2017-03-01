@@ -111,12 +111,12 @@ namespace Cryptool.SlideAttackOnFeistel
         #region Algorithm settings properties (visible in the Settings pane)
 
         //[PropertySaveOrder(4)]
-        [TaskPane("ActionTPCaption", "ActionTPTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
+        [TaskPane("ActionTPCaption", "ActionTPTooltip", null, 1, false, ControlType.ComboBox, new string[] { })]
         public SlideAttackOnFeistelMode Action
         {
             get
             {
-                return this.selectedAction;
+               return this.selectedAction;
             }
             set
             {

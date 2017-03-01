@@ -171,10 +171,15 @@ namespace Cryptool.SlideAttackOnFeistel
         public void Execute()
         {
             isPlayMode = true;
-            //string cipherText;
+            //checks if the cipher text is equal in lenght as that of entered plaintext
+            if(InputCipherText.Length!= InputPlainText.Length)
+            {
+                GuiLogMessage("The cipher text must be euqal in lenght as that of plaintext!", NotificationLevel.Error);
+            }
+
             char[] plainTxt = new char[InputPlainText.Length];
             char[] cipherTxt = new char[InputCipherText.Length];            
-            int[] tempChars = new int[10];
+            //int[] tempChars = new int[10];
             List<int> leftPlainText = new List<int>();
             List<int> rightPlainText = new List<int>();
             List<int> leftCipherText = new List<int>();
@@ -228,7 +233,7 @@ namespace Cryptool.SlideAttackOnFeistel
                     //    rightPlainText[i] = tempChars[i];
                     //}
 
-                  
+                        //the attack on Feistel cipher to get the key characters
                         for(int j=0;j<256;j++)
                         {
                             if (rightCipherText[i]==(leftPlainText[i]^((rightPlainText[i]+j)%256)))
