@@ -203,7 +203,7 @@ namespace Cryptool.Feistel
             // reports error if input plain text is not of even lenght
             if (InputString.Length % 2 != 0)
             {
-                GuiLogMessage("Input plaint text must be of even lenght!", NotificationLevel.Error);
+                GuiLogMessage("Input plainttext must be of even lenght!", NotificationLevel.Error);
                 //inputChars.Add('#');
 
             }
