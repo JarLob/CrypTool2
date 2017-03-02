@@ -18,7 +18,7 @@
     <plugin name="SHA" />
   </relevantPlugins>
 
-  <replacements lang="de">
+  <replacements lang="en">
     <replacement key="$good$" value="good.pdf (hex-encoded data)"/>
     <replacement key="$bad$" value="bad.pdf (hex-encoded data)"/>
     <replacement key="$decoder$" value="String Decoder"/>
@@ -39,20 +39,20 @@ Website of the researchers of the attack: https://shattered.io/\line
 Research paper on the attack: https://shattered.io/static/shattered.pdf\line
 "/>
   </replacements>
-  <replacements lang="en">
+  <replacements lang="de">
     <replacement key="$good$" value="good.pdf (Hex-codierte Daten)"/>
     <replacement key="$bad$" value="bad.pdf (Hex-codierte Daten)"/>
     <replacement key="$decoder$" value="String-Dekodierer"/>
     <replacement key="$comparator$" value="Stromvergleich"/>
     <replacement key="$sha1good$" value="SHA-1(good.pdf)"/>
     <replacement key="$sha1bad$" value="SHA-1(bad.pdf)"/>
-    <replacement key="$dataequal$" value="SHA-1(bad.pdf)"/>
+    <replacement key="$dataequal$" value="Daten gleich?"/>
     <replacement key="$hashequal$" value="Hash gleich?"/>
-    <replacement key="$infotext$" value="Am 23. Februar 2017 wurde ein Kollisionsangriff auf SHA-1 von Forschern des nationalen Forschungsinstituts für Mathematik und Informatik in den Niederlanden (CWI) sowie der Google Research Security, Privacy and Anti-abuse-Gruppe präsentiert. Den Forschern gelang es, einen praktischen Angriff auf den SHA-1-Hash-Algorithmus (Kollisionsangriff) zu erstellen und eine SHA-1-Hash-Kollision zu erzeugen. Sie veröffentlichten zwei pdf-Dateien (good.pdf und bad.pdf) mit verschiedenen Inhalten, aber den gleichen SHA-1 Hash-Werten.\line
+    <replacement key="$infotext$" value="Am 23. Februar 2017 präsentierten Forscher des nationalen Forschungsinstituts für Mathematik und Informatik in den Niederlanden (CWI) sowie der Google Research Security, Privacy and Anti-abuse-Gruppe einen Kollisionsangriff auf SHA-1. Den Forschern gelang es, einen praktischen Angriff auf den SHA-1-Hash-Algorithmus (Kollisionsangriff) zu erstellen und eine SHA-1-Hash-Kollision zu erzeugen. Sie veröffentlichten zwei pdf-Dateien (good.pdf und bad.pdf) mit verschiedenen Inhalten, aber den gleichen SHA-1 Hash-Werten.\line
 \line
-Unsere Vorlage zeigt diese Kollision. Die pdf-Dateien sind hex-codiert (good.pdf und bad.pdf). Zuerst dekodieren wir die Dateien mit String-Dekodierern.Dann vergleichen wir die binäre Repräsentation der Inhalte. Parallel dazu berechnen wir die beiden SHA-1-Hash-Werte beider Dateien und vergleichen diese Hash-Werte. Man kann sehen, dass der Inhalt der Dateien unterschiedlich ist ('Daten gleich?' ist rot) und dass die Hash-Werte gleich sind ('Hash gleich?' ist grün).\line
+Unsere Vorlage zeigt diese Kollision. Die pdf-Dateien sind hex-codiert (good.pdf und bad.pdf). Zuerst dekodieren wir die Dateien mit String-Dekodierern. Dann vergleichen wir die binäre Repräsentation der Inhalte. Parallel dazu berechnen wir die beiden SHA-1-Hash-Werte beider Dateien und vergleichen diese Hash-Werte. Man kann sehen, dass der Inhalt der Dateien unterschiedlich ist ('Daten gleich?' ist rot) und dass die Hash-Werte gleich sind ('Hash gleich?' ist grün).\line
 \line
-Wurde nur eine einzige Hash-Kollision gefunden, betrachten Kryptologen die Hash-Funktion als gebrochen/tot. Somit kann SHA-1 als tot betrachtet werden und sollte nicht mehr für Sicherheitsmaßnahmen verwendet werden.\line
+Kryptologen betrachten eine Hash-Funktion als gebrochen/tot, wenn nur eine einzige Hash-Kollision gefunden wurde. Somit sollte SHA-1 nicht mehr für Sicherheitsmaßnahmen verwendet werden.\line
 \line
 Webseite der Forscher des Angriffs: https://shattered.io/\line
 Forschungsarbeit zum Angriff: https://shattered.io/static/shattered.pdf\line
