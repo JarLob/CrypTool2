@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypPluginBase", "CrypPluginBase\CrypPluginBase.csproj", "{25DB2B47-A457-4EC2-960B-395CE07AE093}"
 EndProject
@@ -440,6 +440,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrainV1Attack", "CrypPluginsExperimental\GrainV1Attack\GrainV1Attack.csproj", "{C4DF6554-BCD8-4601-9D30-DA9BAB2314DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AESVisualization", "CrypPlugins\AESVisualisation\AESVisualization.csproj", "{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feistel", "CrypPluginsExperimental\Feistel\Feistel.csproj", "{0A3F1FD2-B924-415C-8085-DF735D416258}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlideAttackOnFeistel", "CrypPluginsExperimental\SlideAttackOnFeistel\SlideAttackOnFeistel.csproj", "{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1718,6 +1722,18 @@ Global
 		{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}.Release|x86.Build.0 = Release|x86
 		{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}.Test|x86.ActiveCfg = Debug|x86
 		{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}.Test|x86.Build.0 = Debug|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Debug|x86.ActiveCfg = Debug|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Debug|x86.Build.0 = Debug|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Release|x86.ActiveCfg = Release|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Release|x86.Build.0 = Release|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Test|x86.ActiveCfg = Debug|x86
+		{0A3F1FD2-B924-415C-8085-DF735D416258}.Test|x86.Build.0 = Debug|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Debug|x86.ActiveCfg = Debug|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Debug|x86.Build.0 = Debug|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Release|x86.ActiveCfg = Release|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Release|x86.Build.0 = Release|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Test|x86.ActiveCfg = Debug|x86
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5}.Test|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1927,6 +1943,8 @@ Global
 		{04570543-2652-4398-B0A3-CC13A50F7B4B} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
 		{C4DF6554-BCD8-4601-9D30-DA9BAB2314DD} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
 		{115F5A57-E85B-4D79-ABEA-0CD78C3F3457} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{0A3F1FD2-B924-415C-8085-DF735D416258} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
+		{E17CF2E3-65D8-4D72-94F7-D6FED9A0F7F5} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = CrypTool 2.0.vsmdi

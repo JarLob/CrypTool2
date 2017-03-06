@@ -111,7 +111,7 @@ namespace Cryptool.Feistel
         #region Algorithm settings properties (visible in the Settings pane)
 
         //[PropertySaveOrder(4)]
-        [TaskPane("ActionTPCaption", "ActionTPTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList1", "ActionList2" })]
+        [TaskPane("ActionTPCaption", "ActionTPTooltip", null, 1, false, ControlType.ComboBox, new string[] { "ActionList1" })]
         public FeistelMode Action
         {
             get

@@ -173,57 +173,75 @@ namespace Cryptool.Feistel
 #pragma warning disable 67
         public event StatusChangedEventHandler OnPluginStatusChanged;
 #pragma warning restore
-        static int[,] s_box = new int[16, 16];
+        
 
 
         public void Execute()
         {
+            // reports an error if key lenght is not half as that of input text
+            if(Key.Length!=(InputString.Length/2))
+            {
+                GuiLogMessage("Key length should be exactly half of Input in length!!", NotificationLevel.Error );
+                //System.Environment.Exit(0);
+            }
+
             isPlayMode = true;
-            string cipherText;
-            char[] inputChars = new char[InputString.Length];
-            char[] keyChars = new char[Key.Length];
-            char[] cipherChars = new char[InputString.Length];
-            int[] tempChars = new int[InputString.Length / 2];
+           
+            List<char> inputChars = new List<char>();          
             List<int> left = new List<int>();
-            List<int> right = new List<int>();            
-            char[] outputChars = new char[InputString.Length];
-
-            cipherText = InputString;
+            List<int> right = new List<int>();        
 
 
-            for (int i = 0; i < InputString.Length/2; i++)
+            
+
+            for (int i = 0; i < InputString.Length; i++)
             {
-             left.Add(InputString[i]);
+                inputChars.Add(InputString[i]);        
+
+            }
+            // reports error if input plain text is not of even lenght
+            if (InputString.Length % 2 != 0)
+            {
+                GuiLogMessage("Input plainttext must be of even lenght!", NotificationLevel.Error);
+                //inputChars.Add('#');
+
             }
 
-            for (int i = InputString.Length / 2; i < InputString.Length; i++)
+            // defining length variables
+            int fullLength = inputChars.Count;
+            int halfLength = fullLength / 2;
+
+            char[] outputChars = new char[fullLength];
+            //int[] tempChars = new int[halfLength];
+
+            for (int i = 0; i < halfLength; i++)
             {
-                right.Add(InputString[i]);
+             left.Add(inputChars[i]);
             }
 
-            if (!string.IsNullOrEmpty(InputString))
+            for (int i = halfLength; i < fullLength; i++)
+            {
+                right.Add(inputChars[i]);
+            }
+
+            if (!string.IsNullOrEmpty(InputString) && Key.Length==(halfLength))
             {
                 for (int j = 0; j < numberOfRounds; j++)
                 {
-                    //char temp = cipherText[0];
-                    for(int i=0;i<left.Count;i++)
+                    // encrypting left half of the plain text
+                    for(int i=0;i<halfLength;i++)
                     {
                         left[i] = left[i] ^ ((right[i] + Key[i]) % 256);
                     }
 
-                    for (int i = 0; i < left.Count; i++)
+                    //swapping left and right halves
+                    for (int i = 0; i < halfLength; i++)
                     {
-                        tempChars[i] = left[i];
-                    }
-
-                    for (int i = 0; i < right.Count; i++)
-                    {
+                        int tempChars = left[i];
+                    
                         left[i] = right[i];
-                    }
-
-                    for (int i = 0; i < tempChars.Length; i++)
-                    {
-                        right[i] = tempChars[i];
+                    
+                        right[i] = tempChars;
                     }
                    
 
@@ -244,13 +262,14 @@ namespace Cryptool.Feistel
                         ProgressChanged(j, numberOfRounds-1);
 
                     }
-                    
-                for(int k=0;k<left.Count;k++)
+                // concatenating the two halves after swapping to get the cipher text    
+                for(int k=0;k<halfLength;k++)
                 {
                     outputChars[k] = (char)left[k];
                 }
-                int p = left.Count;
-                for ( int k=0;k<right.Count;k++)
+
+                int p = halfLength;
+                for ( int k=0;k<halfLength;k++)
                 {                    
                     outputChars[p] = (char)right[k];
                     p = p + 1;
