@@ -184,11 +184,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PreExecution()
         {
-            _plaintextOutput = "";
-            _textOutput2 = "";
-            _textOutput3 = "";
-            _keyOutput = null;
-            _progress = 0;
         }
 
         public bool checkVariables()
@@ -239,7 +234,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
         public void generatePlaintext()
         {
             _plaintextOutput = "";
-            _startSentence = _rand.Next(0, _inputArray.Length);
             GuiLogMessage("_seedInput: " + _seedInput + ", _rand: " + _rand +
                 ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence, NotificationLevel.Info);
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
@@ -485,7 +479,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     //var str = "[a-zA-Z]{" + length + "}";
                     var str = _regexInput.Replace("$amount", length.ToString());
                     var regex = @str;
-                    var xeger = new Fare.Xeger(regex);
+                    var xeger = new Fare.Xeger(regex, _rand);
                     var regexString = xeger.Generate();
 
                     // TESTING ONLY!

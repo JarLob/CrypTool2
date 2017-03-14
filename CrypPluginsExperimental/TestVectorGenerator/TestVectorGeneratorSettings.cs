@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", null, 2, true, ControlType.ComboBox, new String[] { 
-            "random with reverse regex", "simple random", "natural speech"})]
+            "random with regex", "random", "natural speech"})]
         public GenerationType KeyGeneration
         {
             get
