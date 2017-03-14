@@ -48,6 +48,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string[] _inputArray;
         private System.Random _rand;
         private int _startSentence;
+        private List<String> _keyList = new List<string>();
         
 
         #endregion
@@ -269,11 +270,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 if (sentenceLength >= _settings.MinKeyLength &&
                     sentenceLength <= _settings.MaxKeyLength)
                 {
-                    int sentenceOccurences = 0;
-                    occurences.TryGetValue(sentenceLength, out sentenceOccurences);
+                    int lengthOccurences = 0;
+                    occurences.TryGetValue(sentenceLength, out lengthOccurences);
 
-                    if (sentenceOccurences < _settings.KeyAmountPerLength)
+                    if (lengthOccurences < _settings.KeyAmountPerLength)
                     {
+                        if (outputList.Contains(sentence))
+                        {
+                            continue;
+                        }
                         outputList.Add(sentence);
                         occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
@@ -281,8 +286,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                             "/" + (_inputArray.Length - 1) + ") - Adding sentence: \"" + sentence +
                             "\", occurences[" + sentenceLength + "]: " + occurences[sentenceLength],
                             NotificationLevel.Info);
-
-
 
                         _progress++;
 
@@ -309,22 +312,42 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     if (sentenceLength > _settings.MaxKeyLength)
                     {
 
-                        int sentenceOccurences = _settings.KeyAmountPerLength;
+                        int lengthOccurences = _settings.KeyAmountPerLength;
 
                         while (smallestMissingLength <= _settings.MaxKeyLength &&
-                            sentenceOccurences == _settings.KeyAmountPerLength)
+                            lengthOccurences == _settings.KeyAmountPerLength)
                         {
                             smallestMissingLength++;
-                            occurences.TryGetValue(smallestMissingLength, out sentenceOccurences);
+                            occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
                         }
 
                         // double check, should not happen
                         if (smallestMissingLength <= _settings.MaxKeyLength &&
-                            sentenceOccurences > _settings.KeyAmountPerLength)
+                            lengthOccurences > _settings.KeyAmountPerLength)
                         {
                             GuiLogMessage("Too many sentences added for length: " +
                                 smallestMissingLength, NotificationLevel.Debug);
+                            continue;
                         }
+
+
+                        string cutSentence = sentence.Substring(0, smallestMissingLength);
+                        if (outputList.Contains(cutSentence))
+                        {
+                            continue;
+                        }
+                        outputList.Add(cutSentence);
+                        occurences.AddOrUpdate(smallestMissingLength, 1, (id, count) => count + 1);
+
+                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i +
+                            _inputArray.Length - _startSentence - 1) + ") - Adding cut sentence: \"" +
+                            cutSentence + "\", occurences[" + smallestMissingLength + "]: " +
+                            occurences[smallestMissingLength], NotificationLevel.Info);
+
+                        _progress++;
+
+                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
+                            _settings.KeyAmountPerLength, 1);
 
                         if (smallestMissingLength > _settings.MaxKeyLength)
                         {
@@ -339,21 +362,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                                 break;
                             }
                         }
-
-
-                        string cutSentence = sentence.Substring(0, smallestMissingLength);
-                        outputList.Add(cutSentence);
-                        occurences.AddOrUpdate(smallestMissingLength, 1, (id, count) => count + 1);
-
-                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i +
-                            _inputArray.Length - _startSentence - 1) + ") - Adding cut sentence: \"" +
-                            cutSentence + "\", occurences[" + smallestMissingLength + "]: " +
-                            occurences[smallestMissingLength], NotificationLevel.Info);
-
-                        _progress++;
-
-                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
-                            _settings.KeyAmountPerLength, 1);
                     }
 
 
@@ -470,6 +478,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_regexInput.Contains("$amount"))
             {
                 string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
+                
 
                 for (int i = 0; i < outputArray.Length; i++)
                 {
@@ -481,6 +490,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     var regex = @str;
                     var xeger = new Fare.Xeger(regex, _rand);
                     var regexString = xeger.Generate();
+
+                    while (_keyList.Contains(regexString)) {
+                        regexString = xeger.Generate();
+                    }
+
+                    _keyList.Add(regexString);
 
                     // TESTING ONLY!
                     regexString = regexString + " (" + regexString.Length + ", " + length.ToString() + ")";
