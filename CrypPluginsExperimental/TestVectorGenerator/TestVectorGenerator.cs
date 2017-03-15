@@ -432,26 +432,32 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeys()
         {
-            string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
+            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            {
+                keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                lastKeyLengthIndex = 0;
+            }
+            else if (lastKeyLengthIndex < keysToGenerate - 1)
+            {
+                lastKeyLengthIndex++;
+            }
+            else
+            {
+                return;
+            }
 
             if (_settings.KeyFormatRandom == FormatType.lettersOnly)
             {
-                GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
-
-                for (int i = 0; i < outputArray.Length; i++)
+                //GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
+                string randomKey = "";
+                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
-                    string randomKey = "";
-                    for (int j = 0; j < (_settings.MinKeyLength + i / _settings.KeyAmountPerLength); j++)
-                    {
-                        char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
-                        randomKey = randomKey + ch;
-                    }
-                    GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), i: " + i, NotificationLevel.Info);
-
-                    outputArray[i] = randomKey;
+                    char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
+                    randomKey = randomKey + ch;
                 }
+                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
-                KeyOutput = outputArray;
+                SingleKeyOutput = randomKey;
             }
             else
             {
@@ -469,25 +475,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     // from 0 to 25 for the 26 letters of the alphabet
                     upperLimit = 25;
                 }
-                GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
-
-                for (int i = 0; i < outputArray.Length; i++)
+                //GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
+                string randomKey = "";
+                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
-                    string randomKey = "";
-                    for (int j = 0; j < (_settings.MinKeyLength + i / _settings.KeyAmountPerLength); j++)
-                    {
-                        string space = "";
-                        if (!String.IsNullOrEmpty(randomKey))
-                            space = " ";
-                        int randomInt = (_rand.Next(0, upperLimit+1));
-                        randomKey = randomKey + space + randomInt;
-                    }
-                    GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), i: " + i, NotificationLevel.Info);
-
-                    outputArray[i] = randomKey;
+                    string space = "";
+                    if (!String.IsNullOrEmpty(randomKey))
+                        space = " ";
+                    int randomInt = (_rand.Next(0, upperLimit+1));
+                    randomKey = randomKey + space + randomInt;
                 }
+                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
-                KeyOutput = outputArray;
+                SingleKeyOutput = randomKey;
             }
         }
 
@@ -559,7 +559,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             ProgressChanged(0, 1);
 
             _rand = new System.Random(_seedInput);
-            GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
+            //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
             generatePlaintext();
 
