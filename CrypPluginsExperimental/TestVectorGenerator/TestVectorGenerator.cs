@@ -42,6 +42,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _plaintextOutput;
         private string _textOutput2;
         private string _textOutput3;
+        private string _singleKeyOutput;
         private string[] _keyOutput;
 
         private int _progress;
@@ -49,6 +50,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private System.Random _rand;
         private int _startSentence;
         private List<String> _keyList = new List<string>();
+        private int keysToGenerate = -1;
+        private int lastKeyLengthIndex = -1;
         
 
         #endregion
@@ -61,7 +64,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._textInput; }
             set
             {
-                if (_textInput != value)
+                if (_textInput == null || !_textInput.Equals(value))
                 {
                     this._textInput = value;
                     OnPropertyChanged("TextInput");
@@ -91,12 +94,27 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._regexInput; }
             set
             {
-                if (_regexInput != value)
+                if (_regexInput == null || !_regexInput.Equals(value))
                 {
                     this._regexInput = value;
                     OnPropertyChanged("RegexInput");
                 }
 
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "SingleKeyOutput", "KeyOutput tooltip description")]
+        public string SingleKeyOutput
+        {
+            get { return this._singleKeyOutput; }
+            set
+            {
+                if (_singleKeyOutput == null || !_singleKeyOutput.Equals(value))
+                {
+                    this._singleKeyOutput = value;
+                    OnPropertyChanged("SingleKeyOutput");
+                    //Console.WriteLine("OnPropertyChanges SingleKeyOutput");
+                }
             }
         }
 
@@ -122,7 +140,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set
             {
                 // TODO: check if test works and is necessary
-                if (_plaintextOutput != value)
+                if (_plaintextOutput == null || !_plaintextOutput.Equals(value))
                 {
                     this._plaintextOutput = value;
                     OnPropertyChanged("PlaintextOutput");
@@ -234,6 +252,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generatePlaintext()
         {
+            _startSentence = _rand.Next(0, _inputArray.Length);
             _plaintextOutput = "";
             GuiLogMessage("_seedInput: " + _seedInput + ", _rand: " + _rand +
                 ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence, NotificationLevel.Info);
@@ -250,7 +269,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateNaturalSpeechKeys()
         {
-            List<string> outputList = new List<string>();
             ConcurrentDictionary<int, int> occurences = new ConcurrentDictionary<int, int>();
             _startSentence = _rand.Next(0, _inputArray.Length);
             GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Info);
@@ -275,11 +293,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
                     if (lengthOccurences < _settings.KeyAmountPerLength)
                     {
-                        if (outputList.Contains(sentence))
+                        if (_keyList.Contains(sentence))
                         {
                             continue;
                         }
-                        outputList.Add(sentence);
+                        _keyList.Add(sentence);
                         occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
                         GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i + _inputArray.Length - _startSentence - 1) +
@@ -332,11 +350,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
 
                         string cutSentence = sentence.Substring(0, smallestMissingLength);
-                        if (outputList.Contains(cutSentence))
+                        if (_keyList.Contains(cutSentence))
                         {
                             continue;
                         }
-                        outputList.Add(cutSentence);
+                        _keyList.Add(cutSentence);
                         occurences.AddOrUpdate(smallestMissingLength, 1, (id, count) => count + 1);
 
                         GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i +
@@ -374,7 +392,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
 
-            KeyOutput = outputList.ToArray();
+            KeyOutput = _keyList.ToArray();
 
             Array.Sort(KeyOutput, (x, y) => x.Length.CompareTo(y.Length));
 
@@ -475,67 +493,57 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeysWithRegex()
         {
-            if (_regexInput.Contains("$amount"))
+            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
             {
-                string[] outputArray = new string[(_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength];
-                
-
-                for (int i = 0; i < outputArray.Length; i++)
+                if (_regexInput.Contains("$amount"))
                 {
-                    int length = _settings.MinKeyLength + (i / _settings.KeyAmountPerLength);
-                    //GuiLogMessage("length: " + length, NotificationLevel.Warning);
-
-                    //var str = "[a-zA-Z]{" + length + "}";
-                    var str = _regexInput.Replace("$amount", length.ToString());
-                    var regex = @str;
-                    var xeger = new Fare.Xeger(regex, _rand);
-                    var regexString = xeger.Generate();
-
-                    while (_keyList.Contains(regexString)) {
-                        regexString = xeger.Generate();
-                    }
-
-                    _keyList.Add(regexString);
-
-                    // TESTING ONLY!
-                    regexString = regexString + " (" + regexString.Length + ", " + length.ToString() + ")";
-                    //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
-
-                    if (!Regex.IsMatch(regexString, regex))
-                    {
-                        GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
-
-                    }
-
-                    outputArray[i] = regexString;
+                    keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
                 }
-
-                KeyOutput = outputArray;
+                else
+                {
+                    keysToGenerate = _settings.KeyAmountPerLength;
+                }
+                lastKeyLengthIndex = 0;
+            }
+            else if (lastKeyLengthIndex < keysToGenerate-1)
+            {
+                lastKeyLengthIndex++;
             }
             else
             {
-                string[] outputArray = new string[_settings.KeyAmountPerLength];
-
-                for (int i = 0; i < outputArray.Length; i++)
-                {
-                    var regex = @_regexInput;
-                    var xeger = new Fare.Xeger(regex);
-                    var regexString = xeger.Generate();
-
-                    // TESTING ONLY!
-                    regexString = regexString + " (" + regexString.Length.ToString() + ")";
-                    //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
-
-                    if (!Regex.IsMatch(regexString, regex))
-                    {
-                        GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
-                    }
-
-                    outputArray[i] = regexString;
-                }
-
-                KeyOutput = outputArray;
+                return;
             }
+
+            var str = _regexInput;
+            if (_regexInput.Contains("$amount"))
+            {
+                int length = _settings.MinKeyLength + (lastKeyLengthIndex / _settings.KeyAmountPerLength);
+                //GuiLogMessage("length: " + length, NotificationLevel.Warning);
+                //var str = "[a-zA-Z]{" + length + "}";
+                str = str.Replace("$amount", length.ToString());
+            }
+            var regex = @str;
+            var xeger = new Fare.Xeger(regex, _rand);
+            var regexString = xeger.Generate();
+
+            while (_keyList.Contains(regexString))
+            {
+                regexString = xeger.Generate();
+            }
+
+            _keyList.Add(regexString);
+
+            // TESTING ONLY!
+            //regexString = regexString + " (" + regexString.Length + ")";
+            //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+
+            if (!Regex.IsMatch(regexString, regex))
+            {
+                GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
+
+            }
+
+            SingleKeyOutput = regexString;
         }
 
         /// <summary>
@@ -561,6 +569,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
             else if (_settings.KeyGeneration == GenerationType.regex)
             {
+                //generateSingleRandomKeysWithRegex();
                 generateRandomKeysWithRegex();
             }
             else
@@ -587,6 +596,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PostExecution()
         {
+            keysToGenerate = -1;
+            lastKeyLengthIndex = -1;
         }
 
         /// <summary>
