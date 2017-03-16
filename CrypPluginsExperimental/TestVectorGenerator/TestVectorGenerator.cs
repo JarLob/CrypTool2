@@ -45,13 +45,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _singleKeyOutput;
         private string[] _keyOutput;
 
-        private int _progress;
+        private int _progress = 0;
         private string[] _inputArray;
         private System.Random _rand;
         private int _startSentence;
         private List<String> _keyList = new List<string>();
         private int keysToGenerate = -1;
         private int lastKeyLengthIndex = -1;
+        private bool _notFound = false;
+        ConcurrentDictionary<int, int> occurences;
         
 
         #endregion
@@ -269,165 +271,135 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateNaturalSpeechKeys()
         {
-            ConcurrentDictionary<int, int> occurences = new ConcurrentDictionary<int, int>();
             _startSentence = _rand.Next(0, _inputArray.Length);
-            GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Info);
-
-            for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
+            //GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Debug);
+            
+            if ( occurences == null)
             {
-                occurences.AddOrUpdate(i, 0, (id, count) => 0);
-                //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
+                occurences = new ConcurrentDictionary<int, int>();
+
+                for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
+                {
+                    occurences.AddOrUpdate(i, 0, (id, count) => 0);
+                    //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
+                }
             }
 
-            // for loop for sentence searching by length
-            for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
+            string sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+            int originalStartSentence = _startSentence;
+            //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
+
+            int sentenceLength = sentence.Length;
+            int smallestMissingLength = -1;
+            
+            while (true)
             {
-                string sentence = _inputArray[i].ToUpper().Replace(" ", "");
-                //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
-                int sentenceLength = sentence.Length;
-                if (sentenceLength >= _settings.MinKeyLength &&
-                    sentenceLength <= _settings.MaxKeyLength)
+                // check if key list contains all elements, break if so
+                if (_keyList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
+                    return;
+
+                int lengthOccurences = 0;
+
+                // if no complete sentence could be found, search for a longer one and cut it
+                if (_notFound && sentenceLength > _settings.MaxKeyLength)
                 {
-                    int lengthOccurences = 0;
+                    if (smallestMissingLength == -1)
+                        smallestMissingLength = _settings.MinKeyLength - 1;
+
+                    lengthOccurences = _settings.KeyAmountPerLength;
+
+                    // search for the smallest sentence/key length that is missing
+                    while (smallestMissingLength <= _settings.MaxKeyLength &&
+                        lengthOccurences == _settings.KeyAmountPerLength)
+                    {
+                        smallestMissingLength++;
+                        occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
+                    }
+
+                    // double check, should not happen
+                    if (smallestMissingLength <= _settings.MaxKeyLength &&
+                        lengthOccurences > _settings.KeyAmountPerLength)
+                    {
+                        GuiLogMessage("Too many sentences added for length: " +
+                            smallestMissingLength, NotificationLevel.Debug);
+                        continue;
+                    }
+
+                    // cutting of the sentence
+                    sentence = sentence.Substring(0, smallestMissingLength);
+                    sentenceLength = sentence.Length;
+                }
+                else
+                {
                     occurences.TryGetValue(sentenceLength, out lengthOccurences);
-
-                    if (lengthOccurences < _settings.KeyAmountPerLength)
-                    {
-                        if (_keyList.Contains(sentence))
-                        {
-                            continue;
-                        }
-                        _keyList.Add(sentence);
-                        occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
-
-                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i + _inputArray.Length - _startSentence - 1) +
-                            "/" + (_inputArray.Length - 1) + ") - Adding sentence: \"" + sentence +
-                            "\", occurences[" + sentenceLength + "]: " + occurences[sentenceLength],
-                            NotificationLevel.Info);
-
-                        _progress++;
-
-                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
-                            _settings.KeyAmountPerLength, 1);
-                    }
                 }
-
-                if (allKeysFound(occurences))
-                    break;
-
-            }
-
-            if (!allKeysFound(occurences))
-            {
-                // for loop for sentence searching by longer length and trimming down
-                for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
+                if (sentenceLength >= _settings.MinKeyLength &&
+                        sentenceLength <= _settings.MaxKeyLength &&
+                        lengthOccurences < _settings.KeyAmountPerLength && 
+                        !_keyList.Contains(sentence))
                 {
-                    string sentence = _inputArray[i].ToUpper().Replace(" ", "");
-                    //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
-                    int sentenceLength = sentence.Length;
-                    int smallestMissingLength = _settings.MinKeyLength - 1;
+                    _keyList.Add(sentence);
+                    occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
-                    if (sentenceLength > _settings.MaxKeyLength)
+                    // !!! TESTING ONLY !!!
+                    //sentence = sentence + " (" + sentence.Length + ")";
+
+                    SingleKeyOutput = sentence;
+
+                    // if the letters should be replaced by numbers, do so
+                    if (_settings.KeyFormatRandom == FormatType.numbers)
                     {
-
-                        int lengthOccurences = _settings.KeyAmountPerLength;
-
-                        while (smallestMissingLength <= _settings.MaxKeyLength &&
-                            lengthOccurences == _settings.KeyAmountPerLength)
-                        {
-                            smallestMissingLength++;
-                            occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
-                        }
-
-                        // double check, should not happen
-                        if (smallestMissingLength <= _settings.MaxKeyLength &&
-                            lengthOccurences > _settings.KeyAmountPerLength)
-                        {
-                            GuiLogMessage("Too many sentences added for length: " +
-                                smallestMissingLength, NotificationLevel.Debug);
-                            continue;
-                        }
-
-
-                        string cutSentence = sentence.Substring(0, smallestMissingLength);
-                        if (_keyList.Contains(cutSentence))
-                        {
-                            continue;
-                        }
-                        _keyList.Add(cutSentence);
-                        occurences.AddOrUpdate(smallestMissingLength, 1, (id, count) => count + 1);
-
-                        GuiLogMessage("i: " + i + " (" + (i >= _startSentence ? i - _startSentence : i +
-                            _inputArray.Length - _startSentence - 1) + ") - Adding cut sentence: \"" +
-                            cutSentence + "\", occurences[" + smallestMissingLength + "]: " +
-                            occurences[smallestMissingLength], NotificationLevel.Info);
-
-                        _progress++;
-
-                        ProgressChanged(_progress / (_settings.MaxKeyLength - _settings.MinKeyLength + 1) *
-                            _settings.KeyAmountPerLength, 1);
-
-                        if (smallestMissingLength > _settings.MaxKeyLength)
-                        {
-                            if (allKeysFound(occurences))
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                GuiLogMessage("Something went wrong! Some sentences are missing " +
-                                    "(not correctly added?!)", NotificationLevel.Warning);
-                                break;
-                            }
-                        }
+                        // TODO: fix letter replacement
+                        replaceLettersByNumbersWithSpaces();
                     }
 
-
+                    return;
                 }
 
-                if (!allKeysFound(occurences))
+                _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
+                sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+                sentenceLength = sentence.Length;
+
+                int length = 15 < sentenceLength ? 15 : sentenceLength;
+                Console.WriteLine("sentence:"+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
+
+                // if the start sentence reaches the original one, the whole imput array is computed
+                if (_startSentence == originalStartSentence)
                 {
-                    GuiLogMessage("Somethings wrong! Not all key lengths found!", NotificationLevel.Warning);
-
+                    // check if also no longer sentence to cut could be found, break if so
+                    if (_notFound)
+                    {
+                        return;
+                    }
+                    _notFound = true;
                 }
-            }
 
-            KeyOutput = _keyList.ToArray();
-
-            Array.Sort(KeyOutput, (x, y) => x.Length.CompareTo(y.Length));
-
-            if (_settings.KeyFormatRandom == FormatType.numbers)
-            {
-                replaceLettersByNumbersWithSpaces();
+                // set progress
+                _progress++;
+                ProgressChanged(_progress / (_inputArray.Length-1)*2, 1);
             }
         }
 
         public void replaceLettersByNumbersWithSpaces()
         {
-            List<string> transpositionList = new List<string>();
-            foreach (string str in KeyOutput)
+            char[] chars = SingleKeyOutput.ToCharArray();
+            string transpositionKey = "";
+            foreach (char ch in chars)
             {
-                char[] chars = str.ToCharArray();
-                string transpositionKey = "";
-                foreach (char ch in chars)
+                try
                 {
-                    try
-                    {
-                        string space = "";
-                        if (!String.IsNullOrEmpty(transpositionKey))
-                            space = " ";
-                        transpositionKey = transpositionKey + space + (Convert.ToInt32(ch) - Convert.ToInt32('A'));
-                    }
-                    catch (OverflowException)
-                    {
-                        GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
-                    }
+                    string space = "";
+                    if (!String.IsNullOrEmpty(transpositionKey))
+                        space = " ";
+                    transpositionKey = transpositionKey + space + (Convert.ToInt32(ch) - Convert.ToInt32('A'));
                 }
-
-                transpositionList.Add(transpositionKey);
+                catch (OverflowException)
+                {
+                    GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
+                }
             }
 
-            KeyOutput = transpositionList.ToArray();
+            SingleKeyOutput = transpositionKey;
         }
 
         public void generateRandomKeys()
@@ -534,7 +506,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _keyList.Add(regexString);
 
             // TESTING ONLY!
-            //regexString = regexString + " (" + regexString.Length + ")";
+            regexString = regexString + " (" + regexString.Length + ")";
             //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
 
             if (!Regex.IsMatch(regexString, regex))
@@ -554,14 +526,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (!checkVariables())
                 return;
 
-            preProcessTextInput();
+            if (_inputArray == null)
+                preProcessTextInput();
             
             ProgressChanged(0, 1);
 
             _rand = new System.Random(_seedInput);
             //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
-            generatePlaintext();
+            if (_settings.TextLength > 0)
+                generatePlaintext();
 
             if (_settings.KeyGeneration == GenerationType.naturalSpeech)
             {
@@ -598,6 +572,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             keysToGenerate = -1;
             lastKeyLengthIndex = -1;
+            _inputArray = null;
+            occurences = null;
+            _keyList = new List<string>();
+            _progress = 0;
+            _notFound = false;
         }
 
         /// <summary>
