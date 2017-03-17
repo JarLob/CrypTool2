@@ -50,6 +50,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private System.Random _rand;
         private int _startSentence;
         private List<String> _keyList = new List<string>();
+        private List<String> _plaintextList = new List<string>();
         private int keysToGenerate = -1;
         private int lastKeyLengthIndex = -1;
         private bool _notFound = false;
@@ -240,13 +241,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
             RegexOptions options = RegexOptions.None;
             Regex regex = new Regex("[ ]{2,}", options);
             TextInput = regex.Replace(TextInput, " ");
-            if (TextInput.Length > 10000)
-                TextOutput2 = TextInput.Substring(0, 10000);
+            int substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
+            //TextOutput2 = TextInput.Substring(0, substringLength);
 
             // replace newlines by space
             TextInput = TextInput.Replace(". ", ".");
-            if (TextInput.Length > 10000)
-                TextOutput3 = TextInput.Substring(0, 10000);
+            if (TextInput.EndsWith("."))
+                TextInput = TextInput.Substring(0, TextInput.Length - 1);
+
+            substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
+            TextOutput3 = TextInput.Substring(0, substringLength);
 
             // split input text into sentences
             _inputArray = TextInput.Split('.');
@@ -254,16 +258,29 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generatePlaintext()
         {
+            // check if plaintext list contains all elements, break if so
+            if (_plaintextList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
+                return;
+
             _startSentence = _rand.Next(0, _inputArray.Length);
+            while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
+            {
+                //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
+                //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
+                _startSentence = _rand.Next(0, _inputArray.Length);
+            }
+
             _plaintextOutput = "";
-            GuiLogMessage("_seedInput: " + _seedInput + ", _rand: " + _rand +
-                ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence, NotificationLevel.Info);
+            //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
+            //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
                 _plaintextOutput = _plaintextOutput + _inputArray[i] + ". ";
                 if (_plaintextOutput.Length >= _settings.TextLength)
                 {
-                    PlaintextOutput = _plaintextOutput.Substring(0, _settings.TextLength);
+                    String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
+                    _plaintextList.Add(finalPlaintext);
+                    PlaintextOutput = finalPlaintext;
                     break;
                 }
             }
@@ -344,6 +361,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     // !!! TESTING ONLY !!!
                     //sentence = sentence + " (" + sentence.Length + ")";
 
+                    //int length = 15 < sentence.Length ? 15 : sentence.Length;
+                    //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
+
                     SingleKeyOutput = sentence;
 
                     // if the letters should be replaced by numbers, do so
@@ -359,9 +379,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
                 sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
                 sentenceLength = sentence.Length;
-
-                int length = 15 < sentenceLength ? 15 : sentenceLength;
-                Console.WriteLine("sentence:"+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
 
                 // if the start sentence reaches the original one, the whole imput array is computed
                 if (_startSentence == originalStartSentence)
@@ -575,6 +592,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _inputArray = null;
             occurences = null;
             _keyList = new List<string>();
+            _plaintextList = new List<string>();
             _progress = 0;
             _notFound = false;
         }
