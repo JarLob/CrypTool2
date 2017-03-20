@@ -22,6 +22,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
 using Fare;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
@@ -81,7 +83,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._seedInput.ToString(); }
             set
             {
-                int seed = value.GetHashCode();
+                int seed = SHA1AsInt32(value);
                 if (_seedInput != seed)
                 {
                     this._seedInput = seed;
@@ -206,6 +208,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PreExecution()
         {
+        }
+
+        public static int SHA1AsInt32(string stringToHash)
+        {
+            using (var sha1 = new SHA1Managed())
+            {
+                return BitConverter.ToInt32(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)), 0);
+            }
         }
 
         public bool checkVariables()
@@ -598,7 +608,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             ProgressChanged(0, 1);
 
             _rand = new System.Random(_seedInput);
-            //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
+            GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
             if (_settings.TextLength > 0)
                 generatePlaintext();
