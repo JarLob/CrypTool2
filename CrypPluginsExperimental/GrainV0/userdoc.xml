@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<documentation>
+
+  <language culture="en" />
+
+  <introduction lang="en">
+    Grain v0 is a stream cipher which is based on two shift registers and a non-linear output function.
+    The key size is 80 bits and the size of the initialization vector is 64 bits. 
+  </introduction>
+
+  <usage lang="en">
+    After dragging the Grain v0 component onto your workspace, you will
+    have to attach the two text input components to the connectors 'Key' and 'IV'. Also, you need to attach one "Number Input" component 
+    which indicates the keystream length in bytes.
+   
+    After that, drag into the workspace one "Text Input" component where you should enter the plaintext and one "XOR" component that is going to be
+    used to XOR the plaintext with the output of the cipher (keystream). The result of the XOR is the ciphertext.
+    Additionally you have to connect a text output component to the 'Output' connector of the cipher, which is going to represent the keystream.
+  </usage>
+
+
+
+  <references>
+   
+    <linkReference>
+      <link url="https://eprint.iacr.org/2009/109.pdf" lang="en" />
+      <caption lang="en">Cryptanalysis of Stream Cipher Grain Family</caption>
+     
+    </linkReference>
+  </references>
+
+</documentation>

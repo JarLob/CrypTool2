@@ -16,67 +16,92 @@ using System.Text.RegularExpressions;
 namespace Cryptool.Plugins.A5
 {
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("A5.Properties.Resources", "PluginCaption", "PluginTooltip", "A5/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("A5.Properties.Resources", "A5", "Encrypt the plaintext", "A5/userdoc.xml", new[] { "A5/Images/gsm.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    
 
     public class A5 : ICrypComponent
     {
 
-        #region Algorithm variables
-
-        public bool dbMode; //Debug mode
-
-        private int nRegisters = 3; //number of registers
-        private int[] mRegLens = new int[] { 19, 22, 23 }; //max register lengths
-        private int[] rIndexes = new int[] { 8, 10, 10 }; //register indexes (clocking bits)
-
-        private int[][] registers; //registers (we are using this to create a table with the registers space for all 3 registers (1st row --> register 1 ; 2nd row --> register 2 etc)
-        private int[] iv;
-        private int[] key;
-        private int[] message; //plaintext
-
-        // bits that are tapped in each register (1st row -> Tapped bits of 1st Register and similarly the list follows till third register)
-        private int[][] tappedBits = new int[3][]
-        {
-            new int[] { 18, 17, 16, 13 },
-            new int[] { 21, 20 },
-            new int[] { 22, 21, 20, 7 }
-        };
-
-        private String messageInput;
-        private String output;
-        private String keyString = null;
-        private String initialVector = null;
-        private int BUFFERSIZE = 64;
-        private bool stop = false;
-        private A5Settings settings;
-
-        //modified
-        byte[] keyBytes;
-        byte[] ivBytes;
-        byte[] messageBytes;
-        byte[] outBytes;
-        #endregion
-        //
-        //Converts byte array into string for future using
-        private String BytesArrToString(byte[] arr)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (var b in arr)
-            {
-                sb.Append(Convert.ToString(b, 2).PadLeft(8, '0'));
+        public bool stop;
+        public ISettings settings;
+        private byte[] keyBytes;
+        private byte[] IVbytes;
+        private byte[] output;
+        // Converts bit representation to byte array
+        private byte[] FromInt(int[] arr)
+        {//initialize result array : each byte = 8 bits, so we divide
+            byte[] result = new byte[arr.Length / 8];
+            int temporary = 0;
+            //cycle goes through all bytes
+            for (int i = 0; i < result.Length; i++)
+            {//cycle goes through all bits in current byte
+                for (int j = 7; j >= 0; j--)
+                {//first we shift the bit to its positon in byte
+                    //binary OR operation sets the bit to temporary value
+                    temporary |= arr[i * 8 + (7 - j)] << j;
+                }//sets temporary value to array cell
+                result[i] = (byte)temporary;
+                temporary = 0;
             }
-            return sb.ToString();
+            return result;
+        }
+        //method which converts byte array to bit representation
+        private int[] ToInt(byte[] arr, int size = -1)
+        { //if size was not defined as the argument
+            if (size == -1)
+                //use default size (each byte = 8 bits)
+                size = arr.Length * 8;
+            //initializing resulting array
+            int[] res = new int[size];
+            //cycle goes through all bytes in the array
+            for (int i = 0; i < arr.Length; i++)
+            {//cycle goes through all bits in current byte
+                for (int j = 7; j >= 0; j--)
+                {//shifts the number to get current bit value 
+                    res[res.Length - size] = (((int)arr[i]) >> j) & 1;
+                    size--;
+                    //if size was defined and we get all bits
+                    if (size < 1)
+                        //stop the cycle and end the method
+                        return res;
+                }
+            }
+            return res;
         }
 
-        public A5()
+        // method increments bit array by one
+        // We use different IV`s for different frames. If for the 1st frame IV was 1100....00, for second it will be 0010.....00, for third 1010.....00 
+        // for fourth 0110....00 and so on.
+        private void Increment(int[] b, int curbit)
+        {  //to stop, recursion checks if current bit value isn`t greater then array length
+            if (curbit > b.Length)
+                return;
+            //if current bit is 1, set it to 0 and increment next (by recursive call of this method)
+            if (b[curbit] == 1)
+            {
+                b[curbit] = 0;
+                Increment(b, ++curbit);
+            }
+            else
+            { //otherwise set 0 to 1 and end the recursion
+                b[curbit]++;
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "Plain text", "", true)]
+        public Byte[] PlainText
         {
-            this.settings = new A5Settings();
+            get
+            {
+                return FromInt(plainText);
+            }
+            set
+            {
+                plainText = ToInt(value);
+                OnPropertyChanged("PlainText");
+            }
         }
-
-
-        [PropertyInfo(Direction.InputData, "Key", "Key length = 8 bytes", true)]
+        [PropertyInfo(Direction.InputData, "Key", "Size = 8 bytes", true)]
         public Byte[] Key
         {
             get
@@ -86,83 +111,25 @@ namespace Cryptool.Plugins.A5
             set
             {
                 keyBytes = value;
-                KeyString = BytesArrToString(keyBytes);
                 OnPropertyChanged("Key");
             }
         }
-
-        public String KeyString
-        {
-            get { return this.keyString; }
-            set
-            {
-                this.keyString = value;
-            }
-        }
-
-        [PropertyInfo(Direction.InputData, "IV", "IV length = 22 bits, (last two bits of last byte wont be calculated)", true)]
-        public Byte[] IV
+        [PropertyInfo(Direction.InputData, "Initial vector", "Size= 3 bytes", true)]
+        public Byte[] InitialVector
         {
             get
             {
-                return ivBytes;
+                return IVbytes;
             }
             set
             {
-                ivBytes = value;
-                initialVector = BytesArrToString(ivBytes).Substring(0, 22);
-
-                OnPropertyChanged("IV");
+                IVbytes = value;
+                OnPropertyChanged("InitialVector");
             }
         }
 
-        public String InitialVector
-        {
-            get { return this.initialVector; }
-            set
-            {
-                this.initialVector = value;
-            }
-        }
-
-        [PropertyInfo(Direction.InputData, "InputMessage", "Input message bytes", true)]
-        public Byte[] Message
-        {
-            get
-            {
-                return messageBytes;
-            }
-            set
-            {
-                messageBytes = value;
-                OnPropertyChanged("InputMessage");
-            }
-        }
-
-        public String MessageInput
-        {
-            get { return this.messageInput; }
-            set
-            {
-                this.messageInput = value;
-            }
-        }
-
-        [PropertyInfo(Direction.OutputData, "Output bytes", "Chipher text", true)]
-        public Byte[] Out
-        {
-            get
-            {
-                return outBytes;
-            }
-            set
-            {
-                outBytes = value;
-
-                OnPropertyChanged("Out");
-            }
-        }
-        public String Output
+        [PropertyInfo(Direction.OutputData, "Cipher text", "", true)]
+        public Byte[] CipherText
         {
             get
             {
@@ -170,284 +137,174 @@ namespace Cryptool.Plugins.A5
             }
             set
             {
-                this.output = value;
+                output = value;
+                OnPropertyChanged("CipherText");
             }
         }
 
-        #region A5
-        /**
-	 * 
-	 * @param fileToEncrypt
-	 * @param encryptKey
-	 * @param encryptFrameNumber
-	 * @return The filename of the encrypted file.
-	 */
 
-        // get the maximum length of registers
-        public int GetMaxRegLensTotal()
+        int[] plainText;
+        int[] cipherText;
+        private int NumberOfFrames;//Number of different frames to generate
+        public A5()
         {
-            int total = 0;
-
-            foreach (int len in mRegLens)
-                total += len;
-
-            return total;
+            this.settings = new A5Settings();
         }
 
-        //A function that shows the result after two values are being XORed with each other
-        private int XorValues(int val1, int val2)
-        {
-            int res = 0;
+        private int[] working_key;
+        private int[] working_IV;
 
-            if (val1 != val2)
-                res = 1;
+        LFSR[] registers;
+        //method init all registers for 1 frame
+        public void InitFrame(int[] key, int[] iv)
+        {
+            //init arrays for key and iv
+            working_key = new int[64];
+            working_IV = new int[22];
+            //copying values to those arrays 
+            Array.Copy(key, working_key, 64);
+            Array.Copy(iv, working_IV, 22);
+            //initialize LFSR array
+            registers = new LFSR[3];
+            //creating LFSRs for A5/1
+            // define the register's length, tapped bits and clocking bits
+            registers[0] = new LFSR(19, new int[] { 13, 16, 17, 18 }, 8);
+            registers[1] = new LFSR(22, new int[] { 20, 21 }, 10);
+            registers[2] = new LFSR(23, new int[] { 7, 20, 21, 22 }, 10);
+            //initialize LFSRs values
+            InitPhase();
+        }
+        //method for initializing LFSRs values
+        //inputs key, IV and then 100 rounds
+        private void InitPhase()
+        {
+            //64 rounds for inputting the key
+            for (int i = 0; i < 64; i++)
+            {
+                registers[0].Shift(working_key[i]);
+                registers[1].Shift(working_key[i]);
+                registers[2].Shift(working_key[i]);
+            }
+            //22 rounds for inputting the IV
+            for (int i = 0; i < 22; i++)
+            {
+                registers[0].Shift(working_IV[i]);
+                registers[1].Shift(working_IV[i]);
+                registers[2].Shift(working_IV[i]);
+            }
+            //100 rounds, following the majority rule
+            for (int i = 0; i < 100; i++)
+            {
+                Majority();
+            }
+        }
+        //method gets major bit value and returns it
+        private int GetMajor()
+        {      // if the clocking bit of the first register is the same as the clocking bit of one of the other registers,
+               // then this clocking bit is considered as majority bit
+
+            if (registers[0].ClockingTap() == registers[1].ClockingTap() || registers[0].ClockingTap() == registers[2].ClockingTap())
+            {
+                return registers[0].ClockingTap();
+            }
+            else
+            {//otherwise the clocking bit of the second register is in majority
+                return registers[1].ClockingTap();
+            }
+        }
+        private void Majority()
+        {
+            //get value of major bit
+            int major = GetMajor();
+            //LINQ expression, select registers that have the clocking bit in majority and then shifts them
+            var shiftingRegisters = registers.Where(x => x.ClockingTap() == major);
+            foreach (var reg in shiftingRegisters)
+            {
+                reg.Shift();
+            }
+
+        }
+        //output function, XOR of last values in each LFSR
+        private int Output()
+        {
+            return (registers[0].GetLast() + registers[1].GetLast() + registers[2].GetLast()) % 2;
+        }
+        //encrypts single bit
+        private int Cipher(int infoBit)
+        {
+            //majority function, and shifting registers
+            Majority();
+            //result is XORed with plaintext
+            int res = (infoBit + Output()) % 2;
 
             return res;
         }
-
-        // Function to XOR registers' values, in order to get later the output values
-        private int XorRegValues(int[] vToXor)
+        //encrypts array of bits
+        public int[] Encrypt(int[] frame)
         {
-            int final = 0;
-
-            for (int i = 0; i < vToXor.Length; i++)
-                final = XorValues(final, vToXor[i]);
-
-            return final;
-        }
-
-        // The loop has been created to store the index values of the 3 registers in the array. We get index from length of each register
-        private int[] GetIndexValues()
-        {
-            int[] indexValues = new int[registers.Length];
-
-            for (int i = 0; i < registers.Length; i++)
+            int[] encrypted = new int[frame.Length];
+            for (int i = 0; i < frame.Length; i++)
             {
-                indexValues[i] = registers[i][rIndexes[i]];
+                encrypted[i] = Cipher(frame[i]);
             }
-
-            return indexValues;
+            return encrypted;
         }
 
-        //This function is going to be used later for finding majority bit
-        // it stores the frequency of index values of the three registers
-
-        private int[] FindFrequency(int[] indexValues)
+        public void Execute()
         {
-            int[] tally = new int[2]; //size of 2 since its just binary
-
-            foreach (int val in indexValues)
+            ProgressChanged(0, 1);
+            //check the validity of the input parameters
+            if (InitialVector.Length != 3)
             {
-                if (val == 0)
-                    tally[0]++;
-                else if (val == 1)
-                    tally[1]++;
+                GuiLogMessage("Not valid IV length!", NotificationLevel.Error);
+                return;
             }
-
-            return tally;
-        }
-
-        public void CreateRegisters()
-        {
-            // registers are initialized to zero 
-            registers = new int[nRegisters][];
-            for (int i = 0; i < nRegisters; i++)
+            if (Key.Length != 8)
             {
-                int[] newReg = new int[mRegLens[i]];
-                for (int k = 0; k < mRegLens[i]; k++)
-                    newReg[k] = 0;
-                registers[i] = newReg;
+                GuiLogMessage("Not valid key length!", NotificationLevel.Error);
+                return;
             }
-            // after initializing to zero, the key is going to be mixed
-            MixKey();
-            // after that, the IV is going to be mixed with the feedback of the registers
-            MixIV();
-            for (int j = 0; j < 100; j++)
-            {// registers are being clocked 100 times, using the feedback values
-                int[] regTS = RegistersToShift();
-                int[] feedbackvalues = GetFeedbackValues(regTS);
-                RegisterShiftWithVal(regTS, feedbackvalues);
-            }
+            //initialize the bit array for cipher text
+            cipherText = new int[plainText.Length];
+            //init bit array for IV
+            int[] temporary_IV = new int[22];
+            //converting the IV from byte to bit representation and copying them to temporary IV array 
+            Array.Copy(ToInt(IVbytes), temporary_IV, 22);
+            //gets the number of frames from settings 
+            NumberOfFrames = ((A5Settings)settings).FramesCount;
+            //count frame size
+            int frameSize = plainText.Length / NumberOfFrames;
 
-        }
+            //initialize bit array for one (current) frame
+            int[] framePlain = new int[frameSize];
 
-        // This function returns keystream values after the registers' values are being XORed 
-        public int GetOutValue()
-        {
-            int[] vToXor = new int[registers.Length];
-            int outValue = 0;
-
-            for (int i = 0; i < registers.Length; i++)
-                // from each register we are getting values to XOR
-                vToXor[i] = registers[i][0];
-            // after that we XOR these values
-            outValue = XorRegValues(vToXor);
-
-            int[] regTS = RegistersToShift();
-            int[] feedbackset = GetFeedbackValues(regTS);
-            // registers are being shifted with the feedback set values of registers
-            RegisterShiftWithVal(regTS, feedbackset);
-
-            return outValue;
-        }
-
-        // This is for filling registers with data. We would know the length of register from getIndex so the that the function will know when to stop filling
-        public int[] RegistersToShift()
-        {
-            int[] indexValues = GetIndexValues();
-            int[] tally = FindFrequency(indexValues);
-
-            int highest = 0;
-            int movVal = 0;
-
-            // here we find the majority bit
-            // the index values of each register indicate the majority bit
-            // eg. if the index values of the registers are (1,0,0) this means that the majority bit is 0
-
-            foreach (int count in tally)
+            int[] frameCipher;
+            for (int i = 0; i < NumberOfFrames; i++)
             {
-                if (count > highest)
-                    highest = count;
+                //init registers with key and temporary IV
+                InitFrame(ToInt(keyBytes), temporary_IV);
+                //this output registers values after initial state (before keystream generation)
+                GuiLogMessage(this.ToString(), NotificationLevel.Info);
+                //copying current frame to array
+                Array.Copy(plainText, i * frameSize, framePlain, 0, frameSize);
+                //encrypting frame and writing it to the temporary cipher frame array
+                frameCipher = Encrypt(framePlain);
+                //copying current frame ciphertext to the general ciphertext array
+                Array.Copy(frameCipher, 0, cipherText, i * frameSize, frameSize);
+                //incrementing the IV for the next frame
+                Increment(temporary_IV, 0);
             }
-
-            for (int i = 0; i < tally.Length; i++)
-            {
-                if (tally[i] == highest)
-                    movVal = i;
-            }
-
-            ArrayList regTS = new ArrayList();
-
-            for (int i = 0; i < indexValues.Length; i++)
-            { // only registers that are in majority will be clocked
-                if (indexValues[i] == movVal)
-                    regTS.Add(i);
-            }
-
-            return (int[])regTS.ToArray(typeof(int));
+            //converting ciphertext from bit representation to byte array
+            CipherText = FromInt(cipherText);
+            ProgressChanged(1, 1);
         }
 
-        private void MixKey()
+        public override string ToString()
         {
-            int[] regTS = new int[3] { 0, 1, 2 };
-
-            for (int i = 0; i < key.Length; i++)
-            { // we get the feedback value of each register
-                int[] feedbackset = GetFeedbackValues(regTS);
-                for (int j = 0; j < feedbackset.Length; j++)
-                    // the feedback values of registers are going to be XORed with the secret key bits
-                    feedbackset[j] = XorValues(feedbackset[j], key[i]);
-
-                RegisterShiftWithVal(regTS, feedbackset);
-
-            }
+            return registers[0].ToString() + "\n" + registers[1].ToString() + "\n" + registers[2].ToString() + "\n";
         }
 
-        private void MixIV()
-        {
-            int[] regTS = new int[3] { 0, 1, 2 };
-
-            for (int i = 0; i < iv.Length; i++)
-            {
-                int[] feedbackset = GetFeedbackValues(regTS);
-                for (int j = 0; j < feedbackset.Length; j++)
-                    // feedback values of registers are going to be XORed with the IV bits
-                    feedbackset[j] = XorValues(feedbackset[j], iv[i]);
-                // after XORing these values, the registers will be shifted 
-                RegisterShiftWithVal(regTS, feedbackset);
-            }
-
-        }
-
-        // The feedback in registers are calculated from the bits that are taken out such as for example 13th, 16th, 17th,18th bits in first register
-        private int[] GetFeedbackValues(int[] regTS)
-        {
-            int[] regTSFBV = new int[regTS.Length]; //Reg To Shift Feed Back Values (regTSFBV)
-
-            for (int i = 0; i < regTS.Length; i++)
-            {    // the Feedback set of bits in each registers is received from the tapped bits
-                int[] feedbackSet = new int[tappedBits[regTS[i]].Length];
-
-                for (int x = 0; x < tappedBits[regTS[i]].Length; x++)
-                {
-                    feedbackSet[x] = registers[regTS[i]][tappedBits[regTS[i]][x]];
-                }
-
-                regTSFBV[i] = XorRegValues(feedbackSet);
-            }
-
-            return regTSFBV;
-        }
-
-        public void RegisterShiftWithVal(int[] regTS, int[] val)
-        {
-            for (int i = 0; i < regTS.Length; i++)
-            {
-                int[] regShifting = registers[regTS[i]]; //Make a copy of the register to shift
-
-                //Creates new register with appropriate max reg length
-
-                int[] nRegister = new int[regShifting.Length];
-
-                //Shifting values (the last bit is replaced with the second last bit and the rest of the bits are shifted to the right.)
-
-                for (int x = regShifting.Length - 1; x > 0; x--)
-                    nRegister[x] = regShifting[x - 1]; //
-
-
-
-                //Now put feedback value on the zero index (the feedback value we recieve from xoring of tapped bits.)
-
-                nRegister[0] = val[i];
-
-                registers[regTS[i]] = nRegister; //assign to register (update)
-            }
-        }
-
-        public int[] encrypt(int[] plaintext, int[] encryptKey, int[] initialvector)
-        {
-
-            CreateRegisters();
-            int[] encryptedText = new int[plaintext.Length];
-            for (int i = 0; i < plaintext.Length; i++)
-            {
-                encryptedText[i] = (GetOutValue() + message[i]) % 2;
-            }
-            return encryptedText;
-        }
-
-        /**
-         * Adds zeros to the MSB of the given string. If the string is
-         * too large, it will be truncated.
-         * @param inString
-         * @param bytes
-         * @return
-         */
-        private String padZeros(String inString, int bytes)
-        {
-            char[] initS = new char[bytes];
-            char[] inArray = inString.ToCharArray();
-
-            if (inString.Length > bytes)
-            {
-                int start = inString.Length - bytes;
-                Array.Copy(inArray, start, initS, 0, initS.Length);
-            }
-            else
-            {
-                int diff = bytes - inString.Length;
-
-                for (int i = 0; i < bytes; i++) initS[i] = '0';
-                Array.Copy(inArray, 0, initS, diff, inArray.Length);
-            }
-            return new String(initS);
-        }
-
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
+        #region IPlugin Members
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged(string name)
@@ -455,10 +312,6 @@ namespace Cryptool.Plugins.A5
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
 
         }
-
-        #endregion
-
-        #region IPlugin Members
 
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.
@@ -488,60 +341,7 @@ namespace Cryptool.Plugins.A5
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
-        public void Execute()
-        {
-            ProgressChanged(0, 1);
-            try
-            {// check the validity of input data
-                if (keyBytes.Length != 8)
-                {
-                    GuiLogMessage("Key Length must be 64 bits, current length " + keyBytes.Length, NotificationLevel.Error);
-                    return;
-                }
-                if (String.IsNullOrEmpty(initialVector) || initialVector.Length != 22)
-                {
-                    GuiLogMessage("Initial Vector Length must be 22 bits, current length " + initialVector.Length, NotificationLevel.Error);
-                    GuiLogMessage(initialVector, NotificationLevel.Error);
-                    return;
-                }
 
-                String outval = "";
-                key = new int[64];
-                iv = new int[22];
-                message = new int[messageBytes.Length * 8];
-
-                String messagebits = BytesArrToString(messageBytes);
-
-                //Convert text to binary sequence
-
-
-                for (int i = 0; i < 64; i++)
-                    key[i] = keyString[i] == '0' ? 0 : 1;
-                for (int j = 0; j < 22; j++)
-                    iv[j] = initialVector[j] == '0' ? 0 : 1;
-
-                for (int k = 0; k < messageBytes.Length * 8; k++)
-                {
-                    message[k] = messagebits[k] == '0' ? 0 : 1;
-                }
-
-                int[] result = encrypt(message, key, iv);
-
-                for (int i = 0; i < result.Length; i++)
-                    outval += result[i];
-                List<Byte> byteList = new List<Byte>();
-                for (int i = 0; i < outval.Length; i += 8)
-                {
-                    byteList.Add(Convert.ToByte(outval.Substring(i, 8), 2));
-                }
-                Out = byteList.ToArray();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-            ProgressChanged(1, 1);
-        }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
 
@@ -592,5 +392,54 @@ namespace Cryptool.Plugins.A5
         #endregion
 
 
+    }
+    class LFSR
+    {
+        int[] cells;
+        int[] tapBits;
+        int clockingTap;
+        public LFSR(int size, int[] tapped, int clocking)
+        {
+            cells = new int[size];
+            tapBits = tapped;
+            clockingTap = clocking;
+        }
+        public int Shift(int input = 0)
+        {
+            int result = cells[cells.Length - 1];
+            int next = input;
+            foreach (var tap in tapBits)
+            {
+                next += cells[tap];
+            }
+            next = next % 2;
+            for (int i = cells.Length - 1; i > 0; i--)
+            {
+                cells[i] = cells[i - 1];
+            }
+            cells[0] = next;
+            return result;
+        }
+        public int this[int indexer]
+        {
+            get { return cells[indexer]; }
+        }
+        public int ClockingTap()
+        {
+            return this[clockingTap];
+        }
+        public int GetLast()
+        {
+            return cells[cells.Length - 1];
+        }
+        public override string ToString()
+        {
+            string s = "";
+            foreach (var i in cells)
+            {
+                s += i.ToString();
+            }
+            return s;
+        }
     }
 }

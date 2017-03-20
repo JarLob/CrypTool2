@@ -3,34 +3,18 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.GrainV1.Attack
+namespace Cryptool.Plugins.GrainV0.Chipher
 {
-    public class GrainV1AttackSettings : ISettings
+    public class GrainV0Settings : ISettings
     {
         #region Private Variables
         //variable for NFSR source (false->external, true-> C# random number generator)
-        private bool generator = false;
 
         #endregion
 
         #region TaskPane Settings
         //property for CheckBox
-        [TaskPane("Built-in random generator", "Check this to use built-in random generator to fill NfSR", null, 1, false, PluginBase.ControlType.CheckBox)]
-        public Boolean UseGenerator
-        {
-            get
-            {
-                return generator;
-            }
-            set
-            {
-                if (generator != value)
-                {
-                    generator = value;
-                    OnPropertyChanged("UseGenerator");
-                }
-            }
-        }
+
 
         #endregion
 
@@ -51,3 +35,4 @@ namespace Cryptool.Plugins.GrainV1.Attack
         }
     }
 }
+

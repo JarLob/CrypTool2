@@ -21,14 +21,13 @@
 
   <usage lang="en">
     After dragging the GrainV1Attack component onto your workspace, you will have to attach a text input connector to data sources, which corresponds to
-    the NFSR in the final clocking. You can add the data of the non-linear register manually but this is not very recommended, since it
-    would take a lot of time until you'll find the weak key-IV pair.
-    Also, you can attach a random generator as data source, which will generate random values for the NFSR until the attack is successful.
-    Then you have to connect three text output components to the 'Output' connectors, which correspond to the LFSR and NFSR at the initial state.
+    the brute force used to generate the NFSR in the final clocking randomly. 
+    
+    Then you have to connect four text output components to the 'Output' connectors, which correspond to: the LFSR at the initial state, NFSR at the initial state,
+    NFSR in the 160th clocking and keystream.
     NFSR bits in the output component indicate the secret key.
     LFSR bits from positions 0 to 63 in the output component indicate the IV.
 
-    NFSR input length must be 10 bytes.
   </usage>
 
   <usage lang="de-DE">
@@ -39,7 +38,13 @@
   
   <presentation lang="de-DE">
   </presentation>
-  
+
   <references>
+
+    <linkReference>
+      <link url="https://eprint.iacr.org/2009/109.pdf" lang="en" />
+      <caption lang="en">Cryptanalysis of Stream Cipher Grain Family</caption>
+
+    </linkReference>
   </references>
 </documentation>
