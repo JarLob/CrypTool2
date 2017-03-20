@@ -21,7 +21,7 @@ using System.Windows;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
-    public enum FormatType { lettersOnly, digitsOnly, numbers, binaryOnly };
+    public enum FormatType { lettersOnly, numbers, digitsOnly, binaryOnly };
     public enum GenerationType { regex, random, naturalSpeech };
 
     public class TestVectorGeneratorSettings : ISettings
@@ -32,8 +32,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
         private int _keyAmountPerLength = 1;
-        private FormatType _keyFormat = FormatType.lettersOnly;
-        private GenerationType _keyGeneration = GenerationType.random;
+        private FormatType _keyFormat;
+        private GenerationType _keyGeneration;
 
         #endregion
 
@@ -131,7 +131,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
-            "letters only", "digits only", "numbers from 0 to 25", "binary only"})]
+            "uppercase letters", "unique numbers", "digits", "binary"})]
         public FormatType KeyFormatRandom
         {
             get
@@ -149,7 +149,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
-            "letters only", "numbers from 0 to 25"})]
+            "uppercase letters", "unique numbers"})]
         public FormatType KeyFormatNaturalSpeech
         {
             get
@@ -187,6 +187,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             if (TaskPaneAttributeChanged != null)
                 TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(setting, vis)));
+
+            OnPropertyChanged(setting);
         }
 
         #endregion
@@ -198,7 +200,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
         public event PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            if (_keyFormat == null)
+                _keyFormat = FormatType.lettersOnly;
+            if (_keyGeneration == null)
+                _keyGeneration = GenerationType.random;
+            UpdateTaskPaneVisibility();
         }
 
         private void OnPropertyChanged(string propertyName)
