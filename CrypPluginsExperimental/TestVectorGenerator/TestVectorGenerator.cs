@@ -185,38 +185,274 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #endregion
 
-        #region IPlugin Members
+        #region Generate Plaintext
 
-        /// <summary>
-        /// Provide plugin-related parameters (per instance) or return null.
-        /// </summary>
-        public ISettings Settings
+        public void generatePlaintext()
         {
-            get { return _settings; }
-        }
+            // check if plaintext list contains all elements, break if so
+            if (_plaintextList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
+                return;
 
-        /// <summary>
-        /// Provide custom presentation to visualize the execution or return null.
-        /// </summary>
-        public UserControl Presentation
-        {
-            get { return null; }
-        }
-
-        /// <summary>
-        /// Called once when workflow execution starts.
-        /// </summary>
-        public void PreExecution()
-        {
-        }
-
-        public static int SHA1AsInt32(string stringToHash)
-        {
-            using (var sha1 = new SHA1Managed())
+            _startSentence = _rand.Next(0, _inputArray.Length);
+            while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
             {
-                return BitConverter.ToInt32(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)), 0);
+                //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
+                //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
+                _startSentence = _rand.Next(0, _inputArray.Length);
+            }
+
+            _plaintextOutput = "";
+            //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
+            //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
+            for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
+            {
+                _plaintextOutput = _plaintextOutput + _inputArray[i] + ". ";
+                if (_plaintextOutput.Length >= _settings.TextLength)
+                {
+                    String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
+                    _plaintextList.Add(finalPlaintext);
+                    PlaintextOutput = finalPlaintext;
+                    break;
+                }
             }
         }
+
+        #endregion
+
+        #region Generate Keys
+
+        public void generateNaturalSpeechKeys()
+        {
+            _startSentence = _rand.Next(0, _inputArray.Length);
+            //GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Debug);
+
+            if (occurences == null)
+            {
+                occurences = new ConcurrentDictionary<int, int>();
+
+                for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
+                {
+                    occurences.AddOrUpdate(i, 0, (id, count) => 0);
+                    //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
+                }
+            }
+
+            string sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+            int originalStartSentence = _startSentence;
+            //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
+
+            int sentenceLength = sentence.Length;
+            int smallestMissingLength = -1;
+
+            while (true)
+            {
+                // check if key list contains all elements, break if so
+                if (_keyList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
+                    return;
+
+                int lengthOccurences = 0;
+
+                // if no complete sentence could be found, search for a longer one and cut it
+                if (_notFound && sentenceLength > _settings.MaxKeyLength)
+                {
+                    if (smallestMissingLength == -1)
+                        smallestMissingLength = _settings.MinKeyLength - 1;
+
+                    lengthOccurences = _settings.KeyAmountPerLength;
+
+                    // search for the smallest sentence/key length that is missing
+                    while (smallestMissingLength <= _settings.MaxKeyLength &&
+                        lengthOccurences == _settings.KeyAmountPerLength)
+                    {
+                        smallestMissingLength++;
+                        occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
+                    }
+
+                    // double check, should not happen
+                    if (smallestMissingLength <= _settings.MaxKeyLength &&
+                        lengthOccurences > _settings.KeyAmountPerLength)
+                    {
+                        GuiLogMessage("Too many sentences added for length: " +
+                            smallestMissingLength, NotificationLevel.Debug);
+                        continue;
+                    }
+
+                    // cutting of the sentence
+                    sentence = sentence.Substring(0, smallestMissingLength);
+                    sentenceLength = sentence.Length;
+                }
+                else
+                {
+                    occurences.TryGetValue(sentenceLength, out lengthOccurences);
+                }
+                if (sentenceLength >= _settings.MinKeyLength &&
+                        sentenceLength <= _settings.MaxKeyLength &&
+                        lengthOccurences < _settings.KeyAmountPerLength &&
+                        !_keyList.Contains(sentence))
+                {
+                    _keyList.Add(sentence);
+                    occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
+
+                    // !!! TESTING ONLY !!!
+                    //sentence = sentence + " (" + sentence.Length + ")";
+
+                    //int length = 15 < sentence.Length ? 15 : sentence.Length;
+                    //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
+
+                    // if the letters should be replaced by numbers, do so
+                    if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
+                    {
+                        sentence = convertToNumericKey(sentence);
+                        //replaceLettersByNumbersWithSpaces();
+                    }
+
+                    SingleKeyOutput = sentence;
+
+                    return;
+                }
+
+                _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
+                sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+                sentenceLength = sentence.Length;
+
+                // if the start sentence reaches the original one, the whole imput array is computed
+                if (_startSentence == originalStartSentence)
+                {
+                    // check if also no longer sentence to cut could be found, break if so
+                    if (_notFound)
+                    {
+                        return;
+                    }
+                    _notFound = true;
+                }
+
+                // set progress
+                _progress++;
+                ProgressChanged(_progress / (_inputArray.Length - 1) * 2, 1);
+            }
+        }
+
+        public void generateRandomKeys()
+        {
+            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            {
+                keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                lastKeyLengthIndex = 0;
+            }
+            else if (lastKeyLengthIndex < keysToGenerate - 1)
+            {
+                lastKeyLengthIndex++;
+            }
+            else
+            {
+                return;
+            }
+
+            if (_settings.KeyFormatRandom == FormatType.lettersOnly)
+            {
+                //GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
+                string randomKey = "";
+                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
+                {
+                    char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
+                    randomKey = randomKey + ch;
+                }
+                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
+
+                SingleKeyOutput = randomKey;
+            }
+            else
+            {
+                int upperLimit = 0;
+                if (_settings.KeyFormatRandom == FormatType.binaryOnly)
+                {
+                    // 0 to 1 means binary
+                    upperLimit = 1;
+                }
+                else if (_settings.KeyFormatRandom == FormatType.digitsOnly)
+                {
+                    // 0 to 9 are all digits
+                    upperLimit = 9;
+                }
+                else if (_settings.KeyFormatRandom == FormatType.numbers)
+                {
+                    // from 0 to 25 for the 26 letters of the alphabet
+                    upperLimit = 25;
+                }
+                //GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
+                string randomKey = "";
+                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
+                {
+                    string space = "";
+                    if (!String.IsNullOrEmpty(randomKey))
+                        space = " ";
+                    int randomInt = (_rand.Next(0, upperLimit + 1));
+                    randomKey = randomKey + space + randomInt;
+                }
+                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
+
+                SingleKeyOutput = randomKey;
+            }
+        }
+
+        public void generateRandomKeysWithRegex()
+        {
+            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            {
+                if (_regexInput.Contains("$amount"))
+                {
+                    keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                }
+                else
+                {
+                    keysToGenerate = _settings.KeyAmountPerLength;
+                }
+                lastKeyLengthIndex = 0;
+            }
+            else if (lastKeyLengthIndex < keysToGenerate - 1)
+            {
+                lastKeyLengthIndex++;
+            }
+            else
+            {
+                return;
+            }
+
+            var str = _regexInput;
+            if (_regexInput.Contains("$amount"))
+            {
+                int length = _settings.MinKeyLength + (lastKeyLengthIndex / _settings.KeyAmountPerLength);
+                //GuiLogMessage("length: " + length, NotificationLevel.Warning);
+                //var str = "[a-zA-Z]{" + length + "}";
+                str = str.Replace("$amount", length.ToString());
+            }
+            var regex = @str;
+            var xeger = new Fare.Xeger(regex, _rand);
+            var regexString = xeger.Generate();
+
+            while (_keyList.Contains(regexString))
+            {
+                regexString = xeger.Generate();
+            }
+
+            _keyList.Add(regexString);
+
+            // TESTING ONLY!
+            regexString = regexString + " (" + regexString.Length + ")";
+            //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
+
+            if (!Regex.IsMatch(regexString, regex))
+            {
+                GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
+
+            }
+
+            SingleKeyOutput = regexString;
+        }
+
+        #endregion
+
+        #region General Methods
 
         public bool checkVariables()
         {
@@ -264,147 +500,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             // split input text into sentences
             _inputArray = TextInput.Split('.');
-        }
-
-        public void generatePlaintext()
-        {
-            // check if plaintext list contains all elements, break if so
-            if (_plaintextList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
-                return;
-
-            _startSentence = _rand.Next(0, _inputArray.Length);
-            while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
-            {
-                //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
-                //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
-                _startSentence = _rand.Next(0, _inputArray.Length);
-            }
-
-            _plaintextOutput = "";
-            //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
-            //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
-            for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
-            {
-                _plaintextOutput = _plaintextOutput + _inputArray[i] + ". ";
-                if (_plaintextOutput.Length >= _settings.TextLength)
-                {
-                    String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
-                    _plaintextList.Add(finalPlaintext);
-                    PlaintextOutput = finalPlaintext;
-                    break;
-                }
-            }
-        }
-
-        public void generateNaturalSpeechKeys()
-        {
-            _startSentence = _rand.Next(0, _inputArray.Length);
-            //GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Debug);
-            
-            if ( occurences == null)
-            {
-                occurences = new ConcurrentDictionary<int, int>();
-
-                for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
-                {
-                    occurences.AddOrUpdate(i, 0, (id, count) => 0);
-                    //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
-                }
-            }
-
-            string sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
-            int originalStartSentence = _startSentence;
-            //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
-
-            int sentenceLength = sentence.Length;
-            int smallestMissingLength = -1;
-            
-            while (true)
-            {
-                // check if key list contains all elements, break if so
-                if (_keyList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength)
-                    return;
-
-                int lengthOccurences = 0;
-
-                // if no complete sentence could be found, search for a longer one and cut it
-                if (_notFound && sentenceLength > _settings.MaxKeyLength)
-                {
-                    if (smallestMissingLength == -1)
-                        smallestMissingLength = _settings.MinKeyLength - 1;
-
-                    lengthOccurences = _settings.KeyAmountPerLength;
-
-                    // search for the smallest sentence/key length that is missing
-                    while (smallestMissingLength <= _settings.MaxKeyLength &&
-                        lengthOccurences == _settings.KeyAmountPerLength)
-                    {
-                        smallestMissingLength++;
-                        occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
-                    }
-
-                    // double check, should not happen
-                    if (smallestMissingLength <= _settings.MaxKeyLength &&
-                        lengthOccurences > _settings.KeyAmountPerLength)
-                    {
-                        GuiLogMessage("Too many sentences added for length: " +
-                            smallestMissingLength, NotificationLevel.Debug);
-                        continue;
-                    }
-
-                    // cutting of the sentence
-                    sentence = sentence.Substring(0, smallestMissingLength);
-                    sentenceLength = sentence.Length;
-                }
-                else
-                {
-                    occurences.TryGetValue(sentenceLength, out lengthOccurences);
-                }
-                if (sentenceLength >= _settings.MinKeyLength &&
-                        sentenceLength <= _settings.MaxKeyLength &&
-                        lengthOccurences < _settings.KeyAmountPerLength && 
-                        !_keyList.Contains(sentence))
-                {
-                    _keyList.Add(sentence);
-                    occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
-
-                    // !!! TESTING ONLY !!!
-                    //sentence = sentence + " (" + sentence.Length + ")";
-
-                    //int length = 15 < sentence.Length ? 15 : sentence.Length;
-                    //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
-
-                    // if the letters should be replaced by numbers, do so
-                    if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
-                    {
-                        sentence = convertToNumericKey(sentence);
-                        //replaceLettersByNumbersWithSpaces();
-                    }
-
-                    SingleKeyOutput = sentence;
-
-                    return;
-                }
-
-                _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
-                sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
-                sentenceLength = sentence.Length;
-
-                // if the start sentence reaches the original one, the whole imput array is computed
-                if (_startSentence == originalStartSentence)
-                {
-                    // check if also no longer sentence to cut could be found, break if so
-                    if (_notFound)
-                    {
-                        return;
-                    }
-                    _notFound = true;
-                }
-
-                // set progress
-                _progress++;
-                ProgressChanged(_progress / (_inputArray.Length-1)*2, 1);
-            }
         }
 
         public String convertToNumericKey(String key)
@@ -478,120 +573,39 @@ namespace Cryptool.Plugins.TestVectorGenerator
             SingleKeyOutput = transpositionKey;
         }
 
-        public void generateRandomKeys()
+        public static int SHA1AsInt32(string stringToHash)
         {
-            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            using (var sha1 = new SHA1Managed())
             {
-                keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
-                lastKeyLengthIndex = 0;
-            }
-            else if (lastKeyLengthIndex < keysToGenerate - 1)
-            {
-                lastKeyLengthIndex++;
-            }
-            else
-            {
-                return;
-            }
-
-            if (_settings.KeyFormatRandom == FormatType.lettersOnly)
-            {
-                //GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
-                string randomKey = "";
-                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
-                {
-                    char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
-                    randomKey = randomKey + ch;
-                }
-                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
-
-                SingleKeyOutput = randomKey;
-            }
-            else
-            {
-                int upperLimit = 0;
-                if (_settings.KeyFormatRandom == FormatType.binaryOnly)
-                {
-                    // 0 to 1 means binary
-                    upperLimit = 1;
-                } else if (_settings.KeyFormatRandom == FormatType.digitsOnly)
-                {
-                    // 0 to 9 are all digits
-                    upperLimit = 9;
-                } else if (_settings.KeyFormatRandom == FormatType.numbers)
-                {
-                    // from 0 to 25 for the 26 letters of the alphabet
-                    upperLimit = 25;
-                }
-                //GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
-                string randomKey = "";
-                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
-                {
-                    string space = "";
-                    if (!String.IsNullOrEmpty(randomKey))
-                        space = " ";
-                    int randomInt = (_rand.Next(0, upperLimit+1));
-                    randomKey = randomKey + space + randomInt;
-                }
-                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
-
-                SingleKeyOutput = randomKey;
+                return BitConverter.ToInt32(sha1.ComputeHash(Encoding.UTF8.GetBytes(stringToHash)), 0);
             }
         }
 
-        public void generateRandomKeysWithRegex()
+        #endregion
+
+        #region IPlugin Members
+
+        /// <summary>
+        /// Provide plugin-related parameters (per instance) or return null.
+        /// </summary>
+        public ISettings Settings
         {
-            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
-            {
-                if (_regexInput.Contains("$amount"))
-                {
-                    keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
-                }
-                else
-                {
-                    keysToGenerate = _settings.KeyAmountPerLength;
-                }
-                lastKeyLengthIndex = 0;
-            }
-            else if (lastKeyLengthIndex < keysToGenerate-1)
-            {
-                lastKeyLengthIndex++;
-            }
-            else
-            {
-                return;
-            }
+            get { return _settings; }
+        }
 
-            var str = _regexInput;
-            if (_regexInput.Contains("$amount"))
-            {
-                int length = _settings.MinKeyLength + (lastKeyLengthIndex / _settings.KeyAmountPerLength);
-                //GuiLogMessage("length: " + length, NotificationLevel.Warning);
-                //var str = "[a-zA-Z]{" + length + "}";
-                str = str.Replace("$amount", length.ToString());
-            }
-            var regex = @str;
-            var xeger = new Fare.Xeger(regex, _rand);
-            var regexString = xeger.Generate();
+        /// <summary>
+        /// Provide custom presentation to visualize the execution or return null.
+        /// </summary>
+        public UserControl Presentation
+        {
+            get { return null; }
+        }
 
-            while (_keyList.Contains(regexString))
-            {
-                regexString = xeger.Generate();
-            }
-
-            _keyList.Add(regexString);
-
-            // TESTING ONLY!
-            regexString = regexString + " (" + regexString.Length + ")";
-            //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
-
-            if (!Regex.IsMatch(regexString, regex))
-            {
-                GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
-
-            }
-
-            SingleKeyOutput = regexString;
+        /// <summary>
+        /// Called once when workflow execution starts.
+        /// </summary>
+        public void PreExecution()
+        {
         }
 
         /// <summary>
@@ -628,17 +642,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
 
             ProgressChanged(1, 1);
-        }
-
-        private bool allKeysFound(ConcurrentDictionary<int, int> dict) {
-            foreach (int key in dict.Keys)
-            {
-                //GuiLogMessage("dict[" + key + "]: " + dict[key], NotificationLevel.Info);
-                if (dict[key] < _settings.KeyAmountPerLength)
-                    return false;
-            }
-
-            return true;
         }
 
         /// <summary>

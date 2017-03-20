@@ -166,6 +166,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        #endregion
+
+        #region UI Update
+
         internal void UpdateTaskPaneVisibility()
         {
             settingChanged("KeyFormatRandom", Visibility.Collapsed);
