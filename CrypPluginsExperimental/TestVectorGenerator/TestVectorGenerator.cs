@@ -364,14 +364,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     //int length = 15 < sentence.Length ? 15 : sentence.Length;
                     //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
 
-                    SingleKeyOutput = sentence;
-
                     // if the letters should be replaced by numbers, do so
-                    if (_settings.KeyFormatRandom == FormatType.numbers)
+                    if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
                     {
-                        // TODO: fix letter replacement
-                        replaceLettersByNumbersWithSpaces();
+                        sentence = convertToNumericKey(sentence);
+                        //replaceLettersByNumbersWithSpaces();
                     }
+
+                    SingleKeyOutput = sentence;
 
                     return;
                 }
@@ -395,6 +395,55 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _progress++;
                 ProgressChanged(_progress / (_inputArray.Length-1)*2, 1);
             }
+        }
+
+        public String convertToNumericKey(String key)
+        {
+            return convertToNumericKey(key, true);
+        }
+
+        public String convertToNumericKey(String key, bool addSpaces)
+        {
+            char[] chars = key.ToCharArray();
+            int[] numbers = new int[chars.Length];
+            string space = "";
+            if (addSpaces)
+                space = " ";
+
+            int index = 0;
+
+            for (int i = 0; index < chars.Length; i = i == chars.Length - 1 ? 0 : i + 1)
+            {
+                char ch1 = chars[i];
+                if (ch1 > 'Z')
+                {
+                    continue;
+                }
+
+                int smallestLetter = 0;
+
+                for (int j = 0; j < chars.Length; j++)
+                {
+                    ch1 = chars[smallestLetter];
+                    char ch2 = chars[j];
+
+                    if (smallestLetter == j)
+                        continue;
+
+                    if (ch2 < ch1)
+                        smallestLetter = j;
+                }
+
+                numbers[smallestLetter] = index;
+                chars[smallestLetter] = Convert.ToChar('Z' + 1);
+                index++;
+            }
+            String numericKey = numbers[0].ToString();
+            for (int i = 1; i < numbers.Length; i++)
+                numericKey = numericKey + space + numbers[i];
+            //Console.WriteLine("numericKey: " + numericKey);
+
+            return numericKey;
         }
 
         public void replaceLettersByNumbersWithSpaces()
