@@ -15,7 +15,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
 
         #region TaskPane Settings
         //property for CheckBox
-        [TaskPane("Built-in random generator", "Check this to use built-in random generator to fill NfSR", null, 1, false, PluginBase.ControlType.CheckBox)]
+        [TaskPane("Built-in random generator", "Check this to use built-in random generator to fill NFSR", null, 1, false, PluginBase.ControlType.CheckBox)]
         public Boolean UseGenerator
         {
             get

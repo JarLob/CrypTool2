@@ -11,7 +11,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
 {
     //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("GrainV1Attack.Properties.Resources", "Grain V1 Attack", "Searches for weak Key-IV pairs", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
+    [PluginInfo("GrainV1Attack.Properties.Resources", "Grain V1 Attack", "Searches for weak key-IV pairs", "GrainV1Attack/userdoc.xml", new[] { "GrainV1Attack/GrainV1Attack.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
 

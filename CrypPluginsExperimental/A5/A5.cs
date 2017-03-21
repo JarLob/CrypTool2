@@ -253,17 +253,20 @@ namespace Cryptool.Plugins.A5
         public void Execute()
         {
             ProgressChanged(0, 1);
+
             //check the validity of the input parameters
             if (InitialVector.Length != 3)
             {
-                GuiLogMessage("Not valid IV length!", NotificationLevel.Error);
+                GuiLogMessage(String.Format("Invalid IV length! The given IV is {0} bytes long, but 3 bytes are expected.", InitialVector.Length), NotificationLevel.Error);
                 return;
             }
+
             if (Key.Length != 8)
             {
-                GuiLogMessage("Not valid key length!", NotificationLevel.Error);
+                GuiLogMessage(String.Format("Invalid key length! The given key is {0} bytes long, but 8 bytes are expected.", Key.Length), NotificationLevel.Error);
                 return;
             }
+
             //initialize the bit array for cipher text
             cipherText = new int[plainText.Length];
             //init bit array for IV

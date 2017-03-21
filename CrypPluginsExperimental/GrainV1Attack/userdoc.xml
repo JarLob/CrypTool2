@@ -20,9 +20,9 @@
   </introduction>
 
   <usage lang="en">
-    After dragging the GrainV1Attack component onto your workspace, you will have to attach a text input connector to data sources, which corresponds to
-    the brute force used to generate the NFSR in the final clocking randomly. 
-    
+    After dragging the GrainV1Attack component onto your workspace, you have to attach a text input connector to data sources, which corresponds to
+    the brute force used to generate the NFSR (nonlinear feedback shift register) in the final clocking randomly.
+
     Then you have to connect four text output components to the 'Output' connectors, which correspond to: the LFSR at the initial state, NFSR at the initial state,
     NFSR in the 160th clocking and keystream.
     NFSR bits in the output component indicate the secret key.
@@ -43,7 +43,7 @@
 
     <linkReference>
       <link url="https://eprint.iacr.org/2009/109.pdf" lang="en" />
-      <caption lang="en">Cryptanalysis of Stream Cipher Grain Family</caption>
+      <caption lang="en">Cryptanalysis of the Stream Ciphers Grain Family</caption>
 
     </linkReference>
   </references>

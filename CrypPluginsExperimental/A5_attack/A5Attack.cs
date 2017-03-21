@@ -25,7 +25,7 @@ using System.Collections.Generic;
 namespace Cryptool.Plugins.A5_attack
 {
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
-    [PluginInfo("A5_attack.Properties.Resources", "A5 Attack", "Tries to guess the key and decrypt the ciphertext", "A5/userdoc.xml", new[] { "A5_attack/Images/gsm.png" })]
+    [PluginInfo("A5_attack.Properties.Resources", "A5 Attack", "Tries to guess the key and decrypt the ciphertext", "A5_attack/userdoc.xml", new[] { "A5_attack/Images/gsm.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class A5_attack : ICrypComponent
     {
@@ -559,14 +559,16 @@ namespace Cryptool.Plugins.A5_attack
                 //cycle tries guessbits values for all the cases
                 for (int i = 0; i < (1 << guessbits.Length) - 1; i++)
                 {
-                  
-                    string s = i + " ";
-                    for (int j = 0; j < 17; j++)
-                    {
-                        s += guessbits[j];
-                    }
-                    GuiLogMessage(s, NotificationLevel.Info);
-                    // 
+                    if ((i & 0x3ff) == 0)
+                        ProgressChanged(i, 1 << 17);
+
+                    //string s = i + " ";
+                    //for (int j = 0; j < 17; j++)
+                    //{
+                    //    s += guessbits[j];
+                    //}
+                    //GuiLogMessage(s, NotificationLevel.Info);
+
                     trialKey = Scenario1(guessbits, IV[0]);
                     test = new A5(trialKey, IV[0]);
                     trialPlainText = test.Encrypt(ciphertext[0]);
@@ -636,22 +638,23 @@ namespace Cryptool.Plugins.A5_attack
             }
             return result;
         }
+
         public void Execute()
         {
             ProgressChanged(0, 1);
             // check validity of input values
             if (InitialVector.Length > 3)
             {
-                GuiLogMessage("Initial vector size must be 22 bits. All bits after the 22th won`t be counted", NotificationLevel.Warning);
+                GuiLogMessage("Initial vector size must be 22 bits. All bits after the 22th will be ignored.", NotificationLevel.Warning);
             }
             if (PlainText.Length == 0)
             {
-                GuiLogMessage("Please enter the plaintext", NotificationLevel.Error);
+                GuiLogMessage("Please enter the plaintext.", NotificationLevel.Error);
                 return;
             }
             if (PlainText.Length != CipherText.Length)
             {
-                GuiLogMessage("Lengths of plain and ciphertexts, must be same.", NotificationLevel.Error);
+                GuiLogMessage("The plaintext and the ciphertext must have the same length.", NotificationLevel.Error);
                 return;
             }
             InitValues(PlainText, CipherText, InitialVector, framesCount);
