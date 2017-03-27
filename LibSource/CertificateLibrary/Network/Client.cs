@@ -96,9 +96,9 @@ namespace CertificateLibrary.Network
 
         private const int FALLBACK_CONNECTION_TIMEOUT = 30;
 
-        private const string FALLBACK_SERVER_HOST = "monitor.vs.uni-due.de";
+        private const string FALLBACK_SERVER_HOST = "141.51.125.18";
 
-        private const int FALLBACK_SERVER_PORT = 443;
+        private const int FALLBACK_SERVER_PORT = 44443;
 
         #endregion
 
