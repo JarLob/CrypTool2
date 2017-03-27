@@ -23,19 +23,19 @@ using System.Text.RegularExpressions;
 using System;
 using System.Windows.Threading;
 
-namespace Cryptool.Plugins.CryptoAnalysisAnalyser
+namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("CryptoAnalysisAnalyser", "Subtract one number from another", "CryptoAnalysisAnalyser/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("CryptAnalysisAnalyzer", "Subtract one number from another", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
-    public class TestVectorGenerator : ICrypComponent
+    public class CryptAnalysisAnalyzer : ICrypComponent
     {
         #region Private Variables
 
-        private readonly CryptoAnalysisAnalyserSettings _settings = new CryptoAnalysisAnalyserSettings();
+        private readonly CryptAnalysisAnalyzerSettings _settings = new CryptAnalysisAnalyzerSettings();
         private string _textInput;
         private int _seedInput;
         private string _plaintextInput;

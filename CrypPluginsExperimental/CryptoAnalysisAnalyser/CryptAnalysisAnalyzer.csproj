@@ -77,8 +77,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CryptoAnalysisAnalyser.cs" />
-    <Compile Include="CryptoAnalysisAnalyserSettings.cs" />
+    <Compile Include="CryptAnalysisAnalyzer.cs" />
+    <Compile Include="CryptAnalysisAnalyzerSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

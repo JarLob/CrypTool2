@@ -19,12 +19,12 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows;
 
-namespace Cryptool.Plugins.CryptoAnalysisAnalyser
+namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     public enum FormatType { lettersOnly, digitsOnly, numbers, binaryOnly };
     public enum GenerationType { random, naturalSpeech };
 
-    public class CryptoAnalysisAnalyserSettings : ISettings
+    public class CryptAnalysisAnalyzerSettings : ISettings
     {
         #region Private Variables
 
