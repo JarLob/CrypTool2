@@ -438,7 +438,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _keyList.Add(regexString);
 
             // TESTING ONLY!
-            regexString = regexString + " (" + regexString.Length + ")";
+            //regexString = regexString + " (" + regexString.Length + ")";
             //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
 
             if (!Regex.IsMatch(regexString, regex))
