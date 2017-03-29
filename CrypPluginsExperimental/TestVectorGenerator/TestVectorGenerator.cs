@@ -41,6 +41,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _textInput;
         private int _seedInput;
         private string _regexInput;
+        private string _alphabetInput;
         private string _plaintextOutput;
         private string _debugOutput;
         private string _singleKeyOutput;
@@ -106,18 +107,27 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "SingleKeyOutput", "KeyOutput tooltip description")]
+        [PropertyInfo(Direction.InputData, "AlphabetInput", "AlphabetInput tooltip description")]
+        public string AlphabetInput
+        {
+            get { return this._alphabetInput; }
+            set
+            {
+                this._alphabetInput = value;
+                OnPropertyChanged("AlphabetInput");
+
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "SingleKeyOutput", "SingleKeyOutput tooltip description")]
         public string SingleKeyOutput
         {
             get { return this._singleKeyOutput; }
             set
             {
-                if (_singleKeyOutput == null || !_singleKeyOutput.Equals(value))
-                {
-                    this._singleKeyOutput = value;
-                    OnPropertyChanged("SingleKeyOutput");
-                    //Console.WriteLine("OnPropertyChanges SingleKeyOutput");
-                }
+                this._singleKeyOutput = value;
+                OnPropertyChanged("SingleKeyOutput");
+                //Console.WriteLine("OnPropertyChanges SingleKeyOutput");
             }
         }
 
@@ -268,7 +278,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
 
                     // if the letters should be replaced by numbers, do so
-                    if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
+                    if (_settings.KeyFormatNaturalSpeech == FormatType.uniqueNumbers)
                     {
                         sentence = convertToNumericKey(sentence);
                         //replaceLettersByNumbersWithSpaces();
@@ -329,6 +339,40 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
                 SingleKeyOutput = randomKey;
             }
+            else if (_settings.KeyFormatRandom == FormatType.uniqueLetters ||
+                _settings.KeyFormatRandom == FormatType.uniqueNumbers)
+            {
+                string randomKey = "";
+                string alphabet = "";
+                if (_alphabetInput == null || String.IsNullOrEmpty(_alphabetInput))
+                {
+                    if (_settings.KeyFormatRandom == FormatType.uniqueLetters)
+                        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    if (_settings.KeyFormatRandom == FormatType.uniqueNumbers)
+                        alphabet = "0123456789";
+                }
+                else
+                {
+                    alphabet = _alphabetInput;
+                }
+
+                if (_settings.MaxKeyLength > alphabet.Length)
+                {
+                    GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
+                    return;
+                }
+
+                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
+                {
+                    int i = _rand.Next(0, alphabet.Length-1);
+                    char ch = Convert.ToChar(alphabet.Substring(i, 1));
+                    alphabet = alphabet.Substring(0, i) + alphabet.Substring(i + 1, alphabet.Length - (i + 1));
+                    randomKey = randomKey + ch;
+                }
+                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
+
+                SingleKeyOutput = randomKey;
+            }
             else
             {
                 int upperLimit = 0;
@@ -342,12 +386,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     // 0 to 9 are all digits
                     upperLimit = 9;
                 }
-                else if (_settings.KeyFormatRandom == FormatType.numbers)
-                {
-                    // from 0 to 25 for the 26 letters of the alphabet
-                    upperLimit = 25;
-                }
-                //GuiLogMessage("generate random key with 0 - "+upperLimit+" only", NotificationLevel.Info);
+
                 string randomKey = "";
                 for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
@@ -398,9 +437,20 @@ namespace Cryptool.Plugins.TestVectorGenerator
             var xeger = new Fare.Xeger(regex, _rand);
             var regexString = xeger.Generate();
 
-            while (_keyList.Contains(regexString))
+            var regex1 = "^.*(.).*\\1.*$";
+            var Regex1 = @regex1;
+
+            //((00|01|02|03|04){4}
+            //((?:([0-9])(?!.*\2)){10})*
+            //((?:(00|01|02|03|04)(?!.*\2)){4})*
+            var regex2 = "((?:(05|01|02|03|04)(?!.*\\2)){8})*"; //"^.*(.).*\\2.*$";
+            var Regex2 = @regex2;
+            //regexString = "01020304";
+
+            while (_keyList.Contains(regexString) || Regex.IsMatch(regexString, Regex1))
             {
                 regexString = xeger.Generate();
+                //regexString = "01020304";
             }
 
             _keyList.Add(regexString);
@@ -625,6 +675,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _plaintextList = new List<string>();
             _progress = 0;
             _notFound = false;
+            _singleKeyOutput = "";
+            _regexInput = "";
         }
 
         /// <summary>

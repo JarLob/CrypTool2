@@ -21,7 +21,7 @@ using System.Windows;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
-    public enum FormatType { lettersOnly, numbers, digitsOnly, binaryOnly };
+    public enum FormatType { lettersOnly, uniqueNumbers, digitsOnly, binaryOnly, uniqueLetters };
     public enum GenerationType { regex, random, naturalSpeech };
 
     public class TestVectorGeneratorSettings : ISettings
@@ -131,7 +131,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
-            "uppercase letters", "unique numbers", "digits", "binary"})]
+            "uppercase letters", "unique numbers", "digits", "binary", "unique Letters"})]
         public FormatType KeyFormatRandom
         {
             get
