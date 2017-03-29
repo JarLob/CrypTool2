@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _textInput;
         private int _seedInput;
         private string _plaintextInput;
-        private string[] _keyInput;
+        private string _keyInput;
         private string _bestPlaintextInput;
         private string _bestKeyInput;
         private string _plaintextOutput;
@@ -85,7 +85,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         [PropertyInfo(Direction.InputData, "KeyInput", "KeyInput tooltip description", true)]
-        public string[] KeyInput
+        public string KeyInput
         {
             get { return this._keyInput; }
             set
@@ -237,13 +237,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public bool checkVariables()
         {
-            if (KeyInput.Length == 0 || String.IsNullOrEmpty(KeyInput[0]))
+            if (KeyInput.Length == 0 || String.IsNullOrEmpty(KeyInput))
             {
                 // TESTING!!!
-                List<string> list = new List<string>();
-                list.Add("KEYWORDX");
-                list.Add("KEYWORD");
-                KeyInput = list.ToArray();
+                KeyInput = "KEYWORDX";
 
                 //GuiLogMessage("The key input is empty!", NotificationLevel.Error);
                 //return false;
@@ -270,35 +267,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             ProgressChanged(0, 1);
 
-            if (_keyCount == 0)
+            if (!checkVariables())
             {
-                if (!checkVariables())
-                {
-                    GuiLogMessage("CAA: Execute: checkVariables failed!", NotificationLevel.Balloon);
-                    return;
-                }
-
-                PlaintextOutput = PlaintextInput;
-
-                foreach (string key in KeyInput)
-                {
-                    GuiLogMessage("Current Key: " + key, NotificationLevel.Info);
-                    KeyOutput = key;
-                }
-            }
-            else
-            {
-
-                ProgressChanged(1, 1);
-
-                GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
-                GuiLogMessage("Execute() keyCount: " + _keyCount, NotificationLevel.Info);
-                GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0, 50), NotificationLevel.Info);
-
-
+                GuiLogMessage("CAA: Execute: checkVariables failed!", NotificationLevel.Balloon);
+                return;
             }
 
-            _keyCount++;
+            PlaintextOutput = PlaintextInput;
+            KeyOutput = KeyInput;
+
+            ProgressChanged(1, 1);
+
+            GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
+            GuiLogMessage("Execute() keyCount: " + _keyCount, NotificationLevel.Info);
+            GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0, 50), NotificationLevel.Info);
         }
 
         /// <summary>
