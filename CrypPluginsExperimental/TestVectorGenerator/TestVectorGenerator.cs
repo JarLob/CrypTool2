@@ -24,6 +24,7 @@ using System;
 using Fare;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
@@ -343,31 +344,41 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _settings.KeyFormatRandom == FormatType.uniqueNumbers)
             {
                 string randomKey = "";
-                string alphabet = "";
+                var alphabet = new List<string>();
                 if (_alphabetInput == null || String.IsNullOrEmpty(_alphabetInput))
                 {
                     if (_settings.KeyFormatRandom == FormatType.uniqueLetters)
-                        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                    if (_settings.KeyFormatRandom == FormatType.uniqueNumbers)
-                        alphabet = "0123456789";
+                    {
+                        alphabet = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".Split(' ').ToList();
+                    }
+                    else if (_settings.KeyFormatRandom == FormatType.uniqueNumbers)
+                    {
+                        alphabet = "0 1 2 3 4 5 6 7 8 9".Split(' ').ToList();
+                        alphabet = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18".Split(' ').ToList();
+                    }
                 }
                 else
                 {
-                    alphabet = _alphabetInput;
+                    alphabet = _alphabetInput.Split(' ').ToList();
                 }
 
-                if (_settings.MaxKeyLength > alphabet.Length)
+                if (_settings.MaxKeyLength > alphabet.Count)
                 {
                     GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
                     return;
                 }
-
+                string _separator = ", ";
                 for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
-                    int i = _rand.Next(0, alphabet.Length-1);
-                    char ch = Convert.ToChar(alphabet.Substring(i, 1));
-                    alphabet = alphabet.Substring(0, i) + alphabet.Substring(i + 1, alphabet.Length - (i + 1));
-                    randomKey = randomKey + ch;
+                    int i = _rand.Next(0, alphabet.Count-1);
+
+                    string symbol = alphabet.ElementAt(i);
+                    alphabet.RemoveAt(i);
+
+                    if (randomKey == "")
+                        randomKey = symbol;
+                    else
+                        randomKey = randomKey + _separator + symbol;
                 }
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
