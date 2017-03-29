@@ -32,6 +32,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
         private int _keyAmountPerLength = 1;
+        private string _separator = "";
         private FormatType _keyFormat;
         private GenerationType _keyGeneration;
 
@@ -126,6 +127,23 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 {
                     _keyAmountPerLength = value;
                     OnPropertyChanged("KeyAmountPerLength");
+                }
+            }
+        }
+
+        [TaskPane("Separator between key symbols", "Separator between each of the key symbols to generate", null, 6, false, ControlType.TextBox, null)]
+        public string Separator
+        {
+            get
+            {
+                return _separator;
+            }
+            set
+            {
+                if (_separator != value)
+                {
+                    _separator = value;
+                    OnPropertyChanged("Separator");
                 }
             }
         }

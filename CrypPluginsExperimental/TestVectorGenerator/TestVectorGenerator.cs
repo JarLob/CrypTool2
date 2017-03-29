@@ -284,6 +284,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         sentence = convertToNumericKey(sentence);
                         //replaceLettersByNumbersWithSpaces();
                     }
+                    else
+                    {
+                        // add separator
+                        sentence = AddSeparator(sentence);
+                    }
 
                     SingleKeyOutput = sentence;
 
@@ -311,6 +316,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        private string AddSeparator(string str)
+        {
+            char[] arr = str.ToArray();
+
+            string result = arr[0].ToString();
+            foreach (char c in arr)
+            {
+                result = result + _settings.Separator + c;
+            }
+
+            return result;
+        }
+
         public void generateRandomKeys()
         {
             if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
@@ -334,7 +352,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
                     char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
-                    randomKey = randomKey + ch;
+
+                    if (randomKey == "")
+                        randomKey = ch.ToString();
+                    else
+                        randomKey = randomKey + _settings.Separator + ch;
                 }
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
@@ -354,7 +376,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     else if (_settings.KeyFormatRandom == FormatType.uniqueNumbers)
                     {
                         alphabet = "0 1 2 3 4 5 6 7 8 9".Split(' ').ToList();
-                        alphabet = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18".Split(' ').ToList();
+                        //alphabet = "0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18".Split(' ').ToList();
                     }
                 }
                 else
@@ -367,7 +389,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
                     return;
                 }
-                string _separator = ", ";
+
                 for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
                     int i = _rand.Next(0, alphabet.Count-1);
@@ -378,7 +400,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     if (randomKey == "")
                         randomKey = symbol;
                     else
-                        randomKey = randomKey + _separator + symbol;
+                        randomKey = randomKey + _settings.Separator + symbol;
                 }
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
@@ -401,14 +423,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 string randomKey = "";
                 for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
-                    string space = "";
-                    if (!String.IsNullOrEmpty(randomKey))
-                        space = " ";
                     int randomInt = (_rand.Next(0, upperLimit + 1));
-                    randomKey = randomKey + space + randomInt;
-                }
-                //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
+                    if (randomKey == "")
+                        randomKey = randomInt.ToString();
+                    else
+                        randomKey = randomKey + _settings.Separator + randomInt;
+                }
                 SingleKeyOutput = randomKey;
             }
         }
@@ -533,16 +554,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public String convertToNumericKey(String key)
         {
-            return convertToNumericKey(key, true);
-        }
-
-        public String convertToNumericKey(String key, bool addSpaces)
-        {
             char[] chars = key.ToCharArray();
             int[] numbers = new int[chars.Length];
-            string space = "";
-            if (addSpaces)
-                space = " ";
 
             int index = 0;
 
@@ -574,7 +587,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
             String numericKey = numbers[0].ToString();
             for (int i = 1; i < numbers.Length; i++)
-                numericKey = numericKey + space + numbers[i];
+                numericKey = numericKey + _settings.Separator + numbers[i];
             //Console.WriteLine("numericKey: " + numericKey);
 
             return numericKey;
