@@ -42,10 +42,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _seedInput;
         private string _regexInput;
         private string _plaintextOutput;
-        private string _textOutput2;
-        private string _textOutput3;
+        private string _debugOutput;
         private string _singleKeyOutput;
-        private string[] _keyOutput;
 
         private int _progress = 0;
         private string[] _inputArray;
@@ -123,21 +121,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
-        public string[] KeyOutput
-        {
-            get { return this._keyOutput; }
-            set
-            {
-                // TODO: check if test works and is necessary
-                if (_keyOutput != value)
-                {
-                    this._keyOutput = value;
-                    OnPropertyChanged("KeyOutput");
-                }
-            }
-        }
-
         [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
         public string PlaintextOutput
         {
@@ -153,32 +136,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "TextOutput2", "textOutput tooltip description")]
-        public string TextOutput2
+        [PropertyInfo(Direction.OutputData, "DebugOutput", "textOutput tooltip description")]
+        public string DebugOutput
         {
-            get { return this._textOutput2; }
+            get { return this._debugOutput; }
             set
             {
                 // TODO: check if test works and is necessary
-                if (_textOutput2 != value)
+                if (_debugOutput != value)
                 {
-                    this._textOutput2 = value;
-                    OnPropertyChanged("TextOutput2");
-                }
-            }
-        }
-
-        [PropertyInfo(Direction.OutputData, "TextOutput3", "textOutput tooltip description")]
-        public string TextOutput3
-        {
-            get { return this._textOutput3; }
-            set
-            {
-                // TODO: check if test works and is necessary
-                if (_textOutput3 != value)
-                {
-                    this._textOutput3 = value;
-                    OnPropertyChanged("TextOutput3");
+                    this._debugOutput = value;
+                    OnPropertyChanged("DebugOutput");
                 }
             }
         }
@@ -488,7 +456,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             Regex regex = new Regex("[ ]{2,}", options);
             TextInput = regex.Replace(TextInput, " ");
             int substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
-            //TextOutput2 = TextInput.Substring(0, substringLength);
+            //DebugOutput = TextInput.Substring(0, substringLength);
 
             // replace newlines by space
             TextInput = TextInput.Replace(". ", ".");
@@ -496,7 +464,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 TextInput = TextInput.Substring(0, TextInput.Length - 1);
 
             substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
-            TextOutput3 = TextInput.Substring(0, substringLength);
+            DebugOutput = TextInput.Substring(0, substringLength);
 
             // split input text into sentences
             _inputArray = TextInput.Split('.');
