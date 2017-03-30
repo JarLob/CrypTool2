@@ -53,10 +53,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _startSentence;
         private List<String> _keyList = new List<string>();
         private List<String> _plaintextList = new List<string>();
-        private int keysToGenerate = -1;
-        private int lastKeyLengthIndex = -1;
+        private int _keysToGenerate = -1;
+        private int _lastKeyLengthIndex = -1;
         private bool _notFound = false;
-        ConcurrentDictionary<int, int> occurences;
+        ConcurrentDictionary<int, int> _occurences;
         
 
         #endregion
@@ -205,13 +205,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _startSentence = _rand.Next(0, _inputArray.Length);
             //GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Debug);
 
-            if (occurences == null)
+            if (_occurences == null)
             {
-                occurences = new ConcurrentDictionary<int, int>();
+                _occurences = new ConcurrentDictionary<int, int>();
 
                 for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
                 {
-                    occurences.AddOrUpdate(i, 0, (id, count) => 0);
+                    _occurences.AddOrUpdate(i, 0, (id, count) => 0);
                     //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
                 }
             }
@@ -244,7 +244,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         lengthOccurences == _settings.KeyAmountPerLength)
                     {
                         smallestMissingLength++;
-                        occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
+                        _occurences.TryGetValue(smallestMissingLength, out lengthOccurences);
                     }
 
                     // double check, should not happen
@@ -262,7 +262,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
                 else
                 {
-                    occurences.TryGetValue(sentenceLength, out lengthOccurences);
+                    _occurences.TryGetValue(sentenceLength, out lengthOccurences);
                 }
                 if (sentenceLength >= _settings.MinKeyLength &&
                         sentenceLength <= _settings.MaxKeyLength &&
@@ -270,7 +270,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         !_keyList.Contains(sentence))
                 {
                     _keyList.Add(sentence);
-                    occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
+                    _occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
                     // !!! TESTING ONLY !!!
                     //sentence = sentence + " (" + sentence.Length + ")";
@@ -331,14 +331,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeys()
         {
-            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            if (_keysToGenerate == -1 || _lastKeyLengthIndex == -1)
             {
-                keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
-                lastKeyLengthIndex = 0;
+                _keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                _lastKeyLengthIndex = 0;
             }
-            else if (lastKeyLengthIndex < keysToGenerate - 1)
+            else if (_lastKeyLengthIndex < _keysToGenerate - 1)
             {
-                lastKeyLengthIndex++;
+                _lastKeyLengthIndex++;
             }
             else
             {
@@ -349,7 +349,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 //GuiLogMessage("generate random key with letters only", NotificationLevel.Info);
                 string randomKey = "";
-                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
+                for (int j = 0; j < (_settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
                     char ch = Convert.ToChar(_rand.Next(0, 26) + Convert.ToInt32('A'));
 
@@ -365,7 +365,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             else if (_settings.KeyFormatRandom == FormatType.uniqueLetters ||
                 _settings.KeyFormatRandom == FormatType.uniqueNumbers)
             {
-                string randomKey = "";
                 var alphabet = new List<string>();
                 if (_alphabetInput == null || String.IsNullOrEmpty(_alphabetInput))
                 {
@@ -384,24 +383,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     alphabet = _alphabetInput.Split(' ').ToList();
                 }
 
-                if (_settings.MaxKeyLength > alphabet.Count)
-                {
-                    GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
+                string randomKey = GenerateRandomKeyWithAlphabet(alphabet, 
+                    _settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeyAmountPerLength);
+
+                if (randomKey == null)
                     return;
-                }
-
-                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
-                {
-                    int i = _rand.Next(0, alphabet.Count-1);
-
-                    string symbol = alphabet.ElementAt(i);
-                    alphabet.RemoveAt(i);
-
-                    if (randomKey == "")
-                        randomKey = symbol;
-                    else
-                        randomKey = randomKey + _settings.Separator + symbol;
-                }
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
                 SingleKeyOutput = randomKey;
@@ -421,7 +407,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
 
                 string randomKey = "";
-                for (int j = 0; j < (_settings.MinKeyLength + lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
+                for (int j = 0; j < (_settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeyAmountPerLength); j++)
                 {
                     int randomInt = (_rand.Next(0, upperLimit + 1));
 
@@ -434,23 +420,166 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        public void generateRandomKeysWithRegex()
+        public string GenerateRandomKeyWithAlphabet(List<string> alphabet, int length)
         {
-            if (keysToGenerate == -1 || lastKeyLengthIndex == -1)
+            if (_settings.MaxKeyLength > alphabet.Count)
             {
-                if (_regexInput.Contains("$amount"))
+                GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
+                return null;
+            }
+
+            string randomKey = "";
+
+            for (int j = 0; j < length; j++)
+            {
+                int i = _rand.Next(0, alphabet.Count - 1);
+
+                string symbol = alphabet.ElementAt(i);
+                alphabet.RemoveAt(i);
+
+                if (randomKey == "")
+                    randomKey = symbol;
+                else
+                    randomKey = randomKey + _settings.Separator + symbol;
+            }
+
+            return randomKey;
+        }
+
+        public List<string> FindAlphabet(string alphabetString)
+        {
+            List<string> alphabet = null;
+            if (alphabetString.Contains("-"))
+            {
+                if (Regex.IsMatch(alphabetString, @"a-zA-Z"))
                 {
-                    keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"a-z"))
+                {
+                    alphabet = "abcdefghijklmnopqrstuvwxyz".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"A-Z"))
+                {
+                    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"0-9"))
+                {
+                    alphabet = "0123456789".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"a-zA-Z0-9"))
+                {
+                    alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"A-Z0-9"))
+                {
+                    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.IsMatch(alphabetString, @"a-z0-9"))
+                {
+                    alphabet = "abcdefghijklmnopqrstuvwxyz0123456789".Select(c => c.ToString()).ToList();
+                }
+                else if (Regex.Matches(alphabetString, @"-").Count > 1)
+                {
+                    GuiLogMessage("Alphabet with multiple '-' not recognized!", NotificationLevel.Error);
+                    return null;
                 }
                 else
                 {
-                    keysToGenerate = _settings.KeyAmountPerLength;
+                    string[] alphabetBounds = alphabetString.Split('-');
+                    bool upperIsNumeric = Regex.IsMatch(alphabetBounds[1], @"[0-9]");
+                    bool upperIsLetter = Regex.IsMatch(alphabetBounds[1], @"[a-zA-Z]");
+
+                    bool lowerIsNumeric = Regex.IsMatch(alphabetBounds[0], @"[0-9]");
+                    bool lowerIsLetter = Regex.IsMatch(alphabetBounds[0], @"[a-zA-Z]");
+
+                    if (!upperIsNumeric && !upperIsLetter ||
+                        !lowerIsNumeric && !lowerIsLetter ||
+                        !upperIsNumeric && lowerIsNumeric ||
+                        !upperIsLetter && lowerIsLetter)
+                    {
+                        GuiLogMessage("Alphabet with single '-' not recognized!", NotificationLevel.Error);
+                        return null;
+                    }
+
+                    if (upperIsNumeric)
+                    {
+                        int lower;
+                        if (!int.TryParse(alphabetBounds[0], out lower))
+                        {
+                            GuiLogMessage("Numeric alphabet not recognized!", NotificationLevel.Error);
+                            return null;
+                        }
+                        int upper;
+                        if (!int.TryParse(alphabetBounds[1], out upper))
+                        {
+                            GuiLogMessage("Numeric alphabet not recognized!", NotificationLevel.Error);
+                            return null;
+                        }
+                        alphabet = new List<string>();
+                        for (int i = lower; i <= upper; i++)
+                        {
+                            alphabet.Add(i.ToString());
+                        }
+                    }
+                    else if (upperIsLetter)
+                    {
+                        string lowerUpperAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                        int lower = lowerUpperAlphabet.IndexOf(char.Parse(alphabetBounds[0]));
+                        int upper = lowerUpperAlphabet.IndexOf(char.Parse(alphabetBounds[1]));
+                        if (upper < lower)
+                        {
+                            GuiLogMessage("Latin alphabet not recognized!", NotificationLevel.Error);
+                            return null;
+                        }
+
+                        string latinAlphabetString = lowerUpperAlphabet.Substring(lower, upper - lower);
+                        alphabet = latinAlphabetString.Select(c => c.ToString()).ToList();
+                    }
                 }
-                lastKeyLengthIndex = 0;
             }
-            else if (lastKeyLengthIndex < keysToGenerate - 1)
+            else if (alphabetString.Contains("|"))
             {
-                lastKeyLengthIndex++;
+                alphabet = alphabetString.Split('|').ToList();
+
+            }
+            else if (!String.IsNullOrEmpty(_alphabetInput))
+            {
+                if (_alphabetInput.Contains(' '))
+                {
+                    alphabet = _alphabetInput.Split(' ').ToList();
+                }
+                else
+                {
+                    alphabet = _alphabetInput.Select(c => c.ToString()).ToList();
+                }
+            }
+            else
+            {
+                GuiLogMessage("Alphabet not recognized!", NotificationLevel.Error);
+                return null;
+            }
+
+            return alphabet;
+        }
+
+        public void generateRandomKeysWithRegex()
+        {
+            if (_keysToGenerate == -1 || _lastKeyLengthIndex == -1)
+            {
+                if (_regexInput.Contains("$amount"))
+                {
+                    _keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeyAmountPerLength;
+                }
+                else
+                {
+                    _keysToGenerate = _settings.KeyAmountPerLength;
+                }
+                _lastKeyLengthIndex = 0;
+            }
+            else if (_lastKeyLengthIndex < _keysToGenerate - 1)
+            {
+                _lastKeyLengthIndex++;
             }
             else
             {
@@ -458,17 +587,64 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
 
             var str = _regexInput;
-            if (_regexInput.Contains("$amount"))
+            if (str.Contains("$amount"))
             {
-                int length = _settings.MinKeyLength + (lastKeyLengthIndex / _settings.KeyAmountPerLength);
+                int length = _settings.MinKeyLength + (_lastKeyLengthIndex / _settings.KeyAmountPerLength);
                 //GuiLogMessage("length: " + length, NotificationLevel.Warning);
                 //var str = "[a-zA-Z]{" + length + "}";
                 str = str.Replace("$amount", length.ToString());
             }
+            while (str.Contains("$unique"))
+            {
+                //$unique([0-24]{25})
+                int uniqueIndex = str.IndexOf("$unique");
+                string beforeUnique = str.Substring(0, uniqueIndex);
+                string uniqueString = str.Substring(uniqueIndex, str.Length - uniqueIndex);
+                string betweenBrakets = uniqueString.Between("(", ")");
+                if (betweenBrakets.Contains("(")) {
+                    // handle multiple opening brakets
+                    
+                    //errorCounter = Regex.Matches(yourstring,@"[a-zA-Z]").Count;
+                    //int amountOfBrakets = betweenBrakets.Count("(");
+                }
+                int uniqueEndIndex = uniqueString.IndexOf(")");
+
+                string afterUnique = "";
+                if (uniqueEndIndex < uniqueString.Length - 1)
+                    afterUnique = uniqueString.Substring(uniqueEndIndex + 1, uniqueString.Length - (uniqueEndIndex + 1));
+
+                uniqueString = uniqueString.Substring(0, uniqueEndIndex);
+                uniqueString.Replace("$unique(", "");
+                
+                // find values for manual generation in unique string
+                string alphabetString = uniqueString.Between("[", "]");
+                string repeatString = uniqueString.Between("{", "}");
+                int repeatInt;
+                if (!int.TryParse(repeatString, out repeatInt))
+                {
+                    GuiLogMessage("Error parsing repetition string!", NotificationLevel.Error);
+                    return;
+                }
+
+                List<string> alphabet = FindAlphabet(alphabetString);
+                if (alphabet == null)
+                    return;
+
+                string randomKey = GenerateRandomKeyWithAlphabet(alphabet,
+                     repeatInt);
+
+                if (randomKey == null)
+                    return;
+
+                str = beforeUnique + randomKey + afterUnique;
+            }
+
+            // beginn reverse regex generation
             var regex = @str;
             var xeger = new Fare.Xeger(regex, _rand);
             var regexString = xeger.Generate();
 
+            /*
             var regex1 = "^.*(.).*\\1.*$";
             var Regex1 = @regex1;
 
@@ -478,8 +654,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             var regex2 = "((?:(05|01|02|03|04)(?!.*\\2)){8})*"; //"^.*(.).*\\2.*$";
             var Regex2 = @regex2;
             //regexString = "01020304";
+            */
 
-            while (_keyList.Contains(regexString) || Regex.IsMatch(regexString, Regex1))
+            while (_keyList.Contains(regexString))
             {
                 regexString = xeger.Generate();
                 //regexString = "01020304";
@@ -691,16 +868,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PostExecution()
         {
-            keysToGenerate = -1;
-            lastKeyLengthIndex = -1;
+            _keysToGenerate = -1;
+            _lastKeyLengthIndex = -1;
             _inputArray = null;
-            occurences = null;
+            _occurences = null;
             _keyList = new List<string>();
             _plaintextList = new List<string>();
             _progress = 0;
             _notFound = false;
             _singleKeyOutput = "";
             _regexInput = "";
+            _seedInput = 0;
+            _alphabetInput = "";
+            _debugOutput = "";
         }
 
         /// <summary>
