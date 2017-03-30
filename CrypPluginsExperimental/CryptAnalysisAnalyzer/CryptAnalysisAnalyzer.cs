@@ -274,7 +274,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
 
             PlaintextOutput = PlaintextInput;
-            KeyOutput = KeyInput;
+            KeyOutput = KeyInput; 
+            
+            GuiLogMessage("CAA: Allright!", NotificationLevel.Balloon);
+            Console.WriteLine("CAA: Allright!");
 
             ProgressChanged(1, 1);
 
