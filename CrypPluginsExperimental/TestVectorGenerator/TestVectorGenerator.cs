@@ -422,7 +422,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public string GenerateRandomKeyWithAlphabet(List<string> alphabet, int length)
         {
-            if (_settings.MaxKeyLength > alphabet.Count)
+            return GenerateRandomKeyWithAlphabet(alphabet, length, 1);
+        }
+
+        public string GenerateRandomKeyWithAlphabet(List<string> alphabet, int length, int separatorRepeat)
+        {
+            if (length > alphabet.Count)
             {
                 GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
                 return null;
@@ -439,8 +444,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
                 if (randomKey == "")
                     randomKey = symbol;
-                else
+                else if (j % separatorRepeat == 0)
                     randomKey = randomKey + _settings.Separator + symbol;
+                else
+                    randomKey = randomKey + symbol;
             }
 
             return randomKey;
@@ -600,21 +607,58 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 int uniqueIndex = str.IndexOf("$unique");
                 string beforeUnique = str.Substring(0, uniqueIndex);
                 string uniqueString = str.Substring(uniqueIndex, str.Length - uniqueIndex);
-                string betweenBrakets = uniqueString.Between("(", ")");
-                if (betweenBrakets.Contains("(")) {
-                    // handle multiple opening brakets
-                    
-                    //errorCounter = Regex.Matches(yourstring,@"[a-zA-Z]").Count;
-                    //int amountOfBrakets = betweenBrakets.Count("(");
+
+                // check for multiple opening brackets
+                int firstClosingBracketIndex = uniqueString.IndexOf(")");
+                int uniqueEndIndex = firstClosingBracketIndex;
+                int firstOpeningBracketIndex = uniqueString.IndexOf("(");
+                firstOpeningBracketIndex = uniqueString.IndexOf("(", firstOpeningBracketIndex+1);
+                // handle multiple opening brackets
+                if (firstOpeningBracketIndex != -1 &&
+                    firstOpeningBracketIndex < firstClosingBracketIndex)
+                {
+                    int openingBracketCount = 1;
+                    int nextBracketIndex = firstOpeningBracketIndex;
+                    int nextClosingBracketIndex = firstClosingBracketIndex;
+                    int nextOpeningBracketIndex = firstOpeningBracketIndex;
+
+                    while (openingBracketCount > 0)
+                    {
+                        nextClosingBracketIndex = uniqueString.IndexOf(")", nextBracketIndex+1);
+                        nextOpeningBracketIndex = uniqueString.IndexOf("(", nextBracketIndex+1);
+                        if (nextOpeningBracketIndex != -1 &&
+                            nextOpeningBracketIndex < nextClosingBracketIndex)
+                        {
+                            // TODO: check content between other brackets
+                            //openingBracketCount++;
+                            //nextBracketIndex = nextOpeningBracketIndex;
+
+                            GuiLogMessage("Multiple round brackets not supported yet!", NotificationLevel.Error);
+                            return;
+                        }
+                        else if (nextOpeningBracketIndex == -1 ||
+                            nextOpeningBracketIndex > nextClosingBracketIndex)
+                        {
+                            openingBracketCount--;
+                            nextBracketIndex = nextClosingBracketIndex;
+                        }
+                        else
+                        {
+                            GuiLogMessage("Error involving multiple brackets!", NotificationLevel.Error);
+                            return;
+                        }
+                    }
+
+                    uniqueEndIndex = uniqueString.IndexOf(")", nextClosingBracketIndex+1);
                 }
-                int uniqueEndIndex = uniqueString.IndexOf(")");
 
                 string afterUnique = "";
                 if (uniqueEndIndex < uniqueString.Length - 1)
                     afterUnique = uniqueString.Substring(uniqueEndIndex + 1, uniqueString.Length - (uniqueEndIndex + 1));
 
                 uniqueString = uniqueString.Substring(0, uniqueEndIndex);
-                uniqueString.Replace("$unique(", "");
+                uniqueString = uniqueString.Replace("$unique(", "");
+                
                 
                 // find values for manual generation in unique string
                 string alphabetString = uniqueString.Between("[", "]");
@@ -630,9 +674,21 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 if (alphabet == null)
                     return;
 
-                string randomKey = GenerateRandomKeyWithAlphabet(alphabet,
-                     repeatInt);
+                string randomKey = null;
 
+                if (firstOpeningBracketIndex < firstClosingBracketIndex)
+                {
+                    string separatorRepeatString = uniqueString.Between("(", ")");
+                    int separatorRepeat;
+                    if (int.TryParse(separatorRepeatString, out separatorRepeat))
+                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt, separatorRepeat);
+                    else
+                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt);
+                }
+                else
+                {
+                    randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt);
+                }
                 if (randomKey == null)
                     return;
 
