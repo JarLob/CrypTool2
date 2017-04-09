@@ -25,6 +25,7 @@ using Fare;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
+using Cryptool.PluginBase.IO;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
@@ -161,6 +162,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
         }
+
+        [PropertyInfo(Direction.OutputData, "EmptyEvaluationContainer", "EmptyEvaluationContainer tooltip description")]
+        public EvaluationContainer EmptyEvaluationContainer
+        { get; set; }
 
         #endregion
 
@@ -897,7 +902,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             ProgressChanged(0, 1);
 
             _rand = new System.Random(_seedInput);
-            GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
+            //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
             if (_settings.TextLength > 0)
                 generatePlaintext();
@@ -915,6 +920,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 generateRandomKeys();
             }
+
+            EmptyEvaluationContainer = new EvaluationContainer();
+            OnPropertyChanged("EmptyEvaluationContainer");
 
             ProgressChanged(1, 1);
         }
