@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.PluginBase.IO;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -36,18 +37,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #region Private Variables
 
         private readonly CryptAnalysisAnalyzerSettings _settings = new CryptAnalysisAnalyzerSettings();
+
         private string _textInput;
         private int _seedInput;
         private string _plaintextInput;
         private string _keyInput;
         private string _bestPlaintextInput;
         private string _bestKeyInput;
+        private EvaluationContainer _evaluationInput;
+
         private string _plaintextOutput;
         private string _keyOutput;
         private string _bestPlaintextOutput;
         private string _bestKeyOutput;
-        private int _keyCount = 0;
 
+        private int _keyCount = 0;
         private int _progress;
 
         #endregion
@@ -60,11 +64,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._textInput; }
             set
             {
-                if (_textInput != value)
-                {
-                    this._textInput = value;
-                    OnPropertyChanged("TextInput");
-                }
+                this._textInput = value;
+                OnPropertyChanged("TextInput");
             }
         }
 
@@ -90,12 +91,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._keyInput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_keyInput != value)
-                {
-                    this._keyInput = value;
-                    OnPropertyChanged("KeyInput");
-                }
+                this._keyInput = value;
+                OnPropertyChanged("KeyInput");
             }
         }
 
@@ -105,12 +102,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._plaintextInput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_plaintextInput != value)
-                {
-                    this._plaintextInput = value;
-                    OnPropertyChanged("PlaintextInput");
-                }
+                this._plaintextInput = value;
+                OnPropertyChanged("PlaintextInput");
             }
         }
 
@@ -120,12 +113,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestKeyInput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_bestKeyInput != value)
-                {
-                    this._bestKeyInput = value;
-                    OnPropertyChanged("BestKeyInput");
-                }
+                this._bestKeyInput = value;
+                OnPropertyChanged("BestKeyInput");
             }
         }
 
@@ -135,14 +124,25 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestPlaintextInput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_bestPlaintextInput != value)
-                {
-                    this._bestPlaintextInput = value;
-                    OnPropertyChanged("BestPlaintextInput");
-                }
+                this._bestPlaintextInput = value;
+                OnPropertyChanged("BestPlaintextInput");
             }
         }
+
+        [PropertyInfo(Direction.InputData, "EvaluationInput", "EvaluationInput tooltip description")]
+        public EvaluationContainer EvaluationInput
+        {
+            get { return this._evaluationInput; }
+            set
+            {
+                this._evaluationInput = value;
+                OnPropertyChanged("EvaluationInput");
+            }
+        }
+
+
+        [PropertyInfo(Direction.OutputData, "TriggerNextKey", "TriggerNextKey tooltip description")]
+        public string TriggerNextKey { get; set; }
 
         [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
         public string KeyOutput
@@ -150,12 +150,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._keyOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_keyOutput != value)
-                {
-                    this._keyOutput = value;
-                    OnPropertyChanged("KeyOutput");
-                }
+                this._keyOutput = value;
+                OnPropertyChanged("KeyOutput");
             }
         }
 
@@ -165,12 +161,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._plaintextOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_plaintextOutput != value)
-                {
-                    this._plaintextOutput = value;
-                    OnPropertyChanged("PlaintextOutput");
-                }
+                this._plaintextOutput = value;
+                OnPropertyChanged("PlaintextOutput");
             }
         }
 
@@ -180,12 +172,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestKeyOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_bestKeyOutput != value)
-                {
-                    this._bestKeyOutput = value;
-                    OnPropertyChanged("BestKeyOutput");
-                }
+                this._bestKeyOutput = value;
+                OnPropertyChanged("BestKeyOutput");
             }
         }
 
@@ -195,16 +183,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestPlaintextOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_bestPlaintextOutput != value)
-                {
-                    this._bestPlaintextOutput = value;
-                    OnPropertyChanged("BestPlaintextOutput");
-                }
+                this._bestPlaintextOutput = value;
+                OnPropertyChanged("BestPlaintextOutput");
             }
         }
         
         #endregion
+
 
         #region IPlugin Members
 
@@ -273,17 +258,44 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 return;
             }
 
-            PlaintextOutput = PlaintextInput;
-            KeyOutput = KeyInput; 
+            if (PlaintextInput != PlaintextOutput ||
+                KeyInput != KeyOutput)
+            {
+                PlaintextOutput = PlaintextInput;
+                KeyOutput = KeyInput;
+            }
+
+            if (_evaluationInput != null && _evaluationInput.hasValueSet)
+            {
+                string evaluationString = _evaluationInput.ToString();
+                Console.WriteLine(evaluationString);
+
+                double percentCorrect = 0;
+                if (!String.IsNullOrEmpty(BestKeyInput) && !String.IsNullOrEmpty(BestPlaintextInput))
+                {
+
+                    GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
+                    GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0,
+                        BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Info);
+                    
+                }
+                
+                TimeSpan runtime;
+                if (EvaluationInput.GetRuntime(out runtime)) {
+                    double divisor = runtime.TotalMilliseconds / 10;
+                    double decryptionsPerTimeUnit = Math.Round(EvaluationInput.GetDecryptions() / divisor, 4);
+
+                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
+
+                }
+
+                TriggerNextKey = KeyInput;
+                OnPropertyChanged("TriggerNextKey");
+
+                ProgressChanged(1, 1);
+            }
+
             
-            GuiLogMessage("CAA: Allright!", NotificationLevel.Balloon);
-            Console.WriteLine("CAA: Allright!");
-
-            ProgressChanged(1, 1);
-
-            GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
-            GuiLogMessage("Execute() keyCount: " + _keyCount, NotificationLevel.Info);
-            GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0, 50), NotificationLevel.Info);
         }
 
         /// <summary>
