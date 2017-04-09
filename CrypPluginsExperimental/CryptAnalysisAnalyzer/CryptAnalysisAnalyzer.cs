@@ -22,6 +22,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System;
+using System.Numerics;
 using System.Windows.Threading;
 
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
@@ -190,6 +191,65 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         
         #endregion
 
+        #region General Methods
+
+        /// <summary>
+        /// Returns the number of steps required to transform the source string
+        /// into the target string.
+        /// </summary>
+        public int ComputeLevenshteinDistance(string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))            
+                return string.IsNullOrEmpty(target) ? 0 : target.Length;
+
+            if (string.IsNullOrEmpty(target))
+                return string.IsNullOrEmpty(source) ? 0 : source.Length;
+            
+            int sourceLength = source.Length;
+            int targetLength = target.Length;
+
+            int[,] distance = new int[sourceLength + 1, targetLength + 1];
+
+            // Step 1
+            for (int i = 0; i <= sourceLength; distance[i, 0] = i++) ;
+            for (int j = 0; j <= targetLength; distance[0, j] = j++) ;
+
+            for (int i = 1; i <= sourceLength; i++)
+            {
+                for (int j = 1; j <= targetLength; j++)
+                {
+                    // Step 2
+                    int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
+
+                    // Step 3
+                    distance[i, j] = Math.Min(
+                                        Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1),
+                                        distance[i - 1, j - 1] + cost);
+                }
+            }
+
+            return distance[sourceLength, targetLength];
+        }
+
+        /// <summary> 
+        /// Calculate percentage similarity of two strings
+        /// <param name="source">Source String to Compare with</param>
+        /// <param name="target">Targeted String to Compare</param>
+        /// <returns>Return Similarity between two strings from 0 to 1.0</returns>
+        /// </summary>
+        public double CalculateSimilarity(string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))            
+                return string.IsNullOrEmpty(target) ? 1: 0;            
+
+            if (string.IsNullOrEmpty(target))            
+                return string.IsNullOrEmpty(source) ? 1 : 0;            
+
+            double stepsToSame = ComputeLevenshteinDistance(source, target);
+            return (1.0 - (stepsToSame / (double)Math.Max(source.Length, target.Length)));
+        }
+
+        #endregion
 
         #region IPlugin Members
 
@@ -274,18 +334,22 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (!String.IsNullOrEmpty(BestKeyInput) && !String.IsNullOrEmpty(BestPlaintextInput))
                 {
 
-                    GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Info);
+                    GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Debug);
                     GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0,
-                        BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Info);
+                        BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Debug);
+
+                    percentCorrect = CalculateSimilarity(_bestPlaintextInput, _plaintextInput);
+                    GuiLogMessage("percentCorrect: " + percentCorrect, NotificationLevel.Debug);
                     
                 }
-                
+
+                BigInteger decryptions = EvaluationInput.GetDecryptions();
                 TimeSpan runtime;
                 if (EvaluationInput.GetRuntime(out runtime)) {
                     double divisor = runtime.TotalMilliseconds / 10;
-                    double decryptionsPerTimeUnit = Math.Round(EvaluationInput.GetDecryptions() / divisor, 4);
+                    double decryptionsPerTimeUnit = Math.Round((double) decryptions / divisor, 4);
 
-                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
+                    GuiLogMessage("Decryptions per time unit: " + decryptionsPerTimeUnit, NotificationLevel.Debug);
 
                 }
 
