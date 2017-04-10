@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">    
+    
+    MiniTreyfer is the mini-version of Treyfer cipher with only 16-bit plaintext and 16-bit key. 
+    It is primarily developed to automatically acquire a slid-pair for further use in the slide attacks.
+    
+  </introduction>
+
+  <introduction lang="de-DE">    
+  </introduction>
+
+  <usage lang="en">
+    
+    The MiniTreyfer works by first creating a random 16-bit key as a reference. This key is generated using random number generator.
+    Then the plugin starts generating pairs of plaintext and ciphertext such that the plaintext is encrypted using Treyfer cipher into ciphertext bits.
+    The pluing terminates when it finds a pair of plaintext-ciphertext that uses the previously generated key for encryption. This pair is nothing but a slid pair and is the output of the plugin.
+    
+  </usage>
+    
+  <usage lang="de-DE">
+  </usage>
+  
+  <presentation lang="en">
+  </presentation>
+  
+  <presentation lang="de-DE">
+  </presentation>
+  
+  <references>.
+  </references>
+</documentation>
