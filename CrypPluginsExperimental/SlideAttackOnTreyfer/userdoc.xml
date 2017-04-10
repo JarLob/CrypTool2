@@ -5,18 +5,19 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">  
-        Due to the simplicity of its key schedule, using the same 8 key bytes in each round, Treyfer was one of the first ciphers shown to be susceptible to a slide attack. 
-        This cryptanalysis, which is independent of the number of rounds and the choice of S-box, requires 2^32 known plaintexts and 2^44 computation time.
+  <introduction lang="en">
+    Due to the simplicity of its key schedule, using the same 8 key bytes in each round, Treyfer was one of the first ciphers shown to be susceptible to a slide attack.
+    This cryptanalysis, which is independent of the number of rounds and the choice of the S-box, requires 2^32 known plaintexts and the time complexity of 2^44 Treyfer encryptions.
   </introduction>
   
   <introduction lang="de-DE">    
   </introduction>
 
   <usage lang="en">
-      The slide attack on Treyfer in CrypTool2 takes two character inputs of lenght 8 each. 
-      These inputs represent a slid pair. Searching of slid pair is not included as part of the attack as this involves a huge number of inputs to be examined and searched. 
-      Once the slid pais is provided, the attack performes its operations and retrieves the key in the output field.
+    The slide attack on Treyfer in CrypTool2 takes two character inputs of lenght 8 each.
+    These inputs represent a slid pair. Searching for slid pairs is not included as part of the attack as this
+    involves a huge number of inputs to be examined.
+    Once the slid pais is provided, the attack performes its operations and retrieves the key in the output field.
   </usage>
   
   <usage lang="de-DE">
