@@ -19,9 +19,9 @@
   </introduction>
 
   <usage lang="en">
-    The plugin for the TREYFER attack implemented in CrypTool 2 takes three inputs: the plaintext, the key (both must be of length 8), and an
+    The plugin for the Treyfer attack implemented in CrypTool 2 takes three inputs: the plaintext, the key (both must be of length 8), and an
     integer value indicating the number of rounds. The 'number of rounds' parameter must have a positive integer value (up to 32) for the plugin to run.
-    Plaintext and key could be any ASCII character. After providing these two parameters and running the algorithm, the cipher text is produced as output in the field connected to output port of TREYFER.
+    Plaintext and key could be any ASCII character. After providing these two parameters and running the algorithm, the ciphertext is produced as output in the field connected to output port of Treyfer.
     Rotation of bits (as it appears in the proposed algorithm) is not employed.
     A simple 8x8 S-box is implemented in the code.
   </usage>
