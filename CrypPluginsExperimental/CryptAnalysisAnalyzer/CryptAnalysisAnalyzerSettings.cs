@@ -14,6 +14,7 @@
    limitations under the License.
 */
 using System;
+using System.Numerics;
 using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
@@ -28,126 +29,56 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     {
         #region Private Variables
 
-        private int _textLength = 100;
+        private BigInteger _textLength = 100;
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
-        private int _keyAmountPerLength = 1;
+        private int _keysPerLength = 1;
+        private double _correctPercentage = 100;
+        private int _timeUnit = 10;
         private FormatType _keyFormat = FormatType.lettersOnly;
         private GenerationType _keyGeneration = GenerationType.random;
 
         #endregion
 
         #region TaskPane Settings
-        /*
+
         /// <summary>
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Ciphertext Length", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int TextLength
+        [TaskPane("Minimal correct percentage", "This is a parameter tooltip", null, 1, false, ControlType.TextBox, null)]
+        public double CorrectPercentage
         {
             get
             {
-                return _textLength;
+                return _correctPercentage;
             }
             set
             {
-                if (_textLength != value)
-                {
-                    _textLength = value;
-                    OnPropertyChanged("TextLength");
-                }
+                _correctPercentage = value;
+                OnPropertyChanged("CorrectPercentage");
             }
         }
 
-        [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", null, 2, true, ControlType.ComboBox, new String[] { 
-            "random", "natural speech"})]
-        public GenerationType KeyGeneration
+        /// <summary>
+        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
+        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// </summary>
+        [TaskPane("Time unit size in ms", "This is a parameter tooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
+        public int TimeUnit
         {
             get
             {
-                return this._keyGeneration;
+                return _timeUnit;
             }
             set
             {
-                if (value != _keyGeneration)
-                {
-                    this._keyGeneration = value;
-                    UpdateTaskPaneVisibility();
-                    OnPropertyChanged("KeyGeneration");
-                }
+                _timeUnit = value;
+                OnPropertyChanged("TimeUnit");
             }
         }
 
-        [TaskPane("Minimum Key Length", "Minimum length of the generated keys", null, 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int MinKeyLength
-        {
-            get
-            {
-                return _minKeyLength;
-            }
-            set
-            {
-                if (_minKeyLength != value)
-                {
-                    _minKeyLength = value;
-                    OnPropertyChanged("MinKeyLength");
-                }
-            }
-        }
-
-        [TaskPane("Maximum Key Length", "Maximum length of the generated keys", null, 4, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int MaxKeyLength
-        {
-            get
-            {
-                return _maxKeyLength;
-            }
-            set
-            {
-                if (_maxKeyLength != value)
-                {
-                    _maxKeyLength = value;
-                    OnPropertyChanged("MaxKeyLength");
-                }
-            }
-        }
-
-        [TaskPane("Key Amount Per Length", "Amount of keys to generate per length", null, 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int KeyAmountPerLength
-        {
-            get
-            {
-                return _keyAmountPerLength;
-            }
-            set
-            {
-                if (_keyAmountPerLength != value)
-                {
-                    _keyAmountPerLength = value;
-                    OnPropertyChanged("KeyAmountPerLength");
-                }
-            }
-        }
-
-        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", null, 6, true, ControlType.ComboBox, new String[] { 
-            "letters only", "digits only", "numbers from 0 to 25", "binary only"})]
-        public FormatType KeyFormat
-        {
-            get
-            {
-                return this._keyFormat;
-            }
-            set
-            {
-                if (value != _keyFormat)
-                {
-                    this._keyFormat = value;
-                    OnPropertyChanged("KeyFormat");
-                }
-            }
-        }
-
+        /*
         internal void UpdateTaskPaneVisibility()
         {
             settingChanged("KeyFormat", Visibility.Collapsed);
