@@ -12,7 +12,9 @@
   </introduction>
 
   <usage lang="en">
-    The plugin for Slide attack on Feistel takes two inputs; the plain text and corresponding cipher text which together are called slid pair if they are one round encrypted.
+    The plugin for performing a slide attack on Feistel takes two
+    inputs: the plain text and the corresponding ciphertext which together
+    are called "slid pair" if they are one-round encrypted.
     The slid pair can be any alphanumeric character (within ASCII range).
     When the plugin is run with proper inputs, it generates the unknown key as output.
   </usage>
