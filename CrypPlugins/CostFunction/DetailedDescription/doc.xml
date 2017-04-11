@@ -13,7 +13,7 @@
   </introduction>
 
   <introduction lang="de-DE">
-    Die Kostenfunktion weisst gegebenen Textkörpern numerische Werte zu. Die Art der Kostenfunktion
+    Die Kostenfunktion weist gegebenen Textkörpern numerische Werte zu. Die Art der Kostenfunktion
     (Koinzidenzindex, Entropie, Bigramm (log2), Bigramm (Sinkov), Bigramm (Prozentual), Reguläre Ausdrücke,
     Gewichtete Bigramme/Trigramme) kann durch den Benutzer mittels Einstellung verändert werden. Mit Hilfe
     des zugewiesenen numerischen Wertes kann z.B. festgestellt werden, ob ein gegebener Textkörper natürliche

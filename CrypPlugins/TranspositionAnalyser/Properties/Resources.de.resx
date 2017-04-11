@@ -124,7 +124,7 @@
     <value>Führt verschiedene Angriffe auf die spaltenweise Transposition durch</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
-    <value>Eingabe</value>
+    <value>Geheimtext</value>
   </data>
   <data name="InputTooltip" xml:space="preserve">
     <value>Eingabe des zu untersuchenden Geheimtextes.</value>
@@ -133,7 +133,7 @@
     <value>Crib</value>
   </data>
   <data name="CribTooltip" xml:space="preserve">
-    <value>Crib für die Analyse</value>
+    <value>Geben Sie den Crib für die Crib-Analyse ein.</value>
   </data>
   <data name="ControlMasterCaption" xml:space="preserve">
     <value>Control Master</value>
@@ -148,10 +148,10 @@
     <value>Steuerung der Kostenberechnung</value>
   </data>
   <data name="OutputCaption" xml:space="preserve">
-    <value>Ausgabe</value>
+    <value>Klartext</value>
   </data>
   <data name="OutputTooltip" xml:space="preserve">
-    <value>Ausgabe</value>
+    <value>Ausgabe des besten Klartext-Kandidaten</value>
   </data>
   <data name="Analysis_methodCaption" xml:space="preserve">
     <value>Analysemethode</value>
@@ -181,7 +181,7 @@
     <value>Iterationen</value>
   </data>
   <data name="IterationsTooltip" xml:space="preserve">
-    <value>Geben Sie die Anzahl der Iterationen des Algorithmus an.</value>
+    <value>Geben Sie an, wie viele Iterationen der Algorithmus für einen zufälligen Startwert durchführen soll.</value>
   </data>
   <data name="KeySizeCaption" xml:space="preserve">
     <value>Schlüsselgröße</value>
@@ -199,7 +199,7 @@
     <value>Wiederholungen</value>
   </data>
   <data name="RepeatingsTooltip" xml:space="preserve">
-    <value>Geben Sie die Anzahl der Wiederholungen des Algorithmus an.</value>
+    <value>Geben Sie an, wie oft der Algorithmus mit einem neuen, zufälligen Startwert wiederholt werden soll.</value>
   </data>
   <data name="RowColumnColumnCaption" xml:space="preserve">
     <value>Z-S-S</value>

@@ -172,10 +172,10 @@
     <value>Treffer der regulären Ausdrücke in hexadezimaler Form</value>
   </data>
   <data name="StatisticsCorpusCaption" xml:space="preserve">
-    <value>Textkörper</value>
+    <value>Sprache</value>
   </data>
   <data name="StatisticsCorpusTooltip" xml:space="preserve">
-    <value>Wählen Sie den zu verwendenden Textkörper</value>
+    <value>Wählen Sie eine der vorgegebenen Sprachen, oder geben Sie eine Textdatei an, die einen typischen Text in einer Sprache Ihrer Wahl enthält.</value>
   </data>
   <data name="entropyCaption" xml:space="preserve">
     <value>Entropie-Funktion</value>

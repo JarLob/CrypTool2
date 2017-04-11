@@ -61,7 +61,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis Method ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Analysis method ähnelt.
         /// </summary>
         public static string Analysis_methodCaption {
             get {
@@ -277,7 +277,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Crib for Analysis ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the crib for Crib Analysis ähnelt.
         /// </summary>
         public static string CribTooltip {
             get {
@@ -304,7 +304,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
         /// </summary>
         public static string InputCaption {
             get {
@@ -313,7 +313,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Input data for Analysis ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the ciphertext that is to be analyzed. ähnelt.
         /// </summary>
         public static string InputTooltip {
             get {
@@ -331,7 +331,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the number of iterations of the algorithm. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the number of iterations the algorithm should perform for one random start value. ähnelt.
         /// </summary>
         public static string IterationsTooltip {
             get {
@@ -394,7 +394,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the max length to be bruteforced (max: 20). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the maximum length to be bruteforced (max: 20). ähnelt.
         /// </summary>
         public static string MaxLengthTooltip {
             get {
@@ -412,7 +412,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
         /// </summary>
         public static string OutputCaption {
             get {
@@ -421,7 +421,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the best plaintext candidate ähnelt.
         /// </summary>
         public static string OutputTooltip {
             get {
@@ -466,7 +466,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the number of repetitions of the algorithm. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the number of times the algorithm should be restarted with a new random start value. ähnelt.
         /// </summary>
         public static string RepeatingsTooltip {
             get {

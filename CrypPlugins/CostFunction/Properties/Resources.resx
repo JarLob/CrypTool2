@@ -154,7 +154,7 @@
     <value>If checked, the regular expression will be used in a case-insensitive manner.</value>
   </data>
   <data name="FunctionTypeCaption" xml:space="preserve">
-    <value>FunctionType</value>
+    <value>Function type</value>
   </data>
   <data name="FunctionTypeTooltip" xml:space="preserve">
     <value>Select the type of function</value>
@@ -172,10 +172,10 @@
     <value>Regular Expression match encoded in hex</value>
   </data>
   <data name="StatisticsCorpusCaption" xml:space="preserve">
-    <value>Text Corpus File to use</value>
+    <value>Language</value>
   </data>
   <data name="StatisticsCorpusTooltip" xml:space="preserve">
-    <value>Select a text corpus file</value>
+    <value>Select one of the predefined languages, or choose a custom text file that contains a typical text in a language of your choice.</value>
   </data>
   <data name="entropyCaption" xml:space="preserve">
     <value>Select an entropy function</value>
@@ -223,13 +223,13 @@
     <value>Weighted Bigrams/Trigrams</value>
   </data>
   <data name="StatisticsCorpusList1" xml:space="preserve">
-    <value>german</value>
+    <value>German</value>
   </data>
   <data name="StatisticsCorpusList2" xml:space="preserve">
-    <value>english</value>
+    <value>English</value>
   </data>
   <data name="StatisticsCorpusList3" xml:space="preserve">
-    <value>Custom (...)</value>
+    <value>custom (...)</value>
   </data>
   <data name="entropyList1" xml:space="preserve">
     <value>External (NativeCryptography, default)</value>

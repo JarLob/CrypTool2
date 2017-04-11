@@ -238,10 +238,10 @@
     <value>zeilenweise Auslesen</value>
   </data>
   <data name="ModeList1" xml:space="preserve">
-    <value>Byteweise</value>
+    <value>byteweise</value>
   </data>
   <data name="ModeList2" xml:space="preserve">
-    <value>Buchstabenweise</value>
+    <value>buchstabenweise</value>
   </data>
   <data name="NumberModeCaption" xml:space="preserve">
     <value>Art der Verarbeitung</value>

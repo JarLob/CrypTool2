@@ -352,7 +352,7 @@ namespace TranspositionAnalyser
 
             if (settings.MaxLength < 2 || settings.MaxLength > 20)
             {
-                GuiLogMessage("Check transposition bruteforce length. Min length is 2, max length is 20!", NotificationLevel.Error);
+                GuiLogMessage("Check transposition bruteforce length. Minimum length is 2, maximum length is 20!", NotificationLevel.Error);
                 return;
             }
 

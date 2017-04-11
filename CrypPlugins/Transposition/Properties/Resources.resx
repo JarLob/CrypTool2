@@ -166,7 +166,7 @@
     <value>Select permutation type</value>
   </data>
   <data name="PresentationSpeedCaption" xml:space="preserve">
-    <value>Presentation Speed</value>
+    <value>Presentation speed</value>
   </data>
   <data name="PresentationSpeedTooltip" xml:space="preserve">
     <value>Change the pace of the presentation</value>
@@ -247,6 +247,6 @@
     <value>by character</value>
   </data>
   <data name="NumberModeCaption" xml:space="preserve">
-    <value>Typ of processing</value>
+    <value>Type of processing</value>
   </data>
 </root>

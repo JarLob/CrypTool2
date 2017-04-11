@@ -124,16 +124,16 @@
     <value>Performs several kinds of attacks against the columnar transposition</value>
   </data>
   <data name="InputCaption" xml:space="preserve">
-    <value>Input</value>
+    <value>Ciphertext</value>
   </data>
   <data name="InputTooltip" xml:space="preserve">
-    <value>Input data for Analysis</value>
+    <value>Enter the ciphertext that is to be analyzed.</value>
   </data>
   <data name="CribCaption" xml:space="preserve">
     <value>Crib</value>
   </data>
   <data name="CribTooltip" xml:space="preserve">
-    <value>Crib for Analysis</value>
+    <value>Enter the crib for Crib Analysis</value>
   </data>
   <data name="ControlMasterCaption" xml:space="preserve">
     <value>Control Master</value>
@@ -148,13 +148,13 @@
     <value>Used for cost calculation</value>
   </data>
   <data name="OutputCaption" xml:space="preserve">
-    <value>Output</value>
+    <value>Plaintext</value>
   </data>
   <data name="OutputTooltip" xml:space="preserve">
-    <value>Output</value>
+    <value>Output of the best plaintext candidate</value>
   </data>
   <data name="Analysis_methodCaption" xml:space="preserve">
-    <value>Analysis Method</value>
+    <value>Analysis method</value>
   </data>
   <data name="Analysis_methodTooltip" xml:space="preserve">
     <value>Select the Analysis Method</value>
@@ -181,7 +181,7 @@
     <value>Iterations</value>
   </data>
   <data name="IterationsTooltip" xml:space="preserve">
-    <value>Enter the number of iterations of the algorithm.</value>
+    <value>Enter the number of iterations the algorithm should perform for one random start value.</value>
   </data>
   <data name="KeySizeCaption" xml:space="preserve">
     <value>Keysize</value>
@@ -193,13 +193,13 @@
     <value>Transposition Bruteforce length</value>
   </data>
   <data name="MaxLengthTooltip" xml:space="preserve">
-    <value>Enter the max length to be bruteforced (max: 20).</value>
+    <value>Enter the maximum length to be bruteforced (max: 20).</value>
   </data>
   <data name="RepeatingsCaption" xml:space="preserve">
     <value>Repetitions</value>
   </data>
   <data name="RepeatingsTooltip" xml:space="preserve">
-    <value>Enter the number of repetitions of the algorithm.</value>
+    <value>Enter the number of times the algorithm should be restarted with a new random start value.</value>
   </data>
   <data name="RowColumnColumnCaption" xml:space="preserve">
     <value>R-C-C</value>
