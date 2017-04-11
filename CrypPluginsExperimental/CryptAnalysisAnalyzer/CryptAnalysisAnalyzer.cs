@@ -274,7 +274,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 return;
             }
 
-            if (PlaintextInput != PlaintextOutput ||
+            if (PlaintextInput != PlaintextOutput &&
                 KeyInput != KeyOutput)
             {
                 OnPropertyChanged("MinimalCorrectPercentage");
@@ -282,23 +282,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 KeyOutput = KeyInput;
             }
 
-            if (_evaluationInput != null && _evaluationInput.hasValueSet)
+            if (_evaluationInput != null && _evaluationInput.hasValueSet &&
+                !String.IsNullOrEmpty(BestKeyInput) &&
+                !String.IsNullOrEmpty(BestPlaintextInput))
             {
                 string evaluationString = _evaluationInput.ToString();
                 Console.WriteLine(evaluationString);
+                GuiLogMessage(evaluationString, NotificationLevel.Balloon);
 
-                double percentCorrect = 0;
-                if (!String.IsNullOrEmpty(BestKeyInput) && !String.IsNullOrEmpty(BestPlaintextInput))
-                {
+                GuiLogMessage("Best Key: " + BestKeyInput, NotificationLevel.Balloon);
+                GuiLogMessage("Best Plaintext: " + BestPlaintextInput.Substring(0,
+                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Balloon);
 
-                    GuiLogMessage("Execute() Best Key: " + BestKeyInput, NotificationLevel.Debug);
-                    GuiLogMessage("Execute() Best Plaintext: " + BestPlaintextInput.Substring(0,
-                        BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Debug);
-
-                    percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput);
-                    GuiLogMessage("percentCorrect: " + percentCorrect, NotificationLevel.Debug);
-                    
-                }
+                double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput);
+                GuiLogMessage("percentCorrect: " + percentCorrect, NotificationLevel.Balloon);
 
                 BigInteger decryptions = EvaluationInput.GetDecryptions();
                 TimeSpan runtime;
@@ -306,12 +303,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
                     double decryptionsPerTimeUnit = Math.Round((double) decryptions / divisor, 4);
 
-                    GuiLogMessage("Decryptions per time unit: " + decryptionsPerTimeUnit, NotificationLevel.Debug);
+                    GuiLogMessage("Decryptions per time unit: " + decryptionsPerTimeUnit, NotificationLevel.Balloon);
 
                 }
 
                 TriggerNextKey = KeyInput;
                 OnPropertyChanged("TriggerNextKey");
+
+                //PostExecution();
+
+                _bestPlaintextInput = "";
+                _bestKeyInput = "";
 
                 ProgressChanged(1, 1);
             }
@@ -324,6 +326,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void PostExecution()
         {
+            _plaintextInput = "";
+            _keyInput = "";
+            _bestPlaintextInput = "";
+            _bestKeyInput = "";
+            _evaluationInput = new EvaluationContainer();
+
+            _plaintextOutput = "";
+            _keyOutput = "";
         }
 
         /// <summary>
