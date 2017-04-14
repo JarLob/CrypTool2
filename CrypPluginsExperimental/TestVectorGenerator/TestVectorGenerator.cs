@@ -48,7 +48,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _debugOutput;
         private string _singleKeyOutput;
 
-        private int _progress = 0;
+        private int _keyCount = 0;
         private string[] _inputArray;
         private System.Random _rand;
         private int _startSentence;
@@ -70,11 +70,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._textInput; }
             set
             {
-                if (_textInput == null || !_textInput.Equals(value))
-                {
-                    this._textInput = value;
-                    OnPropertyChanged("TextInput");
-                }
+                this._textInput = value;
+                OnPropertyChanged("TextInput");
             }
         }
 
@@ -88,8 +85,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 if (_seedInput != seed)
                 {
                     this._seedInput = seed;
-                    OnPropertyChanged("SeedInput");
                 }
+                OnPropertyChanged("SeedInput");
 
             }
         }
@@ -100,12 +97,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._regexInput; }
             set
             {
-                if (_regexInput == null || !_regexInput.Equals(value))
-                {
-                    this._regexInput = value;
-                    OnPropertyChanged("RegexInput");
-                }
-
+                this._regexInput = value;
+                OnPropertyChanged("RegexInput");
             }
         }
 
@@ -117,7 +110,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 this._alphabetInput = value;
                 OnPropertyChanged("AlphabetInput");
-
             }
         }
 
@@ -129,7 +121,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 this._singleKeyOutput = value;
                 OnPropertyChanged("SingleKeyOutput");
-                //Console.WriteLine("OnPropertyChanges SingleKeyOutput");
             }
         }
 
@@ -139,12 +130,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._plaintextOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_plaintextOutput == null || !_plaintextOutput.Equals(value))
-                {
-                    this._plaintextOutput = value;
-                    OnPropertyChanged("PlaintextOutput");
-                }
+                this._plaintextOutput = value;
+                OnPropertyChanged("PlaintextOutput");
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "TotalKeys", "TotalKeys tooltip description")]
+        public int TotalKeys
+        {
+            get { return this._keysToGenerate; }
+            set
+            {
+                this._keysToGenerate = value;
+                OnPropertyChanged("TotalKeys");
             }
         }
 
@@ -154,12 +152,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._debugOutput; }
             set
             {
-                // TODO: check if test works and is necessary
-                if (_debugOutput != value)
-                {
-                    this._debugOutput = value;
-                    OnPropertyChanged("DebugOutput");
-                }
+                this._debugOutput = value;
+                OnPropertyChanged("DebugOutput");
             }
         }
 
@@ -314,10 +308,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     }
                     _notFound = true;
                 }
-
-                // set progress
-                _progress++;
-                ProgressChanged(_progress / (_inputArray.Length - 1) * 2, 1);
             }
         }
 
@@ -886,6 +876,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PreExecution()
         {
+            ProgressChanged(0, 1);
         }
 
         /// <summary>
@@ -893,19 +884,24 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void Execute()
         {
+            if (_keyCount > 0)
+                ProgressChanged(_keyCount - 1, _keysToGenerate);
+            else
+                ProgressChanged(0, _keysToGenerate);
+
             if (!checkVariables())
                 return;
 
             if (_inputArray == null)
                 preProcessTextInput();
-            
-            ProgressChanged(0, 1);
 
             _rand = new System.Random(_seedInput);
             //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
             if (_settings.TextLength > 0)
                 generatePlaintext();
+
+            ProgressChanged(_keyCount-0.5, _keysToGenerate);
 
             if (_settings.KeyGeneration == GenerationType.naturalSpeech)
             {
@@ -923,8 +919,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             EmptyEvaluationContainer = new EvaluationContainer();
             OnPropertyChanged("EmptyEvaluationContainer");
+            _keyCount++;
+            OnPropertyChanged("TotalKeys");
 
-            ProgressChanged(1, 1);
+            ProgressChanged(_keyCount, _keysToGenerate);
         }
 
         /// <summary>
@@ -938,7 +936,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _occurences = null;
             _keyList = new List<string>();
             _plaintextList = new List<string>();
-            _progress = 0;
+            _keyCount = 0;
             _notFound = false;
             _singleKeyOutput = "";
             _regexInput = "";

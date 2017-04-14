@@ -57,6 +57,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _bestKeyOutput;
 
         private int _keyCount = 0;
+        private int _totalKeysInput = 0;
         private int _progress;
 
         #endregion
@@ -109,6 +110,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 this._plaintextInput = value;
                 OnPropertyChanged("PlaintextInput");
+            }
+        }
+        
+        [PropertyInfo(Direction.InputData, "TotalKeysInput", "TotalKeysInput tooltip description", true)]
+        public int TotalKeysInput
+        {
+            get { return this._totalKeysInput; }
+            set
+            {
+                this._totalKeysInput = value;
+                OnPropertyChanged("TotalKeysInput");
             }
         }
 
@@ -230,10 +242,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void PreExecution()
         {
-            _keyCount = 0;
-            _plaintextOutput = "";
-            _keyOutput = null;
-            _progress = 0;
+            ProgressChanged(0, 1);
+            Console.WriteLine("---------------");
         }
 
         public bool checkVariables()
@@ -266,7 +276,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void Execute()
         {
-            ProgressChanged(0, 1);
            
             if (!checkVariables())
             {
@@ -274,18 +283,31 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 return;
             }
 
+            // If both plaintext and key are new,
+            // send them to the output
             if (PlaintextInput != PlaintextOutput &&
                 KeyInput != KeyOutput)
             {
+                _keyCount++;
+
                 OnPropertyChanged("MinimalCorrectPercentage");
                 PlaintextOutput = PlaintextInput;
                 KeyOutput = KeyInput;
+
+                if (_totalKeysInput > 0)
+                    ProgressChanged(_keyCount-0.9, _totalKeysInput);
             }
 
+            // if the evaluation input is set, together with the best key
+            // and best plaintext, do the evaluation for that calculation
             if (_evaluationInput != null && _evaluationInput.hasValueSet &&
                 !String.IsNullOrEmpty(BestKeyInput) &&
-                !String.IsNullOrEmpty(BestPlaintextInput))
+                !String.IsNullOrEmpty(BestPlaintextInput) &&
+                BestKeyInput != " " &&
+                BestPlaintextInput != " ")
             {
+                Console.WriteLine("Seed: " + SeedInput);
+
                 string evaluationString = _evaluationInput.ToString();
                 Console.WriteLine(evaluationString);
                 GuiLogMessage(evaluationString, NotificationLevel.Balloon);
@@ -293,6 +315,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 GuiLogMessage("Best Key: " + BestKeyInput, NotificationLevel.Balloon);
                 GuiLogMessage("Best Plaintext: " + BestPlaintextInput.Substring(0,
                     BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Balloon);
+
+
+                Console.WriteLine("Best Key: " + BestKeyInput);
+                Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
+                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length));
 
                 double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput);
                 GuiLogMessage("percentCorrect: " + percentCorrect, NotificationLevel.Balloon);
@@ -307,15 +334,23 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 }
 
-                TriggerNextKey = KeyInput;
-                OnPropertyChanged("TriggerNextKey");
+                if (_keyCount < _totalKeysInput)
+                {
+                    TriggerNextKey = KeyInput;
+                    OnPropertyChanged("TriggerNextKey");
+                }
+                
 
                 //PostExecution();
 
                 _bestPlaintextInput = "";
                 _bestKeyInput = "";
 
-                ProgressChanged(1, 1);
+                if (_totalKeysInput > 0)
+                    ProgressChanged(_keyCount, _totalKeysInput);
+                else
+                    ProgressChanged(1, 1);
+
             }
 
             
@@ -334,6 +369,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             _plaintextOutput = "";
             _keyOutput = "";
+
+            _keyCount = 0;
         }
 
         /// <summary>
