@@ -174,7 +174,7 @@ namespace Cryptool.Plugins.Hill
 
             if (!CheckParameters()) return;
 
-            if (!settings.Action) mat = inv;    // decrypt
+            if (settings.Action) mat = inv;    // decrypt
 
             GuiLogMessage("The matrix is " + mat, NotificationLevel.Debug);
 
