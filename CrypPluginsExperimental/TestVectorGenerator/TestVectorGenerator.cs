@@ -29,11 +29,8 @@ using Cryptool.PluginBase.IO;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
-    [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("TestVectorGenerator", "Subtract one number from another", "TestVectorGenerator/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
+    [PluginInfo("TestVectorGenerator", "Generate keys and plaintexts as test vectors", "TestVectorGenerator/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class TestVectorGenerator : ICrypComponent
     {
@@ -116,34 +113,22 @@ namespace Cryptool.Plugins.TestVectorGenerator
         [PropertyInfo(Direction.OutputData, "SingleKeyOutput", "SingleKeyOutput tooltip description")]
         public string SingleKeyOutput
         {
-            get { return this._singleKeyOutput; }
-            set
-            {
-                this._singleKeyOutput = value;
-                OnPropertyChanged("SingleKeyOutput");
-            }
+            get;
+            set;
         }
 
         [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
         public string PlaintextOutput
         {
-            get { return this._plaintextOutput; }
-            set
-            {
-                this._plaintextOutput = value;
-                OnPropertyChanged("PlaintextOutput");
-            }
+            get;
+            set;
         }
 
         [PropertyInfo(Direction.OutputData, "TotalKeys", "TotalKeys tooltip description")]
         public int TotalKeys
         {
-            get { return this._keysToGenerate; }
-            set
-            {
-                this._keysToGenerate = value;
-                OnPropertyChanged("TotalKeys");
-            }
+            get;
+            set;
         }
 
         [PropertyInfo(Direction.OutputData, "DebugOutput", "textOutput tooltip description")]
@@ -189,7 +174,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 {
                     String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
                     _plaintextList.Add(finalPlaintext);
-                    PlaintextOutput = finalPlaintext;
+                    _plaintextOutput = finalPlaintext;
                     break;
                 }
             }
@@ -289,7 +274,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         sentence = AddSeparator(sentence);
                     }
 
-                    SingleKeyOutput = sentence;
+                    _singleKeyOutput = sentence;
 
                     return;
                 }
@@ -355,7 +340,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
-                SingleKeyOutput = randomKey;
+                _singleKeyOutput = randomKey;
             }
             else if (_settings.KeyFormatRandom == FormatType.uniqueLetters ||
                 _settings.KeyFormatRandom == FormatType.uniqueNumbers)
@@ -385,7 +370,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     return;
                 //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
 
-                SingleKeyOutput = randomKey;
+                _singleKeyOutput = randomKey;
             }
             else
             {
@@ -411,7 +396,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     else
                         randomKey = randomKey + _settings.Separator + randomInt;
                 }
-                SingleKeyOutput = randomKey;
+                _singleKeyOutput = randomKey;
             }
         }
 
@@ -725,7 +710,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             }
 
-            SingleKeyOutput = regexString;
+            _singleKeyOutput = regexString;
         }
 
         #endregion
@@ -823,7 +808,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void replaceLettersByNumbersWithSpaces()
         {
-            char[] chars = SingleKeyOutput.ToCharArray();
+            char[] chars = _singleKeyOutput.ToCharArray();
             string transpositionKey = "";
             foreach (char ch in chars)
             {
@@ -840,7 +825,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
 
-            SingleKeyOutput = transpositionKey;
+            _singleKeyOutput = transpositionKey;
         }
 
         public static int SHA1AsInt32(string stringToHash)
@@ -884,6 +869,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void Execute()
         {
+            if (_keysToGenerate > 0 && _keyCount >= _keysToGenerate)
+            {
+                Console.WriteLine("Number of keys to generate already reached! Skipping generation...");
+                GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
+                return;
+            }
+
             if (_keyCount > 0)
                 ProgressChanged(_keyCount - 1, _keysToGenerate);
             else
@@ -917,10 +909,22 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 generateRandomKeys();
             }
 
+            if (!string.IsNullOrEmpty(_singleKeyOutput) &&
+                !string.IsNullOrEmpty(_plaintextOutput))
+            {
+                SingleKeyOutput = _singleKeyOutput;
+                PlaintextOutput = _plaintextOutput;
+                OnPropertyChanged("SingleKeyOutput");
+                OnPropertyChanged("PlaintextOutput");
+            }
+
             EmptyEvaluationContainer = new EvaluationContainer();
             OnPropertyChanged("EmptyEvaluationContainer");
             _keyCount++;
-            OnPropertyChanged("TotalKeys");
+            if (_keysToGenerate > 0 && _keyCount <= 1) {
+                TotalKeys = _keysToGenerate;
+                OnPropertyChanged("TotalKeys");
+            }
 
             ProgressChanged(_keyCount, _keysToGenerate);
         }
@@ -930,19 +934,24 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PostExecution()
         {
-            _keysToGenerate = -1;
-            _lastKeyLengthIndex = -1;
+            _textInput = null;
+            _seedInput = new int();
+            _regexInput = null;
+            _alphabetInput = null;
+            _plaintextOutput = null;
+            _debugOutput = null;
+            _singleKeyOutput = null;
+
+            _keyCount = 0;
             _inputArray = null;
-            _occurences = null;
+            _rand = null;
             _keyList = new List<string>();
             _plaintextList = new List<string>();
-            _keyCount = 0;
+            _keysToGenerate = -1;
+            _lastKeyLengthIndex = -1;
             _notFound = false;
-            _singleKeyOutput = "";
-            _regexInput = "";
-            _seedInput = 0;
-            _alphabetInput = "";
-            _debugOutput = "";
+            _occurences = null;
+
         }
 
         /// <summary>
