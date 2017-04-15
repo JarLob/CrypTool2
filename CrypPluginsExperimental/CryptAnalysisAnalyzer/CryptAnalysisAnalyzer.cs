@@ -31,11 +31,8 @@ using PercentageSimilarity;
 
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
-    [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Uni Kassel", "http://www.uni-kassel.de/eecs/fachgebiete/ais/")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("CryptAnalysisAnalyzer", "Subtract one number from another", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
+    [PluginInfo("CryptAnalysisAnalyzer", "Analyse CryptAnalysis methods", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CryptAnalysisAnalyzer : ICrypComponent
     {
@@ -59,6 +56,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private int _keyCount = 0;
         private int _totalKeysInput = 0;
         private int _progress;
+        private EvaluationContainer _lastEval;
 
         #endregion
 
@@ -248,19 +246,23 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public bool checkVariables()
         {
-            if (KeyInput.Length == 0 || String.IsNullOrEmpty(KeyInput))
+            if (String.IsNullOrEmpty(PlaintextInput) &&
+                (String.IsNullOrEmpty(KeyInput) || KeyInput.Length == 0))
             {
-                // TESTING!!!
-                KeyInput = "KEYWORDX";
+                if (String.IsNullOrEmpty(KeyInput) || KeyInput.Length == 0)
+                {
+                    // TESTING!!!
+                    //KeyInput = "KEYWORDX";
 
-                //GuiLogMessage("The key input is empty!", NotificationLevel.Error);
-                //return false;
-            }
+                    GuiLogMessage("The key input is empty!", NotificationLevel.Error);
+                    return false;
+                }
 
-            if (String.IsNullOrEmpty(PlaintextInput))
-            {
-                GuiLogMessage("The plaintext input is empty!", NotificationLevel.Error);
-                return false;
+                if (String.IsNullOrEmpty(PlaintextInput))
+                {
+                    GuiLogMessage("The plaintext input is empty!", NotificationLevel.Error);
+                    return false;
+                }
             }
 
             if (String.IsNullOrEmpty(SeedInput))
@@ -285,7 +287,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // If both plaintext and key are new,
             // send them to the output
-            if (PlaintextInput != PlaintextOutput &&
+            if (!String.IsNullOrEmpty(PlaintextInput) &&
+                !String.IsNullOrEmpty(KeyInput) &&
+                PlaintextInput != PlaintextOutput &&
                 KeyInput != KeyOutput)
             {
                 _keyCount++;
@@ -301,11 +305,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // if the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
             if (_evaluationInput != null && _evaluationInput.hasValueSet &&
+                (_lastEval == null || 
+                _lastEval != null && !_evaluationInput.Equals(_lastEval)) &&
                 !String.IsNullOrEmpty(BestKeyInput) &&
                 !String.IsNullOrEmpty(BestPlaintextInput) &&
                 BestKeyInput != " " &&
                 BestPlaintextInput != " ")
             {
+                _lastEval = _evaluationInput;
+
+                // Seed - SeedInput
+                // EvaluationInput
                 Console.WriteLine("Seed: " + SeedInput);
 
                 string evaluationString = _evaluationInput.ToString();
@@ -334,7 +344,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 }
 
-                if (_keyCount < _totalKeysInput)
+                if (_totalKeysInput == null ||
+                    _totalKeysInput > 0 ||
+                    _keyCount < _totalKeysInput)
                 {
                     TriggerNextKey = KeyInput;
                     OnPropertyChanged("TriggerNextKey");
@@ -343,8 +355,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 //PostExecution();
 
-                _bestPlaintextInput = "";
-                _bestKeyInput = "";
+                BestPlaintextInput = "";
+                BestKeyInput = "";
+                EvaluationInput = new EvaluationContainer();
+                //KeyInput = null;
+                //PlaintextInput = null;
 
                 if (_totalKeysInput > 0)
                     ProgressChanged(_keyCount, _totalKeysInput);
@@ -366,6 +381,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _bestPlaintextInput = "";
             _bestKeyInput = "";
             _evaluationInput = new EvaluationContainer();
+            _lastEval = null;
 
             _plaintextOutput = "";
             _keyOutput = "";
