@@ -23,6 +23,7 @@
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$String Decoder$" value="String-Dekodierer"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
+        <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.\line\line Nach &quot;Starten&quot; wird der aus den Eingaben resultierende Geheimtext angezeigt . Verändern Sie nun die Eingabe, erhalten Sie einen entsprechenden neuen Geheimtext (die Eingabe besteht in diesem Fall aus dem Klartext und dem Sender-Schlüssel. Bei anderen Verfahren wird noch eine zusätzliche Eingabe benötigt, z.B. ein IV bei der Achterbahn-Chiffre). Anschließend werden beide Geheimtexte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
@@ -30,6 +31,7 @@
     <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$String Decoder$" value="String Decoder"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on modern ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the input feed is shown (the input feed consists of plaintext and key in this case. Other ciphers might require a third entry such as an IV. For instance in the Achterbahn cipher). If you modify any of the input entries you will get a new corresponding ciphertext. Subsequently the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
   </replacements>
 
 </sample>

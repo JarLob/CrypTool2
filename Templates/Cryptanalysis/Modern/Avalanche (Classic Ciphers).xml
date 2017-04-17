@@ -21,11 +21,13 @@
     <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
+    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei klassischen Verschlüsselungsverfahren.\line\line Nach &quot;Starten&quot; wird der aus dem Klartext resultierende Geheimtext angezeigt. Verändern Sie nun den Klartext, erhalten Sie einen entsprechenden neuen Geheimtext. Anschließend werden beide Geheimtexte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
     <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on classic ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the plaintext is shown. If you modify the plaintext you will get a new corresponding ciphertext. Subsequently the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
   </replacements>
 
 </sample>
