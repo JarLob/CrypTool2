@@ -871,8 +871,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             if (_keysToGenerate > 0 && _keyCount >= _keysToGenerate)
             {
-                Console.WriteLine("Number of keys to generate already reached! Skipping generation...");
-                GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
+                //Console.WriteLine("Number of keys to generate already reached! Skipping generation...");
+                //GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
                 return;
             }
 

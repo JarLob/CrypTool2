@@ -54,6 +54,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _bestKeyOutput;
 
         private int _keyCount = 0;
+        private int _evaluationCount = 0;
         private int _totalKeysInput = 0;
         private int _progress;
         private EvaluationContainer _lastEval;
@@ -305,34 +306,54 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // if the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
             if (_evaluationInput != null && _evaluationInput.hasValueSet &&
-                (_lastEval == null || 
-                _lastEval != null && !_evaluationInput.Equals(_lastEval)) &&
+                (_lastEval == null || !_evaluationInput.Equals(_lastEval)) &&
+                _evaluationCount < _keyCount &&
+                _keyCount <= _totalKeysInput &&
                 !String.IsNullOrEmpty(BestKeyInput) &&
                 !String.IsNullOrEmpty(BestPlaintextInput) &&
                 BestKeyInput != " " &&
                 BestPlaintextInput != " ")
             {
+                //TODO: evaluation container ID?
                 _lastEval = _evaluationInput;
 
+                // Key number - _keyCount
                 // Seed - SeedInput
                 // EvaluationInput
-                Console.WriteLine("Seed: " + SeedInput);
+                // Key - KeyInput
+                // Key space - ???
+                // Plaintext - PlaintextInput
+                // Ciphertext - ???
+                // Best key - BestKeyInput
+                // Best plaintext - BestPlaintextInput
+                // % correct - percentCorrect
+                // Necessary decryptions - decryptions
+                // Runtime - runtime
+                // Restarts - EvaluationInput.GetRestarts()
+                // DecryptionsPerTimeUnit - decryptionsPerTimeUnit
+                // Success probability - to be calculated!
+                // Population size - EvaluationInput.GetPopulationSize()
+                // Tabu set size - EvaluationInput.GetTabuSetSize()
+
+                Console.WriteLine("----- Key: " + _keyCount + " -----");
+
+                if (_evaluationCount == 0)
+                    Console.WriteLine("Seed: " + SeedInput);
 
                 string evaluationString = _evaluationInput.ToString();
                 Console.WriteLine(evaluationString);
                 GuiLogMessage(evaluationString, NotificationLevel.Balloon);
 
-                GuiLogMessage("Best Key: " + BestKeyInput, NotificationLevel.Balloon);
-                GuiLogMessage("Best Plaintext: " + BestPlaintextInput.Substring(0,
-                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length), NotificationLevel.Balloon);
-
-
+                Console.WriteLine("Key: " + KeyInput);
+                Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
+                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length));
                 Console.WriteLine("Best Key: " + BestKeyInput);
                 Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
                     BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length));
 
-                double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput);
-                GuiLogMessage("percentCorrect: " + percentCorrect, NotificationLevel.Balloon);
+                double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
+                Console.WriteLine("percentCorrect: " + percentCorrect);
+                Console.WriteLine("success: " + (percentCorrect >= _settings.CorrectPercentage ? "yes!" : "no."));
 
                 BigInteger decryptions = EvaluationInput.GetDecryptions();
                 TimeSpan runtime;
@@ -340,7 +361,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
                     double decryptionsPerTimeUnit = Math.Round((double) decryptions / divisor, 4);
 
-                    GuiLogMessage("Decryptions per time unit: " + decryptionsPerTimeUnit, NotificationLevel.Balloon);
+                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
 
                 }
 
@@ -351,9 +372,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     TriggerNextKey = KeyInput;
                     OnPropertyChanged("TriggerNextKey");
                 }
-                
 
-                //PostExecution();
+                _evaluationCount++;
 
                 BestPlaintextInput = "";
                 BestKeyInput = "";
@@ -387,6 +407,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _keyOutput = "";
 
             _keyCount = 0;
+            _evaluationCount = 0;
         }
 
         /// <summary>
