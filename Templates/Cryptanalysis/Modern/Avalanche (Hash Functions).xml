@@ -21,7 +21,7 @@
     <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
-    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei Hashverfahren.\line\line Nach &quot;Starten&quot; wird der aus dem Klartext resultierende initiale Hashwert angezeigt. Verändern Sie nun den Klartext, erhalten Sie einen entsprechenden neuen Hash-Wert. Anschließend werden beide Hash-Werte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
+    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei Hashverfahren.\line\line Nach &quot;Starten&quot; wird der aus dem Klartext resultierende initiale Hashwert angezeigt. Verändern Sie nun den Klartext, erhalten Sie einen entsprechenden neuen Hashwert. Anschließend werden beide Hashwerte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
   </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
