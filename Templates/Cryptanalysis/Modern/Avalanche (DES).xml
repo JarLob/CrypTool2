@@ -23,7 +23,7 @@
     <replacement key="$DES Plaintext$" value="DES-Klartext"/>
     <replacement key="$String Decoder$" value="String-Dekodierer"/>
     <replacement key="$Generated Data$" value="Generierte Daten"/>
-    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt nach jeder einzelnen Runde von DES. Die Schlüssellänge beträgt 64 Bits.\line\line Am Anfang der Präsentation (Nach dem Drücken von &quot;Starten&quot;) können Sie Veränderungen am Input (Schlüssel und/oder Klartext) vornehmen. Anschließend können Sie die vorgenommenen Veränderungen und den daraus resultierenden Avalanche-Effekt nach jeder Runde von DES einsehen. Andere relevante statistische Daten werden ebenfalls angezeigt. Im Bereich &quot;Allgemeine Übersicht&quot; können Sie sich einen Überblick über die Auswirkungen der Ausgangsveränderung auf alle anderen Bits nach jeder Runde, verschaffen."/>
+    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt nach jeder einzelnen Runde von DES. Die Schlüssellänge beträgt 64 Bits.\line\line Am Anfang der Präsentation (nach dem Drücken von &quot;Starten&quot;) können Sie Veränderungen am Input (Schlüssel und/oder Klartext) vornehmen. Anschließend können Sie die vorgenommenen Veränderungen und den daraus resultierenden Avalanche-Effekt nach jeder Runde von DES einsehen. Andere relevante statistische Daten werden ebenfalls angezeigt. Im Bereich &quot;Allgemeine Übersicht&quot; können Sie sich einen Überblick über die Auswirkung der initialen Veränderung auf alle Bits in jeder Runde verschaffen."/>
    </replacements>
   <replacements lang="en">
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
@@ -31,7 +31,7 @@
     <replacement key="$DES Plaintext$" value="DES Plaintext"/>
     <replacement key="$String Decoder$" value="String Decoder"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
-    <replacement key="$Memo$" value="This template helps visualize the avalanche effect after every single round of DES. The key length is set to 64 bits.\line\line At the beginning of the presentation (after pressing &quot;Play&quot;) you can modify the key and/or plaintext. Afterwards you can check the modifications made and the resulting avalanche effect after each single round of DES. You will also get other relevant statistical data and a general overview of the bits affected by the initial modification."/>
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect after every single round of DES. The key length is set to 64 bits.\line\line At the beginning of the presentation (after pressing &quot;Play&quot;) you can modify the key and/or plaintext. Then you can check the modifications made and the resulting avalanche effect after each single round of DES. You will also get other relevant statistical data and a general overview of the bits affected by the initial modification."/>
   </replacements>
 
 </sample>

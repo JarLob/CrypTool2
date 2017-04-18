@@ -27,7 +27,7 @@
     <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
     <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$Generated Data$" value="Generated Data"/>
-    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on classic ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the plaintext is shown. If you modify the plaintext you will get a new corresponding ciphertext. Subsequently the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on classic ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the plaintext is shown. If you modify the plaintext you will get a new corresponding ciphertext. Subsequently, the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
   </replacements>
 
 </sample>
