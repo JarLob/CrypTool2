@@ -914,8 +914,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 OnPropertyChanged("PlaintextOutput");
             }
 
-            EmptyEvaluationContainer = new EvaluationContainer();
-            OnPropertyChanged("EmptyEvaluationContainer");
             _keyCount++;
             if (_keysToGenerate > 0 && _keyCount <= 1) {
                 TotalKeys = _keysToGenerate;
