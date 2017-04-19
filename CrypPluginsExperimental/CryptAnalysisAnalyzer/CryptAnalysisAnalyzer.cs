@@ -230,7 +230,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             BigInteger decryptionsCount = 0;
 
             TimeSpan runtimeCount = new TimeSpan();
-            bool noRuntime = false;
+            bool noRuntime = !_settings.CalculateRuntime;
             BigInteger restarts = 0;
             bool noRestarts = false;
             BigInteger populationSize = 0;
@@ -382,7 +382,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 BigInteger decryptions = EvaluationInput.GetDecryptions();
                 TimeSpan runtime;
-                if (EvaluationInput.GetRuntime(out runtime))
+                if (_settings.CalculateRuntime && EvaluationInput.GetRuntime(out runtime))
                 {
                     double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
                     double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);

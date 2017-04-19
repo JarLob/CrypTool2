@@ -29,14 +29,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     {
         #region Private Variables
 
-        private BigInteger _textLength = 100;
-        private int _minKeyLength = 14;
-        private int _maxKeyLength = 14;
-        private int _keysPerLength = 1;
-        private double _correctPercentage = 100;
+        private double _correctPercentage = 95;
         private int _timeUnit = 10;
-        private FormatType _keyFormat = FormatType.lettersOnly;
-        private GenerationType _keyGeneration = GenerationType.random;
+        private bool _calculateRuntime = true;
 
         #endregion
 
@@ -75,6 +70,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 _timeUnit = value;
                 OnPropertyChanged("TimeUnit");
+            }
+        }
+
+        /// <summary>
+        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
+        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// </summary>
+        [TaskPane("Calculate runtime", "Calculate the runtime of the algorithm", null, 3, false, ControlType.CheckBox)]
+        public bool CalculateRuntime
+        {
+            get { return this._calculateRuntime; }
+            set
+            {
+                this._calculateRuntime = value;
+                OnPropertyChanged("CalculateRuntime");
             }
         }
 
