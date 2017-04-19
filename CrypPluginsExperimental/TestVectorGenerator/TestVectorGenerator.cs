@@ -131,7 +131,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set;
         }
 
-        [PropertyInfo(Direction.OutputData, "DebugOutput", "textOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "DebugOutput", "DebugOutput tooltip description")]
         public string DebugOutput
         {
             get { return this._debugOutput; }
@@ -141,10 +141,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 OnPropertyChanged("DebugOutput");
             }
         }
-
-        [PropertyInfo(Direction.OutputData, "EmptyEvaluationContainer", "EmptyEvaluationContainer tooltip description")]
-        public EvaluationContainer EmptyEvaluationContainer
-        { get; set; }
 
         #endregion
 
