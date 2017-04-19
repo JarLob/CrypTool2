@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private readonly CryptAnalysisAnalyzerSettings _settings = new CryptAnalysisAnalyzerSettings();
 
         private string _textInput;
-        private int _seedInput;
+        private string _seedInput;
         private string _plaintextInput;
         private string _keyInput;
         private string _bestPlaintextInput;
@@ -50,14 +50,15 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         private string _plaintextOutput;
         private string _keyOutput;
-        private string _bestPlaintextOutput;
-        private string _bestKeyOutput;
+        private string _gnuPlotOutput;
+        private string _evaluationOutput;
 
         private int _keyCount = 0;
         private int _evaluationCount = 0;
         private int _totalKeysInput = 0;
         private int _progress;
         private EvaluationContainer _lastEval;
+        private Dictionary<int, ExtendedEvaluationContainer> _testRuns;
 
         #endregion
 
@@ -77,16 +78,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description")]
         public string SeedInput
         {
-            get { return this._seedInput.ToString(); }
+            get { return this._seedInput; }
             set
             {
-                int seed = value.GetHashCode();
-                if (_seedInput != seed)
-                {
-                    this._seedInput = seed;
-                    OnPropertyChanged("SeedInput");
-                }
-
+                this._seedInput = value;
+                OnPropertyChanged("SeedInput");
             }
         }
 
@@ -188,25 +184,25 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return _settings.CorrectPercentage; }
         }
 
-        [PropertyInfo(Direction.OutputData, "BestKeyOutput", "BestKeyOutput tooltip description")]
-        public string BestKeyOutput
+        [PropertyInfo(Direction.OutputData, "EvaluationOutput", "EvaluationOutput tooltip description")]
+        public string EvaluationOutput
         {
-            get { return this._bestKeyOutput; }
+            get { return this._evaluationOutput; }
             set
             {
-                this._bestKeyOutput = value;
-                OnPropertyChanged("BestKeyOutput");
+                this._evaluationOutput = value;
+                OnPropertyChanged("EvaluationOutput");
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "BestPlaintextOutput", "BestPlaintextOutput tooltip description")]
-        public string BestPlaintextOutput
+        [PropertyInfo(Direction.OutputData, "GnuPlotOutput", "GnuPlotOutput tooltip description")]
+        public string GnuPlotOutput
         {
-            get { return this._bestPlaintextOutput; }
+            get { return this._gnuPlotOutput; }
             set
             {
-                this._bestPlaintextOutput = value;
-                OnPropertyChanged("BestPlaintextOutput");
+                this._gnuPlotOutput = value;
+                OnPropertyChanged("GnuPlotOutput");
             }
         }
 
@@ -226,6 +222,127 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #endregion
 
         #region Evaluation
+
+        public void Evaluate()
+        {
+            int successCount = 0;
+            double decryptedCount = 0;
+            BigInteger decryptionsCount = 0;
+
+            TimeSpan runtimeCount = new TimeSpan();
+            bool noRuntime = false;
+            BigInteger restarts = 0;
+            bool noRestarts = false;
+            BigInteger populationSize = 0;
+            bool noPopulationSize = false;
+            BigInteger tabuSetSize = 0;
+            bool noTabuSetSize = false;
+
+            // TODO: keys?
+
+            int ciphertextLength = 0;
+            string testSeriesSeed = "";
+            ConcurrentDictionary<int, int> keyLengths = new ConcurrentDictionary<int, int>();
+
+            bool firstElement = true;
+            foreach (KeyValuePair<int, ExtendedEvaluationContainer> entry in _testRuns)
+            {
+                ExtendedEvaluationContainer testRun = entry.Value;
+
+                if (firstElement)
+                {
+                    ciphertextLength = testRun.GetCiphertext().Length;
+                    testSeriesSeed = testRun.GetSeed();
+                }
+
+                if (testRun.GetSuccessfull())
+                    successCount++;
+
+                decryptedCount += testRun.GetPercentDecrypted();
+                decryptionsCount += testRun.GetDecryptions();
+
+                TimeSpan time;
+                if (!noRuntime && testRun.GetRuntime(out time))
+                    runtimeCount += time;
+                else
+                    noRuntime = true;
+
+                if (!noRestarts && testRun.GetRestarts() > 0)
+                    restarts += testRun.GetRestarts();
+                else
+                    noRestarts = true;
+
+                if (!noPopulationSize && testRun.GetPopulationSize() > 0)
+                    populationSize += testRun.GetPopulationSize();
+                else
+                    noPopulationSize = true;
+
+                if (!noTabuSetSize && testRun.GetTabuSetSize() > 0)
+                    tabuSetSize += testRun.GetTabuSetSize();
+                else
+                    noTabuSetSize = true;
+
+                keyLengths.AddOrUpdate(testRun.GetKey().Length, 1, (length, count) => count + 1);
+            }
+            double successPercentage = Math.Round((double) successCount / _testRuns.Count * 100, 2);
+            double averageDecryptedPercentage = Math.Round((double) decryptedCount / _testRuns.Count, 2);
+            double averageDecryptions = Math.Round((double)decryptionsCount / _testRuns.Count, 2);
+
+            string averageRuntimeString = "";
+            if (!noRuntime)
+            {
+                double ms = runtimeCount.TotalMilliseconds / _testRuns.Count;
+                TimeSpan averageRuntime = TimeSpan.FromMilliseconds(ms);
+                averageRuntimeString = new DateTime(averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
+            }
+
+            BigInteger averageRestarts = 0;
+            if (!noRestarts)
+                averageRestarts = restarts / _testRuns.Count;
+
+            BigInteger averagePopulationSize = 0;
+            if (!noPopulationSize)
+                averagePopulationSize = populationSize / _testRuns.Count;
+
+            BigInteger averageTabuSetSize = 0;
+            if (!noTabuSetSize)
+                averageTabuSetSize = tabuSetSize / _testRuns.Count;
+
+            string keyLengthString = "";
+            var keyLengthArray = keyLengths.ToArray();
+            int i = 1;
+            keyLengthString += keyLengthArray[0].Key + " (" + keyLengthArray[0].Value + ")";
+            while (i < keyLengthArray.Length)
+            {
+                keyLengthString += ", " + keyLengthArray[i].Key + " (" + keyLengthArray[i].Value + ")";
+                i++;
+                if (keyLengths.Count > 6 && i == 3)
+                {
+                    i = keyLengthArray.Length - 4;
+                    keyLengthString += " ...";
+                }
+            }
+
+            _evaluationOutput = "";
+            if (!string.IsNullOrEmpty(testSeriesSeed))
+                _evaluationOutput = "Test Series Seed: " + testSeriesSeed + "\r";
+            if (!noRuntime)
+                _evaluationOutput += "Average runtime: " + averageRuntimeString + "\r";
+            _evaluationOutput += "Ciphertext length: " + ciphertextLength + "\r";
+            _evaluationOutput += "Key lengths: " + keyLengthString + "\r";
+            _evaluationOutput += "Average decryptions necessary: " + averageDecryptions + "\r";
+            if (!noRestarts)
+                _evaluationOutput += "Average restarts: " + averageRestarts + "\r";
+            if (!noPopulationSize)
+                _evaluationOutput += "Average population size: " + averagePopulationSize + "\r";
+            if (!noTabuSetSize)
+                _evaluationOutput += "Average tabu set size: " + averageTabuSetSize + "\r";
+            _evaluationOutput += "Averagely decrypted: " + averageDecryptedPercentage + 
+                "% of min " + _settings.CorrectPercentage + "%\r";
+            _evaluationOutput += "Average success: " + successPercentage + "%\r";
+
+            OnPropertyChanged("EvaluationOutput");
+        }
 
         public void CollectEvaluationData()
         {
@@ -248,45 +365,54 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // Tabu set size - EvaluationInput.GetTabuSetSize()
 
             if (_evaluationCount == 0)
-                Console.WriteLine("------- EpochSeed: " + SeedInput + " -------");
+                Console.WriteLine("------- Test Series Seed: " + SeedInput + " -------");
 
-            Console.WriteLine("----- Key: " + _keyCount + " -----");
-
-            string evaluationString = _evaluationInput.ToString();
-            Console.WriteLine(evaluationString);
-            GuiLogMessage(evaluationString, NotificationLevel.Balloon);
-
-            Console.WriteLine("Key: " + KeyInput);
-            Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
-                PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length));
-            Console.WriteLine("Best Key: " + BestKeyInput);
-            Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
-                BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length));
-
-            double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
-            Console.WriteLine("percentCorrect: " + percentCorrect);
-            Console.WriteLine("success: " + (percentCorrect >= _settings.CorrectPercentage ? "yes!" : "no."));
-
-            BigInteger decryptions = EvaluationInput.GetDecryptions();
-            TimeSpan runtime;
-            if (EvaluationInput.GetRuntime(out runtime))
+            // Testing output
+            if (_evaluationCount < 3)
             {
-                double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
-                double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);
+                Console.WriteLine("----- Key: " + _keyCount + " -----");
+                string evaluationString = _evaluationInput.ToString();
+                Console.WriteLine(evaluationString);
+                Console.WriteLine("Best Key: " + BestKeyInput);
+                Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
+                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length));
+                Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
+                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length));
 
-                Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
 
+                BigInteger decryptions = EvaluationInput.GetDecryptions();
+                TimeSpan runtime;
+                if (EvaluationInput.GetRuntime(out runtime))
+                {
+                    double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
+                    double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);
+
+                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
+
+                }
             }
 
-            if (_totalKeysInput == null ||
-                _totalKeysInput > 0 ||
+            double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
+            bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
+           
+            ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
+                _seedInput, _keyCount, _keyInput, _plaintextInput, _bestKeyInput, _bestPlaintextInput,
+                _settings.CorrectPercentage, percentCorrect, success);
+
+            _testRuns.Add(_evaluationInput.GetID(), testRun);
+
+            _evaluationCount++;
+
+            if (_totalKeysInput > 0 &&
                 _keyCount < _totalKeysInput)
             {
                 TriggerNextKey = KeyInput;
                 OnPropertyChanged("TriggerNextKey");
             }
-
-            _evaluationCount++;
+            else
+            {
+                Evaluate();
+            }
 
             BestPlaintextInput = "";
             BestKeyInput = "";
@@ -319,6 +445,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public void PreExecution()
         {
             ProgressChanged(0, 1);
+            _testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
             Console.WriteLine("--------------------------------------------");
         }
 
@@ -493,7 +620,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         // Tabu set size - EvaluationInput.GetTabuSetSize()
         */
 
-        private BigInteger _epochSeed;
+        private string _testSeriesSeed;
         private int _keyNumber;
         private string _key;
         // private BigInteger _keySpace; ?
@@ -503,22 +630,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private double _minimalDecryption;
         private double _percentDecrypted;
         private bool _successful;
-        // DecryptionsPerTimeUnit ? 
 
-        ExtendedEvaluationContainer(EvaluationContainer e)
+        public ExtendedEvaluationContainer(EvaluationContainer e)
         {
             // set EvaluationContainer base class
             base.SetEvaluationContainer(e);
         }
 
-        ExtendedEvaluationContainer(EvaluationContainer e, BigInteger epochSeed, 
+        public ExtendedEvaluationContainer(EvaluationContainer e, string seed, 
             int keyNumber, string key, string plaintext, string bestKey,
             string bestPlaintext, double minimalDecryption, double percentDecrypted,
             bool successfull)
         {
             // set EvaluationContainer base class
             base.SetEvaluationContainer(e);
-            this._epochSeed = epochSeed;
+            this._testSeriesSeed = seed;
             this._keyNumber = keyNumber;
             this._key = key;
             this._plaintext = plaintext;
@@ -529,9 +655,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             this._successful = successfull;
         }
 
-        public bool hasEpochSeed()
+        public bool hasSeed()
         {
-            return this._epochSeed != null && this._epochSeed != 0;
+            return !string.IsNullOrEmpty(this._testSeriesSeed);
         }
 
         public bool hasKeyNumber()
@@ -569,12 +695,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             return this._percentDecrypted != null && this._percentDecrypted != 0;
         }
 
-        public BigInteger GetEpochSeed()
+        public string GetSeed()
         {
-            if (hasEpochSeed())
-                return this._epochSeed;
+            if (hasSeed())
+                return this._testSeriesSeed;
 
-            return 0;
+            return null;
         }
 
         public int GetKeyNumber()
