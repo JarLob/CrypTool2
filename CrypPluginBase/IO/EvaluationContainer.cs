@@ -27,8 +27,10 @@ namespace Cryptool.PluginBase.IO
     {
         #region Fields and constructors
 
+        private int _ID;
         private TimeSpan _runtime;
         private BigInteger _decryptions;
+        private string _ciphertext;
         private BigInteger _restarts;
         // remove if always equal to _decryptions
         private BigInteger _keys;
@@ -45,20 +47,24 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(TimeSpan t, BigInteger decryptions, BigInteger restarts)
+        public EvaluationContainer(int id, TimeSpan t, BigInteger decryptions, string ciphertext, BigInteger restarts)
         {
+            this._ID = id;
             this._runtime = t;
             this._decryptions = decryptions;
+            this._ciphertext = ciphertext;
             this._restarts = restarts;
         }
 
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(TimeSpan t, BigInteger decryptions, BigInteger restarts, BigInteger keys)
+        public EvaluationContainer(int id, TimeSpan t, BigInteger decryptions, string ciphertext, BigInteger restarts, BigInteger keys)
         {
+            this._ID = id;
             this._runtime = t;
             this._decryptions = decryptions;
+            this._ciphertext = ciphertext;
             this._restarts = restarts;
             this._keys = keys;
         }
@@ -66,18 +72,22 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(BigInteger decryptions, BigInteger restarts)
+        public EvaluationContainer(int id, BigInteger decryptions, string ciphertext, BigInteger restarts)
         {
+            this._ID = id;
             this._decryptions = decryptions;
+            this._ciphertext = ciphertext;
             this._restarts = restarts;
         }
 
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(BigInteger decryptions, BigInteger restarts, BigInteger populationSize)
+        public EvaluationContainer(int id, BigInteger decryptions, string ciphertext, BigInteger restarts, BigInteger populationSize)
         {
+            this._ID = id;
             this._decryptions = decryptions;
+            this._ciphertext = ciphertext;
             this._restarts = restarts;
             this._populationSize = populationSize;
         }
@@ -90,8 +100,10 @@ namespace Cryptool.PluginBase.IO
         {
             get
             {
-                if (hasRuntime ||
+                if (hasID ||
+                    hasRuntime ||
                     hasDecryptions ||
+                    hasCiphertext ||
                     hasRestarts ||
                     hasKeys ||
                     hasPopulationSize ||
@@ -99,6 +111,25 @@ namespace Cryptool.PluginBase.IO
                     return true;
                 return false;
             }
+        }
+
+        public bool Equals(EvaluationContainer e)
+        {
+            if ((!hasID || this._ID == e._ID) &&
+                (!hasRuntime || this._runtime == e._runtime) &&
+                (!hasDecryptions || this._decryptions == e._decryptions) &&
+                (!hasCiphertext || this._ciphertext == e._ciphertext) &&
+                (!hasRestarts || this._restarts == e._restarts) &&
+                (!hasKeys || this._keys == e._keys) &&
+                (!hasPopulationSize || this._populationSize == e._populationSize) &&
+                (!hasTabuSetSize || this._tabuSetSize == e._tabuSetSize))
+                return true;
+            return false;
+        }
+
+        public bool hasID
+        {
+            get { return _ID != null && _ID != 0; }
         }
 
         public bool hasRuntime
@@ -109,6 +140,11 @@ namespace Cryptool.PluginBase.IO
         public bool hasDecryptions
         {
             get { return _decryptions != null && _decryptions != 0; }
+        }
+
+        public bool hasCiphertext
+        {
+            get { return !string.IsNullOrEmpty(_ciphertext); }
         }
 
         public bool hasRestarts
@@ -134,7 +170,31 @@ namespace Cryptool.PluginBase.IO
         #endregion
 
         #region Public methods
-        
+
+        /// <summary>
+        /// Set complete EvaluationContainer
+        /// </summary>
+        public void SetEvaluationContainer(EvaluationContainer e)
+        {
+            SetID(e._ID);
+            SetRuntime(e._runtime);
+            SetDecryptions(e._decryptions);
+            SetCiphertext(e._ciphertext);
+            SetRestarts(e._restarts);
+            SetKeys(e._keys);
+            SetPopulationSize(e._populationSize);
+            SetTabuSetSize(e._tabuSetSize);
+        }
+
+        /// <summary>
+        /// Set ID if not already set
+        /// </summary>
+        public void SetID(int id)
+        {
+            if (!hasID)
+                _ID = id;
+        }
+
         /// <summary>
         /// Set runtime if not already set
         /// </summary>
@@ -143,7 +203,7 @@ namespace Cryptool.PluginBase.IO
             if (!hasRuntime)
                 _runtime = t;
         }
-        
+
         /// <summary>
         /// Set number of decryptions if not already set
         /// </summary>
@@ -151,6 +211,15 @@ namespace Cryptool.PluginBase.IO
         {
             if (!hasDecryptions)
                 _decryptions = i;
+        }
+
+        /// <summary>
+        /// Set the ciphertext if not already set
+        /// </summary>
+        public void SetCiphertext(string c)
+        {
+            if (!hasCiphertext)
+                _ciphertext = c;
         }
         
         /// <summary>
@@ -190,6 +259,17 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
+        /// Get the ID as int
+        /// </summary>
+        public int GetID()
+        {
+            if (hasID)
+                return _ID;
+
+            return 0;
+        }
+
+        /// <summary>
         /// Get the runtime as TimeSpan
         /// </summary>
         public bool GetRuntime(out TimeSpan t)
@@ -216,7 +296,18 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as BigInteger
+        /// Get the ciphertext as string
+        /// </summary>
+        public string GetCiphertext()
+        {
+            if (hasCiphertext)
+                return _ciphertext;
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get the number of restarts as BigInteger
         /// </summary>
         public BigInteger GetRestarts()
         {
@@ -227,7 +318,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as BigInteger
+        /// Get the number of keys as BigInteger
         /// </summary>
         public BigInteger GetKeys()
         {
@@ -238,7 +329,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as BigInteger
+        /// Get the number of population size as BigInteger
         /// </summary>
         public BigInteger GetPopulationSize()
         {
@@ -249,7 +340,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as BigInteger
+        /// Get the number of tabu set size as BigInteger
         /// </summary>
         public BigInteger GetTabuSetSize()
         {
@@ -267,15 +358,34 @@ namespace Cryptool.PluginBase.IO
             string outputString = "";
             bool isEmpty = true;
 
-            if (hasRuntime) {
+            if (hasID)
+            {
+                outputString += "ID: " + _ID;
+                isEmpty = false;
+            }
+
+            if (hasRuntime)
+            {
+                if (!isEmpty)
+                    outputString += "\n";
                 outputString += "Runtime: " + _runtime;
                 isEmpty = false;
             }
 
-            if (hasDecryptions) {
+            if (hasDecryptions)
+            {
                 if (!isEmpty)
                     outputString += "\n";
                 outputString += "Decryptions: " + _decryptions;
+                isEmpty = false;
+            }
+
+            if (hasCiphertext)
+            {
+                if (!isEmpty)
+                    outputString += "\n";
+                outputString += "Ciphertext: " + _ciphertext.Substring(0,
+                    _ciphertext.Length > 50 ? 50 : _ciphertext.Length);
                 isEmpty = false;
             }
 
