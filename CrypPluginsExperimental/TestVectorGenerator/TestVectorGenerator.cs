@@ -165,7 +165,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
-                _plaintextOutput = _plaintextOutput + _inputArray[i] + ". ";
+                _plaintextOutput = _plaintextOutput + replaceSpaces(replaceDots(_inputArray[i]));
                 if (_plaintextOutput.Length >= _settings.TextLength)
                 {
                     String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
@@ -196,7 +196,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
 
-            string sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+            string sentence = replaceSpaces(_inputArray[_startSentence]);
             int originalStartSentence = _startSentence;
             //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
 
@@ -276,7 +276,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
 
                 _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
-                sentence = _inputArray[_startSentence].ToUpper().Replace(" ", "");
+                sentence = replaceSpaces(_inputArray[_startSentence]);
                 sentenceLength = sentence.Length;
 
                 // if the start sentence reaches the original one, the whole imput array is computed
@@ -715,13 +715,45 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public bool checkVariables()
         {
-            if (_settings.MinKeyLength < 1)
+            if (String.IsNullOrEmpty(_textInput))
             {
-                GuiLogMessage("KeyLength has to be at least 1", NotificationLevel.Warning);
-                _settings.MinKeyLength = 1;
+                GuiLogMessage("The input text is missing!", NotificationLevel.Error);
+                return false;
             }
 
-            if (_textInput.Length < _settings.MinKeyLength)
+            if (String.IsNullOrEmpty(SeedInput))
+            {
+                GuiLogMessage("The input seed is missing!", NotificationLevel.Error);
+                return false;
+            }
+
+            if (String.IsNullOrEmpty(_regexInput) &&
+                _settings.KeyGeneration == GenerationType.regex)
+            {
+                GuiLogMessage("The input regex is missing!", NotificationLevel.Error);
+                return false;
+            }
+
+            if (_settings.MinKeyLength > _settings.MaxKeyLength)
+            {
+                GuiLogMessage("Maximum key length has to be at least minimum key length!", NotificationLevel.Warning);
+                _settings.MaxKeyLength = _settings.MinKeyLength;
+            }
+
+            if (_settings.TextLength > _settings.MaxTextLength)
+            {
+                GuiLogMessage("Maximum text length has to be at least minimum text length!", NotificationLevel.Warning);
+                _settings.MaxTextLength = _settings.TextLength;
+            }
+
+            if (_settings.TextLengthIncrease > _settings.MaxTextLength - _settings.TextLength)
+            {
+                GuiLogMessage("The text length increase has to be at most the difference between minimum and maximum text length!", NotificationLevel.Warning);
+                _settings.TextLengthIncrease = _settings.MaxTextLength - _settings.TextLength;
+            }
+
+            if (_textInput.Length < _settings.MinKeyLength ||
+                _textInput.Length < _settings.TextLength)
             {
                 GuiLogMessage("The input text is too small!", NotificationLevel.Error);
                 return false;
@@ -730,32 +762,94 @@ namespace Cryptool.Plugins.TestVectorGenerator
             return true;
         }
 
+        public string replaceDots(string text)
+        {
+            // text modifications according to user settings
+            text = text + ". ";
+            if (_settings.DotSymbolHandling == DotSymbolHandlingMode.Remove)
+                text = text.Replace(".", String.Empty);
+            else if (_settings.DotSymbolHandling == DotSymbolHandlingMode.Replace)
+                text = text.Replace(".", _settings.DotReplacer);
+            return text;
+        }
+
+        public string replaceSpaces(string text)
+        {
+            // text modifications according to user settings
+            if (_settings.DeleteSpaces)
+                text = text.Replace(" ", String.Empty);
+            return text;
+        }
+
+        public void processTextSettings()
+        {
+            // text modifications according to user settings
+            if (_settings.NumbersHandling == NumbersHandlingMode.Remove)
+                _textInput = Regex.Replace(_textInput, @"[0-9]", String.Empty);
+            else if (_settings.NumbersHandling == NumbersHandlingMode.ReplaceEnglish)
+            {
+                _textInput = _textInput.Replace("0", "NULL");
+                _textInput = _textInput.Replace("1", "ONE");
+                _textInput = _textInput.Replace("2", "TWO");
+                _textInput = _textInput.Replace("3", "THREE");
+                _textInput = _textInput.Replace("4", "FOUR");
+                _textInput = _textInput.Replace("5", "FIVE");
+                _textInput = _textInput.Replace("6", "SIX");
+                _textInput = _textInput.Replace("7", "SEVEN");
+                _textInput = _textInput.Replace("8", "EIGHT");
+                _textInput = _textInput.Replace("9", "NINE");
+            }
+            else if (_settings.NumbersHandling == NumbersHandlingMode.ReplaceGerman)
+            {
+                _textInput = _textInput.Replace("0", "NULL");
+                _textInput = _textInput.Replace("1", "EINS");
+                _textInput = _textInput.Replace("2", "ZWEI");
+                _textInput = _textInput.Replace("3", "DREI");
+                _textInput = _textInput.Replace("4", "VIER");
+                _textInput = _textInput.Replace("5", "FÜNF");
+                _textInput = _textInput.Replace("6", "SECHS");
+                _textInput = _textInput.Replace("7", "SIEBEN");
+                _textInput = _textInput.Replace("8", "ACHT");
+                _textInput = _textInput.Replace("9", "NEUN");
+            }
+            if (_settings.ReplaceSZ)
+                _textInput = _textInput.Replace("ß", "sz");
+            if (_settings.ReplaceUmlauts)
+            {
+                _textInput = _textInput.Replace("ä", "ae");
+                _textInput = _textInput.Replace("Ä", "AE");
+                _textInput = _textInput.Replace("ö", "oe");
+                _textInput = _textInput.Replace("Ö", "OE");
+                _textInput = _textInput.Replace("ü", "ue");
+                _textInput = _textInput.Replace("Ü", "UE");
+            }
+            if (_settings.UppercaseOnly)
+                _textInput = _textInput.ToUpper();
+        }
+
         public void preProcessTextInput()
         {
             // replace double minus and newlines by space and ? and ! by full stops
-            TextInput = TextInput.Replace("--", " ");
             TextInput = TextInput.Replace("?", ".");
             TextInput = TextInput.Replace("!", ".");
-            TextInput = TextInput.Replace("..", ".");
+            // replace newlines by space
             TextInput = TextInput.Replace(System.Environment.NewLine, " ");
 
             // delete all characters appart from letters, spaces and full stops
-            TextInput = Regex.Replace(TextInput, @"[^A-Za-z. ]+", "");
+            TextInput = Regex.Replace(TextInput, @"[^A-Za-z0-9äöüÄÖÜß. ]+", String.Empty);
 
             // replace double space by single space
             RegexOptions options = RegexOptions.None;
             Regex regex = new Regex("[ ]{2,}", options);
             TextInput = regex.Replace(TextInput, " ");
-            int substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
-            //DebugOutput = TextInput.Substring(0, substringLength);
 
-            // replace newlines by space
+            // replace spaces after full stops and delete very last full stop
             TextInput = TextInput.Replace(". ", ".");
             if (TextInput.EndsWith("."))
                 TextInput = TextInput.Substring(0, TextInput.Length - 1);
 
-            substringLength = 1000 < TextInput.Length ? 1000 : TextInput.Length;
-            DebugOutput = TextInput.Substring(0, substringLength);
+            // process all text modification settings
+            processTextSettings();
 
             // split input text into sentences
             _inputArray = TextInput.Split('.');

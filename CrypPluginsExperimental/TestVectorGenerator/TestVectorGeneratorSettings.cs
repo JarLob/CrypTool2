@@ -40,19 +40,18 @@ namespace Cryptool.Plugins.TestVectorGenerator
         
         // general variables
         private const int generalPaneIndex = 1;
-        private const int ciphertextPaneIndex = generalPaneIndex + 3;
-        private const int keyPaneIndex = ciphertextPaneIndex + 10;
+        private const int plaintextPaneIndex = generalPaneIndex + 7;
+        private const int keyPaneIndex = plaintextPaneIndex + 5;
         private int _numberOfTestRuns = 1;
-        private bool _showExtendedCiphertextSettings = false;
-        private bool _showExtendedKeySettings = false;
-
-        // ciphertext variables
         private int _textLength = 100;
         private int _maxTextLength = 100;
         private int _textLengthIncrease = 5;
+        private NumbersHandlingMode _numbersHandlingMode = NumbersHandlingMode.Remove;
+        private bool _showExtendedSettings = false;
+
+        // plaintext variables
         private DotSymbolHandlingMode _dotSymbolHandlingMode = DotSymbolHandlingMode.Remove;
         private string _dotReplacer = "X";
-        private NumbersHandlingMode _numbersHandlingMode = NumbersHandlingMode.Remove;
 
         // key variables
         private int _minKeyLength = 14;
@@ -65,7 +64,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region General TaskPane Settings
 
-        [TaskPane("Number of Test Runs", "NumberOfTestRunsTooltipCaption", null, generalPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Number of Test Runs", "NumberOfTestRunsTooltipCaption", null, generalPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int NumberOfTestRuns
         {
             get
@@ -82,45 +81,66 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Show extended ciphertext settings", "ShowExtendedCiphertextSettingsTooltipCaption", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
-        public bool ShowExtendedCiphertextSettings
+        [TaskPane("Uppercase Only", "UppercaseOnlyTooltipCaption", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
+        public bool UppercaseOnly
         {
-            get
-            {
-                return _showExtendedCiphertextSettings;
-            }
-            set
-            {
-                _showExtendedCiphertextSettings = value;
-                UpdateCiphertextSettingsVisibility();
-                OnPropertyChanged("ShowExtendedCiphertextSettings");
-            }
+            get;
+            set;
         }
 
-        [TaskPane("Show extended key settings", "ShowExtendedKeySettingsTooltipCaption", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
-        public bool ShowExtendedKeySettings
+        [TaskPane("Delete Spaces", "DeleteSpacesTooltipCaption", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
+        public bool DeleteSpaces
+        {
+            get;
+            set;
+        }
+
+        [TaskPane("Replace ß by SZ", "ReplaceSZTooltipCaption", null, generalPaneIndex + 3, false, ControlType.CheckBox)]
+        public bool ReplaceSZ
+        {
+            get;
+            set;
+        }
+
+        [TaskPane("Replace Umlauts", "ReplaceUmlautsTooltipCaption", null, generalPaneIndex + 4, false, ControlType.CheckBox)]
+        public bool ReplaceUmlauts
+        {
+            get;
+            set;
+        }
+
+        [TaskPane("Numbers Handling", "NumbersHandlingTooltipCaption", null, generalPaneIndex + 5, true, ControlType.ComboBox, new String[] { 
+            "Ignore", "Remove", "Replace with NULL, ONE,...", "Replace with EINS, ZWEI,..."})]
+        public NumbersHandlingMode NumbersHandling
+        {
+            get;
+            set;
+        }
+
+        [TaskPane("Show extended settings", "ShowExtendedSettingsTooltipCaption", null, generalPaneIndex + 6, false, ControlType.CheckBox)]
+        public bool ShowExtendedSettings
         {
             get
             {
-                return _showExtendedKeySettings;
+                return _showExtendedSettings;
             }
             set
             {
-                _showExtendedKeySettings = value;
-                UpdateKeySettingsVisibility();
-                OnPropertyChanged("ShowExtendedKeySettings");
+                _showExtendedSettings = value;
+                UpdateExtendedSettingsVisibility();
+                OnPropertyChanged("ShowExtendedSettings");
             }
         }
 
         #endregion
 
-        #region Ciphertext TaskPane Settings
+        #region Plaintext TaskPane Settings
 
         /// <summary>
         /// HOWTO: This is an example for a setting entity shown in the _settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Ciphertext Length", "This is a parameter tooltipCaption", "CiphertextGroup", ciphertextPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Plaintext Length", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int TextLength
         {
             get
@@ -134,7 +154,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Maximum Ciphertext Length", "This is a parameter tooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Maximum Plaintext Length", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int MaxTextLength
         {
             get
@@ -148,7 +168,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Ciphertext Length Step Increase", "This is a parameter tooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Plaintext Length Step Increase", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int TextLengthIncrease
         {
             get
@@ -162,45 +182,20 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        public int CiphertextsPerLength
+        public int PlaintextsPerLength
         {
             get
             {
-                if (_textLengthIncrease == 0 || (_maxKeyLength - _minKeyLength) == 0)
+                if (_textLengthIncrease == 0 ||
+                    _textLengthIncrease == 1 ||
+                    _maxKeyLength == _minKeyLength ||
+                    _textLengthIncrease < (_maxKeyLength - _minKeyLength))
                     return _numberOfTestRuns;
                 return (int) _numberOfTestRuns / (_textLengthIncrease * (_maxKeyLength - _minKeyLength));
             }
         }
 
-        [TaskPane("Uppercase Only", "UppercaseOnlyTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 3, false, ControlType.CheckBox)]
-        public bool UppercaseOnly
-        {
-            get;
-            set;
-        }
-
-        [TaskPane("Delete Spaces", "DeleteSpacesTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 4, false, ControlType.CheckBox)]
-        public bool DeleteSpaces
-        {
-            get;
-            set;
-        }
-
-        [TaskPane("Replace ß by SZ", "ReplaceSZTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 5, false, ControlType.CheckBox)]
-        public bool ReplaceSZ
-        {
-            get;
-            set;
-        }
-
-        [TaskPane("Replace Umlauts", "ReplaceUmlautsTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 6, false, ControlType.CheckBox)]
-        public bool ReplaceUmlauts
-        {
-            get;
-            set;
-        }
-
-        [TaskPane("Dot Symbol Handling", "DotSymbolHandlingTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 7, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("Dot Symbol Handling", "DotSymbolHandlingTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 3, true, ControlType.ComboBox, new String[] { 
             "Ignore", "Remove", "Replace with:"})]
         public DotSymbolHandlingMode DotSymbolHandling
         {
@@ -216,7 +211,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Replace Dots With:", "DotReplacerTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 8, false, ControlType.TextBox, null)]
+        [TaskPane("Replace Dots With:", "DotReplacerTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 4, false, ControlType.TextBox, null)]
         public string DotReplacer
         {
             get
@@ -228,14 +223,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _dotReplacer = value;
                 OnPropertyChanged("DotReplacer");
             }
-        }
-
-        [TaskPane("Numbers Handling", "NumbersHandlingTooltipCaption", "CiphertextGroup", ciphertextPaneIndex + 9, true, ControlType.ComboBox, new String[] { 
-            "Ignore", "Remove", "Replace with NULL, ONE,...", "Replace with EINS, ZWEI,..."})]
-        public NumbersHandlingMode NumbersHandling
-        {
-            get;
-            set;
         }
 
         #endregion
@@ -299,7 +286,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             get
             {
-                return _numberOfTestRuns / (_maxKeyLength-_minKeyLength);
+                if (_maxKeyLength == _minKeyLength ||
+                        _numberOfTestRuns == 0 ||
+                        _numberOfTestRuns == 1 ||
+                        _numberOfTestRuns < (_maxKeyLength - _minKeyLength))
+                    return _numberOfTestRuns;
+                return _numberOfTestRuns / (_maxKeyLength - _minKeyLength);
             }
         }
 
@@ -321,7 +313,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex+4, true, ControlType.ComboBox, new String[] { 
-            "uppercase letters", "unique numbers", "digits", "binary", "unique Letters"})]
+            "letters", "unique numbers", "digits", "binary", "unique letters"})]
         public FormatType KeyFormatRandom
         {
             get
@@ -339,7 +331,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex+4, true, ControlType.ComboBox, new String[] { 
-            "uppercase letters", "unique numbers"})]
+            "letters", "unique numbers"})]
         public FormatType KeyFormatNaturalSpeech
         {
             get
@@ -360,7 +352,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region UI Update
 
-        internal void UpdateCiphertextSettingsVisibility()
+        internal void UpdateExtendedSettingsVisibility()
         {
             settingChanged("MaxTextLength", Visibility.Collapsed);
             settingChanged("TextLengthIncrease", Visibility.Collapsed);
@@ -371,7 +363,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             settingChanged("DotSymbolHandling", Visibility.Collapsed);
             settingChanged("DotReplacer", Visibility.Collapsed);
             settingChanged("NumbersHandling", Visibility.Collapsed);
-            if (ShowExtendedCiphertextSettings)
+            settingChanged("Separator", Visibility.Collapsed);
+            if (ShowExtendedSettings)
             {
                 settingChanged("MaxTextLength", Visibility.Visible);
                 settingChanged("TextLengthIncrease", Visibility.Visible);
@@ -381,16 +374,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 settingChanged("ReplaceUmlauts", Visibility.Visible);
                 settingChanged("DotSymbolHandling", Visibility.Visible);
                 settingChanged("NumbersHandling", Visibility.Visible);
-                UpdateDotReplacingSettingVisibility();
-            }
-        }
-
-        internal void UpdateKeySettingsVisibility()
-        {
-            settingChanged("Separator", Visibility.Collapsed);
-            if (ShowExtendedKeySettings)
-            {
                 settingChanged("Separator", Visibility.Visible);
+                UpdateDotReplacingSettingVisibility();
             }
         }
 
@@ -442,8 +427,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_keyGeneration == null)
                 _keyGeneration = GenerationType.random;
             UpdateKeyFormatVisibility();
-            UpdateCiphertextSettingsVisibility();
-            UpdateKeySettingsVisibility();
+            UpdateExtendedSettingsVisibility();
             UpdateDotReplacingSettingVisibility();
         }
 
