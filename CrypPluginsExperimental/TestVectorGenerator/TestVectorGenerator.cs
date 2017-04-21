@@ -715,6 +715,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public bool checkVariables()
         {
+            if (_settings.ShowExtendedSettings)
+            {
+                _settings.MaxTextLength = _settings.TextLength;
+                _settings.TextLengthIncrease = 0;
+            }
+
             if (String.IsNullOrEmpty(_textInput))
             {
                 GuiLogMessage("The input text is missing!", NotificationLevel.Error);
