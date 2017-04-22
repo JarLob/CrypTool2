@@ -188,10 +188,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 if (_textLengthIncrease == 0 ||
                     _textLengthIncrease == 1 ||
-                    _maxKeyLength == _minKeyLength ||
-                    _textLengthIncrease < (_maxKeyLength - _minKeyLength))
-                    return _numberOfTestRuns;
-                return (int) _numberOfTestRuns / (_textLengthIncrease * (_maxKeyLength - _minKeyLength));
+                    _maxTextLength == _textLength ||
+                    _textLengthIncrease > (_maxTextLength - _textLength))
+                    return 1;
+                return (int)_numberOfTestRuns / ((_maxTextLength - _textLength + _textLengthIncrease) / _textLengthIncrease);
             }
         }
 
@@ -290,7 +290,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         _numberOfTestRuns == 0 ||
                         _numberOfTestRuns == 1 ||
                         _numberOfTestRuns < (_maxKeyLength - _minKeyLength))
-                    return _numberOfTestRuns;
+                    return 1;
                 return _numberOfTestRuns / (_maxKeyLength - _minKeyLength);
             }
         }

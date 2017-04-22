@@ -45,13 +45,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _debugOutput;
         private string _singleKeyOutput;
 
-        private int _keyCount = 0;
+        private int _testRunCount = 0;
         private string[] _inputArray;
         private System.Random _rand;
         private int _startSentence;
         private List<String> _keyList = new List<string>();
         private List<String> _plaintextList = new List<string>();
-        private int _keysToGenerate = -1;
+        private int _currentTextLength = 0;
+        private int _calculatedTextsCurrentLength = 0;
         private int _lastKeyLengthIndex = -1;
         private bool _notFound = false;
         ConcurrentDictionary<int, int> _occurences;
@@ -149,28 +150,40 @@ namespace Cryptool.Plugins.TestVectorGenerator
         public void generatePlaintext()
         {
             // check if plaintext list contains all elements, break if so
-            if (_plaintextList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeysPerLength)
+            if (_plaintextList.Count == _settings.NumberOfTestRuns)
                 return;
 
+            if (_currentTextLength == 0)
+                _currentTextLength = _settings.TextLength;
+
             _startSentence = _rand.Next(0, _inputArray.Length);
+            int count = 0;
             while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
             {
-                //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
-                //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
                 _startSentence = _rand.Next(0, _inputArray.Length);
+                count++;
+                if (count > _inputArray.Length * 3)
+                {
+                    GuiLogMessage("Text input seems to be too short for the entered amount of plaintexts!", NotificationLevel.Error);
+                    return;
+                }
             }
 
             _plaintextOutput = "";
-            //Console.WriteLine("_seedInput: " + _seedInput + ", _rand: " + _rand +
-            //    ", Length: " + _inputArray.Length + ", StartSentence: " + _startSentence);
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
                 _plaintextOutput = _plaintextOutput + replaceSpaces(replaceDots(_inputArray[i]));
-                if (_plaintextOutput.Length >= _settings.TextLength)
+                if (_plaintextOutput.Length >= _currentTextLength)
                 {
-                    String finalPlaintext = _plaintextOutput.Substring(0, _settings.TextLength);
+                    string finalPlaintext = _plaintextOutput.Substring(0, _currentTextLength);
                     _plaintextList.Add(finalPlaintext);
                     _plaintextOutput = finalPlaintext;
+                    _calculatedTextsCurrentLength++;
+                    if (_calculatedTextsCurrentLength == _settings.PlaintextsPerLength)
+                    {
+                        _calculatedTextsCurrentLength = 0;
+                        _currentTextLength += _settings.TextLengthIncrease;
+                    }
                     break;
                 }
             }
@@ -206,7 +219,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             while (true)
             {
                 // check if key list contains all elements, break if so
-                if (_keyList.Count == (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeysPerLength)
+                if (_keyList.Count == _settings.NumberOfTestRuns)
                     return;
 
                 int lengthOccurences = 0;
@@ -244,6 +257,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 {
                     _occurences.TryGetValue(sentenceLength, out lengthOccurences);
                 }
+
                 if (sentenceLength >= _settings.MinKeyLength &&
                         sentenceLength <= _settings.MaxKeyLength &&
                         lengthOccurences < _settings.KeysPerLength &&
@@ -251,12 +265,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 {
                     _keyList.Add(sentence);
                     _occurences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
-
-                    // !!! TESTING ONLY !!!
-                    //sentence = sentence + " (" + sentence.Length + ")";
-
-                    //int length = 15 < sentence.Length ? 15 : sentence.Length;
-                    //Console.WriteLine("sentence: "+ sentence.Substring(0,length) +" - " + _startSentence + "/" + originalStartSentence);
 
                     // if the letters should be replaced by numbers, do so
                     if (_settings.KeyFormatNaturalSpeech == FormatType.uniqueNumbers)
@@ -279,7 +287,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 sentence = replaceSpaces(_inputArray[_startSentence]);
                 sentenceLength = sentence.Length;
 
-                // if the start sentence reaches the original one, the whole imput array is computed
+                // if the start sentence reaches the original one, the whole imput array has been computed once
                 if (_startSentence == originalStartSentence)
                 {
                     // check if also no longer sentence to cut could be found, break if so
@@ -297,9 +305,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             char[] arr = str.ToArray();
 
             string result = arr[0].ToString();
-            foreach (char c in arr)
+            for (int i = 1; i < arr.Length; i++)
             {
-                result = result + _settings.Separator + c;
+                result = result + _settings.Separator + arr[i];
             }
 
             return result;
@@ -307,12 +315,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeys()
         {
-            if (_keysToGenerate == -1 || _lastKeyLengthIndex == -1)
+            if (_lastKeyLengthIndex == -1)
             {
-                _keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeysPerLength;
                 _lastKeyLengthIndex = 0;
             }
-            else if (_lastKeyLengthIndex < _keysToGenerate - 1)
+            else if (_lastKeyLengthIndex < _settings.NumberOfTestRuns - 1)
             {
                 _lastKeyLengthIndex++;
             }
@@ -548,19 +555,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public void generateRandomKeysWithRegex()
         {
-            if (_keysToGenerate == -1 || _lastKeyLengthIndex == -1)
+            if (_lastKeyLengthIndex == -1)
             {
-                if (_regexInput.Contains("$amount"))
-                {
-                    _keysToGenerate = (_settings.MaxKeyLength - _settings.MinKeyLength + 1) * _settings.KeysPerLength;
-                }
-                else
-                {
-                    _keysToGenerate = _settings.KeysPerLength;
-                }
                 _lastKeyLengthIndex = 0;
             }
-            else if (_lastKeyLengthIndex < _keysToGenerate - 1)
+            else if (_lastKeyLengthIndex < _settings.NumberOfTestRuns - 1)
             {
                 _lastKeyLengthIndex++;
             }
@@ -572,10 +571,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             var str = _regexInput;
             if (str.Contains("$amount"))
             {
-                int length = _settings.MinKeyLength + (_lastKeyLengthIndex / _settings.KeysPerLength);
-                //GuiLogMessage("length: " + length, NotificationLevel.Warning);
-                //var str = "[a-zA-Z]{" + length + "}";
-                str = str.Replace("$amount", length.ToString());
+                str = str.Replace("$amount", _settings.NumberOfTestRuns.ToString());
             }
             while (str.Contains("$unique"))
             {
@@ -671,27 +667,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 str = beforeUnique + randomKey + afterUnique;
             }
 
-            // beginn reverse regex generation
+            // begin reverse regex generation
             var regex = @str;
             var xeger = new Fare.Xeger(regex, _rand);
             var regexString = xeger.Generate();
 
-            /*
-            var regex1 = "^.*(.).*\\1.*$";
-            var Regex1 = @regex1;
-
-            //((00|01|02|03|04){4}
-            //((?:([0-9])(?!.*\2)){10})*
-            //((?:(00|01|02|03|04)(?!.*\2)){4})*
-            var regex2 = "((?:(05|01|02|03|04)(?!.*\\2)){8})*"; //"^.*(.).*\\2.*$";
-            var Regex2 = @regex2;
-            //regexString = "01020304";
-            */
-
             while (_keyList.Contains(regexString))
             {
                 regexString = xeger.Generate();
-                //regexString = "01020304";
             }
 
             _keyList.Add(regexString);
@@ -715,7 +698,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         public bool checkVariables()
         {
-            if (_settings.ShowExtendedSettings)
+            if (!_settings.ShowExtendedSettings)
             {
                 _settings.MaxTextLength = _settings.TextLength;
                 _settings.TextLengthIncrease = 0;
@@ -965,17 +948,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void Execute()
         {
-            if (_keysToGenerate > 0 && _keyCount >= _keysToGenerate)
+            if (_testRunCount >= _settings.NumberOfTestRuns)
             {
                 //Console.WriteLine("Number of keys to generate already reached! Skipping generation...");
                 //GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
                 return;
             }
 
-            if (_keyCount > 0)
-                ProgressChanged(_keyCount - 1, _keysToGenerate);
+            if (_testRunCount > 0)
+                ProgressChanged(_testRunCount - 1, _settings.NumberOfTestRuns);
             else
-                ProgressChanged(0, _keysToGenerate);
+                ProgressChanged(0, _settings.NumberOfTestRuns);
 
             if (!checkVariables())
                 return;
@@ -989,7 +972,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_settings.TextLength > 0)
                 generatePlaintext();
 
-            ProgressChanged(_keyCount-0.5, _keysToGenerate);
+            ProgressChanged(_testRunCount - 0.5, _settings.NumberOfTestRuns);
 
             if (_settings.KeyGeneration == GenerationType.naturalSpeech)
             {
@@ -1014,13 +997,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 OnPropertyChanged("PlaintextOutput");
             }
 
-            _keyCount++;
-            if (_keysToGenerate > 0 && _keyCount <= 1) {
-                TotalKeys = _keysToGenerate;
+            _testRunCount++;
+            if (_testRunCount <= 1) {
+                TotalKeys = _settings.NumberOfTestRuns;
                 OnPropertyChanged("TotalKeys");
             }
 
-            ProgressChanged(_keyCount, _keysToGenerate);
+            ProgressChanged(_testRunCount, _settings.NumberOfTestRuns);
         }
 
         /// <summary>
@@ -1036,12 +1019,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _debugOutput = null;
             _singleKeyOutput = null;
 
-            _keyCount = 0;
+            _testRunCount = 0;
             _inputArray = null;
             _rand = null;
             _keyList = new List<string>();
             _plaintextList = new List<string>();
-            _keysToGenerate = -1;
+            _currentTextLength = 0;
+            _calculatedTextsCurrentLength = 0;
             _lastKeyLengthIndex = -1;
             _notFound = false;
             _occurences = null;
