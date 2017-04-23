@@ -168,7 +168,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Plaintext Length Step Increase", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
+        [TaskPane("Plaintext Length Step Increase", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int TextLengthIncrease
         {
             get
@@ -182,16 +182,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        public int PlaintextsPerLength
+        public double PlaintextsPerLength
         {
             get
             {
-                if (_textLengthIncrease == 0 ||
-                    _textLengthIncrease == 1 ||
-                    _maxTextLength == _textLength ||
+                if (_textLengthIncrease == 0)
+                    return 0;
+                if (_maxTextLength == _textLength ||
                     _textLengthIncrease > (_maxTextLength - _textLength))
                     return 1;
-                return (int)_numberOfTestRuns / ((_maxTextLength - _textLength + _textLengthIncrease) / _textLengthIncrease);
+                double plaintextsPerLength = (double) _numberOfTestRuns / ((_maxTextLength - _textLength + _textLengthIncrease) / _textLengthIncrease);
+                return plaintextsPerLength;
             }
         }
 

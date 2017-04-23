@@ -179,7 +179,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     _plaintextList.Add(finalPlaintext);
                     _plaintextOutput = finalPlaintext;
                     _calculatedTextsCurrentLength++;
-                    if (_calculatedTextsCurrentLength == _settings.PlaintextsPerLength)
+                    if (_settings.PlaintextsPerLength != 0 &&
+                        _calculatedTextsCurrentLength >= _settings.PlaintextsPerLength)
                     {
                         _calculatedTextsCurrentLength = 0;
                         _currentTextLength += _settings.TextLengthIncrease;
@@ -412,7 +413,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             if (length > alphabet.Count)
             {
-                GuiLogMessage("Alphabet length is too short to generate a string of unique letters!", NotificationLevel.Error);
+                GuiLogMessage("Alphabet length (" + alphabet.Count + ") is too short to generate a string of length " + length + " of unique letters!", NotificationLevel.Error);
                 return null;
             }
 
@@ -995,6 +996,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 PlaintextOutput = _plaintextOutput;
                 OnPropertyChanged("SingleKeyOutput");
                 OnPropertyChanged("PlaintextOutput");
+                Console.WriteLine("_singleKeyOutput: " + _singleKeyOutput + " (" + _singleKeyOutput.Length + ")");
+                Console.WriteLine("_plaintextOutput: " + _plaintextOutput + " (" + _plaintextOutput.Length + ")");
             }
 
             _testRunCount++;
