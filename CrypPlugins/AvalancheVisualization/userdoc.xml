@@ -6,19 +6,19 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    The Avalanche effect is a property good cryptographic algorithms and hash functions should exhibit. <ref id="Wikipedia"/>
+    The avalanche effect is a property good cryptographic algorithms and hash functions should exhibit. <ref id="Wikipedia"/>
     <newline />
     <newline />
-    The Avalanche effect property is used as a parameter to measure the reaction a minimal change in the input text or key has on the generated output.
+    The avalanche effect property is used as a parameter to measure the reaction a minimal change in the input text or key has on the generated output.
     <newline/>
     In other words, small changes in the plaintext should result in a significant change of the ciphertext.
     <newline/>
-    A strong Avalanche effect indicates a single bit change on the input propagates rapidly throughout the encryption process or hash function, creating a certain degree of randomness in the cipher or hash value.
+    A strong avalanche effect indicates a single bit change on the input propagates rapidly throughout the encryption process or hash function, creating a certain degree of randomness in the cipher or hash value.
     <newline/>
     The whole point is that two slightly different inputs should yield results as different as possible from each other.
     Consequently, making it difficult for cryptanalysts to break the algorithm. This is why it is a highly desired property secure algorithms should have.
     <newline/>
-    The plugin seeks to provide an understanding of the Avalanche effect property in an illustrative way.
+    The plugin seeks to provide an understanding of the avalanche effect property in an illustrative way.
     For this purpose you can make input changes and subsequently check how strong this property is for the chosen algorithm.
 
   </introduction>
@@ -42,7 +42,7 @@
 
   <usage lang="en">
 
-    The Avalanche plugin has two input entries (key and message) and one output exit.
+    The avalanche plugin has two input entries (key and message) and one output exit.
     <newline/>
     The component is divided in two main categories; unprepared and prepared methods.
     Input and functionality of the plugin vary slightly, depending on the category selected.
@@ -51,8 +51,8 @@
     <section headline="Prepared methods">
       Both message and key input entries are used.
       <newline/>
-      The Avalanche plugin knows the selected method in detail (AES or DES).
-      Here, you can check the Avalanche effect after every single round of the encryption process.
+      The avalanche plugin knows the selected method in detail (AES or DES).
+      Here, you can check the avalanche effect after every single round of the encryption process.
       <newline/>
       For AES the key should be 16, 24, or 32 Bytes long, depending on the selected key length (128, 192, or 256). For DES it should be 8 Bytes long.
       <newline/>
@@ -60,7 +60,7 @@
       <newline/>
       <list>
         <item>Directly on the external input feed.</item>
-        <item>Flipping of single bits within the Avalanche plugin itself.</item>
+        <item>Flipping of single bits within the avalanche plugin itself.</item>
       </list>
     </section>
 
@@ -74,7 +74,7 @@
       There are three options after selecting the category "Unprepared methods": hash functions, classic ciphers, and modern ciphers.
       <newline/>
       One of these options is selected according to the type of the connected external plugin.
-      For instance, if you'd like to check the Avalanche effect of SHA-1, then the option "hash functions" should be selected.
+      For instance, if you'd like to check the avalanche effect of SHA-1, then the option "hash functions" should be selected.
       <newline/>
       For practical reasons there are different templates available for the respective categories.
       <newline/>
@@ -146,7 +146,7 @@
       <newline/>
       After the initial input has been modified, a new view emerges depicting the differences between initial and modified input.
       Here you can have the information be displayed in different formats (binary, decimal, or hex).
-      On the lower part of the window a sequence of buttons indicates you can now check the Avalanche effect after every AES or DES round.
+      On the lower part of the window a sequence of buttons indicates you can now check the avalanche effect after every AES or DES round.
       <newline/>
       While checking the different rounds you can see the current state of the encryption in binary values for both the initial and the modified input.
       The differences between the two bit sequences (flipped bits) are highlighted in color.
@@ -154,7 +154,7 @@
       A section with bullet points provides some statistical data based on the comparison carried out.
       This information includes:
       <list>
-        <item>Number of flipped bits and Avalanche effect</item>
+        <item>Number of flipped bits and avalanche effect</item>
         <item>Length of longest identical bit sequence</item>
         <item>Length of longest flipped bit sequence</item>
         <item>Average number of differing bits per byte</item>
