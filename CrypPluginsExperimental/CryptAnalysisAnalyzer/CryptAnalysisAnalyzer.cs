@@ -238,11 +238,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             BigInteger tabuSetSize = 0;
             bool noTabuSetSize = false;
 
-            // TODO: keys?
+            // TODO: number of derived keys?
 
-            int ciphertextLength = 0;
             string testSeriesSeed = "";
             ConcurrentDictionary<int, int> keyLengths = new ConcurrentDictionary<int, int>();
+            ConcurrentDictionary<int, int> ciphertextLengths = new ConcurrentDictionary<int, int>();
 
             bool firstElement = true;
             foreach (KeyValuePair<int, ExtendedEvaluationContainer> entry in _testRuns)
@@ -251,7 +251,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 if (firstElement)
                 {
-                    ciphertextLength = testRun.GetCiphertext().Length;
                     testSeriesSeed = testRun.GetSeed();
                 }
 
@@ -283,6 +282,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     noTabuSetSize = true;
 
                 keyLengths.AddOrUpdate(testRun.GetKey().Length, 1, (length, count) => count + 1);
+                ciphertextLengths.AddOrUpdate(testRun.GetCiphertext().Length, 1, (length, count) => count + 1);
             }
             double successPercentage = Math.Round((double) successCount / _testRuns.Count * 100, 2);
             double averageDecryptedPercentage = Math.Round((double) decryptedCount / _testRuns.Count, 2);
@@ -308,9 +308,24 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             if (!noTabuSetSize)
                 averageTabuSetSize = tabuSetSize / _testRuns.Count;
 
+            string ciphertextLengthString = "";
+            var ciphertextLengthArray = ciphertextLengths.ToArray();
+            int i = 1;
+            ciphertextLengthString += ciphertextLengthArray[0].Key + " (" + ciphertextLengthArray[0].Value + ")";
+            while (i < ciphertextLengthArray.Length)
+            {
+                ciphertextLengthString += ", " + ciphertextLengthArray[i].Key + " (" + ciphertextLengthArray[i].Value + ")";
+                i++;
+                if (keyLengths.Count > 6 && i == 3)
+                {
+                    i = ciphertextLengthArray.Length - 4;
+                    ciphertextLengthString += " ...";
+                }
+            }
+
             string keyLengthString = "";
             var keyLengthArray = keyLengths.ToArray();
-            int i = 1;
+            i = 1;
             keyLengthString += keyLengthArray[0].Key + " (" + keyLengthArray[0].Value + ")";
             while (i < keyLengthArray.Length)
             {
@@ -328,7 +343,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _evaluationOutput = "Test Series Seed: " + testSeriesSeed + "\r";
             if (!noRuntime)
                 _evaluationOutput += "Average runtime: " + averageRuntimeString + "\r";
-            _evaluationOutput += "Ciphertext length: " + ciphertextLength + "\r";
+            _evaluationOutput += "Ciphertext lengths: " + ciphertextLengthString + "\r";
             _evaluationOutput += "Key lengths: " + keyLengthString + "\r";
             _evaluationOutput += "Average decryptions necessary: " + averageDecryptions + "\r";
             if (!noRestarts)
