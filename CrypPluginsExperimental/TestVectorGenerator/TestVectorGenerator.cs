@@ -25,6 +25,7 @@ using Fare;
 using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
+using System.Numerics;
 using Cryptool.PluginBase.IO;
 
 namespace Cryptool.Plugins.TestVectorGenerator
@@ -157,7 +158,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _currentTextLength = _settings.TextLength;
 
             _startSentence = _rand.Next(0, _inputArray.Length);
-            int count = 0;
+            BigInteger count = 0;
             while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
             {
                 _startSentence = _rand.Next(0, _inputArray.Length);
@@ -572,7 +573,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
             var str = _regexInput;
             if (str.Contains("$amount"))
             {
-                str = str.Replace("$amount", _settings.NumberOfTestRuns.ToString());
+                int length = _settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeysPerLength;
+                str = str.Replace("$amount", length.ToString());
             }
             while (str.Contains("$unique"))
             {
