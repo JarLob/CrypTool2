@@ -158,7 +158,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _currentTextLength = _settings.TextLength;
 
             _startSentence = _rand.Next(0, _inputArray.Length);
-            BigInteger count = 0;
+            int count = 0;
             while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
             {
                 _startSentence = _rand.Next(0, _inputArray.Length);

@@ -224,49 +224,49 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // count and helper variables
             int successCount = 0;
             double decryptedCount = 0;
-            BigInteger decryptionsCount = 0;
+            double decryptionsCount = 0;
 
             TimeSpan runtimeCount = new TimeSpan();
             bool noRuntime = !_settings.CalculateRuntime;
-            BigInteger restarts = 0;
+            double restarts = 0;
             bool noRestarts = false;
-            BigInteger populationSize = 0;
+            double populationSize = 0;
             bool noPopulationSize = false;
-            BigInteger tabuSetSize = 0;
+            double tabuSetSize = 0;
             bool noTabuSetSize = false;
             string testSeriesSeed = "";
 
             // TODO: number of derived keys?
 
             // evaluation key values
-            ConcurrentDictionary<int, int> keyLengths = new ConcurrentDictionary<int, int>();
-            ConcurrentDictionary<int, int> ciphertextLengths = new ConcurrentDictionary<int, int>();
-            ConcurrentDictionary<TimeSpan, int> runtimes = new ConcurrentDictionary<TimeSpan, int>();
+            Dictionary<int, int> keyLengths = new Dictionary<int, int>();
+            Dictionary<int, int> ciphertextLengths = new Dictionary<int, int>();
+            Dictionary<TimeSpan, int> runtimes = new Dictionary<TimeSpan, int>();
 
             // evaluation detailed values
             // key length
-            ConcurrentDictionary<int, double> successPerKeyLength = new ConcurrentDictionary<int, double>();
-            ConcurrentDictionary<int, double> decryptedPercentagesPerKeyLength = new ConcurrentDictionary<int, double>();
-            ConcurrentDictionary<int, BigInteger> decryptionsPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> restartsPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> tabuSizesPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> populationSizesPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, TimeSpan> runtimePerKeyLength = new ConcurrentDictionary<int, TimeSpan>();
+            Dictionary<int, double> successPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, double> decryptedPercentagesPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, double> decryptionsPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, double> restartsPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, double> tabuSizesPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, double> populationSizesPerKeyLength = new Dictionary<int, double>();
+            Dictionary<int, TimeSpan> runtimePerKeyLength = new Dictionary<int, TimeSpan>();
             // ciphertext length
-            ConcurrentDictionary<int, double> successPerCiphertextLength = new ConcurrentDictionary<int, double>();
-            ConcurrentDictionary<int, double> decryptedPercentagesPerCiphertextLength = new ConcurrentDictionary<int, double>();
-            ConcurrentDictionary<int, BigInteger> decryptionsPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> restartsPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> tabuSizesPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, BigInteger> populationSizesPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
-            ConcurrentDictionary<int, TimeSpan> runtimePerCiphertextLength = new ConcurrentDictionary<int, TimeSpan>();
+            Dictionary<int, double> successPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, double> decryptedPercentagesPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, double> decryptionsPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, double> restartsPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, double> tabuSizesPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, double> populationSizesPerCiphertextLength = new Dictionary<int, double>();
+            Dictionary<int, TimeSpan> runtimePerCiphertextLength = new Dictionary<int, TimeSpan>();
             // runtime
-            ConcurrentDictionary<TimeSpan, double> successPerRuntime = new ConcurrentDictionary<TimeSpan, double>();
-            ConcurrentDictionary<TimeSpan, double> decryptedPercentagesPerRuntime = new ConcurrentDictionary<TimeSpan, double>();
-            ConcurrentDictionary<TimeSpan, BigInteger> decryptionsPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
-            ConcurrentDictionary<TimeSpan, BigInteger> restartsPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
-            ConcurrentDictionary<TimeSpan, BigInteger> tabuSizesPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
-            ConcurrentDictionary<TimeSpan, BigInteger> populationSizesPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
+            Dictionary<TimeSpan, double> successPerRuntime = new Dictionary<TimeSpan, double>();
+            Dictionary<TimeSpan, double> decryptedPercentagesPerRuntime = new Dictionary<TimeSpan, double>();
+            Dictionary<TimeSpan, double> decryptionsPerRuntime = new Dictionary<TimeSpan, double>();
+            Dictionary<TimeSpan, double> restartsPerRuntime = new Dictionary<TimeSpan, double>();
+            Dictionary<TimeSpan, double> tabuSizesPerRuntime = new Dictionary<TimeSpan, double>();
+            Dictionary<TimeSpan, double> populationSizesPerRuntime = new Dictionary<TimeSpan, double>();
 
             bool firstElement = true;
             // counting and sorting the data into the dictionaries
@@ -277,10 +277,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 int keyLength = testRun.GetKey().Length;
                 int ciphertextLength = testRun.GetCiphertext().Length;
                 double percentDecrypted = testRun.GetPercentDecrypted();
-                BigInteger decryptions = testRun.GetDecryptions();
-                BigInteger currentRestarts = 0;
-                BigInteger currentTabuSize = 0;
-                BigInteger currentPopulationSize = 0;
+                double decryptions = testRun.GetDecryptions();
+                double currentRestarts = 0;
+                double currentTabuSize = 0;
+                double currentPopulationSize = 0;
                 if (!noRestarts)
                     currentRestarts = testRun.GetRestarts();
                 if (!noTabuSetSize)
@@ -299,8 +299,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (testRun.GetSuccessfull())
                 {
                     successCount++;
-                    successPerKeyLength.AddOrUpdate(keyLength, 1, (length, success) => success + 1);
-                    successPerCiphertextLength.AddOrUpdate(ciphertextLength, 1, (length, success) => success + 1);
+                    DictionaryExtention.AddOrIncrement<int>(successPerKeyLength, keyLength, 1);
+                    DictionaryExtention.AddOrIncrement<int>(successPerCiphertextLength, ciphertextLength, 1);
                 }
 
                 // count the overall decryptions and decrypted percentages
@@ -308,17 +308,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 decryptionsCount += decryptions;
 
                 // count the decryptions and decrypted percentages per key and ciphertext lengths
-                decryptedPercentagesPerKeyLength.AddOrUpdate(keyLength, percentDecrypted, (length, percent) => percent + percentDecrypted);
-                decryptionsPerKeyLength.AddOrUpdate(keyLength, decryptions, (length, localDecryptions) => localDecryptions + decryptions);
-                decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, percentDecrypted, (length, percent) => percent + percentDecrypted);
-                decryptionsPerCiphertextLength.AddOrUpdate(ciphertextLength, decryptions, (length, localDecryptions) => localDecryptions + decryptions);
+                DictionaryExtention.AddOrIncrement<int>(decryptedPercentagesPerKeyLength, keyLength, percentDecrypted);
+                DictionaryExtention.AddOrIncrement<int>(decryptionsPerKeyLength, keyLength, decryptions);
+                DictionaryExtention.AddOrIncrement<int>(decryptedPercentagesPerCiphertextLength, ciphertextLength, percentDecrypted);
+                DictionaryExtention.AddOrIncrement<int>(decryptionsPerCiphertextLength, ciphertextLength, decryptions);
                 
                 // count the restarts if every run contains a restart value greater zero
                 if (!noRestarts && currentRestarts > 0)
                 {
                     restarts += currentRestarts;
-                    restartsPerKeyLength.AddOrUpdate(keyLength, currentRestarts, (length, localRestarts) => localRestarts + currentRestarts);
-                    restartsPerCiphertextLength.AddOrUpdate(ciphertextLength, currentRestarts, (length, localRestarts) => localRestarts + currentRestarts);
+                    DictionaryExtention.AddOrIncrement(restartsPerKeyLength, keyLength, currentRestarts);
+                    DictionaryExtention.AddOrIncrement(restartsPerCiphertextLength, ciphertextLength, currentRestarts);
                 }
                 else
                     noRestarts = true;
@@ -327,8 +327,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (!noTabuSetSize && currentTabuSize > 0)
                 {
                     tabuSetSize += currentTabuSize;
-                    tabuSizesPerKeyLength.AddOrUpdate(keyLength, currentTabuSize, (length, tabuSetSizes) => tabuSetSizes + currentTabuSize);
-                    tabuSizesPerCiphertextLength.AddOrUpdate(ciphertextLength, currentTabuSize, (length, tabuSetSizes) => tabuSetSizes + currentTabuSize);
+                    DictionaryExtention.AddOrIncrement(tabuSizesPerKeyLength, keyLength, currentTabuSize);
+                    DictionaryExtention.AddOrIncrement(tabuSizesPerCiphertextLength, ciphertextLength, currentTabuSize);
                 }
                 else
                     noTabuSetSize = true;
@@ -337,8 +337,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (!noPopulationSize && currentPopulationSize > 0)
                 {
                     populationSize += currentPopulationSize;
-                    populationSizesPerKeyLength.AddOrUpdate(keyLength, currentPopulationSize, (length, populationSizes) => populationSizes + currentPopulationSize);
-                    populationSizesPerCiphertextLength.AddOrUpdate(ciphertextLength, currentPopulationSize, (length, populationSizes) => populationSizes + currentPopulationSize);
+                    DictionaryExtention.AddOrIncrement(populationSizesPerKeyLength, keyLength, currentPopulationSize);
+                    DictionaryExtention.AddOrIncrement(populationSizesPerCiphertextLength, ciphertextLength, currentPopulationSize);
                 }
                 else
                     noPopulationSize = true;
@@ -349,23 +349,23 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 {
                     runtimeCount += time;
                     // update key value dictionary runtimes
-                    runtimes.AddOrUpdate(time, 1, (runtime, count) => count + 1);
+                    DictionaryExtention.AddOrIncrement(runtimes, time, 1);
 
                     // detailed values
                     if (testRun.GetSuccessfull())
-                        successPerRuntime.AddOrUpdate(time, 1, (runtime, success) => success + 1);
-                    decryptedPercentagesPerRuntime.AddOrUpdate(time, percentDecrypted, (runtime, percent) => percent + percentDecrypted);
-                    decryptionsPerRuntime.AddOrUpdate(time, decryptions, (runtime, localDecryptions) => localDecryptions + decryptions);
+                        DictionaryExtention.AddOrIncrement(successPerRuntime, time, 1);
+                    DictionaryExtention.AddOrIncrement(decryptedPercentagesPerRuntime, time, percentDecrypted);
+                    DictionaryExtention.AddOrIncrement(decryptionsPerRuntime, time, decryptions);
                     if (!noRestarts)
-                        restartsPerRuntime.AddOrUpdate(time, currentRestarts, (runtime, localRestarts) => localRestarts + currentRestarts);
+                        DictionaryExtention.AddOrIncrement(restartsPerRuntime, time, currentRestarts);
                     if (!noTabuSetSize)
-                        tabuSizesPerRuntime.AddOrUpdate(time, currentTabuSize, (runtime, tabuSetSizes) => tabuSetSizes + currentTabuSize);
+                        DictionaryExtention.AddOrIncrement(tabuSizesPerRuntime, time, currentTabuSize);
                     if (!noPopulationSize)
-                        populationSizesPerRuntime.AddOrUpdate(time, currentPopulationSize, (runtime, populationSizes) => populationSizes + currentPopulationSize);
+                        DictionaryExtention.AddOrIncrement(populationSizesPerRuntime, time, currentPopulationSize);
 
                     TimeSpan t = time + time;
-                    runtimePerKeyLength.AddOrUpdate(keyLength, time, (length, runtime) => runtime + time);
-                    runtimePerCiphertextLength.AddOrUpdate(ciphertextLength, time, (length, runtime) => runtime + time);
+                    DictionaryExtention.AddOrIncrement(runtimePerKeyLength, keyLength, time);
+                    DictionaryExtention.AddOrIncrement(runtimePerCiphertextLength, ciphertextLength, time);
                 }
                 else
                 {
@@ -373,9 +373,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 // update key value dictionaries keyLengths and ciphertextLengths
-                keyLengths.AddOrUpdate(keyLength, 1, (length, count) => count + 1);
-                ciphertextLengths.AddOrUpdate(ciphertextLength, 1, (length, count) => count + 1);
-
+                DictionaryExtention.AddOrIncrement(keyLengths, keyLength, 1);
+                DictionaryExtention.AddOrIncrement(ciphertextLengths, ciphertextLength, 1);
             }
 
             // after counting all values, we calculate average values here
@@ -404,27 +403,27 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (count > 1)
                     {
                         // detailed values
-                        successPerRuntime.AddOrUpdate(time, 0, (runtime, success) => Math.Round(success / count * 100, 2));
-                        decryptedPercentagesPerRuntime.AddOrUpdate(time, 0, (runtime, percent) => Math.Round(percent / count, 2));
-                        decryptionsPerRuntime.AddOrUpdate(time, 0, (runtime, localDecryptions) => localDecryptions / count);
+                        DictionaryExtention.DivideAndRoundPercent<TimeSpan>(successPerRuntime, time, count, 2);
+                        DictionaryExtention.DivideAndRound<TimeSpan>(decryptedPercentagesPerRuntime, time, count, 2);
+                        DictionaryExtention.Divide<TimeSpan>(decryptionsPerRuntime, time, count);
                         if (!noRestarts)
-                            restartsPerRuntime.AddOrUpdate(time, 0, (runtime, localRestarts) => localRestarts / count);
+                            DictionaryExtention.Divide<TimeSpan>(restartsPerRuntime, time, count);
                         if (!noTabuSetSize)
-                            tabuSizesPerRuntime.AddOrUpdate(time, 0, (runtime, tabuSetSizes) => tabuSetSizes / count);
+                            DictionaryExtention.Divide<TimeSpan>(tabuSizesPerRuntime, time, count);
                         if (!noPopulationSize)
-                            populationSizesPerRuntime.AddOrUpdate(time, 0, (runtime, populationSizes) => populationSizes / count);
+                            DictionaryExtention.Divide<TimeSpan>(populationSizesPerRuntime, time, count);
                     }
                 }
             }
 
             // calculate the overall average values
-            BigInteger averageRestarts = 0;
+            double averageRestarts = 0;
             if (!noRestarts)
                 averageRestarts = restarts / _testRuns.Count;
-            BigInteger averageTabuSetSize = 0;
+            double averageTabuSetSize = 0;
             if (!noTabuSetSize)
                 averageTabuSetSize = tabuSetSize / _testRuns.Count;
-            BigInteger averagePopulationSize = 0;
+            double averagePopulationSize = 0;
             if (!noPopulationSize)
                 averagePopulationSize = populationSize / _testRuns.Count;
 
@@ -438,19 +437,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 1)
                 {
                     // calculate the detailed average values
-                    successPerKeyLength.AddOrUpdate(keyLength, 0, (length, success) => Math.Round(success / count * 100, 2));
-                    decryptedPercentagesPerKeyLength.AddOrUpdate(keyLength, 0, (length, percent) => Math.Round(percent / count, 2));
-                    decryptionsPerKeyLength.AddOrUpdate(keyLength, 0, (length, localDecryptions) => localDecryptions / count);
-                    runtimePerKeyLength.AddOrUpdate(keyLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(Math.Round(runtime.TotalMilliseconds / count, 0)));
+                    DictionaryExtention.DivideAndRoundPercent<int>(successPerKeyLength, keyLength, count, 2);
+                    DictionaryExtention.DivideAndRound<int>(decryptedPercentagesPerKeyLength, keyLength, count, 2);
+                    DictionaryExtention.Divide<int>(decryptionsPerKeyLength, keyLength, count);
+                    DictionaryExtention.DivideTimeSpan<int>(runtimePerKeyLength, keyLength, count);
 
                     if (!noRestarts)
-                        restartsPerKeyLength.AddOrUpdate(keyLength, 0, (length, localRestarts) => localRestarts / count);
-                    
-                    if (!noTabuSetSize)
-                        tabuSizesPerKeyLength.AddOrUpdate(keyLength, 0, (length, tabuSetSizes) => tabuSetSizes / count);
+                        DictionaryExtention.Divide<int>(restartsPerKeyLength, keyLength, count);
 
-                    if (!noPopulationSize)
-                        populationSizesPerKeyLength.AddOrUpdate(keyLength, 0, (length, populationSizes) => populationSizes / count);
+                    if (!noTabuSetSize)
+                        DictionaryExtention.Divide<int>(tabuSizesPerKeyLength, keyLength, count);
+
+                        if (!noPopulationSize)
+                            DictionaryExtention.Divide<int>(populationSizesPerKeyLength, keyLength, count);
                     
                 }
             }
@@ -465,52 +464,60 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 1)
                 {
                     // calculate the detailed average values
-                    successPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, success) => Math.Round(success / count * 100, 2));
-                    decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, percent) => Math.Round(percent / count, 2));
-                    decryptionsPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, localDecryptions) => localDecryptions / count);
-                    runtimePerCiphertextLength.AddOrUpdate(ciphertextLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(Math.Round(runtime.TotalMilliseconds / count, 0)));
+                    //successPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, success) => Math.Round(success / count * 100, 2));
+                    //decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, percent) => Math.Round(percent / count, 2));
+                    //if (decryptedPercentagesPerCiphertextLength.ContainsKey(ciphertextLength))
+                    //    decryptedPercentagesPerCiphertextLength[ciphertextLength] = Math.Round(decryptedPercentagesPerCiphertextLength[ciphertextLength] / count, 2);
+                    DictionaryExtention.DivideAndRoundPercent<int>(successPerCiphertextLength, ciphertextLength, count, 2);
+                    DictionaryExtention.DivideAndRound<int>(decryptedPercentagesPerCiphertextLength, ciphertextLength, count, 2);
+                    DictionaryExtention.Divide<int>(decryptionsPerCiphertextLength, ciphertextLength, count);
+                    DictionaryExtention.DivideTimeSpan<int>(runtimePerCiphertextLength, ciphertextLength, count);
 
                     if (!noRestarts)
-                        restartsPerCiphertextLength.AddOrUpdate(ciphertextLength, 1, (length, localRestarts) => localRestarts / count);
-                    
+                        DictionaryExtention.Divide<int>(restartsPerCiphertextLength, ciphertextLength, count);
+
                     if (!noTabuSetSize)
-                        tabuSizesPerCiphertextLength.AddOrUpdate(ciphertextLength, 1, (length, tabuSetSizes) => tabuSetSizes / count);
+                        DictionaryExtention.Divide<int>(tabuSizesPerCiphertextLength, ciphertextLength, count);
 
                     if (!noPopulationSize)
-                        populationSizesPerCiphertextLength.AddOrUpdate(ciphertextLength, 1, (length, populationSizes) => populationSizes / count); 
+                        DictionaryExtention.Divide<int>(populationSizesPerCiphertextLength, ciphertextLength, count);
                 }
             }
 
             // build the displayed string of occuring ciphertext lengths
             string ciphertextLengthString = "";
-            var ciphertextLengthArray = ciphertextLengths.ToArray();
             int i = 1;
-            ciphertextLengthString += ciphertextLengthArray[0].Key + " (" + ciphertextLengthArray[0].Value + ")";
-            while (i < ciphertextLengthArray.Length)
+            foreach (var pair in ciphertextLengths)
             {
-                ciphertextLengthString += ", " + ciphertextLengthArray[i].Key + " (" + ciphertextLengthArray[i].Value + ")";
-                i++;
-                if (keyLengths.Count > 6 && i == 3)
+                if (ciphertextLengths.Count > 6 && i == 3)
                 {
-                    i = ciphertextLengthArray.Length - 4;
                     ciphertextLengthString += " ...";
                 }
+                else if (ciphertextLengths.Count <= 6 || i < 3 || i >= ciphertextLengths.Count - 3)
+                {
+                    if (ciphertextLengthString != "")
+                        ciphertextLengthString += ", ";
+                    ciphertextLengthString += pair.Key + " (" + pair.Value + ")";
+                }
+                i++;
             }
 
             // build the displayed string of occuring key lengths
             string keyLengthString = "";
-            var keyLengthArray = keyLengths.ToArray();
-            i = 1;
-            keyLengthString += keyLengthArray[0].Key + " (" + keyLengthArray[0].Value + ")";
-            while (i < keyLengthArray.Length)
+            i = 0;
+            foreach (var pair in keyLengths)
             {
-                keyLengthString += ", " + keyLengthArray[i].Key + " (" + keyLengthArray[i].Value + ")";
-                i++;
                 if (keyLengths.Count > 6 && i == 3)
                 {
-                    i = keyLengthArray.Length - 4;
                     keyLengthString += " ...";
                 }
+                else if (keyLengths.Count <= 6 || i < 3 || i >= keyLengths.Count - 3)
+                {
+                    if (keyLengthString != "")
+                        keyLengthString += ", ";
+                    keyLengthString += pair.Key + " (" + pair.Value + ")";
+                }
+                i++;
             }
 
             // build the complete displayed evaluation output string
@@ -605,7 +612,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotDataOutput += ciphertextLength + "\t\t\t\t\t\t" + currentSuccess + "\t\t\t\t" +
                     currentDecryptedPercentage + System.Environment.NewLine;
 
-                BigInteger currentDecryptions = 0;
+                double currentDecryptions = 0;
                 if (!decryptionsPerCiphertextLength.TryGetValue(ciphertextLength, out currentDecryptions))
                 {
                     // Warning!
@@ -690,7 +697,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotDataOutput += "  " + keyLength + "         " + currentSuccess + "         " +
                     currentDecryptedPercentage + System.Environment.NewLine;
 
-                BigInteger currentDecryptions = 0;
+                double currentDecryptions = 0;
                 if (!decryptionsPerKeyLength.TryGetValue(keyLength, out currentDecryptions))
                 {
                     // Warning!
@@ -744,7 +751,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     " (" + PlaintextInput.Length + ")");
 
 
-                BigInteger decryptions = EvaluationInput.GetDecryptions();
+                double decryptions = (double) EvaluationInput.GetDecryptions();
                 TimeSpan runtime;
                 if (_settings.CalculateRuntime && EvaluationInput.GetRuntime(out runtime))
                 {
@@ -1147,6 +1154,130 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public bool GetSuccessfull()
         {
             return this._successful;
+        }
+    }
+
+    public static class DictionaryExtention
+    {
+
+        // Either Add or overwrite
+        public static void AddOrUpdate<K, V>(this Dictionary<K, V> dict, K key, V newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // Either Add or increment
+        public static void AddOrIncrement<K>(this Dictionary<K, int> dict, K key, int newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = dict[key] + newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // Either Add or increment
+        public static void AddOrIncrement<K>(this Dictionary<K, BigInteger> dict, K key, int newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = dict[key] + newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // Either Add or increment
+        public static void AddOrIncrement<K>(this Dictionary<K, double> dict, K key, int newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = dict[key] + newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // Either Add or increment
+        public static void AddOrIncrement<K>(this Dictionary<K, double> dict, K key, double newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = dict[key] + newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // Either Add or increment
+        public static void AddOrIncrement<K>(this Dictionary<K, TimeSpan> dict, K key, TimeSpan newValue)
+        {
+            if (dict.ContainsKey(key))
+                dict[key] = dict[key] + newValue;
+            else
+                dict.Add(key, newValue);
+        }
+
+        // try to devide
+        public static bool Divide<K>(this Dictionary<K, int> dict, K key, int divide)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = dict[key] / divide;
+                return true;
+            }
+            return false;
+        }
+
+        // try to devide
+        public static bool Divide<K>(this Dictionary<K, double> dict, K key, int divide)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = dict[key] / divide;
+                return true;
+            }
+            return false;
+        }
+
+        // try to devide
+        public static bool DivideTimeSpan<K>(this Dictionary<K, TimeSpan> dict, K key, int divide)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = System.TimeSpan.FromMilliseconds(Math.Round(dict[key].TotalMilliseconds / divide, 0));
+                return true;
+            }
+            return false;
+        }
+
+        // try to devide and round
+        public static bool DivideAndRound<K>(this Dictionary<K, int> dict, K key, int divide, int round)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = (int)Math.Round((double)dict[key] / divide, round);
+                return true;
+            }
+            return false;
+        }
+
+        // try to devide and round
+        public static bool DivideAndRound<K>(this Dictionary<K, double> dict, K key, int divide, int round)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = Math.Round((double)dict[key] / divide, round);
+                return true;
+            }
+            return false;
+        }
+
+        // try to devide and round
+        public static bool DivideAndRoundPercent<K>(this Dictionary<K, double> dict, K key, int divide, int round)
+        {
+            if (dict.ContainsKey(key))
+            {
+                dict[key] = Math.Round(dict[key] / divide * 100, round);
+                return true;
+            }
+            return false;
         }
     }
 }
