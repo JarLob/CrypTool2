@@ -858,6 +858,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 _keyCount++;
 
+                EvaluationOutput = EvaluationOutput + System.Environment.NewLine + 
+                    "Current key number: " + _keyCount;
+                OnPropertyChanged("EvaluationOutput");
+
                 // Send the plaintext and key (and min correct percentage) to the encryption method
                 OnPropertyChanged("MinimalCorrectPercentage");
                 PlaintextOutput = PlaintextInput;
@@ -888,12 +892,24 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (_totalKeysInput > 0 &&
                     _keyCount < _totalKeysInput)
                 {
+                    EvaluationOutput = _keyCount + " / " + _totalKeysInput +
+                        " - " + Math.Round((double)_keyCount / _totalKeysInput * 100) + "%" +
+                        System.Environment.NewLine + "Current key number: " +
+                        _keyCount + " - Done.";
+                    OnPropertyChanged("EvaluationOutput");
+
                     TriggerNextKey = KeyInput;
                     OnPropertyChanged("TriggerNextKey");
                 }
                 else
                 {
                     // ...evaluate if not
+                    EvaluationOutput = _keyCount + " / " + _totalKeysInput +
+                        " - " + Math.Round((double)_keyCount / _totalKeysInput * 100) + "%" +
+                        System.Environment.NewLine + "Current key number: " +
+                        _keyCount + " - Done." + System.Environment.NewLine +
+                        System.Environment.NewLine + "Started Evaluating...";
+                    OnPropertyChanged("EvaluationOutput");
 
                     int i = 9;
                     bool boing = true;
