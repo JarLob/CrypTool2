@@ -29,13 +29,13 @@ namespace Cryptool.PluginBase.IO
 
         private int _ID;
         private TimeSpan _runtime;
-        private BigInteger _decryptions;
+        private int _decryptions;
         private string _ciphertext;
-        private BigInteger _restarts;
+        private int _restarts;
         // remove if always equal to _decryptions
-        private BigInteger _keys;
-        private BigInteger _populationSize;
-        private BigInteger _tabuSetSize;
+        private int _keys;
+        private int _populationSize;
+        private int _tabuSetSize;
 
         /// <summary>
         /// Init empty EvaluationContainer
@@ -47,7 +47,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, TimeSpan t, BigInteger decryptions, string ciphertext, BigInteger restarts)
+        public EvaluationContainer(int id, TimeSpan t, int decryptions, string ciphertext, int restarts)
         {
             this._ID = id;
             this._runtime = t;
@@ -59,7 +59,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, TimeSpan t, BigInteger decryptions, string ciphertext, BigInteger restarts, BigInteger keys)
+        public EvaluationContainer(int id, TimeSpan t, int decryptions, string ciphertext, int restarts, int keys)
         {
             this._ID = id;
             this._runtime = t;
@@ -72,7 +72,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, BigInteger decryptions, string ciphertext, BigInteger restarts)
+        public EvaluationContainer(int id, int decryptions, string ciphertext, int restarts)
         {
             this._ID = id;
             this._decryptions = decryptions;
@@ -83,7 +83,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, BigInteger decryptions, string ciphertext, BigInteger restarts, BigInteger populationSize)
+        public EvaluationContainer(int id, int decryptions, string ciphertext, int restarts, int populationSize)
         {
             this._ID = id;
             this._decryptions = decryptions;
@@ -207,7 +207,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Set number of decryptions if not already set
         /// </summary>
-        public void SetDecryptions(BigInteger i)
+        public void SetDecryptions(int i)
         {
             if (!hasDecryptions)
                 _decryptions = i;
@@ -225,7 +225,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Set number of restarts if not already set
         /// </summary>
-        public void SetRestarts(BigInteger i)
+        public void SetRestarts(int i)
         {
             if (!hasRestarts)
                 _restarts = i;
@@ -234,7 +234,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Set number of keys if not already set
         /// </summary>
-        public void SetKeys(BigInteger i)
+        public void SetKeys(int i)
         {
             if (!hasKeys)
                 _keys = i;
@@ -243,7 +243,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Set population size if not already set
         /// </summary>
-        public void SetPopulationSize(BigInteger i)
+        public void SetPopulationSize(int i)
         {
             if (!hasPopulationSize)
                 _populationSize = i;
@@ -252,7 +252,7 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Set tabu set size if not already set
         /// </summary>
-        public void SetTabuSetSize(BigInteger i)
+        public void SetTabuSetSize(int i)
         {
             if (!hasTabuSetSize)
                 _tabuSetSize = i;
@@ -285,9 +285,9 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as BigInteger
+        /// Get the number of decryptions as int
         /// </summary>
-        public BigInteger GetDecryptions()
+        public int GetDecryptions()
         {
             if (hasRuntime)
                 return _decryptions;
@@ -307,9 +307,9 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of restarts as BigInteger
+        /// Get the number of restarts as int
         /// </summary>
-        public BigInteger GetRestarts()
+        public int GetRestarts()
         {
             if (hasRestarts)
                 return _restarts;
@@ -318,9 +318,9 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of keys as BigInteger
+        /// Get the number of keys as int
         /// </summary>
-        public BigInteger GetKeys()
+        public int GetKeys()
         {
             if (hasKeys)
                 return _keys;
@@ -329,9 +329,9 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of population size as BigInteger
+        /// Get the number of population size as int
         /// </summary>
-        public BigInteger GetPopulationSize()
+        public int GetPopulationSize()
         {
             if (hasPopulationSize)
                 return _populationSize;
@@ -340,9 +340,9 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of tabu set size as BigInteger
+        /// Get the number of tabu set size as int
         /// </summary>
-        public BigInteger GetTabuSetSize()
+        public int GetTabuSetSize()
         {
             if (hasTabuSetSize)
                 return _tabuSetSize;
