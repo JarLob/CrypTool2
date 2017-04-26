@@ -216,6 +216,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public void Evaluate()
         {
+            // set dot (".") as Number Decimal Separator
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+
             // count and helper variables
             int successCount = 0;
             double decryptedCount = 0;
@@ -240,7 +245,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // evaluation detailed values
             // key length
-            ConcurrentDictionary<int, int> successPerKeyLength = new ConcurrentDictionary<int, int>();
+            ConcurrentDictionary<int, double> successPerKeyLength = new ConcurrentDictionary<int, double>();
             ConcurrentDictionary<int, double> decryptedPercentagesPerKeyLength = new ConcurrentDictionary<int, double>();
             ConcurrentDictionary<int, BigInteger> decryptionsPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
             ConcurrentDictionary<int, BigInteger> restartsPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
@@ -248,7 +253,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             ConcurrentDictionary<int, BigInteger> populationSizesPerKeyLength = new ConcurrentDictionary<int, BigInteger>();
             ConcurrentDictionary<int, TimeSpan> runtimePerKeyLength = new ConcurrentDictionary<int, TimeSpan>();
             // ciphertext length
-            ConcurrentDictionary<int, int> successPerCiphertextLength = new ConcurrentDictionary<int, int>();
+            ConcurrentDictionary<int, double> successPerCiphertextLength = new ConcurrentDictionary<int, double>();
             ConcurrentDictionary<int, double> decryptedPercentagesPerCiphertextLength = new ConcurrentDictionary<int, double>();
             ConcurrentDictionary<int, BigInteger> decryptionsPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
             ConcurrentDictionary<int, BigInteger> restartsPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
@@ -256,7 +261,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             ConcurrentDictionary<int, BigInteger> populationSizesPerCiphertextLength = new ConcurrentDictionary<int, BigInteger>();
             ConcurrentDictionary<int, TimeSpan> runtimePerCiphertextLength = new ConcurrentDictionary<int, TimeSpan>();
             // runtime
-            ConcurrentDictionary<TimeSpan, int> successPerRuntime = new ConcurrentDictionary<TimeSpan, int>();
+            ConcurrentDictionary<TimeSpan, double> successPerRuntime = new ConcurrentDictionary<TimeSpan, double>();
             ConcurrentDictionary<TimeSpan, double> decryptedPercentagesPerRuntime = new ConcurrentDictionary<TimeSpan, double>();
             ConcurrentDictionary<TimeSpan, BigInteger> decryptionsPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
             ConcurrentDictionary<TimeSpan, BigInteger> restartsPerRuntime = new ConcurrentDictionary<TimeSpan, BigInteger>();
@@ -399,8 +404,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (count > 1)
                     {
                         // detailed values
-                        successPerRuntime.AddOrUpdate(time, 0, (runtime, success) => success / count * 100);
-                        decryptedPercentagesPerRuntime.AddOrUpdate(time, 0, (runtime, percent) => percent / count);
+                        successPerRuntime.AddOrUpdate(time, 0, (runtime, success) => Math.Round(success / count * 100, 2));
+                        decryptedPercentagesPerRuntime.AddOrUpdate(time, 0, (runtime, percent) => Math.Round(percent / count, 2));
                         decryptionsPerRuntime.AddOrUpdate(time, 0, (runtime, localDecryptions) => localDecryptions / count);
                         if (!noRestarts)
                             restartsPerRuntime.AddOrUpdate(time, 0, (runtime, localRestarts) => localRestarts / count);
@@ -433,10 +438,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 1)
                 {
                     // calculate the detailed average values
-                    successPerKeyLength.AddOrUpdate(keyLength, 0, (length, success) => success / count);
-                    decryptedPercentagesPerKeyLength.AddOrUpdate(keyLength, 0, (length, percent) => percent / count);
+                    successPerKeyLength.AddOrUpdate(keyLength, 0, (length, success) => Math.Round(success / count * 100, 2));
+                    decryptedPercentagesPerKeyLength.AddOrUpdate(keyLength, 0, (length, percent) => Math.Round(percent / count, 2));
                     decryptionsPerKeyLength.AddOrUpdate(keyLength, 0, (length, localDecryptions) => localDecryptions / count);
-                    runtimePerKeyLength.AddOrUpdate(keyLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(runtime.TotalMilliseconds / count));
+                    runtimePerKeyLength.AddOrUpdate(keyLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(Math.Round(runtime.TotalMilliseconds / count, 0)));
 
                     if (!noRestarts)
                         restartsPerKeyLength.AddOrUpdate(keyLength, 0, (length, localRestarts) => localRestarts / count);
@@ -460,10 +465,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 1)
                 {
                     // calculate the detailed average values
-                    successPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, success) => success / count);
-                    decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, percent) => percent / count);
+                    successPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, success) => Math.Round(success / count * 100, 2));
+                    decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, percent) => Math.Round(percent / count, 2));
                     decryptionsPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, localDecryptions) => localDecryptions / count);
-                    runtimePerCiphertextLength.AddOrUpdate(ciphertextLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(runtime.TotalMilliseconds / count));
+                    runtimePerCiphertextLength.AddOrUpdate(ciphertextLength, new TimeSpan(), (length, runtime) => TimeSpan.FromMilliseconds(Math.Round(runtime.TotalMilliseconds / count, 0)));
 
                     if (!noRestarts)
                         restartsPerCiphertextLength.AddOrUpdate(ciphertextLength, 1, (length, localRestarts) => localRestarts / count);
@@ -529,40 +534,48 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // GnuPlot output variables
             string evalMethod = "successDecryptedPercentPerCiphertext";
-            string keyValue = "ciphertextLength";
-            string val1 = "success";
-            string val2 = "decryptedPercent";
-            string val3 = "decryptions";
-            string xlabel = "Ciphertext length";
+            string keyValue = "Ciphertext length";
+            string val1 = "Success";
+            string val2 = "Decrypted Percent";
+            string val3 = "Decryptions";
+            string xlabel = "Ciphertext Length";
             string ylabel = "%";
 
             // generate the GnuPlot script output string
-            _gnuPlotScriptOutput = "###################################################################" + System.Environment.NewLine;
+            _gnuPlotScriptOutput = "###########################################################" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "# Gnuplot script for plotting data from output GnuPlotData" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# Save the GnuPlotData output in a file named "+evalMethod+".dat" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# Save this into a file named "+evalMethod+".p and " + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "###################################################################" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set   autoscale                        # scale axes automatically" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "unset log                              # remove any log-scaling" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "unset label                            # remove any previous labels" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set xtic auto                          # set xtics automatically" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set ytic auto                          # set ytics automatically" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# Save the GnuPlotData output in a file named " + System.Environment.NewLine; 
+            _gnuPlotScriptOutput += "# " + evalMethod + ".dat" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# Save this into a file named " + evalMethod + ".p" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# and  use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "###########################################################" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set   autoscale\t\t\t\t\t# scale axes automatically" + System.Environment.NewLine;
+
+            // if percent
+            _gnuPlotScriptOutput += "set yrange [0:115]" + System.Environment.NewLine;  // 115 to gain some space above 100%
+            _gnuPlotScriptOutput += "set ytics (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)" + System.Environment.NewLine;
+
+            _gnuPlotScriptOutput += "unset log\t\t\t\t\t\t# remove any log-scaling" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset label\t\t\t\t\t\t# remove any previous labels" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set xtic auto\t\t\t\t\t# set xtics automatically" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set ytic auto\t\t\t\t\t# set ytics automatically" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set title \""+val1+", "+val2+", and "+val3+" dependent on "+keyValue+"\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set xlabel \""+xlabel+"\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set ylabel \""+ylabel+"\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "plot    \""+evalMethod+".dat\" using 1:2 title '"+val1+"' with linespoints , \\" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "        \""+evalMethod+".dat\" using 1:3 title '"+val2+"' with points" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "        \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints" + System.Environment.NewLine;
 
             // generate the GnuPlot data output string
-            _gnuPlotDataOutput = "###################################################################" + System.Environment.NewLine;
+            _gnuPlotDataOutput = "###########################################################" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# Gnuplot script for plotting data from output GnuPlotData" + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# Save this GnuPlotData output in a file named "+evalMethod+".dat" + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# Save the GnuPlotScript output into a file named "+evalMethod+".p and " + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# use 'load "+evalMethod+".p'" + System.Environment.NewLine;
-            _gnuPlotDataOutput += "###################################################################" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# Save this GnuPlotData output in a file named " + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + evalMethod + ".dat" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# Save the GnuPlotScript output into a file named " + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + evalMethod + ".p" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# and use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "###########################################################" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# Data for: "+evalMethod + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# "+keyValue+"    "+val1+"    "+val2 + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + keyValue + "\t\t" + val1 + "\t\t" + val2 + System.Environment.NewLine;
             
             foreach (var pair in ciphertextLengths)
             {
@@ -575,7 +588,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
                 */
 
-                int currentSuccess = 0;
+                double currentSuccess = 0;
                 if (!successPerCiphertextLength.TryGetValue(ciphertextLength, out currentSuccess)) {
                     // Warning!
                     //continue;
@@ -589,7 +602,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 // add detailed values to GnuPlot data output string
-                _gnuPlotDataOutput += "  " + ciphertextLength + "         " + currentSuccess + "         " +
+                _gnuPlotDataOutput += ciphertextLength + "\t\t\t\t\t\t" + currentSuccess + "\t\t\t\t" +
                     currentDecryptedPercentage + System.Environment.NewLine;
 
                 BigInteger currentDecryptions = 0;
@@ -872,8 +885,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                 {
                     // ...evaluate if not
-                    Evaluate();
 
+                    int i = 9;
+                    bool boing = true;
+                    while (i < 10 && boing)
+                    {
+                        Evaluate();
+                        i++;
+                    }
                     EvaluationOutput = _evaluationOutput;
                     OnPropertyChanged("EvaluationOutput");
 
