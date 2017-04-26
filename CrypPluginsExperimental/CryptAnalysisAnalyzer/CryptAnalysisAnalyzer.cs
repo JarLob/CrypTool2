@@ -737,9 +737,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 Console.WriteLine(evaluationString);
                 Console.WriteLine("Best Key: " + BestKeyInput);
                 Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
-                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length));
+                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length) +
+                    " (" + BestPlaintextInput.Length + ")");
                 Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
-                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length));
+                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length) +
+                    " (" + PlaintextInput.Length + ")");
 
 
                 BigInteger decryptions = EvaluationInput.GetDecryptions();
