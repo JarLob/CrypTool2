@@ -36,9 +36,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CryptAnalysisAnalyzer : ICrypComponent
     {
+        public CryptAnalysisAnalyzer()
+        {
+            _settings = new CryptAnalysisAnalyzerSettings(this);
+        }
+
         #region Private Variables
 
-        private readonly CryptAnalysisAnalyzerSettings _settings = new CryptAnalysisAnalyzerSettings();
+        private readonly CryptAnalysisAnalyzerSettings _settings;
 
         private string _textInput;
         private string _seedInput;
@@ -60,6 +65,79 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private int _progress;
         private EvaluationContainer _lastEval;
         private Dictionary<int, ExtendedEvaluationContainer> _testRuns;
+
+        #endregion
+
+        #region Evaluation Variables
+
+        // count and helper variables
+        private int _successCount = 0;
+        private double _decryptedCount = 0;
+        private double _decryptionsCount = 0;
+        private TimeSpan _runtimeCount = new TimeSpan();
+        private bool _noRuntime = true;
+        private double _restarts = 0;
+        private bool _noRestarts = false;
+        private double _populationSize = 0;
+        private bool _noPopulationSize = false;
+        private double _tabuSetSize = 0;
+        private bool _noTabuSetSize = false;
+        private string _testSeriesSeed = "";
+        private double _normalizedAverageDecryptions;
+        private double _lowestDecryptions;
+        private double _highestDecryptions;
+        private double[] _decryptionsArray;
+
+        // evaluation key values
+        private Dictionary<int, int> _keyLengths;
+        private Dictionary<int, int> _ciphertextLengths;
+        private Dictionary<TimeSpan, int> _runtimes;
+
+        // evaluation detailed values
+        // key length
+        private Dictionary<int, double> _successPerKeyLength;
+        private Dictionary<int, double> _decryptedPercentagesPerKeyLength;
+        private Dictionary<int, double> _decryptionsPerKeyLength;
+        private Dictionary<int, double> _restartsPerKeyLength;
+        private Dictionary<int, double> _tabuSizesPerKeyLength;
+        private Dictionary<int, double> _populationSizesPerKeyLength;
+        private Dictionary<int, TimeSpan> _runtimePerKeyLength;
+        // ciphertext length
+        private Dictionary<int, double> _successPerCiphertextLength;
+        private Dictionary<int, double> _decryptedPercentagesPerCiphertextLength;
+        private Dictionary<int, double> _decryptionsPerCiphertextLength;
+        private Dictionary<int, double> _restartsPerCiphertextLength;
+        private Dictionary<int, double> _tabuSizesPerCiphertextLength;
+        private Dictionary<int, double> _populationSizesPerCiphertextLength;
+        private Dictionary<int, TimeSpan> _runtimePerCiphertextLength;
+        // runtime
+        private Dictionary<TimeSpan, double> _successPerRuntime;
+        private Dictionary<TimeSpan, double> _decryptedPercentagesPerRuntime;
+        private Dictionary<TimeSpan, double> _decryptionsPerRuntime;
+        private Dictionary<TimeSpan, double> _restartsPerRuntime;
+        private Dictionary<TimeSpan, double> _tabuSizesPerRuntime;
+        private Dictionary<TimeSpan, double> _populationSizesPerRuntime;
+
+        // average values
+        private double _successPercentage;
+        private double _averageDecryptedPercentage;
+        private double _averageDecryptions;
+        private double _averageRestarts;
+        private double _averageTabuSetSize;
+        private double _averagePopulationSize;
+        private TimeSpan _averageRuntime;
+
+        #endregion
+
+        #region GnuPlot Variables
+
+        private string _evalMethod = "successDecryptedPercentPerCiphertext";
+        private string _keyValue = "Ciphertext length";
+        private string _val1 = "Success";
+        private string _val2 = "Decrypted Percent";
+        private string _val3 = "Decryptions";
+        private string _xlabel = "Ciphertext Length";
+        private string _ylabel = "%";
 
         #endregion
 
@@ -208,13 +286,75 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #endregion
 
-        #region General Methods
-
-        #endregion
-
         #region Evaluation
 
-        public void Evaluate()
+        public void CollectEvaluationData()
+        {
+            // Key number - _keyCount
+            // Seed - SeedInput
+            // EvaluationInput
+            // Key - KeyInput
+            // Key space - ???
+            // Plaintext - PlaintextInput
+            // Ciphertext - ???
+            // Best key - BestKeyInput
+            // Best plaintext - BestPlaintextInput
+            // % correct - percentCorrect
+            // Necessary decryptions - decryptions
+            // Runtime - runtime
+            // Restarts - EvaluationInput.GetRestarts()
+            // DecryptionsPerTimeUnit - decryptionsPerTimeUnit
+            // Success probability - to be calculated!
+            // Population size - EvaluationInput.GetPopulationSize()
+            // Tabu set size - EvaluationInput.GetTabuSetSize()
+
+            if (_evaluationCount == 0)
+                Console.WriteLine("------- Test Series Seed: " + SeedInput + " -------");
+
+            // Testing output
+            if (_evaluationCount < 3)
+            {
+                Console.WriteLine("----- Key: " + _keyCount + " -----");
+                string evaluationString = _evaluationInput.ToString();
+                Console.WriteLine(evaluationString);
+                Console.WriteLine("Best Key: " + BestKeyInput);
+                Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
+                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length) +
+                    " (" + BestPlaintextInput.Length + ")");
+                Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
+                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length) +
+                    " (" + PlaintextInput.Length + ")");
+
+
+                double decryptions = (double)EvaluationInput.GetDecryptions();
+                TimeSpan runtime;
+                if (_settings.CalculateRuntime && EvaluationInput.GetRuntime(out runtime))
+                {
+                    double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
+                    double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);
+
+                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
+
+                }
+            }
+
+            double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
+            bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
+
+            ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
+                _seedInput, _keyCount, _keyInput, _plaintextInput, _bestKeyInput, _bestPlaintextInput,
+                _settings.CorrectPercentage, percentCorrect, success);
+
+            _testRuns.Add(_evaluationInput.GetID(), testRun);
+
+            _evaluationCount++;
+
+            BestPlaintextInput = "";
+            BestKeyInput = "";
+            EvaluationInput = new EvaluationContainer();
+        }
+
+        public void InitializeVariables()
         {
             // set dot (".") as Number Decimal Separator
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
@@ -222,51 +362,76 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
 
             // count and helper variables
-            int successCount = 0;
-            double decryptedCount = 0;
-            double decryptionsCount = 0;
+            _successCount = 0;
+            _decryptedCount = 0;
+            _decryptionsCount = 0;
 
-            TimeSpan runtimeCount = new TimeSpan();
-            bool noRuntime = !_settings.CalculateRuntime;
-            double restarts = 0;
-            bool noRestarts = false;
-            double populationSize = 0;
-            bool noPopulationSize = false;
-            double tabuSetSize = 0;
-            bool noTabuSetSize = false;
-            string testSeriesSeed = "";
+            _runtimeCount = new TimeSpan();
+            _noRuntime = !_settings.CalculateRuntime;
+            _restarts = 0;
+            _noRestarts = false;
+            _populationSize = 0;
+            _noPopulationSize = false;
+            _tabuSetSize = 0;
+            _noTabuSetSize = false;
+            _testSeriesSeed = "";
 
             // TODO: number of derived keys?
 
             // evaluation key values
-            Dictionary<int, int> keyLengths = new Dictionary<int, int>();
-            Dictionary<int, int> ciphertextLengths = new Dictionary<int, int>();
-            Dictionary<TimeSpan, int> runtimes = new Dictionary<TimeSpan, int>();
+            _keyLengths = new Dictionary<int, int>();
+            _ciphertextLengths = new Dictionary<int, int>();
+            _runtimes = new Dictionary<TimeSpan, int>();
 
             // evaluation detailed values
             // key length
-            Dictionary<int, double> successPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, double> decryptedPercentagesPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, double> decryptionsPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, double> restartsPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, double> tabuSizesPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, double> populationSizesPerKeyLength = new Dictionary<int, double>();
-            Dictionary<int, TimeSpan> runtimePerKeyLength = new Dictionary<int, TimeSpan>();
+            _successPerKeyLength = new Dictionary<int, double>();
+            _decryptedPercentagesPerKeyLength = new Dictionary<int, double>();
+            _decryptionsPerKeyLength = new Dictionary<int, double>();
+            _restartsPerKeyLength = new Dictionary<int, double>();
+            _tabuSizesPerKeyLength = new Dictionary<int, double>();
+            _populationSizesPerKeyLength = new Dictionary<int, double>();
+            _runtimePerKeyLength = new Dictionary<int, TimeSpan>();
             // ciphertext length
-            Dictionary<int, double> successPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, double> decryptedPercentagesPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, double> decryptionsPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, double> restartsPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, double> tabuSizesPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, double> populationSizesPerCiphertextLength = new Dictionary<int, double>();
-            Dictionary<int, TimeSpan> runtimePerCiphertextLength = new Dictionary<int, TimeSpan>();
+            _successPerCiphertextLength = new Dictionary<int, double>();
+            _decryptedPercentagesPerCiphertextLength = new Dictionary<int, double>();
+            _decryptionsPerCiphertextLength = new Dictionary<int, double>();
+            _restartsPerCiphertextLength = new Dictionary<int, double>();
+            _tabuSizesPerCiphertextLength = new Dictionary<int, double>();
+            _populationSizesPerCiphertextLength = new Dictionary<int, double>();
+            _runtimePerCiphertextLength = new Dictionary<int, TimeSpan>();
             // runtime
-            Dictionary<TimeSpan, double> successPerRuntime = new Dictionary<TimeSpan, double>();
-            Dictionary<TimeSpan, double> decryptedPercentagesPerRuntime = new Dictionary<TimeSpan, double>();
-            Dictionary<TimeSpan, double> decryptionsPerRuntime = new Dictionary<TimeSpan, double>();
-            Dictionary<TimeSpan, double> restartsPerRuntime = new Dictionary<TimeSpan, double>();
-            Dictionary<TimeSpan, double> tabuSizesPerRuntime = new Dictionary<TimeSpan, double>();
-            Dictionary<TimeSpan, double> populationSizesPerRuntime = new Dictionary<TimeSpan, double>();
+            _successPerRuntime = new Dictionary<TimeSpan, double>();
+            _decryptedPercentagesPerRuntime = new Dictionary<TimeSpan, double>();
+            _decryptionsPerRuntime = new Dictionary<TimeSpan, double>();
+            _restartsPerRuntime = new Dictionary<TimeSpan, double>();
+            _tabuSizesPerRuntime = new Dictionary<TimeSpan, double>();
+            _populationSizesPerRuntime = new Dictionary<TimeSpan, double>();
+        }
+
+        public void SetGnuPlotVariables()
+        {
+            // set GnuPlot output variables
+            if (_settings.XAxis == XAxisPlot.ciphertextLength)
+            {
+                _evalMethod = "successDecryptedPercentPerCiphertext";
+                _keyValue = "Ciphertext length";
+                _xlabel = "Ciphertext Length";
+            }
+
+            if (_settings.YAxis == YAxisPlot.successAndDecryptedPercent)
+            {
+                _val1 = "Success";
+                _val2 = "Decrypted Percent";
+                _val3 = "Decryptions";
+                _ylabel = "%";
+            }
+        }
+
+        public void Evaluate()
+        {
+            // Initialize variables
+            InitializeVariables();
 
             bool firstElement = true;
             // counting and sorting the data into the dictionaries
@@ -283,117 +448,115 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 double currentRestarts = 0;
                 double currentTabuSize = 0;
                 double currentPopulationSize = 0;
-                if (!noRestarts)
+                if (!_noRestarts)
                     currentRestarts = testRun.GetRestarts();
-                if (!noTabuSetSize)
+                if (!_noTabuSetSize)
                     currentTabuSize = testRun.GetTabuSetSize();
-                if (!noPopulationSize)
+                if (!_noPopulationSize)
                     currentPopulationSize = testRun.GetPopulationSize();
 
                 // get the seed of the whole test series only once
                 if (firstElement)
                 {
-                    testSeriesSeed = testRun.GetSeed();
+                    _testSeriesSeed = testRun.GetSeed();
                     firstElement = false;
                 }
 
                 // count the successfull runs
                 if (testRun.GetSuccessfull())
-                    successCount++;
-                DictionaryExtention.AddOrIncrement<int>(successPerKeyLength, keyLength, currentSuccess);
-                DictionaryExtention.AddOrIncrement<int>(successPerCiphertextLength, ciphertextLength, currentSuccess);
+                    _successCount++;
+                DictionaryExtention.AddOrIncrement<int>(_successPerKeyLength, keyLength, currentSuccess);
+                DictionaryExtention.AddOrIncrement<int>(_successPerCiphertextLength, ciphertextLength, currentSuccess);
 
                 // count the overall decryptions and decrypted percentages
-                decryptedCount += percentDecrypted;
-                decryptionsCount += decryptions;
+                _decryptedCount += percentDecrypted;
+                _decryptionsCount += decryptions;
 
                 // count the decryptions and decrypted percentages per key and ciphertext lengths
-                DictionaryExtention.AddOrIncrement<int>(decryptedPercentagesPerKeyLength, keyLength, percentDecrypted);
-                DictionaryExtention.AddOrIncrement<int>(decryptionsPerKeyLength, keyLength, decryptions);
-                DictionaryExtention.AddOrIncrement<int>(decryptedPercentagesPerCiphertextLength, ciphertextLength, percentDecrypted);
-                DictionaryExtention.AddOrIncrement<int>(decryptionsPerCiphertextLength, ciphertextLength, decryptions);
-                
+                DictionaryExtention.AddOrIncrement<int>(_decryptedPercentagesPerKeyLength, keyLength, percentDecrypted);
+                DictionaryExtention.AddOrIncrement<int>(_decryptionsPerKeyLength, keyLength, decryptions);
+                DictionaryExtention.AddOrIncrement<int>(_decryptedPercentagesPerCiphertextLength, ciphertextLength, percentDecrypted);
+                DictionaryExtention.AddOrIncrement<int>(_decryptionsPerCiphertextLength, ciphertextLength, decryptions);
+
                 // count the restarts if every run contains a restart value greater zero
-                if (!noRestarts && currentRestarts > 0)
+                if (!_noRestarts && currentRestarts > 0)
                 {
-                    restarts += currentRestarts;
-                    DictionaryExtention.AddOrIncrement(restartsPerKeyLength, keyLength, currentRestarts);
-                    DictionaryExtention.AddOrIncrement(restartsPerCiphertextLength, ciphertextLength, currentRestarts);
+                    _restarts += currentRestarts;
+                    DictionaryExtention.AddOrIncrement(_restartsPerKeyLength, keyLength, currentRestarts);
+                    DictionaryExtention.AddOrIncrement(_restartsPerCiphertextLength, ciphertextLength, currentRestarts);
                 }
                 else
-                    noRestarts = true;
+                    _noRestarts = true;
 
                 // count the tabu set size if every run contains a size value greater zero
-                if (!noTabuSetSize && currentTabuSize > 0)
+                if (!_noTabuSetSize && currentTabuSize > 0)
                 {
-                    tabuSetSize += currentTabuSize;
-                    DictionaryExtention.AddOrIncrement(tabuSizesPerKeyLength, keyLength, currentTabuSize);
-                    DictionaryExtention.AddOrIncrement(tabuSizesPerCiphertextLength, ciphertextLength, currentTabuSize);
+                    _tabuSetSize += currentTabuSize;
+                    DictionaryExtention.AddOrIncrement(_tabuSizesPerKeyLength, keyLength, currentTabuSize);
+                    DictionaryExtention.AddOrIncrement(_tabuSizesPerCiphertextLength, ciphertextLength, currentTabuSize);
                 }
                 else
-                    noTabuSetSize = true;
+                    _noTabuSetSize = true;
 
                 // count the population size if every run contains a size value greater zero
-                if (!noPopulationSize && currentPopulationSize > 0)
+                if (!_noPopulationSize && currentPopulationSize > 0)
                 {
-                    populationSize += currentPopulationSize;
-                    DictionaryExtention.AddOrIncrement(populationSizesPerKeyLength, keyLength, currentPopulationSize);
-                    DictionaryExtention.AddOrIncrement(populationSizesPerCiphertextLength, ciphertextLength, currentPopulationSize);
+                    _populationSize += currentPopulationSize;
+                    DictionaryExtention.AddOrIncrement(_populationSizesPerKeyLength, keyLength, currentPopulationSize);
+                    DictionaryExtention.AddOrIncrement(_populationSizesPerCiphertextLength, ciphertextLength, currentPopulationSize);
                 }
                 else
-                    noPopulationSize = true;
+                    _noPopulationSize = true;
 
                 // count all values per runtime and the runtime per key and ciphertext lengths
                 TimeSpan time;
-                if (!noRuntime && testRun.GetRuntime(out time))
+                if (!_noRuntime && testRun.GetRuntime(out time))
                 {
-                    runtimeCount += time;
+                    _runtimeCount += time;
                     // update key value dictionary runtimes
-                    DictionaryExtention.AddOrIncrement(runtimes, time, 1);
+                    DictionaryExtention.AddOrIncrement(_runtimes, time, 1);
 
                     // detailed values
-                    DictionaryExtention.AddOrIncrement(successPerRuntime, time, currentSuccess);
-                    DictionaryExtention.AddOrIncrement(decryptedPercentagesPerRuntime, time, percentDecrypted);
-                    DictionaryExtention.AddOrIncrement(decryptionsPerRuntime, time, decryptions);
-                    if (!noRestarts)
-                        DictionaryExtention.AddOrIncrement(restartsPerRuntime, time, currentRestarts);
-                    if (!noTabuSetSize)
-                        DictionaryExtention.AddOrIncrement(tabuSizesPerRuntime, time, currentTabuSize);
-                    if (!noPopulationSize)
-                        DictionaryExtention.AddOrIncrement(populationSizesPerRuntime, time, currentPopulationSize);
+                    DictionaryExtention.AddOrIncrement(_successPerRuntime, time, currentSuccess);
+                    DictionaryExtention.AddOrIncrement(_decryptedPercentagesPerRuntime, time, percentDecrypted);
+                    DictionaryExtention.AddOrIncrement(_decryptionsPerRuntime, time, decryptions);
+                    if (!_noRestarts)
+                        DictionaryExtention.AddOrIncrement(_restartsPerRuntime, time, currentRestarts);
+                    if (!_noTabuSetSize)
+                        DictionaryExtention.AddOrIncrement(_tabuSizesPerRuntime, time, currentTabuSize);
+                    if (!_noPopulationSize)
+                        DictionaryExtention.AddOrIncrement(_populationSizesPerRuntime, time, currentPopulationSize);
 
                     TimeSpan t = time + time;
-                    DictionaryExtention.AddOrIncrement(runtimePerKeyLength, keyLength, time);
-                    DictionaryExtention.AddOrIncrement(runtimePerCiphertextLength, ciphertextLength, time);
+                    DictionaryExtention.AddOrIncrement(_runtimePerKeyLength, keyLength, time);
+                    DictionaryExtention.AddOrIncrement(_runtimePerCiphertextLength, ciphertextLength, time);
                 }
                 else
                 {
-                    noRuntime = true;
+                    _noRuntime = true;
                 }
 
                 // update key value dictionaries keyLengths and ciphertextLengths
-                DictionaryExtention.AddOrIncrement(keyLengths, keyLength, 1);
-                DictionaryExtention.AddOrIncrement(ciphertextLengths, ciphertextLength, 1);
+                DictionaryExtention.AddOrIncrement(_keyLengths, keyLength, 1);
+                DictionaryExtention.AddOrIncrement(_ciphertextLengths, ciphertextLength, 1);
             }
 
             // after counting all values, we calculate average values here
 
             // calculate the overall average values
-            double successPercentage = Math.Round((double) successCount / _testRuns.Count * 100, 2);
-            double averageDecryptedPercentage = Math.Round((double) decryptedCount / _testRuns.Count, 2);
-            double averageDecryptions = Math.Round((double)decryptionsCount / _testRuns.Count, 2);
+            _successPercentage = Math.Round((double)_successCount / _testRuns.Count * 100, 2);
+            _averageDecryptedPercentage = Math.Round((double)_decryptedCount / _testRuns.Count, 2);
+            _averageDecryptions = Math.Round((double)_decryptionsCount / _testRuns.Count, 2);
 
             // calculate the average runtime values
-            string averageRuntimeString = "";
-            if (!noRuntime)
+            if (!_noRuntime)
             {
                 // calculate the overall average values
-                double ms = runtimeCount.TotalMilliseconds / _testRuns.Count;
-                TimeSpan averageRuntime = TimeSpan.FromMilliseconds(ms);
-                averageRuntimeString = new DateTime(averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
+                double ms = _runtimeCount.TotalMilliseconds / _testRuns.Count;
+                _averageRuntime = TimeSpan.FromMilliseconds(ms);
 
                 // if the current runtime count can be retrieved, calculate the average values
-                foreach (var pair in runtimes)
+                foreach (var pair in _runtimes)
                 {
                     TimeSpan time = pair.Key;
                     int count = pair.Value;
@@ -402,32 +565,32 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (count > 0)
                     {
                         // detailed values
-                        DictionaryExtention.DivideAndRoundPercent<TimeSpan>(successPerRuntime, time, count, 2);
-                        DictionaryExtention.DivideAndRound<TimeSpan>(decryptedPercentagesPerRuntime, time, count, 2);
-                        DictionaryExtention.Divide<TimeSpan>(decryptionsPerRuntime, time, count);
-                        if (!noRestarts)
-                            DictionaryExtention.Divide<TimeSpan>(restartsPerRuntime, time, count);
-                        if (!noTabuSetSize)
-                            DictionaryExtention.Divide<TimeSpan>(tabuSizesPerRuntime, time, count);
-                        if (!noPopulationSize)
-                            DictionaryExtention.Divide<TimeSpan>(populationSizesPerRuntime, time, count);
+                        DictionaryExtention.DivideAndRoundPercent<TimeSpan>(_successPerRuntime, time, count, 2);
+                        DictionaryExtention.DivideAndRound<TimeSpan>(_decryptedPercentagesPerRuntime, time, count, 2);
+                        DictionaryExtention.Divide<TimeSpan>(_decryptionsPerRuntime, time, count);
+                        if (!_noRestarts)
+                            DictionaryExtention.Divide<TimeSpan>(_restartsPerRuntime, time, count);
+                        if (!_noTabuSetSize)
+                            DictionaryExtention.Divide<TimeSpan>(_tabuSizesPerRuntime, time, count);
+                        if (!_noPopulationSize)
+                            DictionaryExtention.Divide<TimeSpan>(_populationSizesPerRuntime, time, count);
                     }
                 }
             }
 
             // calculate the overall average values
-            double averageRestarts = 0;
-            if (!noRestarts)
-                averageRestarts = restarts / _testRuns.Count;
-            double averageTabuSetSize = 0;
-            if (!noTabuSetSize)
-                averageTabuSetSize = tabuSetSize / _testRuns.Count;
-            double averagePopulationSize = 0;
-            if (!noPopulationSize)
-                averagePopulationSize = populationSize / _testRuns.Count;
+            _averageRestarts = 0;
+            if (!_noRestarts)
+                _averageRestarts = _restarts / _testRuns.Count;
+            _averageTabuSetSize = 0;
+            if (!_noTabuSetSize)
+                _averageTabuSetSize = _tabuSetSize / _testRuns.Count;
+            _averagePopulationSize = 0;
+            if (!_noPopulationSize)
+                _averagePopulationSize = _populationSize / _testRuns.Count;
 
             // if the current key length count can be retrieved, calculate the average values
-            foreach (var pair in keyLengths)
+            foreach (var pair in _keyLengths)
             {
                 int keyLength = pair.Key;
                 int count = pair.Value;
@@ -436,25 +599,25 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 0)
                 {
                     // calculate the detailed average values
-                    DictionaryExtention.DivideAndRoundPercent<int>(successPerKeyLength, keyLength, count, 2);
-                    DictionaryExtention.DivideAndRound<int>(decryptedPercentagesPerKeyLength, keyLength, count, 2);
-                    DictionaryExtention.Divide<int>(decryptionsPerKeyLength, keyLength, count);
-                    DictionaryExtention.DivideTimeSpan<int>(runtimePerKeyLength, keyLength, count);
+                    DictionaryExtention.DivideAndRoundPercent<int>(_successPerKeyLength, keyLength, count, 2);
+                    DictionaryExtention.DivideAndRound<int>(_decryptedPercentagesPerKeyLength, keyLength, count, 2);
+                    DictionaryExtention.Divide<int>(_decryptionsPerKeyLength, keyLength, count);
+                    DictionaryExtention.DivideTimeSpan<int>(_runtimePerKeyLength, keyLength, count);
 
-                    if (!noRestarts)
-                        DictionaryExtention.Divide<int>(restartsPerKeyLength, keyLength, count);
+                    if (!_noRestarts)
+                        DictionaryExtention.Divide<int>(_restartsPerKeyLength, keyLength, count);
 
-                    if (!noTabuSetSize)
-                        DictionaryExtention.Divide<int>(tabuSizesPerKeyLength, keyLength, count);
+                    if (!_noTabuSetSize)
+                        DictionaryExtention.Divide<int>(_tabuSizesPerKeyLength, keyLength, count);
 
-                        if (!noPopulationSize)
-                            DictionaryExtention.Divide<int>(populationSizesPerKeyLength, keyLength, count);
-                    
+                    if (!_noPopulationSize)
+                        DictionaryExtention.Divide<int>(_populationSizesPerKeyLength, keyLength, count);
+
                 }
             }
 
             // if the current ciphertext length count can be retrieved, calculate the average values
-            foreach (var pair in ciphertextLengths)
+            foreach (var pair in _ciphertextLengths)
             {
                 int ciphertextLength = pair.Key;
                 int count = pair.Value;
@@ -463,36 +626,48 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (count > 0)
                 {
                     // calculate the detailed average values
-                    //successPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, success) => Math.Round(success / count * 100, 2));
-                    //decryptedPercentagesPerCiphertextLength.AddOrUpdate(ciphertextLength, 0, (length, percent) => Math.Round(percent / count, 2));
-                    //if (decryptedPercentagesPerCiphertextLength.ContainsKey(ciphertextLength))
-                    //    decryptedPercentagesPerCiphertextLength[ciphertextLength] = Math.Round(decryptedPercentagesPerCiphertextLength[ciphertextLength] / count, 2);
-                    DictionaryExtention.DivideAndRoundPercent<int>(successPerCiphertextLength, ciphertextLength, count, 2);
-                    DictionaryExtention.DivideAndRound<int>(decryptedPercentagesPerCiphertextLength, ciphertextLength, count, 2);
-                    DictionaryExtention.Divide<int>(decryptionsPerCiphertextLength, ciphertextLength, count);
-                    DictionaryExtention.DivideTimeSpan<int>(runtimePerCiphertextLength, ciphertextLength, count);
+                    DictionaryExtention.DivideAndRoundPercent<int>(_successPerCiphertextLength, ciphertextLength, count, 2);
+                    DictionaryExtention.DivideAndRound<int>(_decryptedPercentagesPerCiphertextLength, ciphertextLength, count, 2);
+                    DictionaryExtention.Divide<int>(_decryptionsPerCiphertextLength, ciphertextLength, count);
+                    DictionaryExtention.DivideTimeSpan<int>(_runtimePerCiphertextLength, ciphertextLength, count);
 
-                    if (!noRestarts)
-                        DictionaryExtention.Divide<int>(restartsPerCiphertextLength, ciphertextLength, count);
+                    if (!_noRestarts)
+                        DictionaryExtention.Divide<int>(_restartsPerCiphertextLength, ciphertextLength, count);
 
-                    if (!noTabuSetSize)
-                        DictionaryExtention.Divide<int>(tabuSizesPerCiphertextLength, ciphertextLength, count);
+                    if (!_noTabuSetSize)
+                        DictionaryExtention.Divide<int>(_tabuSizesPerCiphertextLength, ciphertextLength, count);
 
-                    if (!noPopulationSize)
-                        DictionaryExtention.Divide<int>(populationSizesPerCiphertextLength, ciphertextLength, count);
+                    if (!_noPopulationSize)
+                        DictionaryExtention.Divide<int>(_populationSizesPerCiphertextLength, ciphertextLength, count);
                 }
             }
+
+            BuildEvaluationOutputString();
+
+            SetGnuPlotVariables();
+
+            GenerateGnuPlotDataOutput();
+
+            GenerateGnuPlotScriptOutput();
+        }
+
+        public void BuildEvaluationOutputString()
+        {
+            // build the average runtime string
+            string averageRuntimeString = "";
+            if (!_noRuntime)
+                averageRuntimeString = new DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
 
             // build the displayed string of occuring ciphertext lengths
             string ciphertextLengthString = "";
             int i = 1;
-            foreach (var pair in ciphertextLengths)
+            foreach (var pair in _ciphertextLengths)
             {
-                if (ciphertextLengths.Count > 6 && i == 3)
+                if (_ciphertextLengths.Count > 6 && i == 3)
                 {
                     ciphertextLengthString += " ...";
                 }
-                else if (ciphertextLengths.Count <= 6 || i < 3 || i >= ciphertextLengths.Count - 3)
+                else if (_ciphertextLengths.Count <= 6 || i < 3 || i >= _ciphertextLengths.Count - 3)
                 {
                     if (ciphertextLengthString != "")
                         ciphertextLengthString += ", ";
@@ -504,13 +679,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // build the displayed string of occuring key lengths
             string keyLengthString = "";
             i = 0;
-            foreach (var pair in keyLengths)
+            foreach (var pair in _keyLengths)
             {
-                if (keyLengths.Count > 6 && i == 3)
+                if (_keyLengths.Count > 6 && i == 3)
                 {
                     keyLengthString += " ...";
                 }
-                else if (keyLengths.Count <= 6 || i < 3 || i >= keyLengths.Count - 3)
+                else if (_keyLengths.Count <= 6 || i < 3 || i >= _keyLengths.Count - 3)
                 {
                     if (keyLengthString != "")
                         keyLengthString += ", ";
@@ -521,54 +696,48 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // build the complete displayed evaluation output string
             _evaluationOutput = "";
-            if (!string.IsNullOrEmpty(testSeriesSeed))
-                _evaluationOutput = "Test Series Seed: " + testSeriesSeed + "\r";
-            if (!noRuntime)
+            if (!string.IsNullOrEmpty(_testSeriesSeed))
+                _evaluationOutput = "Test Series Seed: " + _testSeriesSeed + "\r";
+            if (!_noRuntime)
                 _evaluationOutput += "Average runtime: " + averageRuntimeString + "\r";
             _evaluationOutput += "Ciphertext lengths: " + ciphertextLengthString + "\r";
             _evaluationOutput += "Key lengths: " + keyLengthString + "\r";
-            _evaluationOutput += "Average decryptions necessary: " + averageDecryptions + "\r";
-            if (!noRestarts)
-                _evaluationOutput += "Average restarts: " + averageRestarts + "\r";
-            if (!noPopulationSize)
-                _evaluationOutput += "Average population size: " + averagePopulationSize + "\r";
-            if (!noTabuSetSize)
-                _evaluationOutput += "Average tabu set size: " + averageTabuSetSize + "\r";
-            _evaluationOutput += "Averagely decrypted: " + averageDecryptedPercentage + 
+            _evaluationOutput += "Average decryptions necessary: " + _averageDecryptions + "\r";
+            if (!_noRestarts)
+                _evaluationOutput += "Average restarts: " + _averageRestarts + "\r";
+            if (!_noPopulationSize)
+                _evaluationOutput += "Average population size: " + _averagePopulationSize + "\r";
+            if (!_noTabuSetSize)
+                _evaluationOutput += "Average tabu set size: " + _averageTabuSetSize + "\r";
+            _evaluationOutput += "Averagely decrypted: " + _averageDecryptedPercentage +
                 "% of min " + _settings.CorrectPercentage + "%\r";
-            _evaluationOutput += "Average success: " + successPercentage + "%\r";
+            _evaluationOutput += "Average success: " + _successPercentage + "%\r";
+        }
 
-            // GnuPlot output variables
-            string evalMethod = "successDecryptedPercentPerCiphertext";
-            string keyValue = "Ciphertext length";
-            string val1 = "Success";
-            string val2 = "Decrypted Percent";
-            string val3 = "Decryptions";
-            string xlabel = "Ciphertext Length";
-            string ylabel = "%";
-
+        public void GenerateGnuPlotDataOutput()
+        {
             // generate the GnuPlot data output string
             _gnuPlotDataOutput = "###########################################################" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# Gnuplot script for plotting data from output GnuPlotData" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# Save this GnuPlotData output in a file named " + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# " + evalMethod + ".dat" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + _evalMethod + ".dat" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# Save the GnuPlotScript output into a file named " + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# " + evalMethod + ".p" + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# and use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + _evalMethod + ".p" + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# and use 'load " + _evalMethod + ".p'" + System.Environment.NewLine;
             _gnuPlotDataOutput += "###########################################################" + System.Environment.NewLine;
             _gnuPlotDataOutput += System.Environment.NewLine;
 
             // # Data for evaluation method
-            _gnuPlotDataOutput += "# Data for: " + evalMethod + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# Data for: " + _evalMethod + System.Environment.NewLine;
             _gnuPlotDataOutput += System.Environment.NewLine;
-            _gnuPlotDataOutput += "# " + keyValue + "\t\t" + val1 + "\t\t" + val2 + "\t\t" + val3 + System.Environment.NewLine;
+            _gnuPlotDataOutput += "# " + _keyValue + "\t\t" + _val1 + "\t\t" + _val2 + "\t\t" + _val3 + System.Environment.NewLine;
 
-            double lowestDecryptions = -1;
-            double highestDecryptions = 0;
-            double[] decryptionsArray = new double[decryptionsPerCiphertextLength.Count];
-            double normalizedAverageDecryptions = 0;
+            _lowestDecryptions = -1;
+            _highestDecryptions = 0;
+            _decryptionsArray = new double[_decryptionsPerCiphertextLength.Count];
+            _normalizedAverageDecryptions = 0;
             int position = 0;
-            foreach (var pair in ciphertextLengths)
+            foreach (var pair in _ciphertextLengths)
             {
                 int ciphertextLength = pair.Key;
                 /* // Possible use for showing the number of keys per length
@@ -580,14 +749,15 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 */
 
                 double currentSuccess = 0;
-                if (!successPerCiphertextLength.TryGetValue(ciphertextLength, out currentSuccess)) {
+                if (!_successPerCiphertextLength.TryGetValue(ciphertextLength, out currentSuccess))
+                {
                     // Warning! But may be zero
                     Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertestLength: " + ciphertextLength + ", currentSuccess: " + currentSuccess);
                     //continue;
                 }
 
                 double currentDecryptedPercentage = 0;
-                if (!decryptedPercentagesPerCiphertextLength.TryGetValue(ciphertextLength, out currentDecryptedPercentage))
+                if (!_decryptedPercentagesPerCiphertextLength.TryGetValue(ciphertextLength, out currentDecryptedPercentage))
                 {
                     // Warning!
                     Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertestLength: " + ciphertextLength + ", currentSuccess: " + currentDecryptedPercentage);
@@ -595,7 +765,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 double currentDecryptions = 0;
-                if (!decryptionsPerCiphertextLength.TryGetValue(ciphertextLength, out currentDecryptions))
+                if (!_decryptionsPerCiphertextLength.TryGetValue(ciphertextLength, out currentDecryptions))
                 {
                     // Warning!
                     Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertestLength: " + ciphertextLength + ", currentSuccess: " + currentDecryptions);
@@ -603,16 +773,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
                 else if (currentDecryptions > 0)
                 {
-                    if (lowestDecryptions == -1 || currentDecryptions < lowestDecryptions)
-                        lowestDecryptions = currentDecryptions;
-                    if (currentDecryptions > highestDecryptions)
-                        highestDecryptions = currentDecryptions;
-                    decryptionsArray[position] = currentDecryptions;
+                    if (_lowestDecryptions == -1 || currentDecryptions < _lowestDecryptions)
+                        _lowestDecryptions = currentDecryptions;
+                    if (currentDecryptions > _highestDecryptions)
+                        _highestDecryptions = currentDecryptions;
+                    _decryptionsArray[position] = currentDecryptions;
                     position++;
                 }
 
                 TimeSpan currentRuntime = new TimeSpan();
-                if (!runtimePerCiphertextLength.TryGetValue(ciphertextLength, out currentRuntime))
+                if (!_runtimePerCiphertextLength.TryGetValue(ciphertextLength, out currentRuntime))
                 {
                     // Warning!
                     //continue;
@@ -633,14 +803,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotDataOutput += ciphertextLength + "\t\t\t\t\t\t" + currentSuccess + "\t\t\t\t" +
                     currentDecryptedPercentage + "\t\t\t\t" + currentDecryptions + System.Environment.NewLine;
             }
+        }
 
+        public void GenerateGnuPlotScriptOutput()
+        {
             // generate the GnuPlot script output string
             _gnuPlotScriptOutput = "###########################################################" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "# Gnuplot script for plotting data from output GnuPlotData" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "# Save the GnuPlotData output in a file named " + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# " + evalMethod + ".dat" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# Save this into a file named " + evalMethod + ".p" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "# and  use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# " + _evalMethod + ".dat" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# Save this into a file named " + _evalMethod + ".p" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "# and  use 'load " + _evalMethod + ".p'" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "###########################################################" + System.Environment.NewLine;
             _gnuPlotScriptOutput += System.Environment.NewLine;
 
@@ -667,7 +840,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // # Plot settings
             _gnuPlotScriptOutput += "# Plot settings" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set title \"" + val1 + ", " + val2 + ", and " + val3 + " dependent on " + keyValue + "\"" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set title \"" + _val1 + ", " + _val2 + ", and " + _val3 + " dependent on " + _keyValue + "\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set size ratio 0.8" + System.Environment.NewLine;
             int border = 3; // 11 = |__|, 3 = |__
             if (_settings.Y2Axis != Y2AxisPlot.none) border = 11;
@@ -680,7 +853,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // # x-Axis settings
             _gnuPlotScriptOutput += "# x-Axis settings" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set xtic auto\t\t\t\t\t# -- set xtics automatically" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set xlabel \"" + xlabel + "\"" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set xlabel \"" + _xlabel + "\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += System.Environment.NewLine;
 
             // # y-Axis settings
@@ -704,7 +877,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 // not percent, set yrange and ytics
             }
-            _gnuPlotScriptOutput += "set ylabel \"" + ylabel + "\"" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set ylabel \"" + _ylabel + "\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += System.Environment.NewLine;
 
             // # second y-Axis settings
@@ -712,17 +885,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 _gnuPlotScriptOutput += "# second y-Axis settings" + System.Environment.NewLine;
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + System.Environment.NewLine;
-                _gnuPlotScriptOutput += "set y2label \"" + val3 + "\"" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "set y2label \"" + _val3 + "\"" + System.Environment.NewLine;
                 // calculate normalized average decryptions
-                normalizedAverageDecryptions = CalculateNormalizedAverage(decryptionsArray, 4);
-                int min = (int)lowestDecryptions - 100; //1900;
-                int max = (int)highestDecryptions; //8000;
+                _normalizedAverageDecryptions = CalculateNormalizedAverage(_decryptionsArray, 4);
+                int min = (int)_lowestDecryptions - 100; //1900;
+                int max = (int)_highestDecryptions; //8000;
                 // calculate distances to mean (/average)
-                int lowestToMean = (int)normalizedAverageDecryptions - (int)lowestDecryptions;
-                int highestToMean = (int)highestDecryptions - (int)normalizedAverageDecryptions;
+                int lowestToMean = (int)_normalizedAverageDecryptions - (int)_lowestDecryptions;
+                int highestToMean = (int)_highestDecryptions - (int)_normalizedAverageDecryptions;
 
                 if (highestToMean > lowestToMean * 2)
-                    max = (int)(normalizedAverageDecryptions + lowestToMean * 2);
+                    max = (int)(_normalizedAverageDecryptions + lowestToMean * 2);
 
                 _gnuPlotScriptOutput += "set y2range [" + min + ":" + max + "]" + System.Environment.NewLine;
                 _gnuPlotScriptOutput += System.Environment.NewLine;
@@ -732,33 +905,31 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += "# plotting" + System.Environment.NewLine;
             if (_settings.YAxis == YAxisPlot.successAndDecryptedPercent)
             {
-                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
-                _gnuPlotScriptOutput += "        \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints ls 2" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "plot    \"" + _evalMethod + ".dat\" using 1:2 title '" + _val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "        \"" + _evalMethod + ".dat\" using 1:3 title '" + _val2 + "' with linespoints ls 2" + System.Environment.NewLine;
             }
             else if (_settings.YAxis == YAxisPlot.decryptedPercent)
             {
                 // TODO: decide: still putting success percentage in .dat file? yes -> using 1:3, no -> using 1:2
                 //_gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
-                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints ls 2" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "plot    \"" + _evalMethod + ".dat\" using 1:3 title '" + _val2 + "' with linespoints ls 2" + System.Environment.NewLine;
             }
             else if (_settings.YAxis == YAxisPlot.success)
             {
-                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "plot    \"" + _evalMethod + ".dat\" using 1:2 title '" + _val1 + "' with linespoints ls 1" + System.Environment.NewLine;
             }
             if (_settings.Y2Axis == Y2AxisPlot.decryptions)
             {
-                _gnuPlotScriptOutput += "replot  \"" + evalMethod + ".dat\" using 1:4 title '" + val3 + "' with linespoints ls 3 axes x1y2";
+                _gnuPlotScriptOutput += "replot  \"" + _evalMethod + ".dat\" using 1:4 title '" + _val3 + "' with linespoints ls 3 axes x1y2";
                 if (_settings.ShowY2Average)
                 {
                     _gnuPlotScriptOutput += " , \\" + System.Environment.NewLine;
-                    _gnuPlotScriptOutput += "        " + Math.Round(normalizedAverageDecryptions) + " title 'Average Decryptions = " + Math.Round(normalizedAverageDecryptions) + "' with lines ls 4 axes x1y2";
+                    _gnuPlotScriptOutput += "        " + Math.Round(_normalizedAverageDecryptions) + " title 'Average Decryptions = " + Math.Round(_normalizedAverageDecryptions) + "' with lines ls 4 axes x1y2";
 
                 }
                 else
                     _gnuPlotScriptOutput += System.Environment.NewLine;
             }
-
-
 
             /*
             // GnuPlot output variables
@@ -834,91 +1005,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }*/
         }
 
-        public double CalculateNormalizedAverage(double[] arr, int normalizingFactor)
+        public void RefreshGnuPlotOutputs()
         {
-            Array.Sort(arr);
-            double normalized = 0;
-            List<double> irrepresentableValues = new List<double>();
-            for (int j = arr.Length - 2; j >= 0; j--)
-            {
-                // check if one decryptions value is 4 times bigger than the next value
-                if (arr[j] * normalizingFactor < arr[j + 1])
-                {
-                    irrepresentableValues.Add(arr[j + 1]);
-                    continue;
-                }
-                normalized += arr[j + 1];
-            }
-            normalized += arr[0];
-            normalized /= (arr.Length - irrepresentableValues.Count);
+            EvaluationOutput = _evaluationOutput;
+            OnPropertyChanged("EvaluationOutput");
 
-            return normalized;
-        }
+            GnuPlotScriptOutput = _gnuPlotScriptOutput;
+            OnPropertyChanged("GnuPlotScriptOutput");
 
-        public void CollectEvaluationData()
-        {
-            // Key number - _keyCount
-            // Seed - SeedInput
-            // EvaluationInput
-            // Key - KeyInput
-            // Key space - ???
-            // Plaintext - PlaintextInput
-            // Ciphertext - ???
-            // Best key - BestKeyInput
-            // Best plaintext - BestPlaintextInput
-            // % correct - percentCorrect
-            // Necessary decryptions - decryptions
-            // Runtime - runtime
-            // Restarts - EvaluationInput.GetRestarts()
-            // DecryptionsPerTimeUnit - decryptionsPerTimeUnit
-            // Success probability - to be calculated!
-            // Population size - EvaluationInput.GetPopulationSize()
-            // Tabu set size - EvaluationInput.GetTabuSetSize()
-
-            if (_evaluationCount == 0)
-                Console.WriteLine("------- Test Series Seed: " + SeedInput + " -------");
-
-            // Testing output
-            if (_evaluationCount < 3)
-            {
-                Console.WriteLine("----- Key: " + _keyCount + " -----");
-                string evaluationString = _evaluationInput.ToString();
-                Console.WriteLine(evaluationString);
-                Console.WriteLine("Best Key: " + BestKeyInput);
-                Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
-                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length) +
-                    " (" + BestPlaintextInput.Length + ")");
-                Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
-                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length) +
-                    " (" + PlaintextInput.Length + ")");
-
-
-                double decryptions = (double) EvaluationInput.GetDecryptions();
-                TimeSpan runtime;
-                if (_settings.CalculateRuntime && EvaluationInput.GetRuntime(out runtime))
-                {
-                    double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
-                    double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);
-
-                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
-
-                }
-            }
-
-            double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
-            bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
-           
-            ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
-                _seedInput, _keyCount, _keyInput, _plaintextInput, _bestKeyInput, _bestPlaintextInput,
-                _settings.CorrectPercentage, percentCorrect, success);
-
-            _testRuns.Add(_evaluationInput.GetID(), testRun);
-
-            _evaluationCount++;
-
-            BestPlaintextInput = "";
-            BestKeyInput = "";
-            EvaluationInput = new EvaluationContainer();
+            GnuPlotDataOutput = _gnuPlotDataOutput;
+            OnPropertyChanged("GnuPlotDataOutput");
         }
 
         #endregion
@@ -1060,14 +1156,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         Evaluate();
                         i++;
                     }
-                    EvaluationOutput = _evaluationOutput;
-                    OnPropertyChanged("EvaluationOutput");
 
-                    GnuPlotScriptOutput = _gnuPlotScriptOutput;
-                    OnPropertyChanged("GnuPlotScriptOutput");
-
-                    GnuPlotDataOutput = _gnuPlotDataOutput;
-                    OnPropertyChanged("GnuPlotDataOutput");
+                    RefreshGnuPlotOutputs();
                 }
 
                 if (_totalKeysInput > 0)
@@ -1120,6 +1210,31 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #endregion
 
+        #region General Methods
+
+        public double CalculateNormalizedAverage(double[] arr, int normalizingFactor)
+        {
+            Array.Sort(arr);
+            double normalized = 0;
+            List<double> irrepresentableValues = new List<double>();
+            for (int j = arr.Length - 2; j >= 0; j--)
+            {
+                // check if one decryptions value is 4 times bigger than the next value
+                if (arr[j] * normalizingFactor < arr[j + 1])
+                {
+                    irrepresentableValues.Add(arr[j + 1]);
+                    continue;
+                }
+                normalized += arr[j + 1];
+            }
+            normalized += arr[0];
+            normalized /= (arr.Length - irrepresentableValues.Count);
+
+            return normalized;
+        }
+
+        #endregion
+
         #region Event Handling
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -1135,7 +1250,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
-        private void OnPropertyChanged(string name)
+        public void OnPropertyChanged(string name)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }

@@ -28,9 +28,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
     public class CryptAnalysisAnalyzerSettings : ISettings
     {
+        public CryptAnalysisAnalyzerSettings(CryptAnalysisAnalyzer CAA)
+        {
+            this._CAA = CAA;
+        }
+
+        public CryptAnalysisAnalyzerSettings()
+        {
+            //
+        }
+
         #region Private Variables
 
         // general variables
+        private CryptAnalysisAnalyzer _CAA;
         private const int gnuPlotPaneIndex = generalPaneIndex + 3;
         private double _correctPercentage = 95;
         private int _timeUnit = 10;
@@ -121,6 +132,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     this._xAxis = value;
                     //UpdateKeyFormatVisibility();
                     OnPropertyChanged("XAxis");
+
+                    _CAA.SetGnuPlotVariables();
+                    _CAA.GenerateGnuPlotDataOutput();
+                    _CAA.GenerateGnuPlotScriptOutput();
+                    _CAA.RefreshGnuPlotOutputs();
                 }
             }
         }
@@ -144,6 +160,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     this._yAxis = value;
                     //UpdateKeyFormatVisibility();
                     OnPropertyChanged("YAxis");
+
+                    _CAA.SetGnuPlotVariables();
+                    _CAA.GenerateGnuPlotDataOutput();
+                    _CAA.GenerateGnuPlotScriptOutput();
+                    _CAA.RefreshGnuPlotOutputs();
                 }
             }
         }
@@ -167,6 +188,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     this._y2Axis = value;
                     //UpdateKeyFormatVisibility();
                     OnPropertyChanged("Y2Axis");
+                    if (value == Y2AxisPlot.none)
+                    {
+                        this._showY2Average = false;
+                        OnPropertyChanged("ShowY2Average");
+                    }
+
+                    _CAA.SetGnuPlotVariables();
+                    _CAA.GenerateGnuPlotDataOutput();
+                    _CAA.GenerateGnuPlotScriptOutput();
+                    _CAA.RefreshGnuPlotOutputs();
                 }
             }
         }
@@ -181,10 +212,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._showY2Average; }
             set
             {
-                if (value != _showY2Average)
+                if (_y2Axis != Y2AxisPlot.none &&
+                    value != _showY2Average)
                 {
                     this._showY2Average = value;
                     OnPropertyChanged("ShowY2Average");
+
+                    _CAA.GenerateGnuPlotScriptOutput();
+                    _CAA.RefreshGnuPlotOutputs();
                 }
             }
         }
