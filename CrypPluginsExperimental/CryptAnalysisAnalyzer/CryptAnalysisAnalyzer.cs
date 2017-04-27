@@ -276,6 +276,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 ExtendedEvaluationContainer testRun = entry.Value;
                 int keyLength = testRun.GetKey().Length;
                 int ciphertextLength = testRun.GetCiphertext().Length;
+                int currentSuccess = 0;
+                if (testRun.GetSuccessfull()) currentSuccess = 1;
                 double percentDecrypted = testRun.GetPercentDecrypted();
                 double decryptions = testRun.GetDecryptions();
                 double currentRestarts = 0;
@@ -297,11 +299,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 // count the successfull runs
                 if (testRun.GetSuccessfull())
-                {
                     successCount++;
-                    DictionaryExtention.AddOrIncrement<int>(successPerKeyLength, keyLength, 1);
-                    DictionaryExtention.AddOrIncrement<int>(successPerCiphertextLength, ciphertextLength, 1);
-                }
+                DictionaryExtention.AddOrIncrement<int>(successPerKeyLength, keyLength, currentSuccess);
+                DictionaryExtention.AddOrIncrement<int>(successPerCiphertextLength, ciphertextLength, currentSuccess);
 
                 // count the overall decryptions and decrypted percentages
                 decryptedCount += percentDecrypted;
@@ -352,8 +352,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     DictionaryExtention.AddOrIncrement(runtimes, time, 1);
 
                     // detailed values
-                    if (testRun.GetSuccessfull())
-                        DictionaryExtention.AddOrIncrement(successPerRuntime, time, 1);
+                    DictionaryExtention.AddOrIncrement(successPerRuntime, time, currentSuccess);
                     DictionaryExtention.AddOrIncrement(decryptedPercentagesPerRuntime, time, percentDecrypted);
                     DictionaryExtention.AddOrIncrement(decryptionsPerRuntime, time, decryptions);
                     if (!noRestarts)
@@ -557,12 +556,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotDataOutput += "# " + evalMethod + ".p" + System.Environment.NewLine;
             _gnuPlotDataOutput += "# and use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
             _gnuPlotDataOutput += "###########################################################" + System.Environment.NewLine;
-            _gnuPlotDataOutput += "# Data for: "+evalMethod + System.Environment.NewLine;
+            _gnuPlotDataOutput += System.Environment.NewLine;
+
+            // # Data for evaluation method
+            _gnuPlotDataOutput += "# Data for: " + evalMethod + System.Environment.NewLine;
+            _gnuPlotDataOutput += System.Environment.NewLine;
             _gnuPlotDataOutput += "# " + keyValue + "\t\t" + val1 + "\t\t" + val2 + "\t\t" + val3 + System.Environment.NewLine;
 
             double lowestDecryptions = -1;
             double highestDecryptions = 0;
             double[] decryptionsArray = new double[decryptionsPerCiphertextLength.Count];
+            double normalizedAverageDecryptions = 0;
             int position = 0;
             foreach (var pair in ciphertextLengths)
             {
@@ -607,10 +611,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     position++;
                 }
 
-                // add detailed values to GnuPlot data output string
-                _gnuPlotDataOutput += ciphertextLength + "\t\t\t\t\t\t" + currentSuccess + "\t\t\t\t" +
-                    currentDecryptedPercentage + "\t\t\t\t" + currentDecryptions +System.Environment.NewLine;
-
                 TimeSpan currentRuntime = new TimeSpan();
                 if (!runtimePerCiphertextLength.TryGetValue(ciphertextLength, out currentRuntime))
                 {
@@ -629,23 +629,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     populationSizesPerKeyLength.AddOrUpdate(keyLength, 1, (length, populationSizes) => populationSizes / count;
                 */
 
+                // add detailed values to GnuPlot data output string
+                _gnuPlotDataOutput += ciphertextLength + "\t\t\t\t\t\t" + currentSuccess + "\t\t\t\t" +
+                    currentDecryptedPercentage + "\t\t\t\t" + currentDecryptions + System.Environment.NewLine;
             }
-            
-            Array.Sort(decryptionsArray);
-            double normalizedAverageDecryptions = 0;
-            List<double> irrepresentableValues = new List<double>();
-            for (int j = decryptionsArray.Length - 2; j >= 0; j--)
-            {
-                // check if one decryptions value is 4 times bigger than the next value
-                if (decryptionsArray[j] * 4 < decryptionsArray[j + 1])
-                {
-                    irrepresentableValues.Add(decryptionsArray[j + 1]);
-                    continue;
-                }
-                normalizedAverageDecryptions += decryptionsArray[j + 1];
-            }
-            normalizedAverageDecryptions += decryptionsArray[0];
-            normalizedAverageDecryptions /= (decryptionsArray.Length - irrepresentableValues.Count);
 
             // generate the GnuPlot script output string
             _gnuPlotScriptOutput = "###########################################################" + System.Environment.NewLine;
@@ -655,31 +642,82 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += "# Save this into a file named " + evalMethod + ".p" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "# and  use 'load " + evalMethod + ".p'" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "###########################################################" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set   autoscale\t\t\t\t\t# scale axes automatically" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
 
-            // if percent
-            int percentUpper = 110;
-            if (true)
-                percentUpper += 7;
-            if (true)
-                percentUpper += 7;
-            if (true)
-                percentUpper += 7;
-            _gnuPlotScriptOutput += "set yrange [-5:"+percentUpper+"]" + System.Environment.NewLine;  // to gain some space below 0% and above 100%
-            _gnuPlotScriptOutput += "set ytics (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)" + System.Environment.NewLine;
+            // # General settings
+            _gnuPlotScriptOutput += "# General settings" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set autoscale\t\t\t\t\t# -- scale axes automatically" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset log\t\t\t\t\t\t# -- remove any log-scaling" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset tics\t\t\t\t\t\t# -- remove any previous tics" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset xlabel\t\t\t\t\t# -- remove previous labels" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset ylabel" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "unset y2label" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
+
+            // # Style settings
+            _gnuPlotScriptOutput += "# Style settings" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 1 lc rgb '#2ca25f' lt 1 lw 2 pt 1 ps 0.8   # -- green" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 2 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 0.8   # -- blue" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 3 lc rgb '#e34a33' lt 1 lw 2 pt 2 ps 0.8   # -- red" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 3 lc rgb '#e34a33' lt 1 lw 2 pt 2 ps 0.8   # -- red" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 4 lc rgb '#edb120' lt 1 lw 2               # -- orange" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 101 lc rgb '#656565' lt 1 lw 1             # -- dark-grey" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set style line 102 lc rgb '#d6d7d9' lt 0 lw 1             # -- grey" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
+
+            // # Plot settings
+            _gnuPlotScriptOutput += "# Plot settings" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set title \"" + val1 + ", " + val2 + ", and " + val3 + " dependent on " + keyValue + "\"" + System.Environment.NewLine;
             _gnuPlotScriptOutput += "set size ratio 0.8" + System.Environment.NewLine;
+            int border = 3; // 11 = |__|, 3 = |__
+            if (_settings.Y2Axis != Y2AxisPlot.none) border = 11;
+            _gnuPlotScriptOutput += "set border " + border + " front ls 101" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set tics nomirror out scale 0.75" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set format '%g'" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set grid back ls 102" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
 
-            _gnuPlotScriptOutput += "unset log\t\t\t\t\t\t# remove any log-scaling" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "unset label\t\t\t\t\t\t# remove any previous labels" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set xtic auto\t\t\t\t\t# set xtics automatically" + System.Environment.NewLine;
+            // # x-Axis settings
+            _gnuPlotScriptOutput += "# x-Axis settings" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set xtic auto\t\t\t\t\t# -- set xtics automatically" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += "set xlabel \"" + xlabel + "\"" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
 
-            if (true)
+            // # y-Axis settings
+            _gnuPlotScriptOutput += "# y-Axis settings" + System.Environment.NewLine;
+            if (_settings.YAxis == YAxisPlot.successAndDecryptedPercent ||
+                _settings.YAxis == YAxisPlot.decryptedPercent ||
+                _settings.YAxis == YAxisPlot.success)
             {
-                // second y axis
+                int percentUpper = 110;
+                if (_settings.YAxis == YAxisPlot.successAndDecryptedPercent)
+                    percentUpper += 14;
+                else
+                    percentUpper += 7;
+
+                if (_settings.Y2Axis != Y2AxisPlot.none)
+                    percentUpper += 7;
+                _gnuPlotScriptOutput += "set yrange [-5:" + percentUpper + "]" + System.Environment.NewLine;  // to gain some space below 0% and above 100%
+                _gnuPlotScriptOutput += "set ytics (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100)" + System.Environment.NewLine;
+            }
+            else
+            {
+                // not percent, set yrange and ytics
+            }
+            _gnuPlotScriptOutput += "set ylabel \"" + ylabel + "\"" + System.Environment.NewLine;
+            _gnuPlotScriptOutput += System.Environment.NewLine;
+
+            // # second y-Axis settings
+            if (_settings.Y2Axis == Y2AxisPlot.decryptions)
+            {
+                _gnuPlotScriptOutput += "# second y-Axis settings" + System.Environment.NewLine;
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + System.Environment.NewLine;
                 _gnuPlotScriptOutput += "set y2label \"" + val3 + "\"" + System.Environment.NewLine;
+                // calculate normalized average decryptions
+                normalizedAverageDecryptions = CalculateNormalizedAverage(decryptionsArray, 4);
                 int min = (int)lowestDecryptions - 100; //1900;
                 int max = (int)highestDecryptions; //8000;
+                // calculate distances to mean (/average)
                 int lowestToMean = (int)normalizedAverageDecryptions - (int)lowestDecryptions;
                 int highestToMean = (int)highestDecryptions - (int)normalizedAverageDecryptions;
 
@@ -687,33 +725,41 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     max = (int)(normalizedAverageDecryptions + lowestToMean * 2);
 
                 _gnuPlotScriptOutput += "set y2range [" + min + ":" + max + "]" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += System.Environment.NewLine;
             }
-            _gnuPlotScriptOutput += "set title \"" + val1 + ", " + val2 + ", and " + val3 + " dependent on " + keyValue + "\"" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set xlabel \"" + xlabel + "\"" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set ylabel \"" + ylabel + "\"" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set style line 1 lc rgb '#2ca25f' lt 1 lw 2 pt 1 ps 0.8   # --- green" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set style line 2 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 0.8   # --- blue" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set style line 3 lc rgb '#e34a33' lt 1 lw 2 pt 2 ps 0.8   # --- red" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set style line 101 lc rgb '#656565' lt 1 lw 1" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set border 11 front ls 101" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set tics nomirror out scale 0.75" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set format '%g'" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set style line 102 lc rgb '#d6d7d9' lt 0 lw 1" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "set grid back ls 102" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
-            _gnuPlotScriptOutput += "        \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints ls 2" + System.Environment.NewLine;
-            if (true)
+
+            // # plotting
+            _gnuPlotScriptOutput += "# plotting" + System.Environment.NewLine;
+            if (_settings.YAxis == YAxisPlot.successAndDecryptedPercent)
+            {
+                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "        \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints ls 2" + System.Environment.NewLine;
+            }
+            else if (_settings.YAxis == YAxisPlot.decryptedPercent)
+            {
+                // TODO: decide: still putting success percentage in .dat file? yes -> using 1:3, no -> using 1:2
+                //_gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1 , \\" + System.Environment.NewLine;
+                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:3 title '" + val2 + "' with linespoints ls 2" + System.Environment.NewLine;
+            }
+            else if (_settings.YAxis == YAxisPlot.success)
+            {
+                _gnuPlotScriptOutput += "plot    \"" + evalMethod + ".dat\" using 1:2 title '" + val1 + "' with linespoints ls 1" + System.Environment.NewLine;
+            }
+            if (_settings.Y2Axis == Y2AxisPlot.decryptions)
             {
                 _gnuPlotScriptOutput += "replot  \"" + evalMethod + ".dat\" using 1:4 title '" + val3 + "' with linespoints ls 3 axes x1y2";
-                if (true)
+                if (_settings.ShowY2Average)
                 {
                     _gnuPlotScriptOutput += " , \\" + System.Environment.NewLine;
-                    _gnuPlotScriptOutput += "        " + Math.Round(normalizedAverageDecryptions) + " title 'Average Decryptions = " + Math.Round(normalizedAverageDecryptions) + "' with lines axes x1y2";
+                    _gnuPlotScriptOutput += "        " + Math.Round(normalizedAverageDecryptions) + " title 'Average Decryptions = " + Math.Round(normalizedAverageDecryptions) + "' with lines ls 4 axes x1y2";
 
                 }
                 else
                     _gnuPlotScriptOutput += System.Environment.NewLine;
             }
+
+
+
             /*
             // GnuPlot output variables
             string evalMethod = "successDecryptedPercentPerKey";
@@ -786,6 +832,27 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     //continue;
                 }
             }*/
+        }
+
+        public double CalculateNormalizedAverage(double[] arr, int normalizingFactor)
+        {
+            Array.Sort(arr);
+            double normalized = 0;
+            List<double> irrepresentableValues = new List<double>();
+            for (int j = arr.Length - 2; j >= 0; j--)
+            {
+                // check if one decryptions value is 4 times bigger than the next value
+                if (arr[j] * normalizingFactor < arr[j + 1])
+                {
+                    irrepresentableValues.Add(arr[j + 1]);
+                    continue;
+                }
+                normalized += arr[j + 1];
+            }
+            normalized += arr[0];
+            normalized /= (arr.Length - irrepresentableValues.Count);
+
+            return normalized;
         }
 
         public void CollectEvaluationData()
