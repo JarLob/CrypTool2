@@ -48,6 +48,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private YAxisPlot _yAxis = YAxisPlot.successAndPercentDecrypted;
         private Y2AxisPlot _y2Axis = Y2AxisPlot.decryptions;
         private bool _showY2Average = true;
+        private int _normalizingFactor = 4;
 
         #endregion
 
@@ -216,6 +217,24 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     _CAA.GenerateGnuPlotScriptOutput();
                     _CAA.RefreshGnuPlotOutputs();
                 }
+            }
+        }
+
+        /// <summary>
+        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
+        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// </summary>
+        [TaskPane("Normalize Y-Range Factor", "Size factor to start normalizing single high values on Y-Range", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        public int NormalizingFactor
+        {
+            get
+            {
+                return _normalizingFactor;
+            }
+            set
+            {
+                _normalizingFactor = value;
+                OnPropertyChanged("NormalizingFactor");
             }
         }
 
