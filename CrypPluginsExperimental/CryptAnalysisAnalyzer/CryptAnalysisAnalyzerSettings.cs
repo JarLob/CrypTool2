@@ -23,19 +23,14 @@ using System.Windows;
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     public enum XAxisPlot { ciphertextLength, keyLength, runtime };
-    public enum YAxisPlot { success, decryptedPercent, successAndDecryptedPercent };
-    public enum Y2AxisPlot { none, decryptions, restarts, tabuSetSizes, populationSizes };
+    public enum YAxisPlot { success, percentDecrypted, successAndPercentDecrypted };
+    public enum Y2AxisPlot { none, decryptions, restarts, tabuSetSizes, populationSizes, runtime };
 
     public class CryptAnalysisAnalyzerSettings : ISettings
     {
         public CryptAnalysisAnalyzerSettings(CryptAnalysisAnalyzer CAA)
         {
             this._CAA = CAA;
-        }
-
-        public CryptAnalysisAnalyzerSettings()
-        {
-            //
         }
 
         #region Private Variables
@@ -50,7 +45,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         // GnuPlot variables
         private XAxisPlot _xAxis = XAxisPlot.ciphertextLength;
-        private YAxisPlot _yAxis = YAxisPlot.successAndDecryptedPercent;
+        private YAxisPlot _yAxis = YAxisPlot.successAndPercentDecrypted;
         private Y2AxisPlot _y2Axis = Y2AxisPlot.decryptions;
         private bool _showY2Average = true;
 
@@ -146,7 +141,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
         [TaskPane("Y-Axis", "Values to show on the Y-Axis", "GnuPlot", gnuPlotPaneIndex + 1, true, ControlType.ComboBox, new String[] { 
-            "Success", "Decrypted Percentage", "Success and Decrypted %"})]
+            "Success", "Percent Decrypted", "Success and % Decrypted"})]
         public YAxisPlot YAxis
         {
             get
@@ -174,7 +169,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
         [TaskPane("Second Y-Axis", "Values to show on the second Y-Axis", "GnuPlot", gnuPlotPaneIndex + 2, true, ControlType.ComboBox, new String[] { 
-            "None", "Decryptions", "Restarts", "Tabu Set Sizes", "Population Sizes"})]
+            "None", "Decryptions", "Restarts", "Tabu Set Sizes", "Population Sizes", "Runtime"})]
         public Y2AxisPlot Y2Axis
         {
             get
