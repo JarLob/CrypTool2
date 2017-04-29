@@ -109,7 +109,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set;
         }
 
-        [TaskPane("Numbers Handling", "NumbersHandlingTooltipCaption", null, generalPaneIndex + 5, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("Numbers Handling", "NumbersHandlingTooltipCaption", null, generalPaneIndex + 5, false, ControlType.ComboBox, new String[] { 
             "Ignore", "Remove", "Replace with NULL, ONE,...", "Replace with EINS, ZWEI,..."})]
         public NumbersHandlingMode NumbersHandling
         {
@@ -196,7 +196,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("Dot Symbol Handling", "DotSymbolHandlingTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 3, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("Dot Symbol Handling", "DotSymbolHandlingTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 3, false, ControlType.ComboBox, new String[] { 
             "Ignore", "Remove", "Replace with:"})]
         public DotSymbolHandlingMode DotSymbolHandling
         {
@@ -230,7 +230,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region Key TaskPane Settings
 
-        [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", "KeyGroup", keyPaneIndex, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", "KeyGroup", keyPaneIndex, false, ControlType.ComboBox, new String[] { 
             "random with regex", "random", "natural speech"})]
         public GenerationType KeyGeneration
         {
@@ -313,7 +313,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex+4, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
             "letters", "unique numbers", "digits", "binary", "unique letters"})]
         public FormatType KeyFormatRandom
         {
@@ -331,7 +331,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex+4, true, ControlType.ComboBox, new String[] { 
+        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
             "letters", "unique numbers"})]
         public FormatType KeyFormatNaturalSpeech
         {

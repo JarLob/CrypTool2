@@ -998,8 +998,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 PlaintextOutput = _plaintextOutput;
                 OnPropertyChanged("SingleKeyOutput");
                 OnPropertyChanged("PlaintextOutput");
-                Console.WriteLine("_singleKeyOutput: " + _singleKeyOutput + " (" + _singleKeyOutput.Length + ")");
-                Console.WriteLine("_plaintextOutput: " + _plaintextOutput + " (" + _plaintextOutput.Length + ")");
             }
 
             _testRunCount++;
