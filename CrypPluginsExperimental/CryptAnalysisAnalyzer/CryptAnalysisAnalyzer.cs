@@ -87,8 +87,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private bool _noTabuSetSize;
         private string _testSeriesSeed;
         private double _normalizedAverageYValues;
-        private double _lowestValue;
-        private double _highestValue;
+        private double _lowestXValue;
+        private double _highestXValue;
+        private double _lowestYValue;
+        private double _highestYValue;
+        private double[] _xValuesArray;
         private double[] _yValuesArray;
 
         // evaluation key values
@@ -798,8 +801,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotDataOutput += "\t\t" + _val3;
             _gnuPlotDataOutput += NewLine;
 
-            _lowestValue = -1;
-            _highestValue = 0;
+            _lowestXValue = -1;
+            _highestXValue = 0;
+            _lowestYValue = -1;
+            _highestYValue = 0;
 
             switch (_settings.XAxis)
             {
@@ -811,6 +816,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     break;
                 case XAxisPlot.runtime:
                     _yValuesArray = new double[_runtimes.Count];
+                    _xValuesArray = new double[_runtimes.Count];
                     break;
             }
             _normalizedAverageYValues = 0;
@@ -820,7 +826,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             else if (_settings.XAxis == XAxisPlot.keyLength)
                 AddKeyLengthValues();
             else if (_settings.XAxis == XAxisPlot.runtime)
-                AddRuntimeValues();
+                if (!_noRuntime)
+                    AddRuntimeValues();
+                else {/* TODO: disable runtime in settings*/ }
         }
 
         public void AddCiphertextLengthValues()
@@ -875,10 +883,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentDecryptions > 0)
                         {
-                            if (_lowestValue == -1 || currentDecryptions < _lowestValue)
-                                _lowestValue = currentDecryptions;
-                            if (currentDecryptions > _highestValue)
-                                _highestValue = currentDecryptions;
+                            if (_lowestYValue == -1 || currentDecryptions < _lowestYValue)
+                                _lowestYValue = currentDecryptions;
+                            if (currentDecryptions > _highestYValue)
+                                _highestYValue = currentDecryptions;
                             _yValuesArray[position] = currentDecryptions;
                             position++;
                         }
@@ -899,10 +907,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentRuntime > 0)
                         {
-                            if (_lowestValue == -1 || currentRuntime < _lowestValue)
-                                _lowestValue = currentRuntime;
-                            if (currentRuntime > _highestValue)
-                                _highestValue = currentRuntime;
+                            if (_lowestYValue == -1 || currentRuntime < _lowestYValue)
+                                _lowestYValue = currentRuntime;
+                            if (currentRuntime > _highestYValue)
+                                _highestYValue = currentRuntime;
                             _yValuesArray[position] = currentRuntime;
                             position++;
                         }
@@ -923,10 +931,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentRestarts > 0)
                         {
-                            if (_lowestValue == -1 || currentRestarts < _lowestValue)
-                                _lowestValue = currentRestarts;
-                            if (currentRestarts > _highestValue)
-                                _highestValue = currentRestarts;
+                            if (_lowestYValue == -1 || currentRestarts < _lowestYValue)
+                                _lowestYValue = currentRestarts;
+                            if (currentRestarts > _highestYValue)
+                                _highestYValue = currentRestarts;
                             _yValuesArray[position] = currentRestarts;
                             position++;
                         }
@@ -947,10 +955,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentTabu > 0)
                         {
-                            if (_lowestValue == -1 || currentTabu < _lowestValue)
-                                _lowestValue = currentTabu;
-                            if (currentTabu > _highestValue)
-                                _highestValue = currentTabu;
+                            if (_lowestYValue == -1 || currentTabu < _lowestYValue)
+                                _lowestYValue = currentTabu;
+                            if (currentTabu > _highestYValue)
+                                _highestYValue = currentTabu;
                             _yValuesArray[position] = currentTabu;
                             position++;
                         }
@@ -971,10 +979,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentPopulatioin > 0)
                         {
-                            if (_lowestValue == -1 || currentPopulatioin < _lowestValue)
-                                _lowestValue = currentPopulatioin;
-                            if (currentPopulatioin > _highestValue)
-                                _highestValue = currentPopulatioin;
+                            if (_lowestYValue == -1 || currentPopulatioin < _lowestYValue)
+                                _lowestYValue = currentPopulatioin;
+                            if (currentPopulatioin > _highestYValue)
+                                _highestYValue = currentPopulatioin;
                             _yValuesArray[position] = currentPopulatioin;
                             position++;
                         }
@@ -1038,10 +1046,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentDecryptions > 0)
                         {
-                            if (_lowestValue == -1 || currentDecryptions < _lowestValue)
-                                _lowestValue = currentDecryptions;
-                            if (currentDecryptions > _highestValue)
-                                _highestValue = currentDecryptions;
+                            if (_lowestYValue == -1 || currentDecryptions < _lowestYValue)
+                                _lowestYValue = currentDecryptions;
+                            if (currentDecryptions > _highestYValue)
+                                _highestYValue = currentDecryptions;
                             _yValuesArray[position] = currentDecryptions;
                             position++;
                         }
@@ -1062,10 +1070,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentRuntime > 0)
                         {
-                            if (_lowestValue == -1 || currentRuntime < _lowestValue)
-                                _lowestValue = currentRuntime;
-                            if (currentRuntime > _highestValue)
-                                _highestValue = currentRuntime;
+                            if (_lowestYValue == -1 || currentRuntime < _lowestYValue)
+                                _lowestYValue = currentRuntime;
+                            if (currentRuntime > _highestYValue)
+                                _highestYValue = currentRuntime;
                             _yValuesArray[position] = currentRuntime;
                             position++;
                         }
@@ -1086,10 +1094,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentRestarts > 0)
                         {
-                            if (_lowestValue == -1 || currentRestarts < _lowestValue)
-                                _lowestValue = currentRestarts;
-                            if (currentRestarts > _highestValue)
-                                _highestValue = currentRestarts;
+                            if (_lowestYValue == -1 || currentRestarts < _lowestYValue)
+                                _lowestYValue = currentRestarts;
+                            if (currentRestarts > _highestYValue)
+                                _highestYValue = currentRestarts;
                             _yValuesArray[position] = currentRestarts;
                             position++;
                         }
@@ -1110,10 +1118,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentTabu > 0)
                         {
-                            if (_lowestValue == -1 || currentTabu < _lowestValue)
-                                _lowestValue = currentTabu;
-                            if (currentTabu > _highestValue)
-                                _highestValue = currentTabu;
+                            if (_lowestYValue == -1 || currentTabu < _lowestYValue)
+                                _lowestYValue = currentTabu;
+                            if (currentTabu > _highestYValue)
+                                _highestYValue = currentTabu;
                             _yValuesArray[position] = currentTabu;
                             position++;
                         }
@@ -1134,10 +1142,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentPopulatioin > 0)
                         {
-                            if (_lowestValue == -1 || currentPopulatioin < _lowestValue)
-                                _lowestValue = currentPopulatioin;
-                            if (currentPopulatioin > _highestValue)
-                                _highestValue = currentPopulatioin;
+                            if (_lowestYValue == -1 || currentPopulatioin < _lowestYValue)
+                                _lowestYValue = currentPopulatioin;
+                            if (currentPopulatioin > _highestYValue)
+                                _highestYValue = currentPopulatioin;
                             _yValuesArray[position] = currentPopulatioin;
                             position++;
                         }
@@ -1151,13 +1159,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public void AddRuntimeValues()
         {
-            int position = 0;
+            int xPosition = 0;
+            int yPosition = 0;
             foreach (var pair in _sortedRuntimes)
             {
                 double time = pair.Key;
                 // Possible use for showing the number of texts per length
                 int count = pair.Value;
                 _gnuPlotDataOutput += time + "\t\t\t\t\t\t";
+
+                if (_lowestXValue == -1 || time < _lowestXValue)
+                    _lowestXValue = time;
+                if (time > _highestXValue)
+                    _highestXValue = time;
+                _xValuesArray[xPosition] = time;
+                xPosition++;
 
                 if (_settings.YAxis == YAxisPlot.success ||
                     _settings.YAxis == YAxisPlot.successAndPercentDecrypted)
@@ -1201,12 +1217,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentDecryptions > 0)
                         {
-                            if (_lowestValue == -1 || currentDecryptions < _lowestValue)
-                                _lowestValue = currentDecryptions;
-                            if (currentDecryptions > _highestValue)
-                                _highestValue = currentDecryptions;
-                            _yValuesArray[position] = currentDecryptions;
-                            position++;
+                            if (_lowestYValue == -1 || currentDecryptions < _lowestYValue)
+                                _lowestYValue = currentDecryptions;
+                            if (currentDecryptions > _highestYValue)
+                                _highestYValue = currentDecryptions;
+                            _yValuesArray[yPosition] = currentDecryptions;
+                            yPosition++;
                         }
                     }
                 }
@@ -1216,12 +1232,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                     if (time > 0)
                     {
-                        if (_lowestValue == -1 || time < _lowestValue)
-                            _lowestValue = time;
-                        if (time > _highestValue)
-                            _highestValue = time;
-                        _yValuesArray[position] = time;
-                        position++;
+                        if (_lowestYValue == -1 || time < _lowestYValue)
+                            _lowestYValue = time;
+                        if (time > _highestYValue)
+                            _highestYValue = time;
+                        _yValuesArray[yPosition] = time;
+                        yPosition++;
                     }
                 }
                 else if (_settings.Y2Axis == Y2AxisPlot.restarts && !_noRestarts)
@@ -1239,12 +1255,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentRestarts > 0)
                         {
-                            if (_lowestValue == -1 || currentRestarts < _lowestValue)
-                                _lowestValue = currentRestarts;
-                            if (currentRestarts > _highestValue)
-                                _highestValue = currentRestarts;
-                            _yValuesArray[position] = currentRestarts;
-                            position++;
+                            if (_lowestYValue == -1 || currentRestarts < _lowestYValue)
+                                _lowestYValue = currentRestarts;
+                            if (currentRestarts > _highestYValue)
+                                _highestYValue = currentRestarts;
+                            _yValuesArray[yPosition] = currentRestarts;
+                            yPosition++;
                         }
                     }
                 }
@@ -1263,12 +1279,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentTabu > 0)
                         {
-                            if (_lowestValue == -1 || currentTabu < _lowestValue)
-                                _lowestValue = currentTabu;
-                            if (currentTabu > _highestValue)
-                                _highestValue = currentTabu;
-                            _yValuesArray[position] = currentTabu;
-                            position++;
+                            if (_lowestYValue == -1 || currentTabu < _lowestYValue)
+                                _lowestYValue = currentTabu;
+                            if (currentTabu > _highestYValue)
+                                _highestYValue = currentTabu;
+                            _yValuesArray[yPosition] = currentTabu;
+                            yPosition++;
                         }
                     }
                 }
@@ -1287,12 +1303,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                         if (currentPopulatioin > 0)
                         {
-                            if (_lowestValue == -1 || currentPopulatioin < _lowestValue)
-                                _lowestValue = currentPopulatioin;
-                            if (currentPopulatioin > _highestValue)
-                                _highestValue = currentPopulatioin;
-                            _yValuesArray[position] = currentPopulatioin;
-                            position++;
+                            if (_lowestYValue == -1 || currentPopulatioin < _lowestYValue)
+                                _lowestYValue = currentPopulatioin;
+                            if (currentPopulatioin > _highestYValue)
+                                _highestYValue = currentPopulatioin;
+                            _yValuesArray[yPosition] = currentPopulatioin;
+                            yPosition++;
                         }
                     }
                 }
@@ -1359,6 +1375,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // # x-Axis settings
             _gnuPlotScriptOutput += "# x-Axis settings" + NewLine;
+            if (_settings.XAxis == XAxisPlot.runtime && !_noRuntime)
+            {
+                // calculate normalized average Yvalues
+                double normalizedAverageXValues = CalculateNormalizedAverage(_xValuesArray, _settings.NormalizingFactor);
+
+                int min = CalculateMinValue(_lowestXValue, normalizedAverageXValues, "x");
+                int max = CalculateMaxValue(_lowestXValue, _highestXValue, normalizedAverageXValues, "x");
+
+                // TODO: DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
+
+                if (min != max)
+                    _gnuPlotScriptOutput += "set xrange [" + min + ":" + max + "]" + NewLine;
+            }
             _gnuPlotScriptOutput += "set xtic auto\t\t\t\t\t# -- set xtics automatically" + NewLine;
             _gnuPlotScriptOutput += "set xlabel \"" + _keyValue + "\"" + NewLine;
             _gnuPlotScriptOutput += NewLine;
@@ -1398,43 +1427,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + NewLine;
                 _gnuPlotScriptOutput += "set y2label \"" + _val3 + "\"" + NewLine;
 
-                //if (_settings.Y2Axis == Y2AxisPlot.decryptions ||
-                //    _settings.Y2Axis == Y2AxisPlot.runtime)
-                //    _settings.NormalizingFactor = 4;
+                //    _settings.NormalizingFactor = 4; for runtime and decryptions
 
                 // calculate normalized average Yvalues
                 _normalizedAverageYValues = CalculateNormalizedAverage(_yValuesArray, _settings.NormalizingFactor);
 
-                int min = (int)_lowestValue;
-                if (_settings.Y2Axis == Y2AxisPlot.decryptions)
-                    min -= 100;
-                else if (_settings.Y2Axis == Y2AxisPlot.runtime)
-                    min -= 10;
-                else if (_settings.Y2Axis == Y2AxisPlot.restarts)
-                {
-                    if (_normalizedAverageYValues * 0.1 < 2)
-                        min -= 2;
-                    else
-                        min -= (int) Math.Round(_normalizedAverageYValues * 0.1);
-                }
-                int max = (int)_highestValue;
-                if (_settings.Y2Axis == Y2AxisPlot.runtime)
-                    max += 150;
-
-                if (_settings.Y2Axis == Y2AxisPlot.decryptions ||
-                    _settings.Y2Axis == Y2AxisPlot.runtime)
-                {
-                    // calculate distances to mean (/average)
-                    int lowestToMean = (int)_normalizedAverageYValues - (int)_lowestValue;
-                    int highestToMean = (int)_highestValue - (int)_normalizedAverageYValues;
-
-                    if (highestToMean > lowestToMean * 2)
-                        max = (int)(_normalizedAverageYValues + lowestToMean * 2);
-                }
+                int min = CalculateMinValue(_lowestYValue, _normalizedAverageYValues, "y2");
+                int max = CalculateMaxValue(_lowestYValue, _highestYValue, _normalizedAverageYValues, "y2");
 
                 if (_settings.Y2Axis == Y2AxisPlot.runtime)
                 {
-                    //averageRuntimeString = new DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
+                    //TODO: DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
                 }
 
                 if (min != max)
@@ -1467,6 +1470,56 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                     _gnuPlotScriptOutput += NewLine;
             }
+        }
+
+        public int CalculateMinValue(double lowest, double avg, string axis)
+        {
+            int min = (int)lowest;
+            if (_settings.Y2Axis == Y2AxisPlot.decryptions && axis.Equals("y2"))
+                if (avg * 0.03 < 10)
+                    min -= 10;
+                else
+                    min -= (int) (avg * 0.03);
+            else if ((_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
+                (axis.Equals("x")))
+                if (avg * 0.03 < 5)
+                    min -= 5;
+                else
+                    min -= (int)(avg * 0.03);
+            else if (_settings.Y2Axis == Y2AxisPlot.restarts && axis.Equals("y2"))
+            {
+                if (avg * 0.03 < 2)
+                    min -= 2;
+                else
+                    min -= (int) (avg * 0.03);
+            }
+
+            return min;
+        }
+
+        public int CalculateMaxValue(double lowest, double highest, double avg, string axis)
+        {
+            int max = (int)highest;
+            if ((_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
+                 axis.Equals("x"))
+                if (avg * 0.3 < 2)
+                    max += 2;
+                else
+                    max += (int)(avg * 0.3);
+
+            if (_settings.Y2Axis == Y2AxisPlot.decryptions ||
+                (_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
+                axis.Equals("x"))
+            {
+                // calculate distances to mean (/average)
+                int lowestToMean = (int)avg - (int)lowest;
+                int highestToMean = (int)highest - (int)avg;
+
+                if (highestToMean > lowestToMean * 2)
+                    max = (int)(avg + lowestToMean * 2);
+            }
+
+            return max;
         }
 
         public void RefreshGnuPlotOutputs()
@@ -1686,22 +1739,35 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public double CalculateNormalizedAverage(double[] arr, int normalizingFactor)
         {
             Array.Sort(arr);
-            double normalized = 0;
+
+            double avg = 0;
+            foreach (double val in arr)
+                avg += val;
+            avg /= arr.Length;
+
             List<double> irrepresentableValues = new List<double>();
-            for (int j = arr.Length - 2; j >= 0; j--)
+            for (int j = 0; j < arr.Length - 1; j++)
             {
-                // check if one decryptions value is 4 times bigger than the next value
+                if (arr[j] < avg)
+                    continue;
+
+                // check if one decryptions value is x times bigger than the next value
                 if (arr[j] * normalizingFactor < arr[j + 1])
                 {
-                    irrepresentableValues.Add(arr[j + 1]);
-                    continue;
+                    for (int i = j + 1; i < arr.Length; i++)
+                        irrepresentableValues.Add(arr[i]);
+                    break;
                 }
-                normalized += arr[j + 1];
             }
-            normalized += arr[0];
-            normalized /= (arr.Length - irrepresentableValues.Count);
 
-            return normalized;
+            if (irrepresentableValues.Count == 0)
+                return avg;
+
+            double IrrepresentableSum = 0;
+            foreach (double val in irrepresentableValues)
+                IrrepresentableSum += val;
+
+            return (avg * arr.Length - IrrepresentableSum) / (arr.Length - irrepresentableValues.Count);
         }
 
         #endregion
