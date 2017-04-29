@@ -32,8 +32,6 @@ namespace Cryptool.PluginBase.IO
         private int _decryptions;
         private string _ciphertext;
         private int _restarts;
-        // remove if always equal to _decryptions
-        private int _keys;
         private int _populationSize;
         private int _tabuSetSize;
 
@@ -54,19 +52,6 @@ namespace Cryptool.PluginBase.IO
             this._decryptions = decryptions;
             this._ciphertext = ciphertext;
             this._restarts = restarts;
-        }
-
-        /// <summary>
-        /// Init EvaluationContainer
-        /// </summary>
-        public EvaluationContainer(int id, TimeSpan t, int decryptions, string ciphertext, int restarts, int keys)
-        {
-            this._ID = id;
-            this._runtime = t;
-            this._decryptions = decryptions;
-            this._ciphertext = ciphertext;
-            this._restarts = restarts;
-            this._keys = keys;
         }
 
         /// <summary>
@@ -105,7 +90,6 @@ namespace Cryptool.PluginBase.IO
                     hasDecryptions ||
                     hasCiphertext ||
                     hasRestarts ||
-                    hasKeys ||
                     hasPopulationSize ||
                     hasTabuSetSize)
                     return true;
@@ -120,7 +104,6 @@ namespace Cryptool.PluginBase.IO
                 (!hasDecryptions || this._decryptions == e._decryptions) &&
                 (!hasCiphertext || this._ciphertext == e._ciphertext) &&
                 (!hasRestarts || this._restarts == e._restarts) &&
-                (!hasKeys || this._keys == e._keys) &&
                 (!hasPopulationSize || this._populationSize == e._populationSize) &&
                 (!hasTabuSetSize || this._tabuSetSize == e._tabuSetSize))
                 return true;
@@ -152,11 +135,6 @@ namespace Cryptool.PluginBase.IO
             get { return _restarts != null && _restarts != 0; }
         }
 
-        public bool hasKeys
-        {
-            get { return _keys != null && _keys != 0; }
-        }
-
         public bool hasPopulationSize
         {
             get { return _populationSize != null && _populationSize != 0; }
@@ -181,7 +159,6 @@ namespace Cryptool.PluginBase.IO
             SetDecryptions(e._decryptions);
             SetCiphertext(e._ciphertext);
             SetRestarts(e._restarts);
-            SetKeys(e._keys);
             SetPopulationSize(e._populationSize);
             SetTabuSetSize(e._tabuSetSize);
         }
@@ -229,15 +206,6 @@ namespace Cryptool.PluginBase.IO
         {
             if (!hasRestarts)
                 _restarts = i;
-        }
-        
-        /// <summary>
-        /// Set number of keys if not already set
-        /// </summary>
-        public void SetKeys(int i)
-        {
-            if (!hasKeys)
-                _keys = i;
         }
         
         /// <summary>
@@ -318,17 +286,6 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of keys as int
-        /// </summary>
-        public int GetKeys()
-        {
-            if (hasKeys)
-                return _keys;
-
-            return 0;
-        }
-
-        /// <summary>
         /// Get the number of population size as int
         /// </summary>
         public int GetPopulationSize()
@@ -393,13 +350,6 @@ namespace Cryptool.PluginBase.IO
                 if (!isEmpty)
                     outputString += "\n";
                 outputString += "Restarts: " + _restarts;
-                isEmpty = false;
-            }
-
-            if (hasKeys) {
-                if (!isEmpty)
-                    outputString += "\n";
-                outputString += "Keys: " + _keys;
                 isEmpty = false;
             }
 
