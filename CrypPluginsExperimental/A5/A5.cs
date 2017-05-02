@@ -27,6 +27,10 @@ namespace Cryptool.Plugins.A5
         private byte[] keyBytes;
         private byte[] IVbytes;
         private byte[] output;
+       private byte[] keystream;
+
+
+
         // Converts bit representation to byte array
         private byte[] FromInt(int[] arr)
         {//initialize result array : each byte = 8 bits, so we divide
@@ -142,9 +146,23 @@ namespace Cryptool.Plugins.A5
             }
         }
 
+        [PropertyInfo(Direction.OutputData, "Keystream", "Outputs keystream", true)]
+        public byte[] Keystream
+        {
+            get { return keystream; }
+            set
+            {
+                this.keystream = value;
+                OnPropertyChanged("Keystream");
+            }
+        }
 
         int[] plainText;
         int[] cipherText;
+
+
+        
+        int[] keyStream;
         private int NumberOfFrames;//Number of different frames to generate
         public A5()
         {
@@ -250,25 +268,47 @@ namespace Cryptool.Plugins.A5
             return encrypted;
         }
 
+        // generates 1 bit of keystream
+
+        private int Output1(int keystr)
+        {
+            return (registers[0].GetLast() + registers[1].GetLast() + registers[2].GetLast()) % 2;
+        }
+
+
+
+        // generates keystream per frame
+
+        public int[] keystreamFrame(int[] frame)
+        {
+            int[] kstr = new int[frame.Length];
+            for (int i = 0; i < frame.Length; i++)
+            {
+                kstr[i] = Output1(frame[i]);
+            }
+            return kstr;
+        }
+
+
+
+
         public void Execute()
         {
             ProgressChanged(0, 1);
-
             //check the validity of the input parameters
             if (InitialVector.Length != 3)
             {
-                GuiLogMessage(String.Format("Invalid IV length! The given IV is {0} bytes long, but 3 bytes are expected.", InitialVector.Length), NotificationLevel.Error);
+                GuiLogMessage("Not valid IV length!", NotificationLevel.Error);
                 return;
             }
-
             if (Key.Length != 8)
             {
-                GuiLogMessage(String.Format("Invalid key length! The given key is {0} bytes long, but 8 bytes are expected.", Key.Length), NotificationLevel.Error);
+                GuiLogMessage("Not valid key length!", NotificationLevel.Error);
                 return;
             }
-
             //initialize the bit array for cipher text
             cipherText = new int[plainText.Length];
+            keyStream = new int[plainText.Length];
             //init bit array for IV
             int[] temporary_IV = new int[22];
             //converting the IV from byte to bit representation and copying them to temporary IV array 
@@ -282,6 +322,7 @@ namespace Cryptool.Plugins.A5
             int[] framePlain = new int[frameSize];
 
             int[] frameCipher;
+            int[] frameKeystream;
             for (int i = 0; i < NumberOfFrames; i++)
             {
                 //init registers with key and temporary IV
@@ -292,13 +333,17 @@ namespace Cryptool.Plugins.A5
                 Array.Copy(plainText, i * frameSize, framePlain, 0, frameSize);
                 //encrypting frame and writing it to the temporary cipher frame array
                 frameCipher = Encrypt(framePlain);
+                frameKeystream = keystreamFrame(framePlain);
                 //copying current frame ciphertext to the general ciphertext array
                 Array.Copy(frameCipher, 0, cipherText, i * frameSize, frameSize);
+                Array.Copy(frameKeystream, 0, keyStream, i * frameSize, frameSize);
                 //incrementing the IV for the next frame
                 Increment(temporary_IV, 0);
+
             }
             //converting ciphertext from bit representation to byte array
             CipherText = FromInt(cipherText);
+            Keystream = FromInt(keyStream);
             ProgressChanged(1, 1);
         }
 

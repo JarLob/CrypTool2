@@ -27,6 +27,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
         public Byte[] outputNFSR;
         public Byte[] nfsr160State;
         public Byte[] outputLFSR;
+        // public Byte[] keystream;
 
 
         #region Data Properties
@@ -88,6 +89,16 @@ namespace Cryptool.Plugins.GrainV1.Attack
                 OnPropertyChanged("NFSR160State");
             }
         }
+         //  [PropertyInfo(Direction.OutputData, "keystream", "keystream during initialization", true)]
+         //  public byte[] KeyStream
+         //  {
+         // get { return this.keystream; }
+        // set
+        //     {
+        //        this.keystream = value;
+        //       OnPropertyChanged("KeyStream");
+        //     }
+       // }
         #endregion
 
         // Check whether the parameters are entered correctly by the user
@@ -164,6 +175,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
             //sets the outputs with current values in registers
             OutputLFSR = CompressBytes(10, lfsr);
             OutputNFSR = CompressBytes(10, nfsr);
+         //   KeyStream = CompressBytes(20, keystream);
             //set progressbar to 100%
             ProgressChanged(1, 1);
         }
@@ -176,6 +188,7 @@ namespace Cryptool.Plugins.GrainV1.Attack
             inputNFSR = null;
             outputLFSR = null;
             outputNFSR = null;
+            
         }
         //method needed by the ICrypComponent
         public void Initialize()
@@ -211,7 +224,9 @@ namespace Cryptool.Plugins.GrainV1.Attack
         //run 160 rounds
         public void Attack()
         {
+      //    keystream = new byte[160];
             for (int i = 0; i < 160; i++)
+              //   keystream[i] = OutputFunction();
                 TaktBack();
         }
         //makes 80 bits from 10-bytes array

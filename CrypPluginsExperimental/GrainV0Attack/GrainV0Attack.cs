@@ -13,6 +13,9 @@ namespace Cryptool.Plugins.GrainV0.Attack
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("GrainV0Attack.Properties.Resources", "GrainV0 Attack", "Algorithm gets weak key and weak IV for GrainV0 algorithm", "GrainV0Attack/userdoc.xml", new[] { "GrainV0Attack/Images/grain.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
+
+
+    //Class
     public class GrainV0Attack : ICrypComponent
     {
 

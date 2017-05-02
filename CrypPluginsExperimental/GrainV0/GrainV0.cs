@@ -7,13 +7,15 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.Collections;
 using System.IO;
 using System.Text;
-
 namespace Cryptool.Plugins.GrainV0.Chipher
 {
     //Information about the author
     [Author("Kristina Hita", "khita@mail.uni-mannheim.de", "Universität Mannheim", "https://www.uni-mannheim.de/1/english/university/profile/")]
     [PluginInfo("GrainV0.Properties.Resources", "GrainV0", "GrainV0 algorithm generates keystream of defined length", "GrainV0Attack/userdoc.xml", new[] { "GrainV0/Images/grain.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
+
+
+    //Class
     public class GrainV0 : ICrypComponent
     {
 

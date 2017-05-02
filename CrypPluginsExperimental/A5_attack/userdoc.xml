@@ -29,14 +29,19 @@
     the number of frames used for the attack, are used as input components for the A5/1 attack component. We should mention here that the plaintext is divided
     in frames and each frame corresponds to one known IV. IVs are increased by 1 in each upcoming frame. That's why a different number of frame counts gives
     different results.
-    There are two text output components that represent the trial key that is guessed and the corresponding case. In the A5/1 attack plugin are printed as
-    message the free bits that are being guessed using brute force.
+    There are two text output components that represent the trial key that is guessed and the corresponding case. 
   </usage>
 
   <presentation lang="en">
   </presentation>
 
   <references>
+
+    <linkReference>
+      <link url="http://eprints.qut.edu.au/64105/1/AISC2014􀀀P aper3􀀀f inal:pdf" lang="en" />
+      <caption lang="en"> Alhamdan, A., Bartlett H., Dawson E., Simpson L., Wong K. K. H. (2014), Weak key-IV Pairs in the A5/1 Stream Cipher </caption>
+
+    </linkReference>
   </references>
 
 </documentation>

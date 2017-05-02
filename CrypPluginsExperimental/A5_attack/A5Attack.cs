@@ -145,8 +145,12 @@ namespace Cryptool.Plugins.A5_attack
         int[][] plaintext;
         //same for ciphertext
         int[][] ciphertext;
+
+
+        
         //arrays of initial vectors for each frame
         int[][] IV;
+
         //here would be hold the key which would be tested
         public int[] trialKey;
         //number of frames
@@ -168,6 +172,7 @@ namespace Cryptool.Plugins.A5_attack
             int[] temporaryIV = ConvertFromByteArr(iv, IV_SIZE);
             numberOfFrames = frameCount;
             for (int i = 0; i < frameCount; i++)
+
             {
                 //Copying one frame to temporaryText
                 Array.Copy(PlainText, i * frameSize, temporaryText, 0, frameSize);
@@ -562,35 +567,44 @@ namespace Cryptool.Plugins.A5_attack
                     if ((i & 0x3ff) == 0)
                         ProgressChanged(i, 1 << 17);
 
-                    //string s = i + " ";
-                    //for (int j = 0; j < 17; j++)
-                    //{
-                    //    s += guessbits[j];
-                    //}
-                    //GuiLogMessage(s, NotificationLevel.Info);
+                   //   string s = " ";
+                   //     s = s + guessbits;
+                   //     for (int j = 0; j < 17; j++)
+                   //    {
+                   //         s += guessbits[j];
+                   //    }
+
+                //  GuiLogMessage(""+guessbits, NotificationLevel.Info);
+
 
                     trialKey = Scenario1(guessbits, IV[0]);
                     test = new A5(trialKey, IV[0]);
                     trialPlainText = test.Encrypt(ciphertext[0]);
                     if (CheckIdent(plaintext[0], trialPlainText))
                         if (CheckKey())
+                        //{
                             return 4;
+                               // GuiLogMessage(s, NotificationLevel.Info); }
+
 
                     trialKey = Scenario2(guessbits, IV[0]);
                     test = new A5(trialKey, IV[0]);
                     trialPlainText = test.Encrypt(ciphertext[0]);
                     if (CheckIdent(plaintext[0], trialPlainText))
                         if (CheckKey())
-                            return 2;
-
+                    return 2;
+                   
                     trialKey = Scenario3(guessbits, IV[0]);
                     test = new A5(trialKey, IV[0]);
                     trialPlainText = test.Encrypt(ciphertext[0]);
                     if (CheckIdent(plaintext[0], trialPlainText))
                         if (CheckKey())
-                            return 3;
+                    return 3;
+
                     Increment(guessbits, 0);
+                    
                 }
+                
             }
             return -1;
         }
@@ -657,7 +671,14 @@ namespace Cryptool.Plugins.A5_attack
                 GuiLogMessage("The plaintext and the ciphertext must have the same length.", NotificationLevel.Error);
                 return;
             }
+            if (FramesCount<2)
+            {
+                GuiLogMessage("Frame count should be more than 1", NotificationLevel.Error);
+                return;
+            }
             InitValues(PlainText, CipherText, InitialVector, framesCount);
+            
+
             //Method returns case number of the found key, otherwise returns -1
             int result = Start();
 
@@ -684,6 +705,7 @@ namespace Cryptool.Plugins.A5_attack
                     case 3:
                         Case = "Case 2c -- register A (19 bits) and IV used to determine the key";
                         break;
+
                 }
                 //sets output trial key
                 TrialKey = FromInt(trialKey);
@@ -766,6 +788,8 @@ namespace Cryptool.Plugins.A5_attack
             registers[2] = new LFSR(23, new int[] { 7, 20, 21, 22 }, 10);
             InitPhase();
         }
+
+       
         private void InitPhase()
         {// registers are clocked 64 times using the secret key
             for (int i = 0; i < 64; i++)
@@ -786,6 +810,8 @@ namespace Cryptool.Plugins.A5_attack
             {
                 Majority();
             }
+
+          
             //Console.WriteLine(this);
         } 
         // returns registers in majority

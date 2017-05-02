@@ -8,24 +8,36 @@
     A5/1 is a modern stream cipher that provides privacy for the GSM mobile phone system. 
     It consists of three linear shift registers (LFSR) that are mixed with the secret key and the IV (initialization vector),
     in order to provide the keystream, which is later being XORed with the plaintext to give the ciphertext.
+  
   </introduction>
 
   <usage lang="en">
-    After dragging the A5/1 component into the workspace, you need to attach the three text input components (secret key, IV, and
-    plaintext) to data sources. In the plugin settings the user enters the number of frames he/she wants the plaintext to be divided into.
+
+    After dragging the A5/1 component into the workspace, you need to attach the three text input components that correspond to
+    secret key, IV and plaintext to data sources. In the plugin settings the user enters the number of frames he/she wants the plaintext to be divided into.
     Each frame corresponds to one known IV, which is being incremented by 1 in each upcoming frame.
-    Then you have to connect a text output component to the "output" connector.
+    Then you have to connect 2 text output components to the "output" connector: one for the ciphertext and one for the keystream.
     Plaintext length is arbitrary; the secret key has a length of 16 characters in hexadecimal format and the IV has a length of 6 characters in hexadecimal format.
     If the user wants to see whether the plaintext and the ciphertext are identical or complements, he/she can bring into the workspace "String Comparator" (to
     directly check whether the ciphertext and the plaintext are identical) and "Substituition", "Alphabet", "XOR", another "Text Input" (indicates the alphabet used
     in the text we want to substitute. We enter here FF). In "XOR" we enter as inputs the plaintext and the result of substituting the plaintext with all 1s.
-    In "XOR" output we receive the inverted plaintext. Again, with the "String Comparator" component we compare the inverted plaintext with the received ciphertext.
+    In this "XOR" output we receive the inverted plaintext. Again, with "String Comparator" component we compare the inverted plaintext with the received ciphertext.
   </usage>
 
+  
+  
   <presentation lang="en">
   </presentation>
   
-  <references>
-  </references>
+ 
   
+ <references>
+
+    <linkReference>
+      <link url="http://eprints.qut.edu.au/64105/1/AISC2014􀀀P aper3􀀀f inal:pdf" lang="en" />
+      <caption lang="en"> Alhamdan, A., Bartlett H., Dawson E., Simpson L., Wong K. K. H. (2014), Weak key-IV Pairs in the A5/1 Stream Cipher </caption>
+
+    </linkReference>
+  </references>
+
 </documentation>
