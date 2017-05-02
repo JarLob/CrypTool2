@@ -55,7 +55,8 @@ namespace voluntLib
         private const int DefaultWorkingListTimeout = 600000;
         private const int DefaultMaximumBackoffTime = 1000;
         private const int DefaultPort = 13337;
-        private const string DefaultMulticastGroup = "224.0.7.1";
+        private const string DefaultMulticastGroup = "224.0.224.1"; //currently not registered at IANA 
+        // see https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml#multicast-addresses-1
         private readonly string defaultLocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),  "VoluntLib" + Path.DirectorySeparatorChar + "VoluntLibStore.xml");
 
         #region Configuration Properties
