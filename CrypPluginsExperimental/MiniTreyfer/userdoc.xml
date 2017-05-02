@@ -19,7 +19,7 @@
     
     The MiniTreyfer works by first creating a random 16-bit key as a reference. This key is generated using random number generator.
     Then the plugin starts generating pairs of plaintext and ciphertext such that the plaintext is encrypted using Treyfer cipher into ciphertext bits.
-    The pluing terminates when it finds a pair of plaintext-ciphertext that uses the previously generated key for encryption. This pair is nothing but a slid pair and is the output of the plugin.
+    The plugin terminates when it finds a pair of plaintext-ciphertext that uses the previously generated key for encryption. This pair is nothing but a slid pair and is the output of the plugin.
     
   </usage>
     

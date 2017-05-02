@@ -135,4 +135,10 @@
   <data name="OutputStringTooltip2" xml:space="preserve">
     <value>SlidPair2</value>
   </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>MiniTreyfer</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>MiniTreyfer</value>
+  </data>
 </root>

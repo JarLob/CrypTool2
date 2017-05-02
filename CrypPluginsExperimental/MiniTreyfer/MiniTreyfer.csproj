@@ -114,7 +114,7 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\cipher.jpg" />
+    <Resource Include="Images\cipher.jpg" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
