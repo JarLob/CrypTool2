@@ -88,10 +88,6 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\StringSimilarity\PercentageSimilarity.csproj">
-      <Project>{1d56a623-2eff-4d31-aefe-f6d7ae055084}</Project>
-      <Name>PercentageSimilarity</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
