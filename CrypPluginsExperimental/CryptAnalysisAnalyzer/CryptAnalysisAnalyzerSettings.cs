@@ -134,7 +134,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _CAA.SetGnuPlotVariables();
                         _CAA.GenerateGnuPlotDataOutput();
                         _CAA.GenerateGnuPlotScriptOutput();
-                        _CAA.RefreshGnuPlotOutputs();
+                        _CAA.RefreshEvaluationOutputs();
                     }
                 }
             }
@@ -165,7 +165,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _CAA.SetGnuPlotVariables();
                         _CAA.GenerateGnuPlotDataOutput();
                         _CAA.GenerateGnuPlotScriptOutput();
-                        _CAA.RefreshGnuPlotOutputs();
+                        _CAA.RefreshEvaluationOutputs();
                     }
                 }
             }
@@ -201,7 +201,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _CAA.SetGnuPlotVariables();
                         _CAA.GenerateGnuPlotDataOutput();
                         _CAA.GenerateGnuPlotScriptOutput();
-                        _CAA.RefreshGnuPlotOutputs();
+                        _CAA.RefreshEvaluationOutputs();
                     }
                 }
             }
@@ -226,7 +226,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (_CAA.GnuPlotScriptOutput != null)
                     {
                         _CAA.GenerateGnuPlotScriptOutput();
-                        _CAA.RefreshGnuPlotOutputs();
+                        _CAA.RefreshEvaluationOutputs();
                     }
                 }
             }

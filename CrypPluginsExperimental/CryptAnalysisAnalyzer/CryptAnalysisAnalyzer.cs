@@ -702,7 +702,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
             }
 
-            BuildEvaluationOutputString();
+            if (_keyCount == TotalKeysInput)
+                BuildEvaluationOutputString();
 
             SetGnuPlotVariables();
 
@@ -1520,11 +1521,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             return max;
         }
 
-        public void RefreshGnuPlotOutputs()
+        public void RefreshEvaluationOutputs()
         {
             EvaluationOutput = _evaluationOutput;
             OnPropertyChanged("EvaluationOutput");
 
+            RefreshGnuPlotOutputs();
+        }
+
+        public void RefreshGnuPlotOutputs()
+        {
             GnuPlotScriptOutput = _gnuPlotScriptOutput;
             OnPropertyChanged("GnuPlotScriptOutput");
 
@@ -1678,12 +1684,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                 {
                     // ...evaluate if not
-                    EvaluationOutput += " - Done." + NewLine +
+                    EvaluationOutput = "";
+                    for (int i = 0; i < (int)_progress / 5; i++)
+                        EvaluationOutput += "█";
+
+                    EvaluationOutput += " " + _progress + "%" + NewLine + NewLine +
+                        "Current key number: " + NewLine + _keyCount + " / " +
+                        _totalKeysInput + " - Done." + NewLine +
                         NewLine + "Started Evaluating...";
                     OnPropertyChanged("EvaluationOutput");
                     
                     Evaluate();
-                    RefreshGnuPlotOutputs();
+                    RefreshEvaluationOutputs();
                 }
 
                 if (_totalKeysInput > 0)
