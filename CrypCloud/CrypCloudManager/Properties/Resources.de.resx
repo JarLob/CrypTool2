@@ -299,7 +299,7 @@ Berechnungen.</value>
   <data name="_ResetPW_enterVerificationData_2" xml:space="preserve">
     <value>Bitte geben Sie den Code und ihr neues Passwort ein.</value>
   </data>
-  <data name="Remember_me" xml:space="preserve">
+  <data name="_Remember_me" xml:space="preserve">
     <value>Login speichern</value>
   </data>
   <data name="_JobList_LoggedInAs" xml:space="preserve">
@@ -322,5 +322,8 @@ Berechnungen.</value>
   </data>
   <data name="WritePerformanceLog" xml:space="preserve">
     <value>Schreibe Performance-Log</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
 </root>

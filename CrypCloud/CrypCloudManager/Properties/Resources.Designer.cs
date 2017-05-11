@@ -466,6 +466,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remember me ähnelt.
+        /// </summary>
+        public static string _Remember_me {
+            get {
+                return ResourceManager.GetString("_Remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Enter your account data below to reset your password. ähnelt.
         /// </summary>
         public static string _ResetPW_enterData {
@@ -655,15 +664,6 @@ namespace CrypCloud.Manager.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die remember me ähnelt.
-        /// </summary>
-        public static string Remember_me {
-            get {
-                return ResourceManager.GetString("Remember_me", resourceCulture);
             }
         }
         

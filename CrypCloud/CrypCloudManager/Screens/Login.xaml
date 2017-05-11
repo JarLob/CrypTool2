@@ -10,7 +10,7 @@
             <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Button.xaml" /> 
+                <ResourceDictionary Source="Styles/Button.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -57,11 +57,16 @@
                 <Label/>
 
                 <Grid Width="200" Height="30">
-                    <CheckBox Content="{Loc _Remember_Me}" IsChecked="{Binding RememberPassword}" Width="190" 
-                              Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,5" RenderTransformOrigin="1,0.933" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="77*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox IsChecked="{Binding RememberPassword}" Width="190" 
+                              Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,5" RenderTransformOrigin="1,0.933" Grid.ColumnSpan="2" />
+                    <Label Content="{Loc _Remember_me}" Margin="12,3,-10,0" Width="200" Grid.ColumnSpan="2"/>
                 </Grid>
 
-                <Label/>     
+                <Label/>
                 <Button Name="ConnectButton" Command="{Binding Path=LoginCommand}"  Content="{Loc _Login_btn_connect}" IsDefault="True"  Height="38" Width="200" FontSize="20" IsEnabled="True" />
 
                 <Label/>
