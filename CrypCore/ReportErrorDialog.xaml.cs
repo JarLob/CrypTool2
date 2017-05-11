@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace Cryptool.Core
 {
@@ -66,9 +67,33 @@ namespace Cryptool.Core
         {
             var pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             var hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
-
             var sb = new StringBuilder();
-            sb.AppendLine(string.Format("Operating System: {0}", System.Environment.OSVersion.ToString()));
+            //get windows information from system registry
+            try
+            {
+                RegistryKey localKey;
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                }
+                else
+                {
+                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+                }
+
+                var reg = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+                var productName = (string)reg.GetValue("ProductName");
+                var csdVersion = (string)reg.GetValue("CSDVersion");
+                var currentVersion = (string)reg.GetValue("CurrentVersion");
+                var currentBuildNumber = (string)reg.GetValue("CurrentBuildNumber");
+                var windowsVersionString = productName + " " + csdVersion + " (" + currentVersion + "." + currentBuildNumber + ")";
+                sb.AppendLine(string.Format("Operating System: {0}", windowsVersionString));
+            }
+            catch (Exception ex)
+            {
+                //show fallback if its not possible to read from registration
+                sb.AppendLine(string.Format("Operating System: {0}", System.Environment.OSVersion.ToString()));
+            }            
             //sb.AppendLine(string.Format("Plattform: {0}", Environment.OSVersion.Platform)); // always Win32NT
             sb.AppendLine(string.Format("Processorname: {0}", GetProcessorName()));
             sb.AppendLine(string.Format("Processors: {0}", System.Environment.ProcessorCount));

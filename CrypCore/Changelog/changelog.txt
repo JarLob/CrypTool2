@@ -11,15 +11,15 @@ right side under the "About" menu in the CrypTool 2 application.
 We changed the version number from 2.0 to 2.1 since we are now working on the successor of the CrypTool 2.0 release version.
 
 Sincerly yours,
-The CrypTool 2 Developer Team, August 2016
+The CrypTool 2 Developer Team, Mai 2017
 
 New components:
 - M-138
+- M-138 Analyzer
 - Cramer Shoup
 - Blake
 - Image Hash
 - Grøstl
-- M-138 Analyzer
 - Vigenère Analyzer
 - GNFS (General Number Field Sieve)
 - Watermark Creator
@@ -29,12 +29,14 @@ New components:
 - Audio Input
 - Audio Output
 - Huffman
+- and many more
 
 Templates:
-- All Templates are now available in English and in German. Template language is based on user's system language.
+- All templates are now available in English and in German. Template language is based on user's system language.
 - We created templates for all new components.
 - We created a template that allows users to connect two CrypTool 2.1 instances to create a video and an audio chat.
 - We created two templates showing how to solve Kryptos K1 and K2 using the Vigenère Analyzer
+- and many more
 
 Online Help:
 - Completed the online help (English and German)

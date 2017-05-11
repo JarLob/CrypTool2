@@ -14,6 +14,7 @@ using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Security.Cryptography.X509Certificates;
 using System.Management;
+using Microsoft.Win32;
 
 namespace Cryptool.CrypWin
 {
@@ -39,19 +40,31 @@ namespace Cryptool.CrypWin
             
             var pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
             var hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
-
-            /*string uniqueID;
+            //get windows information from system registry
             try
             {
-                uniqueID = UniqueIdentifier.GetID().ToString();
-            }
-            catch (Exception ex)
-            {
-                uniqueID = string.Format(Properties.Resources.Can_t_get_unique_ID___0_, ex.Message);
-            }*/
+                RegistryKey localKey;
+                if (Environment.Is64BitOperatingSystem)
+                {
+                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
+                }
+                else
+                {
+                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
+                }
 
-            //informations.Add(new Info() { Description = Properties.Resources.SI_User_Name, Value = System.Environment.UserName });    //personal information
-            informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = System.Environment.OSVersion.ToString() });
+                var reg = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+                var productName = (string)reg.GetValue("ProductName");
+                var csdVersion = (string)reg.GetValue("CSDVersion");            
+                var currentVersion = (string)reg.GetValue("CurrentVersion");
+                var currentBuildNumber = (string)reg.GetValue("CurrentBuildNumber");
+                var windowsVersionString = productName + " " + csdVersion + " (" + currentVersion + "." + currentBuildNumber + ")";
+                informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = windowsVersionString });
+            }
+            catch(Exception ex){
+                //show fallback if its not possible to read from registration
+                informations.Add(new Info() { Description = Properties.Resources.SI_Operating_System, Value = System.Environment.OSVersion.ToString()});
+            }
             informations.Add(new Info() { Description = Properties.Resources.SI_System_Type, Value = System.Environment.Is64BitOperatingSystem ? Properties.Resources.SI_System_Type_64 : Properties.Resources.SI_System_Type_32 });
             //informations.Add(new Info() { Description = "Platform", Value = Environment.OSVersion.Platform.ToString() }); // always Win32NT
             //informations.Add(new Info() { Description = Properties.Resources.SI_Machine_Name, Value = System.Environment.MachineName });      //personal information
