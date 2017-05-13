@@ -55,7 +55,7 @@ namespace WorkspaceManager.Model
                 }
                 catch (Exception ex)
                 {
-                    GuiLogMessage(String.Format("Exception while template replacement:{0}",ex.Message),NotificationLevel.Warning);
+                    GuiLogMessage(String.Format("Exception while template replacement: {0}",ex.Message),NotificationLevel.Warning);
                 }
             }            
             workspacemodel.UndoRedoManager.ClearStacks();
