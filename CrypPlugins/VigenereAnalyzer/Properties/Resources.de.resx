@@ -166,7 +166,7 @@
     <value>Wenn angewählt, wird beim Hillclimbing jede Verbesserung ausgewählt. Ansonsten wird die maximal mögliche Verbesserung ausgewählt.</value>
   </data>
   <data name="FromKeylengthCaption" xml:space="preserve">
-    <value>Analyse von Schlüssellänge:</value>
+    <value>Untergrenze der Schlüssellänge</value>
   </data>
   <data name="FromKeylengthTooltip" xml:space="preserve">
     <value>Analysiere den gegebenen Geheimtext und beginne mit dieser Schlüssellänge.</value>
@@ -251,7 +251,7 @@ durchgeführt werden sollen.</value>
     <value>Text</value>
   </data>
   <data name="ToKeylengthCaption" xml:space="preserve">
-    <value>Analysiere bis Schlüssellänge:</value>
+    <value>Obergrenze der Schlüssellänge</value>
   </data>
   <data name="ToKeylengthTooltip" xml:space="preserve">
     <value>Analysiere bis einschließlich dieser Schlüssellänge.</value>

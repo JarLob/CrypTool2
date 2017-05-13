@@ -139,10 +139,10 @@
     <value>Copy value</value>
   </data>
   <data name="FromKeylengthCaption" xml:space="preserve">
-    <value>Analyse from Keylength</value>
+    <value>Lower bound of keylength</value>
   </data>
   <data name="FromKeylengthTooltip" xml:space="preserve">
-    <value>Analyse the given Ciphertext and start from this keylength.</value>
+    <value>Start from this keylength when analyzing the given ciphertext.</value>
   </data>
   <data name="KeyStyleCaption" xml:space="preserve">
     <value>Keystyle</value>
@@ -175,10 +175,10 @@
     <value>Amount of restarts of the hillclimbing algorithm.</value>
   </data>
   <data name="ToKeylengthCaption" xml:space="preserve">
-    <value>Analyse to Keylength</value>
+    <value>Upper bound of keylength</value>
   </data>
   <data name="ToKeylengthTooltip" xml:space="preserve">
-    <value>Analyse the given Ciphertext and stop including this keylength.</value>
+    <value>Stop the analysis after evaluating this keylength.</value>
   </data>
   <data name="Vigenere" xml:space="preserve">
     <value>Classic Vigenère</value>

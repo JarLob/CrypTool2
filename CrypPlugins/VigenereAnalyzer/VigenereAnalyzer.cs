@@ -75,7 +75,7 @@ namespace Cryptool.VigenereAnalyzer
             set { _plaintext = value; OnPropertyChanged("Plaintext"); }
         }
 
-        [PropertyInfo(Direction.OutputData, "KeyCaption", "KeytTooltip", true)]
+        [PropertyInfo(Direction.OutputData, "KeyCaption", "KeyTooltip", true)]
         public String Key
         {
             get { return _key; }

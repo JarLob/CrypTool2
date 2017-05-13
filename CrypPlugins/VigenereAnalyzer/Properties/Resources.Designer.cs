@@ -205,7 +205,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse from Keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Lower bound of keylength ähnelt.
         /// </summary>
         public static string FromKeylengthCaption {
             get {
@@ -214,7 +214,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse the given Ciphertext and start from this keylength. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start from this keylength when analyzing the given ciphertext. ähnelt.
         /// </summary>
         public static string FromKeylengthTooltip {
             get {
@@ -448,7 +448,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse to Keylength ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Upper bound of keylength ähnelt.
         /// </summary>
         public static string ToKeylengthCaption {
             get {
@@ -457,7 +457,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Analyse the given Ciphertext and stop including this keylength. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop the analysis after evaluating this keylength. ähnelt.
         /// </summary>
         public static string ToKeylengthTooltip {
             get {
