@@ -21,12 +21,16 @@
   <replacements lang="de">
     <replacement key="$Plaintext$" value="Klartext"/>
     <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Vigenère enc$" value="Vigenère"/>
+    <replacement key="$Vigenère dec$" value="Vigenère"/>
     <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
     <replacement key="$Key$" value="Schlüssel"/>
  </replacements>
  <replacements lang="en">
     <replacement key="$Plaintext$" value="Plaintext"/>
     <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Vigenère enc$" value="Vigenère"/>
+    <replacement key="$Vigenère dec$" value="Vigenère"/>
     <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
     <replacement key="$Key$" value="Key"/>
  </replacements>
