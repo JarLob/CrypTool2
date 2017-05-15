@@ -367,7 +367,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die A selection of attacks on the M-138 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die A selection of attacks on the M-138 explaining the used hillclimbing in detail ähnelt.
         /// </summary>
         internal static string PluginTooltip {
             get {

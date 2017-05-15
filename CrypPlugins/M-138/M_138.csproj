@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.png" />
+    <Resource Include="603px-M-138-A_strip_cipher_2.jpg" />
     <Content Include="stripes.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

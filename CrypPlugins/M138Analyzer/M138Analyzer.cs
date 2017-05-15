@@ -91,14 +91,14 @@ namespace Cryptool.M138Analyzer
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public string Ciphertext
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "StripsCaption", "StripsTooltip", false)]
+        [PropertyInfo(Direction.InputData, "StripsCaption", "StripsTooltip")]
         public string Strips
         {
             get;

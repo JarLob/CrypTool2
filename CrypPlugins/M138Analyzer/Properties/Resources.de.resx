@@ -136,7 +136,7 @@
     <value>Englisch</value>
   </data>
   <data name="FastConvergeCaption" xml:space="preserve">
-    <value>Schnelle Konvergierung</value>
+    <value>Schnelle Konvergenz</value>
   </data>
   <data name="FastConvergeTooltip" xml:space="preserve">
     <value>Auswahl, ob die schnelle Konvergierung aktiviert werden soll. Erklärung siehe Hilfe.</value>
@@ -217,7 +217,7 @@
     <value>M-138 Analysewerkzeug</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Eine Auswahl von möglichen Angriffen auf die M-138</value>
+    <value>Eine Auswahl von möglichen Angriffen auf die M-138 und detaillierter Beschreibung des verwendeten Hill-Climbings</value>
   </data>
   <data name="ResultTextCaption" xml:space="preserve">
     <value>Resultierender Klartext</value>

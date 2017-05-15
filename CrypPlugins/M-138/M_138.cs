@@ -45,7 +45,7 @@ namespace Cryptool.M_138
         enum Commands { Encrypt, Decrypt };
         private bool _stopped = true;
         private string[,] toVisualize;
-        private static string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private List<string> strips = new List<string>();
         private int[] TextNumbers;
         int _offset;
@@ -135,6 +135,7 @@ namespace Cryptool.M_138
         public void Execute()
         {
             strips = SetStrips(string.IsNullOrEmpty(Strips) ? LoadStrips() : Strips);
+            if (!CheckStrips(strips)) return;
             
             ProgressChanged(0, 1);
 
@@ -241,6 +242,36 @@ namespace Cryptool.M_138
         private string LoadStrips()
         {
             return File.ReadAllText(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"));
+        }
+
+        private bool CheckStrips(List<string> strips)
+        {
+            if (strips == null || strips.Count == 0)
+            {
+                GuiLogMessage("The strips are undefined.", NotificationLevel.Error);
+                return false;
+            }
+
+            Alphabet = String.Concat(strips[0].OrderBy(c => c).Distinct());
+
+            foreach (var strip in strips)
+            {
+                string uniq = String.Concat(strip.OrderBy(c => c).Distinct());
+
+                if (uniq.Length != strip.Length)
+                {
+                    GuiLogMessage("Error in strip '" + strip + "'. It contains duplicates.", NotificationLevel.Error);
+                    return false;
+                }
+
+                if (uniq != Alphabet)
+                {
+                    GuiLogMessage("Error in strip '" + strip + "'. It uses a character set that differs from the first strip.", NotificationLevel.Error);
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private string RemoveInvalidChars(string text, string alphabet)
