@@ -106,7 +106,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Select the Analysis Method ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Select the analysis method ähnelt.
         /// </summary>
         public static string Analysis_methodTooltip {
             get {

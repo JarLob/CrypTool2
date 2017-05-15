@@ -4,9 +4,9 @@
 	<language culture="en" />
 
   <introduction lang="en">
-    The <b>Transposition Analyzer</b> component offers three different methods for the computer aided analysis of ciphertexts that were generated with the <b>Transposition</b> component:
-    the "Brute-Force Algorithm", the "Crib Analysis", and the "Genetic Algorithm".
-    All three methods offer settings for the connected <b>Transposition</b> component and list the results in a table.
+    The <b>Transposition Analyzer</b> component offers four different methods for the computer aided analysis of ciphertexts that were generated with the <b>Transposition</b> component:
+    the "Brute-Force Algorithm", the "Crib Analysis", the "Genetic Algorithm", and the "Hillclimbing Algorithm".
+    All methods offer settings for the connected <b>Transposition</b> component and list the results in a table.
     Moreover, the results are evaluated by a <b>CostFunction</b> component that can be connected to this component, and the results are then ordered according to their cost value.
     Please read the descriptions of these components for further information.
 
@@ -49,6 +49,13 @@
       Now the cost values of the child keys Child1 and Child2 are calculated and the keys are stored in MAXLIST. Again, the list is sorted according to the cost values and the N/2 worst keys are deleted.
       This is repeated until the maximum number of iterations is reached.
     </section>
+    
+    <section headline="Hillclimbing Algorithm">
+      The hillclimbing algorithm generates a random key and decrypts the ciphertext with this key and the resulting plaintext is evaluated with a cost function. 
+      Then a small random change is made on the key and the procedure is repeated with this new key.
+      If the new plaintext has a worse value than the previous plaintext, the new key is discarded. But if the new plaintext has a better cost value, the new key is adopted as the new current key.
+      This procedure is repeated many times. Thus, only changes that generate an improved key are accepted. In this respect, the algorithm reminds of a mountain climber who only takes steps that lead him upwards.
+    </section>
   </introduction>
 
   <usage lang="en">
@@ -69,7 +76,12 @@
 
     <section headline="Genetic Algorithm">
       If you select the genetic algorithm, you must provide the size of the key space. Moreover, you can enter the number of iterations for the genetic algorithm.
-      The "number of repetitions for genetic analysis" determines, how often to generate new random numbers for a new evolution.
+      The field "Repetitions" determines, how often to generate new random numbers for a new evolution.
+    </section>
+    
+    <section headline="Hillclimbing Algorithm">
+      If you select the hillclimbing algorithm, you must provide the size of the key space. In the field "Repetitions", you can enter how often the algorithm should be restarted with a new random key.
+      The number of iterations that should be executed for a random key can be entered in the field "Iterations".
     </section>
   </usage>
 
@@ -85,9 +97,9 @@
   <language culture="de" />
 
 	<introduction lang="de">
-		Die Komponente <b>Transpositions-Analyse</b> bietet drei verschiedene Methoden an zur Computer-gestützten Analyse von Geheimtexten, die mit der Komponente <b>Transposition</b> verschlüsselt wurden:
-    den "Brute-Force-Algorithmus", die "Crib-Analyse" und den "Genetischen Algorithmus".
-		Alle drei Methoden liefern Einstellungen für die angeschlossene <b>Transpositions</b>-Komponente und listen die Ergebnisse tabellarisch auf.
+		Die Komponente <b>Transpositions-Analyse</b> bietet vier verschiedene Methoden zur Computer-gestützten Analyse von Geheimtexten an, die mit der Komponente <b>Transposition</b> verschlüsselt wurden:
+    den "Brute-Force-Algorithmus", die "Crib-Analyse", den "Genetischen Algorithmus" und den "Hill-Climbing-Algorithmus".
+		Alle Methoden liefern Einstellungen für die angeschlossene <b>Transpositions</b>-Komponente und listen die Ergebnisse tabellarisch auf.
 		Die Ergebnisse werden außerdem von einer an diese Komponente anschließbaren <b>Kostenfunktions</b>-Komponente bewertet, und die besten Ergebnisse werden in der Tabelle an den Anfang gestellt.
 		Für weitere Informationen lesen Sie bitte die Beschreibungen dieser Komponenten.
 
@@ -131,6 +143,13 @@
 		Zu den "Kinderschlüsseln" Child1 und Child2 von jedem Schlüsselpaar wird der jeweilige Kostenwert berechnet und in MAXLIST gespeichert. Nun werden erneut alle Schlüssel nach ihrem Kostenwert sortiert.
 		Solange die maximale Anzahl an Durchläufen nicht erreicht ist, werden erneut die N/2 schlechtesten Schlüssel gelöscht. Aus den verbleibenden Schlüsseln werden erneut "Kinderschlüssel" erstellt.
 		</section>
+
+    <section headline="Hill-Climbing-Algorithmus">
+      Der Hill-Climbing-Algorithmus generiert einen zufälligen Schlüssel und entschlüsselt damit den Geheimtext. Der resutierende Klartext wird mit einer Kostenfunktion bewertet. Dann wird eine kleine zufällige Änderung am Schlüssel
+      vorgenommen und mit dem neuen Schlüssel wird der Vorgang wiederholt. Hat der neue Klartext eine schlechtere Bewertung als der vorhergehende Klartext, so wird der neue Schlüssel verworfen. Ist der neue Klartext dagegen besser bewertet,
+      wird der neue Schlüssel als der aktuelle Schlüssel übernommen. Dieser Vorgang wird viele Male wiederholt. Da immer nur Änderungen übernommen werden, die einer Verbesserung des Schlüssels entsprechen, ähnelt der Algorithmus einem Bergsteiger,
+      der immer nur bergauf geht.
+    </section>
 	</introduction>
 
 	<usage lang="de">
@@ -152,8 +171,13 @@
 
 		<section headline="Genetischer Algorithmus">
 		Beim genetischen Algorithmus kann unter dem Punkt "Schlüsselgröße" die Größe des Schlüsselraums festgelegt werden. Des Weiteren kann unter "Iterationen" gewählt werden, wie tief die Evolution sein soll. 
-    Die Anzahl der "Wiederholungen des genetischen Algorithmus" besagt, wie oft neue Zufallszahlen für eine neue Evolution gebildet werden sollen.
+    Die Anzahl der "Wiederholungen" besagt, wie oft neue Zufallszahlen für eine neue Evolution gebildet werden sollen.
 		</section>
+    
+    <section headline="Hill-Climbing-Algorithmus">
+      Beim Hill-Climbing-Algorithmus kann unter dem Punkt "Schlüsselgröße" die Größe des Schlüsselraums festgelegt werden. Im Feld "Wiederholungen" kann man angeben, wie oft der Algorithmus mit einem neuen,
+      zufälligen Startwert wiederholt werden soll. Die Anzahl der Iterationen, die der Algorithmus für einen zufälligen Startwert durchführen soll, wird im Feld "Iterationen" angegeben.
+    </section>
 	</usage>
 
 	<presentation lang="de">

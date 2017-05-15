@@ -157,7 +157,7 @@
     <value>Analysis method</value>
   </data>
   <data name="Analysis_methodTooltip" xml:space="preserve">
-    <value>Select the Analysis Method</value>
+    <value>Select the analysis method</value>
   </data>
   <data name="ColumnColumnColumnCaption" xml:space="preserve">
     <value>C-C-C</value>
