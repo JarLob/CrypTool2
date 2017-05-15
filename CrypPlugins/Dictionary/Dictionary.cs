@@ -43,11 +43,11 @@ namespace Dictionary
         private CryptoolDictionarySettings settings = new CryptoolDictionarySettings();
 
         // dictionary name -> collection of words
-        private static Dictionary<DataFileMetaInfo, string[]> dicValues = new Dictionary<DataFileMetaInfo, string[]>();
-        private static Dictionary<DataFileMetaInfo, string> dicValuesOld = new Dictionary<DataFileMetaInfo, string>();
+        private Dictionary<DataFileMetaInfo, string[]> dicValues = new Dictionary<DataFileMetaInfo, string[]>();
+        private Dictionary<DataFileMetaInfo, string> dicValuesOld = new Dictionary<DataFileMetaInfo, string>();
         
         // list of dictionaries
-        private static DataFileMetaInfo[] dicList;
+        private DataFileMetaInfo[] dicList;
 
         // Manages wordlist files
         private DataManager dataMgr = new DataManager();
@@ -83,11 +83,11 @@ namespace Dictionary
                 {
                     Debug.Assert(CurrentDicSelection != null);
                     if (!dicValuesOld.ContainsKey(CurrentDicSelection))
+                    {
                         dicValuesOld.Add(CurrentDicSelection, string.Join(" ", OutputList));
-
+                    }
                     return dicValuesOld[CurrentDicSelection];
                 }
-
                 return null;
             }
             set { } // readonly
@@ -103,7 +103,6 @@ namespace Dictionary
                     if (dicValues.ContainsKey(CurrentDicSelection) || LoadDictionary(CurrentDicSelection))
                         return dicValues[CurrentDicSelection];
                 }
-
                 return null;
             }
             set { } // readonly
