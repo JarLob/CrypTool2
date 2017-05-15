@@ -547,6 +547,15 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die days ähnelt.
+        /// </summary>
+        public static string Days {
+            get {
+                return ResourceManager.GetString("Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Debug ähnelt.
         /// </summary>
         public static string Debug {
@@ -709,7 +718,7 @@ namespace WorkspaceManager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation finished (To stop the workspace please push the stop button or enter new data to start a new calculation) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation finished after {0} (To stop the workspace please push the stop button or enter new data to start a new calculation) ähnelt.
         /// </summary>
         public static string GlobalProgressBar_Description {
             get {
@@ -759,6 +768,15 @@ namespace WorkspaceManager.Properties {
         public static string HelpTooltip {
             get {
                 return ResourceManager.GetString("HelpTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die hours ähnelt.
+        /// </summary>
+        public static string Hours {
+            get {
+                return ResourceManager.GetString("Hours", resourceCulture);
             }
         }
         
@@ -858,6 +876,15 @@ namespace WorkspaceManager.Properties {
         public static string MinimizeTooltip {
             get {
                 return ResourceManager.GetString("MinimizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die minutes ähnelt.
+        /// </summary>
+        public static string Minutes {
+            get {
+                return ResourceManager.GetString("Minutes", resourceCulture);
             }
         }
         
@@ -1011,6 +1038,15 @@ namespace WorkspaceManager.Properties {
         public static string Save_File {
             get {
                 return ResourceManager.GetString("Save_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die seconds ähnelt.
+        /// </summary>
+        public static string Seconds {
+            get {
+                return ResourceManager.GetString("Seconds", resourceCulture);
             }
         }
         

@@ -508,7 +508,7 @@
     <value>Stoppe Ausführung</value>
   </data>
   <data name="GlobalProgressBar_Description" xml:space="preserve">
-    <value>Berechnung beendet (Zum Anhalten des Workspaces bitte Stop drücken, oder neue Daten eingeben, um eine Neuberechnung durchzuführen).</value>
+    <value>Berechnung beendet nach {0} (Zum Anhalten des Workspaces bitte Stop drücken, oder neue Daten eingeben, um eine Neuberechnung durchzuführen).</value>
   </data>
   <data name="Fonts_" xml:space="preserve">
     <value>Schriftarten</value>
@@ -557,5 +557,17 @@
   </data>
   <data name="CompLayout_SpreadVertical" xml:space="preserve">
     <value>Vertikal verteilen</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>Tagen</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Stunden</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minuten</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Sekunden</value>
   </data>
 </root>

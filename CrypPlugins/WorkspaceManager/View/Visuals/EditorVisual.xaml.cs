@@ -543,6 +543,21 @@ namespace WorkspaceManager.View.Visuals
         public static readonly DependencyProperty IsSettingsOpenProperty = DependencyProperty.Register("IsSettingsOpen",
             typeof(bool), typeof(EditorVisual), new FrameworkPropertyMetadata(true));
 
+
+ 
+        public string ProgressDuration
+        {
+            get { return (string)base.GetValue(ProgressDurationProperty); }
+            set
+            {
+                base.SetValue(ProgressDurationProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty ProgressDurationProperty = DependencyProperty.Register("ProgressDuration",
+          typeof(string), typeof(EditorVisual), new FrameworkPropertyMetadata(string.Empty));
+
+
         public bool IsSettingsOpen
         {
             get { return (bool)base.GetValue(IsSettingsOpenProperty); }

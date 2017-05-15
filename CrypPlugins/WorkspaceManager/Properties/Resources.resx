@@ -508,7 +508,7 @@
     <value>Exception during disposing of the model: {0}</value>
   </data>
   <data name="GlobalProgressBar_Description" xml:space="preserve">
-    <value>Calculation finished (To stop the workspace please push the stop button or enter new data to start a new calculation)</value>
+    <value>Calculation finished after {0} (To stop the workspace please push the stop button or enter new data to start a new calculation)</value>
   </data>
   <data name="Fonts_" xml:space="preserve">
     <value>Fonts</value>
@@ -557,5 +557,17 @@
   </data>
   <data name="CompLayout_SpreadVertical" xml:space="preserve">
     <value>Spread Vertical</value>
+  </data>
+  <data name="Days" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>seconds</value>
   </data>
 </root>

@@ -109,6 +109,10 @@ namespace WorkspaceManager
         public ExecutionEngine ExecutionEngine = null;
         private volatile bool executing = false;
         private volatile bool stopping = false;
+        private static CopyOperation copy;
+
+        private DateTime _starttime;
+        private bool _reachedTotalProgress = false;
 
         #endregion
 
@@ -763,6 +767,8 @@ namespace WorkspaceManager
 
                 ExecutionEngine.OnPluginProgressChanged+=new PluginProgressChangedEventHandler(ExecutionEngine_OnPluginProgressChanged);
 
+                _starttime = DateTime.Now;
+                _reachedTotalProgress = false;
                 ExecutionEngine.Execute(WorkspaceModel, updateGuiElements);
             }
             catch (Exception ex)
@@ -790,9 +796,44 @@ namespace WorkspaceManager
                     progressTime = DateTime.Now;
                     this.WorkspaceSpaceEditorView.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
-                        WorkspaceSpaceEditorView.Progress = args.Value;
+                        WorkspaceSpaceEditorView.Progress = args.Value;                        
                     }, null);
+                    
+                    if (args.Value == args.Max && _reachedTotalProgress == false)
+                    {
+                        var duration = DateTime.Now - _starttime;
+                        string durationString = string.Empty;
+                        if (duration.TotalDays > 1)
+                        {
+                            durationString = duration.ToString(@"dd\.hh\:mm\:ss")  + " " + Resources.Days;
+                        }
+                        else if (duration.TotalHours > 1)
+                        {
+                            durationString = duration.ToString(@"hh\:mm\:ss") + " " + Resources.Hours;
+                        }
+                        else if (duration.TotalMinutes > 1)
+                        {
+                            durationString = duration.ToString(@"mm\:ss") + " " + Resources.Minutes;
+                        }
+                        else
+                        {
+                            durationString = duration.ToString(@"ss") + " " + Resources.Seconds;
+                        }
+
+                        this.WorkspaceSpaceEditorView.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            WorkspaceSpaceEditorView.ProgressDuration = String.Format(Resources.GlobalProgressBar_Description, durationString);
+                        }, null);
+                        _reachedTotalProgress = true;
+                    }
+                    else if(args.Value < args.Max && _reachedTotalProgress == true)
+                    {
+                        //progress fell down below MAX -> we have a new execution run
+                        _reachedTotalProgress = false;
+                        _starttime = DateTime.Now;
+                    }
                 }
+                
             }
         }
 
@@ -1051,7 +1092,7 @@ namespace WorkspaceManager
         }
 
         public bool IsCtrlToggled = false;
-        private static CopyOperation copy;
+        
         public BinEditorState State { get; set; }
 
 
@@ -1069,6 +1110,7 @@ namespace WorkspaceManager
                 ((EditorVisual)Presentation).AddImage(uriLocal);
             }
         }
+        
     }
 
     public class LoadingErrorEventArgs : EventArgs
