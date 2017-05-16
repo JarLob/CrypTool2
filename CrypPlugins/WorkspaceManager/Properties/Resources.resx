@@ -570,4 +570,7 @@
   <data name="Seconds" xml:space="preserve">
     <value>seconds</value>
   </data>
+  <data name="Second" xml:space="preserve">
+    <value>second</value>
+  </data>
 </root>

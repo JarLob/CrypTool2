@@ -827,7 +827,7 @@ namespace WorkspaceManager
                         }
                         else
                         {
-                            durationString = duration.ToString(@"ss") + " " + Resources.Seconds;
+                            durationString = duration.Seconds + " " + (duration.Seconds == 1 ? Resources.Second : Resources.Seconds);
                         }
 
                         this.WorkspaceSpaceEditorView.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
