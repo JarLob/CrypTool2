@@ -43,6 +43,7 @@ using WorkspaceManagerModel.Model.Operations;
 using WorkspaceManager.View.VisualComponents.CryptoLineView;
 using WorkspaceManagerModel.Model.Tools;
 using System.Collections;
+using System.Globalization;
 
 //Disable warnings for unused or unassigned fields and events:
 #pragma warning disable 0169, 0414, 0067
@@ -113,6 +114,9 @@ namespace WorkspaceManager
 
         private DateTime _starttime;
         private bool _reachedTotalProgress = false;
+
+        private CultureInfo _currentCulture;
+        private CultureInfo _currentUICulture;
 
         #endregion
 
@@ -698,6 +702,9 @@ namespace WorkspaceManager
         /// </summary>
         public void Execute()
         {
+            _currentCulture = System.Globalization.CultureInfo.CurrentCulture;
+            _currentUICulture = System.Globalization.CultureInfo.CurrentUICulture;
+
             if (executing || stopping)
             {
                 return;
@@ -789,6 +796,9 @@ namespace WorkspaceManager
 
         private void ExecutionEngine_OnPluginProgressChanged(IPlugin sender, PluginProgressEventArgs args)
         {
+            Thread.CurrentThread.CurrentCulture = _currentCulture;
+            Thread.CurrentThread.CurrentUICulture = _currentUICulture;
+
             if (Cryptool.PluginBase.Properties.Settings.Default.WorkspaceManager_UseGlobalProgressbar) 
             {
                 if (DateTime.Now >= progressTime.AddSeconds(1))
@@ -824,6 +834,7 @@ namespace WorkspaceManager
                         {
                             WorkspaceSpaceEditorView.ProgressDuration = String.Format(Resources.GlobalProgressBar_Description, durationString);
                         }, null);
+                        GuiLogMessage(String.Format(Resources.GlobalProgressBar_Description, durationString), NotificationLevel.Info);
                         _reachedTotalProgress = true;
                     }
                     else if(args.Value < args.Max && _reachedTotalProgress == true)
@@ -848,6 +859,8 @@ namespace WorkspaceManager
             }
 
             var stopThread = new Thread(new ThreadStart(waitingStop));
+            stopThread.CurrentCulture = _currentCulture;
+            stopThread.CurrentUICulture = _currentUICulture;
             stopThread.Start();
 
             EventsHelper.AsynchronousPropertyChanged = true;
