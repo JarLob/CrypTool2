@@ -137,7 +137,6 @@ namespace OnlineDocumentationGenerator
                 }
                 templateDir.ContainingTemplateDocPages.Sort(CompareTemplateDocPages);
             }
-
             return templateDir;
         }
 
