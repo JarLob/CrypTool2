@@ -30,7 +30,6 @@ namespace Cryptool.PluginBase.IO
         private int _ID;
         private TimeSpan _runtime;
         private int _decryptions;
-        private string _ciphertext;
         private int _restarts;
         private int _populationSize;
         private int _tabuSetSize;
@@ -45,34 +44,31 @@ namespace Cryptool.PluginBase.IO
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, TimeSpan t, int decryptions, string ciphertext, int restarts)
+        public EvaluationContainer(int id, TimeSpan t, int decryptions, int restarts)
         {
             this._ID = id;
             this._runtime = t;
             this._decryptions = decryptions;
-            this._ciphertext = ciphertext;
             this._restarts = restarts;
         }
 
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, int decryptions, string ciphertext, int restarts)
+        public EvaluationContainer(int id, int decryptions, int restarts)
         {
             this._ID = id;
             this._decryptions = decryptions;
-            this._ciphertext = ciphertext;
             this._restarts = restarts;
         }
 
         /// <summary>
         /// Init EvaluationContainer
         /// </summary>
-        public EvaluationContainer(int id, int decryptions, string ciphertext, int restarts, int populationSize)
+        public EvaluationContainer(int id, int decryptions, int restarts, int populationSize)
         {
             this._ID = id;
             this._decryptions = decryptions;
-            this._ciphertext = ciphertext;
             this._restarts = restarts;
             this._populationSize = populationSize;
         }
@@ -88,7 +84,6 @@ namespace Cryptool.PluginBase.IO
                 if (hasID ||
                     hasRuntime ||
                     hasDecryptions ||
-                    hasCiphertext ||
                     hasRestarts ||
                     hasPopulationSize ||
                     hasTabuSetSize)
@@ -102,7 +97,6 @@ namespace Cryptool.PluginBase.IO
             if ((!hasID || this._ID == e._ID) &&
                 (!hasRuntime || this._runtime == e._runtime) &&
                 (!hasDecryptions || this._decryptions == e._decryptions) &&
-                (!hasCiphertext || this._ciphertext == e._ciphertext) &&
                 (!hasRestarts || this._restarts == e._restarts) &&
                 (!hasPopulationSize || this._populationSize == e._populationSize) &&
                 (!hasTabuSetSize || this._tabuSetSize == e._tabuSetSize))
@@ -123,11 +117,6 @@ namespace Cryptool.PluginBase.IO
         public bool hasDecryptions
         {
             get { return _decryptions != null && _decryptions != 0; }
-        }
-
-        public bool hasCiphertext
-        {
-            get { return !string.IsNullOrEmpty(_ciphertext); }
         }
 
         public bool hasRestarts
@@ -157,7 +146,6 @@ namespace Cryptool.PluginBase.IO
             SetID(e._ID);
             SetRuntime(e._runtime);
             SetDecryptions(e._decryptions);
-            SetCiphertext(e._ciphertext);
             SetRestarts(e._restarts);
             SetPopulationSize(e._populationSize);
             SetTabuSetSize(e._tabuSetSize);
@@ -188,15 +176,6 @@ namespace Cryptool.PluginBase.IO
         {
             if (!hasDecryptions)
                 _decryptions = i;
-        }
-
-        /// <summary>
-        /// Set the ciphertext if not already set
-        /// </summary>
-        public void SetCiphertext(string c)
-        {
-            if (!hasCiphertext)
-                _ciphertext = c;
         }
         
         /// <summary>
@@ -264,17 +243,6 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the ciphertext as string
-        /// </summary>
-        public string GetCiphertext()
-        {
-            if (hasCiphertext)
-                return _ciphertext;
-
-            return null;
-        }
-
-        /// <summary>
         /// Get the number of restarts as int
         /// </summary>
         public int GetRestarts()
@@ -334,15 +302,6 @@ namespace Cryptool.PluginBase.IO
                 if (!isEmpty)
                     outputString += "\n";
                 outputString += "Decryptions: " + _decryptions;
-                isEmpty = false;
-            }
-
-            if (hasCiphertext)
-            {
-                if (!isEmpty)
-                    outputString += "\n";
-                outputString += "Ciphertext: " + _ciphertext.Substring(0,
-                    _ciphertext.Length > 50 ? 50 : _ciphertext.Length);
                 isEmpty = false;
             }
 
