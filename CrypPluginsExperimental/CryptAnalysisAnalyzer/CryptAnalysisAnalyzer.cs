@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2017 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -47,6 +47,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _textInput;
         private string _seedInput;
         private string _plaintextInput;
+        private string _ciphertextInput;
         private string _keyInput;
         private string _bestPlaintextInput;
         private string _bestKeyInput;
@@ -189,6 +190,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 this._plaintextInput = value;
                 OnPropertyChanged("PlaintextInput");
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "CiphertextInput", "CiphertextInput tooltip description", true)]
+        public string CiphertextInput
+        {
+            get { return this._ciphertextInput; }
+            set
+            {
+                this._ciphertextInput = value;
+                OnPropertyChanged("CiphertextInput");
             }
         }
         
@@ -500,7 +512,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 // current test run values
                 ExtendedEvaluationContainer testRun = entry.Value;
                 int keyLength = testRun.GetKey().Length;
-                int ciphertextLength = testRun.GetCiphertext().Length;
+                int ciphertextLength = _ciphertextInput.Length;
                 int currentSuccess = 0;
                 if (testRun.GetSuccessfull()) currentSuccess = 1;
                 double currentlyDecrypted = testRun.GetPercentDecrypted();
@@ -1620,10 +1632,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 if (String.IsNullOrEmpty(EvaluationOutput))
                     EvaluationOutput = _keyCount + " / " + _totalKeysInput + NewLine +
-                        "0%" + NewLine + NewLine + "Current key number: " +
-                        NewLine + _keyCount;
+                        "0%" + NewLine + NewLine + "Current key number: " + _keyCount;
                 else
-                    EvaluationOutput += NewLine + _keyCount + " / " + _totalKeysInput;
+                    EvaluationOutput += NewLine + "Current key number: " + _keyCount + " / " + _totalKeysInput;
                     
                 OnPropertyChanged("EvaluationOutput");
 
@@ -1661,6 +1672,25 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 _lastEval = _evaluationInput;
 
+                // generate some output infos for the user
+                EvaluationOutput = "";
+                for (int i = 0; i < (int)_progress / 5; i++)
+                    EvaluationOutput += "█";
+
+                EvaluationOutput += " " + _progress + "%" + NewLine + NewLine +
+                    "key number: " + _keyCount + " / " +
+                    _totalKeysInput + " - Done.";
+
+                EvaluationOutput += NewLine + "ID: " + EvaluationInput.GetID() + NewLine;
+                if (_settings.CalculateRuntime)
+                {
+                    TimeSpan time;
+                    EvaluationInput.GetRuntime(out time);
+                    EvaluationOutput += "Last Runtime: " + time.ToString() + NewLine;
+                }
+                EvaluationOutput += "Last number of restarts: " + EvaluationInput.GetRestarts() + NewLine +
+                "Last number of decryptions: " + _evaluationInput.GetDecryptions();
+
                 // gather all available evaluation data
                 CollectEvaluationData();
 
@@ -1668,14 +1698,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (_totalKeysInput > 0 &&
                     _keyCount < _totalKeysInput)
                 {
-                    EvaluationOutput = "";
-                    for (int i = 0; i < (int)_progress / 5; i++)
-                        EvaluationOutput += "█";
-
-                    EvaluationOutput += " " + _progress + "%" + NewLine + NewLine + 
-                        "Current key number: " + NewLine + _keyCount + " / " + 
-                        _totalKeysInput + " - Done.";
-
                     OnPropertyChanged("EvaluationOutput");
 
                     TriggerNextKey = KeyInput;
@@ -1684,14 +1706,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                 {
                     // ...evaluate if not
-                    EvaluationOutput = "";
-                    for (int i = 0; i < (int)_progress / 5; i++)
-                        EvaluationOutput += "█";
-
-                    EvaluationOutput += " " + _progress + "%" + NewLine + NewLine +
-                        "Current key number: " + NewLine + _keyCount + " / " +
-                        _totalKeysInput + " - Done." + NewLine +
-                        NewLine + "Started Evaluating...";
+                    EvaluationOutput += NewLine + "Started Evaluating...";
                     OnPropertyChanged("EvaluationOutput");
                     
                     Evaluate();

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2017 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -231,7 +231,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         #region Key TaskPane Settings
 
         [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", "KeyGroup", keyPaneIndex, false, ControlType.ComboBox, new String[] { 
-            "random with regex", "random", "natural speech"})]
+            "Random with regex", "Random", "Natural speech"})]
         public GenerationType KeyGeneration
         {
             get
@@ -314,7 +314,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "letters", "unique numbers", "digits", "binary", "unique letters"})]
+            "Letters", "Unique numbers", "Digits", "Binary", "Unique letters"})]
         public FormatType KeyFormatRandom
         {
             get
@@ -332,7 +332,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "letters", "unique numbers"})]
+            "Letters", "Unique numbers"})]
         public FormatType KeyFormatNaturalSpeech
         {
             get

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2017 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -113,8 +113,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("X-Axis", "Values to show on the X-Axis", "GnuPlot", gnuPlotPaneIndex, true, ControlType.ComboBox, new String[] { 
-            "Ciphertext Length", "Key Length", "Runtime"})]
+        [TaskPane("X-axis", "Values to show on the X-axis", "GnuPlot", gnuPlotPaneIndex, true, ControlType.ComboBox, new String[] { 
+            "Ciphertext length", "Key length", "Runtime"})]
         public XAxisPlot XAxis
         {
             get
@@ -144,8 +144,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Y-Axis", "Values to show on the Y-Axis", "GnuPlot", gnuPlotPaneIndex + 1, true, ControlType.ComboBox, new String[] { 
-            "Success", "Percent Decrypted", "Success and % Decrypted"})]
+        [TaskPane("Y-axis", "Values to show on the Y-axis", "GnuPlot", gnuPlotPaneIndex + 1, true, ControlType.ComboBox, new String[] { 
+            "Success", "Percent decrypted", "Success and % decrypted"})]
         public YAxisPlot YAxis
         {
             get
@@ -175,8 +175,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Second Y-Axis", "Values to show on the second Y-Axis", "GnuPlot", gnuPlotPaneIndex + 2, true, ControlType.ComboBox, new String[] { 
-            "None", "Decryptions", "Restarts", "Tabu Set Sizes", "Population Sizes", "Runtime"})]
+        [TaskPane("Second Y-axis", "Values to show on the second Y-axis", "GnuPlot", gnuPlotPaneIndex + 2, true, ControlType.ComboBox, new String[] { 
+            "None", "Decryptions", "Restarts", "Tabu set sizes", "Population sizes", "Runtime"})]
         public Y2AxisPlot Y2Axis
         {
             get
@@ -211,7 +211,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Average of second Y-Axis", "Show the Average of the second Y-Axis", "GnuPlot", gnuPlotPaneIndex + 3, true, ControlType.CheckBox)]
+        [TaskPane("Average of second Y-axis", "Show the average of the second Y-axis", "GnuPlot", gnuPlotPaneIndex + 3, true, ControlType.CheckBox)]
         public bool ShowY2Average
         {
             get { return this._showY2Average; }
@@ -236,7 +236,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Normalize Y-Range Factor", "Size factor to start normalizing single high values on Y-Range", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Normalize Y-range Factor", "Size factor to start normalizing single high values on Y-range", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int NormalizingFactor
         {
             get
