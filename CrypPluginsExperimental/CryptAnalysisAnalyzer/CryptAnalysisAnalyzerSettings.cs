@@ -37,9 +37,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         // general variables
         private CryptAnalysisAnalyzer _CAA;
-        private const int gnuPlotPaneIndex = generalPaneIndex + 3;
+        private const int gnuPlotPaneIndex = generalPaneIndex + 2;
         private double _correctPercentage = 95;
-        private int _timeUnit = 10;
         private bool _calculateRuntime = true;
         private const int generalPaneIndex = 1;
 
@@ -63,11 +62,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             get
             {
-                return _correctPercentage;
+                return this._correctPercentage;
             }
             set
             {
-                _correctPercentage = value;
+                this._correctPercentage = value;
                 OnPropertyChanged("CorrectPercentage");
             }
         }
@@ -76,25 +75,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Time unit size in ms", "This is a parameter tooltip", null, generalPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
-        public int TimeUnit
-        {
-            get
-            {
-                return _timeUnit;
-            }
-            set
-            {
-                _timeUnit = value;
-                OnPropertyChanged("TimeUnit");
-            }
-        }
-
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        [TaskPane("Calculate runtime", "Calculate the runtime of the algorithm", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
+        [TaskPane("Calculate runtime", "Calculate the runtime of the algorithm", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
         public bool CalculateRuntime
         {
             get { return this._calculateRuntime; }
@@ -236,7 +217,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Normalize Y-range Factor", "Size factor to start normalizing single high values on Y-range", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Normalize axis ranges factor", "Size factor to start normalizing single high values on the axis ranges", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int NormalizingFactor
         {
             get

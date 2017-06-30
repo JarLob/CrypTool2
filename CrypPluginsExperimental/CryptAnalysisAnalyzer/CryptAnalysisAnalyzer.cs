@@ -53,6 +53,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _bestKeyInput;
         private EvaluationContainer _evaluationInput;
 
+        private bool _newPlaintext = false;
+        private bool _newCiphertext = false;
+        private bool _newKey = false;
+        private bool _newBestPlaintext = false;
+        private bool _newBestKey = false;
+        private bool _newEvaluation = false;
+
         private string _plaintextOutput;
         private string _keyOutput;
         private string _gnuPlotScriptOutput;
@@ -63,7 +70,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private int _evaluationCount = 0;
         private int _totalKeysInput = 0;
         private int _progress;
-        private EvaluationContainer _lastEval;
         private Dictionary<int, ExtendedEvaluationContainer> _testRuns;
 
         private string NewLine = System.Environment.NewLine;
@@ -177,8 +183,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._keyInput; }
             set
             {
-                this._keyInput = value;
-                OnPropertyChanged("KeyInput");
+                if (value != null && value != this._keyInput)
+                {
+                    this._keyInput = value;
+                    this._newKey = true;
+                    OnPropertyChanged("KeyInput");
+                }
             }
         }
 
@@ -188,8 +198,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._plaintextInput; }
             set
             {
-                this._plaintextInput = value;
-                OnPropertyChanged("PlaintextInput");
+                if (value != null && value != this._plaintextInput)
+                {
+                    this._plaintextInput = value;
+                    this._newPlaintext = true;
+                    OnPropertyChanged("PlaintextInput");
+                }
             }
         }
 
@@ -199,8 +213,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._ciphertextInput; }
             set
             {
-                this._ciphertextInput = value;
-                OnPropertyChanged("CiphertextInput");
+                if (value != null && value != this._ciphertextInput)
+                {
+                    this._ciphertextInput = value;
+                    this._newCiphertext = true;
+                    OnPropertyChanged("CiphertextInput");
+                }
             }
         }
         
@@ -221,8 +239,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestKeyInput; }
             set
             {
-                this._bestKeyInput = value;
-                OnPropertyChanged("BestKeyInput");
+                if (value != null && value != this._bestKeyInput)
+                {
+                    this._bestKeyInput = value;
+                    this._newBestKey = true;
+                    OnPropertyChanged("BestKeyInput");
+                }
             }
         }
 
@@ -232,8 +254,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestPlaintextInput; }
             set
             {
-                this._bestPlaintextInput = value;
-                OnPropertyChanged("BestPlaintextInput");
+                if (value != null && value != this._bestPlaintextInput)
+                {
+                    this._bestPlaintextInput = value;
+                    this._newBestPlaintext = true;
+                    OnPropertyChanged("BestPlaintextInput");
+                }
             }
         }
 
@@ -243,8 +269,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._evaluationInput; }
             set
             {
-                this._evaluationInput = value;
-                OnPropertyChanged("EvaluationInput");
+                if (value != null && value != this._evaluationInput)
+                {
+                    this._evaluationInput = value;
+                    OnPropertyChanged("EvaluationInput");
+                }
+                if (value.hasValueSet)
+                    this._newEvaluation = true;
             }
         }
 
@@ -320,7 +351,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // Necessary decryptions - decryptions
             // Runtime - runtime
             // Restarts - EvaluationInput.GetRestarts()
-            // DecryptionsPerTimeUnit - decryptionsPerTimeUnit
             // Success probability - to be calculated!
             // Population size - EvaluationInput.GetPopulationSize()
             // Tabu set size - EvaluationInput.GetTabuSetSize()
@@ -341,18 +371,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
                     PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length) +
                     " (" + PlaintextInput.Length + ")");
-
-
-                double decryptions = (double)EvaluationInput.GetDecryptions();
-                TimeSpan runtime;
-                if (_settings.CalculateRuntime && EvaluationInput.GetRuntime(out runtime))
-                {
-                    double divisor = runtime.TotalMilliseconds / _settings.TimeUnit;
-                    double decryptionsPerTimeUnit = Math.Round((double)decryptions / divisor, 4);
-
-                    Console.WriteLine("Decryptions per time unit: " + decryptionsPerTimeUnit);
-
-                }
             }
 
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
@@ -374,12 +392,28 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             EvaluationInput = new EvaluationContainer();
         }
 
+        private void SetNumberDecimalSeparator(bool reset) 
+        {
+            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+                
+            if (!reset)
+            {
+                // set dot (".") as Number Decimal Separator
+                _originalNumberDecimalSeparator = customCulture.NumberFormat.NumberDecimalSeparator;
+                customCulture.NumberFormat.NumberDecimalSeparator = ".";
+                }
+            else
+            {
+                customCulture.NumberFormat.NumberDecimalSeparator = _originalNumberDecimalSeparator;
+            }
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        }
+
         public void InitializeVariables()
         {
             // set dot (".") as Number Decimal Separator
-            System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-            customCulture.NumberFormat.NumberDecimalSeparator = ".";
-            System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+            SetNumberDecimalSeparator(false);
 
             // count and helper variables
             _successCount = 0;
@@ -395,8 +429,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _tabuSetSize = 0;
             _noTabuSetSize = false;
             _testSeriesSeed = "";
-
-            // TODO: number of derived keys?
 
             // evaluation key values
             _keyLengths = new Dictionary<int, int>();
@@ -1548,6 +1580,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             GnuPlotDataOutput = _gnuPlotDataOutput;
             OnPropertyChanged("GnuPlotDataOutput");
+
+            // reset Number Decimal Separator
+            SetNumberDecimalSeparator(true);
         }
 
         #endregion
@@ -1622,11 +1657,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // If both plaintext and key are new,
             // send them to the output
-            if (!String.IsNullOrEmpty(PlaintextInput) &&
-                !String.IsNullOrEmpty(KeyInput) &&
-                PlaintextInput != PlaintextOutput &&
-                KeyInput != KeyOutput)
+            if (_newKey && _newPlaintext)
             {
+                // consume new values
+                _newKey = false;
+                _newPlaintext = false;
+
                 _keyCount++;
                 _progress = (int)Math.Round((double)_keyCount / _totalKeysInput * 100);
 
@@ -1661,16 +1697,15 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // Wait for the analysis method to send evaluation data.
             // If the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
-            if (_evaluationInput != null && _evaluationInput.hasValueSet &&
-                (_lastEval == null || !_evaluationInput.Equals(_lastEval)) &&
-                /*_evaluationCount < _keyCount &&*/
+            if (_newEvaluation && _newBestKey && _newBestPlaintext &&
                 _keyCount <= _totalKeysInput &&
-                !String.IsNullOrEmpty(BestKeyInput) &&
-                !String.IsNullOrEmpty(BestPlaintextInput) &&
                 BestKeyInput != " " &&
                 BestPlaintextInput != " ")
             {
-                _lastEval = _evaluationInput;
+                // consume new values
+                _newEvaluation = false;
+                _newBestKey = false;
+                _newBestPlaintext = false;
 
                 // generate some output infos for the user
                 EvaluationOutput = "";
@@ -1730,7 +1765,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _bestPlaintextInput = "";
             _bestKeyInput = "";
             _evaluationInput = new EvaluationContainer();
-            _lastEval = null;
 
             _plaintextOutput = "";
             _keyOutput = "";
@@ -1845,7 +1879,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         // Necessary decryptions - decryptions
         // Runtime - runtime
         // Restarts - EvaluationInput.GetRestarts()
-        // DecryptionsPerTimeUnit - decryptionsPerTimeUnit
         // Success probability - to be calculated!
         // Population size - EvaluationInput.GetPopulationSize()
         // Tabu set size - EvaluationInput.GetTabuSetSize()
@@ -1854,7 +1887,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private string _testSeriesSeed;
         private int _keyNumber;
         private string _key;
-        // private BigInteger _keySpace; ?
         private string _plaintext;
         private string _bestKey;
         private string _bestPlaintext;
@@ -1999,26 +2031,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     public static class DictionaryExtention
     {
 
-        // Either Add or overwrite
-        public static void AddOrUpdate<K, V>(this Dictionary<K, V> dict, K key, V newValue)
-        {
-            if (dict.ContainsKey(key))
-                dict[key] = newValue;
-            else
-                dict.Add(key, newValue);
-        }
-
         // Either Add or increment
         public static void AddOrIncrement<K>(this Dictionary<K, int> dict, K key, int newValue)
-        {
-            if (dict.ContainsKey(key))
-                dict[key] = dict[key] + newValue;
-            else
-                dict.Add(key, newValue);
-        }
-
-        // Either Add or increment
-        public static void AddOrIncrement<K>(this Dictionary<K, BigInteger> dict, K key, int newValue)
         {
             if (dict.ContainsKey(key))
                 dict[key] = dict[key] + newValue;

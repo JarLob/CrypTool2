@@ -21,7 +21,7 @@ using System.Windows;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
-    public enum FormatType { lettersOnly, uniqueNumbers, digitsOnly, binaryOnly, uniqueLetters };
+    public enum FormatType { letters, numbers, binary, inputAlphabet };
     public enum GenerationType { regex, random, naturalSpeech };
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private const int plaintextPaneIndex = generalPaneIndex + 7;
         private const int keyPaneIndex = plaintextPaneIndex + 5;
         private int _numberOfTestRuns = 1;
-        private int _textLength = 100;
+        private int _minTextLength = 100;
         private int _maxTextLength = 100;
         private int _textLengthIncrease = 5;
         private NumbersHandlingMode _numbersHandlingMode = NumbersHandlingMode.Remove;
@@ -57,6 +57,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
         private string _separator = "";
+        private bool _uniqueSymbolUsage = false;
         private FormatType _keyFormat;
         private GenerationType _keyGeneration;
 
@@ -95,7 +96,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set;
         }
 
-        [TaskPane("Replace ß by SZ", "ReplaceSZTooltipCaption", null, generalPaneIndex + 3, false, ControlType.CheckBox)]
+        [TaskPane("Replace ß by sz", "ReplaceSZTooltipCaption", null, generalPaneIndex + 3, false, ControlType.CheckBox)]
         public bool ReplaceSZ
         {
             get;
@@ -141,16 +142,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
         [TaskPane("Plaintext Length", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
-        public int TextLength
+        public int MinTextLength
         {
             get
             {
-                return _textLength;
+                return _minTextLength;
             }
             set
             {
-                _textLength = value;
-                OnPropertyChanged("TextLength");
+                _minTextLength = value;
+                OnPropertyChanged("MinTextLength");
             }
         }
 
@@ -188,10 +189,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 if (_textLengthIncrease == 0)
                     return 0;
-                if (_maxTextLength == _textLength ||
-                    _textLengthIncrease > (_maxTextLength - _textLength))
+                if (_maxTextLength == _minTextLength ||
+                    _textLengthIncrease > (_maxTextLength - _minTextLength))
                     return 1;
-                double plaintextsPerLength = (double) _numberOfTestRuns / ((_maxTextLength - _textLength + _textLengthIncrease) / _textLengthIncrease);
+                double plaintextsPerLength = (double) _numberOfTestRuns / ((_maxTextLength - _minTextLength + _textLengthIncrease) / _textLengthIncrease);
                 return plaintextsPerLength;
             }
         }
@@ -287,8 +288,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             get
             {
-                if (_maxKeyLength == _minKeyLength ||
-                        _numberOfTestRuns == 0 ||
+                if (_maxKeyLength == _minKeyLength)
+                    return _numberOfTestRuns;
+                if (_numberOfTestRuns == 0 ||
                         _numberOfTestRuns == 1 ||
                         _numberOfTestRuns < (_maxKeyLength - _minKeyLength))
                     return 1;
@@ -314,7 +316,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "Letters", "Unique numbers", "Digits", "Binary", "Unique letters"})]
+            "Letters", "Numbers", "Binary", "Use input alphabet"})]
         public FormatType KeyFormatRandom
         {
             get
@@ -331,8 +333,22 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        [TaskPane("Unique symbol usage", "UniqueSymbolUsageTooltipCaption", "KeyGroup", keyPaneIndex + 5, false, ControlType.CheckBox)]
+        public bool UniqueSymbolUsage
+        {
+            get
+            {
+                return _uniqueSymbolUsage;
+            }
+            set
+            {
+                _uniqueSymbolUsage = value;
+                OnPropertyChanged("UniqueSymbolUsage");
+            }
+        }
+
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "Letters", "Unique numbers"})]
+            "Sentences from text", "Numeric key from text"})]
         public FormatType KeyFormatNaturalSpeech
         {
             get
@@ -392,16 +408,18 @@ namespace Cryptool.Plugins.TestVectorGenerator
         internal void UpdateKeyFormatVisibility()
         {
             settingChanged("KeyFormatRandom", Visibility.Collapsed);
+                    settingChanged("UniqueSymbolUsage", Visibility.Collapsed);
             settingChanged("KeyFormatNaturalSpeech", Visibility.Collapsed);
             switch (KeyGeneration)
             {
                 case GenerationType.naturalSpeech: // natural speech
-                    _keyFormat = FormatType.lettersOnly;
+                    _keyFormat = FormatType.letters;
                     settingChanged("KeyFormatNaturalSpeech", Visibility.Visible);
                     break;
                 case GenerationType.random: // random generation
                     // TODO: change to invisible when input alphabet or regex is implemented
                     settingChanged("KeyFormatRandom", Visibility.Visible);
+                    settingChanged("UniqueSymbolUsage", Visibility.Visible);
                     break;
             }
         }
@@ -424,7 +442,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         public void Initialize()
         {
             if (_keyFormat == null)
-                _keyFormat = FormatType.lettersOnly;
+                _keyFormat = FormatType.letters;
             if (_keyGeneration == null)
                 _keyGeneration = GenerationType.random;
             UpdateKeyFormatVisibility();
