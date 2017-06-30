@@ -37,6 +37,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     {
         public CryptAnalysisAnalyzer()
         {
+            // initialize the settings with the current instance to be able
+            // to call methods in this instance from the settings
             _settings = new CryptAnalysisAnalyzerSettings(this);
         }
 
@@ -155,6 +157,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #region Data Properties
 
+        /// <summary>
+        /// The input text from which the plaintexts are taken (in the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description")]
         public string TextInput
         {
@@ -166,6 +171,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The seed which initializes the random number generator (in the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description")]
         public string SeedInput
         {
@@ -177,6 +185,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current key (from the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "KeyInput", "KeyInput tooltip description", true)]
         public string KeyInput
         {
@@ -192,6 +203,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current plaintext (from the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "PlaintextInput", "PlaintextInput tooltip description", true)]
         public string PlaintextInput
         {
@@ -207,6 +221,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current ciphertext (from the cryptographic component).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "CiphertextInput", "CiphertextInput tooltip description", true)]
         public string CiphertextInput
         {
@@ -222,6 +239,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
         
+        /// <summary>
+        /// The total number of keys (from the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "TotalKeysInput", "TotalKeysInput tooltip description", true)]
         public int TotalKeysInput
         {
@@ -233,6 +253,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current best key (from the cryptanalytic component).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "BestKeyInput", "BestKeyInput tooltip description")]
         public string BestKeyInput
         {
@@ -248,6 +271,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current best plaintext (from the cryptanalytic component).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "BestPlaintextInput", "BestPlaintextInput tooltip description")]
         public string BestPlaintextInput
         {
@@ -263,6 +289,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current evaluation container (from the cryptanalytic component).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "EvaluationInput", "EvaluationInput tooltip description")]
         public EvaluationContainer EvaluationInput
         {
@@ -280,6 +309,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
 
+        /// <summary>
+        /// The next key trigger, using the last key (for the TestVectorGenerator).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "TriggerNextKey", "TriggerNextKey tooltip description")]
         public string TriggerNextKey { get; set; }
 
@@ -294,6 +326,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The current plaintext output (for the other components).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
         public string PlaintextOutput
         {
@@ -305,12 +340,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary>
+        /// The minimal correct percentage to match the plaintext for success (for the cryptanalytic component).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "MinimalCorrectPercentage", "MinimalCorrectPercentage tooltip description")]
         public double MinimalCorrectPercentage
         {
             get { return _settings.CorrectPercentage; }
         }
 
+        /// <summary>
+        /// The evaluation output (for a text output).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "EvaluationOutput", "EvaluationOutput tooltip description")]
         public string EvaluationOutput
         {
@@ -318,6 +359,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             set;
         }
 
+        /// <summary>
+        /// The GnuPlot script output (for a text output).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "GnuPlotScriptOutput", "GnuPlotScriptOutput tooltip description")]
         public string GnuPlotScriptOutput
         {
@@ -325,6 +369,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             set;
         }
 
+        /// <summary>
+        /// The GnuPlot data output (for a text output).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "GnuPlotDataOutput", "GnuPlotDataOutput tooltip description")]
         public string GnuPlotDataOutput
         {
@@ -336,62 +383,37 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #region Evaluation
 
+        /// <summary> 
+        /// Calculates the correctly decrypted percentage and the success.
+        /// Creates the ExtendedEvaluationContainer and adds it to the dictionary.
+        /// Resets the evaluation inputs.
+        /// </summary>
         public void CollectEvaluationData()
         {
-            // Key number - _keyCount
-            // Seed - SeedInput
-            // EvaluationInput
-            // Key - KeyInput
-            // Key space - ???
-            // Plaintext - PlaintextInput
-            // Ciphertext - ???
-            // Best key - BestKeyInput
-            // Best plaintext - BestPlaintextInput
-            // % correct - percentCorrect
-            // Necessary decryptions - decryptions
-            // Runtime - runtime
-            // Restarts - EvaluationInput.GetRestarts()
-            // Success probability - to be calculated!
-            // Population size - EvaluationInput.GetPopulationSize()
-            // Tabu set size - EvaluationInput.GetTabuSetSize()
-
-            if (_evaluationCount == 0)
-                Console.WriteLine("------- Test Series Seed: " + SeedInput + " -------");
-
-            // Testing output
-            if (_evaluationCount < 3)
-            {
-                Console.WriteLine("----- Key: " + _keyCount + " -----");
-                string evaluationString = _evaluationInput.ToString();
-                Console.WriteLine(evaluationString);
-                Console.WriteLine("Best Key: " + BestKeyInput);
-                Console.WriteLine("Best Plaintext: " + BestPlaintextInput.Substring(0,
-                    BestPlaintextInput.Length > 50 ? 50 : BestPlaintextInput.Length) +
-                    " (" + BestPlaintextInput.Length + ")");
-                Console.WriteLine("Plaintext: " + PlaintextInput.Substring(0,
-                    PlaintextInput.Length > 50 ? 50 : PlaintextInput.Length) +
-                    " (" + PlaintextInput.Length + ")");
-            }
-
+            // calculate the correctly decrypted percentage and the success
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
-            if (_evaluationCount < 3)
-                Console.WriteLine("percentCorrect: " + percentCorrect);
-
+            // create the ExtendedEvaluationContainer with the current values
             ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
                 _seedInput, _keyCount, _keyInput, _plaintextInput, _bestKeyInput, _bestPlaintextInput,
                 _settings.CorrectPercentage, percentCorrect, success);
 
+            // add the container to the test run dictionary with the ID as key
             _testRuns.Add(_evaluationInput.GetID(), testRun);
 
+            // increase the evaluation counter
             _evaluationCount++;
 
+            // reset the evaluation inputs
             BestPlaintextInput = "";
             BestKeyInput = "";
             EvaluationInput = new EvaluationContainer();
         }
 
+        /// <summary> 
+        /// Sets or resets the Number Decimal Separator (using a dot for GnuPlot).
+        /// </summary>
         private void SetNumberDecimalSeparator(bool reset) 
         {
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
@@ -410,6 +432,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
         }
 
+        /// <summary> 
+        /// Initializes all the variables for the evaluation.
+        /// </summary>
         public void InitializeVariables()
         {
             // set dot (".") as Number Decimal Separator
@@ -461,6 +486,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _populationSizesPerRuntime = new Dictionary<double, double>();
         }
 
+        /// <summary> 
+        /// Sets the value variables for the GnuPlot output generation
+        /// </summary>
         public void SetGnuPlotVariables()
         {
             _val1 = "";
@@ -532,6 +560,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         }
 
+        /// <summary> 
+        /// Calculates the average values dependent on the base metrics ciphertext
+        /// and key length and runtime. Triggers the evaluation and GnuPlot output generation.
+        /// </summary>
         public void Evaluate()
         {
             // Initialize variables
@@ -566,7 +598,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     firstElement = false;
                 }
 
-                // count the successfull runs
+                // count the successful runs
                 if (testRun.GetSuccessfull())
                     _successCount++;
                 DictionaryExtention.AddOrIncrement<int>(_successPerKeyLength, keyLength, currentSuccess);
@@ -679,6 +711,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                             DictionaryExtention.Divide<double>(_populationSizesPerRuntime, time, count);
                     }
                 }
+
+                // sort the runtimes to display them in order in the plot
                 _sortedRuntimes = from entry in _runtimes orderby entry.Key ascending select entry;
             }
 
@@ -746,16 +780,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
             }
 
+            // if the testing is done, build the evaluation output string
             if (_keyCount == TotalKeysInput)
                 BuildEvaluationOutputString();
 
+            // call GnuPlot generation methods
             SetGnuPlotVariables();
-
             GenerateGnuPlotDataOutput();
-
             GenerateGnuPlotScriptOutput();
         }
 
+        /// <summary> 
+        /// Generates the evaluation output string and sets the _evaluationOutput variable.
+        /// </summary>
         public void BuildEvaluationOutputString()
         {
             // build the average runtime string
@@ -763,7 +800,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             if (!_noRuntime)
                 averageRuntimeString = new DateTime(TimeSpan.FromMilliseconds(_averageRuntime).Ticks).ToString("HH:mm:ss:FFFF");
 
-            // build the displayed string of occuring ciphertext lengths
+            // build the displayed string of occurring ciphertext lengths
             string ciphertextLengthString = "";
             int i = 0;
             foreach (var pair in _ciphertextLengths)
@@ -781,7 +818,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 i++;
             }
 
-            // build the displayed string of occuring key lengths
+            // build the displayed string of occurring key lengths
             string keyLengthString = "";
             i = 0;
             foreach (var pair in _keyLengths)
@@ -819,9 +856,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _evaluationOutput += "Average success: " + _successPercentage + "%\r";
         }
 
+        /// <summary> 
+        /// Generates the GnuPlot data output and sets the _gnuPlotDataOutput variable.
+        /// </summary>
         public void GenerateGnuPlotDataOutput()
         {
             // generate the GnuPlot data output string
+            // build a header to guide the user
             _gnuPlotDataOutput = "###########################################################" + NewLine;
             _gnuPlotDataOutput += "# Gnuplot script for plotting data from output GnuPlotData" + NewLine;
             _gnuPlotDataOutput += "# Save this GnuPlotData output in a file named " + NewLine;
@@ -837,6 +878,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // # Data for evaluation method
             _gnuPlotDataOutput += "# Data for: " + _evalMethod + NewLine;
             _gnuPlotDataOutput += NewLine;
+            // write evaluation metrics in the file
             _gnuPlotDataOutput += "# " + _keyValue + "\t\t" + _val1;
             if (!String.IsNullOrEmpty(_val2))
                 _gnuPlotDataOutput += "\t\t" + _val2;
@@ -844,6 +886,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotDataOutput += "\t\t" + _val3;
             _gnuPlotDataOutput += NewLine;
 
+            // reset the range values
             _lowestXValue = -1;
             _highestXValue = 0;
             _lowestYValue = -1;
@@ -864,6 +907,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
             _normalizedAverageYValues = 0;
 
+            // add the values for the selected metric
             if (_settings.XAxis == XAxisPlot.ciphertextLength)
                 AddCiphertextLengthValues();
             else if (_settings.XAxis == XAxisPlot.keyLength)
@@ -874,9 +918,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else {/* TODO: disable runtime in settings*/ }
         }
 
+        /// <summary> 
+        /// Generates the GnuPlot data output and sets the _gnuPlotDataOutput variable.
+        /// </summary>
         public void AddCiphertextLengthValues()
         {
             int position = 0;
+            // iterate over every pair per ciphertext length
             foreach (var pair in _ciphertextLengths)
             {
                 int len = pair.Key;
@@ -892,7 +940,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     {
                         // Warning! But may be zero
                         Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertextLength: " + len + ", currentSuccess: " + currentSuccess);
-                        //continue;
+                        continue;
                     }
                     else
                         _gnuPlotDataOutput += currentSuccess + "\t\t\t\t";
@@ -911,6 +959,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _gnuPlotDataOutput += currentDecryptedPercentage + "\t\t\t\t";
                 }
 
+                // set the according values for the second y-axis
                 if (_settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
@@ -1040,6 +1089,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public void AddKeyLengthValues()
         {
             int position = 0;
+            // iterate over every pair per key length
             foreach (var pair in _keyLengths)
             {
                 int len = pair.Key;
@@ -1074,6 +1124,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _gnuPlotDataOutput += currentDecryptedPercentage + "\t\t\t\t";
                 }
 
+                // set the according values for the second y-axis
                 if (_settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
@@ -1204,6 +1255,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             int xPosition = 0;
             int yPosition = 0;
+            // iterate over every pair per runtime
             foreach (var pair in _sortedRuntimes)
             {
                 double time = pair.Key;
@@ -1245,6 +1297,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         _gnuPlotDataOutput += currentDecryptedPercentage + "\t\t\t\t";
                 }
 
+                // set the according values for the second y-axis
                 if (_settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
@@ -1361,9 +1414,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary> 
+        /// Generates the GnuPlot script output and sets the _gnuPlotScriptOutput variable.
+        /// </summary>
         public void GenerateGnuPlotScriptOutput()
         {
             // generate the GnuPlot script output string
+            // build a header to guide the user
             _gnuPlotScriptOutput = "###########################################################" + NewLine;
             _gnuPlotScriptOutput += "# Gnuplot script for plotting data from output GnuPlotData" + NewLine;
             _gnuPlotScriptOutput += "# Save this GnuPlotScript output into a file named" + NewLine;
@@ -1418,16 +1475,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // # x-Axis settings
             _gnuPlotScriptOutput += "# x-Axis settings" + NewLine;
+            // if the x-axis value is runtime and runtime in enabled
             if (_settings.XAxis == XAxisPlot.runtime && !_noRuntime)
             {
-                // calculate normalized average Yvalues
+                // calculate normalized average y-values
                 double normalizedAverageXValues = CalculateNormalizedAverage(_xValuesArray, _settings.NormalizingFactor);
 
+                // calculate new graph ranges
                 int min = CalculateMinValue(_lowestXValue, normalizedAverageXValues, "x");
                 int max = CalculateMaxValue(_lowestXValue, _highestXValue, normalizedAverageXValues, "x");
 
-                // TODO: DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
-
+                // equality means both values are 0, so skip this line in that case
                 if (min != max)
                     _gnuPlotScriptOutput += "set xrange [" + min + ":" + max + "]" + NewLine;
             }
@@ -1435,12 +1493,15 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += "set xlabel \"" + _keyValue + "\"" + NewLine;
             _gnuPlotScriptOutput += NewLine;
 
-            // # y-Axis settings
+            // # y-axis settings
             _gnuPlotScriptOutput += "# y-Axis settings" + NewLine;
+            // if the y-axis value is a value in percent
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted ||
                 _settings.YAxis == YAxisPlot.percentDecrypted ||
                 _settings.YAxis == YAxisPlot.success)
             {
+                // depending on how many graphs and therefore lines in the legend are, we leave
+                // some space above the graph to move it beneath the legend
                 int percentUpper = 110;
                 if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted)
                     percentUpper += 14;
@@ -1454,12 +1515,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
             else
             {
-                // not percent, set yrange and ytics
+                // not percent, set yrange and ytics (not yet selectable in the UI)
             }
             _gnuPlotScriptOutput += "set ylabel \"" + _ylabel + "\"" + NewLine;
             _gnuPlotScriptOutput += NewLine;
 
-            // # second y-Axis settings
+            // # second y-axis settings
+            // make sure the second y-axis is enabled and the value exists
             if (_settings.Y2Axis != Y2AxisPlot.none &&
                 !(_settings.Y2Axis == Y2AxisPlot.runtime && _noRuntime) &&
                 !(_settings.Y2Axis == Y2AxisPlot.restarts && _noRestarts) &&
@@ -1470,30 +1532,33 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + NewLine;
                 _gnuPlotScriptOutput += "set y2label \"" + _val3 + "\"" + NewLine;
 
-                //    _settings.NormalizingFactor = 4; for runtime and decryptions
-
-                // calculate normalized average Yvalues
+                // calculate normalized average y-values
                 _normalizedAverageYValues = CalculateNormalizedAverage(_yValuesArray, _settings.NormalizingFactor);
 
+                // calculate new graph ranges
                 int min = CalculateMinValue(_lowestYValue, _normalizedAverageYValues, "y2");
                 int max = CalculateMaxValue(_lowestYValue, _highestYValue, _normalizedAverageYValues, "y2");
 
+                // format the runtime before plotting
                 if (_settings.Y2Axis == Y2AxisPlot.runtime)
                 {
                     //TODO: DateTime(_averageRuntime.Ticks).ToString("HH:mm:ss:FFFF");
                 }
 
+                // equality means both values are 0, so skip this line in that case
                 if (min != max)
                     _gnuPlotScriptOutput += "set y2range [" + min + ":" + max + "]" + NewLine;
                 _gnuPlotScriptOutput += NewLine;
             }
 
             // # plotting
+            // set the line style
             int style = 1;
             if (_settings.YAxis == YAxisPlot.percentDecrypted)
                 style = 2;
             int column = 3;
 
+            // add the plotting lines to the script
             _gnuPlotScriptOutput += "# plotting" + NewLine;
             _gnuPlotScriptOutput += "plot    \"" + _evalMethod + ".dat\" using 1:2 title '" + _val1 + "' with linespoints ls " + style;
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted)
@@ -1501,9 +1566,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _gnuPlotScriptOutput += " , \\" + NewLine + "        \"" + _evalMethod + ".dat\" using 1:3 title '" + _val2 + "' with linespoints ls 2" + NewLine;
                 column++;
             }
+
+            // if the second y-axis is enabled
             if (_settings.Y2Axis != Y2AxisPlot.none)
             {
                 _gnuPlotScriptOutput += "replot  \"" + _evalMethod + ".dat\" using 1:"+column+" title '" + _val3 + "' with linespoints ls 3 axes x1y2";
+                
+                // if the average of the second y-axis is activated
                 if (_settings.ShowY2Average)
                 {
                     _gnuPlotScriptOutput += " , \\" + NewLine;
@@ -1515,20 +1584,35 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
         }
 
+        /// <summary> 
+        /// Calculates the new minimum value of the GnuPlot graph range.
+        /// <param name="lowest">The lowest value of the graph</param>
+        /// <param name="avg">The average value of the graph</param>
+        /// <param name="axis">The axis whose range is to be calculated</param>
+        /// <returns>The range minimum of the plot</returns>
+        /// </summary>
         public int CalculateMinValue(double lowest, double avg, string axis)
         {
+            // initially set the minimum to the lowest value
             int min = (int)lowest;
+
+            // if the axis is the axis is the second y-axis and its value is decryptions
+            // calculate the minimum with this formula
             if (_settings.Y2Axis == Y2AxisPlot.decryptions && axis.Equals("y2"))
                 if (avg * 0.03 < 10)
                     min -= 10;
                 else
                     min -= (int) (avg * 0.03);
+            // if the axis is the axis is the second y-axis and its value is runtime OR
+            // if the axis is the x-axis, calculate the minimum with this formula
             else if ((_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
                 (axis.Equals("x")))
                 if (avg * 0.03 < 5)
                     min -= 5;
                 else
                     min -= (int)(avg * 0.03);
+            // if the axis is the axis is the second y-axis and its value is restarts
+            // calculate the minimum with this formula
             else if (_settings.Y2Axis == Y2AxisPlot.restarts && axis.Equals("y2"))
             {
                 if (avg * 0.03 < 2)
@@ -1540,9 +1624,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             return min;
         }
 
+        /// <summary> 
+        /// Calculates the new maximum value of the GnuPlot graph range.
+        /// <param name="lowest">The lowest value of the graph</param>
+        /// <param name="highest">The highest value of the graph</param>
+        /// <param name="avg">The average value of the graph</param>
+        /// <param name="axis">The axis whose range is to be calculated</param>
+        /// <returns>The range maximum of the plot</returns>
+        /// </summary>
         public int CalculateMaxValue(double lowest, double highest, double avg, string axis)
         {
+            // initially set the maximum to the highest value
             int max = (int)highest;
+
+            // if the axis is the axis is the second y-axis and its value is runtime OR
+            // if the axis is the y-axis, modify the max value before the actual calculation
             if ((_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
                  axis.Equals("x"))
                 if (avg * 0.3 < 2)
@@ -1550,11 +1646,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                     max += (int)(avg * 0.3);
 
+            // if the axis is the axis is the second y-axis and its value is runtime or decryptions OR
+            // if the axis is the y-axis, calculate the maximum with this formula
             if (_settings.Y2Axis == Y2AxisPlot.decryptions ||
                 (_settings.Y2Axis == Y2AxisPlot.runtime && axis.Equals("y2")) ||
                 axis.Equals("x"))
             {
-                // calculate distances to mean (/average)
+                // calculate distances to mean (average)
                 int lowestToMean = (int)avg - (int)lowest;
                 int highestToMean = (int)highest - (int)avg;
 
@@ -1565,6 +1663,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             return max;
         }
 
+        /// <summary> 
+        /// This method sets the EvaluationOutput and triggers RefreshGnuPlotOutputs().
+        /// </summary>
         public void RefreshEvaluationOutputs()
         {
             EvaluationOutput = _evaluationOutput;
@@ -1573,6 +1674,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             RefreshGnuPlotOutputs();
         }
 
+        /// <summary> 
+        /// This method sets the GnuPlot outputs and triggers the Property Changed Listener.
+        /// Additionally, the Number Decimal Separator is reset to comma or dot.
+        /// </summary>
         public void RefreshGnuPlotOutputs()
         {
             GnuPlotScriptOutput = _gnuPlotScriptOutput;
@@ -1612,9 +1717,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             ProgressChanged(0, 1);
             _testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
-            Console.WriteLine("--------------------------------------------");
         }
 
+        /// <summary>
+        /// Check if the key and plaintext are set correctly. Warn if the seed is missing.
+        /// </summary>
         public bool checkVariables()
         {
             if (String.IsNullOrEmpty(PlaintextInput) &&
@@ -1649,7 +1756,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void Execute()
         {
-           
+            // check if the variables are set
             if (!checkVariables())
             {
                 return;
@@ -1664,8 +1771,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _newPlaintext = false;
 
                 _keyCount++;
+                // update the progress bar
                 _progress = (int)Math.Round((double)_keyCount / _totalKeysInput * 100);
 
+                // visualize the evaluation process through the EvaluationOutput
                 if (String.IsNullOrEmpty(EvaluationOutput))
                     EvaluationOutput = _keyCount + " / " + _totalKeysInput + NewLine +
                         "0%" + NewLine + NewLine + "Current key number: " + _keyCount;
@@ -1687,9 +1796,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     RefreshGnuPlotOutputs();
                 }
 
+                // sending the input values to the outputs
                 PlaintextOutput = PlaintextInput;
                 KeyOutput = KeyInput;
 
+                // update the progress bar
                 if (_totalKeysInput > 0)
                     ProgressChanged(_keyCount-0.9, _totalKeysInput);
             }
@@ -1748,6 +1859,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     RefreshEvaluationOutputs();
                 }
 
+                // update the progress bar
                 if (_totalKeysInput > 0)
                     ProgressChanged(_keyCount, _totalKeysInput);
                 else
@@ -1757,6 +1869,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         /// <summary>
         /// Called once after workflow execution has stopped.
+        /// Emptying the evaluation variables.
         /// </summary>
         public void PostExecution()
         {
@@ -1799,15 +1912,27 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #region General Methods
 
+        /// <summary> 
+        /// This method is checking the difference between each value in the array
+        /// and its direct neighbour. If the difference is bigger than the given
+        /// factor, the big value is removed before the new normalized average
+        /// value of the array is calculated and returned.
+        /// <param name="arr">The array to calculate the normalized average of</param>
+        /// <param name="normalizingFactor">The factor for the minimum size difference</param>
+        /// <returns>The normalized average value of the given array</returns>
+        /// </summary>
         public double CalculateNormalizedAverage(double[] arr, int normalizingFactor)
         {
+            // sort the array first
             Array.Sort(arr);
 
+            // calculate the standard average
             double avg = 0;
             foreach (double val in arr)
                 avg += val;
             avg /= arr.Length;
 
+            // add all irrepresentable high values to the list
             List<double> irrepresentableValues = new List<double>();
             for (int j = 0; j < arr.Length - 1; j++)
             {
@@ -1815,6 +1940,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     continue;
 
                 // check if one decryptions value is x times bigger than the next value
+                // (4 seems to be a good factor for runtime and decryptions)
                 if (arr[j] * normalizingFactor < arr[j + 1])
                 {
                     for (int i = j + 1; i < arr.Length; i++)
@@ -1823,13 +1949,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
             }
 
+            // if there are were no high values found, return the standard average
             if (irrepresentableValues.Count == 0)
                 return avg;
 
+            // add up the irrepresentable values
             double IrrepresentableSum = 0;
             foreach (double val in irrepresentableValues)
                 IrrepresentableSum += val;
 
+            // calculate and return the normalized average by subtracting the sum of the irrepresentable
+            // values from the total sum and subtracting their count from the total count, before
+            // calculating the average and return the result
             return (avg * arr.Length - IrrepresentableSum) / (arr.Length - irrepresentableValues.Count);
         }
 
@@ -1863,6 +1994,24 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #endregion
     }
 
+    /// <summary> 
+    /// Implements the ExtendedEvaluationContainer as an extension of the
+    /// EvaluationContainer, adding the test series seed, the consecutive
+    /// key number, the key, the plaintext, the best key, the best plaintext,
+    /// the minimal necessary decryption percentage, the actual percentage,
+    /// and the success of the test run.
+    /// <param name="container">The standard evaluation container</param>
+    /// <param name="seed">The initial seed of the whole test series</param>
+    /// <param name="keyNumber">The consecutive number of the key</param>
+    /// <param name="key">The key from the generator</param>
+    /// <param name="plaintext">The plaintext from the generator</param>
+    /// <param name="bestKey">The best key from the cryptanalytic component</param>
+    /// <param name="bestPlaintext">The best plaintext from the cryptanalytic component</param>
+    /// <param name="minimalDecryption">The minimum necessary decryption percentage</param>
+    /// <param name="percentDecrypted">The percent decrypted the cryptanalytic component</param>
+    /// <param name="successfull">The success of the test run</param>
+    /// <returns>ExtendedEvaluationContainer</returns>
+    /// </summary>
     public class ExtendedEvaluationContainer : EvaluationContainer
     {
         /*
@@ -1894,19 +2043,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private double _percentDecrypted;
         private bool _successful;
 
+        // constructor to set the standard EvaluationContainer
         public ExtendedEvaluationContainer(EvaluationContainer e)
         {
             // set EvaluationContainer base class
             base.SetEvaluationContainer(e);
         }
 
-        public ExtendedEvaluationContainer(EvaluationContainer e, string seed, 
+        // constructor to set all evaluation values directly
+        public ExtendedEvaluationContainer(EvaluationContainer container, string seed, 
             int keyNumber, string key, string plaintext, string bestKey,
             string bestPlaintext, double minimalDecryption, double percentDecrypted,
             bool successfull)
         {
             // set EvaluationContainer base class
-            base.SetEvaluationContainer(e);
+            base.SetEvaluationContainer(container);
             this._testSeriesSeed = seed;
             this._keyNumber = keyNumber;
             this._key = key;
@@ -2028,10 +2179,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
     }
 
+    /// <summary> 
+    /// Extends the dictionary by AddOrIncrement and multiple Divide methods.
+    /// Updates are done in place.
+    /// <param name="dict">The dictionary to increment or divide in</param>
+    /// <param name="key">The key of the value to update</param>
+    /// <param name="newValue">The value to increment or dicide by</param>
+    /// <returns></returns>
+    /// </summary>
     public static class DictionaryExtention
     {
 
-        // Either Add or increment
+        // either Add or increment
         public static void AddOrIncrement<K>(this Dictionary<K, int> dict, K key, int newValue)
         {
             if (dict.ContainsKey(key))
@@ -2040,7 +2199,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 dict.Add(key, newValue);
         }
 
-        // Either Add or increment
+        // either Add or increment
         public static void AddOrIncrement<K>(this Dictionary<K, double> dict, K key, int newValue)
         {
             if (dict.ContainsKey(key))
@@ -2049,7 +2208,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 dict.Add(key, newValue);
         }
 
-        // Either Add or increment
+        // either Add or increment
         public static void AddOrIncrement<K>(this Dictionary<K, double> dict, K key, double newValue)
         {
             if (dict.ContainsKey(key))
@@ -2114,6 +2273,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
     }
 
+    /// <summary> 
+    /// Contains methods to calculate the levenshtein distance and the
+    /// percentage of similarity of two strings.
+    /// </summary>
     public static class SimilarityExtensions
     {
         /// <summary>

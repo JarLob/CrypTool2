@@ -22,6 +22,7 @@ using System.Windows;
 
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
+    // enums for the selectable options in the UI
     public enum XAxisPlot { ciphertextLength, keyLength, runtime };
     public enum YAxisPlot { success, percentDecrypted, successAndPercentDecrypted };
     public enum Y2AxisPlot { none, decryptions, restarts, tabuSetSizes, populationSizes, runtime };
@@ -30,6 +31,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     {
         public CryptAnalysisAnalyzerSettings(CryptAnalysisAnalyzer CAA)
         {
+            // initialize the settings with the current instance of the
+            // CryptAnalysisAnalyzer to be able to call methods in this
+            // instance from the settings
             this._CAA = CAA;
         }
 
@@ -54,8 +58,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #region General Settings
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// This is the minimum percentage that the decrypted ciphertext has to match the plaintext.
         /// </summary>
         [TaskPane("Minimal correct percentage", "This is a parameter tooltip", null, generalPaneIndex, false, ControlType.TextBox, null)]
         public double CorrectPercentage
@@ -72,8 +75,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// This setting enables or disables the runtime evaluation.
         /// </summary>
         [TaskPane("Calculate runtime", "Calculate the runtime of the algorithm", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
         public bool CalculateRuntime
@@ -91,8 +93,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #region GnuPlot Settings
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Selector for the x-axis value.
         /// </summary>
         [TaskPane("X-axis", "Values to show on the X-axis", "GnuPlot", gnuPlotPaneIndex, true, ControlType.ComboBox, new String[] { 
             "Ciphertext length", "Key length", "Runtime"})]
@@ -107,9 +108,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (value != _xAxis)
                 {
                     this._xAxis = value;
-                    //UpdateKeyFormatVisibility();
                     OnPropertyChanged("XAxis");
 
+                    // if there is a GnuPlot set, regenerate the GnuPlot and refresh all outputs
                     if (_CAA.GnuPlotScriptOutput != null)
                     {
                         _CAA.SetGnuPlotVariables();
@@ -122,8 +123,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Selector for the y-axis value.
         /// </summary>
         [TaskPane("Y-axis", "Values to show on the Y-axis", "GnuPlot", gnuPlotPaneIndex + 1, true, ControlType.ComboBox, new String[] { 
             "Success", "Percent decrypted", "Success and % decrypted"})]
@@ -138,9 +138,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (value != _yAxis)
                 {
                     this._yAxis = value;
-                    //UpdateKeyFormatVisibility();
                     OnPropertyChanged("YAxis");
 
+                    // if there is a GnuPlot set, regenerate the GnuPlot and refresh all outputs
                     if (_CAA.GnuPlotScriptOutput != null)
                     {
                         _CAA.SetGnuPlotVariables();
@@ -153,8 +153,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Selector for the second y-axis value.
         /// </summary>
         [TaskPane("Second Y-axis", "Values to show on the second Y-axis", "GnuPlot", gnuPlotPaneIndex + 2, true, ControlType.ComboBox, new String[] { 
             "None", "Decryptions", "Restarts", "Tabu set sizes", "Population sizes", "Runtime"})]
@@ -169,7 +168,6 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (value != _y2Axis)
                 {
                     this._y2Axis = value;
-                    //UpdateKeyFormatVisibility();
                     OnPropertyChanged("Y2Axis");
                     if (value == Y2AxisPlot.none)
                     {
@@ -177,6 +175,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         OnPropertyChanged("ShowY2Average");
                     }
 
+                    // if there is a GnuPlot set, regenerate the GnuPlot and refresh all outputs
                     if (_CAA.GnuPlotScriptOutput != null)
                     {
                         _CAA.SetGnuPlotVariables();
@@ -189,8 +188,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// Enables the average graph of the second y-axis in GnuPlot.
         /// </summary>
         [TaskPane("Average of second Y-axis", "Show the average of the second Y-axis", "GnuPlot", gnuPlotPaneIndex + 3, true, ControlType.CheckBox)]
         public bool ShowY2Average
@@ -204,6 +202,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     this._showY2Average = value;
                     OnPropertyChanged("ShowY2Average");
 
+                    // if there is a GnuPlot set, regenerate the script and refresh the outputs
                     if (_CAA.GnuPlotScriptOutput != null)
                     {
                         _CAA.GenerateGnuPlotScriptOutput();
@@ -214,10 +213,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
+        /// The factor by which outstandingly high values have to be higher than the preceding
+        /// value to be ignored in the standard focus range of the GnuPlot.
         /// </summary>
-        [TaskPane("Normalize axis ranges factor", "Size factor to start normalizing single high values on the axis ranges", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("Normalize axis ranges factor", "The factor by which outstandingly high values have to be higher than the preceding value to be ignored in the standard focus range of the GnuPlot", "GnuPlot", gnuPlotPaneIndex + 4, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int NormalizingFactor
         {
             get
@@ -233,42 +232,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         #endregion
 
-        #region UI Updates
-
-        /*
-        internal void UpdateTaskPaneVisibility()
-        {
-            settingChanged("KeyFormat", Visibility.Collapsed);
-
-            switch (KeyGeneration)
-            {
-                case GenerationType.naturalSpeech: // natural speech
-                    settingChanged("KeyFormat", Visibility.Visible);
-                    break;
-                case GenerationType.random: // random generation
-                    // TODO: change to invisible when input alphabet or regex is implemented
-                    settingChanged("KeyFormat", Visibility.Visible);
-                    break;
-            }
-        }
-
-        private void settingChanged(string setting, Visibility vis)
-        {
-            if (TaskPaneAttributeChanged != null)
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(setting, vis)));
-        }*/
-
-        #endregion
-
         #region Events
 
-        //public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
-
         public event PropertyChangedEventHandler PropertyChanged;
-        public void Initialize()
-        {
 
-        }
+        public void Initialize(){}
 
         private void OnPropertyChanged(string propertyName)
         {

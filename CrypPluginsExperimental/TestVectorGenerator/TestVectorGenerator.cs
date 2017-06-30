@@ -44,7 +44,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private string _alphabetInput;
         private string _plaintextOutput;
         private string _debugOutput;
-        private string _singleKeyOutput;
+        private string _keyOutput;
 
         private int _testRunCount = 0;
         private string[] _inputArray;
@@ -58,11 +58,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private bool _notFound = false;
         ConcurrentDictionary<int, int> _occurrences;
         
-
         #endregion
 
         #region Data Properties
 
+        /// <summary>
+        /// The input text from which the plaintexts are taken.
+        /// </summary>
         [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description", true)]
         public string TextInput
         {
@@ -74,6 +76,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        /// <summary>
+        /// The seed which initializes the random number generator.
+        /// </summary>
         [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description", true)]
         public string SeedInput
         {
@@ -90,6 +95,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        /// <summary>
+        /// The regex pattern as string (optional).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "RegexInput", "RegexInput tooltip description")]
         public string RegexInput
         {
@@ -101,6 +109,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
+        /// <summary>
+        /// The additional alphabet input (optional).
+        /// </summary>
         [PropertyInfo(Direction.InputData, "AlphabetInput", "AlphabetInput tooltip description")]
         public string AlphabetInput
         {
@@ -112,13 +123,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
         }
 
-        [PropertyInfo(Direction.OutputData, "SingleKeyOutput", "SingleKeyOutput tooltip description")]
-        public string SingleKeyOutput
+        /// <summary>
+        /// The current key (for the CryptAnalysisAnalyzer).
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
+        public string KeyOutput
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// The current plaintext (for the CryptAnalysisAnalyzer).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
         public string PlaintextOutput
         {
@@ -126,6 +143,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set;
         }
 
+        /// <summary>
+        /// The total number of keys (for the CryptAnalysisAnalyzer).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "TotalKeys", "TotalKeys tooltip description")]
         public int TotalKeys
         {
@@ -133,6 +153,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             set;
         }
 
+        /// <summary>
+        /// The debug output for additional information (usable with the string output component).
+        /// </summary>
         [PropertyInfo(Direction.OutputData, "DebugOutput", "DebugOutput tooltip description")]
         public string DebugOutput
         {
@@ -148,21 +171,30 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region Generate Plaintext
 
+        /// <summary>
+        /// Generates the plaintext according to the settings.
+        /// </summary>
         public void generatePlaintext()
         {
             // check if plaintext list contains all elements, break if so
             if (_plaintextList.Count == _settings.NumberOfTestRuns)
                 return;
 
+            // if the current text length is 0, set it to the specified minimum
             if (_currentTextLength == 0)
                 _currentTextLength = _settings.MinTextLength;
 
+            // generate the first starting sentence index of the input array
             _startSentence = _rand.Next(0, _inputArray.Length);
             int count = 0;
+
+            // generate a new starting sentence as long as it has the same beginning as a preceding one
             while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
             {
                 _startSentence = _rand.Next(0, _inputArray.Length);
                 count++;
+
+                // break the loop after going through the array 3 times and return
                 if (count > _inputArray.Length * 3)
                 {
                     GuiLogMessage("Text input seems to be too short for the entered amount of plaintexts!", NotificationLevel.Error);
@@ -171,15 +203,23 @@ namespace Cryptool.Plugins.TestVectorGenerator
             }
 
             _plaintextOutput = "";
+            // iterate over the input array, starting at the start sentence
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
+                // append next sentence as long as current text length reached
+                // replace spaces and dots as specified in the settings
                 _plaintextOutput = _plaintextOutput + replaceSpaces(replaceDots(_inputArray[i]));
                 if (_plaintextOutput.Length >= _currentTextLength)
                 {
+                    // cut the final plaintext to the exact specified length
                     string finalPlaintext = _plaintextOutput.Substring(0, _currentTextLength);
+
+                    // add the final plaintext to the list, set the output and increment counter
                     _plaintextList.Add(finalPlaintext);
                     _plaintextOutput = finalPlaintext;
                     _calculatedTextsCurrentLength++;
+
+                    // increase current text length if number of texts per length is reached and reset counter
                     if (_settings.PlaintextsPerLength != 0 &&
                         _calculatedTextsCurrentLength >= _settings.PlaintextsPerLength)
                     {
@@ -195,11 +235,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
         #region Generate Keys
 
+        /// <summary>
+        /// Generates the natural speech key according to the settings.
+        /// </summary>
         public void generateNaturalSpeechKeys()
         {
+            // generate the first starting sentence index of the input array
             _startSentence = _rand.Next(0, _inputArray.Length);
-            //GuiLogMessage("_seedInput: " + _seedInput + ", StartSentence: " + _startSentence, NotificationLevel.Debug);
-
+            
+            // if the occurrences dictionary is not defined yet, initialize it with
+            // all lengths to generate and 0 occurrences per length
             if (_occurrences == null)
             {
                 _occurrences = new ConcurrentDictionary<int, int>();
@@ -207,15 +252,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 for (int i = _settings.MinKeyLength; i <= _settings.MaxKeyLength; i++)
                 {
                     _occurrences.AddOrUpdate(i, 0, (id, count) => 0);
-                    //GuiLogMessage("Initialize: " + i, NotificationLevel.Debug);
                 }
             }
 
+            // replace the spaces in the current sentence if specified in the settings
             string sentence = replaceSpaces(_inputArray[_startSentence]);
             int originalStartSentence = _startSentence;
-            //GuiLogMessage("Checking sentence: \"" + sentence + "\"", NotificationLevel.Debug);
 
             int sentenceLength = sentence.Length;
+            // the smallest missing length will be set in the loop below
             int smallestMissingLength = -1;
 
             while (true)
@@ -227,11 +272,15 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 int lengthOccurrences = 0;
 
                 // if no complete sentence could be found, search for a longer one and cut it
+                // #2 This is part two of the search
                 if (_notFound && sentenceLength > _settings.MaxKeyLength)
                 {
+                    // if the smallest missing length is -1, set it to the minimum key
+                    // length minus 1 (to balance out the first ++ below in the while loop)
                     if (smallestMissingLength == -1)
                         smallestMissingLength = _settings.MinKeyLength - 1;
 
+                    // set the occurrences to the maximum to enter the while loop below
                     lengthOccurrences = _settings.KeysPerLength;
 
                     // search for the smallest sentence/key length that is missing
@@ -239,6 +288,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         lengthOccurrences == _settings.KeysPerLength)
                     {
                         smallestMissingLength++;
+                        // get the occurrences of the current smallest length
                         _occurrences.TryGetValue(smallestMissingLength, out lengthOccurrences);
                     }
 
@@ -260,6 +310,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     _occurrences.TryGetValue(sentenceLength, out lengthOccurrences);
                 }
 
+                // #1 this is part one of the search
                 if (sentenceLength >= _settings.MinKeyLength &&
                         sentenceLength <= _settings.MaxKeyLength &&
                         lengthOccurrences < _settings.KeysPerLength &&
@@ -271,8 +322,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     // if the letters should be replaced by numbers, do so
                     if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
                     {
-                        sentence = ConvertToNumericKey(sentence);
-                        //replaceLettersByNumbersWithSpaces();
+                        if (_settings.UniqueSymbolUsage)
+                            sentence = ConvertToUniqueNumericKey(sentence);
+                        else
+                            sentence = ConvertToNumericKey(sentence);
                     }
                     else
                     {
@@ -280,12 +333,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         sentence = AddSeparator(sentence);
                     }
 
-                    _singleKeyOutput = sentence;
+                    _keyOutput = sentence;
 
                     return;
                 }
 
+                // set the sentence to the next one in the array (returning to zero after maximum)
                 _startSentence = _startSentence == _inputArray.Length - 1 ? 0 : _startSentence + 1;
+                // replace the spaces and get the current length
                 sentence = replaceSpaces(_inputArray[_startSentence]);
                 sentenceLength = sentence.Length;
 
@@ -297,11 +352,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     {
                         return;
                     }
+
+                    // at this point, we switch from #1 to #2, starting to search longer
+                    // sentences than the actual necessary lengths (and cut them)
                     _notFound = true;
                 }
             }
         }
 
+        /// <summary>
+        /// Adds the specified separator between the key symbols.
+        /// </summary>
         private string AddSeparator(string str)
         {
             char[] arr = str.ToArray();
@@ -315,8 +376,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
             return result;
         }
 
+        /// <summary>
+        /// Selects the key alphabet and triggers the random key generation.
+        /// </summary>
         public void generateRandomKeys()
         {
+            // only generate keys if the number of test runs was not completed
             if (_lastKeyLengthIndex == -1)
             {
                 _lastKeyLengthIndex = 0;
@@ -330,6 +395,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 return;
             }
 
+            // find the current alphabet and put it into the alphabet list
             var alphabet = new List<string>();
             if (_settings.KeyFormatRandom == FormatType.letters)
             {
@@ -356,23 +422,37 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 alphabet = "0 1".Split(' ').ToList();
             }
 
+            // generate the random key 
             string randomKey = GenerateRandomKeyWithAlphabet(alphabet, 
                 _settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeysPerLength);
 
             if (randomKey == null)
                 return;
-            //GuiLogMessage("randomKey: " + randomKey + "(" + randomKey.Length + "), lastKeyLengthIndex: " + lastKeyLengthIndex, NotificationLevel.Info);
-
-            _singleKeyOutput = randomKey;
+            
+            _keyOutput = randomKey;
         }
 
+        /// <summary>
+        /// Triggers the random key generation with a separator repetition of 1.
+        /// <param name="alphabet">The alphabet list containing the alphabet symbols</param>
+        /// <param name="length">The requested length of the key</param>
+        /// <returns>The generated random key</returns>
+        /// </summary>
         public string GenerateRandomKeyWithAlphabet(List<string> alphabet, int length)
         {
             return GenerateRandomKeyWithAlphabet(alphabet, length, 1);
         }
 
+        /// <summary>
+        /// Generates the random key from the given input alphabet of the given length.
+        /// <param name="alphabet">The alphabet list containing the alphabet symbols</param>
+        /// <param name="length">The requested length of the key</param>
+        /// <param name="separatorRepeat">The number of key symbols after which the separator is inserted</param>
+        /// <returns>The generated random key</returns>
+        /// </summary>
         public string GenerateRandomKeyWithAlphabet(List<string> alphabet, int length, int separatorRepeat)
         {
+            // throw error if the alphabet does not contain enough letters for a unique key generation
             if (length > alphabet.Count && _settings.UniqueSymbolUsage)
             {
                 GuiLogMessage("Alphabet length (" + alphabet.Count + ") is too short to generate a string of length " + length + " of unique letters!", NotificationLevel.Error);
@@ -381,14 +461,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
             string randomKey = "";
 
+            // run the loop body once for each key symbol
             for (int j = 0; j < length; j++)
             {
+                // generate the next index of the alphabet list
                 int i = _rand.Next(0, alphabet.Count - 1);
 
+                // take the element at the random index and remove it if the key should be unique
                 string symbol = alphabet.ElementAt(i);
                 if (_settings.UniqueSymbolUsage)
                     alphabet.RemoveAt(i);
 
+                // append the random key by the taken symbol 
+                // (separated by the separator in the specified frequency)
                 if (randomKey == "")
                     randomKey = symbol;
                 else if (j % separatorRepeat == 0)
@@ -400,9 +485,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
             return randomKey;
         }
 
+        /// <summary>
+        /// Searches the short version of an alphabet in the given string or splits the given symbols.
+        /// <param name="alphabetString">The alphabet string containing the alphabet (e.g. in short version)</param>
+        /// <returns>The alphabet as a list of strings</returns>
+        /// </summary>
         public List<string> FindAlphabet(string alphabetString)
         {
+            if (String.IsNullOrEmpty(_alphabetInput))
+                return null;
+
             List<string> alphabet = null;
+
+            // if the string contains a dash, search for abbreviated alphabet representations
             if (alphabetString.Contains("-"))
             {
                 if (Regex.IsMatch(alphabetString, @"a-zA-Z"))
@@ -440,6 +535,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
                 else
                 {
+                    // if no abbreviated representation could be found, split at the dash
+                    // and check whether the upper and lower symbols are numeric or letters
                     string[] alphabetBounds = alphabetString.Split('-');
                     bool upperIsNumeric = Regex.IsMatch(alphabetBounds[1], @"[0-9]");
                     bool upperIsLetter = Regex.IsMatch(alphabetBounds[1], @"[a-zA-Z]");
@@ -447,6 +544,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     bool lowerIsNumeric = Regex.IsMatch(alphabetBounds[0], @"[0-9]");
                     bool lowerIsLetter = Regex.IsMatch(alphabetBounds[0], @"[a-zA-Z]");
 
+                    // if both are different or not numeric or a letter, return null
                     if (!upperIsNumeric && !upperIsLetter ||
                         !lowerIsNumeric && !lowerIsLetter ||
                         !upperIsNumeric && lowerIsNumeric ||
@@ -456,6 +554,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         return null;
                     }
 
+                    // for numeric symbols try to parse the upper and lower bounds to get the alphabet
                     if (upperIsNumeric)
                     {
                         int lower;
@@ -476,6 +575,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                             alphabet.Add(i.ToString());
                         }
                     }
+                    // for letter symbols try to parse the upper and lower bounds to get the alphabet
                     else if (upperIsLetter)
                     {
                         string lowerUpperAlphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -492,33 +592,31 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     }
                 }
             }
+            // if the string contains pipes or spaces, split at those and 
+            // return the result as alphabet list
             else if (alphabetString.Contains("|"))
             {
                 alphabet = alphabetString.Split('|').ToList();
-
             }
-            else if (!String.IsNullOrEmpty(_alphabetInput))
+            else if (_alphabetInput.Contains(' '))
             {
-                if (_alphabetInput.Contains(' '))
-                {
-                    alphabet = _alphabetInput.Split(' ').ToList();
-                }
-                else
-                {
-                    alphabet = _alphabetInput.Select(c => c.ToString()).ToList();
-                }
+                alphabet = _alphabetInput.Split(' ').ToList();
             }
+            // if nothing else matched, split each symbol and return the result as alphabet list
             else
             {
-                GuiLogMessage("Alphabet not recognized!", NotificationLevel.Error);
-                return null;
+                alphabet = _alphabetInput.Select(c => c.ToString()).ToList();
             }
 
             return alphabet;
         }
 
+        /// <summary>
+        /// Generates the reverse regex random keys according to the settings.
+        /// </summary>
         public void generateRandomKeysWithRegex()
         {
+            // only generate keys if the number of test runs was not completed
             if (_lastKeyLengthIndex == -1)
             {
                 _lastKeyLengthIndex = 0;
@@ -532,15 +630,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 return;
             }
 
+            // check for $length and $unique variables
             var str = _regexInput;
-            if (str.Contains("$amount"))
+            if (str.Contains("$length"))
             {
+                // replace $length with the current key length
                 int length = _settings.MinKeyLength + _lastKeyLengthIndex / _settings.KeysPerLength;
-                str = str.Replace("$amount", length.ToString());
+                str = str.Replace("$length", length.ToString());
             }
             while (str.Contains("$unique"))
             {
-                //$unique([0-24]{25})
+                // parse the $unique string using this format: $unique([A-Z](1){3})
                 int uniqueIndex = str.IndexOf("$unique");
                 string beforeUnique = str.Substring(0, uniqueIndex);
                 string uniqueString = str.Substring(uniqueIndex, str.Length - uniqueIndex);
@@ -563,6 +663,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     {
                         nextClosingBracketIndex = uniqueString.IndexOf(")", nextBracketIndex+1);
                         nextOpeningBracketIndex = uniqueString.IndexOf("(", nextBracketIndex+1);
+
+                        // multiple round opening brackets are not supported yet
                         if (nextOpeningBracketIndex != -1 &&
                             nextOpeningBracketIndex < nextClosingBracketIndex)
                         {
@@ -586,6 +688,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         }
                     }
 
+                    // retrieve definitive unique string end index
                     uniqueEndIndex = uniqueString.IndexOf(")", nextClosingBracketIndex+1);
                 }
 
@@ -593,20 +696,21 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 if (uniqueEndIndex < uniqueString.Length - 1)
                     afterUnique = uniqueString.Substring(uniqueEndIndex + 1, uniqueString.Length - (uniqueEndIndex + 1));
 
+                // remove the $unique surrounding
                 uniqueString = uniqueString.Substring(0, uniqueEndIndex);
                 uniqueString = uniqueString.Replace("$unique(", "");
                 
-                
-                // find values for manual generation in unique string
+                // find alphabet and length (repetition) for manual random key generation in unique string
                 string alphabetString = uniqueString.Between("[", "]");
-                string repeatString = uniqueString.Between("{", "}");
-                int repeatInt;
-                if (!int.TryParse(repeatString, out repeatInt))
+                string lengthString = uniqueString.Between("{", "}");
+                int length;
+                if (!int.TryParse(lengthString, out length))
                 {
-                    GuiLogMessage("Error parsing repetition string!", NotificationLevel.Error);
+                    GuiLogMessage("Error parsing length string!", NotificationLevel.Error);
                     return;
                 }
 
+                // get the alphabet as list
                 List<string> alphabet = FindAlphabet(alphabetString);
                 if (alphabet == null)
                     return;
@@ -615,60 +719,71 @@ namespace Cryptool.Plugins.TestVectorGenerator
 
                 if (firstOpeningBracketIndex < firstClosingBracketIndex)
                 {
+                    // find the separator repeat frequency and generate random key
                     string separatorRepeatString = uniqueString.Between("(", ")");
                     int separatorRepeat;
                     if (int.TryParse(separatorRepeatString, out separatorRepeat))
-                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt, separatorRepeat);
+                        // if the separator repeat frequency can be retrieved use it
+                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, length, separatorRepeat);
                     else
-                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt);
+                        // otherwise use 1 as frequency and generate
+                        randomKey = GenerateRandomKeyWithAlphabet(alphabet, length);
                 }
                 else
                 {
-                    randomKey = GenerateRandomKeyWithAlphabet(alphabet, repeatInt);
+                    // if no repetition separator is specified, use 1
+                    randomKey = GenerateRandomKeyWithAlphabet(alphabet, length);
                 }
                 if (randomKey == null)
                     return;
 
+                // replace complete $unique variable in regex pattern with new random key
                 str = beforeUnique + randomKey + afterUnique;
             }
 
-            // begin reverse regex generation
+            // begin reverse regex generation through Xeger (wrapped for C# by Fare)
             var regex = @str;
             var xeger = new Fare.Xeger(regex, _rand);
             var regexString = xeger.Generate();
 
+            // repeat generation until the key is a new one
             while (_keyList.Contains(regexString))
             {
                 regexString = xeger.Generate();
             }
 
+            // add the key to the list
             _keyList.Add(regexString);
 
-            // TESTING ONLY!
-            //regexString = regexString + " (" + regexString.Length + ")";
-            //GuiLogMessage("regexString: " + regexString, NotificationLevel.Warning);
-
+            // double check if the key matches the regex pattern
             if (!Regex.IsMatch(regexString, regex))
             {
                 GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
 
             }
 
-            _singleKeyOutput = regexString;
+            // set the key output
+            _keyOutput = regexString;
         }
 
         #endregion
 
         #region General Methods
 
+        /// <summary>
+        /// Check if the current input variables and correct some.
+        /// </summary>
         public bool checkVariables()
         {
+            // set the min and max text lengths equal and the increase 
+            // to 0 for disabled extended settings
             if (!_settings.ShowExtendedSettings)
             {
                 _settings.MaxTextLength = _settings.MinTextLength;
                 _settings.TextLengthIncrease = 0;
             }
 
+            // check for an input text and seed
             if (String.IsNullOrEmpty(_textInput))
             {
                 GuiLogMessage("The input text is missing!", NotificationLevel.Error);
@@ -681,6 +796,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 return false;
             }
 
+            // check for a regex input if regex is selected
             if (String.IsNullOrEmpty(_regexInput) &&
                 _settings.KeyGeneration == GenerationType.regex)
             {
@@ -688,24 +804,28 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 return false;
             }
 
+            // check if the min key length if higher than the max and throw an error if
             if (_settings.MinKeyLength > _settings.MaxKeyLength)
             {
                 GuiLogMessage("Maximum key length has to be at least minimum key length!", NotificationLevel.Warning);
                 _settings.MaxKeyLength = _settings.MinKeyLength;
             }
 
+            // check if the min text length if higher than the max and throw an error if
             if (_settings.MinTextLength > _settings.MaxTextLength)
             {
                 GuiLogMessage("Maximum text length has to be at least minimum text length!", NotificationLevel.Warning);
                 _settings.MaxTextLength = _settings.MinTextLength;
             }
 
+            // check if the text length increase is to big and throw an error if
             if (_settings.TextLengthIncrease > _settings.MaxTextLength - _settings.MinTextLength)
             {
                 GuiLogMessage("The text length increase has to be at most the difference between minimum and maximum text length!", NotificationLevel.Warning);
                 _settings.TextLengthIncrease = _settings.MaxTextLength - _settings.MinTextLength;
             }
 
+            // check if the input text is big enough, through an error if not
             if (_textInput.Length < _settings.MinKeyLength ||
                 _textInput.Length < _settings.MinTextLength)
             {
@@ -713,9 +833,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 return false;
             }
 
+            // if all variables are set correctly, return true
             return true;
         }
-
+        
+        /// <summary> 
+        /// Replaces or deletes the dots (full stops) in the given string
+        /// according to the settings.
+        /// <param name="text">The text to modify</param>
+        /// <returns>The modified text</returns>
+        /// </summary>
         public string replaceDots(string text)
         {
             // text modifications according to user settings
@@ -727,6 +854,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
             return text;
         }
 
+        /// <summary> 
+        /// Deletes the spaces in the given string according to the settings.
+        /// <param name="text">The text to modify</param>
+        /// <returns>The modified text</returns>
+        /// </summary>
         public string replaceSpaces(string text)
         {
             // text modifications according to user settings
@@ -735,6 +867,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             return text;
         }
 
+        /// <summary> 
+        /// Processes the text input array according to the settings.
+        /// </summary>
         public void processTextSettings()
         {
             // text modifications according to user settings
@@ -781,6 +916,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _textInput = _textInput.ToUpper();
         }
 
+        /// <summary> 
+        /// Preprocesses the input text and split it into the text array.
+        /// </summary>
         public void preProcessTextInput()
         {
             // replace double minus and newlines by space and ? and ! by full stops
@@ -809,7 +947,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _inputArray = TextInput.Split('.');
         }
 
-        public String ConvertToNumericKey(String key)
+        /// <summary> 
+        /// Convert a letter key to a numeric key with unique consecutive numbers.
+        /// </summary>
+        public String ConvertToUniqueNumericKey(String key)
         {
             char[] chars = key.ToCharArray();
             int[] numbers = new int[chars.Length];
@@ -845,33 +986,43 @@ namespace Cryptool.Plugins.TestVectorGenerator
             String numericKey = numbers[0].ToString();
             for (int i = 1; i < numbers.Length; i++)
                 numericKey += _settings.Separator + numbers[i];
-            //Console.WriteLine("numericKey: " + numericKey);
 
             return numericKey;
         }
 
-        public void replaceLettersByNumbersWithSpaces()
+        /// <summary> 
+        /// Convert a letter key to a numeric key with the numbers 1-26.
+        /// </summary>
+        public void ConvertToNumericKey()
         {
-            char[] chars = _singleKeyOutput.ToCharArray();
-            string transpositionKey = "";
+            char[] chars = _keyOutput.ToCharArray();
+            string numericKey = "";
             foreach (char ch in chars)
             {
-                try
+                List<string> alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".Select(c => c.ToString()).ToList();
+                numericKey += alphabet.indexOf(i);
+                /*try
                 {
-                    string space = "";
-                    if (!String.IsNullOrEmpty(transpositionKey))
-                        space = " ";
-                    transpositionKey = transpositionKey + space + (Convert.ToInt32(ch) - Convert.ToInt32('A'));
+                    numericKey += (Convert.ToInt32(ch) - Convert.ToInt32('A'));
                 }
                 catch (OverflowException)
                 {
                     GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
-                }
+                }*/
             }
 
-            _singleKeyOutput = transpositionKey;
-        }
+            // add the separator
+            numericKey = AddSeparator(numericKey);
 
+            return numericKey;
+        }
+        
+        /// <summary> 
+        /// Checks the stringToHash for UTF8 encoding, hashes it with SHA1,
+        /// and converts the hash to a 32-bit integer.
+        /// <param name="stringToHash">The string to hash and convert</param>
+        /// <returns>The integer representation of the SHA1 hash</returns>
+        /// </summary>
         public static int SHA1AsInt32(string stringToHash)
         {
             using (var sha1 = new SHA1Managed())
@@ -913,39 +1064,44 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void Execute()
         {
+            // check if the number of test runs has already been processed
             if (_testRunCount >= _settings.NumberOfTestRuns)
             {
-                //Console.WriteLine("Number of keys to generate already reached! Skipping generation...");
-                //GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
+                GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
                 return;
             }
 
+            // update the progress bar
             if (_testRunCount > 0)
                 ProgressChanged(_testRunCount - 1, _settings.NumberOfTestRuns);
             else
                 ProgressChanged(0, _settings.NumberOfTestRuns);
 
+            // check the input variables
             if (!checkVariables())
                 return;
 
+            // preprocess the input text in the first execution
             if (_inputArray == null)
                 preProcessTextInput();
 
+            // initialize the pseudo-random number generator with the current seed
             _rand = new System.Random(_seedInput);
-            //GuiLogMessage("_seedInput: " + _seedInput, NotificationLevel.Info);
 
+            // generate the plaintext
             if (_settings.MinTextLength > 0)
                 generatePlaintext();
 
+            // update progress bar
             ProgressChanged(_testRunCount - 0.5, _settings.NumberOfTestRuns);
 
+            // generate key
             if (_settings.KeyGeneration == GenerationType.naturalSpeech)
             {
                 generateNaturalSpeechKeys();
             }
             else if (_settings.KeyGeneration == GenerationType.regex)
             {
-                //generateSingleRandomKeysWithRegex();
                 generateRandomKeysWithRegex();
             }
             else
@@ -953,15 +1109,17 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 generateRandomKeys();
             }
 
-            if (!string.IsNullOrEmpty(_singleKeyOutput) &&
+            // fill the outputs
+            if (!string.IsNullOrEmpty(_keyOutput) &&
                 !string.IsNullOrEmpty(_plaintextOutput))
             {
-                SingleKeyOutput = _singleKeyOutput;
+                KeyOutput = _keyOutput;
                 PlaintextOutput = _plaintextOutput;
-                OnPropertyChanged("SingleKeyOutput");
+                OnPropertyChanged("KeyOutput");
                 OnPropertyChanged("PlaintextOutput");
             }
 
+            // increment the test run counter and set the total keys output
             _testRunCount++;
             if (_testRunCount <= 1) {
                 TotalKeys = _settings.NumberOfTestRuns;
@@ -976,13 +1134,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void PostExecution()
         {
+            // reset the variables
             _textInput = null;
             _seedInput = new int();
             _regexInput = null;
             _alphabetInput = null;
             _plaintextOutput = null;
             _debugOutput = null;
-            _singleKeyOutput = null;
+            _keyOutput = null;
 
             _testRunCount = 0;
             _inputArray = null;
