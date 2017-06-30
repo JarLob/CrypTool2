@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<documentation>
+  <language culture="en"/>
+  <!-- <language culture="de-DE"/> -->
+
+  <introduction lang="en">
+    This component is designed to generate test vectors in the form of plaintexts and keys for all classical cryptanalytic CrypTool 2 components (as of July 2017). The first use case is generating pure test vectors in the form of ciphertexts and keys by using the according cryptographic component to encrypt the plaintexts. The second use case is the analysis of the cryptanalytic component with the generated test vectors through the CryptAnalysisAnalyzer component.
+
+    <section headline="History">
+      A general test vector generator which makes analytic results comparable is available in most computer science fields, but not in the cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium from the beginning of 2017), Nils Kopal explains how important standard test vectors are for the field of cryptanalysis, for the purpose of comparison of different algorithms.
+    </section>
+
+    <section headline="Algorithm">
+      The generation of the plaintexts and keys is based on a pseudo-random number generator that is seeded with the seed the user provides. This makes it reproducible with the same input values.
+      <newline/>
+      The plaintext is generated in this way:
+      <newline/>
+      <newline/>
+      For the plaintext and the natural speech keys, the input text (usually a book in text format) is processed by some initial aspects (like removing all characters unlike letters, numbers, spaces, full stops; replacing question and exclamation marks by full stops first) and splitting it to complete sentences which are put into an array. The plaintext generation is basically choosing a (never occurred until now) starting sentence and appending following sentences until the specified plaintext length is exceeded. Then the plaintext is cut to the specified length and given to the output connector. The plaintext length and specifics can be selected through the component settings.
+      <newline/>
+      The natural speech keys are generated in this way:
+      <newline/>
+      <newline/>
+      Starting at a random starting sentence, the first step is searching a sentence of the exact specified length (that was not used as starting sentence before). If that fails, larger sentences are searched and cut to the specified length. All modifications according to the settings are done to the key (like replacing numbers or umlauts).
+      <newline/>
+      The random keys are generated like this:
+      <newline/>
+      <newline/>
+      First, the alphabet from which the key symbols are taken is prepared as a list of strings (this alphabet can be chosen through the drop-down menu or the alphabet input). The next step is taking a random element from the list repeatedly until the specified key length is reached. If the unique symbol usage setting is enabled, the element is directly removed from the list and not used twice.
+      <newline/>
+      The reverse regex keys are generated like this:
+      <newline/>
+      <newline/>
+      A regular expression is a pattern that defines rules for a set of strings. All strings that follow these rules match the pattern. The regex input takes a regex pattern from the user and the reverse regex generator builds a random string matching this pattern (using the pseudo-random number generator, seeded with the input seed). Additional functionalities are the special $length and $unique variables. The $length variable is replaced through the current calculated length that the key has to have. The $unique variable is parsed, a random key is generated using the parsed parameters, and the $unique variable is replaced by that key. After both replacements, the reverse regex generation is continued as usual (see usage for more details).
+    </section>
+  </introduction>
+
+  <introduction lang="de-DE">
+    
+    <section headline="Geschichte">
+      
+    </section>
+
+    <section headline="Algorithmus">
+      Beschreibung
+      <newline/>
+      Überschrift
+      <newline/>
+      <newline/>
+      
+      <newline/>
+      <newline/>
+      <img src="uri"/>
+    </section>
+  </introduction>
+
+  <usage lang="en">
+    The TestVectorGenerator has two mandatory input connectors: text and seed. The optional inputs are the regex pattern and the alphabet.
+    <newline/>
+    <newline/>
+    <b>Text input:</b>
+    <newline/>
+    The text to input should be a large text in natural English (like a children's book).
+    <newline/>
+    <newline/>
+    <b>Seed input:</b>
+    <newline/>
+    The seed can be any string. Together with the settings, text and seed are necessary to reproduce the generated test vectors. In order to get a new test vector, the seed has do be updated, by setting it to one of the previous test values (the second test vector has to be based on the first one to make the generation reproducible; the easiest way is to use the current key as the next seed).
+    <newline/>
+    <newline/>
+    <b>Regex input:</b>
+    <newline/>
+    The regex input accepts most regex patterns (the complete list can be found in the Xeger wiki, linked in the references). A basic example would be "[ab]{4,6}" which generates strings consisting of a's and b's of the lengths 4 to 6 (like "aaaa", "ababab", "bbabb"). A more complex example is the generation of Enigma keys:
+    <newline/>
+    "$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / $unique([1-26]{3}) / $unique([A-Z](2){26})"
+    <newline/>
+    The first $unique variable is replaced by a string of three symbols taken from the given alphabet, separated by the separator symbol specified in the components settings (like "IV, I, III"). The slash and its surrounding spaces are taken as they are, as they are not part of a pattern to generate (between brackets). The second $unique variable generates 3 numbers from 1 to 26 (like "2, 26, 15"). The last $unique specifies the frequency of the separator (", " in this case) to be 2 (instead of the default of 1) inside the round brackets. The curly brackets always define the length, while the square brackets define the alphabet. So the last part generates strings of 26 letters between A and Z, separated in groups of 2 (like "AG, IW, KC, RQ, ..."). All alphabet symbols are only used once, that's the main aspect of the $unique variable.
+    <newline/>
+    <newline/>
+    <b>Alphabet input:</b>
+    <newline/>
+    The alphabet input can be used to specify an alphabet in an abbreviated format (like "A-Z0-9") or a complete alphabet, separated by space or pipe ("|"), which allows multiple characters as one alphabet symbol ("A C E F 8 12"). If all symbols have a length of 1, they can also be written without separators and will be split between them ("ABCDEF").
+    <newline/>
+    <newline/>
+    <b>Settings:</b>
+    <newline/>
+    The more complex part of the TestVectorGenerator are its settings. The most important settings are explained below:
+    <newline/>
+    <newline/>
+    <b>Number of test runs:</b>
+    <newline/>
+    The setting for the number of test runs defines the overall test runs for the test series, divided into the different plaintext and key length (if specified).
+    <newline/>
+    <newline/>
+    <b>Show extended settings:</b>
+    <newline/>
+    To gain full control over all available settings, the extended settings have to be enabled though this setting.
+    <newline/>
+    <newline/>
+    <b>Other general settings:</b>
+    <newline/>
+    The other general settings modify the text and natural speech keys through operations like making all letters uppercase, deleting all spaces, or replacing certain symbols.
+    <newline/>
+    <newline/>
+    <b>Text length settings:</b>
+    <newline/>
+    The text length may be defined through the minimum and maximum length and the lengthening steps.
+    <newline/>
+    <newline/>
+    <b>Dot replacing settings:</b>
+    <newline/>
+    The dot symbols may be ignored, removed, or replaced by another symbol. Once the replacing option is selected, an input field for the new symbol is shown.
+    <newline/>
+    <newline/>
+    <b>Key generation type:</b>
+    <newline/>
+    There are three key generation types available: Natural speech keys, random keys, and reverse regex keys. The natural speech key generation takes sentences from the provided input text. The random keys are generated using the provided input alphabet or a simple one from the drop-down menu. For the reverse regex key generation, a regex pattern has to be provided through the regex input. More detailed information can be found above in the regex input section of this description.
+    <newline/>
+    <newline/>
+    <b>Minimum and Maximum key length:</b>
+    <newline/>
+    These values specify the range of key lengths which will be generated.
+    <newline/>
+    <newline/>
+    <b>Key symbol separator:</b>
+    <newline/>
+    The key symbols may be separated by an arbitrary string, specified in this input field.
+    <newline/>
+    <newline/>
+    <b>Key format:</b>
+    <newline/>
+    The key format setting is available for natural speech and random keys. Natural speech keys can either consist of letters (and other symbols in the text, if not replaced or deleted) or be transformed to numbers. The numeric key can be chosen to be a unique numeric key, using each consecutive number only once, by enabling the unique setting.
+    The random keys can consist of letters, numbers, binary numbers, or the input alphabet characters. All of those options can be combined with the unique setting, so that each alphabet character is only used once in the key.
+
+    This component was part of a master thesis which contains all details about it:
+
+    "Prototypical Development of a Distributed Evaluation Method for Cryptanalytic Methods for Classical Ciphers in CrypTool 2
+    Bastian Heuser, University of Kassel - 2017 - Master thesis    
+  </usage>
+
+  <usage lang="de-DE">
+    Beschreibung
+    <newline/>
+    <newline/>
+    <b>Überschrift:</b>
+    <newline/>
+    
+  </usage>
+
+  <references>
+    <linkReference id="wikipedia">
+      <link url="URL" lang="en" />
+      <caption lang="en">English</caption>
+      <link url="URL" lang="de-DE" />
+      <caption lang="de-DE">Deutsch</caption>
+    </linkReference>
+  </references>
+
+</documentation>
