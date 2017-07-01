@@ -301,11 +301,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 if (value != null && value != this._evaluationInput)
                 {
+                    System.Console.WriteLine("Old Container: " + this._evaluationInput.GetID() + ", New EvaluationContainer: " + value.GetID());
+
                     this._evaluationInput = value;
                     OnPropertyChanged("EvaluationInput");
+
+                    if (value.hasValueSet)
+                        this._newEvaluation = true;
                 }
-                if (value.hasValueSet)
-                    this._newEvaluation = true;
             }
         }
 
@@ -407,9 +410,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _evaluationCount++;
 
             // reset the evaluation inputs
-            BestPlaintextInput = "";
-            BestKeyInput = "";
-            EvaluationInput = new EvaluationContainer();
+            //BestPlaintextInput = "";
+            //BestKeyInput = "";
+            //EvaluationInput = new EvaluationContainer();
         }
 
         /// <summary> 
@@ -1757,6 +1760,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void Execute()
         {
+            System.Console.WriteLine("Execute()");
             // check if the variables are set
             if (!checkVariables())
             {
@@ -1767,6 +1771,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // send them to the output
             if (_newKey && _newPlaintext)
             {
+                System.Console.Write("State 1: _newKey & Plaintext" + NewLine);
+                System.Console.Write("State 1: _newEvaluation: " + _newEvaluation + ", _newBestKey: " +
+                _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);
                 // consume new values
                 _newKey = false;
                 _newPlaintext = false;
@@ -1805,15 +1812,15 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (_totalKeysInput > 0)
                     ProgressChanged(_keyCount-0.9, _totalKeysInput);
             }
-
             // Wait for the analysis method to send evaluation data.
             // If the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
-            if (_newEvaluation && _newBestKey && _newBestPlaintext &&
+            else if (_newEvaluation && _newBestKey && _newBestPlaintext &&
                 _keyCount <= _totalKeysInput &&
                 BestKeyInput != " " &&
                 BestPlaintextInput != " ")
             {
+                System.Console.Write("State 2: _newEvaluation & _newBestKey & _newBestPlaintext" + NewLine);
                 // consume new values
                 _newEvaluation = false;
                 _newBestKey = false;
@@ -1836,7 +1843,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     EvaluationOutput += "Last Runtime: " + time.ToString() + NewLine;
                 }
                 EvaluationOutput += "Last number of restarts: " + EvaluationInput.GetRestarts() + NewLine +
-                "Last number of decryptions: " + _evaluationInput.GetDecryptions();
+                "Last number of decryptions: " + _evaluationInput.GetDecryptions() + NewLine +
+                "Last key input: " + _keyInput;
 
                 // gather all available evaluation data
                 CollectEvaluationData();
@@ -1865,6 +1873,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     ProgressChanged(_keyCount, _totalKeysInput);
                 else
                     ProgressChanged(1, 1);
+            }
+            else /*if (!_newKey && !_newPlaintext)*/
+            {
+                System.Console.Write("_newKey: " + _newKey + ", _newPlaintext: " + _newPlaintext + ", _newEvaluation: " + _newEvaluation + ", _newBestKey: " +
+                _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);
+                
             }
         }
 
