@@ -77,7 +77,7 @@ namespace Cryptool.CylinderCipher
 
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
 
-        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccurred;
+        public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
 
         public ISettings Settings
         {
@@ -431,7 +431,7 @@ namespace Cryptool.CylinderCipher
 
         private void GuiLogMessage(string message, NotificationLevel logLevel)
         {
-            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccurred, this, new GuiLogEventArgs(message, this, logLevel));
+            EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
         private void OnProgressChanged(double value, double max)
