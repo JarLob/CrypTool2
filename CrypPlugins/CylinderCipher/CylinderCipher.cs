@@ -42,18 +42,40 @@ namespace Cryptool.CylinderCipher
         private int[] _key = null;
         private int[] _offsets = null;
 
+        private string _textInput;
+        private string _keyInput;
+
+        private bool _newText;
+        private bool _newKey;
+
         [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip")]
         public string TextInput
         {
-            get;
-            set;
+            get { return this._textInput; }
+            set
+            {
+                if (value != null && value != this._textInput)
+                {
+                    this._textInput = value;
+                    this._newText = true;
+                    OnPropertyChanged("TextInput");
+                }
+            }
         }
 
         [PropertyInfo(Direction.InputData, "KeyCaption", "KeyTooltip")]
         public string Key
         {
-            get;
-            set;
+            get { return this._keyInput; }
+            set
+            {
+                if (value != null && value != this._keyInput)
+                {
+                    this._keyInput = value;
+                    this._newKey = true;
+                    OnPropertyChanged("Key");
+                }
+            }
         }
 
         [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip")]
@@ -90,7 +112,14 @@ namespace Cryptool.CylinderCipher
         }
 
         public void Execute()
-        {                
+        {
+            if (!_newKey || !_newText)
+                return;
+
+            //Consume values
+            _newKey = false;
+            _newText = false;
+
             //Load cylinders and prepare texts
             if (_settings.DeviceType == 0)
             {
@@ -99,17 +128,17 @@ namespace Cryptool.CylinderCipher
             else if (_settings.DeviceType == 1)
             {                
                 LoadCylinders(DirectoryHelper.DirectoryCrypPlugins + Path.DirectorySeparatorChar + "Cylinders_Bazeries.txt");
-                TextInput = TextInput.Replace("W","VV"); // Bazeries has no W - instead he uses VV
+                _textInput = _textInput.Replace("W","VV"); // Bazeries has no W - instead he uses VV
             }
 
             //Invalid character handling
             if (_settings.InvalidCharacterHandling == 0)
-                TextInput = RemoveInvalidChars(TextInput, _alphabet);
+                _textInput = RemoveInvalidChars(_textInput, _alphabet);
             else
                 _ignoredCharacters = new List<string>();
 
             //Map input to integer array
-            _input = MapTextIntoNumberSpace(TextInput.ToUpper(), _alphabet, _settings.InvalidCharacterHandling);           
+            _input = MapTextIntoNumberSpace(_textInput.ToUpper(), _alphabet, _settings.InvalidCharacterHandling);           
 
             //Prepare IndexOf datastructure of cylinders
             PrepareCylindersIndexOf(_cylinders);
@@ -135,7 +164,7 @@ namespace Cryptool.CylinderCipher
             if (_settings.CaseSensitivity)
             {
                 String tmp = MapNumbersIntoTextSpace(result, _alphabet, _settings.InvalidCharacterHandling);
-                TextOutput = new string(tmp.Select((c, k) => Char.IsLower(TextInput[k]) ? Char.ToLower(c) : c).ToArray());
+                TextOutput = new string(tmp.Select((c, k) => Char.IsLower(_textInput[k]) ? Char.ToLower(c) : c).ToArray());
             }
             OnPropertyChanged("TextOutput");
 
@@ -227,11 +256,11 @@ namespace Cryptool.CylinderCipher
             {
                 char sep = "/,."[_settings.SeparatorOffChar];
 
-                if (Key.IndexOf(sep) < 0)
+                if (_keyInput.IndexOf(sep) < 0)
                     throw new Exception("The key contains no offset separator '" + sep + "'.");
 
                 string[] splitted;
-                splitted = Key.Split(sep);                
+                splitted = _keyInput.Split(sep);                
                 sep = ",./"[_settings.SeparatorStripChar];
 
                 //Create key list
