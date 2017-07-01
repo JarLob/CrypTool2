@@ -400,7 +400,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_settings.KeyFormatRandom == FormatType.letters)
             {
                 if (_settings.UppercaseOnly)
-                    alphabet = FindAlphabet("A-Z")
+                    alphabet = FindAlphabet("A-Z");
                 else
                     alphabet = FindAlphabet("a-zA-Z");
             }
@@ -492,7 +492,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public List<string> FindAlphabet(string alphabetString)
         {
-            if (String.IsNullOrEmpty(_alphabetInput))
+            if (String.IsNullOrEmpty(_alphabetInput) &&
+                String.IsNullOrEmpty(alphabetString))
                 return null;
 
             List<string> alphabet = null;
@@ -716,6 +717,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     return;
 
                 string randomKey = null;
+                _settings.UniqueSymbolUsage = true;
 
                 if (firstOpeningBracketIndex < firstClosingBracketIndex)
                 {
@@ -734,6 +736,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     // if no repetition separator is specified, use 1
                     randomKey = GenerateRandomKeyWithAlphabet(alphabet, length);
                 }
+                _settings.UniqueSymbolUsage = false;
+
                 if (randomKey == null)
                     return;
 
@@ -993,14 +997,14 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary> 
         /// Convert a letter key to a numeric key with the numbers 1-26.
         /// </summary>
-        public void ConvertToNumericKey()
+        public string ConvertToNumericKey(string key)
         {
-            char[] chars = _keyOutput.ToCharArray();
+            char[] chars = key.ToCharArray();
             string numericKey = "";
             foreach (char ch in chars)
             {
                 List<string> alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".Select(c => c.ToString()).ToList();
-                numericKey += alphabet.indexOf(i);
+                numericKey += alphabet.IndexOf(ch.ToString());
                 /*try
                 {
                     numericKey += (Convert.ToInt32(ch) - Convert.ToInt32('A'));

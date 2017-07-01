@@ -54,7 +54,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
         private string _separator = "";
-        private bool _uniqueSymbolUsage = false;
         private FormatType _keyFormat;
         private GenerationType _keyGeneration;
 
@@ -385,23 +384,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Switches between using each key symbol only once and using it arbitrarily often.
-        /// </summary>
-        [TaskPane("Unique symbol usage", "UniqueSymbolUsageTooltipCaption", "KeyGroup", keyPaneIndex + 5, false, ControlType.CheckBox)]
-        public bool UniqueSymbolUsage
-        {
-            get
-            {
-                return _uniqueSymbolUsage;
-            }
-            set
-            {
-                _uniqueSymbolUsage = value;
-                OnPropertyChanged("UniqueSymbolUsage");
-            }
-        }
-
-        /// <summary>
         /// Specifies the key format for the natural speech key generation.
         /// </summary>
         [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
@@ -420,6 +402,16 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     OnPropertyChanged("KeyFormat");
                 }
             }
+        }
+
+        /// <summary>
+        /// Switches between using each key symbol only once and using it arbitrarily often.
+        /// </summary>
+        [TaskPane("Unique symbol usage", "UniqueSymbolUsageTooltipCaption", "KeyGroup", keyPaneIndex + 5, false, ControlType.CheckBox)]
+        public bool UniqueSymbolUsage
+        {
+            get;
+            set;
         }
 
         #endregion
@@ -483,7 +475,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     settingChanged("KeyFormatNaturalSpeech", Visibility.Visible);
                     break;
                 case GenerationType.random: // random generation
-                    // TODO: change to invisible when input alphabet or regex is implemented
                     settingChanged("KeyFormatRandom", Visibility.Visible);
                     settingChanged("UniqueSymbolUsage", Visibility.Visible);
                     break;

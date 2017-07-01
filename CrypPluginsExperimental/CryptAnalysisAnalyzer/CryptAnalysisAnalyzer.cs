@@ -75,6 +75,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private Dictionary<int, ExtendedEvaluationContainer> _testRuns;
 
         private string NewLine = System.Environment.NewLine;
+        private string _originalNumberDecimalSeparator;
 
         #endregion
 
