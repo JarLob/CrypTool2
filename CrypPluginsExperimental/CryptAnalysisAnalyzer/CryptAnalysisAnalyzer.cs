@@ -301,7 +301,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 if (value != null && value != this._evaluationInput)
                 {
-                    System.Console.WriteLine("Old Container: " + this._evaluationInput.GetID() + ", New EvaluationContainer: " + value.GetID());
+                    if (this._evaluationInput != null)
+                        System.Console.Write("Old Container: " + this._evaluationInput.GetID() + ", ");
+                    System.Console.WriteLine("New EvaluationContainer: " + value.GetID());
 
                     this._evaluationInput = value;
                     OnPropertyChanged("EvaluationInput");
