@@ -35,14 +35,14 @@ namespace Cryptool.PluginBase.IO
         private int _tabuSetSize;
 
         /// <summary>
-        /// Init empty EvaluationContainer
+        /// Init empty EvaluationContainer.
         /// </summary>
         public EvaluationContainer()
         {
         }
 
         /// <summary>
-        /// Init EvaluationContainer
+        /// Init EvaluationContainer.
         /// </summary>
         public EvaluationContainer(int id, TimeSpan t, int decryptions, int restarts)
         {
@@ -53,7 +53,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Init EvaluationContainer
+        /// Init EvaluationContainer.
         /// </summary>
         public EvaluationContainer(int id, int decryptions, int restarts)
         {
@@ -63,7 +63,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Init EvaluationContainer
+        /// Init EvaluationContainer.
         /// </summary>
         public EvaluationContainer(int id, int decryptions, int restarts, int populationSize)
         {
@@ -76,7 +76,10 @@ namespace Cryptool.PluginBase.IO
         #endregion
 
         #region Public properties
-
+        
+        /// <summary>
+        /// Check if this EvaluationContainer has any value set.
+        /// </summary>
         public bool hasValueSet
         {
             get
@@ -92,6 +95,11 @@ namespace Cryptool.PluginBase.IO
             }
         }
 
+        /// <summary>
+        /// Check if this EvaluationContainer equals the given container.
+        /// </summary>
+        /// <param name="e">The EvaluationContainer to compare with</param>
+        /// <returns>True for equality, false for inequality</returns>
         public bool Equals(EvaluationContainer e)
         {
             if ((!hasID || this._ID == e._ID) &&
@@ -139,7 +147,7 @@ namespace Cryptool.PluginBase.IO
         #region Public methods
 
         /// <summary>
-        /// Set complete EvaluationContainer
+        /// Set complete EvaluationContainer.
         /// </summary>
         public void SetEvaluationContainer(EvaluationContainer e)
         {
@@ -152,7 +160,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Set ID if not already set
+        /// Set ID if not already set.
         /// </summary>
         public void SetID(int id)
         {
@@ -161,7 +169,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Set runtime if not already set
+        /// Set runtime if not already set.
         /// </summary>
         public void SetRuntime(TimeSpan t)
         {
@@ -170,7 +178,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Set number of decryptions if not already set
+        /// Set number of decryptions if not already set.
         /// </summary>
         public void SetDecryptions(int i)
         {
@@ -179,7 +187,7 @@ namespace Cryptool.PluginBase.IO
         }
         
         /// <summary>
-        /// Set number of restarts if not already set
+        /// Set number of restarts if not already set.
         /// </summary>
         public void SetRestarts(int i)
         {
@@ -188,7 +196,7 @@ namespace Cryptool.PluginBase.IO
         }
         
         /// <summary>
-        /// Set population size if not already set
+        /// Set population size if not already set.
         /// </summary>
         public void SetPopulationSize(int i)
         {
@@ -197,7 +205,7 @@ namespace Cryptool.PluginBase.IO
         }
         
         /// <summary>
-        /// Set tabu set size if not already set
+        /// Set tabu set size if not already set.
         /// </summary>
         public void SetTabuSetSize(int i)
         {
@@ -206,7 +214,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the ID as int
+        /// Get the ID as int.
         /// </summary>
         public int GetID()
         {
@@ -217,7 +225,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the runtime as TimeSpan
+        /// Get the runtime as TimeSpan.
         /// </summary>
         public bool GetRuntime(out TimeSpan t)
         {
@@ -232,7 +240,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of decryptions as int
+        /// Get the number of decryptions as int.
         /// </summary>
         public int GetDecryptions()
         {
@@ -243,7 +251,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of restarts as int
+        /// Get the number of restarts as int.
         /// </summary>
         public int GetRestarts()
         {
@@ -254,7 +262,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of population size as int
+        /// Get the number of population size as int.
         /// </summary>
         public int GetPopulationSize()
         {
@@ -265,7 +273,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Get the number of tabu set size as int
+        /// Get the number of tabu set size as int.
         /// </summary>
         public int GetTabuSetSize()
         {
@@ -276,7 +284,7 @@ namespace Cryptool.PluginBase.IO
         }
 
         /// <summary>
-        /// Returns a string representation of all set private members
+        /// Returns a string representation of all set private members.
         /// </summary>
         public override string ToString()
         {
@@ -330,12 +338,5 @@ namespace Cryptool.PluginBase.IO
         }
 
         #endregion
-
-        #region Private/protected methods
-
-        
-
-        #endregion
-
     }
 }
