@@ -301,9 +301,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             {
                 if (value != null && value != this._evaluationInput)
                 {
-                    if (this._evaluationInput != null)
+                    /*if (this._evaluationInput != null)
                         System.Console.Write("Old Container: " + this._evaluationInput.GetID() + ", ");
-                    System.Console.WriteLine("New EvaluationContainer: " + value.GetID());
+                    System.Console.WriteLine("New EvaluationContainer: " + value.GetID());*/
 
                     this._evaluationInput = value;
                     OnPropertyChanged("EvaluationInput");
@@ -400,16 +400,33 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
+            EvaluationOutput += NewLine + "ID: " + EvaluationInput.GetID() + NewLine;
+            if (_settings.CalculateRuntime)
+            {
+                TimeSpan time;
+                EvaluationInput.GetRuntime(out time);
+                EvaluationOutput += "Last Runtime: " + time.ToString() + NewLine;
+            }
+            EvaluationOutput += "Last number of restarts: " + EvaluationInput.GetRestarts() + NewLine +
+            "Last number of decryptions: " + _evaluationInput.GetDecryptions() + NewLine +
+            "Last percentage: " + percentCorrect +"%" + NewLine +
+            "Last success: " +success + NewLine;
+
             // create the ExtendedEvaluationContainer with the current values
             ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
-                _seedInput, _keyCount, _keyInput, _plaintextInput, _bestKeyInput, _bestPlaintextInput,
+                _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
                 _settings.CorrectPercentage, percentCorrect, success);
 
             // add the container to the test run dictionary with the ID as key
             _testRuns.Add(_evaluationInput.GetID(), testRun);
 
             // increase the evaluation counter
-            _evaluationCount++;
+            
+            /*int max = 686;
+            if (_evaluationCount < max)
+                _evaluationCount = max;
+            else*/
+                _evaluationCount++;
 
             // reset the evaluation inputs
             //BestPlaintextInput = "";
@@ -430,7 +447,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _originalNumberDecimalSeparator = customCulture.NumberFormat.NumberDecimalSeparator;
                 customCulture.NumberFormat.NumberDecimalSeparator = ".";
                 }
-            else
+            else if (_originalNumberDecimalSeparator != null)
             {
                 customCulture.NumberFormat.NumberDecimalSeparator = _originalNumberDecimalSeparator;
             }
@@ -582,7 +599,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 // current test run values
                 ExtendedEvaluationContainer testRun = entry.Value;
                 int keyLength = testRun.GetKey().Length;
-                int ciphertextLength = _ciphertextInput.Length;
+                int ciphertextLength = testRun.GetCiphertext().Length;
                 int currentSuccess = 0;
                 if (testRun.GetSuccessfull()) currentSuccess = 1;
                 double currentlyDecrypted = testRun.GetPercentDecrypted();
@@ -1722,7 +1739,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public void PreExecution()
         {
             ProgressChanged(0, 1);
-            _testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
+            _evaluationOutput = "";
+            _gnuPlotDataOutput = "";
+            _gnuPlotScriptOutput = "";
+            RefreshEvaluationOutputs();
+
+            //_testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
         }
 
         /// <summary>
@@ -1762,7 +1784,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void Execute()
         {
-            System.Console.WriteLine("Execute()");
+            //System.Console.WriteLine("Execute()");
             // check if the variables are set
             if (!checkVariables())
             {
@@ -1773,14 +1795,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // send them to the output
             if (_newKey && _newPlaintext)
             {
-                System.Console.Write("State 1: _newKey & Plaintext" + NewLine);
+                /*System.Console.Write("State 1: _newKey & Plaintext" + NewLine);
                 System.Console.Write("State 1: _newEvaluation: " + _newEvaluation + ", _newBestKey: " +
-                _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);
+                _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);*/
                 // consume new values
                 _newKey = false;
                 _newPlaintext = false;
 
-                _keyCount++;
+                if (_keyCount == 0)
+                    _testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
+                
+                /*int max = 686;
+                if (_keyCount < max)
+                    _keyCount = max;
+                else*/
+                    _keyCount++;
                 // update the progress bar
                 _progress = (int)Math.Round((double)_keyCount / _totalKeysInput * 100);
 
@@ -1817,16 +1846,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // Wait for the analysis method to send evaluation data.
             // If the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
-            else if (_newEvaluation && _newBestKey && _newBestPlaintext &&
+            else if (_newEvaluation && _newBestKey && _newBestPlaintext && _newCiphertext &&
                 _keyCount <= _totalKeysInput &&
                 BestKeyInput != " " &&
                 BestPlaintextInput != " ")
             {
-                System.Console.Write("State 2: _newEvaluation & _newBestKey & _newBestPlaintext" + NewLine);
+                //System.Console.Write("State 2: _newEvaluation & _newBestKey & _newBestPlaintext" + NewLine);
                 // consume new values
                 _newEvaluation = false;
                 _newBestKey = false;
                 _newBestPlaintext = false;
+                _newCiphertext = false;
 
                 // generate some output infos for the user
                 EvaluationOutput = "";
@@ -1837,19 +1867,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     "key number: " + _keyCount + " / " +
                     _totalKeysInput + " - Done.";
 
-                EvaluationOutput += NewLine + "ID: " + EvaluationInput.GetID() + NewLine;
-                if (_settings.CalculateRuntime)
-                {
-                    TimeSpan time;
-                    EvaluationInput.GetRuntime(out time);
-                    EvaluationOutput += "Last Runtime: " + time.ToString() + NewLine;
-                }
-                EvaluationOutput += "Last number of restarts: " + EvaluationInput.GetRestarts() + NewLine +
-                "Last number of decryptions: " + _evaluationInput.GetDecryptions() + NewLine +
-                "Last key input: " + _keyInput;
-
                 // gather all available evaluation data
                 CollectEvaluationData();
+
+                EvaluationOutput += "Last key input: " + _keyInput + NewLine;
 
                 // trigger next key if key count less than total keys...
                 if (_totalKeysInput > 0 &&
@@ -1882,6 +1903,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);
                 
             }
+
+
+
+            //System.Console.WriteLine("### Execute end of: CAA");
         }
 
         /// <summary>
@@ -2031,29 +2056,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
     /// </summary>
     public class ExtendedEvaluationContainer : EvaluationContainer
     {
-        /*
-        // Key number - _keyCount
-        // Seed - SeedInput
-        // EvaluationInput
-        // Key - KeyInput
-        // Key space - ???
-        // Plaintext - PlaintextInput
-        // Ciphertext - ???
-        // Best key - BestKeyInput
-        // Best plaintext - BestPlaintextInput
-        // % correct - percentCorrect
-        // Necessary decryptions - decryptions
-        // Runtime - runtime
-        // Restarts - EvaluationInput.GetRestarts()
-        // Success probability - to be calculated!
-        // Population size - EvaluationInput.GetPopulationSize()
-        // Tabu set size - EvaluationInput.GetTabuSetSize()
-        */
-
         private string _testSeriesSeed;
         private int _keyNumber;
         private string _key;
         private string _plaintext;
+        private string _ciphertext;
         private string _bestKey;
         private string _bestPlaintext;
         private double _minimalDecryption;
@@ -2068,8 +2075,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         // constructor to set all evaluation values directly
-        public ExtendedEvaluationContainer(EvaluationContainer container, string seed, 
-            int keyNumber, string key, string plaintext, string bestKey,
+        public ExtendedEvaluationContainer(EvaluationContainer container, string seed,
+            int keyNumber, string key, string plaintext, string ciphertext, string bestKey,
             string bestPlaintext, double minimalDecryption, double percentDecrypted,
             bool successfull)
         {
@@ -2079,6 +2086,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             this._keyNumber = keyNumber;
             this._key = key;
             this._plaintext = plaintext;
+            this._ciphertext = ciphertext;
             this._bestKey = bestKey;
             this._bestPlaintext = bestPlaintext;
             this._minimalDecryption = minimalDecryption;
@@ -2104,6 +2112,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         public bool hasPlaintext()
         {
             return !string.IsNullOrEmpty(this._plaintext);
+        }
+
+        public bool hasCiphertext()
+        {
+            return !string.IsNullOrEmpty(this._ciphertext);
         }
 
         public bool hasBestKey()
@@ -2154,6 +2167,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             if (hasPlaintext())
                 return this._plaintext;
+
+            return null;
+        }
+
+        public string GetCiphertext()
+        {
+            if (hasCiphertext())
+                return this._ciphertext;
 
             return null;
         }
