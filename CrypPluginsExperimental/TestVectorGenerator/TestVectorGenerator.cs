@@ -27,11 +27,13 @@ using System.Text;
 using System.Linq;
 using System.Numerics;
 using Cryptool.PluginBase.IO;
+using Cryptool.PluginBase.Properties;
+using Resources = TestVectorGenerator.Properties.Resources;
 
 namespace Cryptool.Plugins.TestVectorGenerator
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("TestVectorGenerator", "Generate keys and plaintexts as test vectors", "TestVectorGenerator/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("TestVectorGenerator.Properties.Resources", "TVGcaption", "TestVectorGenerator/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class TestVectorGenerator : ICrypComponent
     {
@@ -57,6 +59,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _lastKeyLengthIndex = -1;
         private bool _notFound = false;
         ConcurrentDictionary<int, int> _occurrences;
+
+        private bool _newSeed = false;
         
         #endregion
 
@@ -71,7 +75,10 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._textInput; }
             set
             {
-                this._textInput = value;
+                if (!value.Equals(_textInput))
+                {
+                    this._textInput = value;
+                }
                 OnPropertyChanged("TextInput");
             }
         }
@@ -89,6 +96,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 if (_seedInput != seed)
                 {
                     this._seedInput = seed;
+                    _newSeed = true;
                 }
                 OnPropertyChanged("SeedInput");
 
@@ -104,8 +112,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
             get { return this._regexInput; }
             set
             {
-                this._regexInput = value;
-                OnPropertyChanged("RegexInput");
+                if (!value.Equals(_regexInput))
+                {
+                    this._regexInput = value;
+                    OnPropertyChanged("RegexInput");
+                }
             }
         }
 
@@ -194,6 +205,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _startSentence = _rand.Next(0, _inputArray.Length);
                 count++;
 
+                //System.Console.WriteLine("Plaintext exists! " + count);
+
                 // break the loop after going through the array 3 times and return
                 if (count > _inputArray.Length * 3)
                 {
@@ -202,7 +215,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 }
             }
 
-            _plaintextOutput = "";
             // iterate over the input array, starting at the start sentence
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
@@ -296,7 +308,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     if (smallestMissingLength <= _settings.MaxKeyLength &&
                         lengthOccurrences > _settings.KeysPerLength)
                     {
-                        GuiLogMessage("Too many sentences added for length: " +
+                        GuiLogMessage(Resources.Too_many_sentences_added_for_length +
                             smallestMissingLength, NotificationLevel.Debug);
                         continue;
                     }
@@ -408,7 +420,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 if (_alphabetInput == null || String.IsNullOrEmpty(_alphabetInput))
                 {
-                    GuiLogMessage("Alphabet input is empty!", NotificationLevel.Error);
+                    GuiLogMessage(Resources.Alphabet_input_is_empty_, NotificationLevel.Error);
                     return;
                 }
                 alphabet = _alphabetInput.Split(' ').ToList();
@@ -465,7 +477,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             for (int j = 0; j < length; j++)
             {
                 // generate the next index of the alphabet list
-                int i = _rand.Next(0, alphabet.Count - 1);
+                int i = _rand.Next(0, alphabet.Count);
 
                 // take the element at the random index and remove it if the key should be unique
                 string symbol = alphabet.ElementAt(i);
@@ -1068,6 +1080,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// </summary>
         public void Execute()
         {
+            // check if the seed has a new value
+            if (!_newSeed)
+            {
+                // return if not
+                return;
+            }
+
             // check if the number of test runs has already been processed
             if (_testRunCount >= _settings.NumberOfTestRuns)
             {
@@ -1085,6 +1104,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (!checkVariables())
                 return;
 
+            // reset the new seed variable to false when using the seed
+            _newSeed = false;
+
             // preprocess the input text in the first execution
             if (_inputArray == null)
                 preProcessTextInput();
@@ -1095,7 +1117,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             // generate the plaintext
             if (_settings.MinTextLength > 0)
                 generatePlaintext();
-
             // update progress bar
             ProgressChanged(_testRunCount - 0.5, _settings.NumberOfTestRuns);
 
@@ -1118,9 +1139,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 !string.IsNullOrEmpty(_plaintextOutput))
             {
                 KeyOutput = _keyOutput;
+                Console.WriteLine(_keyOutput);
                 PlaintextOutput = _plaintextOutput;
                 OnPropertyChanged("KeyOutput");
                 OnPropertyChanged("PlaintextOutput");
+                _keyOutput = "";
+                _plaintextOutput = "";
             }
 
             // increment the test run counter and set the total keys output

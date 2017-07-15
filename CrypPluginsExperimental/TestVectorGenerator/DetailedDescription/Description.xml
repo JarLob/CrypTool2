@@ -2,7 +2,7 @@
 
 <documentation>
   <language culture="en"/>
-  <!-- <language culture="de-DE"/> -->
+  <language culture="de-DE"/>
 
   <introduction lang="en">
     This component is designed to generate test vectors in the form of plaintexts and keys for all classical cryptanalytic CrypTool 2 components (as of July 2017). The first use case is generating pure test vectors in the form of ciphertexts and keys by using the according cryptographic component to encrypt the plaintexts. The second use case is the analysis of the cryptanalytic component with the generated test vectors through the CryptAnalysisAnalyzer component.
@@ -51,7 +51,6 @@
       
       <newline/>
       <newline/>
-      <img src="uri"/>
     </section>
   </introduction>
 
@@ -132,6 +131,10 @@
     <newline/>
     The key format setting is available for natural speech and random keys. Natural speech keys can either consist of letters (and other symbols in the text, if not replaced or deleted) or be transformed to numbers. The numeric key can be chosen to be a unique numeric key, using each consecutive number only once, by enabling the unique setting.
     The random keys can consist of letters, numbers, binary numbers, or the input alphabet characters. All of those options can be combined with the unique setting, so that each alphabet character is only used once in the key.
+
+    The following image displays a pure test vector generation scenario. The input text is alice in wonderland, the seed is "SEED", and the regex pattern consists of two $unique variables, which generate 25 numbers from 0 to 24 each, separated by a slash. The TestVectorGenerator has every replacement setting enabled. Before the encryption, the plaintext is split into blocks of five (so 5 blocks are encrypted in one go through the Cylinder Cipher). The Cylinder Cipher mode is encryption, using the M-94 disks. The last combination of string operations and other components calculates the offset part of the Cylinder Cipher key. This is specific for this cipher and not necessary otherwise. The gate at the bottom left is set to true and triggers the next key (if the number of test runs is set higher than 1). The string outputs on the bottom display the key, the plaintext, the ciphertext, and the offset of the key.
+
+      <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
 
     This component was part of a master thesis which contains all details about it:
 
