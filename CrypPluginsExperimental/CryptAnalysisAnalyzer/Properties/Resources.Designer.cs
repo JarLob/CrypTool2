@@ -61,6 +61,132 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average decryptions necessary: .
+        /// </summary>
+        internal static string Average_decryptions_necessary__ {
+            get {
+                return ResourceManager.GetString("Average_decryptions_necessary__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average population size: .
+        /// </summary>
+        internal static string Average_population_size__ {
+            get {
+                return ResourceManager.GetString("Average_population_size__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average restarts: .
+        /// </summary>
+        internal static string Average_restarts__ {
+            get {
+                return ResourceManager.GetString("Average_restarts__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average runtime: .
+        /// </summary>
+        internal static string Average_runtime {
+            get {
+                return ResourceManager.GetString("Average_runtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average success: .
+        /// </summary>
+        internal static string Average_success__ {
+            get {
+                return ResourceManager.GetString("Average_success__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average tabu set size: .
+        /// </summary>
+        internal static string Average_tabu_set_size__ {
+            get {
+                return ResourceManager.GetString("Average_tabu_set_size__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Average of second Y-axis.
+        /// </summary>
+        internal static string AverageAxisCaption {
+            get {
+                return ResourceManager.GetString("AverageAxisCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show the average of the second Y-axis.
+        /// </summary>
+        internal static string AverageAxisTooltipCaption {
+            get {
+                return ResourceManager.GetString("AverageAxisTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Averagely decrypted: .
+        /// </summary>
+        internal static string Averagely_decrypted__ {
+            get {
+                return ResourceManager.GetString("Averagely_decrypted__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Averagely decrypted: {0}% of min {1}.
+        /// </summary>
+        internal static string Averagely_decrypted_of_min {
+            get {
+                return ResourceManager.GetString("Averagely_decrypted_of_min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Best key.
+        /// </summary>
+        internal static string BestKeyInputCaption {
+            get {
+                return ResourceManager.GetString("BestKeyInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The best key found by the used CipherAnalyzer.
+        /// </summary>
+        internal static string BestKeyInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("BestKeyInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Best Plaintext.
+        /// </summary>
+        internal static string BestPlaintextInputCaption {
+            get {
+                return ResourceManager.GetString("BestPlaintextInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The best plaintext found by the used CipherAnalyzer.
+        /// </summary>
+        internal static string BestPlaintextInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("BestPlaintextInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CryptAnalysisAnalyzer.
         /// </summary>
         internal static string CAAcaption {
@@ -70,20 +196,893 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analyse CryptAnalysis methods.
+        /// </summary>
+        internal static string CAAtooltip {
+            get {
+                return ResourceManager.GetString("CAAtooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate runtime.
+        /// </summary>
+        internal static string CalculateRuntimeCaption {
+            get {
+                return ResourceManager.GetString("CalculateRuntimeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calculate the runtime of the algorithm.
+        /// </summary>
+        internal static string CalculateRuntimeTooltipCaption {
+            get {
+                return ResourceManager.GetString("CalculateRuntimeTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphertext Length.
+        /// </summary>
+        internal static string Ciphertext_Length {
+            get {
+                return ResourceManager.GetString("Ciphertext_Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphertext lengths: .
+        /// </summary>
+        internal static string Ciphertext_lengths {
+            get {
+                return ResourceManager.GetString("Ciphertext_lengths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphertext.
+        /// </summary>
+        internal static string CiphertextInputCaption {
+            get {
+                return ResourceManager.GetString("CiphertextInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Plaintext encrypted by the used Cipher.
+        /// </summary>
+        internal static string CiphertextInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("CiphertextInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphertext length.
+        /// </summary>
+        internal static string CiphertextLengthCaption {
+            get {
+                return ResourceManager.GetString("CiphertextLengthCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current key number: .
+        /// </summary>
+        internal static string Current_key_number__ {
+            get {
+                return ResourceManager.GetString("Current_key_number__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data for: .
+        /// </summary>
+        internal static string Data_for__ {
+            get {
+                return ResourceManager.GetString("Data_for__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decryptions.
+        /// </summary>
+        internal static string Decryptions {
+            get {
+                return ResourceManager.GetString("Decryptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decryptions.
+        /// </summary>
+        internal static string DecryptionsCaption {
+            get {
+                return ResourceManager.GetString("DecryptionsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Done.
+        /// </summary>
+        internal static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EvaluationContainer.
+        /// </summary>
+        internal static string EvaluationInputCaption {
+            get {
+                return ResourceManager.GetString("EvaluationInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The EvaluationContainer with the evaluation data of the current test run from the used CipherAnalyzer.
+        /// </summary>
+        internal static string EvaluationInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("EvaluationInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Evaluation output.
+        /// </summary>
+        internal static string EvaluationOutputCaption {
+            get {
+                return ResourceManager.GetString("EvaluationOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The evaluation output with all the average values.
+        /// </summary>
+        internal static string EvaluationOutputTooltipCaption {
+            get {
+                return ResourceManager.GetString("EvaluationOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General settings.
+        /// </summary>
+        internal static string General_settings {
+            get {
+                return ResourceManager.GetString("General_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gnuplot script for plotting data from output GnuPlotData.
+        /// </summary>
+        internal static string Gnuplot_script_for_plotting_data_from_output_GnuPlotData {
+            get {
+                return ResourceManager.GetString("Gnuplot_script_for_plotting_data_from_output_GnuPlotData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GnuPlot data.
+        /// </summary>
+        internal static string GnuPlotDataOutputCaption {
+            get {
+                return ResourceManager.GetString("GnuPlotDataOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The GnuPlot data output to save in a .dat file and use in a GnuPlot script file.
+        /// </summary>
+        internal static string GnuPlotDataOutputTooltipCaption {
+            get {
+                return ResourceManager.GetString("GnuPlotDataOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GnuPlot Settings.
+        /// </summary>
+        internal static string GnuPlotGroupCaption {
+            get {
+                return ResourceManager.GetString("GnuPlotGroupCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GnuPlot script.
+        /// </summary>
+        internal static string GnuPlotScriptOutputCaption {
+            get {
+                return ResourceManager.GetString("GnuPlotScriptOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The GnuPlot script output to save in a .p file and load from the GnuPlot command line.
+        /// </summary>
+        internal static string GnuPlotScriptOutputTooltipCaption {
+            get {
+                return ResourceManager.GetString("GnuPlotScriptOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ID.
+        /// </summary>
+        internal static string ID {
+            get {
+                return ResourceManager.GetString("ID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key Length.
+        /// </summary>
+        internal static string Key_Length {
+            get {
+                return ResourceManager.GetString("Key_Length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key lengths: .
+        /// </summary>
+        internal static string Key_lengths__ {
+            get {
+                return ResourceManager.GetString("Key_lengths__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to key number: .
+        /// </summary>
+        internal static string key_number__ {
+            get {
+                return ResourceManager.GetString("key_number__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string KeyInputCaption {
+            get {
+                return ResourceManager.GetString("KeyInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The key generated by the TestVectorGenerator.
+        /// </summary>
+        internal static string KeyInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("KeyInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key length.
+        /// </summary>
+        internal static string KeyLengthCaption {
+            get {
+                return ResourceManager.GetString("KeyLengthCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string KeyOutputCaption {
+            get {
+                return ResourceManager.GetString("KeyOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The key test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components).
+        /// </summary>
+        internal static string KeyOutputTooltipCaption {
+            get {
+                return ResourceManager.GetString("KeyOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last number of decryptions.
+        /// </summary>
+        internal static string Last_number_of_decryptions {
+            get {
+                return ResourceManager.GetString("Last_number_of_decryptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last number of restarts.
+        /// </summary>
+        internal static string Last_number_of_restarts {
+            get {
+                return ResourceManager.GetString("Last_number_of_restarts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last runtime.
+        /// </summary>
+        internal static string Last_runtime {
+            get {
+                return ResourceManager.GetString("Last_runtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimal correct percentag.
+        /// </summary>
+        internal static string MinimalCorrectPercentageCaption {
+            get {
+                return ResourceManager.GetString("MinimalCorrectPercentageCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimal correct percentage to match the plaintext by for success.
+        /// </summary>
+        internal static string MinimalCorrectPercentageTooltipCaption {
+            get {
+                return ResourceManager.GetString("MinimalCorrectPercentageTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Minimal correct percentage.
         /// </summary>
-        internal static string CorrectPercentageCaption {
+        internal static string MinimumPercentageCaption {
             get {
-                return ResourceManager.GetString("CorrectPercentageCaption", resourceCulture);
+                return ResourceManager.GetString("MinimumPercentageCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimal percentage the decrypted ciphertext has to match the correct plaintext to count as a succesfull decryption.
+        /// </summary>
+        internal static string MinimumPercentageTooltipCaption {
+            get {
+                return ResourceManager.GetString("MinimumPercentageTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NoDecr_.
+        /// </summary>
+        internal static string NoDecr_ {
+            get {
+                return ResourceManager.GetString("NoDecr_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None.
+        /// </summary>
+        internal static string NoneCaption {
+            get {
+                return ResourceManager.GetString("NoneCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Normalize axis ranges factor.
+        /// </summary>
+        internal static string NormalizingFactorCaption {
+            get {
+                return ResourceManager.GetString("NormalizingFactorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The factor by which outstandingly high values have to be higher than the preceding value to be ignored in the standard focus range of the GnuPlot.
+        /// </summary>
+        internal static string NormalizingFactorTooltipCaption {
+            get {
+                return ResourceManager.GetString("NormalizingFactorTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PercDecr_.
+        /// </summary>
+        internal static string PercDecr_ {
+            get {
+                return ResourceManager.GetString("PercDecr_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent Decrypted.
+        /// </summary>
+        internal static string Percent_Decrypted {
+            get {
+                return ResourceManager.GetString("Percent_Decrypted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Percent decrypted.
+        /// </summary>
+        internal static string PercentDecryptedCaption {
+            get {
+                return ResourceManager.GetString("PercentDecryptedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PerCiphLen.
+        /// </summary>
+        internal static string PerCiphLen {
+            get {
+                return ResourceManager.GetString("PerCiphLen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PerKeyLen.
+        /// </summary>
+        internal static string PerKeyLen {
+            get {
+                return ResourceManager.GetString("PerKeyLen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PerTime.
+        /// </summary>
+        internal static string PerTime {
+            get {
+                return ResourceManager.GetString("PerTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plaintext.
+        /// </summary>
+        internal static string PlaintextInputCaption {
+            get {
+                return ResourceManager.GetString("PlaintextInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The plaintext generated by the TestVectorGenerator.
+        /// </summary>
+        internal static string PlaintextInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("PlaintextInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plaintext.
+        /// </summary>
+        internal static string PlaintextOutputCaption {
+            get {
+                return ResourceManager.GetString("PlaintextOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The plaintext test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components).
+        /// </summary>
+        internal static string PlaintextOutputTooltipCaption {
+            get {
+                return ResourceManager.GetString("PlaintextOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plot settings.
+        /// </summary>
+        internal static string Plot_settings {
+            get {
+                return ResourceManager.GetString("Plot_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to plotting.
+        /// </summary>
+        internal static string plotting {
+            get {
+                return ResourceManager.GetString("plotting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Popu_.
+        /// </summary>
+        internal static string Popu_ {
+            get {
+                return ResourceManager.GetString("Popu_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Population Sizes.
+        /// </summary>
+        internal static string Population_Sizes {
+            get {
+                return ResourceManager.GetString("Population_Sizes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Population sizes.
+        /// </summary>
+        internal static string PopulationCaption {
+            get {
+                return ResourceManager.GetString("PopulationCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rest_.
+        /// </summary>
+        internal static string Rest_ {
+            get {
+                return ResourceManager.GetString("Rest_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restarts.
+        /// </summary>
+        internal static string Restarts {
+            get {
+                return ResourceManager.GetString("Restarts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restarts.
+        /// </summary>
+        internal static string RestartsCaption {
+            get {
+                return ResourceManager.GetString("RestartsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runtime.
+        /// </summary>
+        internal static string Runtime {
+            get {
+                return ResourceManager.GetString("Runtime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runtime.
+        /// </summary>
+        internal static string RuntimeCaption {
+            get {
+                return ResourceManager.GetString("RuntimeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the GnuPlotData output in a file named .
+        /// </summary>
+        internal static string Save_the_GnuPlotData_output_in_a_file_named_ {
+            get {
+                return ResourceManager.GetString("Save_the_GnuPlotData_output_in_a_file_named_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the GnuPlotScript output into a file named .
+        /// </summary>
+        internal static string Save_the_GnuPlotScript_output_into_a_file_named_ {
+            get {
+                return ResourceManager.GetString("Save_the_GnuPlotScript_output_into_a_file_named_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to second y-Axis settings.
+        /// </summary>
+        internal static string second_y_Axis_settings {
+            get {
+                return ResourceManager.GetString("second_y_Axis_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second Y-axis.
+        /// </summary>
+        internal static string SecondYAxisCaption {
+            get {
+                return ResourceManager.GetString("SecondYAxisCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Values to show on the second Y-axis.
+        /// </summary>
+        internal static string SecondYAxisTooltipCaption {
+            get {
+                return ResourceManager.GetString("SecondYAxisTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seed.
+        /// </summary>
+        internal static string SeedInputCaption {
+            get {
+                return ResourceManager.GetString("SeedInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The seed for the pseudo-random number generator, making test vectors reproducible.
+        /// </summary>
+        internal static string SeedInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("SeedInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Started evaluating.
+        /// </summary>
+        internal static string Started_evaluating {
+            get {
+                return ResourceManager.GetString("Started_evaluating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Style settings.
+        /// </summary>
+        internal static string Style_settings {
+            get {
+                return ResourceManager.GetString("Style_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Succ_.
+        /// </summary>
+        internal static string Succ_ {
+            get {
+                return ResourceManager.GetString("Succ_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Succ_PercDecr_.
+        /// </summary>
+        internal static string Succ_PercDecr_ {
+            get {
+                return ResourceManager.GetString("Succ_PercDecr_", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Success.
         /// </summary>
-        internal static string Success {
+        internal static string SuccessCaption {
             get {
-                return ResourceManager.GetString("Success", resourceCulture);
+                return ResourceManager.GetString("SuccessCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success and % decrypted.
+        /// </summary>
+        internal static string SuccessPercentCaption {
+            get {
+                return ResourceManager.GetString("SuccessPercentCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabu_.
+        /// </summary>
+        internal static string Tabu_ {
+            get {
+                return ResourceManager.GetString("Tabu_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabu Set Sizes.
+        /// </summary>
+        internal static string Tabu_Set_Sizes {
+            get {
+                return ResourceManager.GetString("Tabu_Set_Sizes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabu set sizes.
+        /// </summary>
+        internal static string TabuCaption {
+            get {
+                return ResourceManager.GetString("TabuCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Series Seed: .
+        /// </summary>
+        internal static string Test_Series_Seed {
+            get {
+                return ResourceManager.GetString("Test_Series_Seed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input Text.
+        /// </summary>
+        internal static string TextInputCaption {
+            get {
+                return ResourceManager.GetString("TextInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The input text from which the plaintexts and natural language keys are taken.
+        /// </summary>
+        internal static string TextInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("TextInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The key input is empty!.
+        /// </summary>
+        internal static string The_key_input_is_empty_ {
+            get {
+                return ResourceManager.GetString("The_key_input_is_empty_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The plaintext input is empty!.
+        /// </summary>
+        internal static string The_plaintext_input_is_empty_ {
+            get {
+                return ResourceManager.GetString("The_plaintext_input_is_empty_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The seed input is empty! It is required for logging purposes..
+        /// </summary>
+        internal static string The_seed_input_is_empty__It_is_required_for_logging_purposes_ {
+            get {
+                return ResourceManager.GetString("The_seed_input_is_empty__It_is_required_for_logging_purposes_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time_.
+        /// </summary>
+        internal static string Time_ {
+            get {
+                return ResourceManager.GetString("Time_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total number of keys.
+        /// </summary>
+        internal static string TotalKeysInputCaption {
+            get {
+                return ResourceManager.GetString("TotalKeysInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of keys specified in the TestVectorGenerator.
+        /// </summary>
+        internal static string TotalKeysInputTooltipCaption {
+            get {
+                return ResourceManager.GetString("TotalKeysInputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trigger next key.
+        /// </summary>
+        internal static string TriggerNextKeyCaption {
+            get {
+                return ResourceManager.GetString("TriggerNextKeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The seed for the next test vector generation in the current test series (usually set to the current key).
+        /// </summary>
+        internal static string TriggerNextKeyTooltipCaption {
+            get {
+                return ResourceManager.GetString("TriggerNextKeyTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TryGetValue from {0} failed! ciphertextLength: {1}, {2}: .
+        /// </summary>
+        internal static string TryGetValue_from__0__failed__ciphertextLength___1____2 {
+            get {
+                return ResourceManager.GetString("TryGetValue_from__0__failed__ciphertextLength___1____2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use &apos;load {0}.p&apos; to plot.
+        /// </summary>
+        internal static string Use__load__0__p__to_plot {
+            get {
+                return ResourceManager.GetString("Use__load__0__p__to_plot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to x-Axis settings.
+        /// </summary>
+        internal static string x_Axis_settings {
+            get {
+                return ResourceManager.GetString("x_Axis_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X-axis.
+        /// </summary>
+        internal static string XAxisCaption {
+            get {
+                return ResourceManager.GetString("XAxisCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Values to show on the X-axis.
+        /// </summary>
+        internal static string XAxisTooltipCaption {
+            get {
+                return ResourceManager.GetString("XAxisTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to y-Axis settings.
+        /// </summary>
+        internal static string y_Axis_settings {
+            get {
+                return ResourceManager.GetString("y_Axis_settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y-axis.
+        /// </summary>
+        internal static string YAxisCaption {
+            get {
+                return ResourceManager.GetString("YAxisCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Values to show on the Y-axis.
+        /// </summary>
+        internal static string YAxisTooltipCaption {
+            get {
+                return ResourceManager.GetString("YAxisTooltipCaption", resourceCulture);
             }
         }
     }

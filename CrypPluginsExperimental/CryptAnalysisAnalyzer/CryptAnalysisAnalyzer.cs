@@ -31,7 +31,7 @@ using Cryptool.PluginBase.IO;
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("CryptAnalysisAnalyzer.Properties.Resources", "CAAcaption", "Analyse CryptAnalysis methods", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("CryptAnalysisAnalyzer.Properties.Resources", "CAAcaption", "CAAtooltip", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CryptAnalysisAnalyzer : ICrypComponent
     {
@@ -161,7 +161,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The input text from which the plaintexts are taken (in the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltipCaption")]
         public string TextInput
         {
             get { return this._textInput; }
@@ -175,7 +175,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The seed which initializes the random number generator (in the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "SeedInputCaption", "SeedInputTooltipCaption")]
         public string SeedInput
         {
             get { return this._seedInput; }
@@ -189,7 +189,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current key (from the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "KeyInput", "KeyInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltipCaption", true)]
         public string KeyInput
         {
             get { return this._keyInput; }
@@ -207,7 +207,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current plaintext (from the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "PlaintextInput", "PlaintextInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltipCaption", true)]
         public string PlaintextInput
         {
             get { return this._plaintextInput; }
@@ -225,7 +225,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current ciphertext (from the cryptographic component).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "CiphertextInput", "CiphertextInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "CiphertextInputCaption", "CiphertextInputTooltipCaption", true)]
         public string CiphertextInput
         {
             get { return this._ciphertextInput; }
@@ -239,11 +239,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
             }
         }
-        
+
         /// <summary>
         /// The total number of keys (from the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "TotalKeysInput", "TotalKeysInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "TotalKeysInputCaption", "TotalKeysInputTooltipCaption", true)]
         public int TotalKeysInput
         {
             get { return this._totalKeysInput; }
@@ -257,7 +257,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current best key (from the cryptanalytic component).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "BestKeyInput", "BestKeyInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "BestKeyInputCaption", "BestKeyInputTooltipCaption")]
         public string BestKeyInput
         {
             get { return this._bestKeyInput; }
@@ -275,7 +275,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current best plaintext (from the cryptanalytic component).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "BestPlaintextInput", "BestPlaintextInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "BestPlaintextInputCaption", "BestPlaintextInputTooltipCaption")]
         public string BestPlaintextInput
         {
             get { return this._bestPlaintextInput; }
@@ -293,7 +293,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The current evaluation container (from the cryptanalytic component).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "EvaluationInput", "EvaluationInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "EvaluationInputCaption", "EvaluationInputTooltipCaption")]
         public EvaluationContainer EvaluationInput
         {
             get { return this._evaluationInput; }
@@ -314,10 +314,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The next key trigger, using the last key (for the TestVectorGenerator).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "TriggerNextKey", "TriggerNextKey tooltip description")]
+        [PropertyInfo(Direction.OutputData, "TriggerNextKeyCaption", "TriggerNextKeyTooltipCaption")]
         public string TriggerNextKey { get; set; }
 
-        [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
+        /// <summary>
+        /// The current kez output (for the Cipher and CipherAnalyzer components).
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "KeyOutputCaption", "KeyOutputTooltipCaption")]
         public string KeyOutput
         {
             get { return this._keyOutput; }
@@ -329,9 +332,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// The current plaintext output (for the other components).
+        /// The current plaintext output (for the Cipher and CipherAnalyzer components).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "PlaintextOutputCaption", "PlaintextOutputTooltipCaption")]
         public string PlaintextOutput
         {
             get { return this._plaintextOutput; }
@@ -343,9 +346,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         }
 
         /// <summary>
-        /// The minimal correct percentage to match the plaintext for success (for the cryptanalytic component).
+        /// The minimal correct percentage to match the plaintext for success (for the CipherAnalyzer component).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "MinimalCorrectPercentage", "MinimalCorrectPercentage tooltip description")]
+        [PropertyInfo(Direction.OutputData, "MinimalCorrectPercentageCaption", "MinimalCorrectPercentageTooltipCaption")]
         public double MinimalCorrectPercentage
         {
             get { return _settings.CorrectPercentage; }
@@ -354,7 +357,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The evaluation output (for a text output).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "EvaluationOutput", "EvaluationOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltipCaption")]
         public string EvaluationOutput
         {
             get;
@@ -364,7 +367,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The GnuPlot script output (for a text output).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "GnuPlotScriptOutput", "GnuPlotScriptOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "GnuPlotScriptOutputCaption", "GnuPlotScriptOutputTooltipCaption")]
         public string GnuPlotScriptOutput
         {
             get;
@@ -374,7 +377,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The GnuPlot data output (for a text output).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "GnuPlotDataOutput", "GnuPlotDataOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "GnuPlotDataOutputCaption", "GnuPlotDataOutputTooltipCaption")]
         public string GnuPlotDataOutput
         {
             get;
@@ -395,7 +398,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // calculate the correctly decrypted percentage and the success
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
-            
+
             // create the ExtendedEvaluationContainer with the current values
             ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
                 _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
@@ -406,26 +409,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // increase the evaluation counter
             _evaluationCount++;
-
-            // reset the evaluation inputs
-            //BestPlaintextInput = "";
-            //BestKeyInput = "";
-            //EvaluationInput = new EvaluationContainer();
         }
 
         /// <summary> 
         /// Sets or resets the Number Decimal Separator (using a dot for GnuPlot).
         /// </summary>
-        private void SetNumberDecimalSeparator(bool reset) 
+        private void SetNumberDecimalSeparator(bool reset)
         {
             System.Globalization.CultureInfo customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
-                
+
             if (!reset)
             {
                 // set dot (".") as Number Decimal Separator
                 _originalNumberDecimalSeparator = customCulture.NumberFormat.NumberDecimalSeparator;
                 customCulture.NumberFormat.NumberDecimalSeparator = ".";
-                }
+            }
             else if (_originalNumberDecimalSeparator != null)
             {
                 customCulture.NumberFormat.NumberDecimalSeparator = _originalNumberDecimalSeparator;
@@ -500,64 +498,64 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // set GnuPlot output variables
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted)
             {
-                _val1 = Resources.Success;
-                _val2 = "Percent Decrypted";
+                _val1 = Resources.SuccessCaption;
+                _val2 = Resources.Percent_Decrypted;
                 _ylabel = "%";
-                _evalMethod = "Succ_PercDecr_";
+                _evalMethod = Resources.Succ_PercDecr_;
             }
             else if (_settings.YAxis == YAxisPlot.success)
             {
-                _val1 = Resources.Success;
+                _val1 = Resources.SuccessCaption;
                 _ylabel = "%";
-                _evalMethod = "Succ_";
+                _evalMethod = Resources.Succ_;
             }
             else if (_settings.YAxis == YAxisPlot.percentDecrypted)
             {
-                _val1 = "Percent Decrypted";
+                _val1 = Resources.Percent_Decrypted;
                 _ylabel = "%";
-                _evalMethod = "PercDecr_";
+                _evalMethod = Resources.PercDecr_;
             }
-            
+
             if (_settings.Y2Axis == Y2AxisPlot.decryptions)
             {
-                _val3 = "Decryptions";
-                _evalMethod += "NoDecr_";
+                _val3 = Resources.Decryptions;
+                _evalMethod += Resources.NoDecr_;
             }
             else if (_settings.Y2Axis == Y2AxisPlot.restarts)
             {
-                _val3 = "Restarts";
-                _evalMethod += "Rest_";
+                _val3 = Resources.Restarts;
+                _evalMethod += Resources.Rest_;
             }
             else if (_settings.Y2Axis == Y2AxisPlot.tabuSetSizes)
             {
-                _val3 = "Tabu Set Sizes";
-                _evalMethod += "Tabu_";
+                _val3 = Resources.Tabu_Set_Sizes;
+                _evalMethod += Resources.Tabu_;
             }
             else if (_settings.Y2Axis == Y2AxisPlot.populationSizes)
             {
-                _val3 = "Population Sizes";
-                _evalMethod += "Popu_";
+                _val3 = Resources.Population_Sizes;
+                _evalMethod += Resources.Popu_;
             }
             else if (_settings.Y2Axis == Y2AxisPlot.runtime)
             {
-                _val3 = "Runtime";
-                _evalMethod += "Time_";
+                _val3 = Resources.Runtime;
+                _evalMethod += Resources.Time_;
             }
 
             if (_settings.XAxis == XAxisPlot.ciphertextLength)
             {
-                _evalMethod += "PerCiphLen";
-                _keyValue = "Ciphertext Length";
+                _evalMethod += Resources.PerCiphLen;
+                _keyValue = Resources.Ciphertext_Length;
             }
             else if (_settings.XAxis == XAxisPlot.keyLength)
             {
-                _evalMethod += "PerKeyLen";
-                _keyValue = "Key Length";
+                _evalMethod += Resources.PerKeyLen;
+                _keyValue = Resources.Key_Length;
             }
             else if (_settings.XAxis == XAxisPlot.runtime)
             {
-                _evalMethod += "PerTime";
-                _keyValue = "Runtime";
+                _evalMethod += Resources.PerTime;
+                _keyValue = Resources.Runtime;
             }
 
         }
@@ -841,21 +839,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // build the complete displayed evaluation output string
             _evaluationOutput = "";
             if (!string.IsNullOrEmpty(_testSeriesSeed))
-                _evaluationOutput = "Test Series Seed: " + _testSeriesSeed + "\r";
+                _evaluationOutput = Resources.Test_Series_Seed + _testSeriesSeed + "\r";
             if (!_noRuntime)
-                _evaluationOutput += "Average runtime: " + averageRuntimeString + "\r";
-            _evaluationOutput += "Ciphertext lengths: " + ciphertextLengthString + "\r";
-            _evaluationOutput += "Key lengths: " + keyLengthString + "\r";
-            _evaluationOutput += "Average decryptions necessary: " + _averageDecryptions + "\r";
+                _evaluationOutput += Resources.Average_runtime + averageRuntimeString + "\r";
+            _evaluationOutput += Resources.Ciphertext_lengths + ciphertextLengthString + "\r";
+            _evaluationOutput += Resources.Key_lengths__ + keyLengthString + "\r";
+            _evaluationOutput += Resources.Average_decryptions_necessary__ + _averageDecryptions + "\r";
             if (!_noRestarts)
-                _evaluationOutput += "Average restarts: " + _averageRestarts + "\r";
+                _evaluationOutput += Resources.Average_restarts__ + _averageRestarts + "\r";
             if (!_noPopulationSize)
-                _evaluationOutput += "Average population size: " + _averagePopulationSize + "\r";
+                _evaluationOutput += Resources.Average_population_size__ + _averagePopulationSize + "\r";
             if (!_noTabuSetSize)
-                _evaluationOutput += "Average tabu set size: " + _averageTabuSetSize + "\r";
-            _evaluationOutput += "Averagely decrypted: " + _averagePercentDecrypted +
-                "% of min " + _settings.CorrectPercentage + "%\r";
-            _evaluationOutput += "Average success: " + _successPercentage + "%\r";
+                _evaluationOutput += Resources.Average_tabu_set_size__ + _averageTabuSetSize + "\r";
+            _evaluationOutput += string.Format(Resources.Averagely_decrypted_of_min, _averagePercentDecrypted, _settings.CorrectPercentage) + "%\r";
+            _evaluationOutput += Resources.Average_success__ + _successPercentage + "%\r";
         }
 
         /// <summary> 
@@ -866,19 +863,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // generate the GnuPlot data output string
             // build a header to guide the user
             _gnuPlotDataOutput = "###########################################################" + NewLine;
-            _gnuPlotDataOutput += "# Gnuplot script for plotting data from output GnuPlotData" + NewLine;
-            _gnuPlotDataOutput += "# Save this GnuPlotData output in a file named " + NewLine;
+            _gnuPlotDataOutput += "#" + Resources.Gnuplot_script_for_plotting_data_from_output_GnuPlotData + NewLine;
+            _gnuPlotDataOutput += "# " + Resources.Save_the_GnuPlotData_output_in_a_file_named_ + NewLine;
             _gnuPlotDataOutput += "#" + NewLine;
             _gnuPlotDataOutput += "# --> '" + _evalMethod + ".dat'" + NewLine;
             _gnuPlotDataOutput += "#" + NewLine;
-            _gnuPlotDataOutput += "# Save the GnuPlotScript output into a file named " + NewLine;
+            _gnuPlotDataOutput += "# " + Resources.Save_the_GnuPlotScript_output_into_a_file_named_ + NewLine;
             _gnuPlotDataOutput += "# '" + _evalMethod + ".p'" + NewLine;
-            _gnuPlotDataOutput += "# Use 'load " + _evalMethod + ".p' to plot" + NewLine;
+            _gnuPlotDataOutput += "# " + string.Format(Resources.Use__load__0__p__to_plot, _evalMethod) + NewLine;
             _gnuPlotDataOutput += "###########################################################" + NewLine;
             _gnuPlotDataOutput += NewLine;
 
             // # Data for evaluation method
-            _gnuPlotDataOutput += "# Data for: " + _evalMethod + NewLine;
+            _gnuPlotDataOutput += "# " + Resources.Data_for__ + _evalMethod + NewLine;
             _gnuPlotDataOutput += NewLine;
             // write evaluation metrics in the file
             _gnuPlotDataOutput += "# " + _keyValue + "\t\t" + _val1;
@@ -941,7 +938,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_successPerCiphertextLength.TryGetValue(len, out currentSuccess))
                     {
                         // Warning! But may be zero
-                        Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertextLength: " + len + ", currentSuccess: " + currentSuccess);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "successPerCiphertextLength", len, "currentSuccess") + currentSuccess);
                         continue;
                     }
                     else
@@ -954,7 +951,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_percentDecryptedPerCiphertextLength.TryGetValue(len, out currentDecryptedPercentage))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertextLength: " + len + ", currentSuccess: " + currentDecryptedPercentage);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_percentDecryptedPerCiphertextLength", len, "currentDecryptedPercentage") + currentDecryptedPercentage);
                         continue;
                     }
                     else
@@ -968,7 +965,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_decryptionsPerCiphertextLength.TryGetValue(len, out currentDecryptions))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerCiphertextLength failed! ciphertextLength: " + len + ", currentSuccess: " + currentDecryptions);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_decryptionsPerCiphertextLength", len, "currentDecryptions") + currentDecryptions);
                         //continue;
                     }
                     else
@@ -1016,7 +1013,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_restartsPerCiphertextLength.TryGetValue(len, out currentRestarts))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from restartsPerCiphertextLength failed! ciphertextLength: " + len + ", currentRestarts: " + currentRestarts);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_restartsPerCiphertextLength", len, "currentRestarts") + currentRestarts);
                         //continue;
                     }
                     else
@@ -1040,7 +1037,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_tabuSizesPerCiphertextLength.TryGetValue(len, out currentTabu))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from tabuSizesPerCiphertextLength failed! ciphertextLength: " + len + ", currentTabu: " + currentTabu);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_tabuSizesPerCiphertextLength", len, "currentTabu") + currentTabu);
                         //continue;
                     }
                     else
@@ -1064,7 +1061,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_populationSizesPerCiphertextLength.TryGetValue(len, out currentPopulatioin))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from populationSizesPerCiphertextLength failed! ciphertextLength: " + len + ", currentPopulatioin: " + currentPopulatioin);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_populationSizesPerCiphertextLength", len, "currentPopulatioin") + currentPopulatioin);
                         //continue;
                     }
                     else
@@ -1106,7 +1103,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_successPerKeyLength.TryGetValue(len, out currentSuccess))
                     {
                         // Warning! But may be zero
-                        Console.WriteLine("TryGetValue from successPerKeyLength failed! keyLength: " + len + ", currentSuccess: " + currentSuccess);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_successPerKeyLength", len, "currentSuccess") + currentSuccess);
                         //continue;
                     }
                     else
@@ -1119,7 +1116,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_percentDecryptedPerKeyLength.TryGetValue(len, out currentDecryptedPercentage))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerKeyLength failed! keyLength: " + len + ", currentSuccess: " + currentDecryptedPercentage);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_percentDecryptedPerKeyLength", len, "currentDecryptedPercentage") + currentDecryptedPercentage);
                         continue;
                     }
                     else
@@ -1133,7 +1130,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_decryptionsPerKeyLength.TryGetValue(len, out currentDecryptions))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerKeyLength failed! keyLength: " + len + ", currentSuccess: " + currentDecryptions);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_decryptionsPerKeyLength", len, "currentDecryptions") + currentDecryptions);
                         //continue;
                     }
                     else
@@ -1181,7 +1178,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_restartsPerKeyLength.TryGetValue(len, out currentRestarts))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from restartsPerKeyLength failed! keyLength: " + len + ", currentRestarts: " + currentRestarts);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_restartsPerKeyLength", len, "currentRestarts") + currentRestarts);
                         //continue;
                     }
                     else
@@ -1205,7 +1202,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_tabuSizesPerKeyLength.TryGetValue(len, out currentTabu))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from tabuSizesPerKeyLength failed! keyLength: " + len + ", currentTabu: " + currentTabu);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_tabuSizesPerKeyLength", len, "currentTabu") + currentTabu);
                         //continue;
                     }
                     else
@@ -1229,7 +1226,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_populationSizesPerKeyLength.TryGetValue(len, out currentPopulatioin))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from populationSizesPerKeyLength failed! keyLength: " + len + ", currentPopulatioin: " + currentPopulatioin);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_populationSizesPerKeyLength", len, "currentPopulatioin") + currentPopulatioin);
                         //continue;
                     }
                     else
@@ -1279,7 +1276,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_successPerRuntime.TryGetValue(time, out currentSuccess))
                     {
                         // Warning! But may be zero
-                        Console.WriteLine("TryGetValue from successPerRuntime failed! runtime: " + time + ", currentSuccess: " + currentSuccess);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_successPerRuntime", time, "currentSuccess") + currentSuccess);
                         //continue;
                     }
                     else
@@ -1292,7 +1289,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_percentDecryptedPerRuntime.TryGetValue(time, out currentDecryptedPercentage))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerRuntime failed! runtime: " + time + ", currentSuccess: " + currentDecryptedPercentage);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_percentDecryptedPerRuntime", time, "currentDecryptedPercentage") + currentDecryptedPercentage);
                         continue;
                     }
                     else
@@ -1306,7 +1303,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_decryptionsPerRuntime.TryGetValue(time, out currentDecryptions))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from successPerRuntime failed! runtime: " + time + ", currentSuccess: " + currentDecryptions);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_decryptionsPerRuntime", time, "currentDecryptions") + currentDecryptions);
                         //continue;
                     }
                     else
@@ -1344,7 +1341,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_restartsPerRuntime.TryGetValue(time, out currentRestarts))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from restartsPerRuntime failed! runtime: " + time + ", currentRestarts: " + currentRestarts);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_restartsPerRuntime", time, "currentRestarts") + currentRestarts);
                         //continue;
                     }
                     else
@@ -1368,7 +1365,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_tabuSizesPerRuntime.TryGetValue(time, out currentTabu))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from tabuSizesPerRuntime failed! runtime: " + time + ", currentTabu: " + currentTabu);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_tabuSizesPerRuntime", time, "currentTabu") + currentTabu);
                         //continue;
                     }
                     else
@@ -1392,7 +1389,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     if (!_populationSizesPerRuntime.TryGetValue(time, out currentPopulatioin))
                     {
                         // Warning!
-                        Console.WriteLine("TryGetValue from populationSizesPerRuntime failed! runtime: " + time + ", currentPopulatioin: " + currentPopulatioin);
+                        Console.WriteLine(string.Format(Resources.TryGetValue_from__0__failed__ciphertextLength___1____2, "_populationSizesPerRuntime", time, "currentPopulatioin") + currentPopulatioin);
                         //continue;
                     }
                     else
@@ -1424,19 +1421,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // generate the GnuPlot script output string
             // build a header to guide the user
             _gnuPlotScriptOutput = "###########################################################" + NewLine;
-            _gnuPlotScriptOutput += "# Gnuplot script for plotting data from output GnuPlotData" + NewLine;
-            _gnuPlotScriptOutput += "# Save this GnuPlotScript output into a file named" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.Gnuplot_script_for_plotting_data_from_output_GnuPlotData + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.Save_the_GnuPlotScript_output_into_a_file_named_ + NewLine;
             _gnuPlotScriptOutput += "#" + NewLine;
             _gnuPlotScriptOutput += "# --> '" + _evalMethod + ".p'" + NewLine;
             _gnuPlotScriptOutput += "#" + NewLine;
-            _gnuPlotScriptOutput += "# Save the GnuPlotData output in a file named " + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.Save_the_GnuPlotData_output_in_a_file_named_ + NewLine;
             _gnuPlotScriptOutput += "# '" + _evalMethod + ".dat'" + NewLine;
-            _gnuPlotScriptOutput += "# Use 'load " + _evalMethod + ".p' to plot" + NewLine;
+            _gnuPlotScriptOutput += "# " + string.Format(Resources.Use__load__0__p__to_plot, _evalMethod) + NewLine;
             _gnuPlotScriptOutput += "###########################################################" + NewLine;
             _gnuPlotScriptOutput += NewLine;
 
             // # General settings
-            _gnuPlotScriptOutput += "# General settings" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.General_settings + NewLine;
             _gnuPlotScriptOutput += "set autoscale\t\t\t\t\t# -- scale axes automatically" + NewLine;
             _gnuPlotScriptOutput += "unset log\t\t\t\t\t\t# -- remove any log-scaling" + NewLine;
             _gnuPlotScriptOutput += "unset tics\t\t\t\t\t\t# -- remove any previous tics" + NewLine;
@@ -1446,7 +1443,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += NewLine;
 
             // # Style settings
-            _gnuPlotScriptOutput += "# Style settings" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.Style_settings + NewLine;
             _gnuPlotScriptOutput += "set style line 1 lc rgb '#2ca25f' lt 1 lw 2 pt 1 ps 0.8   # -- green" + NewLine;
             _gnuPlotScriptOutput += "set style line 2 lc rgb '#0060ad' lt 1 lw 2 pt 7 ps 0.8   # -- blue" + NewLine;
             _gnuPlotScriptOutput += "set style line 3 lc rgb '#e34a33' lt 1 lw 2 pt 2 ps 0.8   # -- red" + NewLine;
@@ -1457,7 +1454,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += NewLine;
 
             // # Plot settings
-            _gnuPlotScriptOutput += "# Plot settings" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.Plot_settings + NewLine;
             _gnuPlotScriptOutput += "set title \"" + _val1;
             if (!String.IsNullOrEmpty(_val2) && !String.IsNullOrEmpty(_val3))
                 _gnuPlotScriptOutput += ", " + _val2 + ", and " + _val3;
@@ -1476,7 +1473,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += NewLine;
 
             // # x-Axis settings
-            _gnuPlotScriptOutput += "# x-Axis settings" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.x_Axis_settings + NewLine;
             // if the x-axis value is runtime and runtime in enabled
             if (_settings.XAxis == XAxisPlot.runtime && !_noRuntime)
             {
@@ -1496,7 +1493,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _gnuPlotScriptOutput += NewLine;
 
             // # y-axis settings
-            _gnuPlotScriptOutput += "# y-Axis settings" + NewLine;
+            _gnuPlotScriptOutput += "# " + Resources.y_Axis_settings + NewLine;
             // if the y-axis value is a value in percent
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted ||
                 _settings.YAxis == YAxisPlot.percentDecrypted ||
@@ -1530,7 +1527,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 !(_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && _noTabuSetSize) &&
                 !(_settings.Y2Axis == Y2AxisPlot.populationSizes && _noPopulationSize))
             {
-                _gnuPlotScriptOutput += "# second y-Axis settings" + NewLine;
+                _gnuPlotScriptOutput += "# " + Resources.second_y_Axis_settings + NewLine;
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + NewLine;
                 _gnuPlotScriptOutput += "set y2label \"" + _val3 + "\"" + NewLine;
 
@@ -1561,7 +1558,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             int column = 3;
 
             // add the plotting lines to the script
-            _gnuPlotScriptOutput += "# plotting" + NewLine;
+            _gnuPlotScriptOutput += "# " + 
+                Resources.plotting + NewLine;
             _gnuPlotScriptOutput += "plot    \"" + _evalMethod + ".dat\" using 1:2 title '" + _val1 + "' with linespoints ls " + style;
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted)
             {
@@ -1737,20 +1735,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // TESTING!!!
                     //KeyInput = "KEYWORDX";
 
-                    GuiLogMessage("The key input is empty!", NotificationLevel.Error);
+                    GuiLogMessage(Resources.The_key_input_is_empty_, NotificationLevel.Error);
                     return false;
                 }
 
                 if (String.IsNullOrEmpty(PlaintextInput))
                 {
-                    GuiLogMessage("The plaintext input is empty!", NotificationLevel.Error);
+                    GuiLogMessage(Resources.The_plaintext_input_is_empty_, NotificationLevel.Error);
                     return false;
                 }
             }
 
             if (String.IsNullOrEmpty(SeedInput))
             {
-                GuiLogMessage("The seed input is empty! It is required for logging purposes.", NotificationLevel.Warning);
+                GuiLogMessage(Resources.The_seed_input_is_empty__It_is_required_for_logging_purposes_, NotificationLevel.Warning);
             }
 
             return true;
@@ -1778,7 +1776,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (_keyCount == 0)
                     _testRuns = new Dictionary<int, ExtendedEvaluationContainer>();
                 
-				// increase key counter
+                // increase key counter
                 _keyCount++;
 
                 // update the progress bar
@@ -1787,9 +1785,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 // visualize the evaluation process through the EvaluationOutput
                 if (String.IsNullOrEmpty(EvaluationOutput))
                     EvaluationOutput = _keyCount + " / " + _totalKeysInput + NewLine +
-                        "0%" + NewLine + NewLine + "Current key number: " + _keyCount;
+                        "0%" + NewLine + NewLine + Resources.Current_key_number__ + _keyCount;
                 else
-                    EvaluationOutput += NewLine + "Current key number: " + _keyCount + " / " + _totalKeysInput;
+                    EvaluationOutput += NewLine + Resources.Current_key_number__ + _keyCount + " / " + _totalKeysInput;
                     
                 OnPropertyChanged("EvaluationOutput");
 
@@ -1835,18 +1833,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     EvaluationOutput += "█";
 
                 EvaluationOutput += " " + _progress + "%" + NewLine + NewLine +
-                    "key number: " + _keyCount + " / " +
-                    _totalKeysInput + " - Done.";
+                    Resources.key_number__ + _keyCount + " / " +
+                    _totalKeysInput + " - " + Resources.Done + ".";
 
-				EvaluationOutput += NewLine + "ID: " + EvaluationInput.GetID() + NewLine;
+                EvaluationOutput += NewLine + Resources.ID + ": " + EvaluationInput.GetID() + NewLine;
                 if (_settings.CalculateRuntime)
                 {
                     TimeSpan time;
                     EvaluationInput.GetRuntime(out time);
-                    EvaluationOutput += "Last Runtime: " + time.ToString() + NewLine;
+                    EvaluationOutput += Resources.Last_runtime + ": " + time.ToString() + NewLine;
                 }
-                EvaluationOutput += "Last number of restarts: " + EvaluationInput.GetRestarts() + NewLine +
-                "Last number of decryptions: " + _evaluationInput.GetDecryptions();
+                EvaluationOutput += Resources.Last_number_of_restarts + ": " + EvaluationInput.GetRestarts() + NewLine +
+                Resources.Last_number_of_decryptions + ": " + _evaluationInput.GetDecryptions();
                 // gather all available evaluation data
                 CollectEvaluationData();
 
@@ -1862,7 +1860,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 else
                 {
                     // ...evaluate if not
-                    EvaluationOutput += NewLine + "Started Evaluating...";
+                    EvaluationOutput += NewLine + Resources.Started_evaluating + "...";
                     OnPropertyChanged("EvaluationOutput");
                     
                     Evaluate();
@@ -1877,6 +1875,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
             else /*if (!_newKey && !_newPlaintext)*/
             {
+                // debug output
                 System.Console.Write("_newKey: " + _newKey + ", _newPlaintext: " + _newPlaintext + ", _newEvaluation: " + _newEvaluation + ", _newBestKey: " +
                 _newBestKey + ", _newBestPlaintext: " + _newBestPlaintext + NewLine);
                 
