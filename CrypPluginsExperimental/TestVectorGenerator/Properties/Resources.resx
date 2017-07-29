@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TVGcaption" xml:space="preserve">
+    <value>TestVectorGenerator</value>
+  </data>
+  <data name="Alphabet_input_is_empty_" xml:space="preserve">
+    <value>Alphabet input is empty!</value>
+  </data>
+  <data name="Too_many_sentences_added_for_length" xml:space="preserve">
+    <value>Too many sentences added for length: </value>
+  </data>
+  <data name="AlphabetInputCaption" xml:space="preserve">
+    <value>Alphabet</value>
+  </data>
+  <data name="AlphabetInputTooltip" xml:space="preserve">
+    <value>The optional alphabet to use for the key generation</value>
+  </data>
+  <data name="DebugOutputCaption" xml:space="preserve">
+    <value>Debug Output</value>
+  </data>
+  <data name="DebugOutputTooltip" xml:space="preserve">
+    <value>The debug output can be used to get additional debug information</value>
+  </data>
+  <data name="KeyOutputCaption" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyOutputTooltip" xml:space="preserve">
+    <value>The generated key</value>
+  </data>
+  <data name="PlaintextOutputCaption" xml:space="preserve">
+    <value>Plaintext</value>
+  </data>
+  <data name="PlaintextOutputTooltip" xml:space="preserve">
+    <value>The generated plaintext</value>
+  </data>
+  <data name="RegexInputCaption" xml:space="preserve">
+    <value>Regex Pattern</value>
+  </data>
+  <data name="RegexInputTooltip" xml:space="preserve">
+    <value>The regex pattern for the reverse regex key generation</value>
+  </data>
+  <data name="SeedInputCaption" xml:space="preserve">
+    <value>Seed</value>
+  </data>
+  <data name="SeedInputTooltip" xml:space="preserve">
+    <value>The seed for the pseudo-random number generator, making test vectors reproducible</value>
+  </data>
+  <data name="TextInputCaption" xml:space="preserve">
+    <value>Input Text</value>
+  </data>
+  <data name="TextInputTooltip" xml:space="preserve">
+    <value>The input text from which the plaintexts and natural language keys are taken</value>
+  </data>
+  <data name="TotalKeysCaption" xml:space="preserve">
+    <value>Total Keys</value>
+  </data>
+  <data name="TotalKeysTooltip" xml:space="preserve">
+    <value>The total number of keys to generate</value>
+  </data>
+  <data name="TVGtooltip" xml:space="preserve">
+    <value>Generates keys and plaintexts as test vectors</value>
+  </data>
+  <data name="input_text_too_short" xml:space="preserve">
+    <value>The input text seems to be too short for the entered amount of plaintexts!</value>
+  </data>
+  <data name="Alphabet_length_is_too_short" xml:space="preserve">
+    <value>Alphabet length ({0}) is too short to generate a string of length {1} of unique letters!</value>
+  </data>
+  <data name="Alphabet_with_hypen_not_recognized_" xml:space="preserve">
+    <value>Alphabet with single '-' not recognized!</value>
+  </data>
+  <data name="Numeric_alphabet_not_recognized" xml:space="preserve">
+    <value>Numeric alphabet not recognized!</value>
+  </data>
+  <data name="Latin_alphabet_not_recognized" xml:space="preserve">
+    <value>Latin alphabet not recognized!</value>
+  </data>
+  <data name="Multiple_round_brackets_not_supported_yet" xml:space="preserve">
+    <value>Multiple round brackets not supported yet!</value>
+  </data>
+  <data name="Error_involving_multiple_brackets" xml:space="preserve">
+    <value>Error involving multiple brackets!</value>
+  </data>
+  <data name="Error_parsing_length_string" xml:space="preserve">
+    <value>Error parsing length string!</value>
+  </data>
+  <data name="regexString_does_not_match_regex" xml:space="preserve">
+    <value>regexString "{0}" does not match regex "{1}"!</value>
+  </data>
+  <data name="The_input_text_is_missing" xml:space="preserve">
+    <value>The input text is missing!</value>
+  </data>
+  <data name="The_input_seed_is_missing" xml:space="preserve">
+    <value>The input seed is missing!</value>
+  </data>
+  <data name="The_input_regex_is_missing" xml:space="preserve">
+    <value>The input regex is missing!</value>
+  </data>
+  <data name="Maximum_key_length_has_to_be_at_least_minimum_key_length" xml:space="preserve">
+    <value>Maximum key length has to be at least minimum key length!</value>
+  </data>
+  <data name="Maximum_text_length_has_to_be_at_least_minimum_text_length" xml:space="preserve">
+    <value>Maximum text length has to be at least minimum text length!</value>
+  </data>
+  <data name="The_text_length_increase_has_to_be_" xml:space="preserve">
+    <value>The text length increase has to be at most the difference between minimum and maximum text length!</value>
+  </data>
+  <data name="The_input_text_is_too_small" xml:space="preserve">
+    <value>The input text is too small!</value>
+  </data>
+  <data name="All_keys_have_been_generated" xml:space="preserve">
+    <value>All keys have been generated. Stopping generation.</value>
+  </data>
+  <data name="BinaryCaption" xml:space="preserve">
+    <value>Binary</value>
+  </data>
+  <data name="DeleteSpacesCaption" xml:space="preserve">
+    <value>Delete spaces</value>
+  </data>
+  <data name="DeleteSpacesTooltipCaption" xml:space="preserve">
+    <value>Delete the spaces in the input text</value>
+  </data>
+  <data name="IgnoreCaption" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="InputAlphabetCaption" xml:space="preserve">
+    <value>Use input alphabet</value>
+  </data>
+  <data name="keyGenerationTypeCaption" xml:space="preserve">
+    <value>Key generation type</value>
+  </data>
+  <data name="KeyGenerationTypeTooltipCaption" xml:space="preserve">
+    <value>The type of key to generate</value>
+  </data>
+  <data name="KeyGroupCaption" xml:space="preserve">
+    <value>Key Settings</value>
+  </data>
+  <data name="LettersCaption" xml:space="preserve">
+    <value>Letters</value>
+  </data>
+  <data name="MaximumKeyLengthCaption" xml:space="preserve">
+    <value>Maximum key length</value>
+  </data>
+  <data name="MaximumKeyLengthTooltipCaption" xml:space="preserve">
+    <value>Maximum length of the keys to generate</value>
+  </data>
+  <data name="MaximumPlaintextLengthCaption" xml:space="preserve">
+    <value>Maximum plaintext length</value>
+  </data>
+  <data name="MaximumPlaintextLengthCaptionTooltipCaption" xml:space="preserve">
+    <value>The longest plaintext length to generate</value>
+  </data>
+  <data name="MinimumKeyLengthCaption" xml:space="preserve">
+    <value>Minimum key length</value>
+  </data>
+  <data name="MinimumKeyLengthTooltipCaption" xml:space="preserve">
+    <value>Minimum length of the keys to generate</value>
+  </data>
+  <data name="MinimumPlaintextLengthCaption" xml:space="preserve">
+    <value>Minimum plaintext length</value>
+  </data>
+  <data name="MinimumPlaintextLengthCaptionTooltipCaption" xml:space="preserve">
+    <value>The shortest plaintext length to generate</value>
+  </data>
+  <data name="NaturalLanguageCaption" xml:space="preserve">
+    <value>Natural language</value>
+  </data>
+  <data name="NaturalLanguageKeyFormatCaption" xml:space="preserve">
+    <value>Natural language key format</value>
+  </data>
+  <data name="NaturalLanguageKeyFormatTooltipCaption" xml:space="preserve">
+    <value>Key format of the natural language key</value>
+  </data>
+  <data name="NumberHandlingCaption" xml:space="preserve">
+    <value>Number handling</value>
+  </data>
+  <data name="NumberHandlingTooltipCaption" xml:space="preserve">
+    <value>Ignore, remove, or replace numbers in the input text</value>
+  </data>
+  <data name="NumberOfTestRunsCaption" xml:space="preserve">
+    <value>Number of test runs</value>
+  </data>
+  <data name="NumberOfTestRunsTooltipCaption" xml:space="preserve">
+    <value>The total number of test runs for this test series</value>
+  </data>
+  <data name="NumbersCaption" xml:space="preserve">
+    <value>Numbers</value>
+  </data>
+  <data name="NumericKeyFromTextCaption" xml:space="preserve">
+    <value>Numeric key from text</value>
+  </data>
+  <data name="PeriodReplacerCaption" xml:space="preserve">
+    <value>Replace periods with:</value>
+  </data>
+  <data name="PeriodReplacerTooltipCaption" xml:space="preserve">
+    <value>The symbol to replace periods with</value>
+  </data>
+  <data name="PeriodSymbolHandlingCaption" xml:space="preserve">
+    <value>Period symbol handling</value>
+  </data>
+  <data name="PeriodSymbolHandlingTooltipCaption" xml:space="preserve">
+    <value>Ignore, remove, or replace the period symbols in the input text</value>
+  </data>
+  <data name="PlaintextGroupCaption" xml:space="preserve">
+    <value>Plaintext Settings</value>
+  </data>
+  <data name="PlaintextLengthStepIncreaseCaption" xml:space="preserve">
+    <value>Plaintext length step increase</value>
+  </data>
+  <data name="PlaintextLengthStepIncreaseTooltipCaption" xml:space="preserve">
+    <value>The number of alphabet symbols to increase the plaintexts by between generations</value>
+  </data>
+  <data name="RandomFromAlphabetCaption" xml:space="preserve">
+    <value>Random from alphabet</value>
+  </data>
+  <data name="RandomKeyFormatCaption" xml:space="preserve">
+    <value>Random key format</value>
+  </data>
+  <data name="RandomKeyFormatTooltipCaption" xml:space="preserve">
+    <value>Key format of the random key</value>
+  </data>
+  <data name="RandomRegexCaption" xml:space="preserve">
+    <value>Random by reverse regex</value>
+  </data>
+  <data name="RemoveCaption" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="ReplaceSzCaption" xml:space="preserve">
+    <value>Replace ß by sz</value>
+  </data>
+  <data name="ReplaceSZTooltipCaption" xml:space="preserve">
+    <value>Replace ß by sz in the input text</value>
+  </data>
+  <data name="ReplaceUmlautsCaption" xml:space="preserve">
+    <value>Replace umlauts</value>
+  </data>
+  <data name="ReplaceUmlautsTooltipCaption" xml:space="preserve">
+    <value>Replace umlauts in the input text</value>
+  </data>
+  <data name="ReplaceWithCaption" xml:space="preserve">
+    <value>Replace with:</value>
+  </data>
+  <data name="ReplaceWithEINSCaption" xml:space="preserve">
+    <value>Replace with EINS, ZWEI,...</value>
+  </data>
+  <data name="ReplaceWithNullCaption" xml:space="preserve">
+    <value>Replace with NULL, ONE,...</value>
+  </data>
+  <data name="SentencesFromTextCaption" xml:space="preserve">
+    <value>Sentences from text</value>
+  </data>
+  <data name="SeparatorCaption" xml:space="preserve">
+    <value>Separator between key symbols</value>
+  </data>
+  <data name="SeparatorTooltipCaption" xml:space="preserve">
+    <value>Separator between each of the key symbols to generate</value>
+  </data>
+  <data name="ShowExtendedSettingsCaption" xml:space="preserve">
+    <value>Show extended settings</value>
+  </data>
+  <data name="ShowExtendedSettingsTooltipCaption" xml:space="preserve">
+    <value>Show or hide the extended settings</value>
+  </data>
+  <data name="UniqueSymbolUsageCaption" xml:space="preserve">
+    <value>Unique symbol usage</value>
+  </data>
+  <data name="UniqueSymbolUsageTooltipCaption" xml:space="preserve">
+    <value>Use every symbol of the key generation alphabet only once</value>
+  </data>
+  <data name="UppercaseOnlyCaption" xml:space="preserve">
+    <value>Uppercase only</value>
+  </data>
+  <data name="UppercaseOnlyTooltipCaption" xml:space="preserve">
+    <value>Transform the input text to uppercase</value>
+  </data>
+</root>
