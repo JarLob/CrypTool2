@@ -23,13 +23,13 @@ namespace Cryptool.Plugins.TestVectorGenerator
 {
     // enums for the selectable options in the UI
     public enum FormatType { letters, numbers, binary, inputAlphabet };
-    public enum GenerationType { regex, random, naturalSpeech };
+    public enum GenerationType { regex, random, naturalLanguage };
 
-    // an enumaration for the different modes of dealing with dots
-    public enum DotSymbolHandlingMode { Ignore = 0, Remove = 1, Replace = 2 };
+    // an enumaration for the different modes of dealing with periods
+    public enum PeriodSymbolHandlingMode { Ignore = 0, Remove = 1, Replace = 2 };
 
     // an enumaration for the different modes of dealing with numbers
-    public enum NumbersHandlingMode { Ignore = 0, Remove = 1, ReplaceEnglish = 2, ReplaceGerman = 3 };
+    public enum NumberHandlingMode { Ignore = 0, Remove = 1, ReplaceEnglish = 2, ReplaceGerman = 3 };
 
     public class TestVectorGeneratorSettings : ISettings
     {
@@ -43,19 +43,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
         private int _minTextLength = 100;
         private int _maxTextLength = 100;
         private int _textLengthIncrease = 5;
-        private NumbersHandlingMode _numbersHandlingMode = NumbersHandlingMode.Remove;
+        private NumberHandlingMode _numberHandlingMode = NumberHandlingMode.Remove;
         private bool _showExtendedSettings = false;
 
         // plaintext variables
-        private DotSymbolHandlingMode _dotSymbolHandlingMode = DotSymbolHandlingMode.Remove;
-        private string _dotReplacer = "X";
+        private PeriodSymbolHandlingMode _periodSymbolHandlingMode = PeriodSymbolHandlingMode.Remove;
+        private string _periodReplacer = "X";
 
         // key variables
         private int _minKeyLength = 14;
         private int _maxKeyLength = 14;
         private string _separator = "";
         private FormatType _keyFormat;
-        private GenerationType _keyGeneration;
+        private GenerationType _keyGenerationType;
 
         #endregion
 
@@ -64,7 +64,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The total number of test runs for this test series.
         /// </summary>
-        [TaskPane("Number of Test Runs", "NumberOfTestRunsTooltipCaption", null, generalPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
+        [TaskPane("NumberOfTestRunsCaption", "NumberOfTestRunsTooltipCaption", null, generalPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int NumberOfTestRuns
         {
             get
@@ -82,9 +82,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Modifies all letters in the plaintext and the random and natural speech keys.
+        /// Modifies all letters in the plaintext and the random and natural language keys.
         /// </summary>
-        [TaskPane("Uppercase Only", "UppercaseOnlyTooltipCaption", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
+        [TaskPane("UppercaseOnlyCaption", "UppercaseOnlyTooltipCaption", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
         public bool UppercaseOnly
         {
             get;
@@ -92,9 +92,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Deletes the spaces in the plaintext and the natural speech keys.
+        /// Deletes the spaces in the plaintext and the natural language keys.
         /// </summary>
-        [TaskPane("Delete Spaces", "DeleteSpacesTooltipCaption", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
+        [TaskPane("DeleteSpacesCaption", "DeleteSpacesTooltipCaption", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
         public bool DeleteSpaces
         {
             get;
@@ -102,9 +102,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Replaces the letter ß with sz in the plaintext and the natural speech keys.
+        /// Replaces the letter ß with sz in the plaintext and the natural language keys.
         /// </summary>
-        [TaskPane("Replace ß by sz", "ReplaceSZTooltipCaption", null, generalPaneIndex + 3, false, ControlType.CheckBox)]
+        [TaskPane("ReplaceSzCaption", "ReplaceSZTooltipCaption", null, generalPaneIndex + 3, false, ControlType.CheckBox)]
         public bool ReplaceSZ
         {
             get;
@@ -112,9 +112,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Replaces all umlauts (upper- or lowercase) in the plaintext and the natural speech keys.
+        /// Replaces all umlauts (upper- or lowercase) in the plaintext and the natural language keys.
         /// </summary>
-        [TaskPane("Replace Umlauts", "ReplaceUmlautsTooltipCaption", null, generalPaneIndex + 4, false, ControlType.CheckBox)]
+        [TaskPane("ReplaceUmlautsCaption", "ReplaceUmlautsTooltipCaption", null, generalPaneIndex + 4, false, ControlType.CheckBox)]
         public bool ReplaceUmlauts
         {
             get;
@@ -122,11 +122,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Ignores, removes, or replaces numbers in the plaintext and the natural speech keys.
+        /// Ignores, removes, or replaces numbers in the plaintext and the natural language keys.
         /// </summary>
-        [TaskPane("Numbers Handling", "NumbersHandlingTooltipCaption", null, generalPaneIndex + 5, false, ControlType.ComboBox, new String[] { 
-            "Ignore", "Remove", "Replace with NULL, ONE,...", "Replace with EINS, ZWEI,..."})]
-        public NumbersHandlingMode NumbersHandling
+        [TaskPane("NumberHandlingCaption", "NumberHandlingTooltipCaption", null, generalPaneIndex + 5, false, ControlType.ComboBox, new String[] { 
+            "IgnoreCaption", "RemoveCaption", "ReplaceWithNullCaption", "ReplaceWithEINSCaption"})]
+        public NumberHandlingMode NumberHandling
         {
             get;
             set;
@@ -135,7 +135,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Displays or hides the extended settings.
         /// </summary>
-        [TaskPane("Show extended settings", "ShowExtendedSettingsTooltipCaption", null, generalPaneIndex + 6, false, ControlType.CheckBox)]
+        [TaskPane("ShowExtendedSettingsCaption", "ShowExtendedSettingsTooltipCaption", null, generalPaneIndex + 6, false, ControlType.CheckBox)]
         public bool ShowExtendedSettings
         {
             get
@@ -158,7 +158,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Defines the minimum length of the generated plaintexts.
         /// </summary>
-        [TaskPane("Minimum Plaintext Length", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
+        [TaskPane("MinimumPlaintextLengthCaption", "MinimumPlaintextLengthCaptionTooltipCaption", "PlaintextGroupCaption", plaintextPaneIndex, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int MinTextLength
         {
             get
@@ -175,7 +175,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Defines the maximum length of the generated plaintexts.
         /// </summary>
-        [TaskPane("Maximum Plaintext Length", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
+        [TaskPane("MaximumPlaintextLengthCaption", "MaximumPlaintextLengthCaptionTooltipCaption", "PlaintextGroupCaption", plaintextPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, Int32.MaxValue)]
         public int MaxTextLength
         {
             get
@@ -192,7 +192,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Defines the text length steps of the generated plaintexts.
         /// </summary>
-        [TaskPane("Plaintext Length Step Increase", "This is a parameter tooltipCaption", "PlaintextGroup", plaintextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("PlaintextLengthStepIncreaseCaption", "PlaintextLengthStepIncreaseTooltipCaption", "PlaintextGroupCaption", plaintextPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int TextLengthIncrease
         {
             get
@@ -224,38 +224,38 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Ignores, removes, or replaces dots in the plaintext and the natural speech keys.
+        /// Ignores, removes, or replaces periods in the plaintext and the natural language keys.
         /// </summary>
-        [TaskPane("Dot Symbol Handling", "DotSymbolHandlingTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 3, false, ControlType.ComboBox, new String[] { 
-            "Ignore", "Remove", "Replace with:"})]
-        public DotSymbolHandlingMode DotSymbolHandling
+        [TaskPane("PeriodSymbolHandlingCaption", "PeriodSymbolHandlingTooltipCaption", "PlaintextGroupCaption", plaintextPaneIndex + 3, false, ControlType.ComboBox, new String[] { 
+            "IgnoreCaption", "RemoveCaption", "ReplaceWithCaption"})]
+        public PeriodSymbolHandlingMode PeriodSymbolHandling
         {
             get
             {
-                return this._dotSymbolHandlingMode;
+                return this._periodSymbolHandlingMode;
             }
             set
             {
-                this._dotSymbolHandlingMode = value;
-                UpdateDotReplacingSettingVisibility();
-                OnPropertyChanged("DotSymbolHandling");
+                this._periodSymbolHandlingMode = value;
+                UpdatePeriodReplacingSettingVisibility();
+                OnPropertyChanged("PeriodSymbolHandling");
             }
         }
 
         /// <summary>
-        /// Specifies the dot replacing symbol.
+        /// Specifies the period replacing symbol.
         /// </summary>
-        [TaskPane("Replace Dots With:", "DotReplacerTooltipCaption", "PlaintextGroup", plaintextPaneIndex + 4, false, ControlType.TextBox, null)]
-        public string DotReplacer
+        [TaskPane("PeriodReplacerCaption", "PeriodReplacerTooltipCaption", "PlaintextGroupCaption", plaintextPaneIndex + 4, false, ControlType.TextBox, null)]
+        public string PeriodReplacer
         {
             get
             {
-                return _dotReplacer;
+                return _periodReplacer;
             }
             set
             {
-                _dotReplacer = value;
-                OnPropertyChanged("DotReplacer");
+                _periodReplacer = value;
+                OnPropertyChanged("PeriodReplacer");
             }
         }
 
@@ -266,21 +266,21 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Specifies the type of the key generation.
         /// </summary>
-        [TaskPane("keyGenerationCaption", "KeyGenerationTooltipCaption", "KeyGroup", keyPaneIndex, false, ControlType.ComboBox, new String[] { 
-            "Random with regex", "Random", "Natural speech"})]
-        public GenerationType KeyGeneration
+        [TaskPane("keyGenerationTypeCaption", "KeyGenerationTypeTooltipCaption", "KeyGroupCaption", keyPaneIndex, false, ControlType.ComboBox, new String[] { 
+            "RandomRegexCaption", "RandomFromAlphabetCaption", "NaturalLanguageCaption"})]
+        public GenerationType KeyGenerationType
         {
             get
             {
-                return this._keyGeneration;
+                return this._keyGenerationType;
             }
             set
             {
-                if (value != _keyGeneration)
+                if (value != _keyGenerationType)
                 {
-                    this._keyGeneration = value;
+                    this._keyGenerationType = value;
                     UpdateKeyFormatVisibility();
-                    OnPropertyChanged("KeyGeneration");
+                    OnPropertyChanged("KeyGenerationType");
                 }
             }
         }
@@ -288,7 +288,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Defines the minimum length of the generated keys.
         /// </summary>
-        [TaskPane("Minimum Key Length", "Minimum length of the generated keys", "KeyGroup", keyPaneIndex+1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("MinimumKeyLengthCaption", "MinimumKeyLengthTooltipCaption", "KeyGroupCaption", keyPaneIndex + 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int MinKeyLength
         {
             get
@@ -308,7 +308,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Defines the maximum length of the generated keys.
         /// </summary>
-        [TaskPane("Maximum Key Length", "Maximum length of the generated keys", "KeyGroup", keyPaneIndex+2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("MaximumKeyLengthCaption", "MaximumKeyLengthTooltipCaption", "KeyGroupCaption", keyPaneIndex + 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int MaxKeyLength
         {
             get
@@ -345,7 +345,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Specifies the separator symbol between the key symbols.
         /// </summary>
-        [TaskPane("Separator between key symbols", "Separator between each of the key symbols to generate", "KeyGroup", keyPaneIndex+3, false, ControlType.TextBox, null)]
+        [TaskPane("SeparatorCaption", "SeparatorTooltipCaption", "KeyGroupCaption", keyPaneIndex + 3, false, ControlType.TextBox, null)]
         public string Separator
         {
             get
@@ -365,8 +365,8 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Specifies the key format for the random key generation.
         /// </summary>
-        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "Letters", "Numbers", "Binary", "Use input alphabet"})]
+        [TaskPane("RandomKeyFormatCaption", "RandomKeyFormatTooltipCaption", "KeyGroupCaption", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
+            "LettersCaption", "NumbersCaption", "BinaryCaption", "InputAlphabetCaption"})]
         public FormatType KeyFormatRandom
         {
             get
@@ -384,11 +384,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
 
         /// <summary>
-        /// Specifies the key format for the natural speech key generation.
+        /// Specifies the key format for the natural language key generation.
         /// </summary>
-        [TaskPane("keyFormatCaption", "KeyFormatTooltipCaption", "KeyGroup", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
-            "Sentences from text", "Numeric key from text"})]
-        public FormatType KeyFormatNaturalSpeech
+        [TaskPane("NaturalLanguageKeyFormatCaption", "NaturalLanguageKeyFormatTooltipCaption", "KeyGroupCaption", keyPaneIndex + 4, false, ControlType.ComboBox, new String[] { 
+            "SentencesFromTextCaption", "NumericKeyFromTextCaption"})]
+        public FormatType KeyFormatNaturalLanguage
         {
             get
             {
@@ -407,7 +407,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// Switches between using each key symbol only once and using it arbitrarily often.
         /// </summary>
-        [TaskPane("Unique symbol usage", "UniqueSymbolUsageTooltipCaption", "KeyGroup", keyPaneIndex + 5, false, ControlType.CheckBox)]
+        [TaskPane("UniqueSymbolUsageCaption", "UniqueSymbolUsageTooltipCaption", "KeyGroupCaption", keyPaneIndex + 5, false, ControlType.CheckBox)]
         public bool UniqueSymbolUsage
         {
             get;
@@ -429,9 +429,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
             settingChanged("DeleteSpaces", Visibility.Collapsed);
             settingChanged("ReplaceSZ", Visibility.Collapsed);
             settingChanged("ReplaceUmlauts", Visibility.Collapsed);
-            settingChanged("DotSymbolHandling", Visibility.Collapsed);
-            settingChanged("DotReplacer", Visibility.Collapsed);
-            settingChanged("NumbersHandling", Visibility.Collapsed);
+            settingChanged("PeriodSymbolHandling", Visibility.Collapsed);
+            settingChanged("PeriodReplacer", Visibility.Collapsed);
+            settingChanged("NumberHandling", Visibility.Collapsed);
             settingChanged("Separator", Visibility.Collapsed);
             if (ShowExtendedSettings)
             {
@@ -441,22 +441,22 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 settingChanged("DeleteSpaces", Visibility.Visible);
                 settingChanged("ReplaceSZ", Visibility.Visible);
                 settingChanged("ReplaceUmlauts", Visibility.Visible);
-                settingChanged("DotSymbolHandling", Visibility.Visible);
-                settingChanged("NumbersHandling", Visibility.Visible);
+                settingChanged("PeriodSymbolHandling", Visibility.Visible);
+                settingChanged("NumberHandling", Visibility.Visible);
                 settingChanged("Separator", Visibility.Visible);
-                UpdateDotReplacingSettingVisibility();
+                UpdatePeriodReplacingSettingVisibility();
             }
         }
 
         /// <summary>
-        /// Shows or hides the dot replacer input field.
+        /// Shows or hides the period replacer input field.
         /// </summary>
-        internal void UpdateDotReplacingSettingVisibility()
+        internal void UpdatePeriodReplacingSettingVisibility()
         {
-            settingChanged("DotReplacer", Visibility.Collapsed);
-            if (_dotSymbolHandlingMode == DotSymbolHandlingMode.Replace)
+            settingChanged("PeriodReplacer", Visibility.Collapsed);
+            if (_periodSymbolHandlingMode == PeriodSymbolHandlingMode.Replace)
             {
-                settingChanged("DotReplacer", Visibility.Visible);
+                settingChanged("PeriodReplacer", Visibility.Visible);
             }
         }
 
@@ -467,12 +467,12 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             settingChanged("KeyFormatRandom", Visibility.Collapsed);
                     settingChanged("UniqueSymbolUsage", Visibility.Collapsed);
-            settingChanged("KeyFormatNaturalSpeech", Visibility.Collapsed);
-            switch (KeyGeneration)
+            settingChanged("KeyFormatNaturalLanguage", Visibility.Collapsed);
+            switch (KeyGenerationType)
             {
-                case GenerationType.naturalSpeech: // natural speech
+                case GenerationType.naturalLanguage: // natural language
                     _keyFormat = FormatType.letters;
-                    settingChanged("KeyFormatNaturalSpeech", Visibility.Visible);
+                    settingChanged("KeyFormatNaturalLanguage", Visibility.Visible);
                     break;
                 case GenerationType.random: // random generation
                     settingChanged("KeyFormatRandom", Visibility.Visible);
@@ -507,11 +507,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
         {
             if (_keyFormat == null)
                 _keyFormat = FormatType.letters;
-            if (_keyGeneration == null)
-                _keyGeneration = GenerationType.random;
+            if (_keyGenerationType == null)
+                _keyGenerationType = GenerationType.random;
             UpdateKeyFormatVisibility();
             UpdateExtendedSettingsVisibility();
-            UpdateDotReplacingSettingVisibility();
+            UpdatePeriodReplacingSettingVisibility();
         }
 
         private void OnPropertyChanged(string propertyName)

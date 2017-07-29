@@ -33,7 +33,7 @@ using Resources = TestVectorGenerator.Properties.Resources;
 namespace Cryptool.Plugins.TestVectorGenerator
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("TestVectorGenerator.Properties.Resources", "TVGcaption", "TestVectorGenerator/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("TestVectorGenerator.Properties.Resources", "TVGcaption", "TVGtooltip", "TestVectorGenerator/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class TestVectorGenerator : ICrypComponent
     {
@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The input text from which the plaintexts are taken.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "TextInput", "TextInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip", true)]
         public string TextInput
         {
             get { return this._textInput; }
@@ -86,7 +86,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The seed which initializes the random number generator.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "SeedInput", "SeedInput tooltip description", true)]
+        [PropertyInfo(Direction.InputData, "SeedInputCaption", "SeedInputTooltip", true)]
         public string SeedInput
         {
             get { return this._seedInput.ToString(); }
@@ -106,7 +106,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The regex pattern as string (optional).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "RegexInput", "RegexInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "RegexInputCaption", "RegexInputTooltip")]
         public string RegexInput
         {
             get { return this._regexInput; }
@@ -123,7 +123,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The additional alphabet input (optional).
         /// </summary>
-        [PropertyInfo(Direction.InputData, "AlphabetInput", "AlphabetInput tooltip description")]
+        [PropertyInfo(Direction.InputData, "AlphabetInputCaption", "AlphabetInputTooltip")]
         public string AlphabetInput
         {
             get { return this._alphabetInput; }
@@ -137,7 +137,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The current key (for the CryptAnalysisAnalyzer).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "KeyOutput", "KeyOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "KeyOutputCaption", "KeyOutputTooltip")]
         public string KeyOutput
         {
             get;
@@ -147,7 +147,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The current plaintext (for the CryptAnalysisAnalyzer).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "PlaintextOutput", "PlaintextOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "PlaintextOutputCaption", "PlaintextOutputTooltip")]
         public string PlaintextOutput
         {
             get;
@@ -157,7 +157,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The total number of keys (for the CryptAnalysisAnalyzer).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "TotalKeys", "TotalKeys tooltip description")]
+        [PropertyInfo(Direction.OutputData, "TotalKeysCaption", "TotalKeysTooltip")]
         public int TotalKeys
         {
             get;
@@ -167,7 +167,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
         /// <summary>
         /// The debug output for additional information (usable with the string output component).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "DebugOutput", "DebugOutput tooltip description")]
+        [PropertyInfo(Direction.OutputData, "DebugOutputCaption", "DebugOutputTooltip")]
         public string DebugOutput
         {
             get { return this._debugOutput; }
@@ -200,9 +200,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
             int count = 0;
 
             // generate a new starting sentence as long as it has the same beginning as a preceding one
-            while (_plaintextList.Exists(s => s.StartsWith(_inputArray[_startSentence])))
+            string currSentence = replaceSpaces(replacePeriods(_inputArray[_startSentence]));
+            if (currSentence.Length > _currentTextLength)
+                currSentence = currSentence.Substring(0, _currentTextLength);
+            int currLength = currSentence.Length;
+
+            //while (_plaintextList.Any(s => (replaceSpaces(replacePeriods(_inputArray[_startSentence]))).StartsWith(s)))
+            while(_plaintextList.Any(s => s.Length >= currLength && s.Substring(0,currLength) == currSentence))
             {
                 _startSentence = _rand.Next(0, _inputArray.Length);
+                currSentence = replaceSpaces(replacePeriods(_inputArray[_startSentence]));
+                if (currSentence.Length > _currentTextLength)
+                    currSentence = currSentence.Substring(0, _currentTextLength);
+                currLength = currSentence.Length;
                 count++;
 
                 //System.Console.WriteLine("Plaintext exists! " + count);
@@ -210,17 +220,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 // break the loop after going through the array 3 times and return
                 if (count > _inputArray.Length * 3)
                 {
-                    GuiLogMessage("Text input seems to be too short for the entered amount of plaintexts!", NotificationLevel.Error);
+                    GuiLogMessage(Resources.input_text_too_short, NotificationLevel.Error);
                     return;
                 }
             }
+
+            int originalStartSentence = _startSentence;
 
             // iterate over the input array, starting at the start sentence
             for (int i = _startSentence; i != _startSentence - 1; i = i == _inputArray.Length - 1 ? 0 : i + 1)
             {
                 // append next sentence as long as current text length reached
-                // replace spaces and dots as specified in the settings
-                _plaintextOutput = _plaintextOutput + replaceSpaces(replaceDots(_inputArray[i]));
+                // replace spaces and periods as specified in the settings
+                _plaintextOutput = _plaintextOutput + replaceSpaces(replacePeriods(_inputArray[i]));
                 if (_plaintextOutput.Length >= _currentTextLength)
                 {
                     // cut the final plaintext to the exact specified length
@@ -240,6 +252,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     }
                     break;
                 }
+                else if (i == _startSentence && 
+                    !_plaintextOutput.Equals(replaceSpaces(replacePeriods(_inputArray[i]))))
+                {
+                    return;
+                }
             }
         }
 
@@ -248,9 +265,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         #region Generate Keys
 
         /// <summary>
-        /// Generates the natural speech key according to the settings.
+        /// Generates the natural language key according to the settings.
         /// </summary>
-        public void generateNaturalSpeechKeys()
+        public void generateNaturalLanguageKeys()
         {
             // generate the first starting sentence index of the input array
             _startSentence = _rand.Next(0, _inputArray.Length);
@@ -332,7 +349,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     _occurrences.AddOrUpdate(sentenceLength, 1, (id, count) => count + 1);
 
                     // if the letters should be replaced by numbers, do so
-                    if (_settings.KeyFormatNaturalSpeech == FormatType.numbers)
+                    if (_settings.KeyFormatNaturalLanguage == FormatType.numbers)
                     {
                         if (_settings.UniqueSymbolUsage)
                             sentence = ConvertToUniqueNumericKey(sentence);
@@ -467,7 +484,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             // throw error if the alphabet does not contain enough letters for a unique key generation
             if (length > alphabet.Count && _settings.UniqueSymbolUsage)
             {
-                GuiLogMessage("Alphabet length (" + alphabet.Count + ") is too short to generate a string of length " + length + " of unique letters!", NotificationLevel.Error);
+                GuiLogMessage(string.Format(Resources.Alphabet_length_is_too_short, alphabet.Count, length), NotificationLevel.Error);
                 return null;
             }
 
@@ -563,7 +580,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         !upperIsNumeric && lowerIsNumeric ||
                         !upperIsLetter && lowerIsLetter)
                     {
-                        GuiLogMessage("Alphabet with single '-' not recognized!", NotificationLevel.Error);
+                        GuiLogMessage(Resources.Alphabet_with_hypen_not_recognized_, NotificationLevel.Error);
                         return null;
                     }
 
@@ -571,15 +588,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
                     if (upperIsNumeric)
                     {
                         int lower;
-                        if (!int.TryParse(alphabetBounds[0], out lower))
-                        {
-                            GuiLogMessage("Numeric alphabet not recognized!", NotificationLevel.Error);
-                            return null;
-                        }
                         int upper;
-                        if (!int.TryParse(alphabetBounds[1], out upper))
+                        if (!int.TryParse(alphabetBounds[0], out lower) ||
+                            !int.TryParse(alphabetBounds[1], out upper))
                         {
-                            GuiLogMessage("Numeric alphabet not recognized!", NotificationLevel.Error);
+                            GuiLogMessage(Resources.Numeric_alphabet_not_recognized, NotificationLevel.Error);
                             return null;
                         }
                         alphabet = new List<string>();
@@ -596,7 +609,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         int upper = lowerUpperAlphabet.IndexOf(char.Parse(alphabetBounds[1]));
                         if (upper < lower)
                         {
-                            GuiLogMessage("Latin alphabet not recognized!", NotificationLevel.Error);
+                            GuiLogMessage(Resources.Latin_alphabet_not_recognized, NotificationLevel.Error);
                             return null;
                         }
 
@@ -685,7 +698,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                             //openingBracketCount++;
                             //nextBracketIndex = nextOpeningBracketIndex;
 
-                            GuiLogMessage("Multiple round brackets not supported yet!", NotificationLevel.Error);
+                            GuiLogMessage(Resources.Multiple_round_brackets_not_supported_yet, NotificationLevel.Error);
                             return;
                         }
                         else if (nextOpeningBracketIndex == -1 ||
@@ -696,7 +709,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                         }
                         else
                         {
-                            GuiLogMessage("Error involving multiple brackets!", NotificationLevel.Error);
+                            GuiLogMessage(Resources.Error_involving_multiple_brackets, NotificationLevel.Error);
                             return;
                         }
                     }
@@ -719,7 +732,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 int length;
                 if (!int.TryParse(lengthString, out length))
                 {
-                    GuiLogMessage("Error parsing length string!", NotificationLevel.Error);
+                    GuiLogMessage(Resources.Error_parsing_length_string, NotificationLevel.Error);
                     return;
                 }
 
@@ -774,7 +787,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             // double check if the key matches the regex pattern
             if (!Regex.IsMatch(regexString, regex))
             {
-                GuiLogMessage("regexString \"" + regexString + "\" does not match regex \"" + regex + "\"!", NotificationLevel.Error);
+                GuiLogMessage(string.Format(Resources.regexString_does_not_match_regex, regexString, regex), NotificationLevel.Error);
 
             }
 
@@ -802,42 +815,42 @@ namespace Cryptool.Plugins.TestVectorGenerator
             // check for an input text and seed
             if (String.IsNullOrEmpty(_textInput))
             {
-                GuiLogMessage("The input text is missing!", NotificationLevel.Error);
+                GuiLogMessage(Resources.The_input_text_is_missing, NotificationLevel.Error);
                 return false;
             }
 
             if (String.IsNullOrEmpty(SeedInput))
             {
-                GuiLogMessage("The input seed is missing!", NotificationLevel.Error);
+                GuiLogMessage(Resources.The_input_seed_is_missing, NotificationLevel.Error);
                 return false;
             }
 
             // check for a regex input if regex is selected
             if (String.IsNullOrEmpty(_regexInput) &&
-                _settings.KeyGeneration == GenerationType.regex)
+                _settings.KeyGenerationType == GenerationType.regex)
             {
-                GuiLogMessage("The input regex is missing!", NotificationLevel.Error);
+                GuiLogMessage(Resources.The_input_regex_is_missing, NotificationLevel.Error);
                 return false;
             }
 
             // check if the min key length if higher than the max and throw an error if
             if (_settings.MinKeyLength > _settings.MaxKeyLength)
             {
-                GuiLogMessage("Maximum key length has to be at least minimum key length!", NotificationLevel.Warning);
+                GuiLogMessage(Resources.Maximum_key_length_has_to_be_at_least_minimum_key_length, NotificationLevel.Warning);
                 _settings.MaxKeyLength = _settings.MinKeyLength;
             }
 
             // check if the min text length if higher than the max and throw an error if
             if (_settings.MinTextLength > _settings.MaxTextLength)
             {
-                GuiLogMessage("Maximum text length has to be at least minimum text length!", NotificationLevel.Warning);
+                GuiLogMessage(Resources.Maximum_text_length_has_to_be_at_least_minimum_text_length, NotificationLevel.Warning);
                 _settings.MaxTextLength = _settings.MinTextLength;
             }
 
             // check if the text length increase is to big and throw an error if
             if (_settings.TextLengthIncrease > _settings.MaxTextLength - _settings.MinTextLength)
             {
-                GuiLogMessage("The text length increase has to be at most the difference between minimum and maximum text length!", NotificationLevel.Warning);
+                GuiLogMessage(Resources.The_text_length_increase_has_to_be_, NotificationLevel.Warning);
                 _settings.TextLengthIncrease = _settings.MaxTextLength - _settings.MinTextLength;
             }
 
@@ -845,7 +858,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             if (_textInput.Length < _settings.MinKeyLength ||
                 _textInput.Length < _settings.MinTextLength)
             {
-                GuiLogMessage("The input text is too small!", NotificationLevel.Error);
+                GuiLogMessage(Resources.The_input_text_is_too_small, NotificationLevel.Error);
                 return false;
             }
 
@@ -854,19 +867,19 @@ namespace Cryptool.Plugins.TestVectorGenerator
         }
         
         /// <summary> 
-        /// Replaces or deletes the dots (full stops) in the given string
+        /// Replaces or deletes the periods (full stops) in the given string
         /// according to the settings.
         /// <param name="text">The text to modify</param>
         /// <returns>The modified text</returns>
         /// </summary>
-        public string replaceDots(string text)
+        public string replacePeriods(string text)
         {
             // text modifications according to user settings
             text = text + ". ";
-            if (_settings.DotSymbolHandling == DotSymbolHandlingMode.Remove)
+            if (_settings.PeriodSymbolHandling == PeriodSymbolHandlingMode.Remove)
                 text = text.Replace(".", String.Empty);
-            else if (_settings.DotSymbolHandling == DotSymbolHandlingMode.Replace)
-                text = text.Replace(".", _settings.DotReplacer);
+            else if (_settings.PeriodSymbolHandling == PeriodSymbolHandlingMode.Replace)
+                text = text.Replace(".", _settings.PeriodReplacer);
             return text;
         }
 
@@ -889,9 +902,9 @@ namespace Cryptool.Plugins.TestVectorGenerator
         public void processTextSettings()
         {
             // text modifications according to user settings
-            if (_settings.NumbersHandling == NumbersHandlingMode.Remove)
+            if (_settings.NumberHandling == NumberHandlingMode.Remove)
                 _textInput = Regex.Replace(_textInput, @"[0-9]", String.Empty);
-            else if (_settings.NumbersHandling == NumbersHandlingMode.ReplaceEnglish)
+            else if (_settings.NumberHandling == NumberHandlingMode.ReplaceEnglish)
             {
                 _textInput = _textInput.Replace("0", "NULL");
                 _textInput = _textInput.Replace("1", "ONE");
@@ -904,7 +917,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 _textInput = _textInput.Replace("8", "EIGHT");
                 _textInput = _textInput.Replace("9", "NINE");
             }
-            else if (_settings.NumbersHandling == NumbersHandlingMode.ReplaceGerman)
+            else if (_settings.NumberHandling == NumberHandlingMode.ReplaceGerman)
             {
                 _textInput = _textInput.Replace("0", "NULL");
                 _textInput = _textInput.Replace("1", "EINS");
@@ -1017,14 +1030,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             {
                 List<string> alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".Select(c => c.ToString()).ToList();
                 numericKey += alphabet.IndexOf(ch.ToString());
-                /*try
-                {
-                    numericKey += (Convert.ToInt32(ch) - Convert.ToInt32('A'));
-                }
-                catch (OverflowException)
-                {
-                    GuiLogMessage("Unable to convert " + ((int)ch).ToString("X4") + " to an Int32.", NotificationLevel.Info);
-                }*/
             }
 
             // add the separator
@@ -1090,7 +1095,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
             // check if the number of test runs has already been processed
             if (_testRunCount >= _settings.NumberOfTestRuns)
             {
-                GuiLogMessage("Number of keys to generate already reached! Skipping generation...", NotificationLevel.Warning);
+                GuiLogMessage(Resources.All_keys_have_been_generated, NotificationLevel.Info);
                 return;
             }
 
@@ -1121,11 +1126,11 @@ namespace Cryptool.Plugins.TestVectorGenerator
             ProgressChanged(_testRunCount - 0.5, _settings.NumberOfTestRuns);
 
             // generate key
-            if (_settings.KeyGeneration == GenerationType.naturalSpeech)
+            if (_settings.KeyGenerationType == GenerationType.naturalLanguage)
             {
-                generateNaturalSpeechKeys();
+                generateNaturalLanguageKeys();
             }
-            else if (_settings.KeyGeneration == GenerationType.regex)
+            else if (_settings.KeyGenerationType == GenerationType.regex)
             {
                 generateRandomKeysWithRegex();
             }
