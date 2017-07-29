@@ -60,7 +60,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// This is the minimum percentage that the decrypted ciphertext has to match the plaintext.
         /// </summary>
-        [TaskPane("Minimal correct percentage", "This is a parameter tooltip", null, generalPaneIndex, false, ControlType.TextBox, null)]
+        [TaskPane("CorrectPercentageCaption", "This is a parameter tooltip", null, generalPaneIndex, false, ControlType.TextBox, null)]
         public double CorrectPercentage
         {
             get

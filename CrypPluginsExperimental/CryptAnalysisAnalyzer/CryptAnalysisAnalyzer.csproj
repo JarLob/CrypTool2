@@ -8,8 +8,8 @@
     <ProjectGuid>{0B4BEF72-1963-40C4-B9CF-1D036201E7CD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CryptoAnalysisAnalyser</RootNamespace>
-    <AssemblyName>CryptoAnalysisAnalyser</AssemblyName>
+    <RootNamespace>CryptAnalysisAnalyzer</RootNamespace>
+    <AssemblyName>CryptAnalysisAnalyzer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -81,6 +81,11 @@
     <Compile Include="CryptAnalysisAnalyzer.cs" />
     <Compile Include="CryptAnalysisAnalyzerSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -108,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="userdoc.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

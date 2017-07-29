@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Threading;
 using System.Windows.Controls;
-
+using CryptAnalysisAnalyzer.Properties;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
@@ -31,7 +31,7 @@ using Cryptool.PluginBase.IO;
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("CryptAnalysisAnalyzer", "Analyse CryptAnalysis methods", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("CryptAnalysisAnalyzer.Properties.Resources", "CAAcaption", "Analyse CryptAnalysis methods", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CryptAnalysisAnalyzer : ICrypComponent
     {
@@ -500,14 +500,14 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // set GnuPlot output variables
             if (_settings.YAxis == YAxisPlot.successAndPercentDecrypted)
             {
-                _val1 = "Success";
+                _val1 = Resources.Success;
                 _val2 = "Percent Decrypted";
                 _ylabel = "%";
                 _evalMethod = "Succ_PercDecr_";
             }
             else if (_settings.YAxis == YAxisPlot.success)
             {
-                _val1 = "Success";
+                _val1 = Resources.Success;
                 _ylabel = "%";
                 _evalMethod = "Succ_";
             }
