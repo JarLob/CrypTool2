@@ -133,7 +133,7 @@
     <value>The best key found by the used CipherAnalyzer</value>
   </data>
   <data name="BestPlaintextInputCaption" xml:space="preserve">
-    <value>Best Plaintext</value>
+    <value>Best plaintext</value>
   </data>
   <data name="BestPlaintextInputTooltipCaption" xml:space="preserve">
     <value>The best plaintext found by the used CipherAnalyzer</value>
@@ -142,7 +142,7 @@
     <value>CryptAnalysisAnalyzer</value>
   </data>
   <data name="CAAtooltip" xml:space="preserve">
-    <value>Analyse CryptAnalysis methods</value>
+    <value>Analyze cryptanalysis methods</value>
   </data>
   <data name="CalculateRuntimeCaption" xml:space="preserve">
     <value>Calculate runtime</value>
@@ -154,7 +154,7 @@
     <value>Ciphertext</value>
   </data>
   <data name="CiphertextInputTooltipCaption" xml:space="preserve">
-    <value>The Plaintext encrypted by the used Cipher</value>
+    <value>The plaintext encrypted by the used cipher</value>
   </data>
   <data name="CiphertextLengthCaption" xml:space="preserve">
     <value>Ciphertext length</value>
@@ -178,16 +178,16 @@
     <value>GnuPlot data</value>
   </data>
   <data name="GnuPlotDataOutputTooltipCaption" xml:space="preserve">
-    <value>The GnuPlot data output to save in a .dat file and use in a GnuPlot script file</value>
+    <value>The GnuPlot data output to be saved in a .dat file and used in a GnuPlot script file</value>
   </data>
   <data name="GnuPlotGroupCaption" xml:space="preserve">
-    <value>GnuPlot Settings</value>
+    <value>GnuPlot settings</value>
   </data>
   <data name="GnuPlotScriptOutputCaption" xml:space="preserve">
     <value>GnuPlot script</value>
   </data>
   <data name="GnuPlotScriptOutputTooltipCaption" xml:space="preserve">
-    <value>The GnuPlot script output to save in a .p file and load from the GnuPlot command line</value>
+    <value>The GnuPlot script output to be saved in a .p file and loaded from the GnuPlot command line</value>
   </data>
   <data name="KeyInputCaption" xml:space="preserve">
     <value>Key</value>
@@ -202,19 +202,19 @@
     <value>Key</value>
   </data>
   <data name="KeyOutputTooltipCaption" xml:space="preserve">
-    <value>The key test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components)</value>
+    <value>The key test vector of the current test run (usually provided to both the Cipher and the CipherAnalyzer components)</value>
   </data>
   <data name="MinimalCorrectPercentageCaption" xml:space="preserve">
-    <value>Minimal correct percentag</value>
+    <value>Minimal correct percentage</value>
   </data>
   <data name="MinimalCorrectPercentageTooltipCaption" xml:space="preserve">
-    <value>The minimal correct percentage to match the plaintext by for success</value>
+    <value>The minimal percentage of correctly decrypted ciphertext characters to be judged as  success</value>
   </data>
   <data name="MinimumPercentageCaption" xml:space="preserve">
     <value>Minimal correct percentage</value>
   </data>
   <data name="MinimumPercentageTooltipCaption" xml:space="preserve">
-    <value>The minimal percentage the decrypted ciphertext has to match the correct plaintext to count as a succesfull decryption</value>
+    <value>The minimal percentage the decrypted ciphertext has to match the correct plaintext to count as a successfull decryption</value>
   </data>
   <data name="NoneCaption" xml:space="preserve">
     <value>None</value>
@@ -229,7 +229,7 @@
     <value>Percent decrypted</value>
   </data>
   <data name="Percent_Decrypted" xml:space="preserve">
-    <value>Percent Decrypted</value>
+    <value>Percent decrypted</value>
   </data>
   <data name="PlaintextInputCaption" xml:space="preserve">
     <value>Plaintext</value>
@@ -241,7 +241,7 @@
     <value>Plaintext</value>
   </data>
   <data name="PlaintextOutputTooltipCaption" xml:space="preserve">
-    <value>The plaintext test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components)</value>
+    <value>The plaintext test vector of the current test run (usually provided to both the Cipher and the CipherAnalyzer components)</value>
   </data>
   <data name="PopulationCaption" xml:space="preserve">
     <value>Population sizes</value>
@@ -274,10 +274,10 @@
     <value>Tabu set sizes</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
-    <value>Input Text</value>
+    <value>Input text</value>
   </data>
   <data name="TextInputTooltipCaption" xml:space="preserve">
-    <value>The input text from which the plaintexts and natural language keys are taken</value>
+    <value>The input text from which the plaintexts and natural language keys are taken from</value>
   </data>
   <data name="TotalKeysInputCaption" xml:space="preserve">
     <value>Total number of keys</value>
@@ -328,13 +328,13 @@
     <value>Restarts</value>
   </data>
   <data name="Tabu_Set_Sizes" xml:space="preserve">
-    <value>Tabu Set Sizes</value>
+    <value>Tabu set sizes</value>
   </data>
   <data name="Tabu_" xml:space="preserve">
     <value>Tabu_</value>
   </data>
   <data name="Population_Sizes" xml:space="preserve">
-    <value>Population Sizes</value>
+    <value>Population sizes</value>
   </data>
   <data name="Popu_" xml:space="preserve">
     <value>Popu_</value>
@@ -346,16 +346,16 @@
     <value>PerCiphLen</value>
   </data>
   <data name="Ciphertext_Length" xml:space="preserve">
-    <value>Ciphertext Length</value>
+    <value>Ciphertext length</value>
   </data>
   <data name="Key_Length" xml:space="preserve">
-    <value>Key Length</value>
+    <value>Key length</value>
   </data>
   <data name="PerTime" xml:space="preserve">
     <value>PerTime</value>
   </data>
   <data name="Test_Series_Seed" xml:space="preserve">
-    <value>Test Series Seed: </value>
+    <value>Test series seed: </value>
   </data>
   <data name="Average_runtime" xml:space="preserve">
     <value>Average runtime: </value>
