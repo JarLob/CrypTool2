@@ -178,7 +178,7 @@
     <value>GnuPlot data</value>
   </data>
   <data name="GnuPlotDataOutputTooltipCaption" xml:space="preserve">
-    <value>The GnuPlot data output to be saved in a .dat file and used in a GnuPlot script file</value>
+    <value>GnuPlot data output to be saved in a .dat file and used in a GnuPlot script file</value>
   </data>
   <data name="GnuPlotGroupCaption" xml:space="preserve">
     <value>GnuPlot settings</value>
@@ -187,7 +187,7 @@
     <value>GnuPlot script</value>
   </data>
   <data name="GnuPlotScriptOutputTooltipCaption" xml:space="preserve">
-    <value>The GnuPlot script output to be saved in a .p file and loaded from the GnuPlot command line</value>
+    <value>GnuPlot script output to be saved in a .p file and loaded from the GnuPlot command line</value>
   </data>
   <data name="KeyInputCaption" xml:space="preserve">
     <value>Key</value>
@@ -208,7 +208,7 @@
     <value>Minimal correct percentage</value>
   </data>
   <data name="MinimalCorrectPercentageTooltipCaption" xml:space="preserve">
-    <value>The minimal percentage of correctly decrypted ciphertext characters to be judged as  success</value>
+    <value>The minimal percentage of correctly decrypted ciphertext characters to be judged as success</value>
   </data>
   <data name="MinimumPercentageCaption" xml:space="preserve">
     <value>Minimal correct percentage</value>
