@@ -22,7 +22,7 @@ namespace Cryptool.Fialka
 {
     [Author("Eugen Antal, Tomáš Sovič", "eugen.antal@stuba.sk", "FEI STU Bratislava", "http://www.fei.stuba.sk/")]
    
-    [PluginInfo("Cryptool.Fialka.Properties.Resources", "PluginCaption", "PluginTooltip", "Fialka/DetailedDescription/userdoc.xml", "Fialka/Images/FialkaRot.png")]//new[] { "CrypWin/images/default.png" }/*, "CrypWin/images/default.png", "CrypWin/images/default.png"*/)]
+    [PluginInfo("Cryptool.Fialka.Properties.Resources", "PluginCaption", "PluginTooltip", "Fialka/DetailedDescription/userdoc.xml", "Fialka/Images/FialkaRot.png")]
    
     [ComponentCategory(ComponentCategory.CiphersClassic)]
 
@@ -118,7 +118,9 @@ namespace Cryptool.Fialka
             {
                 GuiLogMessage("Input is null or empty.", NotificationLevel.Debug);
                 return;
-            } else if (this.settings.settingsRestore == FialkaSettings.RestoreInitialSettings.WhenInputChanged)
+            }
+
+            if (this.settings.settingsRestore == FialkaSettings.RestoreInitialSettings.WhenInputChanged)
             {
                 this.settings.internalState = this.savedState.DeepCopy();
                 this.settings.internalStateChanged(); // notify old values were restored
@@ -126,6 +128,7 @@ namespace Cryptool.Fialka
             }
 
             string key1, key2;
+
             // init
             key1 = this.settings.internalState.getFormattedKey();
             this.fialkaCore = new FialkaCore(this.settings.internalState);
@@ -138,6 +141,7 @@ namespace Cryptool.Fialka
             OnPropertyChanged("Output");
             GuiLogMessage("Output is: " + Output, NotificationLevel.Debug);
             key2 = this.settings.internalState.getFormattedKey();
+
             // finalization
             this.settings.internalStateChanged();
             ProgressChanged(Input.Length, Input.Length);

@@ -462,8 +462,8 @@ namespace Cryptool.Fialka
         public static readonly string keyboardPolandSpec = "Ą%-6)4[9?3(=5+ĘŁ:,2]01/78Ž.°' ";
         public static readonly string keyboardCzechoslovakianLet = "FADULT5PBRKVZJGHCNE7QWXIOSM8Y2";
         public static readonly string keyboardCzechoslovakianSpec = "ŘÄČ6Ě4[9\"3Ö=5ÜŽ+:,2]01/78Š.%- ";
-        public static readonly string keyboardDDRLet = "F8DULT5PBRKVZ4GHCNEA327IOSM96J";
-        public static readonly string keyboardDDRSpec = "V:W6)4[9/3(X5JÄÜY,2]01F78Q.-Ö*";
+        public static readonly string keyboardGDRLet = "F8DULT5PBRKVZ4GHCNEA327IOSM96J";
+        public static readonly string keyboardGDRSpec = "V:W6)4[9/3(X5JÄÜY,2]01F78Q.-Ö*";
         // special constants used in mixed-mode
         public const string MixedModeLetterShiftChars = "[5Ж";
         public const string MixedModeNumberShiftChars = "]7AФ";
@@ -500,11 +500,11 @@ namespace Cryptool.Fialka
             {
                 switch (country)
                 {
-                    case FialkaEnums.countryLayout.DDR:
+                    case FialkaEnums.countryLayout.GDR:
                         blocked = spaceMappingDDR.Contains(key);
                         break;
                         // same for CZK and POL
-                    case FialkaEnums.countryLayout.Czechslovakia:
+                    case FialkaEnums.countryLayout.Czechoslovakia:
                     case FialkaEnums.countryLayout.Poland:
                         blocked = (key == spaceMappingOther);
                         break;
@@ -555,16 +555,16 @@ namespace Cryptool.Fialka
             int idx = InvalidInput;
             switch (country)
             {
-                case FialkaEnums.countryLayout.Czechslovakia:
+                case FialkaEnums.countryLayout.Czechoslovakia:
                     if (keyboardCzechoslovakianLet.Contains(input))
                     {
                         idx = keyboardCzechoslovakianLet.IndexOf(input);
                     }
                     break;
-                case FialkaEnums.countryLayout.DDR:
-                    if (keyboardDDRLet.Contains(input))
+                case FialkaEnums.countryLayout.GDR:
+                    if (keyboardGDRLet.Contains(input))
                     {
-                        idx = keyboardDDRLet.IndexOf(input);
+                        idx = keyboardGDRLet.IndexOf(input);
                     }
                     break;
                 case FialkaEnums.countryLayout.Poland:
@@ -588,16 +588,16 @@ namespace Cryptool.Fialka
             int idx = InvalidInput;
             switch (country)
             {
-                case FialkaEnums.countryLayout.Czechslovakia:
+                case FialkaEnums.countryLayout.Czechoslovakia:
                     if (keyboardCzechoslovakianSpec.Contains(input))
                     {
                         idx = keyboardCzechoslovakianSpec.IndexOf(input);
                     }
                     break;
-                case FialkaEnums.countryLayout.DDR:
-                    if (keyboardDDRSpec.Contains(input))
+                case FialkaEnums.countryLayout.GDR:
+                    if (keyboardGDRSpec.Contains(input))
                     {
-                        idx = keyboardDDRSpec.IndexOf(input);
+                        idx = keyboardGDRSpec.IndexOf(input);
                     }
                     break;
                 case FialkaEnums.countryLayout.Poland:
@@ -651,7 +651,7 @@ namespace Cryptool.Fialka
             char output = FialkaConstants.InvalidInputPrintSymbol;
             switch (country)
             {
-                case FialkaEnums.countryLayout.Czechslovakia:
+                case FialkaEnums.countryLayout.Czechoslovakia:
                     {
                         switch (shiftMode)
                         {
@@ -668,18 +668,18 @@ namespace Cryptool.Fialka
                         }
                     }
                     break;
-                case FialkaEnums.countryLayout.DDR:
+                case FialkaEnums.countryLayout.GDR:
                     {
                         switch (shiftMode)
                         {
                             case FialkaEnums.printHeadShift.LetterShift:
                                 {
-                                    output = keyboardDDRLet[input];
+                                    output = keyboardGDRLet[input];
                                 }
                                 break;
                             case FialkaEnums.printHeadShift.NumberShift:
                                 {
-                                    output = keyboardDDRSpec[input];
+                                    output = keyboardGDRSpec[input];
                                 }
                                 break;
                         }

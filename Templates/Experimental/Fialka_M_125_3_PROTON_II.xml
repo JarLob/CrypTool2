@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Fialka M-125-3 PROTON II</title>
+  <summary lang="en">Usage of the <i>Fialka M-125-3</i> with PROTON II rotors</summary>
+  <description lang="en">This template shows the usage of the Fialka cipher machine.</description>
+  <keywords>Fialka, Proton</keywords>
+
+  <title lang="de">Fialka M-125-3 PROTON II</title>
+  <summary lang="de">Benutzung der <i>Fialka M-125-3</i> mit PROTON II-Rotoren</summary>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der Chiffriermaschine Fialka.</description>
+  <keywords lang="de">Fialka, Proton</keywords>
+
+  <relevantPlugins>
+    <plugin name="Fialka" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+  </replacements>
+
+</sample>

@@ -62,9 +62,9 @@ namespace Cryptool.Fialka
         public enum printHeadShift { LetterShift = 0, NumberShift = 1 };
         /// <summary>
         /// Country specific keyboard layout, determines the input encoding (positions of keys). Also specify the output layout (together with the print head).
-        /// Available only: Poland, DDR, Czechslovakia.
+        /// Available only: Poland, GDR, Czechoslovakia.
         /// </summary>
-        public enum countryLayout { Poland = 0, DDR = 1, Czechslovakia = 2};
+        public enum countryLayout { Poland = 0, GDR = 1, Czechoslovakia = 2};
         
 
         #region Input handler

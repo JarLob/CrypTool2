@@ -350,7 +350,7 @@ namespace Cryptool.Fialka
             //this.txtOpMode = FialkaEnums.textOperationmMode.Letters; // auto set in model setter
             this.opMode = FialkaEnums.operationMode.Encrypt; // auto set in model setter
             // input/output
-            this.countryLayout = FialkaEnums.countryLayout.Czechslovakia;
+            this.countryLayout = FialkaEnums.countryLayout.Czechoslovakia;
             this.printHead = FialkaEnums.printHeadMapping.Latin;
             // AUTO SET:
             //this.printHeadShift = FialkaEnums.printHeadShift.LetterShift; // auto set in txtOpMode setter

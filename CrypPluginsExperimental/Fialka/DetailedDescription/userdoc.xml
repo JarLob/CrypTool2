@@ -6,31 +6,31 @@
   <language culture="en"/>
 
   <introduction lang="en">
-    Fialka M-125 is a rotor machine using an electro-mechanical construction. There are two known versions of the machine: standard (M-125) and extended
-    (M-125-3). Each of these versions also had a country-specific variant. It is known that it was used in the (former) Soviet Union, Poland, Czechoslovakia, Hungary and East Germany (DDR).
+    Fialka M-125 is a rotor machine using an electromechanical construction. There are two known versions of the machine: standard (M-125) and extended
+    (M-125-3). Each version also had a country-specific variant. It is known that it was used in the (former) Soviet Union, Poland, Czechoslovakia, Hungary and East Germany (GDR).
     <newline />
-    The design of Fialka M-125 is largely based on the well-known cipher machine Enigma. There are some major differences in the machine’s construction that can
-    imply an effort to correct known Enigma weaknesses.
+    The design of the Fialka M-125 is largely based on the well-known cipher machine Enigma. There are some major differences in the machine’s construction that can
+    be regarded as an effort to correct known Enigma weaknesses.
     <newline />
     <newline />
-    A keyboard containing 30 keys serves as an input for the cipher machine. Pressing a key sends an electrical signal from the key into the output of
-    the cipher machine through several electro-mechanical components of the device.
+    A keyboard containing 30 keys serves as input for the cipher machine. Pressing a key sends an electrical signal from the key into the output of
+    the cipher machine through several electromechanical components of the device.
     The cryptographic security of Fialka relies on the use of several rotors, where each rotor implements a monoalphabetic substitution.
     The machine contains a special card reader that allows for the use of punched cards as a fixed permutation of the input alphabet.
-    The result is printed on a paper-tape.
+    The result is printed on a paper tape.
     After encrypting a letter, rotors are moved into new positions, so in the next step a different permutation of the input alphabet is realized.
     <newline />
     <newline />
     Fialka has the following operation flow:
     <list>
-      <item> The key is pressed on the keyboard. </item>
+      <item> A key is pressed on the keyboard. </item>
       <item> The electrical circuit is connected through the card reader into the entry disc.</item>
       <item> The circuit continues from the entry disc through a set of ten rotors into the reflector.</item>
       <item> The signal is reflected by the reflector and returned through the components listed above, in reverse order, into the printer.</item>
     </list>
     <newline />
-    Despite to Enigma, the reflector’s wiring in Fialka is special. The substitution is not involutoric (contains one cycle of length 3 and one cycle of length 1).
-    This causes, that different operation mode should be used for decryption. The cycle of length 1 enables self-encryption of the input letter.
+    The reflector's wiring in Fialka differs from the Enigma reflector: the substitution is not involutoric - it contains one cycle of length 3 and one cycle of length 1.
+    This entails that a different operation mode must be used for decryption. The cycle of length 1 enables self-encryption of the input letter.
     <newline />
     <newline />
     The main differences between Enigma and Fialka are summarized in the following table:
@@ -57,7 +57,7 @@
       </tr>
       <tr>
         <td>Rotor stepping direction</td>
-        <td>one directional</td>
+        <td>one-directional</td>
         <td>adjacent rotors in opposite direction</td>
       </tr>
       <tr>
@@ -76,7 +76,7 @@
       <item>Different operation modes (Encrypt, Decrypt, Plain text mode).</item>
       <item>All possible key settings (rotor order, rotor offsets, ring offset, punch card substitution, core order, core offsets, core sides).</item>
       <item>In case of M-125-3 different text operation modes (letters only, numbers only (special characters) and mixed mode).</item>
-      <item>In case of M-125-3 special numbers only encryption mode (Num lock 10).</item>
+      <item>In case of M-125-3 special numbers only encryption mode (NumLock 10).</item>
     </list>
   </introduction>
 
@@ -84,16 +84,16 @@
     In the settings of the component, you can select from several settings group.
     <newline/>
     <newline/>
-    In the 'Workspace' menu you find settings for handling of unknown symbols and the time period of restoring the initial key (saved  before the PLAY button is pressed).
+    In the 'Workspace' menu you find settings for the handling of unknown symbols and the time period of restoring the initial key (saved before the PLAY button is pressed).
     <newline />
     If the input text contains a symbol that is not supported for a selected charset (specified by the print head and country layout), you can choose whether that symbol should be removed, ignored, or replaced by the letter '@'.
     If it is ignored, it will be added unmodified to the output text.
     <newline />
-    The machine settings is saved every time before the PLAY button is pressed. If the save period is set to:
+    The machine settings are saved every time before the PLAY button is pressed. If the save period is set to:
     <newline />
     "After execution" - the saved key is restored after the encryption process is finished;
     <newline />
-    "Stop pressed " - the saved key is restored only when the STOP button is pressed, if you modify the input before pressing the STOP - the changed key is applied;
+    "Stop pressed" - the saved key is restored only when the STOP button is pressed; if you modify the input before pressing STOP, the changed key is applied;
     <newline />
     "Input changed" - the saved key is restored each time before the encryption is called;
     <newline />
@@ -104,9 +104,9 @@
     <newline />
     You can set the machine model (M-125 / M-125-3), rotor type (PROTON I / PROTON II), country specific layouts and rotor series.
     In this menu you can also find the print head mapping, num lock type and text operation modes.
-    The num lock and text operation modes are available only for M-125-3 machine type.
+    The num lock and text operation modes are available only for the M-125-3 machine type.
     <newline />
-    The Operation mode specify if the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode - without any encryption.
+    The Operation mode specifies whether the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode - without any encryption.
     <newline />
     <newline />
     The rest of the available settings forms the machine's key based on the selected rotor type.
@@ -115,7 +115,7 @@
 
     <section headline="PROTON I key settings">
       In the 'Rotor series' part of the 'Fialka machine settings' menu, you can choose the country specific rotor series.
-      The available set of rotors depends on the chosen rotor series. The rotors are unique (contains different permutation and different pin positions) for all countries.
+      The available set of rotors depends on the chosen rotor series. The rotors are unique (different permutations and different pin positions) for all countries.
       <newline />
       <newline />
       In the 'Rotor order' menu, you can determine the position of the rotors on the spindle. The positions are marked from 1 to 10 from the reflector.
@@ -152,12 +152,12 @@
       If you want to order the rotors into base position (1 .. 10), press the button 'Base positions'.
       <newline />
       <newline />
-      In the 'Rotor offsets' menu, you can determine the initial offset on each of the rotors. Rotor [x] offset specify the offset for rotor placed in position (Rotor order) [x].
+      In the 'Rotor offsets' menu, you can determine the initial offset on each of the rotors. Rotor [x] offset specifies the offset for the rotor placed in position (Rotor order) [x].
       <newline />
-      If you want to reset the offsets, press the button 'Null offsets'. The 'Base positions' button set an increasing offset for each rotor (1 .. 10).
+      If you want to reset the offsets, press the button 'Null offsets'. The 'Base positions' button sets increasing offsets for the rotors (1 .. 10).
       <newline />
       <newline />
-      In the 'Ring offsets' menu, you can determine the offset of the rings on each of the rotors.
+      In the 'Ring offsets' menu, you can determine the offset of the ring on each of the rotors.
       <newline />
       If you want to reset the offsets, press the button 'Null offsets'.
       <newline />
@@ -173,11 +173,11 @@
       <newline />
       The core of the rotors (the wiring) can be rotated, flipped or exchanged with another rotor.
       <newline />
-      If the cores are in the same order as rotors, inserted in side I and with 0 offsets, the PROTON II rotors are the same as PROTON I rotors.
+      If the cores are in the same order as rotors, inserted in side I and with 0 offsets, the PROTON II rotors are the same as the PROTON I rotors.
       <newline />
       <newline />
-      In the 'Core order' menu, you can determine the position of cores in the rotors. Core [x] order specify the core placed into rotor at position [x].
-      If the core is inserted into a new position the pin positions on the rotor remains the same, but the rotor wiring is changed.
+      In the 'Core order' menu, you can determine the position of cores in the rotors. Core [x] order specifies the core placed into the rotor at position [x].
+      If the core is inserted into a new position, the pin position on the rotor remains the same, but the rotor wiring is changed.
       <newline />
       The following table contains the core labels (Cyrillic and numeric values):
       <table border="1">
@@ -208,26 +208,26 @@
       </table>
       <newline />
       <newline />
-      In the 'Core offsets' menu, you can determine the initial offset of each core. Core [x] offset specify the offset for core placed into rotor at position [x].
+      In the 'Core offsets' menu, you can determine the initial offset of each core. Core [x] offset specifies the offset for the core placed into the rotor at position [x].
       <newline />
       If you want to reset the offsets, press the button 'Null offsets'.
       <newline />
       <newline />
-      In the 'Core sides' menu, you can determine the cores are flipped. Core [x] side specify the side for core placed into rotor at position [x].
+      In the 'Core sides' menu, you can determine if the cores are flipped. Core [x] side specifies the side for the core placed into the rotor at position [x].
       <newline />
-      The 'Default core sides' button set side I for all cores.
+      The 'Default core sides' button sets side I for all cores.
       <newline />
       <newline />
     </section>
 
     <section headline="M-125-3 specific settings">
-      The M-125-3 model allows to select from different text operation modes.
+      The M-125-3 model allows to select between different text operation modes.
       <newline />
-      Each key on the machine's keyboard contains a letter and a special characters for both Cyrillic and Latin print head.
-      Selecting the 'Print head mapping' you can choose whether that Cyrillic or Latin layout is used (for input and output).
+      Each key on the machine's keyboard contains a letter and a special character for both the Cyrillic and the Latin print head.
+      Selecting the 'Print head mapping' you can choose whether the Cyrillic or the Latin layout is used (for input and output).
       The Latin layout is country specific and can be set in the 'Country layout' part of the 'Fialka machine settings'.
       <newline />
-      The allowed charset of available layouts is presented in <ref id="Cryptomuseum"/>.
+      The allowed charsets of the available layouts are presented in <ref id="Cryptomuseum"/>.
       <newline />
       <newline />
       If you want to use letters, select the 'Letters' option in the 'Text operation mode'.
@@ -240,20 +240,20 @@
       There is also an option to use both letters and special characters. To set this mode, select the 'Mixed' option.
       In this case two keys are given up to switch between the 'Letters' and 'Numbers' modes.
       <newline />
-      Whether the letter shift character ('[','5','Ж') is present in the input the 'Letters' mode will be used for the next input.
+      When a letter shift character ('[','5','Ж') is present in the input, the 'Letters' mode will be used for the next input.
       <newline />
-      Whether the number shift character (']','7','A','Ф') is present in the input the 'Numbers' mode will be used for the next input.
+      When a number shift character (']','7','A','Ф') is present in the input, the 'Numbers' mode will be used for the next input.
       <newline />
-      There is also necessary to select the corresponding letter/number shift character based on the selected print head and on the selected country layout.
+      It is also necessary to select the corresponding letter/number shift character based on the selected print head and on the selected country layout.
       To make this process easier the '[' and ']' characters can be used in all cases.
       <newline />
       <newline />
       The M-125-3 model can be used to encrypt only numerical data (numbers 0,1,..9).
-      If you want to use this mode, set the 'Num lock' settings to 'NumLock 10', in all other cases use the 'NumLock 30' option.
+      If you want to use this mode, set the 'NumLock' settings to 'NumLock 10', in all other cases use the 'NumLock 30' option.
       <newline />
-      On the real Fialka machine this mode is only available, when the 'Text operation mode' is set to 'Numbers' and the 'Print head mapping' is set to 'Cyrillic'.
+      On the real Fialka machine this mode is only available when the 'Text operation mode' is set to 'Numbers' and the 'Print head mapping' is set to 'Cyrillic'.
       <newline />
-      Selecting the 'NumLock 10' mode automatically set the required 'Text operation mode' and the 'Print head mapping'. In this case the non-numeric inputs are invalid.
+      Selecting the 'NumLock 10' mode automatically sets the required 'Text operation mode' and the 'Print head mapping'. In this case the non-numeric inputs are invalid.
       <newline />
     </section>
   </usage>
@@ -265,10 +265,259 @@
   <language culture="de-DE"/>
 
   <introduction lang="de-DE">
+    Die Fialka M-125 ist eine elektromechanische Rotor-Chiffriermaschine. Es sind zwei Varianten der Maschine bekannt: Standard (M-125) und erweitert (M-125-3).
+    Von beiden Varianten gibt es auch noch länderspezifische Versionen. Es ist bekannt, daß sie in der (ehemaligen) Sowjetunion, Polen, der Tschechoslowakei, Ungarn und der DDR eingesetzt wurde.
+    <newline />
+    Das Design der Fialka M-125 basiert größtenteils auf der bekannten Chiffriermaschine Enigma. Es gibt allerdings einige wichtige Unterschiede im Aufbau der Maschine, die als Versuch angesehen werden können,
+    die bekannten Schwächen der Enigma zu vermeiden.
+    <newline />
+    <newline />
+    Die Eingabe in die Chiffriermaschine geschieht über die aus 30 Tasten bestehende Tastatur. Wenn eine Taste gedrückt wird, geht ein elektrisches Signal von der Taste durch mehrere elektromechanische Komponenten
+    der Maschine bis zu deren Ausgang.
+    Die kryptographische Sicherheit der Fialka basiert auf der Verwendung mehrerer Rotoren, wobei jeder einzelne Rotor eine monoalphabetische Substitution realisiert.
+    Die Maschine enthält einen Lochkartenleser, mit dem man die feste Permutation des Eingabealphabets mittels einer Lochkarte eingeben kann.
+    Die Ausgabe wird auf einen Papierstreifen gedruckt.
+    Wenn ein Zeichen verschlüsselt wurde, rotieren die Rotoren in neue Positionen und implementieren daher im nächsten Schritt eine neue Permutation.
+    <newline />
+    <newline />
+    Fialka hat den folgenden Operationsablauf:
+    <list>
+      <item> Eine Taste der Tastatur wird gedrückt. </item>
+      <item> Der elektrische Stromkreis wird durch den Kartenleser in den Eingangsrotor geleitet.</item>
+      <item> Der Stromkreis geht durch die 10 Rotoren und danach zum Reflektor.</item>
+      <item> Das Signal wird von Reflektor umgekehrt und durch die oben aufgelisteten Komponenten in umgekehrter Reihenfolge zurückgeschickt und dann ausgedruckt.</item>
+    </list>
+    <newline />
+    Die Verdrahtung des Reflektors der Fialka unterscheidet sich von der Umkehrwalze der Enigma: die realisierte Substitution ist nicht involutorisch, sie enthält einen Zyklus der Länge 3 und einen der Länge 1.
+    Das bedeutet, daß, anders als bei der Enigma, für die Entschlüsselung eine andere Operation als für die Verschlüsselung notwendig wird. Der Zyklus der Länge 1 ermöglicht, daß ein Zeichen auch auf sich selbst abgebildet werden kann.
+    <newline />
+    <newline />
+    Die wichtigsten unterschiede zwischen Enigma und Fialka werden in der folgenden Tabelle zusammengefasst:
+    <table border="1">
+      <tr>
+        <th></th>
+        <th>Enigma</th>
+        <th>Fialka</th>
+      </tr>
+      <tr>
+        <td>Rotoranzahl</td>
+        <td>3 oder 4</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>Alphabetgröße</td>
+        <td>26</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>Rotorweiterschaltung</td>
+        <td>einfach</td>
+        <td>basierend auf Blockadepin</td>
+      </tr>
+      <tr>
+        <td>Rotationsrichtung</td>
+        <td>alle Rotoren in eine Richtung</td>
+        <td>benachbarte Rotoren in entgegengesetzte Richtungen</td>
+      </tr>
+      <tr>
+        <td>Selbstverschlüsselung</td>
+        <td>unmöglich</td>
+        <td>möglich</td>
+      </tr>
+    </table>
+    <newline />
+    <newline />
+    Die Fialka-Komponente ist voll kompatibel zur realen Fialka-Maschine. Sie erlaubt folgende Einstellungen:
+    <list>
+      <item>Verschiedene Maschinenmodelle (M-125 und M-125-3).</item>
+      <item>Verschiedene Rotorensätze (PROTON I und PROTON II) und verscheidene länderspezifische Rotorverdrahtungen (3K : Polen, 5K : Ungarn, 6K : Tschechoslowakei).</item>
+      <item>Verschiedene (länderspezifische) Tastaturbelegungen und Typenräder.</item>
+      <item>Verschiedene Operationsmodi (Verschlüsseln, Entschlüsseln, Klartextmodus).</item>
+      <item>Alle möglichen Schlüsseleinstellungen (Rotorreihenfolge, Rotoroffsets, Ringoffsets, Lochkartensubstitution, Kernreihenfolge, Kernoffsets, Kernorientierungen).</item>
+      <item>Verschiedene Text-Operationsmodi für die M-125-3 (nur Buchstaben, nur Zahlen (Sonderzeichen) und gemischter Modus).</item>
+      <item>Für die M-125-3 ein besonderer Verschlüsselungsmodus, bei dem die Eingabe nur aus Ziffern besteht (NumLock 10).</item>
+    </list>
   </introduction>
 
-
   <usage lang="de-DE">
+    In den Einstellungen der Komponente kann man zwischen verschiedenen Optionsgruppen auswählen.
+    <newline/>
+    <newline/>
+    In der Gruppe "Workspace" befinden sich die Einstellungen für die Behandlung unbekannter Zeichen und für den Zeitpunkt, wann der Schlüssel wieder auf den initialen Schlüssel
+    (der gesichert wird, wenn der START-Button gedrückt wird) gesetzt werden soll.
+    <newline />
+    Enthält die Eingabe ein Zeichen, das nicht in dem durch das gewählte Typenrad und das Länderlayout bestimmten Zeichensatz vorhanden ist, kann das Zeichen entweder entfernt, ignoriert oder durch '@' ersetzt werden.
+    Wird es ignoriert, so wird es unverändert an die Ausgabe weitergegeben.
+    <newline />
+    Die Maschineneinstellungen werden jedesmal gespeichert, wenn der Start-Button gedrückt wird. Der Schlüssel kann zu verschiedenen Zeitpunkten wiederhergestellt werden:
+    <newline />
+    "nach Ausführung" - der gespeicherte Schlüssel wird wiederhergestellt, wenn die Verschlüsselung beendet ist;
+    <newline />
+    "nach Stop" - der gespeicherte Schlüssel wird erst wiederhergestellt, wenn der Stop-Button gedrückt wurde; wird die Eingabe vor Drücken von Stop verändert, wird der geänderte Schlüssel verwendet;
+    <newline />
+    "bei Änderung der Eingabe" - der gespeicherte Schlüssel wird vor jeder Änderung der Eingabe wiederhergestellt;
+    <newline />
+    "nie" - der gespeicherte Schlüssel wird nie wiederhergestellt.
+    <newline/>
+    <newline/>
+    Die Gruppe "Maschineneinstellungen" enthält die wichtigsten Einstellungsmöglichkeiten der Maschine.
+    <newline />
+    Man kann das Maschinenmodell (M-125 / M-125-3), den Rotorensatz (PROTON I / PROTON II), länderspezifische Layouts und die Rotoranordnung festlegen.
+    Man findet hier auch das Typenrad des Druckers, den NumLock-Typ und die Text-Operationsmodi.
+    NumLock und die Text-Operationsmodi sind nur für die M-125-3 möglich.
+    <newline />
+    Der Operationsmodus gibt an, ob die Maschine die Eingabe verschlüsseln oder entschlüsseln soll. Wird der Klartextmodus gewählt, so wird die Eingabe unverändert an die Ausgabe weitergegeben.
+    <newline />
+    <newline />
+    Die restlichen Einstellungen bilden, basierend auf dem ausgewählten Rotorensatz, den Schlüssel der Maschine.
+    <newline />
+    <newline />
+
+    <section headline="Schlüsselparameter für PROTON I">
+      In der Gruppe "Rotorensatz" kann man den länderspezifischen Rotorensatz auswählen.
+      Die verfügbaren Rotoren hängen vom ausgewählten Rotorensatz ab. Die Rotoren sind für alle Länder einzigartig (d.h. unterschiedliche Permutationen und unterschiedliche Pinpositionen).
+      <newline />
+      <newline />
+      In der Gruppe "Rotoranordnung" kann man die Positionen der Rotoren auf der Spindel festlegen. Die Positionen werden, beginnend beim Reflektor, von 1 bis 10 nummeriert.
+      Jeder Rotor enthält eine einzigartige Verdrahtung (Substitution) und Pinpositionen, die für die Weiterschaltung der Rotoren verantwortlich sind.
+      <newline />
+      Die folgende Tabelle zeigt die Rotorzeichnungen (kyrillische Buchstaben und Ziffern):
+      <table border="1">
+        <tr>
+          <th>А</th>
+          <th>Б</th>
+          <th>В</th>
+          <th>Г</th>
+          <th>Д</th>
+          <th>Е</th>
+          <th>Ж</th>
+          <th>З</th>
+          <th>И</th>
+          <th>К</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+        </tr>
+      </table>
+      <newline />
+      Um die Rotoren in der Basisreihenfolge (1 .. 10) anzuordnen, drücken Sie die Schaltfläche "Grundpositionen".
+      <newline />
+      <newline />
+      In der Gruppe "Rotoroffsets" können Sie die initialen Offsets für jeden Rotor festlegen. Rotor [x] Offset spezifiziert dabei den Offset des Rotors in Position [x] der Rotoranordnung.
+      <newline />
+      Klicken Sie auf "Nulloffsets", um die Offsets zurückzusetzen. Der Button "Grundpositionen" setzt die Offsets auf die Werte 1-10.
+      <newline />
+      <newline />
+      In der Gruppe "Ringoffsets" können Sie den Offset des Ringes jedes Rotors bestimmen.
+      <newline />
+      Klicken Sie auf "Nulloffsets", um die Ringoffsets zurückzusetzen.
+      <newline />
+      <newline />
+      In der Gruppe "Lochkarte" können Sie die durch die Lochkarte definierte Substitution festlegen.
+      Klicken Sie auf den Button "Identität", um die Lochkarte zu entfernen bzw. die Substitution auf die identische Substitution zurückzusetzen.
+      <newline />
+      <newline />
+    </section>
+
+    <section headline="Zusätzliche Schlüsselparameter für PROTON II">
+      Für den PROTON II-Rotorensatz gibt es einige zusätzliche Einstellungsmöglichkeiten.
+      <newline />
+      Der Kern der Rotoren (d.h. die Verdrahtung) kann rotiert, umgedreht oder durch einen anderen Kern ersetzt werden.
+      <newline />
+      Wenn die Kerne in der gleichen Reihenfolge wie die Rotoren angeordnet sind, dieselbe Orientierung und Offset 0 haben, sind die PROTON II-Rotoren identisch zu den PROTON I-Rotoren.
+      <newline />
+      <newline />
+      In der Gruppe "Kernanordnung" können Sie festlegen, an welcher Position ein Kern eingesetzt werden soll. Kernposition [x] bedeutet, daß der Kern in den Rotor an Position [x] eingesetzt wird.
+      Wenn ein Kern in eine neue Position gesetzt wird, bleibt die Pinposition unverändert und nur die Verdrahtung wird gewechselt.
+      <newline />
+      Die folgende Tabelle zeigt die Bezeichnung der Kerne (kyrillisch und Zahlen):
+      <table border="1">
+        <tr>
+          <th>А</th>
+          <th>Б</th>
+          <th>В</th>
+          <th>Г</th>
+          <th>Д</th>
+          <th>Е</th>
+          <th>Ж</th>
+          <th>З</th>
+          <th>И</th>
+          <th>К</th>
+        </tr>
+        <tr>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+          <th>7</th>
+          <th>8</th>
+          <th>9</th>
+          <th>10</th>
+        </tr>
+      </table>
+      <newline />
+      <newline />
+      In der Gruppe "Kernoffsets" kann man den initialen Offset für jeden Kern eingeben. Kernoffset [x] spezifiziert den Offset für den Kern, der im Rotor an der Position [x] eingesetzt ist.
+      <newline />
+      Um die Kernoffsets zurückzusetzen, drücken Sie den Button "Nulloffsets".
+      <newline />
+      <newline />
+      In der Gruppe "Kernorientierung" können sie festlegen, ob die Kerne normal oder um 180 Grad gedreht eingesetzt werden sollen.
+      Kernorientierung [x] spezifiziert die Orientierung für den Kern, der in dem Rotor an Position [x] eingesetzt ist.
+      <newline />
+      Drücken Sie "Kernorientierungen zurücksetzen", um alle Kerne auf Seite I zu orientieren.
+      <newline />
+      <newline />
+    </section>
+
+    <section headline="Spezifische Einstellungen für die M-125-3">
+      Im Modell M-125-3 kann man zwischen verschiedenen Text-Operationsmodi wählen.
+      <newline />
+      Auf jeder Taste der Tastatur der Maschine sind ein Buchstabe und ein Sonderzeichen für das kyrillische und das lateinische Typenrad.
+      In der Einstellung "Typenrad" können Sie auswählen, ob das kyrillische oder das lateinische Layout (für Eingabe und Ausgabe) verwendet werden soll.
+      Das lateinische Layout ist länderspezifisch und kann in der Einstellung "Länderspezifisches Layout" angepasst werden.
+      <newline />
+      Die verwendeten Zeichensätze der vorhandenen Layouts werden auf dieser Seite aufgelistet: <ref id="Cryptomuseum"/>
+      <newline />
+      <newline />
+      Wenn Sie nur Buchstaben verschlüsseln wollen, wählen Sie den Operationsmodus "Buchstaben".
+      Diese Betriebsart ist kompatibel zu dem älteren Modell M-125.
+      <newline />
+      <newline />
+      Für Sonderzeichen wählen Sie den Operationsmodus "Zahlen".
+      <newline />
+      <newline />
+      Buchstaben und Sonderzeichen können auch gemeinsam verwendet werden. Wählen Sie dazu den Operationsmodus "Gemischt".
+      In diesem Fall werden zwei besondere Zeichen benutzt, um zwischen den Modi "Buchstaben" und "Zahlen" umzuschalten.
+      <newline />
+      
+      Wenn eines der Umschaltzeichen ('[','5','Ж') in der Eingabe vorkommt, wird der Buchstabenmodus für die folgenden Eingabezeichen aktiviert.
+      <newline />
+      Wenn eines der Umschaltzeichen (']','7','A','Ф') in der Eingabe vorkommt, wird der Zahlenmodus für die folgenden Eingabezeichen aktiviert.
+      <newline />
+      Die zu verwendenden Umschaltzeichen hängen vom gewählten Typenrad und dem gewählten Länderlayout ab. Um die Umschaltung zu vereinfachen, können in allen Fällen
+      die Zeichen '[' und ']' als Umschaltzeichen benutzt werden.
+      <newline />
+      <newline />
+      Mit dem Modell M-125-3 kann man Eingabedaten, die nur aus Ziffern bestehen, verschlüsseln. Stellen Sie dazu die Einstellung "NumLock" auf "NumLock 10".
+      Verwenden Sie "NumLock 30" in allen anderen Fällen.
+      <newline />
+      In der realen Fialka ist dieser Modus nur verfügbar, wenn der Text-Operationsmodus auf "Zahlen" und das Typenrad auf "kyrillisch" eingestellt ist.
+      <newline />
+      Wenn "NumLock 10" ausgewählt wird, werden der Text-Operationmodus und das Typenrad automatisch auf die erforderlichen Werte gesetzt. In diesem Fall sind nichtnumerische Eingaben ungültig.
+      <newline />
+    </section>
   </usage>
 
   <presentation lang="de-DE">
@@ -277,12 +526,14 @@
   <!--REFERENCES-->
   <references>
     <linkReference>
-      <link url="http://www.tandfonline.com/doi/full/10.1080/01611194.2014.915264" lang="en" />
+      <link url="http://www.tandfonline.com/doi/full/10.1080/01611194.2014.915264" />
       <caption lang="en">Key Space and Period of Fialka M-125 Cipher Machine (Cryptologia)</caption>
+      <caption lang="de">Key Space and Period of Fialka M-125 Cipher Machine (Cryptologia) (englisch)</caption>
     </linkReference>
     <linkReference id="Cryptomuseum">
-      <link url="http://www.cryptomuseum.com/crypto/fialka/" lang="en" />
+      <link url="http://www.cryptomuseum.com/crypto/fialka/" />
       <caption lang="en">Fialka (Cryptomuseum)</caption>
+      <caption lang="de">Fialka (Cryptomuseum) (englisch)</caption>
     </linkReference>
     <linkReference>
       <link url="https://en.wikipedia.org/wiki/Fialka" lang="en" />

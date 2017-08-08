@@ -154,7 +154,7 @@
     <value>Country layout</value>
   </data>
   <data name="SelectMachineCountryLayoutTooltip" xml:space="preserve">
-    <value>Selectd the country layout.</value>
+    <value>Select the country layout.</value>
   </data>
   <data name="SelectMachineKeyboardMappingCaption" xml:space="preserve">
     <value>Keyboard mapping</value>
@@ -169,7 +169,7 @@
     <value>Select the machine model type.</value>
   </data>
   <data name="SelectMachineNumLockTypeCaption" xml:space="preserve">
-    <value>Num lock</value>
+    <value>NumLock</value>
   </data>
   <data name="SelectMachineNumLockTypeTooltip" xml:space="preserve">
     <value>Select the NumLock type.</value>
@@ -217,7 +217,7 @@
     <value>Restore initial key </value>
   </data>
   <data name="SettingsRestoreTooltip" xml:space="preserve">
-    <value>When will the initial key (set before encryption) restored in workflow.</value>
+    <value>When will the initial key (set before encryption) be restored in the workflow.</value>
   </data>
   <data name="Rotor1Caption" xml:space="preserve">
     <value>R01</value>
@@ -655,13 +655,13 @@
     <value>Input handling</value>
   </data>
   <data name="SettingsInputhandlerTooltip" xml:space="preserve">
-    <value>How will the invalid input displayed.</value>
+    <value>How will invalid input be handeled?</value>
   </data>
   <data name="SettingsOutputUpdateCaption" xml:space="preserve">
-    <value>Output will update</value>
+    <value>Output update</value>
   </data>
   <data name="SettingsOutputUpdateTooltip" xml:space="preserve">
-    <value>Select when will the output updated.</value>
+    <value>Select when the output will be updated.</value>
   </data>
   <data name="VisibilityCaption" xml:space="preserve">
     <value>Hide settings</value>
@@ -674,5 +674,59 @@
   </data>
   <data name="OutputKeyDescription" xml:space="preserve">
     <value>Key settings before end after the encryption.</value>
+  </data>
+  <data name="CountryLayoutList1" xml:space="preserve">
+    <value>Poland</value>
+  </data>
+  <data name="CountryLayoutList2" xml:space="preserve">
+    <value>GDR</value>
+  </data>
+  <data name="CountryLayoutList3" xml:space="preserve">
+    <value>Czechoslovakia</value>
+  </data>
+  <data name="OperationModeList1" xml:space="preserve">
+    <value>Plain (O)</value>
+  </data>
+  <data name="OperationModeList2" xml:space="preserve">
+    <value>Encrypt (3)</value>
+  </data>
+  <data name="OperationModeList3" xml:space="preserve">
+    <value>Decrypt (P)</value>
+  </data>
+  <data name="PrintHeadMappingList1" xml:space="preserve">
+    <value>Cyrillic (PУC)</value>
+  </data>
+  <data name="PrintHeadMappingList2" xml:space="preserve">
+    <value>Latin (ЛAT)</value>
+  </data>
+  <data name="SettingsInputhandlerList1" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="SettingsInputhandlerList2" xml:space="preserve">
+    <value>Mark with @</value>
+  </data>
+  <data name="SettingsInputhandlerList3" xml:space="preserve">
+    <value>Keep unchanged</value>
+  </data>
+  <data name="SettingsRestoreList1" xml:space="preserve">
+    <value>After execution</value>
+  </data>
+  <data name="SettingsRestoreList2" xml:space="preserve">
+    <value>Stop pressed </value>
+  </data>
+  <data name="SettingsRestoreList3" xml:space="preserve">
+    <value>Input changed</value>
+  </data>
+  <data name="SettingsRestoreList4" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="TextOperationModeList1" xml:space="preserve">
+    <value>Letters (Б)</value>
+  </data>
+  <data name="TextOperationModeList2" xml:space="preserve">
+    <value>Mixed (C)</value>
+  </data>
+  <data name="TextOperationModeList3" xml:space="preserve">
+    <value>Numbers (Ц)</value>
   </data>
 </root>

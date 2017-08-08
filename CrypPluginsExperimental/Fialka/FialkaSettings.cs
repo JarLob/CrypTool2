@@ -87,7 +87,6 @@ namespace Cryptool.Fialka
             this.RotorOrder[rotorNumber2] = current;
             OnPropertyChanged("Rotor" + (rotorNumber+ 1));
             OnPropertyChanged("Rotor" + (rotorNumber2 + 1));
-
         }
 
         private void RotorCoreSwaps(int rotorCoreNumber, int current, int next)
@@ -97,7 +96,6 @@ namespace Cryptool.Fialka
             this.RotorCoreOrders[rotorCoreNumber2] = current;
             OnPropertyChanged("RotorCore" + (rotorCoreNumber + 1));
             OnPropertyChanged("RotorCore" + (rotorCoreNumber2 + 1));
-
         }
 
 
@@ -139,6 +137,7 @@ namespace Cryptool.Fialka
             setSettingsVisibilityRotorCoreOffsetGroup();
             setSettingsVisibilityPunchCardGroup();
         }
+
         private void setSettingsVisibilityWorkspaceGroup()
         {
             // workspace group
@@ -159,7 +158,7 @@ namespace Cryptool.Fialka
         private void setSettingsVisibilityMachineGroup()
         {
             // machine settings group
-        if (machineGroupHide)
+            if (machineGroupHide)
             {
                 hideSettingsElement("MachineModel");
                 hideSettingsElement("OperationMode");
@@ -173,7 +172,6 @@ namespace Cryptool.Fialka
             }
             else
             {
-
                 showSettingsElement("MachineModel");
                 showSettingsElement("OperationMode");
                 showSettingsElement("RotorType");
@@ -398,7 +396,7 @@ namespace Cryptool.Fialka
             }
         }
 
-        [TaskPane("SettingsRestoreCaption", "SettingsRestoreTooltip", "Workspace", 2, false, ControlType.ComboBox, new string[] { "After execution", "Stop pressed ", "Input changed", "Never" })]
+        [TaskPane("SettingsRestoreCaption", "SettingsRestoreTooltip", "Workspace", 2, false, ControlType.ComboBox, new string[] { "SettingsRestoreList1", "SettingsRestoreList2", "SettingsRestoreList3", "SettingsRestoreList4" })]
         public RestoreInitialSettings SettingsRestore
         {
             get
@@ -415,7 +413,7 @@ namespace Cryptool.Fialka
             }
         }
 
-        [TaskPane("SettingsInputhandlerCaption", "SettingsInputhandlerTooltip", "Workspace", 3, false, ControlType.ComboBox, new string[] { "Remove", "Mark with @", "Keep unchanged" })]
+        [TaskPane("SettingsInputhandlerCaption", "SettingsInputhandlerTooltip", "Workspace", 3, false, ControlType.ComboBox, new string[] { "SettingsInputhandlerList1", "SettingsInputhandlerList2", "SettingsInputhandlerList3" })]
         public FialkaEnums.handleInvalidInput InputHandler
         {
             get
@@ -471,7 +469,7 @@ namespace Cryptool.Fialka
             }
         }
 
-        [TaskPane("SelectMachineOperationModeCaption", "SelectMachineOperationModeTooltip", "MachineSettings", 7, false, ControlType.ComboBox, new string[] { "Plain (O)", "Encrypt (3)", "Decrypt (P)" })]
+        [TaskPane("SelectMachineOperationModeCaption", "SelectMachineOperationModeTooltip", "MachineSettings", 7, false, ControlType.ComboBox, new string[] { "OperationModeList1", "OperationModeList2", "OperationModeList3" })]
         public FialkaEnums.operationMode OperationMode
         {
             get
@@ -515,7 +513,7 @@ namespace Cryptool.Fialka
             }
         }
      
-        [TaskPane("SelectMachineCountryLayoutCaption", "SelectMachineCountryLayoutTooltip", "MachineSettings", 9, false, ControlType.ComboBox, new string[] { "Poland", "DDR", "Czechoslovakia" })]
+        [TaskPane("SelectMachineCountryLayoutCaption", "SelectMachineCountryLayoutTooltip", "MachineSettings", 9, false, ControlType.ComboBox, new string[] { "CountryLayoutList1", "CountryLayoutList2", "CountryLayoutList3" })]
         public FialkaEnums.countryLayout CountryLayout
         {
             get
@@ -533,7 +531,7 @@ namespace Cryptool.Fialka
         }
      
                                                                                   
-        [TaskPane("SelectMachinePrintHeadMappingCaption", "SelectMachinePrintHeadMappingTooltip", "MachineSettings", 11, false, ControlType.ComboBox, new string[] { "Cyrillic (PУC)", "Latin (ЛAT)" })]
+        [TaskPane("SelectMachinePrintHeadMappingCaption", "SelectMachinePrintHeadMappingTooltip", "MachineSettings", 11, false, ControlType.ComboBox, new string[] { "PrintHeadMappingList1", "PrintHeadMappingList2" })]
         public FialkaEnums.printHeadMapping PrintHeadMapping
         {
             get
@@ -591,7 +589,7 @@ namespace Cryptool.Fialka
             }
         }
       
-        [TaskPane("SelectMachineTxtOpModeCaption", "SelectMachineTxtOpModeTooltip", "MachineSettings", 14, false, ControlType.ComboBox, new string[] { "Letters (Б)", "Mixed (C)", "Numbers (Ц)" })]
+        [TaskPane("SelectMachineTxtOpModeCaption", "SelectMachineTxtOpModeTooltip", "MachineSettings", 14, false, ControlType.ComboBox, new string[] { "TextOperationModeList1", "TextOperationModeList2", "TextOperationModeList3" })]
         public FialkaEnums.textOperationmMode TextOperationMode
         {
             get
@@ -1330,7 +1328,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[1])
                 {
                     RotorCoreSwaps(1, this.RotorCoreOrders[1] , value);
-            
                 }
             }
         }
@@ -1349,7 +1346,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[2])
                 {
                     RotorCoreSwaps(2, this.RotorCoreOrders[2], value);
-                   
                 }
             }
         }
@@ -1368,7 +1364,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[3])
                 {
                     RotorCoreSwaps(3, this.RotorCoreOrders[3], value);
-                    
                 }
             }
         }
@@ -1387,7 +1382,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[4])
                 {
                     RotorCoreSwaps(4, this.RotorCoreOrders[4], value);
-                   
                 }
             }
         }
@@ -1406,7 +1400,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[5])
                 {
                     RotorCoreSwaps(5, this.RotorCoreOrders[5], value);
-                   
                 }
             }
         }
@@ -1425,7 +1418,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[6])
                 {
                     RotorCoreSwaps(6, this.RotorCoreOrders[6], value);
-                    
                 }
             }
         }
@@ -1444,7 +1436,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[7])
                 {
                     RotorCoreSwaps(7, this.RotorCoreOrders[7], value);
-                  
                 }
             }
         }
@@ -1463,7 +1454,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[8])
                 {
                     RotorCoreSwaps(8, this.RotorCoreOrders[8], value);
-                   
                 }
             }
         }
@@ -1482,7 +1472,6 @@ namespace Cryptool.Fialka
                 if (value != this.RotorCoreOrders[9])
                 {
                     RotorCoreSwaps(9, this.RotorCoreOrders[9], value);
-                   
                 }
             }
         }
@@ -1508,32 +1497,16 @@ namespace Cryptool.Fialka
         /// <returns></returns>
         private int setInternalStateCoreOrientation(int input)
         {
-            if (input == 0)
-            {
-                return 1;
-            }
-            else if (input == 1)
-            {
-                return -1;
-            }
-            return 1;
+            return input == 1 ? -1 : 1;
         }
         /// <summary>
         /// Helper method. Conersion from 1/-1 (internal state) into 0/1 (UI settings). In InternalState 1 represents normal side (\pi) and -1 represents flipped size (\pi^{-1}).
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private int gettInternalStateCoreOrientation(int input)
+        private int getInternalStateCoreOrientation(int input)
         {
-            if (input == 1)
-            {
-                return 0;
-            }
-            else if (input == -1)
-            {
-                return 1;
-            }
-            return 0;
+            return input == -1 ? 1 : 0;
         }
 
         [SettingsFormat(1, "Normal", "Normal")]
@@ -1554,17 +1527,16 @@ namespace Cryptool.Fialka
 
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "1")]
-        [TaskPane("Rotor1Caption", "SelectRotor1CoreSideTooltip", "RotorCoreSideSelection", 65, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor1Caption", "SelectRotor1CoreSideTooltip", "RotorCoreSideSelection", 65, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor1CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[0]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[0]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[0]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[0]))
                 {
                     this.RotorCoreOrientations[0] = setInternalStateCoreOrientation(value);
                     OnPropertyChanged("Rotor1CoreSide");
@@ -1574,17 +1546,16 @@ namespace Cryptool.Fialka
 
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "2")]
-        [TaskPane("Rotor2Caption", "SelectRotor2CoreSideTooltip", "RotorCoreSideSelection", 66, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor2Caption", "SelectRotor2CoreSideTooltip", "RotorCoreSideSelection", 66, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor2CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[1]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[1]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[1]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[1]))
                 {
                     this.RotorCoreOrientations[1] = setInternalStateCoreOrientation(value);
                     OnPropertyChanged("Rotor2CoreSide");
@@ -1593,17 +1564,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "3")]
-        [TaskPane("Rotor3Caption", "SelectRotor3CoreSideTooltip", "RotorCoreSideSelection", 67, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor3Caption", "SelectRotor3CoreSideTooltip", "RotorCoreSideSelection", 67, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor3CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[2]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[2]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[2]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[2]))
                 {
                     this.RotorCoreOrientations[2] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor3CoreSide");
@@ -1612,17 +1582,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "4")]
-        [TaskPane("Rotor4Caption", "SelectRotor4CoreSideTooltip", "RotorCoreSideSelection", 68, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor4Caption", "SelectRotor4CoreSideTooltip", "RotorCoreSideSelection", 68, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor4CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[3]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[3]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[3]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[3]))
                 {
                     this.RotorCoreOrientations[3] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor4CoreSide");
@@ -1631,17 +1600,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "5")]
-        [TaskPane("Rotor5Caption", "SelectRotor5CoreSideTooltip", "RotorCoreSideSelection", 69, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor5Caption", "SelectRotor5CoreSideTooltip", "RotorCoreSideSelection", 69, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor5CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[4]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[4]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[4]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[4]))
                 {
                     this.RotorCoreOrientations[4] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor5CoreSide");
@@ -1650,17 +1618,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "1")]
-        [TaskPane("Rotor6Caption", "SelectRotor6CoreSideTooltip", "RotorCoreSideSelection", 70, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor6Caption", "SelectRotor6CoreSideTooltip", "RotorCoreSideSelection", 70, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor6CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[5]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[5]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[5]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[5]))
                 {
                     this.RotorCoreOrientations[5] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor6CoreSide");
@@ -1669,17 +1636,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "2")]
-        [TaskPane("Rotor7Caption", "SelectRotor7CoreSideTooltip", "RotorCoreSideSelection", 71, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor7Caption", "SelectRotor7CoreSideTooltip", "RotorCoreSideSelection", 71, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor7CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[6]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[6]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[6]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[6]))
                 {
                     this.RotorCoreOrientations[6] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor7CoreSide");
@@ -1688,17 +1654,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "3")]
-        [TaskPane("Rotor8Caption", "SelectRotor8CoreSideTooltip", "RotorCoreSideSelection", 72, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor8Caption", "SelectRotor8CoreSideTooltip", "RotorCoreSideSelection", 72, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor8CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[7]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[7]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[7]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[7]))
                 {
                     this.RotorCoreOrientations[7] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor8CoreSide");
@@ -1707,17 +1672,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "4")]
-        [TaskPane("Rotor9Caption", "SelectRotor9CoreSideTooltip", "RotorCoreSideSelection", 73, false, ControlType.ComboBox,
-            new string[] { "1", "2" })]
+        [TaskPane("Rotor9Caption", "SelectRotor9CoreSideTooltip", "RotorCoreSideSelection", 73, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor9CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[8]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[8]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[8]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[8]))
                 {
                     this.RotorCoreOrientations[8] = setInternalStateCoreOrientation(value); ;
                     OnPropertyChanged("Rotor9CoreSide");
@@ -1726,17 +1690,16 @@ namespace Cryptool.Fialka
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "5")]
-        [TaskPane("Rotor10Caption", "SelectRotor10CoreSideTooltip", "RotorCoreSideSelection", 74, false, ControlType.ComboBox,
-           new string[] { "1", "2" })]
+        [TaskPane("Rotor10Caption", "SelectRotor10CoreSideTooltip", "RotorCoreSideSelection", 74, false, ControlType.ComboBox, new string[] { "1", "2" })]
         public int Rotor10CoreSide
         {
             get
             {
-                return gettInternalStateCoreOrientation(this.RotorCoreOrientations[9]);
+                return getInternalStateCoreOrientation(this.RotorCoreOrientations[9]);
             }
             set
             {
-                if (value != gettInternalStateCoreOrientation(this.RotorCoreOrientations[9]))
+                if (value != getInternalStateCoreOrientation(this.RotorCoreOrientations[9]))
                 {
                     this.RotorCoreOrientations[9] = setInternalStateCoreOrientation(value);
                     OnPropertyChanged("Rotor10CoreSide");

@@ -168,22 +168,13 @@ namespace Cryptool.Fialka
         /// <returns>The substituted input in Z_{30}. </returns>
         private int encrypt(int input)
         {
-            if (this.internalState.opMode == FialkaEnums.operationMode.Plain)
-            {
-                return input;
-            }
-            switch (this.internalState.numlockType)
-            {
-                case FialkaEnums.numLockType.NumLock10:
+            if (this.internalState.opMode != FialkaEnums.operationMode.Plain)
+                switch (this.internalState.numlockType)
                 {
-                    input = encrypt10(input);
-                } break;
-                case FialkaEnums.numLockType.NumLock30:
-                {
-                    input = encrypt30(input);
-                } break;             
-            }
-         
+                    case FialkaEnums.numLockType.NumLock10: return encrypt10(input);
+                    case FialkaEnums.numLockType.NumLock30: return encrypt30(input);
+                }
+
             return input;
         }
 
@@ -226,6 +217,7 @@ namespace Cryptool.Fialka
             input = FialkaConstants.keyboardInverse[input];
             // internal state change
             rotorStepping();
+
             return input;
         }
 
@@ -296,6 +288,7 @@ namespace Cryptool.Fialka
             input = FialkaConstants.keyboardInverse[input];
             // internal state change
             rotorStepping();
+
             return input;
         }
 
@@ -306,21 +299,14 @@ namespace Cryptool.Fialka
         /// <returns>The substituted input in Z_{30}.</returns>
         private int handleReflector(int input)
         {
-            FialkaEnums.operationMode opMode = this.internalState.opMode;
-            switch (opMode)
+            switch (this.internalState.opMode)
             {
-                case FialkaEnums.operationMode.Encrypt:
-                    input = FialkaConstants.reflectorEncrypt[input];
-                    break;
-                case FialkaEnums.operationMode.Decrypt:
-                    input = FialkaConstants.reflectorDecrypt[input];
-                    break;
-                case FialkaEnums.operationMode.Plain: break; // without any change, instead we should not call the encryption while the machine is in plain text mode
+                case FialkaEnums.operationMode.Encrypt: return FialkaConstants.reflectorEncrypt[input];
+                case FialkaEnums.operationMode.Decrypt: return FialkaConstants.reflectorDecrypt[input];
+                default: return input;  // without any change, instead we should not call the encryption while the machine is in plain text mode
             };
-            return input;
         }
-
-
+        
         /// <summary>
         /// Performs the specific permutation of input based on selected rotor. Firstly the offsets are removed from the rotors,
         /// next the substitution is calculated from base position. At the end the offsets are restored.
