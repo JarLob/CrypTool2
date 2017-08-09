@@ -1771,7 +1771,7 @@ namespace Cryptool.Fialka.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die How will invalid input be handeled? ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die How will invalid input be handled? ähnelt.
         /// </summary>
         internal static string SettingsInputhandlerTooltip {
             get {

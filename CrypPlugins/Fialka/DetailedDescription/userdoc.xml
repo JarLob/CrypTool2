@@ -93,7 +93,7 @@
     <newline />
     "After execution" - the saved key is restored after the encryption process is finished;
     <newline />
-    "Stop pressed" - the saved key is restored only when the STOP button is pressed; if you modify the input before pressing STOP, the changed key is applied;
+    "Stop pressed" - the saved key is restored only when the Stop button is pressed; if you modify the input before pressing Stop, the changed key is applied;
     <newline />
     "Input changed" - the saved key is restored each time before the encryption is called;
     <newline />
@@ -106,7 +106,7 @@
     In this menu you can also find the print head mapping, num lock type and text operation modes.
     The num lock and text operation modes are available only for the M-125-3 machine type.
     <newline />
-    The Operation mode specifies whether the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode - without any encryption.
+    The Operation mode specifies whether the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode -- without any encryption.
     <newline />
     <newline />
     The rest of the available settings forms the machine's key based on the selected rotor type.
@@ -266,7 +266,7 @@
 
   <introduction lang="de-DE">
     Die Fialka M-125 ist eine elektromechanische Rotor-Chiffriermaschine. Es sind zwei Varianten der Maschine bekannt: Standard (M-125) und erweitert (M-125-3).
-    Von beiden Varianten gibt es auch noch länderspezifische Versionen. Es ist bekannt, daß sie in der (ehemaligen) Sowjetunion, Polen, der Tschechoslowakei, Ungarn und der DDR eingesetzt wurde.
+    Von beiden Varianten gibt es auch noch länderspezifische Versionen. Es ist bekannt, dass sie in der (ehemaligen) Sowjetunion, Polen, der Tschechoslowakei, Ungarn und der DDR eingesetzt wurde.
     <newline />
     Das Design der Fialka M-125 basiert größtenteils auf der bekannten Chiffriermaschine Enigma. Es gibt allerdings einige wichtige Unterschiede im Aufbau der Maschine, die als Versuch angesehen werden können,
     die bekannten Schwächen der Enigma zu vermeiden.
@@ -289,7 +289,7 @@
     </list>
     <newline />
     Die Verdrahtung des Reflektors der Fialka unterscheidet sich von der Umkehrwalze der Enigma: die realisierte Substitution ist nicht involutorisch, sie enthält einen Zyklus der Länge 3 und einen der Länge 1.
-    Das bedeutet, daß, anders als bei der Enigma, für die Entschlüsselung eine andere Operation als für die Verschlüsselung notwendig wird. Der Zyklus der Länge 1 ermöglicht, daß ein Zeichen auch auf sich selbst abgebildet werden kann.
+    Das bedeutet, dass, anders als bei der Enigma, für die Entschlüsselung eine andere Operation als für die Verschlüsselung notwendig wird. Der Zyklus der Länge 1 ermöglicht, dass ein Zeichen auch auf sich selbst abgebildet werden kann.
     <newline />
     <newline />
     Die wichtigsten unterschiede zwischen Enigma und Fialka werden in der folgenden Tabelle zusammengefasst:
@@ -330,7 +330,7 @@
     Die Fialka-Komponente ist voll kompatibel zur realen Fialka-Maschine. Sie erlaubt folgende Einstellungen:
     <list>
       <item>Verschiedene Maschinenmodelle (M-125 und M-125-3).</item>
-      <item>Verschiedene Rotorensätze (PROTON I und PROTON II) und verscheidene länderspezifische Rotorverdrahtungen (3K : Polen, 5K : Ungarn, 6K : Tschechoslowakei).</item>
+      <item>Verschiedene Rotorensätze (PROTON I und PROTON II) und verschiedene länderspezifische Rotorverdrahtungen (3K : Polen, 5K : Ungarn, 6K : Tschechoslowakei).</item>
       <item>Verschiedene (länderspezifische) Tastaturbelegungen und Typenräder.</item>
       <item>Verschiedene Operationsmodi (Verschlüsseln, Entschlüsseln, Klartextmodus).</item>
       <item>Alle möglichen Schlüsseleinstellungen (Rotorreihenfolge, Rotoroffsets, Ringoffsets, Lochkartensubstitution, Kernreihenfolge, Kernoffsets, Kernorientierungen).</item>
@@ -344,7 +344,7 @@
     <newline/>
     <newline/>
     In der Gruppe "Workspace" befinden sich die Einstellungen für die Behandlung unbekannter Zeichen und für den Zeitpunkt, wann der Schlüssel wieder auf den initialen Schlüssel
-    (der gesichert wird, wenn der START-Button gedrückt wird) gesetzt werden soll.
+    (der gesichert wird, wenn der Start-Button gedrückt wird) gesetzt werden soll.
     <newline />
     Enthält die Eingabe ein Zeichen, das nicht in dem durch das gewählte Typenrad und das Länderlayout bestimmten Zeichensatz vorhanden ist, kann das Zeichen entweder entfernt, ignoriert oder durch '@' ersetzt werden.
     Wird es ignoriert, so wird es unverändert an die Ausgabe weitergegeben.
@@ -436,7 +436,7 @@
       Wenn die Kerne in der gleichen Reihenfolge wie die Rotoren angeordnet sind, dieselbe Orientierung und Offset 0 haben, sind die PROTON II-Rotoren identisch zu den PROTON I-Rotoren.
       <newline />
       <newline />
-      In der Gruppe "Kernanordnung" können Sie festlegen, an welcher Position ein Kern eingesetzt werden soll. Kernposition [x] bedeutet, daß der Kern in den Rotor an Position [x] eingesetzt wird.
+      In der Gruppe "Kernanordnung" können Sie festlegen, an welcher Position ein Kern eingesetzt werden soll. Kernposition [x] bedeutet, dass der Kern in den Rotor an Position [x] eingesetzt wird.
       Wenn ein Kern in eine neue Position gesetzt wird, bleibt die Pinposition unverändert und nur die Verdrahtung wird gewechselt.
       <newline />
       Die folgende Tabelle zeigt die Bezeichnung der Kerne (kyrillisch und Zahlen):
@@ -473,7 +473,7 @@
       Um die Kernoffsets zurückzusetzen, drücken Sie den Button "Nulloffsets".
       <newline />
       <newline />
-      In der Gruppe "Kernorientierung" können sie festlegen, ob die Kerne normal oder um 180 Grad gedreht eingesetzt werden sollen.
+      In der Gruppe "Kernorientierung" können Sie festlegen, ob die Kerne normal oder um 180 Grad gedreht eingesetzt werden sollen.
       Kernorientierung [x] spezifiziert die Orientierung für den Kern, der in dem Rotor an Position [x] eingesetzt ist.
       <newline />
       Drücken Sie "Kernorientierungen zurücksetzen", um alle Kerne auf Seite I zu orientieren.

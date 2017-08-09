@@ -655,7 +655,7 @@
     <value>Input handling</value>
   </data>
   <data name="SettingsInputhandlerTooltip" xml:space="preserve">
-    <value>How will invalid input be handeled?</value>
+    <value>How will invalid input be handled?</value>
   </data>
   <data name="SettingsOutputUpdateCaption" xml:space="preserve">
     <value>Output update</value>
