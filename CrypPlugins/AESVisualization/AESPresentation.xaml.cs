@@ -14,12 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace AESVisualisation
+namespace AESVisualization
 {
     /// <summary>
     /// Interaction logic for AESPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AESVisualisation.Properties.Resources")]
+    [Cryptool.PluginBase.Attributes.Localization("AESVisualization.Properties.Resources")]
     public partial class AESPresentation : UserControl
     {
         public TextBlock tempBlock = new TextBlock();
@@ -379,7 +379,7 @@ namespace AESVisualisation
                 {
                     cleanUp();
                     operationCounter = 4;
-                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
+                    keyExpansionTextBlock.Text = AESVisualization.Properties.Resources.encButton;
                     buttonNextClickedEvent.Set();
                     return;
                 }
@@ -631,9 +631,9 @@ namespace AESVisualisation
                 Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     autostepSpeedSlider.IsEnabled = true; 
-                    InitialRoundTextBlock.Text = AESVisualisation.Properties.Resources.initialRoundTextBlock;
-                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
-                    expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
+                    InitialRoundTextBlock.Text = AESVisualization.Properties.Resources.initialRoundTextBlock;
+                    keyExpansionTextBlock.Text = AESVisualization.Properties.Resources.encButton;
+                    expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.expTextBlock;
                     showButton();
                     hideButton();
                     invisible();
@@ -849,8 +849,8 @@ namespace AESVisualisation
                     Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                        expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
-                        keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.expButton;
+                        expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.encTextBlock;
+                        keyExpansionTextBlock.Text = AESVisualization.Properties.Resources.expButton;
                         hideButton();
                         enabledStartEnd();
                         playButton.IsEnabled = true;
@@ -896,8 +896,8 @@ namespace AESVisualisation
                     autostep = false;
                     expansionKeyGrid.Visibility = Visibility.Hidden;
                     showButton();
-                    keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.expButton;
-                    expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
+                    keyExpansionTextBlock.Text = AESVisualization.Properties.Resources.expButton;
+                    expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.encTextBlock;
                     changeRoundButton();
                     buttonVisible();
                 }, null);
@@ -972,7 +972,7 @@ namespace AESVisualisation
                         subByteButton.Foreground = Brushes.Gray;
                         shiftRowButton.Foreground = Brushes.Gray;
                         expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                        expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.resultTextBlock;
+                        expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.resultTextBlock;
                         InitialRoundTextBlock.Visibility = Visibility.Hidden;
                     }, null);
                     autostep = false;
@@ -3739,7 +3739,7 @@ namespace AESVisualisation
                         {
                             backButton.IsEnabled = false;
                             expansionEncryptionTextBlock.Visibility = Visibility.Visible;
-                            expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.IntroText; 
+                            expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.IntroText; 
                             startGrid.Visibility = Visibility.Visible;
                             startTextBlock.Visibility = Visibility.Visible;
                             startTextBlock1.Visibility = Visibility.Visible;
@@ -3793,14 +3793,14 @@ namespace AESVisualisation
                     case 4:
                         Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                         {
-                            expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.expTextBlock;
+                            expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.expTextBlock;
                             expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                             Intro3ENImage.Visibility = Visibility.Hidden;
                             startGrid.Visibility = Visibility.Visible;
                             expansionTextBlock.Visibility = Visibility.Visible;
                             expansionTextBlock2.Visibility = Visibility.Visible;
                             Intro2ENTextBlock.Visibility = Visibility.Hidden;
-                            keyExpansionTextBlock.Text = AESVisualisation.Properties.Resources.encButton;
+                            keyExpansionTextBlock.Text = AESVisualization.Properties.Resources.encButton;
                         }, null);
                         break;
                     default: break;
@@ -4614,7 +4614,7 @@ namespace AESVisualisation
         }
 
         /*
-        Implementation of the visualisation of the subBytes operation
+        Implementation of the visualization of the subBytes operation
         */
         public void subBytes()
         {
@@ -5295,7 +5295,7 @@ namespace AESVisualisation
         }
 
         /*
-        Implementation of the visualisation of the shiftRow operation.
+        Implementation of the visualization of the shiftRow operation.
         */
         private void shiftRow()
         {
@@ -5418,7 +5418,7 @@ namespace AESVisualisation
         }
 
         /*
-        Implementation of the visualisation of the mixCol operation
+        Implementation of the visualization of the mixCol operation
         */
         private void mixColumns()
         {
@@ -6003,44 +6003,44 @@ namespace AESVisualisation
             shift = shifting;
             if(shift == 0)
             {
-                round1Button.Content = AESVisualisation.Properties.Resources.Round1;
-                round2Button.Content = AESVisualisation.Properties.Resources.Round2;
-                round3Button.Content = AESVisualisation.Properties.Resources.Round3;
-                round4Button.Content = AESVisualisation.Properties.Resources.Round4;
-                round5Button.Content = AESVisualisation.Properties.Resources.Round5;
-                round6Button.Content = AESVisualisation.Properties.Resources.Round6;
-                round7Button.Content = AESVisualisation.Properties.Resources.Round7;
-                round8Button.Content = AESVisualisation.Properties.Resources.Round8;
-                round9Button.Content = AESVisualisation.Properties.Resources.Round9;
-                round10Button.Content = AESVisualisation.Properties.Resources.Round10;
+                round1Button.Content = AESVisualization.Properties.Resources.Round1;
+                round2Button.Content = AESVisualization.Properties.Resources.Round2;
+                round3Button.Content = AESVisualization.Properties.Resources.Round3;
+                round4Button.Content = AESVisualization.Properties.Resources.Round4;
+                round5Button.Content = AESVisualization.Properties.Resources.Round5;
+                round6Button.Content = AESVisualization.Properties.Resources.Round6;
+                round7Button.Content = AESVisualization.Properties.Resources.Round7;
+                round8Button.Content = AESVisualization.Properties.Resources.Round8;
+                round9Button.Content = AESVisualization.Properties.Resources.Round9;
+                round10Button.Content = AESVisualization.Properties.Resources.Round10;
             }
             else if(shift == 1)
             {
                 if (keysize == 1)
                 {
-                    round1Button.Content = AESVisualisation.Properties.Resources.Round3;
-                    round2Button.Content = AESVisualisation.Properties.Resources.Round4;
-                    round3Button.Content = AESVisualisation.Properties.Resources.Round5;
-                    round4Button.Content = AESVisualisation.Properties.Resources.Round6;
-                    round5Button.Content = AESVisualisation.Properties.Resources.Round7;
-                    round6Button.Content = AESVisualisation.Properties.Resources.Round8;
-                    round7Button.Content = AESVisualisation.Properties.Resources.Round9;
-                    round8Button.Content = AESVisualisation.Properties.Resources.Round10;
-                    round9Button.Content = AESVisualisation.Properties.Resources.Round11;
-                    round10Button.Content = AESVisualisation.Properties.Resources.Round12;
+                    round1Button.Content = AESVisualization.Properties.Resources.Round3;
+                    round2Button.Content = AESVisualization.Properties.Resources.Round4;
+                    round3Button.Content = AESVisualization.Properties.Resources.Round5;
+                    round4Button.Content = AESVisualization.Properties.Resources.Round6;
+                    round5Button.Content = AESVisualization.Properties.Resources.Round7;
+                    round6Button.Content = AESVisualization.Properties.Resources.Round8;
+                    round7Button.Content = AESVisualization.Properties.Resources.Round9;
+                    round8Button.Content = AESVisualization.Properties.Resources.Round10;
+                    round9Button.Content = AESVisualization.Properties.Resources.Round11;
+                    round10Button.Content = AESVisualization.Properties.Resources.Round12;
                 }
                 else
                 {
-                    round1Button.Content = AESVisualisation.Properties.Resources.Round5;
-                    round2Button.Content = AESVisualisation.Properties.Resources.Round6;
-                    round3Button.Content = AESVisualisation.Properties.Resources.Round7;
-                    round4Button.Content = AESVisualisation.Properties.Resources.Round8;
-                    round5Button.Content = AESVisualisation.Properties.Resources.Round9;
-                    round6Button.Content = AESVisualisation.Properties.Resources.Round10;
-                    round7Button.Content = AESVisualisation.Properties.Resources.Round11;
-                    round8Button.Content = AESVisualisation.Properties.Resources.Round12;
-                    round9Button.Content = AESVisualisation.Properties.Resources.Round13;
-                    round10Button.Content = AESVisualisation.Properties.Resources.Round14;
+                    round1Button.Content = AESVisualization.Properties.Resources.Round5;
+                    round2Button.Content = AESVisualization.Properties.Resources.Round6;
+                    round3Button.Content = AESVisualization.Properties.Resources.Round7;
+                    round4Button.Content = AESVisualization.Properties.Resources.Round8;
+                    round5Button.Content = AESVisualization.Properties.Resources.Round9;
+                    round6Button.Content = AESVisualization.Properties.Resources.Round10;
+                    round7Button.Content = AESVisualization.Properties.Resources.Round11;
+                    round8Button.Content = AESVisualization.Properties.Resources.Round12;
+                    round9Button.Content = AESVisualization.Properties.Resources.Round13;
+                    round10Button.Content = AESVisualization.Properties.Resources.Round14;
                 }
             }
             changeRoundButton();
@@ -6488,8 +6488,8 @@ namespace AESVisualisation
             abort = true;
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {              
-                expansionEncryptionTextBlock.Text = AESVisualisation.Properties.Resources.encTextBlock;
-                InitialRoundTextBlock.Text = AESVisualisation.Properties.Resources.resultTextBlock;
+                expansionEncryptionTextBlock.Text = AESVisualization.Properties.Resources.encTextBlock;
+                InitialRoundTextBlock.Text = AESVisualization.Properties.Resources.resultTextBlock;
                 expansionEncryptionTextBlock.Visibility = Visibility.Visible;
                 InitialRoundTextBlock.Visibility = Visibility.Visible;
             }, null);

@@ -8,8 +8,8 @@
     <ProjectGuid>{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AESVisualisation</RootNamespace>
-    <AssemblyName>AESVisualisation</AssemblyName>
+    <RootNamespace>AESVisualization</RootNamespace>
+    <AssemblyName>AESVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -81,8 +81,8 @@
     <Compile Include="AESPresentation.xaml.cs">
       <DependentUpon>AESPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AESVisualisation.cs" />
-    <Compile Include="AESVisualisationSettings.cs" />
+    <Compile Include="AESVisualization.cs" />
+    <Compile Include="AESVisualizationSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.de.Designer.cs">
       <DependentUpon>Resources.de.resx</DependentUpon>

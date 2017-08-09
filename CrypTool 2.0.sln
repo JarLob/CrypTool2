@@ -435,7 +435,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "A5", "CrypPluginsExperiment
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrainV1Attack", "CrypPluginsExperimental\GrainV1Attack\GrainV1Attack.csproj", "{C4DF6554-BCD8-4601-9D30-DA9BAB2314DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AESVisualization", "CrypPlugins\AESVisualisation\AESVisualization.csproj", "{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AESVisualization", "CrypPlugins\AESVisualization\AESVisualization.csproj", "{115F5A57-E85B-4D79-ABEA-0CD78C3F3457}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Feistel", "CrypPluginsExperimental\Feistel\Feistel.csproj", "{0A3F1FD2-B924-415C-8085-DF735D416258}"
 EndProject
