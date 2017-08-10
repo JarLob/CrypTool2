@@ -106,7 +106,7 @@
     In this menu you can also find the print head mapping, num lock type and text operation modes.
     The num lock and text operation modes are available only for the M-125-3 machine type.
     <newline />
-    The Operation mode specifies whether the machine is used to encrypt or decrypt the input message. This mode can be also set to plain text mode -- without any encryption.
+    The operation mode specifies whether the machine is used to encrypt or decrypt the input message. This mode can be also set to plaintext mode -- without any encryption.
     <newline />
     <newline />
     The rest of the available settings forms the machine's key based on the selected rotor type.
