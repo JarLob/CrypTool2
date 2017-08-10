@@ -32,7 +32,7 @@ using System.Diagnostics;
 namespace Cryptool.Plugins.AESVisualization
 {
     [Author("Matthias Becher", "matthias.becher2193@mail.com", "Universität Mannheim", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("AESVisualization.Properties.Resources", "PluginCaption", "PluginTooltip", "AESVisualization/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("AESVisualization.Properties.Resources", "PluginCaption", "PluginTooltip", "AESVisualization/userdoc.xml", new[] { "AESVisualization/images/AES.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class AESVisualization : ICrypComponent
     {
