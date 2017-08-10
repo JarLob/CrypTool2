@@ -295,6 +295,10 @@
       <Project>{AF5B966D-76A8-43A1-B6D2-3831FD4EF1C7}</Project>
       <Name>Enigma</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\Fialka\Fialka.csproj">
+      <Project>{92c31d1c-a348-4c4d-b591-36d51f48f401}</Project>
+      <Name>Fialka</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\FrequencyTest\FrequencyTest.csproj">
       <Project>{BBE9497C-4AE2-4493-A611-DEBB37DFBBC8}</Project>
       <Name>FrequencyTest</Name>
