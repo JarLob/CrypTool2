@@ -2,6 +2,7 @@
 
 <documentation>
   <language culture="en"/>
+  <language culture="de-DE"/>
 
   <introduction lang="en">
     This component is designed to generate test vectors in the form of plaintexts and keys for all classical cryptanalytic CrypTool 2 components (as of July 2017). The first use case is generating pure test vectors in the form of ciphertexts and keys by using the according cryptographic component to encrypt the plaintexts. The second use case is the analysis of the cryptanalytic component with the generated test vectors through the CryptAnalysisAnalyzer component.
@@ -16,12 +17,12 @@
       The plaintext is generated in this way:
       <newline/>
       <newline/>
-      For the plaintext and the natural speech keys, the input text (usually a book in text format) is processed by some initial aspects (like removing all characters unlike letters, numbers, spaces, full stops; replacing question and exclamation marks by full stops first) and splitting it to complete sentences which are put into an array. The plaintext generation is basically choosing a (never occurred until now) starting sentence and appending following sentences until the specified plaintext length is exceeded. Then the plaintext is cut to the specified length and given to the output connector. The plaintext length and specifics can be selected through the component settings.
+      For the plaintext and the natural speech keys, the input text (usually a book in text format) is processed by some initial aspects (like removing all characters unlike letters, numbers, spaces, periods; replacing question and exclamation marks by periods first) and splitting it to complete sentences which are put into an array. The plaintext generation is basically choosing a (never occurred until now) starting sentence and appending following sentences until the specified plaintext length is reached or exceeded. Then the plaintext is cut to the specified length and given to the output connector. The plaintext length and specifics can be selected through the component settings.
       <newline/>
       The natural speech keys are generated in this way:
       <newline/>
       <newline/>
-      Starting at a random starting sentence, the first step is searching a sentence of the exact specified length (that was not used as starting sentence before). If that fails, larger sentences are searched and cut to the specified length. All modifications according to the settings are done to the key (like replacing numbers or umlauts).
+      Starting at a random starting sentence, the first step is searching a sentence of the exact specified length (that was not used as starting sentence before). If that fails, larger sentences are searched and cut to the specified length. All modifications according to the settings are done to the key at this point (like replacing numbers or umlauts).
       <newline/>
       The random keys are generated like this:
       <newline/>
@@ -32,6 +33,38 @@
       <newline/>
       <newline/>
       A regular expression is a pattern that defines rules for a set of strings. All strings that follow these rules match the pattern. The regex input takes a regex pattern from the user and the reverse regex generator builds a random string matching this pattern (using the pseudo-random number generator, seeded with the input seed). Additional functionalities are the special $length and $unique variables. The $length variable is replaced through the current calculated length that the key has to have. The $unique variable is parsed, a random key is generated using the parsed parameters, and the $unique variable is replaced by that key. After both replacements, the reverse regex generation is continued as usual (see usage for more details).
+    </section>
+  </introduction>
+
+  <introduction lang="de-DE">
+    Diese Komponente wurde entwickelt um Testvektoren in der Form von Klartexten und Schlüsseln für alle klassischen kryptoanalytischen CrypTool 2 Komponenten (Stand Juli 2017) zu generieren. Der erste Anwendungsfall ist die Generierung purer Testvektoren in Form von Geheimtexten und Schlüsseln durch Verschlüsselung der Klartexte durch die entsprechende kryptographische Komponente. Der zweite Anwendungsfall ist die Analyse einer kryptoanalytischen Komponente mittels der generierten Testvektoren durch die CryptAnalysisAnalyzer Komponente.
+
+    <section headline="Geschichte">
+      Ein allgemeiner Testvektor-Generator oder bereits generierte standardisierte Testvektoren, die die analytischen Ergebnisse vergleichbar machen, sind verfügbar in den meisten Teilbereichen der Informatik, aber nicht in der Kryptoanalyse. In dem Paper "We need test vectors!" (ein Vorschlag für das 2017 Cryptologic History Symposium von Anfang 2017), erklärt Nils Kopal wie wichtig standardisierte Testvektoren für den Bereich der Kryptoanalyse sind, um verschiedene Algorithmen zu vergleichen.
+    </section>
+
+    <section headline="Algorithmus">
+      Die Generierung von Klartexten und Schlüsseln ist auf einem Pseudo-Zufallszahlengenerator basiert, der durch den Samen initialisiert wird, den der Nutzer bereit stellt. Dadurch wird die Generierung mit den identischen Eingabewerten reproduzierbar.
+      <newline/>
+      Der Klartext wird wie folgt generiert:
+      <newline/>
+      <newline/>
+      Für den Klartext und die Natürliche-Sprache-Schlüssel wird der Eingabetext (normalerweise ein Buch in Textformat) anhand einiger initialer Aspekte verarbeitet (wie das Entfernen alle Zeichen, die keine Buchstaben, Zahlen, Leerzeichen oder Punkte sind, und der Ersetzung aller Frage- und Ausrufezeichen durch Punkte) und die Aufteilung nach vollständigen Sätzen, die dann in einem Array gespeichert werden. Die Generierung eines Klartexts besteht grundsätzlich aus einem (neuen) Startsatz und dem Anhängen der darauf folgenden Sätze bis die eingestellte Klartext-Länge erreicht oder überschritten wurde. Dann wird der Klartext auf die eingestellte Länge gekürzt und an den Ausgabekonnektor weiter gegeben. Die Klartext-Länge und Einzelheiten können durch die Komponenten-Einstellungen ausgewählt werden.
+      <newline/>
+      Die Natürliche-Sprache-Schlüssel werden folgendermaßen generiert:
+      <newline/>
+      <newline/>
+      Beginnend bei einem zufälligen Startsatz, der erste Schritt ist die Suche nach einem Satz mit exakt der gesuchten Länge (der bisher noch nicht als Startsatz verwendet wurde). Wenn die Suche fehl schlägt werden längere Sätze gesucht und an der eingestellten Länge abgeschnitten. Alle Modifikationen die in den Einstellungen festgelegt wurden, werden an dieser Stelle am Key vorgenommen (wie die Ersetzung vom Zahlen und Umlauten).
+      <newline/>
+      Die einfachen zufälligen Schlüssel werden wie folgt generiert:
+      <newline/>
+      <newline/>
+      Als erstes wird das Alphabet von dem die Schlüssel-Symbole ausgewählt werden als eine liste von Zeichenketten vorbereitet (dieses Alphabet kann durch das Drop-down Menü oder die Alphabet Eingabe festgelegt werden). Im nächsten Schritt wird wiederholt ein zufälliges Element aus der Liste ausgewählt bis die festgelegte Schlüssel-Länge erreicht wurde. Wenn die Option aktiviert ist, dass jedes Symbol nur einmal pro Schlüssel verwendet werden darf, wird das aktuelle Symbol direkt von der Liste entfernt und nicht mehrfach verwendet.
+      <newline/>
+      Die Revers-Regex-Schlüssel werden folgendermaßen generiert:
+      <newline/>
+      <newline/>
+      Ein regulärer Ausdruck ist ein Muster, dass Regeln für eine Menge von Zeichenketten festlegt. Alle Zeichenketten die diese Regeln befolgen passen zu diesem Muster. Die Eingabe-Verbindung für reguläre Ausdrücke empfängt das Muster vom Nutzer und der Revers-Regex-Generator baut daraus eine zufällige Zeichenkette die diesem Muster entspricht (dabei verwendet er den pseudo Zufallszahlengenerator, initialisiert mit dem eingegebenen Samen). Zusätzliche Funktionen stellen die speziellen Variablen $length und $unique dar. Die $length Variable wird durch die aktuelle berechnete Länge des Schlüssels ersetzt. Die $unique Variable wird analysiert, ein zufälliger Schlüssel wird nach den gefundenen Parametern generiert und die $unique Variable wird durch diesen Schlüssel ersetzt. Nach diesen Ersetzungen läuft die Revers-Regex-Generierung weiter wie normal (mehr Details befinden sich weiter unten).
     </section>
   </introduction>
 
@@ -46,7 +79,7 @@
     <newline/>
     <b>Seed input:</b>
     <newline/>
-    The seed can be any string. Together with the settings, text and seed are necessary to reproduce the generated test vectors. In order to get a new test vector, the seed has do be updated, by setting it to one of the previous test values (the second test vector has to be based on the first one to make the generation reproducible; the easiest way is to use the current key as the next seed).
+    The seed can be any string. Together with the settings, text and seed are necessary to reproduce the generated test vectors. In order to get a new test vector, the seed has to be updated, by setting it to one of the directly previous test values (the second test vector has to be based on the first one to make the generation reproducible; the easiest way is to use the current key as the next seed).
     <newline/>
     <newline/>
     <b>Regex input:</b>
@@ -55,7 +88,7 @@
     <newline/>
     "$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / $unique([1-26]{3}) / $unique([A-Z](2){26})"
     <newline/>
-    The first $unique variable is replaced by a string of three symbols taken from the given alphabet, separated by the separator symbol specified in the components settings (like "IV, I, III"). The slash and its surrounding spaces are taken as they are, as they are not part of a pattern to generate (between brackets). The second $unique variable generates 3 numbers from 1 to 26 (like "2, 26, 15"). The last $unique specifies the frequency of the separator (", " in this case) to be 2 (instead of the default of 1) inside the round brackets. The curly brackets always define the length, while the square brackets define the alphabet. So the last part generates strings of 26 letters between A and Z, separated in groups of 2 (like "AG, IW, KC, RQ, ..."). All alphabet symbols are only used once, that's the main aspect of the $unique variable.
+    The first $unique variable is replaced by a string of three symbols taken from the given alphabet, separated by the separator symbol specified in the components settings (like "IV, I, III"). The slash and its surrounding spaces are taken as they are, as they are not part of a pattern to generate (between brackets). The second $unique variable generates 3 numbers from 1 to 26 (like "2, 26, 15"). The last $unique specifies the frequency of the separator (", " in this case) to be 2 (instead of the default of 1) inside the round brackets. The curly brackets always define the length, while the square brackets define the alphabet. So the last part generates strings of 26 letters from A to Z, separated in groups of 2 (like "AG, IW, KC, RQ, ..."). All alphabet symbols are only used once, that's the main aspect of the $unique variable.
     <newline/>
     <newline/>
     <b>Alphabet input:</b>
@@ -70,7 +103,7 @@
     <newline/>
     <b>Number of test runs:</b>
     <newline/>
-    The setting for the number of test runs defines the overall test runs for the test series, divided into the different plaintext and key length (if specified).
+    The setting for the number of test runs defines the overall test runs for the test series, divided into the different plaintext lengths and key lengths (if specified).
     <newline/>
     <newline/>
     <b>Show extended settings:</b>
@@ -119,8 +152,104 @@
 
     This component was part of a master thesis which contains all details about it:
 
-    "Prototypical Development of a Distributed Evaluation Method for Cryptanalytic Methods for Classical Ciphers in CrypTool 2
+    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
     Bastian Heuser, University of Kassel - 2017 - Master thesis    
   </usage>
+
+  <usage lang="de-DE">
+    Der TestVectorGenerator hat zwei notwendige Eingangsverbindungen: Text und Samen. Die optionalen Eingänge sind das reguläre Ausdrucks-Muster und das Alphabet.
+    <newline/>
+    <newline/>
+    <b>Text Eingabe:</b>
+    <newline/>
+    Der Eingabetext sollte ein umfangreicher text in natürlichem Englisch sein (wie ein Kinderbuch).
+    <newline/>
+    <newline/>
+    <b>Samen Eingabe:</b>
+    <newline/>
+    Der Samen kann eine beliebige Zeichenkette sein. Gemeinsam mit den Einstellungen sind Text und Samen notwendig um die generierten Testvektoren zu reproduzieren. Um einen neuen Testvektor zu erhalten, muss der Samen aktualisiert werden indem er auf einen der letzten generierten Testwerte gesetzt wird (der zweite Testvektor muss auf dem ersten basieren um die Generierung reproduzierbar zu machen; der einfachste Weg ist den aktuell generierten Schlüssel als nächsten Samen zu verwenden).
+    <newline/>
+    <newline/>
+    <b>Regex Eingabe:</b>
+    <newline/>
+    Die Regex Eingabe (oder auch reguläre Ausdrucks-Eingabe) akzeptiert die meisten regulären Ausdrucks-Muster (die komplette Liste ist im Xeger Wiki zu finden, dass in den Referenzen verlinkt ist). Ein einfaches Beispiel wäre "[ab]{4,6}", welches Zeichenketten generiert die aus a's und b's der Länge 4 bis 6 bestehen (wie "aaaa", "ababab", "bbabb"). Ein kompliziertes Beispiel ist die Generierung von Enigma Schlüsseln:
+    <newline/>
+    "$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / $unique([1-26]{3}) / $unique([A-Z](2){26})"
+    <newline/>
+    Die erste $unique Variable wird durch eine Zeichenkette von drei Symbolen aus dem gegebenen Alphabet ersetzt, separiert durch das Trennsymbol welches in den Einstellungen der Komponente festgelegt wurde (wie "IV, I, III"). Der Schrägstrich und die umgebenden Leerzeichen werden gelassen wie sie sind, weil sie kein Teil eines zu generierenden Musters sind (zwischen den Klammern). Die zweite $unique Variable generiert drei Zahlen von 1 bis 26 (like "2, 26, 15"). Das letzte $unique spezifiziert auch die Frequenz des Trennsymbols (", " in diesem Fall) als 2 (anders als der Standard 1) in den runden Klammern. Folglich generiert der letzte Teil Zeichenketten von 26 Buchstaben von A bis Z, separiert in Zweiergruppen (wie "AG, IW, KC, RQ, ..."). Alle Alphabetsymbole werden nur einmal verwendet, was genau der hauptsächliche Zweck der $unique Variable ist.
+    <newline/>
+    <newline/>
+    <b>Alphabet Eingabe:</b>
+    <newline/>
+    Die Alphabet-Eingabe kann dazu genutzt werden ein Alphabet in einem abgekürzten Format anzugeben (wie "A-Z0-9") oder ein vollständiges Alphabet, separiert durch Leerzeichen oder Pipe-Symbole, wodurch auch mehrere Zeichen ein Alphabet-Symbol darstellen dürfen ("A C E F 8 12"). Wenn alle Symbole die Länge 1 besitzen, können die Trennsymbole auch weggelassen werden ("ABCDEF").
+    <newline/>
+    <newline/>
+    <b>Einstellungen:</b>
+    <newline/>
+    Der komplexere Teil des TestVectorGenerators sind seine Einstellungen. Die wichtigsten sind im Folgenden erklärt:
+    <newline/>
+    <newline/>
+    <b>Anzahl an Testläufen:</b>
+    <newline/>
+    Diese Einstellung definiert die Gesamtanzahl der Testläufe in einer Testserie, aufgeteilt in die verschiedenen Klartext- und Schlüssellängen (wenn definiert).
+    <newline/>
+    <newline/>
+    <b>Zeige erweiterte Einstellungen:</b>
+    <newline/>
+    Um volle Kontrolle über alle verfügbaren Einstellungen zu bekommen, müssen die erweiterten Einstellungen durch diese Einstellung aktiviert werden.
+    <newline/>
+    <newline/>
+    <b>Andere allgemeine Einstellungen:</b>
+    <newline/>
+    Die anderen allgemeinen Einstellungen modifizieren den Text und die Natürliche-Sprache-Schlüssel durch Operationen wie Konvertierung zu Großbuchstaben, Löschen alle Leerzeichen oder der Ersetzung bestimmter Symbole.
+    <newline/>
+    <newline/>
+    <b>Textlängen Einstellungen:</b>
+    <newline/>
+    Die Textlänge kann definiert werden durch die minimale und maximale Länge und die Verlängerungsschritte zwischen den verschiedenen Längen.
+    <newline/>
+    <newline/>
+    <b>Punkt-Ersetzungs-Einstellung:</b>
+    <newline/>
+    Punkte können ignoriert, entfernt oder durch ein anderes Symbol ersetzt werden. Wird die Ersetzungs-Option gewählt, wird ein Eingabefeld für das neue Symbol angezeigt.
+    <newline/>
+    <newline/>
+    <b>Schlüsseltyp:</b>
+    <newline/>
+    Es gibt drei verfügbare Schlüsseltypen: Natürliche-Sprachen-Schlüssel, zufällige Schlüssel und Revers-Regex-Schlüssel. Die Generierung Natürlicher-Sprachen-Schlüssel verwendet Sätze des gegebenen Eingabetext. Die zufälligen Schlüssel werden basierend auf dem gegebenen Eingabealphabet generiert, oder entsprechend der gewählten Kategorie im Drop-Down-Menü. Für die Generierung der Revers-Regex-Schlüssel muss ein regulärer Ausdruck in Form eines Musters durch die Regex-Eingabe bereitgestellt werden. Detailliertere Informationen können weiter oben bei der Regex-Eingabe gefunden werden.
+    <newline/>
+    <newline/>
+    <b>Minimale und maximale Schlüssellänge:</b>
+    <newline/>
+    Diese Werte geben den Bereich der Schlüssellänge an in dem die generierten Schlüssel liegen sollen.
+    <newline/>
+    <newline/>
+    <b>Schlüsselsymbol-Trenner:</b>
+    <newline/>
+    Die Schlüsselsymbole können durch eine beliebige Zeichenkette getrennt werden, die in diesem Eingabefeld festgelegt wird.
+    <newline/>
+    <newline/>
+    <b>Schlüsselformat:</b>
+    <newline/>
+    Die Einstellung Schlüsselformat ist verfügbar für Natürliche-Sprache-Schlüssel und zufällige Schlüssel. Natürliche-Sprache-Schlüssel können entweder aus Buchstaben bestehen (und anderen Symbolen des Eingabetextes, wenn nicht ersetzt oder gelöscht) oder zu Zahlen transformiert werden. Der Schlüssel aus Zahlen kann wahlweise jede Zahl höchstens einmal verwenden (Wenn die "Einmalig"-Option gewählt wurde) oder mehrfach. Der zufällige Schlüssel kann Buchstaben, Zahlen, binäre Zahlen oder Symbole des Eingabealphabets beinhalten. All diese Möglichkeiten können auch mit der "Einmalig"-Option kombiniert werden, sodass jedes Symbol höchstens einmal im Schlüssel beinhaltet werden darf.
+
+    Das folgende Bild zeigt das Szenario der Generierung purer Testvektoren. Der Eingabetext ist das Buch "Alice in Wonderland", der eingegebene Samen ist "SEED", und das Regex-Muster besteht aus zwei $unique Variablen, die jeweils 25 Zahlen von 0 bis 24 generieren, getrennt durch einen Schrägstrich (zwischen den jeweils 25 Zahlen). Alle Einstellungen zu Ersetzungen im Text sind im TestVectorGenerator aktiviert. Vor der Verschlüsselung wird der Klartext in Blöcke von je fünf Zeichen geteilt (also werden fünf Blöcke in einem Durchgang von der Zylinder-Chiffre verschlüsselt). Der Modus der Zylinder-Chiffre ist Verschlüsselung mit den M-94 Scheiben. Die letzte Kombination von Zeichenketten-Operationen und anderen Komponenten berechnet den Offset Teil des Schlüssels. Diese Berechnung ist spezifisch für diese Chiffre und woanders nicht nötig. Das Tor unten links steht auf wahr und stößt den nächsten Schlüssel an (wenn die Anzahl an Testläufen größer ist als 1). Die Zeichenausgaben unten zeigen den Schlüssel, Klartext, Geheimtext und das Offset des Schlüssels an.
+
+      <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
+
+    Diese Komponente war teil einer Masterarbeit, die alle Details darüber beinhaltet:
+
+    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
+    Bastian Heuser, Universität Kassel - 2017 - Masterarbeit    
+  </usage>
+
+  <references>
+    <linkReference>
+      <link url="https://code.google.com/archive/p/xeger/wikis/XegerLimitations.wiki" lang="en" />
+      <caption lang="en">Xeger Limitations</caption>
+      <link url="https://code.google.com/archive/p/xeger/wikis/XegerLimitations.wiki" lang="de-DE" />
+      <caption lang="de-DE">Xeger Limitationen (Englisch)</caption>
+    </linkReference>
+  </references>
 
 </documentation>
