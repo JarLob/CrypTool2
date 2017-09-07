@@ -2,15 +2,49 @@
 
 <documentation>
   <language culture="en"/>
+  <language culture="de-DE"/>
 
   <introduction lang="en">
-    This <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) component is designed to use the test vectors (key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>) and analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) using this test vectors.
+    This <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) component is designed to analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) by using test vectors (consisting of key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>).
 
     <section headline="History">
-      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are for the field of cryptanalysis are important in order to compare different cryptanalytic algorithms.
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
     </section>
 
     <section headline="Algorithm">
+      The algorithm is working in three different states, shown in the following image:
+      <newline/>
+
+      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\flowdiagramsimplecolored.png"/>
+
+      <newline/>
+      <newline/>
+      State 1 - New test vector:
+      <newline/>
+      In state 1 (green), the new test vector from the <b>TVG</b> is stored and this test vector is provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>). The algorithm stays in state 1 and waits for the results of these components.
+      <newline/>
+      <newline/>
+      State 2 - Collect data:
+      <newline/>
+      In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. If there are still keys to be generated (not all test runs finished), the current key is used to trigger the next key from the <b>TVG</b>. The algorithm stays in state 2 and waits for the next test vector. After all keys have been generated, the algorithm switches to state 3.
+      <newline/>
+      <newline/>
+      State 3 - Evaluation:
+      <newline/>
+      In state 3 (red), all collected test data is evaluated. These are the averages of runtime (if enabled), success probability, decrypted ciphertext, necessary decryptions, and (if provided) restarts, population size, and tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
+    </section>
+  </introduction>
+
+  <introduction lang="de-DE">
+    Diese <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) Komponente analysiert klassische kryptoanalytische CrypTool 2 Komponenten (<b>CAs</b>) indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext) der <b>TestVectorGenerator</b> Komponente (<b>TVG</b>).
+
+    <section headline="Geschichte">
+      In den meisten Bereichen der Informatik sind standardisierte Testvektoren verfügbar, die analytische Testergebnisse vergleichbar machen, aber nicht im Bereich der Kryptoanalyse. In der Publikation "We need test vectors!" (ein Vorschlag)
+
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are for the field of cryptanalysis are important in order to compare different cryptanalytic algorithms.
+    </section>
+
+    <section headline="Algorithmus">
       The algorithm is working in three different states, shown in the following image:
       <newline/>
 
