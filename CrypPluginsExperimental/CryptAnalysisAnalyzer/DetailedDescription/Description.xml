@@ -7,26 +7,30 @@
     This <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) component is designed to use the test vectors (key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>) and analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) using this test vectors.
 
     <section headline="History">
-      A general test vector generator which makes analytic results comparable is available in most computer science fields, but not in the cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium from the beginning of 2017), Nils Kopal explains how important standard test vectors are for the field of cryptanalysis, for the purpose of comparison of different algorithms.
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are for the field of cryptanalysis are important in order to compare different cryptanalytic algorithms.
     </section>
 
     <section headline="Algorithm">
-      The algorithm is working in three different states:
+      The algorithm is working in three different states, shown in the following image:
+      <newline/>
+
+      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\flowdiagramsimplecolored.png"/>
+
       <newline/>
       <newline/>
       State 1 - New test vector:
       <newline/>
-      In state 1 the new test vector from the <b>TVG</b> is stored and the components to analyze (<b>Cipher</b> and <b>CA</b>) are provided with this test vector. The algorithm stays in state 1 and waits for the results of those components.
+      In state 1 (green), the new test vector from the <b>TVG</b> is stored and this test vector is provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>) The algorithm stays in state 1 and waits for the results of these components.
       <newline/>
       <newline/>
       State 2 - Collect data:
       <newline/>
-      In state 2 the incoming results from the <b>Cipher</b> and <b>CA</b> are stored together with the according test vector. If there are still keys to generate (not all test runs finished), the current key is used to trigger the next key from the <b>TVG</b>. The algorithm stays in state 2 and waits for the next test vector. After all keys have been generated, the algorithm switches to state 3.
+      In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. If there are still keys to generate (not all test runs finished), the current key is used to trigger the next key from the <b>TVG</b>. The algorithm stays in state 2 and waits for the next test vector. After all keys have been generated, the algorithm switches to state 3.
       <newline/>
       <newline/>
       State 3 - Evaluation:
       <newline/>
-      In state 3 all collected test data is evaluated. The averages of runtime (if enabled), success probability, decrypted ciphertext, necessary decryptions, and (if provided) restarts, population size, and tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
+      In state 3 (red), all collected test data is evaluated. The averages of runtime (if enabled), success probability, decrypted ciphertext, necessary decryptions, and (if provided) restarts, population size, and tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
     </section>
   </introduction>
 
@@ -51,12 +55,12 @@
     <newline/>
     <b>Ciphertext:</b>
     <newline/>
-    The plaintext encrypted by the used <b>Cipher</b>.
+    The plaintext encrypted by the used <b>Cipher</b> component.
     <newline/>
     <newline/>
     <b>Seed:</b>
     <newline/>
-    This seed should be set to the same seed value of the <b>TVG</b>. It is just logged and displayed along with the results in the end (because it is necessary to reproduce these test vectors).
+    This seed should be set to the same seed as the one used by the <b>TVG</b>. It is just logged and displayed along with the results in the end (because it is necessary to reproduce these test vectors).
     <newline/>
     <newline/>
     <b>Best key:</b>
@@ -71,7 +75,7 @@
     <newline/>
     <b>Evaluation container:</b>
     <newline/>
-    The evaluation container from the <b>CA</b>, containing all the detailed results for the current test run.
+    The evaluation container from the <b>CA</b> contains all detailed results for the current test run.
     <newline/>
     <newline/>
     <newline/>
@@ -80,12 +84,12 @@
     <newline/>
     <b>Key:</b>
     <newline/>
-    The key to provide for the <b>Cipher</b>.
+    The key to be provided for the <b>Cipher</b> component.
     <newline/>
     <newline/>
     <b>Plaintext:</b>
     <newline/>
-    The plaintext to provide for the <b>Cipher</b> and the <b>CA</b>. The <b>CA</b> only needs the plaintext (along with the necessary percentage, explained below) if the option to stop the algorithm early on success is enabled.
+    The plaintext to be provided for the <b>Cipher</b> and the <b>CA</b> components. The <b>CA</b> only needs the plaintext (along with the necessary percentage, explained below) if the option to stop the algorithm early on success is enabled.
     <newline/>
     <newline/>
     <b>Minimal correct percentage:</b>
