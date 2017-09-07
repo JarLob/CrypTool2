@@ -31,7 +31,7 @@ using Cryptool.PluginBase.IO;
 namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("CryptAnalysisAnalyzer.Properties.Resources", "CAAcaption", "CAAtooltip", "CryptAnalysisAnalyzer/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("CryptAnalysisAnalyzer.Properties.Resources", false, "CAAcaption", "CAAtooltip", "CryptAnalysisAnalyzer/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class CryptAnalysisAnalyzer : ICrypComponent
     {

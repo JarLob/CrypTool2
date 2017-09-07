@@ -33,7 +33,7 @@ using Resources = TestVectorGenerator.Properties.Resources;
 namespace Cryptool.Plugins.TestVectorGenerator
 {
     [Author("Bastian Heuser", "bhe@student.uni-kassel.de", "Applied Information Security - University of Kassel", "http://www.ais.uni-kassel.de")]
-    [PluginInfo("TestVectorGenerator.Properties.Resources", "TVGcaption", "TVGtooltip", "TestVectorGenerator/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("TestVectorGenerator.Properties.Resources", false, "TVGcaption", "TVGtooltip", "TestVectorGenerator/DetailedDescription/Description.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CryptanalysisGeneric)]
     public class TestVectorGenerator : ICrypComponent
     {
