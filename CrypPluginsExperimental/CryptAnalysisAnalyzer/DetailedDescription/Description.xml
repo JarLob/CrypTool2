@@ -5,7 +5,7 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    This <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) component is designed to analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) by using test vectors (consisting of key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>).
+    This <b>CryptAnalysisAnalyzer</b> component (<b>CAA</b>) is designed to analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) by using test vectors (consisting of key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>).
 
     <section headline="History">
       A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
@@ -21,50 +21,48 @@
       <newline/>
       State 1 - New test vector:
       <newline/>
-      In state 1 (green), the new test vector from the <b>TVG</b> is stored and this test vector is provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>). The algorithm stays in state 1 and waits for the results of these components.
+      In state 1 (green), the algorithm waits for a new test vector from the <b>TVG</b>. Once the new test vector is available, it is stored and provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>). The algorithm switches to state 2 and waits for the results of these components.
       <newline/>
       <newline/>
       State 2 - Collect data:
       <newline/>
-      In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. If there are still keys to be generated (not all test runs finished), the current key is used to trigger the next key from the <b>TVG</b>. The algorithm stays in state 2 and waits for the next test vector. After all keys have been generated, the algorithm switches to state 3.
+      In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. The <b>Cipher</b> component provides the ciphertext, while the <b>CA</b> component provides the best key, best plaintext, and the collected values for the evaluation in an EvaluationContainer. If there are still keys to be generated (not all test runs finished), the current key is used to trigger the next test vector from the <b>TVG</b>. The algorithm switches to state 1 and waits for the next test vector. After all test vectors have been generated, the algorithm switches to state 3.
       <newline/>
       <newline/>
       State 3 - Evaluation:
       <newline/>
-      In state 3 (red), all collected test data is evaluated. These are the averages of runtime (if enabled), success probability, decrypted ciphertext, necessary decryptions, and (if provided) restarts, population size, and tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
+      In state 3 (red), all collected test data is evaluated. These are the averages of the runtime (if enabled), the success probability, the percentage of decrypted ciphertext, the necessary decryptions, and (if provided) the restarts, the population size, and the tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
     </section>
   </introduction>
 
   <introduction lang="de-DE">
-    Die <b>CryptAnalysisAnalyzer</b>-Komponente (<b>CAA</b>) analysiert klassische kryptoanalytische Komponenten (<b>CAs</b>) in CrypTool 2, indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext) die von der <b>TestVectorGenerator</b>-Komponente (<b>TVG</b>).
+    Die <b>CryptAnalysisAnalyzer</b>-Komponente (<b>CAA</b>) analysiert klassische kryptoanalytische Komponenten (<b>CAs</b>) in CrypTool 2, indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext) die von der <b>TestVectorGenerator</b>-Komponente (<b>TVG</b>) erzeugt wurden.
 
     <section headline="Geschichte">
-      In den meisten Bereichen der Informatik sind standardisierte Testvektoren verfügbar, die analytische Testergebnisse vergleichbar machen, aber nicht im Bereich der Kryptoanalyse. In der Publikation "We need test vectors!" (ein Vorschlag)
-
-      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are for the field of cryptanalysis are important in order to compare different cryptanalytic algorithms.
+      In den meisten Bereichen der Informatik sind standardisierte Testvektoren verfügbar, die analytische Testergebnisse vergleichbar machen, aber nicht im Bereich der Kryptoanalyse. In der Publikation "We need test vectors!" (ein Vorschlag für das "Cryptologic History Symposium" in 2017), erklärt Nils Kopal, dass standardisierte Testvektoren im Bereich der Kryptoanalyse besonders wichtig sind um verschiedene kryptoanalytische Algorithmen miteinander zu vergleichen.
     </section>
 
     <section headline="Algorithmus">
-      The algorithm is working in three different states, shown in the following image:
+      Der Algorithmus agiert in drei verschiedenen Zuständen, zu sehen in folgendem Bild:
       <newline/>
 
       <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\flowdiagramsimplecolored.png"/>
 
       <newline/>
       <newline/>
-      State 1 - New test vector:
+      Zustand 1 - Neuer Testvektor:
       <newline/>
-      In state 1 (green), the new test vector from the <b>TVG</b> is stored and this test vector is provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>) The algorithm stays in state 1 and waits for the results of these components.
-      <newline/>
-      <newline/>
-      State 2 - Collect data:
-      <newline/>
-      In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. If there are still keys to generate (not all test runs finished), the current key is used to trigger the next key from the <b>TVG</b>. The algorithm stays in state 2 and waits for the next test vector. After all keys have been generated, the algorithm switches to state 3.
+      In Zustand 1 (grün) wartet der Algorithmus auf einen neuen Testvektor vom <b>TVG</b>. Sobald dieser Testvektor eingetroffen ist, wird er gespeichert und den zu analysierenden Komponenten (<b>Cipher</b> und <b>CA</b>) zur Verfügung gestellt. Der Algorithmus wechselt dann in den Zustand 2 und wartet auf die Ergebnisse dieser Komponenten.
       <newline/>
       <newline/>
-      State 3 - Evaluation:
+      Zustand 2 - Daten sammeln:
       <newline/>
-      In state 3 (red), all collected test data is evaluated. The averages of runtime (if enabled), success probability, decrypted ciphertext, necessary decryptions, and (if provided) restarts, population size, and tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
+      In Zustand 2 (blau) werden die eingehenden Ergebnisse der <b>Cipher</b>- und <b>CA</b>-Komponenten zusammen mit dem entsprechenden Testvektor gespeichert. Die <b>Cipher</b>-Komponente überträgt dabei den Geheimtext, während die <b>CA</b>-Komponente den besten Schlüssel, besten Klartext und die gesammelten Werte für die Evaluation in einem EvaluationContainer bereitstellt. Wenn noch immer Schlüssel zu berechnen sind (noch nicht alle Testläufe sind fertig), wird der aktuelle Schlüssel verwendet um die Generierung des nächsten Testvektors im <b>TVG</b> anzustoßen. Der Algorithmus wechselt in den ersten Zustand und wartet auf den nächsten Testvektor. Wenn alle Testvektoren berechnet wurden wechselt der Algorithmus in Zustand 3.
+      <newline/>
+      <newline/>
+      Zustand 3 - Evaluation:
+      <newline/>
+      Im dritten Zustand (rot) werden alle gesammelten Testdaten evaluiert. Diese sind die Durchschnittswerte der Laufzeit (falls aktiviert), der Erfolgswahrscheinlichkeit, die prozentuale Entschlüsselung der Geheimtexte, die benötigten Entschlüsselungen, und (wenn angegeben) die Neustarts, die Populationsgröße und die Größe des Tabu-Sets. Zusätzlich können diese Werte im Detail berechnet werden, jeweils in Abhängigkeit der Länge der Geheimtexte oder Schlüssel, oder der Laufzeit (falls aktiviert). Die CSV-Ausgabe (Komma-Separierte-Werte) dieser Werte kann in anderen Anwendungen verwendet werden, zum Beispiel in GnuPlot (zusammen mit der generierten GnuPlot-Skript-Ausgabe). 
     </section>
   </introduction>
 
