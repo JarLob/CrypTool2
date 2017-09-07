@@ -36,7 +36,7 @@
   </introduction>
 
   <introduction lang="de-DE">
-    Diese <b>CryptAnalysisAnalyzer</b> (<b>CAA</b>) Komponente analysiert klassische kryptoanalytische CrypTool 2 Komponenten (<b>CAs</b>) indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext) der <b>TestVectorGenerator</b> Komponente (<b>TVG</b>).
+    Die <b>CryptAnalysisAnalyzer</b>-Komponente (<b>CAA</b>) analysiert klassische kryptoanalytische Komponenten (<b>CAs</b>) in CrypTool 2, indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext) die von der <b>TestVectorGenerator</b>-Komponente (<b>TVG</b>).
 
     <section headline="Geschichte">
       In den meisten Bereichen der Informatik sind standardisierte Testvektoren verfügbar, die analytische Testergebnisse vergleichbar machen, aber nicht im Bereich der Kryptoanalyse. In der Publikation "We need test vectors!" (ein Vorschlag)
