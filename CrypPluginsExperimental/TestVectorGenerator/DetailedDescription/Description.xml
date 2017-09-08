@@ -166,7 +166,7 @@
   </usage>
 
   <usage lang="de-DE">
-    Der <b>TVG</b> hat zwei notwendige Eingangsverbindungen: Text und Samen. Die optionalen Eingänge sind das reguläre Ausdrucks-Muster und das Alphabet.
+    Der <b>TVG</b> hat zwei notwendige Eingangsverbindungen: Text und Samenwert (Seed). Die optionalen Eingänge sind das reguläre Ausdrucks-Muster und das Alphabet.
     <newline/>
     <newline/>
     <b>Text-Eingabe:</b>
@@ -176,7 +176,7 @@
     <newline/>
     <b>Samen-Eingabe:</b>
     <newline/>
-    Der Samen kann eine beliebige Zeichenkette sein. Gemeinsam mit den Einstellungen sind Text und Samen notwendig, um die generierten Testvektoren zu reproduzieren. Um einen neuen Testvektor zu erhalten, muss der Samen aktualisiert werden, indem er auf einen der letzten generierten Testwerte gesetzt wird (der zweite Testvektor muss auf dem ersten basieren, um die Generierung reproduzierbar zu machen; der einfachste Weg ist, den aktuell generierten Schlüssel als nächsten Samen zu verwenden).
+    Der Samen (Seed) kann eine beliebige Zeichenkette sein. Gemeinsam mit den Einstellungen sind Text und Samen notwendig, um die generierten Testvektoren zu reproduzieren. Um einen neuen Testvektor zu erhalten, muss der Samen aktualisiert werden, indem er auf einen der letzten generierten Testwerte gesetzt wird (der zweite Testvektor muss auf dem ersten basieren, um die Generierung reproduzierbar zu machen; der einfachste Weg ist, den aktuell generierten Schlüssel als nächsten Samen zu verwenden).
     <newline/>
     <newline/>
     <b>Regex-Eingabe:</b>
