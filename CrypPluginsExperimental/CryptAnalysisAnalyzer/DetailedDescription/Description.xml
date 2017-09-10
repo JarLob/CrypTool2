@@ -8,7 +8,7 @@
     This <b>CryptAnalysisAnalyzer</b> component (<b>CAA</b>) is designed to analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) by using test vectors (consisting of key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>).
 
     <section headline="History">
-      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for 2017 Cryptologic History Symposium), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for the 2017th Cryptologic History Symposium of the NSA), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
     </section>
 
     <section headline="Algorithm">
@@ -39,7 +39,7 @@
     Die <b>CryptAnalysisAnalyzer</b>-Komponente (<b>CAA</b>) analysiert klassische kryptoanalytische Komponenten (<b>CAs</b>) in CrypTool 2, indem sie detaillierte Testreihen durchführt, basierend auf den Testvektoren (bestehend aus Schlüssel und Klartext), die von der <b>TestVectorGenerator</b>-Komponente (<b>TVG</b>) erzeugt wurden.
 
     <section headline="Geschichte">
-      In den meisten Bereichen der Informatik gibt es standardisierte Testvektoren, um Testergebnisse vergleichbar zu machen. Für den Bereich der Kryptoanalyse ist das bisher nicht der Fall. In dem Beitrag "We Need Test vectors!" (vorgestellt auf dem "Symposium on Cryptologic History" der NSA in 2017), erklärt Nils Kopal, dass standardisierte Testvektoren im Bereich der Kryptoanalyse wichtig sind, um verschiedene kryptoanalytische Algorithmen miteinander zu vergleichen.
+      In den meisten Bereichen der Informatik gibt es standardisierte Testvektoren, um Testergebnisse vergleichbar zu machen. Für den Bereich der Kryptoanalyse ist das bisher nicht der Fall. In dem Beitrag "We Need Test Vectors!" (vorgestellt auf dem "Symposium on Cryptologic History" der NSA in 2017), erklärt Nils Kopal, dass standardisierte Testvektoren im Bereich der Kryptoanalyse wichtig sind, um verschiedene kryptoanalytische Algorithmen miteinander zu vergleichen.
     </section>
 
     <section headline="Algorithmus">
@@ -323,7 +323,7 @@
 
       <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\caa-template-final.png"/>
 
-    Diese <b>CAA</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit entält weitere Details hierzu:
+    Diese <b>CAA</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit enthält weitere Details hierzu:
 
     "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
     Bastian Heuser, Universität Kassel -- 2017 -- Masterarbeit    
