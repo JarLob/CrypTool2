@@ -8,7 +8,7 @@
     This component is designed to generate test vectors in the form of plaintexts and keys for all classical cryptanalytic components in CrypTool 2 (as of July 2017). The first use case is generating pure test vectors (pure in this context means only test vectors are generated and no analysis is done) by using the according cryptographic component to encrypt the plaintexts. The second use case is the analysis of the cryptanalytic component via detailed test series (these test series are created and evaluated by the <b>CryptAnalysisAnalyzer</b> component (<b>CAA</b>) from test vectors of the <b>TestVectorGenerator</b> (<b>TVG</b>)).
 
     <section headline="History">
-      A general test vector generator which makes analytic results comparable is available in most computer science fields, but not in the cryptanalysis. In the paper "We need test vectors!" (a proposal for 2017 Cryptologic History Symposium from the beginning of 2017), Nils Kopal explains how important standard test vectors are for the field of cryptanalysis, for the purpose of comparison of different algorithms.
+      A general test vector generator which makes analytic results comparable is available in most computer science fields, but not in the cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for 2017 Cryptologic History Symposium from the beginning of 2017), Nils Kopal explains how important standard test vectors are for the field of cryptanalysis, for the purpose of comparison of different algorithms.
     </section>
 
     <section headline="Algorithm">
@@ -44,7 +44,7 @@
     Diese Komponente generiert Testvektoren (bestehend aus Klartexten und Schlüsseln) für alle klassischen kryptoanalytischen Komponenten in CrypTool 2 (Stand Juli 2017). Der erste Anwendungsfall ist die Generierung purer Testvektoren (pur in diesem Kontext bedeutet, dass nur Testvektoren generiert werden, aber keine Analyse stattfindet) durch Verschlüsselung der Klartexte mit der entsprechenden kryptographischen Verschlüsselungs-Komponente. Der zweite Anwendungsfall beinhaltet ausführliche Testserien zur Analyse von kryptoanalytischen Komponenten (diese Testserien werden von der <b>CryptAnalysisAnalyzer</b>-Komponente (<b>CAA</b>) aus den vom <b>TestVectorGenerator</b> (<b>TVG</b>) generierten Testvektoren erzeugt und evaluiert). 
 
     <section headline="Geschichte">
-      Ein allgemeiner Testvektor-Generator oder bereits generierte standardisierte Testvektoren, die die analytischen Ergebnisse vergleichbar machen, sind verfügbar in den meisten Teilbereichen der Informatik, aber nicht in der Kryptoanalyse. In dem Paper "We need test vectors!" (ein Vorschlag für das 2017 Cryptologic History Symposium von Anfang 2017), erklärt Nils Kopal wie wichtig standardisierte Testvektoren für den Bereich der Kryptoanalyse sind, um verschiedene Algorithmen zu vergleichen.
+      Ein allgemeiner Testvektor-Generator oder bereits generierte standardisierte Testvektoren, die die analytischen Ergebnisse vergleichbar machen, sind verfügbar in den meisten Teilbereichen der Informatik, aber nicht in der Kryptoanalyse. In dem Paper "We Need Test Vectors!" (ein Vorschlag für das 2017 Cryptologic History Symposium von Anfang 2017), erklärt Nils Kopal wie wichtig standardisierte Testvektoren für den Bereich der Kryptoanalyse sind, um verschiedene Algorithmen zu vergleichen.
     </section>
 
     <section headline="Algorithmus">
@@ -135,22 +135,22 @@
     The dot symbols may be ignored, removed, or replaced by another symbol. Once the replacing option is selected, an input field for the new symbol is shown.
     <newline/>
     <newline/>
-    <b>Key generation type:</b>
+    <b>Key generation type setting:</b>
     <newline/>
     There are three key generation types available: Natural speech keys, random keys, and reverse regex keys. The natural speech key generation takes sentences from the provided input text. The random keys are generated using the provided input alphabet or a simple one from the drop-down menu. For the reverse regex key generation, a regex pattern has to be provided through the regex input. More detailed information can be found above in the regex input section of this description.
     <newline/>
     <newline/>
-    <b>Minimum and Maximum key length:</b>
+    <b>Minimum and Maximum key length settings:</b>
     <newline/>
     These values specify the range of key lengths which will be generated.
     <newline/>
     <newline/>
-    <b>Key symbol separator:</b>
+    <b>Key symbol separator setting:</b>
     <newline/>
     The key symbols may be separated by an arbitrary string, specified in this input field.
     <newline/>
     <newline/>
-    <b>Key format:</b>
+    <b>Key format setting:</b>
     <newline/>
     The key format setting is available for natural speech and random keys. Natural speech keys can either consist of letters (and other symbols in the text, if not replaced or deleted) or be transformed to numbers. The numeric key can be chosen to be a unique numeric key, using each consecutive number only once, by enabling the unique setting.
     The random keys can consist of letters, numbers, binary numbers, or the input alphabet characters. All of those options can be combined with the unique setting, so that each alphabet character is only used once in the key.
@@ -159,7 +159,7 @@
 
       <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
 
-    This component was part of a master thesis which contains more details about it:
+    This <b>TVG</b> component was developed as part of a master thesis which contains more details about it:
 
     "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
     Bastian Heuser, University of Kassel -- 2017 -- Master thesis    
@@ -247,7 +247,7 @@
 
       <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
 
-    Diese Komponente war Teil einer Masterarbeit, die weitere Details darüber enthält:
+    Diese <b>TVG</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit entält weitere Details hierzu:
 
     "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
     Bastian Heuser, Universität Kassel -- 2017 -- Masterarbeit    
