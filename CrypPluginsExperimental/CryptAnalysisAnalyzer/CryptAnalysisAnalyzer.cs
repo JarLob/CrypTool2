@@ -348,8 +348,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// The minimal correct percentage to match the plaintext for success (for the CipherAnalyzer component).
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "MinimalCorrectPercentageCaption", "MinimalCorrectPercentageTooltipCaption")]
-        public double MinimalCorrectPercentage
+        [PropertyInfo(Direction.OutputData, "MinimumPercentageCaption", "MinimumPercentageTooltipCaption")]
+        public double MinimumCorrectPercentage
         {
             get { return _settings.CorrectPercentage; }
         }
@@ -1792,7 +1792,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 OnPropertyChanged("EvaluationOutput");
 
                 // Send the plaintext and key (and min correct percentage) to the encryption method
-                OnPropertyChanged("MinimalCorrectPercentage");
+                OnPropertyChanged("MinimumCorrectPercentage");
                 
                 // generate intermediate GnuPlot output on plaintext length change
                 if (!String.IsNullOrEmpty(PlaintextOutput) &&

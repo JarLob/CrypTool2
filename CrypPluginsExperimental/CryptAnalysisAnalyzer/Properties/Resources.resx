@@ -142,7 +142,7 @@
     <value>CryptAnalysisAnalyzer</value>
   </data>
   <data name="CAAtooltip" xml:space="preserve">
-    <value>Analyze cryptanalysis methods</value>
+    <value>Analyzes cryptanalytic methods</value>
   </data>
   <data name="CalculateRuntimeCaption" xml:space="preserve">
     <value>Calculate runtime</value>
@@ -178,7 +178,7 @@
     <value>GnuPlot data</value>
   </data>
   <data name="GnuPlotDataOutputTooltipCaption" xml:space="preserve">
-    <value>GnuPlot data output to be saved in a .dat file and used in a GnuPlot script file</value>
+    <value>GnuPlot data output to be saved in a .dat file and used in GnuPlot with a GnuPlot script file</value>
   </data>
   <data name="GnuPlotGroupCaption" xml:space="preserve">
     <value>GnuPlot settings</value>
@@ -223,7 +223,7 @@
     <value>Normalize axis ranges factor</value>
   </data>
   <data name="NormalizingFactorTooltipCaption" xml:space="preserve">
-    <value>The factor by which outstandingly high values have to be higher than the preceding value to be ignored in the standard focus range of the GnuPlot</value>
+    <value>The factor by which outstandingly high (or low) values have to differ from the adjacent values to be ignored in the standard focus range of the GnuPlot</value>
   </data>
   <data name="PercentDecryptedCaption" xml:space="preserve">
     <value>Percent decrypted</value>
@@ -382,7 +382,7 @@
     <value>Averagely decrypted: </value>
   </data>
   <data name="Averagely_decrypted_of_min" xml:space="preserve">
-    <value>Averagely decrypted: {0}% of min {1}</value>
+    <value>Averagely decrypted: {0}% of min. {1}</value>
   </data>
   <data name="Average_success__" xml:space="preserve">
     <value>Average success: </value>
@@ -400,7 +400,7 @@
     <value>Data for: </value>
   </data>
   <data name="TryGetValue_from__0__failed__ciphertextLength___1____2" xml:space="preserve">
-    <value>TryGetValue from {0} failed! ciphertextLength: {1}, {2}: </value>
+    <value>TryGetValue() from {0} failed! ciphertextLength: {1}, {2}: </value>
   </data>
   <data name="Save_the_GnuPlotData_output_in_a_file_named_" xml:space="preserve">
     <value>Save the GnuPlotData output in a file named </value>
@@ -415,16 +415,16 @@
     <value>Plot settings</value>
   </data>
   <data name="x_Axis_settings" xml:space="preserve">
-    <value>x-Axis settings</value>
+    <value>X-Axis settings</value>
   </data>
   <data name="y_Axis_settings" xml:space="preserve">
-    <value>y-Axis settings</value>
+    <value>Y-Axis settings</value>
   </data>
   <data name="second_y_Axis_settings" xml:space="preserve">
-    <value>second y-Axis settings</value>
+    <value>Second Y-Axis settings</value>
   </data>
   <data name="plotting" xml:space="preserve">
-    <value>plotting</value>
+    <value>Plotting</value>
   </data>
   <data name="The_key_input_is_empty_" xml:space="preserve">
     <value>The key input is empty!</value>
