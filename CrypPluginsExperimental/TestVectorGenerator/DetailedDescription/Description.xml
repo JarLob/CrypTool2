@@ -8,7 +8,7 @@
     This component is designed to generate test vectors in the form of plaintexts and keys for all classical cryptanalytic components in CrypTool 2 (as of July 2017). The first use case is generating pure test vectors (pure in this context means only test vectors are generated and no analysis is done) by using the according cryptographic component to encrypt the plaintexts. The second use case is the analysis of the cryptanalytic component via detailed test series (these test series are created and evaluated by the <b>CryptAnalysisAnalyzer</b> component (<b>CAA</b>) from test vectors of the <b>TestVectorGenerator</b> (<b>TVG</b>)).
 
     <section headline="History">
-      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for the 2017th Cryptologic History Symposium of the NSA), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for the 2017 "Symposium on Cryptologic History" of the NSA), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
     </section>
 
     <section headline="Algorithm">

@@ -8,7 +8,7 @@
     This <b>CryptAnalysisAnalyzer</b> component (<b>CAA</b>) is designed to analyze classical cryptanalytic CrypTool 2 components (<b>CAs</b>) by using test vectors (consisting of key and plaintext) from the <b>TestVectorGenerator</b> (<b>TVG</b>).
 
     <section headline="History">
-      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for the 2017th Cryptologic History Symposium of the NSA), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
+      A general test vector generator making analytic results comparable is available in most computer science fields, but not in the field of cryptanalysis. In the paper "We Need Test Vectors!" (a proposal for the 2017 "Symposium on Cryptologic History" of the NSA), Nils Kopal explained that standardized test vectors are important for the field of cryptanalysis in order to compare different cryptanalytic algorithms.
     </section>
 
     <section headline="Algorithm">

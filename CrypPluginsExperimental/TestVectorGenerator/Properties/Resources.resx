@@ -226,7 +226,7 @@
     <value>The input text is too small!</value>
   </data>
   <data name="All_keys_have_been_generated" xml:space="preserve">
-    <value>All keys have been generated. Stopping generation.</value>
+    <value>All test vectors have been generated. Stopping generation.</value>
   </data>
   <data name="BinaryCaption" xml:space="preserve">
     <value>Binary</value>
@@ -358,10 +358,10 @@
     <value>Replace with:</value>
   </data>
   <data name="ReplaceWithEINSCaption" xml:space="preserve">
-    <value>Replace with EINS, ZWEI,...</value>
+    <value>Replace with NULL, EINS, ZWEI, ...</value>
   </data>
   <data name="ReplaceWithNullCaption" xml:space="preserve">
-    <value>Replace with NULL, ONE,...</value>
+    <value>Replace with NULL, ONE, TWO, ...</value>
   </data>
   <data name="SentencesFromTextCaption" xml:space="preserve">
     <value>Sentences from text</value>
