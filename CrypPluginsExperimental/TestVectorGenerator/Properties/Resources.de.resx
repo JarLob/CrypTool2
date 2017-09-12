@@ -163,7 +163,7 @@
     <value>Der Samenwert (Seed) der vom Pseudo-Zufallszahlen-Generator genutzt wird, wodurch die Testvektoren reproduzierbar sind</value>
   </data>
   <data name="TextInputCaption" xml:space="preserve">
-    <value>Text-Eingabe</value>
+    <value>Eingabetext</value>
   </data>
   <data name="TextInputTooltip" xml:space="preserve">
     <value>Der Eingabetext vom dem die Klartexte und Natürliche-Sprache-Schlüssel entnommen werden</value>
