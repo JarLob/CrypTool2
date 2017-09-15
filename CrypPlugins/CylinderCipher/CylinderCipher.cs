@@ -92,7 +92,8 @@ namespace Cryptool.CylinderCipher
 
         public void PostExecution()
         {
-            
+            this._newKey = true;
+            this._newText = true;
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -167,6 +168,8 @@ namespace Cryptool.CylinderCipher
                 TextOutput = new string(tmp.Select((c, k) => Char.IsLower(_textInput[k]) ? Char.ToLower(c) : c).ToArray());
             }
             OnPropertyChanged("TextOutput");
+
+            //System.Console.WriteLine("### Execute end of: CC");
 
             //set component to 100% progress
             OnProgressChanged(1, 1);
