@@ -385,13 +385,13 @@ namespace Cryptool.Fialka
         private void rotorStepping()
         {
              /*
-             After a key is pressed (a letter is encrypted/decryped) this rotor stepping should be performed.
-             The rotors forms two independent part based on the order how they are inserted (if they are labeld from the left (reflector) to 
+             After a key is pressed (a letter is encrypted/decrypted) this rotor stepping should be performed.
+             The rotors form two independent parts based on the order how they are inserted (if they are labeled from the left (reflector) to 
              the right (entryDisk) with increasing numbers (starting with 1) even numbers are independent from odd numbers).
-             The rotation is controlled by the blocking pins. The odd rotors are controlled from the right and are rotated anti-clockwise (towrds the keyboard).
+             The rotation is controlled by the blocking pins. The odd rotors are controlled from the right and are rotated anti-clockwise (towards the keyboard).
              The even rotors are controlled from the left to the right and are rotated clockwise (away from the keyboard).
              The presence of the blocking pin (the position is specific for both parts) affects the rotation of all pins of the part.
-             In each direction one rotor is rotated all the time (rotor labeld 2 and 9).
+             In each direction one rotor is rotated all the time (rotor labeled 2 and 9).
               */
             //even rotors indexes
             for (int i = 1; i < 10; i += 2)
