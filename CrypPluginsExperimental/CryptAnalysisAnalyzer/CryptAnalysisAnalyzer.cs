@@ -400,12 +400,25 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
             // create the ExtendedEvaluationContainer with the current values
-            ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
-                _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
-                _settings.CorrectPercentage, percentCorrect, success);
+            if (_settings.FullEvaluation)
+            {
+                // todo: _evaluationInput == null anyway?
+                ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
+                    _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
+                    _settings.CorrectPercentage, percentCorrect, success);
+            } 
+            else 
+            {
+                ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(null,
+                    _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
+                    _settings.CorrectPercentage, percentCorrect, success);
+            }
 
             // add the container to the test run dictionary with the ID as key
-            _testRuns.Add(_evaluationInput.GetID(), testRun);
+            if (_settings.FullEvaluation)
+                _testRuns.Add(_evaluationInput.GetID(), testRun);
+            else
+                _testRuns.Add(_ciphertextInput.GetHashCode(), testRun);
 
             // increase the evaluation counter
             _evaluationCount++;
@@ -580,16 +593,19 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 int currentSuccess = 0;
                 if (testRun.GetSuccessfull()) currentSuccess = 1;
                 double currentlyDecrypted = testRun.GetPercentDecrypted();
-                double decryptions = testRun.GetDecryptions();
-                double currentRestarts = 0;
-                double currentTabuSize = 0;
-                double currentPopulationSize = 0;
-                if (!_noRestarts)
-                    currentRestarts = testRun.GetRestarts();
-                if (!_noTabuSetSize)
-                    currentTabuSize = testRun.GetTabuSetSize();
-                if (!_noPopulationSize)
-                    currentPopulationSize = testRun.GetPopulationSize();
+                if (_settings.FullEvaluation)
+                {
+                    double decryptions = testRun.GetDecryptions();
+                    double currentRestarts = 0;
+                    double currentTabuSize = 0;
+                    double currentPopulationSize = 0;
+                    if (!_noRestarts)
+                        currentRestarts = testRun.GetRestarts();
+                    if (!_noTabuSetSize)
+                        currentTabuSize = testRun.GetTabuSetSize();
+                    if (!_noPopulationSize)
+                        currentPopulationSize = testRun.GetPopulationSize();
+                }
 
                 // get the seed of the whole test series only once
                 if (firstElement)
@@ -606,16 +622,21 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 // count the overall decryptions and decrypted percentages
                 _decryptedCount += currentlyDecrypted;
-                _decryptionsCount += decryptions;
+                if (_settings.FullEvaluation)
+                    _decryptionsCount += decryptions;
 
                 // count the decryptions and decrypted percentages per key and ciphertext lengths
                 DictionaryExtention.AddOrIncrement<int>(_percentDecryptedPerKeyLength, keyLength, currentlyDecrypted);
-                DictionaryExtention.AddOrIncrement<int>(_decryptionsPerKeyLength, keyLength, decryptions);
                 DictionaryExtention.AddOrIncrement<int>(_percentDecryptedPerCiphertextLength, ciphertextLength, currentlyDecrypted);
-                DictionaryExtention.AddOrIncrement<int>(_decryptionsPerCiphertextLength, ciphertextLength, decryptions);
+                if (_settings.FullEvaluation)
+                {
+                    DictionaryExtention.AddOrIncrement<int>(_decryptionsPerKeyLength, keyLength, decryptions);
+                    DictionaryExtention.AddOrIncrement<int>(_decryptionsPerCiphertextLength, ciphertextLength, decryptions);
+                }
+                
 
                 // count the restarts if every run contains a restart value greater zero
-                if (!_noRestarts && currentRestarts > 0)
+                if (_settings.FullEvaluation && !_noRestarts && currentRestarts > 0)
                 {
                     _restarts += currentRestarts;
                     DictionaryExtention.AddOrIncrement(_restartsPerKeyLength, keyLength, currentRestarts);
@@ -625,7 +646,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     _noRestarts = true;
 
                 // count the tabu set size if every run contains a size value greater zero
-                if (!_noTabuSetSize && currentTabuSize > 0)
+                if (_settings.FullEvaluation && !_noTabuSetSize && currentTabuSize > 0)
                 {
                     _tabuSetSize += currentTabuSize;
                     DictionaryExtention.AddOrIncrement(_tabuSizesPerKeyLength, keyLength, currentTabuSize);
@@ -635,7 +656,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     _noTabuSetSize = true;
 
                 // count the population size if every run contains a size value greater zero
-                if (!_noPopulationSize && currentPopulationSize > 0)
+                if (_settings.FullEvaluation && !_noPopulationSize && currentPopulationSize > 0)
                 {
                     _populationSize += currentPopulationSize;
                     DictionaryExtention.AddOrIncrement(_populationSizesPerKeyLength, keyLength, currentPopulationSize);
@@ -646,7 +667,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 // count all values per runtime and the runtime per key and ciphertext lengths
                 TimeSpan timeSpan;
-                if (!_noRuntime && testRun.GetRuntime(out timeSpan))
+                if (_settings.FullEvaluation && !_noRuntime && testRun.GetRuntime(out timeSpan))
                 {
                     double time = timeSpan.TotalMilliseconds;
                     _runtimeCount += time;
@@ -682,10 +703,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // calculate the overall average values
             _successPercentage = Math.Round((double)_successCount / _testRuns.Count * 100, 2);
             _averagePercentDecrypted = Math.Round((double)_decryptedCount / _testRuns.Count, 2);
-            _averageDecryptions = Math.Round((double)_decryptionsCount / _testRuns.Count, 2);
+            if (_settings.FullEvaluation)
+                _averageDecryptions = Math.Round((double)_decryptionsCount / _testRuns.Count, 2);
 
             // calculate the average runtime values
-            if (!_noRuntime)
+            if (_settings.FullEvaluation && !_noRuntime)
             {
                 // calculate the overall average values
                 _averageRuntime = _runtimeCount / _testRuns.Count;
@@ -717,15 +739,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
 
             // calculate the overall average values
-            _averageRestarts = 0;
-            if (!_noRestarts)
-                _averageRestarts = _restarts / _testRuns.Count;
-            _averageTabuSetSize = 0;
-            if (!_noTabuSetSize)
-                _averageTabuSetSize = _tabuSetSize / _testRuns.Count;
-            _averagePopulationSize = 0;
-            if (!_noPopulationSize)
-                _averagePopulationSize = _populationSize / _testRuns.Count;
+            if (_settings.FullEvaluation)
+            {
+                _averageRestarts = 0;
+                if (!_noRestarts)
+                    _averageRestarts = _restarts / _testRuns.Count;
+                _averageTabuSetSize = 0;
+                if (!_noTabuSetSize)
+                    _averageTabuSetSize = _tabuSetSize / _testRuns.Count;
+                _averagePopulationSize = 0;
+                if (!_noPopulationSize)
+                    _averagePopulationSize = _populationSize / _testRuns.Count;
+            }
 
             // if the current key length count can be retrieved, calculate the average values
             foreach (var pair in _keyLengths)
@@ -739,18 +764,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // calculate the detailed average values
                     DictionaryExtention.DivideAndRoundPercent<int>(_successPerKeyLength, keyLength, count, 2);
                     DictionaryExtention.DivideAndRound<int>(_percentDecryptedPerKeyLength, keyLength, count, 2);
-                    DictionaryExtention.Divide<int>(_decryptionsPerKeyLength, keyLength, count);
-                    DictionaryExtention.Divide<int>(_runtimePerKeyLength, keyLength, count);
+                    if (_settings.FullEvaluation)
+                    {
+                        DictionaryExtention.Divide<int>(_decryptionsPerKeyLength, keyLength, count);
+                        DictionaryExtention.Divide<int>(_runtimePerKeyLength, keyLength, count);
 
-                    if (!_noRestarts)
-                        DictionaryExtention.Divide<int>(_restartsPerKeyLength, keyLength, count);
+                        if (!_noRestarts)
+                            DictionaryExtention.Divide<int>(_restartsPerKeyLength, keyLength, count);
 
-                    if (!_noTabuSetSize)
-                        DictionaryExtention.Divide<int>(_tabuSizesPerKeyLength, keyLength, count);
+                        if (!_noTabuSetSize)
+                            DictionaryExtention.Divide<int>(_tabuSizesPerKeyLength, keyLength, count);
 
-                    if (!_noPopulationSize)
-                        DictionaryExtention.Divide<int>(_populationSizesPerKeyLength, keyLength, count);
-
+                        if (!_noPopulationSize)
+                            DictionaryExtention.Divide<int>(_populationSizesPerKeyLength, keyLength, count);
+                    }
                 }
             }
 
@@ -766,17 +793,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // calculate the detailed average values
                     DictionaryExtention.DivideAndRoundPercent<int>(_successPerCiphertextLength, ciphertextLength, count, 2);
                     DictionaryExtention.DivideAndRound<int>(_percentDecryptedPerCiphertextLength, ciphertextLength, count, 2);
-                    DictionaryExtention.Divide<int>(_decryptionsPerCiphertextLength, ciphertextLength, count);
-                    DictionaryExtention.Divide<int>(_runtimePerCiphertextLength, ciphertextLength, count);
+                    if (_settings.FullEvaluation)
+                    {
+                        DictionaryExtention.Divide<int>(_decryptionsPerCiphertextLength, ciphertextLength, count);
+                        DictionaryExtention.Divide<int>(_runtimePerCiphertextLength, ciphertextLength, count);
 
-                    if (!_noRestarts)
-                        DictionaryExtention.Divide<int>(_restartsPerCiphertextLength, ciphertextLength, count);
+                        if (!_noRestarts)
+                            DictionaryExtention.Divide<int>(_restartsPerCiphertextLength, ciphertextLength, count);
 
-                    if (!_noTabuSetSize)
-                        DictionaryExtention.Divide<int>(_tabuSizesPerCiphertextLength, ciphertextLength, count);
+                        if (!_noTabuSetSize)
+                            DictionaryExtention.Divide<int>(_tabuSizesPerCiphertextLength, ciphertextLength, count);
 
-                    if (!_noPopulationSize)
-                        DictionaryExtention.Divide<int>(_populationSizesPerCiphertextLength, ciphertextLength, count);
+                        if (!_noPopulationSize)
+                            DictionaryExtention.Divide<int>(_populationSizesPerCiphertextLength, ciphertextLength, count);
+                    }
                 }
             }
 
@@ -797,7 +827,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             // build the average runtime string
             string averageRuntimeString = "";
-            if (!_noRuntime)
+            if (_settings.FullEvaluation && !_noRuntime)
                 averageRuntimeString = new DateTime(TimeSpan.FromMilliseconds(_averageRuntime).Ticks).ToString("HH:mm:ss:FFFF");
 
             // build the displayed string of occurring ciphertext lengths
@@ -840,17 +870,20 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _evaluationOutput = "";
             if (!string.IsNullOrEmpty(_testSeriesSeed))
                 _evaluationOutput = Resources.Test_Series_Seed + _testSeriesSeed + "\r";
-            if (!_noRuntime)
+            if (_settings.FullEvaluation && !_noRuntime)
                 _evaluationOutput += Resources.Average_runtime + averageRuntimeString + "\r";
             _evaluationOutput += Resources.Ciphertext_lengths + ciphertextLengthString + "\r";
             _evaluationOutput += Resources.Key_lengths__ + keyLengthString + "\r";
-            _evaluationOutput += Resources.Average_decryptions_necessary__ + _averageDecryptions + "\r";
-            if (!_noRestarts)
-                _evaluationOutput += Resources.Average_restarts__ + _averageRestarts + "\r";
-            if (!_noPopulationSize)
-                _evaluationOutput += Resources.Average_population_size__ + _averagePopulationSize + "\r";
-            if (!_noTabuSetSize)
-                _evaluationOutput += Resources.Average_tabu_set_size__ + _averageTabuSetSize + "\r";
+            if (_settings.FullEvaluation)
+            {
+                _evaluationOutput += Resources.Average_decryptions_necessary__ + _averageDecryptions + "\r";
+                if (!_noRestarts)
+                    _evaluationOutput += Resources.Average_restarts__ + _averageRestarts + "\r";
+                if (!_noPopulationSize)
+                    _evaluationOutput += Resources.Average_population_size__ + _averagePopulationSize + "\r";
+                if (!_noTabuSetSize)
+                    _evaluationOutput += Resources.Average_tabu_set_size__ + _averageTabuSetSize + "\r";
+            }
             _evaluationOutput += string.Format(Resources.Averagely_decrypted_of_min, _averagePercentDecrypted, _settings.CorrectPercentage) + "%\r";
             _evaluationOutput += Resources.Average_success__ + _successPercentage + "%\r";
         }
@@ -899,9 +932,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 case XAxisPlot.keyLength:
                     _yValuesArray = new double[_keyLengths.Count];
                     break;
+                // todo: disable runtime on axis if runtime or full eval disabled!
                 case XAxisPlot.runtime:
-                    _yValuesArray = new double[_runtimes.Count];
-                    _xValuesArray = new double[_runtimes.Count];
+                    if (_settings.FullEvaluation && !_noRuntime)
+                    {
+                        _yValuesArray = new double[_runtimes.Count];
+                        _xValuesArray = new double[_runtimes.Count];
+                    }
                     break;
             }
             _normalizedAverageYValues = 0;
@@ -912,7 +949,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             else if (_settings.XAxis == XAxisPlot.keyLength)
                 AddKeyLengthValues();
             else if (_settings.XAxis == XAxisPlot.runtime)
-                if (!_noRuntime)
+                if (_settings.FullEvaluation && !_noRuntime)
                     AddRuntimeValues();
                 else {/* TODO: disable runtime in settings*/ }
         }
@@ -959,7 +996,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 // set the according values for the second y-axis
-                if (_settings.Y2Axis == Y2AxisPlot.decryptions)
+                // TODO: disable decryptions if full eval deactivated
+                if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
                     if (!_decryptionsPerCiphertextLength.TryGetValue(len, out currentDecryptions))
@@ -984,7 +1022,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     }
 
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
+                else if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
                 {
                     double currentRuntime = 0;
                     if (!_runtimePerCiphertextLength.TryGetValue(len, out currentRuntime))
@@ -1007,7 +1045,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.restarts && !_noRestarts)
+                else if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.restarts && !_noRestarts)
                 {
                     double currentRestarts = 0;
                     if (!_restartsPerCiphertextLength.TryGetValue(len, out currentRestarts))
@@ -1031,7 +1069,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && !_noTabuSetSize)
+                else if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && !_noTabuSetSize)
                 {
                     double currentTabu = 0;
                     if (!_tabuSizesPerCiphertextLength.TryGetValue(len, out currentTabu))
@@ -1055,7 +1093,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.populationSizes && !_noPopulationSize)
+                else if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.populationSizes && !_noPopulationSize)
                 {
                     double currentPopulatioin = 0;
                     if (!_populationSizesPerCiphertextLength.TryGetValue(len, out currentPopulatioin))
@@ -1124,7 +1162,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 // set the according values for the second y-axis
-                if (_settings.Y2Axis == Y2AxisPlot.decryptions)
+                if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
                     if (!_decryptionsPerKeyLength.TryGetValue(len, out currentDecryptions))
@@ -1149,7 +1187,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     }
 
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
+                else if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
                 {
                     double currentRuntime = 0;
                     if (!_runtimePerKeyLength.TryGetValue(len, out currentRuntime))
@@ -1172,7 +1210,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.restarts && !_noRestarts)
+                else if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.restarts && !_noRestarts)
                 {
                     double currentRestarts = 0;
                     if (!_restartsPerKeyLength.TryGetValue(len, out currentRestarts))
@@ -1196,7 +1234,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && !_noTabuSetSize)
+                else if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.tabuSetSizes && !_noTabuSetSize)
                 {
                     double currentTabu = 0;
                     if (!_tabuSizesPerKeyLength.TryGetValue(len, out currentTabu))
@@ -1220,7 +1258,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         }
                     }
                 }
-                else if (_settings.Y2Axis == Y2AxisPlot.populationSizes && !_noPopulationSize)
+                else if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.populationSizes && !_noPopulationSize)
                 {
                     double currentPopulatioin = 0;
                     if (!_populationSizesPerKeyLength.TryGetValue(len, out currentPopulatioin))
@@ -1252,6 +1290,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public void AddRuntimeValues()
         {
+            if (!_settings.FullEvaluation || _noRuntime)
+                return;
+                
             int xPosition = 0;
             int yPosition = 0;
             // iterate over every pair per runtime
@@ -1815,10 +1856,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // Wait for the analysis method to send evaluation data.
             // If the evaluation input is set, together with the best key
             // and best plaintext, do the evaluation for that calculation
-            else if (_newEvaluation && _newBestKey && _newBestPlaintext && _newCiphertext &&
+            else if (_newBestKey && _newBestPlaintext && _newCiphertext &&
                 _keyCount <= _totalKeysInput &&
                 BestKeyInput != " " &&
-                BestPlaintextInput != " ")
+                BestPlaintextInput != " " &&
+                ((_settings.FullEvaluation && _newEvaluation) ||
+                    (!_settings.FullEvaluation)))
             {
                 //System.Console.Write("State 2: _newEvaluation & _newBestKey & _newBestPlaintext" + NewLine);
                 // consume new values
@@ -1836,15 +1879,23 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     Resources.key_number__ + _keyCount + " / " +
                     _totalKeysInput + " - " + Resources.Done + ".";
 
-                EvaluationOutput += NewLine + Resources.ID + ": " + EvaluationInput.GetID() + NewLine;
-                if (_settings.CalculateRuntime)
+                string id = "unknown";
+                if (_settings.FullEvaluation)
+                    id = EvaluationInput.GetID()
+
+                EvaluationOutput += NewLine + Resources.ID + ": " + id + NewLine;
+                if (_settings.FullEvaluation && _settings.CalculateRuntime)
                 {
                     TimeSpan time;
                     EvaluationInput.GetRuntime(out time);
                     EvaluationOutput += Resources.Last_runtime + ": " + time.ToString() + NewLine;
                 }
-                EvaluationOutput += Resources.Last_number_of_restarts + ": " + EvaluationInput.GetRestarts() + NewLine +
-                Resources.Last_number_of_decryptions + ": " + _evaluationInput.GetDecryptions();
+
+                if (_settings.FullEvaluation)
+                {
+                    EvaluationOutput += Resources.Last_number_of_restarts + ": " + EvaluationInput.GetRestarts() + NewLine +
+                    Resources.Last_number_of_decryptions + ": " + _evaluationInput.GetDecryptions();
+                }
                 // gather all available evaluation data
                 CollectEvaluationData();
 

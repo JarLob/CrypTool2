@@ -41,7 +41,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         // general variables
         private CryptAnalysisAnalyzer _CAA;
-        private const int gnuPlotPaneIndex = generalPaneIndex + 2;
+        private const int gnuPlotPaneIndex = generalPaneIndex + 3;
+        private bool _fullEvaluation = true;
         private double _correctPercentage = 95;
         private bool _calculateRuntime = true;
         private const int generalPaneIndex = 1;
@@ -58,9 +59,23 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         #region General Settings
 
         /// <summary>
+        /// This setting enables or disables waiting for the Evaluation Container.
+        /// </summary>
+        [TaskPane("FullEvaluationCaption", "FullEvaluationTooltipCaption", null, generalPaneIndex, false, ControlType.CheckBox)]
+        public bool FullEvaluation
+        {
+            get { return this._fullEvaluation; }
+            set
+            {
+                this._fullEvaluation = value;
+                OnPropertyChanged("FullEvaluation");
+            }
+        }
+
+        /// <summary>
         /// This is the minimum percentage that the decrypted ciphertext has to match the plaintext.
         /// </summary>
-        [TaskPane("MinimumPercentageCaption", "MinimumPercentageTooltipCaption", null, generalPaneIndex, false, ControlType.TextBox, null)]
+        [TaskPane("MinimumPercentageCaption", "MinimumPercentageTooltipCaption", null, generalPaneIndex + 1, false, ControlType.TextBox, null)]
         public double CorrectPercentage
         {
             get
@@ -77,7 +92,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// <summary>
         /// This setting enables or disables the runtime evaluation.
         /// </summary>
-        [TaskPane("CalculateRuntimeCaption", "CalculateRuntimeTooltipCaption", null, generalPaneIndex + 1, false, ControlType.CheckBox)]
+        [TaskPane("CalculateRuntimeCaption", "CalculateRuntimeTooltipCaption", null, generalPaneIndex + 2, false, ControlType.CheckBox)]
         public bool CalculateRuntime
         {
             get { return this._calculateRuntime; }
