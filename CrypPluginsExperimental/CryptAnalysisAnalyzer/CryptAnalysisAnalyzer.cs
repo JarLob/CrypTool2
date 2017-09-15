@@ -72,6 +72,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         private int _evaluationCount = 0;
         private int _totalKeysInput = 0;
         private int _progress;
+        private DateTime _startRuntime = new DateTime();
+        private TimeSpan _approxRuntime = new TimeSpan();
         private Dictionary<int, ExtendedEvaluationContainer> _testRuns;
 
         private string NewLine = System.Environment.NewLine;
@@ -195,7 +197,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._keyInput; }
             set
             {
-                if (value != null && value != this._keyInput)
+                if (!String.IsNullOrEmpty(value) && value != this._keyInput)
                 {
                     this._keyInput = value;
                     this._newKey = true;
@@ -213,7 +215,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._plaintextInput; }
             set
             {
-                if (value != null && value != this._plaintextInput)
+                if (!String.IsNullOrEmpty(value) && value != this._plaintextInput)
                 {
                     this._plaintextInput = value;
                     this._newPlaintext = true;
@@ -231,7 +233,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._ciphertextInput; }
             set
             {
-                if (value != null && value != this._ciphertextInput)
+                if (!String.IsNullOrEmpty(value) && value != this._ciphertextInput)
                 {
                     this._ciphertextInput = value;
                     this._newCiphertext = true;
@@ -263,7 +265,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestKeyInput; }
             set
             {
-                if (value != null && value != this._bestKeyInput)
+                if (!String.IsNullOrEmpty(value) && value != this._bestKeyInput)
                 {
                     this._bestKeyInput = value;
                     this._newBestKey = true;
@@ -281,7 +283,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             get { return this._bestPlaintextInput; }
             set
             {
-                if (value != null && value != this._bestPlaintextInput)
+                if (!String.IsNullOrEmpty(value) && value != this._bestPlaintextInput)
                 {
                     this._bestPlaintextInput = value;
                     this._newBestPlaintext = true;
@@ -399,12 +401,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
+            int id = _ciphertextInput.GetHashCode();
+            _evaluationInput = new EvaluationContainer(id, _approxRuntime, 0, 0);
+
             // create the ExtendedEvaluationContainer with the current values
-            if (!_settings.FullEvaluation)
-            {
-                _evaluationInput = null;
-            }
-            // todo: _evaluationInput == null anyway?
             ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
                 _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
                 _settings.CorrectPercentage, percentCorrect, success);
@@ -413,7 +413,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             if (_settings.FullEvaluation)
                 _testRuns.Add(_evaluationInput.GetID(), testRun);
             else
-                _testRuns.Add(_ciphertextInput.GetHashCode(), testRun);
+                _testRuns.Add(id, testRun);
 
             // increase the evaluation counter
             _evaluationCount++;
@@ -666,6 +666,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 // count all values per runtime and the runtime per key and ciphertext lengths
                 TimeSpan timeSpan;
+                // TODO: calculate approximate runtime
                 if (_settings.FullEvaluation && !_noRuntime && testRun.GetRuntime(out timeSpan))
                 {
                     double time = timeSpan.TotalMilliseconds;
@@ -1561,7 +1562,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // # second y-axis settings
             // make sure the second y-axis is enabled and the value exists
-            if (_settings.Y2Axis != Y2AxisPlot.none &&
+            if (_settings.FullEvaluation &&
+                _settings.Y2Axis != Y2AxisPlot.none &&
                 !(_settings.Y2Axis == Y2AxisPlot.runtime && _noRuntime) &&
                 !(_settings.Y2Axis == Y2AxisPlot.restarts && _noRestarts) &&
                 !(_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && _noTabuSetSize) &&
@@ -1608,7 +1610,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
 
             // if the second y-axis is enabled
-            if (_settings.Y2Axis != Y2AxisPlot.none)
+            if (_settings.FullEvaluation &&
+                _settings.Y2Axis != Y2AxisPlot.none)
             {
                 _gnuPlotScriptOutput += "replot  \"" + _evalMethod + ".dat\" using 1:"+column+" title '" + _val3 + "' with linespoints ls 3 axes x1y2";
                 
@@ -1851,6 +1854,10 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 // update the progress bar
                 if (_totalKeysInput > 0)
                     ProgressChanged(_keyCount-0.9, _totalKeysInput);
+
+                // calculate approximate runtime
+                if (!_settings.FullEvaluation && _settings.CalculateRuntime)
+                    _startRuntime = DateTime.Now;
             }
             // Wait for the analysis method to send evaluation data.
             // If the evaluation input is set, together with the best key
@@ -1862,7 +1869,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 ((_settings.FullEvaluation && _newEvaluation) ||
                     (!_settings.FullEvaluation)))
             {
-                //System.Console.Write("State 2: _newEvaluation & _newBestKey & _newBestPlaintext" + NewLine);
+                // calculate approximate runtime
+                if (!_settings.FullEvaluation && _settings.CalculateRuntime)
+                {
+                    var elapsedtime = DateTime.Now.Subtract(_startRuntime);
+                    _approxRuntime = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, elapsedtime.Milliseconds);
+                }
+
                 // consume new values
                 _newEvaluation = false;
                 _newBestKey = false;
@@ -1886,13 +1899,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 if (_settings.FullEvaluation && _settings.CalculateRuntime)
                 {
                     TimeSpan time;
-                    EvaluationInput.GetRuntime(out time);
+                    _evaluationInput.GetRuntime(out time);
                     EvaluationOutput += Resources.Last_runtime + ": " + time.ToString() + NewLine;
                 }
 
                 if (_settings.FullEvaluation)
                 {
-                    EvaluationOutput += Resources.Last_number_of_restarts + ": " + EvaluationInput.GetRestarts() + NewLine +
+                    EvaluationOutput += Resources.Last_number_of_restarts + ": " + _evaluationInput.GetRestarts() + NewLine +
                     Resources.Last_number_of_decryptions + ": " + _evaluationInput.GetDecryptions();
                 }
                 // gather all available evaluation data
