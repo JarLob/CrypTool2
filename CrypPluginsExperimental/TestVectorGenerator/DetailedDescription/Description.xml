@@ -157,7 +157,7 @@
     <newline/>
     The following image displays a pure test vector generation scenario. The input text is the book "Alice in Wonderland", the seed is "SEED", and the regex pattern consists of two $unique variables, which generate 25 numbers from 0 to 24 each, separated by a slash. The <b>TVG</b> has every replacement setting enabled. Before the encryption, the plaintext is split into blocks of five (so 5 blocks are encrypted in one go through the Cylinder Cipher). The Cylinder Cipher mode is encryption, using the M-94 disks. The last combination of string operations and other components calculates the offset part of the Cylinder Cipher key. This is specific for this cipher and not necessary otherwise. The gate at the bottom left is set to true and triggers the next key (if the number of test runs is set higher than 1). The string outputs on the bottom display the key, the plaintext, the ciphertext, and the offset of the key.
 
-      <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
+      <img src="TestVectorGenerator/DetailedDescription/Images/cylinderpurevectortemplate.png" width="100%"/>
 
     This <b>TVG</b> component was developed as part of a master thesis which contains more details about it:
 
@@ -245,7 +245,7 @@
     <newline/>
     Das folgende Bild zeigt das Szenario der Generierung purer Testvektoren. Der Eingabetext ist das Buch "Alice in Wonderland", der eingegebene Samen ist "SEED", und das Regex-Muster besteht aus zwei $unique-Variablen, die jeweils 25 Zahlen von 0 bis 24 generieren, getrennt durch einen Schrägstrich. Alle Einstellungen zu Ersetzungen im Text sind im <b>TVG</b> aktiviert. Vor der Verschlüsselung wird der Klartext in Blöcke von je fünf Zeichen geteilt (also werden fünf Blöcke in einem Durchgang von der Zylinder-Chiffre verschlüsselt). Der Modus der Zylinder-Chiffre ist Verschlüsselung mit den M-94-Scheiben. Die letzte Kombination von Zeichenketten-Operationen und anderen Komponenten berechnet den Offset-Teil des Schlüssels. Diese Berechnung ist spezifisch für diese Chiffre und woanders nicht nötig. Das Tor (Gate) unten links steht auf wahr und stößt den nächsten Schlüssel an (wenn die Anzahl an Testläufen größer ist als 1). Die Zeichenausgaben unten zeigen den Schlüssel, Klartext, Geheimtext und das Offset des Schlüssels an.
 
-      <img src="TestVectorGenerator\DetailedDescription\Images\cylinderpurevectortemplate.png"/>
+      <img src="TestVectorGenerator/DetailedDescription/Images/cylinderpurevectortemplate.png" width="100%"/>
 
     Diese <b>TVG</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit enthält weitere Details hierzu:
 

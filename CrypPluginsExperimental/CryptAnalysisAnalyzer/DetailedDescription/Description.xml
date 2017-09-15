@@ -15,7 +15,7 @@
       The algorithm is working in three different states, shown in the following image:
       <newline/>
 
-      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\flowdiagramsimplecolored.png"/>
+      <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/flowdiagramsimplecolored.png" width="100%"/>
 
       <newline/>
       <newline/>
@@ -46,7 +46,7 @@
       Der Algorithmus agiert in drei verschiedenen Zuständen, zu sehen in folgendem Bild:
       <newline/>
 
-      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\flowdiagramsimplecolored.png"/>
+      <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/flowdiagramsimplecolored.png" width="100%"/>
 
       <newline/>
       <newline/>
@@ -189,7 +189,7 @@
     <newline/>
     The following image displays the complete testing process of the <b>CylinderCipherAnalyzer</b> component (<b>CCA</b>) in CrypTool 2 using the <b>CAA</b> component. The first step is highlighted in green, the second in blue, and the third in red. The <b>CAA</b> component itself is highlighted in yellow.
 
-      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\caa-template-final.png"/>
+      <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/caa-template-final.png" width="100%"/>
 
     This <b>CAA</b> component was developed as part of a master thesis which contains more details about it:
 
@@ -321,7 +321,7 @@
     <newline/>
     Das folgende Bild visualisiert den vollständigen Test-Prozess der <b>CylinderCipherAnalyzer</b>-Komponente (<b>CCA</b>) in CrypTool 2, durchgeführt von der <b>CAA</b>-Komponente. Der erste Schritt ist grün markiert, der zweite blau und der dritte rot. Die <b>CAA</b>-Komponente selbst ist gelb markiert.
 
-      <img src="CryptAnalysisAnalyzer\DetailedDescription\Images\caa-template-final.png"/>
+      <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/caa-template-final.png" width="100%"/>
 
     Diese <b>CAA</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit enthält weitere Details hierzu:
 
