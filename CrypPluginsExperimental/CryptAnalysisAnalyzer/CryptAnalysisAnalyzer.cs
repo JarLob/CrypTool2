@@ -1938,24 +1938,18 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         /// </summary>
         public void PostExecution()
         {
-            _plaintextInput = "";
-            _keyInput = "";
-            _bestPlaintextInput = "";
-            _bestKeyInput = "";
+            _plaintextInput = String.Empty;
+            _keyInput = String.Empty;
+            _bestPlaintextInput = String.Empty;
+            _bestKeyInput = String.Empty;
+            _ciphertextInput = String.Empty;
             _evaluationInput = new EvaluationContainer();
 
-            _plaintextOutput = "";
-            _keyOutput = "";
+            _plaintextOutput = String.Empty;
+            _keyOutput = String.Empty;
 
             _keyCount = 0;
             _evaluationCount = 0;
-
-            _newBestKey = true;
-            _newBestPlaintext = true;
-            _newCiphertext = true;
-            _newEvaluation = true;
-            _newKey = true;
-            _newPlaintext = true;
         }
 
         /// <summary>

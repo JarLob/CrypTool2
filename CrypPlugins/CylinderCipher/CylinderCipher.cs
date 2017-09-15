@@ -92,8 +92,8 @@ namespace Cryptool.CylinderCipher
 
         public void PostExecution()
         {
-            this._newKey = true;
-            this._newText = true;
+            _keyInput = String.Empty;
+            _textInput = String.Empty;
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;

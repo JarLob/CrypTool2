@@ -1186,8 +1186,6 @@ namespace Cryptool.Plugins.TestVectorGenerator
             _lastKeyLengthIndex = -1;
             _notFound = false;
             _occurrences = null;
-
-            _newSeed = true;
         }
 
         /// <summary>
