@@ -400,7 +400,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
             // create the ExtendedEvaluationContainer with the current values
-            if (_settings.FullEvaluation)
+            if (!_settings.FullEvaluation)
             {
                 _evaluationInput = null;
             }
@@ -1949,6 +1949,13 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             _keyCount = 0;
             _evaluationCount = 0;
+
+            _newBestKey = true;
+            _newBestPlaintext = true;
+            _newCiphertext = true;
+            _newEvaluation = true;
+            _newKey = true;
+            _newPlaintext = true;
         }
 
         /// <summary>
