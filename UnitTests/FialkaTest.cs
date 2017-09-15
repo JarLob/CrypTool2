@@ -196,7 +196,7 @@ namespace Tests.TemplateAndPluginTests
         }
 
         TestVectorAdvancedSettings[] _testvectorsProtonII = new TestVectorAdvancedSettings[] {
-            
+
             new TestVectorAdvancedSettings () {
                 testCase = 6,
                 input  = "WERTZUIOPQ7SDFGHJKL5YXCVBNMA8WERTZUIOPQ7SDFGHJKL5YXCVBNMA8WERTZUIOPQ7SDFGHJKL5YXCVBNMA8",
@@ -356,7 +356,7 @@ namespace Tests.TemplateAndPluginTests
                 input  = "2ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM9",
                 output = "3NE84P7LKP54K7CRV3B6E9ZJK78DHMCECE97O9VF9GZG6KPHT4IDFKE3JTG8KO2ZBHM3MO9ZLTU8LJLH3",
                 model = FialkaEnums.machineModel.M125_3,
-                layout = FialkaEnums.countryLayout.DDR,
+                layout = FialkaEnums.countryLayout.GDR,
                 rTypes = FialkaEnums.rotorTypes.PROTON_II,
                 rSeries = FialkaEnums.rotorSeries.K6,
                 RotorOrder =  FialkaConstants.baseRotorPositions(),
@@ -425,7 +425,7 @@ namespace Tests.TemplateAndPluginTests
                 input  = "2ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM9",
                 output = "VHSNTIIA54O7NMKOK8O57CNKCBABTUFUV92GKVAOSFRV94T4FNDMC8BT3B8DONGHL5LJ62A8E5BCJ492G",
                 model = FialkaEnums.machineModel.M125_3,
-                layout = FialkaEnums.countryLayout.DDR,
+                layout = FialkaEnums.countryLayout.GDR,
                 rTypes = FialkaEnums.rotorTypes.PROTON_II,
                 rSeries = FialkaEnums.rotorSeries.K3,
                 RotorOrder =  FialkaConstants.baseRotorPositions(),
@@ -502,7 +502,7 @@ namespace Tests.TemplateAndPluginTests
                 input  = "2ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM92ERTZUIOP3SDFGH4KL567CVBNM9",
                 output = "3MSV2NFOVJC8GN4FR8FIMIK2BBSBVL4FJBV7333JICM57HIZBHSNGC46D3ZL7E7VAI6PB9E6J7HTAG37K",
                 model = FialkaEnums.machineModel.M125_3,
-                layout = FialkaEnums.countryLayout.DDR,
+                layout = FialkaEnums.countryLayout.GDR,
                 rTypes = FialkaEnums.rotorTypes.PROTON_II,
                 rSeries = FialkaEnums.rotorSeries.K5,
                 RotorOrder =  FialkaConstants.baseRotorPositions(),
@@ -609,7 +609,7 @@ namespace Tests.TemplateAndPluginTests
                 output = "8566013658783611962301360947746396511950198930984548084567910419150320828061779852755291192856290",
                 numLock = FialkaEnums.numLockType.NumLock10,
                 model = FialkaEnums.machineModel.M125_3,
-                layout = FialkaEnums.countryLayout.DDR,
+                layout = FialkaEnums.countryLayout.GDR,
                 rTypes = FialkaEnums.rotorTypes.PROTON_II,
                 rSeries = FialkaEnums.rotorSeries.K5,
                 RotorOrder = FialkaConstants.baseRotorPositions(),
