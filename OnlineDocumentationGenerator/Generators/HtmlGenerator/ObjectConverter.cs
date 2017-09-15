@@ -47,7 +47,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
             }
             if (theObject is BitmapFrame)
             {
-                return ConvertImageSource((BitmapFrame)theObject, docPage.Name, docPage);
+                return string.Format("<img src=\"{0}\" />", ConvertImageSource((BitmapFrame)theObject, docPage.Name, docPage));
             }
             if (theObject is ComponentTemplateList)
             {
@@ -208,15 +208,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
         /// <returns></returns>
         private string ConvertImageSource(BitmapFrame imageSource, string filename, EntityDocumentationPage entityDocumentationPage)
         {
-            filename = filename + ".png";
+            filename += ".png";
             if (!_createdImages.Contains(filename))
             {
                 var dir = Path.Combine(Path.Combine(_outputDir, OnlineHelp.HelpDirectory), entityDocumentationPage.DocDirPath);
                 //create image file:
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
+                if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+
                 var file = Path.Combine(dir, filename);
                 using (var fileStream = new FileStream(file, FileMode.Create))
                 {
@@ -226,7 +224,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                 }
             }
             _createdImages.Add(filename);
-            return string.Format("<img src=\"{0}\" />", filename);
+            return filename;
         }
 
         /// <summary>
@@ -273,9 +271,7 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                                 {
                                     var htmlLinkToRef = entityDocumentationPage.References.GetHTMLinkToRef(idAtt.Value);
                                     if (htmlLinkToRef != null)
-                                    {
                                         result.Append(htmlLinkToRef);
-                                    }
                                 }
                             }
                             break;
@@ -283,11 +279,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
                             var srcAtt = ((XElement) node).Attribute("src");
                             if (srcAtt != null)
                             {
-                                int sIndex = srcAtt.Value.IndexOf('/');
-                                var image = BitmapFrame.Create(new Uri(string.Format("pack://application:,,,/{0};component/{1}", 
-                                    srcAtt.Value.Substring(0, sIndex), srcAtt.Value.Substring(sIndex + 1))));
-                                var filename = string.Format("{0}_{1}", entityDocumentationPage.Name, Path.GetFileNameWithoutExtension(srcAtt.Value));
-                                var img = ConvertImageSource(image, filename, entityDocumentationPage);
+                                string srcname = srcAtt.Value.Replace('\\', '/');
+                                int sIndex = srcname.IndexOf('/');
+                                var image = BitmapFrame.Create(new Uri(string.Format("pack://application:,,,/{0};component/{1}", srcname.Substring(0, sIndex), srcname.Substring(sIndex + 1))));
+                                var filename = string.Format("{0}_{1}", entityDocumentationPage.Name, Path.GetFileNameWithoutExtension(srcname));
+                                filename = ConvertImageSource(image, filename, entityDocumentationPage);
+                                ((XElement)node).Attribute("src").SetValue(filename);
+                                var img = node.ToString();
                                 var caption = ((XElement)node).Attribute("caption");
                                 if (caption != null)
                                     img = string.Format("<table><caption align=\"bottom\">{0}</caption><tr><td>{1}</td></tr></table>", caption.Value, img );
