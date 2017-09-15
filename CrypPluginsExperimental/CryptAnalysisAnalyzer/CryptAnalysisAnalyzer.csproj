@@ -131,7 +131,7 @@
     <Resource Include="DetailedDescription\Images\caa-template-final.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DetailedDescription\Images\flowdiagramsimplecolored.png" />
+    <Resource Include="DetailedDescription\Images\flowdiagramsimplecolored.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
