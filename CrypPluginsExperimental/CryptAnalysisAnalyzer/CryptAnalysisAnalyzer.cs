@@ -402,17 +402,12 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // create the ExtendedEvaluationContainer with the current values
             if (_settings.FullEvaluation)
             {
-                // todo: _evaluationInput == null anyway?
-                ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
-                    _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
-                    _settings.CorrectPercentage, percentCorrect, success);
-            } 
-            else 
-            {
-                ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(null,
-                    _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
-                    _settings.CorrectPercentage, percentCorrect, success);
+                _evaluationInput = null;
             }
+            // todo: _evaluationInput == null anyway?
+            ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
+                _seedInput, _keyCount, _keyInput, _plaintextInput, _ciphertextInput, _bestKeyInput, _bestPlaintextInput,
+                _settings.CorrectPercentage, percentCorrect, success);
 
             // add the container to the test run dictionary with the ID as key
             if (_settings.FullEvaluation)
@@ -593,12 +588,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 int currentSuccess = 0;
                 if (testRun.GetSuccessfull()) currentSuccess = 1;
                 double currentlyDecrypted = testRun.GetPercentDecrypted();
+
+                // initialize empty variables
+                double decryptions = 0;
+                double currentRestarts = 0;
+                double currentTabuSize = 0;
+                double currentPopulationSize = 0;
+
                 if (_settings.FullEvaluation)
                 {
-                    double decryptions = testRun.GetDecryptions();
-                    double currentRestarts = 0;
-                    double currentTabuSize = 0;
-                    double currentPopulationSize = 0;
+                    decryptions = testRun.GetDecryptions();
                     if (!_noRestarts)
                         currentRestarts = testRun.GetRestarts();
                     if (!_noTabuSetSize)
@@ -1881,7 +1880,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
                 string id = "unknown";
                 if (_settings.FullEvaluation)
-                    id = EvaluationInput.GetID()
+                    id = _evaluationInput.GetID().ToString();
 
                 EvaluationOutput += NewLine + Resources.ID + ": " + id + NewLine;
                 if (_settings.FullEvaluation && _settings.CalculateRuntime)
