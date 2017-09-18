@@ -15,28 +15,32 @@
       The generation of the plaintexts and keys is based on a pseudo-random number generator that is seeded with the seed the user provides. This makes it reproducible with the same input values.
       <newline/>
       <newline/>
-      The plaintext is generated in this way:
+      <b>The plaintext is generated in this way:</b>
       <newline/>
       For the plaintext and the natural speech keys, the input text (usually a book in text format) is processed by some initial aspects (like removing all characters unlike letters, numbers, spaces, periods; replacing question and exclamation marks by periods first) and splitting it to complete sentences which are put into an array. The plaintext generation is basically choosing a (never occurred until now) starting sentence and appending following sentences until the specified plaintext length is reached or exceeded. Then the plaintext is cut to the specified length and given to the output connector. The plaintext length and specifics can be selected through the component settings.
       <newline/>
       <newline/>
-      The natural speech keys are generated in this way:
+      <b>The natural speech keys are generated in this way:</b>
       <newline/>
       Starting at a random starting sentence, the first step is searching a sentence of the exact specified length (that was not used as starting sentence before). If that fails, larger sentences are searched and cut to the specified length. All modifications according to the settings are done to the key at this point (like replacing numbers or umlauts). For Example:
       <newline/>
-      "ThisIsAKey123ü" is modified to this:
       <newline/>
-      "ThisIsAKeyONETWOTHREEue" (if replacing umlauts is active and numbers should be replaces by written English numbers.)
+      "<i>ThisIsAKey123ü</i>" is modified to this:
       <newline/>
       <newline/>
-      The random keys are generated like this:
+      "<i>ThisIsAKeyONETWOTHREEue</i>" 
+      <newline/>
+      (if replacing umlauts is active and numbers should be replaces by written English numbers.)
+      <newline/>
+      <newline/>
+      <b>The random keys are generated like this:</b>
       <newline/>
       First, the alphabet from which the key symbols are taken is prepared as a list of strings (this alphabet can be chosen through the drop-down menu or the alphabet input). The next step is taking a random element from the list repeatedly until the specified key length is reached. If the unique symbol usage setting is enabled, the element is directly removed from the list and not used twice.
       <newline/>
       <newline/>
-      The reverse regex keys are generated like this:
+      <b>The reverse regex keys are generated like this:</b>
       <newline/>
-      A regular expression is a pattern that defines rules for a set of strings. All strings that follow these rules match the pattern. The regex input takes a regex pattern from the user and the reverse regex generator builds a random string matching this pattern (using the pseudo-random number generator, seeded with the input seed). Additional functionalities are the special $length and $unique variables. The $length variable is replaced through the current calculated length that the key has to have. The $unique variable is parsed, a random key is generated using the parsed parameters, and the $unique variable is replaced by that key. After both replacements, the reverse regex generation is continued as usual (see usage for more details).
+      A regular expression is a pattern that defines rules for a set of strings. All strings that follow these rules match the pattern. The regex input takes a regex pattern from the user and the reverse regex generator builds a random string matching this pattern (using the pseudo-random number generator, seeded with the input seed). Additional functionalities are the special <i>\$length</i> and <i>\$unique</i> variables. The <i>\$length</i> variable is replaced through the current calculated length that the key has to have. The <i>\$unique</i> variable is parsed, a random key is generated using the parsed parameters, and the <i>\$unique</i> variable is replaced by that key. After both replacements, the reverse regex generation is continued as usual (see usage for more details).
     </section>
   </introduction>
 
@@ -51,28 +55,32 @@
       Die Klartexte und Schlüssel werden mit Hilfe eines Pseudo-Zufallszahlengenerators erzeugt, der einen durch den vom Benutzer bereitgestellten Samenwert (Seed) nutzt. Durch identische Eingabewerte kann die Generierung jederzeit reproduziert werden.
       <newline/>
       <newline/>
-      Der Klartext wird wie folgt generiert:
+      <b>Der Klartext wird wie folgt generiert:</b>
       <newline/>
       Für den Klartext und die Natürliche-Sprache-Schlüssel wird der Eingabetext (normalerweise ein Buch in Textformat) anhand einiger initialer Aspekte verarbeitet (wie das Entfernen alle Zeichen, die keine Buchstaben, Zahlen, Leerzeichen oder Punkte sind, und der Ersetzung aller Frage- und Ausrufezeichen durch Punkte) und die Aufteilung nach vollständigen Sätzen, die dann in einem Array gespeichert werden. Die Generierung eines Klartexts besteht grundsätzlich aus einem (neuen) Startsatz und dem Anhängen der darauf folgenden Sätze bis die eingestellte Klartext-Länge erreicht oder überschritten wurde. Dann wird der Klartext auf die eingestellte Länge gekürzt und an den Ausgabekonnektor weiter gegeben. Die Klartext-Länge und Einzelheiten können durch die Komponenten-Einstellungen ausgewählt werden.
       <newline/>
       <newline/>
-      Die Natürliche-Sprache-Schlüssel werden folgendermaßen generiert:
+      <b>Die Natürliche-Sprache-Schlüssel werden folgendermaßen generiert:</b>
       <newline/>
       Beginnend mit einem zufälligen Startsatz wird im ersten Schritt nach einem Satz gesucht mit exakt der vorgegebenen Länge (der bisher noch nicht als Startsatz verwendet wurde). Wenn die Suche fehl schlägt, werden längere Sätze gesucht und an der eingestellten Länge abgeschnitten. Alle Modifikationen des Schlüssels, die in den Einstellungen festgelegt wurden, werden an dieser Stelle vorgenommen (wie die Ersetzung vom Zahlen und Umlauten). Beispiel:
       <newline/>
-      "DiesIstEinSchlüssel123" wird zu:
       <newline/>
-      "DiesIstEinSchluesselEINSZWEIDREI" (wenn das Ersetzen von Umlauten aktiviert und Zahlen durch ausgeschriebene deutsche Zahlen ersetzt werden sollen)
+      "<i>DiesIstEinSchlüssel123</i>" wird zu:
       <newline/>
       <newline/>
-      Die einfachen zufälligen Schlüssel werden wie folgt generiert:
+      "<i>DiesIstEinSchluesselEINSZWEIDREI</i>" 
+      <newline/>
+      (wenn das Ersetzen von Umlauten aktiviert und Zahlen durch ausgeschriebene deutsche Zahlen ersetzt werden sollen)
+      <newline/>
+      <newline/>
+      <b>Die einfachen zufälligen Schlüssel werden wie folgt generiert:</b>
       <newline/>
       Als erstes wird das Alphabet, von dem die Schlüssel-Symbole ausgewählt werden, als eine liste von Zeichenketten vorbereitet (dieses Alphabet kann durch das Drop-Down-Menü oder das Eingabe-Alphabet festgelegt werden). Im nächsten Schritt wird wiederholt ein zufälliges Element aus der Liste ausgewählt bis die festgelegte Schlüssel-Länge erreicht wurde. Wenn die Option aktiviert ist, dass jedes Symbol nur einmal pro Schlüssel verwendet werden darf, wird das aktuelle Symbol direkt von der Liste entfernt und nicht mehrfach verwendet.
       <newline/>
       <newline/>
-      Die Revers-Regex-Schlüssel werden folgendermaßen generiert:
+      <b>Die Revers-Regex-Schlüssel werden folgendermaßen generiert:</b>
       <newline/>
-      Ein regulärer Ausdruck ist ein Muster, das Regeln für eine Menge von Zeichenketten festlegt. Alle Zeichenketten, die diese Regeln befolgen, passen zu diesem Muster. Normalerweise nutzt man reguläre Ausdrücke, um gegebene Texte zu filtern. Hier ist es umgekehrt: Die Eingabe-Verbindung für reguläre Ausdrücke empfängt das Muster vom Nutzer und der Revers-Regex-Generator baut daraus eine zufällige Zeichenkette, die diesem Muster entspricht (dabei verwendet er den Pseudo-Zufallszahlengenerator, initialisiert mit dem eingegebenen Samen). Zusätzliche Funktionen stellen die speziellen Variablen $length und $unique dar. Die $length-Variable wird durch die aktuell berechnete Länge des Schlüssels ersetzt. Die $unique-Variable wird analysiert, ein zufälliger Schlüssel wird nach den gefundenen Parametern generiert, und die $unique-Variable wird durch diesen Schlüssel ersetzt. Nach diesen Ersetzungen läuft die Revers-Regex-Generierung weiter wie normal (weitere Details finden Sie weiter unten).
+      Ein regulärer Ausdruck ist ein Muster, das Regeln für eine Menge von Zeichenketten festlegt. Alle Zeichenketten, die diese Regeln befolgen, passen zu diesem Muster. Normalerweise nutzt man reguläre Ausdrücke, um gegebene Texte zu filtern. Hier ist es umgekehrt: Die Eingabe-Verbindung für reguläre Ausdrücke empfängt das Muster vom Nutzer und der Revers-Regex-Generator baut daraus eine zufällige Zeichenkette, die diesem Muster entspricht (dabei verwendet er den Pseudo-Zufallszahlengenerator, initialisiert mit dem eingegebenen Samen). Zusätzliche Funktionen stellen die speziellen Variablen <i>\$length</i> und <i>\$unique</i> dar. Die <i>\$length</i>-Variable wird durch die aktuell berechnete Länge des Schlüssels ersetzt. Die <i>\$unique</i>-Variable wird analysiert, ein zufälliger Schlüssel wird nach den gefundenen Parametern generiert, und die <i>\$unique</i>-Variable wird durch diesen Schlüssel ersetzt. Nach diesen Ersetzungen läuft die Revers-Regex-Generierung weiter wie normal (weitere Details finden Sie weiter unten).
     </section>
   </introduction>
 
@@ -94,9 +102,11 @@
     <newline/>
     The regex input accepts most regex patterns (the complete list can be found in the Xeger wiki, linked in the references). A basic example would be "[ab]{4,6}" which generates strings consisting of a's and b's of the lengths 4 to 6 (like "aaaa", "ababab", "bbabb"). A more complex example is the generation of Enigma keys:
     <newline/>
-    "$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / $unique([1-26]{3}) / $unique([A-Z](2){26})"
     <newline/>
-    The first $unique variable is replaced by a string of three symbols taken from the given alphabet, separated by the separator symbol specified in the components settings (like "IV, I, III"). The slash and its surrounding spaces are taken as they are, as they are not part of a pattern to generate (between brackets). The second $unique variable generates 3 numbers from 1 to 26 (like "2, 26, 15"). The last $unique specifies the frequency of the separator (", " in this case) to be 2 (instead of the default of 1) inside the round brackets. A frequency of 2 means that the separator symbol is inserted after each two characters. The curly brackets always define the length, while the square brackets define the alphabet. So the last part generates strings of 26 letters from A to Z, separated in groups of 2 (like "AG, IW, KC, RQ, ..."). All alphabet symbols are only used once, that's the main aspect of the $unique variable.
+    "<i>\$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / \$unique([1-26]{3}) / \$unique([A-Z](2){26})</i>"
+    <newline/>
+    <newline/>
+    The first <i>\$unique</i> variable is replaced by a string of three symbols taken from the given alphabet, separated by the separator symbol specified in the components settings (like "IV, I, III"). The slash and its surrounding spaces are taken as they are, as they are not part of a pattern to generate (between brackets). The second <i>\$unique</i> variable generates 3 numbers from 1 to 26 (like "2, 26, 15"). The last <i>\$unique</i> specifies the frequency of the separator (", " in this case) to be 2 (instead of the default of 1) inside the round brackets. A frequency of 2 means that the separator symbol is inserted after each two characters. The curly brackets always define the length, while the square brackets define the alphabet. So the last part generates strings of 26 letters from A to Z, separated in groups of 2 (like "AG, IW, KC, RQ, ..."). All alphabet symbols are only used once, that's the main aspect of the <i>\$unique</i> variable.
     <newline/>
     <newline/>
     <b>Alphabet input:</b>
@@ -155,13 +165,19 @@
     The key format setting is available for natural speech and random keys. Natural speech keys can either consist of letters (and other symbols in the text, if not replaced or deleted) or be transformed to numbers. The numeric key can be chosen to be a unique numeric key, using each consecutive number only once, by enabling the unique setting.
     The random keys can consist of letters, numbers, binary numbers, or the input alphabet characters. All of those options can be combined with the unique setting, so that each alphabet character is only used once in the key.
     <newline/>
-    The following image displays a pure test vector generation scenario. The input text is the book "Alice in Wonderland", the seed is "SEED", and the regex pattern consists of two $unique variables, which generate 25 numbers from 0 to 24 each, separated by a slash. The <b>TVG</b> has every replacement setting enabled. Before the encryption, the plaintext is split into blocks of five (so 5 blocks are encrypted in one go through the Cylinder Cipher). The Cylinder Cipher mode is encryption, using the M-94 disks. The last combination of string operations and other components calculates the offset part of the Cylinder Cipher key. This is specific for this cipher and not necessary otherwise. The gate at the bottom left is set to true and triggers the next key (if the number of test runs is set higher than 1). The string outputs on the bottom display the key, the plaintext, the ciphertext, and the offset of the key.
+    The following image displays a pure test vector generation scenario. The input text is the book "Alice in Wonderland", the seed is "SEED", and the regex pattern consists of two <i>\$unique</i> variables, which generate 25 numbers from 0 to 24 each, separated by a slash. The <b>TVG</b> has every replacement setting enabled. Before the encryption, the plaintext is split into blocks of five (so 5 blocks are encrypted in one go through the Cylinder Cipher). The Cylinder Cipher mode is encryption, using the M-94 disks. The last combination of string operations and other components calculates the offset part of the Cylinder Cipher key. This is specific for this cipher and not necessary otherwise. The gate at the bottom left is set to true and triggers the next key (if the number of test runs is set higher than 1). The string outputs on the bottom display the key, the plaintext, the ciphertext, and the offset of the key.
+    <newline/>
+    <newline/>
 
       <img src="TestVectorGenerator/DetailedDescription/Images/cylinderpurevectortemplate.png" width="100%"/>
 
+    <newline/>
+    <newline/>
     This <b>TVG</b> component was developed as part of a master thesis which contains more details about it:
+    <newline/>
+    <newline/>
 
-    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
+    "<i>Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2</i>"
     Bastian Heuser, University of Kassel -- 2017 -- Master thesis    
   </usage>
 
@@ -183,9 +199,11 @@
     <newline/>
     Die Regex-Eingabe (oder auch reguläre Ausdrucks-Eingabe) akzeptiert die meisten regulären Ausdrucks-Muster (die komplette Liste ist im Xeger-Wiki zu finden, das in den Referenzen verlinkt ist). Ein einfaches Beispiel wäre "[ab]{4,6}", welches Zeichenketten generiert, die aus a's und b's der Länge 4 bis 6 bestehen (wie "aaaa", "ababab", "bbabb"). Ein kompliziertes Beispiel ist die Generierung von Enigma-Schlüsseln:
     <newline/>
-    "$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / $unique([1-26]{3}) / $unique([A-Z](2){26})"
     <newline/>
-    Die erste $unique-Variable wird durch eine Zeichenkette von drei Symbolen aus dem gegebenen Alphabet ersetzt, separiert durch das Trennsymbol, welches in den Einstellungen der Komponente festgelegt wurde (wie "IV, I, III"). Der Schrägstrich und die umgebenden Leerzeichen werden belassen wie sie sind, weil sie nicht Teil eines zu generierenden Musters sind (zwischen den Klammern). Die zweite $unique-Variable generiert drei Zahlen von 1 bis 26 (wie "2, 26, 15"). Das letzte $unique spezifiziert auch die Frequenz des Trennsymbols (", " in diesem Fall) als 2 (anders als der Standard 1, der in den anderen beiden $unique-Variablen automatisch verwendet wird) in den runden Klammern. Eine Frequenz von 2 bedeutet, dass das Trennsymbol jeweils alle 2 Zeichen eingefügt wird. Folglich generiert der letzte Teil Zeichenketten von 26 Buchstaben von A bis Z, separiert in Zweiergruppen (wie "AG, IW, KC, RQ, ..."). Alle Alphabetsymbole werden nur einmal verwendet, was genau der hauptsächliche Zweck der $unique-Variable ist.
+    "<i>$unique([I|II|III|IV|V|VI|VII|VIII]{3}) / \$unique([1-26]{3}) / \$unique([A-Z](2){26})</i>"
+    <newline/>
+    <newline/>
+    Die erste <i>\$unique</i>-Variable wird durch eine Zeichenkette von drei Symbolen aus dem gegebenen Alphabet ersetzt, separiert durch das Trennsymbol, welches in den Einstellungen der Komponente festgelegt wurde (wie "IV, I, III"). Der Schrägstrich und die umgebenden Leerzeichen werden belassen wie sie sind, weil sie nicht Teil eines zu generierenden Musters sind (zwischen den Klammern). Die zweite <i>\$unique</i>-Variable generiert drei Zahlen von 1 bis 26 (wie "2, 26, 15"). Das letzte <i>\$unique</i> spezifiziert auch die Frequenz des Trennsymbols (", " in diesem Fall) als 2 (anders als der Standard 1, der in den anderen beiden <i>\$unique</i>-Variablen automatisch verwendet wird) in den runden Klammern. Eine Frequenz von 2 bedeutet, dass das Trennsymbol jeweils alle 2 Zeichen eingefügt wird. Folglich generiert der letzte Teil Zeichenketten von 26 Buchstaben von A bis Z, separiert in Zweiergruppen (wie "AG, IW, KC, RQ, ..."). Alle Alphabetsymbole werden nur einmal verwendet, was genau der hauptsächliche Zweck der <i>\$unique</i>-Variable ist.
     <newline/>
     <newline/>
     <b>Alphabet-Eingabe:</b>
@@ -243,13 +261,19 @@
     <newline/>
     Die Einstellung Schlüsselformat ist verfügbar für Natürliche-Sprache-Schlüssel und zufällige Schlüssel. Natürliche-Sprache-Schlüssel können entweder aus Buchstaben bestehen (und anderen Symbolen des Eingabetextes, wenn nicht ersetzt oder gelöscht) oder zu Zahlen transformiert werden. Der Schlüssel aus Zahlen kann jede Zahl entweder einmal verwenden (wenn die "Einmalig"-Option gewählt wurde) oder mehrfach. Der zufällige Schlüssel kann Buchstaben, Zahlen, binäre Zahlen oder Symbole des Eingabealphabets beinhalten. All diese Möglichkeiten können auch mit der "Einmalig"-Option kombiniert werden, sodass jedes Symbol höchstens einmal im Schlüssel beinhaltet sein darf.
     <newline/>
-    Das folgende Bild zeigt das Szenario der Generierung purer Testvektoren. Der Eingabetext ist das Buch "Alice in Wonderland", der eingegebene Samen ist "SEED", und das Regex-Muster besteht aus zwei $unique-Variablen, die jeweils 25 Zahlen von 0 bis 24 generieren, getrennt durch einen Schrägstrich. Alle Einstellungen zu Ersetzungen im Text sind im <b>TVG</b> aktiviert. Vor der Verschlüsselung wird der Klartext in Blöcke von je fünf Zeichen geteilt (also werden fünf Blöcke in einem Durchgang von der Zylinder-Chiffre verschlüsselt). Der Modus der Zylinder-Chiffre ist Verschlüsselung mit den M-94-Scheiben. Die letzte Kombination von Zeichenketten-Operationen und anderen Komponenten berechnet den Offset-Teil des Schlüssels. Diese Berechnung ist spezifisch für diese Chiffre und woanders nicht nötig. Das Tor (Gate) unten links steht auf wahr und stößt den nächsten Schlüssel an (wenn die Anzahl an Testläufen größer ist als 1). Die Zeichenausgaben unten zeigen den Schlüssel, Klartext, Geheimtext und das Offset des Schlüssels an.
+    Das folgende Bild zeigt das Szenario der Generierung purer Testvektoren. Der Eingabetext ist das Buch "Alice in Wonderland", der eingegebene Samen ist "SEED", und das Regex-Muster besteht aus zwei <i>\$unique</i>-Variablen, die jeweils 25 Zahlen von 0 bis 24 generieren, getrennt durch einen Schrägstrich. Alle Einstellungen zu Ersetzungen im Text sind im <b>TVG</b> aktiviert. Vor der Verschlüsselung wird der Klartext in Blöcke von je fünf Zeichen geteilt (also werden fünf Blöcke in einem Durchgang von der Zylinder-Chiffre verschlüsselt). Der Modus der Zylinder-Chiffre ist Verschlüsselung mit den M-94-Scheiben. Die letzte Kombination von Zeichenketten-Operationen und anderen Komponenten berechnet den Offset-Teil des Schlüssels. Diese Berechnung ist spezifisch für diese Chiffre und woanders nicht nötig. Das Tor (Gate) unten links steht auf wahr und stößt den nächsten Schlüssel an (wenn die Anzahl an Testläufen größer ist als 1). Die Zeichenausgaben unten zeigen den Schlüssel, Klartext, Geheimtext und das Offset des Schlüssels an.
+    <newline/>
+    <newline/>
 
       <img src="TestVectorGenerator/DetailedDescription/Images/cylinderpurevectortemplate.png" width="100%"/>
 
+    <newline/>
+    <newline/>
     Diese <b>TVG</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit enthält weitere Details hierzu:
+    <newline/>
+    <newline/>
 
-    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
+    "<i>Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2</i>"
     Bastian Heuser, Universität Kassel -- 2017 -- Masterarbeit    
   </usage>
 

@@ -14,23 +14,30 @@
     <section headline="Algorithm">
       The algorithm is working in three different states, shown in the following image:
       <newline/>
+    <newline/>
 
       <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/flowdiagramsimplecolored.png" width="100%"/>
 
       <newline/>
       <newline/>
-      State 1 - New test vector:
+    <newline/>
+      <b>State 1 - New test vector:</b>
       <newline/>
+    <newline/>
       In state 1 (green), the algorithm waits for a new test vector from the <b>TVG</b>. Once the new test vector is available, it is stored and provided to the components to be analyzed (<b>Cipher</b> and <b>CA</b>). The algorithm switches to state 2 and waits for the results of these components.
       <newline/>
       <newline/>
-      State 2 - Collect data:
+    <newline/>
+      <b>State 2 - Collect data:</b>
       <newline/>
+    <newline/>
       In state 2 (blue), the incoming results from the <b>Cipher</b> and <b>CA</b> components are stored together with the according test vector. The <b>Cipher</b> component provides the ciphertext, while the <b>CA</b> component provides the best key, best plaintext, and the collected values for the evaluation in an EvaluationContainer. If there are still keys to be generated (not all test runs finished), the current key is used to trigger the next test vector from the <b>TVG</b>. The algorithm switches to state 1 and waits for the next test vector. After all test vectors have been generated, the algorithm switches to state 3.
       <newline/>
       <newline/>
-      State 3 - Evaluation:
+    <newline/>
+      <b>State 3 - Evaluation:</b>
       <newline/>
+    <newline/>
       In state 3 (red), all collected test data is evaluated. These are the averages of the runtime (if enabled), the success probability, the percentage of decrypted ciphertext, the necessary decryptions, and (if provided) the restarts, the population size, and the tabu set size. Additionally, these values can be calculated in detail, for each ciphertext length, key length, or runtime (if enabled). The CSV output of those values can be used in other applications, for example in GnuPlot (together with the generated script output).
     </section>
   </introduction>
@@ -45,23 +52,30 @@
     <section headline="Algorithmus">
       Der Algorithmus agiert in drei verschiedenen Zuständen, zu sehen in folgendem Bild:
       <newline/>
+      <newline/>
 
       <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/flowdiagramsimplecolored.png" width="100%"/>
 
       <newline/>
       <newline/>
-      Zustand 1 - Neuer Testvektor:
       <newline/>
+      <b>Zustand 1 - Neuer Testvektor:</b>
+      <newline/>
+    <newline/>
       In Zustand 1 (grün) wartet der Algorithmus auf einen neuen Testvektor vom <b>TVG</b>. Sobald dieser Testvektor eingetroffen ist, wird er gespeichert und den zu analysierenden Komponenten (<b>Cipher</b> und <b>CA</b>) zur Verfügung gestellt. Der Algorithmus wechselt dann in den Zustand 2 und wartet auf die Ergebnisse dieser Komponenten.
       <newline/>
       <newline/>
-      Zustand 2 - Daten sammeln:
+    <newline/>
+      <b>Zustand 2 - Daten sammeln:</b>
       <newline/>
+    <newline/>
       In Zustand 2 (blau) werden die eingehenden Ergebnisse der <b>Cipher</b>- und <b>CA</b>-Komponenten zusammen mit dem entsprechenden Testvektor gespeichert. Die <b>Cipher</b>-Komponente überträgt dabei den Geheimtext, während die <b>CA</b>-Komponente den besten Schlüssel, besten Klartext und die gesammelten Werte für die Evaluation in einem EvaluationContainer bereitstellt. Wenn noch immer Schlüssel zu berechnen sind (noch nicht alle Testläufe sind fertig), wird der aktuelle Schlüssel verwendet, um die Generierung des nächsten Testvektors im <b>TVG</b> anzustoßen. Der Algorithmus wechselt in den ersten Zustand und wartet auf den nächsten Testvektor. Wenn alle Testvektoren berechnet wurden, wechselt der Algorithmus in Zustand 3.
       <newline/>
       <newline/>
-      Zustand 3 - Evaluation:
+    <newline/>
+      <b>Zustand 3 - Evaluation:</b>
       <newline/>
+    <newline/>
       Im dritten Zustand (rot) werden alle gesammelten Testdaten evaluiert. Diese sind die Durchschnittswerte der Laufzeit (falls aktiviert), der Erfolgswahrscheinlichkeit, die prozentuale Entschlüsselung der Geheimtexte, die benötigten Entschlüsselungen, und (wenn angegeben) die Neustarts, die Populationsgröße und die Größe des Tabu-Sets. Zusätzlich können diese Werte im Detail berechnet werden, jeweils in Abhängigkeit der Länge der Geheimtexte oder Schlüssel, oder der Laufzeit (falls aktiviert). Die CSV-Ausgabe (Komma-separierte Werte) dieser Werte kann in anderen Anwendungen verwendet werden, zum Beispiel in GnuPlot (zusammen mit der generierten GnuPlot-Skript-Ausgabe). 
     </section>
   </introduction>
@@ -188,12 +202,18 @@
     This setting only modifies the range of the Y-axes, if there are single very high or very low values in them. If a value is higher (or lower) than its neighbors by more than the specified factor, then the Y-range is normalized. This lays the emphasis of the initial GnuPlot range on the majority of the values and shows them in detail. Outliers usually cause the plot to be too compressed to be able to distinguish the values that are close to average.
     <newline/>
     The following image displays the complete testing process of the <b>CylinderCipherAnalyzer</b> component (<b>CCA</b>) in CrypTool 2 using the <b>CAA</b> component. The first step is highlighted in green, the second in blue, and the third in red. The <b>CAA</b> component itself is highlighted in yellow.
+    <newline/>
+    <newline/>
 
       <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/caa-template-final.png" width="100%"/>
 
+    <newline/>
+    <newline/>
     This <b>CAA</b> component was developed as part of a master thesis which contains more details about it:
+    <newline/>
+    <newline/>
 
-    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
+    "<i>Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2</i>"
     Bastian Heuser, University of Kassel -- 2017 -- Master thesis    
   </usage>
 
@@ -320,12 +340,18 @@
     Diese Einstellung modifiziert nur den Bereich der Y-Achsen, wenn einzelne sehr hohe oder niedrige Werte existieren. Wenn ein Wert um den hier festgelegten Faktor höher (oder niedriger) ist als seine Nachbarwerte, dann wird der Bereich der Y-Achsen normalisiert. Dadurch wird der Fokus des initialen GnuPlot-Bereichs auf die Mehrzahl der Werte gelegt und zeigt diese im Detail. Starke Ausreißer sorgen sonst dafür, dass der Graph so komprimiert wird, dass die Werte, die nah am Durchschnitt liegen, nicht mehr unterschieden werden können.
     <newline/>
     Das folgende Bild visualisiert den vollständigen Test-Prozess der <b>CylinderCipherAnalyzer</b>-Komponente (<b>CCA</b>) in CrypTool 2, durchgeführt von der <b>CAA</b>-Komponente. Der erste Schritt ist grün markiert, der zweite blau und der dritte rot. Die <b>CAA</b>-Komponente selbst ist gelb markiert.
+    <newline/>
+    <newline/>
 
       <img src="CryptAnalysisAnalyzer/DetailedDescription/Images/caa-template-final.png" width="100%"/>
 
+    <newline/>
+    <newline/>
     Diese <b>CAA</b>-Komponente wurde im Rahmen einer Masterarbeit entwickelt. Die Masterarbeit enthält weitere Details hierzu:
+    <newline/>
+    <newline/>
 
-    "Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2"
+    "<i>Development of an Evaluation Method for Cryptanalysis of Classical Ciphers in CrypTool 2</i>"
     Bastian Heuser, Universität Kassel -- 2017 -- Masterarbeit    
   </usage>
 
