@@ -142,7 +142,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Averagely decrypted: {0}% of min {1}.
+        ///   Looks up a localized string similar to Averagely decrypted: {0}% of min. {1}.
         /// </summary>
         internal static string Averagely_decrypted_of_min {
             get {
@@ -345,6 +345,24 @@ namespace CryptAnalysisAnalyzer.Properties {
         internal static string EvaluationOutputTooltipCaption {
             get {
                 return ResourceManager.GetString("EvaluationOutputTooltipCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full evaluation.
+        /// </summary>
+        internal static string FullEvaluationCaption {
+            get {
+                return ResourceManager.GetString("FullEvaluationCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aquire the full evaluation that requires an EvaluationContainer of the analyzed CA component.
+        /// </summary>
+        internal static string FullEvaluationTooltipCaption {
+            get {
+                return ResourceManager.GetString("FullEvaluationTooltipCaption", resourceCulture);
             }
         }
         

@@ -453,6 +453,12 @@
   <data name="Started_evaluating" xml:space="preserve">
     <value>Evaluierung gestartet</value>
   </data>
+  <data name="FullEvaluationCaption" xml:space="preserve">
+    <value>Volle Evaluation</value>
+  </data>
+  <data name="FullEvaluationTooltipCaption" xml:space="preserve">
+    <value>Erarbeite die volle Evaluation, die einen EvaluationContainer der analysierten CA-Komponente benötigt</value>
+  </data>
   <data name="GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output" xml:space="preserve">
     <value>GnuPlot Daten um die Ergebnisse mittels des GnuPlot Skripts zu zeichnen</value>
   </data>

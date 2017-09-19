@@ -667,7 +667,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 // count all values per runtime and the runtime per key and ciphertext lengths
                 TimeSpan timeSpan;
                 // TODO: calculate approximate runtime
-                if (_settings.FullEvaluation && !_noRuntime && testRun.GetRuntime(out timeSpan))
+                if (!_noRuntime && testRun.GetRuntime(out timeSpan))
                 {
                     double time = timeSpan.TotalMilliseconds;
                     _runtimeCount += time;
@@ -677,13 +677,17 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // detailed values
                     DictionaryExtention.AddOrIncrement(_successPerRuntime, time, currentSuccess);
                     DictionaryExtention.AddOrIncrement(_percentDecryptedPerRuntime, time, currentlyDecrypted);
-                    DictionaryExtention.AddOrIncrement(_decryptionsPerRuntime, time, decryptions);
-                    if (!_noRestarts)
-                        DictionaryExtention.AddOrIncrement(_restartsPerRuntime, time, currentRestarts);
-                    if (!_noTabuSetSize)
-                        DictionaryExtention.AddOrIncrement(_tabuSizesPerRuntime, time, currentTabuSize);
-                    if (!_noPopulationSize)
-                        DictionaryExtention.AddOrIncrement(_populationSizesPerRuntime, time, currentPopulationSize);
+
+                    if (_settings.FullEvaluation)
+                    {
+                        DictionaryExtention.AddOrIncrement(_decryptionsPerRuntime, time, decryptions);
+                        if (!_noRestarts)
+                            DictionaryExtention.AddOrIncrement(_restartsPerRuntime, time, currentRestarts);
+                        if (!_noTabuSetSize)
+                            DictionaryExtention.AddOrIncrement(_tabuSizesPerRuntime, time, currentTabuSize);
+                        if (!_noPopulationSize)
+                            DictionaryExtention.AddOrIncrement(_populationSizesPerRuntime, time, currentPopulationSize);
+                    }
 
                     DictionaryExtention.AddOrIncrement(_runtimePerKeyLength, keyLength, time);
                     DictionaryExtention.AddOrIncrement(_runtimePerCiphertextLength, ciphertextLength, time);
@@ -707,7 +711,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 _averageDecryptions = Math.Round((double)_decryptionsCount / _testRuns.Count, 2);
 
             // calculate the average runtime values
-            if (_settings.FullEvaluation && !_noRuntime)
+            if (!_noRuntime)
             {
                 // calculate the overall average values
                 _averageRuntime = _runtimeCount / _testRuns.Count;
@@ -724,13 +728,16 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         // detailed values
                         DictionaryExtention.DivideAndRoundPercent<double>(_successPerRuntime, time, count, 2);
                         DictionaryExtention.DivideAndRound<double>(_percentDecryptedPerRuntime, time, count, 2);
-                        DictionaryExtention.Divide<double>(_decryptionsPerRuntime, time, count);
-                        if (!_noRestarts)
-                            DictionaryExtention.Divide<double>(_restartsPerRuntime, time, count);
-                        if (!_noTabuSetSize)
-                            DictionaryExtention.Divide<double>(_tabuSizesPerRuntime, time, count);
-                        if (!_noPopulationSize)
-                            DictionaryExtention.Divide<double>(_populationSizesPerRuntime, time, count);
+                        if (_settings.FullEvaluation)
+                        {
+                            DictionaryExtention.Divide<double>(_decryptionsPerRuntime, time, count);
+                            if (!_noRestarts)
+                                DictionaryExtention.Divide<double>(_restartsPerRuntime, time, count);
+                            if (!_noTabuSetSize)
+                                DictionaryExtention.Divide<double>(_tabuSizesPerRuntime, time, count);
+                            if (!_noPopulationSize)
+                                DictionaryExtention.Divide<double>(_populationSizesPerRuntime, time, count);
+                        }
                     }
                 }
 
@@ -764,10 +771,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // calculate the detailed average values
                     DictionaryExtention.DivideAndRoundPercent<int>(_successPerKeyLength, keyLength, count, 2);
                     DictionaryExtention.DivideAndRound<int>(_percentDecryptedPerKeyLength, keyLength, count, 2);
+                    DictionaryExtention.Divide<int>(_runtimePerKeyLength, keyLength, count);
+
                     if (_settings.FullEvaluation)
                     {
                         DictionaryExtention.Divide<int>(_decryptionsPerKeyLength, keyLength, count);
-                        DictionaryExtention.Divide<int>(_runtimePerKeyLength, keyLength, count);
 
                         if (!_noRestarts)
                             DictionaryExtention.Divide<int>(_restartsPerKeyLength, keyLength, count);
@@ -793,10 +801,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     // calculate the detailed average values
                     DictionaryExtention.DivideAndRoundPercent<int>(_successPerCiphertextLength, ciphertextLength, count, 2);
                     DictionaryExtention.DivideAndRound<int>(_percentDecryptedPerCiphertextLength, ciphertextLength, count, 2);
+                    DictionaryExtention.Divide<int>(_runtimePerCiphertextLength, ciphertextLength, count);
+
                     if (_settings.FullEvaluation)
                     {
                         DictionaryExtention.Divide<int>(_decryptionsPerCiphertextLength, ciphertextLength, count);
-                        DictionaryExtention.Divide<int>(_runtimePerCiphertextLength, ciphertextLength, count);
 
                         if (!_noRestarts)
                             DictionaryExtention.Divide<int>(_restartsPerCiphertextLength, ciphertextLength, count);
@@ -827,7 +836,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
         {
             // build the average runtime string
             string averageRuntimeString = "";
-            if (_settings.FullEvaluation && !_noRuntime)
+            if (!_noRuntime)
                 averageRuntimeString = new DateTime(TimeSpan.FromMilliseconds(_averageRuntime).Ticks).ToString("HH:mm:ss:FFFF");
 
             // build the displayed string of occurring ciphertext lengths
@@ -870,7 +879,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             _evaluationOutput = "";
             if (!string.IsNullOrEmpty(_testSeriesSeed))
                 _evaluationOutput = Resources.Test_Series_Seed + _testSeriesSeed + "\r";
-            if (_settings.FullEvaluation && !_noRuntime)
+            if (!_noRuntime)
                 _evaluationOutput += Resources.Average_runtime + averageRuntimeString + "\r";
             _evaluationOutput += Resources.Ciphertext_lengths + ciphertextLengthString + "\r";
             _evaluationOutput += Resources.Key_lengths__ + keyLengthString + "\r";
@@ -934,7 +943,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     break;
                 // todo: disable runtime on axis if runtime or full eval disabled!
                 case XAxisPlot.runtime:
-                    if (_settings.FullEvaluation && !_noRuntime)
+                    if (!_noRuntime)
                     {
                         _yValuesArray = new double[_runtimes.Count];
                         _xValuesArray = new double[_runtimes.Count];
@@ -949,7 +958,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             else if (_settings.XAxis == XAxisPlot.keyLength)
                 AddKeyLengthValues();
             else if (_settings.XAxis == XAxisPlot.runtime)
-                if (_settings.FullEvaluation && !_noRuntime)
+                if (!_noRuntime)
                     AddRuntimeValues();
                 else {/* TODO: disable runtime in settings*/ }
         }
@@ -996,7 +1005,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 }
 
                 // set the according values for the second y-axis
-                // TODO: disable decryptions if full eval deactivated
+                // TODO: disable decryptions option if full eval deactivated
                 if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.decryptions)
                 {
                     double currentDecryptions = 0;
@@ -1022,7 +1031,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     }
 
                 }
-                else if (_settings.FullEvaluation &&_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
+                else if (_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
                 {
                     double currentRuntime = 0;
                     if (!_runtimePerCiphertextLength.TryGetValue(len, out currentRuntime))
@@ -1187,7 +1196,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     }
 
                 }
-                else if (_settings.FullEvaluation && _settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
+                else if (_settings.Y2Axis == Y2AxisPlot.runtime && !_noRuntime)
                 {
                     double currentRuntime = 0;
                     if (!_runtimePerKeyLength.TryGetValue(len, out currentRuntime))
@@ -1290,7 +1299,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
         public void AddRuntimeValues()
         {
-            if (!_settings.FullEvaluation || _noRuntime)
+            if (_noRuntime)
                 return;
                 
             int xPosition = 0;
@@ -1562,12 +1571,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
 
             // # second y-axis settings
             // make sure the second y-axis is enabled and the value exists
-            if (_settings.FullEvaluation &&
-                _settings.Y2Axis != Y2AxisPlot.none &&
-                !(_settings.Y2Axis == Y2AxisPlot.runtime && _noRuntime) &&
-                !(_settings.Y2Axis == Y2AxisPlot.restarts && _noRestarts) &&
-                !(_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && _noTabuSetSize) &&
-                !(_settings.Y2Axis == Y2AxisPlot.populationSizes && _noPopulationSize))
+            if (!(_settings.Y2Axis == Y2AxisPlot.runtime && _noRuntime) ||
+                _settings.FullEvaluation && 
+                (!(_settings.Y2Axis == Y2AxisPlot.restarts && _noRestarts) ||
+                !(_settings.Y2Axis == Y2AxisPlot.tabuSetSizes && _noTabuSetSize) ||
+                !(_settings.Y2Axis == Y2AxisPlot.populationSizes && _noPopulationSize)))
             {
                 _gnuPlotScriptOutput += "# " + Resources.second_y_Axis_settings + NewLine;
                 _gnuPlotScriptOutput += "set y2tic scale 0.75" + NewLine;
@@ -1610,7 +1618,8 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             }
 
             // if the second y-axis is enabled
-            if (_settings.FullEvaluation &&
+            if ((_settings.FullEvaluation ||
+                _settings.Y2Axis != Y2AxisPlot.runtime && !_noRuntime) &&
                 _settings.Y2Axis != Y2AxisPlot.none)
             {
                 _gnuPlotScriptOutput += "replot  \"" + _evalMethod + ".dat\" using 1:"+column+" title '" + _val3 + "' with linespoints ls 3 axes x1y2";
@@ -1856,7 +1865,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                     ProgressChanged(_keyCount-0.9, _totalKeysInput);
 
                 // calculate approximate runtime
-                if (!_settings.FullEvaluation && _settings.CalculateRuntime)
+                if (_settings.CalculateRuntime)
                     _startRuntime = DateTime.Now;
             }
             // Wait for the analysis method to send evaluation data.
@@ -1894,12 +1903,22 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 string id = "unknown";
                 if (_settings.FullEvaluation)
                     id = _evaluationInput.GetID().ToString();
+                else
+                    id = _ciphertextInput.GetHashCode().ToString();
 
                 EvaluationOutput += NewLine + Resources.ID + ": " + id + NewLine;
-                if (_settings.FullEvaluation && _settings.CalculateRuntime)
+                if (_settings.CalculateRuntime)
                 {
                     TimeSpan time;
-                    _evaluationInput.GetRuntime(out time);
+                    if (_settings.FullEvaluation)
+                    {
+                        _evaluationInput.GetRuntime(out time);
+                    }
+                    else
+                    {
+                        time = _approxRuntime;
+                    }
+
                     EvaluationOutput += Resources.Last_runtime + ": " + time.ToString() + NewLine;
                 }
 
