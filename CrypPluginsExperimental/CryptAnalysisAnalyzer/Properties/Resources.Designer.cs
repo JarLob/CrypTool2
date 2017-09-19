@@ -169,7 +169,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Best Plaintext.
+        ///   Looks up a localized string similar to Best plaintext.
         /// </summary>
         internal static string BestPlaintextInputCaption {
             get {
@@ -196,7 +196,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyse CryptAnalysis methods.
+        ///   Looks up a localized string similar to Analyzes cryptanalytic methods.
         /// </summary>
         internal static string CAAtooltip {
             get {
@@ -223,7 +223,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ciphertext Length.
+        ///   Looks up a localized string similar to Ciphertext length.
         /// </summary>
         internal static string Ciphertext_Length {
             get {
@@ -250,7 +250,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Plaintext encrypted by the used Cipher.
+        ///   Looks up a localized string similar to The plaintext encrypted by the used cipher.
         /// </summary>
         internal static string CiphertextInputTooltipCaption {
             get {
@@ -358,6 +358,15 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GnuPlot data output to plot using the GnuPlot script output.
+        /// </summary>
+        internal static string GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output {
+            get {
+                return ResourceManager.GetString("GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gnuplot script for plotting data from output GnuPlotData.
         /// </summary>
         internal static string Gnuplot_script_for_plotting_data_from_output_GnuPlotData {
@@ -376,7 +385,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The GnuPlot data output to save in a .dat file and use in a GnuPlot script file.
+        ///   Looks up a localized string similar to GnuPlot data output to be saved in a .dat file and used in GnuPlot with a GnuPlot script file.
         /// </summary>
         internal static string GnuPlotDataOutputTooltipCaption {
             get {
@@ -385,7 +394,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GnuPlot Settings.
+        ///   Looks up a localized string similar to GnuPlot settings.
         /// </summary>
         internal static string GnuPlotGroupCaption {
             get {
@@ -403,7 +412,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The GnuPlot script output to save in a .p file and load from the GnuPlot command line.
+        ///   Looks up a localized string similar to GnuPlot script output to be saved in a .p file and loaded from the GnuPlot command line.
         /// </summary>
         internal static string GnuPlotScriptOutputTooltipCaption {
             get {
@@ -421,7 +430,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Key Length.
+        ///   Looks up a localized string similar to Key length.
         /// </summary>
         internal static string Key_Length {
             get {
@@ -484,7 +493,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The key test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components).
+        ///   Looks up a localized string similar to The key test vector of the current test run (usually provided to both the Cipher and the CipherAnalyzer components).
         /// </summary>
         internal static string KeyOutputTooltipCaption {
             get {
@@ -520,7 +529,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimal correct percentag.
+        ///   Looks up a localized string similar to Minimal correct percentage.
         /// </summary>
         internal static string MinimalCorrectPercentageCaption {
             get {
@@ -529,7 +538,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The minimal correct percentage to match the plaintext by for success.
+        ///   Looks up a localized string similar to The minimal percentage of correctly decrypted ciphertext characters to be judged as success.
         /// </summary>
         internal static string MinimalCorrectPercentageTooltipCaption {
             get {
@@ -547,7 +556,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The minimal percentage the decrypted ciphertext has to match the correct plaintext to count as a succesfull decryption.
+        ///   Looks up a localized string similar to The minimal percentage the decrypted ciphertext has to match the correct plaintext to count as a successfull decryption.
         /// </summary>
         internal static string MinimumPercentageTooltipCaption {
             get {
@@ -583,7 +592,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The factor by which outstandingly high values have to be higher than the preceding value to be ignored in the standard focus range of the GnuPlot.
+        ///   Looks up a localized string similar to The factor by which outstandingly high (or low) values have to differ from the adjacent values to be ignored in the standard focus range of the GnuPlot.
         /// </summary>
         internal static string NormalizingFactorTooltipCaption {
             get {
@@ -601,7 +610,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Percent Decrypted.
+        ///   Looks up a localized string similar to Percent decrypted.
         /// </summary>
         internal static string Percent_Decrypted {
             get {
@@ -673,7 +682,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The plaintext test vector of the current test run (usually to provide for the Cipher and CipherAnalyzer components).
+        ///   Looks up a localized string similar to The plaintext test vector of the current test run (usually provided to both the Cipher and the CipherAnalyzer components).
         /// </summary>
         internal static string PlaintextOutputTooltipCaption {
             get {
@@ -691,7 +700,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to plotting.
+        ///   Looks up a localized string similar to Plotting.
         /// </summary>
         internal static string plotting {
             get {
@@ -709,7 +718,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Population Sizes.
+        ///   Looks up a localized string similar to Population sizes.
         /// </summary>
         internal static string Population_Sizes {
             get {
@@ -790,7 +799,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to second y-Axis settings.
+        ///   Looks up a localized string similar to Second Y-Axis settings.
         /// </summary>
         internal static string second_y_Axis_settings {
             get {
@@ -898,7 +907,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tabu Set Sizes.
+        ///   Looks up a localized string similar to Tabu set sizes.
         /// </summary>
         internal static string Tabu_Set_Sizes {
             get {
@@ -916,7 +925,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Series Seed: .
+        ///   Looks up a localized string similar to Test series seed: .
         /// </summary>
         internal static string Test_Series_Seed {
             get {
@@ -925,7 +934,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Text.
+        ///   Looks up a localized string similar to Input text.
         /// </summary>
         internal static string TextInputCaption {
             get {
@@ -934,7 +943,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The input text from which the plaintexts and natural language keys are taken.
+        ///   Looks up a localized string similar to The input text from which the plaintexts and natural language keys are taken from.
         /// </summary>
         internal static string TextInputTooltipCaption {
             get {
@@ -1015,7 +1024,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TryGetValue from {0} failed! ciphertextLength: {1}, {2}: .
+        ///   Looks up a localized string similar to TryGetValue() from {0} failed! ciphertextLength: {1}, {2}: .
         /// </summary>
         internal static string TryGetValue_from__0__failed__ciphertextLength___1____2 {
             get {
@@ -1033,7 +1042,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to x-Axis settings.
+        ///   Looks up a localized string similar to X-Axis settings.
         /// </summary>
         internal static string x_Axis_settings {
             get {
@@ -1060,7 +1069,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to y-Axis settings.
+        ///   Looks up a localized string similar to Y-Axis settings.
         /// </summary>
         internal static string y_Axis_settings {
             get {

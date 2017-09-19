@@ -896,7 +896,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             // generate the GnuPlot data output string
             // build a header to guide the user
             _gnuPlotDataOutput = "###########################################################" + NewLine;
-            _gnuPlotDataOutput += "#" + Resources.Gnuplot_script_for_plotting_data_from_output_GnuPlotData + NewLine;
+            _gnuPlotDataOutput += "#" + Resources.GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output + NewLine;
             _gnuPlotDataOutput += "# " + Resources.Save_the_GnuPlotData_output_in_a_file_named_ + NewLine;
             _gnuPlotDataOutput += "#" + NewLine;
             _gnuPlotDataOutput += "# --> '" + _evalMethod + ".dat'" + NewLine;

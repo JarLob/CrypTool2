@@ -459,4 +459,7 @@
   <data name="Started_evaluating" xml:space="preserve">
     <value>Started evaluating</value>
   </data>
+  <data name="GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output" xml:space="preserve">
+    <value>GnuPlot data output to plot using the GnuPlot script output</value>
+  </data>
 </root>
