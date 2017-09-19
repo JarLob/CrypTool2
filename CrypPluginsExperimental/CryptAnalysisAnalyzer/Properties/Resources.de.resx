@@ -457,7 +457,7 @@
     <value>Volle Evaluation</value>
   </data>
   <data name="FullEvaluationTooltipCaption" xml:space="preserve">
-    <value>Erarbeite die volle Evaluation, die einen EvaluationContainer der analysierten CA-Komponente benötigt</value>
+    <value>Führe die volle Evaluation durch -- dies erfordert einen EvaluationContainer der analysierten CA-Komponente.</value>
   </data>
   <data name="GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output" xml:space="preserve">
     <value>GnuPlot-Output-Daten, die mit dem GnuPlot-Skript gezeichnet werden können</value>
