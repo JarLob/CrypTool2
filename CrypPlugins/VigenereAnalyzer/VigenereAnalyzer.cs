@@ -389,13 +389,13 @@ namespace Cryptool.VigenereAnalyzer
 
             if (_presentation.BestList.Count == 0)
             {
-                Plaintext = entry.Text;
-                Key = entry.Key;
+                _plaintext = entry.Text;
+                _key = entry.Key;
             }
             else if(entry.Value > _presentation.BestList.First().Value)
             {
-                Plaintext = entry.Text;
-                Key = entry.Key;
+                _plaintext = entry.Text;
+                _key = entry.Key;
             }
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
