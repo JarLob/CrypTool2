@@ -188,8 +188,6 @@ namespace Cryptool.M138Analyzer
                             Ciphertext.Remove(Plaintext.Length);
                         }
                     } //Ciphertext and Plaintext have the same length
-                    ResultText = Plaintext;
-                    OnPropertyChanged("ResultText");
                     CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
                     PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
                     int _textLength = Plaintext.Length;
@@ -243,6 +241,8 @@ namespace Cryptool.M138Analyzer
                         _estimatedEndTime = _globalStartTime.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
                         UpdateDisplayEnd(i, _estimatedEndTime);
                     }
+                    ResultText = Plaintext;
+                    OnPropertyChanged("ResultText");
                     CalculatedKey = AllPossibleKeysAsString.ToString();
                     OnPropertyChanged("CalculatedKey");
                     break;
@@ -797,8 +797,8 @@ namespace Cryptool.M138Analyzer
                     if (_globalBestKeyCost > BestCostValueOfAllKeys)
                     {
                         //New Best key over all offsetz found, update output
-                        ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _trimKey, _keyOffset, StripList), Alphabet);
-                        OnPropertyChanged("ResultText");
+                        //ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _trimKey, _keyOffset, StripList), Alphabet);
+                        //OnPropertyChanged("ResultText");
                         BestCostValueOfAllKeys = _globalBestKeyCost;
                     }
                 }
