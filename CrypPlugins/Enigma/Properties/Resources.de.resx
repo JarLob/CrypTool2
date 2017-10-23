@@ -807,4 +807,10 @@
   <data name="OutputKeyTooltip" xml:space="preserve">
     <value>Die aktuell besten während der Analyse gefundenen Schlüssel</value>
   </data>
+  <data name="InputKeyCaption" xml:space="preserve">
+    <value>Schlüssel-Eingabe</value>
+  </data>
+  <data name="InputKeyTooltip" xml:space="preserve">
+    <value>Eingabe eines Enigma-Schlüssels, der die zu verwendenden Rotoren, Ringe und Steckbrett-Verbindungen beinhaltet</value>
+  </data>
 </root>

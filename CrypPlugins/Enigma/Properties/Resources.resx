@@ -232,7 +232,7 @@
     <value>The mapping and the inverse mapping are the same, i.e. if A maps to X, the X maps to A.</value>
   </data>
   <data name="KeyCaption" xml:space="preserve">
-    <value>Key (Initial rotor setting)</value>
+    <value>Initial rotor setting</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
     <value>Please provide the initial rotor setting for each rotor, e.g. ABCD. Note that the slowest rotor is on the left and the fastest rotor is on the right. Only the Enigma M4 ("Shark") uses four rotors.</value>
@@ -806,5 +806,11 @@
   </data>
   <data name="OutputKeyTooltip" xml:space="preserve">
     <value>Last best found keys during analysis</value>
+  </data>
+  <data name="InputKeyCaption" xml:space="preserve">
+    <value>Input Key</value>
+  </data>
+  <data name="InputKeyTooltip" xml:space="preserve">
+    <value>Input an Enigma key containing the rotors to use, the rings to use, and the plugboard connections</value>
   </data>
 </root>

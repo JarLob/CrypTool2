@@ -1005,24 +1005,24 @@ namespace Cryptool.Enigma
         public void giveFeedbackAndDie()
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback) delegate
-                                                                                  {
+                {
                                                                                       
-                                                                                      if (playbool)
-                                                                                      {
-                                                                                          stopclick(this,
-                                                                                                    EventArgs.Empty);
-                                                                                          Object[] carrier =
-                                                                                              new Object[3];
-                                                                                          carrier[0] =
-                                                                                              output.Substring(0,
-                                                                                                               output.
-                                                                                                                   Length);
-                                                                                          carrier[1] = output.Length;
-                                                                                          carrier[2] = output.Length;
-                                                                                          fireLetters(carrier,
-                                                                                                      EventArgs.Empty);
-                                                                                      }
-                                                                                  }, null);
+                    if (playbool)
+                    {
+                        stopclick(this,
+                                EventArgs.Empty);
+                        Object[] carrier =
+                            new Object[3];
+                        carrier[0] =
+                            output.Substring(0,
+                                            output.
+                                                Length);
+                        carrier[1] = output.Length;
+                        carrier[2] = output.Length;
+                        fireLetters(carrier,
+                                    EventArgs.Empty);
+                    }
+                }, null);
         }
 
         public void disablePresentation(Boolean isrunning, Boolean isvisible) 

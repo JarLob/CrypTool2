@@ -682,6 +682,8 @@ namespace Cryptool.Enigma
         private void printBestCandidates()
         {
             StringBuilder message = new StringBuilder("  -- Analysis results --" + Environment.NewLine);
+            StringBuilder currentBestKey = new StringBuilder();
+
             message.AppendLine("=====================================");
 
             foreach (analysisConfigSettings cfg in analysisCandidates)
@@ -691,8 +693,15 @@ namespace Cryptool.Enigma
                     (rotorEnum)cfg.Rotor3, (rotorEnum)cfg.Rotor2, (rotorEnum)cfg.Rotor1,
                     cfg.Ring3.ToString("00"), cfg.Ring2.ToString("00"), cfg.Ring1.ToString("00"),
                     cfg.Key, pluginFacade.pB2String(cfg.PlugBoard));
+
+                currentBestKey = new StringBuilder();
+                currentBestKey.AppendFormat("{0},{1},{2}/{3},{4},{5}/{6}/{7}",
+                    (rotorEnum)cfg.Rotor3, (rotorEnum)cfg.Rotor2, (rotorEnum)cfg.Rotor1,
+                    cfg.Ring3.ToString(), cfg.Ring2.ToString(), cfg.Ring1.ToString(),
+                    cfg.Key, pluginFacade.pB2String(cfg.PlugBoard));
             }
-            pluginFacade.OutputKey = message.ToString();
+            //pluginFacade.OutputKey = message.ToString();
+            pluginFacade.SetOutputKey(currentBestKey.ToString());
             pluginFacade.LogMessage(message.ToString(), NotificationLevel.Info);
         }
 

@@ -63,6 +63,7 @@ namespace Cryptool.Enigma
         private EnigmaCore core;
         private EnigmaAnalyzer analyzer;
         private string inputString;
+        private string _inputKey;
         private IDictionary<int, IDictionary<string, double[]>> statistics;
         // FIXME: enable optional statistics input
         //private IDictionary<string, double[]> inputTriGrams;
@@ -70,7 +71,8 @@ namespace Cryptool.Enigma
         private string outputKey;
         private string savedKey;
         public Boolean isrunning;
-        
+        private Boolean _newString = false;
+        private Boolean _newKey = false;
 
         #endregion
 
@@ -250,7 +252,7 @@ namespace Cryptool.Enigma
         {
             // Got an intermidate results from the analyzer, hence display it
             outputString = postFormatOutput(e.Result);
-            OnPropertyChanged("OutputString");
+            //OnPropertyChanged("OutputString");
         }
 
         #endregion
@@ -354,7 +356,7 @@ namespace Cryptool.Enigma
         {
             Object[] carrier = sender as Object[];
 
-            OutputString = (String)carrier[0] ;
+            this.outputString = (String)carrier[0] ;
             int x = (int)carrier[1];
             int y = (int)carrier[2];
             
@@ -400,7 +402,26 @@ namespace Cryptool.Enigma
                 if (value != inputString)
                 {
                     this.inputString = value;
+                    this._newString = true;
                     OnPropertyChanged("InputString");
+                }
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", false)]
+        public string InputKey
+        {
+            get { return this._inputKey; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value) && value != this._inputKey)
+                {
+                    this._inputKey = value;
+                    this._newKey = true;
+                    OnPropertyChanged("InputKey");
+                    // TODO: uncomment
+                    //settings.HideAllBasicKeySettings();
+                    settings.SetKeySettings(value);
                 }
             }
         }
@@ -445,6 +466,11 @@ namespace Cryptool.Enigma
         #endregion
 
         #region Public methods
+
+        public void SetOutputKey (string key)
+        {
+            this.outputKey = key;
+        }
 
         public void PreExecution()
         {
@@ -516,8 +542,6 @@ namespace Cryptool.Enigma
                     // FIXME: output all scorings
                     LogMessage("Enigma encryption done. The resulting index of coincidences is " + analyzer.calculateScore(outputString, 0), NotificationLevel.Info);
 
-                    // "fire" the output
-                    OnPropertyChanged("OutputString");
                     break;
                 case 1:
                     LogMessage("Enigma analysis starting ...", NotificationLevel.Info);
@@ -533,7 +557,6 @@ namespace Cryptool.Enigma
 
                         // fire all best candidates
                         outputString = postFormatOutput(decrypt);
-                        OnPropertyChanged("OutputString");
                     }
 
                     ShowProgress(1000, 1000);
@@ -541,6 +564,10 @@ namespace Cryptool.Enigma
                 default:
                     break;
             }
+
+            // "fire" the outputs
+            OnPropertyChanged("OutputString");
+            OnPropertyChanged("OutputKey");
 
         }
 

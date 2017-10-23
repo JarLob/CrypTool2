@@ -447,6 +447,131 @@ namespace Cryptool.Enigma
             return c - 'A';
         }
 
+        public void HideAllBasicKeySettings()
+        {
+            hideSettingsElement("Rotor1");
+            hideSettingsElement("Rotor2");
+            hideSettingsElement("Rotor3");
+            hideSettingsElement("Rotor4");
+            hideSettingsElement("Ring1");
+            hideSettingsElement("Ring2");
+            hideSettingsElement("Ring3");
+            hideSettingsElement("Ring4");
+            hidePlugBoard();
+        }
+
+        public void SetKeySettings(string inputKey)
+        {
+            // delete the spaces
+            inputKey = inputKey.Replace(" ", String.Empty);
+            inputKey = inputKey.Replace("\n", String.Empty);
+            inputKey = inputKey.Replace("\r", String.Empty);
+            int firstSlashIndex = inputKey.IndexOf('/');
+            int secondSlashIndex = (inputKey.Substring(firstSlashIndex + 1)).IndexOf('/') + firstSlashIndex + 1;
+            string rotorString = inputKey.Substring(0, firstSlashIndex);
+            string ringString = inputKey.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1);
+            string plugBoardString = inputKey.Substring(secondSlashIndex + 1);
+
+            SetRotorsByString(rotorString);
+            SetRingByString(ringString);
+            SetPlugBoardByString(plugBoardString);
+        }
+
+        private void SetRotorsByString(string rotorString)
+        {
+            string[] rotors = rotorString.Split(',');
+            rotor1 = GetRotorIndexFromString(rotors[0]);
+            rotor2 = GetRotorIndexFromString(rotors[1]);
+            rotor3 = GetRotorIndexFromString(rotors[2]);
+            if (rotors.Length > 3)
+            {
+                rotor4 = GetRotorIndexFromString(rotors[3]);
+                OnPropertyChanged("Rotor4");
+            }
+
+            OnPropertyChanged("Rotor1");
+            OnPropertyChanged("Rotor2");
+            OnPropertyChanged("Rotor3");
+        }
+
+        private int GetRotorIndexFromString(string indexString)
+        {
+            int index = -1;
+
+            switch (indexString)
+            {
+                case "I":
+                    index = 0;
+                    break;
+                case "II":
+                    index = 1;
+                    break;
+                case "III":
+                    index = 2;
+                    break;
+                case "IV":
+                    index = 3;
+                    break;
+                case "V":
+                    index = 4;
+                    break;
+                case "VI":
+                    index = 5;
+                    break;
+                case "VII":
+                    index = 6;
+                    break;
+                case "VIII":
+                    index = 7;
+                    break;
+            }
+
+            return index;
+        }
+
+        private void SetRingByString(string ringString)
+        {
+            string[] rings = ringString.Split(',');
+            
+            int value1, value2, value3, value4 = -1;
+
+            if (!Int32.TryParse(rings[0], out value1) ||
+                !Int32.TryParse(rings[1], out value2) ||
+                !Int32.TryParse(rings[2], out value3) ||
+                rings.Length > 3 && !Int32.TryParse(rings[3], out value4))
+            {
+                Console.WriteLine("Error parsing the InputKey ring settings!");
+                return;
+            }
+
+            ring1 = value1;
+            ring2 = value2;
+            ring3 = value3;
+            if (rings.Length > 3)
+            {
+                ring4 = value4;
+                OnPropertyChanged("Ring4");
+            }
+
+            OnPropertyChanged("Ring1");
+            OnPropertyChanged("Ring2");
+            OnPropertyChanged("Ring3");
+        }
+
+        private void SetPlugBoardByString(string plugBoardString)
+        {
+            ResetPlugboard();
+            string[] plugBoardStringArray = plugBoardString.Split(',');
+
+            for (int i = 0; i < plugBoardStringArray.Length; i++)
+            {
+                int indexLetterOne = alphabet.IndexOf(plugBoardStringArray[i].Substring(0, 1));
+                int indexLetterTwo = alphabet.IndexOf(plugBoardStringArray[i].Substring(1, 1));
+                setPlugBoard(indexLetterOne, indexLetterTwo);
+                setPlugBoard(indexLetterTwo, indexLetterOne);
+            }
+        }
+
         #endregion
 
         #region Initialisation / Contructor
