@@ -51,6 +51,26 @@ namespace Cryptool.VigenereAnalyzer
         private DateTime _endTime;
         private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+        // EVALUATION!
+        private static int threads = 1;
+        private static int currentThread = 0;
+        private int _improvements = 0;
+        
+        private string _ciphertextInput;
+        private string _plaintextInput;
+        private double _percentageInput;
+
+        private bool _newCiphertext = false;
+        private bool _newPlaintext = false;
+        private bool _newPercentage = false;
+
+        private TimeSpan _runtime = new TimeSpan();
+        private bool _finished = false;
+        private int _totalNumberOfRestarts;
+        private int _totalNumberOfDecryptions;
+        private int[] _numberOfRestarts;
+        private int[] _numberOfDecryptions;
+
         public VigenereAnalyzer()
         {
             _presentation.UpdateOutputFromUserChoice+=UpdateOutputFromUserChoice;
@@ -63,10 +83,51 @@ namespace Cryptool.VigenereAnalyzer
         }
         
         [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
-        public string Ciphertext { get; set; }
+        public string Ciphertext 
+        {
+            get { return _ciphertextInput; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value) && value != _ciphertextInput)
+                {
+                    _ciphertextInput = value;
+                    _newCiphertext = true;
+                    OnPropertyChanged("Ciphertext");
+                }
+            }
+        }
 
         [PropertyInfo(Direction.InputData, "VigenereAlphabetCaption", "VigenereAlphabetTooltip", false)]
         public string VigenereAlphabet { get; set; }
+
+        // EVALUATION!
+        [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
+        public string CorrectPlaintextInput
+        {
+            get { return this._plaintextInput; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value) && value != this._plaintextInput)
+                {
+                    this._plaintextInput = value;
+                    OnPropertyChanged("CorrectPlaintextInput");
+                    this._newPlaintext = true;
+                }
+            }
+        }
+
+        // EVALUATION!
+        [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
+        public double MinimalCorrectPercentage
+        {
+            get { return this._percentageInput; }
+            set
+            {
+                this._percentageInput = value;
+                this._newPercentage = true;
+                OnPropertyChanged("MinimalCorrectPercentage");
+            }
+        }
 
         [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip", true)]
         public String Plaintext
@@ -80,6 +141,20 @@ namespace Cryptool.VigenereAnalyzer
         {
             get { return _key; }
             set { _key = value; OnPropertyChanged("Key"); }
+        }
+
+        // EVALUATION!
+        [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
+        public EvaluationContainer EvaluationOutput
+        {
+            get
+            {
+                var elapsedtime = DateTime.Now.Subtract(_startTime);
+                _runtime = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, elapsedtime.Milliseconds);
+                var ID = _ciphertextInput.GetHashCode();
+
+                return new EvaluationContainer(ID, _runtime, _totalNumberOfDecryptions, _totalNumberOfRestarts);
+            }
         }
         
         public void PreExecution()
@@ -111,6 +186,25 @@ namespace Cryptool.VigenereAnalyzer
         {
             Ciphertext = null;
             VigenereAlphabet = null;
+
+
+            _ciphertextInput = String.Empty;
+
+            _plaintext = String.Empty;
+            _plaintextInput = String.Empty;
+            _key = String.Empty;
+            _ciphertextInput = String.Empty;
+            _percentageInput = new Double();
+            _stopped = false;
+            _startTime = new DateTime();
+            _endTime = new DateTime();
+
+            // EVALUATION! reset values
+            _runtime = new TimeSpan();
+            _totalNumberOfRestarts = 0;
+            _totalNumberOfDecryptions = 0;
+            _improvements = 0;
+            _finished = false;
         }
 
         public event StatusChangedEventHandler OnPluginStatusChanged;
@@ -140,6 +234,11 @@ namespace Cryptool.VigenereAnalyzer
             _stopped = false;
             ProgressChanged(0, 1);
 
+            // EVALUATION!
+            if (!_newCiphertext)
+            {
+                return;
+            }
             if (string.IsNullOrEmpty(Ciphertext))
             {
                 GuiLogMessage("No Ciphertext given for analysis!", NotificationLevel.Error);
@@ -150,7 +249,22 @@ namespace Cryptool.VigenereAnalyzer
                 GuiLogMessage("No Vigenere Alphabet given for analysis!", NotificationLevel.Error);
                 return;
             }
-            var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet), Alphabet);
+
+
+            // EVALUATION! if stopping is active, percentage and plaintext are necessary
+            if (_settings.StopIfPercentReached &&
+                    (!_newPercentage || !_newPlaintext))
+            {
+                // wait for new values
+                return;
+            }
+
+            // consume values
+            _newCiphertext = false;
+            _newPercentage = false;
+            _newPlaintext = false;
+
+            var ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(_ciphertextInput.ToUpper(), Alphabet), Alphabet);
 
             if (_settings.ToKeyLength > ciphertext.Length)
             {
@@ -162,9 +276,28 @@ namespace Cryptool.VigenereAnalyzer
                 var temp = _settings.ToKeyLength;
                 _settings.ToKeyLength = _settings.FromKeylength;
                 _settings.FromKeylength = temp;
-            }            
+            }
+
+            // EVALUATION!
+            if (_percentageInput <= 0 ||
+                _percentageInput > 100)
+            {
+                _percentageInput = 95;
+            }
+            _runtime = new TimeSpan();
+
+            _totalNumberOfRestarts = 0;
+            _totalNumberOfDecryptions = 0;
+            _numberOfRestarts = new int[1 /*_settings.CoresUsed*/]; // prepared for multi threading
+            _numberOfDecryptions = new int[1 /*_settings.CoresUsed*/];
+            for (int t = 1 /*_settings.CoresUsed*/ - 1; t >= 0; t--)
+            {
+                _numberOfRestarts[t] = 0;
+                _numberOfDecryptions[t] = 0;
+            }
+
             UpdateDisplayStart();
-            for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength; keylength++)
+            for (var keylength = _settings.FromKeylength; keylength <= _settings.ToKeyLength && !_finished; keylength++)
             {
                 UpdateDisplayEnd(keylength);
                 HillclimbVigenere(ciphertext, keylength, _settings.Restarts);
@@ -174,10 +307,24 @@ namespace Cryptool.VigenereAnalyzer
                 }
             }
             UpdateDisplayEnd(_settings.ToKeyLength);
+
+            // EVALUATION!
+            for (var i = 0; i < threads; i++)
+            {
+                _totalNumberOfRestarts += _numberOfRestarts[i];
+                _totalNumberOfDecryptions += _numberOfDecryptions[i];
+            }
+            // adding 1 for the last decryption
+            _totalNumberOfDecryptions++;    
+
             if (_presentation.BestList.Count > 0)
             {
                 Plaintext = _presentation.BestList[0].Text;
                 Key = _presentation.BestList[0].Key;
+
+                // EVALUATION!
+                _finished = false;
+                OnPropertyChanged("EvaluationOutput");
             }
             
             ProgressChanged(1, 1);            
@@ -269,15 +416,19 @@ namespace Cryptool.VigenereAnalyzer
                 {
                     foundbetter = false;
                     // permute key
-                    for (var i = 0; i < keylength; i++)
+                    for (var i = 0; i < keylength && !_finished; i++)
                     {
-                        for (var j = 0; j < alphabetlength; j++)
+                        for (var j = 0; j < alphabetlength && !_finished; j++)
                         {
                             var oldLetter = runkey[i];
                             runkey[i] = j;
                             plaintext = _settings.Mode == Mode.Vigenere
                                 ? DecryptVigenereOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext)
                                 : DecryptAutokeyOwnAlphabetInPlace(plaintext, runkey, numvigalphabet, i, ciphertext);
+
+                            // EVALUATION! Count the number of decryptions per thread
+                            _numberOfDecryptions[currentThread]++;
+
                             keys++;
                             var costvalue = 0.0;
                             switch (_settings.CostFunction)
@@ -302,7 +453,43 @@ namespace Cryptool.VigenereAnalyzer
                             {
                                 bestkeycost = costvalue;
                                 bestkey = (int[]) runkey.Clone();
-                                foundbetter = true;                                
+                                foundbetter = true;
+
+                                // EVALUATION!
+                                if (bestkeycost > globalbestkeycost)
+                                {
+
+                                    // EVALUATION! increase the _improvements counter
+                                    _improvements++;
+                                    // only map the current plaintext into text space and
+                                    // compare its correctness, if the stopping option is
+                                    // active, a percentage is provided and the _improvements
+                                    // have reached the specified minimum (frequency)
+                                    if (_settings.StopIfPercentReached &&
+                                        _percentageInput != 0 &&
+                                        _improvements % _settings.ComparisonFrequency == 0)
+                                    {
+                                        double progress1 = (keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts;
+                                        double progress2 = (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts;
+                                        double progress = progress1 / progress2 * 100.0;
+
+                                        string currentBestPlaintext = MapNumbersIntoTextSpace(_settings.Mode == Mode.Vigenere ? DecryptVigenereOwnAlphabet(ciphertext, bestkey, MapTextIntoNumberSpace(VigenereAlphabet, Alphabet)) :
+                                            DecryptAutokeyOwnAlphabet(ciphertext, bestkey, MapTextIntoNumberSpace(VigenereAlphabet, Alphabet)), Alphabet);
+                                        
+                                        // calculate string similarity between the current
+                                        // plaintext and the provided original plaintext
+                                        double currentlyCorrect = _plaintextInput.CalculateSimilarity(currentBestPlaintext) * 100;
+
+                                        Console.WriteLine(progress + "% - currentlyCorrect: " + currentlyCorrect + "% - best key cost:" + bestkeycost);
+
+                                        // stop the algorithm if the percentage is high enough
+                                        if (currentlyCorrect >= _percentageInput)
+                                        {
+                                            _finished = true;
+                                            restarts = 0;
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -332,9 +519,10 @@ namespace Cryptool.VigenereAnalyzer
                                         _presentation.currentSpeed.Content = string.Format("{0:0,0}", keysDispatcher);
                                     }
                                     // ReSharper disable once EmptyGeneralCatchClause
-                                    catch (Exception)
+                                    catch (Exception e)
                                     {
                                         //wtf?
+                                        Console.WriteLine("e1: " + e);
                                     }
                                 }, null);
                                 keys = 0;
@@ -343,16 +531,24 @@ namespace Cryptool.VigenereAnalyzer
                         }
                     }
                     runkey = (int[])bestkey.Clone();
-                } while (foundbetter);
+                } while (foundbetter && !_finished);
 
                 UpdateDisplayEnd(keylength);
                 restarts--;
+
+                // EVALUATION! count the number of restarts per thread
+                _numberOfRestarts[currentThread]++;
+
                 if (bestkeycost > globalbestkeycost)
                 {
                     globalbestkeycost = bestkeycost;
                     AddNewBestListEntry(bestkey, globalbestkeycost, ciphertext);
                 }
                 ProgressChanged((keylength - _settings.FromKeylength) * totalrestarts + totalrestarts - restarts, (_settings.ToKeyLength - _settings.FromKeylength + 1) * totalrestarts);
+            
+                // EVALUATION!
+                if (_finished)
+                    return;
             }
             //We update finally the keys/second of the ui
             var keysDispatcher2 = keys;
@@ -364,11 +560,15 @@ namespace Cryptool.VigenereAnalyzer
                     _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception)
+                catch (Exception e)
                 {
                     //wtf?
+                    Console.WriteLine("e2: " + e);
                 }
             }, null);
+
+            // EVALUATION!
+            return;
         }
 
         /// <summary>
@@ -421,9 +621,10 @@ namespace Cryptool.VigenereAnalyzer
                     _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception)
+                catch (Exception e)
                 {
                     //wtf?
+                    Console.WriteLine("e3: " + e);
                 }
             }, null); 
         }
@@ -743,4 +944,62 @@ namespace Cryptool.VigenereAnalyzer
         }        
     }    
 
+    public static class SimilarityExtensions
+    {
+        /// <summary>
+        /// Returns the number of steps required to transform the source string
+        /// into the target string.
+        /// </summary>
+        public static int ComputeLevenshteinDistance(this string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.IsNullOrEmpty(target) ? 0 : target.Length;
+
+            if (string.IsNullOrEmpty(target))
+                return string.IsNullOrEmpty(source) ? 0 : source.Length;
+
+            int sourceLength = source.Length;
+            int targetLength = target.Length;
+
+            int[,] distance = new int[sourceLength + 1, targetLength + 1];
+
+            // Step 1
+            for (int i = 0; i <= sourceLength; distance[i, 0] = i++) ;
+            for (int j = 0; j <= targetLength; distance[0, j] = j++) ;
+
+            for (int i = 1; i <= sourceLength; i++)
+            {
+                for (int j = 1; j <= targetLength; j++)
+                {
+                    // Step 2
+                    int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
+
+                    // Step 3
+                    distance[i, j] = Math.Min(
+                                        Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1),
+                                        distance[i - 1, j - 1] + cost);
+                }
+            }
+
+            return distance[sourceLength, targetLength];
+        }
+
+        /// <summary> 
+        /// Calculate percentage similarity of two strings
+        /// <param name="source">Source String to Compare with</param>
+        /// <param name="target">Targeted String to Compare</param>
+        /// <returns>Return Similarity between two strings from 0 to 1.0</returns>
+        /// </summary>
+        public static double CalculateSimilarity(this string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.IsNullOrEmpty(target) ? 1 : 0;
+
+            if (string.IsNullOrEmpty(target))
+                return string.IsNullOrEmpty(source) ? 1 : 0;
+
+            double stepsToSame = ComputeLevenshteinDistance(source, target);
+            return (1.0 - (stepsToSame / (double)Math.Max(source.Length, target.Length)));
+        }
+    }
 }

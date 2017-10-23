@@ -66,6 +66,10 @@ namespace Cryptool.VigenereAnalyzer
         private KeyStyle _keyStyle;
         private CostFunction _costFunction = CostFunction.Quadgrams;
 
+        // EVALUATION!
+        private bool _stopIfPercentReached = false;
+        private int _comparisonFrequency = 1;
+
         public void Initialize()
         {
             
@@ -188,6 +192,39 @@ namespace Cryptool.VigenereAnalyzer
                 {
                     _keyStyle = value;
                     OnPropertyChanged("KeyStyle");
+                }
+            }
+        }
+
+        // EVALUATION!
+        [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
+        public bool StopIfPercentReached
+        {
+            get
+            {
+                return this._stopIfPercentReached;
+            }
+            set
+            {
+                this._stopIfPercentReached = value;
+                OnPropertyChanged("StopIfPercentReached");
+            }
+        }
+
+        // EVALUATION!
+        [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
+        public int ComparisonFrequency
+        {
+            get
+            {
+                return _comparisonFrequency;
+            }
+            set
+            {
+                if (value != _comparisonFrequency)
+                {
+                    _comparisonFrequency = value;
+                    OnPropertyChanged("ComparisonFrequency");
                 }
             }
         }
