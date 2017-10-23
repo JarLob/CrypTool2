@@ -54,7 +54,7 @@ namespace Cryptool.CylinderCipher
             get { return this._textInput; }
             set
             {
-                if (value != null && value != this._textInput)
+                if (!String.IsNullOrEmpty(value) && value != this._textInput)
                 {
                     this._textInput = value;
                     this._newText = true;
@@ -69,7 +69,7 @@ namespace Cryptool.CylinderCipher
             get { return this._keyInput; }
             set
             {
-                if (value != null && value != this._keyInput)
+                if (!String.IsNullOrEmpty(value) && value != this._keyInput)
                 {
                     this._keyInput = value;
                     this._newKey = true;
