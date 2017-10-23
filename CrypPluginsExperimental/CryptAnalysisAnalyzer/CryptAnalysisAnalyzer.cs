@@ -401,8 +401,11 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
-            int id = _ciphertextInput.GetHashCode();
-            _evaluationInput = new EvaluationContainer(id, _approxRuntime, 0, 0);
+            if (!_settings.FullEvaluation)
+            {
+                int id = _ciphertextInput.GetHashCode();
+                _evaluationInput = new EvaluationContainer(id, _approxRuntime, 0, 0);
+            }
 
             // create the ExtendedEvaluationContainer with the current values
             ExtendedEvaluationContainer testRun = new ExtendedEvaluationContainer(_evaluationInput,
@@ -413,7 +416,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             if (_settings.FullEvaluation)
                 _testRuns.Add(_evaluationInput.GetID(), testRun);
             else
-                _testRuns.Add(id, testRun);
+                _testRuns.Add(_ciphertextInput.GetHashCode(), testRun);
 
             // increase the evaluation counter
             _evaluationCount++;
@@ -975,7 +978,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                 int len = pair.Key;
                 // Possible use for showing the number of texts per length
                 int count = pair.Value;
-                _gnuPlotDataOutput += len + "\t\t\t\t\t\t";
+                _gnuPlotDataOutput += len + "\t\t\t\t";
 
                 if (_settings.YAxis == YAxisPlot.success ||
                     _settings.YAxis == YAxisPlot.successAndPercentDecrypted)
@@ -988,7 +991,7 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
                         continue;
                     }
                     else
-                        _gnuPlotDataOutput += currentSuccess + "\t\t\t\t";
+                        _gnuPlotDataOutput += currentSuccess + "\t\t";
                 }
                 if (_settings.YAxis == YAxisPlot.percentDecrypted ||
                     _settings.YAxis == YAxisPlot.successAndPercentDecrypted)
