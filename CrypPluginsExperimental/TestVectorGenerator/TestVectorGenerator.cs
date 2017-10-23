@@ -1144,7 +1144,7 @@ namespace Cryptool.Plugins.TestVectorGenerator
                 !string.IsNullOrEmpty(_plaintextOutput))
             {
                 KeyOutput = _keyOutput;
-                Console.WriteLine(_keyOutput);
+                Console.WriteLine("TVG - _keyOutput: " + _keyOutput);
                 PlaintextOutput = _plaintextOutput;
                 OnPropertyChanged("KeyOutput");
                 OnPropertyChanged("PlaintextOutput");
