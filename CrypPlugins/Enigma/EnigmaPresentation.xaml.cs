@@ -230,16 +230,16 @@ namespace Cryptool.Enigma
                 {
                     case 0:
                         rotorarray[position] = new Rotor2(settings.Model, settings.Rotor3 + 1, this.Width, this.Height,
-                                                          settings.Key.ToUpper()[0] - 65, settings.Ring3);
-                        Console.WriteLine(position + "  " + settings.Rotor3 + 1 + "   " + settings.Key.ToUpper());
+                                                          settings.InitialRotorPos.ToUpper()[0] - 65, settings.Ring3);
+                        Console.WriteLine(position + "  " + settings.Rotor3 + 1 + "   " + settings.InitialRotorPos.ToUpper());
                         break;
                     case 1:
                         rotorarray[position] = new Rotor2(settings.Model, settings.Rotor2 + 1, this.Width, this.Height,
-                                                          settings.Key.ToUpper()[1] - 65, settings.Ring2);
+                                                          settings.InitialRotorPos.ToUpper()[1] - 65, settings.Ring2);
                         break;
                     case 2:
                         rotorarray[position] = new Rotor2(settings.Model, settings.Rotor1 + 1, this.Width, this.Height,
-                                                          settings.Key.ToUpper()[2] - 65, settings.Ring1);
+                                                          settings.InitialRotorPos.ToUpper()[2] - 65, settings.Ring1);
                         break;
 
 
@@ -4026,34 +4026,34 @@ namespace Cryptool.Enigma
             if(rotorarray[0]!=null)
             if (dummy == rotorarray[0].up )
             {
-                settings.Key = rotorarray[0].custom.Text + "" + settings.Key[1] + "" + settings.Key[2];
+                settings.InitialRotorPos = rotorarray[0].custom.Text + "" + settings.InitialRotorPos[1] + "" + settings.InitialRotorPos[2];
                 
             }
             if (rotorarray[1] != null)
             if (dummy == rotorarray[1].up)
             {
-                settings.Key = settings.Key[0] + "" + rotorarray[1].custom.Text + "" + settings.Key[2];
+                settings.InitialRotorPos = settings.InitialRotorPos[0] + "" + rotorarray[1].custom.Text + "" + settings.InitialRotorPos[2];
             }
             if (rotorarray[2] != null)
             if (dummy == rotorarray[2].up)
             {
-                settings.Key = settings.Key[0] + "" + settings.Key[1] + "" + rotorarray[2].custom.Text;
+                settings.InitialRotorPos = settings.InitialRotorPos[0] + "" + settings.InitialRotorPos[1] + "" + rotorarray[2].custom.Text;
             }
             if (rotorarray[0] != null)
             if (dummy == rotorarray[0].down)
             {
-                settings.Key = rotorarray[0].custom.Text +"" + settings.Key[1] + ""+settings.Key[2];
+                settings.InitialRotorPos = rotorarray[0].custom.Text +"" + settings.InitialRotorPos[1] + ""+settings.InitialRotorPos[2];
 
             }
             if (rotorarray[1] != null)
             if (dummy == rotorarray[1].down)
             {
-                settings.Key = settings.Key[0] + "" + rotorarray[1].custom.Text + "" + settings.Key[2];
+                settings.InitialRotorPos = settings.InitialRotorPos[0] + "" + rotorarray[1].custom.Text + "" + settings.InitialRotorPos[2];
             }
             if (rotorarray[2] != null)
             if (dummy == rotorarray[2].down)
             {
-                settings.Key = settings.Key[0] + "" + settings.Key[1] + "" + rotorarray[2].custom.Text;
+                settings.InitialRotorPos = settings.InitialRotorPos[0] + "" + settings.InitialRotorPos[1] + "" + rotorarray[2].custom.Text;
             }
 
             if (rotorarray[2] != null)

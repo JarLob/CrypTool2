@@ -448,42 +448,6 @@ namespace Cryptool.Enigma.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input Key.
-        /// </summary>
-        public static string InputKeyCaption {
-            get {
-                return ResourceManager.GetString("InputKeyCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Input an Enigma key containing the rotors to use, the rings to use, and the plugboard connections.
-        /// </summary>
-        public static string InputKeyTooltip {
-            get {
-                return ResourceManager.GetString("InputKeyTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text input.
-        /// </summary>
-        public static string InputStringCaption {
-            get {
-                return ResourceManager.GetString("InputStringCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Input a string to be processed by the Enigma machine.
-        /// </summary>
-        public static string InputStringTooltip {
-            get {
-                return ResourceManager.GetString("InputStringTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Involutoric.
         /// </summary>
         public static string InvolutoricCaption {
@@ -507,6 +471,24 @@ namespace Cryptool.Enigma.Properties {
         public static string KeyCaption {
             get {
                 return ResourceManager.GetString("KeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key input.
+        /// </summary>
+        public static string KeyInputCaption {
+            get {
+                return ResourceManager.GetString("KeyInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input an Enigma key containing the rotors to use, the rings to use, and the plugboard connections.
+        /// </summary>
+        public static string KeyInputTooltip {
+            get {
+                return ResourceManager.GetString("KeyInputTooltip", resourceCulture);
             }
         }
         
@@ -939,42 +921,6 @@ namespace Cryptool.Enigma.Properties {
         public static string ModelTPTooltip {
             get {
                 return ResourceManager.GetString("ModelTPTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OutputKey.
-        /// </summary>
-        public static string OutputKeyCaption {
-            get {
-                return ResourceManager.GetString("OutputKeyCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Last best found keys during analysis.
-        /// </summary>
-        public static string OutputKeyTooltip {
-            get {
-                return ResourceManager.GetString("OutputKeyTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Text output.
-        /// </summary>
-        public static string OutputStringCaption {
-            get {
-                return ResourceManager.GetString("OutputStringCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The string after processing with the Enigma machine.
-        /// </summary>
-        public static string OutputStringTooltip {
-            get {
-                return ResourceManager.GetString("OutputStringTooltip", resourceCulture);
             }
         }
         
@@ -2086,11 +2032,47 @@ namespace Cryptool.Enigma.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text input.
+        /// </summary>
+        public static string TextInputCaption {
+            get {
+                return ResourceManager.GetString("TextInputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input a string to be processed by the Enigma machine.
+        /// </summary>
+        public static string TextInputTooltip {
+            get {
+                return ResourceManager.GetString("TextInputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text options.
         /// </summary>
         public static string TextOptionsGroup {
             get {
                 return ResourceManager.GetString("TextOptionsGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text output.
+        /// </summary>
+        public static string TextOutputCaption {
+            get {
+                return ResourceManager.GetString("TextOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The string after processing with the Enigma machine.
+        /// </summary>
+        public static string TextOutputTooltip {
+            get {
+                return ResourceManager.GetString("TextOutputTooltip", resourceCulture);
             }
         }
         

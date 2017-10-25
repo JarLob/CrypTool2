@@ -98,7 +98,6 @@
     <Compile Include="Walze.cs" />
     <Compile Include="Rotor2.cs" />
     <Compile Include="Enigma.cs" />
-    <Compile Include="EnigmaAnalyzer.cs" />
     <Compile Include="EnigmaConstants.cs" />
     <Compile Include="EnigmaCore.cs" />
     <Compile Include="EnigmaEnums.cs" />
@@ -119,19 +118,6 @@
     <Resource Include="Images\decrypt.png" />
     <Resource Include="Images\encrypt.png" />
     <Resource Include="Images\Enigma.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Enigma_2gram_Frequency.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Enigma_3gram_Frequency.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Enigma_1gram_Frequency.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Enigma2.png" />

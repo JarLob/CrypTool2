@@ -138,7 +138,7 @@ namespace Cryptool.Enigma
 
                 //update the status, if we are not in anylzing mode
                 // this must be deactivated during analysis, since it takes a lot of time
-                if (settings.Action == 0 && !pluginFacade.Presentation.IsVisible)
+                if (!pluginFacade.Presentation.IsVisible)
                     pluginFacade.ShowProgress(i, input.Length);
             }
 
@@ -146,8 +146,7 @@ namespace Cryptool.Enigma
             sw.Stop();
 
             // Print some info on the console, if not in analyzing mode.
-            if (settings.Action == 0)
-                logMessage(String.Format("Enigma processing done! Processed {0} characters in {1} ms!", input.Length, sw.ElapsedMilliseconds), NotificationLevel.Info);
+            logMessage(String.Format("Enigma processing done! Processed {0} characters in {1} ms!", input.Length, sw.ElapsedMilliseconds), NotificationLevel.Info);
 
             return new string(result);
         }

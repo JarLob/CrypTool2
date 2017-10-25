@@ -36,33 +36,14 @@ namespace Cryptool.Enigma
     {
         #region Private variables
 
-        private int action = 0; //0=encrypt, 1=decrypt
-        private ObservableCollection<string> actionStrings = new ObservableCollection<string>();
         private ObservableCollection<string> rotorAStrings = new ObservableCollection<string>();
         private ObservableCollection<string> rotorBStrings = new ObservableCollection<string>();
         private ObservableCollection<string> reflectorStrings = new ObservableCollection<string>();
         private int model = 3;
         private int unknownSymbolHandling = 0; // 0=ignore, leave unmodified
         private int caseHandling = 0; // 0=preserve, 1, convert all to upper, 2= convert all to lower
-        private string key = "AAA";
+        private string _initialRotorPos = "AAA";
         private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        private bool analyzeRotors = true;
-        private bool analyzeKey = true;
-        private bool analyzeRings = true;
-        private bool analyzePlugs = true;
-        private bool analysisUseRotorI = true;
-        private bool analysisUseRotorII = true;
-        private bool analysisUseRotorIII = true;
-        private bool analysisUseRotorIV = true;
-        private bool analysisUseRotorV = true;
-        private bool analysisUseRotorVI = true;
-        private bool analysisUseRotorVII = true;
-        private bool analysisUseRotorVIII = true;
-
-        private int keySearchMethod = 0;
-        private int maxSearchedPlugs = 10;
-        private int plugSearchMethod = 2;
 
         private int rotor1 = 0;
         private int rotor2 = 1;
@@ -131,269 +112,6 @@ namespace Cryptool.Enigma
                 //OnPropertyChanged("PlugBoardDisplay");
                 OnPropertyChanged("PlugBoard");
                 
-            }
-        }
-
-        private void setSettingsVisibility()
-        {
-            switch (this.model)
-            {
-                case 2: // Enigma Rocket - supports analysis
-
-                    //hide unused elements
-                    hideSettingsElement("Rotor4");
-                    hideSettingsElement("Ring4");
-
-                    // show elements common for analysis and encryption
-                    showSettingsElement("Reflector");
-                    showSettingsElement("PresentationSpeed");
-                     switch (this.action)
-                    {
-                        case 0: // Encrypt/Decrypt
-                            // hide all options related to analysis
-                            hideSettingsElement("AnalyzeKey");
-                            hideSettingsElement("AnalyzeRotors");
-                            hideSettingsElement("AnalysisUseRotorI");
-                            hideSettingsElement("AnalysisUseRotorII");
-                            hideSettingsElement("AnalysisUseRotorIII");
-                            hideSettingsElement("AnalysisUseRotorIV");
-                            hideSettingsElement("AnalysisUseRotorV");
-                            hideSettingsElement("AnalysisUseRotorVI");
-                            hideSettingsElement("AnalysisUseRotorVII");
-                            hideSettingsElement("AnalysisUseRotorVIII");
-                            hideSettingsElement("AnalyzeRings");
-                            hideSettingsElement("KeySearchMethod");
-                            hideSettingsElement("AnalyzePlugs");
-                            hideSettingsElement("MaxSearchedPlugs");
-                            hideSettingsElement("PlugSearchMethod");
-
-                             //the Enigma Rocket did not have a Plugboards, hence hide it and reset it
-                            hidePlugBoard();
-                            ResetPlugboard();
-
-                            // make sure, that everything is visible
-                            showSettingsElement("Key");
-                            showSettingsElement("Rotor1");
-                            showSettingsElement("Rotor2");
-                            showSettingsElement("Rotor3");
-                            showSettingsElement("Ring1");
-                            showSettingsElement("Ring2");
-                            showSettingsElement("Ring3");
-                            
-                            break;
-                        case 1: // Analyze
-                            showSettingsElement("AnalyzeKey");
-                            showSettingsElement("AnalyzeRotors");
-                            showSettingsElement("AnalysisUseRotorI");
-                            showSettingsElement("AnalysisUseRotorII");
-                            showSettingsElement("AnalysisUseRotorIII");
-                            showSettingsElement("AnalyzeRings");
-                            showSettingsElement("KeySearchMethod");
-                            
-                             // hide unsed Rotors.
-                            hideSettingsElement("AnalysisUseRotorIV");
-                            hideSettingsElement("AnalysisUseRotorV");
-                            hideSettingsElement("AnalysisUseRotorVI");
-                            hideSettingsElement("AnalysisUseRotorVII");
-                            hideSettingsElement("AnalysisUseRotorVIII");
-
-                            // make sure, the hidden rotors are not selected
-                            analysisUseRotorIV      = false;
-                            analysisUseRotorV       = false;
-                            analysisUseRotorVI      = false;
-                            analysisUseRotorVII     = false;
-                            analysisUseRotorVIII    = false;   
-                         
-                            // hide possibility to analyze plugboard, since the Rocket did not have a plugboard
-                            hideSettingsElement("AnalyzePlugs");
-
-                             //make sure that anaylzing plugboard is not selected
-                            analyzePlugs            = false;
-
-                            // make sure, the plgboard is not visible and it is reset (technically, there would be no problem using the plugboard with the Rocket)
-                            hidePlugBoard();
-                            ResetPlugboard();
-
-                            // hide also settings related to the plugboard
-                            hideSettingsElement("MaxSearchedPlugs");
-                            hideSettingsElement("PlugSearchMethod");
-
- 
-                            // now check which analysis options are active and hide those settings which are automatically determined
-                            if (this.analyzeKey)
-                            {
-                                hideSettingsElement("Key");
-                            }
-                            else
-                            {
-                                showSettingsElement("Key");
-                            }
-
-                            if (this.analyzeRotors)
-                            {
-                                hideSettingsElement("Rotor1");
-                                hideSettingsElement("Rotor2");
-                                hideSettingsElement("Rotor3");
-                            }
-                            else
-                            {
-                                showSettingsElement("Rotor1");
-                                showSettingsElement("Rotor2");
-                                showSettingsElement("Rotor3");
-                            }
-
-                            if (this.analyzeRings)
-                            {
-                                hideSettingsElement("Ring1");
-                                hideSettingsElement("Ring2");
-                                hideSettingsElement("Ring3");
-                            }
-                            else
-                            {
-                                showSettingsElement("Ring1");
-                                showSettingsElement("Ring2");
-                                showSettingsElement("Ring3");
-                            }
-
-                            break;
-                    }
-                    break;
-
-                case 3: // Enigma M3 - supports analysis
-
-                    //hide unused elements
-                    hideSettingsElement("Rotor4");
-                    hideSettingsElement("Ring4");
-
-                    // show elements common for analysis and encryption
-                    showSettingsElement("Reflector");
-
-                    switch (this.action)
-                    {
-                        case 0: // Encrypt/Decrypt
-                            // hide all options related to analysis
-                            hideSettingsElement("AnalyzeKey");
-                            hideSettingsElement("AnalyzeRotors");
-                            hideSettingsElement("AnalysisUseRotorI");
-                            hideSettingsElement("AnalysisUseRotorII");
-                            hideSettingsElement("AnalysisUseRotorIII");
-                            hideSettingsElement("AnalysisUseRotorIV");
-                            hideSettingsElement("AnalysisUseRotorV");
-                            hideSettingsElement("AnalysisUseRotorVI");
-                            hideSettingsElement("AnalysisUseRotorVII");
-                            hideSettingsElement("AnalysisUseRotorVIII");
-                            hideSettingsElement("AnalyzeRings");
-                            hideSettingsElement("KeySearchMethod");
-                            hideSettingsElement("AnalyzePlugs");
-                            hideSettingsElement("MaxSearchedPlugs");
-                            hideSettingsElement("PlugSearchMethod");
-
-                            
-
-
-                            // make sure, that everything is visible
-                            showSettingsElement("Key");
-                            showSettingsElement("Rotor1");
-                            showSettingsElement("Rotor2");
-                            showSettingsElement("Rotor3");
-                            showSettingsElement("Ring1");
-                            showSettingsElement("Ring2");
-                            showSettingsElement("Ring3");
-                            
-                            showPlugBoard();
-                            break;
-                        case 1: // Analyze
-                            showSettingsElement("AnalyzeKey");
-                            showSettingsElement("AnalyzeRotors");
-                            showSettingsElement("AnalysisUseRotorI");
-                            showSettingsElement("AnalysisUseRotorII");
-                            showSettingsElement("AnalysisUseRotorIII");
-                            showSettingsElement("AnalysisUseRotorIV");
-                            showSettingsElement("AnalysisUseRotorV");
-                            showSettingsElement("AnalysisUseRotorVI");
-                            showSettingsElement("AnalysisUseRotorVII");
-                            showSettingsElement("AnalysisUseRotorVIII");
-                            showSettingsElement("AnalyzeRings");
-                            showSettingsElement("KeySearchMethod");
-                            showSettingsElement("AnalyzePlugs");
-                            showSettingsElement("MaxSearchedPlugs");
-                            showSettingsElement("PlugSearchMethod");
-
-                            // now check which analysis options are active and hide those settings which are automatically determined
-                            if (this.analyzeKey)
-                            {
-                                hideSettingsElement("Key");
-                            }
-                            else
-                            {
-                                showSettingsElement("Key");
-                            }
-
-                            if (this.analyzeRotors)
-                            {
-                                hideSettingsElement("Rotor1");
-                                hideSettingsElement("Rotor2");
-                                hideSettingsElement("Rotor3");
-                            }
-                            else
-                            {
-                                showSettingsElement("Rotor1");
-                                showSettingsElement("Rotor2");
-                                showSettingsElement("Rotor3");
-                            }
-
-                            if (this.analyzeRings)
-                            {
-                                hideSettingsElement("Ring1");
-                                hideSettingsElement("Ring2");
-                                hideSettingsElement("Ring3");
-                            }
-                            else
-                            {
-                                showSettingsElement("Ring1");
-                                showSettingsElement("Ring2");
-                                showSettingsElement("Ring3");
-                            }
-
-                            if (this.analyzePlugs)
-                            {
-                                hidePlugBoard();
-                            }
-                            else
-                            {
-                                showPlugBoard();
-                            }
-                            break;
-                    }
-                    break;
-                default:
-                    // make sure, that everything is visible
-                    showSettingsElement("Key");
-                    showSettingsElement("Rotor1");
-                    showSettingsElement("Rotor2");
-                    showSettingsElement("Rotor3");
-                    showSettingsElement("Ring1");
-                    showSettingsElement("Ring2");
-                    showSettingsElement("Ring3");
-
-                    // hide all options related to analysis
-                    hideSettingsElement("PresentationSpeed");
-                    hideSettingsElement("AnalyzeKey");
-                    hideSettingsElement("AnalyzeRotors");
-                    hideSettingsElement("AnalysisUseRotorI");
-                    hideSettingsElement("AnalysisUseRotorII");
-                    hideSettingsElement("AnalysisUseRotorIII");
-                    hideSettingsElement("AnalysisUseRotorIV");
-                    hideSettingsElement("AnalysisUseRotorV");
-                    hideSettingsElement("AnalysisUseRotorVI");
-                    hideSettingsElement("AnalysisUseRotorVII");
-                    hideSettingsElement("AnalysisUseRotorVIII");
-                    hideSettingsElement("AnalyzeRings");
-                    hideSettingsElement("KeySearchMethod");
-                    hideSettingsElement("AnalyzePlugs");
-                    hideSettingsElement("MaxSearchedPlugs");
-                    hideSettingsElement("PlugSearchMethod");
-                    break;
             }
         }
 
@@ -466,15 +184,43 @@ namespace Cryptool.Enigma
             inputKey = inputKey.Replace(" ", String.Empty);
             inputKey = inputKey.Replace("\n", String.Empty);
             inputKey = inputKey.Replace("\r", String.Empty);
-            int firstSlashIndex = inputKey.IndexOf('/');
-            int secondSlashIndex = (inputKey.Substring(firstSlashIndex + 1)).IndexOf('/') + firstSlashIndex + 1;
-            string rotorString = inputKey.Substring(0, firstSlashIndex);
-            string ringString = inputKey.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1);
-            string plugBoardString = inputKey.Substring(secondSlashIndex + 1);
 
+            // count slashes
+            int slashes = inputKey.Count(x => x == '/');
+
+            // search slash indices
+            int firstSlashIndex = inputKey.IndexOf('/');
+            int secondSlashIndex = 0;
+            if (slashes > 1)
+                secondSlashIndex = (inputKey.Substring(firstSlashIndex + 1)).IndexOf('/') + firstSlashIndex + 1;
+            int thirdSlashIndex = 0;
+            if (slashes > 2)
+                thirdSlashIndex = (inputKey.Substring(secondSlashIndex + 1)).IndexOf('/') + secondSlashIndex + 1;
+            
+            // trim different parts of the key
+            string rotorString = inputKey.Substring(0, firstSlashIndex);
+            string ringString = inputKey.Substring(firstSlashIndex + 1);
+            if (slashes > 1)
+                ringString = inputKey.Substring(firstSlashIndex + 1, secondSlashIndex - firstSlashIndex - 1);
+
+            string plugBoardString = "";
+            if (slashes > 1)
+                plugBoardString = inputKey.Substring(secondSlashIndex + 1);
+
+            string initialRotorPosString = "";
+            if (slashes > 2)
+            {
+                plugBoardString = inputKey.Substring(secondSlashIndex + 1, thirdSlashIndex - secondSlashIndex - 1);
+                initialRotorPosString = inputKey.Substring(thirdSlashIndex + 1);
+            }
+
+            // set settings by strings
             SetRotorsByString(rotorString);
             SetRingByString(ringString);
-            SetPlugBoardByString(plugBoardString);
+            if (slashes > 1)
+                SetPlugBoardByString(plugBoardString);
+            if (slashes > 2)
+                _initialRotorPos = initialRotorPosString;
         }
 
         private void SetRotorsByString(string rotorString)
@@ -578,7 +324,6 @@ namespace Cryptool.Enigma
 
         public EnigmaSettings()
         {
-            SetList(actionStrings, "Action1", "Action4");
             SetList(rotorAStrings, "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8");
             SetList(rotorBStrings, "RotorB1");
             SetList(reflectorStrings, "Reflector1", "Reflector2", "Reflector3");
@@ -587,7 +332,6 @@ namespace Cryptool.Enigma
         public void Initialize()
         {
             hideSettingsElement("Rotor4"); hideSettingsElement("Ring4");
-            setSettingsVisibility();
         }
 
         #endregion
@@ -632,64 +376,50 @@ namespace Cryptool.Enigma
                 switch (this.model)
                 {
                     case 0: // Enigma A/B
-                        SetList(actionStrings, "Action2", "Action3");
                         SetList(rotorAStrings, "RotorA9", "RotorA10", "RotorA11");
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector10");
 
-                        action = 0;
-                        if (key.Length > 3) key = key.Remove(0, 1);
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); hideSettingsElement("Reflector");
                         break;
                     case 1: // Enigma D
-                        SetList(actionStrings, "Action1");
                         SetList(rotorAStrings, "RotorA12", "RotorA13", "RotorA14");
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector4");
 
-                        action = 0;
-                        if (key.Length > 3) key = key.Remove(0, 1);
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
                     case 2: // Reichsbahn (Rocket)
-                        SetList(actionStrings, "Action1","Action4");
                         SetList(rotorAStrings, "RotorA15", "RotorA16", "RotorA17"); // "RotorA4"); //you must add a  Rotor 4 for the challenge on MTC3 (Cascading encryption - Part 3/3)
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector5");
 
-                        action = 0;
-                        if (key.Length > 3) key = key.Remove(0, 1);
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
-
-                        setSettingsVisibility();
                         break;
                     case 3: // Enigma I / M3
-                        SetList(actionStrings, "Action1", "Action4");
                         SetList(rotorAStrings, "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8");
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector1", "Reflector2", "Reflector3");
 
-                        action = 0;
-                        if (key.Length > 3) key = key.Remove(0, 1);
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
 
-                        setSettingsVisibility();
-
                         break;
                     case 4: // Enigma M4 "Shark"
-                        SetList(actionStrings, "Action1");
                         SetList(rotorAStrings, "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8");
                         SetList(rotorBStrings, "RotorB2", "RotorB3");
                         SetList(reflectorStrings, "Reflector6", "Reflector7");
 
-                        action = 0;
-                        if (key.Length < 4) key = "A" + key;
+                        if (_initialRotorPos.Length < 4) _initialRotorPos = "A" + _initialRotorPos;
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
 
@@ -697,26 +427,22 @@ namespace Cryptool.Enigma
                         showPlugBoard();
                         break;
                     case 5: // Enigma K-Model
-                        SetList(actionStrings, "Action1");
                         SetList(rotorAStrings, "RotorA18", "RotorA19", "RotorA20");
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector8");
 
-                        action = 0; 
-                        if (key.Length > 3) key = key.Remove(0, 1); 
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1); 
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0; 
                         reflector = 0; 
 
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
                     case 6: // Enigam G / Abwehr
-                        SetList(actionStrings, "Action1");
                         SetList(rotorAStrings, "RotorA21", "RotorA22", "RotorA23");
                         SetList(rotorBStrings, "RotorB1");
                         SetList(reflectorStrings, "Reflector9");
 
-                        action = 0;
-                        if (key.Length > 3) key = key.Remove(0, 1);
+                        if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
 
@@ -724,8 +450,7 @@ namespace Cryptool.Enigma
                         break;
                 }
 
-                OnPropertyChanged("Action");
-                OnPropertyChanged("Key");
+                OnPropertyChanged("InitialRotorPos");
                 OnPropertyChanged("Rotor1");
                 OnPropertyChanged("Rotor2");
                 OnPropertyChanged("Rotor3");
@@ -735,335 +460,17 @@ namespace Cryptool.Enigma
         }
 
 
-        [TaskPane( "KeyCaption", "KeyTooltip",
+        [TaskPane( "InitialRotorPosCaption", "InitialRotorPosTooltip",
             null, 1, false, ControlType.TextBox, ValidationType.RegEx, "^[A-Za-z]{3,4}$")]
-        public string Key
+        public string InitialRotorPos
         {
-            get { return this.key; }
+            get { return this._initialRotorPos; }
             set
             {
-                if (value != key)
+                if (value != _initialRotorPos)
                 {
-                    this.key = value;
-                    OnPropertyChanged("Key");   
-                }
-            }
-        }
-
-
-        [TaskPane( "ActionCaption", "ActionTooltip",
-            null, 2, false, ControlType.DynamicComboBox, new string[] { "ActionStrings" })]
-        [PropertySaveOrder(9)]
-        public int Action
-        {
-            get { return this.action; }
-            set
-            {
-                if (((int)value) != action)
-                {
-                    this.action = (int)value;
-                    OnPropertyChanged("Action");
-                    setSettingsVisibility();   
-                }
-            }
-        }
-
-        /// <summary>
-        /// This collection contains the values for the Action combobox.
-        /// </summary>
-        [PropertySaveOrder(9)]
-        public ObservableCollection<string> ActionStrings
-        {
-            get { return actionStrings; }
-            set
-            {
-                if (value != actionStrings)
-                {
-                    actionStrings = value;
-                    OnPropertyChanged("ActionStrings");
-                }
-            }
-        }
-
-        #region Text options
-
-        [ContextMenu( "UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
-            3, ContextMenuControlType.ComboBox, null,
-            new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
-        [TaskPane( "UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
-            "TextOptionsGroup", 3, false, ControlType.ComboBox,
-            new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
-        public int UnknownSymbolHandling
-        {
-            get { return this.unknownSymbolHandling; }
-            set
-            {
-                if ((int)value != unknownSymbolHandling)
-                {
-                    this.unknownSymbolHandling = (int)value;
-                    OnPropertyChanged("UnknownSymbolHandling");   
-                }
-            }
-        }
-
-        [ContextMenu( "CaseHandlingCaption", "CaseHandlingTooltip",
-            4, ContextMenuControlType.ComboBox, null,
-            new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]
-        [TaskPane( "CaseHandlingCaption", "CaseHandlingTooltip",
-            "TextOptionsGroup", 4, false, ControlType.ComboBox,
-            new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]
-        public int CaseHandling
-        {
-            get { return this.caseHandling; }
-            set
-            {
-                if ((int)value != caseHandling)
-                {
-                    this.caseHandling = (int)value;
-                    OnPropertyChanged("CaseHandling");   
-                }
-            }
-        }
-
-        #endregion
-
-        #region Analysis options
-
-        [TaskPane( "AnalyzeKeyCaption", "AnalyzeKeyTooltip",
-            "AnalysisOptionsGroup", 6, false, ControlType.CheckBox, "", null)]
-        public bool AnalyzeKey
-        {
-            get { return analyzeKey; }
-            set
-            {
-                if (value != analyzeKey)
-                {
-                    analyzeKey = value;
-                    OnPropertyChanged("AnalyzeKey");
-                    setSettingsVisibility();
-                }
-            }
-        }
-
-        [TaskPane( "AnalyzeRotorsCaption", "AnalyzeRotorsTooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalyzeRotors
-        {
-            get { return analyzeRotors; }
-            set
-            {
-                if (value != analyzeRotors)
-                {
-                    analyzeRotors = value;
-                    OnPropertyChanged("AnalyzeRotors");
-                    setSettingsVisibility();
-                }
-            }
-        }
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorICaption", "AnalysisUseRotorITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorI
-        {
-            get { return analysisUseRotorI; }
-            set
-            {
-                if (value != analysisUseRotorI)
-                {
-                    analysisUseRotorI = value;
-                    OnPropertyChanged("AnalysisUseRotorI");
-                }
-            }
-        }
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorIICaption", "AnalysisUseRotorIITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorII
-        {
-            get { return analysisUseRotorII; }
-            set
-            {
-                if (value != analysisUseRotorII)
-                {
-                    analysisUseRotorII = value;
-                    OnPropertyChanged("AnalysisUseRotorII");
-                }
-            }
-        }
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorIIICaption", "AnalysisUseRotorIIITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorIII
-        {
-            get { return analysisUseRotorIII; }
-            set
-            {
-                if (value != analysisUseRotorIII)
-                {
-                    analysisUseRotorIII = value;
-                    OnPropertyChanged("AnalysisUseRotorIII");
-                }
-            }
-        }
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorIVCaption", "AnalysisUseRotorIVTooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorIV
-        {
-            get { return analysisUseRotorIV; }
-            set
-            {
-                if (value != analysisUseRotorIV)
-                {
-                    analysisUseRotorIV = value;
-                    OnPropertyChanged("AnalysisUseRotorIV");
-                }
-            }
-        }
-
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorVCaption", "AnalysisUseRotorVTooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorV
-        {
-            get { return analysisUseRotorV; }
-            set
-            {
-                if (value != analysisUseRotorV)
-                {
-                    analysisUseRotorV = value;
-                    OnPropertyChanged("AnalysisUseRotorV");
-                }
-            }
-        }
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorVICaption", "AnalysisUseRotorVITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorVI
-        {
-            get { return analysisUseRotorVI; }
-            set
-            {
-                if (value != analysisUseRotorVI)
-                {
-                    analysisUseRotorVI = value;
-                    OnPropertyChanged("AnalysisUseRotorVI");
-                }
-            }
-        }
-
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorVIICaption", "AnalysisUseRotorVIITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorVII
-        {
-            get { return analysisUseRotorVII; }
-            set
-            {
-                if (value != analysisUseRotorVII)
-                {
-                    analysisUseRotorVII = value;
-                    OnPropertyChanged("AnalysisUseRotorVII");
-                }
-            }
-        }
-
-
-        [SettingsFormat(1, "Normal", "Normal")]
-        [TaskPane( "AnalysisUseRotorVIIICaption", "AnalysisUseRotorVIIITooltip",
-            "AnalysisOptionsGroup", 7, false, ControlType.CheckBox, "", null)]
-        public bool AnalysisUseRotorVIII
-        {
-            get { return analysisUseRotorVIII; }
-            set
-            {
-                if (value != analysisUseRotorVIII)
-                {
-                    analysisUseRotorVIII = value;
-                    OnPropertyChanged("AnalysisUseRotorVIII");
-                }
-            }
-        }
-
-
-        [TaskPane( "AnalyzeRingsCaption", "AnalyzeRingsTooltip",
-            "AnalysisOptionsGroup", 8, false, ControlType.CheckBox, "", null)]
-        public bool AnalyzeRings
-        {
-            get { return analyzeRings; }
-            set
-            {
-                if (value != analyzeRings)
-                {
-                    analyzeRings = value;
-                    OnPropertyChanged("AnalyzeRings");
-                    setSettingsVisibility();
-                }
-            }
-        }
-
-        [TaskPane("KeySearchMethodCaption", "KeySearchMethodTooltip", "AnalysisOptionsGroup", 8, false, ControlType.ComboBox, new string[] { "KeySearchMethodList1", "KeySearchMethodList2", "KeySearchMethodList3", "KeySearchMethodList4", "KeySearchMethodList5", "KeySearchMethodList6" })]
-        public int KeySearchMethod
-        {
-            get { return this.keySearchMethod; }
-            set
-            {
-                if (value != keySearchMethod)
-                {
-                    keySearchMethod = value;
-                    OnPropertyChanged("KeySearchMethod");
-                }
-            }
-        }
-
-        [TaskPane( "AnalyzePlugsCaption", "AnalyzePlugsTooltip",
-            "AnalysisOptionsGroup", 9, false, ControlType.CheckBox, "", null)]
-        public bool AnalyzePlugs
-        {
-            get { return analyzePlugs; }
-            set
-            {
-                if (value != analyzePlugs)
-                {
-                    analyzePlugs = value;
-                    OnPropertyChanged("AnalyzePlugs");
-                    setSettingsVisibility();
-                }
-            }
-        }
-
-        [TaskPane( "MaxSearchedPlugsCaption", "MaxSearchedPlugsTooltip",
-            "AnalysisOptionsGroup", 9, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 26)]
-        public int MaxSearchedPlugs
-        {
-            get { return this.maxSearchedPlugs; }
-            set
-            {
-                if (value != maxSearchedPlugs)
-                {
-                    maxSearchedPlugs = value;
-                    OnPropertyChanged("MaxSearchedPlugs");
-                }
-            }
-        }
-
-        [TaskPane("PlugSearchMethodCaption", "PlugSearchMethodTooltip", "AnalysisOptionsGroup", 9, false, ControlType.ComboBox, new string[] { "KeySearchMethodList1", "KeySearchMethodList2", "KeySearchMethodList3", "KeySearchMethodList4", "KeySearchMethodList5", "KeySearchMethodList6" })]
-        public int PlugSearchMethod
-        {
-            get { return this.plugSearchMethod; }
-            set
-            {
-                if (value != plugSearchMethod)
-                {
-                    plugSearchMethod = value;
-                    OnPropertyChanged("PlugSearchMethod");
+                    this._initialRotorPos = value;
+                    OnPropertyChanged("InitialRotorPos");   
                 }
             }
         }
@@ -1597,8 +1004,6 @@ namespace Cryptool.Enigma
             //OnPropertyChanged("Remove all Plugs");
         }
 
-        #endregion
-
         [TaskPane( "PresentationSpeedCaption", "PresentationSpeedTooltip", "PresentationGroup", 71, true, ControlType.Slider, 2, 25)]
         public int PresentationSpeed
         {
@@ -1609,6 +1014,48 @@ namespace Cryptool.Enigma
                 {
                     Presentation_Speed = value;
                     OnPropertyChanged("PresentationSpeed");   
+                }
+            }
+        }
+
+        #endregion
+
+        #region Text options
+
+        [ContextMenu("UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
+            3, ContextMenuControlType.ComboBox, null,
+            new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
+        [TaskPane("UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
+            "TextOptionsGroup", 3, false, ControlType.ComboBox,
+            new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
+        public int UnknownSymbolHandling
+        {
+            get { return this.unknownSymbolHandling; }
+            set
+            {
+                if ((int)value != unknownSymbolHandling)
+                {
+                    this.unknownSymbolHandling = (int)value;
+                    OnPropertyChanged("UnknownSymbolHandling");
+                }
+            }
+        }
+
+        [ContextMenu("CaseHandlingCaption", "CaseHandlingTooltip",
+            4, ContextMenuControlType.ComboBox, null,
+            new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]
+        [TaskPane("CaseHandlingCaption", "CaseHandlingTooltip",
+            "TextOptionsGroup", 4, false, ControlType.ComboBox,
+            new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]
+        public int CaseHandling
+        {
+            get { return this.caseHandling; }
+            set
+            {
+                if ((int)value != caseHandling)
+                {
+                    this.caseHandling = (int)value;
+                    OnPropertyChanged("CaseHandling");
                 }
             }
         }

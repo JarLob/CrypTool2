@@ -123,16 +123,16 @@
   <data name="InputGramsTooltip" xml:space="preserve">
     <value>Wörterbuch mit N-Gramm-Häufigkeiten (string -&gt; [absolut, prozentual, log2])</value>
   </data>
-  <data name="InputStringCaption" xml:space="preserve">
+  <data name="TextInputCaption" xml:space="preserve">
     <value>Texteingabe</value>
   </data>
-  <data name="InputStringTooltip" xml:space="preserve">
+  <data name="TextInputTooltip" xml:space="preserve">
     <value>Geben Sie den mit der Enigma zu ver-/entschlüsselnden Text ein.</value>
   </data>
-  <data name="OutputStringCaption" xml:space="preserve">
+  <data name="TextOutputCaption" xml:space="preserve">
     <value>Textausgabe</value>
   </data>
-  <data name="OutputStringTooltip" xml:space="preserve">
+  <data name="TextOutputTooltip" xml:space="preserve">
     <value>Der mit der Enigma ver-/entschlüsselte Text.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
@@ -800,12 +800,6 @@
   </data>
   <data name="PresentationActivation" xml:space="preserve">
     <value>Präsentation aktivieren</value>
-  </data>
-  <data name="OutputKeyCaption" xml:space="preserve">
-    <value>Schlüsselausgabe</value>
-  </data>
-  <data name="OutputKeyTooltip" xml:space="preserve">
-    <value>Die aktuell besten während der Analyse gefundenen Schlüssel</value>
   </data>
   <data name="InputKeyCaption" xml:space="preserve">
     <value>Schlüssel-Eingabe</value>

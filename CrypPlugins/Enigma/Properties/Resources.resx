@@ -123,16 +123,16 @@
   <data name="InputGramsTooltip" xml:space="preserve">
     <value>Dictionary with gram counts (string -&gt; [absolute, percentaged, log2])</value>
   </data>
-  <data name="InputStringCaption" xml:space="preserve">
+  <data name="TextInputCaption" xml:space="preserve">
     <value>Text input</value>
   </data>
-  <data name="InputStringTooltip" xml:space="preserve">
+  <data name="TextInputTooltip" xml:space="preserve">
     <value>Input a string to be processed by the Enigma machine</value>
   </data>
-  <data name="OutputStringCaption" xml:space="preserve">
+  <data name="TextOutputCaption" xml:space="preserve">
     <value>Text output</value>
   </data>
-  <data name="OutputStringTooltip" xml:space="preserve">
+  <data name="TextOutputTooltip" xml:space="preserve">
     <value>The string after processing with the Enigma machine</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
@@ -801,16 +801,10 @@
   <data name="PresentationActivation" xml:space="preserve">
     <value>Activate Presentation</value>
   </data>
-  <data name="OutputKeyCaption" xml:space="preserve">
-    <value>OutputKey</value>
+  <data name="KeyInputCaption" xml:space="preserve">
+    <value>Key input</value>
   </data>
-  <data name="OutputKeyTooltip" xml:space="preserve">
-    <value>Last best found keys during analysis</value>
-  </data>
-  <data name="InputKeyCaption" xml:space="preserve">
-    <value>Input Key</value>
-  </data>
-  <data name="InputKeyTooltip" xml:space="preserve">
+  <data name="KeyInputTooltip" xml:space="preserve">
     <value>Input an Enigma key containing the rotors to use, the rings to use, and the plugboard connections</value>
   </data>
 </root>

@@ -1,5 +1,5 @@
 ﻿/* 
-   Copyright 2008-2013, Arno Wacker, University of Kassel
+   Copyright 2008-2017, Arno Wacker, University of Kassel
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -61,9 +61,8 @@ namespace Cryptool.Enigma
         private EnigmaSettings settings;
         private EnigmaPresentationFrame enigmaPresentationFrame;
         private EnigmaCore core;
-        private EnigmaAnalyzer analyzer;
-        private string inputString;
-        private string _inputKey;
+        private string _textInput;
+        private string _keyInput;
         private IDictionary<int, IDictionary<string, double[]>> statistics;
         // FIXME: enable optional statistics input
         //private IDictionary<string, double[]> inputTriGrams;
@@ -71,7 +70,7 @@ namespace Cryptool.Enigma
         private string outputKey;
         private string savedKey;
         public Boolean isrunning;
-        private Boolean _newString = false;
+        private Boolean _newText = false;
         private Boolean _newKey = false;
 
         #endregion
@@ -241,22 +240,6 @@ namespace Cryptool.Enigma
 
         #endregion
 
-        #region Analyzer event handler
-
-        /// <summary>
-        /// This eventhandler is called, when the analyzer has an intermediate result
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void analyzer_OnIntermediateResult(object sender, IntermediateResultEventArgs e)
-        {
-            // Got an intermidate results from the analyzer, hence display it
-            outputString = postFormatOutput(e.Result);
-            //OnPropertyChanged("OutputString");
-        }
-
-        #endregion
-
         #region n-gram frequencies
 
         private IDictionary<string, double[]> LoadDefaultStatistics(int length)
@@ -319,11 +302,7 @@ namespace Cryptool.Enigma
         {
             this.settings = new EnigmaSettings();
             this.core = new EnigmaCore(this);
-            this.analyzer = new EnigmaAnalyzer(this);
-            this.analyzer.OnIntermediateResult += new EventHandler<IntermediateResultEventArgs>(analyzer_OnIntermediateResult);
             this.statistics = new Dictionary<int, IDictionary<string, double[]>>();
-            
-          
             
             enigmaPresentationFrame = new EnigmaPresentationFrame(this);
             EnigmaPresentation myPresentation = enigmaPresentationFrame.EnigmaPresentation;
@@ -333,7 +312,6 @@ namespace Cryptool.Enigma
             this.settings.PropertyChanged += settings_OnPropertyChange;
             this.enigmaPresentationFrame.EnigmaPresentation.fireLetters += fireLetters;
             this.enigmaPresentationFrame.EnigmaPresentation.newInput += newInput;
-
         }
 
         #endregion
@@ -349,7 +327,6 @@ namespace Cryptool.Enigma
         private void newInput(object sender, EventArgs args)
         {
                 running = false;
-            
         }
 
         private void fireLetters(object sender, EventArgs args)  
@@ -361,11 +338,7 @@ namespace Cryptool.Enigma
             int y = (int)carrier[2];
             
             ShowProgress(x,y);
-
-            
         }
-
-
 
         private void settings_OnPropertyChange(object sender, PropertyChangedEventArgs e)
         {
@@ -393,32 +366,32 @@ namespace Cryptool.Enigma
 
         #region Connector properties
 
-        [PropertyInfo(Direction.InputData, "InputStringCaption", "InputStringTooltip", true)]
-        public string InputString
+        [PropertyInfo(Direction.InputData, "TextInputCaption", "TextInputTooltip", true)]
+        public string TextInput
         {
-            get { return this.inputString; }
+            get { return this._textInput; }
             set
             {
-                if (value != inputString)
+                if (value != _textInput)
                 {
-                    this.inputString = value;
-                    this._newString = true;
-                    OnPropertyChanged("InputString");
+                    this._textInput = value;
+                    this._newText = true;
+                    OnPropertyChanged("TextInput");
                 }
             }
         }
 
-        [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", false)]
-        public string InputKey
+        [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltip", true)]
+        public string KeyInput
         {
-            get { return this._inputKey; }
+            get { return this._keyInput; }
             set
             {
-                if (!String.IsNullOrEmpty(value) && value != this._inputKey)
+                if (!String.IsNullOrEmpty(value) && value != this._keyInput)
                 {
-                    this._inputKey = value;
+                    this._keyInput = value;
                     this._newKey = true;
-                    OnPropertyChanged("InputKey");
+                    OnPropertyChanged("KeyInput");
                     // TODO: uncomment
                     //settings.HideAllBasicKeySettings();
                     settings.SetKeySettings(value);
@@ -440,37 +413,20 @@ namespace Cryptool.Enigma
         //    }
         //}
 
-        [PropertyInfo(Direction.OutputData, "OutputStringCaption", "OutputStringTooltip", false)]
-        public string OutputString
+        [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", false)]
+        public string TextOutput
         {
             get { return this.outputString; }
             set
             {
                 outputString = value;
-                OnPropertyChanged("OutputString");
+                OnPropertyChanged("TextOutput");
             }
         }
-
-        [PropertyInfo(Direction.OutputData, "OutputKeyCaption", "OutputKeyTooltip", false)]
-        public string OutputKey
-        {
-            get { return this.outputKey; }
-            set
-            {
-                outputKey = value;
-                OnPropertyChanged("OutputKey");
-            }
-        }
-
 
         #endregion
 
         #region Public methods
-
-        public void SetOutputKey (string key)
-        {
-            this.outputKey = key;
-        }
 
         public void PreExecution()
         {
@@ -490,7 +446,7 @@ namespace Cryptool.Enigma
             }
 
             // remember the current key-setting, in order to restore on stop
-            savedKey = settings.Key;
+            savedKey = settings.InitialRotorPos;
 
             //configure the enigma
             core.setInternalConfig(settings.Rotor1, settings.Rotor2, settings.Rotor3, settings.Rotor4,
@@ -503,11 +459,8 @@ namespace Cryptool.Enigma
 
         public void Execute()
         {
-
-            
-            if (inputString == null)
+            if (_textInput == null)
                 return;
-
 
             if (settings.Model != 3 && settings.Model != 2)
             {
@@ -515,60 +468,30 @@ namespace Cryptool.Enigma
                 return;
             }
 
-            
-
-            switch (settings.Action)
+            while(running)
             {
-                case 0:
-                    while(running)
-                    {
-                        enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
-                        if (stopped)
-                        return;
-                    }
-
-                    running = true;
-                    LogMessage("Enigma encryption/decryption started...", NotificationLevel.Info);
-
-                    // re-set the key, in case we get executed again during single run
-                    settings.Key = savedKey.ToUpper();
-
-                    // do the encryption
-                    outputString = FormattedEncrypt(settings.Alphabet.IndexOf(settings.Key[2]), 
-                        settings.Alphabet.IndexOf(settings.Key[1]),
-                        settings.Alphabet.IndexOf(settings.Key[0]), 
-                        0, inputString);                    
-
-                    // FIXME: output all scorings
-                    LogMessage("Enigma encryption done. The resulting index of coincidences is " + analyzer.calculateScore(outputString, 0), NotificationLevel.Info);
-
-                    break;
-                case 1:
-                    LogMessage("Enigma analysis starting ...", NotificationLevel.Info);
-
-                    //prepare for analysis
-                    LogMessage("ANALYSIS: Preformatting text...", NotificationLevel.Debug);
-                    string preformatedText = preFormatInput(inputString);
-
-                    // perform the analysis
-                    foreach (string decrypt in analyzer.Analyze(preformatedText))
-                    {
-                        LogMessage(decrypt, NotificationLevel.Debug);
-
-                        // fire all best candidates
-                        outputString = postFormatOutput(decrypt);
-                    }
-
-                    ShowProgress(1000, 1000);
-                    break;
-                default:
-                    break;
+                enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
+                if (stopped)
+                return;
             }
 
-            // "fire" the outputs
-            OnPropertyChanged("OutputString");
-            OnPropertyChanged("OutputKey");
+            running = true;
+            LogMessage("Enigma encryption/decryption started...", NotificationLevel.Info);
 
+            // re-set the key, in case we get executed again during single run
+            settings.InitialRotorPos = savedKey.ToUpper();
+
+            // do the encryption
+            outputString = FormattedEncrypt(settings.Alphabet.IndexOf(settings.InitialRotorPos[2]), 
+                settings.Alphabet.IndexOf(settings.InitialRotorPos[1]),
+                settings.Alphabet.IndexOf(settings.InitialRotorPos[0]), 
+                0, _textInput);                    
+
+            // FIXME: output all scorings
+            //LogMessage("Enigma encryption done. The resulting index of coincidences is " + analyzer.calculateScore(outputString, 0), NotificationLevel.Info);
+
+            // "fire" the output
+            OnPropertyChanged("TextOutput");
         }
 
         public void PostExecution()
@@ -576,22 +499,19 @@ namespace Cryptool.Enigma
             LogMessage("Enigma shutting down. Reverting key to inial value!", NotificationLevel.Info);
             if (savedKey != null && savedKey.Length > 0)
             {
-                settings.Key = savedKey; // re-set the key
+                settings.InitialRotorPos = savedKey; // re-set the key
             }
 
             running = false;
             isrunning = false;
             enigmaPresentationFrame.ChangeStatus(isrunning, enigmaPresentationFrame.EnigmaPresentation.IsVisible);
-            
         }
 
         public void Stop()
         {
-            
             stopped = true;
             LogMessage("Enigma stopped", NotificationLevel.Info);
             enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
-            analyzer.StopAnalysis();
         }
 
         public void Initialize()
