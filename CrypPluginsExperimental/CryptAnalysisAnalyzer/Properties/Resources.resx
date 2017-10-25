@@ -468,4 +468,13 @@
   <data name="GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output" xml:space="preserve">
     <value>GnuPlot data output which can be drawn by the GnuPlot script</value>
   </data>
+  <data name="Correct_last_key" xml:space="preserve">
+    <value>Correct last key</value>
+  </data>
+  <data name="Best_last_key" xml:space="preserve">
+    <value>Best last key</value>
+  </data>
+  <data name="Correctly_decrypted" xml:space="preserve">
+    <value>Correctly decrypted</value>
+  </data>
 </root>
