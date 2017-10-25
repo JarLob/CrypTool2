@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="InputGramsCaption" xml:space="preserve">
+    <value>N-Gramm-Wörterbuch</value>
+  </data>
+  <data name="InputGramsTooltip" xml:space="preserve">
+    <value>Wörterbuch mit N-Gramm-Häufigkeiten (string -&gt; [absolut, prozentual, log2])</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>EnigmaBreaker</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Angriff auf die Polyalphabetische Rotor-Chiffriermaschine</value>
+  </data>
+  <data name="ActionCaption" xml:space="preserve">
+    <value>Betriebsart</value>
+  </data>
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Wählen Sie die Betriebsart für diesen Enigma-Simulator. Bitte beachten Sie, dass alle Enigmas seit der Enigma D mit einem Reflektor arbeiten und es daher zwischen der Verschlüsselung und der Entschlüsselung keinen Unterschied gibt.</value>
+  </data>
+  <data name="AnalysisUseRotorICaption" xml:space="preserve">
+    <value>Rotor I berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor I bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorIICaption" xml:space="preserve">
+    <value>Rotor II berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorIITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor II bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorIIICaption" xml:space="preserve">
+    <value>Rotor III berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorIIITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor III bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorIVCaption" xml:space="preserve">
+    <value>Rotor IV berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorIVTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor IV bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorVCaption" xml:space="preserve">
+    <value>Rotor V berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorVTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor V bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorVICaption" xml:space="preserve">
+    <value>Rotor VI berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorVITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VI bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorVIICaption" xml:space="preserve">
+    <value>Rotor VII berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorVIITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VII bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalysisUseRotorVIIICaption" xml:space="preserve">
+    <value>Rotor VIII berücksichtigen</value>
+  </data>
+  <data name="AnalysisUseRotorVIIITooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VIII bei der Analyse berücksichtigt.</value>
+  </data>
+  <data name="AnalyzeInitialRotorPosCaption" xml:space="preserve">
+    <value>Analysiere initiale Rotorpositionen</value>
+  </data>
+  <data name="AnalyzeInitialRotorPosTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die korrekten initialen Rotorpositionen zu finden. Sonst werden die vorgegebenen verwendet.</value>
+  </data>
+  <data name="AnalyzePlugsCaption" xml:space="preserve">
+    <value>Analysiere Stecker</value>
+  </data>
+  <data name="AnalyzePlugsTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die korrekten Steckerverbindungen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
+  </data>
+  <data name="AnalyzeRingsCaption" xml:space="preserve">
+    <value>Analysiere Ringstellungen</value>
+  </data>
+  <data name="AnalyzeRingsTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die korrekten Ringstellungen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
+  </data>
+  <data name="AnalyzeRotorsCaption" xml:space="preserve">
+    <value>Analysiere verwendete Rotoren</value>
+  </data>
+  <data name="AnalyzeRotorsTooltip" xml:space="preserve">
+    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die verwendeten Rotoren und ihre Positionen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
+  </data>
+  <data name="CaseHandlingCaption" xml:space="preserve">
+    <value>Groß-/Kleinschreibung</value>
+  </data>
+  <data name="CaseHandlingTooltip" xml:space="preserve">
+    <value>Wie sollen Groß- und Kleinbuchstaben behandelt werden?</value>
+  </data>
+  <data name="InvolutoricCaption" xml:space="preserve">
+    <value>Involutorisch</value>
+  </data>
+  <data name="InvolutoricTooltip" xml:space="preserve">
+    <value>Die Abbildung ist selbstinvers, d.h. wenn A auf X abgebildet wird, dann wird auch X auf A abgebildet.</value>
+  </data>
+  <data name="InitialRotorPosCaption" xml:space="preserve">
+    <value>Initiale Rotorpositionen</value>
+  </data>
+  <data name="InitialRotorPosTooltip" xml:space="preserve">
+    <value>Geben Sie die Startposition für jeden Rotor an, z.B. ABCD. Der langsamste Rotor ist links, der schnellste rechts. Nur die Enigma M4 ("Shark") verwendet 4 Rotoren.</value>
+  </data>
+  <data name="SearchMethodCaption" xml:space="preserve">
+    <value>Rotor-/Ring-/Schlüssel-Suchmethode</value>
+  </data>
+  <data name="SearchMethodTooltip" xml:space="preserve">
+    <value>Welche Methode soll zur Bewertung der Rotorkonfiguration verwendet werden?</value>
+  </data>
+  <data name="MaxSearchedPlugsCaption" xml:space="preserve">
+    <value>Max. Stecker suchen</value>
+  </data>
+  <data name="MaxSearchedPlugsTooltip" xml:space="preserve">
+    <value>Wieviele Steckerverbindungen sollen maximal gesucht werden? Der Suchalgorithmus kann weniger als die angegebene Zahl zurückgeben, da dies nur eine obere Schranke ist.</value>
+  </data>
+  <data name="ModelCaption" xml:space="preserve">
+    <value>Enigma-Modell</value>
+  </data>
+  <data name="ModelTooltip" xml:space="preserve">
+    <value>Wählen Sie das Enigma-Modell. Verschiedene Modelle verwenden unterschiedliche Rotoren mit unterschiedlicher innerer Verdrahtung.</value>
+  </data>
+  <data name="ModelTPCaption" xml:space="preserve">
+    <value>Enigma-Modell</value>
+  </data>
+  <data name="ModelTPTooltip" xml:space="preserve">
+    <value>Wählen Sie das Enigma-Modell. Verschiedene Modelle verwenden unterschiedliche Rotoren mit unterschiedlicher innerer Verdrahtung.</value>
+  </data>
+  <data name="PlugBoardCaption" xml:space="preserve">
+    <value>Substitution:</value>
+  </data>
+  <data name="PlugBoardTooltip" xml:space="preserve">
+    <value>Zeigt die aktuelle Substitution</value>
+  </data>
+  <data name="PlugBoardACaption" xml:space="preserve">
+    <value>A=</value>
+  </data>
+  <data name="PlugBoardATooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardBCaption" xml:space="preserve">
+    <value>B=</value>
+  </data>
+  <data name="PlugBoardBTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardCCaption" xml:space="preserve">
+    <value>C=</value>
+  </data>
+  <data name="PlugBoardCTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardDCaption" xml:space="preserve">
+    <value>D=</value>
+  </data>
+  <data name="PlugBoardDTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardECaption" xml:space="preserve">
+    <value>E=</value>
+  </data>
+  <data name="PlugBoardETooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardFCaption" xml:space="preserve">
+    <value>F=</value>
+  </data>
+  <data name="PlugBoardFTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardGCaption" xml:space="preserve">
+    <value>G=</value>
+  </data>
+  <data name="PlugBoardGTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardHCaption" xml:space="preserve">
+    <value>H=</value>
+  </data>
+  <data name="PlugBoardHTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardICaption" xml:space="preserve">
+    <value>I=</value>
+  </data>
+  <data name="PlugBoardITooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardJCaption" xml:space="preserve">
+    <value>J=</value>
+  </data>
+  <data name="PlugBoardJTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardKCaption" xml:space="preserve">
+    <value>K=</value>
+  </data>
+  <data name="PlugBoardKTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardLCaption" xml:space="preserve">
+    <value>L=</value>
+  </data>
+  <data name="PlugBoardLTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardMCaption" xml:space="preserve">
+    <value>M=</value>
+  </data>
+  <data name="PlugBoardMTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardNCaption" xml:space="preserve">
+    <value>N=</value>
+  </data>
+  <data name="PlugBoardNTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardOCaption" xml:space="preserve">
+    <value>O=</value>
+  </data>
+  <data name="PlugBoardOTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardPCaption" xml:space="preserve">
+    <value>P=</value>
+  </data>
+  <data name="PlugBoardPTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardQCaption" xml:space="preserve">
+    <value>Q=</value>
+  </data>
+  <data name="PlugBoardQTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardRCaption" xml:space="preserve">
+    <value>R=</value>
+  </data>
+  <data name="PlugBoardRTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardSCaption" xml:space="preserve">
+    <value>S=</value>
+  </data>
+  <data name="PlugBoardSTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardTCaption" xml:space="preserve">
+    <value>T=</value>
+  </data>
+  <data name="PlugBoardTTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardUCaption" xml:space="preserve">
+    <value>U=</value>
+  </data>
+  <data name="PlugBoardUTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardVCaption" xml:space="preserve">
+    <value>V=</value>
+  </data>
+  <data name="PlugBoardVTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardWCaption" xml:space="preserve">
+    <value>W=</value>
+  </data>
+  <data name="PlugBoardWTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardXCaption" xml:space="preserve">
+    <value>X=</value>
+  </data>
+  <data name="PlugBoardXTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardYCaption" xml:space="preserve">
+    <value>Y=</value>
+  </data>
+  <data name="PlugBoardYTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugBoardZCaption" xml:space="preserve">
+    <value>Z=</value>
+  </data>
+  <data name="PlugBoardZTooltip" xml:space="preserve">
+    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
+  </data>
+  <data name="PlugSearchMethodCaption" xml:space="preserve">
+    <value>Suchmethode für Steckerverbindungen</value>
+  </data>
+  <data name="PlugSearchMethodTooltip" xml:space="preserve">
+    <value>Welche Bewertungsmethode soll bei der Suche nach den Steckerverbindungen verwendet werden?</value>
+  </data>
+  <data name="PresentationSpeedCaption" xml:space="preserve">
+    <value>Darstellungsgeschwindigkeit</value>
+  </data>
+  <data name="PresentationSpeedTooltip" xml:space="preserve">
+    <value>Ändern Sie die Geschwindigkeit der Darstellung</value>
+  </data>
+  <data name="ReflectorCaption" xml:space="preserve">
+    <value>Umkehrwalze</value>
+  </data>
+  <data name="ReflectorTooltip" xml:space="preserve">
+    <value>Wählen Sie die verwendete Umkehrwalze. Wenn Sie keine Umkehrwalze verwenden wollen, wählen Sie 'keine'.</value>
+  </data>
+  <data name="ResetPlugboardCaption" xml:space="preserve">
+    <value>Alle Steckerverbindungen entfernen</value>
+  </data>
+  <data name="ResetPlugboardTooltip" xml:space="preserve">
+    <value>Wenn Sie diese Schaltfläche drücken, wird das Steckerbrett in den Anfangszustand versetzt, d.h. alle Steckerverbindungen werden entfernt.</value>
+  </data>
+  <data name="Ring1Caption" xml:space="preserve">
+    <value>Ring 1 (rechts)</value>
+  </data>
+  <data name="Ring1Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Versatz für Ring 1</value>
+  </data>
+  <data name="Ring2Caption" xml:space="preserve">
+    <value>Ring 2</value>
+  </data>
+  <data name="Ring2Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Versatz für Ring 2</value>
+  </data>
+  <data name="Ring3Caption" xml:space="preserve">
+    <value>Ring 3</value>
+  </data>
+  <data name="Ring3Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Versatz für Ring 3</value>
+  </data>
+  <data name="Ring4Caption" xml:space="preserve">
+    <value>Ring 4 (links)</value>
+  </data>
+  <data name="Ring4Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Versatz für Ring 4</value>
+  </data>
+  <data name="Rotor1Caption" xml:space="preserve">
+    <value>Rotor 1 (schnell/rechts)</value>
+  </data>
+  <data name="Rotor1Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Rotor für die rechte (schnellste) Position.</value>
+  </data>
+  <data name="Rotor2Caption" xml:space="preserve">
+    <value>Rotor 2</value>
+  </data>
+  <data name="Rotor2Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Rotor für die zweite Position.</value>
+  </data>
+  <data name="Rotor3Caption" xml:space="preserve">
+    <value>Rotor 3</value>
+  </data>
+  <data name="Rotor3Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Rotor für die dritte Position.</value>
+  </data>
+  <data name="Rotor4Caption" xml:space="preserve">
+    <value>Rotor 4 (langsam/links)</value>
+  </data>
+  <data name="Rotor4Tooltip" xml:space="preserve">
+    <value>Wählen Sie den Rotor für die vierte Position. Wenn Sie nur 3 Rotoren verwenden wollen, wählen Sie hier 'keinen'.</value>
+  </data>
+  <data name="UnknownSymbolHandlingCaption" xml:space="preserve">
+    <value>Behandlung ungültiger Zeichen</value>
+  </data>
+  <data name="UnknownSymbolHandlingTooltip" xml:space="preserve">
+    <value>Wie soll auf Zeichen in der Eingabe reagiert werden, die nicht Bestandteil des Eingabe-Alphabets sind?</value>
+  </data>
+  <data name="CaseHandlingList1" xml:space="preserve">
+    <value>keine Änderung</value>
+  </data>
+  <data name="CaseHandlingList2" xml:space="preserve">
+    <value>in Großbuchstaben konvertieren</value>
+  </data>
+  <data name="CaseHandlingList3" xml:space="preserve">
+    <value>in Kleinbuchstaben konvertieren</value>
+  </data>
+  <data name="ModelList1" xml:space="preserve">
+    <value>Kommerzielle Enigma A/B - seit 1924</value>
+  </data>
+  <data name="ModelList2" xml:space="preserve">
+    <value>Kommerzielle Enigma D</value>
+  </data>
+  <data name="ModelList3" xml:space="preserve">
+    <value>Reichsbahn (Rocket) - seit 1941</value>
+  </data>
+  <data name="ModelList4" xml:space="preserve">
+    <value>Enigma I / M3</value>
+  </data>
+  <data name="ModelList5" xml:space="preserve">
+    <value>M4 (Shark)</value>
+  </data>
+  <data name="ModelList6" xml:space="preserve">
+    <value>Modell K</value>
+  </data>
+  <data name="ModelList7" xml:space="preserve">
+    <value>G ("Abwehr-Enigma")</value>
+  </data>
+  <data name="UnknownSymbolHandlingList1" xml:space="preserve">
+    <value>Ignorieren (nicht ändern)</value>
+  </data>
+  <data name="UnknownSymbolHandlingList2" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="UnknownSymbolHandlingList3" xml:space="preserve">
+    <value>Ersetzen durch 'X'</value>
+  </data>
+  <data name="AnalysisOptionsGroup" xml:space="preserve">
+    <value>Analyseoptionen</value>
+  </data>
+  <data name="PlugboardGroup" xml:space="preserve">
+    <value>Steckerbrett</value>
+  </data>
+  <data name="PresentationGroup" xml:space="preserve">
+    <value>Darstellung</value>
+  </data>
+  <data name="RingSettingsGroup" xml:space="preserve">
+    <value>Ringstellung</value>
+  </data>
+  <data name="TextOptionsGroup" xml:space="preserve">
+    <value>Text-Optionen</value>
+  </data>
+  <data name="UsedRotorsGroup" xml:space="preserve">
+    <value>Verwendete Rotoren</value>
+  </data>
+  <data name="SearchMethodList1" xml:space="preserve">
+    <value>Koinzidenzindex</value>
+  </data>
+  <data name="SearchMethodList2" xml:space="preserve">
+    <value>log2-Bigramm</value>
+  </data>
+  <data name="SearchMethodList3" xml:space="preserve">
+    <value>log2-Trigramm</value>
+  </data>
+  <data name="SearchMethodList4" xml:space="preserve">
+    <value>Sinkov-Unigramn</value>
+  </data>
+  <data name="SearchMethodList5" xml:space="preserve">
+    <value>Sinkov-Bigramm</value>
+  </data>
+  <data name="SearchMethodList6" xml:space="preserve">
+    <value>Unigramm-Entropie</value>
+  </data>
+  <data name="Ringstellung_" xml:space="preserve">
+    <value>Ringstellung:</value>
+  </data>
+  <data name="Rotorlage_" xml:space="preserve">
+    <value>Rotorlage:</value>
+  </data>
+  <data name="LetterA" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="LetterB" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="LetterC" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="LetterD" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="LetterE" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="LetterF" xml:space="preserve">
+    <value>F</value>
+  </data>
+  <data name="LetterG" xml:space="preserve">
+    <value>G</value>
+  </data>
+  <data name="LetterH" xml:space="preserve">
+    <value>H</value>
+  </data>
+  <data name="LetterI" xml:space="preserve">
+    <value>I</value>
+  </data>
+  <data name="LetterJ" xml:space="preserve">
+    <value>J</value>
+  </data>
+  <data name="LetterK" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="LetterL" xml:space="preserve">
+    <value>L</value>
+  </data>
+  <data name="LetterM" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="LetterN" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="LetterO" xml:space="preserve">
+    <value>O</value>
+  </data>
+  <data name="LetterP" xml:space="preserve">
+    <value>P</value>
+  </data>
+  <data name="LetterQ" xml:space="preserve">
+    <value>Q</value>
+  </data>
+  <data name="LetterR" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="LetterS" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="LetterT" xml:space="preserve">
+    <value>T</value>
+  </data>
+  <data name="LetterU" xml:space="preserve">
+    <value>U</value>
+  </data>
+  <data name="LetterV" xml:space="preserve">
+    <value>V</value>
+  </data>
+  <data name="LetterW" xml:space="preserve">
+    <value>W</value>
+  </data>
+  <data name="LetterX" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="LetterY" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="LetterZ" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="Please_stop_the_Workspace_for_Presentation" xml:space="preserve">
+    <value>Bitte halten Sie den Workspace an, um die Präsentation anzuzeigen!</value>
+  </data>
+  <data name="Reflector1" xml:space="preserve">
+    <value>UKW A</value>
+  </data>
+  <data name="Reflector10" xml:space="preserve">
+    <value>Für dieses Modell nicht vorhanden.</value>
+  </data>
+  <data name="Reflector2" xml:space="preserve">
+    <value>UKW B (2. November 1937)</value>
+  </data>
+  <data name="Reflector3" xml:space="preserve">
+    <value>UKW C (seit 1940/41)</value>
+  </data>
+  <data name="Reflector4" xml:space="preserve">
+    <value>UKW (D)</value>
+  </data>
+  <data name="Reflector5" xml:space="preserve">
+    <value>UKW (Reichsbahn) -- seit 7. Feb. 1941</value>
+  </data>
+  <data name="Reflector6" xml:space="preserve">
+    <value>UKW B "dünn" -- seit 1. Feb. 1942</value>
+  </data>
+  <data name="Reflector7" xml:space="preserve">
+    <value>UKW C "dünn" -- seit 1. Juli 1943</value>
+  </data>
+  <data name="Reflector8" xml:space="preserve">
+    <value>UKW (K) -- seit Feb. 1939</value>
+  </data>
+  <data name="Reflector9" xml:space="preserve">
+    <value>UKW (G)</value>
+  </data>
+  <data name="RotorA1" xml:space="preserve">
+    <value>I (seit 1930)</value>
+  </data>
+  <data name="RotorA10" xml:space="preserve">
+    <value>II (C) -- seit 1924</value>
+  </data>
+  <data name="RotorA11" xml:space="preserve">
+    <value>III (C) -- seit 1924</value>
+  </data>
+  <data name="RotorA12" xml:space="preserve">
+    <value>I (D)</value>
+  </data>
+  <data name="RotorA13" xml:space="preserve">
+    <value>II (D)</value>
+  </data>
+  <data name="RotorA14" xml:space="preserve">
+    <value>III (D)</value>
+  </data>
+  <data name="RotorA15" xml:space="preserve">
+    <value>I (Reichsbahn) -- seit 7. Feb. 1941</value>
+  </data>
+  <data name="RotorA16" xml:space="preserve">
+    <value>II (Reichsbahn) -- seit 7. Feb. 1941</value>
+  </data>
+  <data name="RotorA17" xml:space="preserve">
+    <value>III (Reichsbahn) -- seit 7. Feb. 1941</value>
+  </data>
+  <data name="RotorA18" xml:space="preserve">
+    <value>I (K) -- seit Feb. 1939</value>
+  </data>
+  <data name="RotorA19" xml:space="preserve">
+    <value>II (K) -- seit Feb. 1939</value>
+  </data>
+  <data name="RotorA2" xml:space="preserve">
+    <value>II (seit 1930)</value>
+  </data>
+  <data name="RotorA20" xml:space="preserve">
+    <value>III (K) -- seit Feb. 1939</value>
+  </data>
+  <data name="RotorA21" xml:space="preserve">
+    <value>I (G)</value>
+  </data>
+  <data name="RotorA22" xml:space="preserve">
+    <value>II (G)</value>
+  </data>
+  <data name="RotorA23" xml:space="preserve">
+    <value>III (G)</value>
+  </data>
+  <data name="RotorA3" xml:space="preserve">
+    <value>III (seit 1930)</value>
+  </data>
+  <data name="RotorA4" xml:space="preserve">
+    <value>IV (seit 1938, M3 "Heer")</value>
+  </data>
+  <data name="RotorA5" xml:space="preserve">
+    <value>V (seit 1938, M3 "Heer")</value>
+  </data>
+  <data name="RotorA6" xml:space="preserve">
+    <value>VI (seit 1939, M3/M4)</value>
+  </data>
+  <data name="RotorA7" xml:space="preserve">
+    <value>VII (seit 1939, M3/M4)</value>
+  </data>
+  <data name="RotorA8" xml:space="preserve">
+    <value>VIII (seit 1939, M3/M4)</value>
+  </data>
+  <data name="RotorA9" xml:space="preserve">
+    <value>I (C) -- seit 1924</value>
+  </data>
+  <data name="RotorB1" xml:space="preserve">
+    <value>Für dieses Modell nicht vorhanden.</value>
+  </data>
+  <data name="RotorB2" xml:space="preserve">
+    <value>Beta -- seit 1. Feb. 1942</value>
+  </data>
+  <data name="RotorB3" xml:space="preserve">
+    <value>Gamma -- seit 1. Juli 1943</value>
+  </data>
+
+  <data name="Copy_all" xml:space="preserve">
+    <value>Kopiere alle Zeilen.</value>
+  </data>
+  <data name="Copy_key" xml:space="preserve">
+    <value>Kopiere Schlüssel</value>
+  </data>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Kopiere selektierte Zeile</value>
+  </data>
+  <data name="Copy_text" xml:space="preserve">
+    <value>Kopiere Text</value>
+  </data>
+  <data name="Copy_value" xml:space="preserve">
+    <value>Kopiere Wert</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Vergangene Zeit:</value>
+  </data>
+  <data name="EndLabel" xml:space="preserve">
+    <value>Endzeit:</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Schlüssel/Sekunde:</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Startzeit:</value>
+  </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analyse</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestenliste</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Wert</value>
+  </data>
+  <data name="CurrentlyAnalysedLabel" xml:space="preserve">
+    <value>Aktuell analysierter Teil:</value>
+  </data>
+
+  <data name="CiphertextCaption" xml:space="preserve">
+    <value>Geheimtext</value>
+  </data>
+  <data name="CiphertextTooltip" xml:space="preserve">
+    <value>Der Geheimtext, der analysiert werden soll.</value>
+  </data>
+  <data name="BestPlaintextCaption" xml:space="preserve">
+    <value>Bester Klartext</value>
+  </data>
+  <data name="BestPlaintextTooltip" xml:space="preserve">
+    <value>Der beste Klartext, der während der Analyse gefunden
+wurde.</value>
+  </data>
+  <data name="BestKeyCaption" xml:space="preserve">
+    <value>Bester Schlüssel</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>Schlüssel</value>
+  </data>
+  <data name="KeyLengthHeader" xml:space="preserve">
+    <value>Schlüssellänge:</value>
+  </data>
+  <data name="KeyStyleCaption" xml:space="preserve">
+    <value>Art des Schlüssels</value>
+  </data>
+  <data name="KeyStyleTooltip" xml:space="preserve">
+    <value>Ist der Schlüssel eine natürlichsprachliche Passphrase?</value>
+  </data>
+  <data name="BestKeyTooltip" xml:space="preserve">
+    <value>Der beste Schlüssel, der während der Analyse gefunden
+wurde.</value>
+  </data>
+
+  <data name="RotorsCaption" xml:space="preserve">
+    <value>Rotoren</value>
+  </data>
+  <data name="RingsCaption" xml:space="preserve">
+    <value>Ringe</value>
+  </data>
+  <data name="PlugsCaption" xml:space="preserve">
+    <value>Stecker</value>
+  </data>
+</root>
