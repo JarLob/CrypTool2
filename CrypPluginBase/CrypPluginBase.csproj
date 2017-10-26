@@ -107,6 +107,7 @@
     <Compile Include="IO\CStreamReader.cs" />
     <Compile Include="IO\CStreamWriter.cs" />
     <Compile Include="IO\DirectoryHelper.cs" />
+    <Compile Include="IO\EvaluationContainer.cs" />
     <Compile Include="IO\ICryptoolStream.cs" />
     <Compile Include="ICrypTutorial.cs" />
     <Compile Include="Miscellaneous\ApplicationSettingsHelper.cs" />
