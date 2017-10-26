@@ -127,13 +127,13 @@
     <value>Text input</value>
   </data>
   <data name="TextInputTooltip" xml:space="preserve">
-    <value>Input a string to be processed by the Enigma machine</value>
+    <value>Input a text to be encrypted or decrypted by the Enigma machine</value>
   </data>
   <data name="TextOutputCaption" xml:space="preserve">
     <value>Text output</value>
   </data>
   <data name="TextOutputTooltip" xml:space="preserve">
-    <value>The string after processing with the Enigma machine</value>
+    <value>The processed text, encrypted or decrypted by the Enigma machine.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Enigma</value>

@@ -220,7 +220,10 @@ namespace Cryptool.Enigma
             if (slashes > 1)
                 SetPlugBoardByString(plugBoardString);
             if (slashes > 2)
+            {
                 _initialRotorPos = initialRotorPosString;
+                OnPropertyChanged("InitialRotorPos");
+            }
         }
 
         private void SetRotorsByString(string rotorString)

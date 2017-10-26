@@ -137,7 +137,7 @@ namespace Cryptool.Enigma
 
         private void visbileCheckbox_Checked(object sender, RoutedEventArgs e)
         {
-            if (facade.isrunning)
+            if (facade._isrunning)
             {
                 enigmaStatus.Text = Properties.Resources.EnigmaPresentationFrame_visbileCheckbox_Checked_Restart_Workspace;
             }

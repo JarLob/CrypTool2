@@ -2041,7 +2041,7 @@ namespace Cryptool.Enigma.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Input a string to be processed by the Enigma machine.
+        ///   Looks up a localized string similar to Input a text to be encrypted or decrypted by the Enigma machine.
         /// </summary>
         public static string TextInputTooltip {
             get {
@@ -2068,7 +2068,7 @@ namespace Cryptool.Enigma.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The string after processing with the Enigma machine.
+        ///   Looks up a localized string similar to The processed text, encrypted or decrypted by the Enigma machine..
         /// </summary>
         public static string TextOutputTooltip {
             get {
