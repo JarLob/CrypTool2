@@ -139,10 +139,10 @@
     <value>Der beste Klartext der von der untersuchten CipherAnalyzer-Komponente gefunden wurde</value>
   </data>
   <data name="CAAcaption" xml:space="preserve">
-    <value>CryptAnalysisAnalyzer</value>
+    <value>CryptAnalysisEvaluator</value>
   </data>
   <data name="CAAtooltip" xml:space="preserve">
-    <value>Analysiert kryptoanalytische Methoden</value>
+    <value>Evaluiert kryptoanalytische Methoden</value>
   </data>
   <data name="CalculateRuntimeCaption" xml:space="preserve">
     <value>Berechne Laufzeit</value>

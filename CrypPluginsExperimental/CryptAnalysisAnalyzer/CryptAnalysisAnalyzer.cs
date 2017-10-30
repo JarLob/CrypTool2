@@ -401,9 +401,9 @@ namespace Cryptool.Plugins.CryptAnalysisAnalyzer
             double percentCorrect = _bestPlaintextInput.CalculateSimilarity(_plaintextInput) * 100;
             bool success = percentCorrect >= _settings.CorrectPercentage ? true : false;
 
-            EvaluationOutput += "Correct last key" + ": " + _keyInput + NewLine;
-            EvaluationOutput += "Best last key" + ": " + _bestKeyInput + NewLine;
-            EvaluationOutput += "Correctly decrypted" + ": " + percentCorrect + "%" + NewLine;
+            EvaluationOutput += NewLine + Resources.Correct_last_key + ": " + _keyInput + NewLine;
+            EvaluationOutput += Resources.Best_last_key + ": " + _bestKeyInput + NewLine;
+            EvaluationOutput += Resources.Correctly_decrypted + ": " + percentCorrect + "%";
 
             if (!_settings.FullEvaluation)
             {

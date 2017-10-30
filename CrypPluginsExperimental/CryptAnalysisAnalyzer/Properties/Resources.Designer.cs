@@ -151,6 +151,15 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Best last key.
+        /// </summary>
+        internal static string Best_last_key {
+            get {
+                return ResourceManager.GetString("Best_last_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Best key.
         /// </summary>
         internal static string BestKeyInputCaption {
@@ -187,7 +196,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CryptAnalysisAnalyzer.
+        ///   Looks up a localized string similar to CryptAnalysisEvaluator.
         /// </summary>
         internal static string CAAcaption {
             get {
@@ -196,7 +205,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyzes cryptanalytic methods.
+        ///   Looks up a localized string similar to Evaluates cryptanalytic methods.
         /// </summary>
         internal static string CAAtooltip {
             get {
@@ -264,6 +273,24 @@ namespace CryptAnalysisAnalyzer.Properties {
         internal static string CiphertextLengthCaption {
             get {
                 return ResourceManager.GetString("CiphertextLengthCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Correct last key.
+        /// </summary>
+        internal static string Correct_last_key {
+            get {
+                return ResourceManager.GetString("Correct_last_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Correctly decrypted.
+        /// </summary>
+        internal static string Correctly_decrypted {
+            get {
+                return ResourceManager.GetString("Correctly_decrypted", resourceCulture);
             }
         }
         
@@ -358,7 +385,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Aquire the full evaluation that requires an EvaluationContainer of the analyzed CA component.
+        ///   Looks up a localized string similar to Aquire the full evaluation. This requires an EvaluationContainer of the analyzed CA component..
         /// </summary>
         internal static string FullEvaluationTooltipCaption {
             get {
@@ -376,7 +403,7 @@ namespace CryptAnalysisAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GnuPlot data output to plot using the GnuPlot script output.
+        ///   Looks up a localized string similar to GnuPlot data output which can be drawn by the GnuPlot script.
         /// </summary>
         internal static string GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output {
             get {
