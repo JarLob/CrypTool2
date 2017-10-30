@@ -58,18 +58,21 @@ namespace Cryptool.EnigmaBreaker
         EnigmaCore _core;
         AssignmentPresentation _presentation;
 
-        private bool _stopped = false;
+        private bool _stoppedOrFinished = false;
 
-        private int rotorPos1 = 0;
-        private int rotorPos2 = 0;
-        private int rotorPos3 = 0;
+        private int _rotorPos1 = 0;
+        private int _rotorPos2 = 0;
+        private int _rotorPos3 = 0;
 
-        private int keys = 0;
-        private DateTime lasttime = DateTime.Now;
+        private int _keys = 0;
+        private DateTime _lasttime = DateTime.Now;
 
-        private List<analysisConfigSettings> analysisCandidates = new List<analysisConfigSettings>();
-        private const int maxAnalysisEntries = 10; // should go in settings under "Analysis Options"
+        private List<analysisConfigSettings> _analysisCandidates = new List<analysisConfigSettings>();
+        private const int _maxAnalysisEntries = 10; // should go in settings under "Analysis Options"
         private const int _maxBestListEntries = 100;
+
+        // EVALUATION!
+        private int _improvements = 0;
 
         #endregion
 
@@ -90,6 +93,7 @@ namespace Cryptool.EnigmaBreaker
                 Value = value
             };
 
+            /*
             if (_presentation.BestList.Count == 0)
             {
                 _pluginFacade.BestPlaintext = entry.Text;
@@ -99,7 +103,7 @@ namespace Cryptool.EnigmaBreaker
             {
                 _pluginFacade.BestPlaintext = entry.Text;
                 _pluginFacade.BestKey = entry.Key;
-            }
+            }*/
 
             _pluginFacade.Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
@@ -137,9 +141,9 @@ namespace Cryptool.EnigmaBreaker
         /// </summary>
         private void UpdateKeysPerSec()
         {
-            if (DateTime.Now >= lasttime.AddMilliseconds(1000))
+            if (DateTime.Now >= _lasttime.AddMilliseconds(1000))
             {
-                var keysDispatcher = keys;
+                var keysDispatcher = _keys;
                 _pluginFacade.Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     try
@@ -153,8 +157,8 @@ namespace Cryptool.EnigmaBreaker
                         Console.WriteLine("e1: " + e);
                     }
                 }, null);
-                keys = 0;
-                lasttime = DateTime.Now;
+                _keys = 0;
+                _lasttime = DateTime.Now;
             }
         }
 
@@ -167,21 +171,21 @@ namespace Cryptool.EnigmaBreaker
             _pluginFacade.UpdateDisplayEnd(Resources.RotorsCaption);
 
             // Start the stopwatch
-            Stopwatch sw = Stopwatch.StartNew();
+            //Stopwatch sw = Stopwatch.StartNew();
             //int trials = 0;
 
-            for (int i = 0; i < 8 && !_stopped; i++)
+            for (int i = 0; i < 8 && !_stoppedOrFinished; i++)
             {
                 //Rotor 3 (slowest)
                 if (!includeRotor(i)) continue;
                 _settings.Rotor3 = i;
-                for (int j = 0; j < 8 && !_stopped; j++)
+                for (int j = 0; j < 8 && !_stoppedOrFinished; j++)
                 {
                     // Rotor 2 (middle)
                     if (!includeRotor(j) || j == i) continue;
                     _settings.Rotor2 = j;
 
-                    for (int k = 0; k < 8 && !_stopped; k++)
+                    for (int k = 0; k < 8 && !_stoppedOrFinished; k++)
                     {
                         // Rotor 1 (fastest)
                         if (!includeRotor(k) || k == i || k == j) continue;
@@ -200,8 +204,6 @@ namespace Cryptool.EnigmaBreaker
                             analyzeInitialRotorPos(text);
                         else
                             CheckKeyWithInitialRotorPos(text);
-                        //trials++;
-                        keys++;
 
                         // print keys/sec in the ui
                         UpdateKeysPerSec();
@@ -217,7 +219,7 @@ namespace Cryptool.EnigmaBreaker
             _pluginFacade.UpdateDisplayEnd(Resources.RotorsCaption);
 
             // Stop the stopwatch
-            sw.Stop();
+            //sw.Stop();
 
             //string msg = String.Format("Processed {0} rotor permutations in {1}!", trials, sw.Elapsed.ToString());
             //_pluginFacade.LogMessage(msg, NotificationLevel.Info);
@@ -236,19 +238,18 @@ namespace Cryptool.EnigmaBreaker
             // now run through all rotor positions..
 
             // Start the stopwatch
-            Stopwatch sw = Stopwatch.StartNew();
-            int trials = 0;
+            //Stopwatch sw = Stopwatch.StartNew();
+            //int trials = 0;
 
             // Rotor 1 positions (fastest)
-            for (int l = 0; l < 26 && !_stopped; l++)
+            for (int l = 0; l < 26 && !_stoppedOrFinished; l++)
             {
-                for (int m = 0; m < 26 && !_stopped; m++)
+                for (int m = 0; m < 26 && !_stoppedOrFinished; m++)
                 {
-                    for (int n = 0; n < 26 && !_stopped; n++)
+                    for (int n = 0; n < 26 && !_stoppedOrFinished; n++)
                     {
                         checkKey(l, m, n, text);
-                        trials++;
-                        keys++;
+                        //trials++;
 
                         // print keys/sec in the ui
                         UpdateKeysPerSec();
@@ -260,7 +261,7 @@ namespace Cryptool.EnigmaBreaker
             } // Rotor1 positions
 
             // Stop the stopwatch
-            sw.Stop();
+            //sw.Stop();
 
             //string msg = String.Format("Processed {0} rotor positions for {1},{2},{3} in {4}!",
             //    trials, (rotorEnum)_core.Rotor3, (rotorEnum)_core.Rotor2, (rotorEnum)_core.Rotor1, sw.Elapsed.ToString());
@@ -274,7 +275,7 @@ namespace Cryptool.EnigmaBreaker
         /// <returns>The result of encrypting/decrypting the ciphertext with the given key</returns>
         private string CheckKeyWithInitialRotorPos(string text)
         {
-            return checkKey(rotorPos1, rotorPos2, rotorPos3, text);
+            return checkKey(_rotorPos1, _rotorPos2, _rotorPos3, text);
         }
 
         /// <summary>
@@ -292,12 +293,15 @@ namespace Cryptool.EnigmaBreaker
             string result = _core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, 0, text);
             double newScore = calculateScore(result, _settings.SearchMethod);
 
-            if (analysisCandidates.Count >= maxAnalysisEntries)
+            _pluginFacade.IncrementDecryptionsCountForThread(0);
+            _keys++;
+
+            if (_analysisCandidates.Count >= _maxAnalysisEntries)
             {
                 // List is full, check if we need to remove one
-                if (newScore > analysisCandidates[0].Score)
+                if (newScore > _analysisCandidates[0].Score)
                 {
-                    double currentMax = analysisCandidates[analysisCandidates.Count - 1].Score;
+                    double currentMax = _analysisCandidates[_analysisCandidates.Count - 1].Score;
 
                     analysisConfigSettings csetting = new analysisConfigSettings();
                     csetting.Score = newScore;
@@ -310,20 +314,20 @@ namespace Cryptool.EnigmaBreaker
                     csetting.PlugBoard = _core.Plugboard;
                     csetting.InitialRotorPos = _settings.Alphabet[rotor3Pos].ToString() + _settings.Alphabet[rotor2Pos].ToString() + _settings.Alphabet[rotor1Pos].ToString();
 
-                    analysisCandidates.Add(csetting);
-                    analysisCandidates.Sort();
+                    _analysisCandidates.Add(csetting);
+                    _analysisCandidates.Sort();
 
                     // remove the smallest one
-                    analysisCandidates.RemoveAt(0);
+                    _analysisCandidates.RemoveAt(0);
 
-
+                    // EVALUATION!
                     if (newScore > currentMax)
                     {
                         // new best option
-                        string status = String.Format("ANALYSIS: ==> Found better rotor settings: {0},{1},{2}; {3},{4},{5}; Key: {6}; I.C.={7} <==",
+                        /*string status = String.Format("ANALYSIS: ==> Found better rotor settings: {0},{1},{2}; {3},{4},{5}; Key: {6}; I.C.={7} <==",
                         (rotorEnum)csetting.Rotor3, (rotorEnum)csetting.Rotor2, (rotorEnum)csetting.Rotor1,
                         csetting.Ring3.ToString("00"), csetting.Ring2.ToString("00"), csetting.Ring1.ToString("00"),
-                        csetting.InitialRotorPos, newScore.ToString());
+                        csetting.InitialRotorPos, newScore.ToString());*/
                         //_pluginFacade.LogMessage(status, NotificationLevel.Info);
                         
                         string key = String.Format("{0}, {1}, {2} / {3}, {4}, {5} / {6} / {7}",
@@ -332,12 +336,36 @@ namespace Cryptool.EnigmaBreaker
                         _pluginFacade.pB2String(csetting.PlugBoard), csetting.InitialRotorPos);
 
                         AddNewBestListEntry(key, newScore, encrypt(csetting, text, csetting.PlugBoard));
-                        printBestCandidates();
+                        //printBestCandidates();
 
                         // fire the event, so someting becomes visible..
-                        if (OnIntermediateResult != null)
+                        /*if (OnIntermediateResult != null)
                         {
                             OnIntermediateResult(this, new IntermediateResultEventArgs() { Result = result });
+                        }*/
+
+                        // EVALUATION! increase the _improvements counter
+                        _improvements++;
+                        // only map the current plaintext into text space and
+                        // compare its correctness, if the stopping option is
+                        // active, a percentage is provided and the _improvements
+                        // have reached the specified minimum (frequency)
+                        if (_settings.StopIfPercentReached &&
+                            _pluginFacade.MinimalCorrectPercentage != 0 &&
+                            _improvements % _settings.ComparisonFrequency == 0)
+                        {
+                            // calculate string similarity between the current
+                            // plaintext and the provided original plaintext
+                            double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(result) * 100;
+
+                            Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + newScore);
+
+                            // stop the algorithm if the percentage is high enough
+                            if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                            {
+                                _pluginFacade.Finished = true;
+                                _stoppedOrFinished = true;
+                            }
                         }
                     }
 
@@ -359,33 +387,57 @@ namespace Cryptool.EnigmaBreaker
                 csetting.PlugBoard = _core.Plugboard;
                 csetting.InitialRotorPos = _settings.Alphabet[rotor3Pos].ToString() + _settings.Alphabet[rotor2Pos].ToString() + _settings.Alphabet[rotor1Pos].ToString();
 
-                analysisCandidates.Add(csetting);
-                analysisCandidates.Sort();
+                _analysisCandidates.Add(csetting);
+                _analysisCandidates.Sort();
 
-                if (analysisCandidates.Count == maxAnalysisEntries)
+                string key = String.Format("{0}, {1}, {2} / {3}, {4}, {5} / {6} / {7}",
+                    (rotorEnum)csetting.Rotor3, (rotorEnum)csetting.Rotor2, (rotorEnum)csetting.Rotor1,
+                    csetting.Ring3.ToString(), csetting.Ring2.ToString(), csetting.Ring1.ToString(),
+                    _pluginFacade.pB2String(csetting.PlugBoard), csetting.InitialRotorPos);
+
+                AddNewBestListEntry(key, newScore, encrypt(csetting, text, csetting.PlugBoard));
+
+                // EVALUATION! increase the _improvements counter
+                _improvements++;
+                // only map the current plaintext into text space and
+                // compare its correctness, if the stopping option is
+                // active, a percentage is provided and the _improvements
+                // have reached the specified minimum (frequency)
+                if (_settings.StopIfPercentReached &&
+                    _pluginFacade.MinimalCorrectPercentage != 0 &&
+                    _improvements % _settings.ComparisonFrequency == 0)
                 {
-                    printBestCandidates();
+                    // calculate string similarity between the current
+                    // plaintext and the provided original plaintext
+                    double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(result) * 100;
+
+                    Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + newScore);
+
+                    // stop the algorithm if the percentage is high enough
+                    if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                    {
+                        _pluginFacade.Finished = true;
+                        _stoppedOrFinished = true;
+                    }
+                }
+
+                if (_analysisCandidates.Count == _maxAnalysisEntries)
+                {
+                    //printBestCandidates();
 
                     // current best option
-                    analysisConfigSettings bestOption = analysisCandidates[analysisCandidates.Count - 1];
+                    analysisConfigSettings bestOption = _analysisCandidates[_analysisCandidates.Count - 1];
 
-                    string status = String.Format("ANALYSIS: Best candidates is filled. Best option so far: {0},{1},{2}; Key: {3}; I.C.={4}",
-                    (rotorEnum)bestOption.Rotor3, (rotorEnum)bestOption.Rotor2, (rotorEnum)bestOption.Rotor1, bestOption.InitialRotorPos, bestOption.Score.ToString());
+                    //string status = String.Format("ANALYSIS: Best candidates is filled. Best option so far: {0},{1},{2}; Key: {3}; I.C.={4}",
+                    //(rotorEnum)bestOption.Rotor3, (rotorEnum)bestOption.Rotor2, (rotorEnum)bestOption.Rotor1, bestOption.InitialRotorPos, bestOption.Score.ToString());
                     //_pluginFacade.LogMessage(status, NotificationLevel.Debug);
-
-                    string key = String.Format("{0}, {1}, {2} / {3}, {4}, {5} / {6} / {7}",
-                        (rotorEnum)csetting.Rotor3, (rotorEnum)csetting.Rotor2, (rotorEnum)csetting.Rotor1,
-                        csetting.Ring3.ToString(), csetting.Ring2.ToString(), csetting.Ring1.ToString(),
-                        _pluginFacade.pB2String(csetting.PlugBoard), csetting.InitialRotorPos);
-
-                    AddNewBestListEntry(key, newScore, encrypt(csetting, text, csetting.PlugBoard));
                         
 
                     // fire the event, so someting becomes visible..
-                    if (OnIntermediateResult != null)
+                    /*if (OnIntermediateResult != null)
                     {
                         OnIntermediateResult(this, new IntermediateResultEventArgs() { Result = result });
-                    }
+                    }*/
                 }
 
             }
@@ -410,10 +462,9 @@ namespace Cryptool.EnigmaBreaker
             if (_settings.AnalyzeInitialRotorPos)
             {
                 // turn fast rotor
-                for (int i = 1; i <= _settings.Alphabet.Length && !_stopped; i++)
+                for (int i = 1; i <= _settings.Alphabet.Length && !_stoppedOrFinished; i++)
                 {
                     _core.setInternalConfig(enigmaConfig.Rotor1, enigmaConfig.Rotor2, enigmaConfig.Rotor3, 0, _settings.Reflector, i, 1, 1, 1, enigmaConfig.PlugBoard);
-
 
                     int rotatedR1Pos;
                     if (_settings.AnalyzeInitialRotorPos)
@@ -422,12 +473,11 @@ namespace Cryptool.EnigmaBreaker
                     else
                         rotatedR1Pos = r1pos;
 
-
                     string result = _core.Encrypt(rotatedR1Pos, r2pos, r3pos, 0, text);
-
                     double newScore = calculateScore(result, _settings.SearchMethod);
 
-                    keys++;
+                    _pluginFacade.IncrementDecryptionsCountForThread(0);
+                    _keys++;
 
                     if (newScore > enigmaConfig.Score)
                     {
@@ -442,6 +492,30 @@ namespace Cryptool.EnigmaBreaker
                         _pluginFacade.pB2String(enigmaConfig.PlugBoard), enigmaConfig.InitialRotorPos);
 
                         AddNewBestListEntry(key, newScore, encrypt(enigmaConfig, text, enigmaConfig.PlugBoard));
+
+                        // EVALUATION! increase the _improvements counter
+                        _improvements++;
+                        // only map the current plaintext into text space and
+                        // compare its correctness, if the stopping option is
+                        // active, a percentage is provided and the _improvements
+                        // have reached the specified minimum (frequency)
+                        if (_settings.StopIfPercentReached &&
+                            _pluginFacade.MinimalCorrectPercentage != 0 &&
+                            _improvements % _settings.ComparisonFrequency == 0)
+                        {
+                            // calculate string similarity between the current
+                            // plaintext and the provided original plaintext
+                            double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(result) * 100;
+
+                            Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + newScore);
+
+                            // stop the algorithm if the percentage is high enough
+                            if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                            {
+                                _pluginFacade.Finished = true;
+                                _stoppedOrFinished = true;
+                            }
+                        }
                     }
 
                     // print keys/sec in the ui
@@ -454,7 +528,7 @@ namespace Cryptool.EnigmaBreaker
                 r1pos = _settings.Alphabet.IndexOf(enigmaConfig.InitialRotorPos[2]);
 
                 // turn middle rotor
-                for (int i = 1; i <= _settings.Alphabet.Length && !_stopped; i++)
+                for (int i = 1; i <= _settings.Alphabet.Length && !_stoppedOrFinished; i++)
                 {
                     _core.setInternalConfig(enigmaConfig.Rotor1, enigmaConfig.Rotor2, enigmaConfig.Rotor3, 0, _settings.Reflector, enigmaConfig.Ring1, i, 1, 1, enigmaConfig.PlugBoard);
 
@@ -467,7 +541,8 @@ namespace Cryptool.EnigmaBreaker
 
                     string result = _core.Encrypt(r1pos, rotatedR2Pos, r3pos, 0, text);
 
-                    keys++;
+                    _pluginFacade.IncrementDecryptionsCountForThread(0);
+                    _keys++;
 
                     double newScore = calculateScore(result, _settings.SearchMethod);
 
@@ -484,6 +559,30 @@ namespace Cryptool.EnigmaBreaker
                         _pluginFacade.pB2String(enigmaConfig.PlugBoard), enigmaConfig.InitialRotorPos);
 
                         AddNewBestListEntry(key, newScore, encrypt(enigmaConfig, text, enigmaConfig.PlugBoard));
+
+                        // EVALUATION! increase the _improvements counter
+                        _improvements++;
+                        // only map the current plaintext into text space and
+                        // compare its correctness, if the stopping option is
+                        // active, a percentage is provided and the _improvements
+                        // have reached the specified minimum (frequency)
+                        if (_settings.StopIfPercentReached &&
+                            _pluginFacade.MinimalCorrectPercentage != 0 &&
+                            _improvements % _settings.ComparisonFrequency == 0)
+                        {
+                            // calculate string similarity between the current
+                            // plaintext and the provided original plaintext
+                            double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(result) * 100;
+
+                            Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + newScore);
+
+                            // stop the algorithm if the percentage is high enough
+                            if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                            {
+                                _pluginFacade.Finished = true;
+                                _stoppedOrFinished = true;
+                            }
+                        }
                     }
 
                     // print keys/sec in the ui
@@ -494,18 +593,19 @@ namespace Cryptool.EnigmaBreaker
             }
             else
             {
-                // in case the key is fixed, we search all combinations, i.e. 26*26*26
-                for (int i = 1; i <= _settings.Alphabet.Length && !_stopped; i++)
+                // in case the initial pos is fixed, we search all combinations, i.e. 26*26*26
+                for (int i = 1; i <= _settings.Alphabet.Length && !_stoppedOrFinished; i++)
                 {
-                    for (int j = 1; j <= _settings.Alphabet.Length && !_stopped; j++)
+                    for (int j = 1; j <= _settings.Alphabet.Length && !_stoppedOrFinished; j++)
                     {
-                        for (int k = 1; k <= _settings.Alphabet.Length && !_stopped; k++)
+                        for (int k = 1; k <= _settings.Alphabet.Length && !_stoppedOrFinished; k++)
                         {
                             _core.setInternalConfig(enigmaConfig.Rotor1, enigmaConfig.Rotor2, enigmaConfig.Rotor3, 0, _settings.Reflector, k, j, i, 1, enigmaConfig.PlugBoard);
                             string result = _core.Encrypt(r1pos, r2pos, r3pos, 0, text);
                             double newScore = calculateScore(result, _settings.SearchMethod);
 
-                            keys++;
+                            _pluginFacade.IncrementDecryptionsCountForThread(0);
+                            _keys++;
 
                             if (newScore > enigmaConfig.Score)
                             {
@@ -522,6 +622,30 @@ namespace Cryptool.EnigmaBreaker
                                 _pluginFacade.pB2String(enigmaConfig.PlugBoard), enigmaConfig.InitialRotorPos);
 
                                 AddNewBestListEntry(key, newScore, encrypt(enigmaConfig, text, enigmaConfig.PlugBoard));
+
+                                // EVALUATION! increase the _improvements counter
+                                _improvements++;
+                                // only map the current plaintext into text space and
+                                // compare its correctness, if the stopping option is
+                                // active, a percentage is provided and the _improvements
+                                // have reached the specified minimum (frequency)
+                                if (_settings.StopIfPercentReached &&
+                                    _pluginFacade.MinimalCorrectPercentage != 0 &&
+                                    _improvements % _settings.ComparisonFrequency == 0)
+                                {
+                                    // calculate string similarity between the current
+                                    // plaintext and the provided original plaintext
+                                    double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(result) * 100;
+
+                                    Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + newScore);
+
+                                    // stop the algorithm if the percentage is high enough
+                                    if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                                    {
+                                        _pluginFacade.Finished = true;
+                                        _stoppedOrFinished = true;
+                                    }
+                                }
                             }
 
                             // print keys/sec in the ui
@@ -558,23 +682,23 @@ namespace Cryptool.EnigmaBreaker
 
             string tmp;
             bool plugFound = false;
-            int trials = 0;
+            //int trials = 0;
             int keys = 0;
             string bestResult = encrypt(enigmaConfig, text, enigmaConfig.PlugBoard);
             enigmaConfig.Score = calculateScore(bestResult, _settings.PlugSearchMethod);
 
-            for (int n = 0; n < maxPlugs && !_stopped; n++)
+            for (int n = 0; n < maxPlugs && !_stoppedOrFinished; n++)
             {
 
                 //LogMessage(String.Format("ANALYSIS: ====> Stage 3.{0} - Searching plugs <====",(n+1)), NotificationLevel.Info);
 
                 tmp = enigmaConfig.PlugBoard;
                 plugFound = false;
-                trials = 0; //reset the counter, so we count each round individually
+                // trials = 0; //reset the counter, so we count each round individually
 
-                for (int i = 0; i < _settings.Alphabet.Length && !_stopped; i++)
+                for (int i = 0; i < _settings.Alphabet.Length && !_stoppedOrFinished; i++)
                 {
-                    for (int j = i + 1; j < _settings.Alphabet.Length && !_stopped; j++)
+                    for (int j = i + 1; j < _settings.Alphabet.Length && !_stoppedOrFinished; j++)
                     {
                         //create a "clean" plugboard
                         StringBuilder plugboard = new StringBuilder(tmp);
@@ -586,7 +710,7 @@ namespace Cryptool.EnigmaBreaker
                         if (plugboard[i] != _settings.Alphabet[i])
                         {
                             plugFound = plugFound | resolvePlugConflict(i, j, enigmaConfig, plugboard.ToString(), text);
-                            trials += 3;
+                            //trials += 3;
                             keys += 3;
                             continue;
                         }
@@ -594,7 +718,7 @@ namespace Cryptool.EnigmaBreaker
                         if (plugboard[j] != _settings.Alphabet[j])
                         {
                             plugFound = plugFound | resolvePlugConflict(j, i, enigmaConfig, plugboard.ToString(), text);
-                            trials += 3;
+                            //trials += 3;
                             keys += 3;
                             continue;
                         }
@@ -605,7 +729,9 @@ namespace Cryptool.EnigmaBreaker
 
                         string result = encrypt(enigmaConfig, text, plugboard.ToString());
                         double newScore = calculateScore(result, _settings.PlugSearchMethod);
-                        trials++;
+
+                        //trials++;
+                        _pluginFacade.IncrementDecryptionsCountForThread(0);
                         keys++;
 
                         if (newScore > enigmaConfig.Score)
@@ -622,8 +748,33 @@ namespace Cryptool.EnigmaBreaker
 
                             // default is the IC Score (index of coincidence)
                             double GeneralSearchMethodScore = calculateScore(result, _settings.SearchMethod);
+                            string newBestPlaintext = encrypt(enigmaConfig, text, enigmaConfig.PlugBoard);
 
-                            AddNewBestListEntry(key, GeneralSearchMethodScore, encrypt(enigmaConfig, text, enigmaConfig.PlugBoard));
+                            AddNewBestListEntry(key, GeneralSearchMethodScore, newBestPlaintext);
+
+                            // EVALUATION! increase the _improvements counter
+                            _improvements++;
+                            // only map the current plaintext into text space and
+                            // compare its correctness, if the stopping option is
+                            // active, a percentage is provided and the _improvements
+                            // have reached the specified minimum (frequency)
+                            if (_settings.StopIfPercentReached &&
+                                _pluginFacade.MinimalCorrectPercentage != 0 &&
+                                _improvements % _settings.ComparisonFrequency == 0)
+                            {
+                                // calculate string similarity between the current
+                                // plaintext and the provided original plaintext
+                                double currentlyCorrect = _pluginFacade.CorrectPlaintextInput.CalculateSimilarity(newBestPlaintext) * 100;
+
+                                Console.WriteLine("currentlyCorrect: " + currentlyCorrect + "% - best score:" + GeneralSearchMethodScore);
+
+                                // stop the algorithm if the percentage is high enough
+                                if (currentlyCorrect >= _pluginFacade.MinimalCorrectPercentage)
+                                {
+                                    _pluginFacade.Finished = true;
+                                    _stoppedOrFinished = true;
+                                }
+                            }
                         }
 
                         // print keys/sec in the ui
@@ -635,15 +786,15 @@ namespace Cryptool.EnigmaBreaker
 
                 _pluginFacade.UpdateDisplayEnd(Resources.PlugsCaption);
 
-                string msg = String.Format("ANALYSIS: Plugs setting in round {0} after {1} trials: {2} | {3},{4},{5} | {6},{7},{8} | {9} | {10}",
+                /*string msg = String.Format("ANALYSIS: Plugs setting in round {0} after {1} trials: {2} | {3},{4},{5} | {6},{7},{8} | {9} | {10}",
                     (n + 1), trials, enigmaConfig.Score.ToString(),
                     (rotorEnum)enigmaConfig.Rotor3, (rotorEnum)enigmaConfig.Rotor2, (rotorEnum)enigmaConfig.Rotor1,
                     enigmaConfig.Ring3, enigmaConfig.Ring2, enigmaConfig.Ring1,
-                    enigmaConfig.InitialRotorPos, _pluginFacade.pB2String(enigmaConfig.PlugBoard));
+                    enigmaConfig.InitialRotorPos, _pluginFacade.pB2String(enigmaConfig.PlugBoard));*/
                 //_pluginFacade.LogMessage(msg, NotificationLevel.Info);
 
                 // no plug could lead to a better result, hence abort plug search.
-                if (!plugFound || _stopped)
+                if (!plugFound || _stoppedOrFinished)
                     break;
             }
 
@@ -790,7 +941,7 @@ namespace Cryptool.EnigmaBreaker
                     }
                 }
 
-                if (_stopped)
+                if (_stoppedOrFinished)
                     break;
             }
 
@@ -812,7 +963,7 @@ namespace Cryptool.EnigmaBreaker
                     inputGrams[g] = new double[] { 1, 0 };
                 }
 
-                if (_stopped)
+                if (_stoppedOrFinished)
                     break;
             }
 
@@ -890,7 +1041,7 @@ namespace Cryptool.EnigmaBreaker
 
             message.AppendLine("=====================================");
 
-            foreach (analysisConfigSettings cfg in analysisCandidates)
+            foreach (analysisConfigSettings cfg in _analysisCandidates)
             {
                 message.AppendFormat("{0} | {1},{2},{3} | {4},{5},{6} | {7} | {8}" + Environment.NewLine,
                     cfg.Score.ToString(),
@@ -907,7 +1058,7 @@ namespace Cryptool.EnigmaBreaker
                     _pluginFacade.pB2String(cfg.PlugBoard), cfg.InitialRotorPos);
             }
             //pluginFacade.BestKey = message.ToString();
-            _pluginFacade.SetBestKey(currentBestKey.ToString());
+            //_pluginFacade.SetBestKey(currentBestKey.ToString());
             //pluginFacade.LogMessage(message.ToString(), NotificationLevel.Info);
         }
 
@@ -920,12 +1071,11 @@ namespace Cryptool.EnigmaBreaker
 
         #region Public events
 
-        public event EventHandler<IntermediateResultEventArgs> OnIntermediateResult;
+        //public event EventHandler<IntermediateResultEventArgs> OnIntermediateResult;
 
         #endregion
 
         #region Public methods
-
 
         /// <summary>
         /// Creates a new EnigmaAnalyzer class
@@ -953,11 +1103,11 @@ namespace Cryptool.EnigmaBreaker
             _pluginFacade.LogMessage("=========> ANALYSIS OF ENIGMA MESSAGE STARTED <=========", NotificationLevel.Info);
 
             // some initialisation
-            analysisCandidates.Clear();
-            _stopped = false;
+            _analysisCandidates.Clear();
+            _stoppedOrFinished = false;
 
-            keys = 0;
-            lasttime = DateTime.Now;
+            _keys = 0;
+            _lasttime = DateTime.Now;
 
             AnalyzeRun(preformatedText);
 
@@ -967,7 +1117,7 @@ namespace Cryptool.EnigmaBreaker
             _core.VerboseLevel = VerboseLevels.VeryVerbose;
 
             // decrypt all
-            return analysisCandidates.Select(cfg => encrypt(cfg, preformatedText, cfg.PlugBoard));
+            return _analysisCandidates.Select(cfg => encrypt(cfg, preformatedText, cfg.PlugBoard));
         }
 
         private void AnalyzeRun(string preformatedText)
@@ -976,9 +1126,9 @@ namespace Cryptool.EnigmaBreaker
             {
                 _pluginFacade.LogMessage("ANALYSIS: ====> Stage 1 - Searching used rotors and key <====", NotificationLevel.Info);
                 
-                rotorPos1 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[0]);
-                rotorPos2 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[1]);
-                rotorPos3 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[2]);
+                _rotorPos1 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[0]);
+                _rotorPos2 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[1]);
+                _rotorPos3 = _settings.Alphabet.IndexOf(_settings.InitialRotorPos[2]);
 
                 analyzeRotors(preformatedText);
             }
@@ -1008,7 +1158,7 @@ namespace Cryptool.EnigmaBreaker
                     settingsConfig.Ring3 = _settings.AnalyzeRings ? 1 : _settings.Ring3;
                     settingsConfig.InitialRotorPos = _settings.InitialRotorPos;
 
-                    analysisCandidates.Add(settingsConfig);
+                    _analysisCandidates.Add(settingsConfig);
                 }
             }
 
@@ -1018,9 +1168,9 @@ namespace Cryptool.EnigmaBreaker
             //analysisCandidates[analysisCandidates.Count - 1].Rotor3 = 1;
             //analysisCandidates[analysisCandidates.Count - 1].Key = "BKF";
 
-            printBestCandidates();
+            //printBestCandidates();
 
-            if (_stopped)
+            if (_stoppedOrFinished)
                 return;
 
             // put the core in quiet mode, since now many internal changes occur
@@ -1030,60 +1180,60 @@ namespace Cryptool.EnigmaBreaker
             {
                 _pluginFacade.LogMessage("ANALYSIS: ====> Stage 2 - Searching ring positions <====", NotificationLevel.Info);
 
-                for (int j = analysisCandidates.Count - 1; j >= 0 && !_stopped; j--)
+                for (int j = _analysisCandidates.Count - 1; j >= 0 && !_stoppedOrFinished; j--)
                 {
-                    analysisCandidates[j].PlugBoard = _settings.Alphabet; // empty plugs
-                    analyzeRings(analysisCandidates[j], preformatedText);
+                    _analysisCandidates[j].PlugBoard = _settings.Alphabet; // empty plugs
+                    analyzeRings(_analysisCandidates[j], preformatedText);
                 }
 
-                analysisCandidates.Sort();
+                _analysisCandidates.Sort();
             }
             else
             {
                 _pluginFacade.LogMessage("ANALYSIS: ====> Skipping stage 2 - Using provided ring settings <====", NotificationLevel.Info);
 
-                for (int j = analysisCandidates.Count - 1; j >= 0 && !_stopped; j--)
+                for (int j = _analysisCandidates.Count - 1; j >= 0 && !_stoppedOrFinished; j--)
                 {
-                    analysisCandidates[j].PlugBoard = _settings.Alphabet; // empty plugs
-                    analysisCandidates[j].Ring1 = _settings.Ring1;
-                    analysisCandidates[j].Ring2 = _settings.Ring2;
-                    analysisCandidates[j].Ring3 = _settings.Ring3;
+                    _analysisCandidates[j].PlugBoard = _settings.Alphabet; // empty plugs
+                    _analysisCandidates[j].Ring1 = _settings.Ring1;
+                    _analysisCandidates[j].Ring2 = _settings.Ring2;
+                    _analysisCandidates[j].Ring3 = _settings.Ring3;
                 }
             }
 
-            printBestCandidates();
+            //printBestCandidates();
 
-            if (_stopped)
+            if (_stoppedOrFinished)
                 return;
 
             if (_settings.AnalyzePlugs)
             {
                 _pluginFacade.LogMessage("ANALYSIS: ====> Stage 3 - Searching used plugs <====", NotificationLevel.Info);
 
-                for (int j = analysisCandidates.Count - 1; j >= 0 && !_stopped; j--)
+                for (int j = _analysisCandidates.Count - 1; j >= 0 && !_stoppedOrFinished; j--)
                 {
-                    string result = analyzePlugs(analysisCandidates[j], _settings.MaxSearchedPlugs, preformatedText);
+                    string result = analyzePlugs(_analysisCandidates[j], _settings.MaxSearchedPlugs, preformatedText);
 
                     // fire the event, so someting becomes visible..
-                    if (OnIntermediateResult != null)
+                    /*if (OnIntermediateResult != null)
                     {
                         OnIntermediateResult(this, new IntermediateResultEventArgs() { Result = result });
-                    }
+                    }*/
                 }
 
-                analysisCandidates.Sort();
+                _analysisCandidates.Sort();
             }
             else
             {
                 _pluginFacade.LogMessage("ANALYSIS: ====> Skipping stage 3 - Using provided plugboard <====", NotificationLevel.Info);
 
-                for (int j = analysisCandidates.Count - 1; j >= 0 && !_stopped; j--)
+                for (int j = _analysisCandidates.Count - 1; j >= 0 && !_stoppedOrFinished; j--)
                 {
-                    analysisCandidates[j].PlugBoard = _settings.PlugBoard;
+                    _analysisCandidates[j].PlugBoard = _settings.PlugBoard;
                 }
             }
 
-            printBestCandidates();
+            //printBestCandidates();
         }
 
         /// <summary>
@@ -1091,8 +1241,31 @@ namespace Cryptool.EnigmaBreaker
         /// </summary>
         public void StopAnalysis()
         {
-            _stopped = true;
+            _stoppedOrFinished = true;
         }
+        
+        /// <summary>
+        /// Updates the keys per second (to use once after the analysis).
+        /// </summary>
+        public void FinalUiUpdate()
+        {
+            var keysDispatcher2 = _keys;
+            var lasttimeDispatcher2 = _lasttime;
+            _pluginFacade.Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
+                }
+                // ReSharper disable once EmptyGeneralCatchClause
+                catch (Exception e)
+                {
+                    //wtf?
+                    Console.WriteLine("e2: " + e);
+                }
+            }, null);
+        }
+        
 
         /// <summary>
         /// The method calculates and returns the index of coincidences of a given text
@@ -1114,7 +1287,7 @@ namespace Cryptool.EnigmaBreaker
 
 
             // now calculate the index of coincidences
-            for (int i = 0; i < statistics.Length && !_stopped; i++)
+            for (int i = 0; i < statistics.Length && !_stoppedOrFinished; i++)
             {
                 cipherTextLength += statistics[i];
                 countDoubleCharacters += (statistics[i] * (statistics[i] - 1));
@@ -1147,5 +1320,64 @@ namespace Cryptool.EnigmaBreaker
         #endregion
 
 
+    }
+
+    public static class SimilarityExtensions
+    {
+        /// <summary>
+        /// Returns the number of steps required to transform the source string
+        /// into the target string.
+        /// </summary>
+        public static int ComputeLevenshteinDistance(this string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.IsNullOrEmpty(target) ? 0 : target.Length;
+
+            if (string.IsNullOrEmpty(target))
+                return string.IsNullOrEmpty(source) ? 0 : source.Length;
+
+            int sourceLength = source.Length;
+            int targetLength = target.Length;
+
+            int[,] distance = new int[sourceLength + 1, targetLength + 1];
+
+            // Step 1
+            for (int i = 0; i <= sourceLength; distance[i, 0] = i++) ;
+            for (int j = 0; j <= targetLength; distance[0, j] = j++) ;
+
+            for (int i = 1; i <= sourceLength; i++)
+            {
+                for (int j = 1; j <= targetLength; j++)
+                {
+                    // Step 2
+                    int cost = (target[j - 1] == source[i - 1]) ? 0 : 1;
+
+                    // Step 3
+                    distance[i, j] = Math.Min(
+                                        Math.Min(distance[i - 1, j] + 1, distance[i, j - 1] + 1),
+                                        distance[i - 1, j - 1] + cost);
+                }
+            }
+
+            return distance[sourceLength, targetLength];
+        }
+
+        /// <summary> 
+        /// Calculate percentage similarity of two strings
+        /// <param name="source">Source String to Compare with</param>
+        /// <param name="target">Targeted String to Compare</param>
+        /// <returns>Return Similarity between two strings from 0 to 1.0</returns>
+        /// </summary>
+        public static double CalculateSimilarity(this string source, string target)
+        {
+            if (string.IsNullOrEmpty(source))
+                return string.IsNullOrEmpty(target) ? 1 : 0;
+
+            if (string.IsNullOrEmpty(target))
+                return string.IsNullOrEmpty(source) ? 1 : 0;
+
+            double stepsToSame = ComputeLevenshteinDistance(source, target);
+            return (1.0 - (stepsToSame / (double)Math.Max(source.Length, target.Length)));
+        }
     }
 }

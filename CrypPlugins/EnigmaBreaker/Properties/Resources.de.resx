@@ -124,7 +124,7 @@
     <value>Wörterbuch mit N-Gramm-Häufigkeiten (string -&gt; [absolut, prozentual, log2])</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>EnigmaBreaker</value>
+    <value>Enigma Breaker</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Angriff auf die Polyalphabetische Rotor-Chiffriermaschine</value>
@@ -759,7 +759,6 @@
   <data name="RotorB3" xml:space="preserve">
     <value>Gamma -- seit 1. Juli 1943</value>
   </data>
-
   <data name="Copy_all" xml:space="preserve">
     <value>Kopiere alle Zeilen.</value>
   </data>
@@ -802,7 +801,6 @@
   <data name="CurrentlyAnalysedLabel" xml:space="preserve">
     <value>Aktuell analysierter Teil:</value>
   </data>
-
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>
   </data>
@@ -835,7 +833,6 @@ wurde.</value>
     <value>Der beste Schlüssel, der während der Analyse gefunden
 wurde.</value>
   </data>
-
   <data name="RotorsCaption" xml:space="preserve">
     <value>Rotoren</value>
   </data>

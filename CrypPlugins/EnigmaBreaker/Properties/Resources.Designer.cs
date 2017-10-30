@@ -232,18 +232,18 @@ namespace Cryptool.EnigmaBreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Analyze initial rotor pos.
+        ///   Looks up a localized string similar to Analyze initial rotor positions.
         /// </summary>
-        public static string AnalyzeKeyCaption {
+        public static string AnalyzeInitialRotorPosCaption {
             get {
                 return ResourceManager.GetString("AnalyzeInitialRotorPosCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If checked, the analysis tries to detect the correct key. If unchecked, the value from &quot;Key&quot; is used..
+        ///   Looks up a localized string similar to If checked, the analysis tries to detect the correct key. If unchecked, the value from &quot;Initial rotor positions&quot; is used..
         /// </summary>
-        public static string AnalyzeKeyTooltip {
+        public static string AnalyzeInitialRotorPosTooltip {
             get {
                 return ResourceManager.GetString("AnalyzeInitialRotorPosTooltip", resourceCulture);
             }
@@ -448,7 +448,7 @@ namespace Cryptool.EnigmaBreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Current analyzed keylength:.
+        ///   Looks up a localized string similar to Currently analyzed part:.
         /// </summary>
         public static string CurrentlyAnalysedLabel {
             get {
@@ -1411,7 +1411,7 @@ namespace Cryptool.EnigmaBreaker.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EnigmaBreaker.
+        ///   Looks up a localized string similar to Enigma Breaker.
         /// </summary>
         public static string PluginCaption {
             get {
@@ -1425,6 +1425,15 @@ namespace Cryptool.EnigmaBreaker.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugs.
+        /// </summary>
+        public static string PlugsCaption {
+            get {
+                return ResourceManager.GetString("PlugsCaption", resourceCulture);
             }
         }
         
@@ -1650,6 +1659,15 @@ namespace Cryptool.EnigmaBreaker.Properties {
         public static string Ring4Tooltip {
             get {
                 return ResourceManager.GetString("Ring4Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rings.
+        /// </summary>
+        public static string RingsCaption {
+            get {
+                return ResourceManager.GetString("RingsCaption", resourceCulture);
             }
         }
         
@@ -1987,6 +2005,15 @@ namespace Cryptool.EnigmaBreaker.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotors.
+        /// </summary>
+        public static string RotorsCaption {
+            get {
+                return ResourceManager.GetString("RotorsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotor/Ring/Key search method.
         /// </summary>
         public static string SearchMethodCaption {
@@ -2163,33 +2190,6 @@ namespace Cryptool.EnigmaBreaker.Properties {
         public static string ValueHeader {
             get {
                 return ResourceManager.GetString("ValueHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rotors.
-        /// </summary>
-        public static string RotorsCaption {
-            get {
-                return ResourceManager.GetString("RotorsCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rings.
-        /// </summary>
-        public static string RingsCaption {
-            get {
-                return ResourceManager.GetString("RingsCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value.
-        /// </summary>
-        public static string PlugsCaption {
-            get {
-                return ResourceManager.GetString("PlugsCaption", resourceCulture);
             }
         }
     }

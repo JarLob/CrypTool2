@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2012, Arno Wacker, University of Kassel
+   Copyright 2008-2017, Arno Wacker, University of Kassel
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -75,6 +75,10 @@ namespace Cryptool.EnigmaBreaker
         private int reflector = 0;
 
         private StringBuilder plugBoard = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+        // EVALUATION!
+        private bool _stopIfPercentReached = false;
+        private int _comparisonFrequency = 1;
 
         #endregion
 
@@ -1286,6 +1290,43 @@ namespace Cryptool.EnigmaBreaker
             // Are the following needed? For the presentation? indeed
             //OnPropertyChanged("PlugBoardDisplay");
             //OnPropertyChanged("Remove all Plugs");
+        }
+
+        #endregion
+
+        #region Evaluation settings
+
+        // EVALUATION!
+        [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
+        public bool StopIfPercentReached
+        {
+            get
+            {
+                return this._stopIfPercentReached;
+            }
+            set
+            {
+                this._stopIfPercentReached = value;
+                OnPropertyChanged("StopIfPercentReached");
+            }
+        }
+
+        // EVALUATION!
+        [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
+        public int ComparisonFrequency
+        {
+            get
+            {
+                return _comparisonFrequency;
+            }
+            set
+            {
+                if (value != _comparisonFrequency)
+                {
+                    _comparisonFrequency = value;
+                    OnPropertyChanged("ComparisonFrequency");
+                }
+            }
         }
 
         #endregion

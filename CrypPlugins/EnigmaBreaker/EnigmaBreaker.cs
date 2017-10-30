@@ -75,12 +75,30 @@ namespace Cryptool.EnigmaBreaker
         private string _savedKey;
         private DateTime _startTime;
         private DateTime _endTime;
-        public Boolean _isrunning;
-        private Boolean _newCiphertext = false;
-        private Boolean _newKey = false;
+        public bool _isrunning;
+        private bool _newCiphertext = false;
+        private bool _newKey = false;
 
         private bool _running = false;
         private bool _stopped = false;
+
+        // EVALUATION!
+        private static int threads = 1;
+        private static int currentThread = 0;
+        private int _improvements = 0;
+
+        private string _plaintextInput;
+        private double _percentageInput;
+
+        private bool _newPlaintext = false;
+        private bool _newPercentage = false;
+
+        private TimeSpan _runtime = new TimeSpan();
+        private bool _finished = false;
+        private int _totalNumberOfRestarts;
+        private int _totalNumberOfDecryptions;
+        private int[] _numberOfRestarts;
+        private int[] _numberOfDecryptions;
 
         #endregion
 
@@ -268,12 +286,12 @@ namespace Cryptool.EnigmaBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void analyzer_OnIntermediateResult(object sender, IntermediateResultEventArgs e)
+        /*private void analyzer_OnIntermediateResult(object sender, IntermediateResultEventArgs e)
         {
             // Got an intermidate results from the analyzer, hence display it
             _bestPlaintext = postFormatOutput(e.Result);
             //OnPropertyChanged("BestPlaintext");
-        }
+        }*/
 
         #endregion
 
@@ -341,7 +359,7 @@ namespace Cryptool.EnigmaBreaker
             this._presentation = new AssignmentPresentation();
             this._core = new EnigmaCore(this);
             this._analyzer = new EnigmaAnalyzer(this);
-            this._analyzer.OnIntermediateResult += new EventHandler<IntermediateResultEventArgs>(analyzer_OnIntermediateResult);
+            //this._analyzer.OnIntermediateResult += new EventHandler<IntermediateResultEventArgs>(analyzer_OnIntermediateResult);
             this._statistics = new Dictionary<int, IDictionary<string, double[]>>();
             _presentation.UpdateOutputFromUserChoice += UpdateOutputFromUserChoice;
             
@@ -413,6 +431,35 @@ namespace Cryptool.EnigmaBreaker
             }
         }
 
+        // EVALUATION!
+        [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
+        public string CorrectPlaintextInput
+        {
+            get { return this._plaintextInput; }
+            set
+            {
+                if (!String.IsNullOrEmpty(value) && value != this._plaintextInput)
+                {
+                    this._plaintextInput = value;
+                    OnPropertyChanged("CorrectPlaintextInput");
+                    this._newPlaintext = true;
+                }
+            }
+        }
+
+        // EVALUATION!
+        [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
+        public double MinimalCorrectPercentage
+        {
+            get { return this._percentageInput; }
+            set
+            {
+                this._percentageInput = value;
+                this._newPercentage = true;
+                OnPropertyChanged("MinimalCorrectPercentage");
+            }
+        }
+
         //[PropertyInfo(Direction.InputData, "InputGramsCaption", "InputGramsTooltip", "", false, false, QuickWatchFormat.Text, "FrequencyTest.QuickWatchDictionary")]
         //public IDictionary<string, double[]> InputGrams
         //{
@@ -449,15 +496,56 @@ namespace Cryptool.EnigmaBreaker
             }
         }
 
+        // EVALUATION!
+        [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
+        public EvaluationContainer EvaluationOutput
+        {
+            get
+            {
+                var elapsedtime = DateTime.Now.Subtract(_startTime);
+                _runtime = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, elapsedtime.Milliseconds);
+                var ID = _ciphertextInput.GetHashCode();
+
+                return new EvaluationContainer(ID, _runtime, _totalNumberOfDecryptions, _totalNumberOfRestarts);
+            }
+        }
+
 
         #endregion
 
         #region Public methods
 
+        public bool Finished
+        {
+            get { return this._finished; }
+            set { this._finished = value; }
+        }
+
+        public bool IncrementDecryptionsCountForThread(int thread)
+        {
+            if (_numberOfDecryptions.Length - 1 < thread)
+                return false;
+
+            _numberOfDecryptions[thread]++;
+
+            return true;
+        }
+
+        public bool IncrementRestartsCountForThread(int thread)
+        {
+            if (_numberOfRestarts.Length - 1 < thread)
+                return false;
+
+            _numberOfRestarts[thread]++;
+
+            return true;
+        }
+
+        /*
         public void SetBestKey (string key)
         {
             this._bestKey = key;
-        }
+        }*/
 
         public void PreExecution()
         {
@@ -492,7 +580,7 @@ namespace Cryptool.EnigmaBreaker
             _stopped = false;
             ShowProgress(0, 1);
 
-            if (_ciphertextInput == null)
+            if (!_newCiphertext)
                 return;
 
             if (_settings.Model != 3 && _settings.Model != 2)
@@ -504,6 +592,37 @@ namespace Cryptool.EnigmaBreaker
             //prepare for analysis
             LogMessage("ANALYSIS: Preformatting text...", NotificationLevel.Debug);
             string preformatedText = preFormatInput(_ciphertextInput);
+
+            // EVALUATION! if stopping is active, percentage and plaintext are necessary
+            if (_settings.StopIfPercentReached &&
+                    (!_newPercentage || !_newPlaintext))
+            {
+                // wait for new values
+                return;
+            }
+
+            // consume values
+            _newCiphertext = false;
+            _newPercentage = false;
+            _newPlaintext = false;
+
+            // EVALUATION!
+            if (_percentageInput <= 0 ||
+                _percentageInput > 100)
+            {
+                _percentageInput = 95;
+            }
+            _runtime = new TimeSpan();
+
+            _totalNumberOfRestarts = 0;
+            _totalNumberOfDecryptions = 0;
+            _numberOfRestarts = new int[1 /*_settings.CoresUsed*/]; // prepared for multi threading
+            _numberOfDecryptions = new int[1 /*_settings.CoresUsed*/];
+            for (int t = 1 /*_settings.CoresUsed*/ - 1; t >= 0; t--)
+            {
+                _numberOfRestarts[t] = 0;
+                _numberOfDecryptions[t] = 0;
+            }
 
             UpdateDisplayStart();
 
@@ -518,50 +637,54 @@ namespace Cryptool.EnigmaBreaker
             }
             UpdateDisplayEnd();
 
-            // TODO: We update finally the keys/second of the ui
-            /*var keysDispatcher2 = keys;
-            var lasttimeDispatcher2 = lasttime;
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            // We update finally the keys/second of the ui
+            _analyzer.FinalUiUpdate();
+
+            // EVALUATION!
+            for (var i = 0; i < threads; i++)
             {
-                try
-                {
-                    _presentation.currentSpeed.Content = string.Format("{0:0,0}", Math.Round(keysDispatcher2 * 1000 / (DateTime.Now - lasttimeDispatcher2).TotalMilliseconds, 0));
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception e)
-                {
-                    //wtf?
-                    Console.WriteLine("e2: " + e);
-                }
-            }, null);*/
+                _totalNumberOfRestarts += _numberOfRestarts[i];
+                _totalNumberOfDecryptions += _numberOfDecryptions[i];
+            }
+            // adding 1 for the last decryption
+            _totalNumberOfDecryptions++;
             
             if (_presentation.BestList.Count > 0)
             {
                 BestPlaintext = _presentation.BestList[0].Text;
                 BestKey = _presentation.BestList[0].Key;
+
+                // EVALUATION!
+                _finished = false;
+                OnPropertyChanged("EvaluationOutput");
             }
 
             // "fire" the outputs
-            OnPropertyChanged("BestPlaintext");
-            OnPropertyChanged("BestKey");
+            //OnPropertyChanged("BestPlaintext");
+            //OnPropertyChanged("BestKey");
 
             ShowProgress(1, 1);
         }
 
         public void PostExecution()
         {
-            LogMessage("Enigma shutting down. Reverting key to inial value!", NotificationLevel.Info);
-            if (_savedKey != null && _savedKey.Length > 0)
-            {
-                _settings.InitialRotorPos = _savedKey; // re-set the key
-            }
-
             _running = false;
             _isrunning = false;
             _ciphertextInput = String.Empty;
             _stopped = false;
             _startTime = new DateTime();
             _endTime = new DateTime();
+            _bestKey = String.Empty;
+            _bestPlaintext = String.Empty;
+
+            // EVALUATION! reset values
+            _plaintextInput = String.Empty;
+            _percentageInput = new Double();
+            _runtime = new TimeSpan();
+            _totalNumberOfRestarts = 0;
+            _totalNumberOfDecryptions = 0;
+            _improvements = 0;
+            _finished = false;
         }
 
         public void Stop()
@@ -579,8 +702,6 @@ namespace Cryptool.EnigmaBreaker
         {
             //LogMessage("Dispose", NotificationLevel.Debug);
         }
-
-
 
         /// <summary>
         /// Logs a message to the Cryptool console

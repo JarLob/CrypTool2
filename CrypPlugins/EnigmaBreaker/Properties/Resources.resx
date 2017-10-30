@@ -124,7 +124,7 @@
     <value>Dictionary with gram counts (string -&gt; [absolute, percentaged, log2])</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>EnigmaBreaker</value>
+    <value>Enigma Breaker</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Breaker for the Polyalphabetic rotor-cipher machine</value>
@@ -753,7 +753,6 @@
   <data name="RotorB3" xml:space="preserve">
     <value>Gamma -- since 1st July 1943</value>
   </data>
-
   <data name="Copy_all" xml:space="preserve">
     <value>Copy all lines</value>
   </data>
@@ -796,7 +795,6 @@
   <data name="CurrentlyAnalysedLabel" xml:space="preserve">
     <value>Currently analyzed part:</value>
   </data>
-
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
@@ -821,7 +819,6 @@
   <data name="BestPlaintextTooltip" xml:space="preserve">
     <value>The best plaintext which was found during the analysis.</value>
   </data>
-
   <data name="RotorsCaption" xml:space="preserve">
     <value>Rotors</value>
   </data>
