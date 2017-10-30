@@ -68,9 +68,13 @@ namespace Cryptool.Enigma
         //private IDictionary<string, double[]> inputTriGrams;
         private string _textOutput;
         private string _savedInitialRotorPos;
-        public Boolean _isrunning;
-        private Boolean _newText = false;
-        private Boolean _newKey = false;
+        public bool _isrunning;
+        private bool _newText = false;
+        private bool _keyInputConnected = false;
+        private bool _newKey = false;
+
+        private bool _running = false;
+        private bool _stopped = false;
 
         #endregion
 
@@ -325,7 +329,7 @@ namespace Cryptool.Enigma
 
         private void newInput(object sender, EventArgs args)
         {
-                running = false;
+                _running = false;
         }
 
         private void fireLetters(object sender, EventArgs args)  
@@ -380,12 +384,13 @@ namespace Cryptool.Enigma
             }
         }
 
-        [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltip", true)]
+        [PropertyInfo(Direction.InputData, "KeyInputCaption", "KeyInputTooltip", false)]
         public string KeyInput
         {
             get { return this._keyInput; }
             set
             {
+                this._keyInputConnected = true;
                 if (!String.IsNullOrEmpty(value) && value != this._keyInput)
                 {
                     this._keyInput = value;
@@ -431,8 +436,8 @@ namespace Cryptool.Enigma
         {
             _isrunning = true;
 
-            running = false;
-            stopped = false;
+            _running = false;
+            _stopped = false;
 
             if (_enigmaPresentationFrame.EnigmaPresentation.checkReady())
                 _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
@@ -453,12 +458,9 @@ namespace Cryptool.Enigma
                         _settings.PlugBoard);
         }
 
-        private bool running = false;
-        private bool stopped = false;
-
         public void Execute()
         {
-            if (!this._newText || !this._newKey)
+            if (!this._newText || this._keyInputConnected && !this._newKey)
                 return;
 
             this._newText = false;
@@ -470,14 +472,14 @@ namespace Cryptool.Enigma
                 return;
             }
 
-            while(running)
+            while(_running)
             {
                 _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
-                if (stopped)
+                if (_stopped)
                 return;
             }
 
-            running = true;
+            _running = true;
             LogMessage("Enigma encryption/decryption started...", NotificationLevel.Info);
 
             // re-set the key, in case we get executed again during single run
@@ -498,23 +500,26 @@ namespace Cryptool.Enigma
 
         public void PostExecution()
         {
-            LogMessage("Enigma shutting down. Reverting rotor positions to inial value!", NotificationLevel.Info);
-            if (_savedInitialRotorPos != null && _savedInitialRotorPos.Length > 0)
+            //LogMessage("Enigma shutting down. Reverting rotor positions to inial value!", NotificationLevel.Info);
+            /*if (_savedInitialRotorPos != null && _savedInitialRotorPos.Length > 0)
             {
                 _settings.InitialRotorPos = _savedInitialRotorPos;
-            }
+            }*/
+
 
             this._keyInput = String.Empty;
             this._textInput = String.Empty;
+            this._newKey = false;
+            this._newText = false;
 
-            running = false;
+            _running = false;
             _isrunning = false;
             _enigmaPresentationFrame.ChangeStatus(_isrunning, _enigmaPresentationFrame.EnigmaPresentation.IsVisible);
         }
 
         public void Stop()
         {
-            stopped = true;
+            _stopped = true;
             LogMessage("Enigma stopped", NotificationLevel.Info);
             _enigmaPresentationFrame.EnigmaPresentation.stopclick(this, EventArgs.Empty);
         }

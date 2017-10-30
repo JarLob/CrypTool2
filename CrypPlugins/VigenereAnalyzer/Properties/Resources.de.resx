@@ -219,7 +219,7 @@ wurde.</value>
 wurde.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Vigenère Analyse</value>
+    <value>Vigenère Breaker</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Kryptoanalyse des Vigenère-Verfahrens mittels

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Nils Kopal, Applied Information Security, Uni Kassel
+   Copyright 2017 Nils Kopal, Applied Information Security, Uni Kassel
    https://www.uni-kassel.de/eecs/fachgebiete/ais/mitarbeiter/nils-kopal-m-sc.html
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -187,9 +187,6 @@ namespace Cryptool.VigenereAnalyzer
             Ciphertext = null;
             VigenereAlphabet = null;
 
-
-            _ciphertextInput = String.Empty;
-
             _plaintext = String.Empty;
             _plaintextInput = String.Empty;
             _key = String.Empty;
@@ -234,7 +231,6 @@ namespace Cryptool.VigenereAnalyzer
             _stopped = false;
             ProgressChanged(0, 1);
 
-            // EVALUATION!
             if (!_newCiphertext)
             {
                 return;
