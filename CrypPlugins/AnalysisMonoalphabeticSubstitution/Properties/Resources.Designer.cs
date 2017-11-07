@@ -205,6 +205,15 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Latin ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList4 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Choose language ähnelt.
         /// </summary>
         public static string ChooseAlphabetTooltip {

@@ -397,4 +397,7 @@ werden soll.</value>
   <data name="no_cuda" xml:space="preserve">
     <value>Keine CUDA-fähige Grafikkarte oder fehlender Treiber.</value>
   </data>
+  <data name="ChooseAlphabetList4" xml:space="preserve">
+    <value>Latein</value>
+  </data>
 </root>

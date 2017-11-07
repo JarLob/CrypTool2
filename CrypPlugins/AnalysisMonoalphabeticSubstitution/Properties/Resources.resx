@@ -393,4 +393,7 @@
   <data name="no_cuda" xml:space="preserve">
     <value>No CUDA-enabled device or CUDA driver found.</value>
   </data>
+  <data name="ChooseAlphabetList4" xml:space="preserve">
+    <value>Latin</value>
+  </data>
 </root>
