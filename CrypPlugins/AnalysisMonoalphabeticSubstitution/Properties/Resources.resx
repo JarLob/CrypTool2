@@ -396,4 +396,28 @@
   <data name="ChooseAlphabetList4" xml:space="preserve">
     <value>Latin</value>
   </data>
+  <data name="ChooseAlphabetList10" xml:space="preserve">
+    <value>Portuguese</value>
+  </data>
+  <data name="ChooseAlphabetList11" xml:space="preserve">
+    <value>Czech</value>
+  </data>
+  <data name="ChooseAlphabetList12" xml:space="preserve">
+    <value>Greek</value>
+  </data>
+  <data name="ChooseAlphabetList5" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="ChooseAlphabetList6" xml:space="preserve">
+    <value>Hungarian</value>
+  </data>
+  <data name="ChooseAlphabetList7" xml:space="preserve">
+    <value>Swedish</value>
+  </data>
+  <data name="ChooseAlphabetList8" xml:space="preserve">
+    <value>Italian</value>
+  </data>
+  <data name="ChooseAlphabetList9" xml:space="preserve">
+    <value>Dutch</value>
+  </data>
 </root>

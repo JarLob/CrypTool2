@@ -78,6 +78,14 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private const String German = "abcdefghijklmnopqrstuvwxyzäüöß";
         private const String Spanish = "abcdefghijklmnopqrstuvwxyzñ";
         private const String Latin = "abcdefghijklmnopqrstuvwxyz";
+        private const String French = "abcdefghijklmnopqrstuvwxyz";
+        private const String Hungarian = "abcdefghijklmnopqrstuvwxyz";
+        private const String Swedish = "abcdefghijklmnopqrstuvwxyzåäö";
+        private const String Italian = "abcdefghijklmnopqrstuvwxyz";
+        private const String Dutch = "abcdefghijklmnopqrstuvwxyz";
+        private const String Portuguese = "abcdefghijklmnopqrstuvwxyz";
+        private const String Czech = "abcdefghijklmnopqrstuvwxyz";
+        private const String Greek = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
 
         // Attackers
         private DictionaryAttacker dicAttacker;
@@ -223,7 +231,95 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 {
                     GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
                 }
-            }     
+            }
+            else if (settings.Alphabet == 4)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("fr-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 5)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("hu-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 6)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("sv-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 7)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("it-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 8)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("nl-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 9)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("pt-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 10)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("cs-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }
+            else if (settings.Alphabet == 11)
+            {
+                try
+                {
+                    this.langDic = new Dictionary("el-small.dic", ctAlphabet.Length);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
+                }
+            }           
             // Add new case for another language
             // elseif (settings.Alphabet == 1)
             // {
@@ -442,6 +538,30 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 case 3:
                     this.hillAttacker.Alphabet = Latin;
                     break;
+                case 4:
+                    this.hillAttacker.Alphabet = French;
+                    break;
+                case 5:
+                    this.hillAttacker.Alphabet = Hungarian;
+                    break;
+                case 6:
+                    this.hillAttacker.Alphabet = Swedish;
+                    break;
+                case 7:
+                    this.hillAttacker.Alphabet = Italian;
+                    break;
+                case 8:
+                    this.hillAttacker.Alphabet = Dutch;
+                    break;
+                case 9:
+                    this.hillAttacker.Alphabet = Portuguese;
+                    break;
+                case 10:
+                    this.hillAttacker.Alphabet = Czech;
+                    break;
+                case 11:
+                    this.hillAttacker.Alphabet = Greek;
+                    break;              
                 default:
                     this.hillAttacker.Alphabet = English;
                     break;
@@ -511,6 +631,30 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     break;
                 case 3:
                     this.hillAttacker.Alphabet = Latin;
+                    break;
+                case 4:
+                    this.hillAttacker.Alphabet = French;
+                    break;
+                case 5:
+                    this.hillAttacker.Alphabet = Hungarian;
+                    break;
+                case 6:
+                    this.hillAttacker.Alphabet = Swedish;
+                    break;
+                case 7:
+                    this.hillAttacker.Alphabet = Italian;
+                    break;
+                case 8:
+                    this.hillAttacker.Alphabet = Dutch;
+                    break;
+                case 9:
+                    this.hillAttacker.Alphabet = Portuguese;
+                    break;
+                case 10:
+                    this.hillAttacker.Alphabet = Czech;
+                    break;
+                case 11:
+                    this.hillAttacker.Alphabet = Greek;
                     break;
                 default:
                     this.hillAttacker.Alphabet = English;
@@ -873,6 +1017,38 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 alpha = AnalysisMonoalphabeticSubstitution.Latin;
             }
+            else if (lang == 4)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.French;
+            }
+            else if (lang == 5)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Hungarian;
+            }
+            else if (lang == 6)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Swedish;
+            }
+            else if (lang == 7)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Italian;
+            }
+            else if (lang == 8)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Dutch;
+            }
+            else if (lang == 9)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Portuguese;
+            }
+            else if (lang == 10)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Czech;
+            }
+            else if (lang == 11)
+            {
+                alpha = AnalysisMonoalphabeticSubstitution.Greek;
+            }
             // Add another case for a new language
             //else if ( lang == 1)
             //{
@@ -905,6 +1081,38 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             else if (alpha_nr == 3)
             {
                 lang = "la";
+            }
+            else if (alpha_nr == 4)
+            {
+                lang = "fr";
+            }
+            else if (alpha_nr == 5)
+            {
+                lang = "hu";
+            }
+            else if (alpha_nr == 6)
+            {
+                lang = "sv";
+            }
+            else if (alpha_nr == 7)
+            {
+                lang = "it";
+            }
+            else if (alpha_nr == 8)
+            {
+                lang = "nl";
+            }
+            else if (alpha_nr == 9)
+            {
+                lang = "pt";
+            }
+            else if (alpha_nr == 10)
+            {
+                lang = "cs";
+            }
+            else if (alpha_nr == 11)
+            {
+                lang = "el";
             }
             // Add another case for a new language
             //else if (alpha_nr == 1)

@@ -48,7 +48,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         #region TaskPane Settings
 
         [TaskPane("ChooseAlphabetCaption", "ChooseAlphabetTooltip", "AlphabetGroup", 1, false, ControlType.ComboBox,
-            new string[] { "ChooseAlphabetList1", "ChooseAlphabetList2", "ChooseAlphabetList3", "ChooseAlphabetList4" })] //Add new value for another language, do it in the resource files to have multi-language support
+            new string[] { "ChooseAlphabetList1", "ChooseAlphabetList2", "ChooseAlphabetList3", "ChooseAlphabetList4", "ChooseAlphabetList5", "ChooseAlphabetList6", "ChooseAlphabetList7", "ChooseAlphabetList8", "ChooseAlphabetList9", "ChooseAlphabetList10", "ChooseAlphabetList11"/*, "ChooseAlphabetList12"*/ })] //Add new value for another language, do it in the resource files to have multi-language support
         public int Alphabet
         {
             get { return alphabet; }

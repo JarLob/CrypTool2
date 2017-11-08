@@ -187,6 +187,33 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Portuguese ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList10 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Czech ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList11 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList12 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die German ähnelt.
         /// </summary>
         public static string ChooseAlphabetList2 {
@@ -210,6 +237,51 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         public static string ChooseAlphabetList4 {
             get {
                 return ResourceManager.GetString("ChooseAlphabetList4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die French ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList5 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hungarian ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList6 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Swedish ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList7 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Italian ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList8 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dutch ähnelt.
+        /// </summary>
+        public static string ChooseAlphabetList9 {
+            get {
+                return ResourceManager.GetString("ChooseAlphabetList9", resourceCulture);
             }
         }
         

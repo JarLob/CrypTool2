@@ -400,4 +400,28 @@ werden soll.</value>
   <data name="ChooseAlphabetList4" xml:space="preserve">
     <value>Latein</value>
   </data>
+  <data name="ChooseAlphabetList10" xml:space="preserve">
+    <value>Portugisisch</value>
+  </data>
+  <data name="ChooseAlphabetList11" xml:space="preserve">
+    <value>Tschechisch</value>
+  </data>
+  <data name="ChooseAlphabetList12" xml:space="preserve">
+    <value>Griechisch</value>
+  </data>
+  <data name="ChooseAlphabetList5" xml:space="preserve">
+    <value>Französisch</value>
+  </data>
+  <data name="ChooseAlphabetList6" xml:space="preserve">
+    <value>Ungarisch</value>
+  </data>
+  <data name="ChooseAlphabetList7" xml:space="preserve">
+    <value>Schwedisch</value>
+  </data>
+  <data name="ChooseAlphabetList8" xml:space="preserve">
+    <value>Italienisch</value>
+  </data>
+  <data name="ChooseAlphabetList9" xml:space="preserve">
+    <value>Niederländisch</value>
+  </data>
 </root>
