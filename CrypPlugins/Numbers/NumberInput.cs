@@ -30,6 +30,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Threading.Tasks;
 using Cryptool.PluginBase.Attributes;
+using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.Numbers
 {
@@ -189,7 +190,8 @@ namespace Cryptool.Plugins.Numbers
             {
                 return BigInteger.Zero;
             }
-            return BigIntegerHelper.ParseExpression(settings.Number);
+            var strNumber = Regex.Replace(settings.Number, @"\s+", "");
+            return BigIntegerHelper.ParseExpression(strNumber);
         }
 
         #region Properties
