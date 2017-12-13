@@ -6,6 +6,7 @@ namespace TranspositionAnalyser
     public class ValueKey : IComparable, ICloneable
     {
         public byte[] key;
+        public string word;
         public double score;
         public byte[] plaintext;
         public string mode;
@@ -29,6 +30,7 @@ namespace TranspositionAnalyser
             ValueKey v = new ValueKey();
 
             v.score = score;
+            v.word = word;
             v.key = (byte[])key.Clone();
             v.plaintext = (byte[])plaintext.Clone();
             v.mode = mode;

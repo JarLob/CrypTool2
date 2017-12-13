@@ -193,7 +193,7 @@
     <value>Maximale Schlüssellänge</value>
   </data>
   <data name="MaxLengthTooltip" xml:space="preserve">
-    <value>Geben Sie die maximale Länge für die Brute-Force-Analyse an (max. 20).</value>
+    <value>Geben Sie die maximale Länge für Analyse an.</value>
   </data>
   <data name="RepeatingsCaption" xml:space="preserve">
     <value>Wiederholungen</value>
@@ -280,5 +280,26 @@
   </data>
   <data name="ModeHeader" xml:space="preserve">
     <value>Modus</value>
+  </data>
+  <data name="Analysis_methodList5" xml:space="preserve">
+    <value>Wörterbuchangriff</value>
+  </data>
+  <data name="CaseSensitiveCaption" xml:space="preserve">
+    <value>Beachte Klein-/Großschreibung</value>
+  </data>
+  <data name="CaseSensitiveTooltip" xml:space="preserve">
+    <value>Wörterbuchangriff beachtet Klein-/Großschreibung</value>
+  </data>
+  <data name="DictionaryCaption" xml:space="preserve">
+    <value>Wörterbuch</value>
+  </data>
+  <data name="DictionaryTooltip" xml:space="preserve">
+    <value>Wörterbuch für den Wörterbuchangriff</value>
+  </data>
+  <data name="MinLengthCaption" xml:space="preserve">
+    <value>Minimale Schlüssellänge</value>
+  </data>
+  <data name="MinLengthTooltip" xml:space="preserve">
+    <value>Geben Sie die minimale Länge für Analyse an.</value>
   </data>
 </root>

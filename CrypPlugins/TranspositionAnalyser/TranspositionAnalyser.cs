@@ -15,7 +15,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace TranspositionAnalyser
 {
 
-    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels", "kohnen@cryptool.org, weyers@cryptool.org, malischewski@cryptool.org, wiefels@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
+    [Author("Daniel Kohnen, Julian Weyers, Simon Malischewski, Armin Wiefels, Nils Kopal", "kohnen@cryptool.org, weyers@cryptool.org, malischewski@cryptool.org, wiefels@cryptool.org", "Universität Duisburg-Essen", "http://www.uni-due.de")]
     [PluginInfo("TranspositionAnalyser.Properties.Resources", "PluginCaption", "PluginTooltip", "TranspositionAnalyser/DetailedDescription/doc.xml", "TranspositionAnalyser/Images/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class TranspositionAnalyser : ICrypComponent
@@ -34,6 +34,8 @@ namespace TranspositionAnalyser
 
         private TranspositionAnalyserSettings settings;
         private TranspositionAnalyserQuickWatchPresentation myPresentation;
+
+        private string[] dictionary;
 
         #region Properties
 
@@ -65,6 +67,20 @@ namespace TranspositionAnalyser
             {
                 this.crib = value;
                 OnPropertyChange("Crib");
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "DictionaryCaption", "DictionaryTooltip", false)]
+        public string[] Dictionary
+        {
+            get
+            {
+                return this.dictionary;
+            }
+            set
+            {
+                this.dictionary = value;
+                OnPropertyChange("Dictionary");
             }
         }
 
@@ -162,6 +178,9 @@ namespace TranspositionAnalyser
 
         public void PreExecution()
         {
+            this.dictionary = null;
+            this.crib = null;
+            this.input = null;
         }
 
         public void Execute()
@@ -195,10 +214,11 @@ namespace TranspositionAnalyser
                 case 1: GuiLogMessage("Starting Crib Analysis", NotificationLevel.Info); CribAnalysis(crib, input); break;
                 case 2: GuiLogMessage("Starting Genetic Analysis", NotificationLevel.Info); GeneticAnalysis(); break;
                 case 3: GuiLogMessage("Starting Hill Climbing Analysis", NotificationLevel.Info); HillClimbingAnalysis(); break;
+                case 4: GuiLogMessage("Starting Dictionary Analysis", NotificationLevel.Info); DictionaryAnalysis(); break;
             }
 
             ProgressChanged(1, 1);
-        }
+        }        
 
         public void PostExecution()
         {
@@ -304,7 +324,14 @@ namespace TranspositionAnalyser
                     entry.Ranking = (i + 1).ToString();
                     entry.Value = String.Format("{0:0.00000}", v.score);
                     entry.KeyArray = v.key;
-                    entry.Key = "[" + String.Join(",", v.key) + "]";
+                    if (v.word == null)
+                    {
+                        entry.Key = "[" + String.Join(",", v.key) + "]";
+                    }
+                    else
+                    {
+                        entry.Key = v.word + " [" + String.Join(",", v.key) + "]";
+                    }
                     entry.Mode = v.mode;
                     entry.Text = Encoding.GetEncoding(1252).GetString(v.plaintext);
 
@@ -1153,9 +1180,10 @@ namespace TranspositionAnalyser
             return true;
         }
 
-        private void decrypt(ValueKey vk, byte[] key)
+        private void decrypt(ValueKey vk, byte[] key, string word = null)
         {
             vk.key = key;
+            vk.word = word;
             vk.plaintext = this.controlMaster.Decrypt(this.input, vk.key);
             vk.score = this.costMaster.CalculateCost(vk.plaintext);
             vk.mode = (((ReadInMode)this.controlMaster.getSettings("ReadIn") == ReadInMode.byColumn) ? Properties.Resources.CharacterForColumn : Properties.Resources.CharacterForRow ) + "-"
@@ -1168,6 +1196,116 @@ namespace TranspositionAnalyser
             ValueKey result = new ValueKey();
             decrypt(result, (byte[])key.Clone());
             return result;
+        }
+
+        private void DictionaryAnalysis()
+        {
+            if (dictionary == null)
+            {
+                GuiLogMessage("Please attach dictionary to component", NotificationLevel.Error);
+                return;
+            }
+
+            List<string> words = new List<string>();
+            foreach(string word in dictionary){
+                if(word.Length >= this.settings.MinLength && word.Length <= this.settings.MaxLength){
+                    if (this.settings.CaseSensitive)
+                    {
+                        words.Add(word);
+                    }
+                    else
+                    {
+                        words.Add(word.ToUpper());
+                    }
+                }
+            }
+
+            DateTime startTime = DateTime.Now;
+            DateTime nextUpdate = DateTime.Now.AddMilliseconds(100);
+
+            int[] set = getBruteforceSettings();
+
+            ulong totalKeys = (ulong)(words.Count * set.Length);
+            ulong doneKeys = 0;
+
+            stop = false;
+
+            for (int index = 0; index < words.Count; index++)
+            {
+                for (int s = 0; s < set.Length; s++)
+                {
+                    if (stop) break;
+
+                    switch (set[s])
+                    {
+                        case (0):
+                            controlMaster.changeSettings("ReadIn", ReadInMode.byColumn);
+                            controlMaster.changeSettings("Permute", PermutationMode.byColumn);
+                            controlMaster.changeSettings("ReadOut", ReadOutMode.byColumn);
+                            break;
+                        case (1):
+                            controlMaster.changeSettings("ReadIn", ReadInMode.byColumn);
+                            controlMaster.changeSettings("Permute", PermutationMode.byColumn);
+                            controlMaster.changeSettings("ReadOut", ReadOutMode.byRow);
+                            break;
+                        case (2):
+                            controlMaster.changeSettings("ReadIn", ReadInMode.byRow);
+                            controlMaster.changeSettings("Permute", PermutationMode.byColumn);
+                            controlMaster.changeSettings("ReadOut", ReadOutMode.byColumn);
+                            break;
+                        case (3):
+                            controlMaster.changeSettings("ReadIn", ReadInMode.byRow);
+                            controlMaster.changeSettings("Permute", PermutationMode.byColumn);
+                            controlMaster.changeSettings("ReadOut", ReadOutMode.byRow);
+                            break;
+                    }
+
+                    byte[] key = GenerateKeyFromWord(words[index]);
+
+                    ValueKey vk = new ValueKey();
+                    decrypt(vk, key, words[index]);
+
+                    if (TOPLIST.isBetter(vk))
+                    {
+                        TOPLIST.Add(vk);
+                        Output = vk.plaintext;
+                    }
+
+                    doneKeys++;
+
+                    if (DateTime.Now >= nextUpdate)
+                    {
+                        UpdatePresentationList(totalKeys, doneKeys, startTime);
+                        nextUpdate = DateTime.Now.AddMilliseconds(1000);
+                    }
+                }
+            }
+            UpdatePresentationList(totalKeys, doneKeys, startTime);
+        }
+
+        private byte[] GenerateKeyFromWord(string word)
+        {
+            byte[] key = new byte[word.Length];
+            for (int i = 0; i < word.Length; i++)
+            {
+                key[i] = byte.MaxValue;
+            }
+            for (int i = 0; i < word.Length; i++)
+            {
+                var smallestIndex = -1;
+                var smallestValue = int.MaxValue;
+
+                for (var j = 0; j < word.Length; j++)
+                {
+                    if (key[j] == byte.MaxValue && word[j] < smallestValue)
+                    {
+                        smallestValue = word[j];
+                        smallestIndex = j;
+                    }
+                }
+                key[smallestIndex] = (byte)(i + 1);
+            }
+            return key;
         }
     }
 

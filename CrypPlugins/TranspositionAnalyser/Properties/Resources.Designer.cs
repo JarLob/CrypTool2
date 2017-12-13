@@ -106,11 +106,38 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary Attack ähnelt.
+        /// </summary>
+        public static string Analysis_methodList5 {
+            get {
+                return ResourceManager.GetString("Analysis_methodList5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Select the analysis method ähnelt.
         /// </summary>
         public static string Analysis_methodTooltip {
             get {
                 return ResourceManager.GetString("Analysis_methodTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Case sensitive ähnelt.
+        /// </summary>
+        public static string CaseSensitiveCaption {
+            get {
+                return ResourceManager.GetString("CaseSensitiveCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary attack is case sensitive ähnelt.
+        /// </summary>
+        public static string CaseSensitiveTooltip {
+            get {
+                return ResourceManager.GetString("CaseSensitiveTooltip", resourceCulture);
             }
         }
         
@@ -286,6 +313,24 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary ähnelt.
+        /// </summary>
+        public static string DictionaryCaption {
+            get {
+                return ResourceManager.GetString("DictionaryCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary for the dictionary analysis ähnelt.
+        /// </summary>
+        public static string DictionaryTooltip {
+            get {
+                return ResourceManager.GetString("DictionaryTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed: ähnelt.
         /// </summary>
         public static string ElapsedLabel {
@@ -385,7 +430,7 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Transposition Bruteforce length ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Max length of keyword ähnelt.
         /// </summary>
         public static string MaxLengthCaption {
             get {
@@ -394,11 +439,29 @@ namespace TranspositionAnalyser.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the maximum length to be bruteforced (max: 20). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the maximum length to be analyzed ähnelt.
         /// </summary>
         public static string MaxLengthTooltip {
             get {
                 return ResourceManager.GetString("MaxLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Min length of keyword ähnelt.
+        /// </summary>
+        public static string MinLengthCaption {
+            get {
+                return ResourceManager.GetString("MinLengthCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enter the minimum length to be analyzed ähnelt.
+        /// </summary>
+        public static string MinLengthTooltip {
+            get {
+                return ResourceManager.GetString("MinLengthTooltip", resourceCulture);
             }
         }
         

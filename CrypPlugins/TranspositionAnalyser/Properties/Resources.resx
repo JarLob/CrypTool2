@@ -190,10 +190,10 @@
     <value>Enter the keysize to be searched.</value>
   </data>
   <data name="MaxLengthCaption" xml:space="preserve">
-    <value>Transposition Bruteforce length</value>
+    <value>Max length of keyword</value>
   </data>
   <data name="MaxLengthTooltip" xml:space="preserve">
-    <value>Enter the maximum length to be bruteforced (max: 20).</value>
+    <value>Enter the maximum length to be analyzed</value>
   </data>
   <data name="RepeatingsCaption" xml:space="preserve">
     <value>Repetitions</value>
@@ -280,5 +280,26 @@
   </data>
   <data name="ModeHeader" xml:space="preserve">
     <value>Mode</value>
+  </data>
+  <data name="Analysis_methodList5" xml:space="preserve">
+    <value>Dictionary Attack</value>
+  </data>
+  <data name="CaseSensitiveCaption" xml:space="preserve">
+    <value>Case sensitive</value>
+  </data>
+  <data name="CaseSensitiveTooltip" xml:space="preserve">
+    <value>Dictionary attack is case sensitive</value>
+  </data>
+  <data name="DictionaryCaption" xml:space="preserve">
+    <value>Dictionary</value>
+  </data>
+  <data name="DictionaryTooltip" xml:space="preserve">
+    <value>Dictionary for the dictionary analysis</value>
+  </data>
+  <data name="MinLengthCaption" xml:space="preserve">
+    <value>Min length of keyword</value>
+  </data>
+  <data name="MinLengthTooltip" xml:space="preserve">
+    <value>Enter the minimum length to be analyzed</value>
   </data>
 </root>
