@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
 using System.Collections.Generic;
+using Cryptool.PluginBase.Attributes;
 
 namespace Cryptool.VigenereAnalyzer
 {
@@ -101,6 +102,7 @@ namespace Cryptool.VigenereAnalyzer
         public string VigenereAlphabet { get; set; }
 
         // EVALUATION!
+        [CryptoBenchmarkProperty()]
         [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
         public string CorrectPlaintextInput
         {
@@ -117,6 +119,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
+        [CryptoBenchmarkProperty()]
         [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
         public double MinimalCorrectPercentage
         {
@@ -144,6 +147,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
+        [CryptoBenchmarkProperty()]
         [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
         public EvaluationContainer EvaluationOutput
         {

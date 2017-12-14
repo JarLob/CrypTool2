@@ -29,6 +29,7 @@ using System.Collections.ObjectModel;
 using System.Numerics;
 using System.Text;
 using WorkspaceManagerModel.Properties;
+using Cryptool.PluginBase.Attributes;
 
 namespace WorkspaceManager.Model
 {
@@ -216,6 +217,13 @@ namespace WorkspaceManager.Model
         /// <param name="propertyInfoAttribute"></param>
         internal void generateConnector(PropertyInfoAttribute propertyInfoAttribute)
         {
+            //if the property has a CryptoBenchmarkPropertyAttribute we do not create a Connector
+            CryptoBenchmarkPropertyAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkPropertyAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkPropertyAttribute), false);
+            if(!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
+            {
+                return;
+            }
+
             if (propertyInfoAttribute.Direction.Equals(Direction.InputData))
             {
                 ConnectorModel connectorModel = new ConnectorModel();
