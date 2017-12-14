@@ -16,6 +16,7 @@
 */
 
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.Attributes;
 using System.ComponentModel;
 
 
@@ -197,6 +198,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
+        [CryptoBenchmarkAttribute()]
         [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
         public bool StopIfPercentReached
         {
@@ -212,6 +214,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
+        [CryptoBenchmarkAttribute()]
         [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
         public int ComparisonFrequency
         {

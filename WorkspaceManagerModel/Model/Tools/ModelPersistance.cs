@@ -242,7 +242,7 @@ namespace WorkspaceManager.Model
                     else
                     {
                         //silently delete here CryptoBenchmarkProperties if not running in this mode
-                        CryptoBenchmarkPropertyAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkPropertyAttribute[])propertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkPropertyAttribute), false);
+                        CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])propertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
                         if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
                         {
                             pluginModel.WorkspaceModel.deleteConnectorModel(connectorModel);
@@ -259,7 +259,7 @@ namespace WorkspaceManager.Model
                     if (query.Count() == 0)
                     {
                         //if the property has a CryptoBenchmarkPropertyAttribute we do not create a Connector
-                        CryptoBenchmarkPropertyAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkPropertyAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkPropertyAttribute), false);
+                        CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
                         if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
                         {
                             continue;

@@ -102,7 +102,7 @@ namespace Cryptool.VigenereAnalyzer
         public string VigenereAlphabet { get; set; }
 
         // EVALUATION!
-        [CryptoBenchmarkProperty()]
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
         public string CorrectPlaintextInput
         {
@@ -119,7 +119,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
-        [CryptoBenchmarkProperty()]
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
         public double MinimalCorrectPercentage
         {
@@ -147,7 +147,7 @@ namespace Cryptool.VigenereAnalyzer
         }
 
         // EVALUATION!
-        [CryptoBenchmarkProperty()]
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
         public EvaluationContainer EvaluationOutput
         {

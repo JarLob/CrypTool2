@@ -28,6 +28,7 @@ using System.Windows;
 // Cryptool 2.0 specific includes
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.PluginBase.Attributes;
 
 
 namespace Cryptool.EnigmaBreaker
@@ -1297,6 +1298,7 @@ namespace Cryptool.EnigmaBreaker
         #region Evaluation settings
 
         // EVALUATION!
+        [CryptoBenchmark()]
         [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
         public bool StopIfPercentReached
         {
@@ -1312,6 +1314,7 @@ namespace Cryptool.EnigmaBreaker
         }
 
         // EVALUATION!
+        [CryptoBenchmark()]
         [TaskPane("ComparisonFrequencyCaption", "ComparisonFrequencyTooltip", null, 8, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000)]
         public int ComparisonFrequency
         {

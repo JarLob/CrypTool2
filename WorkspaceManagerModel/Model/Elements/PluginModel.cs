@@ -218,7 +218,7 @@ namespace WorkspaceManager.Model
         internal void generateConnector(PropertyInfoAttribute propertyInfoAttribute)
         {
             //if the property has a CryptoBenchmarkPropertyAttribute we do not create a Connector
-            CryptoBenchmarkPropertyAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkPropertyAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkPropertyAttribute), false);
+            CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])propertyInfoAttribute.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
             if(!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
             {
                 return;

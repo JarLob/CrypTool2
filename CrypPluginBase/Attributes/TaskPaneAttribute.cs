@@ -22,7 +22,7 @@ namespace Cryptool.PluginBase
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]    
     public class TaskPaneAttribute : Attribute
-    {
+    {       
         # region multi language properties        
         private readonly string caption;
         public string Caption
@@ -34,6 +34,18 @@ namespace Cryptool.PluginBase
             else
               return caption;
           }
+        }
+
+        public PropertyInfo PropertyInfo
+        {
+            get;
+            set;
+        }
+
+        public MethodInfo MethodInfo
+        {
+            get;
+            set;
         }
 
         private readonly string toolTip;

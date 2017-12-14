@@ -28,6 +28,7 @@ using System.Collections.Specialized;
 using System.Collections;
 using Cryptool.PluginBase.Validation;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.PluginBase.Attributes;
 
 
 
@@ -518,12 +519,28 @@ namespace WorkspaceManager.View.Visuals
 
         private EntryGroup createContentSettings(IPlugin plugin)
         {
-
-            EntryGroup entgrou = new EntryGroup();
-
-            
+            EntryGroup entgrou = new EntryGroup();          
             foreach (TaskPaneAttribute tpa in plugin.Settings.GetSettingsProperties(plugin))
             {
+                //if it is a method and has a CryptoBenchmarkPropertyAttribute we do not create a settings entry               
+                if (tpa.MethodInfo != null)
+                {
+                    CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])tpa.MethodInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
+                    if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
+                    {
+                        continue;
+                    }
+                }
+                //if it is a property and has a CryptoBenchmarkPropertyAttribute we do not create a settings entry               
+                else if (tpa.PropertyInfo != null)
+                {
+                    CryptoBenchmarkAttribute[] cryptoBenchmarkAttributes = (CryptoBenchmarkAttribute[])tpa.PropertyInfo.GetCustomAttributes(typeof(CryptoBenchmarkAttribute), false);
+                    if (!Cryptool.Core.Globals.cryptoBenchmark && cryptoBenchmarkAttributes.Length > 0)
+                    {
+                        continue;
+                    }
+                }
+
                 SettingsFormatAttribute sfa = plugin.Settings.GetSettingsFormat(tpa.PropertyName);
                 if(sfa!=null)
                 if (!groups.Contains(sfa.VerticalGroup))

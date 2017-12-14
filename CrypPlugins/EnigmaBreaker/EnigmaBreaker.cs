@@ -38,6 +38,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase.IO;
 using System.Windows.Threading;
 using Cryptool.EnigmaBreaker.Properties;
+using Cryptool.PluginBase.Attributes;
 
 
 namespace Cryptool.EnigmaBreaker
@@ -432,6 +433,7 @@ namespace Cryptool.EnigmaBreaker
         }
 
         // EVALUATION!
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.InputData, "PlaintextInputCaption", "PlaintextInputTooltip", false)]
         public string CorrectPlaintextInput
         {
@@ -448,6 +450,7 @@ namespace Cryptool.EnigmaBreaker
         }
 
         // EVALUATION!
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.InputData, "DecryptionPercentageCaption", "DecryptionPercentageTooltip", false)]
         public double MinimalCorrectPercentage
         {
@@ -497,6 +500,7 @@ namespace Cryptool.EnigmaBreaker
         }
 
         // EVALUATION!
+        [CryptoBenchmark()]
         [PropertyInfo(Direction.OutputData, "EvaluationOutputCaption", "EvaluationOutputTooltip", true)]
         public EvaluationContainer EvaluationOutput
         {

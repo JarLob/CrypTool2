@@ -86,7 +86,7 @@
     <Compile Include="Attributes\AutoAssumeFullEndProgressAttribute.cs" />
     <Compile Include="Attributes\ComponentCategoryAttribute.cs" />
     <Compile Include="Attributes\ComponentVisualAppearance.cs" />
-    <Compile Include="Attributes\CryptoBenchmarkPropertyAttribute.cs" />
+    <Compile Include="Attributes\CryptoBenchmarkAttribute.cs" />
     <Compile Include="Attributes\DontSaveAttribute.cs" />
     <Compile Include="Attributes\FunctionListAttribute.cs" />
     <Compile Include="Attributes\LocalizationAttribute.cs" />
