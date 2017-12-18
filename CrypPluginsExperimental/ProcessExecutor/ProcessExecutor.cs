@@ -49,7 +49,10 @@ namespace Cryptool.ProcessExecutor
         public event PropertyChangedEventHandler PropertyChanged;
         
         private bool _Running = false;
+        //CT2 IPC uses 2 pipes: one for sending and one for receiving messages
         private NamedPipeServerStream _PipeServer = null;
+        private NamedPipeServerStream _PipeClient = null;
+
         private StreamReader _PipeReader = null;
         private StreamWriter _PipeWriter = null;
         private Process _Process = null;
@@ -174,22 +177,26 @@ namespace Cryptool.ProcessExecutor
                 _Process.StartInfo.CreateNoWindow = true;
                 _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;                                
                 _Process.Start();
-                string pipeName = "CrypTool2_Pipe_" + _Process.Id;
 
-                //Step 2: Create named pipe with processID
-                _PipeServer = new NamedPipeServerStream(pipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                string serverPipeName = "clientToServer" + _Process.Id;
+                string clientPipeName = "serverToClient" + _Process.Id;
+
+                //Step 2: Create named pipes with processID
+                _PipeServer = new NamedPipeServerStream(serverPipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                _PipeClient = new NamedPipeServerStream(clientPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
 
                 //Step 3: Wait for external process to connect            
-                _PipeServer.BeginWaitForConnection(connectionCallback, _PipeServer);
+                _PipeServer.BeginWaitForConnection(connectionServerCallback, _PipeServer);
+                _PipeClient.BeginWaitForConnection(connectionServerCallback, _PipeClient);
 
-                int timer = 0;
-                while (!_PipeServer.IsConnected)
+                int time = 0;
+                while (!_PipeServer.IsConnected && !_PipeClient.IsConnected)
                 {
                     Thread.Sleep(100);
-                    timer++;
-                    if (timer == 10)
+                    time++;
+                    if (time == 50)
                     {
-                        GuiLogMessage("Process did not connect to pipe. Stop now.", NotificationLevel.Warning);                        
+                        GuiLogMessage("Process did not connect to pipes. Stop now.", NotificationLevel.Warning);                        
                         return;
                     }
                     
@@ -202,7 +209,7 @@ namespace Cryptool.ProcessExecutor
 
 
                 //Step 5: Receive outputs
-                while (!_PipeServer.IsConnected)
+                while (_PipeServer.IsConnected && _PipeClient.IsConnected)
                 {
                     Thread.Sleep(100);
                     if (!_Running)
@@ -226,7 +233,7 @@ namespace Cryptool.ProcessExecutor
                     }
                     catch (Exception ex)
                     {
-                        GuiLogMessage("Could not close pipe reader: " + ex.Message, NotificationLevel.Error);
+                        GuiLogMessage("Could not close pipe reader for server: " + ex.Message, NotificationLevel.Error);
                     }
                     _PipeReader = null;
                 }
@@ -238,7 +245,7 @@ namespace Cryptool.ProcessExecutor
                     }
                     catch (Exception ex)
                     {
-                        GuiLogMessage("Could not close pipe writer: " + ex.Message, NotificationLevel.Error);
+                        GuiLogMessage("Could not close pipe writer for client: " + ex.Message, NotificationLevel.Error);
                     }
                     _PipeWriter = null;
                 }
@@ -250,7 +257,19 @@ namespace Cryptool.ProcessExecutor
                     }
                     catch (Exception ex)
                     {
-                        GuiLogMessage("Could not close named pipe: " + ex.Message, NotificationLevel.Error);
+                        GuiLogMessage("Could not close named pipe for server: " + ex.Message, NotificationLevel.Error);
+                    }
+                    _PipeServer = null;
+                }
+                if (_PipeClient != null && _PipeClient.IsConnected)
+                {
+                    try
+                    {
+                        _PipeClient.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage("Could not close named pipe for client: " + ex.Message, NotificationLevel.Error);
                     }
                     _PipeServer = null;
                 }
@@ -261,7 +280,7 @@ namespace Cryptool.ProcessExecutor
                 {
                     Thread.Sleep(100);
                     time++;
-                    if (time == 10)
+                    if (time == 50)
                     {
                         try
                         {
@@ -279,18 +298,32 @@ namespace Cryptool.ProcessExecutor
             }            
         }
 
-        private void connectionCallback(IAsyncResult asyncResult)
+        private void connectionServerCallback(IAsyncResult asyncResult)
         {
             try
             {
                 NamedPipeServerStream pipeServer = (NamedPipeServerStream)asyncResult.AsyncState;
                 pipeServer.EndWaitForConnection(asyncResult);
                 _PipeReader = new StreamReader(pipeServer);
-                _PipeWriter = new StreamWriter(pipeServer);
             }
             catch (Exception ex)
             {
-                GuiLogMessage("Exception during establishing of connection: " + ex.Message,NotificationLevel.Error);
+                GuiLogMessage("Exception during establishing of connection to server pipe: " + ex.Message,NotificationLevel.Error);
+                _Running = false;
+            }
+        }
+
+        private void connectionClientCallback(IAsyncResult asyncResult)
+        {
+            try
+            {
+                NamedPipeServerStream pipeClient = (NamedPipeServerStream)asyncResult.AsyncState;
+                pipeClient.EndWaitForConnection(asyncResult);
+                _PipeWriter = new StreamWriter(pipeClient);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage("Exception during establishing of connection to client Pipe: " + ex.Message, NotificationLevel.Error);
                 _Running = false;
             }
         }
