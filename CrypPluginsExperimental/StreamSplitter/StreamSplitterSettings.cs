@@ -35,7 +35,7 @@ namespace Cryptool.Plugins.StreamSplitter
         /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
         /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
         /// </summary>
-        [TaskPane("Split Offset", "Offset at which the input is split. A negative value will split from the end", 
+        [TaskPane("OffsetCaption", "OffsetTooltip", 
             null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, Int32.MinValue, Int32.MaxValue)]
 
         public int Offset //Note that when the name matches an input name, this setting disappear when the input is connected

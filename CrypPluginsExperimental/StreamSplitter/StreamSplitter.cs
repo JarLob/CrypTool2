@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.StreamSplitter
     [Author("Mostafa Dahshan", "mdahshan@ksu.edu.sa", "King Saud University", "http://fac.ksu.edu.sa/mdahshan")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("StreamSplitter", "Split a binary stream into two parts", "StreamSplitter/userdoc.xml", new[] { "StreamSplitter/icons/streamsplitter.png" })]
+    [PluginInfo("StreamSplitter.Properties.Resources", "StreamSplitter", "Split a binary stream into two parts", "StreamSplitter/userdoc.xml", new[] { "StreamSplitter/icons/streamsplitter.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class StreamSplitter : ICrypComponent
@@ -50,14 +50,14 @@ namespace Cryptool.Plugins.StreamSplitter
         /// HOWTO: Input interface to read the input data. 
         /// You can add more input properties of other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "Input Stream", "Input stream that needs to be split")]
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip")]
         public ICryptoolStream InputStream
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Offset", "Offset at which the input is split. A negative value will split from the end", false)]
+        [PropertyInfo(Direction.InputData, "OffsetCaption", "OffsetTooltip", false)]
         public int Offset
         {
             get { return _offset;  }
@@ -77,13 +77,13 @@ namespace Cryptool.Plugins.StreamSplitter
         /// HOWTO: Output interface to write the output data.
         /// You can add more output properties ot other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "Output Part 1", "First part of the splitted stream")]
+        [PropertyInfo(Direction.OutputData, "OutputStream1Caption", "OutputStream1Tooltip")]
         public ICryptoolStream OutputStream1
         {
             get { return outputPart1; }
         }
 
-        [PropertyInfo(Direction.OutputData, "Output Part 2", "Second part of the splitted stream")]
+        [PropertyInfo(Direction.OutputData, "OutputStream2Caption", "OutputStream2Tooltip")]
         public ICryptoolStream OutputStream2
         {
             get { return outputPart2; }
