@@ -946,4 +946,7 @@
   <data name="SI_Processor_Name" xml:space="preserve">
     <value>Prozessorname</value>
   </data>
+  <data name="SI_CommandLine" xml:space="preserve">
+    <value>Kommandozeile</value>
+  </data>
 </root>

@@ -1923,6 +1923,15 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Command Line ähnelt.
+        /// </summary>
+        internal static string SI_CommandLine {
+            get {
+                return ResourceManager.GetString("SI_CommandLine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Common Language Runtime Version (.NET Version) ähnelt.
         /// </summary>
         internal static string SI_Common_Language_Runtime_Version {

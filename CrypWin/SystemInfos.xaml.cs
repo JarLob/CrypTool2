@@ -43,15 +43,8 @@ namespace Cryptool.CrypWin
             //get windows information from system registry
             try
             {
-                RegistryKey localKey;
-                if (Environment.Is64BitOperatingSystem)
-                {
-                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                }
-                else
-                {
-                    localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-                }
+                RegistryKey localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,
+                    Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32);
 
                 var reg = localKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
                 var productName = (string)reg.GetValue("ProductName");
@@ -82,7 +75,8 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_Product_Name, Value = AssemblyHelper.ProductName });
             informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = Environment.Version.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Runtime_Path, Value = AppDomain.CurrentDomain.BaseDirectory });
-            
+            informations.Add(new Info() { Description = Properties.Resources.SI_CommandLine, Value = Environment.CommandLine });
+
             // system time row with hacky workaround to update time when tab becomes visible
             timeIndex = informations.Count;
             informations.Add(new Info() { Description = Properties.Resources.SI_System_Time, Value = DateTime.Now.ToShortTimeString() });
@@ -131,7 +125,6 @@ namespace Cryptool.CrypWin
             {
                 //wtf?
             }
-
         }
 
         public static string ByteArrayToHexString(byte[] ba)
@@ -181,22 +174,11 @@ namespace Cryptool.CrypWin
             try
             {
                 var query = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-                string name = String.Empty;
                 var collection = query.Get();
-                var i = 1;
-                foreach (var processor in collection)
-                {
-                    if (processor["name"] != null)
-                    {
-                        name += processor["name"].ToString();
-                        if (i < collection.Count)
-                        {
-                            name += ", ";
-                        }
-                    }
-                    i++;
-                }
-                return name;
+                var l = new List<ManagementBaseObject>();
+                foreach (var processor in collection) l.Add(processor);
+
+                return String.Join(", ", l.Where(p => p["Name"] != null).Select(p => p["Name"].ToString()));
             }
             catch (Exception ex)
             {

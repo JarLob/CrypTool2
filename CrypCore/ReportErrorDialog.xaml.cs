@@ -107,6 +107,7 @@ namespace Cryptool.Core
             sb.AppendLine(string.Format("Product name: {0}", _productName));
             sb.AppendLine(string.Format("Common language runtime version: {0}", Environment.Version.ToString()));
             sb.AppendLine(string.Format("System time: {0}", DateTime.Now.ToShortTimeString()));
+            sb.AppendLine(string.Format("Command line: {0}", Environment.CommandLine));
 
             return sb.ToString();
         }
