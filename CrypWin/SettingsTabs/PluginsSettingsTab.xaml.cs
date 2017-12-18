@@ -101,6 +101,33 @@ namespace Cryptool.CrypWin.SettingsTabs
             PluginListBox.Items.Refresh();
             CheckBox_Checked(null, null);
         }
+
+        private void ContextMenuHandler(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MenuItem menu = (MenuItem)((RoutedEventArgs)e).Source;
+                PluginInformation entry = (PluginInformation)menu.CommandParameter;
+                if (entry == null) return;
+                string tag = (string)menu.Tag;
+
+                if (tag == "copy_line")
+                {
+                    string s = entry.Pluginname + "\t" + entry.Plugindescription + "\t" + entry.Assemblyname;
+                    Clipboard.SetText(s);
+                }
+                else if (tag == "copy_all")
+                {
+                    List<string> lines = new List<string>();
+                    foreach (PluginInformation x in PluginListBox.Items) lines.Add(x.Pluginname + "\t" + x.Plugindescription + "\t" + x.Assemblyname);
+                    Clipboard.SetText(String.Join("\n", lines));
+                }
+            }
+            catch (Exception ex)
+            {
+                Clipboard.SetText("");
+            }
+        }
     }
 
     [ValueConversion(typeof(bool), typeof(Visibility))]

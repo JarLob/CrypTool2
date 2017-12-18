@@ -262,7 +262,7 @@
     <value>deaktiviert</value>
   </data>
   <data name="HeaderPluginName" xml:space="preserve">
-    <value>Plugin-Name</value>
+    <value>Komponenten-Name</value>
   </data>
   <data name="Invert_selection" xml:space="preserve">
     <value>Auswahl invertieren</value>
@@ -296,5 +296,11 @@
   </data>
   <data name="UseLastPathTooltip" xml:space="preserve">
     <value>Markieren, damit der Datei-Dialog immer den zuletzt verwendeten Pfad öffnet</value>
+  </data>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Kopiere alle Zeilen</value>
+  </data>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Kopiere Zeile</value>
   </data>
 </root>

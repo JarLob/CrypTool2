@@ -223,6 +223,24 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
+        /// </summary>
+        public static string Copy_all {
+            get {
+                return ResourceManager.GetString("Copy_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy line ähnelt.
+        /// </summary>
+        public static string Copy_line {
+            get {
+                return ResourceManager.GetString("Copy_line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Set your preferred language for CrypTool 2 here! ähnelt.
         /// </summary>
         public static string cultureBox_tooltip {
@@ -277,7 +295,7 @@ namespace Cryptool.CrypWin.SettingsTabs.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plugin Name ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component Name ähnelt.
         /// </summary>
         public static string HeaderPluginName {
             get {

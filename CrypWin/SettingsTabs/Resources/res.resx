@@ -280,7 +280,7 @@
     <value>Disabled</value>
   </data>
   <data name="HeaderPluginName" xml:space="preserve">
-    <value>Plugin Name</value>
+    <value>Component Name</value>
   </data>
   <data name="Invert_selection" xml:space="preserve">
     <value>Invert selection</value>
@@ -296,5 +296,11 @@
   </data>
   <data name="Show_balloon_for_" xml:space="preserve">
     <value>Show balloon for </value>
+  </data>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Copy all lines</value>
+  </data>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Copy line</value>
   </data>
 </root>

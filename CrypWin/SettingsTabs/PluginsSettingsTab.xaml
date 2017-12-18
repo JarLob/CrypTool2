@@ -30,8 +30,22 @@
                 <Button Content="{Loc Deselect_all}" Click="DeselectAll_Click" />
                 <Button Content="{Loc Invert_selection}" Click="Invert_Click" />
             </StackPanel>
-        
+
             <ListView Grid.Row="1" Name="PluginListBox" ItemsSource="{Binding}" Background="#00000000">
+                
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Header="{Loc Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                        <MenuItem Header="{Loc Copy_all}" Tag="copy_all" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                    </ContextMenu>
+                </ListView.Resources>
+                
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+
                 <ListView.View>
                     <GridView AllowsColumnReorder="True">
                         
