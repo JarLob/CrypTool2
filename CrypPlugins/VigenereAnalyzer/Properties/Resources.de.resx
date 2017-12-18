@@ -190,8 +190,7 @@
     <value>Ist der Schlüssel eine natürlichsprachliche Passphrase?</value>
   </data>
   <data name="KeyTooltip" xml:space="preserve">
-    <value>Der beste Schlüssel, der während der Analyse gefunden
-wurde.</value>
+    <value>Der beste Schlüssel, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="LanguageCaption" xml:space="preserve">
     <value>Sprache</value>
@@ -215,15 +214,13 @@ wurde.</value>
     <value>Bester Klartext</value>
   </data>
   <data name="PlaintextTooltip" xml:space="preserve">
-    <value>Der beste Klartext, der während der Analyse gefunden
-wurde.</value>
+    <value>Der beste Klartext, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Vigenère Breaker</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Kryptoanalyse des Vigenère-Verfahrens mittels
-Hillclimbing.</value>
+    <value>Kryptoanalyse des Vigenère-Verfahrens mittels Hillclimbing.</value>
   </data>
   <data name="Quadgrams" xml:space="preserve">
     <value>4-Gramme</value>
@@ -235,8 +232,7 @@ Hillclimbing.</value>
     <value>Anzahl Neustarts</value>
   </data>
   <data name="RestartsTooltip" xml:space="preserve">
-    <value>Anzahl der Neustarts, die während des Hillclimbings
-durchgeführt werden sollen.</value>
+    <value>Anzahl der Neustarts, die während des Hillclimbings durchgeführt werden sollen.</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Spanisch</value>
