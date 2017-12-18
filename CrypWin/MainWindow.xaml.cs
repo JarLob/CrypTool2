@@ -103,6 +103,7 @@ namespace Cryptool.CrypWin
         private X509Certificate serverTlsCertificate1;
         private X509Certificate serverTlsCertificate2;
         private EditorTypePanelManager.EditorTypePanelProperties defaultPanelProperties = new EditorTypePanelManager.EditorTypePanelProperties(true,false,false);
+        private CultureInfo currentculture, currentuiculture;
 
         private Dictionary<IEditor, string> editorToFileMap = new Dictionary<IEditor, string>();
         private string ProjectFileName
@@ -682,7 +683,7 @@ namespace Cryptool.CrypWin
                     using (var pipeServer = new NamedPipeServerStream((string)identifyingString, PipeDirection.In))
                     {
                     
-                        pipeServer.WaitForConnection();
+                      pipeServer.WaitForConnection();
                         BringToFront();
                         using (var sr = new StreamReader(pipeServer))
                         {
@@ -796,6 +797,8 @@ namespace Cryptool.CrypWin
                 {
                     Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
                     Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                    this.currentculture = Thread.CurrentThread.CurrentCulture;
+                    this.currentuiculture = Thread.CurrentThread.CurrentUICulture;
                 }
                 catch (Exception)
                 {
@@ -1281,6 +1284,9 @@ namespace Cryptool.CrypWin
 
         private void LoadPlugins()
         {
+            Thread.CurrentThread.CurrentCulture = currentculture;
+            Thread.CurrentThread.CurrentUICulture = currentuiculture;
+
             var pluginTypes = new Dictionary<string, List<Type>>();
             foreach (var interfaceName in interfaceNameList)
             {
