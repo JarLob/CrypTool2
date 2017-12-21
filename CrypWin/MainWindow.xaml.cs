@@ -1328,7 +1328,14 @@ namespace Cryptool.CrypWin
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                PluginList.Finished();
+                try
+                {
+                    PluginList.Finished();
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(ex.Message, NotificationLevel.Error);
+                }
             }, null);
                         
             try
@@ -1348,7 +1355,14 @@ namespace Cryptool.CrypWin
                 // Init of this stuff has to be done after plugins have been loaded
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    ComponentInformations.EditorExtension = GetEditorExtension(loadedTypes[typeof(IEditor).FullName]);
+                    try
+                    {
+                        ComponentInformations.EditorExtension = GetEditorExtension(loadedTypes[typeof(IEditor).FullName]);
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(ex.Message, NotificationLevel.Error);
+                    }
                 }, null);
                 AsyncCallback asyncCallback = new AsyncCallback(TypeInitFinished);
                 InitTypesDelegate initTypesDelegate = new InitTypesDelegate(this.InitTypes);
@@ -1364,54 +1378,60 @@ namespace Cryptool.CrypWin
         /// CrypWin startup finished, show window stuff.
         /// </summary>
         public void TypeInitFinished(IAsyncResult ar)
-        {
-            // check if plugin thread threw an exception
-            CheckInitTypesException(ar);
-
+        {            
             try
             {
+                // check if plugin thread threw an exception
+                CheckInitTypesException(ar);
+
                 this.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
-                    this.Visibility = Visibility.Visible;
-                    this.Show();
-
-                    #region Gui-Stuff
-                    Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                    Version version = AssemblyHelper.GetVersion(assembly);
-                    OnGuiLogNotificationOccuredTS(this, new GuiLogEventArgs(Resource.crypTool + " " + version.ToString() + Resource.started_and_ready, null, NotificationLevel.Info));
-
-                    this.IsEnabled = true;
-                    AppRibbon.Items.Refresh();
-                    splashWindow.Close();
-                    Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-                    #endregion Gui-Stuff
-
-                    InitDebug();
-
-                    LoadIndividualComponentConnectionStatistics();
-
-                    // open projects at startup if necessary, return whether any project has been opened
-                    bool hasOpenedProject = CheckCommandOpenProject();
-
-                    if (Properties.Settings.Default.ShowStartcenter && CheckCommandProjectFileGiven().Count == 0)
+                    try
                     {
-                        AddEditorDispatched(typeof(StartCenter.StartcenterEditor));
+                        this.Visibility = Visibility.Visible;
+                        this.Show();
+
+                        #region Gui-Stuff
+                        Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                        Version version = AssemblyHelper.GetVersion(assembly);
+                        OnGuiLogNotificationOccuredTS(this, new GuiLogEventArgs(Resource.crypTool + " " + version.ToString() + Resource.started_and_ready, null, NotificationLevel.Info));
+
+                        this.IsEnabled = true;
+                        AppRibbon.Items.Refresh();
+                        splashWindow.Close();
+                        Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+                        #endregion Gui-Stuff
+
+                        InitDebug();
+
+                        LoadIndividualComponentConnectionStatistics();
+
+                        // open projects at startup if necessary, return whether any project has been opened
+                        bool hasOpenedProject = CheckCommandOpenProject();
+
+                        if (Properties.Settings.Default.ShowStartcenter && CheckCommandProjectFileGiven().Count == 0)
+                        {
+                            AddEditorDispatched(typeof(StartCenter.StartcenterEditor));
+                        }
+                        else if (!hasOpenedProject) // neither startcenter shown nor any project opened
+                        {
+                            ProjectTitleChanged(); // init window title in order to avoid being empty
+                        }
+
+                        if (IsCommandParameterGiven("-silent"))
+                        {
+                            silent = true;
+                            statusBarItem.Content = null;
+                            dockWindowLogMessages.IsAutoHide = true;
+                            dockWindowLogMessages.Visibility = Visibility.Collapsed;
+                        }
+
+                        startUpRunning = false;
                     }
-                    else if (!hasOpenedProject) // neither startcenter shown nor any project opened
+                    catch (Exception ex)
                     {
-                        ProjectTitleChanged(); // init window title in order to avoid being empty
+                        GuiLogMessage(ex.Message, NotificationLevel.Error);
                     }
-
-                    if (IsCommandParameterGiven("-silent"))
-                    {
-                        silent = true;
-                        statusBarItem.Content = null;
-                        dockWindowLogMessages.IsAutoHide = true;
-                        dockWindowLogMessages.Visibility = Visibility.Collapsed;
-                    }
-
-                    startUpRunning = false;
-
                 }, null);
 
             }
