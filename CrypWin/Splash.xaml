@@ -58,6 +58,7 @@
                 <Hyperlink NavigateUri="http://www.cryptool.org" Foreground="#FFFFFFFF" Click="Hyperlink_Click">http://www.cryptool.org</Hyperlink>		        
 		        <LineBreak/>
                 <LineBreak/>
+		        <Run Text="&lt;°)))&gt;&lt;" Foreground="#A0FF0000"/>
 		        <Run Name="logMessage" Text="" Foreground="#FFFFFFFF"/>                
             </TextBlock>
             <Rectangle Width="580" Height="40.7273" Canvas.Left="0" Canvas.Top="132.364" Stretch="Fill" Fill="#FFD13217"/>
