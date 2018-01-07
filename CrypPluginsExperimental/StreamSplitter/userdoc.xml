@@ -5,13 +5,21 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+    This component splits an input binary stream into two streams. This can be useful when working with composite streams formed by contactenating multiple fields.
+    For example, a message concatenated with a digital signature. In addition, complex PDUs can be constructed using the Concatenate component <docRef item="Cryptool.Plugins.Concatenate"/> 
+    and subsequently deconstructed by using this component to test protocols with arbitrary complexity.
   </introduction>
 
   <introduction lang="de-DE">    
   </introduction>
 
   <usage lang="en">
+    Connect the input stream into the component's InputStream input. The offset can be defined in the component Settings or provided as an input to the Offset input for more flexibility. <newline/>
+    There are two outputs, OutputStream1 and OutputStream2. After the execution is completed, OutputStream1 contains the bytes from the start of the InputStream to just before Offset, 
+    while OutputStream2 contains the bytes from Offset to the end of the InputStream. <newline/>
+    If it is desired to split the input stream from the end, the Offset value should be negative. For example, if you want OutputStream2 to contain the last 10 bytes of the InputStream,
+    then set the Offset value to -10.
   </usage>
 
   <usage lang="de-DE">
