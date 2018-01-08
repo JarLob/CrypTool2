@@ -1326,20 +1326,20 @@ namespace Cryptool.CrypWin
 
         public void LoadingPluginsFinished(IAsyncResult ar)
         {
-            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                try
-                {
-                    PluginList.Finished();
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(ex.Message, NotificationLevel.Error);
-                }
-            }, null);
-                        
             try
             {
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        PluginList.Finished();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(ex.Message, NotificationLevel.Error);
+                    }
+                }, null);                        
+           
                 AsyncResult asyncResult = ar as AsyncResult;
                 LoadPluginsDelegate exe = asyncResult.AsyncDelegate as LoadPluginsDelegate;
 
