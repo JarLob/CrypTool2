@@ -26,6 +26,8 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Editor;
 using Microsoft.Win32;
 using System.Windows.Documents;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Cryptool.CrypWin
 {
@@ -280,19 +282,17 @@ namespace Cryptool.CrypWin
         {
             try
             {
-                string a = string.Empty, b = string.Empty, filter = string.Empty;
-                foreach (Type type in ComponentInformations.EditorExtension.Values)
+                var ext = ComponentInformations.EditorExtension.Values.ToDictionary(t => t.GetPluginInfoAttribute().Caption, t => t.GetEditorInfoAttribute().DefaultExtension);
+                if (ext.Count() == 0) return "cwm (*.cwm)";
+
+                string filter = String.Join("|", ext.Select(i => string.Format("{0} (*.{1})|*.{1}", i.Key, i.Value)));
+                if (ext.Count() > 1)
                 {
-                    filter += string.Format("{0} (*.{1}) | *.{1}|", type.GetPluginInfoAttribute().Caption,
-                        type.GetEditorInfoAttribute().DefaultExtension);
-                    b += string.Format("*.{0};", type.GetEditorInfoAttribute().DefaultExtension);
+                    string allExtensions = String.Join(";", ext.Select(i => string.Format("*.{0}", i.Value)));
+                    filter = string.Format("All ({0})|{0}|{1}", allExtensions, filter);
                 }
-                if (b.Length > 0)
-                    b.Remove(b.Length - 1, 1);
-                a = string.Format("All ({0}) | {1}", b, b);
-                filter = filter.Substring(0, filter.Length - 1);
-                a += "|" + filter;
-                return a;
+
+                return filter;
             }
             catch (Exception ex)
             {
