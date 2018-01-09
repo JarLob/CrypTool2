@@ -1284,9 +1284,14 @@ namespace Cryptool.CrypWin
 
         private void LoadPlugins()
         {
-            Thread.CurrentThread.CurrentCulture = currentculture;
-            Thread.CurrentThread.CurrentUICulture = currentuiculture;
-
+            if (currentculture != null)
+            {
+                Thread.CurrentThread.CurrentCulture = currentculture;
+            }
+            if (currentuiculture != null)
+            {
+                Thread.CurrentThread.CurrentUICulture = currentuiculture;
+            }
             var pluginTypes = new Dictionary<string, List<Type>>();
             foreach (var interfaceName in interfaceNameList)
             {
@@ -1326,20 +1331,20 @@ namespace Cryptool.CrypWin
 
         public void LoadingPluginsFinished(IAsyncResult ar)
         {
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    PluginList.Finished();
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(ex.Message, NotificationLevel.Error);
+                }
+            }, null);
+                        
             try
             {
-                Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    try
-                    {
-                        PluginList.Finished();
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage(ex.Message, NotificationLevel.Error);
-                    }
-                }, null);                        
-           
                 AsyncResult asyncResult = ar as AsyncResult;
                 LoadPluginsDelegate exe = asyncResult.AsyncDelegate as LoadPluginsDelegate;
 
@@ -2423,12 +2428,6 @@ namespace Cryptool.CrypWin
         {
             e.Handled = true;
             ContactDevelopersDialog.ShowModalDialog();
-        }
-
-        private void buttonReportBug_Click(object sender, RoutedEventArgs e)
-        {
-            e.Handled = true;
-            System.Diagnostics.Process.Start("https://www.cryptool.org/trac/CrypTool2/newticket");
         }
 
         private void buttonWebsite_Click(object sender, RoutedEventArgs e)

@@ -426,7 +426,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Contact_Developers ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers/Report a bug ähnelt.
         /// </summary>
         internal static string Contact_Developers {
             get {
@@ -435,7 +435,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Us ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers/Report a bug ähnelt.
         /// </summary>
         internal static string Contact_Us_ {
             get {
@@ -1712,15 +1712,6 @@ namespace Cryptool.CrypWin.Properties {
         internal static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Report Bug ähnelt.
-        /// </summary>
-        internal static string Report_Bug_ {
-            get {
-                return ResourceManager.GetString("Report_Bug_", resourceCulture);
             }
         }
         

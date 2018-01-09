@@ -575,13 +575,10 @@
     <value>Debugnachricht</value>
   </data>
   <data name="Contact_Us_" xml:space="preserve">
-    <value>Kontakt aufnehmen</value>
+    <value>Kontakt aufnehmen/Fehler melden</value>
   </data>
   <data name="Visit_Homepage" xml:space="preserve">
     <value>Homepage besuchen</value>
-  </data>
-  <data name="Report_Bug_" xml:space="preserve">
-    <value>Problem melden</value>
   </data>
   <data name="Update_ready_to_install__would_you_like_to_remove_it" xml:space="preserve">
     <value>Wollen Sie das verfügbare Update löschen?</value>
@@ -668,7 +665,7 @@
     <value>Abbrechen</value>
   </data>
   <data name="Contact_Developers" xml:space="preserve">
-    <value>Kontakt aufnehmen</value>
+    <value>Kontakt aufnehmen/Fehler melden</value>
   </data>
   <data name="Copy_everything_to_clipboard" xml:space="preserve">
     <value>Alles in die Zwischenablage kopieren</value>

@@ -572,13 +572,10 @@
     <value>Debug Message</value>
   </data>
   <data name="Contact_Us_" xml:space="preserve">
-    <value>Contact Us</value>
+    <value>Contact Developers/Report a bug</value>
   </data>
   <data name="Visit_Homepage" xml:space="preserve">
     <value>Visit Homepage</value>
-  </data>
-  <data name="Report_Bug_" xml:space="preserve">
-    <value>Report Bug</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
@@ -695,7 +692,7 @@
     <value>Cancel</value>
   </data>
   <data name="Contact_Developers" xml:space="preserve">
-    <value>Contact_Developers</value>
+    <value>Contact Developers/Report a bug</value>
   </data>
   <data name="Copy_everything_to_clipboard" xml:space="preserve">
     <value>Copy everything to clipboard</value>
