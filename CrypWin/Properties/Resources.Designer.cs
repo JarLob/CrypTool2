@@ -2591,7 +2591,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Your E-Mail address (optional): ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your e-mail address (optional): ähnelt.
         /// </summary>
         internal static string Your_E_Mail_address__optional {
             get {
