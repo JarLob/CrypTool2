@@ -426,7 +426,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers/Report a bug ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers / Report a Bug ähnelt.
         /// </summary>
         internal static string Contact_Developers {
             get {
@@ -435,7 +435,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers/Report a bug ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Contact Developers / Report a Bug ähnelt.
         /// </summary>
         internal static string Contact_Us_ {
             get {

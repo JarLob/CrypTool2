@@ -575,7 +575,7 @@
     <value>Debugnachricht</value>
   </data>
   <data name="Contact_Us_" xml:space="preserve">
-    <value>Kontakt aufnehmen/Fehler melden</value>
+    <value>Kontakt aufnehmen / Fehler melden</value>
   </data>
   <data name="Visit_Homepage" xml:space="preserve">
     <value>Homepage besuchen</value>
@@ -665,7 +665,7 @@
     <value>Abbrechen</value>
   </data>
   <data name="Contact_Developers" xml:space="preserve">
-    <value>Kontakt aufnehmen/Fehler melden</value>
+    <value>Kontakt aufnehmen / Fehler melden</value>
   </data>
   <data name="Copy_everything_to_clipboard" xml:space="preserve">
     <value>Alles in die Zwischenablage kopieren</value>
