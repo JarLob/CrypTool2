@@ -6,23 +6,31 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">
-    This component splits an input binary stream into two streams. This can be useful when working with composite streams formed by contactenating multiple fields.
-    For example, a message concatenated with a digital signature. In addition, complex PDUs can be constructed using the Concatenate component <docRef item="Cryptool.Plugins.Concatenate"/> 
+    This component splits an input binary stream into two streams. This can be useful when working with composite streams formed by contactenating multiple fields
+    (for example, a message concatenated with a digital signature). In addition, complex data packets can be constructed using the <docRef item="Concatenate.Concatenate"/> component 
     and subsequently deconstructed by using this component to test protocols with arbitrary complexity.
   </introduction>
 
-  <introduction lang="de-DE">    
+  <introduction lang="de-DE">
+    Diese Komponente teilt einen binären Eingabe-Datenstrom in zwei Datenströme. Dies ist sinnvoll, wenn man mit Datenströmen arbeitet, die aus mehreren Datenfeldern zusammengesetzt wurden
+    (zum Beispiel eine Nachricht mit angehängter digitaler Signatur). Komplexe Datenpakete können mit der Komponente <docRef item="Concatenate.Concatenate"/> generiert
+    und anschließend mit dieser Komponente wieder in ihre Bestandteile zerlegt werden.
   </introduction>
 
   <usage lang="en">
-    Connect the input stream into the component's InputStream input. The offset can be defined in the component Settings or provided as an input to the Offset input for more flexibility. <newline/>
-    There are two outputs, OutputStream1 and OutputStream2. After the execution is completed, OutputStream1 contains the bytes from the start of the InputStream to just before Offset, 
-    while OutputStream2 contains the bytes from Offset to the end of the InputStream. <newline/>
-    If it is desired to split the input stream from the end, the Offset value should be negative. For example, if you want OutputStream2 to contain the last 10 bytes of the InputStream,
-    then set the Offset value to -10.
+    Connect the input stream into the component's "InputStream" input. The offset at which the input is split can be defined in the component settings or provided as an input to the "Offset" input for more flexibility. <newline/>
+    There are two outputs, "OutputStream1" and "OutputStream2". After the execution is completed, "OutputStream1" contains the bytes from the start of "InputStream" to just before "Offset", 
+    while "OutputStream2" contains the bytes from "Offset" to the end of "InputStream". <newline/>
+    If it is desired to split the input stream from the end, the "Offset" value should be negative. For example, if you want "OutputStream2" to contain the last 10 bytes of "InputStream",
+    then set the "Offset" value to -10.
   </usage>
 
   <usage lang="de-DE">
+    Verbinden Sie den Eingabe-Datenstrom mit dem entsprechend benannten Input dieser Komponente. Der Offset, an dem die Eingabe geteilt wird, kann in den Einstellingen der Komponente oder am Input "Offset" angegeben werden. <newline/>
+    Die Komponente hat die zwei Ausgänge "Ausgabe Teil 1" und "Ausgabe Teil 2". Wenn die Ausführung beendet ist, liegen an "Ausgabe Teil 1" die Bytes vom Beginn der Eingabe bis ein Byte vor dem angegebenen Offset an
+    und an "Ausgabe Teil 2" die Bytes ab Offset bis zum Ende der Eingabe. <newline/>
+    Soll der Offset vom Ende der Eingabe her gezählt werden, so muss man einen negativen Wert als Offset angeben. Beispiel: Soll "Ausgabe Teil 2" die letzten 10 Bytes des Eingabe-Datenstroms enthalten,
+    so muss "Offset" auf -10 gesetzt werden.
   </usage>
   
   <presentation lang="en">
