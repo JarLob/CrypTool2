@@ -25,12 +25,12 @@
     Naturally, for models with plugboards, the plugboard setting is also part of the key.
     <newline />
     <newline />
-    Besides encrypting and decrypting messages, the Enigma component can also analyze ciphertexts.
-  </introduction>
+    The Enigma component can encrypt and decrypt messages. If you want to analyze an encrypted message, please use the <docRef item="Cryptool.EnigmaBreaker.EnigmaBreaker"/> component.
+</introduction>
 
   <usage lang="en">
     In the main section of the settings, you can select the Enigma model.
-    You can enter the initial rotor setting in the key textfield and select the operation mode of the component: should the input text be analyzed or encrypted/decrypted?
+    You can enter the initial setting of the rotors in the "Rotor positions" textfield.
     <newline />
     <newline />
     In the 'Text options' menu you find settings for handling of unknown symbols (for example spaces) and for handling of uppercase and lowercase letters.
@@ -39,11 +39,7 @@
     output text.
     <newline />
     <newline />
-    The menu 'Analysis options' contains settings for the analysis mode of the component.
-    Here you can select which parts of Enigma should be included in the analysis of a ciphertext.
-    <newline />
-    <newline />
-    In the menu 'Used rotors', you can choose the rotors with which to operate Enigma. The available set of rotors depends on the chosen Enigma model.
+    In the menu 'Rotors used', you can choose the rotors with which to operate Enigma. The available set of rotors depends on the chosen Enigma model.
     <newline />
     <newline />
     In the 'Ring settings' menu, you can determine the position of the rings on each of the rotors.
@@ -113,12 +109,11 @@
     Bei diesen Modellen sind die angebrachten Steckerverbindungen natürlich ebenfalls Teil des Schlüssels.
     <newline />
     <newline />
-    Mit der Enigma-Komponente kann man Texte nicht nur ver- und entschlüsseln, sondern auch Geheimtexte analysieren.
+    Mit der Enigma-Komponente kann man Texte ver- und entschlüsseln. Für die Analyse eines Geheimtextes verwenden Sie bitte die Komponente <docRef item="Cryptool.EnigmaBreaker.EnigmaBreaker"/>.
   </introduction>
 
   <usage lang="de">
-    Im Hauptmenu der Einstellungen kann zunächst das Enigma-Modell gewählt werden. Unter "Schlüssel" kann die Rotorlage gewählt werden, und unter "Betriebsart",
-    ob die Komponente den Text verarbeiten oder analysieren soll.
+    Im Hauptmenu der Einstellungen kann zunächst das Enigma-Modell gewählt werden. Unter "Rotorlage" kann die initiale Rotorlage eingestellt werden.
     <newline />
     <newline />
     Im Menü "Text-Optionen" befinden sich Einstellungen zur Behandlung von Sonderzeichen, Leerzeichen und der Groß-/Kleinschreibung.
@@ -126,9 +121,6 @@
     Unter "Groß-/Kleinschreibung" kann gewählt werden, ob die Buchstaben vor der Ausgabe komplett in Groß- bzw. Kleinbuchstaben konvertiert werden sollen
     oder ob die ursprüngliche Schreibweise wiederhergestellt werden soll.
     Für die Sonderzeichen kann unter "Behandlung ungültiger Zeichen" eingestellt werden, ob unbekannte Symbole ignoriert, entfernt oder durch ein 'X' ersetzt werden sollen.
-    <newline />
-    <newline />
-    Das Menü "Analyseoptionen" beinhaltet Einstellungsmöglichkeiten für den Analyse-Modus. In diesem Menü kann entschieden werden, welche Teile der Enigma bei der Analyse mit einbezogen werden sollen.
     <newline />
     <newline />
     Im Menü "Verwendete Rotoren" können die Rotoren gewählt werden, mit denen die Enigma bestückt wird.

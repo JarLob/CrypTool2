@@ -727,7 +727,6 @@ namespace Cryptool.EnigmaBreaker
 
         /// <summary>
         /// Returns a formated string with all plugs from a given substitution string
-        /// This method should be move to some more adequate place
         /// </summary>
         /// <param name="pb">The substitution string for a plugboard</param>
         /// <returns>A list of plugs</returns>
@@ -735,8 +734,7 @@ namespace Cryptool.EnigmaBreaker
         {
             if (pb.Length != _settings.Alphabet.Length)
                 return "-- no plugs --";
-
-
+            
             StringBuilder result = new StringBuilder();
 
             for (int i = 0; i < _settings.Alphabet.Length; i++)

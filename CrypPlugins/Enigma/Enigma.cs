@@ -95,13 +95,11 @@ namespace Cryptool.Enigma
         /// <returns>The encrypted/decrypted string</returns>
         private string FormattedEncrypt(int rotor1Pos, int rotor2Pos, int rotor3Pos, int rotor4Pos, string text)
         {
-            
             String input = preFormatInput(text);
             _enigmaPresentationFrame.ChangeStatus(_isrunning, _enigmaPresentationFrame.EnigmaPresentation.IsVisible);
 
             if (Presentation.IsVisible && _enigmaPresentationFrame.EnigmaPresentation.PresentationDisabled.DisabledBoolProperty)
             {
-
                 String output = _core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input);
 
                 _enigmaPresentationFrame.EnigmaPresentation.output = output;
@@ -113,14 +111,9 @@ namespace Cryptool.Enigma
                 //return postFormatOutput(output);
                
                 return "";
-            }           
-            else
-            {
-                   
-                return postFormatOutput(_core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input));
             }
-            
 
+            return postFormatOutput(_core.Encrypt(rotor1Pos, rotor2Pos, rotor3Pos, rotor4Pos, input));
         }
 
         internal class UnknownToken
@@ -142,6 +135,7 @@ namespace Cryptool.Enigma
 
         IList<UnknownToken> unknownList = new List<UnknownToken>();
         IList<UnknownToken> lowerList = new List<UnknownToken>();
+
         /// <summary>
         /// Format the string to contain only alphabet characters in upper case
         /// </summary>
@@ -151,6 +145,7 @@ namespace Cryptool.Enigma
         {
             StringBuilder result = new StringBuilder();
             bool newToken = true;
+
             unknownList.Clear();
             lowerList.Clear();
 
@@ -191,7 +186,6 @@ namespace Cryptool.Enigma
             }
 
             return result.ToString().ToUpper();
-
         }
 
         //// legacy code
@@ -243,60 +237,6 @@ namespace Cryptool.Enigma
 
         #endregion
 
-        #region n-gram frequencies
-
-        private IDictionary<string, double[]> LoadDefaultStatistics(int length)
-        {
-            Dictionary<string, double[]> grams = new Dictionary<string, double[]>();
-
-            StreamReader reader = new StreamReader(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, GetStatisticsFilename(length)));
-
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                if (line.StartsWith("#"))
-                    continue;
-
-                string[] tokens = WordTokenizer.tokenize(line).ToArray();
-                if (tokens.Length == 0)
-                    continue;
-                Debug.Assert(tokens.Length == 2, "Expected 2 tokens, found " + tokens.Length + " on one line");
-
-                grams.Add(tokens[0], new double[] { Double.Parse(tokens[1]), 0, 0, 0 });
-            }
-
-            double sum = grams.Values.Sum(item => item[ABSOLUTE]);
-            LogMessage("Sum of all n-gram counts is: " + sum, NotificationLevel.Debug);
-
-            // calculate scaled values
-            foreach (double[] g in grams.Values)
-            {
-                g[PERCENTAGED] = g[ABSOLUTE] / sum;
-                g[LOG2] = Math.Log(g[ABSOLUTE], 2);
-                g[SINKOV] = Math.Log(g[PERCENTAGED], Math.E);
-            }
-
-            return grams;
-        }
-
-        /// <summary>
-        /// Get file name for default n-gram frequencies.
-        /// </summary>
-        /// <param name="length"></param>
-        /// <exception cref="NotSupportedException">No default n-gram frequencies available</exception>
-        /// <returns></returns>
-        private string GetStatisticsFilename(int length)
-        {
-            if (length < 1)
-            {
-                throw new ArgumentOutOfRangeException("There is no known default statistic for an n-gram length of " + length);
-            }
-
-            return "Enigma_" + length + "gram_Frequency.txt";
-        }
-
-        #endregion
-
         #endregion
 
         #region Constructor
@@ -329,7 +269,7 @@ namespace Cryptool.Enigma
 
         private void newInput(object sender, EventArgs args)
         {
-                _running = false;
+            _running = false;
         }
 
         private void fireLetters(object sender, EventArgs args)  
@@ -402,20 +342,6 @@ namespace Cryptool.Enigma
                 }
             }
         }
-
-        //[PropertyInfo(Direction.InputData, "InputGramsCaption", "InputGramsTooltip", "", false, false, QuickWatchFormat.Text, "FrequencyTest.QuickWatchDictionary")]
-        //public IDictionary<string, double[]> InputGrams
-        //{
-        //    get { return this.inputTriGrams; }
-        //    set
-        //    {
-        //        if (value != inputTriGrams)
-        //        {
-        //            this.inputTriGrams = value;
-        //            OnPropertyChanged("InputTriGrams");
-        //        }
-        //    }
-        //}
 
         [PropertyInfo(Direction.OutputData, "TextOutputCaption", "TextOutputTooltip", false)]
         public string TextOutput
@@ -533,9 +459,7 @@ namespace Cryptool.Enigma
         {
             //LogMessage("Dispose", NotificationLevel.Debug);
         }
-
-
-
+        
         /// <summary>
         /// Logs a message to the Cryptool console
         /// </summary>
@@ -552,52 +476,6 @@ namespace Cryptool.Enigma
         public void ShowProgress(double val, double max)
         {
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(val, max));
-        }
-
-        /// <summary>
-        /// Returns a formated string with all plugs from a given substitution string
-        /// This method should be move to some more adequate place
-        /// </summary>
-        /// <param name="pb">The substitution string for a plugboard</param>
-        /// <returns>A list of plugs</returns>
-        public string pB2String(string pb)
-        {
-            if (pb.Length != _settings.Alphabet.Length)
-                return "-- no plugs --";
-
-
-            StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < _settings.Alphabet.Length; i++)
-            {
-                if (_settings.Alphabet[i] != pb[i] && !result.ToString().Contains(_settings.Alphabet[i]))
-                {
-                    if (result.Length > 0)
-                        result.Append(' ');
-
-                    result.Append(_settings.Alphabet[i].ToString() + pb[i].ToString());
-                }
-            }
-
-            if (result.Length == 0)
-                result.Append("-- no plugs --");
-
-            return result.ToString();
-        }
-
-        public IDictionary<string, double[]> GetStatistics(int gramLength)
-        {
-            // FIXME: inputTriGrams is not being used!
-
-            // FIXME: implement exception handling
-
-            if (!_statistics.ContainsKey(gramLength))
-            {
-                LogMessage("Trying to load default statistics for " + gramLength + "-grams", NotificationLevel.Info);
-                _statistics[gramLength] = LoadDefaultStatistics(gramLength);
-            }
-
-            return _statistics[gramLength];
         }
 
         #endregion

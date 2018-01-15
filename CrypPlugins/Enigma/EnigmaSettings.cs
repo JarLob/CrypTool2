@@ -243,39 +243,10 @@ namespace Cryptool.Enigma
             OnPropertyChanged("Rotor3");
         }
 
+        string[] rotorNames = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII" };
         private int GetRotorIndexFromString(string indexString)
         {
-            int index = -1;
-
-            switch (indexString)
-            {
-                case "I":
-                    index = 0;
-                    break;
-                case "II":
-                    index = 1;
-                    break;
-                case "III":
-                    index = 2;
-                    break;
-                case "IV":
-                    index = 3;
-                    break;
-                case "V":
-                    index = 4;
-                    break;
-                case "VI":
-                    index = 5;
-                    break;
-                case "VII":
-                    index = 6;
-                    break;
-                case "VIII":
-                    index = 7;
-                    break;
-            }
-
-            return index;
+            return Array.IndexOf(rotorNames, indexString);
         }
 
         private void SetRingByString(string ringString)
@@ -357,13 +328,8 @@ namespace Cryptool.Enigma
             foreach (string key in keys)
                 coll.Add(typeof(Enigma).GetPluginStringResource(key));
         }
-
-        [ContextMenu( "ModelCaption", "ModelTooltip",
-            0, ContextMenuControlType.ComboBox, null,
-            new string[] { "ModelList1", "ModelList2", "ModelList3", "ModelList4", "ModelList5", "ModelList6", "ModelList7" })]
-        [TaskPane( "ModelTPCaption", "ModelTPTooltip",
-            null, 0, false, ControlType.ComboBox,
-            new string[] { "ModelList1", "ModelList2", "ModelList3", "ModelList4", "ModelList5", "ModelList6", "ModelList7" })]
+        
+        [TaskPane( "ModelTPCaption", "ModelTPTooltip", null, 0, false, ControlType.ComboBox, new string[] { "ModelList1", "ModelList2", "ModelList3", "ModelList4", "ModelList5", "ModelList6", "ModelList7" })]
         [PropertySaveOrder(1)]
         public int Model
         {
@@ -388,6 +354,7 @@ namespace Cryptool.Enigma
                         reflector = 0;
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); hideSettingsElement("Reflector");
                         break;
+
                     case 1: // Enigma D
                         SetList(rotorAStrings, "RotorA12", "RotorA13", "RotorA14");
                         SetList(rotorBStrings, "RotorB1");
@@ -398,6 +365,7 @@ namespace Cryptool.Enigma
                         reflector = 0;
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
+
                     case 2: // Reichsbahn (Rocket)
                         SetList(rotorAStrings, "RotorA15", "RotorA16", "RotorA17"); // "RotorA4"); //you must add a  Rotor 4 for the challenge on MTC3 (Cascading encryption - Part 3/3)
                         SetList(rotorBStrings, "RotorB1");
@@ -407,6 +375,7 @@ namespace Cryptool.Enigma
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
                         break;
+
                     case 3: // Enigma I / M3
                         SetList(rotorAStrings, "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8");
                         SetList(rotorBStrings, "RotorB1");
@@ -415,8 +384,8 @@ namespace Cryptool.Enigma
                         if (_initialRotorPos.Length > 3) _initialRotorPos = _initialRotorPos.Remove(0, 1);
                         rotor1 = 0; rotor2 = 1; rotor3 = 2; rotor4 = 0;
                         reflector = 0;
-
                         break;
+
                     case 4: // Enigma M4 "Shark"
                         SetList(rotorAStrings, "RotorA1", "RotorA2", "RotorA3", "RotorA4", "RotorA5", "RotorA6", "RotorA7", "RotorA8");
                         SetList(rotorBStrings, "RotorB2", "RotorB3");
@@ -429,6 +398,7 @@ namespace Cryptool.Enigma
                         showSettingsElement("Rotor4"); showSettingsElement("Ring4"); showSettingsElement("Reflector");
                         showPlugBoard();
                         break;
+
                     case 5: // Enigma K-Model
                         SetList(rotorAStrings, "RotorA18", "RotorA19", "RotorA20");
                         SetList(rotorBStrings, "RotorB1");
@@ -440,6 +410,7 @@ namespace Cryptool.Enigma
 
                         hideSettingsElement("Rotor4"); hideSettingsElement("Ring4"); showSettingsElement("Reflector");
                         break;
+
                     case 6: // Enigam G / Abwehr
                         SetList(rotorAStrings, "RotorA21", "RotorA22", "RotorA23");
                         SetList(rotorBStrings, "RotorB1");
@@ -757,8 +728,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Eins")]
-        [TaskPane( "PlugBoardACaption", "PlugBoardATooltip", "PlugboardGroup", 40, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "A=", "PlugBoardLetterTooltip", "PlugboardGroup", 40, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardA
         {
             get { return alphabet.IndexOf(this.plugBoard[0]); }
@@ -766,8 +737,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Eins")]
-        [TaskPane( "PlugBoardBCaption", "PlugBoardBTooltip", "PlugboardGroup", 41, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "B=", "PlugBoardLetterTooltip", "PlugboardGroup", 41, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardB
         {
             get { return alphabet.IndexOf(this.plugBoard[1]); }
@@ -775,8 +746,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Eins")]
-        [TaskPane( "PlugBoardCCaption", "PlugBoardCTooltip", "PlugboardGroup", 42, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "C=", "PlugBoardLetterTooltip", "PlugboardGroup", 42, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardC
         {
             get { return alphabet.IndexOf(this.plugBoard[2]); }
@@ -784,8 +755,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Zwei")]
-        [TaskPane( "PlugBoardDCaption", "PlugBoardDTooltip", "PlugboardGroup", 43, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "D=", "PlugBoardLetterTooltip", "PlugboardGroup", 43, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardD
         {
             get { return alphabet.IndexOf(this.plugBoard[3]); }
@@ -793,8 +764,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Zwei")]
-        [TaskPane( "PlugBoardECaption", "PlugBoardETooltip", "PlugboardGroup", 44, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "E=", "PlugBoardLetterTooltip", "PlugboardGroup", 44, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardE
         {
             get { return alphabet.IndexOf(this.plugBoard[4]); }
@@ -802,8 +773,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Zwei")]
-        [TaskPane( "PlugBoardFCaption", "PlugBoardFTooltip", "PlugboardGroup", 45, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "F=", "PlugBoardLetterTooltip", "PlugboardGroup", 45, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardF
         {
             get { return alphabet.IndexOf(this.plugBoard[5]); }
@@ -811,8 +782,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Drei")]
-        [TaskPane( "PlugBoardGCaption", "PlugBoardGTooltip", "PlugboardGroup", 46, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "G=", "PlugBoardLetterTooltip", "PlugboardGroup", 46, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardG
         {
             get { return alphabet.IndexOf(this.plugBoard[6]); }
@@ -820,8 +791,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Drei")]
-        [TaskPane( "PlugBoardHCaption", "PlugBoardHTooltip", "PlugboardGroup", 47, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "H=", "PlugBoardLetterTooltip", "PlugboardGroup", 47, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardH
         {
             get { return alphabet.IndexOf(this.plugBoard[7]); }
@@ -829,8 +800,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Drei")]
-        [TaskPane( "PlugBoardICaption", "PlugBoardITooltip", "PlugboardGroup", 48, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "I=", "PlugBoardLetterTooltip", "PlugboardGroup", 48, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardI
         {
             get { return alphabet.IndexOf(this.plugBoard[8]); }
@@ -838,8 +809,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Vier")]
-        [TaskPane( "PlugBoardJCaption", "PlugBoardJTooltip", "PlugboardGroup", 49, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "J=", "PlugBoardLetterTooltip", "PlugboardGroup", 49, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardJ
         {
             get { return alphabet.IndexOf(this.plugBoard[9]); }
@@ -847,8 +818,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Vier")]
-        [TaskPane( "PlugBoardKCaption", "PlugBoardKTooltip", "PlugboardGroup", 50, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "K=", "PlugBoardLetterTooltip", "PlugboardGroup", 50, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardK
         {
             get { return alphabet.IndexOf(this.plugBoard[10]); }
@@ -856,8 +827,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Vier")]
-        [TaskPane( "PlugBoardLCaption", "PlugBoardLTooltip", "PlugboardGroup", 51, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "L=", "PlugBoardLetterTooltip", "PlugboardGroup", 51, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardL
         {
             get { return alphabet.IndexOf(this.plugBoard[11]); }
@@ -865,8 +836,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Fuenf")]
-        [TaskPane( "PlugBoardMCaption", "PlugBoardMTooltip", "PlugboardGroup", 52, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "M=", "PlugBoardLetterTooltip", "PlugboardGroup", 52, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardM
         {
             get { return alphabet.IndexOf(this.plugBoard[12]); }
@@ -874,8 +845,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Fuenf")]
-        [TaskPane( "PlugBoardNCaption", "PlugBoardNTooltip", "PlugboardGroup", 53, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "N=", "PlugBoardLetterTooltip", "PlugboardGroup", 53, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardN
         {
             get { return alphabet.IndexOf(this.plugBoard[13]); }
@@ -883,8 +854,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Fuenf")]
-        [TaskPane( "PlugBoardOCaption", "PlugBoardOTooltip", "PlugboardGroup", 54, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "O=", "PlugBoardLetterTooltip", "PlugboardGroup", 54, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardO
         {
             get { return alphabet.IndexOf(this.plugBoard[14]); }
@@ -892,8 +863,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sechs")]
-        [TaskPane( "PlugBoardPCaption", "PlugBoardPTooltip", "PlugboardGroup", 55, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "P=", "PlugBoardLetterTooltip", "PlugboardGroup", 55, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardP
         {
             get { return alphabet.IndexOf(this.plugBoard[15]); }
@@ -901,8 +872,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sechs")]
-        [TaskPane( "PlugBoardQCaption", "PlugBoardQTooltip", "PlugboardGroup", 56, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "Q=", "PlugBoardLetterTooltip", "PlugboardGroup", 56, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardQ
         {
             get { return alphabet.IndexOf(this.plugBoard[16]); }
@@ -910,8 +881,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sechs")]
-        [TaskPane( "PlugBoardRCaption", "PlugBoardRTooltip", "PlugboardGroup", 57, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "R=", "PlugBoardLetterTooltip", "PlugboardGroup", 57, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardR
         {
             get { return alphabet.IndexOf(this.plugBoard[17]); }
@@ -919,8 +890,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sieben")]
-        [TaskPane( "PlugBoardSCaption", "PlugBoardSTooltip", "PlugboardGroup", 58, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "S=", "PlugBoardLetterTooltip", "PlugboardGroup", 58, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardS
         {
             get { return alphabet.IndexOf(this.plugBoard[18]); }
@@ -928,8 +899,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sieben")]
-        [TaskPane( "PlugBoardTCaption", "PlugBoardTTooltip", "PlugboardGroup", 59, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "T=", "PlugBoardLetterTooltip", "PlugboardGroup", 59, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardT
         {
             get { return alphabet.IndexOf(this.plugBoard[19]); }
@@ -937,8 +908,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Sieben")]
-        [TaskPane( "PlugBoardUCaption", "PlugBoardUTooltip", "PlugboardGroup", 60, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "U=", "PlugBoardLetterTooltip", "PlugboardGroup", 60, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardU
         {
             get { return alphabet.IndexOf(this.plugBoard[20]); }
@@ -946,8 +917,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Acht")]
-        [TaskPane( "PlugBoardVCaption", "PlugBoardVTooltip", "PlugboardGroup", 61, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "V=", "PlugBoardLetterTooltip", "PlugboardGroup", 61, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardV
         {
             get { return alphabet.IndexOf(this.plugBoard[21]); }
@@ -955,8 +926,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Acht")]
-        [TaskPane( "PlugBoardWCaption", "PlugBoardWTooltip", "PlugboardGroup", 62, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "W=", "PlugBoardLetterTooltip", "PlugboardGroup", 62, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardW
         {
             get { return alphabet.IndexOf(this.plugBoard[22]); }
@@ -964,8 +935,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Acht")]
-        [TaskPane( "PlugBoardXCaption", "PlugBoardXTooltip", "PlugboardGroup", 63, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "X=", "PlugBoardLetterTooltip", "PlugboardGroup", 63, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardX
         {
             get { return alphabet.IndexOf(this.plugBoard[23]); }
@@ -973,8 +944,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(0, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Neun")]
-        [TaskPane( "PlugBoardYCaption", "PlugBoardYTooltip", "PlugboardGroup", 64, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "Y=", "PlugBoardLetterTooltip", "PlugboardGroup", 64, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardY
         {
             get { return alphabet.IndexOf(this.plugBoard[24]); }
@@ -982,8 +953,8 @@ namespace Cryptool.Enigma
         }
 
         [SettingsFormat(1, "Normal", "Normal", "Black", "White", System.Windows.Controls.Orientation.Horizontal, "Auto", "*", "Neun")]
-        [TaskPane( "PlugBoardZCaption", "PlugBoardZTooltip", "PlugboardGroup", 65, false, ControlType.ComboBox,
-            new String[] { "LetterA", "LetterB", "LetterC", "LetterD", "LetterE", "LetterF", "LetterG", "LetterH", "LetterI", "LetterJ", "LetterK", "LetterL", "LetterM", "LetterN", "LetterO", "LetterP", "LetterQ", "LetterR", "LetterS", "LetterT", "LetterU", "LetterV", "LetterW", "LetterX", "LetterY", "LetterZ" })]
+        [TaskPane( "Z=", "PlugBoardLetterTooltip", "PlugboardGroup", 65, false, ControlType.ComboBox,
+            new String[] { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" })]
         public int PlugBoardZ
         {
             get { return alphabet.IndexOf(this.plugBoard[25]); }
@@ -1025,9 +996,6 @@ namespace Cryptool.Enigma
 
         #region Text options
 
-        [ContextMenu("UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
-            3, ContextMenuControlType.ComboBox, null,
-            new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
         [TaskPane("UnknownSymbolHandlingCaption", "UnknownSymbolHandlingTooltip",
             "TextOptionsGroup", 3, false, ControlType.ComboBox,
             new string[] { "UnknownSymbolHandlingList1", "UnknownSymbolHandlingList2", "UnknownSymbolHandlingList3" })]
@@ -1043,10 +1011,7 @@ namespace Cryptool.Enigma
                 }
             }
         }
-
-        [ContextMenu("CaseHandlingCaption", "CaseHandlingTooltip",
-            4, ContextMenuControlType.ComboBox, null,
-            new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]
+        
         [TaskPane("CaseHandlingCaption", "CaseHandlingTooltip",
             "TextOptionsGroup", 4, false, ControlType.ComboBox,
             new string[] { "CaseHandlingList1", "CaseHandlingList2", "CaseHandlingList3" })]

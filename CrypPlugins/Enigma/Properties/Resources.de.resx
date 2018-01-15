@@ -141,113 +141,14 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Polyalphabetische Rotor-Chiffriermaschine</value>
   </data>
-  <data name="ActionCaption" xml:space="preserve">
-    <value>Betriebsart</value>
-  </data>
-  <data name="ActionTooltip" xml:space="preserve">
-    <value>Wählen Sie die Betriebsart für diesen Enigma-Simulator. Bitte beachten Sie, dass alle Enigmas seit der Enigma D mit einem Reflektor arbeiten und es daher zwischen der Verschlüsselung und der Entschlüsselung keinen Unterschied gibt.</value>
-  </data>
-  <data name="AnalysisUseRotorICaption" xml:space="preserve">
-    <value>Rotor I berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor I bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorIICaption" xml:space="preserve">
-    <value>Rotor II berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorIITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor II bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorIIICaption" xml:space="preserve">
-    <value>Rotor III berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorIIITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor III bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorIVCaption" xml:space="preserve">
-    <value>Rotor IV berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorIVTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor IV bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorVCaption" xml:space="preserve">
-    <value>Rotor V berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorVTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor V bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorVICaption" xml:space="preserve">
-    <value>Rotor VI berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorVITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VI bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorVIICaption" xml:space="preserve">
-    <value>Rotor VII berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorVIITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VII bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalysisUseRotorVIIICaption" xml:space="preserve">
-    <value>Rotor VIII berücksichtigen</value>
-  </data>
-  <data name="AnalysisUseRotorVIIITooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, wird Rotor VIII bei der Analyse berücksichtigt.</value>
-  </data>
-  <data name="AnalyzeKeyCaption" xml:space="preserve">
-    <value>Analysiere Schlüssel (initiale Rotorpositionen)</value>
-  </data>
-  <data name="AnalyzeKeyTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse den korrekten Schlüssel zu finden. Sonst wird der vorgegebene Schlüssel verwendet.</value>
-  </data>
-  <data name="AnalyzePlugsCaption" xml:space="preserve">
-    <value>Analysiere Stecker</value>
-  </data>
-  <data name="AnalyzePlugsTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die korrekten Steckerverbindungen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
-  </data>
-  <data name="AnalyzeRingsCaption" xml:space="preserve">
-    <value>Analysiere Ringstellungen</value>
-  </data>
-  <data name="AnalyzeRingsTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die korrekten Ringstellungen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
-  </data>
-  <data name="AnalyzeRotorsCaption" xml:space="preserve">
-    <value>Analysiere verwendete Rotoren</value>
-  </data>
-  <data name="AnalyzeRotorsTooltip" xml:space="preserve">
-    <value>Wenn dieses Kontrollkästchen gesetzt ist, versucht die Analyse die verwendeten Rotoren und ihre Positionen zu finden. Sonst werden die vorgegebenen Werte verwendet.</value>
-  </data>
   <data name="CaseHandlingCaption" xml:space="preserve">
     <value>Groß-/Kleinschreibung</value>
   </data>
   <data name="CaseHandlingTooltip" xml:space="preserve">
     <value>Wie sollen Groß- und Kleinbuchstaben behandelt werden?</value>
   </data>
-  <data name="InvolutoricCaption" xml:space="preserve">
-    <value>Involutorisch</value>
-  </data>
-  <data name="InvolutoricTooltip" xml:space="preserve">
-    <value>Die Abbildung ist selbstinvers, d.h. wenn A auf X abgebildet wird, dann wird auch X auf A abgebildet.</value>
-  </data>
-  <data name="KeyCaption" xml:space="preserve">
-    <value>Schlüssel (initiale Rotorpositionen)</value>
-  </data>
   <data name="KeyTooltip" xml:space="preserve">
     <value>Geben Sie die Startposition für jeden Rotor an, z.B. ABCD. Der langsamste Rotor ist links, der schnellste rechts. Nur die Enigma M4 ("Shark") verwendet 4 Rotoren.</value>
-  </data>
-  <data name="KeySearchMethodCaption" xml:space="preserve">
-    <value>Rotor-/Ring-/Schlüssel-Suchmethode</value>
-  </data>
-  <data name="KeySearchMethodTooltip" xml:space="preserve">
-    <value>Welche Methode soll zur Bewertung der Rotorkonfiguration verwendet werden?</value>
-  </data>
-  <data name="MaxSearchedPlugsCaption" xml:space="preserve">
-    <value>Max. Stecker suchen</value>
-  </data>
-  <data name="MaxSearchedPlugsTooltip" xml:space="preserve">
-    <value>Wieviele Steckerverbindungen sollen maximal gesucht werden? Der Suchalgorithmus kann weniger als die angegebene Zahl zurückgeben, da dies nur eine obere Schranke ist.</value>
   </data>
   <data name="ModelCaption" xml:space="preserve">
     <value>Enigma-Modell</value>
@@ -267,167 +168,8 @@
   <data name="PlugBoardTooltip" xml:space="preserve">
     <value>Zeigt die aktuelle Substitution</value>
   </data>
-  <data name="PlugBoardACaption" xml:space="preserve">
-    <value>A=</value>
-  </data>
-  <data name="PlugBoardATooltip" xml:space="preserve">
+  <data name="PlugBoardLetterTooltip" xml:space="preserve">
     <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardBCaption" xml:space="preserve">
-    <value>B=</value>
-  </data>
-  <data name="PlugBoardBTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardCCaption" xml:space="preserve">
-    <value>C=</value>
-  </data>
-  <data name="PlugBoardCTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardDCaption" xml:space="preserve">
-    <value>D=</value>
-  </data>
-  <data name="PlugBoardDTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardECaption" xml:space="preserve">
-    <value>E=</value>
-  </data>
-  <data name="PlugBoardETooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardFCaption" xml:space="preserve">
-    <value>F=</value>
-  </data>
-  <data name="PlugBoardFTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardGCaption" xml:space="preserve">
-    <value>G=</value>
-  </data>
-  <data name="PlugBoardGTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardHCaption" xml:space="preserve">
-    <value>H=</value>
-  </data>
-  <data name="PlugBoardHTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardICaption" xml:space="preserve">
-    <value>I=</value>
-  </data>
-  <data name="PlugBoardITooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardJCaption" xml:space="preserve">
-    <value>J=</value>
-  </data>
-  <data name="PlugBoardJTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardKCaption" xml:space="preserve">
-    <value>K=</value>
-  </data>
-  <data name="PlugBoardKTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardLCaption" xml:space="preserve">
-    <value>L=</value>
-  </data>
-  <data name="PlugBoardLTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardMCaption" xml:space="preserve">
-    <value>M=</value>
-  </data>
-  <data name="PlugBoardMTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardNCaption" xml:space="preserve">
-    <value>N=</value>
-  </data>
-  <data name="PlugBoardNTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardOCaption" xml:space="preserve">
-    <value>O=</value>
-  </data>
-  <data name="PlugBoardOTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardPCaption" xml:space="preserve">
-    <value>P=</value>
-  </data>
-  <data name="PlugBoardPTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardQCaption" xml:space="preserve">
-    <value>Q=</value>
-  </data>
-  <data name="PlugBoardQTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardRCaption" xml:space="preserve">
-    <value>R=</value>
-  </data>
-  <data name="PlugBoardRTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardSCaption" xml:space="preserve">
-    <value>S=</value>
-  </data>
-  <data name="PlugBoardSTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardTCaption" xml:space="preserve">
-    <value>T=</value>
-  </data>
-  <data name="PlugBoardTTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardUCaption" xml:space="preserve">
-    <value>U=</value>
-  </data>
-  <data name="PlugBoardUTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardVCaption" xml:space="preserve">
-    <value>V=</value>
-  </data>
-  <data name="PlugBoardVTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardWCaption" xml:space="preserve">
-    <value>W=</value>
-  </data>
-  <data name="PlugBoardWTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardXCaption" xml:space="preserve">
-    <value>X=</value>
-  </data>
-  <data name="PlugBoardXTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardYCaption" xml:space="preserve">
-    <value>Y=</value>
-  </data>
-  <data name="PlugBoardYTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugBoardZCaption" xml:space="preserve">
-    <value>Z=</value>
-  </data>
-  <data name="PlugBoardZTooltip" xml:space="preserve">
-    <value>Mit welchem Buchstaben soll dieser Stecker verbunden werden?</value>
-  </data>
-  <data name="PlugSearchMethodCaption" xml:space="preserve">
-    <value>Suchmethode für Steckerverbindungen</value>
-  </data>
-  <data name="PlugSearchMethodTooltip" xml:space="preserve">
-    <value>Welche Bewertungsmethode soll bei der Suche nach den Steckerverbindungen verwendet werden?</value>
   </data>
   <data name="PresentationSpeedCaption" xml:space="preserve">
     <value>Darstellungsgeschwindigkeit</value>
@@ -540,9 +282,6 @@
   <data name="UnknownSymbolHandlingList3" xml:space="preserve">
     <value>Ersetzen durch 'X'</value>
   </data>
-  <data name="AnalysisOptionsGroup" xml:space="preserve">
-    <value>Analyseoptionen</value>
-  </data>
   <data name="PlugboardGroup" xml:space="preserve">
     <value>Steckerbrett</value>
   </data>
@@ -558,122 +297,14 @@
   <data name="UsedRotorsGroup" xml:space="preserve">
     <value>Verwendete Rotoren</value>
   </data>
-  <data name="KeySearchMethodList1" xml:space="preserve">
-    <value>Koinzidenzindex</value>
-  </data>
-  <data name="KeySearchMethodList2" xml:space="preserve">
-    <value>log2-Bigramm</value>
-  </data>
-  <data name="KeySearchMethodList3" xml:space="preserve">
-    <value>log2-Trigramm</value>
-  </data>
-  <data name="KeySearchMethodList4" xml:space="preserve">
-    <value>Sinkov-Unigramn</value>
-  </data>
-  <data name="KeySearchMethodList5" xml:space="preserve">
-    <value>Sinkov-Bigramm</value>
-  </data>
-  <data name="KeySearchMethodList6" xml:space="preserve">
-    <value>Unigramm-Entropie</value>
-  </data>
   <data name="Ringstellung_" xml:space="preserve">
     <value>Ringstellung:</value>
   </data>
   <data name="Rotorlage_" xml:space="preserve">
     <value>Rotorlage:</value>
   </data>
-  <data name="LetterA" xml:space="preserve">
-    <value>A</value>
-  </data>
-  <data name="LetterB" xml:space="preserve">
-    <value>B</value>
-  </data>
-  <data name="LetterC" xml:space="preserve">
-    <value>C</value>
-  </data>
-  <data name="LetterD" xml:space="preserve">
-    <value>D</value>
-  </data>
-  <data name="LetterE" xml:space="preserve">
-    <value>E</value>
-  </data>
-  <data name="LetterF" xml:space="preserve">
-    <value>F</value>
-  </data>
-  <data name="LetterG" xml:space="preserve">
-    <value>G</value>
-  </data>
-  <data name="LetterH" xml:space="preserve">
-    <value>H</value>
-  </data>
-  <data name="LetterI" xml:space="preserve">
-    <value>I</value>
-  </data>
-  <data name="LetterJ" xml:space="preserve">
-    <value>J</value>
-  </data>
-  <data name="LetterK" xml:space="preserve">
-    <value>K</value>
-  </data>
-  <data name="LetterL" xml:space="preserve">
-    <value>L</value>
-  </data>
-  <data name="LetterM" xml:space="preserve">
-    <value>M</value>
-  </data>
-  <data name="LetterN" xml:space="preserve">
-    <value>N</value>
-  </data>
-  <data name="LetterO" xml:space="preserve">
-    <value>O</value>
-  </data>
-  <data name="LetterP" xml:space="preserve">
-    <value>P</value>
-  </data>
-  <data name="LetterQ" xml:space="preserve">
-    <value>Q</value>
-  </data>
-  <data name="LetterR" xml:space="preserve">
-    <value>R</value>
-  </data>
-  <data name="LetterS" xml:space="preserve">
-    <value>S</value>
-  </data>
-  <data name="LetterT" xml:space="preserve">
-    <value>T</value>
-  </data>
-  <data name="LetterU" xml:space="preserve">
-    <value>U</value>
-  </data>
-  <data name="LetterV" xml:space="preserve">
-    <value>V</value>
-  </data>
-  <data name="LetterW" xml:space="preserve">
-    <value>W</value>
-  </data>
-  <data name="LetterX" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="LetterY" xml:space="preserve">
-    <value>Y</value>
-  </data>
-  <data name="LetterZ" xml:space="preserve">
-    <value>Z</value>
-  </data>
   <data name="Please_stop_the_Workspace_for_Presentation" xml:space="preserve">
     <value>Bitte halten Sie den Workspace an, um die Präsentation anzuzeigen!</value>
-  </data>
-  <data name="Action1" xml:space="preserve">
-    <value>Verschlüsseln / Entschlüsseln</value>
-  </data>
-  <data name="Action2" xml:space="preserve">
-    <value>Verschlüsseln</value>
-  </data>
-  <data name="Action3" xml:space="preserve">
-    <value>Entschlüsseln</value>
-  </data>
-  <data name="Action4" xml:space="preserve">
-    <value>Analysieren</value>
   </data>
   <data name="Reflector1" xml:space="preserve">
     <value>UKW A</value>
@@ -801,10 +432,16 @@
   <data name="PresentationActivation" xml:space="preserve">
     <value>Präsentation aktivieren</value>
   </data>
-  <data name="InputKeyCaption" xml:space="preserve">
+  <data name="KeyInputCaption" xml:space="preserve">
     <value>Schlüssel-Eingabe</value>
   </data>
-  <data name="InputKeyTooltip" xml:space="preserve">
+  <data name="KeyInputTooltip" xml:space="preserve">
     <value>Eingabe eines Enigma-Schlüssels, der die zu verwendenden Rotoren, Ringe und Steckbrett-Verbindungen beinhaltet</value>
+  </data>
+  <data name="InitialRotorPosCaption" xml:space="preserve">
+    <value>Rotorlage</value>
+  </data>
+  <data name="InitialRotorPosTooltip" xml:space="preserve">
+    <value>Geben sie die initiale Lage der Rotoren an (z.B. AAAA).</value>
   </data>
 </root>
