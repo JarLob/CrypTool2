@@ -39,9 +39,10 @@ namespace Cryptool.Enigma
         private ObservableCollection<string> rotorAStrings = new ObservableCollection<string>();
         private ObservableCollection<string> rotorBStrings = new ObservableCollection<string>();
         private ObservableCollection<string> reflectorStrings = new ObservableCollection<string>();
+
         private int model = 3;
-        private int unknownSymbolHandling = 0; // 0=ignore, leave unmodified
-        private int caseHandling = 0; // 0=preserve, 1, convert all to upper, 2= convert all to lower
+        private int unknownSymbolHandling = 0; // 0 = ignore, 1 = leave unmodified
+        private int caseHandling = 0; // 0 = preserve, 1 = convert all to upper, 2 = convert all to lower
         private string _initialRotorPos = "AAA";
         private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -67,21 +68,9 @@ namespace Cryptool.Enigma
 
         private void checkRotorChange(int rotor, int was, int becomes)
         {
-            switch (rotor)
-            {
-                case 1:
-                    if (rotor2 == becomes) { rotor2 = was; OnPropertyChanged("Rotor2"); }
-                    if (rotor3 == becomes) { rotor3 = was; OnPropertyChanged("Rotor3"); }
-                    break;
-                case 2:
-                    if (rotor1 == becomes) { rotor1 = was; OnPropertyChanged("Rotor1"); }
-                    if (rotor3 == becomes) { rotor3 = was; OnPropertyChanged("Rotor3"); }
-                    break;
-                case 3:
-                    if (rotor1 == becomes) { rotor1 = was; OnPropertyChanged("Rotor1"); }
-                    if (rotor2 == becomes) { rotor2 = was; OnPropertyChanged("Rotor2"); }
-                    break;
-            }
+            if (rotor1 == becomes) { rotor1 = was; OnPropertyChanged("Rotor1"); }
+            if (rotor2 == becomes) { rotor2 = was; OnPropertyChanged("Rotor2"); }
+            if (rotor3 == becomes) { rotor3 = was; OnPropertyChanged("Rotor3"); }
         }
 
         private void setPlugBoard(int letterPos, int newIndex)
@@ -118,9 +107,8 @@ namespace Cryptool.Enigma
         private void hidePlugBoard()
         {
             foreach (char c in this.alphabet)
-            {
                 hideSettingsElement("PlugBoard" + c);
-            }
+
             hideSettingsElement("PlugBoard");
             hideSettingsElement("ResetPlugboard");
         }
@@ -128,9 +116,8 @@ namespace Cryptool.Enigma
         private void showPlugBoard()
         {
             foreach (char c in this.alphabet)
-            {
                 showSettingsElement("PlugBoard" + c);
-            }
+
             showSettingsElement("PlugBoard");
             showSettingsElement("ResetPlugboard");
         }
@@ -438,12 +425,12 @@ namespace Cryptool.Enigma
             null, 1, false, ControlType.TextBox, ValidationType.RegEx, "^[A-Za-z]{3,4}$")]
         public string InitialRotorPos
         {
-            get { return this._initialRotorPos; }
+            get { return this._initialRotorPos.ToUpper(); }
             set
             {
                 if (value != _initialRotorPos)
                 {
-                    this._initialRotorPos = value;
+                    this._initialRotorPos = value.ToUpper();
                     OnPropertyChanged("InitialRotorPos");   
                 }
             }
