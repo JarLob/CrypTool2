@@ -280,10 +280,12 @@ namespace Cryptool.CrypWin
 
         private string CreateOpenProjectFilter()
         {
+            string defaultPattern = "cwm (*.cwm)|*.cwm";
+
             try
             {
                 var ext = ComponentInformations.EditorExtension.Values.ToDictionary(t => t.GetPluginInfoAttribute().Caption, t => t.GetEditorInfoAttribute().DefaultExtension);
-                if (ext.Count() == 0) return "cwm (*.cwm)";
+                if (ext.Count() == 0) return defaultPattern;
 
                 string filter = String.Join("|", ext.Select(i => string.Format("{0} (*.{1})|*.{1}", i.Key, i.Value)));
                 if (ext.Count() > 1)
@@ -291,14 +293,14 @@ namespace Cryptool.CrypWin
                     string allExtensions = String.Join(";", ext.Select(i => string.Format("*.{0}", i.Value)));
                     filter = string.Format("All ({0})|{0}|{1}", allExtensions, filter);
                 }
-
+                
                 return filter;
             }
             catch (Exception ex)
             {
                 //creating the default extensions using the plugins failed
                 //so return only cwm since this is the default file extension
-                return "cwm (*.cwm)";
+                return defaultPattern;
             }
         }
 
