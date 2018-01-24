@@ -88,6 +88,24 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop percentage ähnelt.
+        /// </summary>
+        public static string ComparisonFrequencyCaption {
+            get {
+                return ResourceManager.GetString("ComparisonFrequencyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop the current analysis in the cryptanalytic component if the given percentage is reached. ähnelt.
+        /// </summary>
+        public static string ComparisonFrequencyTooltip {
+            get {
+                return ResourceManager.GetString("ComparisonFrequencyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
         /// </summary>
         public static string Copy_all {
@@ -435,6 +453,24 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         public static string StartLabel {
             get {
                 return ResourceManager.GetString("StartLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop current analysis if percentage reached ähnelt.
+        /// </summary>
+        public static string StopIfPercentReachedCaption {
+            get {
+                return ResourceManager.GetString("StopIfPercentReachedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stop the current analysis in the cryptanalytic component if the given percentage is reached. ähnelt.
+        /// </summary>
+        public static string StopIfPercentReachedTooltip {
+            get {
+                return ResourceManager.GetString("StopIfPercentReachedTooltip", resourceCulture);
             }
         }
         

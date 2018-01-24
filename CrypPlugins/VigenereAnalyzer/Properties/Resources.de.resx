@@ -126,6 +126,12 @@
   <data name="CiphertextTooltip" xml:space="preserve">
     <value>Der Geheimtext, der analysiert werden soll.</value>
   </data>
+  <data name="ComparisonFrequencyCaption" xml:space="preserve">
+    <value>Stop-Prozentsatz</value>
+  </data>
+  <data name="ComparisonFrequencyTooltip" xml:space="preserve">
+    <value>Beende die laufende Analyse in der kryptanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
+  </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Kopiere alle Zeilen.</value>
   </data>
@@ -242,6 +248,12 @@
   </data>
   <data name="StartLabel" xml:space="preserve">
     <value>Startzeit:</value>
+  </data>
+  <data name="StopIfPercentReachedCaption" xml:space="preserve">
+    <value>Beende Analyse, wenn Prozentsatz erreicht ist</value>
+  </data>
+  <data name="StopIfPercentReachedTooltip" xml:space="preserve">
+    <value>Beende die laufende Analyse in der kryptanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Text</value>

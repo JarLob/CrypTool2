@@ -199,7 +199,7 @@ namespace Cryptool.VigenereAnalyzer
 
         // EVALUATION!
         [CryptoBenchmarkAttribute()]
-        [TaskPane("Stop current analysis if percent reached", "Stop the current analysis in the cryptanalytic component if entered percentage reached", null, 7, false, ControlType.CheckBox)]
+        [TaskPane("StopIfPercentReachedCaption", "StopIfPercentReachedTooltip", null, 7, false, ControlType.CheckBox)]
         public bool StopIfPercentReached
         {
             get

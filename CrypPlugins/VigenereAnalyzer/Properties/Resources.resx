@@ -273,4 +273,16 @@
   <data name="Spanish" xml:space="preserve">
     <value>Spanish</value>
   </data>
+  <data name="ComparisonFrequencyCaption" xml:space="preserve">
+    <value>Stop percentage</value>
+  </data>
+  <data name="ComparisonFrequencyTooltip" xml:space="preserve">
+    <value>Stop the current analysis in the cryptanalytic component if the given percentage is reached.</value>
+  </data>
+  <data name="StopIfPercentReachedCaption" xml:space="preserve">
+    <value>Stop current analysis if percentage reached</value>
+  </data>
+  <data name="StopIfPercentReachedTooltip" xml:space="preserve">
+    <value>Stop the current analysis in the cryptanalytic component if the given percentage is reached.</value>
+  </data>
 </root>
