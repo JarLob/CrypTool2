@@ -130,7 +130,7 @@
     <value>Stop-Prozentsatz</value>
   </data>
   <data name="ComparisonFrequencyTooltip" xml:space="preserve">
-    <value>Beende die laufende Analyse in der kryptanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
+    <value>Beende die laufende Analyse in der kryptoanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
     <value>Kopiere alle Zeilen.</value>
@@ -253,7 +253,7 @@
     <value>Beende Analyse, wenn Prozentsatz erreicht ist</value>
   </data>
   <data name="StopIfPercentReachedTooltip" xml:space="preserve">
-    <value>Beende die laufende Analyse in der kryptanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
+    <value>Beende die laufende Analyse in der kryptoanalytischen Komponente, wenn der angegebene Prozentsatz erreicht ist.</value>
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Text</value>
