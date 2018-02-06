@@ -112,8 +112,9 @@ namespace WorkspaceManager.Model
             foreach (var textmodel in workspacemodel.AllTextModels)
             {
                 //create flowdocument out of data in xaml package format
-                var flowDocument = new FlowDocument();
+                var flowDocument = new FlowDocument();                
                 var textRange = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
+                
                 using (var memoryStream = new MemoryStream(textmodel.data))
                 {                    
                     textRange.Load(memoryStream, System.Windows.DataFormats.XamlPackage);
@@ -129,7 +130,7 @@ namespace WorkspaceManager.Model
                 //replace all keys with corresponding values
                 foreach (var key in replacements.Keys)
                 {
-                    rtf = rtf.Replace(key, replacements[key]);
+                    rtf = rtf.Replace(key, GetRtfUnicodeEscapedString(replacements[key]));
                 }
                 //create new textRange with replaced values
                 using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(rtf)))
@@ -144,7 +145,31 @@ namespace WorkspaceManager.Model
                     memoryStream.Close();
                 }
             }
-        }       
+        }
+
+        /// <summary>
+        /// Converts the unicode chars to rtf escape values
+        /// obtained from https://stackoverflow.com/questions/1368020/how-to-output-unicode-string-to-rtf-using-c
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private static string GetRtfUnicodeEscapedString(string s)
+        {
+            var sb = new StringBuilder();
+            foreach (var c in s)
+            {
+                if (c <= 0x7f)
+                {
+                    sb.Append(c);
+                }
+                else
+                {
+                    sb.Append("\\u" + Convert.ToUInt32(c) + "?");
+                }
+            }
+            return sb.ToString();
+        }
+
 
         private void restoreSettings(PersistantModel persistantModel, WorkspaceModel workspacemodel)
         {
