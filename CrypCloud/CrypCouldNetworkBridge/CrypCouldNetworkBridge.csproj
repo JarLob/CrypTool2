@@ -73,12 +73,6 @@
   <ItemGroup>
     <Resource Include="bannedCertificates.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
-      <Project>{00382c7a-8812-483f-8984-5a3612de5285}</Project>
-      <Name>voluntLib</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
