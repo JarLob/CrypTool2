@@ -266,8 +266,11 @@ namespace Cryptool.CrypWin
         #region Init
 
         public MainWindow()
-        {
+        {            
             SetLanguage();
+
+            CheckEssentialComponents();
+
             LoadResources();
 
             // systemInfos and licenses must be initialized after the language has been set, otherwise they are initialized with the wrong language
@@ -587,8 +590,42 @@ namespace Cryptool.CrypWin
 
             InitCould();
         }
+        
+        /// <summary>
+        /// This method checks, if essential components are available
+        /// If not, it shows a message box containing an error and exits CT2 with return code -1
+        /// 
+        /// We added this to avoid spamming of tickets of users, that directly start CT2 
+        /// in the zip file of the zip installation
+        /// </summary>
+        private void CheckEssentialComponents()
+        {
+            //List of components that have to be available
+            //add new essential compoents if needed
+            //Warning: If a component is not available; CT2 WONT START!
+            var essentialComponents = new List<string>();
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypCore.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPluginBase.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypProprietary.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfDock.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfEditors.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\DevComponents.WpfRibbon.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\OnlineDocumentationGenerator.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManager.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\WorkspaceManagerModel.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\WorkspaceManager.dll");
+            essentialComponents.Add(System.AppDomain.CurrentDomain.BaseDirectory + @"\CrypPlugins\Wizard.dll");
 
-      
+            foreach(var file in essentialComponents)
+            {
+                if (!File.Exists(file))
+                {
+                    MessageBox.Show(String.Format("Missing essential component of CrypTool 2:\r\n{0}\r\nEither completely unzip the zip installation of CrypTool 2 or reinstall CrypTool 2 if not running zip installation",file),
+                        "CrypTool 2 Essential Component not Found!", MessageBoxButton.OK,MessageBoxImage.Error);
+                    System.Environment.Exit(-1);
+                }
+            }
+        }
 
         private void LoadIndividualComponentConnectionStatistics()
         {
