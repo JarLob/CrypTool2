@@ -730,66 +730,52 @@ namespace Cryptool.PluginBase.Miscellaneous
         /*
          * This code is heavily inspired by the code from the BigInteger class written by Chew Keong TAN
          */
-        public static bool IsProbablePrime(this BigInteger thisVal)
+        public static bool IsProbablePrime(this BigInteger n)
         {
-            thisVal = BigInteger.Abs(thisVal);
+            n = BigInteger.Abs(n);
 
-            //test small numbers
-            if (thisVal == 0 || thisVal == 1)
-                return false;
-            if (thisVal == 2 || thisVal == 3)
-                return true;            
+            // test small numbers
 
-            if (thisVal.IsEven)     // even numbers
-                return false;
+            if (n < 4) return n > 1;
+            if (primesBelow2000.Where(p => p < n).Any(p => n % p == 0)) return false;
 
-            // test for divisibility by primes < 2000
-            for (int p = 0; p < primesBelow2000.Length; p++)
-            {
-                BigInteger divisor = primesBelow2000[p];
+            // perform Miller-Rabin Test
 
-                if (divisor >= thisVal)
-                    break;
+            // By a result from Pomerance, Selfridge, Wagstaff and Jaeschke, Miller-Rabin is deterministic for values < 318665857834031151167461 if the following witnesses are used:
+            // (see https://de.wikipedia.org/wiki/Miller-Rabin-Test)
 
-                BigInteger resultNum = thisVal % divisor;
-                if (resultNum == 0)                
-                    return false;                
-            }
+            int[] tests =
+                n < 1373653 ? new int[] { 2, 3 } :
+                n < 9080191 ? new int[] { 31, 73 } :
+                n < 4759123141 ? new int[] { 2, 7, 61 } :
+                n < 2152302898747 ? new int[] { 2, 3, 5, 7, 11 } :
+                n < 3474749660383 ? new int[] { 2, 3, 5, 7, 11, 13 } :
+                n < 341550071728321 ? new int[] { 2, 3, 5, 7, 11, 13, 17 } :
+                n < 3825123056546413051 ? new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23 } :
+                /*n < 318665857834031151167461*/ new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37 };
 
-            // Perform BASE 2 Rabin-Miller Test
+            return tests.All(a => IsStrongPseudoprime(n, a));
+        }
 
-            // calculate values of s and t
+
+        public static bool IsStrongPseudoprime(BigInteger n, BigInteger a)
+        {
+            BigInteger d = n - 1;
             int s = 0;
 
-            BigInteger t = thisVal - 1;
-            while ((t & 0x01) == 0)     //TODO: This could be implemented more efficient
-            {
-                t = t >> 1;
+            while ((d & 1) == 0) {
+                d >>= 1;
                 s++;
             }
 
-            BigInteger a = 2;
+            BigInteger t = BigInteger.ModPow(a, d, n);
+            if (t == 1) return true;
 
-            // b = a^t mod p
-            BigInteger b = BigInteger.ModPow(a, t, thisVal);
-
-            if (b == 1)         // a^t mod p = 1
-                return true;
-
-            BigInteger p_sub1 = thisVal - 1;
-            for (int j = 0; j < s; j++)
-            {
-                if (b == p_sub1)         // a^((2^j)*t) mod p = p-1 for some 0 <= j <= s-1
-                    return true;
-
-                b = (b * b) % thisVal;
+            while (s > 0) {
+                if (t == n - 1) return true;
+                t = BigInteger.ModPow(t, 2, n);
+                s--;
             }
-
-            /*  TODO: Implement this:
-            // if number is strong pseudoprime to base 2, then do a strong lucas test
-            if (result)
-                result = LucasStrongTestHelper(thisVal);
-            */
 
             return false;
         }
