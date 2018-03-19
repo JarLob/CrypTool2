@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Next Smaller Prime Number</title>
+  <summary lang="en">Find the next smaller prime number</summary>
+  <description lang="en">This template searches for the biggest prime number that is smaller or equal to a given number using a loop.</description>
+  <keywords>prime, composite, primality</keywords>
+
+  <title lang="de">Nächstkleinere Primzahl</title>
+  <summary lang="de">Findet die nächstkleinere Primzahl</summary>
+  <description lang="de">Diese Vorlage sucht in einer Schleife die größte Primzahl, die kleiner oder gleich einer gegebenen Zahl ist.</description>
+  <keywords lang="de">Primzahl, zusammengesetzt</keywords>
+
+  <icon file="Factorization.png" />
+
+  <relevantPlugins>
+    <plugin name="BooleanOutput" />
+    <plugin name="PrimeTest" />
+    <plugin name="Gate" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Number Input$" value="Zahleneingabe"/>
+    <replacement key="$PrimeTest$" value="Primzahltest"/>
+    <replacement key="$Is Prime?$" value="Ist prim?"/>
+    <replacement key="$Next smaller prime$" value="Nächstkleinere Primzahl"/>
+	 <replacement key="$Step Size$" value="Schrittweite"/>
+	 <replacement key="$memo$" value="Die in der Komponente &quot;Zahleneingabe&quot; gegebene Zahl wird in einer Schleife solange heruntergezählt, bis eine Primzahl gefunden wurde. Sie können die Schrittweite auf 1 abändern, um die nächstgrößere Primzahl zu suchen."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Number Input$" value="Number Input"/>
+    <replacement key="$PrimeTest$" value="PrimeTest"/>
+    <replacement key="$Is Prime?$" value="Is Prime?"/>
+    <replacement key="$Next smaller prime$" value="Next smaller prime"/>
+	 <replacement key="$Step Size$" value="Step Size"/>
+	 <replacement key="$memo$" value="The number given in the &quot;Number Input&quot; component is decreased in a loop until a prime number is found. You can change the step size to 1 to search for the next bigger prime number."/>
+  </replacements>
+
+</sample>
