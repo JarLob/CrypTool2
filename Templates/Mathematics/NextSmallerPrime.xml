@@ -25,6 +25,8 @@
     <replacement key="$Is Prime?$" value="Ist prim?"/>
     <replacement key="$Next smaller prime$" value="Nächstkleinere Primzahl"/>
 	 <replacement key="$Step Size$" value="Schrittweite"/>
+	 <replacement key="$Difference$" value="Differenz"/>
+	 <replacement key="$Subtraction$" value="Subtraktion"/>
 	 <replacement key="$memo$" value="Die in der Komponente &quot;Zahleneingabe&quot; gegebene Zahl wird in einer Schleife solange heruntergezählt, bis eine Primzahl gefunden wurde. Sie können die Schrittweite auf 1 abändern, um die nächstgrößere Primzahl zu suchen."/>
   </replacements>
   <replacements lang="en">
@@ -33,6 +35,8 @@
     <replacement key="$Is Prime?$" value="Is Prime?"/>
     <replacement key="$Next smaller prime$" value="Next smaller prime"/>
 	 <replacement key="$Step Size$" value="Step Size"/>
+	 <replacement key="$Difference$" value="Difference"/>
+	 <replacement key="$Subtraction$" value="Subtraction"/>
 	 <replacement key="$memo$" value="The number given in the &quot;Number Input&quot; component is decreased in a loop until a prime number is found. You can change the step size to 1 to search for the next bigger prime number."/>
   </replacements>
 
