@@ -97,7 +97,61 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current analyzed offset ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
+        /// </summary>
+        internal static string Copy_all {
+            get {
+                return ResourceManager.GetString("Copy_all", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy key ähnelt.
+        /// </summary>
+        internal static string Copy_key {
+            get {
+                return ResourceManager.GetString("Copy_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy key phrase ähnelt.
+        /// </summary>
+        internal static string Copy_keyphrase {
+            get {
+                return ResourceManager.GetString("Copy_keyphrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy selected line ähnelt.
+        /// </summary>
+        internal static string Copy_line {
+            get {
+                return ResourceManager.GetString("Copy_line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy text ähnelt.
+        /// </summary>
+        internal static string Copy_text {
+            get {
+                return ResourceManager.GetString("Copy_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copy value ähnelt.
+        /// </summary>
+        internal static string Copy_value {
+            get {
+                return ResourceManager.GetString("Copy_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current analyzed offset: ähnelt.
         /// </summary>
         internal static string CurrentAnalysedKeylengthLabel {
             get {
@@ -106,7 +160,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed time: ähnelt.
         /// </summary>
         internal static string ElapsedLabel {
             get {
@@ -115,7 +169,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Estimated end time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Estimated end time: ähnelt.
         /// </summary>
         internal static string EndLabel {
             get {
@@ -142,7 +196,25 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of restarts for hill climbing ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Highscore Beep ähnelt.
+        /// </summary>
+        internal static string HighscoreBeepCaption {
+            get {
+                return ResourceManager.GetString("HighscoreBeepCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Make a sound if a new highscore has been found. Highscores in the first 10 seconds are ignored. ähnelt.
+        /// </summary>
+        internal static string HighscoreBeepTooltip {
+            get {
+                return ResourceManager.GetString("HighscoreBeepTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of restarts ähnelt.
         /// </summary>
         internal static string HillClimbRestartsCaption {
             get {
@@ -151,7 +223,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Set the number of restarts hill climbing should do for each offset. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set the number of restarts for each offset. ähnelt.
         /// </summary>
         internal static string HillClimbRestartsTooltip {
             get {
@@ -196,7 +268,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Average keys / sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Average keys / sec: ähnelt.
         /// </summary>
         internal static string KeysPerSecondAverageLabel {
             get {
@@ -205,11 +277,29 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current keys / sec ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current keys / sec: ähnelt.
         /// </summary>
         internal static string KeysPerSecondCurrentLabel {
             get {
                 return ResourceManager.GetString("KeysPerSecondCurrentLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kill counter ähnelt.
+        /// </summary>
+        internal static string KillCounterCaption {
+            get {
+                return ResourceManager.GetString("KillCounterCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die After how many iterations without finding a better value should the search be abandoned? ähnelt.
+        /// </summary>
+        internal static string KillCounterTooltip {
+            get {
+                return ResourceManager.GetString("KillCounterTooltip", resourceCulture);
             }
         }
         
@@ -237,6 +327,15 @@ namespace Cryptool.M138Analyzer.Properties {
         internal static string LanguageList2 {
             get {
                 return ResourceManager.GetString("LanguageList2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Spanish ähnelt.
+        /// </summary>
+        internal static string LanguageList3 {
+            get {
+                return ResourceManager.GetString("LanguageList3", resourceCulture);
             }
         }
         
@@ -295,7 +394,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hill climbing ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Partially known plaintext ähnelt.
         /// </summary>
         internal static string MethodList2 {
             get {
@@ -304,11 +403,20 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Partially known plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hill climbing ähnelt.
         /// </summary>
         internal static string MethodList3 {
             get {
                 return ResourceManager.GetString("MethodList3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Simulated Annealing ähnelt.
+        /// </summary>
+        internal static string MethodList4 {
+            get {
+                return ResourceManager.GetString("MethodList4", resourceCulture);
             }
         }
         
@@ -336,6 +444,15 @@ namespace Cryptool.M138Analyzer.Properties {
         internal static string MinOffsetTooltip {
             get {
                 return ResourceManager.GetString("MinOffsetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Offset ähnelt.
+        /// </summary>
+        internal static string OffsetHeader {
+            get {
+                return ResourceManager.GetString("OffsetHeader", resourceCulture);
             }
         }
         
@@ -376,6 +493,15 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Remaining: ähnelt.
+        /// </summary>
+        internal static string RemainingLabel {
+            get {
+                return ResourceManager.GetString("RemainingLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Resulting plaintext ähnelt.
         /// </summary>
         internal static string ResultTextCaption {
@@ -394,7 +520,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Start time ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start time: ähnelt.
         /// </summary>
         internal static string StartLabel {
             get {

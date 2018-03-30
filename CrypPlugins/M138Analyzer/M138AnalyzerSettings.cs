@@ -21,7 +21,6 @@ using System.Windows;
 
 namespace Cryptool.M138Analyzer
 {
-    // HOWTO: rename class (click name, press F2)
     public class M138AnalyzerSettings : ISettings
     {
         #region Private Variables
@@ -30,14 +29,15 @@ namespace Cryptool.M138Analyzer
         private int _keyLength = 25;
         private int _minOffset = 1;
         private int _maxOffset = 25;
-        private string _retries;
+        private int _retries = 100;
+        private int _killcounter = 1000000;
         private bool _fastConverge = false;
 
         #endregion
 
         #region TaskPane Settings
 
-        [TaskPane("MethodCaption", "MethodTooltip", null, 0, false, ControlType.ComboBox, new string[] { "MethodList1", "MethodList2", "MethodList3" })]
+        [TaskPane("MethodCaption", "MethodTooltip", null, 0, false, ControlType.ComboBox, new string[] { "MethodList1", "MethodList2", "MethodList3", "MethodList4" })]
         public int Method
         {
             get
@@ -49,11 +49,12 @@ namespace Cryptool.M138Analyzer
                 if (_analyticMode != value)
                 {
                     _analyticMode = value;
+                    UpdateTaskPaneVisibility();
                 }
             }
         }
 
-        [TaskPane("LanguageCaption", "LanguageTooltip", null, 4, false, ControlType.ComboBox, new string[] { "LanguageList1", "LanguageList2" })]
+        [TaskPane("LanguageCaption", "LanguageTooltip", null, 4, false, ControlType.LanguageSelector)]
         public int Language
         {
             get
@@ -62,14 +63,11 @@ namespace Cryptool.M138Analyzer
             }
             set
             {
-                if (_language != value)
-                {
-                    _language = value;
-                }
+                _language = value;
             }
         }
 
-        [TaskPane("KeyLengthCaption", "KeyLengthTooltip", null, 1, false, ControlType.TextBox)]
+        [TaskPane("KeyLengthCaption", "KeyLengthTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000000)]
         public int KeyLengthUserSelection
         {
             get
@@ -78,14 +76,11 @@ namespace Cryptool.M138Analyzer
             }
             set
             {
-                if (_keyLength != value)
-                {
-                    _keyLength = value;
-                }
+                _keyLength = value;
             }
         }
 
-        [TaskPane("MinOffsetCaption", "MinOffsetTooltip", null, 2, false, ControlType.TextBox)]
+        [TaskPane("MinOffsetCaption", "MinOffsetTooltip", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, 10000000)]
         public int MinOffsetUserSelection
         {
             get
@@ -94,14 +89,11 @@ namespace Cryptool.M138Analyzer
             }
             set
             {
-                if (_minOffset != value)
-                {
-                    _minOffset = value;
-                }
+                _minOffset = value;
             }
         }
 
-        [TaskPane("MaxOffsetCaption", "MaxOffsetTooltip", null, 3, false, ControlType.TextBox)]
+        [TaskPane("MaxOffsetCaption", "MaxOffsetTooltip", null, 3, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, 10000000)]
         public int MaxOffsetUserSelection
         {
             get
@@ -110,15 +102,12 @@ namespace Cryptool.M138Analyzer
             }
             set
             {
-                if (_maxOffset != value)
-                {
-                    _maxOffset = value;
-                }
+                _maxOffset = value;
             }
         }
 
-        [TaskPane("HillClimbRestartsCaption", "HillClimbRestartsTooltip", null, 5, false, ControlType.TextBox)]
-        public string HillClimbRestarts
+        [TaskPane("HillClimbRestartsCaption", "HillClimbRestartsTooltip", null, 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000000)]
+        public int HillClimbRestarts
         {
             get
             {
@@ -126,68 +115,89 @@ namespace Cryptool.M138Analyzer
             }
             set
             {
-                if (_retries != value)
-                {
-                    _retries = value;
-                }
+                _retries = value;
             }
         }
 
         [TaskPane("FastConvergeCaption", "FastConvergeTooltip", null, 6, false, ControlType.CheckBox)]
         public bool FastConverge
         {
+            get; set;
+        }
+
+        [TaskPane("KillCounterCaption", "KillCounterTooltip", null, 7, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, 10000000)]
+        public int KillCounter
+        {
             get
             {
-                return _fastConverge;
+                return _killcounter;
             }
             set
             {
-                if (_fastConverge != value)
-                {
-                    _fastConverge = value;
-                }
+                _killcounter = value;
             }
+        }
+
+        [TaskPane("HighscoreBeepCaption", "HighscoreBeepTooltip", null, 8, true, ControlType.CheckBox)]
+        public bool HighscoreBeep
+        {
+            get; set;
         }
 
         #endregion
 
         #region Events
+
         public void UpdateTaskPaneVisibility()
         {
-            if (_analyticMode == 0)
+            switch (_analyticMode)
             {
-                //Known Plaintext
-                SettingChanged("LanguageSelection", Visibility.Hidden);
-                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
-                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
-                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
-                SettingChanged("HillClimbRestarts", Visibility.Hidden);
-                SettingChanged("FastConverge", Visibility.Hidden);
-            }
-            else if(_analyticMode == 1)
-            {
-                //Hill Climbing
-                SettingChanged("LanguageSelection", Visibility.Visible);
-                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
-                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
-                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
-                SettingChanged("HillClimbRestarts", Visibility.Visible);
-                SettingChanged("FastConverge", Visibility.Visible);
-            }
-            else if (_analyticMode == 2)
-            {
-                SettingChanged("LanguageSelection", Visibility.Visible);
-                SettingChanged("KeyLengthUserSelection", Visibility.Visible);
-                SettingChanged("MinOffsetUserSelection", Visibility.Visible);
-                SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
-                SettingChanged("HillClimbRestarts", Visibility.Visible);
-                SettingChanged("FastConverge", Visibility.Visible);
-            }
-            else
-            {
-                //Nope, this should not be possible
+                case 0: // Known Plaintext
+                    SettingChanged("Language", Visibility.Collapsed);
+                    SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                    SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("HillClimbRestarts", Visibility.Collapsed);
+                    SettingChanged("FastConverge", Visibility.Collapsed);
+                    SettingChanged("KillCounter", Visibility.Collapsed);
+                    SettingChanged("HighscoreBeep", Visibility.Collapsed);
+                    break;
+                    
+                case 1: // Partially Known Plaintext
+                    SettingChanged("Language", Visibility.Visible);
+                    SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                    SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("HillClimbRestarts", Visibility.Visible);
+                    SettingChanged("FastConverge", Visibility.Visible);
+                    SettingChanged("KillCounter", Visibility.Collapsed);
+                    SettingChanged("HighscoreBeep", Visibility.Collapsed);
+                    break;
+
+                case 2: // Hill Climbing
+                    SettingChanged("Language", Visibility.Visible);
+                    SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                    SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("HillClimbRestarts", Visibility.Visible);
+                    SettingChanged("FastConverge", Visibility.Visible);
+                    SettingChanged("KillCounter", Visibility.Collapsed);
+                    SettingChanged("HighscoreBeep", Visibility.Visible);
+                    break;
+
+                case 3: // Simulated Annealing
+                    SettingChanged("Language", Visibility.Visible);
+                    SettingChanged("KeyLengthUserSelection", Visibility.Visible);
+                    SettingChanged("MinOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("MaxOffsetUserSelection", Visibility.Visible);
+                    SettingChanged("HillClimbRestarts", Visibility.Visible);
+                    SettingChanged("FastConverge", Visibility.Collapsed);
+                    SettingChanged("KillCounter", Visibility.Visible);
+                    SettingChanged("HighscoreBeep", Visibility.Visible);
+                    break;
             }
         }
+
         private void SettingChanged(string setting, Visibility vis)
         {
             if (TaskPaneAttributeChanged != null)

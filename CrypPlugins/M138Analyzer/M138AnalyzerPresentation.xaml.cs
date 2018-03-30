@@ -23,16 +23,15 @@ namespace Cryptool.M138Analyzer
     public partial class M138AnalyzerPresentation : UserControl
     {
         public ObservableCollection<ResultEntry> BestList = new ObservableCollection<ResultEntry>();
+        public event EventHandler doppelClick;
 
         public M138AnalyzerPresentation()
         {
             InitializeComponent();
         }
-
-
+        
         public void ContextMenuHandler(Object sender, EventArgs eventArgs)
         {
-            /*
             try
             {
                 MenuItem menu = (MenuItem)((RoutedEventArgs)eventArgs).Source;
@@ -42,7 +41,7 @@ namespace Cryptool.M138Analyzer
 
                 if (tag == "copy_text")
                 {
-                    Clipboard.SetText(removeNuls(entry.Text));
+                    Clipboard.SetText(entry.Text);
                 }
                 else if (tag == "copy_value")
                 {
@@ -66,7 +65,20 @@ namespace Cryptool.M138Analyzer
             catch (Exception ex)
             {
                 Clipboard.SetText("");
-            } */
+            }
+        }
+
+        string entryToText(ResultEntry entry)
+        {
+            return "Rank: " + entry.Ranking + "\n" +
+                   "Value: " + entry.Value + "\n" +
+                   "Key: " + entry.Key + "\n" +
+                   "Text: " + entry.Text;
+        }
+
+        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        {
+            doppelClick(sender, eventArgs);
         }
     }
 }

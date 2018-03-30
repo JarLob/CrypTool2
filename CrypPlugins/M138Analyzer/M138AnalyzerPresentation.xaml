@@ -62,22 +62,18 @@
 
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
-                                <!--
-                                <MenuItem Header="{x:Static properties:Resources.Copy_value}" Tag="copy_value" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_key}" Tag="copy_key" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_text}" Tag="copy_text" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                <MenuItem Header="{x:Static properties:Resources.Copy_all}" Tag="copy_all" CommandParameter="{Binding}" Click="ContextMenuHandler" />
-                                -->
+                                <MenuItem Header="{Loc Copy_value}" Tag="copy_value" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="{Loc Copy_key}" Tag="copy_key" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="{Loc Copy_text}" Tag="copy_text" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="{Loc Copy_line}" Tag="copy_line" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="{Loc Copy_all}" Tag="copy_all" CommandParameter="{Binding}" Click="ContextMenuHandler" />
                             </ContextMenu>
                         </ListView.Resources>
 
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
-                                <!--
-                                <EventSetter Event= "MouseDoubleClick" Handler="HandleDoubleClick" />
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"/>
-                                -->
+                                <EventSetter Event= "MouseDoubleClick" Handler="HandleDoubleClick" />
                             </Style>
                         </ListView.ItemContainerStyle>
 
@@ -98,6 +94,13 @@
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
                                 <GridViewColumn Header="{Loc KeyHeader}" DisplayMemberBinding="{Binding Path=Key}" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="{Loc OffsetHeader}" DisplayMemberBinding="{Binding Path=Offset}" Width="30">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label/>

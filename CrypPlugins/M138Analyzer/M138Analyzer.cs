@@ -22,10 +22,12 @@ using System.IO;
 using System.Text;
 using System;
 using Cryptool.PluginBase.IO;
+using Cryptool.PluginBase.Utils;
 using System.Windows.Threading;
 using System.Threading;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Media;
 
 
 namespace Cryptool.M138Analyzer
@@ -38,37 +40,43 @@ namespace Cryptool.M138Analyzer
         #region Private Variables
 
         private List<int[]> StripList = new List<int[]>(); //Store used strips
+        List<int[]> invStripList;
         private int QUADGRAMMULTIPLIER = 3;
         private int TRIGRAMMULTIPLIER = 1;
         private int DIVISOR = 4;
         private List<int[]> BestKeyList = new List<int[]>();
-        private List<double> BestKeyValues = new List<double>();
         private List<int> KeyOffsetList = new List<int>();
         private List<string> BestListToVisualize = new List<string>();
         private int BestListLength = 20;
-        private double[, ,] Trigrams;
-        private double[, , ,] Quadgrams;
+
         private bool _isStopped = true;
         private DateTime _startTime;
-        private DateTime _endTime;
-        private int _selectedLanguage = 0;
+        private DateTime _lastbeeptime;
         private int MinOffsetUserSelect;
         private int MaxOffsetUserSelect;
         private double KeysPerSecondCurrent = 0;
         private double KeysPerSecondAverage = 0;
-        private double AverageTimePerRestart = 0;
         private bool fastConverge = false;
-        double[] unigrams;
 
         private readonly M138AnalyzerSettings settings = new M138AnalyzerSettings();
         private int Attack = 0; //What attack whould be used
-        private string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        private UniGrams Unigrams;
+        private TriGrams Trigrams;
+        private QuadGrams Quadgrams;
+        private PentaGrams Pentagrams;
+
+        private string StripAlphabet;   // alphabet used by the strips
+        private string Alphabet;        // alphabet used by the chosen language, StripAlphabet may not use characters that are not contained in Alphabet
+
+        Dictionary<char, int> Char2Num;
         private int[] CiphertextNumbers;
         private int[] PlaintextNumbers;
         private int KeyLength = 25; //Default key for M138
-        private int RetryCounter;
-        private int MaxRetriesNecesary;
+        //private int MaxRetriesNecessary;
         private double BestCostValueOfAllKeys = double.MinValue;
+        private int progressCounter, progressMax;
+        
 
         private M138AnalyzerPresentation _presentation = new M138AnalyzerPresentation();
         #endregion
@@ -78,6 +86,7 @@ namespace Cryptool.M138Analyzer
             settings = new M138AnalyzerSettings();
             settings.UpdateTaskPaneVisibility();
             settings.PropertyChanged += new PropertyChangedEventHandler(settings_PropertyChanged);
+            _presentation.doppelClick += new EventHandler(this.doppelClick);
         }
         #endregion
 
@@ -140,6 +149,22 @@ namespace Cryptool.M138Analyzer
             get { return _presentation; }
         }
 
+        private void doppelClick(object sender, EventArgs e)
+        {
+            try
+            {
+                ListViewItem lvi = sender as ListViewItem;
+                ResultEntry rse = lvi.Content as ResultEntry;
+                CalculatedKey = rse.Key;
+                ResultText = rse.Text;
+                OnPropertyChanged("CalculatedKey");
+                OnPropertyChanged("ResultText");
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         /// <summary>
         /// Called once when workflow execution starts.
         /// </summary>
@@ -152,9 +177,62 @@ namespace Cryptool.M138Analyzer
         /// </summary>
         public void Execute()
         {
-            StripList = string.IsNullOrEmpty(Strips) ? LoadStripes(Alphabet) : SetStripes(Strips, Alphabet);
+            //System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 
-            ProgressChanged(0, 1);
+            //int[] ns = new int[1000];
+            //int[] nd = new int[1000];
+
+            //sw.Start();
+            //for (int i = 0; i < 1000000; i++)
+            //{
+            //    for (int j = 0; j < 1000; j++)
+            //    {
+            //        nd[j] = ns[j];
+            //    }
+            //}
+            //sw.Stop();
+            //GuiLogMessage(sw.Elapsed.ToString(), NotificationLevel.Info);
+            //sw.Reset();
+            //sw.Start();
+            //for (int i = 0; i < 1000000; i++)
+            //{
+            //    Array.Copy(ns, nd, 1000);
+            //}
+            //sw.Stop();
+            //GuiLogMessage(sw.Elapsed.ToString(), NotificationLevel.Info);
+
+            int _restartNtimes;
+            ResultEntry re;
+            int[] _tmpKey;
+
+            setLanguage();
+
+            List<string> strips = SetStrips(string.IsNullOrEmpty(Strips) ? LoadStrips() : Strips);
+            if (!CheckStrips(strips)) return;
+            Char2Num = Enumerable.Range(0, Alphabet.Length).ToDictionary(i => Alphabet[i]);
+            StripList = strips.Select(s => MapTextIntoNumberSpace(s)).ToList();
+            
+            //Dictionary<string, double> ddd = new Dictionary<string, double>();
+            //for (int i = 0; i < 26; i++)
+            //    for (int j = 0; j < 26; j++)
+            //        for (int k = 0; k < 26; k++)
+            //            for (int l = 0; l < 26; l++)
+            //            {
+            //            string s = new string(new char[] { Alphabet[i], Alphabet[j], Alphabet[k], Alphabet[l] });
+            //            ddd.Add(s, Quadgrams[i, j, k, l]);
+            //        }
+            //List<string> od = ddd.Keys.OrderByDescending(k => ddd[k]).Select(k => k + " " + ddd[k].ToString()).ToList();
+            //List<string> oa = ddd.Keys.OrderBy(k => ddd[k]).Select(k => k + " " + ddd[k].ToString()).ToList();
+
+            invStripList = StripList.Select(s => {
+                var inv = new int[Alphabet.Length];
+                for (int i = 0; i < s.Length; i++) inv[i] = -1;
+                for (int i = 0; i < s.Length; i++) inv[s[i]] = i;
+                return inv;
+            }).ToList();
+            
+            var _estimatedEndTime = DateTime.Now;
+
             _isStopped = false;
 
             // Clear presentation
@@ -168,317 +246,166 @@ namespace Cryptool.M138Analyzer
             
             switch (Attack)
             {
-                case 0: //Known Plaintext
+                #region Known Plaintext
+                case 0: // Known Plaintext
                     if (String.IsNullOrEmpty(Ciphertext) || String.IsNullOrEmpty(Plaintext))
                     {
                         GuiLogMessage("Please provide Ciphertext and Plaintext to perform a known plaintext attack", NotificationLevel.Error);
                         return;
                     }
 
-                    Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), Alphabet);
-                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet);
-                    if (Plaintext.Length != Ciphertext.Length)
-                    {
-                        if (Plaintext.Length > Ciphertext.Length)
-                        {
-                            Plaintext.Remove(Ciphertext.Length);
-                        }
-                        else
-                        {
-                            Ciphertext.Remove(Plaintext.Length);
-                        }
-                    } //Ciphertext and Plaintext have the same length
-                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-                    PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
-                    int _textLength = Plaintext.Length;
-                    List<int> _listOfOffsets = new List<int>();
-                    List<List<int>> _keysForOffset = new List<List<int>>();
-                    List<List<int>> _allKeys = new List<List<int>>();
-                    List<string> _allKeysReadable = new List<string>();
-                    int _numberOfKeysForThisOffset;
+                    Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), StripAlphabet);
+                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), StripAlphabet);
+
+                    //assert that Ciphertext and Plaintext have the same length
+                    if (Plaintext.Length > Ciphertext.Length)
+                        Plaintext.Remove(Ciphertext.Length);
+                    else if (Plaintext.Length < Ciphertext.Length)
+                        Ciphertext.Remove(Plaintext.Length);
+                    
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
+                    PlaintextNumbers = MapTextIntoNumberSpace(Plaintext);
+
+                    double _costValue1 = Quadgrams.CalculateCost(PlaintextNumbers);
+
                     //Call Known Plaintext Attack
                     //TextLength should be at least 25
-                    StringBuilder AllPossibleKeysAsString = new StringBuilder();
-                    var _estimatedEndTime = DateTime.Now;
+                    List<string> AllPossibleKeysAsString = new List<string>();
+
                     UpdateDisplayStart();
                     var _globalStartTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Go Over Keylength (Try all possible offsets)
+
+                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++) //Go Over Keylength (Try all possible offsets)
                     {
                         var _startTime = DateTime.Now;
-                        ProgressChanged(i, MaxOffsetUserSelect + 1);
-                        _keysForOffset = KnownPlaintextAttack(i, _textLength, StripList.Count, StripList[0].Length);
+
+                        var _keysForOffset = KnownPlaintextAttack(offset, Plaintext.Length, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset
                         {
-                            StringBuilder sb = new StringBuilder();
-                            //sb.Append("Key for Offset " + i + ": ");
-                            int _cachedKeyLength = _keysForOffset.Count;
-                            for (int _keyLocation = 0; _keyLocation < _cachedKeyLength; _keyLocation++)
-                            {
-                                if (_keysForOffset[_keyLocation].Count > 1)
-                                {
-                                    sb.Append("[");
-                                }
-                                sb.Append(string.Join("|", _keysForOffset[_keyLocation].ToArray()));
-                                if (_keysForOffset[_keyLocation].Count > 1)
-                                {
-                                    sb.Append("]");
-                                }
-                                if (_keyLocation != _cachedKeyLength - 1)
-                                {
-                                    sb.Append(",");
-                                }
-                                else
-                                {
-                                    sb.Append(" / " + i);
-                                    sb.Append("\n");
-                                }
-                            }
-                            AddNewBestListEntryKnownPlaintext(sb.ToString().Split('/')[0], i);
-                            AllPossibleKeysAsString.Append(sb);
+                            string s = string.Join(", ", _keysForOffset.Select(k => (k.Count > 1) ? "[" + string.Join("|", k) + "]" : k[0].ToString()));
+                            //AddNewBestListEntry()
+                            AddNewBestListEntryKnownPlaintext(s, _costValue1, offset);
+                            AllPossibleKeysAsString.Add(s + " / " + offset);
                         }
-                        var _endTime = DateTime.Now;
-                        var _elapsedTime = _endTime - _startTime;
-                        _estimatedEndTime = _globalStartTime.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
-                        UpdateDisplayEnd(i, _estimatedEndTime);
+
+                        var _elapsedTime = DateTime.Now - _startTime;
+                        _estimatedEndTime = _globalStartTime.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - offset));
+
+                        UpdateDisplayEnd(offset, _estimatedEndTime);
+                        ProgressChanged(offset - MinOffsetUserSelect + 1, MaxOffsetUserSelect - MinOffsetUserSelect + 1);
                     }
+
+                    CalculatedKey = string.Join(Environment.NewLine, AllPossibleKeysAsString);
                     ResultText = Plaintext;
-                    OnPropertyChanged("ResultText");
-                    CalculatedKey = AllPossibleKeysAsString.ToString();
-                    OnPropertyChanged("CalculatedKey");
-                    break;
-
-                case 1: //Hill Climbing
-                    if (String.IsNullOrEmpty(Ciphertext))
-                    {
-                        GuiLogMessage("Please provide a ciphertext to perform Hill Climbing", NotificationLevel.Error);
-                        return;
-                    }
-                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-                    RetryCounter = 0;
-                    _selectedLanguage = settings.Language;
-
-                    int _restartNtimes;
-                    int _tmpTextLength = CiphertextNumbers.Length;
-                    for (int _i = 0; _i < BestListLength; _i++)
-                    {
-                        BestKeyValues.Add(Double.MinValue); //Fill List where Cost Values will be saved with minimum values
-                    }
-
-                    if (_tmpTextLength < 100) //0-99, focus on trigrams
-                    {
-                        _restartNtimes = 35;
-                        TRIGRAMMULTIPLIER = 4;
-                        QUADGRAMMULTIPLIER = 1;
-                        DIVISOR = 5;
-                    }
-                    else if (_tmpTextLength < 200) //100-199, evenly use tri- and quadgrams
-                    {
-                        _restartNtimes = 25;
-                        TRIGRAMMULTIPLIER = 3;
-                        QUADGRAMMULTIPLIER = 4;
-                        DIVISOR = 7;
-                    }
-                    else if (_tmpTextLength < 300) //200-299 focus more on quadgrams
-                    {
-                        _restartNtimes = 17;
-                        TRIGRAMMULTIPLIER = 2;
-                        QUADGRAMMULTIPLIER = 4;
-                        DIVISOR = 6;
-                    }
-                    else
-                    { // >=300 Use mainly quadgrams
-                        _restartNtimes = 10;
-                        TRIGRAMMULTIPLIER = 2;
-                        QUADGRAMMULTIPLIER = 6;
-                        DIVISOR = 8;
-                    }
-                    switch (_selectedLanguage)
-                    {
-                        case 0: //English
-                            Trigrams = Load3Grams(Alphabet);
-                            Quadgrams = Load4Grams(Alphabet);
-                            unigrams = new double[] { 0.08167, 0.01492, 0.02781, 0.04253, 0.12701, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978, 0.02306, 0.0015, 0.01974, 0.00074 };
-                            //Occurance of letters in english language. Source: Wikipedia
-                            //http://de.wikipedia.org/wiki/Buchstabenhäufigkeit
-                            break;
-                        case 1: //German
-                            Quadgrams = LoadGerman4Grams(Alphabet);
-                            TRIGRAMMULTIPLIER = 0;
-                            QUADGRAMMULTIPLIER = 1;
-                            unigrams = new double[] { 0.0651, 0.0189, 0.0306, 0.0508, 0.174, 0.0166, 0.0301, 0.0476, 0.0755, 0.0027, 0.0121, 0.0344, 0.0253, 0.0978, 0.0251, 0.0079, 0.0002, 0.07, 0.0727, 0.0615, 0.0435, 0.0067, 0.0189, 0.0003, 0.0004, 0.0113 };
-                            //Occurance of letters in german language. Source: Wikipedia
-                            DIVISOR = 1;
-                            break;
-                    }
-
-                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts))
-                    {
-                        _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
-                    }
-                    int len = Alphabet.Length; //Length of a strip equals Alphabet Length (By Definition)
-                    MaxRetriesNecesary = _restartNtimes * len;
-
-                    UpdateDisplayStart();
-
-                    _estimatedEndTime = DateTime.Now;
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++)
-                    {
-                        var _startTime = DateTime.Now;
-                        UpdateDisplayEnd(i, _estimatedEndTime);
-                        HillClimb(CiphertextNumbers, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge);
-                        if (_isStopped)
-                        {
-                            return;
-                        }
-                        var _endTime = DateTime.Now;
-                        var _elapsedTime = _endTime - _startTime;
-                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - i));
-                        UpdateDisplayEnd(i, _estimatedEndTime);
-                    }
-                    ResultEntry re = _presentation.BestList.First();
-                    UpdateDisplayEnd(re.Offset, DateTime.Now);
-                    string _tmpKeyStrips = re.Key.Split('/')[0];
-                    int[] _tmpKey = _tmpKeyStrips.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
-                    CalculatedKey = re.Key;
-                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey, re.Offset, StripList), Alphabet);
                     OnPropertyChanged("CalculatedKey");
                     OnPropertyChanged("ResultText");
                     break;
-
-                case 2: //Partially Known Plaintext
+                #endregion
+                #region Partially Known Plaintext
+                case 1: // Partially Known Plaintext
                     if (String.IsNullOrEmpty(Plaintext))
                     {
                         GuiLogMessage("Please provide a Plaintext for a Partially Known Plaintext attack", NotificationLevel.Error);
                         return;
                     }
-                    else
-                    {
-                        PlaintextNumbers = MapTextIntoNumberSpace(Plaintext, Alphabet);
-                    }
-                    int _lengthOfPlaintext = PlaintextNumbers.Length;
+                    
                     if (String.IsNullOrEmpty(Ciphertext))
                     {
                         GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
                         return;
                     }
-                    if (Ciphertext.Length < _lengthOfPlaintext)
+                    
+                    if (Ciphertext.Length < Plaintext.Length)
                     {
                         GuiLogMessage("For a partially-known plaintext attack, the length of the known ciphertext needs to be larger than the length of the known plaintext. Otherwise, please perform a known-plaintext attack", NotificationLevel.Error);
                         return;
                     }
-                    CiphertextNumbers = new int[_lengthOfPlaintext];
-                    int[] _tmpCipherText = MapTextIntoNumberSpace(Ciphertext, Alphabet);
-                    for (int i = 0; i < _lengthOfPlaintext; i++)
-                    {
-                        CiphertextNumbers[i] = _tmpCipherText[i];
-                    }
 
-                    _tmpTextLength = _tmpCipherText.Length;
-
-                    if (_tmpTextLength < 100) //0-99, focus on trigrams
+                    Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), Alphabet);
+                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), Alphabet);
+                    PlaintextNumbers = MapTextIntoNumberSpace(Plaintext);
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
+                    
+                    if (CiphertextNumbers.Length < 100) //0-99, focus on trigrams
                     {
                         _restartNtimes = 35;
                         TRIGRAMMULTIPLIER = 4;
                         QUADGRAMMULTIPLIER = 1;
-                        DIVISOR = 5;
                     }
-                    else if (_tmpTextLength < 200) //100-199, evenly use tri- and quadgrams
+                    else if (CiphertextNumbers.Length < 200) //100-199, evenly use tri- and quadgrams
                     {
                         _restartNtimes = 25;
                         TRIGRAMMULTIPLIER = 3;
                         QUADGRAMMULTIPLIER = 3;
-                        DIVISOR = 6;
                     }
-                    else if (_tmpTextLength < 300) //200-299 focus more on quadgrams
+                    else if (CiphertextNumbers.Length < 300) //200-299 focus more on quadgrams
                     {
                         _restartNtimes = 17;
                         TRIGRAMMULTIPLIER = 2;
                         QUADGRAMMULTIPLIER = 4;
-                        DIVISOR = 6;
                     }
                     else
                     { // >=300 Use mainly quadgrams
                         _restartNtimes = 10;
                         TRIGRAMMULTIPLIER = 1;
                         QUADGRAMMULTIPLIER = 6;
-                        DIVISOR = 7;
                     }
-                    switch (_selectedLanguage)
-                    {
-                        case 0: //English
-                            Trigrams = Load3Grams(Alphabet);
-                            Quadgrams = Load4Grams(Alphabet);
-                            unigrams = new double[] { 0.08167, 0.01492, 0.02781, 0.04253, 0.12701, 0.02228, 0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025, 0.02406, 0.06749, 0.07507, 0.01929, 0.00095, 0.05987, 0.06327, 0.09056, 0.02758, 0.00978, 0.02306, 0.0015, 0.01974, 0.00074 };
-                            //Occurance of letters in english language. Source: Wikipedia
-                            //http://de.wikipedia.org/wiki/Buchstabenhäufigkeit
-                            break;
-                        case 1: //German
-                            Quadgrams = LoadGerman4Grams(Alphabet);
-                            TRIGRAMMULTIPLIER = 0;
-                            QUADGRAMMULTIPLIER = 1;
-                            DIVISOR = 1;
-                            unigrams = new double[] { 0.0651, 0.0189, 0.0306, 0.0508, 0.174, 0.0166, 0.0301, 0.0476, 0.0755, 0.0027, 0.0121, 0.0344, 0.0253, 0.0978, 0.0251, 0.0079, 0.0002, 0.07, 0.0727, 0.0615, 0.0435, 0.0067, 0.0189, 0.0003, 0.0004, 0.0113 };
-                            //Occurance of letters in german language. Source: Wikipedia
-                            break;
-                    }
+                    DIVISOR = TRIGRAMMULTIPLIER + QUADGRAMMULTIPLIER;
 
-                    if (!String.IsNullOrEmpty(settings.HillClimbRestarts))
-                    {
-                        _restartNtimes = Convert.ToInt32(settings.HillClimbRestarts);
-                    }
+                    _restartNtimes = settings.HillClimbRestarts;
+
+                    progressCounter = 0;
+                    progressMax = MaxOffsetUserSelect - MinOffsetUserSelect + 1;
 
                     UpdateDisplayStart();
-                    for (int i = MinOffsetUserSelect; i < MaxOffsetUserSelect + 1; i++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
+
+                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
                     {
                         var _startTime = DateTime.Now;
-                        int countOnlyOne = 0;
-                        ProgressChanged(i, MaxOffsetUserSelect + 1);
-                        _keysForOffset = KnownPlaintextAttack(i, _lengthOfPlaintext, StripList.Count, StripList[0].Length);
+                        var _keysForOffset = KnownPlaintextAttack(offset, PlaintextNumbers.Length, StripList.Count, StripList[0].Length);
                         if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
                         {
+                            int countOnlyOne = 0;
                             int _numPosKeys = 1;
                             foreach (List<int> l in _keysForOffset)
                             {
-                                _numPosKeys = _numPosKeys * l.Count;
-                                if (l.Count == 1)
-                                {
-                                    countOnlyOne++;
-                                }
+                                _numPosKeys *= l.Count;
+                                if (l.Count == 1) countOnlyOne++;
                             }
-                            if (_numPosKeys > 100000 || _numPosKeys < 0)
+
+                            if (_numPosKeys > 100000)
                             {
                                 //Go through Keylist. Eliminate largest List, Remove from List of fixed locations. Check whether still more than 1000 possibilities.
                                 //if yes, delete next
                                 //if no, repeat
                                 //too much to do hill climbing on every possible key
-                                if (countOnlyOne > 10)
+                                if (countOnlyOne <= 10)
                                 {
-                                    int[] _tempKey = new int[KeyLength];
-                                    int[] _fixesPositions = new int[KeyLength];
-                                    int _i = 0;
-                                    foreach (List<int> l in _keysForOffset)
-                                    {
-                                        if (l.Count == 1)
-                                        {
-                                            _tempKey[_i] = l[0];
-                                            _fixesPositions[_i] = 1;
-                                        }
-                                        else
-                                        {
-                                            _tempKey[_i] = 0;
-                                            _fixesPositions[_i] = 0;
-                                        }
-                                        _i++;
-                                    }
-                                    HillClimb(_tmpCipherText, KeyLength, i, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge, _tempKey, _fixesPositions);
-                                }
-                                else
-                                {
-                                    GuiLogMessage("Too many possible keys found. Handling not yet implemented, please try a Ciphertext-Only Attack", NotificationLevel.Error);
+                                    GuiLogMessage("Too many possible keys found. Handling not yet implemented, please try a ciphertext-Only attack.", NotificationLevel.Error);
                                     //Not Yet Implemented
                                     return;
                                 }
 
+                                int[] _tempKey = new int[KeyLength];
+                                int[] _fixedPositions = new int[KeyLength];
+
+                                int _i = 0;
+                                foreach (List<int> l in _keysForOffset)
+                                {
+                                    if (l.Count == 1)
+                                    {
+                                        _tempKey[_i] = l[0];
+                                        _fixedPositions[_i] = 1;
+                                    }
+                                    else
+                                    {
+                                        _tempKey[_i] = 0;
+                                        _fixedPositions[_i] = 0;
+                                    }
+                                    _i++;
+                                }
+
+                                HillClimb(CiphertextNumbers, KeyLength, offset, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge, _tempKey, _fixedPositions);
                             }
                             else
                             {
@@ -486,14 +413,18 @@ namespace Cryptool.M138Analyzer
                                 int listLength = _keysForOffset.Count;
                                 int[] counters = new int[listLength];
                                 int[] _tmplistLen = new int[listLength];
+
                                 for (int _tmpCount = 0; _tmpCount < listLength; _tmpCount++)
                                 {
                                     counters[_tmpCount] = 0;
                                     _tmplistLen[_tmpCount] = _keysForOffset[_tmpCount].Count - 1;
                                 }
+
                                 bool increaseNext = false;
                                 for (int _tmpCount = 0; _tmpCount < _numPosKeys; _tmpCount++)
                                 {
+                                    if (_isStopped) return;
+
                                     //Generate all possible keys
                                     int[] _tempKey = new int[KeyLength];
 
@@ -501,15 +432,15 @@ namespace Cryptool.M138Analyzer
                                     {
                                         if (increaseNext)
                                         {
-                                            counters[_tmpCount2]++;
-                                            if (counters[_tmpCount2] > _tmplistLen[_tmpCount2])
+                                            if (counters[_tmpCount2] < _tmplistLen[_tmpCount2])
                                             {
-                                                increaseNext = true;
-                                                counters[_tmpCount2] = 0;
+                                                counters[_tmpCount2]++;
+                                                increaseNext = false;
                                             }
                                             else
                                             {
-                                                increaseNext = false;
+                                                counters[_tmpCount2] = 0;
+                                                increaseNext = true;
                                             }
                                         }
                                         else
@@ -518,37 +449,154 @@ namespace Cryptool.M138Analyzer
                                         }
                                         _tempKey[_tmpCount2] = _keysForOffset[_tmpCount2][counters[_tmpCount2]];
                                     }
-                                    //Create Bestlist
-                                    int[] _plainText = Decrypt(_tmpCipherText, _tempKey, i, StripList);
-                                    double _costValue = ((TRIGRAMMULTIPLIER * CalculateTrigramCost(Trigrams, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(Quadgrams, _plainText))) / DIVISOR;
-                                    AddNewBestListEntry(_tempKey, _costValue, _tmpCipherText, i);
-                                    increaseNext = true;
-                                    var _endTime = DateTime.Now;
-                                    var _elapsedTime = _endTime - _startTime;
-                                    _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - i));
-                                    UpdateDisplayEnd(i, _estimatedEndTime);
 
+                                    //Create Bestlist
+                                    int[] _plainText = Decrypt(CiphertextNumbers, _tempKey, offset, StripList);
+                                    //double _costValue = ((TRIGRAMMULTIPLIER * Trigrams.CalculateCost(_plainText)) + (QUADGRAMMULTIPLIER * Quadgrams.CalculateCost(_plainText))) / DIVISOR;
+                                    double _costValue = Quadgrams.CalculateCost(_plainText);
+                                    //double _costValue = ((TRIGRAMMULTIPLIER * LanguageStatistics.Calculate3GramCost(Trigrams, _plainText)) + (QUADGRAMMULTIPLIER * LanguageStatistics.Calculate4GramCost(Quadgrams, _plainText))) / DIVISOR;
+                                    AddNewBestListEntry(_tempKey, _costValue, CiphertextNumbers, offset);
+                                    increaseNext = true;
+                                    
+                                    var _elapsedTime = DateTime.Now - _startTime;
+                                    _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect + 1 - offset));
+                                    UpdateDisplayEnd(offset, _estimatedEndTime);
+                                    ProgressChanged(_tmpCount, _numPosKeys);
                                 }
 
                             }
                         }
+
                         UpdateDisplayEnd(MaxOffsetUserSelect, DateTime.Now);
+                        ProgressChanged(++progressCounter, progressMax);
                     }
-                    ResultEntry re2 = _presentation.BestList.First();
-                    UpdateDisplayEnd(re2.Offset, DateTime.Now);
-                    string _tmpKeyStrips2 = re2.Key.Split('/')[0];
+
+                    re = _presentation.BestList.First();
+                    UpdateDisplayEnd(re.Offset, DateTime.Now);
+                    string _tmpKeyStrips2 = re.Key.Split('/')[0];
                     int[] _tmpKey2 = _tmpKeyStrips2.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
-                    CalculatedKey = re2.Key;
-                    ResultText = MapNumbersIntoTextSpace(Decrypt(_tmpCipherText, _tmpKey2, re2.Offset, StripList), Alphabet);
+
+                    CalculatedKey = re.Key;
+                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey2, re.Offset, StripList));
                     OnPropertyChanged("CalculatedKey");
                     OnPropertyChanged("ResultText");
                     break;
-                    
-                default:
+                #endregion
+                #region Hill Climbing
+                case 2: // Hill Climbing
+                    if (String.IsNullOrEmpty(Ciphertext))
+                    {
+                        GuiLogMessage("Please provide a ciphertext to perform Hill Climbing", NotificationLevel.Error);
+                        return;
+                    }
+
+                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), StripAlphabet);
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
+
+                    if (CiphertextNumbers.Length < 100) //0-99, focus on trigrams
+                    {
+                        _restartNtimes = 35;
+                        TRIGRAMMULTIPLIER = 4;
+                        QUADGRAMMULTIPLIER = 1;
+                    }
+                    else if (CiphertextNumbers.Length < 200) //100-199, evenly use tri- and quadgrams
+                    {
+                        _restartNtimes = 25;
+                        TRIGRAMMULTIPLIER = 3;
+                        QUADGRAMMULTIPLIER = 4;
+                    }
+                    else if (CiphertextNumbers.Length < 300) //200-299 focus more on quadgrams
+                    {
+                        _restartNtimes = 17;
+                        TRIGRAMMULTIPLIER = 2;
+                        QUADGRAMMULTIPLIER = 4;
+                    }
+                    else
+                    { // >=300 Use mainly quadgrams
+                        _restartNtimes = 10;
+                        TRIGRAMMULTIPLIER = 2;
+                        QUADGRAMMULTIPLIER = 6;
+                    }
+                    DIVISOR = TRIGRAMMULTIPLIER + QUADGRAMMULTIPLIER;
+
+                    _restartNtimes = settings.HillClimbRestarts;
+
+                    UpdateDisplayStart();
+
+                    progressCounter = 0;
+                    progressMax = MaxOffsetUserSelect - MinOffsetUserSelect + 1;
+
+                    _estimatedEndTime = DateTime.Now;
+
+                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++)
+                    {
+                        if (_isStopped) return;
+                        var _startTime = DateTime.Now;
+                        UpdateDisplayEnd(offset, _estimatedEndTime);
+                        HillClimb(CiphertextNumbers, KeyLength, offset, StripList, Alphabet, Trigrams, Quadgrams, _restartNtimes, fastConverge);
+                        var _elapsedTime = DateTime.Now - _startTime;
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - offset));
+
+                        UpdateDisplayEnd(offset, _estimatedEndTime);
+                        ProgressChanged(++progressCounter, progressMax);
+                    }
+
+                    re = _presentation.BestList.First();
+                    UpdateDisplayEnd(re.Offset, DateTime.Now);
+                    _tmpKey = re.Key.Split('/')[0].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+
+                    CalculatedKey = re.Key;
+                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey, re.Offset, StripList));
+                    OnPropertyChanged("CalculatedKey");
+                    OnPropertyChanged("ResultText");
                     break;
+                #endregion
+                #region Simulated Annealing
+                case 3: // Simulated Annealing
+                    if (String.IsNullOrEmpty(Ciphertext))
+                    {
+                        GuiLogMessage("Please provide a ciphertext to perform Simulated Annealing", NotificationLevel.Error);
+                        return;
+                    }
+
+                    Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), StripAlphabet);
+                    CiphertextNumbers = MapTextIntoNumberSpace(Ciphertext);
+
+                    UpdateDisplayStart();
+
+                    progressCounter = 0;
+                    progressMax = MaxOffsetUserSelect - MinOffsetUserSelect + 1;
+                    globalmaxscore = 0;
+
+                    _estimatedEndTime = DateTime.Now;
+
+                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++)
+                    {
+                        if (_isStopped) return;
+
+                        var _startTime = DateTime.Now;
+                        UpdateDisplayEnd(offset, _estimatedEndTime);
+
+                        SimulatedAnnealing(CiphertextNumbers, KeyLength, offset, settings.HillClimbRestarts, StripList);
+
+                        var _elapsedTime = DateTime.Now - _startTime;
+                        _estimatedEndTime = DateTime.Now.AddSeconds(_elapsedTime.TotalSeconds * (MaxOffsetUserSelect - offset));
+
+                        UpdateDisplayEnd(offset, _estimatedEndTime);
+                        ProgressChanged(++progressCounter, progressMax);
+                    }
+
+                    re = _presentation.BestList.First();
+                    UpdateDisplayEnd(re.Offset, DateTime.Now);
+                    _tmpKey = re.Key.Split('/')[0].Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+
+                    CalculatedKey = re.Key;
+                    ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _tmpKey, re.Offset, StripList));
+                    OnPropertyChanged("CalculatedKey");
+                    OnPropertyChanged("ResultText");
+                    break;
+                    #endregion
             }
-            
-            ProgressChanged(1, 1);
         }
 
         /// <summary>
@@ -567,7 +615,6 @@ namespace Cryptool.M138Analyzer
             _isStopped = true;
             KeysPerSecondCurrent = 0;
             KeysPerSecondAverage = 0;
-            AverageTimePerRestart = 0;
         }
 
         /// <summary>
@@ -575,9 +622,6 @@ namespace Cryptool.M138Analyzer
         /// </summary>
         public void Initialize()
         {
-            //StripList = LoadStripes(Alphabet);
-            Trigrams = Load3Grams(Alphabet);
-            Quadgrams = Load4Grams(Alphabet);
         }
 
         /// <summary>
@@ -619,34 +663,40 @@ namespace Cryptool.M138Analyzer
 
         #region Helpers
 
-        private bool HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, double[, ,] _ngrams3, double[, , ,] _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
+        private void setLanguage()
         {
+            string lang = LanguageStatistics.LanguageCode(settings.Language);
 
-            int _numberOfStrips = _stripes.Count; //Anzahl verfuegbarer Streifen
+            Unigrams = new UniGrams(lang);
+            Trigrams = new TriGrams(lang);
+            Quadgrams = new QuadGrams(lang);
+            //Pentagrams = new PentaGrams(lang);
+            Alphabet = Unigrams.Alphabet;
+        }
+
+        private void HillClimb(int[] _cipherText, int _keyLength, int _keyOffset, List<int[]> _stripes, string _alphabet, TriGrams _ngrams3, QuadGrams _ngrams4, int _restarts = 10, bool _fastConverge = false, int[] _startKey = null, int[] _fixedPos = null)
+        {
+            int _numberOfStrips = _stripes.Count; //Anzahl verfügbarer Streifen
             double _globalBestKeyCost = double.MinValue; //Kostenwert des globalen Maximums fuer diesen Offset
             int[] _globalBestKey;
-            int[] _localBestKey = new int[_keyLength];
+
+            int[] _plainText = new int[_cipherText.Length];
+            int[] _localBestKey = new int[_numberOfStrips];
+            int[] _copykey = new int[_numberOfStrips]; //Copy of Runkey
+
             int _keyCount = 0;
             var _startTime = DateTime.Now;
             Random _rand = new Random(Guid.NewGuid().GetHashCode());
 
-            while (_restarts > 0)
+            for (int RetryCounter = 0; RetryCounter < _restarts; RetryCounter++)
             {
-                if (_isStopped)
-                {
-                    return false; ;
-                }
                 int[] _runkey = new int[_numberOfStrips]; //Runkey that contains every possible Strip. Only the first _keyLength strips will be used though
-                List<int> _elements = new List<int>();
-                for (int _i = 0; _i < _numberOfStrips; _i++)
-                {
-                    _elements.Add(_i);
-                }
+                List<int> _elements = Enumerable.Range(0, _numberOfStrips).ToList();
+
                 //Startkey is given, just fill the empty parts of the key with random strips
                 if (_startKey != null)
                 {
-                    int _givenStartkeyLength = _startKey.Length;
-                    for (int _i = 0; _i < _givenStartkeyLength; _i++)
+                    for (int _i = 0; _i < _startKey.Length; _i++)
                     {
                         if (_elements.Contains(_startKey[_i]))
                         { //Given Startkey value at this position is a valid strip
@@ -660,7 +710,7 @@ namespace Cryptool.M138Analyzer
                             _elements.Remove(_elements[_number]);
                         }
                     }
-                    for (int _i = _givenStartkeyLength; _i < _numberOfStrips; _i++)
+                    for (int _i = _startKey.Length; _i < _numberOfStrips; _i++)
                     {
                         //Fill rest of the runkey
                         int _number = _rand.Next(0, _elements.Count);
@@ -686,36 +736,25 @@ namespace Cryptool.M138Analyzer
 
                 do
                 {
+                    if (_isStopped) return;
+
                     _foundBetterKey = false;
 
-                    //Iterate over the first 25 elements of the key (The actual key)
+                    //Iterate over the first 25 elements of the key (the actual key)
                     for (int i = 0; i < _keyLength; i++)
                     {
-                        //Iterate over the complete Key (100 elements) and swap one of the first 25 elements with one element of the key
+                        //Iterate over the complete key (100 elements) and swap one of the first 25 elements with one element of the key
                         //TODO: Might it be better to swap >1 elements at one time?
-                        for (int j = 0; j < _numberOfStrips; j++)
+                        for (int j = i + 1; j < _numberOfStrips; j++)
                         {
-                            if (i == j)
-                            {
-                                continue; //Don't swap an element with itself
-                            }
-                            int[] _copykey = new int[_numberOfStrips]; //Copy of Runkey
-                            for (int k = 0; k < _numberOfStrips; k++)
-                            {
-                                _copykey[k] = _runkey[k];
-                            }
+                            Array.Copy(_runkey,_copykey,_numberOfStrips);
+
                             //Swap 2 Elements in copykey
                             if (_fixedPos == null)
                             {
                                 int _tmpElement = _copykey[i];
                                 _copykey[i] = _copykey[j];
                                 _copykey[j] = _tmpElement;
-
-                                //TEST
-                                //_tmpElement = _copykey[Mod(i + 7, _keyLength)];
-                                //_copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
-                                //_copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
-                                //TODO: Swap more elements at one time?
                             }
                             else
                             {
@@ -723,147 +762,272 @@ namespace Cryptool.M138Analyzer
                                 //{
                                 //    continue;
                                 //}
-                                if (_fixedPos[i] == 1)
-                                {
-                                    continue;
-                                }
-                                else if (j < 25 && _fixedPos[j] == 1)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    int _tmpElement = _copykey[i];
-                                    _copykey[i] = _copykey[j];
-                                    _copykey[j] = _tmpElement;
+                                if (_fixedPos[i] == 1) continue;
+                                if (j < 25 && _fixedPos[j] == 1) continue;
 
-                                    //TEST
-                                    _tmpElement = _copykey[Mod(i + 7, _keyLength)];
-                                    _copykey[Mod(i + 7, _keyLength)] = _copykey[Mod(j + 3, _numberOfStrips)];
-                                    _copykey[Mod(j + 3, _numberOfStrips)] = _tmpElement;
-                                    //TODO: Swap more elements at one time?
-                                }
+                                int _tmpElement = _copykey[i];
+                                _copykey[i] = _copykey[j];
+                                _copykey[j] = _tmpElement;
+
+                                //TEST
+                                _tmpElement = _copykey[(i + 7) % _keyLength];
+                                _copykey[(i + 7) % _keyLength] = _copykey[(j + 3) % _numberOfStrips];
+                                _copykey[(j + 3) % _numberOfStrips] = _tmpElement;
+                                //TODO: Swap more elements at one time?
                             }
 
-                            int[] _trimKey = new int[_keyLength]; //First n (25) Elements of runkey that will actually be used for en/decryption
-                            for (int k = 0; k < _keyLength; k++)
-                            {
-                                _trimKey[k] = _copykey[k];
-                            }
+                            DecryptInPlace(_cipherText, _plainText, _copykey, _keyLength, _keyOffset, _stripes);
+                            //double _costValue = (((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR) * UnigramCost(_plainText);
+                            //double _costValue = ((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR;
+                            //double _costValue = Pentagrams.CalculateCost(_plainText);
+                            double _costValue = Quadgrams.CalculateCost(_plainText);
+                            //double _costValue = Trigrams.CalculateCost(_plainText);
 
-                            int[] _plainText = Decrypt(_cipherText, _trimKey, _keyOffset, _stripes);
-                            double _costValue = (((TRIGRAMMULTIPLIER * CalculateTrigramCost(_ngrams3, _plainText)) + (QUADGRAMMULTIPLIER * CalculateQuadgramCost(_ngrams4, _plainText))) / DIVISOR) * UnigramCost(_plainText, _selectedLanguage);
-                            //TODO: Improve cost Function
-
-                            _keyCount++;
-
-                            if (_costValue > _localBestKeyCost) //Tested key is better then the best local key so far
+                            if (_localBestKeyCost < _costValue) //Tested key is better than the best local key so far
                             {
                                 _localBestKeyCost = _costValue;
-                                _localBestKey = _copykey;
+                                Array.Copy(_copykey, _localBestKey, _numberOfStrips);
 
-                                //Fill Bestlist if necessary (Could be that all Keys found in a different run already ahve been better and there's no need to save this crap
+                                //Fill Bestlist if necessary (could be that all keys found in a different run already have been better and there's no need to save this crap
                                 _foundBetterKey = true;
                                 if (_fastConverge)
-                                {
-                                    _runkey = _localBestKey;
-                                }
+                                    Array.Copy(_localBestKey, _runkey, _numberOfStrips);
                             }
+
+                            _keyCount++;
                         }
                     }
-                    _runkey = _localBestKey;
+                    Array.Copy(_localBestKey, _runkey, _numberOfStrips);
                 } while (_foundBetterKey);
-                var _endTime = DateTime.Now;
-                var _timeForOneRestart = (_endTime - _startTime);
+                
+                var _timeForOneRestart = DateTime.Now - _startTime;
                 KeysPerSecondCurrent = _keyCount / _timeForOneRestart.TotalSeconds;
                 KeysPerSecondAverage = (RetryCounter * KeysPerSecondAverage + KeysPerSecondCurrent) / (RetryCounter + 1);
                 UpdateKeysPerSecond((int)KeysPerSecondCurrent, (int)KeysPerSecondAverage);
-                _restarts--;
-                RetryCounter++;
-                //UpdateDisplayEnd(_keyOffset, _calcualtedEndTime);
-                ProgressChanged(RetryCounter, MaxRetriesNecesary);
 
-                if (_localBestKeyCost > _globalBestKeyCost) //Found a better Key then the best key found so far
+                //UpdateDisplayEnd(_keyOffset, _calcualtedEndTime);
+
+                AddNewBestListEntry(_localBestKey.Take(KeyLength).ToArray(), _localBestKeyCost, CiphertextNumbers, _keyOffset, settings.HighscoreBeep);
+
+                if (_localBestKeyCost > _globalBestKeyCost) //Found a better key than the best key found so far
                 {
                     //New best global Key found
                     _globalBestKeyCost = _localBestKeyCost;
-                    _globalBestKey = _localBestKey;
-                    int[] _trimKey = new int[KeyLength];
-                    for (int z = 0; z < KeyLength; z++)
+                    _globalBestKey = _localBestKey.Take(KeyLength).ToArray();
+
+                    if (BestCostValueOfAllKeys < _globalBestKeyCost)
                     {
-                        _trimKey[z] = _globalBestKey[z];
-                    }
-                    AddNewBestListEntry(_trimKey, _globalBestKeyCost, CiphertextNumbers, _keyOffset);
-                    if (_globalBestKeyCost > BestCostValueOfAllKeys)
-                    {
-                        //New Best key over all offsetz found, update output
-                        //ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _trimKey, _keyOffset, StripList), Alphabet);
-                        //OnPropertyChanged("ResultText");
                         BestCostValueOfAllKeys = _globalBestKeyCost;
+
+                        //New Best key over all offsets found, update output
+                        ResultText = MapNumbersIntoTextSpace(Decrypt(CiphertextNumbers, _globalBestKey, _keyOffset, StripList));
+                        OnPropertyChanged("ResultText");
                     }
                 }
             }
+        }
 
-            return true;
+        void save()
+        {
+            Array.Copy(key, oldkey, key.Length);
+        }
+
+        void restore()
+        {
+            Array.Copy(oldkey, key, key.Length);
+        }
+
+        void swap(int[] key, int i, int j)
+        {
+            int tmp = key[i];
+            key[i] = key[j];
+            key[j] = tmp;
+        }
+        
+        int[] randomKey()
+        {
+            int[] newkey = new int[key.Length];
+
+            for (int i = 0; i < key.Length; i++)
+                newkey[i] = key[i];
+
+            for (int i = 0; i < key.Length; i++)
+                swap(newkey, i, rnd.Next(key.Length));
+
+            return newkey;
+        }
+
+        double calculateScore(int[] _cipherText, int[] key, int _keyOffset, List<int[]> _stripes)
+        {
+            DecryptInPlace(_cipherText, plaintext, key, keyLength, _keyOffset, _stripes);
+            //double score = Pentagrams.CalculateCost(plaintext);
+            double score = Quadgrams.CalculateCost(plaintext);
+            return score;
+        }
+
+        void randomize()
+        {
+            int r = rnd.Next(100);
+
+            if (r < 90)
+            {
+                swap(key, rnd.Next(keyLength), rnd.Next(key.Length));
+            }
+            else
+            {
+                for (int j = 0; j <= rnd.Next(5); j++)
+                    swap(key, rnd.Next(keyLength), rnd.Next(key.Length));
+            }
+        }
+
+        void printbest(double score, double temp)
+        {
+            CalculatedKey = String.Format(" // {0:f14} {1:f14} temp={2:f14}\r", score, maxScore, temp);
+            OnPropertyChanged("CalculatedKey");
+        }
+
+        int[] key, oldkey;
+        int[] plaintext;
+        int keyLength;
+        int printcounter;
+        uint killcounter;
+
+        Random rnd = new Random();
+        double maxScore, globalmaxscore;
+
+        private void SimulatedAnnealing(int[] _cipherText, int _keyLength, int _keyOffset, int iterations, List<int[]> _stripes)
+        {
+            keyLength = _keyLength;
+            key = Enumerable.Range(0, _stripes.Count).ToArray();
+            oldkey = new int[key.Length];
+            plaintext = new int[_cipherText.Length];
+            double score = calculateScore(_cipherText, key, _keyOffset, _stripes);
+            score = Math.Exp(Quadgrams.CalculateCost(_cipherText)); ;
+
+            double inittemp = 0.1;
+            double epsilon = 0.01;
+            double factor = 0.999;
+
+            DateTime starttime = DateTime.Now;
+            DateTime lastupdate = DateTime.Now;
+            DateTime nextupdate = lastupdate.AddSeconds(1);
+
+            uint keycount = 0;
+            uint totalkeycount = 0;
+
+            for (int iteration = 0; iteration < iterations; iteration++)
+            {
+                key = randomKey();
+
+                double workingScore;
+                printcounter = 0;
+                killcounter = 0;
+
+                double currentScore = calculateScore(_cipherText,key,_keyOffset,_stripes);
+                maxScore = currentScore;
+
+                for (double temp = inittemp; temp > epsilon; temp *= factor)
+                {
+                    if (_isStopped) return;
+
+                    for (int t = 0; t < 1500; t++)
+                    {
+                        save();
+                        randomize();
+
+                        workingScore = calculateScore(_cipherText, key, _keyOffset, _stripes);
+
+                        if (maxScore < workingScore)
+                        {
+                            maxScore = workingScore;
+                            AddNewBestListEntry(key.Take(keyLength).ToArray(), maxScore, CiphertextNumbers, _keyOffset, settings.HighscoreBeep);
+                            if (globalmaxscore < maxScore)
+                            {
+                                globalmaxscore = maxScore;
+                                killcounter = 0;
+                            }
+                        }
+
+                        double diff = workingScore - currentScore;
+                        double p = Math.Exp(diff / temp);
+                        bool accept = (diff >= 0) || (rnd.NextDouble() < p);
+
+                        //if (++printcounter == 5000)
+                        //{
+                        //    printbest(currentScore, temp);
+                        //    printcounter = 0;
+                        //}
+
+                        if (accept)
+                        {
+                            save();
+                            currentScore = workingScore;
+                        }
+
+                        restore();
+                        
+                        keycount++;
+                        totalkeycount++;
+                        killcounter++;
+                        if (killcounter > settings.KillCounter) break;
+                    }
+
+
+                    if(DateTime.Now >= nextupdate)
+                    {
+                        KeysPerSecondCurrent = keycount / (DateTime.Now - lastupdate).TotalSeconds;
+                        KeysPerSecondAverage = totalkeycount / (DateTime.Now - starttime).TotalSeconds;
+                        UpdateKeysPerSecond((int)KeysPerSecondCurrent, (int)KeysPerSecondAverage);
+
+                        lastupdate = DateTime.Now;
+                        nextupdate = lastupdate.AddSeconds(1);
+                        keycount = 0;
+                    }
+
+                    if (killcounter > settings.KillCounter) break;
+                }
+            }
         }
 
         private List<List<int>> KnownPlaintextAttack(int _offset, int _textLength, int _availableStrips, int _stripLength)
         {
-            int[] _currentStrip;
-            int p; //Plaintext Character
-            int c; //Ciphertext Character
-            int isAt;
             List<List<int>> _workingStrips = new List<List<int>>();
             List<List<int>> _possibleStrips = new List<List<int>>();
 
             for (int location = 0; location < _textLength; location++) //Go over the whole text
             {
                 List<int> _possibleStripsForThisLocation = new List<int>();
-                p = PlaintextNumbers[location];
-                c = CiphertextNumbers[location];
-                for (int testStripNumber = 0; testStripNumber < _availableStrips; testStripNumber++)
+                for (int i = 0; i < _availableStrips; i++)
                 {
                     //Test each strip for this offset
-                    _currentStrip = StripList[testStripNumber];
-                    isAt = Array.IndexOf(_currentStrip, p);
-                    int _tmpTestBla = (isAt + _offset) % _stripLength;
-                    if (_currentStrip[(isAt + _offset) % _stripLength] == c)
-                    {
-                        _possibleStripsForThisLocation.Add(testStripNumber);
-                    }
+                    if (StripList[i][(invStripList[i][PlaintextNumbers[location]] + _offset) % _stripLength] == CiphertextNumbers[location])
+                        _possibleStripsForThisLocation.Add(i);
                 }
-                if (_possibleStripsForThisLocation.Count == 0) //No strips work for this location, so the whole offset will not have a valid key. Break here
-                {
-                    return null;
-                }
+                
+                if (_possibleStripsForThisLocation.Count == 0) return null; //No strips work for this location, so the whole offset will not have a valid key. Break here
                 _possibleStrips.Add(_possibleStripsForThisLocation);
             }
+
             //Now there should be a non-empty list of Strips with working offsets for each position
             for (int location = 0; location < KeyLength; location++)
             {
-                if (location >= _textLength)
-                {
-                    break;
-                }
+                if (location >= _textLength) break;
+
                 //Make advantage of the period and check which strips still work
-                int tmp = location + KeyLength;
-                List<int> _possibleStripsForThisLocation = new List<int>();
-                _possibleStripsForThisLocation = _possibleStrips[location];
-                while (tmp < _textLength) //Go through the whole text again
+                var _possibleStripsForThisLocation = _possibleStrips[location];
+                for (int tmp = location + KeyLength; tmp < _textLength; tmp += KeyLength) //Go through the whole text again
                 {
                     _possibleStripsForThisLocation = _possibleStripsForThisLocation.Intersect(_possibleStrips[tmp]).ToList<int>();
-                    if (_possibleStripsForThisLocation.Count == 0)
-                    {
-                        return null;
-                    }
-                    tmp += KeyLength; //Check location 1 period later
+                    if (_possibleStripsForThisLocation.Count == 0) return null;
                 }
                 _workingStrips.Add(_possibleStripsForThisLocation); //In Working Strips we should now have KeyLength Elements of Lists that each hold possible strips for their location
                 //Now make this to a list of Lists that holds all possible keys
             }
+
             //Prevent strips from appearing twice in a key
             int _tmpCount = _workingStrips.Count; //Size of the list
             bool _stripWasKicked = true;
+
             while (_stripWasKicked)
             {
                 _stripWasKicked = false;
@@ -879,10 +1043,7 @@ namespace Cryptool.M138Analyzer
                                 if (l.Contains(_analyzedStrip))
                                 {
                                     l.Remove(_analyzedStrip);
-                                    if (l.Count == 0)
-                                    {
-                                        return null;
-                                    }
+                                    if (l.Count == 0) return null;
                                     _stripWasKicked = true;
                                 }
                             }
@@ -890,27 +1051,8 @@ namespace Cryptool.M138Analyzer
                     }
                 }
             }
+
             return _workingStrips;
-        }
-
-        private double UnigramCost(int[] text, int lang)
-        {
-            double cost = 0;
-            int[] occur = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-            foreach (char c in text)
-            {
-                occur[c]++;
-            }
-
-            int texlen = text.Length;
-            for (int i = 0; i < 26; i++)
-            {
-                double reloccur = (double)occur[i] / (double)texlen;
-                cost += (Math.Abs(reloccur)-unigrams[i]);
-            }
-
-            return cost*cost;
         }
 
         IEnumerable<IEnumerable<int>> PermuteAllKeys(IEnumerable<IEnumerable<int>> sequences)
@@ -919,224 +1061,81 @@ namespace Cryptool.M138Analyzer
 
             return sequences.Aggregate(result, (accumulator, sequence) => from accseq in accumulator from item in sequence select accseq.Concat(new[] { item }));
         }
-        private bool ArraysEqual(int[] a, int[] b)
+
+        private void DecryptInPlace(int[] cipherText, int[] plainText, int[] key, int keylength, int keyoffset, List<int[]> stripes)
         {
-            int _tmpLength = a.Length;
-            for (int i = 0; i < _tmpLength; i++)
+            int stripeslength = stripes[0].Length;
+            int ofs = (((-keyoffset) % stripeslength) + stripeslength) % stripeslength;
+            
+            for (int i = 0; i < cipherText.Length; i++)
             {
-                if (a[i] == b[i])
-                {
-                    return false;
-                }
+                int j = key[i % keylength];
+                int k = invStripList[j][cipherText[i]];
+                plainText[i] = stripes[j][(k + ofs) % stripeslength];
             }
-            return true;
-        }
-
-        private double CalculateTrigramCost(double[, ,] ngrams3, int[] plaintext)
-        {
-            double value = 0;
-            int end = plaintext.Length - 2;
-
-            for (int i = 0; i < end; i++)
-            {
-                value += ngrams3[plaintext[i], plaintext[i + 1], plaintext[i + 2]];
-            }
-            return value;
-        }
-
-        private double CalculateQuadgramCost(double[, , ,] ngrams4, int[] plaintext)
-        {
-            double value = 0;
-            int end = plaintext.Length - 3;
-
-            for (int i = 0; i < end; i++)
-            {
-                value += ngrams4[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];
-            }
-            return value;
         }
 
         private int[] Decrypt(int[] cipherText, int[] key, int keyoffset, List<int[]> stripes)
         {
-            int length = cipherText.Length;
-            int keylength = key.Length;
-            int stripeslength = stripes[0].Length;
-            int[] selectedStrip;
-            int[] plainText = new int[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                selectedStrip = stripes[key[Mod(i, keylength)]];
-                plainText[i] = selectedStrip[Mod(IndexOf(selectedStrip, cipherText[i]) - keyoffset, stripeslength)];
-            }
+            int[] plainText = new int[cipherText.Length];
+            DecryptInPlace(cipherText, plainText, key, key.Length, keyoffset, stripes);
             return plainText;
         }
 
-        private int Mod(int a, int n)
+        private int[] MapTextIntoNumberSpace(string text)
         {
-            int result = a % n;
-            if (a < 0)
-            {
-                result += n;
-            }
-            return result;
+            return text.Select(c => Char2Num[c]).ToArray();
         }
 
-        private int IndexOf(int[] array, int value)
+        private string MapNumbersIntoTextSpace(int[] numbers)
         {
-            int length = array.Length;
-            for (int i = 0; i < length; i++)
-            {
-                if (array[i] == value)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        private int[] MapTextIntoNumberSpace(string text, string alphabet)
-        {
-            //return text.Select(c => alphabet.IndexOf(c)).ToArray();
-            int[] numbers = new int[text.Length];
-            int position = 0;
-            foreach (char c in text)
-            {
-                numbers[position] = alphabet.IndexOf(c);
-                position++;
-            }
-            return numbers;
-        }
-
-        private string MapNumbersIntoTextSpace(int[] numbers, string alphabet)
-        {
-            StringBuilder sb = new StringBuilder();
-            foreach (int i in numbers)
-            {
-                sb.Append(alphabet[i]);
-            }
-            return sb.ToString();
-        }
-
-        private double[, ,] Load3Grams(string _a)
-        {
-            int _tmpAlphabetLength = Alphabet.Length;
-            double[, ,] Trigrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "en-3gram-nocs.bin"), FileMode.Open, FileAccess.Read))
-            {
-                using (BinaryReader reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < _tmpAlphabetLength; i++)
-                    {
-                        for (int j = 0; j < _tmpAlphabetLength; j++)
-                        {
-                            for (int k = 0; k < _tmpAlphabetLength; k++)
-                            {
-                                byte[] bytes = reader.ReadBytes(8);
-                                Trigrams[i, j, k] = BitConverter.ToDouble(bytes, 0);
-                            }
-                        }
-                    }
-                }
-            }
-            return Trigrams;
-        }
-
-        private double[, , ,] Load4Grams(string _a)
-        {
-            int _tmpAlphabetLength = Alphabet.Length;
-            double[, , ,] Quadgrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "en-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
-            {
-                using (BinaryReader reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < _tmpAlphabetLength; i++)
-                    {
-                        for (int j = 0; j < _tmpAlphabetLength; j++)
-                        {
-                            for (int k = 0; k < _tmpAlphabetLength; k++)
-                            {
-                                for (int l = 0; l < _tmpAlphabetLength; l++)
-                                {
-                                    byte[] bytes = reader.ReadBytes(8);
-                                    Quadgrams[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
-                                }
-                            }
-                        }
-                    }
-                }
-                return Quadgrams;
-            }
-        }
-
-
-        private double[, , ,] LoadGerman4Grams(string _a)
-        {
-            int _tmpAlphabetLength = Alphabet.Length;
-            double[, , ,] Quadgrams = new double[_tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength, _tmpAlphabetLength];
-            using (FileStream fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, "de-4gram-nocs.bin"), FileMode.Open, FileAccess.Read))
-            {
-                using (BinaryReader reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < _tmpAlphabetLength; i++)
-                    {
-                        for (int j = 0; j < _tmpAlphabetLength; j++)
-                        {
-                            for (int k = 0; k < _tmpAlphabetLength; k++)
-                            {
-                                for (int l = 0; l < _tmpAlphabetLength; l++)
-                                {
-                                    byte[] bytes = reader.ReadBytes(8);
-                                    Quadgrams[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
-                                }
-                            }
-                        }
-                    }
-                }
-                return Quadgrams;
-            }
+            return new string(numbers.Select(n => Alphabet[n]).ToArray());
         }
         
-        private List<int[]> SetStripes(string text, string alphabet)
+        private List<string> SetStrips(string text)
         {
-            var stripes = text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-            return stripes.Select(s => MapTextIntoNumberSpace(s, alphabet)).ToList();
+            return text.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         }
 
-        private List<int[]> LoadStripes(string alphabet)
+        private string LoadStrips()
         {
-            string text = File.ReadAllText(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"));
-            return SetStripes(text, alphabet);
-
-            List<int[]> _tmpStripes = new List<int[]>();
-            StringBuilder sb = new StringBuilder();
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"), FileMode.Open, FileAccess.Read))
-            {
-                using (StreamReader sr = new StreamReader(fs))
-                {
-                    string line = "";
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        _tmpStripes.Add(MapTextIntoNumberSpace(line, alphabet));
-                    }
-                }
-            }
-            return _tmpStripes;
+            return File.ReadAllText(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, "stripes.txt"));
         }
 
-
-        private string PrintNumbers(IEnumerable<int> numbers)
+        private bool CheckStrips(List<string> strips)
         {
-            StringBuilder builder = new StringBuilder();
-            foreach (int i in numbers)
+            if (strips == null || strips.Count == 0)
             {
-                if (i < 10)
-                {
-                    builder.Append("0");
-                }
-                builder.Append(i + " ");
+                GuiLogMessage("The strips are undefined.", NotificationLevel.Error);
+                return false;
             }
-            return builder.ToString();
+
+            StripAlphabet = String.Concat(strips[0].OrderBy(c => c).Distinct());
+
+            foreach (var strip in strips)
+            {
+                string uniq = String.Concat(strip.OrderBy(c => c).Distinct());
+
+                if (uniq.Length != strip.Length)
+                {
+                    GuiLogMessage("Error in strip '" + strip + "'. It contains duplicates.", NotificationLevel.Error);
+                    return false;
+                }
+
+                if (uniq != StripAlphabet)
+                {
+                    GuiLogMessage("Error in strip '" + strip + "'. It uses a character set that differs from the first strip.", NotificationLevel.Error);
+                    return false;
+                }
+            }
+
+            if (RemoveInvalidChars(StripAlphabet, Alphabet).Length < StripAlphabet.Length)
+            {
+                GuiLogMessage("The strips use characters that are not allowed in the selected language.", NotificationLevel.Error);
+                return false;
+            }
+
+            return true;
         }
 
         private void UpdateDisplayStart()
@@ -1154,8 +1153,7 @@ namespace Cryptool.M138Analyzer
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                _endTime = DateTime.Now;
-                var elapsedtime = _endTime.Subtract(_startTime);
+                var elapsedtime = DateTime.Now - _startTime;
                 var elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
                 ((M138AnalyzerPresentation)Presentation).endTime.Content = "" + _estimatedEnd;
                 ((M138AnalyzerPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
@@ -1167,17 +1165,19 @@ namespace Cryptool.M138Analyzer
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                ((M138AnalyzerPresentation)Presentation).keysPerSecondAverageLabel.Content = _average;
-                ((M138AnalyzerPresentation)Presentation).keysPerSecondCurrentLabel.Content = _current;
+                var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+                
+                ((M138AnalyzerPresentation)Presentation).keysPerSecondAverageLabel.Content = String.Format(culture, "{0:##,#}", _average);
+                ((M138AnalyzerPresentation)Presentation).keysPerSecondCurrentLabel.Content = String.Format(culture, "{0:##,#}", _current);
             }, null);
         }
 
-        private void AddNewBestListEntry(int[] key, double value, int[] ciphertext, int offset)
+        private void AddNewBestListEntry(int[] key, double value, int[] ciphertext, int offset, bool beep = false)
         {
             ResultEntry entry = new ResultEntry
             {
                 Key = string.Join(", ", key) + " / " + offset,
-                Text = MapNumbersIntoTextSpace(Decrypt(ciphertext, key, offset, StripList), Alphabet),
+                Text = MapNumbersIntoTextSpace(Decrypt(ciphertext, key, offset, StripList)),
                 Value = value,
                 Offset = offset
             };
@@ -1186,22 +1186,23 @@ namespace Cryptool.M138Analyzer
             {
                 try
                 {
-                    if (_presentation.BestList.Count > 0 && value <= _presentation.BestList.Last().Value)
+                    if (_presentation.BestList.Count > 0)
                     {
-                        return; //All Entries in Bestlist are better than this one
+                        if (value <= _presentation.BestList.Last().Value) return; //All Entries in Bestlist are better than this one
+                        if (value > _presentation.BestList.First().Value && beep)
+                            if ((DateTime.Now - _startTime).Seconds > 10)   // skip meaningless highscores in the first 10 seconds
+                                if ((DateTime.Now - _lastbeeptime).Seconds > 1) // only beep once per second for highscore bursts
+                                {
+                                    SystemSounds.Beep.Play();
+                                    _lastbeeptime = DateTime.Now;
+                                }
                     }
                     _presentation.BestList.Add(entry);
                     _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList.OrderByDescending(i => i.Value));
                     if (_presentation.BestList.Count > BestListLength)
-                    {
                         _presentation.BestList.RemoveAt(BestListLength);
-                    }
-                    int z = 0;
-                    foreach (ResultEntry r in _presentation.BestList)
-                    {
-                        r.Ranking = z;
-                        z++;
-                    }
+                    int z = 1;
+                    foreach (ResultEntry r in _presentation.BestList) r.Ranking = z++;
                     _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 catch (Exception e)
@@ -1213,13 +1214,14 @@ namespace Cryptool.M138Analyzer
 
         }
 
-        private void AddNewBestListEntryKnownPlaintext(string key, int offset)
+        private void AddNewBestListEntryKnownPlaintext(string key, double value, int offset)
         {
             ResultEntry entry = new ResultEntry
             {
                 Key = key,
                 Text = Plaintext,
-                Value = offset,
+                Value = value,
+                Offset = offset,
             };
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -1228,16 +1230,8 @@ namespace Cryptool.M138Analyzer
                 {
                     _presentation.BestList.Add(entry);
                     _presentation.BestList = new ObservableCollection<ResultEntry>(_presentation.BestList);
-                    //if (_presentation.BestList.Count > BestListLength)
-                    //{
-                    //    _presentation.BestList.RemoveAt(BestListLength);
-                    //}
-                    int z = 0;
-                    foreach (ResultEntry r in _presentation.BestList)
-                    {
-                        r.Ranking = z;
-                        z++;
-                    }
+                    int z = 1;
+                    foreach (ResultEntry r in _presentation.BestList) r.Ranking = z++;
                     _presentation.ListView.DataContext = _presentation.BestList;
                 }
                 catch (Exception e)
@@ -1300,7 +1294,7 @@ namespace Cryptool.M138Analyzer
 
         public double ExactValue
         {
-            get { return Math.Abs(Value); }
+            get { return Value; }
         }
     }
 }
