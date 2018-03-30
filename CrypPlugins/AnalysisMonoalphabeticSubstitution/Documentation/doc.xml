@@ -37,9 +37,9 @@
       if this is a NVIDIA CUDA-enabled GPU.
     </section>
     <section headline="Comparison of Dictionary and Genetic Attack" >
-      The genetic attack and the dictionary attack have different advantages and disadvantages that complement each other for an holistic approach to analyze
+      The genetic attack and the dictionary attack have different advantages and disadvantages that complement each other for a holistic approach to analyze
       a monoalphabetic substitution cipher.<newline/>
-      The advantages of a genetic attack are that it does not need word boundaries for it's analysis, that it can take care of large ciphertext samples, and that nothing more
+      The advantages of a genetic attack are that it does not need word boundaries for its analysis, that it can take care of large ciphertext samples, and that nothing more
       than the n-gram probabilities are needed for the analysis. Hence, the ciphertext's word boundaries can be scrambled without negative impact on the analysis. Furthermore, the larger the sample of the ciphertext
       the better the genetic attack performs because the fingerprint according to the n-gram probabilities is better. A disadvantage of the genetic attack is
       that it performs poorly on very short ciphertext samples, e. g. 60 characters or less.<newline />

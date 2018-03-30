@@ -138,15 +138,6 @@
   <data name="ChooseAlphabetCaption" xml:space="preserve">
     <value>Language</value>
   </data>
-  <data name="ChooseAlphabetList1" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="ChooseAlphabetList2" xml:space="preserve">
-    <value>German</value>
-  </data>
-  <data name="ChooseAlphabetList3" xml:space="preserve">
-    <value>Spanish</value>
-  </data>
   <data name="ChooseAlphabetTooltip" xml:space="preserve">
     <value>Choose language</value>
   </data>
@@ -204,46 +195,46 @@
   <data name="PTCaseSensitiveTooltip" xml:space="preserve">
     <value>Distinguish between small and captial letters.</value>
   </data>
-  <data name="PropCiphertextalphabetCaption" xml:space="preserve">
+  <data name="CiphertextAlphabetCaption" xml:space="preserve">
     <value>Ciphertext alphabet</value>
   </data>
-  <data name="PropCiphertextalphabetTooltip" xml:space="preserve">
+  <data name="CiphertextAlphabetTooltip" xml:space="preserve">
     <value>Alphabet of the ciphertext</value>
   </data>
-  <data name="PropCiphertextCaption" xml:space="preserve">
+  <data name="CiphertextCaption" xml:space="preserve">
     <value>Ciphertext</value>
   </data>
-  <data name="PropCiphertextTooltip" xml:space="preserve">
+  <data name="CiphertextTooltip" xml:space="preserve">
     <value>Encrypted text</value>
   </data>
-  <data name="PropLanguagedictionaryCaption" xml:space="preserve">
+  <data name="LanguagedictionaryCaption" xml:space="preserve">
     <value>Dictionary</value>
   </data>
-  <data name="PropLanguagedictionaryTooltip" xml:space="preserve">
+  <data name="LanguagedictionaryTooltip" xml:space="preserve">
     <value>Dictionary of assumed plaintext language</value>
   </data>
-  <data name="PropPlaintextalphabetCaption" xml:space="preserve">
+  <data name="PlaintextAlphabetCaption" xml:space="preserve">
     <value>Plaintext alphabet</value>
   </data>
-  <data name="PropPlaintextalphabetoutputCaption" xml:space="preserve">
+  <data name="PlaintextAlphabetOutputCaption" xml:space="preserve">
     <value>Plaintext alphabet</value>
   </data>
-  <data name="PropPlaintextalphabetoutputTooltip" xml:space="preserve">
+  <data name="PlaintextAlphabetOutputTooltip" xml:space="preserve">
     <value>Plaintext alphabet with letters in the order to decrypt the ciphertext</value>
   </data>
-  <data name="PropPlaintextalphabetTooltip" xml:space="preserve">
+  <data name="PlaintextAlphabetTooltip" xml:space="preserve">
     <value>Assumed alphabet of the plaintext</value>
   </data>
-  <data name="PropPlaintextCaption" xml:space="preserve">
+  <data name="PlaintextCaption" xml:space="preserve">
     <value>Plaintext</value>
   </data>
-  <data name="PropPlaintextTooltip" xml:space="preserve">
+  <data name="PlaintextTooltip" xml:space="preserve">
     <value>Decrypted text</value>
   </data>
-  <data name="PropReferencetextCaption" xml:space="preserve">
+  <data name="ReferencetextCaption" xml:space="preserve">
     <value>Reference text</value>
   </data>
-  <data name="PropReferencetextTooltip" xml:space="preserve">
+  <data name="ReferencetextTooltip" xml:space="preserve">
     <value>Sample text to extract letter frequencies of the assumed plaintext language</value>
   </data>
   <data name="TreatmentInvalidCharsCaption" xml:space="preserve">
@@ -292,10 +283,12 @@
     <value>Value</value>
   </data>
   <data name="dic_attack_finished" xml:space="preserve">
-    <value>Dictionary attack finished in </value>
+    <value>Dictionary attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds.</value>
   </data>
   <data name="error_alphabet_length" xml:space="preserve">
-    <value>Length of ciphertext alphabet and plaintext alphabet is different.</value>
+    <value>The ciphertext alphabet contains more letters than the plaintext alphabet.
+Ciphertext alphabet: "{0}" ({1} letters)
+Plaintext alphabet: "{2}" ({3} letters)</value>
   </data>
   <data name="error_ciphertext" xml:space="preserve">
     <value>Error while obtaining ciphertext.</value>
@@ -304,10 +297,10 @@
     <value>Error while obtaining English language dictionary file</value>
   </data>
   <data name="gen_attack_finished" xml:space="preserve">
-    <value>Genetic attack finished in </value>
+    <value>Genetic attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds.</value>
   </data>
   <data name="gen_attack_testedkeys" xml:space="preserve">
-    <value>Number of tested keys with genetic attack: </value>
+    <value>Number of tested keys with genetic attack: {0}</value>
   </data>
   <data name="no_ciphertext" xml:space="preserve">
     <value>No ciphertext is set.</value>
@@ -358,13 +351,13 @@
     <value>H</value>
   </data>
   <data name="hill_attack_finished" xml:space="preserve">
-    <value>Hillclimbing attack finished in: </value>
+    <value>Hillclimbing attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds.</value>
   </data>
   <data name="hill_attack_testedkeys" xml:space="preserve">
-    <value>Number of tested keys with hillclimbing attack: </value>
+    <value>Number of tested keys with hillclimbing attack: {0}</value>
   </data>
   <data name="hill_attack_keyspersecond" xml:space="preserve">
-    <value>Tested keys with hillclimbing per second: </value>
+    <value>Tested keys with hillclimbing per second: {0}</value>
   </data>
   <data name="ChooseAlgorithmCaption" xml:space="preserve">
     <value>Algorithm</value>
@@ -382,7 +375,7 @@
     <value>Choose the algorithm which should be used.</value>
   </data>
   <data name="RestartsCaption" xml:space="preserve">
-    <value>Amount of restarts (Hillclimbing only)</value>
+    <value>Restarts</value>
   </data>
   <data name="RestartsTooltip" xml:space="preserve">
     <value>Choose how often the hillclimbing algorithm should start over.</value>
@@ -393,8 +386,20 @@
   <data name="no_cuda" xml:space="preserve">
     <value>No CUDA-enabled device or CUDA driver found.</value>
   </data>
-  <data name="ChooseAlphabetList4" xml:space="preserve">
-    <value>Latin</value>
+  <data name="KeysPerSecLabel" xml:space="preserve">
+    <value>Keys / sec.:</value>
+  </data>
+  <data name="TotalKeysLabel" xml:space="preserve">
+    <value>Tested keys:</value>
+  </data>
+  <data name="UseSpacesCaption" xml:space="preserve">
+    <value>Use spaces</value>
+  </data>
+  <data name="UseSpacesTooltip" xml:space="preserve">
+    <value>Use language statistics that include the space character</value>
+  </data>
+  <data name="ChooseAlphabetList1" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="ChooseAlphabetList10" xml:space="preserve">
     <value>Portuguese</value>
@@ -404,6 +409,15 @@
   </data>
   <data name="ChooseAlphabetList12" xml:space="preserve">
     <value>Greek</value>
+  </data>
+  <data name="ChooseAlphabetList2" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="ChooseAlphabetList3" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="ChooseAlphabetList4" xml:space="preserve">
+    <value>Latin</value>
   </data>
   <data name="ChooseAlphabetList5" xml:space="preserve">
     <value>French</value>
@@ -419,5 +433,11 @@
   </data>
   <data name="ChooseAlphabetList9" xml:space="preserve">
     <value>Dutch</value>
+  </data>
+  <data name="KeyOutputCaption" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="KeyOutputTooltip" xml:space="preserve">
+    <value>Output of the recovered key</value>
   </data>
 </root>

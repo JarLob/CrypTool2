@@ -4,24 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cryptool.PluginBase.IO;
+using Cryptool.PluginBase.Utils;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     class Frequencies
     {
         #region Private Variables
 
-        private double[] prob1gram;
-        private double[][] prob2gram;
-        private double[][][] prob3gram;
-        private double[][][][] prob4gram;
-        private double[][][][][] prob5gram;
-        private double[][][][][][] prob6gram;
-        private double[][][][][][][] prob7gram;
+        public double[] prob1gram;
+        public double[,] prob2gram;
+        public double[,,] prob3gram;
+        public double[,,,] prob4gram;
+        public double[,,,,] prob5gram;
+        public double[,,,,,] prob6gram;
+        public double[,,,,,,] prob7gram;
 
         private Alphabet alpha;
-        private int size;
-        private int ngram;
+        public int size;
+        public int ngram;
 
         private CalculateFitness calculateFitnessOfKey;
 
@@ -42,55 +43,47 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         public int NGram
         {
             get { return this.ngram; }
-            set { ; }
         }
 
         public double[] Prob1Gram
         {
             get { return this.prob1gram; }
-            set { ; }
         }
 
-        public double[][] Prob2Gram
+        public double[,] Prob2Gram
         {
             get { return this.prob2gram; }
-            set { ; }
         }
 
-        public double[][][] Prob3Gram
+        public double[,,] Prob3Gram
         {
             get { return this.prob3gram; }
-            set { ; }
         }
 
-        public double[][][][] Prob4Gram
+        public double[,,,] Prob4Gram
         {
             get { return this.prob4gram; }
-            set { ; }
         }
 
-        public double[][][][][] Prob5Gram
+        public double[,,,,] Prob5Gram
         {
             get { return this.prob5gram; }
-            set { ; }
         }
 
-        public double[][][][][][] Prob6Gram
+        public double[,,,,,] Prob6Gram
         {
             get { return this.prob6gram; }
-            set { ; }
         }
 
-        public double[][][][][][][] Prob7Gram
+        public double[,,,,,,] Prob7Gram
         {
             get { return this.prob7gram; }
-            set { ; }
         }
 
         public CalculateFitness CalculateFitnessOfKey
         {
+            set { this.calculateFitnessOfKey = value; }
             get { return this.calculateFitnessOfKey; }
-            set { ; }
         }
 
         #endregion
@@ -106,279 +99,118 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             ngram = 1;
             prob1gram = new double[size];
 
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
                 {
-                    for (int i = 0; i < this.prob1gram.Length; i++)
-                    {
-                        var bytes = reader.ReadBytes(8);
-                        prob1gram[i] = BitConverter.ToDouble(bytes,0);
-                    }
+                    var bytes = reader.ReadBytes(8);
+                    prob1gram[i] = BitConverter.ToDouble(bytes, 0);
                 }
-            }
-            
         }
 
         public void ReadProbabilities2Gram(String filename)
         {
             this.ngram = 2;
-            this.prob2gram = new double[this.size][];
+            this.prob2gram = new double[this.size, this.size];
 
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob2gram[i] = new double[this.size];
-            }
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob2gram.Length; i++)
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
                     {
-                        for (int j = 0; j < this.prob2gram.Length; j++)
-                        {
-                            var bytes = reader.ReadBytes(8);
-                            this.prob2gram[i][j] = BitConverter.ToDouble(bytes, 0); ;
-                        }
-                    }                   
-                }
-            }
-
+                        var bytes = reader.ReadBytes(8);
+                        this.prob2gram[i, j] = BitConverter.ToDouble(bytes, 0); ;
+                    }
         }
 
         public void ReadProbabilities3Gram(String filename)
         {
             this.ngram = 3;
-            this.prob3gram = new double[this.size][][];
+            this.prob3gram = new double[this.size, this.size, this.size];
 
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob3gram[i] = new double[this.size][];
-                for (int j = 0; j < this.size; j++)
-                {
-                    this.prob3gram[i][j] = new double[this.size];
-                }
-            }
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob3gram.Length; i++)
-                    {
-                        for (int j = 0; j < this.prob3gram.Length; j++)
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
+                        for (int k = 0; k < this.size; k++)
                         {
-                            for (int k = 0; k < this.prob3gram.Length; k++)
-                            {
-                                var bytes = reader.ReadBytes(8);
-                                this.prob3gram[i][j][k] = BitConverter.ToDouble(bytes, 0);
-                            }
+                            var bytes = reader.ReadBytes(8);
+                            this.prob3gram[i, j, k] = BitConverter.ToDouble(bytes, 0);
                         }
-                    }
-                }
-            }
         }
 
         public void ReadProbabilities4Gram(String filename)
         {
             this.ngram = 4;
-            this.prob4gram = new double[this.size][][][];
+            this.prob4gram = new double[this.size, this.size, this.size, this.size];
 
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob4gram[i] = new double[this.size][][];
-                for (int j = 0; j < this.size; j++)
-                {
-                    this.prob4gram[i][j] = new double[this.size][];
-                    for (int k = 0; k < this.size; k++)
-                    {
-                        this.prob4gram[i][j][k] = new double[this.size];
-                    }
-                }
-            }
             using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob4gram.Length; i++)
-                    {
-                        for (int j = 0; j < this.prob4gram.Length; j++)
-                        {
-                            for (int k = 0; k < this.prob4gram.Length; k++)
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
+                        for (int k = 0; k < this.size; k++)
+                            for (int l = 0; l < this.size; l++)
                             {
-                                for (int l = 0; l < this.prob4gram.Length; l++)
-                                {
-                                    var bytes = reader.ReadBytes(8);
-                                    this.prob4gram[i][j][k][l] = BitConverter.ToDouble(bytes, 0);
-                                }
+                                var bytes = reader.ReadBytes(8);
+                                this.prob4gram[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
                             }
-                        }
-                    }
-                }
-            }
         }
 
         public void ReadProbabilities5Gram(String filename)
         {
             this.ngram = 5;
-            this.prob5gram = new double[this.size][][][][];
-            
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob5gram[i] = new double[this.size][][][];
-                for (int j = 0; j < this.size; j++)
-                {
-                    this.prob5gram[i][j] = new double[this.size][][];
-                    for (int k = 0; k < this.size; k++)
-                    {
-                        this.prob5gram[i][j][k] = new double[this.size][];
-                        for (int l = 0; l < this.size; l++)
-                        {
-                            this.prob5gram[i][j][k][l] = new double[this.size];
-                        }
-                    }
-                }
-            }
-           
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob5gram.Length; i++)
-                    {
-                        for (int j = 0; j < this.prob5gram.Length; j++)
-                        {
-                            for (int k = 0; k < this.prob5gram.Length; k++)
-                            {
-                                for (int l = 0; l < this.prob5gram.Length; l++)
+            this.prob5gram = new double[this.size, this.size, this.size, this.size, this.size];
+
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
+                        for (int k = 0; k < this.size; k++)
+                            for (int l = 0; l < this.size; l++)
+                                for (int m = 0; m < this.size; m++)
                                 {
-                                    for (int m = 0; m < this.prob5gram.Length; m++)
-                                    {
-                                        var bytes = reader.ReadBytes(8);
-                                        this.prob5gram[i][j][k][l][m] = BitConverter.ToDouble(bytes, 0);
-                                    }
+                                    var bytes = reader.ReadBytes(8);
+                                    this.prob5gram[i, j, k, l, m] = BitConverter.ToDouble(bytes, 0);
                                 }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public void ReadProbabilities6Gram(String filename)
         {
             this.ngram = 6;
-            this.prob6gram = new double[this.size][][][][][];
+            this.prob6gram = new double[this.size, this.size, this.size, this.size, this.size, this.size];
 
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob6gram[i] = new double[this.size][][][][];
-                for (int j = 0; j < this.size; j++)
-                {
-                    this.prob6gram[i][j] = new double[this.size][][][];
-                    for (int k = 0; k < this.size; k++)
-                    {
-                        this.prob6gram[i][j][k] = new double[this.size][][];
-                        for (int l = 0; l < this.size; l++)
-                        {
-                            this.prob6gram[i][j][k][l] = new double[this.size][];
-                            for (int m = 0; m < this.size; m++)
-                            {
-                                this.prob6gram[i][j][k][l][m] = new double[this.size];
-                            }
-                        }
-                    }
-                }
-            }
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob6gram.Length; i++)
-                    {
-                        for (int j = 0; j < this.prob6gram.Length; j++)
-                        {
-                            for (int k = 0; k < this.prob6gram.Length; k++)
-                            {
-                                for (int l = 0; l < this.prob6gram.Length; l++)
-                                {
-                                    for (int m = 0; m < this.prob6gram.Length; m++)
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
+                        for (int k = 0; k < this.size; k++)
+                            for (int l = 0; l < this.size; l++)
+                                for (int m = 0; m < this.size; m++)
+                                    for (int n = 0; n < this.size; n++)
                                     {
-                                        for (int n = 0; n < this.prob6gram.Length; n++)
-                                        {
-                                            var bytes = reader.ReadBytes(8);
-                                            this.prob6gram[i][j][k][l][m][n] = BitConverter.ToDouble(bytes, 0);
-                                        }
+                                        var bytes = reader.ReadBytes(8);
+                                        this.prob6gram[i, j, k, l, m, n] = BitConverter.ToDouble(bytes, 0);
                                     }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         public void ReadProbabilities7Gram(String filename)
         {
             this.ngram = 7;
-            this.prob7gram = new double[this.size][][][][][][];
+            this.prob7gram = new double[this.size, this.size, this.size, this.size, this.size, this.size, this.size];
 
-            for (int i = 0; i < this.size; i++)
-            {
-                this.prob7gram[i] = new double[this.size][][][][][];
-                for (int j = 0; j < this.size; j++)
-                {
-                    this.prob7gram[i][j] = new double[this.size][][][][];
-                    for (int k = 0; k < this.size; k++)
-                    {
-                        this.prob7gram[i][j][k] = new double[this.size][][][];
-                        for (int l = 0; l < this.size; l++)
-                        {
-                            this.prob7gram[i][j][k][l] = new double[this.size][][];
-                            for (int m = 0; m < this.size; m++)
-                            {
-                                this.prob7gram[i][j][k][l][m] = new double[this.size][];
-                                for (int n = 0; n < this.size; n++)
-                                {
-                                    this.prob7gram[i][j][k][l][m][n] = new double[this.size];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < this.prob7gram.Length; i++)
-                    {
-                        for (int j = 0; j < this.prob7gram.Length; j++)
-                        {
-                            for (int k = 0; k < this.prob7gram.Length; k++)
-                            {
-                                for (int l = 0; l < this.prob7gram.Length; l++)
-                                {
-                                    for (int m = 0; m < this.prob7gram.Length; m++)
-                                    {
-                                        for (int n = 0; n < this.prob7gram.Length; n++)
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
+            using (var reader = new BinaryReader(fileStream))
+                for (int i = 0; i < this.size; i++)
+                    for (int j = 0; j < this.size; j++)
+                        for (int k = 0; k < this.size; k++)
+                            for (int l = 0; l < this.size; l++)
+                                for (int m = 0; m < this.size; m++)
+                                    for (int n = 0; n < this.size; n++)
+                                        for (int o = 0; o < this.size; o++)
                                         {
-                                            for (int o = 0; o < this.prob7gram.Length; o++)
-                                            {
-                                                var bytes = reader.ReadBytes(8);
-                                                this.prob7gram[i][j][k][l][m][n][o] = BitConverter.ToDouble(bytes, 0);
-                                            }
+                                            var bytes = reader.ReadBytes(8);
+                                            this.prob7gram[i, j, k, l, m, n, o] = BitConverter.ToDouble(bytes, 0);
                                         }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-         
         }
 
         public void ReadProbabilitiesFromNGramFile(String filename)
@@ -436,12 +268,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private double CalculateFitness2gram(Text plaintext)
         {
             double res = 0;
-            double[][] prob = this.Prob2Gram;
+            double[,] prob = this.Prob2Gram;
             int[] text = plaintext.ValidLetterArray;
 
             for (int pos0 = 0; pos0 < text.Length - 1; pos0++)
             {
-                res += prob[text[pos0]][text[pos0 + 1]];
+                res += prob[text[pos0], text[pos0 + 1]];
             }
             return res;
         }
@@ -449,7 +281,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private double CalculateFitness3gram(Text plaintext)
         {
             double res = 0;
-            double[][][] prob = this.Prob3Gram;
+            double[,,] prob = this.Prob3Gram;
             int[] text = plaintext.ValidLetterArray;
 
             if (text.Length == 1)
@@ -458,7 +290,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 {
                     for (int j = 0; j < this.alpha.Length; j++)
                     {
-                        res += prob[text[0]][i][j];
+                        res += prob[text[0], i, j];
                     }
                 }
             }
@@ -466,23 +298,28 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 for (int i=0; i < this.alpha.Length; i++)
                 {
-                    res += prob[text[0]][text[1]][i];
+                    res += prob[text[0], text[1], i];
                 }
             }
             else
             {
                 for (int pos0 = 0; pos0 < text.Length - 2; pos0++)
                 {
-                    res += prob[text[pos0]][text[pos0 + 1]][text[pos0 + 2]];
+                    res += prob[text[pos0], text[pos0 + 1], text[pos0 + 2]];
                 }
             }
             return res;
         }
 
+        public double CalculateFitness4gram2(Text plaintext)
+        {
+            return LanguageStatistics.Calculate4GramCost(prob4gram, plaintext.ValidLetterArray);
+        }
+
         private double CalculateFitness4gram(Text plaintext)
         {
             double res = 0;
-            double[][][][] prob = this.Prob4Gram;
+            double[,,,] prob = this.Prob4Gram;
             int[] text = plaintext.ValidLetterArray;
 
             if (text.Length == 1)
@@ -493,7 +330,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     {
                         for (int t=0; t < this.alpha.Length; t++)
                         {
-                            res += prob[text[0]][i][j][t];
+                            res += prob[text[0],i,j,t];
                         }
                     }
                 }
@@ -504,7 +341,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 {
                     for (int j = 0; j < this.alpha.Length; j++)
                     {
-                        res += prob[text[0]][text[1]][i][j];
+                        res += prob[text[0], text[1], i, j];
                     }
                 }
             }
@@ -512,14 +349,14 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 for (int i = 0; i < this.alpha.Length; i++)
                 {
-                    res += prob[text[0]][text[1]][text[2]][i];
+                    res += prob[text[0], text[1], text[2], i];
                 }
             }
             else
             {
                 for (int pos0 = 0; pos0 < text.Length - 3; pos0++)
                 {
-                    res += prob[text[pos0]][text[pos0 + 1]][text[pos0 + 2]][text[pos0 + 3]];
+                    res += prob[text[pos0], text[pos0 + 1], text[pos0 + 2], text[pos0 + 3]];
                 }
             }
             return res;
@@ -528,12 +365,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private double CalculateFitness5gram(Text plaintext)
         {
             double res = 0;
-            double[][][][][] prob = this.Prob5Gram;
+            double[,,,,] prob = this.Prob5Gram;
             int[] text = plaintext.ValidLetterArray;
 
             for (int pos0 = 0; pos0 < text.Length - 4; pos0++)
             {
-                res += prob[text[pos0]][text[pos0 + 1]][text[pos0 + 2]][text[pos0 + 3]][text[pos0 + 4]];
+                res += prob[text[pos0], text[pos0 + 1], text[pos0 + 2], text[pos0 + 3], text[pos0 + 4]];
             }
             return res;
         }
@@ -541,12 +378,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private double CalculateFitness6gram(Text plaintext)
         {
             double res = 0;
-            double[][][][][][] prob = this.Prob6Gram;
+            double[,,,,,] prob = this.Prob6Gram;
             int[] text = plaintext.ValidLetterArray;
 
             for (int pos0 = 0; pos0 < text.Length - 5; pos0++)
             {
-                res += prob[text[pos0]][text[pos0 + 1]][text[pos0 + 2]][text[pos0 + 3]][text[pos0 + 4]][text[pos0 + 5]];
+                res += prob[text[pos0], text[pos0 + 1], text[pos0 + 2], text[pos0 + 3], text[pos0 + 4], text[pos0 + 5]];
             }
             return res;
         }
@@ -554,12 +391,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private double CalculateFitness7gram(Text plaintext)
         {
             double res = 0;
-            double[][][][][][][] prob = this.Prob7Gram;
+            double[,,,,,,] prob = this.Prob7Gram;
             int[] text = plaintext.ValidLetterArray;
 
             for (int pos0 = 0; pos0 < text.Length - 6; pos0++)
             {
-                res += prob[text[pos0]][text[pos0 + 1]][text[pos0 + 2]][text[pos0 + 3]][text[pos0 + 4]][text[pos0 + 5]][text[pos0 + 5]];
+                res += prob[text[pos0], text[pos0 + 1], text[pos0 + 2], text[pos0 + 3], text[pos0 + 4], text[pos0 + 5], text[pos0 + 5]];
             }
             return res;
         }

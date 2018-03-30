@@ -11,8 +11,9 @@ using ManagedCuda;
 using ManagedCuda.BasicTypes;
 using ManagedCuda.VectorTypes;
 using Cryptool.PluginBase.IO;
+using Cryptool.PluginBase.Utils;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     class HillclimbingAttacker
     {
@@ -44,18 +45,25 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private bool stopFlag;
         private PluginProgress pluginProgress;
         private UpdateKeyDisplay updateKeyDisplay;
+        public CalculateCostDelegate calculateCost;
+
         //Input
         private string ciphertextString = null;
-        private string alphabet = null;
+        private string ciphertextalphabet = null;
+        private string plaintextalphabet = null;
         private int restarts;
-        private double[, , ,] _quadgrams;
+        public QuadGrams quadgrams; // GPU requires quadgrams
+
         //InplaceSymbols
         int[,] inplaceSpots;
         int[] inplaceAmountOfSymbols;
+
         //CudaVars
         static CudaKernel MajorKernel;
+
         //Output
         private long totalKeys;
+
         #endregion Variables;
 
         #region Input Properties
@@ -71,10 +79,16 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             set { this.ciphertextString = value; }
         }
 
-        public string Alphabet
+        public string CiphertextAlphabet
         {
-            get { return this.alphabet; }
-            set { this.alphabet = value; }
+            get { return this.ciphertextalphabet; }
+            set { this.ciphertextalphabet = value; }
+        }
+
+        public string PlaintextAlphabet
+        {
+            get { return this.plaintextalphabet; }
+            set { this.plaintextalphabet = value; }
         }
 
         public int Restarts
@@ -103,23 +117,30 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             get { return this.pluginProgress; }
             set { this.pluginProgress = value; }
         }
+
+        public CalculateCostDelegate CalculateCost
+        {
+            get { return this.calculateCost; }
+            set { this.calculateCost = value; }
+        }
+
         #endregion Output Properties
 
         public void ExecuteOnGPU()
         {
             //Initialise CUDA
             CudaContext cntxt = new CudaContext();
-            InitKernels(alphabet, cntxt);
+            InitKernels(plaintextalphabet, cntxt);
 
             #region Variables
 
             //Local C# Variables
             totalKeys = 0;
             long totalThreads = 0;
-            int alphabetlength = alphabet.Length; //Implemented for Performance
+            int alphabetlength = plaintextalphabet.Length; //Implemented for Performance
             double globalBestCost = double.MinValue;
-            int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(),alphabet), alphabet);
-            int[] ciphertextForCuda = CutCiphertext(ciphertext); //if the Ciphertextlength is > 1000, cut the text and ignore everything after the first 1k Symbols. (Performance and Cudaspecific needs).
+            int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(), ciphertextalphabet), ciphertextalphabet);
+            int[] ciphertextForCuda = ciphertext.Take(1000).ToArray(); //if the Ciphertext length is > 1000, cut the text and ignore everything after the first 1k Symbols. (Performance and Cuda specific needs).
             int textLength = ciphertextForCuda.Length;
 
             //Compute amount of threads used
@@ -131,17 +152,16 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 totalThreads = ((GRIDDIMES * GRIDDIMES) * (BLOCKDIMES * BLOCKDIMES));
             }
-            else if (alphabetlength == 30)
+            else
             {
                 totalThreads = ((GRIDDIMGER * GRIDDIMGER) * (BLOCKDIMGER * BLOCKDIMGER));
             }
 
             //Load Costfunction
-            Load4Grams();
+            //Load4Grams();
 
             //Cuda has no 4dim. Arrays => Break Costfunction down in one dimension
-            double[] d_singleDimQuadgrams = new double[alphabetlength * alphabetlength * alphabetlength * alphabetlength];
-            d_singleDimQuadgrams = QuadgramsToSingleDim(alphabetlength);
+            double[] d_singleDimQuadgrams = d_singleDimQuadgrams = QuadgramsToSingleDim(alphabetlength);
 
             //Variables for CUDA
             //totalthreads
@@ -149,7 +169,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             //vector_totalThreads.CopyToDevice(totalThreads);
 
             //Runkey: Copy Data to Device when calling Kernel.
-            CudaDeviceVariable<int> vector_runkey = new CudaDeviceVariable<int>(alphabet.Length);
+            CudaDeviceVariable<int> vector_runkey = new CudaDeviceVariable<int>(plaintextalphabet.Length);
 
             //Ciphertext (Already prepared for Kernel).
             CudaDeviceVariable<int> vector_ciphertext = new CudaDeviceVariable<int>(textLength);
@@ -188,7 +208,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                         runkey, vector_runkey, vector_quadgrams, vector_cudaout);
                         //cntxt.Synchronize();
 
-                        totalKeys = totalKeys + totalThreads; //Amount of tested keys tested.
+                        totalKeys += totalThreads; //Amount of tested keys tested.
 
                         //check if in _out are better CostValues than there are at the moment & return position else return "-1"
                         int betterKeyPosition = Betterkey(cuda_out, bestkeycost);
@@ -200,27 +220,24 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                             foundbetter = true;
                             int i = betterKeyPosition / alphabetlength;
                             int j = betterKeyPosition % alphabetlength;
-                            runkey = ModifyKey(runkey, i, j);
+                            Swap(runkey, i, j);
                         }
 
                     } while (foundbetter);
 
-                    if (StopFlag)
-                    {
-                        return;
-                    }
+                    if (StopFlag) return;
 
                     restarts--;
                     pluginProgress(totalRestarts - restarts, totalRestarts);
 
                     //Output
-                    if (bestkeycost > globalBestCost)
+                    //if (bestkeycost > globalBestCost)
                     {
                         globalBestCost = bestkeycost;
                         //Add to bestlist-output:
                         KeyCandidate newKeyCan = new KeyCandidate(runkey, globalBestCost,
-                            ConverteNumbersToLetters(UseKeyOnCipher(ciphertext, runkey, ciphertext.Length), alphabet), ConverteNumbersToLetters(runkey, alphabet));
-                        //Note: in usekeyOnCipher Method i use chiphertext.length instead of textlength! Because textlength = Length Cuda uses != the whole ciphertext textlength
+                            ConvertNumbersToLetters(UseKeyOnCipher(ciphertext, runkey), plaintextalphabet), ConvertNumbersToLetters(runkey, plaintextalphabet));
+                        //Note: in usekeyOnCipher Method i use ciphertext.length instead of textlength! Because textlength = Length Cuda uses != the whole ciphertext textlength
                         newKeyCan.HillAttack = true;
                         this.updateKeyDisplay(newKeyCan);
                     }
@@ -246,41 +263,38 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             #region{Variables}
 
             double globalbestkeycost = double.MinValue;
-            int[] bestkey = new int[alphabet.Length];
-            inplaceAmountOfSymbols = new int[alphabet.Length];
-            int besti = 0;
-            int bestj = 0;
-            int alphabetlength = alphabet.Length; //No need for calculating a few million times. (Performance)
+            int[] bestkey = new int[plaintextalphabet.Length];
+            inplaceAmountOfSymbols = new int[plaintextalphabet.Length];
+            int alphabetlength = plaintextalphabet.Length; //No need for calculating a few million times. (Performance)
             bool foundbetter;
             bool foundInplace = false;
             totalKeys = 0;
+            Random random = new Random();
+
             #endregion{Variables}
 
-            //Load Costfunction
-            Load4Grams();
-
             //Take input and prepare
-            int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(),alphabet), alphabet);
+            //int[] ciphertext = MapTextIntoNumberSpace(RemoveInvalidChars(ciphertextString.ToLower(), ciphertextalphabet), ciphertextalphabet);
+            PluginBase.Utils.Alphabet ciphertextAlphabet = new PluginBase.Utils.Alphabet(ciphertextalphabet);
+            PluginBase.Utils.Alphabet plaintextAlphabet = new PluginBase.Utils.Alphabet(plaintextalphabet);
+            PluginBase.Utils.Text cipherText = new PluginBase.Utils.Text(ciphertextString, ciphertextAlphabet);
+            int[] ciphertext = cipherText.ValidLetterArray;
+            
             int length = ciphertext.Length;
             int[] plaintext = new int[length];
-            inplaceSpots = new int[alphabet.Length, length];
-
-            var totalRestarts = restarts;
-
-            while (restarts > 0)
+            inplaceSpots = new int[plaintextalphabet.Length, length];
+            
+            for (int restart = 0; restart < restarts; restart++)
             {
+                pluginProgress(restart, restarts);
+
                 //Generate random key:
-                Random random = new Random();
                 int[] runkey = BuildRandomKey(random);
                 double bestkeycost = double.MinValue;
 
-                //Create first plaintext and analyse places of symbols:
-                plaintext = UseKeyOnCipher(ciphertext, runkey, length);
-                for (int i = 0; i < alphabet.Length; i++)
-                {
-                    inplaceAmountOfSymbols[i] = 0;
-                }
-                AnalyseSymbolPlaces(plaintext, length);
+                //Create first plaintext and analyze places of symbols:
+                plaintext = UseKeyOnCipher(ciphertext, runkey);
+                AnalyzeSymbolPlaces(plaintext, length);
 
                 do
                 {
@@ -288,146 +302,126 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     for (int i = 0; i < alphabetlength; i++)
                     {
                         foundInplace = false;
+                        int[] copykey = (int[])runkey.Clone();
                         for (int j = 0; j < alphabetlength; j++)
                         {
-                            if (i == j) { continue; }
+                            if (i == j) continue;
 
-                            //create childkey
-                            int[] copykey = (int[])runkey.Clone();
-                            copykey = ModifyKey(copykey, i, j);
-
-                            totalKeys++; //Count Keys for Performaceoutput
+                            //create child key
+                            Swap(copykey, i, j);
 
                             int sub1 = copykey[i];
                             int sub2 = copykey[j];
 
                             //Inplace swap in text
                             for (int m = 0; m < inplaceAmountOfSymbols[sub1]; m++)
-                            {
                                 plaintext[inplaceSpots[sub1, m]] = sub2;
-                            }
 
                             for (int m = 0; m < inplaceAmountOfSymbols[sub2]; m++)
-                            {
                                 plaintext[inplaceSpots[sub2, m]] = sub1;
-                            }
 
                             //Calculate the costfunction
-                            double costvalue = CalculateQuadgramCost(_quadgrams, plaintext);
+                            double costvalue = calculateCost(plaintext);
 
-                            //Reverte the CopyKeySubstitution
-                            //Inplace swap in text
-                            for (int m = 0; m < inplaceAmountOfSymbols[sub2]; m++)
-                            {
-                                plaintext[inplaceSpots[sub2, m]] = sub2;
-                            }
-
-                            for (int m = 0; m < inplaceAmountOfSymbols[sub1]; m++)
-                            {
-                                plaintext[inplaceSpots[sub1, m]] = sub1;
-                            }
-
-                            if (costvalue > bestkeycost) //When found a better key adopt it.
+                            if (bestkeycost < costvalue) //When found a better key adopt it.
                             {
                                 bestkeycost = costvalue;
-                                bestkey = copykey;
+                                bestkey = (int[])copykey.Clone();
                                 foundbetter = true;
                                 foundInplace = true;
-                                besti = i;
-                                bestj = j;
                             }
+
+                            //Revert the CopyKey substitution
+                            Swap(copykey, i, j);
+
+                            for (int m = 0; m < inplaceAmountOfSymbols[sub2]; m++)
+                                plaintext[inplaceSpots[sub2, m]] = sub2;
+
+                            for (int m = 0; m < inplaceAmountOfSymbols[sub1]; m++)
+                                plaintext[inplaceSpots[sub1, m]] = sub1;
+
+                            totalKeys++; //Count Keys for Performance output
                         }
 
                         //Fast converge take over new key + therefore new resulting plaintext
                         if (foundInplace)
                         {
                             runkey = bestkey;
-                            plaintext = InplaceSubstitution(plaintext, runkey[besti], runkey[bestj]);
+                            plaintext = UseKeyOnCipher(ciphertext, runkey);
+                            AnalyzeSymbolPlaces(plaintext, length);
                         }
                     }
                 } while (foundbetter);
 
-                if (StopFlag)
-                {
-                    return;
-                }
+                if (StopFlag) return;
 
-                restarts--;
-                pluginProgress(totalRestarts - restarts, totalRestarts);
-
-                if (bestkeycost > globalbestkeycost)
+                if (globalbestkeycost < bestkeycost)
                 {
                     globalbestkeycost = bestkeycost;
                     //Add to bestlist-output:
-                    KeyCandidate newKeyCan = new KeyCandidate(bestkey, globalbestkeycost,
-                        ConverteNumbersToLetters(plaintext,alphabet), ConverteNumbersToLetters(bestkey,alphabet));
+                    string sss = cipherText.ToString(plaintextAlphabet, true);
+                    string keystring = CreateKeyOutput(bestkey);
+                    KeyCandidate newKeyCan = new KeyCandidate(bestkey, bestkeycost, ConvertNumbersToLetters(UseKeyOnCipher(ciphertext, bestkey), plaintextalphabet), keystring);
+                    //KeyCandidate newKeyCan = new KeyCandidate(bestkey, bestkeycost, ConvertNumbersToLetters(UseKeyOnCipher(ciphertext, bestkey), plaintextalphabet), ConvertNumbersToLetters(bestkey, plaintextalphabet));
                     newKeyCan.HillAttack = true;
                     this.updateKeyDisplay(newKeyCan);
                 }
             }
-            pluginProgress(1, 1);
         }
 
         #region Methods & Functions
 
+        private String CreateKeyOutput(int[] key)
+        {
+            char[] k = new char[plaintextalphabet.Length];
+            for (int i = 0; i < k.Length; i++) k[i] = ' ';
+
+            for (int i = 0; i < ciphertextalphabet.Length; i++)
+                k[key[i]] = ciphertextalphabet[i];
+
+            return new string(k);
+        }
+
         public static string RemoveInvalidChars(string text, string alphabet)
         {
-            var builder = new StringBuilder();
-            foreach (var c in text)
-            {
-                if (alphabet.Contains(c))
-                {
-                    builder.Append(c);
-                }
-            }
-            return builder.ToString();
+            return new string((text.Where(c => alphabet.Contains(c))).ToArray());
         }
 
         public static int[] MapTextIntoNumberSpace(string text, string alphabet)
         {
-            var numbers = new int[text.Length];
-            var position = 0;
-            foreach (var c in text)
-            {
-                numbers[position] = alphabet.IndexOf(c);
-                position++;
-            }
-            return numbers;
+            return text.Select(c => alphabet.IndexOf(c)).ToArray();
         }
 
         private int[] BuildRandomKey(Random randomdev)
         {
             List<int> list = new List<int>();
-            for (int i = 0; i < alphabet.Length; i++) list.Add(i);
+            for (int i = 0; i < plaintextalphabet.Length; i++) list.Add(i);
 
-            int[] key = new int[alphabet.Length];
+            int[] key = new int[plaintextalphabet.Length];
 
-            for (int i = (alphabet.Length - 1); i >= 0; i--)
+            for (int i = (plaintextalphabet.Length - 1); i >= 0; i--)
             {
                 int random = randomdev.Next(0, i + 1);
                 key[i] = list[random];
                 list.RemoveAt(random);
             }
+
             return key;
         }
 
-        private int[] ModifyKey(int[] parentKey, int i, int j)
+        private void Swap(int[] key, int i, int j)
         {
-            // swap i with j
-            int temp = parentKey[i];
-            parentKey[i] = parentKey[j];
-            parentKey[j] = temp;
-
-            return (parentKey);
+            int tmp = key[i];
+            key[i] = key[j];
+            key[j] = tmp;
         }
 
-        private int[] UseKeyOnCipher(int[] ciphertext, int[] key, int length)
+        private int[] UseKeyOnCipher(int[] ciphertext, int[] key)
         {
-            int[] plaintext = new int[length];
-            for (int i = 0; i < length; i++)
-            {
+            int[] plaintext = new int[ciphertext.Length];
+            
+            for (int i = 0; i < ciphertext.Length; i++)
                 plaintext[i] = key[ciphertext[i]];
-            }
 
             return plaintext;
         }
@@ -478,189 +472,25 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// <param name="numbers"></param>
         /// <param name="alphabet"></param>
         /// <returns></returns>
-        public static string ConverteNumbersToLetters(int[] numbers, string alphabet)
+        public static string ConvertNumbersToLetters(int[] numbers, string alphabet)
         {
-            var builder = new StringBuilder();
-            foreach (var i in numbers)
-            {
-                builder.Append(alphabet[i]);
-            }
-            return builder.ToString();
+            return String.Join("", numbers.Select(i => alphabet[i]));
         }
 
-        private void AnalyseSymbolPlaces(int[] plaintext, int length)
+        private void AnalyzeSymbolPlaces(int[] text, int length)
         {
+            for (int i = 0; i < plaintextalphabet.Length; i++)
+                inplaceAmountOfSymbols[i] = 0;
+
             for (int i = 0; i < length; i++)
             {
-                switch (plaintext[i])
+                int p = text[i];
+                if (p < 0 || p > length)
                 {
-                    case 0:
-                        inplaceSpots[0, inplaceAmountOfSymbols[0]] = i;
-                        inplaceAmountOfSymbols[0]++;
-                        break;
-                    case 1:
-                        inplaceSpots[1, inplaceAmountOfSymbols[1]] = i;
-                        inplaceAmountOfSymbols[1]++;
-                        break;
-                    case 2:
-                        inplaceSpots[2, inplaceAmountOfSymbols[2]] = i;
-                        inplaceAmountOfSymbols[2]++;
-                        break;
-                    case 3:
-                        inplaceSpots[3, inplaceAmountOfSymbols[3]] = i;
-                        inplaceAmountOfSymbols[3]++;
-                        break;
-                    case 4:
-                        inplaceSpots[4, inplaceAmountOfSymbols[4]] = i;
-                        inplaceAmountOfSymbols[4]++;
-                        break;
-                    case 5:
-                        inplaceSpots[5, inplaceAmountOfSymbols[5]] = i;
-                        inplaceAmountOfSymbols[5]++;
-                        break;
-                    case 6:
-                        inplaceSpots[6, inplaceAmountOfSymbols[6]] = i;
-                        inplaceAmountOfSymbols[6]++;
-                        break;
-                    case 7:
-                        inplaceSpots[7, inplaceAmountOfSymbols[7]] = i;
-                        inplaceAmountOfSymbols[7]++;
-                        break;
-                    case 8:
-                        inplaceSpots[8, inplaceAmountOfSymbols[8]] = i;
-                        inplaceAmountOfSymbols[8]++;
-                        break;
-                    case 9:
-                        inplaceSpots[9, inplaceAmountOfSymbols[9]] = i;
-                        inplaceAmountOfSymbols[9]++;
-                        break;
-                    case 10:
-                        inplaceSpots[10, inplaceAmountOfSymbols[10]] = i;
-                        inplaceAmountOfSymbols[10]++;
-                        break;
-                    case 11:
-                        inplaceSpots[11, inplaceAmountOfSymbols[11]] = i;
-                        inplaceAmountOfSymbols[11]++;
-                        break;
-                    case 12:
-                        inplaceSpots[12, inplaceAmountOfSymbols[12]] = i;
-                        inplaceAmountOfSymbols[12]++;
-                        break;
-                    case 13:
-                        inplaceSpots[13, inplaceAmountOfSymbols[13]] = i;
-                        inplaceAmountOfSymbols[13]++;
-                        break;
-                    case 14:
-                        inplaceSpots[14, inplaceAmountOfSymbols[14]] = i;
-                        inplaceAmountOfSymbols[14]++;
-                        break;
-                    case 15:
-                        inplaceSpots[15, inplaceAmountOfSymbols[15]] = i;
-                        inplaceAmountOfSymbols[15]++;
-                        break;
-                    case 16:
-                        inplaceSpots[16, inplaceAmountOfSymbols[16]] = i;
-                        inplaceAmountOfSymbols[16]++; ;
-                        break;
-                    case 17:
-                        inplaceSpots[17, inplaceAmountOfSymbols[17]] = i;
-                        inplaceAmountOfSymbols[17]++;
-                        break;
-                    case 18:
-                        inplaceSpots[18, inplaceAmountOfSymbols[18]] = i;
-                        inplaceAmountOfSymbols[18]++;
-                        break;
-                    case 19:
-                        inplaceSpots[19, inplaceAmountOfSymbols[19]] = i;
-                        inplaceAmountOfSymbols[19]++;
-                        break;
-                    case 20:
-                        inplaceSpots[20, inplaceAmountOfSymbols[20]] = i;
-                        inplaceAmountOfSymbols[20]++;
-                        break;
-                    case 21:
-                        inplaceSpots[21, inplaceAmountOfSymbols[21]] = i;
-                        inplaceAmountOfSymbols[21]++;
-                        break;
-                    case 22:
-                        inplaceSpots[22, inplaceAmountOfSymbols[22]] = i;
-                        inplaceAmountOfSymbols[22]++;
-                        break;
-                    case 23:
-                        inplaceSpots[23, inplaceAmountOfSymbols[23]] = i;
-                        inplaceAmountOfSymbols[23]++;
-                        break;
-                    case 24:
-                        inplaceSpots[24, inplaceAmountOfSymbols[24]] = i;
-                        inplaceAmountOfSymbols[24]++;
-                        break;
-                    case 25:
-                        inplaceSpots[25, inplaceAmountOfSymbols[25]] = i;
-                        inplaceAmountOfSymbols[25]++;
-                        break;
-                    case 26:
-                        inplaceSpots[26, inplaceAmountOfSymbols[26]] = i;
-                        inplaceAmountOfSymbols[26]++;
-                        break;
-                    case 27:
-                        inplaceSpots[27, inplaceAmountOfSymbols[27]] = i;
-                        inplaceAmountOfSymbols[27]++;
-                        break;
-                    case 28:
-                        inplaceSpots[28, inplaceAmountOfSymbols[28]] = i;
-                        inplaceAmountOfSymbols[28]++;
-                        break;
-                    case 29:
-                        inplaceSpots[29, inplaceAmountOfSymbols[29]] = i;
-                        inplaceAmountOfSymbols[29]++;
-                        break;
-                    default:
-                        Console.WriteLine("Error: analyseSymbolPlaces Switch reached default");
-                        break;
+                    Console.WriteLine("Error: illegal symbol found");
+                    break;
                 }
-            }
-        }
-
-        public static double CalculateQuadgramCost(double[, , ,] ngrams4, int[] plaintext)
-        {
-            double value = 0;
-            var end = plaintext.Length - 3;
-
-            for (var i = 0; i < end; i++)
-            {
-                value += ngrams4[plaintext[i], plaintext[i + 1], plaintext[i + 2], plaintext[i + 3]];
-            }
-            return value;
-        }
-
-        private void Load4Grams()
-        {
-            string filename = "";
-            if (alphabet.Length == 26) filename = "en-4gram-nocs.bin";
-            if (alphabet.Length == 27) filename = "es-4gram-nocs.bin";
-            if (alphabet.Length == 30) filename = "de-4gram-nocs.bin";
-
-            _quadgrams = new double[alphabet.Length, alphabet.Length, alphabet.Length, alphabet.Length];
-
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = new BinaryReader(fileStream))
-                {
-                    for (int i = 0; i < alphabet.Length; i++)
-                    {
-                        for (int j = 0; j < alphabet.Length; j++)
-                        {
-                            for (int k = 0; k < alphabet.Length; k++)
-                            {
-                                for (int l = 0; l < alphabet.Length; l++)
-                                {
-                                    var bytes = reader.ReadBytes(8);
-                                    _quadgrams[i, j, k, l] = BitConverter.ToDouble(bytes, 0);
-                                }
-                            }
-                        }
-                    }
-                }
+                inplaceSpots[p, inplaceAmountOfSymbols[p]++] = i;
             }
         }
 
@@ -711,41 +541,34 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             MajorKernel.GridDimensions = gridsize;
         }
 
-        private int Betterkey(double[] costvlaues, double bestcostvalue)
+        private int Betterkey(double[] costvalues, double bestcostvalue)
         {
-            //This method searches for the best possible key in the costvlauesset that is better then the bestcostvlaue at the moment
+            //This method searches for the best possible key in the costvaluesset that is better then the bestcostvalue at the moment
             //When there is no better key return -1
             int position = -1;
 
-            for (int i = 0; i < costvlaues.Length; i++)
+            for (int i = 0; i < costvalues.Length; i++)
             {
-                if (costvlaues[i] > bestcostvalue)
+                if (costvalues[i] > bestcostvalue)
                 {
                     position = i;
-                    bestcostvalue = costvlaues[i];
+                    bestcostvalue = costvalues[i];
                 }
             }
+
             return position;
         }
 
         private int[] CutCiphertext(int[] ciphertext)
         {
-            //Cuts the Ciphertext to a maximium length of 1000 Symbols. Else it will get too big to handle for Kernel.
-            int[] cuttedCipher;
+            //Cuts the Ciphertext to a maximum length of 1000 Symbols. Else it will get too big to handle for Kernel.
+            const int max = 1000;
 
-            if (ciphertext.Length < 1000)
-            {
-                cuttedCipher = new int[ciphertext.Length];
-                cuttedCipher = ciphertext;
-            }
-            else
-            {
-                cuttedCipher = new int[1000];
-                for (int i = 0; i < 1000; i++)
-                {
-                    cuttedCipher[i] = ciphertext[i];
-                }
-            }
+            if (ciphertext.Length < max)
+                return ciphertext;
+            
+            int[] cuttedCipher = new int[max];
+            Array.Copy(ciphertext, cuttedCipher, max);
             return cuttedCipher;
         }
 
@@ -754,19 +577,14 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             // al = alphabetlength
             double[] singleDimQuadgrams = new double[al * al * al * al];
 
+            int i = 0;
+
             for (int dim4 = 0; dim4 < al; dim4++)
-            {
                 for (int dim3 = 0; dim3 < al; dim3++)
-                {
                     for (int dim2 = 0; dim2 < al; dim2++)
-                    {
                         for (int dim1 = 0; dim1 < al; dim1++)
-                        {
-                            singleDimQuadgrams[dim1 + (dim2 * al) + (dim3 * (al * al)) + (dim4 * (al * al * al))] = _quadgrams[dim1, dim2, dim3, dim4];
-                        }
-                    }
-                }
-            }
+                            singleDimQuadgrams[i++] = quadgrams.Frequencies[dim1, dim2, dim3, dim4];
+
             return singleDimQuadgrams;
         }
 

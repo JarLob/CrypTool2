@@ -8,7 +8,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     class GeneticAttacker
     {
@@ -139,7 +139,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         public void Analyze()
         {
             //Set progress to 50%
-            this.pluginProgress(50.0, 100.0);
+            this.pluginProgress(50, 100);
 
             // Adjust analyzer parameters to ciphertext length
             AdjustAnalyzerParameters(this.ciphertext.Length);
@@ -152,11 +152,6 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             // Execute analysis
             for (int curRep = 0; curRep < this.repetitions; curRep++)
             {
-                if (this.stopFlag == true)
-                {
-                    return;
-                }
-
                 Population population = new Population();
                 SetUpEnvironment(population, GeneticAttacker.population_size);
 
@@ -168,10 +163,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
                 while ((change > GeneticAttacker.changeBorder) && (curGen < GeneticAttacker.maxGenerations))
                 {
-                    if (this.stopFlag == true)
-                    {
-                        return;
-                    }
+                    if (StopFlag) return;
 
                     nextGen = CreateNextGeneration(nextGen, this.ciphertext, this.ciphertext_alphabet, false);
                     change = nextGen.dev;
@@ -208,26 +200,13 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             this.best_key = new int[size];
             pop.keys = new int[size][];
             pop.fitness = new double[size];
-       
+
             // Create probability array to choose crossover keys
-            int s = 0;
-            int[] quantElements = new int[size];
-            for (int i = 0; i < size; i++)
-            {
-                s += i;
-                quantElements[i] = size - i;
-            }
-            s += size;
-            pop.prob = new int[s];
-            int index = 0;
-            for (int i = 0; i < quantElements.Length; i++)
-            {
-                for (int j = 0; j < quantElements[i]; j++)
-                {
-                    pop.prob[index] = i;
-                    index++;
-                }
-            }
+            pop.prob = new int[(size * (size + 1)) / 2];
+
+            for (int i = 0, k = 0; i < size; i++)
+                for (int j = 0; j < size - i; j++)
+                    pop.prob[k++] = i;
         }
 
         private void CreateInitialGeneration(Population pop, Text ciphertext, Alphabet cipher_alpha, Alphabet plain_alpha, Frequencies freq)
@@ -356,26 +335,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private void AdjustAnalyzerParameters(int textlength)
         {
             // Change parameters according to the ciphertext length
-            if (textlength >= 200)
-            {
-                this.repetitions = 1;
-            }
-            else if ((textlength >= 100) && (textlength < 200))
-            {
-                this.repetitions = 2;
-            }
-            else if ((textlength >= 90) && (textlength < 100))
-            {
-                this.repetitions = 10;
-            }
-            else if ((textlength >= 70) && (textlength < 80))
-            {
-                this.repetitions = 20;
-            }
-            else if (textlength < 70)
-            {
-                this.repetitions = 30;
-            }
+            if (textlength >= 200) this.repetitions = 1;
+            else if (textlength >= 100) this.repetitions = 2;
+            else if (textlength >= 90) this.repetitions = 10;
+            else if (textlength >= 70) this.repetitions = 20;
+            else this.repetitions = 30;
         }
 
         #endregion

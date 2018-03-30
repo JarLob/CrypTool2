@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AnalysisMonoalphabeticSubstitution.Properties {
+namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -39,7 +39,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("AnalysisMonoalphabeticSubstitution.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -322,6 +322,42 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext alphabet ähnelt.
+        /// </summary>
+        public static string CiphertextAlphabetCaption {
+            get {
+                return ResourceManager.GetString("CiphertextAlphabetCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alphabet of the ciphertext ähnelt.
+        /// </summary>
+        public static string CiphertextAlphabetTooltip {
+            get {
+                return ResourceManager.GetString("CiphertextAlphabetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
+        /// </summary>
+        public static string CiphertextCaption {
+            get {
+                return ResourceManager.GetString("CiphertextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypted text ähnelt.
+        /// </summary>
+        public static string CiphertextTooltip {
+            get {
+                return ResourceManager.GetString("CiphertextTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copy all lines ähnelt.
         /// </summary>
         public static string Copy_all {
@@ -430,7 +466,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary attack finished in  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds. ähnelt.
         /// </summary>
         public static string dic_attack_finished {
             get {
@@ -466,7 +502,9 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Length of ciphertext alphabet and plaintext alphabet is different. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The ciphertext alphabet contains more letters than the plaintext alphabet.
+        ///Ciphertext alphabet: &quot;{0}&quot; ({1} letters)
+        ///Plaintext alphabet: &quot;{2}&quot; ({3} letters) ähnelt.
         /// </summary>
         public static string error_alphabet_length {
             get {
@@ -493,7 +531,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Genetic attack finished in  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Genetic attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds. ähnelt.
         /// </summary>
         public static string gen_attack_finished {
             get {
@@ -502,7 +540,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of tested keys with genetic attack:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of tested keys with genetic attack: {0} ähnelt.
         /// </summary>
         public static string gen_attack_testedkeys {
             get {
@@ -520,7 +558,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Hillclimbing attack finished in:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hillclimbing attack finished in {0:00} hours, {1:00} minutes, {2:00} seconds. ähnelt.
         /// </summary>
         public static string hill_attack_finished {
             get {
@@ -529,7 +567,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Tested keys with hillclimbing per second:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tested keys with hillclimbing per second: {0} ähnelt.
         /// </summary>
         public static string hill_attack_keyspersecond {
             get {
@@ -538,7 +576,7 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of tested keys with hillclimbing attack:  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of tested keys with hillclimbing attack: {0} ähnelt.
         /// </summary>
         public static string hill_attack_testedkeys {
             get {
@@ -561,6 +599,51 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         public static string KeyHeader {
             get {
                 return ResourceManager.GetString("KeyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Key ähnelt.
+        /// </summary>
+        public static string KeyOutputCaption {
+            get {
+                return ResourceManager.GetString("KeyOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the recovered key ähnelt.
+        /// </summary>
+        public static string KeyOutputTooltip {
+            get {
+                return ResourceManager.GetString("KeyOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keys / sec.: ähnelt.
+        /// </summary>
+        public static string KeysPerSecLabel {
+            get {
+                return ResourceManager.GetString("KeysPerSecLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary ähnelt.
+        /// </summary>
+        public static string LanguagedictionaryCaption {
+            get {
+                return ResourceManager.GetString("LanguagedictionaryCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary of assumed plaintext language ähnelt.
+        /// </summary>
+        public static string LanguagedictionaryTooltip {
+            get {
+                return ResourceManager.GetString("LanguagedictionaryTooltip", resourceCulture);
             }
         }
         
@@ -646,6 +729,60 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet ähnelt.
+        /// </summary>
+        public static string PlaintextAlphabetCaption {
+            get {
+                return ResourceManager.GetString("PlaintextAlphabetCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet ähnelt.
+        /// </summary>
+        public static string PlaintextAlphabetOutputCaption {
+            get {
+                return ResourceManager.GetString("PlaintextAlphabetOutputCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet with letters in the order to decrypt the ciphertext ähnelt.
+        /// </summary>
+        public static string PlaintextAlphabetOutputTooltip {
+            get {
+                return ResourceManager.GetString("PlaintextAlphabetOutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Assumed alphabet of the plaintext ähnelt.
+        /// </summary>
+        public static string PlaintextAlphabetTooltip {
+            get {
+                return ResourceManager.GetString("PlaintextAlphabetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
+        /// </summary>
+        public static string PlaintextCaption {
+            get {
+                return ResourceManager.GetString("PlaintextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypted text ähnelt.
+        /// </summary>
+        public static string PlaintextTooltip {
+            get {
+                return ResourceManager.GetString("PlaintextTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Monoalphabetic Substitution Analyzer ähnelt.
         /// </summary>
         public static string PluginCaption {
@@ -660,132 +797,6 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext alphabet ähnelt.
-        /// </summary>
-        public static string PropCiphertextalphabetCaption {
-            get {
-                return ResourceManager.GetString("PropCiphertextalphabetCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Alphabet of the ciphertext ähnelt.
-        /// </summary>
-        public static string PropCiphertextalphabetTooltip {
-            get {
-                return ResourceManager.GetString("PropCiphertextalphabetTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Ciphertext ähnelt.
-        /// </summary>
-        public static string PropCiphertextCaption {
-            get {
-                return ResourceManager.GetString("PropCiphertextCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Encrypted text ähnelt.
-        /// </summary>
-        public static string PropCiphertextTooltip {
-            get {
-                return ResourceManager.GetString("PropCiphertextTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary ähnelt.
-        /// </summary>
-        public static string PropLanguagedictionaryCaption {
-            get {
-                return ResourceManager.GetString("PropLanguagedictionaryCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Dictionary of assumed plaintext language ähnelt.
-        /// </summary>
-        public static string PropLanguagedictionaryTooltip {
-            get {
-                return ResourceManager.GetString("PropLanguagedictionaryTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet ähnelt.
-        /// </summary>
-        public static string PropPlaintextalphabetCaption {
-            get {
-                return ResourceManager.GetString("PropPlaintextalphabetCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet ähnelt.
-        /// </summary>
-        public static string PropPlaintextalphabetoutputCaption {
-            get {
-                return ResourceManager.GetString("PropPlaintextalphabetoutputCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext alphabet with letters in the order to decrypt the ciphertext ähnelt.
-        /// </summary>
-        public static string PropPlaintextalphabetoutputTooltip {
-            get {
-                return ResourceManager.GetString("PropPlaintextalphabetoutputTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Assumed alphabet of the plaintext ähnelt.
-        /// </summary>
-        public static string PropPlaintextalphabetTooltip {
-            get {
-                return ResourceManager.GetString("PropPlaintextalphabetTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Plaintext ähnelt.
-        /// </summary>
-        public static string PropPlaintextCaption {
-            get {
-                return ResourceManager.GetString("PropPlaintextCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Decrypted text ähnelt.
-        /// </summary>
-        public static string PropPlaintextTooltip {
-            get {
-                return ResourceManager.GetString("PropPlaintextTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Reference text ähnelt.
-        /// </summary>
-        public static string PropReferencetextCaption {
-            get {
-                return ResourceManager.GetString("PropReferencetextCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sample text to extract letter frequencies of the assumed plaintext language ähnelt.
-        /// </summary>
-        public static string PropReferencetextTooltip {
-            get {
-                return ResourceManager.GetString("PropReferencetextTooltip", resourceCulture);
             }
         }
         
@@ -853,7 +864,25 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Amount of restarts (Hillclimbing only) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reference text ähnelt.
+        /// </summary>
+        public static string ReferencetextCaption {
+            get {
+                return ResourceManager.GetString("ReferencetextCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sample text to extract letter frequencies of the assumed plaintext language ähnelt.
+        /// </summary>
+        public static string ReferencetextTooltip {
+            get {
+                return ResourceManager.GetString("ReferencetextTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restarts ähnelt.
         /// </summary>
         public static string RestartsCaption {
             get {
@@ -925,6 +954,15 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Tested keys: ähnelt.
+        /// </summary>
+        public static string TotalKeysLabel {
+            get {
+                return ResourceManager.GetString("TotalKeysLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Invalid Characters ähnelt.
         /// </summary>
         public static string TreatmentInvalidCharsCaption {
@@ -957,6 +995,24 @@ namespace AnalysisMonoalphabeticSubstitution.Properties {
         public static string UseDefaultWordSeparatorTooltip {
             get {
                 return ResourceManager.GetString("UseDefaultWordSeparatorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use spaces ähnelt.
+        /// </summary>
+        public static string UseSpacesCaption {
+            get {
+                return ResourceManager.GetString("UseSpacesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use language statistics that include the space character ähnelt.
+        /// </summary>
+        public static string UseSpacesTooltip {
+            get {
+                return ResourceManager.GetString("UseSpacesTooltip", resourceCulture);
             }
         }
         

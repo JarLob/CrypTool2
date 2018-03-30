@@ -18,6 +18,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Cryptool.PluginBase;
 using System.ComponentModel;
 using Cryptool.PluginBase.IO;
@@ -26,18 +27,20 @@ using System.Windows.Controls;
 using System.Diagnostics;
 using System.Windows.Threading;
 using System.Threading;
-using AnalysisMonoalphabeticSubstitution.Properties;
+using Cryptool.AnalysisMonoalphabeticSubstitution.Properties;
+using Cryptool.PluginBase.Utils;
 using ManagedCuda;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     public delegate void PluginProgress(double current, double maximum);
     public delegate void UpdateOutput(String key_string, String plaintext_string);
     delegate double CalculateFitness(Text plaintext);
     delegate void UpdateKeyDisplay(KeyCandidate keyCan);
+    delegate double CalculateCostDelegate(int[] plaintext);
 
     [Author("Andreas Grüner, Cordian Henkel", "Andreas.Gruener@web.de, Cordian.Henkel@yahoo.de", "Humboldt University Berlin, Universität Kassel", "http://www.hu-berlin.de, https://www.ais.uni-kassel.de")]
-    [PluginInfo("AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
+    [PluginInfo("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources", "PluginCaption", "PluginTooltip", "AnalysisMonoalphabeticSubstitution/Documentation/doc.xml", "AnalysisMonoalphabeticSubstitution/icon.png")]
     [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
 
     public class AnalysisMonoalphabeticSubstitution : ICrypComponent
@@ -56,68 +59,66 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private Dictionary langDic = null;
         private Text cText = null;
         private List<KeyCandidate> keyCandidates;
-
-        // Statistics
-        private TimeSpan total_time = new TimeSpan();       /*NEVER USED. WHAT TO DO ? */
-        private TimeSpan currun_time;                      /*NEVER USED. WHAT TO DO ? */
+        private string ciphertextalphabet;
+        private string plaintextalphabet;
+        private string keyoutput;
+        private QuadGrams quadgrams;
 
         // Input property variables
         private String ciphertext;
       
         // Output property variables
         private String plaintext;
-        private String plaintext_alphabet_output;
+        private String plaintextalphabetoutput;
 
         // Presentation
         private AssignmentPresentation masPresentation = new AssignmentPresentation();
         private DateTime startTime;
         private DateTime endTime;
-
-        // Alphabet constants
-        private const String English = "abcdefghijklmnopqrstuvwxyz";
-        private const String German = "abcdefghijklmnopqrstuvwxyzäüöß";
-        private const String Spanish = "abcdefghijklmnopqrstuvwxyzñ";
-        private const String Latin = "abcdefghijklmnopqrstuvwxyz";
-        private const String French = "abcdefghijklmnopqrstuvwxyz";
-        private const String Hungarian = "abcdefghijklmnopqrstuvwxyz";
-        private const String Swedish = "abcdefghijklmnopqrstuvwxyzåäö";
-        private const String Italian = "abcdefghijklmnopqrstuvwxyz";
-        private const String Dutch = "abcdefghijklmnopqrstuvwxyz";
-        private const String Portuguese = "abcdefghijklmnopqrstuvwxyz";
-        private const String Czech = "abcdefghijklmnopqrstuvwxyz";
-        private const String Greek = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ";
+        private long totalKeys;
+        private double keysPerSecond;
 
         // Attackers
         private DictionaryAttacker dicAttacker;
         private GeneticAttacker genAttacker;
         private HillclimbingAttacker hillAttacker;
 
-        // Test for CUDA
-        private bool cudaAvailable;
+        CalculateCostDelegate CalculateCost;
 
         #endregion
 
         #region Data Properties
 
-        [PropertyInfo(Direction.InputData, "PropCiphertextCaption", "PropCiphertextTooltip", true)]
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip", true)]
         public String Ciphertext
         {
             get { return this.ciphertext; }
             set { this.ciphertext = value; }
         }
-       
-        [PropertyInfo(Direction.OutputData, "PropPlaintextCaption", "PropPlaintextTooltip", true)]
+
+        [PropertyInfo(Direction.InputData, "CiphertextAlphabetCaption", "CiphertextAlphabetTooltip", false)]
+        public String CiphertextAlphabet
+        {
+            get { return this.ciphertextalphabet; }
+            set { this.ciphertextalphabet = value; }
+        }
+
+        [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip", true)]
         public String Plaintext
         {
             get { return this.plaintext; }
-            set { }
         }
 
-        [PropertyInfo(Direction.OutputData, "PropPlaintextalphabetoutputCaption", "PropPlaintextalphabetoutputTooltip", true)]
-        public String Plaintext_Alphabet_Output
+        [PropertyInfo(Direction.OutputData, "PlaintextAlphabetOutputCaption", "PlaintextAlphabetOutputTooltip", true)]
+        public String PlaintextAlphabetOutput
         {
-            get { return this.plaintext_alphabet_output; }
-            set { }
+            get { return this.plaintextalphabetoutput; }
+        }
+
+        [PropertyInfo(Direction.OutputData, "KeyOutputCaption", "KeyOutputTooltip", true)]
+        public String KeyOutput
+        {
+            get { return this.keyoutput; }
         }
 
         #endregion
@@ -128,20 +129,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         {
             get { return settings; }
         }
-
-        /// <summary>
-        /// HOWTO: You can provide a custom (tabbed) presentation to visualize your algorithm.
-        /// Return null if you don't provide one.
-        /// </summary>
+        
         public UserControl Presentation
         {
             get { return this.masPresentation; }
         }
-
-        /// <summary>
-        /// HOWTO: You can provide custom (quickwatch) presentation to visualize your algorithm.
-        /// Return null if you don't provide one.
-        /// </summary>
+        
         public UserControl QuickWatchPresentation
         {
             get { return null; }
@@ -149,17 +142,16 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
         public void PreExecution()
         {
-
+            Ciphertext = null;
+            CiphertextAlphabet = null;
         }
 
         public void Execute()
         {
-
             this.genAttacker = new GeneticAttacker();
             this.dicAttacker = new DictionaryAttacker();
             this.hillAttacker = new HillclimbingAttacker();
-
-            String alpha = "";
+            
             Boolean inputOK = true;
 
             // Clear presentation
@@ -169,180 +161,103 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             }, null);
 
             // Prepare the cryptanalysis of the ciphertext
+            
+            ciphertext = ciphertext.ToLower();   // Todo: add case handling
 
-            // Set alphabet 
-            alpha = detAlphabet(settings.Alphabet);
-            this.ptAlphabet = new Alphabet(alpha, 1, settings.Alphabet);
-            this.ctAlphabet = new Alphabet(alpha, 1, settings.Alphabet);
-
-            // N-gram probabilities    
-            String helper = IdentifyNGramFile(settings.Alphabet);
-            if (helper != null)
+            if (settings.ChooseAlgorithm < 2)
             {
-                this.langFreq = new Frequencies(this.ptAlphabet);
-                this.langFreq.ReadProbabilitiesFromNGramFile(helper);
+                // Set alphabets
+                string lang = LanguageStatistics.LanguageCode(settings.Language);
+                quadgrams = new QuadGrams(lang, settings.UseSpaces);
+                //pentagrams = new PentaGrams(lang, settings.UseSpaces);
+                CalculateCost = quadgrams.CalculateCost;
+
+                plaintextalphabet = quadgrams.Alphabet;
+                ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
+                    ? new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "")
+                    : new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");
+                //            ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet) ? plaintextalphabet : new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()).Replace("\r", "").Replace("\n", "");
+
+                this.ptAlphabet = new Alphabet(plaintextalphabet);
+                this.ctAlphabet = new Alphabet(ciphertextalphabet);
             }
             else
             {
-                GuiLogMessage(Resources.no_ngram_file, NotificationLevel.Error);
-            }
-             
-            // Dictionary
-            if (settings.Alphabet == 0)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("en-small.dic",ctAlphabet.Length);
-                }
-                catch(Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 1)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("de-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 2)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("es-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 3)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("la-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 4)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("fr-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 5)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("hu-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 6)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("sv-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 7)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("it-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 8)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("nl-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 9)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("pt-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 10)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("cs-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }
-            else if (settings.Alphabet == 11)
-            {
-                try
-                {
-                    this.langDic = new Dictionary("el-small.dic", ctAlphabet.Length);
-                }
-                catch (Exception ex)
-                {
-                    GuiLogMessage(Resources.error_dictionary + " :" + ex.Message, NotificationLevel.Error);
-                }
-            }           
-            // Add new case for another language
-            // elseif (settings.Alphabet == 1)
-            // {
-            // ......
-            // }
+                // Dictionary
 
-            // Set ciphertext
-            String helper1 = null;
-            try
-            {
-                //helper1 = returnStreamContent(this.ciphertext);
-                if (this.ciphertext.Length != 0)
+                try
                 {
-                    helper1 = this.ciphertext;
+                    this.langDic = null;
+
+                    switch (settings.Language2)
+                    {
+                        case 1: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜß"; break;  // German
+                        case 2: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÑ"; break;  // spanish
+                        case 3: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Latin 
+                        case 4: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // French 
+                        case 5: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Hungarian 
+                        case 6: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ"; break; // Swedish 
+                        case 7: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Italian 
+                        case 8: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Dutch 
+                        case 9: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Portuguese 
+                        case 10: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Czech 
+                        case 11: plaintextalphabet = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ"; break; // Greek
+                        default: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;  // English
+                    }
+
+                    switch (settings.Language2)
+                    {
+                        case 1: this.langDic = new Dictionary("de-small.dic", plaintextalphabet.Length); break;
+                        case 2: this.langDic = new Dictionary("es-small.dic", plaintextalphabet.Length); break;
+                        case 3: this.langDic = new Dictionary("la-small.dic", plaintextalphabet.Length); break;
+                        case 4: this.langDic = new Dictionary("fr-small.dic", plaintextalphabet.Length); break;
+                        case 5: this.langDic = new Dictionary("hu-small.dic", plaintextalphabet.Length); break;
+                        case 6: this.langDic = new Dictionary("sv-small.dic", plaintextalphabet.Length); break;
+                        case 7: this.langDic = new Dictionary("it-small.dic", plaintextalphabet.Length); break;
+                        case 8: this.langDic = new Dictionary("nl-small.dic", plaintextalphabet.Length); break;
+                        case 9: this.langDic = new Dictionary("pt-small.dic", plaintextalphabet.Length); break;
+                        case 10: this.langDic = new Dictionary("cs-small.dic", plaintextalphabet.Length); break;
+                        case 11: this.langDic = new Dictionary("el-small.dic", plaintextalphabet.Length); break;
+                        default: this.langDic = new Dictionary("en-small.dic", plaintextalphabet.Length); break;
+                    }
                 }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(Resources.error_dictionary + ": " + ex.Message, NotificationLevel.Error);
+                }
+                // Dictionary correct?
+                if (this.langDic == null)
+                {
+                    GuiLogMessage(Resources.no_dictionary, NotificationLevel.Warning);
+                }
+
+                String helper = IdentifyNGramFile(settings.Language2);
+                if (helper == null)
+                {
+                    GuiLogMessage(Resources.no_ngram_file, NotificationLevel.Error);
+                    return;
+                }
+
+                //ciphertextalphabet = String.IsNullOrEmpty(CiphertextAlphabet)
+                //    ? Regex.Replace(new string(Ciphertext.ToLower().Distinct().OrderBy(c => c).ToArray()), @"\s", "")
+                //    : Regex.Replace(new string(CiphertextAlphabet.ToLower().Distinct().OrderBy(c => c).ToArray()), @"\s", "");
+                ciphertext = ciphertext.ToLower();
+                plaintextalphabet = plaintextalphabet.ToLower();
+                ciphertextalphabet = plaintextalphabet;
+                
+                this.ptAlphabet = new Alphabet(plaintextalphabet);
+                this.ctAlphabet = new Alphabet(ciphertextalphabet);
+                this.langFreq = new Frequencies(this.ptAlphabet);
+                this.langFreq.ReadProbabilitiesFromNGramFile(helper);
             }
-            catch
+
+            // Plaintext Alphabet
+            this.plaintextalphabetoutput = plaintextalphabet;
+            OnPropertyChanged("PlaintextAlphabetOutput");
+
+            if (ciphertext != null)
             {
-                GuiLogMessage(Resources.error_ciphertext, NotificationLevel.Error);
-            }
-            if (helper1 != null)
-            {
-                this.cText = new Text(helper1, this.ctAlphabet, settings.TreatmentInvalidChars);
+                this.cText = new Text(ciphertext.ToLower(), this.ctAlphabet, settings.TreatmentInvalidChars);
             }
             else
             {
@@ -355,38 +270,126 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 GuiLogMessage(Resources.no_plaintext_alphabet, NotificationLevel.Error);
                 inputOK = false;
             }
+
             // CTAlphabet correct?
             if (this.ctAlphabet == null)
             {
                 GuiLogMessage(Resources.no_ciphertext_alphabet, NotificationLevel.Error);
                 inputOK = false;
             }
+
             // Ciphertext correct?
             if (this.cText == null)
             {
                 GuiLogMessage(Resources.no_ciphertext, NotificationLevel.Error);
                 inputOK = false;
             }
-            // Dictionary correct?
-            if (this.langDic == null)
-            {
-                GuiLogMessage(Resources.no_dictionary, NotificationLevel.Warning);
-            }
+            
             // Language frequencies
-            if (this.langFreq == null)
+            //if (this.langFreq == null)
+            //{
+            //    GuiLogMessage(Resources.no_lang_freq, NotificationLevel.Error);
+            //    //inputOK = false;
+            //}
+
+            // Check length of ciphertext and plaintext alphabet
+            if (this.ctAlphabet.Length > this.ptAlphabet.Length)
             {
-                GuiLogMessage(Resources.no_lang_freq, NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.error_alphabet_length, ciphertextalphabet, ciphertextalphabet.Length, plaintextalphabet, plaintextalphabet.Length), NotificationLevel.Error);
                 inputOK = false;
             }
-            // Check length of ciphertext and plaintext alphabet
-            if (this.ctAlphabet.Length != this.ptAlphabet.Length)
+            
+            // If input incorrect return otherwise execute analysis
+            lock (this.stopFlag)
             {
-                GuiLogMessage(Resources.error_alphabet_length, NotificationLevel.Error);
-                inputOK = false;
+                if (this.stopFlag.Stop)
+                    return;
+            }
+            
+            if (!inputOK)
+            {
+                inputOK = true;
+                return;
             }
 
+            this.UpdateDisplayStart();
+
+            //this.masPresentation.DisableGUI();
+            this.masPresentation.UpdateOutputFromUserChoice = this.UpdateOutput;
+            this.keyCandidates = new List<KeyCandidate>();
+
+            /* Algorithm:
+             * 0 = Hillclimbing CPU
+             * 1 = Hillclimbing GPU
+             * 2 = Genetic & Dictionary */
+            if (settings.ChooseAlgorithm == 0)
+            {
+                AnalyzeHillclimbing(false);
+                totalKeys = hillAttacker.TotalKeys;
+            }
+            else if (settings.ChooseAlgorithm == 1)
+            {
+                if (!isCudaAvailable())
+                {
+                    GuiLogMessage(Resources.no_cuda, NotificationLevel.Error);
+                    return;
+                }
+
+                AnalyzeHillclimbing(true);
+                totalKeys = hillAttacker.TotalKeys;
+            }
+            else if (settings.ChooseAlgorithm == 2)
+            {
+                if (this.langDic != null)
+                    AnalyzeDictionary();
+                AnalyzeGenetic();
+            }
+
+            this.UpdateDisplayEnd();
+            
+            //set final plugin progress to 100%:
+            OnPluginProgressChanged(this, new PluginProgressEventArgs(1.0, 1.0));
+        }
+
+        public void PostExecution()
+        {
+            lock(this.stopFlag)
+            {
+                this.stopFlag.Stop = false;
+            }
+            this.ciphertextalphabet = null;
+        }
+
+        public void Pause()
+        {
+        }
+
+        public void Stop()
+        {
+            if (this.dicAttacker != null) this.dicAttacker.StopFlag = true;
+            if (this.genAttacker != null) this.genAttacker.StopFlag = true;
+            if (this.hillAttacker != null) this.hillAttacker.StopFlag = true;
+            if (this.langDic != null) this.langDic.StopFlag = true;
+            lock (this.stopFlag)
+            {
+                this.stopFlag.Stop = true;
+            }
+        }
+
+        public void Initialize()
+        {
+            this.settings.Initialize();
+        }
+
+        public void Dispose()
+        {
+        }
+
+        private bool isCudaAvailable()
+        {
             //Check if Cuda is Available (Device & Driver).
-            cudaAvailable = true;
+            bool cudaAvailable = true;
+
             try
             {
                 CudaContext chtxt = new CudaContext();
@@ -408,396 +411,113 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 cudaAvailable = false;
             }
 
-            // If input incorrect return otherwise execute analysis
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
+            return cudaAvailable;
+        }
 
+        public void AnalyzeHillclimbing(bool GPU = false)
+        {
+            // Initialize analyzer
+            //this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
+            this.hillAttacker.Ciphertext = ciphertext;
+            this.hillAttacker.Restarts = settings.Restarts;
+            this.hillAttacker.PlaintextAlphabet = plaintextalphabet;
+            this.hillAttacker.CiphertextAlphabet = ciphertextalphabet;
+            this.hillAttacker.CalculateCost = CalculateCost;
+            this.hillAttacker.quadgrams = quadgrams;
 
-            if (inputOK == false)
-            {
-                inputOK = true;
-                return;
-            }
+            this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
+            this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
+
+            // Start attack
+            if(GPU)
+                this.hillAttacker.ExecuteOnGPU();
             else
-            {
-                this.UpdateDisplayStart();
-                //this.masPresentation.DisableGUI();
-                this.masPresentation.UpdateOutputFromUserChoice = this.UpdateOutput;
-                this.keyCandidates = new List<KeyCandidate>();
-               
-                /*Algorith
-                 * 0 = Hillclimbing CPU
-                 * 1 = Hillclimbing GPU
-                 * 2 = Genetic & Dictionary */
-                if (settings.ChooseAlgorithm == 0)
-                {
-                    AnalyzeHillclimbingCPU();
-                }
-                else if (settings.ChooseAlgorithm == 1)
-                {
-               
-                    if (cudaAvailable)
-                    {
-                        AnalyzeHillclimbingGPU();
-                    }
-                    else
-                    {
-                        GuiLogMessage(Resources.no_cuda, NotificationLevel.Error);
-                        return;   
-                    }
-                }
-                else if (settings.ChooseAlgorithm == 2)
-                {
-
-                    if (this.langDic == null)
-                    {
-                        AnalyzeGenetic();
-                    }
-                    else
-                    {
-                        AnalyzeDictionary();
-                        AnalyzeGenetic();
-                    }
-                    //this.masPresentation.EnableGUI();
-
-                }
-               
-                this.UpdateDisplayEnd();                
-            }
-            //set final plugin progress to 100%:
-            OnPluginProgressChanged(this,new PluginProgressEventArgs(1.0,1.0));
-        }
-
-        public void PostExecution()
-        {
-            lock(this.stopFlag)
-            {
-                this.stopFlag.Stop = false;
-            }
-        }
-
-        public void Pause()
-        {
-        }
-
-        public void Stop()
-        {
-            this.dicAttacker.StopFlag = true;
-            this.genAttacker.StopFlag = true;
-            this.hillAttacker.StopFlag = true;
-            this.langDic.StopFlag = true;
-            lock(this.stopFlag)
-            {
-                this.stopFlag.Stop = true;
-            }
-        }
-
-        public void Initialize()
-        {
-            this.settings.Initialize();
-        }
-
-        public void Dispose()
-        {
-        }
-
-
-        public void AnalyzeHillclimbingCPU()
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
-
-            // Initialize analyzer
-            this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
-            this.hillAttacker.Restarts = settings.Restarts;
-
-            switch (settings.Alphabet)
-            {
-                case 0:
-                    this.hillAttacker.Alphabet = English;
-                    break;
-                case 1:
-                    this.hillAttacker.Alphabet = German;
-                    break;
-                case 2:
-                    this.hillAttacker.Alphabet = Spanish;
-                    break;
-                case 3:
-                    this.hillAttacker.Alphabet = Latin;
-                    break;
-                case 4:
-                    this.hillAttacker.Alphabet = French;
-                    break;
-                case 5:
-                    this.hillAttacker.Alphabet = Hungarian;
-                    break;
-                case 6:
-                    this.hillAttacker.Alphabet = Swedish;
-                    break;
-                case 7:
-                    this.hillAttacker.Alphabet = Italian;
-                    break;
-                case 8:
-                    this.hillAttacker.Alphabet = Dutch;
-                    break;
-                case 9:
-                    this.hillAttacker.Alphabet = Portuguese;
-                    break;
-                case 10:
-                    this.hillAttacker.Alphabet = Czech;
-                    break;
-                case 11:
-                    this.hillAttacker.Alphabet = Greek;
-                    break;              
-                default:
-                    this.hillAttacker.Alphabet = English;
-                    break;
-            }
-            
-            this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
-            this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
-
-            // Start attack
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
-
-            this.hillAttacker.ExecuteOnCPU();
-
-            watch.Stop();
-
-            //Output Performance
-            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
-            GuiLogMessage(Resources.hill_attack_finished + curTime, NotificationLevel.Info);
-            GuiLogMessage(Resources.hill_attack_testedkeys + hillAttacker.TotalKeys.ToString("#,##0"), NotificationLevel.Info);
-
-            //Calculate total seconds needed for hillclimbing
-            int seconds = watch.Elapsed.Seconds;
-            int minutes = watch.Elapsed.Minutes;
-            for (int i = 0; i < minutes; i++)
-            {
-                seconds = seconds + 60;
-            }
-            // finishing calculation in under one second is possible due to great algorithm ; )
-            if (seconds == 0) seconds = 1;
-            //Output Perforamce: Keys / Second
-            long keysPerSecond = hillAttacker.TotalKeys / seconds;
-            GuiLogMessage(Resources.hill_attack_keyspersecond + keysPerSecond.ToString("#,##0"), NotificationLevel.Info);
-        }
-
-        public void AnalyzeHillclimbingGPU()
-        {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
-
-            // Initialize analyzer
-            this.hillAttacker.Ciphertext = this.cText.ToString(this.ctAlphabet);
-            this.hillAttacker.Restarts = settings.Restarts;
-            switch (settings.Alphabet)
-            {
-                case 0:
-                    this.hillAttacker.Alphabet = English;
-                    break;
-                case 1:
-                    this.hillAttacker.Alphabet = German;
-                    break;
-                case 2:
-                    this.hillAttacker.Alphabet = Spanish;
-                    break;
-                case 3:
-                    this.hillAttacker.Alphabet = Latin;
-                    break;
-                case 4:
-                    this.hillAttacker.Alphabet = French;
-                    break;
-                case 5:
-                    this.hillAttacker.Alphabet = Hungarian;
-                    break;
-                case 6:
-                    this.hillAttacker.Alphabet = Swedish;
-                    break;
-                case 7:
-                    this.hillAttacker.Alphabet = Italian;
-                    break;
-                case 8:
-                    this.hillAttacker.Alphabet = Dutch;
-                    break;
-                case 9:
-                    this.hillAttacker.Alphabet = Portuguese;
-                    break;
-                case 10:
-                    this.hillAttacker.Alphabet = Czech;
-                    break;
-                case 11:
-                    this.hillAttacker.Alphabet = Greek;
-                    break;
-                default:
-                    this.hillAttacker.Alphabet = English;
-                    break;
-            }
-
-            this.hillAttacker.PluginProgressCallback = this.ProgressChanged;
-            this.hillAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
-
-            // Start attack
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
-
-            this.hillAttacker.ExecuteOnGPU();
-
-            watch.Stop();
-
-            //Output Performance
-            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
-            GuiLogMessage(Resources.hill_attack_finished + curTime, NotificationLevel.Info);
-            GuiLogMessage(Resources.hill_attack_testedkeys + hillAttacker.TotalKeys.ToString("#,##0"), NotificationLevel.Info);
-
-            //Calculate overall seconds needed for computing:
-            int seconds = watch.Elapsed.Seconds;
-            int minutes = watch.Elapsed.Minutes;
-            for (int i = 0; i < minutes; i++)
-            {
-                seconds = seconds + 60;
-            }
-
-            // finishing calculation in under one second is possible due to great algorithm ; )
-            if (seconds == 0) seconds = 1;
-            //Output Perforamce: Keys / Second
-            long keysPerSecond = hillAttacker.TotalKeys / seconds;
-            GuiLogMessage(Resources.hill_attack_keyspersecond + keysPerSecond.ToString("#,##0"), NotificationLevel.Info);
+                this.hillAttacker.ExecuteOnCPU();
         }
 
         private void AnalyzeDictionary()
         {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
             ////////////////////// Create keys with dictionary attacker
             // Initialize dictionary attacker
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
             
-                //this.dicAttacker = new DictionaryAttacker();
+            //this.dicAttacker = new DictionaryAttacker();
             this.dicAttacker.ciphertext = this.cText;
             this.dicAttacker.languageDictionary = this.langDic;
             this.dicAttacker.frequencies = this.langFreq;
             this.dicAttacker.ciphertext_alphabet = this.ctAlphabet;
             this.dicAttacker.plaintext_alphabet = this.ptAlphabet;
+
             this.dicAttacker.PluginProgressCallback = this.ProgressChanged;
             this.dicAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
             
-
             // Prepare text
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
-            
+
             this.dicAttacker.PrepareAttack();
-            
 
             // Deterministic search
             // Try to find full solution with all words enabled
-     
-                this.dicAttacker.SolveDeterministicFull();
 
-                // Try to find solution with disabled words
-                if (!this.dicAttacker.CompleteKey)
-                {
-                    this.dicAttacker.SolveDeterministicWithDisabledWords();
+            this.dicAttacker.SolveDeterministicFull();
 
-                    // Randomized search;
-                    if (!this.dicAttacker.PartialKey)
-                    {
-                        this.dicAttacker.SolveRandomized();
-                    }
-                }
-                  
+            // Try to find solution with disabled words
+            if (!this.dicAttacker.CompleteKey)
+            {
+                this.dicAttacker.SolveDeterministicWithDisabledWords();
 
-            watch.Stop();
-
-            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours, watch.Elapsed.Minutes, watch.Elapsed.Seconds);
-            GuiLogMessage(Resources.dic_attack_finished + curTime, NotificationLevel.Info);
+                // Randomized search;
+                if (!this.dicAttacker.PartialKey)
+                    this.dicAttacker.SolveRandomized();
+            }
         }
 
         private void AnalyzeGenetic()
         {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-
             ////////////////// Create keys with genetic attacker
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
 
             // Initialize analyzer
             this.genAttacker.Ciphertext = this.cText;
             this.genAttacker.Ciphertext_Alphabet = this.ctAlphabet;
             this.genAttacker.Plaintext_Alphabet = this.ptAlphabet;
             this.genAttacker.Language_Frequencies = this.langFreq;
+
             this.genAttacker.PluginProgressCallback = this.ProgressChanged;
             this.genAttacker.UpdateKeyDisplay = this.UpdateKeyDisplay;
             
-
             // Start attack
-            lock (this.stopFlag)
-            {
-                if (this.stopFlag.Stop == true)
-                {
-                    return;
-                }
-            }
             
             this.genAttacker.Analyze();
-            
-            
-            watch.Stop();
+        }
 
-            string curTime = String.Format("{0:00}:{1:00}:{2:00}", watch.Elapsed.Hours ,watch.Elapsed.Minutes, watch.Elapsed.Seconds);
-            GuiLogMessage(Resources.gen_attack_finished + curTime, NotificationLevel.Info);
-            GuiLogMessage(Resources.gen_attack_testedkeys + genAttacker.Currun_Keys.ToString("#,##0"), NotificationLevel.Info);
+        private string IdentifyNGramFile(int alpha_nr)
+        {
+            string name = "";
+            string lang = "";
+
+            switch(alpha_nr)
+            {
+                case 1: lang = "de"; break;
+                case 2: lang = "es"; break;
+                case 3: lang = "la"; break;
+                case 4: lang = "fr"; break;
+                case 5: lang = "hu"; break;
+                case 6: lang = "sv"; break;
+                case 7: lang = "it"; break;
+                case 8: lang = "nl"; break;
+                case 9: lang = "pt"; break;
+                case 10: lang = "cs"; break;
+                case 11: lang = "el"; break;
+                default: lang = "en"; break;
+            }
+
+            // It is always looked for a 4-gram file at first. If the 4-gram file is not found the 3-gram file is choosen
+            for (int i = 4; i > 2; i--)
+            {
+                name = lang + "-" + i.ToString() + "gram-nocs.bin";
+                if (File.Exists(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, name)))
+                    return name;
+            }
+
+            return null;
         }
 
         private void UpdateKeyDisplay(KeyCandidate keyCan)
@@ -806,41 +526,41 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 bool update = false;
 
-                // Add key if key does not already exists
+                // Add key if key does not already exist
                 if (!this.keyCandidates.Contains(keyCan))
                 {
                     this.keyCandidates.Add(keyCan);
                     this.keyCandidates.Sort(new KeyCandidateComparer());
 
                     if (this.keyCandidates.Count > 20)
-                    {
                         this.keyCandidates.RemoveAt(this.keyCandidates.Count - 1);
-                    }
+
                     update = true;
                 }
                 else
                 {
                     int index = this.keyCandidates.IndexOf(keyCan);
                     KeyCandidate keyCanAlreadyInList = this.keyCandidates[index];
-                    if (keyCan.DicAttack == true)
+
+                    if (keyCan.DicAttack)
                     {
-                        if (keyCanAlreadyInList.DicAttack == false)
+                        if (!keyCanAlreadyInList.DicAttack)
                         {
                             keyCanAlreadyInList.DicAttack = true;
                             update = true;
                         }
                     }
-                    if (keyCan.GenAttack == true)
+                    if (keyCan.GenAttack)
                     {
-                        if (keyCanAlreadyInList.GenAttack == false)
+                        if (!keyCanAlreadyInList.GenAttack)
                         {
                             keyCanAlreadyInList.GenAttack = true;
                             update = true;
                         }
                     }
-                    if (keyCan.HillAttack == true)
+                    if (keyCan.HillAttack)
                     {
-                        if (keyCanAlreadyInList.HillAttack == false)
+                        if (!keyCanAlreadyInList.HillAttack)
                         {
                             keyCanAlreadyInList.HillAttack = true;
                             update = true;
@@ -851,11 +571,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 // Display output
                 if (update)
                 {
-                    this.plaintext = this.keyCandidates[0].Plaintext;
-                    OnPropertyChanged("Plaintext");
+                    //this.plaintext = this.keyCandidates[0].Plaintext;
+                    //OnPropertyChanged("Plaintext");
 
-                    this.plaintext_alphabet_output = CreateAlphabetOutput(this.keyCandidates[0].Key, this.ctAlphabet);
-                    OnPropertyChanged("Plaintext_Alphabet_Output");
+                    //this.plaintextalphabetoutput = CreateKeyOutput(this.keyCandidates[0].Key, this.ptAlphabet, this.ctAlphabet);
+                    //OnPropertyChanged("PlaintextAlphabetOutput");
+                    UpdateOutput(this.keyCandidates[0].Key_string, this.keyCandidates[0].Plaintext);
 
                     ((AssignmentPresentation) Presentation).Dispatcher.Invoke(DispatcherPriority.Normal,
                         (SendOrPostCallback) delegate
@@ -869,31 +590,31 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                                     KeyCandidate keyCandidate = this.keyCandidates[i];
 
                                     ResultEntry entry = new ResultEntry();
-                                    entry.Ranking = i.ToString();
+                                    entry.Ranking = (i+1).ToString();
                                     entry.Text = keyCandidate.Plaintext;
                                     entry.Key = keyCandidate.Key_string;
 
-                                    if (keyCandidate.GenAttack == true && keyCandidate.DicAttack == false)
+                                    if (keyCandidate.GenAttack && !keyCandidate.DicAttack)
                                     {
                                         entry.Attack = Resources.GenAttackDisplay;
                                     }
-                                    else if (keyCandidate.DicAttack == true && keyCandidate.GenAttack == false)
+                                    else if (keyCandidate.DicAttack && !keyCandidate.GenAttack)
                                     {
                                         entry.Attack = Resources.DicAttackDisplay;
                                     }
-                                    else if (keyCandidate.GenAttack == true && keyCandidate.DicAttack == true)
+                                    else if (keyCandidate.GenAttack && keyCandidate.DicAttack)
                                     {
                                         entry.Attack = Resources.GenAttackDisplay + ", " + Resources.DicAttackDisplay;
                                     }
-                                    else if (keyCandidate.HillAttack == true)
+                                    else if (keyCandidate.HillAttack)
                                     {
                                         entry.Attack = Resources.HillAttackDisplay;
                                     }
 
-                                    double f = Math.Log10(Math.Abs(keyCandidate.Fitness));
+                                    double f = keyCandidate.Fitness;
+                                    //double f = Math.Log10(Math.Abs(keyCandidate.Fitness));
                                     entry.Value = string.Format("{0:0.00000} ", f);
                                     ((AssignmentPresentation) Presentation).entries.Add(entry);
-
                                 }
                             }
                             catch (Exception ex)
@@ -912,23 +633,33 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         private void UpdateDisplayStart()
         {
              ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate{
-                 this.startTime = DateTime.Now;
+                 startTime = DateTime.Now;
                  ((AssignmentPresentation)Presentation).startTime.Content = "" + startTime;
                  ((AssignmentPresentation)Presentation).endTime.Content = "";
                  ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
-              }, null);
+                 ((AssignmentPresentation)Presentation).totalKeys.Content = "";
+                 ((AssignmentPresentation)Presentation).keysPerSecond.Content = "";
+             }, null);
         }
 
         private void UpdateDisplayEnd()
         {
             ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                this.endTime = DateTime.Now;
-                TimeSpan elapsedtime = this.endTime.Subtract(this.startTime);
-                TimeSpan elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                ((AssignmentPresentation)Presentation).endTime.Content = "" + this.endTime;
-                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
+                var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
+                endTime = DateTime.Now;
+                TimeSpan elapsedtime = endTime.Subtract(startTime);
+                TimeSpan elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
+                
+                double totalSeconds = elapsedtime.TotalSeconds;
+                if (totalSeconds == 0) totalSeconds = 0.001;
+                keysPerSecond = totalKeys / totalSeconds;
+
+                ((AssignmentPresentation)Presentation).endTime.Content = "" + endTime;
+                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
+                ((AssignmentPresentation)Presentation).totalKeys.Content = String.Format(culture, "{0:##,#}", totalKeys);
+                ((AssignmentPresentation)Presentation).keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSecond);
             }, null);
         }
 
@@ -962,196 +693,46 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         #endregion
 
         #region Helper Functions
+        
+        //private string detAlphabet(int n)
+        //{
+        //    var langs = "en de es fr it hu ru cs".Split(new char[] { ' ' });
+        //    string lang = langs[n % langs.Length];
+        //    quadgrams = new QuadGrams(lang, settings.UseSpaces);
+        //    return quadgrams.Alphabet.ToLower();
 
-        private string returnFileContent(String filename)
+        //    //string alphabet;
+        //    //var quadgrams = LanguageStatistics.Load4Grams(lang, out alphabet, settings.UseSpaces);
+        //    //this.langFreq = new Frequencies(new Alphabet(alphabet, 1, 0));
+        //    //this.langFreq.prob4gram = quadgrams;
+        //    //this.langFreq.ngram = 4;
+        //    //this.langFreq.CalculateFitnessOfKey = this.langFreq.CalculateFitness4gram2;
+
+        //    //return alphabet.ToLower();
+        //}
+
+        private void UpdateOutput(string key_string, String plaintext_string)
         {
-            string res = "";
-
-            using (TextReader reader = new StreamReader(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename)))
-            {
-                res = reader.ReadToEnd();
-            }
-            return res;
-        }
-
-        private string returnStreamContent(ICryptoolStream stream)
-        {
-            string res = "";
-
-            if (stream == null)
-            {
-                return null;
-            }
-
-            using (CStreamReader reader = stream.CreateReader())
-            {
-                res = Encoding.Default.GetString(reader.ReadFully());
-               
-               
-                if (res.Length == 0)
-                {
-                    return null;
-                }
-            }
-
-            return res;
-        }
-
-        private string detAlphabet(int lang)
-        {
-            String alpha = "";
-            // English
-            if (lang == 0)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.English;
-            }
-            else if (lang == 1)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.German;
-            }
-            else if (lang == 2)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Spanish;
-            }
-            else if (lang == 3)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Latin;
-            }
-            else if (lang == 4)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.French;
-            }
-            else if (lang == 5)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Hungarian;
-            }
-            else if (lang == 6)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Swedish;
-            }
-            else if (lang == 7)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Italian;
-            }
-            else if (lang == 8)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Dutch;
-            }
-            else if (lang == 9)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Portuguese;
-            }
-            else if (lang == 10)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Czech;
-            }
-            else if (lang == 11)
-            {
-                alpha = AnalysisMonoalphabeticSubstitution.Greek;
-            }
-            // Add another case for a new language
-            //else if ( lang == 1)
-            //{
-            //
-            //}
-
-            return alpha;
-        }
-
-
-        private string IdentifyNGramFile(int alpha_nr)
-        {
-            bool cs = false;
-            string name = "";
-            string lang = "";
-            string casesen = "";
-
-            if (alpha_nr == 0)
-            {
-                lang = "en";
-            }
-            else if (alpha_nr == 1)
-            {
-                lang = "de";
-            }
-            else if (alpha_nr == 2)
-            {
-                lang = "es";
-            }
-            else if (alpha_nr == 3)
-            {
-                lang = "la";
-            }
-            else if (alpha_nr == 4)
-            {
-                lang = "fr";
-            }
-            else if (alpha_nr == 5)
-            {
-                lang = "hu";
-            }
-            else if (alpha_nr == 6)
-            {
-                lang = "sv";
-            }
-            else if (alpha_nr == 7)
-            {
-                lang = "it";
-            }
-            else if (alpha_nr == 8)
-            {
-                lang = "nl";
-            }
-            else if (alpha_nr == 9)
-            {
-                lang = "pt";
-            }
-            else if (alpha_nr == 10)
-            {
-                lang = "cs";
-            }
-            else if (alpha_nr == 11)
-            {
-                lang = "el";
-            }
-            // Add another case for a new language
-            //else if (alpha_nr == 1)
-            //{
-            //    lang = "xx";
-            //}
-
-            if (cs == false)
-            {
-                casesen = "nocs";
-            } else
-            {
-                casesen = "cs";
-            }
-
-            // It is always looked for a 4-gram file at first. If the 4-gram file is not found the 3-gram file is choosen
-            for (int i = 4; i > 2; i--)
-            {
-                name = lang + "-" + i.ToString() + "gram-" + casesen + ".bin";
-                if (File.Exists(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, name)))
-                {
-                    return name;
-                }
-            }
-            return null;
-        }
-
-        private void UpdateOutput(String key_string, String plaintext_string)
-        {
-            // Plaintext
             this.plaintext = plaintext_string;
             OnPropertyChanged("Plaintext");
-
-            // Alphabet
-            this.plaintext_alphabet_output = key_string;
-            OnPropertyChanged("Plaintext_Alphabet_Output");
+            
+            this.keyoutput = key_string;
+            OnPropertyChanged("KeyOutput");
         }
 
-        private String CreateAlphabetOutput(int[] key, Alphabet ciphertext_alphabet)
+        private String CreateKeyOutput(int[] key, Alphabet plaintextalphabet, Alphabet ciphertextalphabet)
+        {
+            char[] k = new char[plaintextalphabet.Length];
+
+            for (int i = 0; i < k.Length; i++) k[i] = ' ';
+
+            for (int i = 0; i < ciphertextalphabet.Length; i++)
+                k[key[i]] = ciphertextalphabet.GetLetterFromPosition(i)[0];
+
+            return new string(k);
+        }
+
+        private String CreateAlphabetOutput2(int[] key, Alphabet ciphertext_alphabet)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -1162,7 +743,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             return sb.ToString();
         }
-
+        
         #endregion
     }
 

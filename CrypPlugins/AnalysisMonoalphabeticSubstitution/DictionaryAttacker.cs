@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     /**
      *  Dictionary attacker is based on the Decrypto project and "Robust Dictionary Attack of Short Simple
@@ -145,29 +145,25 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             List<Byte[]> text_in_words = this.ctext.ToSingleWords(this.calpha);
 
-            // Add only unigue words
+            // Add only unique words
             WordComparer word_comparer = new WordComparer();
-            for (int i=0;i<text_in_words.Count;i++)
+            for (int i = 0; i < text_in_words.Count; i++)
             {
-                Word w = new Word(i,text_in_words[i]);
+                Word w = new Word(i, text_in_words[i]);
                 bool vorhanden = false;
-                for (int j=0;j<this.words.Count;j++)
+                for (int j = 0; j < this.words.Count; j++)
                 {
-                    if (word_comparer.Compare(w,this.words[j])==0)
+                    if (word_comparer.Compare(w, this.words[j]) == 0)
                     {
                         vorhanden = true;
+                        break;
                     }
                 }
 
-                if (vorhanden == false)
-                {
+                if (!vorhanden)
                     this.words.Add(w);
-                }
 
-                if (this.stopFlag == true)
-                {
-                    return;
-                }
+                if (StopFlag) return;
             }
 
             // Look up words with same pattern in dictionary
@@ -211,7 +207,6 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                         this.historder[i] = this.historder[j];
                         this.historder[j] = (byte)helper;
                     }
-
                 }
             }
 
@@ -272,10 +267,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 for (int i = 0; i < this.words.Count; i++)
                 {
-                    if (this.stopFlag == true)
-                    {
-                        break;
-                    }
+                    if (StopFlag) break;
 
                     this.ReenableWords();
                     this.words[i].Enabled = false;
@@ -292,18 +284,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 for (int i = 0; i < this.words.Count; i++)
                 {
-                    if (this.stopFlag == true)
-                    {
-                        break;
-                    }
+                    if (StopFlag) break;
 
                     for (int j = i + 1; j < this.words.Count; j++)
                     {
-                        if (this.stopFlag == true)
-                        {
-                            break;
-                        }
-
                         this.ReenableWords();
                         this.words[i].Enabled = false;
                         this.words[j].Enabled = false;
@@ -321,25 +305,12 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
             {
                 for (int i = 0; i < this.words.Count; i++)
                 {
-                    if (this.stopFlag == true)
-                    {
-                        break;
-                    }
+                    if (StopFlag) break;
 
                     for (int j = i + 1; j < this.words.Count; j++)
                     {
-                        if (this.stopFlag == true)
-                        {
-                            break;
-                        }
-
                         for (int x = j + 1; x < this.words.Count; x++)
                         {
-                            if (this.stopFlag == true)
-                            {
-                                break;
-                            }
-
                             this.ReenableWords();
                             this.words[i].Enabled = false;
                             this.words[j].Enabled = false;
@@ -366,10 +337,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             for (int i = 0; i < DictionaryAttacker.maxRandomIterations; i++)
             {
-                if (this.stopFlag == true)
-                {
-                    break;
-                }
+                if (StopFlag) break;
 
                 this.Solve();
 
@@ -415,10 +383,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             do
             {
-                if (this.stopFlag == true)
-                {
-                    break;
-                }
+                if (StopFlag) break;
 
                 rounds++;
 
@@ -559,7 +524,6 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
             for (int i = 0; i < res.Length; i++)
             {
-
                 res[i] = new Candidate(candidates[i], CalculateWordCandidateFitness(candidates[i]));
             }
             
@@ -575,11 +539,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 if (candidate.Length == 1)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.Prob3Gram.Length; i++)
+                    for (int i = 0; i < this.freq.size; i++)
                     {
-                        for (int j = 0; j < this.freq.Prob3Gram[i].Length; j++)
+                        for (int j = 0; j < this.freq.size; j++)
                         {
-                            fitness += this.freq.Prob3Gram[candidate[0]][i][j];
+                            fitness += this.freq.Prob3Gram[candidate[0],i,j];
                             count++;
                         }
                     }
@@ -588,9 +552,9 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 2)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.Prob3Gram.Length; i++)
+                    for (int i = 0; i < this.freq.size; i++)
                     {
-                        fitness += this.freq.Prob3Gram[candidate[0]][candidate[1]][i];
+                        fitness += this.freq.Prob3Gram[candidate[0],candidate[1],i];
                         count++;
                     }
                     fitness = fitness / count;
@@ -603,7 +567,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
                     for (int i = 3; i < candidate.Length; i++)
                     {
-                        fitness += this.freq.Prob3Gram[l1][l2][l3];
+                        fitness += this.freq.Prob3Gram[l1,l2,l3];
 
                         l1 = l2;
                         l2 = l3;
@@ -616,13 +580,13 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 if (candidate.Length == 1)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.Prob4Gram.Length; i++)
+                    for (int i = 0; i < this.freq.size; i++)
                     {
-                        for (int j = 0; j < this.freq.Prob4Gram[i].Length; j++)
+                        for (int j = 0; j < this.freq.size; j++)
                         {
-                            for (int t = 0; t < this.freq.Prob4Gram[i][j].Length; t++)
+                            for (int t = 0; t < this.freq.size; t++)
                             {
-                                fitness += this.freq.Prob4Gram[candidate[0]][i][j][t];
+                                fitness += this.freq.Prob4Gram[candidate[0],i,j,t];
                                 count++;
                             }
                         }
@@ -632,11 +596,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 2)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.Prob4Gram.Length; i++)
+                    for (int i = 0; i < this.freq.size; i++)
                     {
-                        for (int j = 0; j < this.freq.Prob4Gram[i].Length; j++)
+                        for (int j = 0; j < this.freq.size; j++)
                         {
-                            fitness += this.freq.Prob4Gram[candidate[0]][candidate[1]][i][j];
+                            fitness += this.freq.Prob4Gram[candidate[0],candidate[1],i,j];
                             count++;
                         }
                     }
@@ -645,9 +609,9 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                 else if (candidate.Length == 3)
                 {
                     int count = 0;
-                    for (int i = 0; i < this.freq.Prob4Gram.Length; i++)
+                    for (int i = 0; i < this.freq.size; i++)
                     {
-                        fitness += this.freq.Prob4Gram[candidate[0]][candidate[1]][candidate[2]][i];
+                        fitness += this.freq.Prob4Gram[candidate[0],candidate[1],candidate[2],i];
                         count++;
                     }
                     fitness = fitness / count;
@@ -661,7 +625,7 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
 
                     for (int i = 4; i < candidate.Length; i++)
                     {
-                        fitness += this.freq.Prob4Gram[l1][l2][l3][l4];
+                        fitness += this.freq.Prob4Gram[l1,l2,l3,l4];
 
                         l1 = l2;
                         l2 = l3;
@@ -848,12 +812,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
                     }
 
                     helper.SetEmpty();
-
+                    
                     for (int c = data.firstcand[wordnum]; c < w.Candidates.Length; c++)
                     {
-
                         Candidate candidate = w.Candidates[c];
-
                         if (set.IsMappingOK(w.ByteValue, candidate.ByteValue))
                         {
                             helper.EnableMapping(w.ByteValue, candidate.ByteValue);

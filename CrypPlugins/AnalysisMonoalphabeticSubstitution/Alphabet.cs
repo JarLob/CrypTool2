@@ -4,7 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     /// <summary>
     /// Representation of an alphabet
@@ -13,24 +13,24 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
     {
         #region Private Variables
 
-        private Dictionary<int,string> alphabet = new Dictionary<int,string>();
+        //private Dictionary<int, string> alphabet = new Dictionary<int, string>();
+        private string[] alphabet;
         private Dictionary<string, int> re_alphabet = new Dictionary<string, int>();
-        private int identifier;
+        //private int identifier;
 
         #endregion
 
         #region Properties
 
-        public int Identifier
-        {
-            get { return this.identifier; }
-            set { this.identifier = value; }
-        }
+        //public int Identifier
+        //{
+        //    get { return this.identifier; }
+        //    set { this.identifier = value; }
+        //}
 
         public int Length
         {
-            get { return this.alphabet.Count; }
-            private set { ; }
+            get { return this.alphabet.Length; }
         }
 
         #endregion
@@ -40,66 +40,21 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// <summary>
         /// Regularly split string after length characters 
         /// </summary>
-        public Alphabet(string alphabet,int length, int id)
+        public Alphabet(string alphabet, int length = 1)
         {
-            int index = 0;
-            string cur= "";
-            this.identifier = id;
+            List<string> alpha = new List<string>();
 
-            for (int i = 0; i < alphabet.Length; i = i + length)
+            for (int i = 0; i + length <= alphabet.Length; i += length)
             {
-                try
+                var c = alphabet.Substring(i, length);
+                if (!this.re_alphabet.ContainsKey(c))
                 {
-                    cur = alphabet.Substring(i, length);
-                }
-                catch
-                {
-                    Console.WriteLine("4");
-                }
-                if (!this.re_alphabet.ContainsKey(cur))
-                {
-                    this.alphabet.Add(index, cur);
-                    this.re_alphabet.Add(cur,index);
-                    index++;
+                    this.re_alphabet.Add(c, alpha.Count);
+                    alpha.Add(c);
                 }
             }
-        }
 
-        /// <summary>
-        /// Split string after separator 
-        /// </summary>
-        public Alphabet(string alphabet, char separator = ';')
-        {
-            string[] let = alphabet.Split(separator);
-            int index = 0;
-
-            for (int i = 0; i < let.Length; i++)
-            {
-                if (!this.re_alphabet.ContainsKey(let[i]))
-                {
-                    this.alphabet.Add(index, let[i]);
-                    this.re_alphabet.Add(let[i], index);
-                    index++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Use list with strings 
-        /// </summary>
-        public Alphabet(List<string> alphabet)
-        {
-            int index = 0;
-
-            for (int i =0 ;i<alphabet.Count;i++)
-            {
-                if (!this.re_alphabet.ContainsKey(alphabet[i]))
-                {
-                    this.alphabet.Add(index, alphabet[i]);
-                    this.re_alphabet.Add(alphabet[i], index);
-                    index++;
-                }
-            }
+            this.alphabet = alpha.ToArray();
         }
 
         /// <summary>
@@ -107,26 +62,32 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// </summary>
         public Alphabet(string[] alphabet)
         {
-            int index = 0;
+            List<string> alpha = new List<string>();
 
-            for (int i = 0; i < alphabet.Length; i++)
-            {
-                if (!this.re_alphabet.ContainsKey(alphabet[i]))
+            foreach (var c in alphabet)
+                if (!this.re_alphabet.ContainsKey(c))
                 {
-                    this.alphabet.Add(index, alphabet[i]);
-                    this.re_alphabet.Add(alphabet[i], index);
-                    index++;
+                    this.re_alphabet.Add(c, alpha.Count);
+                    alpha.Add(c);
                 }
-            }
+
+            this.alphabet = alpha.ToArray();
         }
+
+        /// <summary>
+        /// Split string after separator 
+        /// </summary>
+        public Alphabet(string alphabet, char separator) : this(alphabet.Split(separator)) {}
+
+        /// <summary>
+        /// Use list with strings 
+        /// </summary>
+        public Alphabet(List<string> alphabet) : this(alphabet.ToArray()) {}
 
         /// <summary>
         /// Create empty alphabet 
         /// </summary>
-        public Alphabet()
-        {
-
-        }
+        public Alphabet() {}
 
         #endregion
 
@@ -137,14 +98,10 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// </summary>
         public int GetPositionOfLetter(string letter)
         {
-            int res = -1;
-            
-            if (this.re_alphabet.ContainsKey(letter))
-            {
-                res = this.re_alphabet[letter];
-            }
-            
-            return res;
+            if (!this.re_alphabet.ContainsKey(letter))
+                return -1;
+
+            return this.re_alphabet[letter];
         }
 
         /// <summary>
@@ -152,53 +109,49 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// </summary>
         public string GetLetterFromPosition(int position)
         {
-            string res = null;
+            if (position < 0 || position >= alphabet.Length)
+                return null;
 
-            if (this.alphabet.ContainsKey(position))
-            {
-                res = this.alphabet[position];
-            }
-
-            return res;
+            return alphabet[position];
         }
+
+        //public string this[int position]
+        //{
+        //    get
+        //    {
+        //        if (position < 0 || position >= alphabet.Length)
+        //            return null;
+        //        return alphabet[position];
+        //    }
+        //}
 
         /// <summary>
         /// Get letters from positions 
         /// </summary>
-        public string[] GetLettersFromPositions(int[] positions)
-        {
-            string[] res = new string[positions.Length];
+        //public string[] GetLettersFromPositions(int[] positions)
+        //{
+        //    string[] res = new string[positions.Length];
 
-            for (int i = 0; i < positions.Length; i++)
-            {
-                if (this.alphabet.ContainsKey(positions[i]))
-                {
-                    res[i] = this.alphabet[positions[i]];
-                } else
-                {
-                    res[i] = null;
-                }
-            }
-            return res;
-        }
+        //    for (int i = 0; i < positions.Length; i++)
+        //        res[i] = GetLetterFromPosition(positions[i]);
+
+        //    return res;
+        //}
 
         /// <summary>
         /// Change letter in alphabet
         /// </summary>
         public bool ChangeLetterAt(int position, string letter)
         {
-            if ((!this.alphabet.ContainsKey(position)) || (this.re_alphabet.ContainsKey(letter)))
-            {
-                return false;
-            }
-            else
-            {
-                this.re_alphabet.Remove(this.alphabet[position]);
-                this.alphabet[position] = letter;
-                this.re_alphabet.Add(letter, position);
+            var oldletter = GetLetterFromPosition(position);
+            if (oldletter == null) return false;
+            if (this.re_alphabet.ContainsKey(letter)) return false;
 
-                return true;
-            }
+            this.re_alphabet.Remove(oldletter);
+            this.re_alphabet.Add(letter, position);
+            this.alphabet[position] = letter;
+
+            return true;
         }
 
         /// <summary>
@@ -206,22 +159,16 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// </summary>
         public bool SwapLettersAt(int pos1, int pos2)
         {
-            if (this.alphabet.ContainsKey(pos1) && this.alphabet.ContainsKey(pos2))
-            {
-                string helper = this.alphabet[pos1];
-                this.alphabet[pos1] = this.alphabet[pos2];
-                this.re_alphabet[this.alphabet[pos1]] = pos2;
-                this.alphabet[pos2] = helper;
-                this.re_alphabet[this.alphabet[pos2]] = pos1;
+            var letter1 = GetLetterFromPosition(pos1);
+            if (letter1 == null) return false;
 
-                return true;
-            }
-            else 
-            {
-                return false;
-            }
-            
-            
+            var letter2 = GetLetterFromPosition(pos2);
+            if (letter2 == null) return false;
+
+            this.alphabet[pos1] = letter2;
+            this.alphabet[pos2] = letter1;
+
+            return true;
         }
 
         /// <summary>
@@ -229,107 +176,98 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// </summary>
         public int GetNumberOfLettersStartingWith(string symbols)
         {
-            int nr = 0;
-            
-            for (int i=0;i<this.alphabet.Count;i++)
-            {
+            int count = 0;
+
+            for (int i = 0; i < this.alphabet.Length; i++)
                 if (this.alphabet[i].IndexOf(symbols)==0)
-                {
-                    nr++;
-                }
-            }
-            return nr;
+                    count++;
+
+            return count;
         }
 
         /// <summary>
         /// Check if letters are prefix-free .. to be implemented
         /// </summary>
-        public bool CheckPrefixOfLetters()
-        {
-
-            return true;
-        }
+        //public bool CheckPrefixOfLetters()
+        //{
+        //    return true;
+        //}
 
         /// <summary>
         /// Add letter to alphabet
         /// </summary>
-        public bool AddLetter(string letter)
-        {
-            if (!this.re_alphabet.ContainsKey(letter))
-            {
-                int index = this.alphabet.Count;
-                this.alphabet.Add(index, letter);
-                this.re_alphabet.Add(letter, index);
+        //public bool AddLetter(string letter)
+        //{
+        //    if (this.re_alphabet.ContainsKey(letter))
+        //        return false;
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        //    int index = this.alphabet.Length;
+        //    this.alphabet.Add(index, letter);
+        //    this.re_alphabet.Add(letter, index);
 
-        }
+        //    return true;
+        //}
 
         /// <summary>
         /// Remove letter from alphabet
         /// </summary>
-        public bool RemoveLetter(string letter)
-        {
-            if (this.re_alphabet.ContainsKey(letter))
-            {
-                this.alphabet.Remove(this.re_alphabet[letter]);
-                this.re_alphabet.Remove(letter);
-                this.RebuildIndex();
+        //public bool RemoveLetter(string letter)
+        //{
+        //    if (this.re_alphabet.ContainsKey(letter))
+        //    {
+        //        this.alphabet.Remove(this.re_alphabet[letter]);
+        //        this.re_alphabet.Remove(letter);
+        //        this.RebuildIndex();
 
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// Remove letter from alphabet
         /// </summary>
-        public bool RemoveLetter(int position)
-        {
-            if (this.alphabet.ContainsKey(position))
-            {
-                this.re_alphabet.Remove(this.alphabet[position]);
-                this.alphabet.Remove(position);
-                this.RebuildIndex();
+        //public bool RemoveLetter(int position)
+        //{
+        //    if (this.alphabet.ContainsKey(position))
+        //    {
+        //        this.re_alphabet.Remove(this.alphabet[position]);
+        //        this.alphabet.Remove(position);
+        //        this.RebuildIndex();
 
-                return true;
-            }
-            else 
-            {
-                return false;
-            }
+        //        return true;
+        //    }
+        //    else 
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// Copy alphabet 
         /// </summary>
-        public Alphabet CopyTo()
-        {
-            Alphabet res = new Alphabet();
+        //public Alphabet CopyTo()
+        //{
+        //    Alphabet res = new Alphabet();
 
-            foreach (KeyValuePair<int, string> pair in this.alphabet)
-            {
-                res.AddLetter(pair.Value);
-            }
+        //    foreach (KeyValuePair<int, string> pair in this.alphabet)
+        //    {
+        //        res.AddLetter(pair.Value);
+        //    }
 
-            return res;
-        }
+        //    return res;
+        //}
 
         /// <summary>
         /// Get number of letters
         /// </summary>
         public int GetAlphabetQuantity()
         {
-            return this.alphabet.Count;
+            return this.alphabet.Length;
         }
 
         #endregion Methods
@@ -353,17 +291,17 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         /// <summary>
         /// Close numeration gaps, for instance if letters have been removed
         /// </summary>
-        private void RebuildIndex()
-        {
-            int index = 0;
-            this.alphabet = new Dictionary<int,string>();
-            foreach (KeyValuePair<string, int> pair in this.re_alphabet)
-            {
-                this.re_alphabet[pair.Key] = index;
-                this.alphabet.Add(index,pair.Key);
-                index++;
-            }
-        }
+        //private void RebuildIndex()
+        //{
+        //    int index = 0;
+        //    this.alphabet = new string[];
+        //    foreach (KeyValuePair<string, int> pair in this.re_alphabet)
+        //    {
+        //        this.re_alphabet[pair.Key] = index;
+        //        this.alphabet.Add(index,pair.Key);
+        //        index++;
+        //    }
+        //}
 
         #endregion
     }
@@ -373,11 +311,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
     /// </summary>
     class AlphabetEnum : IEnumerator<string>
     {
-        private Dictionary<int, string> alphabet;
+        private string[] alphabet;
         private int cur_position = -1;
         private string cur_letter = null;
 
-        public AlphabetEnum(Dictionary<int,string> alpha)
+        public AlphabetEnum(string[] alpha)
         {
             this.alphabet = alpha;
             this.cur_letter = default(string);
@@ -387,14 +325,11 @@ namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
         {
             this.cur_position++;
 
-            if (this.cur_position >= this.alphabet.Count)
-            {
+            if (this.cur_position >= this.alphabet.Length)
                 return false;
-            } else
-            {
-                this.cur_letter = this.alphabet[this.cur_position];
-                return true;
-            }
+
+            this.cur_letter = this.alphabet[this.cur_position];
+            return true;
         }
 
         public void Reset()

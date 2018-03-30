@@ -16,12 +16,12 @@ using System.Collections.ObjectModel;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     /// <summary>
     /// Interaktionslogik für AssignmentPresentation.xaml
     /// </summary>
-    [Cryptool.PluginBase.Attributes.Localization("AnalysisMonoalphabeticSubstitution.Properties.Resources")]
+    [Cryptool.PluginBase.Attributes.Localization("Cryptool.AnalysisMonoalphabeticSubstitution.Properties.Resources")]
     public partial class AssignmentPresentation : UserControl
     {
 

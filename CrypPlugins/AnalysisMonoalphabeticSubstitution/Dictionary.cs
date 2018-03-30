@@ -6,7 +6,7 @@ using System.Text;
 using Cryptool.PluginBase.IO;
 using System.IO;
 
-namespace Cryptool.Plugins.AnalysisMonoalphabeticSubstitution
+namespace Cryptool.AnalysisMonoalphabeticSubstitution
 {
     class Dictionary
     {
