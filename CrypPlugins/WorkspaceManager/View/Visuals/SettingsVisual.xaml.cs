@@ -656,11 +656,26 @@ namespace WorkspaceManager.View.Visuals
                             entgrou.AddNewEntry(tpa.GroupName,new ControlEntry(comboBox, tpa, sfa, b, bcv.Model));
                             break;
 
-                        # endregion ComboBox
+                    #endregion ComboBox
 
-                        # region RadioButton
-                        
-                        case ControlType.RadioButton:
+                    #region LanguageSelector
+                    case ControlType.LanguageSelector:
+                        {
+                            ComboBox comboBox1 = new ComboBox();
+
+                            comboBox1.Tag = tpa.ToolTip;
+                            comboBox1.MouseEnter += Control_MouseEnter;
+                            comboBox1.ItemsSource = Cryptool.PluginBase.Utils.LanguageStatistics.SupportedLanguages;
+                            comboBox1.ToolTip = tpa.ToolTip;
+                            comboBox1.SetBinding(ComboBox.SelectedIndexProperty, dataBinding);
+                            entgrou.AddNewEntry(tpa.GroupName, new ControlEntry(comboBox1, tpa, sfa, b, bcv.Model));
+                            break;
+                        }
+
+                    #endregion LanguageSelector
+
+                    #region RadioButton
+                    case ControlType.RadioButton:
                             if (!dicRadioButtons.ContainsKey(plugin.Settings))
                             {
                                 dicRadioButtons.Add(plugin.Settings, new Dictionary<string, List<RadioButton>>());

@@ -141,4 +141,28 @@
   <data name="This_is_a_WorkspaceManager_file_" xml:space="preserve">
     <value>This is a workspace editor file.</value>
   </data>
+  <data name="LanguageCS" xml:space="preserve">
+    <value>Czech</value>
+  </data>
+  <data name="LanguageDE" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="LanguageEN" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="LanguageES" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="LanguageFR" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="LanguageHU" xml:space="preserve">
+    <value>Hungarian</value>
+  </data>
+  <data name="LanguageIT" xml:space="preserve">
+    <value>Italian</value>
+  </data>
+  <data name="LanguageRU" xml:space="preserve">
+    <value>Russian</value>
+  </data>
 </root>

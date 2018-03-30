@@ -19,7 +19,7 @@ namespace Cryptool.PluginBase.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -75,6 +75,78 @@ namespace Cryptool.PluginBase.Properties {
         public static string Error_trying_to_lookup_localization_key {
             get {
                 return ResourceManager.GetString("Error_trying_to_lookup_localization_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Czech ähnelt.
+        /// </summary>
+        public static string LanguageCS {
+            get {
+                return ResourceManager.GetString("LanguageCS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die German ähnelt.
+        /// </summary>
+        public static string LanguageDE {
+            get {
+                return ResourceManager.GetString("LanguageDE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die English ähnelt.
+        /// </summary>
+        public static string LanguageEN {
+            get {
+                return ResourceManager.GetString("LanguageEN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Spanish ähnelt.
+        /// </summary>
+        public static string LanguageES {
+            get {
+                return ResourceManager.GetString("LanguageES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die French ähnelt.
+        /// </summary>
+        public static string LanguageFR {
+            get {
+                return ResourceManager.GetString("LanguageFR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hungarian ähnelt.
+        /// </summary>
+        public static string LanguageHU {
+            get {
+                return ResourceManager.GetString("LanguageHU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Italian ähnelt.
+        /// </summary>
+        public static string LanguageIT {
+            get {
+                return ResourceManager.GetString("LanguageIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Russian ähnelt.
+        /// </summary>
+        public static string LanguageRU {
+            get {
+                return ResourceManager.GetString("LanguageRU", resourceCulture);
             }
         }
         
