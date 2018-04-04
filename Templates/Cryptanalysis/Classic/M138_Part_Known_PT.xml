@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sample>
 
-  <title lang="en">M-138 Partially Known-Plaintext Attack</title>
-  <summary lang="en">Cryptanalysis of the <i>M-138</i> using a Partially Known-Plaintext Attack</summary>
-  <description lang="en">This template shows the cryptanalysis of the <i>M-138</i> using a Partially Known-Plaintext attack.</description>
-  <keywords>M-138, Hill-Climbing, Partially Known-Plaintext</keywords>
+  <title lang="en">M-138 Partially-Known Plaintext Attack</title>
+  <summary lang="en">Cryptanalysis of the <i>M-138</i> using a Partially-Known Plaintext Attack</summary>
+  <description lang="en">This template shows the cryptanalysis of the <i>M-138</i> using a Partially-Known Plaintext attack.</description>
+  <keywords>M-138, Hill-Climbing, Partially-Known Plaintext</keywords>
 
-  <title lang="de">Partially Known-Plaintext Angriff auf M-138</title>
-  <summary lang="de">Kryptoanalyse der <i>M-138</i> mit Hilfe eines Partially Known-Plaintext Angriffs</summary>
-  <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>M-138</i> mit einem Partially Known-Plaintext Angriff.</description>
-  <keywords lang="de">M-138, Hill-Climbing, Partially Known-Plaintext, Teilweise bekannter Klartext</keywords>
+  <title lang="de">Partially-Known-Plaintext Angriff auf M-138</title>
+  <summary lang="de">Kryptoanalyse der <i>M-138</i> mit Hilfe eines Partially-Known-Plaintext Angriffs</summary>
+  <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>M-138</i> mit einem Partially-Known-Plaintext Angriff.</description>
+  <keywords lang="de">M-138, Hill-Climbing, Partially-Known-Plaintext, Teilweise bekannter Klartext</keywords>
 
   <icon file="M138.png" />
 
@@ -23,7 +23,7 @@
     <replacement key="$Key$" value="Schlüssel"/>
     <replacement key="$M-138 Analyzer$" value="M-138-Analysierer"/>
 	 <replacement key="$memo1$" value="Das obige Textfeld enthält den bekannten Klartext, der an die Analysekomponente geschickt wird, das untere Textfeld den zugehörigen bekannten Geheimtext."/>
-	 <replacement key="$memo2$" value="Diese Vorlage führt einen Partially Known-Plaintext-Angriff auf die M-138 durch. Links können die Klar- und Geheimtexte, die an die Analysekomponente geschickt werden, eingegeben werden. In den Einstellungen des Analysierers kann die Sprache des Klartextes angegeben werden.\line In der Präsentationsansicht der Analysekomponente werden weitere Informationen über den Angriff dargestellt, z.B. eine Liste der besten Schlüssel bezüglich eines Wertes, in dessen Berechnung Trigramme, Tetragramme und die relativen Buchstabenhäufigkeiten einfliessen."/>
+	 <replacement key="$memo2$" value="Diese Vorlage führt einen Partially-Known-Plaintext-Angriff auf die M-138 durch. Links können die Klar- und Geheimtexte, die an die Analysekomponente geschickt werden, eingegeben werden. In den Einstellungen des Analysierers kann die Sprache des Klartextes angegeben werden.\line In der Präsentationsansicht der Analysekomponente werden weitere Informationen über den Angriff dargestellt, z.B. eine Liste der besten Schlüssel bezüglich eines Wertes, in dessen Berechnung Trigramme, Tetragramme und die relativen Buchstabenhäufigkeiten einfliessen."/>
 	 <replacoement key="$memo3$" value="Im oberen Textfeld wird der komplette Klartext angezeigt, den man erhält, wenn man den Geheimtext mit dem besten gefundenen Schlüssel entschlüsselt. Unten wird der beste gefundene Schlüssel angezeigt."/>
   </replacements>
   <replacements lang="en">
@@ -32,7 +32,7 @@
     <replacement key="$Key$" value="Key"/>
     <replacement key="$M-138 Analyzer$" value="M-138 Analyzer"/>
 	 <replacement key="$memo1$" value="The upper textbox contains the known plaintext to be sent to the analyzer. The lower textbox contains the corresponding known ciphertext."/>
-	 <replacement key="$memo2$" value="This template performs a partially known-plaintext attack on M-138. On the left side, you can choose the plain- and ciphertext to be sent to the analyzer. In the analyzer's settings, you can select the language of the plaintext.\line In the visualisation of the analyzer component (its presentation mode), you'll see more information about the attack, e.g. a list of the best keys, according to a value calculated using Trigrams, Quadgrams and relative occurrence of characters."/>
+	 <replacement key="$memo2$" value="This template performs a partially-known plaintext attack on M-138. On the left side, you can choose the plain- and ciphertext to be sent to the analyzer. In the analyzer's settings, you can select the language of the plaintext.\line In the visualisation of the analyzer component (its presentation mode), you'll see more information about the attack, e.g. a list of the best keys, according to a value calculated using Trigrams, Quadgrams and relative occurrence of characters."/>
 	 <replacoement key="$memo3$" value="In the upper textbox, you can see the complete plaintext resulting when decrypting the ciphertext using the best found key. In the lower textbox, you can see the best key found."/>
   </replacements>
 

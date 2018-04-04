@@ -621,7 +621,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Keys / sec.: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keys / sec: ähnelt.
         /// </summary>
         public static string KeysPerSecLabel {
             get {

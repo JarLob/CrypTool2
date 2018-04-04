@@ -172,10 +172,10 @@
     <value>Bester gefundener Schlüssel.</value>
   </data>
   <data name="KeysPerSecondAverageLabel" xml:space="preserve">
-    <value>Durchschnittliche Schlüssel / Sekunde:</value>
+    <value>Durchschnittliche Schlüssel / sec:</value>
   </data>
   <data name="KeysPerSecondCurrentLabel" xml:space="preserve">
-    <value>Aktuelle Schlüssel / Sekunde:</value>
+    <value>Aktuelle Schlüssel / sec:</value>
   </data>
   <data name="LanguageCaption" xml:space="preserve">
     <value>Sprache</value>

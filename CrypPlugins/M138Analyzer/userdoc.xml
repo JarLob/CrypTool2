@@ -47,7 +47,7 @@
     to run the attack on a different keylength.
     Regarding the key to be found, you can also set the minimal and maximal offset to be tested. This is useful in case you already know the offset but
     still need to find out the rest of the key.
-    The next setting, language, is only relevant in case of a ciphertext-only or partially known-plaintext attack. In these cases, a hillclimbing
+    The next setting, language, is only relevant in case of a ciphertext-only or partially-known plaintext attack. In these cases, a hillclimbing
     algorithm is implemented which rates the plaintext using tri- and quadgrams. The setting allows you to choose whether the plaintext is supposed to be
     German or English.
     Restarts for Hillclimbing is only relevant for ciphertext-only and partially-known-plaintext attacks as well. This setting controls how often the

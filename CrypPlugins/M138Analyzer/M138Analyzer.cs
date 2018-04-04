@@ -250,14 +250,14 @@ namespace Cryptool.M138Analyzer
                 case 0: // Known Plaintext
                     if (String.IsNullOrEmpty(Ciphertext) || String.IsNullOrEmpty(Plaintext))
                     {
-                        GuiLogMessage("Please provide Ciphertext and Plaintext to perform a known plaintext attack", NotificationLevel.Error);
+                        GuiLogMessage("Please provide ciphertext and plaintext to perform a known-plaintext attack", NotificationLevel.Error);
                         return;
                     }
 
                     Plaintext = RemoveInvalidChars(Plaintext.ToUpper(), StripAlphabet);
                     Ciphertext = RemoveInvalidChars(Ciphertext.ToUpper(), StripAlphabet);
 
-                    //assert that Ciphertext and Plaintext have the same length
+                    //assert that ciphertext and plaintext have the same length
                     if (Plaintext.Length > Ciphertext.Length)
                         Plaintext.Remove(Ciphertext.Length);
                     else if (Plaintext.Length < Ciphertext.Length)
@@ -268,7 +268,7 @@ namespace Cryptool.M138Analyzer
 
                     double _costValue1 = Quadgrams.CalculateCost(PlaintextNumbers);
 
-                    //Call Known Plaintext Attack
+                    //Call known-plaintext attack
                     //TextLength should be at least 25
                     List<string> AllPossibleKeysAsString = new List<string>();
 
@@ -305,13 +305,13 @@ namespace Cryptool.M138Analyzer
                 case 1: // Partially Known Plaintext
                     if (String.IsNullOrEmpty(Plaintext))
                     {
-                        GuiLogMessage("Please provide a Plaintext for a Partially Known Plaintext attack", NotificationLevel.Error);
+                        GuiLogMessage("Please provide a plaintext for a partially-known plaintext attack", NotificationLevel.Error);
                         return;
                     }
                     
                     if (String.IsNullOrEmpty(Ciphertext))
                     {
-                        GuiLogMessage("Please provide a Ciphertext for a Partially Known Plaintext attack", NotificationLevel.Error);
+                        GuiLogMessage("Please provide a ciphertext for a partially-known plaintext attack", NotificationLevel.Error);
                         return;
                     }
                     
@@ -359,11 +359,11 @@ namespace Cryptool.M138Analyzer
 
                     UpdateDisplayStart();
 
-                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++) //Do a known Plaintext on the known Plaintext and afterwards do a Hill Climbing on the complete Ciphertext
+                    for (int offset = MinOffsetUserSelect; offset <= MaxOffsetUserSelect; offset++) //Do a known-plaintext on the known plaintext and afterwards do a Hill Climbing on the complete ciphertext
                     {
                         var _startTime = DateTime.Now;
                         var _keysForOffset = KnownPlaintextAttack(offset, PlaintextNumbers.Length, StripList.Count, StripList[0].Length);
-                        if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete Ciphertext
+                        if (_keysForOffset != null) //Found a Key for this offset, do Hill Climbing on complete ciphertext
                         {
                             int countOnlyOne = 0;
                             int _numPosKeys = 1;
@@ -381,7 +381,7 @@ namespace Cryptool.M138Analyzer
                                 //too much to do hill climbing on every possible key
                                 if (countOnlyOne <= 10)
                                 {
-                                    GuiLogMessage("Too many possible keys found. Handling not yet implemented, please try a ciphertext-Only attack.", NotificationLevel.Error);
+                                    GuiLogMessage("Too many possible keys found. Handling not yet implemented, please try a ciphertext-only attack.", NotificationLevel.Error);
                                     //Not Yet Implemented
                                     return;
                                 }

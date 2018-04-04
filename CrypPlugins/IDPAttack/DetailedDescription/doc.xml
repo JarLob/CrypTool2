@@ -10,7 +10,7 @@
     <newline />
     A DCT consists of the application of two simple columnar transpositions (SCT), each having its own key. The success of the IDP method relies on the fact, that it can provide a measurement of the quality of the second key without 
     knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the <i>IDP Analyzer</i> component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase 
-    and produces an intermediate ciphertext, that is basically also just a SCT and which can easily be solved in a second step with a classic Hill climbing attack.
+    and produces an intermediate ciphertext, that is basically also just a SCT and which can easily be solved in a second step with a classic Hill Climbing attack.
   </introduction>
 
   <usage lang="en">
@@ -29,10 +29,10 @@
     In the settings of the component, you can enter limits for the sizes of the two keys of the DCT. Those words of the dictionary whose size does not lie in the interval for key 2 are ignored.
     <newline />
     <newline />
-    In "Hill Climbing" mode, the keywords are not retrieved from a dictionary, but are generated randomly. A Hill climbing round starts with a randomly generated keyword whose IDP score is calculated. Small changes are then applied to the present keyword
+    In "Hill Climbing" mode, the keywords are not retrieved from a dictionary, but are generated randomly. A Hill Climbing round starts with a randomly generated keyword whose IDP score is calculated. Small changes are then applied to the present keyword
     and the new IDP score is calculated. If it has a better score, the new keyword is kept and the process is repeated with the new keyword. If the score is worse, it is dismissed and the process is repeated with the old keyword.
     <newline />
-    In the settings of the component you can determine the number of iterations of one Hill climbing round and the total number of rounds. In this mode, you can't enter upper and lower limits for the key sizes. Instead, you must enter the exact
+    In the settings of the component you can determine the number of iterations of one Hill Climbing round and the total number of rounds. In this mode, you can't enter upper and lower limits for the key sizes. Instead, you must enter the exact
     sizes of the keys.
     <newline />
     <newline />
@@ -80,7 +80,7 @@
     <newline />
     <newline />
     Bei der "Hill Climbing"-Methode werden die Schlüsselworte nicht aus einem Wörterbuch ausgelesen, sondern werden zufällig generiert.
-    Eine Runde des "Hill climbing" beginnt mit der Erzeugung eines zufälligen Schlüsselwortes, dessen IDP-Wert berechnet wird. Dann werden an diesem Schlüsselwort kleine Änderungen vorgenommen, und der IDP-Wert dieses neuen Schlüssels wird berechnet.
+    Eine Runde des "Hill Climbing" beginnt mit der Erzeugung eines zufälligen Schlüsselwortes, dessen IDP-Wert berechnet wird. Dann werden an diesem Schlüsselwort kleine Änderungen vorgenommen, und der IDP-Wert dieses neuen Schlüssels wird berechnet.
     Ist der neue IDP-Wert besser, so behält man das neue Schlüsselwort und der Vorgang wird mit diesem wiederholt. Ist der Wert schlechter, so wird das neue Schlüsselwort verworfen und mit dem alten weiter gearbeitet.
     <newline />
     In den Einstellungen kann man die Anzahl der Runden-Iterationen und die Gesamtzahl der Runden angeben. In dieser Betriebsart kann man keine oberen und unteren Schranken für die Schlüsselgrößen angeben, sondern muss die zu untersuchenden

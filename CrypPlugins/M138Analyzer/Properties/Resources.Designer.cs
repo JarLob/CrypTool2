@@ -394,7 +394,7 @@ namespace Cryptool.M138Analyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Partially known plaintext ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Partially-known plaintext ähnelt.
         /// </summary>
         internal static string MethodList2 {
             get {

@@ -232,7 +232,7 @@
     <value>Key</value>
   </data>
   <data name="Keys_secLabel" xml:space="preserve">
-    <value>Keys / sec.:</value>
+    <value>Keys / sec:</value>
   </data>
   <data name="LocalLabel" xml:space="preserve">
     <value>Local</value>

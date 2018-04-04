@@ -1030,7 +1030,7 @@ namespace TranspositionAnalyser
 
         #endregion
 
-        #region Hill climbing
+        #region Hill Climbing
 
         private void HillClimbingAnalysis()
         {

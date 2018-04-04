@@ -193,7 +193,7 @@
     <value>Geheimtextalphabet</value>
   </data>
   <data name="CiphertextAlphabetTooltip" xml:space="preserve">
-    <value>Das Ahlphabet des Geheimtextes</value>
+    <value>Das Alphabet des Geheimtextes</value>
   </data>
   <data name="CiphertextCaption" xml:space="preserve">
     <value>Geheimtext</value>

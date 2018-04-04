@@ -142,7 +142,7 @@
     <value>German</value>
   </data>
   <data name="MethodList2" xml:space="preserve">
-    <value>Partially known plaintext</value>
+    <value>Partially-known plaintext</value>
   </data>
   <data name="HillClimbRestartsCaption" xml:space="preserve">
     <value>Number of restarts</value>
@@ -205,7 +205,7 @@
     <value>Set the minimum offset to be analyzed</value>
   </data>
   <data name="MethodList3" xml:space="preserve">
-    <value>Hill climbing</value>
+    <value>Hill Climbing</value>
   </data>
   <data name="PlaintextCaption" xml:space="preserve">
     <value>Plaintext</value>

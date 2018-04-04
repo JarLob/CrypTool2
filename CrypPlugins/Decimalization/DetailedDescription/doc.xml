@@ -5,7 +5,7 @@
   
   <introduction lang="en">
     Decimalization is the process of creating a decimal number from a binary number. Furthermore certain characteristics of the 
-    binary data should be transferred to the decimal, e. g. a uniform distribution of the digits and unpredictability of the digits. This plugin realizes
+    binary data should be transferred to the decimal, e.g. a uniform distribution of the digits and unpredictability of the digits. This plugin realizes
     different decimalization processes within the CrypTool 2 environment.
   </introduction>
   <usage lang="en">

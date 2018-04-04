@@ -3,7 +3,7 @@
 
   <title lang="en">Decimalization</title>
   <summary lang="en">Usage of the <i>Decimalization</i></summary>
-  <description lang="en"><i>Decimalization</i> is the process of creating a decimal number from a binary number. Furthermore certain characteristics of the binary data should be transferred to the decimal, e. g. a uniform distribution and unpredictability.<newline /><newline />
+  <description lang="en"><i>Decimalization</i> is the process of creating a decimal number from a binary number. Furthermore certain characteristics of the binary data should be transferred to the decimal, e.g. a uniform distribution and unpredictability.<newline /><newline />
 This template presents two scenarios of creating decimals from binary data: The first scenario uses a random number generator to generate binary data for the component. The second scenario allows manual input of the binary data using the <i>TextInput</i> component. The <i>Decimalization</i> component transforms the data to decimals. The results can be found inside the text boxes.</description>
   <keywords>Decimalization</keywords>
 
@@ -34,7 +34,7 @@ Diese Vorlage enthält zwei Dezimalisierungsszenarien: Im ersten Szenario werden
     <replacement key="$RandomInput$" value="Random Input"/>
     <replacement key="$StringDecoder$" value="String Decoder"/>
     <replacement key="$Decimalization$" value="Decimalization"/>
-	 <replacement key="$memo$" value="{\ul Decimalization Component}\line\line Decimalization is the process of creating a decimal number from a binary number. Furthermore certain characteristics of the binary data should be transferred to the decimal, e. g. a uniform distribution and unpredictability.\line\line This template presents two scenarios of creating decimals from binary data: The first scenario uses a random number generator to generate binary data for the plugin.  The second scenario (at the bottom) allows manual input of the binary data using the TextInput component. The decimalization components transform the data to decimals. The results can be found inside the text boxes.\line\line If you want to have more information (e.g. about the four decimalization methods) please consult the online help."/>
+	 <replacement key="$memo$" value="{\ul Decimalization Component}\line\line Decimalization is the process of creating a decimal number from a binary number. Furthermore certain characteristics of the binary data should be transferred to the decimal, e.g. a uniform distribution and unpredictability.\line\line This template presents two scenarios of creating decimals from binary data: The first scenario uses a random number generator to generate binary data for the plugin.  The second scenario (at the bottom) allows manual input of the binary data using the TextInput component. The decimalization components transform the data to decimals. The results can be found inside the text boxes.\line\line If you want to have more information (e.g. about the four decimalization methods) please consult the online help."/>
   </replacements>
 
 </sample>

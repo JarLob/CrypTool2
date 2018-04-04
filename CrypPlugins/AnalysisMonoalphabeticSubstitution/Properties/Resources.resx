@@ -387,7 +387,7 @@ Plaintext alphabet: "{2}" ({3} letters)</value>
     <value>No CUDA-enabled device or CUDA driver found.</value>
   </data>
   <data name="KeysPerSecLabel" xml:space="preserve">
-    <value>Keys / sec.:</value>
+    <value>Keys / sec:</value>
   </data>
   <data name="TotalKeysLabel" xml:space="preserve">
     <value>Tested keys:</value>

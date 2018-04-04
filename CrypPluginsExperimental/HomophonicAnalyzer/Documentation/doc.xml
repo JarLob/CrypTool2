@@ -42,7 +42,7 @@
       The advantages of a genetic attack are that it does not need word boundaries for it's analysis, that it can take care of large ciphertext samples, and that nothing more
       than the n-gram probabilities are needed for the analysis. Hence, the ciphertext's word boundaries can be scrambled without negative impact on the analysis. Furthermore, the larger the sample of the ciphertext
       the better the genetic attack performs because the fingerprint according to the n-gram probabilities is better. A disadvantage of the genetic attack is
-      that it performs poorly on very short ciphertext samples, e. g. 60 characters or less.<newline />
+      that it performs poorly on very short ciphertext samples, e.g. 60 characters or less.<newline />
       The advantage of the dictionary attack is that it can cope with very short ciphertext samples in a short and efficient way. Disadvantages of this attack
       are that a dictionary with the most common words is needed, that the words of the ciphertext have to be in the dictionary, and that the single words of the ciphertext must be identifiable.
     </section>
