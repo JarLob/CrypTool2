@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Monoalphabetic Substitution Analyzer with arbitrary Ciphertext Alphabet</title>
+  <summary lang="en">Cryptanalysis of the monoalphabetic substitution cipher with an arbitrary ciphertext alphabet</summary>
+  <description lang="en">This template shows the cryptanalysis of the monoalphabetic substitution cipher. A sample plaintext is entered in the text input. After starting the workspace, the Substitution component encrypts the plaintext using the given ciphertext alphabet. The resulting ciphertext is then fed into the Monoalphabetic Substitution Analyzer, that tries to recover the original plaintext.</description>
+  <keywords>Monoalphabetic Substitution Cipher, Frequencies, Dictionary Attack, Analysis, Alphabet</keywords>
+
+  <title lang="de">Angriff auf die monoalphabetische Substitution mit beliebigem Geheimtextalphabet</title>
+  <summary lang="de">Angriff auf die monoalphabetische Substitution mit einem beliebigen Geheimtextalphabet</summary>
+  <description lang="de">Dieses Template zeigt die Kryptoanalyse der monoalphabetischen Substitution. Ein Beispiel-Klartext ist bereits in die Texteingabebox eingetragen. Nachdem die Vorlage gestartet wurde, wird der Klartext mit der Substitutions-Komponente und dem angegebenen Geheimtextalphabet verschlüsselt. Der resultierende Geheimtext wird an die Analysekomponente weitergeleitet. Diese versucht dann, den Klartext wieder herzustellen.</description>
+  
+  <keywords lang="de">monoalphabetische Substitution, Häufigkeiten, Wörterbuch, Analyse</keywords>
+  
+  <icon file="AnalysisMonoalphabeticSubstitution.png" />
+  <relevantPlugins>
+    <plugin name="AnalysisMonoalphabeticSubstitution" />
+    <plugin name="Substitution" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Plaintext alphabet$" value="Klartextalphabet"/>
+    <replacement key="$Ciphertext alphabet$" value="Geheimtextalphabet"/>
+    <replacement key="$ToUpper$" value="Großbuchstaben"/>
+    <replacement key="$Substitution$" value="Substitution"/>
+    <replacement key="$Output of the plaintext alphabet$" value="Ausgabe des Klartextalphabets"/>
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Cryptanalysis$" value="Kryptoanalyse des Geheimtextes"/>
+    <replacement key="$Output of the key$" value="Ausgabe des Schlüssels"/>
+    <replacement key="$Recovered plaintext$" value="Ermittelter Klartext"/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Plaintext alphabet$" value="Plaintext alphabet"/>
+    <replacement key="$Ciphertext alphabet$" value="Ciphertext alphabet"/>
+    <replacement key="$ToUpper$" value="ToUpper"/>
+    <replacement key="$Substitution$" value="Substitution"/>
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Cryptanalysis$" value="Cryptanalysis of the ciphertext"/>
+    <replacement key="$Output of the plaintext alphabet$" value="Output of the plaintext alphabet"/>
+    <replacement key="$Output of the key$" value="Output of the key"/>
+    <replacement key="$Recovered plaintext$" value="Recovered plaintext"/>
+  </replacements>
+
+</sample>
