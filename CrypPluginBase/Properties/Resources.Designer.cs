@@ -97,6 +97,15 @@ namespace Cryptool.PluginBase.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Greek ähnelt.
+        /// </summary>
+        public static string LanguageEL {
+            get {
+                return ResourceManager.GetString("LanguageEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die English ähnelt.
         /// </summary>
         public static string LanguageEN {
@@ -138,6 +147,15 @@ namespace Cryptool.PluginBase.Properties {
         public static string LanguageIT {
             get {
                 return ResourceManager.GetString("LanguageIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Latin ähnelt.
+        /// </summary>
+        public static string LanguageLA {
+            get {
+                return ResourceManager.GetString("LanguageLA", resourceCulture);
             }
         }
         

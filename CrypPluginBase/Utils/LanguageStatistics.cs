@@ -14,13 +14,13 @@ namespace Cryptool.PluginBase.Utils
     {
         public static string[] SupportedLanguages
         {
-            //get { return new string[] { "English", "German", "Spanish", "French", "Italian", "Hungarian", "Russian", "Czech" }; }
-            get { return new string[] { Resources.LanguageEN, Resources.LanguageDE, Resources.LanguageES, Resources.LanguageFR, Resources.LanguageIT, Resources.LanguageHU, Resources.LanguageRU, Resources.LanguageCS }; }
+            //get { return new string[] { "English", "German", "Spanish", "French", "Italian", "Hungarian", "Russian", "Czech", "Greek", "Latin" }; }
+            get { return new string[] { Resources.LanguageEN, Resources.LanguageDE, Resources.LanguageES, Resources.LanguageFR, Resources.LanguageIT, Resources.LanguageHU, Resources.LanguageRU, Resources.LanguageCS, Resources.LanguageEL, Resources.LanguageLA }; }
         }
 
         public static string[] SupportedLanguagesCodes
         {
-            get { return new string[] { "en", "de", "es", "fr", "it", "hu", "ru", "cs" }; }
+            get { return new string[] { "en", "de", "es", "fr", "it", "hu", "ru", "cs", "el", "la" }; }
         }
 
         public static string LanguageCode(int n)
@@ -58,6 +58,8 @@ namespace Cryptool.PluginBase.Utils
             { "hu", "ABCDEFGHIJKLMNOPQRSTUVWXYZÁÉÍÓÖŐÚÜŰ" },
             { "ru", "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ" },
             { "cs", "AÁBCČDĎEÉĚFGHIÍJKLMNŇOÓPQRŘSŠTŤUÚŮVWXYÝZŽ" },
+            { "el", "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ" },
+            { "la", "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
         };
 
         public static string Alphabet(string language, bool useSpaces = false)

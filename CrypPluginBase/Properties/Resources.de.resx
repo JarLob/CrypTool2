@@ -159,4 +159,10 @@
   <data name="LanguageRU" xml:space="preserve">
     <value>Russisch</value>
   </data>
+  <data name="LanguageEL" xml:space="preserve">
+    <value>Griechisch</value>
+  </data>
+  <data name="LanguageLA" xml:space="preserve">
+    <value>Lateinisch</value>
+  </data>
 </root>

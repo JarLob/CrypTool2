@@ -165,4 +165,10 @@
   <data name="LanguageRU" xml:space="preserve">
     <value>Russian</value>
   </data>
+  <data name="LanguageEL" xml:space="preserve">
+    <value>Greek</value>
+  </data>
+  <data name="LanguageLA" xml:space="preserve">
+    <value>Latin</value>
+  </data>
 </root>
