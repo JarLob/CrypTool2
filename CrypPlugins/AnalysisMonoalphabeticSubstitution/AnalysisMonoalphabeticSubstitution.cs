@@ -202,7 +202,6 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
                         case 9: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Portuguese 
                         case 10: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break; // Czech 
                         case 11: plaintextalphabet = "ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ"; break; // Greek
-                        case 12: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;  // Latin
                         default: plaintextalphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; break;  // English
                     }
 
