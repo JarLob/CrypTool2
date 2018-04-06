@@ -11,6 +11,11 @@ or use the contact form on the upper right side under the "About" menu in the Cr
 Sincerly yours,
 The CrypTool 2 Developer Team, April 2018
 
+Changelog:
+
+Hint: We updated CrypTool 2.1 to .NET Framework 4.7.1. So please download it before applying the update.
+Download Link: https://www.microsoft.com/net/download/dotnet-framework-runtime
+
 New components:
 
 Ciphers:
