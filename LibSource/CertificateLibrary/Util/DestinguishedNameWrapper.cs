@@ -80,8 +80,8 @@ namespace PeersAtPlay.CertificateLibrary.Util
             }
 
             // Read the CN, O, OU, C, EmailAddress values from Destinguished Name
-            ArrayList values = dn.GetValues();
-            ArrayList oids = dn.GetOids();
+            var values = dn.GetValueList();
+            var oids = dn.GetOidList();
             if (values.Count != oids.Count)
             {
                 // Is thrown when the certificate was created in a very strange way ;)

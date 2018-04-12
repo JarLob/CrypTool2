@@ -29,7 +29,6 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
 using System.ComponentModel;
-using Org.BouncyCastle.Utilities.Encoders;
 
 namespace Transcriptor
 {

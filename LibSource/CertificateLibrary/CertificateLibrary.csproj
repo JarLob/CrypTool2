@@ -77,9 +77,8 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.CryptoExt, Version=1.6.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Lib\BouncyCastle.CryptoExt.dll</HintPath>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\..\Lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=c2ce2cb84dc7c251, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
