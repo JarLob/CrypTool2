@@ -68,13 +68,13 @@ namespace Cryptool.Plugins.KPFSHA256
 
             if (N > 4294967296)
             {
-                throw new ToMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * sha256.GetDigestSize()).ToString()));
+                throw new TooMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * sha256.GetDigestSize()).ToString()));
             }
 
             //Problem mit System.outofmemoryexception...
             if(Convert.ToInt32(N) * sha256.GetDigestSize() > 99999999)
             {
-                //throw new ToMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * sha256.GetDigestSize()).ToString()));
+                //throw new TooMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * sha256.GetDigestSize()).ToString()));
             }
 
             //counter as hex beginning with zero byte. Counter has a size of 16 bits.
@@ -209,7 +209,7 @@ namespace Cryptool.Plugins.KPFSHA256
 
             if (N > 255)
             {
-                throw new ToMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}" , outputBytes.ToString()).Replace("{1}", (255 * sha256.GetDigestSize()).ToString()));
+                throw new TooMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}" , outputBytes.ToString()).Replace("{1}", (255 * sha256.GetDigestSize()).ToString()));
             }
 
             for (int i = 0; i < N; i++, CTR++)
@@ -572,7 +572,7 @@ namespace Cryptool.Plugins.KPFSHA256
                 OnPropertyChanged("KeyMaterial");
             }
             //in case of too long outputs specified
-            catch (ToMuchOutputRequestedException ex)
+            catch (TooMuchOutputRequestedException ex)
             {
                 GuiLogMessage(ex.Message, NotificationLevel.Error);
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate

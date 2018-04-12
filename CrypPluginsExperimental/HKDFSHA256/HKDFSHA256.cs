@@ -85,7 +85,7 @@ namespace Cryptool.Plugins.HKDFSHA256
 
             if (N > 4294967296)
             {
-                throw new ToMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * hmac.GetMacSize()).ToString()));
+                throw new TooMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (4294967295 * hmac.GetMacSize()).ToString()));
             }
 
             //if salt is not provided, set it to 0x00 * hashlength
@@ -324,7 +324,7 @@ namespace Cryptool.Plugins.HKDFSHA256
 
             if (N > 255)
             {
-                throw new ToMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (255 * hmac.GetMacSize()).ToString()));
+                throw new TooMuchOutputRequestedException(Resources.ExToMuchOutputRequested.Replace("{0}", outputBytes.ToString()).Replace("{1}", (255 * hmac.GetMacSize()).ToString()));
             }
 
             //if salt is not provided, set it to 0x00 * hashlength
@@ -846,7 +846,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                 _keyMaterial = BitConverter.ToString(result).Replace("-", "");
                 OnPropertyChanged("KeyMaterial");
             }
-            catch (ToMuchOutputRequestedException ex)
+            catch (TooMuchOutputRequestedException ex)
             {
                 GuiLogMessage(ex.Message, NotificationLevel.Error);
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate

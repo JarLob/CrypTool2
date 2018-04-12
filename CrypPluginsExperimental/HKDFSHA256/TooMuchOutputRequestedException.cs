@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.HKDFSHA256
 {
-    class ToMuchOutputRequestedException : Exception
+    class TooMuchOutputRequestedException : Exception
     {
-        public ToMuchOutputRequestedException(string message) : base(message)
+        public TooMuchOutputRequestedException(string message) : base(message)
         {
 
         }
