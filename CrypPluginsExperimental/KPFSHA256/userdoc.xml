@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en"> 
+		The function KPF SHA-256 is a key derivation function (kdf). This implementation uses the SHA-256 hash function with the counter-mode. The process is based on the so called HMAC-based Key Derivation Function (hkdf). The hkdf-kdf uses an 8-bit counter. Because of that, the maximum amount of output is limited (256 * length of the used hash function). In the configuration of the plugin you can choose between an implementation with 8-bit counter and one with a 32-bit counter. With the 32-bit counter you can create much longer outputs. <newline /><newline /><b>Attention:</b><newline /> The SHA-2 should not used with a key as prefix, because of a problem with the construction of the hash function (find details on <b>length extension attack</b>). This implementation is only for demonstration purpose.
+	  <section headline="Inputs and Outputs">
+		<list>
+			<item><b>Source Key Material:</b> Specifies the source key material. It is used to calculate the key material.</item>
+			<item><b>Key:</b> The key for calculation of the key material. It must be secret.</item>
+			<item><b>Length of the output key material (in Byte):</b> Specifies the length of the output key material.</item>
+			<item><b>Key Material:</b> After the calculation, the generated key material is visible in this textfield.</item>
+			<item><b>Calculationsteps:</b> The intermediate steps of the calculation are displayed in this textfield.</item>
+		</list>	
+      </section>
+	  <section headline="Basics and background">
+		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a kdf, you can generate keys with pseudorandom characters. An integral part of a kdf is a pseudorandom function (prf). These functions are often based on hashfunctions or stream ciphers. <newline /> A prf generates strings with pseudorandom chars. Frequently, hashfunctions were used as prf. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a prf.
+	  </section>
+	  <section headline="Traditional approach of a PRF" >
+		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed prf can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
+	  <section headline="Modern approach of a PRF">
+	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (hmac), if the used hash function is based on the Merkle-Damgård construction. The hmac is not vulnerable to the extension attack. The hkdf function is hmac based kdf. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
+	  </section>
+	  <section headline="Extension of the output">
+	  The length of the output is limited to a fixed size. To extend the length, the used prf must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs.
+	  </section>
+	  <section headline="SHA-3">
+	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional prf approach) and do not require any auxiliary operation modes to achieve any output length. 
+	  </section>
+  </introduction>
+
+  <introduction lang="de-DE">
+    Die Funktion KPF SHA-256 ist eine Schlüsselgenerierungsfunktion (KDF). Diese Implementierung verwendet den SHA-256 im Counter-Mode. Das Verfahren orientiert sich am so genannten HMAC-based Key Derivation Function (HKDF). Das HKDF-Verfahren verwendet einen 8-Bit Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (256 * Hashlänge). In der Konfiguration des PlugIn kann zwischen der Variante mit der Orientierung am HKDF-Verfahren (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit Variante lassen sich wesentlich längere Ausgaben erzeugen. <newline /><newline /><b>Achtung:</b><newline /> Der SHA-2 sollte aus Konstruktionsgründen der Hashfunktion nicht mit einem Schlüssel (als Präfix) verwendet werden (siehe <b>Erweiterungsangriff</b>). <b>Diese Implementierung dient ausschließlich nur zu Demonstrationszwecken</b>.
+    <section headline="Eingaben und Ausgaben">
+	<list>
+		<item><b>Quellschlüsselmaterial:</b> Spezifiziert das Quellschlüsselmaterial. Dieses wird zur generierung des Schlüsselmaterials verwendet.</item>
+		<item><b>Schlüssel:</b> Der Schlüssel wird zu generierung des Schlüsselmaterials verwendet. Dieser muss geheim sein.</item>
+		<item><b>Länge des zu generierenden Schlüssel (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterial.</item>
+		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial in diesem Textfeld zu sehen.</item>
+		<item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item>
+	</list>	
+	</section>
+	<section headline="Grundlagen und Hintergrund">
+      Für kryptographische Verfahren und Anwendungen eignen sich keine durch Anwender spezifizierte Schlüssel, da diese in der Regel nicht den Anforderungen genügen. Mit KDFs können Schlüssel mit pseudozufälligen Zeichen generiert werden. Ein wesentlicher Bestandteil einer KDF ist eine Pseudozufallsfunktion (PRF). PRFs basieren häufig auf Hashfunktionen oder Stream Ciphers.
+      <newline />
+      Eine PRF generiert Zeichenketten mit pseudozufälligen Zeichen. Häufig wurden Hashfunktionen als PRF verwendet. Das Ziel einer Hashfunktion ist allerdings nicht die Generierung von pseudozufälligen Zeichenketten. Essentiell für eine PRF ist ein geheimer Schlüssel.
+    </section>
+    <section headline="Traditioneller Ansatz einer PRF" >
+      Intuitiv und naheliegender Weise kann eine Hashfunktion um einen Schlüssel erweitert werden. Dazu kann der Schlüssel als Präfix vor die Eingabe der Hashfunktion gehangen werden. In der Literatur wird diese Konstruktion als traditioneller Ansatz bezeichnet. Dieser Ansatz ist allerdings problematisch, wenn die verwendete Hashfunktion auf der Merkle-Damgård Konstruktion basiert. Die meisten praxisrelevanten Hashfunktionen aus der Vergangenheit basieren auf dem Merkle-Damgård Konstruktionsschema. Aufgrund einer Schwäche in der Konstruktion lässt sich eine so konstruierte PRF mit einem Erweiterungsangriff schwächen. Daher dürfen in der Praxis keine Merkle-Damgård basierten Hashfunktionen mit den traditionellen Ansatz verwendet werden.
+      </section>
+    <section headline="Moderner Ansatz einer PRF">
+      Ein modernerer und sicherer Ansatz ist die Verwendung des Keyed-Hash Message Authentication Codes (HMAC) als PRF, wenn die verwendete Hashfunktion auf der Merkle-Damgård Konstruktion basiert. Der HMAC ist sicher gegenüber einem Erweiterungsangriff. Eine auf dem HMAC basierende KDF ist das HKDF-Verfahren. Dieses wird beispielsweise vom amerikanischen Nationalen Institut für Standards und Technologie (kurz: NIST) empfohlen.<newline /><newline />
+    </section>
+    <section headline="Verlängerung der Ausgabe">
+      Um mit KDFs beliebig lange Ausgaben zu erzeugen, muss eine zu Grunde liegende PRF mehrfach aufgerufen und deren Ausgaben zu einem Schlüssel zusammengefügt werden. Dazu gibt es verschiedene Betriebsmodi (Mode of Operation). Zwei mögliche und häufig verwendete Betriebsmodi sind der Zähler-basierende Counter-Mode sowie der Feedback-Mode, der eine Rückkopplung des zuvor berechneten Teilschlüssels verwendet. Diese beiden Betriebsmodi werden zur Konstruktion von KDFs vom NIST empfohlen.
+   </section>
+   <section headline="SHA-3">
+     Im Rahmen der SHA-3 Competition wurden viele interessante Einreichungen gemacht. Einige der Kandidaten wie der Blake, Skein und Keccak basieren nicht mehr auf der Merkle-Damgård konstruktion. Darüber hinaus bringen manche Hashfunktionen auch eine "integrierte" beliebige Wahl der Ausgabelänge des Hashwertes mit. Daher können diese Hashfunktionen mit Key-Präfix (traditioneller PRF Ansatz) verwendet werden und benötigen keinen Betriebsmodi mit Hilfskonstruktion zur Erreichung einer beliebigen Ausgabelänge. 
+   </section>
+  </introduction>
+
+  <usage lang="en">
+	The usable in- and outputs will be explained in the presentationview of the component.
+  </usage>
+
+  <usage lang="de-DE">
+	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentationsansicht der Komponente erklärt.
+  </usage>
+  
+  <presentation lang="en">
+	By double-clicking on the KPF SHA-256 component in the workspace, you can activate the visualization of the calculation. The design and operation of the function will be explained step by step.
+  </presentation>
+  
+  <presentation lang="de-DE">
+	Durch Doppelklick auf die KPF SHA-256 Komponente in der Arbeitsfläche können Sie die Visualisierung der Berechnung aktivieren. Dabei wird die Konstruktion und die Arbeitsweise der Funktion Schritt für Schritt erklärt.
+  </presentation>
+  
+  <references>
+    <linkReference>
+      <link url="https://tools.ietf.org/html/rfc5869" lang="en" />
+      <caption lang="en">RFC 5869: Extract-and-Expand HKDF. Accessed 01-04-2018</caption>
+      <link url="https://tools.ietf.org/html/rfc5869" lang="de-DE" />
+      <caption lang="de-DE">RFC 5869: Extract-and-Expand HKDF. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://eprint.iacr.org/2010/264.pdf" lang="en" />
+      <caption lang="en">Cryptographic Extraction and Key Derivation: The HKDF Scheme. Accessed 01-04-2018</caption>
+      <link url="https://eprint.iacr.org/2010/264.pdf" lang="de-DE" />
+      <caption lang="de-DE">Cryptographic Extraction and Key Derivation: The HKDF Scheme. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-56c.pdf" lang="en" />
+      <caption lang="en">Recommendation for Key Derivation through Extraction-then-Expansion. Accessed 01-04-2018</caption>
+      <link url="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-56c.pdf" lang="de-DE" />
+      <caption lang="de-DE">Recommendation for Key Derivation through Extraction-then-Expansion. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-108.pdf" lang="en" />
+      <caption lang="en">Recommendation for Key Derivation Using Pseudorandom Functions. Accessed 01-04-2018</caption>
+      <link url="https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-108.pdf" lang="de-DE" />
+      <caption lang="de-DE">Recommendation for Key Derivation Using Pseudorandom Functions. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+	<linkReference>
+      <link url="https://en.wikipedia.org/wiki/Length_extension_attack" lang="en" />
+      <caption lang="en">Length extension attack. Accessed 01-04-2018</caption>
+      <link url="https://en.wikipedia.org/wiki/Length_extension_attack" lang="de-DE" />
+      <caption lang="de-DE">Length extension attack. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+	<linkReference>
+      <link url="https://www.cryptologie.net/article/417/how-did-length-extension-attacks-made-it-into-sha-2/" lang="en" />
+      <caption lang="en">How did length extension attacks made it into SHA-2? Accessed 01-04-2018</caption>
+      <link url="https://www.cryptologie.net/article/417/how-did-length-extension-attacks-made-it-into-sha-2/" lang="de-DE" />
+      <caption lang="de-DE">How did length extension attacks made it into SHA-2? Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+  </references>
+</documentation>

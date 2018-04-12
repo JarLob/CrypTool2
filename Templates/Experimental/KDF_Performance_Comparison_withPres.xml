@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">KDF Performance Comparison (with presentation)</title>
+  <summary lang="en">Shows the comparison of 3 different key derivation functions (KPF SHA-256, KPF SHAKE256, HKDF SHA-256). All KDFs will be explained step by step.</summary>
+  <description lang="en">This template shows how the 3 different key derivation functions (KPF SHA-256, KPF SHAKE256, HKDF SHA-256) work and how fast they are.</description>
+  <keywords>kdf, hashing, schlüssel</keywords>
+
+  <title lang="de">KDF Performance Vergleich (mit Präsentation)</title>
+  <summary lang="de">Zeigt den Vergleich von 3 verschiedenen Key Derivation Functions (KPF SHA-256, KPF SHAKE256, HKDF SHA-256). Alle 3 KDFs werden Schritt für Schritt durch eine Präsentation erklärt.</summary>
+  <description lang="de">Diese Vorlage zeigt, wie die 3 verschiedenen Key Derivation Functions funktionieren (KPF SHA-256, KPF SHAKE256, HKDF SHA-256) und wie schnell diese sind.</description>
+  <keywords lang="de">kdf, hashing, schlüssel</keywords>
+
+  <icon file="KDF_Performance_Comparison_withPres.png" />
+  <relevantPlugins>
+    <plugin name="KPFSHA256" />
+    <plugin name="HKDFSHA256" />
+	<plugin name="KPFSHAKE256" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+	<replacement key="$SKMDesc$" value="Eingabe des Quellschlüsselmaterial"/>
+	<replacement key="$KeyDesc$" value="Eingabe des Schlüssels" />
+	<replacement key="$SaltDesc$" value="Eingabe des Salt" />
+	<replacement key="$CTXInfoDesc$" value="Eingabe von CTXInfo" />
+	<replacement key="$OutputLength$" value="Eingabe der Ausgabelänge (in Byte)" />
+	<replacement key="$skm$" value="Quellschluesselmaterial" />
+	<replacement key="$key$" value="geheim" />
+	<replacement key="$salt$" value="salt" />
+	<replacement key="$ctxinfo$" value="Anwendungsspezifische Konstante" />
+	<replacement key="$outputResDebug$" value="Ausgabe der Zwischenschritte der Berechnung" />
+	<replacement key="$outputRes$" value="Ausgabe des Schlüsselmaterials" />
+	<replacement key="$Introduction$" value="\fs23 In dieser Vorlage können 3 verschiedene Schlüsselgenerierungsfunktionen ausprobiert werden. Im untenstehenden Textfeld stehen einige Anmerkungen zum Vergleich der Geschwindigkeit der Funktionen. Die Grafik zeigt den Vergleich der Funktionen in einem Diagramm." />
+    <replacement key="$ExplanationResults$" value="\fs23 Die nebenstehende Grafik zeigt die drei verwendbaren Implementierungen der KDFs im Vergleich. Auf der X-Achse ist die Länge des Key Material abgebildet und auf der Y-Achse ist die dafür benötigte Rechenzeit in Millisekunden zu sehen. Die Funktion HKDF SHA-256 ist ein gängiges und sicheres Verfahren. KPF SHA-256 ist in der Praxis aufgrund eines Problems der Konstruktion des SHA-256 nicht einsetzbar. Die hier gezeigte Implementierung dient zu Demonstrationszwecken. Weitere Details sind der Hilfe und den Referenzen zu entnehmen. Im Vergleich dazu ist der SHA-3 mit Key-Präfix problemlos nutzbar. Wie in der Grafik zu sehen, ist die Funktion KPF SHAKE256 im gezeigten Vergleich die schnellste KDF. Die Messwerte wurden unter optimalen Bedingungen ermittelt."/>
+  </replacements>
+  <replacements lang="en">
+	<replacement key="$SKMDesc$" value="Input of source key material"/>
+	<replacement key="$KeyDesc$" value="Input of key" />
+	<replacement key="$SaltDesc$" value="Input of salt" />
+	<replacement key="$CTXInfoDesc$" value="Input of CTXInfo" />
+	<replacement key="$OutputLength$" value="Input of the outputlength (in byte)" />
+  	<replacement key="$skm$" value="Source key material" />
+	<replacement key="$key$" value="secret" />
+	<replacement key="$salt$" value="salt" />
+	<replacement key="$ctxinfo$" value="Application specific constant" />
+	<replacement key="$outputResDebug$" value="Output of the calculationsteps" />
+	<replacement key="$outputRes$" value="Output of the key material" />
+	<replacement key="$Introduction$" value="\fs23 In this template you can test 3 different key derivation functions. The textbox  below-mentioned are some remarks to the comparison of the performance of the functions. The picture next to the textbox shows the comparison with different outputlengths." />
+    <replacement key="$ExplanationResults$" value="\fs23 The picture shows the performance of the 3 usable implementations of the kdfs. On the x-axis is the length of the key material shown and on the y-axis you can see the needed time for the calculation in milliseconds. The function HKDF SHA-256 is a very common and secure method. KPF SHA-256 is not usable in practice, because of a problem with the underlying Merkle-Damgard construction of the SHA-256 hashfunction. The shown implementation is only for demonstration purpose. Find further details in the help and the references there. In comparison to the SHA-3 there is no problem with the key-prefix. As you can see in the pucture, the function KPF SHAKE256 is the fastest kdf in comparison to the 2 other. The values were taken under optimal conditions."/>
+  </replacements>
+
+</sample>
