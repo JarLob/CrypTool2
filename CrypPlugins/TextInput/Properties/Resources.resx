@@ -156,4 +156,25 @@
   <data name="ShowLinesTooltip" xml:space="preserve">
     <value>With this checkbox enabled, the number of lines in the text is displayed in the status line of the component.</value>
   </data>
+  <data name="FontCaption" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="FontGroup" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Sets the font of this TextInput.</value>
+  </data>
+  <data name="ManualFontSettingsCaption" xml:space="preserve">
+    <value>Manual Font Settings</value>
+  </data>
+  <data name="ManualFontSettingsTooltip" xml:space="preserve">
+    <value>Set the font manually.</value>
+  </data>
+  <data name="FontSizeCaption" xml:space="preserve">
+    <value>Font Size</value>
+  </data>
+  <data name="FontSizeTooltip" xml:space="preserve">
+    <value>Sets the font size of this TextInput.</value>
+  </data>
 </root>

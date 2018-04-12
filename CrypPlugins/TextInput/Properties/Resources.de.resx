@@ -156,4 +156,25 @@
   <data name="ShowLinesTooltip" xml:space="preserve">
     <value>Wenn dieses Kontrollkästchen aktiviert ist, wird die Anzahl der Zeilen des Textes in der Statuszeile der Komponente angezeigt.</value>
   </data>
+  <data name="FontCaption" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="FontGroup" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Stellt die Schriftart dieser Texteingabe ein.</value>
+  </data>
+  <data name="FontSizeCaption" xml:space="preserve">
+    <value>Schriftgröße</value>
+  </data>
+  <data name="FontSizeTooltip" xml:space="preserve">
+    <value>Stellt die Schriftgröße dieser Texteingabe ein.</value>
+  </data>
+  <data name="ManualFontSettingsCaption" xml:space="preserve">
+    <value>Manuelle Schrift-Einstellung</value>
+  </data>
+  <data name="ManualFontSettingsTooltip" xml:space="preserve">
+    <value>Stellt die Schrift manuell ein.</value>
+  </data>
 </root>

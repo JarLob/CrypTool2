@@ -33,6 +33,7 @@ using Cryptool.PluginBase.IO;
 using System.Runtime.CompilerServices;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Runtime.Remoting.Contexts;
+using System.Drawing;
 
 namespace Cryptool.TextInput
 {
@@ -49,7 +50,6 @@ namespace Cryptool.TextInput
       settings = new TextInputSettings();
       settings.OnLogMessage += settings_OnLogMessage;
       settings.PropertyChanged += settings_OnPropertyChanged;
-
       textInputPresentation = new TextInputPresentation();
       Presentation = textInputPresentation;
       setStatusBar();
@@ -60,6 +60,14 @@ namespace Cryptool.TextInput
         if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines")
         {
             setStatusBar();
+        }
+        if (e.PropertyName == "Font")
+        {
+            textInputPresentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
+        }
+        if (e.PropertyName == "FontSize")
+        {
+            textInputPresentation.MyFontSize = settings.FontSize;
         }
     }
 

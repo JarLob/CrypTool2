@@ -20,85 +20,217 @@ using System.Linq;
 using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Cryptool.TextInput
 {
-  public class TextInputSettings : ISettings
-  {    
-    public delegate void TextInputLogMessage(string message, NotificationLevel loglevel);
-    public event TextInputLogMessage OnLogMessage;
-
-    private void LogMessage(string message, NotificationLevel logLevel)
+    public class TextInputSettings : ISettings
     {
-      if (OnLogMessage != null) OnLogMessage(message, logLevel);
-    }
+        public delegate void TextInputLogMessage(string message, NotificationLevel loglevel);
+        public event TextInputLogMessage OnLogMessage;
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
-    private string text;
-    public string Text 
-    {
-      get { return text; }
-      set 
-      {
-        if (value != text)
+        private ObservableCollection<string> fonts = new ObservableCollection<string>();
+        public ObservableCollection<string> Fonts
         {
-            text = value;
-            OnPropertyChanged("Text");
-        }
-      }
-    }
-
-    #region settings
-
-    private bool showChars = true;
-    [ContextMenu("ShowCharsCaption", "ShowCharsTooltip", 1, ContextMenuControlType.CheckBox, null)]
-    [TaskPane("ShowCharsCaption", "ShowCharsTooltip", "ShowCharsGroup", 1, true, ControlType.CheckBox, "", null)]
-    public bool ShowChars
-    {
-        get { return showChars; }
-        set
-        {
-            if (value != showChars)
+            get { return fonts; }
+            set
             {
-                showChars = value;
-                OnPropertyChanged("ShowChars");
+                if (value != fonts)
+                {
+                    fonts = value;
+                    OnPropertyChanged("Fonts");
+                }
             }
         }
-    }
 
-    private bool showLines = true;
-    [ContextMenu("ShowLinesCaption", "ShowLinesTooltip", 2, ContextMenuControlType.CheckBox, null)]
-    [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 2, true, ControlType.CheckBox, "", null)]
-    public bool ShowLines
-    {
-        get { return showLines; }
-        set
+        public TextInputSettings()
         {
-            if (value != showLines)
+            Fonts.Clear();
+            ResetFont();
+        }
+
+        public void ResetFont()
+        {
+            int index = -1;
+            int i = 0;
+            foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
             {
-                showLines = value;
-                OnPropertyChanged("ShowLines");
+                Fonts.Add(font.ToString());
+                if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
+                {
+                    index = i;
+                }
+                i++;
+            }
+            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize
+            if (index != -1)
+            {
+                font = index;
+            }
+            OnPropertyChanged("Font");
+            OnPropertyChanged("FontSize");
+        }
+
+
+        private void LogMessage(string message, NotificationLevel logLevel)
+        {
+            if (OnLogMessage != null) OnLogMessage(message, logLevel);
+        }
+
+        private string text;
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                if (value != text)
+                {
+                    text = value;
+                    OnPropertyChanged("Text");
+                }
             }
         }
+
+        #region settings
+
+        private bool showChars = true;
+        [TaskPane("ShowCharsCaption", "ShowCharsTooltip", "ShowCharsGroup", 1, true, ControlType.CheckBox, "", null)]
+        public bool ShowChars
+        {
+            get { return showChars; }
+            set
+            {
+                if (value != showChars)
+                {
+                    showChars = value;
+                    OnPropertyChanged("ShowChars");
+                }
+            }
+        }
+
+        private bool showLines = true;
+        [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 2, true, ControlType.CheckBox, "", null)]
+        public bool ShowLines
+        {
+            get { return showLines; }
+            set
+            {
+                if (value != showLines)
+                {
+                    showLines = value;
+                    OnPropertyChanged("ShowLines");
+                }
+            }
+        }
+
+        private bool manualFontSettings = false;
+        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", null, 3, true, ControlType.CheckBox, "")]
+        public bool ManualFontSettings
+        {
+            get { return manualFontSettings; }
+            set
+            {
+                if (value != manualFontSettings)
+                {
+
+                    if (value == false) 
+                    {
+                        HideSettingsElement("Font");
+                        HideSettingsElement("FontSize");
+                        ResetFont();
+                    }
+                    else
+                    {
+                        ShowSettingsElement("Font");
+                        ShowSettingsElement("FontSize");
+                    }
+                    manualFontSettings = value;
+                    OnPropertyChanged("ManualFontSettings");
+                }
+            }
+        }
+
+        private int font;
+        [TaskPane("FontCaption", "FontTooltip", "FontGroup", 4, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
+        public int Font
+        {
+            get { return font; }
+            set
+            {
+                if (value != font)
+                {
+                    if (manualFontSettings)
+                    {
+                        font = value;    
+                    }                    
+                    OnPropertyChanged("Font");
+                }
+            }
+        }
+
+        private double fontsize;
+        [TaskPane("FontSizeCaption", "FontSizeTooltip", "FontGroup", 5, true, ControlType.NumericUpDown,ValidationType.RangeInteger,8,72)]
+        public double FontSize
+        {
+            get { return fontsize; }
+            set
+            {
+                if (value != fontsize)
+                {
+                    if (manualFontSettings)
+                    {
+                        fontsize = value;
+                    }                    
+                    OnPropertyChanged("FontSize");
+                }
+            }
+        }
+       
+        #endregion settings
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void Initialize()
+        {
+            if (manualFontSettings)
+            {
+                ShowSettingsElement("Font");
+                ShowSettingsElement("FontSize");
+            }
+            else
+            {
+                HideSettingsElement("Font");
+                HideSettingsElement("FontSize");
+            }
+        }
+
+        public void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+        private void ShowSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+        }
+
+        private void HideSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Hidden)));
+            }
+        }
+
+        #endregion
     }
-
-    #endregion settings
-
-    #region INotifyPropertyChanged Members
-
-    public event PropertyChangedEventHandler PropertyChanged;
-      public void Initialize()
-      {
-          
-      }
-
-      public void OnPropertyChanged(string name)
-    {
-      if (PropertyChanged != null)
-      {
-        PropertyChanged(this, new PropertyChangedEventArgs(name));
-      }
-    }
-
-    #endregion
-  }
 }

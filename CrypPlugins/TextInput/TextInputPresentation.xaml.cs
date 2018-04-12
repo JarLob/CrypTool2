@@ -28,22 +28,62 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cryptool.PluginBase.Attributes;
+using System.ComponentModel;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.TextInput
 {
-  /// <summary>
-  /// Interaction logic for TextInputPresentation.xaml
-  /// </summary>
-  [Cryptool.PluginBase.Attributes.Localization("Cryptool.TextInput.Properties.Resources")]
-  [TabColor("red")]
-  public partial class TextInputPresentation : UserControl
-  {
-    public TextInputPresentation()
+    /// <summary>
+    /// Interaction logic for TextInputPresentation.xaml
+    /// </summary>
+    [Cryptool.PluginBase.Attributes.Localization("Cryptool.TextInput.Properties.Resources")]
+    [TabColor("red")]
+    public partial class TextInputPresentation : UserControl, INotifyPropertyChanged
     {
-      InitializeComponent();
-      Height = double.NaN;
-      Width = double.NaN;
-    }
+        public TextInputPresentation()
+        {
+            InitializeComponent();
+            Height = double.NaN;
+            Width = double.NaN;
+            DataContext = this;
+        }
 
-  }
+        private void OnPropertyChanged(string propertyName)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        private FontFamily fontFamily;
+
+        public FontFamily MyFontFamily
+        {
+            get
+            {
+                return fontFamily;
+            }
+            set
+            {
+                fontFamily = value;
+                OnPropertyChanged("MyFontFamily");
+            }
+        }
+
+        private double fontsize;
+
+        public double MyFontSize
+        {
+            get
+            {
+                return fontsize;
+            }
+            set
+            {
+                fontsize = value;
+                OnPropertyChanged("MyFontSize");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+    }
 }
