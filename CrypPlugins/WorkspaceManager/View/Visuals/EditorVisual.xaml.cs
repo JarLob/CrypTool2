@@ -47,40 +47,8 @@ namespace WorkspaceManager.View.Visuals
         public QuadTreeLib.QuadTree<FakeNode> PluginTree { get; set; }
         public QuadTreeLib.QuadTree<FakeNode> FromToTree { get; set; }
         public CryptoLineView CurrentLine { get; set; }
-        public CryptoLineView LastLine { get; set; }  
-        public  int LineCount { get; set; }
-
-        //private uint _computationDone = 0;
-        //public uint ComputationDone
-        //{
-        //    get
-        //    {
-        //        return _computationDone;
-        //    }
-        //    set 
-        //    {
-        //        _computationDone = value;
-        //        if (_computationDone >= LineCount && !editor.IsExecuting && editor.IsVisible)
-        //        {
-        //            foreach (var element in Visuals.OfType<CryptoLineView>())
-        //            {
-        //                element.Line.ClearIntersect();
-        //            }
- 
-        //            foreach (var element in Visuals.OfType<CryptoLineView>())
-        //            {
-        //                element.Line.DrawDecoration();
-        //            }
-
-        //            foreach (var element in Visuals.OfType<CryptoLineView>())
-        //            {
-        //                element.Line.InvalidateOnce();
-        //            }
-
-        //            _computationDone = 0;
-        //        }
-        //    }
-        //}
+        public CryptoLineView LastLine { get; set; }
+        public int LineCount { get; set; }
 
         private FromTo selectedPart;
         public FromTo SelectedPart
@@ -113,18 +81,18 @@ namespace WorkspaceManager.View.Visuals
             }
         }
 
-        private bool callback  = true;
+        private bool callback = true;
         private DispatcherTimer timer = new DispatcherTimer() { Interval = TimeSpan.FromMilliseconds(1000) };
         public VisualsHelper(WorkspaceModel model, EditorVisual editor)
         {
             this.Model = model;
             this.Editor = editor;
-            PluginTree = new QuadTreeLib.QuadTree<FakeNode>(rect);
-            FromToTree = new QuadTreeLib.QuadTree<FakeNode>(rect);
+            PluginTree = new QuadTreeLib.QuadTree<FakeNode>();
+            FromToTree = new QuadTreeLib.QuadTree<FakeNode>();
             timer.Tick += delegate(object o, EventArgs args)
             {
                 callback = false;
-                
+
                 var op = editor.Dispatcher.BeginInvoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                     {
                         var filter = Visuals.OfType<CryptoLineView>();
@@ -138,7 +106,7 @@ namespace WorkspaceManager.View.Visuals
                         foreach (var element in filter)
                             element.Line.InvalidateVisual();
 
-                    },null);
+                    }, null);
 
                 op.Completed += delegate
                     {
@@ -156,7 +124,7 @@ namespace WorkspaceManager.View.Visuals
 
         internal void DrawDecoration()
         {
-            if(!timer.IsEnabled && callback)
+            if (!timer.IsEnabled && callback)
                 timer.Start();
         }
 
@@ -215,7 +183,7 @@ namespace WorkspaceManager.View.Visuals
                         {
                             if (x.LogicalParent == CurrentLine.Line)
                                 SelectedPart = x.FromTo;
-                        }      
+                        }
                     }
                 }
             }
@@ -326,7 +294,6 @@ namespace WorkspaceManager.View.Visuals
                     if (e.NewItems[0] is CryptoLineView)
                     {
                         (e.NewItems[0] as CryptoLineView).Line.ComputationDone += new EventHandler<ComputationDoneEventArgs>(Line_ComputationDone);
-                        //(e.NewItems[0] as CryptoLineView).IsSelectedChanged += new EventHandler(VisualsHelper_IsSelectedChanged);
                     }
 
                     break;
@@ -343,22 +310,15 @@ namespace WorkspaceManager.View.Visuals
                     if (e.OldItems[0] is CryptoLineView)
                     {
                         (e.OldItems[0] as CryptoLineView).Line.ComputationDone -= new EventHandler<ComputationDoneEventArgs>(Line_ComputationDone);
-                        //(e.OldItems[0] as CryptoLineView).IsSelectedChanged -= new EventHandler(VisualsHelper_IsSelectedChanged);
                     }
 
                     break;
             }
-            //LineCount = Visuals.OfType<CryptoLineView>().Count();
         }
-
-        //void VisualsHelper_IsSelectedChanged(object sender, EventArgs e)
-        //{
-        //    var line = (CryptoLineView)sender;
-        //}
 
         void Line_ComputationDone(object sender, ComputationDoneEventArgs e)
         {
-            if(e.IsPathComputationDone)
+            if (e.IsPathComputationDone)
                 renewFromToTree();
         }
 
@@ -377,7 +337,7 @@ namespace WorkspaceManager.View.Visuals
 
         private void renewPluginTree()
         {
-            PluginTree = new QuadTreeLib.QuadTree<FakeNode>(rect);
+            PluginTree = new QuadTreeLib.QuadTree<FakeNode>();
             foreach (var element in Visuals.OfType<ComponentVisual>())
             {
                 PluginTree.Insert(new FakeNode()
@@ -392,7 +352,7 @@ namespace WorkspaceManager.View.Visuals
 
         private void renewFromToTree()
         {
-            FromToTree = new QuadTreeLib.QuadTree<FakeNode>(rect);
+            FromToTree = new QuadTreeLib.QuadTree<FakeNode>();
             var temp = Visuals.OfType<CryptoLineView>();
             foreach (var element in temp)
             {
@@ -511,19 +471,39 @@ namespace WorkspaceManager.View.Visuals
 
         public WorkspaceManagerClass MyEditor { get; private set; }
 
-        public FullscreenVisual FullscreenVisual { get { return (FullscreenVisual)FullScreen.Content; } }
+        public FullscreenVisual FullscreenVisual
+        {
+            get { return (FullscreenVisual)FullScreen.Content; }
+        }
 
         private ObservableCollection<UIElement> selectedItemsObservable = new ObservableCollection<UIElement>();
-        public ObservableCollection<UIElement> SelectedItemsObservable { get { return selectedItemsObservable; } private set { selectedItemsObservable = value; } }
+        public ObservableCollection<UIElement> SelectedItemsObservable
+        {
+            get { return selectedItemsObservable; }
+            private set { selectedItemsObservable = value; }
+        }
 
         private ObservableCollection<UIElement> visualCollection = new ObservableCollection<UIElement>();
-        public ObservableCollection<UIElement> VisualCollection { get { return visualCollection; } private set { visualCollection = value; } }
+        public ObservableCollection<UIElement> VisualCollection
+        {
+            get { return visualCollection; }
+            private set { visualCollection = value; }
+        }
 
         private ObservableCollection<ComponentVisual> componentCollection = new ObservableCollection<ComponentVisual>();
-        public ObservableCollection<ComponentVisual> ComponentCollection { get { return componentCollection; } private set { componentCollection = value; } }
+        public ObservableCollection<ComponentVisual> ComponentCollection
+        {
+            get { return componentCollection; }
+            private set { componentCollection = value; }
+        }
 
         private ObservableCollection<CryptoLineView> pathCollection = new ObservableCollection<CryptoLineView>();
-        public ObservableCollection<CryptoLineView> PathCollection { get { return pathCollection; } private set { pathCollection = value; } }
+        public ObservableCollection<CryptoLineView> PathCollection
+        {
+            get { return pathCollection; }
+            private set { pathCollection = value; }
+        }
+
         #endregion
 
         #region DependencyProperties
@@ -533,7 +513,10 @@ namespace WorkspaceManager.View.Visuals
 
         public double Progress
         {
-            get { return (double)base.GetValue(ProgressProperty); }
+            get
+            {
+                return (double)base.GetValue(ProgressProperty);
+            }
             set
             {
                 base.SetValue(ProgressProperty, value);
@@ -544,7 +527,7 @@ namespace WorkspaceManager.View.Visuals
             typeof(bool), typeof(EditorVisual), new FrameworkPropertyMetadata(true));
 
 
- 
+
         public string ProgressDuration
         {
             get { return (string)base.GetValue(ProgressDurationProperty); }
@@ -839,7 +822,7 @@ namespace WorkspaceManager.View.Visuals
             bind.ConverterParameter = bin;
             bind.Converter = new SelectionChangedConverter();
             bin.SetBinding(ComponentVisual.IsSelectedProperty, bind);
-            bin.PositionDeltaChanged += new EventHandler<PositionDeltaChangedArgs>(ComponentPositionDeltaChanged);           
+            bin.PositionDeltaChanged += new EventHandler<PositionDeltaChangedArgs>(ComponentPositionDeltaChanged);
 
             if (mode == 1)
             {
@@ -994,7 +977,7 @@ namespace WorkspaceManager.View.Visuals
         {
             try
             {
-               Model.ModifyModel(new NewTextModelOperation());
+                Model.ModifyModel(new NewTextModelOperation());
             }
             catch (Exception e)
             {
@@ -1243,9 +1226,10 @@ namespace WorkspaceManager.View.Visuals
                     {
                         VisualCollection.Add(conn);
                     }
-                }else
+                }
+                else
                 {
-                    var model = (ConnectionModel) args.EffectedModelElement;
+                    var model = (ConnectionModel)args.EffectedModelElement;
                     if (!model.To.IControl)
                         AddConnectionVisual((ConnectorVisual)model.From.UpdateableView, (ConnectorVisual)model.To.UpdateableView, model);
                 }
@@ -1257,7 +1241,8 @@ namespace WorkspaceManager.View.Visuals
                     ComponentVisual plugin = (ComponentVisual)((PluginModel)args.EffectedModelElement).UpdateableView;
                     if (!VisualCollection.Contains(plugin))
                         VisualCollection.Add(plugin);
-                }else
+                }
+                else
                 {
                     var pluginModel = (PluginModel)args.EffectedModelElement;
                     bool skip = false;
@@ -1495,16 +1480,6 @@ namespace WorkspaceManager.View.Visuals
             return null;
         }
 
-        private void ContextMenuClick2(object sender, RoutedEventArgs e)
-        {
-            //MenuItem item = (MenuItem)sender;
-
-            //List<Operation> list = DoSelectionOperation((string)item.Tag);
-
-            //if (list != null && list.Count > 0)
-            //    this.Model.ModifyModel(new MultiOperation(list));
-        }
-
         private void ComponentPositionDeltaChanged(object sender, PositionDeltaChangedArgs e)
         {
             if (MyEditor.isExecuting())
@@ -1599,12 +1574,7 @@ namespace WorkspaceManager.View.Visuals
         }
 
         private static void OnIsLinkingChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            //EditorVisual b = (EditorVisual)d;
-            //if (b.IsLinking)
-            //{
-
-            //}
+        {            
         }
 
         private static void OnZoomLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1742,7 +1712,7 @@ namespace WorkspaceManager.View.Visuals
                 Point scrollpos = e.GetPosition(ScrollViewer);
                 ScrollViewer.ScrollToHorizontalOffset(pos.X * ZoomLevel - scrollpos.X);
                 ScrollViewer.ScrollToVerticalOffset(pos.Y * ZoomLevel - scrollpos.Y);
-                
+
                 e.Handled = true;
             }
         }
@@ -1803,12 +1773,6 @@ namespace WorkspaceManager.View.Visuals
                     e.Handled = true;
                 }
             }
-
-            //if (e.Source is CryptoLineView)
-            //{
-            //    CryptoLineView l = (CryptoLineView)e.Source;
-            //    Model.ModifyModel(new DeleteConnectionModelOperation(l.Line.Model));
-            //}
         }
 
         private void returnWindowFocus()
@@ -1833,8 +1797,8 @@ namespace WorkspaceManager.View.Visuals
                 Keyboard.Focus(this);
                 e.Handled = true;
             }
-     
-            
+
+
             switch (e.ClickCount)
             {
                 case 1:
@@ -1876,7 +1840,6 @@ namespace WorkspaceManager.View.Visuals
                         {
                             ConnectorVisual b = element as ConnectorVisual;
                             SelectedConnector = b;
-                            //draggedLink.SetBinding(CryptoLineView.IsLinkingProperty, new Binding() { Source = this, Path = new PropertyPath(BinEditorVisual.IsLinkingProperty) });
                             draggedLink.Line.SetBinding(InternalCryptoLineView.StartPointProperty, Util.CreateConnectorBinding(b, draggedLink));
                             draggedLink.Line.EndPoint = e.GetPosition(sender as FrameworkElement);
                             VisualCollection.Add(draggedLink);
@@ -1886,11 +1849,8 @@ namespace WorkspaceManager.View.Visuals
                         PluginChangedEventArgs componentArgs = new PluginChangedEventArgs(c.Model.Plugin, c.FunctionName, DisplayPluginMode.Normal);
                         MyEditor.onSelectedPluginChanged(componentArgs);
 
-                        //if (SelectedItems == null || !SelectedItems.Contains(c))
-                        //    SelectedItems = new UIElement[] { c };
-
                         if (SelectedItems == null)
-                            SelectedItems = new UIElement[] {};
+                            SelectedItems = new UIElement[] { };
 
                         if ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.None)
                         {
@@ -1967,7 +1927,7 @@ namespace WorkspaceManager.View.Visuals
 
         void ExecutionEngine_OnPluginProgressChanged(IPlugin sender, PluginProgressEventArgs args)
         {
-            
+
         }
 
         void WindowPreviewMouseMove(object sender, MouseEventArgs e)
@@ -2089,7 +2049,7 @@ namespace WorkspaceManager.View.Visuals
 
         public enum Direction { Top, Bottom, Left, Right };
         public enum Orientation { Horizontal, Vertical };
-        
+
         private List<Operation> Selection_Move(List<ComponentVisual> components, Direction direction)
         {
             List<Operation> list = new List<Operation>();

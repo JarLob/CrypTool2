@@ -147,14 +147,6 @@ namespace WorkspaceManager.View.Base
             return multiBinding;
         }
 
-        public static Binding CreateMultiDraggingBinding(ComponentVisual value, ComponentVisual parameter)
-        {
-            Binding binding = new Binding();
-
-
-            return binding;
-        }
-
         public static class MouseUtilities
         {
             public static Point CorrectGetPosition(Visual relativeTo)

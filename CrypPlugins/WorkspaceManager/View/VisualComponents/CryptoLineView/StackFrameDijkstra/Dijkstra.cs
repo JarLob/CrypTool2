@@ -9,7 +9,6 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
 {
     public class Node : IComparable<Node>
     {
-
         public double Dist { get; set; }
         public Node previous { get; set; }
 
@@ -30,7 +29,6 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
         {
             return Vertices;
         }
-
 
         private static int uniqueCounter;
         protected readonly int uniqueIndex;
@@ -55,6 +53,7 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
 
         public LinkedList<Node> makePath()
         {
+            //cachen; neu bauen wenn sich was ändert...
             LinkedList<Node> result = new LinkedList<Node>();
             Node s = this;
             while (s != null)
@@ -68,44 +67,49 @@ namespace WorkspaceManager.View.VisualComponents.StackFrameDijkstra
 
     }
 
-    public class Dijkstra<T>  where T : Node {
+    public class Dijkstra<T> where T : Node
+    {
 
-        public LinkedList<Node> findPath(IEnumerable<T> graph, T start, T goal) {
-    
+        public LinkedList<Node> findPath(IEnumerable<T> graph, T start, T goal)
+        {
+
             OrderedSet<T> unvisitedNodes = new OrderedSet<T>();
 
-            foreach(T n in graph) {
-                if(n.Equals(start))
+            foreach (T n in graph)
+            {
+                if (n.Equals(start))
                 {
                     n.Dist = 0;
                 }
                 unvisitedNodes.Add(n);
             }
 
-            while (unvisitedNodes.Count!=0 ) {
+            while (unvisitedNodes.Count != 0)
+            {
                 var visitingNode = unvisitedNodes.RemoveFirst();
 
-               if (visitingNode.Dist == Double.PositiveInfinity) {
+                if (visitingNode.Dist == Double.PositiveInfinity)
+                {
                     break;
                 }
 
-           
-                if (goal.Equals(visitingNode)) {
+
+                if (goal.Equals(visitingNode))
+                {
                     return visitingNode.makePath();
                 }
 
-                foreach (T v in visitingNode.neighbors()) {
+                foreach (T v in visitingNode.neighbors())
+                {
                     double altPathCost = visitingNode.Dist + visitingNode.traverseCost(v);
-                
-                    if (altPathCost < v.Dist) {
-                        unvisitedNodes.Remove(v);
+
+                    if (altPathCost < v.Dist)
+                    {
                         v.Dist = altPathCost;
                         v.previous = visitingNode;
-                        unvisitedNodes.Add(v);
                     }
                 }
             }
-
             return null;
         }
     }

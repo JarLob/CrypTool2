@@ -998,8 +998,6 @@ namespace WorkspaceManager.View.VisualComponents.CryptoLineView
                     yoffset = baseoffset;
                     break;
             }
-            //xoffset *= flipper;
-            //yoffset *= flipper;
             return new Point(EndPoint.X + xoffset, EndPoint.Y + yoffset);
         }
     }

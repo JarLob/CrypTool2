@@ -38,11 +38,18 @@ namespace QuadTreeLib
         public delegate void QTAction(QuadTreeNode<T> obj);
 
         /// <summary>
+        /// Constructs a Quadtree from -100000,-100000 to 100000, 100000
+        /// </summary>
+        public QuadTree() : this(new RectangleF(-100000,-100000,200000,200000))
+        {
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="rectangle"></param>
         public QuadTree(RectangleF rectangle)
-        {
+        {            
             m_rectangle = rectangle;
             m_root = new QuadTreeNode<T>(m_rectangle);
         }
