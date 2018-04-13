@@ -21,14 +21,21 @@ using System.Text;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
+using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.Numbers
 {
     class NumberInputSettings : ISettings
-    {
+    {     
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
+        private ObservableCollection<string> fonts = new ObservableCollection<string>();
+        private bool manualFontSettings = false;
+        private int font;
+        private double fontsize;
+
         #region Number
         private String number = "";
-        //[TaskPane("NumberCaption", "NumberTooltip", null, 1, false, ControlType.TextBox)]
         public String Number
         {
             get 
@@ -42,6 +49,48 @@ namespace Cryptool.Plugins.Numbers
             }
         }
         #endregion
+
+        public ObservableCollection<string> Fonts
+        {
+            get { return fonts; }
+            set
+            {
+                if (value != fonts)
+                {
+                    fonts = value;
+                    OnPropertyChanged("Fonts");
+                }
+            }
+        }
+
+        public NumberInputSettings()
+        {
+            Fonts.Clear();
+            ResetFont();
+        }
+
+        public void ResetFont()
+        {
+            int index = -1;
+            int i = 0;
+            foreach (var font in System.Windows.Media.Fonts.SystemFontFamilies)
+            {
+                Fonts.Add(font.ToString());
+                if (Cryptool.PluginBase.Properties.Settings.Default.FontFamily == font)
+                {
+                    index = i;
+                }
+                i++;
+            }
+            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
+            if (index != -1)
+            {
+                font = index;
+            }
+            OnPropertyChanged("Font");
+            OnPropertyChanged("FontSize");
+        }
+
 
         #region ShowDigits
         private bool showDigits = true;
@@ -58,6 +107,67 @@ namespace Cryptool.Plugins.Numbers
                 }
             }
         }
+
+        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", "FontGroup", 3, true, ControlType.CheckBox, "")]
+        public bool ManualFontSettings
+        {
+            get { return manualFontSettings; }
+            set
+            {
+                if (value != manualFontSettings)
+                {
+
+                    if (value == false)
+                    {
+                        CollapseSettingsElement("Font");
+                        CollapseSettingsElement("FontSize");
+                        ResetFont();
+                    }
+                    else
+                    {
+                        ShowSettingsElement("Font");
+                        ShowSettingsElement("FontSize");
+                    }
+                    manualFontSettings = value;
+                    OnPropertyChanged("ManualFontSettings");
+                }
+            }
+        }
+
+        [TaskPane("FontCaption", "FontTooltip", "FontGroup", 4, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
+        public int Font
+        {
+            get { return font; }
+            set
+            {
+                if (value != font)
+                {
+                    if (manualFontSettings)
+                    {
+                        font = value;
+                    }
+                    OnPropertyChanged("Font");
+                }
+            }
+        }
+
+        [TaskPane("FontSizeCaption", "FontSizeTooltip", "FontGroup", 5, true, ControlType.NumericUpDown, ValidationType.RangeInteger, 8, 72)]
+        public double FontSize
+        {
+            get { return fontsize; }
+            set
+            {
+                if (value != fontsize)
+                {
+                    if (manualFontSettings)
+                    {
+                        fontsize = value;
+                    }
+                    OnPropertyChanged("FontSize");
+                }
+            }
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Members
@@ -67,6 +177,23 @@ namespace Cryptool.Plugins.Numbers
         {
             
         }
+
+        private void ShowSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+        }
+
+        private void CollapseSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            }
+        }
+
 
         private void OnPropertyChanged(string p)
         {

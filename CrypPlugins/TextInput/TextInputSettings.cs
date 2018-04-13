@@ -32,6 +32,11 @@ namespace Cryptool.TextInput
         public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
         private ObservableCollection<string> fonts = new ObservableCollection<string>();
+        private bool showLines = true;
+        private bool manualFontSettings = false;
+        private int font;
+        private double fontsize;
+
         public ObservableCollection<string> Fonts
         {
             get { return fonts; }
@@ -110,7 +115,6 @@ namespace Cryptool.TextInput
             }
         }
 
-        private bool showLines = true;
         [TaskPane("ShowLinesCaption", "ShowLinesTooltip", "ShowCharsGroup", 2, true, ControlType.CheckBox, "", null)]
         public bool ShowLines
         {
@@ -125,8 +129,7 @@ namespace Cryptool.TextInput
             }
         }
 
-        private bool manualFontSettings = false;
-        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", null, 3, true, ControlType.CheckBox, "")]
+        [TaskPane("ManualFontSettingsCaption", "ManualFontSettingsTooltip", "FontGroup", 3, true, ControlType.CheckBox, "")]
         public bool ManualFontSettings
         {
             get { return manualFontSettings; }
@@ -137,8 +140,8 @@ namespace Cryptool.TextInput
 
                     if (value == false) 
                     {
-                        HideSettingsElement("Font");
-                        HideSettingsElement("FontSize");
+                        CollapseSettingsElement("Font");
+                        CollapseSettingsElement("FontSize");
                         ResetFont();
                     }
                     else
@@ -152,7 +155,6 @@ namespace Cryptool.TextInput
             }
         }
 
-        private int font;
         [TaskPane("FontCaption", "FontTooltip", "FontGroup", 4, true, ControlType.DynamicComboBox, new string[] { "Fonts" })]
         public int Font
         {
@@ -170,7 +172,6 @@ namespace Cryptool.TextInput
             }
         }
 
-        private double fontsize;
         [TaskPane("FontSizeCaption", "FontSizeTooltip", "FontGroup", 5, true, ControlType.NumericUpDown,ValidationType.RangeInteger,8,72)]
         public double FontSize
         {
@@ -202,8 +203,8 @@ namespace Cryptool.TextInput
             }
             else
             {
-                HideSettingsElement("Font");
-                HideSettingsElement("FontSize");
+                CollapseSettingsElement("Font");
+                CollapseSettingsElement("FontSize");
             }
         }
 
@@ -223,11 +224,11 @@ namespace Cryptool.TextInput
             }
         }
 
-        private void HideSettingsElement(string element)
+        private void CollapseSettingsElement(string element)
         {
             if (TaskPaneAttributeChanged != null)
             {
-                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Hidden)));
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
             }
         }
 

@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.Numbers
     [PluginInfo("Cryptool.Plugins.Numbers.Properties.Resources", "PluginInputCaption", "PluginInputTooltip", "Numbers/DetailedDescription/doc.xml", "Numbers/icons/inputIcon.png")]
     [ComponentCategory(ComponentCategory.ToolsDataInputOutput)]
     [ComponentVisualAppearance(ComponentVisualAppearance.VisualAppearanceEnum.Opened)]
-    class NumberInput : ICrypComponent
+    public class NumberInput : ICrypComponent
     {
         private NumberInputPresentation _presentation = new NumberInputPresentation();
         private Boolean _running = false;
@@ -59,7 +59,14 @@ namespace Cryptool.Plugins.Numbers
                 {
                     SetStatusBar();
                 }, null);
-
+            }
+            if (e.PropertyName == "Font")
+            {
+                _presentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
+            }
+            if (e.PropertyName == "FontSize")
+            {
+                _presentation.MyFontSize = settings.FontSize;
             }
         }
 
@@ -94,9 +101,6 @@ namespace Cryptool.Plugins.Numbers
                 try
                 {
                     GetDigitsAndBitsWithTimeOut(out digits, out bits);
-                    //var number = GetNumberWithTimeOut(out digits, out bits);
-                    //bits = number.BitCount(); 
-                    //digits = BigInteger.Abs(number).ToString().Length;
                 }
                 catch (Exception ex)
                 {
@@ -163,25 +167,6 @@ namespace Cryptool.Plugins.Numbers
             digits = result[0];
             bits = result[1];
         }
-
-        //private void GetDigitsAndBitsWithTimeOut(out int digits, out int bits)
-        //{
-        //    int[] result = null;
-
-        //    var tokenSource = new CancellationTokenSource();
-        //    CancellationToken token = tokenSource.Token;
-        //    int timeOut = 500; // milliseconds
-
-        //    bool success;
-        //    var task = Task.Factory.StartNew(() => result = GetDigitsAndBits(), token);
-        //    success = task.Wait(timeOut, token);
-
-        //    if (!success)
-        //        throw new OverflowException();
-
-        //    digits = result[0];
-        //    bits = result[1];
-        //}
 
         private BigInteger GetNumber()
         {

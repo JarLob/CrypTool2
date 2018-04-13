@@ -16,8 +16,8 @@
                  IsUndoEnabled="True"
                  PreviewTextInput="TextBox_PreviewTextInput"                 
                  Foreground="Black"
-                 FontFamily="{Binding Source={x:Static Properties:Settings.Default}, Path=FontFamily, Mode=OneWay}" 
-                 FontSize="{Binding Source={x:Static Properties:Settings.Default}, Path=FontSize, Mode=OneWay}" >
+                 FontFamily="{Binding MyFontFamily}" 
+                 FontSize="{Binding MyFontSize}">
             <TextBox.Template>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Border Padding="2" BorderThickness="1">

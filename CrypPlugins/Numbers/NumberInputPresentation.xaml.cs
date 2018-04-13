@@ -30,32 +30,68 @@ using System.Windows.Shapes;
 using Cryptool.PluginBase.Attributes;
 using Control = System.Windows.Controls.Control;
 using UserControl = System.Windows.Controls.UserControl;
+using System.ComponentModel;
+using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.Numbers
 {
-  /// <summary>
-  /// Interaction logic for NumberInputPresentation.xaml
-  /// </summary>
-  public partial class NumberInputPresentation : UserControl
-  {
-    public NumberInputPresentation()
+    /// <summary>
+    /// Interaction logic for NumberInputPresentation.xaml
+    /// </summary>
+    public partial class NumberInputPresentation : UserControl, INotifyPropertyChanged
     {
-      InitializeComponent();
-      Height = double.NaN;
-      Width = double.NaN;
-    }
-
-    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
-            char c = e.Text.ToUpper()[0];
-
-        //if (!"01234567890+-*/^ ()AaBbCcDdEeFf#HhXxOo".Contains(e.Text))
-        if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || "+-*/^ ()#!%,".Contains(c)))
+        public NumberInputPresentation()
         {
-            e.Handled = true;
+            InitializeComponent();
+            Height = double.NaN;
+            Width = double.NaN;
+            DataContext = this;
         }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            char c = e.Text.ToUpper()[0];
+            if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || "+-*/^ ()#!%,".Contains(c)))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        private FontFamily fontFamily;
+
+        public FontFamily MyFontFamily
+        {
+            get
+            {
+                return fontFamily;
+            }
+            set
+            {
+                fontFamily = value;
+                OnPropertyChanged("MyFontFamily");
+            }
+        }
+
+        private double fontsize;
+
+        public double MyFontSize
+        {
+            get
+            {
+                return fontsize;
+            }
+            set
+            {
+                fontsize = value;
+                OnPropertyChanged("MyFontSize");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
-
-  }
-
 }

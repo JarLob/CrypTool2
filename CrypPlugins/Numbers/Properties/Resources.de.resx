@@ -228,4 +228,25 @@
   <data name="Bits" xml:space="preserve">
     <value>Bits</value>
   </data>
+  <data name="FontCaption" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="FontGroup" xml:space="preserve">
+    <value>Schriftart</value>
+  </data>
+  <data name="FontSizeCaption" xml:space="preserve">
+    <value>Schriftgröße</value>
+  </data>
+  <data name="FontSizeTooltip" xml:space="preserve">
+    <value>Stellt die Schriftgröße dieser Zahleneingabe ein.</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Stellt die Schriftart dieser Zahleneingabe ein.</value>
+  </data>
+  <data name="ManualFontSettingsCaption" xml:space="preserve">
+    <value>Manuelle Schrift-Einstellung</value>
+  </data>
+  <data name="ManualFontSettingsTooltip" xml:space="preserve">
+    <value>Stellt die Schrift manuell ein.</value>
+  </data>
 </root>

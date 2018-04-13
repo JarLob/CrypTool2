@@ -28,30 +28,70 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Cryptool.PluginBase.Attributes;
+using Cryptool.PluginBase.Miscellaneous;
+using System.ComponentModel;
 
 namespace TextOutput
 {
-  /// <summary>
-  /// Interaction logic for TextOutputPresentation.xaml
-  /// </summary>
-  [TabColor("pink")]
-  public partial class TextOutputPresentation : UserControl
-  {
-      public TextOutput _textOutput = null;
+    /// <summary>
+    /// Interaction logic for TextOutputPresentation.xaml
+    /// </summary>
+    [TabColor("pink")]
+    public partial class TextOutputPresentation : UserControl, INotifyPropertyChanged
+    {
+        public TextOutput _textOutput = null;
 
-      public TextOutputPresentation()
-      {
-          InitializeComponent();
-          this.Width = double.NaN;
-          this.Height = double.NaN;
-      }
+        public TextOutputPresentation()
+        {
+            InitializeComponent();
+            Width = double.NaN;
+            Height = double.NaN;
+            DataContext = this;
+        }
 
-      private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
-      {
-          if (_textOutput != null && ((bool)args.NewValue))
-          {
-              _textOutput.ShowInPresentation(_textOutput.CurrentValue);
-          }
-      }
-  }
+        private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            if (_textOutput != null && ((bool)args.NewValue))
+            {
+                _textOutput.ShowInPresentation(_textOutput.CurrentValue);
+            }
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        private FontFamily fontFamily;
+
+        public FontFamily MyFontFamily
+        {
+            get
+            {
+                return fontFamily;
+            }
+            set
+            {
+                fontFamily = value;
+                OnPropertyChanged("MyFontFamily");
+            }
+        }
+
+        private double fontsize;
+
+        public double MyFontSize
+        {
+            get
+            {
+                return fontsize;
+            }
+            set
+            {
+                fontsize = value;
+                OnPropertyChanged("MyFontSize");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

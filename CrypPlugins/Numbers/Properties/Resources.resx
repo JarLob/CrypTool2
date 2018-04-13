@@ -228,4 +228,25 @@
   <data name="Bits" xml:space="preserve">
     <value>bits</value>
   </data>
+  <data name="FontCaption" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="FontGroup" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="FontSizeCaption" xml:space="preserve">
+    <value>Font Size</value>
+  </data>
+  <data name="FontSizeTooltip" xml:space="preserve">
+    <value>Sets the font size of this Number Input.</value>
+  </data>
+  <data name="FontTooltip" xml:space="preserve">
+    <value>Sets the font of this Number Input.</value>
+  </data>
+  <data name="ManualFontSettingsCaption" xml:space="preserve">
+    <value>Manual Font Settings</value>
+  </data>
+  <data name="ManualFontSettingsTooltip" xml:space="preserve">
+    <value>Set the font manually.</value>
+  </data>
 </root>

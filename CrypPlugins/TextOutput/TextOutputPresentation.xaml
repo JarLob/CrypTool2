@@ -11,8 +11,8 @@
     </Grid.RowDefinitions>
     <!--<Label Padding="0" Grid.Row="0" Name="labelString" VerticalAlignment="Top" Background="#DFDFDF">Input</Label>-->
     <RichTextBox Name="textBox" Grid.Row="1" Margin="0" IsEnabled="True" VerticalScrollBarVisibility="Auto" IsReadOnly="True" 
-             FontFamily="{Binding Source={x:Static Properties:Settings.Default}, Path=FontFamily, Mode=OneWay}" 
-             FontSize="{Binding Source={x:Static Properties:Settings.Default}, Path=FontSize, Mode=OneWay}" />    
+             FontFamily="{Binding MyFontFamily}" 
+               FontSize="{Binding MyFontSize}" />
         
     <Label Padding="0" Grid.Row="2" Name="labelBytes" VerticalAlignment="Top" Background="#DFDFDF">0 Bytes</Label>
     </Grid>

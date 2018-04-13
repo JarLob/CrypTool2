@@ -153,10 +153,14 @@ namespace TextOutput
             if (e.PropertyName == "ShowChars" || e.PropertyName == "ShowLines" || e.PropertyName == "ShowDigits")
             {
                 setStatusBar();
-                //textOutputPresentation.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                //{
-                //    setStatusBar();
-                //}, null);
+            }
+            if (e.PropertyName == "Font")
+            {
+                textOutputPresentation.MyFontFamily = new System.Windows.Media.FontFamily(settings.Fonts[settings.Font]);
+            }
+            if (e.PropertyName == "FontSize")
+            {
+                textOutputPresentation.MyFontSize = settings.FontSize;
             }
         }
 

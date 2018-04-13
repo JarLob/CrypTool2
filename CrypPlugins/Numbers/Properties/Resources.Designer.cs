@@ -19,7 +19,7 @@ namespace Cryptool.Plugins.Numbers.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -97,6 +97,51 @@ namespace Cryptool.Plugins.Numbers.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Font ähnelt.
+        /// </summary>
+        internal static string FontCaption {
+            get {
+                return ResourceManager.GetString("FontCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Font ähnelt.
+        /// </summary>
+        internal static string FontGroup {
+            get {
+                return ResourceManager.GetString("FontGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Font Size ähnelt.
+        /// </summary>
+        internal static string FontSizeCaption {
+            get {
+                return ResourceManager.GetString("FontSizeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the font size of this Number Input. ähnelt.
+        /// </summary>
+        internal static string FontSizeTooltip {
+            get {
+                return ResourceManager.GetString("FontSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the font of this Number Input. ähnelt.
+        /// </summary>
+        internal static string FontTooltip {
+            get {
+                return ResourceManager.GetString("FontTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die x Input ähnelt.
         /// </summary>
         internal static string Input1Caption {
@@ -129,6 +174,24 @@ namespace Cryptool.Plugins.Numbers.Properties {
         internal static string Input2Tooltip {
             get {
                 return ResourceManager.GetString("Input2Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Manual Font Settings ähnelt.
+        /// </summary>
+        internal static string ManualFontSettingsCaption {
+            get {
+                return ResourceManager.GetString("ManualFontSettingsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Set the font manually. ähnelt.
+        /// </summary>
+        internal static string ManualFontSettingsTooltip {
+            get {
+                return ResourceManager.GetString("ManualFontSettingsTooltip", resourceCulture);
             }
         }
         
