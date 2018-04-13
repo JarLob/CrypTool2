@@ -64,7 +64,7 @@ namespace Cryptool.TextInput
                 }
                 i++;
             }
-            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize
+            fontsize = Cryptool.PluginBase.Properties.Settings.Default.FontSize;
             if (index != -1)
             {
                 font = index;
