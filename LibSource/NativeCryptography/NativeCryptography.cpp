@@ -77,7 +77,7 @@ namespace NativeCryptography {
 		DES_key_schedule deskey;
 		DES_set_key_unchecked((const_DES_cblock*)key, &deskey);
 		
-		for (int c = 0; c < numBlocks; c++)
+		for (unsigned int c = 0; c < numBlocks; c++)
 		{		
 			DES_ecb_encrypt((const_DES_cblock*)(input + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey, DES_DECRYPT);
 		}
@@ -111,7 +111,7 @@ namespace NativeCryptography {
 		xor64(outp, iv);
 
 		//rest of blocks
-		for (int c = 1; c < numBlocks; c++)
+		for (unsigned int c = 1; c < numBlocks; c++)
 		{
 			DES_ecb_encrypt((const_DES_cblock*)(input + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey, DES_DECRYPT);
 			xor64(outp + c * 8, input + (c - 1) * 8);
@@ -187,7 +187,7 @@ namespace NativeCryptography {
 		DES_set_key_unchecked((const_DES_cblock*)key1, &deskey1);
 		DES_set_key_unchecked((const_DES_cblock*)key2, &deskey2);
 
-		for (int c = 0; c < numBlocks; c++)
+		for (unsigned int c = 0; c < numBlocks; c++)
 		{
 			DES_ecb_encrypt((const_DES_cblock*)(input + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey1, DES_DECRYPT);
 			DES_ecb_encrypt((const_DES_cblock*)(outp + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey2, DES_ENCRYPT);
@@ -224,7 +224,7 @@ namespace NativeCryptography {
 		xor64(outp, iv);
 
 		//rest of blocks
-		for (int c = 1; c < numBlocks; c++)
+		for (unsigned int c = 1; c < numBlocks; c++)
 		{
 			DES_ecb_encrypt((const_DES_cblock*)(input + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey1, DES_DECRYPT);
 			DES_ecb_encrypt((const_DES_cblock*)(outp + c * 8), (const_DES_cblock*)(outp + c * 8), &deskey2, DES_ENCRYPT);
@@ -305,7 +305,7 @@ namespace NativeCryptography {
 		AES_KEY aeskey;
 		AES_set_decrypt_key(key, 128, &aeskey);
 
-		for (int c = 0; c < numBlocks; c++)
+		for (unsigned int c = 0; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 		}
@@ -339,7 +339,7 @@ namespace NativeCryptography {
 		xor128(outp, iv);
 
 		//rest of blocks
-		for (int c = 1; c < numBlocks; c++)
+		for (unsigned int c = 1; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 			xor128(outp + c * 16, input + (c - 1) * 16);
@@ -446,7 +446,7 @@ namespace NativeCryptography {
 		AES_KEY aeskey;
 		AES_set_decrypt_key(key, 192, &aeskey);
 
-		for (int c = 0; c < numBlocks; c++)
+		for (unsigned int c = 0; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 		}
@@ -480,7 +480,7 @@ namespace NativeCryptography {
 		xor128(outp, iv);
 
 		//rest of blocks
-		for (int c = 1; c < numBlocks; c++)
+		for (unsigned int c = 1; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 			xor128(outp + c * 16, input + (c - 1) * 16);
@@ -588,7 +588,7 @@ namespace NativeCryptography {
 		AES_KEY aeskey;
 		AES_set_decrypt_key(key, 256, &aeskey);
 
-		for (int c = 0; c < numBlocks; c++)
+		for (unsigned int c = 0; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 		}
@@ -622,7 +622,7 @@ namespace NativeCryptography {
 		xor128(outp, iv);
 
 		//rest of blocks
-		for (int c = 1; c < numBlocks; c++)
+		for (unsigned int c = 1; c < numBlocks; c++)
 		{
 			AES_decrypt(input + c * 16, outp + c * 16, &aeskey);
 			xor128(outp + c * 16, input + (c - 1) * 16);
@@ -779,17 +779,23 @@ namespace NativeCryptography {
 	void prepareEntropy(int size)
 	{
 		if (xlogx != 0)
+		{
 			free(xlogx);
+		}
 		xlogx = (float*)malloc((size + 1)*sizeof(float));
 		//precomputations for fast entropy calculation	
 		xlogx[0] = 0.0;
 		for (int i = 1; i <= size; i++)
+		{
 			xlogx[i] = -1.0 * i * Math::Log(i / (float)size) / Math::Log(2.0);
+		}
 	}
 
 	double Crypto::calculateEntropy(array<unsigned char>^ text, int bytesToUse){
 		if (bytesToUse > text->Length)
+		{
 			bytesToUse = text->Length;
+		}
 		static int lastUsedSize = -1;
 
 		if (lastUsedSize != bytesToUse)
@@ -822,8 +828,9 @@ namespace NativeCryptography {
 		float entropy = 0;
 		//calculate probabilities and sum entropy
 		for (short i = 0; i < 256; i++)
+		{
 			entropy += xlogx[n[i]];
-
+		}
 		return entropy / (double)bytesToUse;
 	}
 

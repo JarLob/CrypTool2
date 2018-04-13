@@ -12,9 +12,9 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyTitleAttribute("NativeCryptography")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
-[assembly:AssemblyCompanyAttribute("Microsoft")];
+[assembly:AssemblyCompanyAttribute("CrypTool 2 Team")];
 [assembly:AssemblyProductAttribute("NativeCryptography")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2010")];
+[assembly:AssemblyCopyrightAttribute("Copyright (c) Microsoft 2018")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
@@ -34,5 +34,3 @@ using namespace System::Security::Permissions;
 [assembly:ComVisible(false)];
 
 [assembly:CLSCompliantAttribute(true)];
-
-[assembly:SecurityPermission(SecurityAction::RequestMinimum, UnmanagedCode = true)];
