@@ -77,10 +77,10 @@ namespace WorkspaceManager.Model.Tools
                     UndoStack.Peek() is ResizeModelElementOperation ||
                     UndoStack.Peek() is MultiOperation))
                 {
-                    op = UndoStack.Pop();
-                    op.Undo(WorkspaceModel);
+                    op = UndoStack.Pop();                    
                     RedoStack.Push(op);
                 }
+                op.Undo(WorkspaceModel);
             }
             finally
             {
@@ -112,10 +112,10 @@ namespace WorkspaceManager.Model.Tools
                     RedoStack.Peek() is ResizeModelElementOperation ||
                     RedoStack.Peek() is MultiOperation))
                 {
-                    op = RedoStack.Pop();
-                    op.Execute(WorkspaceModel);
+                    op = RedoStack.Pop();                    
                     UndoStack.Push(op);
                 }
+                op.Execute(WorkspaceModel);
             }
             finally
             {
