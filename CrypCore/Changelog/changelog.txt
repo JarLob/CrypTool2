@@ -43,7 +43,7 @@ Other Components:
 - Huffman compression algorithm
 - Levenshtein distance
 
-We heavily updated the monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
+We updated the monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
 Additionally, we integrated the CrypTool 2 book (English & German).
 
 And:
