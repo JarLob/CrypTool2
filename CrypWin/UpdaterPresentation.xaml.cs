@@ -153,28 +153,44 @@ namespace Cryptool.CrypWin
         
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            switch (((MenuItem)sender).Name)
+            try
             {
-                case "Copy":
-                    if (ChangelogList.SelectedItem != null)
-                    {
-                        var rssItem = (RssItem)ChangelogList.SelectedItem;
-                        Clipboard.SetData(DataFormats.Text, rssItem);
-                    }
-                    break;
-                case "CopyAll":
-                    List<RssItem> rssItems = new List<RssItem>();
-                    foreach (var item in ChangelogList.Items)
-                        rssItems.Add((RssItem)item);
-                    string sep = Environment.NewLine + new String('-', 80) + Environment.NewLine;
-                    Clipboard.SetData(DataFormats.Text, String.Join(sep, rssItems));
-                    break;
+                switch (((MenuItem)sender).Name)
+                {
+                    case "Copy":
+                        if (ChangelogList.SelectedItem != null)
+                        {
+                            var rssItem = (RssItem)ChangelogList.SelectedItem;
+                            Clipboard.SetData(DataFormats.Text, rssItem);
+                        }
+                        break;
+                    case "CopyAll":
+                        List<RssItem> rssItems = new List<RssItem>();
+                        foreach (var item in ChangelogList.Items)
+                            rssItems.Add((RssItem)item);
+                        string sep = Environment.NewLine + new String('-', 80) + Environment.NewLine;
+                        Clipboard.SetData(DataFormats.Text, String.Join(sep, rssItems));
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                // sometimes, we experience "problems" with copying, for example
+                // System.Runtime.InteropServices.COMException (0x800401D0): OpenClipboard fehlgeschlagen (Exception from HRESULT: 0x800401D0 (CLIPBRD_E_CANT_OPEN))
+                // thus, we can only catch these exceptions here... in that case, the copy just wont work at that moment
             }
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetData(DataFormats.Text, ChangelogText.Html);
+            try
+            {
+                Clipboard.SetData(DataFormats.Text, ChangelogText.Html);
+            }
+            catch (Exception ex)
+            {
+                // same here as above
+            }
         }
     }
 
