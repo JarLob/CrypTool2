@@ -202,7 +202,7 @@ Runde      /16</value>
   Algorithmus am 23. November 1976 zum Data Encryption Standard.
 
 - Am 2. Oktober 2000 wurde der DES durch den belgischen Algorithmus 
-  "Rijndael" ersetzt, der den AES (Advanced Encrytption Standard) darstellt.</value>
+  "Rijndael" ersetzt, der den AES (Advanced Encryption Standard) darstellt.</value>
   </data>
   <data name="InfoText" xml:space="preserve">
     <value>DES ist ein Blockchiffrieralgorithmus, der 64 Bit-Klartextblöcke mit einem
