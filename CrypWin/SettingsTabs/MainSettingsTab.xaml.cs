@@ -23,6 +23,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 using Cryptool.Core;
 using Cryptool.CrypWin.Properties;
 using Cryptool.PluginBase.Attributes;
@@ -38,27 +39,25 @@ namespace Cryptool.CrypWin.SettingsTabs
     public partial class MainSettingsTab : UserControl
     {
         private bool initialized = false;
-        private static string[] supportedCulture = new string[] {"de", "en-US"};
+        private static string[] supportedCultures = new string[] {"de", "en-US"};
 
         public MainSettingsTab(Style settingsStyle)
         {
             Resources.Add("settingsStyle", settingsStyle);
             InitializeComponent();
-            
-            List<CultureInfo> cultures = new List<CultureInfo>();
 
-            foreach (var cult in supportedCulture)
-            {
-                cultures.Add(CultureInfo.CreateSpecificCulture(cult));
-            }
-            cultures.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
+            var cultures = supportedCultures.ToDictionary(c => c, c => CultureInfo.CreateSpecificCulture(c));
 
-            foreach (var cultureInfo in cultures)
+            foreach (var cultureInfo in cultures.Values.OrderBy(c => c.DisplayName))
             {
                 Culture.Items.Add(cultureInfo);
                 if (cultureInfo.TextInfo.CultureName == CultureInfo.CurrentUICulture.TextInfo.CultureName)
                     Culture.SelectedItem = cultureInfo;
             }
+
+            // Fallback if culture is not set
+            if (Culture.SelectedItem == null && cultures.ContainsKey("en-US"))
+                Culture.SelectedItem = cultures["en-US"];
 
             RecentFileListLengthBox.Text = RecentFileList.GetSingleton().ListLength.ToString();
 
