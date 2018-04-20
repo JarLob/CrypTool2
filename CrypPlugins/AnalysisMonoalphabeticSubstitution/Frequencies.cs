@@ -161,7 +161,7 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             this.ngram = 5;
             this.prob5gram = new double[this.size, this.size, this.size, this.size, this.size];
 
-            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (var fileStream = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var reader = new BinaryReader(fileStream))
                 for (int i = 0; i < this.size; i++)
                     for (int j = 0; j < this.size; j++)

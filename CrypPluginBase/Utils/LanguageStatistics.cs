@@ -133,7 +133,7 @@ namespace Cryptool.PluginBase.Utils
             
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
@@ -160,7 +160,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
@@ -188,7 +188,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
@@ -217,7 +217,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
@@ -399,7 +399,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var gz = new GZipStream(fs, CompressionMode.Decompress))
             {
                 Alphabet = (string)bf.Deserialize(gz);
@@ -447,7 +447,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var gz = new GZipStream(fs, CompressionMode.Decompress))
             {
                 Alphabet = (string)bf.Deserialize(gz);
@@ -496,7 +496,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var gz = new GZipStream(fs, CompressionMode.Decompress))
             {
                 Alphabet = (string)bf.Deserialize(gz);
@@ -546,7 +546,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var gz = new GZipStream(fs, CompressionMode.Decompress))
             {
                 Alphabet = (string)bf.Deserialize(gz);
@@ -597,7 +597,7 @@ namespace Cryptool.PluginBase.Utils
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryLanguageStatistics, filename), FileMode.Open, FileAccess.Read))
             using (var gz = new GZipStream(fs, CompressionMode.Decompress))
             {
                 Alphabet = (string)bf.Deserialize(gz);
