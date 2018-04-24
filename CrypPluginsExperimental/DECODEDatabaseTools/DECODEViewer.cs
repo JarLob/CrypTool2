@@ -34,14 +34,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
     public class DECODEViewer : ICrypComponent
     {
         #region Private Variables
-        private DECODEDownloaderSettings settings;
+        private DECODEViewerSettings settings;
         private DECODEViewerPresentation presentation;
         private bool running = false;
         #endregion
 
         public DECODEViewer()
         {
-            settings = new DECODEDownloaderSettings();
+            settings = new DECODEViewerSettings();
             presentation = new DECODEViewerPresentation(this);
         }
 
@@ -84,6 +84,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void PreExecution()
         {
+            this.presentation.Record = new Record();
         }
 
         /// <summary>
@@ -92,12 +93,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             ProgressChanged(0, 1);
-            
-            Record record = null;
             try
             {
-                record = JsonDownloaderAndConverter.GetRecordFromString(DECODERecord);
-                GuiLogMessage(record.ToString(), NotificationLevel.Info);
+                Record record  = JsonDownloaderAndConverter.GetRecordFromString(DECODERecord);
+                presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    presentation.Record = record;
+                }, null);                       
             }
             catch (Exception ex)
             {

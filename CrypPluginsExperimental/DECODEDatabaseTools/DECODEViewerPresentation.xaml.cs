@@ -1,4 +1,5 @@
-﻿/*
+﻿using Cryptool.PluginBase.Miscellaneous;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +18,7 @@ using Cryptool.Plugins.DECODEDatabaseTools.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,14 +35,36 @@ using System.Windows.Shapes;
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     [PluginBase.Attributes.Localization("Cryptool.Plugins.DECODEDatabaseTools.Properties.Resources")]
-    public partial class DECODEViewerPresentation : UserControl
+    public partial class DECODEViewerPresentation : UserControl, INotifyPropertyChanged
     {
-        private DECODEViewer Plugin;        
+        private DECODEViewer Plugin;
+        private Record record;
+
+        public Record Record
+        {
+            get
+            {
+                return record;
+            }
+            set
+            {
+                record = value;
+                OnPropertyChanged("Record");
+            }
+        }
 
         public DECODEViewerPresentation(DECODEViewer plugin)
         {
             InitializeComponent();
             Plugin = plugin;
+            DataContext = this;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
         }
     }
 }
