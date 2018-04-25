@@ -153,28 +153,21 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         /// <returns></returns>
         private BitmapFrame DownloadImage(string url)
         {
-            try
+          
+            byte[] data = JsonDownloaderAndConverter.GetData(url);
+            var decoder = BitmapDecoder.Create(new MemoryStream(data),
+                          BitmapCreateOptions.PreservePixelFormat,
+                          BitmapCacheOption.None);
+            if (decoder.Frames.Count > 0)
             {
-                byte[] data = JsonDownloaderAndConverter.GetData(url);
-                var decoder = BitmapDecoder.Create(new MemoryStream(data),
-                              BitmapCreateOptions.PreservePixelFormat,
-                              BitmapCacheOption.None);
-                if (decoder.Frames.Count > 0)
-                {
-                    return decoder.Frames[0];
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
+                return decoder.Frames[0];
+            }           
             return null;
         }
     }
 
     [DataContract]
-    public class DecipheredText
+    public class Document
     {
         [DataMember]
         public int document_id { get; set; }
@@ -188,60 +181,56 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public string file_type { get; set; }
         [DataMember]
         public string download_url { get; set; }
+
+        /// <summary>
+        /// Tries to download the document; if it fails, it returns null
+        /// </summary>
+        public byte[] GetDocument
+        {
+            get
+            {
+                return JsonDownloaderAndConverter.GetData(download_url);
+            }
+        }
     }
 
-    [DataContract]
-    public class Transcription
-    {
-        [DataMember]
-        public int document_id { get; set; }
-        [DataMember]
-        public string title { get; set; }
-        [DataMember]
-        public string upload_date { get; set; }
-        [DataMember]
-        public string size { get; set; }
-        [DataMember]
-        public string file_type { get; set; }
-        [DataMember]
-        public string download_url { get; set; }
-    }
-
-    [DataContract]
-    public class Translation
-    {
-        [DataMember]
-        public int document_id { get; set; }
-        [DataMember]
-        public string title { get; set; }
-        [DataMember]
-        public string upload_date { get; set; }
-        [DataMember]
-        public string size { get; set; }
-        [DataMember]
-        public string file_type { get; set; }
-        [DataMember]
-        public string download_url { get; set; }
-    }
 
     [DataContract]
     public class Documents
     {
         [DataMember]
-        public List<DecipheredText> deciphered_text { get; set; }
+        public List<Document> deciphered_text { get; set; }
         [DataMember]
-        public List<object> cleartext { get; set; }
+        public List<Document> cleartext { get; set; }
         [DataMember]
-        public List<object> cryptanalysis_statistics { get; set; }
+        public List<Document> cryptanalysis_statistics { get; set; }
         [DataMember]
-        public List<object> miscellaneous { get; set; }
+        public List<Document> miscellaneous { get; set; }
         [DataMember]
-        public List<object> publication { get; set; }
+        public List<Document> publication { get; set; }
         [DataMember]
-        public List<Transcription> transcription { get; set; }
+        public List<Document> transcription { get; set; }
         [DataMember]
-        public List<Translation> translation { get; set; }
+        public List<Document> translation { get; set; }
+
+        public List<Document> AllDocuments
+        {
+            get
+            {
+                List<Document> documents = new List<Document>();
+                documents.AddRange(deciphered_text);
+                documents.AddRange(cleartext);
+                documents.AddRange(cryptanalysis_statistics);
+                documents.AddRange(miscellaneous);
+                documents.AddRange(publication);
+                documents.AddRange(transcription);
+                documents.AddRange(transcription);
+                documents.AddRange(translation);
+                return documents;
+            }
+        }
     }
+    
 
     [DataContract]
     public class Record

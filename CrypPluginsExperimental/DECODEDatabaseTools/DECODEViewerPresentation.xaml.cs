@@ -59,7 +59,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Plugin = plugin;
             DataContext = this;
         }
-
+        
+        /// <summary>
+        /// User double-clicked on an image thumbnail; thus, we download the image and output it now
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         public void ImageListHandleDoubleClick(Object sender, EventArgs eventArgs)
         {
             try
@@ -80,7 +85,31 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             }
         }
 
-
+        /// <summary>
+        /// User double-clicked on a document; thus, we download the document and output it now
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        public void DocumentListHandleDoubleClick(Object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                var lvi = sender as ListViewItem;
+                if (lvi != null)
+                {
+                    var document = lvi.Content as DataObjects.Document;
+                    if (document != null)
+                    {
+                        Plugin.DownloadDocument(document);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //wtf?
+            }
+        }
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 

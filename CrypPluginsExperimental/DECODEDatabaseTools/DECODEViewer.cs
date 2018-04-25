@@ -51,8 +51,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         
         /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
+        /// Input of a json record of the DECODE database
         /// </summary>
         [PropertyInfo(Direction.InputData, "DecodeRecordCaption", "DecodeRecordTooltip")]
         public string DECODERecord
@@ -62,10 +61,20 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
-        /// Output processed image as ICryptoolStream.
+        /// Outputs a selected Image in a CrypToolStream
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
         public ICryptoolStream OutputImage
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Outputs a selected document as byte array
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "OutputDocumentCaption", "OutputDocumentTooltip")]
+        public byte[] OutputDocument
         {
             get;
             set;
@@ -100,6 +109,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 presentation.ImageList.Items.Clear();
+                presentation.DocumentList.Items.Clear();
             }, null);          
         }
 
@@ -116,12 +126,19 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 {
                     presentation.Record = record;
 
-                    //add all images to the ListView
+                    //add all images to the ListView of images
                     presentation.ImageList.Items.Clear();
                     foreach(DataObjects.Image image in record.images)
                     {
                         presentation.ImageList.Items.Add(image);
-                    }                    
+                    }
+                    //add all documents to the ListView of documents
+                    presentation.DocumentList.Items.Clear();
+                    foreach (DataObjects.Document document in record.documents.AllDocuments)
+                    {
+                        presentation.DocumentList.Items.Add(document);
+                    }
+
                 }, null);                       
             }
             catch (Exception ex)
@@ -192,6 +209,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         #endregion        
     
+        /// <summary>
+        /// Download and output an image
+        /// </summary>
+        /// <param name="image"></param>
         internal void DownloadImage(DataObjects.Image image)
         {
             try
@@ -212,6 +233,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 GuiLogMessage(String.Format("Exception downloading and converting image: {0}", ex.Message), NotificationLevel.Error);
             }       
+        }
+
+        /// <summary>
+        /// Download and output a document
+        /// </summary>
+        /// <param name="document"></param>
+        internal void DownloadDocument(Document document)
+        {
+            try
+            {
+                byte[] documentData = document.GetDocument;
+                OutputDocument = documentData;
+                OnPropertyChanged("OutputDocument");
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception downloading document: {0}", ex.Message), NotificationLevel.Error);
+            }     
         }
     }
 }

@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="800" d:DesignWidth="500" MinHeight="850" MinWidth="550">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="95"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -16,6 +16,7 @@
             <RowDefinition Height="162"/>
             <RowDefinition Height="54"/>
             <RowDefinition Height="27"/>
+            <RowDefinition Height="200*"/>
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
         
@@ -27,6 +28,7 @@
 
         <Label Content="{Binding Path=Record.metadata.name}" Grid.Column="1" Grid.Row="0" Background="LightBlue"/>
         <Label Content="Images:" Grid.Row="5" Grid.Column="0"  FontSize="14" Background="LightGray"/>
+        <Label Content="Documents:" Grid.Row="6" Grid.Column="0"  FontSize="14" Background="White"/>
         
         <!-- metadata.content -->
         <Grid Grid.Column="1" Grid.Row="1">
@@ -137,5 +139,51 @@
             </ListView.View>
         </ListView>
         </ScrollViewer>
+        <ListView Grid.Row="6" Grid.Column="1"  Name="DocumentList" FontSize="12" Height="Auto" Background="White" Foreground="Black" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="DocumentListHandleDoubleClick" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn  Header="#" DisplayMemberBinding="{Binding Path=document_id}" Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Header="Title" DisplayMemberBinding="{Binding Path=title}" Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Header="Upload Date" DisplayMemberBinding="{Binding Path=upload_date}" Width="80">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Header="Size" DisplayMemberBinding="{Binding Path=size}" Width="80">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn  Header="File Type" DisplayMemberBinding="{Binding Path=file_type}" Width="80">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>
