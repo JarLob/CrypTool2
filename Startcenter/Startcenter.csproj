@@ -227,10 +227,10 @@
     <Resource Include="book.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="CrypToolScript-de.pdf">
+    <None Include="CT-Book-de.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="CrypToolScript-en.pdf">
+    <None Include="CT-Book-en.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
