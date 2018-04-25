@@ -72,5 +72,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             Record record = (Record)serializer.ReadObject(stream);
             return record;
         }
+
+        /// <summary>
+        /// Downloads data from the specified URL and returns it as byte array
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static byte[] GetData(string url)
+        {
+            WebClient client = new WebClient();
+            return client.DownloadData(url);            
+        }
     }
 }

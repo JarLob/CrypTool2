@@ -60,6 +60,28 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             DataContext = this;
         }
 
+        public void ImageListHandleDoubleClick(Object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                var lvi = sender as ListViewItem;
+                if (lvi != null)
+                {
+                    var image = lvi.Content as DataObjects.Image;
+                    if (image != null)
+                    {
+                        Plugin.DownloadImage(image);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //wtf?
+            }
+        }
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)

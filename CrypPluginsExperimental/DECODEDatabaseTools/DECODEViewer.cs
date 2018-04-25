@@ -25,6 +25,8 @@ using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
 using System;
+using Cryptool.PluginBase.IO;
+using System.Windows.Media.Imaging;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -59,6 +61,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             set;
         }
 
+        /// <summary>
+        /// Output processed image as ICryptoolStream.
+        /// </summary>
+        [PropertyInfo(Direction.OutputData, "OutputImageCaption", "OutputImageTooltip")]
+        public ICryptoolStream OutputImage
+        {
+            get;
+            set;
+        }
+
         #endregion
 
         #region IPlugin Members
@@ -85,6 +97,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void PreExecution()
         {
             this.presentation.Record = new Record();
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                presentation.ImageList.Items.Clear();
+            }, null);          
         }
 
         /// <summary>
@@ -99,6 +115,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
                     presentation.Record = record;
+
+                    //add all images to the ListView
+                    presentation.ImageList.Items.Clear();
+                    foreach(DataObjects.Image image in record.images)
+                    {
+                        presentation.ImageList.Items.Add(image);
+                    }                    
                 }, null);                       
             }
             catch (Exception ex)
@@ -168,5 +191,27 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         #endregion        
+    
+        internal void DownloadImage(DataObjects.Image image)
+        {
+            try
+            {
+                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.QualityLevel = 100;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    encoder.Frames.Add(BitmapFrame.Create(image.GetFullImage));
+                    encoder.Save(stream);
+                    byte[] data = stream.ToArray();
+                    stream.Close();
+                    OutputImage = new CStreamWriter(data);
+                    OnPropertyChanged("OutputImage");
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception downloading and converting image: {0}", ex.Message), NotificationLevel.Error);
+            }       
+        }
     }
 }

@@ -15,10 +15,12 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
 {
@@ -127,6 +129,48 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public string full_url { get; set; }
         [DataMember]
         public string thumbnail_url { get; set; }
+
+        public BitmapFrame GetFullImage
+        {
+            get
+            {
+                return DownloadImage(full_url);
+            }
+        }
+
+        public BitmapFrame GetThumbnail
+        {
+            get
+            {
+                return DownloadImage(thumbnail_url);
+            }
+        }
+
+        /// <summary>
+        /// Tries to download an image; if it fails, it returns null
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        private BitmapFrame DownloadImage(string url)
+        {
+            try
+            {
+                byte[] data = JsonDownloaderAndConverter.GetData(url);
+                var decoder = BitmapDecoder.Create(new MemoryStream(data),
+                              BitmapCreateOptions.PreservePixelFormat,
+                              BitmapCacheOption.None);
+                if (decoder.Frames.Count > 0)
+                {
+                    return decoder.Frames[0];
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+            return null;
+        }
     }
 
     [DataContract]
