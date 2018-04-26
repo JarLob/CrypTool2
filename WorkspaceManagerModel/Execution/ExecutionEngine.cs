@@ -104,9 +104,23 @@ namespace WorkspaceManager.Execution
                 benchmarkTimer.AutoReset = true;
                 benchmarkTimer.Enabled = true;
 
-                int i = 0;
+                //1. call all PreExecution methods of plugins
                 foreach (var pluginModel in workspaceModel.AllPluginModels)
                 {
+                    try
+                    {
+                        pluginModel.Plugin.PreExecution();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(string.Format(Resources.An_Error_occured_while_pre_0_1, pluginModel.Name, ex.Message), NotificationLevel.Error);
+                    }
+                }
+
+                //2. create threads and start these
+                int i = 0;
+                foreach (var pluginModel in workspaceModel.AllPluginModels)
+                {                           
                     var thread = new Thread(new ParameterizedThreadStart(pluginModel.Execute))
                                      {Name = "WorkspaceManager_Thread-" + i};
                     //thread.CurrentUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -118,6 +132,7 @@ namespace WorkspaceManager.Execution
                     thread.Start(this);
                 }
 
+                //3. fire resetEvents for each thread to let plugins start working
                 foreach (var pluginModel in workspaceModel.AllPluginModels)
                 {
                     if (pluginModel.InputConnectors.Count == 0)
@@ -247,6 +262,7 @@ namespace WorkspaceManager.Execution
             {
                 GuiLogMessage(Resources.ExecutionEngine_Stop_Start_stopping_ExecutionEngine, NotificationLevel.Info);
                 Stopped = true;
+                //4. call stop on each plugin
                 foreach (var pluginModel in workspaceModel.AllPluginModels)
                 {
                     pluginModel.Stop = true;
@@ -263,6 +279,7 @@ namespace WorkspaceManager.Execution
                 benchmarkTimer.Enabled = false;
                 workspaceModel.IsBeingExecuted = false;
 
+                //5. Wait for all threads to stop
                 GuiLogMessage(Resources.ExecutionEngine_Stop_Waiting_for_all_threads_to_stop, NotificationLevel.Debug);
                 foreach(var t in threads)
                 {
@@ -288,6 +305,19 @@ namespace WorkspaceManager.Execution
                 UpdateGuiElements(true);
                 GuiLogMessage(Resources.ExecutionEngine_Stop_WorkspaceModel_states_resetted,NotificationLevel.Debug);
                 GuiLogMessage(Resources.ExecutionEngine_Stop_ExecutionEngine_successfully_stopped, NotificationLevel.Info);
+
+                //6. finally call PostExecution of all plugins
+                foreach (var pluginModel in workspaceModel.AllPluginModels)
+                {
+                    try
+                    {
+                        pluginModel.Plugin.PostExecution();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(string.Format(Resources.An_Error_occured_while_post_0_1, pluginModel.Name, ex.Message), NotificationLevel.Error);
+                    }
+                }
             }
             catch(Exception ex)
             {

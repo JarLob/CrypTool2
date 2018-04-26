@@ -376,7 +376,7 @@ namespace Cryptool.VigenereAnalyzer.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Vigenère Breaker ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Vigenère Analyzer ähnelt.
         /// </summary>
         public static string PluginCaption {
             get {

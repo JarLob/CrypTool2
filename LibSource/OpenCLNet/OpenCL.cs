@@ -160,7 +160,14 @@ namespace OpenCLNet
 
         public static Platform[] GetPlatforms()
         {
-            return (Platform[])Platforms.Clone();
+            if (Platforms != null)
+            {
+                return (Platform[])Platforms.Clone();
+            }
+            else
+            {
+                return new Platform[0];
+            }
         }
 
         public static Platform GetPlatform(int index)

@@ -250,6 +250,26 @@ namespace Cryptool.VigenereAnalyzer
                 return;
             }
 
+            //Check, if the given Vigenere Alphabet is valid
+            var numvigalphabet = MapTextIntoNumberSpace(VigenereAlphabet, Alphabet);
+            var builder = new StringBuilder();
+            var pos = 0;            
+            foreach(var number in numvigalphabet)
+            {
+                if(number == -1)
+                {
+                    builder.Append(VigenereAlphabet[pos]);
+                    builder.Append(",");
+                }
+                pos++;
+            }
+
+            if(builder.Length > 0)
+            {
+                builder.Remove(builder.Length - 1, 1);
+                GuiLogMessage(string.Format("Invalid characters in Vigenère alphabet: {0}", builder.ToString()), NotificationLevel.Error);
+                return;
+            }
 
             // EVALUATION! if stopping is active, percentage and plaintext are necessary
             if (_settings.StopIfPercentReached &&

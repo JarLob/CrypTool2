@@ -53,7 +53,7 @@ namespace TextOutput
         {
             if (_textOutput != null && ((bool)args.NewValue))
             {
-                _textOutput.ShowInPresentation(_textOutput.CurrentValue);
+                _textOutput.ShowInPresentation(_textOutput.CurrentValue, true);
             }
         }
 

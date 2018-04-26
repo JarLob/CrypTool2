@@ -168,4 +168,13 @@
   <data name="TriggerList7" xml:space="preserve">
     <value>negative Flanke (wahr-&gt;falsch)</value>
   </data>
+  <data name="MaxCounterCaption" xml:space="preserve">
+    <value>Maximaler Zählerwert</value>
+  </data>
+  <data name="MaxCounterTooltip" xml:space="preserve">
+    <value>Setzt den maximalen Wert, den der Zähler erreichen muss, bis das Gate geschlossen ist.</value>
+  </data>
+  <data name="TriggerList8" xml:space="preserve">
+    <value>Zähler</value>
+  </data>
 </root>

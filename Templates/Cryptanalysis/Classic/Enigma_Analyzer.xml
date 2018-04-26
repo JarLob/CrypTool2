@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sample>
 
-  <title lang="en">Enigma Breaker</title>
+  <title lang="en">Enigma Analyzer</title>
   <summary lang="en">Cryptanalysis of the <i>Enigma</i> cipher</summary>
   <description lang="en">This template shows the cryptanalysis of the <i>Enigma</i> cipher.</description>
-  <keywords>Machine, Turing, World War, Rotor, Attack, Analysis, Breaker</keywords>
+  <keywords>Machine, Turing, World War, Rotor, Attack, Analysis, Analyzer, Breaker</keywords>
 
-  <title lang="de">Enigma Breaker</title>
+  <title lang="de">Enigma-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Enigma</i>-Chiffriermaschine</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>Enigma</i>-Chiffriermaschine.</description>
-  <keywords lang="de">Maschine, Weltkrieg, Angriff, Breaker</keywords>
+  <keywords lang="de">Maschine, Turing, Weltkrieg, Rotor, Angriff, Analyse, Analyzer, Breaker</keywords>
 
-  <icon file="Enigma_Breaker.png" />
+  <icon file="Enigma_Analyzer.png" />
   <relevantPlugins>
     <plugin name="Enigma" />
     <plugin name="FrequencyTest" />
@@ -19,7 +19,7 @@
   </relevantPlugins>
 
   <replacements lang="de">
-    <replacement key="$EnigmaBreaker$" value="Enigma Analyse"/>
+    <replacement key="$EnigmaAnalyzer$" value="Enigma-Analyse"/>
     <replacement key="$Ciphertext$" value="Geheimtext"/>
     <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
     <replacement key="$FrequencyTest$" value="Frequenz-Test"/>
@@ -27,7 +27,7 @@
     <replacement key="$memo$" value="Diese Vorlage demonstriert den von James Gillogly in der Cryptologia Jahrgang XIX, Nummer 4, vorgestellten kryptoanalytischen Algorithmus: http://members.fortunecity.com/jpeschel/gillog1.htm\line Die verwendete Nachricht ist ein kurzer deutscher Satz. Die Analyse kann über die Optionen in den Einstellungen der Komponente kontrolliert werden. Abhängig davon, welche Suchmethode für die Steckerverbindungen gewählt wurde, wird der Algorithmus die Nachricht korrekt entschlüsseln (log2-Trigramm-Summe als Kostenfunktion bei der Identifizierung des nächsten Steckers), oder ein Stecker wird falsch sein (Koinzidenzindex). Der Grund hierfür ist der zu kurze Text, der verlässliche Resultate mit dem Koinzidenzindex verhindert."/>
   </replacements>
   <replacements lang="en">
-    <replacement key="$EnigmaBreaker$" value="Enigma Analyzer"/>
+    <replacement key="$EnigmaAnalyzer$" value="Enigma Analyzer"/>
     <replacement key="$Ciphertext$" value="Ciphertext"/>
     <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
     <replacement key="$FrequencyTest$" value="FrequencyTest"/>

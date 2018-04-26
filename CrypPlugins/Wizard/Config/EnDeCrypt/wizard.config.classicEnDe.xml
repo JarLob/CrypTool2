@@ -285,7 +285,7 @@
       <defaultvalue lang="de">Wir wurden entdeckt, sofortiger Rückzug!</defaultvalue>
     </inputBox>
 
-    <inputBox plugin="Enigma" property="Key" alignment="Stretch" width="10%" visibleLines="1" group="settings">
+    <inputBox plugin="Enigma" property="InitialRotorPos" alignment="Stretch" width="10%" visibleLines="1" group="settings">
       <description lang="en">Key:</description>
       <description lang="de">Schlüssel:</description>
       <defaultvalue lang="en">AAA</defaultvalue>

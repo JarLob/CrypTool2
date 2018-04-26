@@ -16,8 +16,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
@@ -25,15 +27,16 @@ namespace Gate
 {
     public enum Trigger
     {
-        AlwaysOpen, AlwaysClosed, TrueValue, FalseValue, AnyEdge, PositiveEdge, NegativeEdge
+        AlwaysOpen, AlwaysClosed, TrueValue, FalseValue, AnyEdge, PositiveEdge, NegativeEdge, Counter
     };
 
     public class GateSettings : ISettings
     {
         private Trigger trigger = 0;
+        private int maxCounter = 100;
 
         [TaskPane( "TriggerCaption", "TriggerTooltip", null, 1, true, ControlType.RadioButton,
-            new string[] { "TriggerList1", "TriggerList2", "TriggerList3", "TriggerList4", "TriggerList5", "TriggerList6", "TriggerList7" })]
+            new string[] { "TriggerList1", "TriggerList2", "TriggerList3", "TriggerList4", "TriggerList5", "TriggerList6", "TriggerList7", "TriggerList8" })]
         public Trigger Trigger
         {
             get
@@ -47,20 +50,63 @@ namespace Gate
                     trigger = value;
                     OnPropertyChanged("Trigger");
                 }
+
+                if(trigger == Trigger.Counter)
+                {
+                    showSettingsElement("MaxCounter");
+                }
+                else
+                {
+                    hideSettingsElement("MaxCounter");
+                }
             }
         }
         #region INotifyPropertyChanged Members
 
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        [TaskPane("MaxCounterCaption", "MaxCounterTooltiü", null, 2, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 1, int.MaxValue)]
+        public int MaxCounter
+        {
+            get { return maxCounter; }
+            set { maxCounter = value; }
+           
+        }
+
+
+        private void showSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+        }
+
+        private void hideSettingsElement(string element)
+        {
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            }
+        }
+        
         public void Initialize()
         {
-            
+            if (trigger == Trigger.Counter)
+            {
+                showSettingsElement("MaxCounter");
+            }
+            else
+            {
+                hideSettingsElement("MaxCounter");
+            }
         }
 
         private void OnPropertyChanged(string p)
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, p);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
 
         #endregion
     }

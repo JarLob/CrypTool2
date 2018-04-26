@@ -296,7 +296,7 @@ namespace TextOutput
             return newValue;
         }
 
-        internal void ShowInPresentation(string fillValue)
+        internal void ShowInPresentation(string fillValue, bool maximized = false)
         {
             if (!Presentation.IsVisible) return;
 
@@ -304,14 +304,14 @@ namespace TextOutput
             if (Thread.CurrentThread == Application.Current.Dispatcher.Thread)
             {
                 //we are in the UI thread, thus we can directly call
-                UpdateTextControls(fillValue);
+                UpdateTextControls(fillValue, maximized);
             }
             else
             {
                 //we are not in the UI thread, thus we have to get into
                 Presentation.Dispatcher.Invoke(DispatcherPriority.Background, (SendOrPostCallback)delegate
                 {                    
-                    UpdateTextControls(fillValue);
+                    UpdateTextControls(fillValue, maximized);
                 }, fillValue);
                 try
                 {
@@ -325,7 +325,7 @@ namespace TextOutput
             }
         }
 
-        private void UpdateTextControls(string fillValue)
+        private void UpdateTextControls(string fillValue, bool maximized = false)
         {
             if (!Presentation.IsVisible) return;
 
@@ -347,7 +347,10 @@ namespace TextOutput
                 // append line breaks only if not first line
                 if (!string.IsNullOrEmpty(oldtext))
                     textOutputPresentation.textBox.AppendText(new String('\r', settings.AppendBreaks));
-
+                if (maximized)
+                {
+                    textOutputPresentation.textBox.Document.Blocks.Clear();
+                }
                 textOutputPresentation.textBox.AppendText(fillValue);
                 textOutputPresentation.textBox.ScrollToEnd();
             }

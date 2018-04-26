@@ -152,7 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
-      <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
+      <Project>{5aa65cee-66bf-4b99-b46b-339e15c1a2c4}</Project>
       <Name>CrypCloudCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">
@@ -166,7 +166,7 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
-      <Project>{00382C7A-8812-483F-8984-5A3612DE5285}</Project>
+      <Project>{00382c7a-8812-483f-8984-5a3612de5285}</Project>
       <Name>voluntLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\CostFunction\CostFunction.csproj">

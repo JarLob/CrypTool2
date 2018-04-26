@@ -718,7 +718,7 @@ namespace Cryptool.EnigmaBreaker.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Enigma Breaker ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Enigma Analyzer ähnelt.
         /// </summary>
         public static string PluginCaption {
             get {

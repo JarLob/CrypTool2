@@ -19,7 +19,7 @@ namespace Tests.TemplateAndPluginTests
         public void CaesarTestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("Caesar");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", "InputAlphabet", "ShiftKey", ".CaseSensitive" }, new[] { "OutputString" });
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", "AlphabetSymbols", "ShiftKey", ".CaseSensitive" }, new[] { "OutputString" });
             object[] output;
 
             foreach (TestVector vector in testvectors)

@@ -89,6 +89,12 @@ namespace Cryptool.CrypWin
                     Monitor.Wait(thread, Properties.Settings.Default.DemoInterval*1000);
                 }
 
+                //Force garbage collection.
+                GC.Collect();
+
+                // Wait for all finalizers to complete before continuing.
+                GC.WaitForPendingFinalizers();
+
                 if (logWriter != null)
                 {
                     logWriter.WriteLine("*** Testing " + filelist[currentFile]);

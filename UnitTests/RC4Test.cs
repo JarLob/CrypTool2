@@ -18,11 +18,11 @@ namespace Tests.TemplateAndPluginTests
         public void RC4TestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("RC4");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputData", "InputKey" }, new[] { "OutputStream" });
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputData", "InputKey" , ".Keylength" }, new[] { "OutputStream" });
 
             foreach (TestVector vector in testvectors)
             {
-                object[] output = scenario.GetOutputs(new object[] { (new byte[vector.offset + vector.output.Length / 2]).ToStream(), vector.key.HexToStream() });
+                object[] output = scenario.GetOutputs(new object[] { (new byte[vector.offset + vector.output.Length / 2]).ToStream(), vector.key.HexToStream(), (int)vector.key.HexToStream().Length });
                 Assert.AreEqual(vector.output.ToUpper(), output[0].ToHex().Substring(vector.offset * 2), "Unexpected value in test #" + vector.n + ".");
             }
         }
@@ -30,7 +30,7 @@ namespace Tests.TemplateAndPluginTests
         struct TestVector
         {
             public string key, output;
-            public int n, offset;
+            public int n, offset, keylength;
         }
 
         //

@@ -223,7 +223,7 @@
     <value>Der beste Klartext, der während der Analyse gefunden wurde.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Vigenère Breaker</value>
+    <value>Vigenère-Analyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Kryptoanalyse des Vigenère-Verfahrens mittels Hillclimbing.</value>

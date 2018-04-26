@@ -228,4 +228,10 @@
   <data name="An_Error_occured_while_stopping_0_1" xml:space="preserve">
     <value>An Error occured while stopping '{0}': {1}</value>
   </data>
+  <data name="An_Error_occured_while_post_0_1" xml:space="preserve">
+    <value>An error occured while executing PostExecution of {0}: {1}</value>
+  </data>
+  <data name="An_Error_occured_while_pre_0_1" xml:space="preserve">
+    <value>An error occured while executing PreExecution of {0}: {1}</value>
+  </data>
 </root>

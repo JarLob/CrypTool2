@@ -124,7 +124,7 @@
     <value>Wörterbuch mit N-Gramm-Häufigkeiten (string -&gt; [absolut, prozentual, log2])</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Enigma Breaker</value>
+    <value>Enigma-Analyse</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Angriff auf die Polyalphabetische Rotor-Chiffriermaschine</value>

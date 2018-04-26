@@ -644,7 +644,7 @@ namespace WorkspaceManager
         {
             get
             {
-                if (this.WorkspaceModel != null)
+                if (!PluginExtension.IsTestMode && this.WorkspaceModel != null)
                 {
                     return this.WorkspaceModel.HasChanges;
                 }

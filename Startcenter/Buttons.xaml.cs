@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls; 
-using Cryptool.CrypTutorials;  
+//using Cryptool.CrypTutorials;  
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using OnlineDocumentationGenerator.Generators.HtmlGenerator;
@@ -21,8 +21,8 @@ namespace Startcenter
         {
             InitializeComponent();
 
-                DistCompButton.Visibility = Visibility.Collapsed;
-                DistCompLabel.Visibility = Visibility.Collapsed; 
+                //DistCompButton.Visibility = Visibility.Collapsed;
+                //DistCompLabel.Visibility = Visibility.Collapsed; 
         }
 
         private void WizardButton_Click(object sender, RoutedEventArgs e)
@@ -30,10 +30,10 @@ namespace Startcenter
             OnOpenEditor(typeof(Wizard.Wizard), null);
         }
 
-        private void CrypTutorialsButton_Click(object sender, RoutedEventArgs e)
+        /*private void CrypTutorialsButton_Click(object sender, RoutedEventArgs e)
         {
             OnOpenEditor(typeof(CrypTutorials), null);
-        }
+        }*/
             
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {

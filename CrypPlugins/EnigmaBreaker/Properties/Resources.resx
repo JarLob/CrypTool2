@@ -124,7 +124,7 @@
     <value>Dictionary with gram counts (string -&gt; [absolute, percentaged, log2])</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Enigma Breaker</value>
+    <value>Enigma Analyzer</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Breaker for the Polyalphabetic rotor-cipher machine</value>

@@ -43,12 +43,12 @@
         </Button>
         <TextBlock Grid.Column="1" Grid.Row="1" Text="{Loc Create_a_new_workspace_with_the_graphical_editor_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
 
-        <Button Grid.Column="0" Grid.Row="2" Click="CrypTutorialsButton_Click">
+        <!--<Button Grid.Column="0" Grid.Row="2" Click="CrypTutorialsButton_Click">
             <Button.Content>
                 <Image Source="/Startcenter;component/cryptutorials.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Loc CrypTutorials}" VerticalAlignment="Center" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Loc CrypTutorials}" VerticalAlignment="Center" TextWrapping="Wrap"/>-->
 
         <Button Grid.Column="0" Grid.Row="3" Click="HelpButton_Click">
             <Button.Content>
@@ -64,12 +64,12 @@
         </Button>
         <TextBlock Grid.Column="1" Grid.Row="4" Text="{Loc Open_the_ct_book_}" VerticalAlignment="Center" TextWrapping="Wrap"/>
 
-        <Button Grid.Column="0" Grid.Row="5" Click="ConnectButton_Click" Name="DistCompButton">
+        <!--<Button Grid.Column="0" Grid.Row="5" Click="ConnectButton_Click" Name="DistCompButton">
             <Button.Content>
                 <Image Stretch="Fill" Source="/Startcenter;component/peer2peer-disconnect.png" />
             </Button.Content>
         </Button>
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Loc Connect_to_the_distributed_computing_platform_}" VerticalAlignment="Center" Name="DistCompLabel" TextWrapping="Wrap"/>
+        <TextBlock Grid.Column="1" Grid.Row="5" Text="{Loc Connect_to_the_distributed_computing_platform_}" VerticalAlignment="Center" Name="DistCompLabel" TextWrapping="Wrap"/>-->
 
         <Button Grid.Column="0" Grid.Row="6" Click="WebpageButton_Click">
             <Button.Content>

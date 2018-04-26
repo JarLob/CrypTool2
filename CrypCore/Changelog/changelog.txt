@@ -1,51 +1,12 @@
-[b]CrypTool Release[b]
+[b]CrypTool 2.1 - 2018.2 Beta[b]
 
 Dear CrypTool 2 users,
 
-many new components found their way into this new release version of CrypTool 2.1.
-For a detailed overview of the new components please have a look at the list beneath this text. 
-We hope you have as much fun using CrypTool 2.1 Release as we had creating it. If you find any bugs 
-please do not hesitate using our bug reporting form at https://www.cryptool.org/trac/CrypTool2/newticket, 
-or use the contact form on the upper right side under the "About" menu in the CrypTool 2 application.
+This is a beta release preparing for the upcoming CrypTool 2.1 - 2018.2 Release version.
+We hope you have as much fun using CrypTool 2.1 - 2018.2 Beta as we had creating it. 
+If you find any bugs please do not hesitate using our bug reporting form at 
+https://www.cryptool.org/trac/CrypTool2/newticket, or use the contact form on the upper
+right side under the "About" menu in the CrypTool 2 application.
 
 Sincerly yours,
-The CrypTool 2 Developer Team, April 2018
-
-Changelog:
-
-Hint: We updated CrypTool 2.1 to .NET Framework 4.7.1. So please download it before applying the update.
-Download Link: https://www.microsoft.com/net/download/dotnet-framework-runtime
-
-New components:
-
-Ciphers:
-- AES visualization
-- DES visualization
-- Blake
-- Groestl
-- M-138 cipher
-- Fialka Machine
-
-Cryptanalysis components:
-- New powerful Vigenère analyzer
-- M-138 analyzer
-- Enigma analyzer (separated the Enigma analysis from the Enigma cipher component)
-
-Components for the topic "Image Processing":
-- Image processor
-- Watermark creator
-- Robust hash function
-- Transcriptor
-
-Other Components:
-- Avalanche effekt visualization
-- Audio input & output components
-- Huffman compression algorithm
-- Levenshtein distance
-
-We updated the monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
-Additionally, we integrated the CrypTool 2 book (English & German).
-
-And:
-Many bugs fixed...
-Many typos fixed...
+The CrypTool 2 Developer Team, March 2018

@@ -477,11 +477,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CrypCloud\CrypCloudCore\CrypCloudCore.csproj">
-      <Project>{5AA65CEE-66BF-4B99-B46B-339E15C1A2C4}</Project>
+      <Project>{5aa65cee-66bf-4b99-b46b-339e15c1a2c4}</Project>
       <Name>CrypCloudCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypCloud\CrypCloudManager\CrypCloudManager.csproj">
-      <Project>{9925A476-C298-4224-BF66-A18688202E64}</Project>
+      <Project>{9925a476-c298-4224-bf66-a18688202e64}</Project>
       <Name>CrypCloudManager</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypCore\CrypCore.csproj">

@@ -116,6 +116,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="StaticDocs\CrypToolBook.xml">
+      <SubType>Designer</SubType>
+    </Resource>
     <None Include="Generators\LaTeXGenerator\LaTeXTmpl-Appendix.tex" />
     <None Include="Generators\LaTeXGenerator\LaTeXTmpl-Components-de.tex" />
     <None Include="Generators\LaTeXGenerator\LaTeXTmpl-Components-en.tex" />

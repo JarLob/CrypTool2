@@ -402,9 +402,7 @@ namespace WorkspaceManager.Model
             var executionEngine = (ExecutionEngine)o;
             try
             {
-                Stop = false;
-
-                plugin.PreExecution();
+                Stop = false;                
                 bool firstrun = true;
 
                 while (true)
@@ -687,8 +685,7 @@ namespace WorkspaceManager.Model
                             connectionModel.From.PluginModel.resetEvent.Set();
                         }
                     }
-                }
-                plugin.PostExecution();
+                }                
             }
             catch (Exception ex)
             {

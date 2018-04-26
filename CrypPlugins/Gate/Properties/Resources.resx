@@ -168,4 +168,13 @@
   <data name="TriggerList7" xml:space="preserve">
     <value>negative edge (true-&gt;false)</value>
   </data>
+  <data name="TriggerList8" xml:space="preserve">
+    <value>Counter</value>
+  </data>
+  <data name="MaxCounterCaption" xml:space="preserve">
+    <value>Max counter value</value>
+  </data>
+  <data name="MaxCounterTooltip" xml:space="preserve">
+    <value>Sets the maximum value the counter has to reach until the gate is closed.</value>
+  </data>
 </root>

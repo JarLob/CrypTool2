@@ -44,6 +44,9 @@ namespace Gate
         private bool freshInput = false;
         private bool freshControl = false;
 
+        private int _counter = 1;
+        private int _maxCounter = 100;
+
         [PropertyInfo(Direction.InputData, "InputObjectCaption", "InputObjectTooltip", true)]
         public object InputObject
         {
@@ -115,10 +118,17 @@ namespace Gate
             output = null;
             oldControl = false;
             control = false;
+            _counter = 1;
+            _maxCounter = settings.MaxCounter;
         }
 
         public void Execute()
         {
+            if (freshInput)
+            {
+                _counter++;
+            }
+
             if (shallFire())
             {
                 output = input;
@@ -156,6 +166,8 @@ namespace Gate
                     return freshInput && freshControl && !oldControl && control;
                 case Trigger.NegativeEdge:
                     return freshInput && freshControl && oldControl && !control;
+                case Trigger.Counter:
+                    return freshInput && _counter <= _maxCounter;
                 default:
                     return false;
             }

@@ -19,7 +19,7 @@ namespace Tests.TemplateAndPluginTests
         public void EnigmaTestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("Enigma");
-            var scenario = new PluginTestScenario(pluginInstance, new[] { "InputString", ".Model", ".Key", ".Rotor1", ".Rotor2", ".Rotor3", ".Rotor4", ".Reflector", ".Ring1", ".Ring2", ".Ring3", ".Ring4", ".PlugBoard" }, new[] { "OutputString" });
+            var scenario = new PluginTestScenario(pluginInstance, new[] { "TextInput", ".Model", ".InitialRotorPos", ".Rotor1", ".Rotor2", ".Rotor3", ".Rotor4", ".Reflector", ".Ring1", ".Ring2", ".Ring3", ".Ring4", ".PlugBoard" }, new[] { "TextOutput" });
             object[] output;
             
             foreach (TestVector vector in testvectors)

@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ExecutionEngine_Execute_Exception_occured_during_startup_of_Workspace___0_" xml:space="preserve">
-    <value>Es trat ein Fehler während des Startens der Arbeitsfläche auf: {0}</value>
+    <value>Ein Fehler trat während des Startens der Arbeitsfläche auf: {0}</value>
   </data>
   <data name="ExecutionEngine_BenchmarkTimeout_Executing_at__0_0_0__Plugins_sec_" xml:space="preserve">
     <value>Führe {0:0,0} Plugins\Sekunde aus.</value>
   </data>
   <data name="ExecutionEngine_CheckGui_Exception_occured_during_update_of_GUI_of_Workspace___0__" xml:space="preserve">
-    <value>Es trat ein Fehler während des Updates der Oberfläche des Editors auf: {0} </value>
+    <value>Ein Fehler trat während des Updates der Oberfläche des Editors auf: {0} </value>
   </data>
   <data name="ExecutionEngine_Stop_Start_stopping_ExecutionEngine" xml:space="preserve">
     <value>Beginne das Stoppen der Ausführungsmaschine</value>
@@ -136,7 +136,7 @@
     <value>Thread {0} beendete sich nicht selbstständig innerhalb {1} Millisekunden und wird nun hart beendet</value>
   </data>
   <data name="ExecutionEngine_Stop_Exception_during_waiting_for_thread___0___to_stop___1_" xml:space="preserve">
-    <value>Es trat ein Fehler während des Wartens auf die Beendigung von  '{0}' auf: {1}</value>
+    <value>Ein Fehler trat während des Wartens auf die Beendigung von  '{0}' auf: {1}</value>
   </data>
   <data name="ExecutionEngine_Stop_All_threads_stopped" xml:space="preserve">
     <value>Alle Threads wurden angehalten</value>
@@ -148,34 +148,34 @@
     <value>Ausführungsmaschine erfolgreich gestoppt</value>
   </data>
   <data name="ExecutionEngine_Stop_Exception_occured_during_stopping_of_Workspace___0__" xml:space="preserve">
-    <value>Es trat ein Fehler während des Stoppens der Arbeitsfläche auf: {0} </value>
+    <value>Ein Fehler trat während des Stoppens der Arbeitsfläche auf: {0} </value>
   </data>
   <data name="ExecutionEngine_Stop_Aborting___0___now" xml:space="preserve">
     <value>Beende '{0}' nun</value>
   </data>
   <data name="ConnectorModel_PropertyChangedOnPlugin_Error_occured_during_propagating_of_new_value_of___0___of_Output___1_____2_" xml:space="preserve">
-    <value>Es trat ein Fehler bei der Weitergabe eines neuen Wertes des Plugins '{0}' des Outputs '{1}' auf: {2}</value>
+    <value>Ein Fehler trat bei der Weitergabe eines neuen Wertes des Plugins '{0}' des Outputs '{1}' auf: {2}</value>
   </data>
   <data name="PluginModel_Execute_Number_of__0__too_big_for__1____2_" xml:space="preserve">
     <value>Die Zahl {0} ist zu groß für {1}: {2}</value>
   </data>
   <data name="PluginModel_Execute_An_error_occured_while_setting_value_of_connector___0___of___1_____2_" xml:space="preserve">
-    <value>Es trat ein Fehler während der Belegung mit Daten von '{0}'  von '{1}' auf: {2}</value>
+    <value>Ein Fehler trat während der Belegung mit Daten des Konnektors '{0}' der Komponente '{1}' auf: {2}</value>
   </data>
   <data name="PluginModel_Execute_An_error_occured_while_executing____0______1__" xml:space="preserve">
-    <value>Es trat ein Fehler während der Ausführung von '{0}' auf : {1} </value>
+    <value>Ein Fehler trat während der Ausführung von '{0}' auf: {1} </value>
   </data>
   <data name="PluginModel_Execute_An_error_occured_while_executing___0______1_" xml:space="preserve">
-    <value>Es trat ein Fehler während der Ausführung von '{0}' auf : {1}</value>
+    <value>Ein Fehler trat während der Ausführung von '{0}' auf : {1}</value>
   </data>
   <data name="CopyOperation_Execute_Could_not_restore_the_setting___0___of_plugin___1__" xml:space="preserve">
     <value>Konnte die Einstellung '{0}' des Plugins '{1}' nicht wiederherstellen</value>
   </data>
   <data name="CopyOperation_Execute_Error_while_initializing___0__" xml:space="preserve">
-    <value>Es trat ein Fehler während der Initialisierung von '{0}' auf</value>
+    <value>Ein Fehler trat während der Initialisierung von '{0}' auf</value>
   </data>
   <data name="CopyOperation_Execute_Error_while_restoring_IControl_Connection_between___0___to___1____Workspace_surely_will_not_work_well_" xml:space="preserve">
-    <value>Es trat ein Fehler während der Erstellung der IControl-Verbindung zwischen '{0}' und '{1}' auf. Die Arbeitsfläche wird nicht richtig funktionieren.</value>
+    <value>Ein Fehler trat während der Erstellung der IControl-Verbindung zwischen '{0}' und '{1}' auf. Die Arbeitsfläche wird nicht richtig funktionieren.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_Could_not_restore_the_setting___0___of_plugin___1__" xml:space="preserve">
     <value>Konnte die Einstellung '{0}' des Plugins '{1}' nicht wiederherstellen</value>
@@ -187,10 +187,10 @@
     <value>Kein ConnectorModel für das Plugins Property '{0}' des Typs '{1}' existiert im PluginModel '{2}:{3}'. Erstelle solch ein ConnectorModel nun.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_Error_while_initializing____0__" xml:space="preserve">
-    <value>Es trat ein Fehler während der Initialisierung von '{0}' auf</value>
+    <value>Ein Fehler trat während der Initialisierung von '{0}' auf</value>
   </data>
   <data name="ModelPersistance_restoreSettings_Error_while_restoring_IControl_Connection_between___0___to___1____Workspace_surely_will_not_work_well_" xml:space="preserve">
-    <value>Es trat ein Fehler während der Erstellung der IControl-Verbindung zwischen '{0}' und '{1}' auf. Die Arbeitsfläche wird nicht richtig funktionieren.</value>
+    <value>Ein Fehler trat während der Erstellung der IControl-Verbindung zwischen '{0}' und '{1}' auf. Die Arbeitsfläche wird nicht richtig funktionieren.</value>
   </data>
   <data name="ModelPersistance_restoreSettings_" xml:space="preserve">
     <value>Ein ImageModel ohne Daten (byte array == null || byte array ist leer) kann nicht wiederhergestellt werden. Dies wird nun gelöscht</value>
@@ -224,5 +224,11 @@
   </data>
   <data name="XMLSerialization_Deserialize_Could_not_restore_reference_beteen_model_element___0___and_its_reference_with_id___1__" xml:space="preserve">
     <value>Konnte die Referenz zwischen dem Modelelement '{0}' und seinem referenzierten Objekt mit ID '{1}' erstellen</value>
+  </data>
+  <data name="An_Error_occured_while_post_0_1" xml:space="preserve">
+    <value>Ein Fehler trat bei der Ausführung von PostExecution von {0} auf: {1}</value>
+  </data>
+  <data name="An_Error_occured_while_pre_0_1" xml:space="preserve">
+    <value>Ein Fehler trat bei der Ausführung von PreExecution von {0} auf: {1}</value>
   </data>
 </root>
