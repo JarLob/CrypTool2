@@ -124,30 +124,30 @@
     <value>Component to download data from the DECODE database</value>
   </data>
   <data name="DecodeRecordCaption" xml:space="preserve">
-    <value>Record</value>
+    <value>Datensatz</value>
   </data>
   <data name="DecodeRecordTooltip" xml:space="preserve">
-    <value>DECODE record (data set) in json format</value>
+    <value>DECODE-Datensatz im json-Format</value>
   </data>
   <data name="DecodeViewerPluginCaption" xml:space="preserve">
-    <value>DECODE Viewer</value>
+    <value>DECODE Betrachter</value>
   </data>
   <data name="DecodeViewerPluginTooltip" xml:space="preserve">
-    <value>Component to view data from the DECODE database</value>
+    <value>Komponente um heruntergeladene DECODE-Daten zu Visualisieren</value>
   </data>
   <data name="NameHeader" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="OutputDocumentCaption" xml:space="preserve">
-    <value>Document</value>
+    <value>Dokument</value>
   </data>
   <data name="OutputDocumentTooltip" xml:space="preserve">
-    <value>Downloaded document from DECODE database</value>
+    <value>Heruntergeladenes Dokument der DECODE-Datenbank</value>
   </data>
   <data name="OutputImageCaption" xml:space="preserve">
-    <value>Image</value>
+    <value>Bild</value>
   </data>
   <data name="OutputImageTooltip" xml:space="preserve">
-    <value>Downloaded image from DECODE database</value>
+    <value>Heruntergeladenes Bild der DECODE-Datenbank </value>
   </data>
 </root>

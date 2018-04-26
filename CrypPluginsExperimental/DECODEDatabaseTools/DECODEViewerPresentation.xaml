@@ -4,20 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="800" d:DesignWidth="500" MinHeight="850" MinWidth="550">
+             d:DesignHeight="600" d:DesignWidth="500" MinHeight="600" MinWidth="550">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="95"/>
+            <ColumnDefinition Width="82"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="27"/>
-            <RowDefinition Height="216"/>
-            <RowDefinition Height="162"/>
+            <RowDefinition Height="104"/>
+            <RowDefinition Height="81"/>
             <RowDefinition Height="54"/>
             <RowDefinition Height="27"/>
-            <RowDefinition Height="200*"/>
-            <RowDefinition Height="200*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150*"/>
         </Grid.RowDefinitions>
         
         <Label Content="Name:" Grid.Column="0" Grid.Row="0" Background="White" FontSize="14"/>
@@ -33,14 +33,12 @@
         <!-- metadata.content -->
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="115"/>
+                <ColumnDefinition Width="120*"/>
+                <ColumnDefinition Width="115"/>
+                <ColumnDefinition Width="120*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
@@ -50,55 +48,58 @@
             <Label Content="Cipher Type:" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
             <Label Content="Symbol Set:" Grid.Column="0" Grid.Row="2"  Background="LightGray"/>
             <Label Content="Number of Pages:" Grid.Column="0" Grid.Row="3"  Background="LightGray"/>
-            <Label Content="Inline Plaintext:" Grid.Column="0" Grid.Row="4"  Background="LightGray"/>
-            <Label Content="Inline Cleartext:" Grid.Column="0" Grid.Row="5" Background="LightGray"/>
-            <Label Content="Cleartext Language:" Grid.Column="0" Grid.Row="6" Background="LightGray"/>
-            <Label Content="Plaintext Language:" Grid.Column="0" Grid.Row="7"  Background="LightGray"/>
+            
+            <Label Content="Inline Plaintext:" Grid.Column="2" Grid.Row="0"  Background="LightGray"/>
+            <Label Content="Inline Cleartext:" Grid.Column="2" Grid.Row="1" Background="LightGray"/>
+            <Label Content="Cleartext Language:" Grid.Column="2" Grid.Row="2" Background="LightGray"/>
+            <Label Content="Plaintext Language:" Grid.Column="2" Grid.Row="3"  Background="LightGray"/>
 
             <Label Content="{Binding Path=Record.metadata.content.type}" Grid.Column="1" Grid.Row="0"  Background="LightGray"/>
             <Label Content="{Binding Path=Record.metadata.content.cipher_type}" Grid.Column="1" Grid.Row="1"  Background="LightGray"/>
             <Label Content="{Binding Path=Record.metadata.content.symbol_set}" Grid.Column="1" Grid.Row="2"  Background="LightGray"/>
             <Label Content="{Binding Path=Record.metadata.content.number_of_pages}" Grid.Column="1" Grid.Row="3"  Background="LightGray"/>
-            <Label Content="{Binding Path=Record.metadata.content.inline_plaintext}" Grid.Column="1" Grid.Row="4"  Background="LightGray"/>
-            <Label Content="{Binding Path=Record.metadata.content.inline_cleartext}" Grid.Column="1" Grid.Row="5"  Background="LightGray"/>
-            <Label Content="{Binding Path=Record.metadata.content.cleartext_language}" Grid.Column="1" Grid.Row="6"  Background="LightGray"/>
-            <Label Content="{Binding Path=Record.metadata.content.plaintext_language}" Grid.Column="1" Grid.Row="7"  Background="LightGray"/>
+            
+            <Label Content="{Binding Path=Record.metadata.content.inline_plaintext}" Grid.Column="3" Grid.Row="0"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.inline_cleartext}" Grid.Column="3" Grid.Row="1"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.cleartext_language}" Grid.Column="3" Grid.Row="2"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.plaintext_language}" Grid.Column="3" Grid.Row="3"  Background="LightGray"/>
         </Grid>
 
         <!-- metadata.origin -->
         
         <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="115"/>
+                <ColumnDefinition Width="120*"/>
+                <ColumnDefinition Width="115"/>
+                <ColumnDefinition Width="120*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>
-                <RowDefinition Height="27"/>    
+                <RowDefinition Height="27"/> 
             </Grid.RowDefinitions>
             <Label Content="Author:" Grid.Column="0" Grid.Row="0" Background="White"/>
             <Label Content="Sender:" Grid.Column="0" Grid.Row="1" Background="White"/>
             <Label Content="Receiver:" Grid.Column="0" Grid.Row="2"  Background="White"/>
-            <Label Content="Dating:" Grid.Column="0" Grid.Row="3"  Background="White"/>
-            <Label Content="Region:" Grid.Column="0" Grid.Row="4"  Background="White"/>
-            <Label Content="City:" Grid.Column="0" Grid.Row="5" Background="White"/>
+            
+            <Label Content="Dating:" Grid.Column="2" Grid.Row="0"  Background="White"/>
+            <Label Content="Region:" Grid.Column="2" Grid.Row="1"  Background="White"/>
+            <Label Content="City:" Grid.Column="2" Grid.Row="2" Background="White"/>
 
             <Label Content="{Binding Path=Record.metadata.origin.author}" Grid.Column="1" Grid.Row="0"  Background="White"/>
             <Label Content="{Binding Path=Record.metadata.origin.sender}" Grid.Column="1" Grid.Row="1"  Background="White"/>
             <Label Content="{Binding Path=Record.metadata.origin.receiver}" Grid.Column="1" Grid.Row="2"  Background="White"/>
-            <Label Content="{Binding Path=Record.metadata.origin.dating}" Grid.Column="1" Grid.Row="3"  Background="White"/>
-            <Label Content="{Binding Path=Record.metadata.origin.region}" Grid.Column="1" Grid.Row="4"  Background="White"/>
-            <Label Content="{Binding Path=Record.metadata.origin.city}" Grid.Column="1" Grid.Row="5"  Background="White"/>           
+            
+            <Label Content="{Binding Path=Record.metadata.origin.dating}" Grid.Column="3" Grid.Row="0"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.region}" Grid.Column="3" Grid.Row="1"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.city}" Grid.Column="3" Grid.Row="2"  Background="White"/>           
         </Grid>
 
         <!-- metadata.format-->
         <Grid Grid.Column="1" Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="115"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -131,7 +132,7 @@
                     <GridViewColumn Header="Image" Width="324">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding Path=GetThumbnail}"/>
+                                <Image Source="{Binding Path=GetThumbnail}" Height="150" MaxHeight="150"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>                  

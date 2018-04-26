@@ -108,9 +108,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             this.presentation.Record = new Record();
             presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                presentation.ImageList.Items.Clear();
-                presentation.DocumentList.Items.Clear();
-            }, null);          
+                try
+                {
+                    presentation.ImageList.Items.Clear();
+                    presentation.DocumentList.Items.Clear();
+                }
+                catch(Exception)
+                {
+                    //wtf?
+                }
+            }, null);
         }
 
         /// <summary>
@@ -119,16 +126,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             ProgressChanged(0, 1);
+            Record record;
             try
             {
-                Record record  = JsonDownloaderAndConverter.GetRecordFromString(DECODERecord);
-                presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                record = JsonDownloaderAndConverter.GetRecordFromString(DECODERecord);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Could not download or convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
                 {
                     presentation.Record = record;
-
                     //add all images to the ListView of images
                     presentation.ImageList.Items.Clear();
-                    foreach(DataObjects.Image image in record.images)
+                    foreach (DataObjects.Image image in record.images)
                     {
                         presentation.ImageList.Items.Add(image);
                     }
@@ -138,15 +153,13 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                     {
                         presentation.DocumentList.Items.Add(document);
                     }
-
-                }, null);                       
-            }
-            catch (Exception ex)
-            {
-                GuiLogMessage(String.Format("Error while deserialization of json data:{0}", ex.Message), NotificationLevel.Error);
-                return;
-            }
-
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Error while adding data:{0}", ex.Message), NotificationLevel.Error);
+                    return;
+                }
+            }, null);
             ProgressChanged(1, 1);
         }
 

@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DECODEDownloader ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Downloader ähnelt.
         /// </summary>
         internal static string DecodeDownloaderPluginCaption {
             get {
@@ -79,7 +79,25 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die DECODEViewer ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Record ähnelt.
+        /// </summary>
+        internal static string DecodeRecordCaption {
+            get {
+                return ResourceManager.GetString("DecodeRecordCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECODE record (data set) in json format ähnelt.
+        /// </summary>
+        internal static string DecodeRecordTooltip {
+            get {
+                return ResourceManager.GetString("DecodeRecordTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die DECODE Viewer ähnelt.
         /// </summary>
         internal static string DecodeViewerPluginCaption {
             get {
@@ -102,6 +120,42 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.Properties {
         internal static string NameHeader {
             get {
                 return ResourceManager.GetString("NameHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Document ähnelt.
+        /// </summary>
+        internal static string OutputDocumentCaption {
+            get {
+                return ResourceManager.GetString("OutputDocumentCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded document from DECODE database ähnelt.
+        /// </summary>
+        internal static string OutputDocumentTooltip {
+            get {
+                return ResourceManager.GetString("OutputDocumentTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Image ähnelt.
+        /// </summary>
+        internal static string OutputImageCaption {
+            get {
+                return ResourceManager.GetString("OutputImageCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Downloaded image from DECODE database ähnelt.
+        /// </summary>
+        internal static string OutputImageTooltip {
+            get {
+                return ResourceManager.GetString("OutputImageTooltip", resourceCulture);
             }
         }
     }

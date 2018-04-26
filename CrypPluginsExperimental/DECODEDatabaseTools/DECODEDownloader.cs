@@ -24,6 +24,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
+using System;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
@@ -46,11 +47,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         #region Data Properties
 
-        
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
         [PropertyInfo(Direction.OutputData, "DecodeRecordCaption", "DecodeRecordTooltip")]
         public string DECODERecord
         {
@@ -83,6 +79,17 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void PreExecution()
         {
+            presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                try
+                {
+                    presentation.ListView.Items.Clear();
+                }
+                catch (Exception)
+                {
+                    //wtf?
+                }
+            }, null);
         }
 
         /// <summary>
@@ -91,13 +98,30 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         public void Execute()
         {
             ProgressChanged(0, 1);
-            List<RecordsRecord> records = JsonDownloaderAndConverter.GetRecordsList(JsonDownloaderAndConverter.DOWNLOAD_RECORDS_URL);
+            List<RecordsRecord> records;
+            try
+            {
+                records = JsonDownloaderAndConverter.GetRecordsList(JsonDownloaderAndConverter.DOWNLOAD_RECORDS_URL);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Could not download or convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+                return;
+            }
             presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                presentation.RecordsList.Clear();
-                foreach (RecordsRecord record in records)
+                try
                 {
-                    presentation.RecordsList.Add(record);
+                    presentation.RecordsList.Clear();
+                    foreach (RecordsRecord record in records)
+                    {
+                        presentation.RecordsList.Add(record);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Exception while adding received data to ListView: {0}", ex.Message), NotificationLevel.Error);
+                    return;
                 }
             }, null);                        
             running = true;
@@ -110,9 +134,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 return;
             }
-            string data = JsonDownloaderAndConverter.GetRecordString(record);
-            DECODERecord = data;
-            OnPropertyChanged("DECODERecord");
+            Thread thread = new Thread(DownloadThread);
+            thread.IsBackground = true;
+            thread.Start(record);
+
+            
+        }
+
+        private void DownloadThread(object param)
+        {
+            try
+            {
+                RecordsRecord record = (RecordsRecord)param;
+                string data = JsonDownloaderAndConverter.GetRecordString(record);
+                DECODERecord = data;
+                OnPropertyChanged("DECODERecord");
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Could not download or convert data from DECODE database: {0}", ex.Message), NotificationLevel.Error);
+            }
         }
 
         /// <summary>
