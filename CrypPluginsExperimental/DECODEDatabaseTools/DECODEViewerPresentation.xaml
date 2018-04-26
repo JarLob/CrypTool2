@@ -20,13 +20,13 @@
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
         
-        <Label Content="Name:" Grid.Column="0" Grid.Row="0" Background="LightBlue" FontSize="14"/>
-        <Label Content="Content:" Grid.Column="0" Grid.Row="1" Background="LemonChiffon" FontSize="14"/>
-        <Label Content="Origin:" Grid.Column="0" Grid.Row="2"  Background="LightCyan" FontSize="14"/>
-        <Label Content="Format:" Grid.Column="0" Grid.Row="3"  Background="LightGreen" FontSize="14"/>
-        <Label Content="Add. Info:" Grid.RowSpan="2" Grid.Column="0" Grid.Row="4"  Background="LightYellow" FontSize="14"/>
-
-        <Label Content="{Binding Path=Record.metadata.name}" Grid.Column="1" Grid.Row="0" Background="LightBlue"/>
+        <Label Content="Name:" Grid.Column="0" Grid.Row="0" Background="White" FontSize="14"/>
+        <Label Content="Content:" Grid.Column="0" Grid.Row="1" Background="LightGray" FontSize="14"/>
+        <Label Content="Origin:" Grid.Column="0" Grid.Row="2"  Background="White" FontSize="14"/>
+        <Label Content="Format:" Grid.Column="0" Grid.Row="3"  Background="LightGray" FontSize="14"/>
+        <Label Content="Add. Info:" Grid.RowSpan="2" Grid.Column="0" Grid.Row="4"  Background="White" FontSize="14"/>
+        
+        <Label Content="{Binding Path=Record.metadata.name}" Grid.Column="1" Grid.Row="0" Background="White"/>
         <Label Content="Images:" Grid.Row="5" Grid.Column="0"  FontSize="14" Background="LightGray"/>
         <Label Content="Documents:" Grid.Row="6" Grid.Column="0"  FontSize="14" Background="White"/>
         
@@ -46,23 +46,23 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
             </Grid.RowDefinitions>
-            <Label Content="Type:" Grid.Column="0" Grid.Row="0" Background="LemonChiffon"/>
-            <Label Content="Cipher Type:" Grid.Column="0" Grid.Row="1" Background="LemonChiffon"/>
-            <Label Content="Symbol Set:" Grid.Column="0" Grid.Row="2"  Background="LemonChiffon"/>
-            <Label Content="Number of Pages:" Grid.Column="0" Grid.Row="3"  Background="LemonChiffon"/>
-            <Label Content="Inline Plaintext:" Grid.Column="0" Grid.Row="4"  Background="LemonChiffon"/>
-            <Label Content="Inline Cleartext:" Grid.Column="0" Grid.Row="5" Background="LemonChiffon"/>
-            <Label Content="Cleartext Language:" Grid.Column="0" Grid.Row="6" Background="LemonChiffon"/>
-            <Label Content="Plaintext Language:" Grid.Column="0" Grid.Row="7"  Background="LemonChiffon"/>
+            <Label Content="Type:" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
+            <Label Content="Cipher Type:" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
+            <Label Content="Symbol Set:" Grid.Column="0" Grid.Row="2"  Background="LightGray"/>
+            <Label Content="Number of Pages:" Grid.Column="0" Grid.Row="3"  Background="LightGray"/>
+            <Label Content="Inline Plaintext:" Grid.Column="0" Grid.Row="4"  Background="LightGray"/>
+            <Label Content="Inline Cleartext:" Grid.Column="0" Grid.Row="5" Background="LightGray"/>
+            <Label Content="Cleartext Language:" Grid.Column="0" Grid.Row="6" Background="LightGray"/>
+            <Label Content="Plaintext Language:" Grid.Column="0" Grid.Row="7"  Background="LightGray"/>
 
-            <Label Content="{Binding Path=Record.metadata.content.type}" Grid.Column="1" Grid.Row="0"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.cipher_type}" Grid.Column="1" Grid.Row="1"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.symbol_set}" Grid.Column="1" Grid.Row="2"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.number_of_pages}" Grid.Column="1" Grid.Row="3"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.inline_plaintext}" Grid.Column="1" Grid.Row="4"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.inline_cleartext}" Grid.Column="1" Grid.Row="5"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.cleartext_language}" Grid.Column="1" Grid.Row="6"  Background="LemonChiffon"/>
-            <Label Content="{Binding Path=Record.metadata.content.plaintext_language}" Grid.Column="1" Grid.Row="7"  Background="LemonChiffon"/>
+            <Label Content="{Binding Path=Record.metadata.content.type}" Grid.Column="1" Grid.Row="0"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.cipher_type}" Grid.Column="1" Grid.Row="1"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.symbol_set}" Grid.Column="1" Grid.Row="2"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.number_of_pages}" Grid.Column="1" Grid.Row="3"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.inline_plaintext}" Grid.Column="1" Grid.Row="4"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.inline_cleartext}" Grid.Column="1" Grid.Row="5"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.cleartext_language}" Grid.Column="1" Grid.Row="6"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.content.plaintext_language}" Grid.Column="1" Grid.Row="7"  Background="LightGray"/>
         </Grid>
 
         <!-- metadata.origin -->
@@ -80,19 +80,19 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>    
             </Grid.RowDefinitions>
-            <Label Content="Author:" Grid.Column="0" Grid.Row="0" Background="LightCyan"/>
-            <Label Content="Sender:" Grid.Column="0" Grid.Row="1" Background="LightCyan"/>
-            <Label Content="Receiver:" Grid.Column="0" Grid.Row="2"  Background="LightCyan"/>
-            <Label Content="Dating:" Grid.Column="0" Grid.Row="3"  Background="LightCyan"/>
-            <Label Content="Region:" Grid.Column="0" Grid.Row="4"  Background="LightCyan"/>
-            <Label Content="City:" Grid.Column="0" Grid.Row="5" Background="LightCyan"/>
+            <Label Content="Author:" Grid.Column="0" Grid.Row="0" Background="White"/>
+            <Label Content="Sender:" Grid.Column="0" Grid.Row="1" Background="White"/>
+            <Label Content="Receiver:" Grid.Column="0" Grid.Row="2"  Background="White"/>
+            <Label Content="Dating:" Grid.Column="0" Grid.Row="3"  Background="White"/>
+            <Label Content="Region:" Grid.Column="0" Grid.Row="4"  Background="White"/>
+            <Label Content="City:" Grid.Column="0" Grid.Row="5" Background="White"/>
 
-            <Label Content="{Binding Path=Record.metadata.origin.author}" Grid.Column="1" Grid.Row="0"  Background="LightCyan"/>
-            <Label Content="{Binding Path=Record.metadata.origin.sender}" Grid.Column="1" Grid.Row="1"  Background="LightCyan"/>
-            <Label Content="{Binding Path=Record.metadata.origin.receiver}" Grid.Column="1" Grid.Row="2"  Background="LightCyan"/>
-            <Label Content="{Binding Path=Record.metadata.origin.dating}" Grid.Column="1" Grid.Row="3"  Background="LightCyan"/>
-            <Label Content="{Binding Path=Record.metadata.origin.region}" Grid.Column="1" Grid.Row="4"  Background="LightCyan"/>
-            <Label Content="{Binding Path=Record.metadata.origin.city}" Grid.Column="1" Grid.Row="5"  Background="LightCyan"/>           
+            <Label Content="{Binding Path=Record.metadata.origin.author}" Grid.Column="1" Grid.Row="0"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.sender}" Grid.Column="1" Grid.Row="1"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.receiver}" Grid.Column="1" Grid.Row="2"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.dating}" Grid.Column="1" Grid.Row="3"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.region}" Grid.Column="1" Grid.Row="4"  Background="White"/>
+            <Label Content="{Binding Path=Record.metadata.origin.city}" Grid.Column="1" Grid.Row="5"  Background="White"/>           
         </Grid>
 
         <!-- metadata.format-->
@@ -105,14 +105,14 @@
                 <RowDefinition Height="27"/>
                 <RowDefinition Height="27"/>
             </Grid.RowDefinitions>
-            <Label Content="Paper:" Grid.Column="0" Grid.Row="0" Background="LightGreen"/>
-            <Label Content="Ink Type:" Grid.Column="0" Grid.Row="1" Background="LightGreen"/>
+            <Label Content="Paper:" Grid.Column="0" Grid.Row="0" Background="LightGray"/>
+            <Label Content="Ink Type:" Grid.Column="0" Grid.Row="1" Background="LightGray"/>
 
-            <Label Content="{Binding Path=Record.metadata.format.paper}" Grid.Column="1" Grid.Row="0"  Background="LightGreen"/>
-            <Label Content="{Binding Path=Record.metadata.format.ink_type}" Grid.Column="1" Grid.Row="1"  Background="LightGreen"/>
+            <Label Content="{Binding Path=Record.metadata.format.paper}" Grid.Column="1" Grid.Row="0"  Background="LightGray"/>
+            <Label Content="{Binding Path=Record.metadata.format.ink_type}" Grid.Column="1" Grid.Row="1"  Background="LightGray"/>
            
         </Grid>
-        <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="4"  Background="LightYellow"/>
+        <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="4"  Background="White"/>
 
         <ScrollViewer Grid.Row="5" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView Name="ImageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray">
@@ -154,7 +154,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn  Header="Title" DisplayMemberBinding="{Binding Path=title}" Width="120">
+                    <GridViewColumn  Header="Title" DisplayMemberBinding="{Binding Path=title}" Width="168">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>

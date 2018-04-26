@@ -40,12 +40,37 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 
         public DECODEDownloaderPresentation(DECODEDownloader plugin)
         {
-            InitializeComponent();
-            DataContext = RecordsList;
+            InitializeComponent();            
             Plugin = plugin;
+            this.ListView.ItemsSource = RecordsList;
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ListView.ItemsSource);
+            view.Filter = UserFilter;
+
         }
 
-        public void HandleDoubleClick(Object sender, EventArgs eventArgs)
+        /// <summary>
+        /// Filter name using the entered text
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        private bool UserFilter(object item)
+        {
+            if (String.IsNullOrEmpty(Filter.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return ((item as RecordsRecord).name.IndexOf(Filter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+        }
+
+        /// <summary>
+        /// User double-clicked for downloading a record
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void HandleDoubleClick(Object sender, EventArgs eventArgs)
         {
             try
             {
@@ -64,5 +89,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
                 //wtf?
             }
         }
+
+        /// <summary>
+        /// Text of filter textfield changed; thus, update the ListView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Filter_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(ListView.ItemsSource).Refresh();
+        }
+
     }
 }
