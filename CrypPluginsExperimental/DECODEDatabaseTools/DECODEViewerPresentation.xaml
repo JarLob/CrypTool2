@@ -116,7 +116,7 @@
         <Label Content="{Binding Path=Record.metadata.additional_information}" Grid.Column="1" Grid.Row="4"  Background="White"/>
 
         <ScrollViewer Grid.Row="5" Grid.Column="1" CanContentScroll="False" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <ListView Name="ImageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray">
+            <ListView Name="ImageList" FontSize="12" Height="Auto" Foreground="LightGray" Background="LightGray" PreviewMouseWheel="ImageList_PreviewMouseWheel">
                 <ListView.Resources>
                     <Style TargetType="GridViewColumnHeader">
                         <Setter Property="Visibility" Value="Collapsed" />

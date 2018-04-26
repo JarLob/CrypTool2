@@ -117,5 +117,24 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
         }
+
+        /// <summary>
+        /// Forward MouseWheel event to parent ui element (ScrollViewer) 
+        /// to enable the user to scroll through the image list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImageList_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                e.Handled = true;
+                var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                var parent = ((Control)sender).Parent as UIElement;
+                parent.RaiseEvent(eventArg);
+            }
+        }
     }
 }
