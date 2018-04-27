@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     public class RecordsRecord
     {
         [DataMember]
-        public int record_id { get; set; }
+        public int id { get; set; }
 
         [DataMember]
         public string name { get; set; }
@@ -153,16 +153,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         /// <returns></returns>
         private BitmapFrame DownloadImage(string url)
         {
-          
-            byte[] data = JsonDownloaderAndConverter.GetData(url);
-            var decoder = BitmapDecoder.Create(new MemoryStream(data),
-                          BitmapCreateOptions.PreservePixelFormat,
-                          BitmapCacheOption.None);
-            if (decoder.Frames.Count > 0)
+            try
             {
-                return decoder.Frames[0];
-            }           
-            return null;
+                byte[] data = JsonDownloaderAndConverter.GetData(url);
+                var decoder = BitmapDecoder.Create(new MemoryStream(data),
+                              BitmapCreateOptions.PreservePixelFormat,
+                              BitmapCacheOption.None);
+                if (decoder.Frames.Count > 0)
+                {
+                    return decoder.Frames[0];
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                //wtf?
+                return null;
+            }
         }
     }
 
@@ -189,7 +196,15 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         {
             get
             {
-                return JsonDownloaderAndConverter.GetData(download_url);
+                try
+                {
+                    return JsonDownloaderAndConverter.GetData(download_url);
+                }
+                catch (Exception)
+                {
+                    //wtf?
+                    return null;
+                }
             }
         }
     }
@@ -204,8 +219,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public List<Document> cleartext { get; set; }
         [DataMember]
         public List<Document> cryptanalysis_statistics { get; set; }
-        [DataMember]
-        public List<Document> miscellaneous { get; set; }
+        //[DataMember]
+        //public List<Document> miscellaneous { get; set; }
         [DataMember]
         public List<Document> publication { get; set; }
         [DataMember]
@@ -221,7 +236,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
                 documents.AddRange(deciphered_text);
                 documents.AddRange(cleartext);
                 documents.AddRange(cryptanalysis_statistics);
-                documents.AddRange(miscellaneous);
+                //documents.AddRange(miscellaneous);
                 documents.AddRange(publication);
                 documents.AddRange(transcription);
                 documents.AddRange(transcription);

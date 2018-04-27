@@ -27,8 +27,23 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class JsonDownloaderAndConverter
     {
-        public const string DOWNLOAD_RECORDS_URL = "http://localhost/DECODE/records.json";
-        public const string DOWNLOAD_RECORD_URL = "http://localhost/DECODE/record.json";
+        public const string DOWNLOAD_RECORDS_URL = "https://stp.lingfil.uu.se/decodedev/records";
+        public const string DOWNLOAD_RECORD_URL = "https://stp.lingfil.uu.se/decodedev/records/";
+
+        /// <summary>
+        /// Hack to override timeout
+        /// </summary>
+        private class MyWebClient : WebClient
+        {
+            private const int TIMEOUT = 5000;
+
+            protected override WebRequest GetWebRequest(Uri uri)
+            {
+                WebRequest w = base.GetWebRequest(uri);
+                w.Timeout = TIMEOUT;
+                return w;
+            }
+        }
 
         /// <summary>
         /// Get the list of records of the DECODE database using the json protocol
@@ -37,28 +52,38 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <returns></returns>
         public static List<RecordsRecord> GetRecordsList(string url)
         {
-            WebClient client = new WebClient();
-            byte[] data;
-            try
+            using (MyWebClient client = new MyWebClient())
             {
-                data = client.DownloadData(url);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("Could not download records data from DECODE database: {0}", ex.Message), ex);
-            }
-            
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
-            MemoryStream stream = new MemoryStream(data);
-            stream.Position = 0;
-            try
-            {
-                Records records = (Records)serializer.ReadObject(stream);
-                return records.records;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
+                client.Headers.Add("Accept", "application/json");
+                client.Headers.Add("Accept", "text/plain");
+                
+                byte[] data;
+                try
+                {
+                    data = client.DownloadData(url);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(String.Format("Could not download records data from DECODE database: {0}", ex.Message), ex);
+                }
+                //dirty hack
+                string json = "{\"records\":{" + UTF8Encoding.UTF8.GetString(data) + "}";
+                data = UTF8Encoding.UTF8.GetBytes(json);
+                //end of dirty hack
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
+                using (MemoryStream stream = new MemoryStream(data))
+                {
+                    stream.Position = 0;
+                    try
+                    {
+                        Records records = (Records)serializer.ReadObject(stream);
+                        return records.records;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
+                    }
+                }
             }
         }
 
@@ -71,10 +96,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             try
             {
-                WebClient client = new WebClient();
-                string url = DOWNLOAD_RECORD_URL + "?record_id=" + record.record_id;
-                byte[] data = client.DownloadData(url);
-                return UTF8Encoding.UTF8.GetString(data);
+                using (MyWebClient client = new MyWebClient())
+                {
+                    client.Headers.Add("Accept", "application/json");
+                    client.Headers.Add("Accept", "text/plain");
+                    string url = DOWNLOAD_RECORD_URL + "/" + record.id;
+                    byte[] data = client.DownloadData(url);
+                    return UTF8Encoding.UTF8.GetString(data);
+                }
             }
             catch (Exception ex)
             {
@@ -92,10 +121,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             try
             {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Record));
-                MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(data));
-                stream.Position = 0;
-                Record record = (Record)serializer.ReadObject(stream);
-                return record;
+                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(data)))
+                {
+                    stream.Position = 0;
+                    Record record = (Record)serializer.ReadObject(stream);
+                    return record;
+                }
             }
             catch (Exception ex)
             {
@@ -112,8 +143,10 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         {
             try
             {
-                WebClient client = new WebClient();
-                return client.DownloadData(url);
+                using (MyWebClient client = new MyWebClient())
+                {
+                    return client.DownloadData(url);
+                }
             }
             catch (Exception ex)
             {

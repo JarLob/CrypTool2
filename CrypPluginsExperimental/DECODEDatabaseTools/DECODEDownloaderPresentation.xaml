@@ -20,7 +20,7 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Path=record_id}" Width="50">
+                    <GridViewColumn Header="#" DisplayMemberBinding="{Binding Path=id}" Width="50">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label/>
