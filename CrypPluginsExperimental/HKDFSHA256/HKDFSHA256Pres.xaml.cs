@@ -23,17 +23,32 @@ namespace Cryptool.Plugins.HKDFSHA256
     public partial class HKDFSHA256Pres : UserControl
     {
         public AutoResetEvent buttonNextClickedEvent;
-        private bool _skipIntro;
+        public AutoResetEvent buttonStartClickedEvent;
+        public AutoResetEvent buttonRestartClickedEvent;
+        private bool _skipChapter;
+        private bool _restart;
 
-        public bool SkipIntro
+        public bool Restart
         {
             get
             {
-                return _skipIntro;
+                return _restart;
             }
             set
             {
-                _skipIntro = value;
+                _restart = value;
+            }
+        }
+
+        public bool SkipChapter
+        {
+            get
+            {
+                return _skipChapter;
+            }
+            set
+            {
+                _skipChapter = value;
             }
         }
 
@@ -41,13 +56,27 @@ namespace Cryptool.Plugins.HKDFSHA256
         {
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
-            _skipIntro = false;
+            buttonStartClickedEvent = new AutoResetEvent(false);
+            buttonRestartClickedEvent = new AutoResetEvent(false);
+            _skipChapter = false;
         }
 
+        private void buttonRestart_Click(object sender, RoutedEventArgs e)
+        {
+            buttonRestartClickedEvent.Set();
+            _restart = true;
+        }
+
+        private void buttonStart_Click(object sender, RoutedEventArgs e)
+        {
+            buttonStartClickedEvent.Set();
+            _restart = false;
+        }
+        
         private void buttonSkip_Click(object sender, RoutedEventArgs e)
         {
             buttonNextClickedEvent.Set();
-            _skipIntro = true;
+            _skipChapter = true;
         }
 
         private void buttonNext_Click(object sender, RoutedEventArgs e)

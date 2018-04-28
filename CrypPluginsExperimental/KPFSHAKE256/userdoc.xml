@@ -6,39 +6,39 @@
   <language culture="de-DE"/>
 
   <introduction lang="en"> 
-		The function KPF SHAKE256 is a key derivation function (kdf). The hash function SHAKE256 is part of the SHA-3 family and can generate any length of output due its special construction. It is not based on the Merkle- Damgård construction, but on the Sponge construction. Currently there are no attacks on the SHA-3 family nor on the Sponge construction. Therefore, this hash function is particularly well suited for use as a pseudo-random function (prf) with a key prefixed. Due to the variable generation of hash digests no extension of the output is necessary as with KPF SHA-256 or HKDF SHA-256.
+		The function KPF SHAKE256 is a key derivation function (KDF). The hash function SHAKE256 is part of the SHA-3 family and can generate any length of output due its special construction. It is not based on the Merkle- Damgård construction, but on the Sponge construction. Currently there are no attacks on the SHA-3 family nor on the Sponge construction. Therefore, this hash function is particularly well suited for use as a pseudo-random function (PRF) with a key prefixed. Due to the variable generation of hash digests no extension of the output is necessary as with KPF SHA-256 or HKDF SHA-256.
 	  <section headline="Inputs and outputs">
 	  	<list>
-		<item><b>Source Key Material:</b> Specifies the source key material. It is used to calculate the key material.</item>
+		<item><b>Source Key Material:</b> Specifies the source key material (SKM). It is used to calculate the key material.</item>
 		<item><b>Key:</b> The key for calculation of the key material. It must be secret.</item>
 		<item><b>Length of the output key material (in Byte):</b> Specifies the length of the output key material.</item>
-		<item><b>Key Material</b>: After the calculation, the generated key material is visible in this textfield.</item>
+		<item><b>Key Material</b>: After the calculation, the generated key material (KM) is visible in this textfield.</item>
 		</list>	
 	  </section>
 	  <section headline="Basics and background">
-		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a kdf, you can generate keys with pseudorandom characters. An integral part of a kdf is a prf. These functions are often based on hashfunctions or stream ciphers. <newline /> A prf generates strings with pseudorandom chars. Frequently, hashfunctions were used as prf. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a prf.
+		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a KDF, you can generate keys with pseudorandom characters. An integral part of a KDF is a PRF. These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
 	  </section>
 	  <section headline="Traditional approach of a PRF" >
-		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed prf can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
+		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
 	  <section headline="Modern approach of a PRF">
-	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (hmac), if the used hash function is based on the Merkle-Damgård construction. The hmac is not vulnerable to the extension attack. The hkdf function is hmac based kdf. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
+	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The hkdf function is HMAC based KDF. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
 	  </section>
 	  <section headline="Extension of the output">
-	  The length of the output is limited to a fixed size. To extend the length, the used prf must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs.
+	  The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs.
 	  </section>
 	  <section headline="SHA-3">
-	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional prf approach) and do not require any auxiliary operation modes to achieve any output length. 
+	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional PRF approach) and do not require any auxiliary operation modes to achieve any output length. 
 	  </section>
   </introduction>
 
     <introduction lang="de-DE">
-    Die Funktion KPF SHAKE256 ist eine Schlüsselgenerierungsfunktion (KDF). Die Hashfunktion SHAKE256 ist teil der SHA-3 Familie und kann durch ihre Konstruktion beliebig lange Ausgaben erzeugen. Sie basiert nicht auf der Merkle-Damgård Konstruktion, sondern auf der Sponge-Konstruktion. Aktuell existieren weder Angriffe auf die SHA-3 Familie noch auf die Sponge-Konstruktion. Daher eignet sich diese Hashfunktion besonders für die Verwendung als Pseudozufallsfunktion (PRF) mit einem Schlüssel als Präfix. Durch die variable Erzeugung von Hashwerten ist keine Verlängerung der Ausgabe nötig wie bei KPF SHA-256 oder HKDF SHA-256.
+    Die Funktion KPF SHAKE256 ist eine Schlüsselgenerierungsfunktion (Key Derivation Function, KDF). Die Hashfunktion SHAKE256 ist teil der SHA-3 Familie und kann durch ihre Konstruktion beliebig lange Ausgaben erzeugen. Sie basiert nicht auf der Merkle-Damgård Konstruktion, sondern auf der Sponge-Konstruktion. Aktuell existieren weder Angriffe auf die SHA-3 Familie noch auf die Sponge-Konstruktion. Daher eignet sich diese Hashfunktion besonders für die Verwendung als Pseudozufallsfunktion (Pseudorandom Function, PRF) mit einem Schlüssel als Präfix. Durch die variable Erzeugung von Hashwerten ist keine Verlängerung der Ausgabe nötig wie bei KPF SHA-256 oder HKDF SHA-256.
 	<section headline="Eingaben und Ausgaben">
 		<list>
-			<item><b>Quellschlüsselmaterial:</b> Spezifiziert das Quellschlüsselmaterial. Dieses wird zur generierung des Schlüsselmaterials verwendet.</item>
+			<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur generierung des Schlüsselmaterials verwendet.</item>
 			<item><b>Schlüssel:</b> Der Schlüssel wird zu generierung des Schlüsselmaterials verwendet. Dieser muss geheim sein.</item>
 			<item><b>Länge des zu generierenden Schlüssel (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterial.</item>
-			<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial in diesem Textfeld zu sehen.</item>
+			<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item>
 		</list>	
 	</section>
 	<section headline="Grundlagen und Hintergrund">

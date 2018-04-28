@@ -318,7 +318,7 @@ namespace KPFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation finished ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Calculation finished ähnelt.
         /// </summary>
         internal static string PresFinishedSectionHeading {
             get {
@@ -327,7 +327,8 @@ namespace KPFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, either stop the execution and start it again or change one of the inputs. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
+        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -336,7 +337,7 @@ namespace KPFSHAKE256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Skip intro ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip chapter ähnelt.
         /// </summary>
         internal static string PresIntro {
             get {
@@ -383,12 +384,21 @@ namespace KPFSHAKE256.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart ähnelt.
+        /// </summary>
+        internal static string PresRestart {
+            get {
+                return ResourceManager.GetString("PresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (skm).
+        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM).
         ///
         ///&lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
         ///
-        ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (km) in byte.
+        ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (KM) in byte.
         ///
         ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
         ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the textfield. ähnelt.
@@ -396,6 +406,24 @@ namespace KPFSHAKE256.Properties {
         internal static string PresSectionIntroductionText {
             get {
                 return ResourceManager.GetString("PresSectionIntroductionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start ähnelt.
+        /// </summary>
+        internal static string PresStart {
+            get {
+                return ResourceManager.GetString("PresStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0}/{1} ähnelt.
+        /// </summary>
+        internal static string PresStepText {
+            get {
+                return ResourceManager.GetString("PresStepText", resourceCulture);
             }
         }
         
@@ -442,6 +470,15 @@ namespace KPFSHAKE256.Properties {
         internal static string SaveFileDialogTooltip {
             get {
                 return ResourceManager.GetString("SaveFileDialogTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum amount of output are 5 MB (5242880 byte). The requested amount of  {0} byte was set to the maximum. ähnelt.
+        /// </summary>
+        internal static string TooMuchOutputRequestedLogMSG {
+            get {
+                return ResourceManager.GetString("TooMuchOutputRequestedLogMSG", resourceCulture);
             }
         }
     }

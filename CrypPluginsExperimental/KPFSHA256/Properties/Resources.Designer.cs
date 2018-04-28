@@ -292,7 +292,7 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die KM = H(K || 1 || SKM)||H(K || 2 || SKM)||...||H(K || n || SKM) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die KM = H(K || 1 || SKM) || H(K || 2 || SKM) ||...|| H(K || n || SKM) ähnelt.
         /// </summary>
         internal static string PresConstructionScheme {
             get {
@@ -337,7 +337,7 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation finished ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Calculation finished ähnelt.
         /// </summary>
         internal static string PresFinishedSectionHeading {
             get {
@@ -346,7 +346,8 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, either stop the execution and start it again or change one of the inputs. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
+        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -355,7 +356,7 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Skip intro ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip chapter ähnelt.
         /// </summary>
         internal static string PresIntro {
             get {
@@ -367,7 +368,7 @@ namespace KPFSHA256.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die The function KPF SHA-256 is a key derivation function (KDF). It uses a keyed hashfunction as pseudorandom function (PRF). The key will be prefixed to the input. It uses the SHA-256 hashfunction. In this implementation, the counter-mode is used for iteration.
         ///
         ///&lt;Bold&gt;ATTENTION:&lt;/Bold&gt;
-        ///The SHA-256 can not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purpose. ähnelt.
+        ///The SHA-256 should not be used as an PRF because of a problem of the Merkle-Damgard construction. &lt;Bold&gt; This implementation is only for demonstration purpose. ähnelt.
         /// </summary>
         internal static string PresIntroductionPart1Text {
             get {
@@ -407,7 +408,7 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Iterationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Calculationphase ähnelt.
         /// </summary>
         internal static string PresIterationSectionHeading {
             get {
@@ -416,7 +417,7 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Iterationphase ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 3. Calculationphase ähnelt.
         /// </summary>
         internal static string PresIterationSectionHeadingNum {
             get {
@@ -443,21 +444,57 @@ namespace KPFSHA256.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart ähnelt.
+        /// </summary>
+        internal static string PresRestart {
+            get {
+                return ResourceManager.GetString("PresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the Source Key Material.
+        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the Source Key Material (SKM).
         ///
         ///&lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
         ///
         ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
         ///
         ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the textfield.
+        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the key material (KM) is visible in the textfield.
         ///
-        ///&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this textfield. ähnelt.
+        ///&lt;Bold&gt;Debug:&lt;/Bold&gt; The key material will be calculated in multiple steps. Each subresult will be visible in this [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string PresSectionIntroductionText {
             get {
                 return ResourceManager.GetString("PresSectionIntroductionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip chapter ähnelt.
+        /// </summary>
+        internal static string PresSkipChapter {
+            get {
+                return ResourceManager.GetString("PresSkipChapter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start ähnelt.
+        /// </summary>
+        internal static string PresStart {
+            get {
+                return ResourceManager.GetString("PresStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0}/{1} ähnelt.
+        /// </summary>
+        internal static string PresStepText {
+            get {
+                return ResourceManager.GetString("PresStepText", resourceCulture);
             }
         }
         
@@ -504,6 +541,24 @@ namespace KPFSHA256.Properties {
         internal static string SaveFileDialogTooltip {
             get {
                 return ResourceManager.GetString("SaveFileDialogTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum amout of outputbytes are 8160 in case of implementation refered to  RFC 5869 . The requested amout of {0} byte was set to the maximum. ähnelt.
+        /// </summary>
+        internal static string TooMuchOutputRequestedLogForKPFStd {
+            get {
+                return ResourceManager.GetString("TooMuchOutputRequestedLogForKPFStd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum amount of output are 5 MB 5242880 byte). The requested amount of  {0} byte was set to the maximum. ähnelt.
+        /// </summary>
+        internal static string TooMuchOutputRequestedLogMSG {
+            get {
+                return ResourceManager.GetString("TooMuchOutputRequestedLogMSG", resourceCulture);
             }
         }
     }

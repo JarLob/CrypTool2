@@ -166,18 +166,18 @@
     <value>KPF SHAKE256</value>
   </data>
   <data name="PresIntro" xml:space="preserve">
-    <value>Skip intro</value>
+    <value>Skip chapter</value>
   </data>
   <data name="PresNext" xml:space="preserve">
     <value>Next</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
     <value>&lt;Bold&gt;Inputs:&lt;/Bold&gt;
-&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (skm).
+&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM).
 
 &lt;Bold&gt;Key:&lt;/Bold&gt; Specifies the secret key for the calculation. 
 
-&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (km) in byte.
+&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (KM) in byte.
 
 &lt;Bold&gt;Outputs:&lt;/Bold&gt;
 &lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is visible in the textfield.</value>
@@ -240,10 +240,11 @@ The calculation takes place completely within the hash function SHAKE256...</val
     <value>An error occured. Please find detailed information in the log of Cryptool2.</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
-    <value>Calculation finished</value>
+    <value>4. Calculation finished</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
-    <value>To repeat the calculation, either stop the execution and start it again or change one of the inputs.</value>
+    <value>To repeat the calculation, there are 3 alternatives:
+Either stop the execution and start it again, change one of the inputs or click on the "Restart" button. Then the calculation will restart automatically.</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
     <value>The function KPF SHAKE256 is a key derivation function (kdf). It uses a keyed hash function as pseudorandom function (prf). The key will be prefixed to the input. It uses the SHAKE256 hash function. This hash function is part of the SHA-3 family. Characteristic for the SHAKE256 is the determination of the outputlength in dependency of a parameter. This makes it easy to generate keys with a specific length without additional construction around the prf.
@@ -255,5 +256,17 @@ The SHA-3 family can be viewed in the template Keccak-Hash.</value>
   </data>
   <data name="PresIntroductionSectionHeadingNum" xml:space="preserve">
     <value>1. Introduction</value>
+  </data>
+  <data name="TooMuchOutputRequestedLogMSG" xml:space="preserve">
+    <value>The maximum amount of output are 5 MB (5242880 byte). The requested amount of  {0} byte was set to the maximum.</value>
+  </data>
+  <data name="PresRestart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="PresStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="PresStepText" xml:space="preserve">
+    <value>{0}/{1}</value>
   </data>
 </root>

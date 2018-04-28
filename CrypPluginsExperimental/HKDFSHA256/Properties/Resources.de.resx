@@ -136,7 +136,7 @@
     <value>Aktiviert oder deaktiviert die Erklärungen</value>
   </data>
   <data name="ConfigPrintKMToFileCaption" xml:space="preserve">
-    <value>Generiertes Key Material in Datei speichern</value>
+    <value>Generiertes Schlüsselmaterial in Datei speichern</value>
   </data>
   <data name="ConfigPrintKMToFileTooltip" xml:space="preserve">
     <value>Legt fest, dass das generierte Schlüsselmaterial in einer Datei gespeichert wird, um dieses eventuell in anderen Tools zu verwenden</value>
@@ -175,7 +175,7 @@
     <value>Berechnungschritte überspringen</value>
   </data>
   <data name="PresIntro" xml:space="preserve">
-    <value>Einführung überspringen</value>
+    <value>Kapitel überspringen</value>
   </data>
   <data name="PresNext" xml:space="preserve">
     <value>Weiter</value>
@@ -200,7 +200,7 @@
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
     <value>Die Funktion HKDF SHA-256 ist eine Schlüsselgenerierungs-
-funktion (KDF). Als Pseudozufallsfunktion (PRF) wird der Keyed-Hash Message Authentication Code (HMAC) verwendet. Dieser erhält neben dem SKM auch den geheimen Schlüssel als Eingabe. In dieser Implementierung wird als Hashfunktion der SHA-256 verwendet im HMAC verwendet. Dieses Schlüsselgenerierungsverfahren wird u.a. von der National Institute of Standards and Technology (NIST) empfohlen.</value>
+funktion (Key Derivation Function, KDF). Als Pseudozufallsfunktion (Pseudorandom Function, PRF) wird der Keyed-Hash Message Authentication Code (HMAC) verwendet. Dieser erhält neben dem SKM auch den geheimen Schlüssel als Eingabe. In dieser Implementierung wird als Hashfunktion der SHA-256 im HMAC verwendet. Dieses Schlüsselgenerierungsverfahren wird u.a. vom National Institute of Standards and Technology (NIST) empfohlen.</value>
   </data>
   <data name="PresIntroductionSectionHeading" xml:space="preserve">
     <value>Einführung</value>
@@ -210,17 +210,17 @@ funktion (KDF). Als Pseudozufallsfunktion (PRF) wird der Keyed-Hash Message Auth
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
     <value>&lt;Bold&gt;Eingaben:&lt;/Bold&gt;
-&lt;Bold&gt;Quellschlüsselmaterial:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
-material (SKM).
+&lt;Bold&gt;Quellschlüssel-Material:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
+Material (Source Key Material, SKM).
 
-&lt;Bold&gt;Salt:&lt;/Bold&gt; Spezifiziert das Salt zur Berechnung des Pseudozufallsschlüssel (PRK). Muss nicht geheim sein.
+&lt;Bold&gt;Salt:&lt;/Bold&gt; Spezifiziert den Saltwert zur Berechnung des Pseudozufallsschlüssel (Pseudorandom Key, PRK). Dieser muss nicht geheim sein.
 
-&lt;Bold&gt;CTXInfo:&lt;/Bold&gt; Spezifiziert die anwendungsspezifische Konstante CTXInfo. Kann auch leer sein.
+&lt;Bold&gt;Kontext-Information:&lt;/Bold&gt; Spezifiziert die anwendungsspezifische Konstante CTXInfo (Context Information, CTXInfo). Diese kann auch leer sein.
 
 &lt;Bold&gt;Länge des Schlüsselmaterials (in Byte):&lt;/Bold&gt; Spezifiziert die Länge des Schlüsselmaterials in Byte.
 
 &lt;Bold&gt;Ausgaben:&lt;/Bold&gt;
-&lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (KM) im Textfeld zu sehen.
+&lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) im Textfeld zu sehen.
 
 &lt;Bold&gt;Debug:&lt;/Bold&gt; Das Schlüsselmaterial wird sukzessive in mehreren Schritten berechnet. Die Ergebnisse der jeweiligen Teilschritte sind in der Debugausgabe zu sehen.</value>
   </data>
@@ -247,13 +247,13 @@ Byte 17 - 24: {3}
 Byte 24 - 32: {4}</value>
   </data>
   <data name="PresConstructionPart1Text" xml:space="preserve">
-    <value>Die Berechnung des Schlüsselmaterials kann schematisch wie folgt beschrieben werden:</value>
+    <value>Die Berechnung des Schlüsselmaterials kann formal wie folgt beschrieben werden:</value>
   </data>
   <data name="PresConstructionPart2Text" xml:space="preserve">
-    <value>Das HKDF-Verfahren besteht aus zwei Schritten. Im ersten Schritt wird ein Pseudozufallsschlüssel (PRK) generiert. Dieser wird auf Basis des SKM und eines optionalen Salts berechnet.</value>
+    <value>Das HKDF-Verfahren besteht aus zwei Schritten. Im ersten Schritt wird ein Pseudozufallsschlüssel (Pseudorandom Key, PRK) generiert. Dieser wird auf Basis des SKM und eines optionalen Salts berechnet.</value>
   </data>
   <data name="PresConstructionPart3Text" xml:space="preserve">
-    <value>Im zweiten Schritt wird das Schlüsselmaterial berechnet. Dazu wird der PRK aus dem ersten Schritt als geheimer Schlüssel verwendet. Das KM wird schrittweise berechnet. Das HKDF-Verfahren verwendet dazu eine Feedback-Schleife und einen Zähler: Der jeweilige vorherberechnete Wert wird als Eingabe für die nachfolgende Berechnung verwendet. Der Zähler wird bei jedem Schritt inkrementiert. Die Eingabe CTXinfo ist eine anwendungsspezifische Konstante, diese kann auch entfallen.</value>
+    <value>Im zweiten Schritt wird das Schlüsselmaterial berechnet. Dazu wird der PRK aus dem ersten Schritt als geheimer Schlüssel verwendet. Das KM wird schrittweise berechnet. Das HKDF-Verfahren verwendet dazu eine Feedback-Schleife und einen Zähler: Der jeweiligs vorher berechnete Wert wird als Eingabe für die nachfolgende Berechnung verwendet. Der Zähler wird bei jedem Schritt inkrementiert. Die Eingabe CTXinfo ist eine anwendungsspezifische Konstante, diese kann auch entfallen.</value>
   </data>
   <data name="PresConstructionPart4Text" xml:space="preserve">
     <value>Die folgende Abbildung visualisiert Schritt zwei:</value>
@@ -320,9 +320,25 @@ Byte 24 - 32: {4}</value>
     <value>Es ist ein Fehler aufgetreten. Weitere Informationen sind im Protokoll des CrypTool2 zu finden.</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
-    <value>Berechnung beendet</value>
+    <value>4. Berechnung beendet</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
-    <value>Zum wiederholen der Berechnung entweder die Ausführung stoppen und wieder starten oder eine der Eingaben ändern. Dann startet die Berechnung automatisch erneut.</value>
+    <value>Zum Wiederholen der Berechnung gibt es 3 Alternativen: 
+Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern oder auf den Button "Neustart" klicken. Dann startet die Berechnung automatisch neu.</value>
+  </data>
+  <data name="PresRestart" xml:space="preserve">
+    <value>Neustart</value>
+  </data>
+  <data name="PresStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="TooMuchOutputRequestedLogForKPFStd" xml:space="preserve">
+    <value>Die größte Menge an Ausgabebytes sind 8160 byte bei der Implementierung gemäß RFC 5869 . Die angeforderte Menge von {0} byte wurde auf das Maximum gesetzt.</value>
+  </data>
+  <data name="TooMuchOutputRequestedLogMSG" xml:space="preserve">
+    <value>Die größte Menge an Ausgabebytes sind 5 MB 5242880byte). Die angeforderte Menge von {0} byte wurde auf das Maximum gesetzt.</value>
+  </data>
+  <data name="PresStepText" xml:space="preserve">
+    <value>{0}/{1}</value>
   </data>
 </root>

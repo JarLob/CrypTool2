@@ -130,7 +130,7 @@
     <value>Aktiviert oder deaktiviert die Präsentation</value>
   </data>
   <data name="ConfigPrintKMToFileCaption" xml:space="preserve">
-    <value>Generiertes Key Material in Datei speichern</value>
+    <value>Generiertes Schlüsselmaterial in Datei speichern</value>
   </data>
   <data name="ConfigPrintKMToFileTooltip" xml:space="preserve">
     <value>Legt fest, dass das generierte Schlüsselmaterial in einer Datei gespeichert wird, um dieses eventuell in anderen Tools zu verwenden</value>
@@ -166,22 +166,22 @@
     <value>KPF SHAKE256</value>
   </data>
   <data name="PresIntro" xml:space="preserve">
-    <value>Einführung überspringen</value>
+    <value>Kapitel überspringen</value>
   </data>
   <data name="PresNext" xml:space="preserve">
     <value>Weiter</value>
   </data>
   <data name="PresSectionIntroductionText" xml:space="preserve">
     <value>&lt;Bold&gt;Eingaben:&lt;/Bold&gt;
-&lt;Bold&gt;Quellschlüsselmaterial:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
-material (SKM).
+&lt;Bold&gt;Quellschlüssel-Material:&lt;/Bold&gt; Spezifiziert das Quellschlüssel-
+Material (Source Key Material, SKM).
 
 &lt;Bold&gt;Schlüssel:&lt;/Bold&gt; Spezifiziert den geheimen Schlüssel (Key) zur Berechnung des Schlüsselmaterials. Dieser muss geheim bleiben.
 
 &lt;Bold&gt;Länge des Schlüsselmaterials (in Byte):&lt;/Bold&gt; Spezifiziert die Länge des Schlüsselmaterials in Byte.
 
 &lt;Bold&gt;Ausgaben:&lt;/Bold&gt;
-&lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (KM) im Textfeld zu sehen.</value>
+&lt;Bold&gt;Schlüsselmaterial:&lt;/Bold&gt; Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) im Textfeld zu sehen.</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KPF SHAKE256
@@ -215,19 +215,19 @@ Eine Schlüsselgenerierungsfunktion mit erweiterbarer Ausgabelänge
 SKM: {1} 
 Key: {2}
 
-Die Berechnung findet vollständig innerhalb der Hashfunktion SHAKE256 statt...</value>
+Die Berechnung findet vollständig innerhalb der Hashfunktion SHAKE256 statt.</value>
   </data>
   <data name="PresConstructionPart1Text" xml:space="preserve">
     <value>Die Berechnung des Schlüsselmaterials kann schematisch wie folgt beschrieben werden:</value>
   </data>
   <data name="PresConstructionPart2Text" xml:space="preserve">
-    <value>Das Schlüsselmaterial wird durch die Ausführung der um den Schlüssel erweiterten Hashfunktion berechnet. Der Hashfunktion SHAKE256 wird als Parameter die Länge der Ausgabe übergeben. Im Vergleich zu Hashfunktionen mit fester Ausgabelänge ist beim SHAKE256 keine weitere Konstruktion notwendig, um beliebig lange Ausgaben zu ermöglichen. Die Generierung eines Hashwertes ist beim SHAKE256 in zwei Phasen eingeteilt, die im folgenden Schaubild zu sehen sind.</value>
+    <value>Das Schlüsselmaterial wird durch die Ausführung der um den Schlüssel erweiterten Hashfunktion berechnet. Der Hashfunktion SHAKE256 wird als Parameter die Länge der Ausgabe übergeben. Im Vergleich zu Hashfunktionen mit fester Ausgabelänge ist beim SHAKE256 keine weitere Konstruktion notwendig, um beliebig lange Ausgaben zu erzeugen. Die Generierung eines Hashwertes ist beim SHAKE256 in zwei Phasen eingeteilt, die im folgenden Schaubild zu sehen sind.</value>
   </data>
   <data name="PresConstructionPart3Text" xml:space="preserve">
-    <value>Die zwei Phasen heißen &lt;Bold&gt;Absorbing- und Squeezing-Phase&lt;/Bold&gt;. In der &lt;Bold&gt;Absorbing Phase&lt;/Bold&gt; wird die Eingabe gelesen und es werden verschiedene Operationen ausgeführt.</value>
+    <value>Die zwei Phasen heißen &lt;Bold&gt;Absorbing- und Squeezing-Phase&lt;/Bold&gt;. In der &lt;Bold&gt;Absorbing-Phase&lt;/Bold&gt; wird die Eingabe gelesen und es werden verschiedene Operationen ausgeführt.</value>
   </data>
   <data name="PresConstructionPart4Text" xml:space="preserve">
-    <value>In der &lt;Bold&gt;Squeezing Phase&lt;/Bold&gt; wird in Abhängigkeit des Längenparameters entsprechend oft die Funktion f ausgeführt und die gewünschte Länge des Hashwertes generiert.</value>
+    <value>In der &lt;Bold&gt;Squeezing-Phase&lt;/Bold&gt; wird in Abhängigkeit des Längenparameters entsprechend oft die Funktion f ausgeführt und die gewünschte Länge des Hashwertes generiert.</value>
   </data>
   <data name="PresConstructionScheme" xml:space="preserve">
     <value>KM = H(K || SKM)</value>
@@ -242,14 +242,15 @@ Die Berechnung findet vollständig innerhalb der Hashfunktion SHAKE256 statt...<
     <value>Es ist ein Fehler aufgetreten. Weitere Informationen sind im Protokoll des CrypTool2 zu finden.</value>
   </data>
   <data name="PresFinishedSectionHeading" xml:space="preserve">
-    <value>Berechnung beendet</value>
+    <value>4. Berechnung beendet</value>
   </data>
   <data name="PresFinishedText" xml:space="preserve">
-    <value>Zum wiederholen der Berechnung entweder die Ausführung stoppen und wieder starten oder eine der Eingaben ändern. Dann startet die Berechnung automatisch erneut.</value>
+    <value>Zum Wiederholen der Berechnung gibt es 3 Alternativen: 
+Entweder die Ausführung stoppen und wieder starten, eine der Eingaben ändern oder auf den Button "Neustart" klicken. Dann startet die Berechnung automatisch neu.</value>
   </data>
   <data name="PresIntroductionPart1Text" xml:space="preserve">
     <value>Die Funktion KPF SHAKE256 ist eine Schlüsselgenerierungs-
-funktion (KDF). Als Pseudozufallsfunktion (PRF) wird eine Hashfunktion mit Schlüssel verwendet. Dieser wird als Prefix vor die Eingabe gehangen. Als Hashfunktion wird der SHAKE256 verwendet. Diese Hashfunktion ist Teil der SHA-3 Familie. Die Besonderheit dieser Funktion ist, dass die Länge der Ausgabe per Parameter gewählt werden kann. Dies macht es besonders einfach, beliebig lange Schlüssel zu generieren. 
+funktion (Key Derivation Function, KDF). Als Pseudozufallsfunktion (Pseudorandom Function, PRF) wird eine Hashfunktion mit Schlüssel verwendet. Dieser Schlüssel wird als Präfix vor die Eingabe gehangen. Als Hashfunktion wird der SHAKE256 verwendet. Diese Hashfunktion ist Teil der SHA-3 Familie. Die Besonderheit dieser Funktion ist, dass die Länge der Ausgabe per Parameter gewählt werden kann. Dies macht es besonders einfach, beliebig lange Schlüssel zu generieren. 
 
 Die SHA-3 Familie kann in der Vorlage Keccak-Hash betrachtet werden.</value>
   </data>
@@ -258,5 +259,17 @@ Die SHA-3 Familie kann in der Vorlage Keccak-Hash betrachtet werden.</value>
   </data>
   <data name="PresIntroductionSectionHeadingNum" xml:space="preserve">
     <value>1. Einführung</value>
+  </data>
+  <data name="TooMuchOutputRequestedLogMSG" xml:space="preserve">
+    <value>Die größte Menge an Ausgabebytes sind 5 MB (5242880 byte). Die angeforderte Menge von {0} byte wurde auf das Maximum gesetzt.</value>
+  </data>
+  <data name="PresRestart" xml:space="preserve">
+    <value>Neustart</value>
+  </data>
+  <data name="PresStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="PresStepText" xml:space="preserve">
+    <value>{0}/{1}</value>
   </data>
 </root>

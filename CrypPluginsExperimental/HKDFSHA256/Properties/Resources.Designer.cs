@@ -291,7 +291,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The HKDF procedure consists of two steps. In the first step, a pseudo random key (prk) is generated. It is calculated on the basis of the SKM and an optional salt. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The HKDF procedure consists of two steps. In the first step, a pseudo random key (PRK) is generated. It is calculated on the basis of the SKM and an optional salt. ähnelt.
         /// </summary>
         internal static string PresConstructionPart2Text {
             get {
@@ -300,7 +300,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the hmac. The km is calculated step by step. The hkdf method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremendet in each step. The input ctxinfo is an application-specific constant, which can also be empty. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die In step 2, the key material is calculated. For this purpose, the prk from step 1 is used as a secret key for the hmac. The KM is calculated step by step. The HKDF method uses a feedback loop and a counter for this purpose: The respective precalculated value is used as input for the subsequent calculation. The counter is incremendet in each step. The input CTXinfo is an application-specific constant, which can also be empty. ähnelt.
         /// </summary>
         internal static string PresConstructionPart3Text {
             get {
@@ -371,7 +371,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Calculation finished ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 4. Calculation finished ähnelt.
         /// </summary>
         internal static string PresFinishedSectionHeading {
             get {
@@ -380,7 +380,8 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, either stop the execution and start it again or change one of the inputs. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To repeat the calculation, there are 3 alternatives:
+        ///Either stop the execution and start it again, change one of the inputs or click on the &quot;Restart&quot; button. Then the calculation will restart automatically. ähnelt.
         /// </summary>
         internal static string PresFinishedText {
             get {
@@ -389,7 +390,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Skip intro ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Skip chapter ähnelt.
         /// </summary>
         internal static string PresIntro {
             get {
@@ -398,7 +399,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The function HKDF SHA-256 is a key derivation function. It uses the Keyed-Hash Message Authentication Code (HMAC) as a pseudorandom function (prf). As inputs it gets the skm and the secret key. In this implementation, the SHA-256 is used in the HMAC. This key derivation fuction is recommended by the National Institute of Standards and Technology (nist). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The function HKDF SHA-256 is a key derivation function (KDF). It uses the Keyed-Hash Message Authentication Code (HMAC) as a pseudorandom function (PRF). As inputs it gets the SKM and the secret key. In this implementation, the SHA-256 is used in the HMAC. This key derivation fuction is recommended by the National Institute of Standards and Technology (NIST). ähnelt.
         /// </summary>
         internal static string PresIntroductionPart1Text {
             get {
@@ -425,7 +426,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Step 1: Calculation of prk with following inputs:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Step 1: Calculation of PRK with following inputs:
         ///
         ///SKM: {0} 
         ///Salt: {1} ähnelt.
@@ -492,7 +493,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of prk:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of PRK:
         ///
         ///Byte 1 - 8: {1}
         ///Byte 9 - 16: {2}
@@ -506,21 +507,48 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Restart ähnelt.
+        /// </summary>
+        internal static string PresRestart {
+            get {
+                return ResourceManager.GetString("PresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die &lt;Bold&gt;Inputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the Source Key Material (skm).
+        ///&lt;Bold&gt;Source Key Material:&lt;/Bold&gt; Specifies the source key material (SKM)
         ///
-        ///&lt;Bold&gt;Salt:&lt;/Bold&gt; Specifies the salt for the calculation of the pseudorandom key (prk). Does not have to be secret.
+        ///&lt;Bold&gt;Salt:&lt;/Bold&gt; Specifies the salt value for the calculation of the pseudorandom key (PRK). Does not have to be secret.
         ///
-        ///&lt;Bold&gt;CTXInfo:&lt;/Bold&gt; Specifies the applicationspecific constant CTXInfo. Can also be empty.
+        ///&lt;Bold&gt;Context Information:&lt;/Bold&gt; Specifies the applicationspecific constant context information (CTXInfo). Can be empty.
         ///
-        ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material (km) in byte.
+        ///&lt;Bold&gt;Length of the key material (in byte):&lt;/Bold&gt; Specifies the length of the key material in byte.
         ///
         ///&lt;Bold&gt;Outputs:&lt;/Bold&gt;
-        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After the calculation, the result is  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///&lt;Bold&gt;Key Material:&lt;/Bold&gt; After th [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string PresSectionIntroductionText {
             get {
                 return ResourceManager.GetString("PresSectionIntroductionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Start ähnelt.
+        /// </summary>
+        internal static string PresStart {
+            get {
+                return ResourceManager.GetString("PresStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {0}/{1} ähnelt.
+        /// </summary>
+        internal static string PresStepText {
+            get {
+                return ResourceManager.GetString("PresStepText", resourceCulture);
             }
         }
         
@@ -535,7 +563,7 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output of prk:
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of PRK:
         ///
         ///Byte 1 - 8:   {1}
         ///Byte 9 - 16:  {2}
@@ -563,6 +591,24 @@ namespace HKDFSHA256.Properties {
         internal static string SaveFileDialogTooltip {
             get {
                 return ResourceManager.GetString("SaveFileDialogTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum amout of outputbytes are 8160 in case of implementation refered to  RFC 5869 . The requested amout of {0} byte was set to the maximum. ähnelt.
+        /// </summary>
+        internal static string TooMuchOutputRequestedLogForKPFStd {
+            get {
+                return ResourceManager.GetString("TooMuchOutputRequestedLogForKPFStd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The maximum amount of output are 5 MB 5242880 byte). The requested amount of  {0} byte was set to the maximum. ähnelt.
+        /// </summary>
+        internal static string TooMuchOutputRequestedLogMSG {
+            get {
+                return ResourceManager.GetString("TooMuchOutputRequestedLogMSG", resourceCulture);
             }
         }
     }

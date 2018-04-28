@@ -6,42 +6,42 @@
   <language culture="de-DE"/>
 
   <introduction lang="en">   
-		The function HKDF SHA-256 is a key generation function (kdf). The method uses the keyed hash message authentication codes (hmac) as a pseudorandom function (prf). The key to be generated is generated in 2 steps. Step 1 generates a pseudorandom key (prk). Step 2 successively generates the key by repeating the hmac. The hkdf method uses an 8-bit counter, which limits the key length to be generated (255 * hash length, the counter in step 2 starts at 1). In the configuration of the plug-in, you can choose between the standardized variant (with 8-bit counter) and a variant with 32-bit counter. The 32-bit variant can generate much longer outputs.  
+		The function HKDF SHA-256 is a key generation function (KDF). The method uses the keyed hash message authentication codes (HMAC) as a pseudorandom function (PRF). The key to be generated is generated in 2 steps. Step 1 generates a pseudorandom key (prk). Step 2 successively generates the key by repeating the HMAC. The hkdf method uses an 8-bit counter, which limits the key length to be generated (255 * hash length, the counter in step 2 starts at 1). In the configuration of the plug-in, you can choose between the standardized variant (with 8-bit counter) and a variant with 32-bit counter. The 32-bit variant can generate much longer outputs.  
   	  	<section headline="Inputs and outputs">
 	  	<list>
 			<item><b>Source Key Material:</b> Specifies the source key material. It is used for the calculation of the prk.</item>
-			<item><b>Salt:</b> The salt is used for the calculation of the prk as key in the hmac. It can be an empty string.</item>
-			<item><b>CTXInfo:</b> CTXInfo is a application specific constant. It can be an empty string.</item>
+			<item><b>Salt:</b> The salt is used for the calculation of the prk as key in the HMAC. It can be an empty string.</item>
+			<item><b>Context Information:</b> It is a application specific constant (CTXInfo). It can be an empty string.</item>
 			<item><b>Length of the key material (in Byte):</b> Specifies the length of the output key material.</item>
 			<item><b>Key Material</b>: After the calculation, the generated key material is visible in this textfield.</item>
 			<item><b>Calculationsteps:</b> The intermediate steps of the calculation are displayed in this textfield.</item>
 		</list>	
 	  </section>
 	  <section headline="Basics and background">
-		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a kdf, you can generate keys with pseudorandom characters. An integral part of a kdf is a pseudorandom function (prf). These functions are often based on hashfunctions or stream ciphers. <newline /> A prf generates strings with pseudorandom chars. Frequently, hashfunctions were used as prf. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a prf.
+		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a KDF, you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
 	  </section>
 	  <section headline="Traditional approach of a PRF" >
-		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed prf can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
+		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
 	  <section headline="Modern approach of a PRF">
-	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (hmac), if the used hash function is based on the Merkle-Damgård construction. The hmac is not vulnerable to the extension attack. The hkdf function is hmac based kdf. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
+	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The hkdf function is HMAC based KDF. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
 	  </section>
 	  <section headline="Extension of the output">
-	  The length of the output is limited to a fixed size. To extend the length, the used prf must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs.
+	  The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct KDFs.
 	  </section>
 	  <section headline="SHA-3">
-	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional prf approach) and do not require any auxiliary operation modes to achieve any output length. 
+	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional PRF approach) and do not require any auxiliary operation modes to achieve any output length. 
 	  </section> 
   </introduction>
 
   <introduction lang="de-DE">
-     Die Funktion HKDF SHA-256 ist eine Schlüsselgenerierungsfunktion (KDF). Das Verfahren verwendet als Pseudozufallsfunktion (PRF) den Keyed-Hash Message Authentication Codes (HMAC). Der zu generierende Schlüssel wird in 2 Schritten generiert. Schritt 1 generiert einen Pseudozufallsschlüssel (PRK). Schritt 2 erzeugt sukzessive den Schlüssel durch wiederholte Ausführung des HMAC. Das HKDF-Verfahren verwendet einen 8 Bit Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (255 * Hashlänge, der Zähler in Schritt 2 beginnt bei 1 zu zählen). In der Konfiguration des PlugIn kann zwischen der standardisierten Variante (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit Variante lassen sich wesentlich längere Ausgaben erzeugen.
+     Die Funktion HKDF SHA-256 ist eine Schlüsselgenerierungsfunktion (Key Derivation Function, KDF). Das Verfahren verwendet als Pseudozufallsfunktion (Pseudorandom Function, PRF) den Keyed-Hash Message Authentication Codes (HMAC). Der zu generierende Schlüssel wird in 2 Schritten generiert. Schritt 1 generiert einen Pseudozufallsschlüssel (PRK). Schritt 2 erzeugt sukzessive den Schlüssel durch wiederholte Ausführung des HMAC. Das HKDF-Verfahren verwendet einen 8 Bit Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (255 * Hashlänge, der Zähler in Schritt 2 beginnt bei 1 zu zählen). In der Konfiguration des PlugIn kann zwischen der standardisierten Variante (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit Variante lassen sich wesentlich längere Ausgaben erzeugen.
         <section headline="Eingaben und Ausgaben">
 	<list>
-		<item><b>Quellschlüsselmaterial:</b> Spezifiziert das Quellschlüsselmaterial. Dieses wird zur generierung des PRK verwendet.</item>
-		<item><b>Salt:</b> Salt wird bei der generierung des PRK als Schlüssel im HMAC verwendet. Kann leer sein.</item>
-		<item><b>CTXInfo:</b> Ist eine anwendungsspezifische Konstante. Kann leer sein.</item>
+		<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur generierung des Pseudo-Zufallsschlüssel (Pseudorandom Key, PRK) verwendet.</item>
+		<item><b>Salt:</b> Salt wird bei der generierung des PRK als Schlüssel verwendet. Kann leer sein.</item>
+		<item><b>Kontext-Information:</b> Ist eine anwendungsspezifische Konstante CTXInfo (Context Information, CTXInfo). Kann leer sein.</item>
 		<item><b>Länge des zu generierenden Schlüssel (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterial.</item>
-		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial in diesem Textfeld zu sehen.</item>
+		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item>
 		<item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item>
 	</list>	
 	</section>	
@@ -66,7 +66,7 @@
   
   <usage lang="en">
 	The usable in- and outputs will be explained in the presentationview of the component.
-  </usage>
+r  </usage>
 
   <usage lang="de-DE">
 	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentationsansicht der Komponente erklärt.

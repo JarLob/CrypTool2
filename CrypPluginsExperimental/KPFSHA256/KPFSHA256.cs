@@ -22,6 +22,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
+using System.Numerics;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using KPFSHA256.Properties;
@@ -31,20 +32,21 @@ namespace Cryptool.Plugins.KPFSHA256
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
     [PluginInfo("KPFSHA256.Properties.Resources", "PluginCaption", "KPFSHA256Tooltip", "KPFSHA256/userdoc.xml", new[] { "KPFSHA256/images/icon.png" })]
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.HashFunctions)]
     public class KPFSHA256 : ICrypComponent
     {
         #region Private Variables
 
         private readonly KPFSHA256Settings settings = new KPFSHA256Settings();
         private KPFSHA256Pres pres = new KPFSHA256Pres();
-        private string _skm;
-        private string _key;
-        private int _outputBytes;
-        private string _keyMaterial;
-        private string _keyMaterialDebug;
+        private byte[] _skm;
+        private byte[] _key;
+        private BigInteger _outputBytes;
+        private byte[] _keyMaterial;
+        private byte[] _keyMaterialDebug;
         private Thread workerThread;
-        private double prgs_val = 0.8;
+        private int stepsToGo = 0;
+        private int curStep = 0;
 
         #endregion
 
@@ -59,7 +61,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// <param name="show"></param>
         /// <param name="buttonEvent"></param>
         /// <returns></returns>
-        private byte[] computeKPFSHA256_IntCTR(byte[] msg, byte[] key, int outputBytes, bool show, AutoResetEvent buttonEvent)
+        private byte[] computeKPFSHA256_IntCTR(byte[] msg, byte[] key, int outputBytes, bool show, AutoResetEvent buttonEvent, ref double curVal, double incVal)
         {
             //hash object
             Sha256Digest sha256 = new Sha256Digest();
@@ -87,9 +89,6 @@ namespace Cryptool.Plugins.KPFSHA256
             byte[] result = new byte[outputBytes];
             //output array for temp output for debug in the ui
             byte[] tmp_result = new byte[sha256.GetDigestSize()];
-            //var for progess
-            double prgs_step = prgs_val / N;
-            double prgs_Curval = 0.1;
 
             //prepare input array
             System.Buffer.BlockCopy(key, 0, input, 0, key.Length);
@@ -97,8 +96,6 @@ namespace Cryptool.Plugins.KPFSHA256
 
             for (int i = 0; i < N; i++, CTR++)
             {
-                ProgressChanged(prgs_Curval, 1);
-                prgs_Curval += prgs_step;
                 //sets the counter
                 System.Buffer.BlockCopy(BitConverter.GetBytes(CTR), 0, input, key.Length, sizeof(int));
                 //update internal hash state
@@ -128,42 +125,86 @@ namespace Cryptool.Plugins.KPFSHA256
                     }
                 }
 
-                _keyMaterialDebug = strBuilderDebug.ToString();
+                //_keyMaterialDebug = strBuilderDebug.ToString();
+                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString());
                 OnPropertyChanged("KeyMaterialDebug");
 
-                if (show && !pres.SkipIntro && !(i == (N - 1)))
+                if (show && !pres.SkipChapter && !(i == (N - 1)))
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
+                        /*
                         pres.txtIterationRounds.Text = "";
                         pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
                             .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
                         pres.txtIterationDebugOutput.Text = strBuilderPres.ToString();
+                        */
+
+                        Paragraph p = new Paragraph();
+                        p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
+                            .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationRounds.Document.Blocks.Clear();
+                        pres.txtIterationRounds.Document.Blocks.Add(p);
+
+                        p = new Paragraph();
+                        p.Inlines.Add(new Run(strBuilderPres.ToString()));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationDebugOutput.Document.Blocks.Clear();
+                        pres.txtIterationDebugOutput.Document.Blocks.Add(p);
+
                     }, null);
 
                     buttonEvent = pres.buttonNextClickedEvent;
                     buttonEvent.WaitOne();
 
                 }
-                else if (show && !pres.SkipIntro && !(i == N))
+                else if (show && !pres.SkipChapter && !(i == N))
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
+                        /*
                         pres.txtIterationRounds.Text = "";
                         pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
                             .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
                         pres.txtIterationDebugOutput.Text = strBuilderPres.ToString();
+                        */
+
+                        Paragraph p = new Paragraph();
+                        p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
+                            .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationRounds.Document.Blocks.Clear();
+                        pres.txtIterationRounds.Document.Blocks.Add(p);
+
+                        p = new Paragraph();
+                        p.Inlines.Add(new Run(strBuilderPres.ToString()));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationDebugOutput.Document.Blocks.Clear();
+                        pres.txtIterationDebugOutput.Document.Blocks.Add(p);
+
                     }, null);
                 }
 
-                if (pres.SkipIntro)
+                if (pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
                         pres.imgIteration.Visibility = Visibility.Hidden;
+                        pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                        pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+
                     }, null);
                 }
                 //ENDIF DEBUG
+
+                if (!(i == (N - 1)))
+                {
+                    curVal += incVal;
+                    ProgressChanged(curVal, 1);
+                    curStep++;
+                    refreshStepState();
+                }
             }
 
             //truncated output
@@ -183,7 +224,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// <param name="key"></param>
         /// <param name="outputBytes"></param>
         /// <returns>
-        private byte[] computeKPFSHA256_8BitCTR(byte[] msg, byte[] key, int outputBytes, bool show, AutoResetEvent buttonEvent)
+        private byte[] computeKPFSHA256_8BitCTR(byte[] msg, byte[] key, int outputBytes, bool show, AutoResetEvent buttonEvent, ref double curVal, double incVal)
         {
             //hash object
             Sha256Digest sha256 = new Sha256Digest();
@@ -199,9 +240,6 @@ namespace Cryptool.Plugins.KPFSHA256
             byte[] result = new byte[outputBytes];
             //output array for temp output for debug in the ui
             byte[] tmp_result = new byte[sha256.GetDigestSize()];
-            //var for progess
-            double prgs_step = prgs_val / N;
-            double prgs_Curval = 0.1;
 
             //prepare input array
             System.Buffer.BlockCopy(key, 0, input, 0, key.Length);
@@ -214,9 +252,7 @@ namespace Cryptool.Plugins.KPFSHA256
 
             for (int i = 0; i < N; i++, CTR++)
             {
-                ProgressChanged(prgs_Curval, 1);
-                prgs_Curval += prgs_step;
-                //sets the counter
+                 //sets the counter
                 input[key.Length] = CTR;
                 //update internal hash state
                 sha256.BlockUpdate(input, 0, input.Length);
@@ -245,41 +281,86 @@ namespace Cryptool.Plugins.KPFSHA256
                     }
                 }
 
-                _keyMaterialDebug = strBuilderDebug.ToString();
+                //__keyMaterialDebug = strBuilderDebug.ToString();
+                _keyMaterialDebug = Encoding.UTF8.GetBytes(strBuilderDebug.ToString());
                 OnPropertyChanged("KeyMaterialDebug");
 
-                if (show && !pres.SkipIntro && !(i == (N-1)))
+                if (show && !pres.SkipChapter && !(i == (N-1)))
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
+                        /*
                         pres.txtIterationRounds.Text = "";
                         pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i+1).ToString()).Replace("{1}", N.ToString())
                             .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i+1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
                         pres.txtIterationDebugOutput.Text = strBuilderPres.ToString();
+                        */
+
+                        Paragraph p = new Paragraph();
+                        p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
+                            .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationRounds.Document.Blocks.Clear();
+                        pres.txtIterationRounds.Document.Blocks.Add(p);
+
+                        p = new Paragraph();
+                        p.Inlines.Add(new Run(strBuilderPres.ToString()));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationDebugOutput.Document.Blocks.Clear();
+                        pres.txtIterationDebugOutput.Document.Blocks.Add(p);
+
                     }, null);
 
                     buttonEvent = pres.buttonNextClickedEvent;
                     buttonEvent.WaitOne();
 
-                }else if (show && !pres.SkipIntro && !(i == N))
+                }
+                else if (show && !pres.SkipChapter && !(i == N))
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
+                        /*
                         pres.txtIterationRounds.Text = "";
                         pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
                             .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
                         pres.txtIterationDebugOutput.Text = strBuilderPres.ToString();
+                        */
+
+                        Paragraph p = new Paragraph();
+                        p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString())
+                            .Replace("{2}", System.Text.Encoding.UTF8.GetString(msg)).Replace("{3}", (i + 1).ToString()).Replace("{4}", System.Text.Encoding.UTF8.GetString(key))));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationRounds.Document.Blocks.Clear();
+                        pres.txtIterationRounds.Document.Blocks.Add(p);
+
+                        p = new Paragraph();
+                        p.Inlines.Add(new Run(strBuilderPres.ToString()));
+                        p.TextAlignment = TextAlignment.Left;
+                        pres.txtIterationDebugOutput.Document.Blocks.Clear();
+                        pres.txtIterationDebugOutput.Document.Blocks.Add(p);
+
                     }, null);
+
                 }
 
-                if (pres.SkipIntro)
+                if (pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
                         pres.imgIteration.Visibility = Visibility.Hidden;
+                        pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                        pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+
                     }, null);
                 }
                 //ENDIF DEBUG
+
+                if(!(i == (N - 1))){
+                    curVal += incVal;
+                    ProgressChanged(curVal, 1);
+                    curStep++;
+                    refreshStepState();
+                }
             }
 
             //truncat output
@@ -290,22 +371,89 @@ namespace Cryptool.Plugins.KPFSHA256
         }
 
         /// <summary>
+        /// Method for refreshing the stepcounter in the presentation
+        /// </summary>
+        private void refreshStepState()
+        {
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                Paragraph p = new Paragraph();
+
+                //headline of lblExplanationSectionHeading
+                p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
+                p.TextAlignment = TextAlignment.Right;
+                pres.txtStep.Document.Blocks.Add(p);
+                pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
+            }, null);
+        }
+        
+        /// <summary>
         /// the method to be called in the workerthread
         /// </summary>
         private void tExecute()
         {
+            //Label for restart
+            Restart:
+
             //Progessbar adjusting
             ProgressChanged(0, 1);
-        
-            //clean up last round
+
+            //Clean up outputs
+            _keyMaterial = Encoding.UTF8.GetBytes("");
+            OnPropertyChanged("KeyMaterial");
+
+            _keyMaterialDebug = Encoding.UTF8.GetBytes("");
+            OnPropertyChanged("KeyMaterialDebug");
+
+            //clean steps
+            curStep = 0;
+
+            //Check for output length: max 5.242.880 byte = 5 Mb
+            if (!settings.InfinityOutput && OutputBytes > 5242880)
+            {
+                GuiLogMessage(Resources.TooMuchOutputRequestedLogMSG.Replace("{0}", OutputBytes.ToString()), NotificationLevel.Warning);
+                OutputBytes = 5242880;
+                OnPropertyChanged("OutputBytes");
+            }
+            if(settings.InfinityOutput && OutputBytes > 255 * (new Sha256Digest()).GetDigestSize()){
+                GuiLogMessage(Resources.TooMuchOutputRequestedLogForKPFStd.Replace("{0}", OutputBytes.ToString()), NotificationLevel.Warning);
+                OutputBytes = 8160;
+                OnPropertyChanged("OutputBytes");
+            }
+                
+            //eight steps takes the presentation
+            double steps = (Math.Ceiling(Convert.ToDouble((int)OutputBytes) / (new Sha256Digest()).GetDigestSize())) + 8;
+            stepsToGo = (int)steps;
+            double prgress_step = ((double)1) / steps;
+            double val = 0;
+
+            refreshStepState();
+
+            //Event for start
+            AutoResetEvent buttonStartClickedEvent = pres.buttonStartClickedEvent;
+            buttonStartClickedEvent = pres.buttonStartClickedEvent;
+            buttonStartClickedEvent.Reset();
+
+            //clean up for starting
             pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
             {
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.buttonStart.IsEnabled = true;
+                pres.buttonRestart.IsEnabled = false;
+
                 //Remarks to the inputs and outputs
-                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Visible;
+                pres.txtExplanationSectionText.Visibility = Visibility.Visible;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtFinished.Visibility = Visibility.Hidden;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
 
                 //Title of Presentation
-                pres.lblTitleHeading.Visibility = Visibility.Visible;
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
 
                 //Introduction
                 pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
@@ -323,16 +471,15 @@ namespace Cryptool.Plugins.KPFSHA256
 
                 //Iterationphase
                 pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblIterationHeading.Visibility = Visibility.Hidden;
                 pres.imgIteration.Visibility = Visibility.Hidden;
+                pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                pres.lblIterationHeading.Visibility = Visibility.Hidden;
                 pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
 
                 //Calculation finished
-                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblIterationHeading.Visibility = Visibility.Hidden;
-                pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
 
-                //Last 
+                //Last
                 pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
                 pres.txtFinished.Visibility = Visibility.Hidden;
 
@@ -340,19 +487,16 @@ namespace Cryptool.Plugins.KPFSHA256
                 pres.txtError.Visibility = Visibility.Hidden;
 
                 //Buttons
-                pres.spButtons.Visibility = Visibility.Visible;
+                pres.spButtons.Visibility = Visibility.Hidden;
                 pres.buttonSkipIntro.IsEnabled = false;
                 pres.buttonSkipCalc.IsEnabled = false;
                 pres.buttonNext.IsEnabled = false;
-                pres.SkipIntro = false;
+                pres.SkipChapter = false;
+
             }, null);
 
-            //Clean up outputs
-            _keyMaterial = "";
-            OnPropertyChanged("KeyMaterial");
-
-            _keyMaterialDebug = "";
-            OnPropertyChanged("KeyMaterialDebug");
+            buttonStartClickedEvent = pres.buttonStartClickedEvent;
+            buttonStartClickedEvent.WaitOne();
 
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
             buttonNextClickedEvent = pres.buttonNextClickedEvent;
@@ -361,7 +505,61 @@ namespace Cryptool.Plugins.KPFSHA256
             //Check if presentation shall be displayed
             if (settings.DisplayPres)
             {
-                if (!pres.SkipIntro)
+                //Clean up last round
+                pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    //Remarks to the inputs and outputs
+                    pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+
+                    //Title of Presentation
+                    pres.lblTitleHeading.Visibility = Visibility.Visible;
+
+                    //Introduction
+                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                    //Construction
+                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                    pres.imgConstructionKPFSHA256.Visibility = Visibility.Hidden;
+
+                    //Iterationphase
+                    pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblIterationHeading.Visibility = Visibility.Hidden;
+                    pres.imgIteration.Visibility = Visibility.Hidden;
+                    pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+
+                    //Calculation finished
+                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblIterationHeading.Visibility = Visibility.Hidden;
+                    pres.txtIterationRounds.Visibility = Visibility.Hidden;
+
+                    //Last 
+                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtFinished.Visibility = Visibility.Hidden;
+
+                    //Error
+                    pres.txtError.Visibility = Visibility.Hidden;
+
+                    //Buttons
+                    pres.spStartRestartButtons.Visibility = Visibility.Hidden;
+                    pres.buttonStart.IsEnabled = false;
+                    pres.buttonRestart.IsEnabled = false;
+                    pres.spButtons.Visibility = Visibility.Visible;
+                    pres.buttonSkipIntro.IsEnabled = false;
+                    pres.buttonSkipCalc.IsEnabled = false;
+                    pres.buttonNext.IsEnabled = false;
+                    pres.SkipChapter = false;
+
+                }, null);
+
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -375,8 +573,15 @@ namespace Cryptool.Plugins.KPFSHA256
 
                 }
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
+                pres.SkipChapter = false;
+
                 //Block: Introduction section heading  
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -389,11 +594,17 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Introduction section
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
+                        pres.lblTitleHeading.Visibility = Visibility.Hidden;
                         pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
                         pres.lblIntroductionHeading.Visibility = Visibility.Visible;
                         pres.txtIntroductionText.Visibility = Visibility.Visible;
@@ -404,12 +615,23 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                
+
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
+                pres.SkipChapter = false;
+
                 //Block: Construction section heading
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
+                        pres.lblTitleHeading.Visibility = Visibility.Hidden;
                         pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                        pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
                         pres.txtIntroductionText.Visibility = Visibility.Hidden;
                         pres.lblConstructionSectionHeading.Visibility = Visibility.Visible;
 
@@ -419,8 +641,13 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Construction section part 1
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -435,8 +662,13 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Construction section part 2
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -453,8 +685,13 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Construction section part 3
-                if (!pres.SkipIntro)
+                if (!pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -473,11 +710,18 @@ namespace Cryptool.Plugins.KPFSHA256
                     buttonNextClickedEvent.WaitOne();
                 }
 
+                pres.SkipChapter = false;
+
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Iteration section heading  
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
 
-                    pres.SkipIntro = false;
+                    pres.SkipChapter = false;
 
                     //Title of Presentation
                     pres.lblTitleHeading.Visibility = Visibility.Hidden;
@@ -510,6 +754,11 @@ namespace Cryptool.Plugins.KPFSHA256
                 buttonNextClickedEvent = pres.buttonNextClickedEvent;
                 buttonNextClickedEvent.WaitOne();
 
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //Block: Iteration section 
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                 {
@@ -523,21 +772,27 @@ namespace Cryptool.Plugins.KPFSHA256
                 }, null);
 
             }
+            else
+            {
+                val += (prgress_step * 8);
+                ProgressChanged(val, 1);
+                curStep = 8;
+                refreshStepState();
+            }
 
             //Convert inputstrings into byte arrays
-            byte[] skm = Encoding.UTF8.GetBytes(_skm);
-            byte[] key = Encoding.UTF8.GetBytes(_key);
+            //byte[] skm = Encoding.UTF8.GetBytes(_skm);
+            //byte[] key = Encoding.UTF8.GetBytes(_key);
             try
             {
-                ProgressChanged(0.1, 1);
                 byte[] result;
                 if (settings.InfinityOutput)
                 {
-                    result = computeKPFSHA256_8BitCTR(skm, key, _outputBytes, settings.DisplayPres, buttonNextClickedEvent);
+                    result = computeKPFSHA256_8BitCTR(_skm, _key, (int)_outputBytes, settings.DisplayPres, buttonNextClickedEvent, ref val, prgress_step);
                 }
                 else
                 {
-                    result = computeKPFSHA256_IntCTR(skm, key, _outputBytes, settings.DisplayPres, buttonNextClickedEvent);
+                    result = computeKPFSHA256_IntCTR(_skm, _key, (int)_outputBytes, settings.DisplayPres, buttonNextClickedEvent, ref val, prgress_step);
                 }
 
                 if (result == null)
@@ -562,13 +817,19 @@ namespace Cryptool.Plugins.KPFSHA256
                     file.Close();
                 }
 
-                if (!pres.SkipIntro && settings.DisplayPres)
+                if (!pres.SkipChapter && settings.DisplayPres)
                 {
                     buttonNextClickedEvent = pres.buttonNextClickedEvent;
                     buttonNextClickedEvent.WaitOne();
                 }
 
-                _keyMaterial = BitConverter.ToString(result).Replace("-", "");
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
+                //_keyMaterial = Encoding.UTF8.GetBytes(BitConverter.ToString(result).Replace("-", ""));
+                _keyMaterial = result;
                 OnPropertyChanged("KeyMaterial");
             }
             //in case of too long outputs specified
@@ -601,6 +862,7 @@ namespace Cryptool.Plugins.KPFSHA256
                 return;
             }
 
+            /*
             if (settings.DisplayPres)
             {
                 pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -615,9 +877,85 @@ namespace Cryptool.Plugins.KPFSHA256
                     pres.imgIteration.Visibility = Visibility.Hidden;
                 }, null);
             }
+            */
+
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+
+                //Remarks to the inputs and outputs
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.imgConstructionKPFSHA256.Visibility = Visibility.Hidden;
+
+                //Iterationphase
+                pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
+                pres.imgIteration.Visibility = Visibility.Hidden;
+                pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                pres.lblIterationHeading.Visibility = Visibility.Hidden;
+                pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
+                pres.txtFinished.Visibility = Visibility.Visible;
+
+                //Error
+                pres.txtError.Visibility = Visibility.Hidden;
+
+                //Buttons
+                pres.spStartRestartButtons.Visibility = Visibility.Hidden;
+                pres.buttonStart.IsEnabled = false;
+                pres.buttonRestart.IsEnabled = false;
+                pres.spButtons.Visibility = Visibility.Visible;
+                pres.buttonSkipIntro.IsEnabled = false;
+                pres.buttonSkipCalc.IsEnabled = false;
+                pres.buttonNext.IsEnabled = false;
+                pres.SkipChapter = false;
+
+            }, null);
 
             //Progessbar adjusting
-            ProgressChanged(1, 1);
+            //ProgressChanged(1, 1);
+            // curStep++;
+            // refreshStepState();
+
+            //show elements for restart the system
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.buttonStart.IsEnabled = false;
+                pres.buttonRestart.IsEnabled = true;
+
+                pres.spButtons.Visibility = Visibility.Hidden;
+            }, null);
+
+            AutoResetEvent buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+            buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+            buttonRestartClickedEvent.Reset();
+
+            buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+            buttonRestartClickedEvent.WaitOne();
+
+            if (pres.Restart)
+            {
+                goto Restart;
+            }
+
         }
 
         #endregion
@@ -628,7 +966,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// Input for source key material
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputSKMCaption", "InputSKMToolTip", true)]
-        public string SKM
+        public byte[] SKM
         {
             get
             {
@@ -644,7 +982,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// Input for the key
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyToolTip", true)]
-        public string Key
+        public byte[] Key
         {
             get
             {
@@ -660,7 +998,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// Input for outputlength
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputOutputLengthCaption", "InputOutputLengthToolTip", true)]
-        public int OutputBytes
+        public BigInteger OutputBytes
         {
             get
             {
@@ -676,7 +1014,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// Output for key material
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputKeyMaterialCaption", "OutputKeyMaterialToolTip")]
-        public string KeyMaterial
+        public byte[] KeyMaterial
         {
             get
             {
@@ -692,7 +1030,7 @@ namespace Cryptool.Plugins.KPFSHA256
         /// Output for debug
         /// </summary>
         [PropertyInfo(Direction.OutputData, "OutputKeyMaterialDebugCaption", "OutputKeyMaterialDebugToolTip")]
-        public string KeyMaterialDebug
+        public byte[] KeyMaterialDebug
         {
             get
             {
@@ -831,7 +1169,13 @@ namespace Cryptool.Plugins.KPFSHA256
                 pres.buttonSkipIntro.IsEnabled = false;
                 pres.buttonSkipCalc.IsEnabled = false;
                 pres.buttonNext.IsEnabled = false;
-                pres.SkipIntro = false;
+                pres.SkipChapter = false;
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.buttonStart.IsEnabled = false;
+                pres.buttonRestart.IsEnabled = false;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Hidden;
 
             }, null);
         }
@@ -841,39 +1185,157 @@ namespace Cryptool.Plugins.KPFSHA256
         /// </summary>
         public void Initialize()
         {
+
+            refreshStepState();
+
+            Paragraph p = new Paragraph();
+
+            //headline of lblExplanationSectionHeading
+            p.Inlines.Add(new Run(Resources.PresExplanationSectionHeading));
+            pres.lblExplanationSectionHeading.Document.Blocks.Add(p);
+            pres.lblExplanationSectionHeading.Document.Blocks.Remove(pres.lblExplanationSectionHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblTitleHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresTitleHeading));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblTitleHeading.Document.Blocks.Add(p);
+            pres.lblTitleHeading.Document.Blocks.Remove(pres.lblTitleHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblIntroductionSectionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresIntroductionSectionHeadingNum));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblIntroductionSectionHeading.Document.Blocks.Add(p);
+            pres.lblIntroductionSectionHeading.Document.Blocks.Remove(pres.lblIntroductionSectionHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblIntroductionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresIntroductionSectionHeading));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblIntroductionHeading.Document.Blocks.Add(p);
+            pres.lblIntroductionHeading.Document.Blocks.Remove(pres.lblIntroductionHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblConstructionSectionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionSectionHeadingNum));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblConstructionSectionHeading.Document.Blocks.Add(p);
+            pres.lblConstructionSectionHeading.Document.Blocks.Remove(pres.lblConstructionSectionHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblConstructionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionSectionHeading));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblConstructionHeading.Document.Blocks.Add(p);
+            pres.lblConstructionHeading.Document.Blocks.Remove(pres.lblConstructionHeading.Document.Blocks.FirstBlock);
+
+            //text of txtConstructionText1
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionPart1Text));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtConstructionText1.Document.Blocks.Add(p);
+            pres.txtConstructionText1.Document.Blocks.Remove(pres.txtConstructionText1.Document.Blocks.FirstBlock);
+
+            //text of txtConstructionScheme
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionScheme));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtConstructionScheme.Document.Blocks.Add(p);
+            pres.txtConstructionScheme.Document.Blocks.Remove(pres.txtConstructionScheme.Document.Blocks.FirstBlock);
+
+            //text of txtConstructionText2
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionPart2Text));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtConstructionText2.Document.Blocks.Add(p);
+            pres.txtConstructionText2.Document.Blocks.Remove(pres.txtConstructionText2.Document.Blocks.FirstBlock);
+
+            //text of txtConstructionText3
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresConstructionPart3Text));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtConstructionText3.Document.Blocks.Add(p);
+            pres.txtConstructionText3.Document.Blocks.Remove(pres.txtConstructionText3.Document.Blocks.FirstBlock);
+
+            //headline of lblIterationSectionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresIterationSectionHeadingNum));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblIterationSectionHeading.Document.Blocks.Add(p);
+            pres.lblIterationSectionHeading.Document.Blocks.Remove(pres.lblIterationSectionHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblIterationHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresIterationSectionHeading));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblIterationHeading.Document.Blocks.Add(p);
+            pres.lblIterationHeading.Document.Blocks.Remove(pres.lblIterationHeading.Document.Blocks.FirstBlock);
+
+            //headline of lblFinishedSectionHeading
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresFinishedSectionHeading));
+            p.TextAlignment = TextAlignment.Center;
+            pres.lblFinishedSectionHeading.Document.Blocks.Add(p);
+            pres.lblFinishedSectionHeading.Document.Blocks.Remove(pres.lblFinishedSectionHeading.Document.Blocks.FirstBlock);
+
+            //text of txtFinished
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresFinishedText));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtFinished.Document.Blocks.Add(p);
+            pres.txtFinished.Document.Blocks.Remove(pres.txtFinished.Document.Blocks.FirstBlock);
+
+            //text of txtError
+            p = new Paragraph();
+            p.Inlines.Add(new Run(Resources.PresErrorText));
+            p.TextAlignment = TextAlignment.Left;
+            pres.txtError.Document.Blocks.Add(p);
+            pres.txtError.Document.Blocks.Remove(pres.txtError.Document.Blocks.FirstBlock);
+
             //for formatting the text 
             var parts = Resources.PresSectionIntroductionText.Split(new[] { "<Bold>", "</Bold>" }, StringSplitOptions.None);
-            bool isBold = false;
+            p = new Paragraph();
+            bool isBold = false; 
             foreach (var part in parts)
             {
                 if (isBold)
                 {
-                    pres.txtExplanationSectionText.Inlines.Add(new Bold(new Run(part)));
+                    //pres.txtExplanationSectionText.Inlines.Add(new Bold(new Run(part)));
+                    p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    pres.txtExplanationSectionText.Inlines.Add(new Run(part));
+                    //pres.txtExplanationSectionText.Inlines.Add(new Run(part));
+                    p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
             }
+            pres.txtExplanationSectionText.Document.Blocks.Add(p);
+            pres.txtExplanationSectionText.Document.Blocks.Remove(pres.txtExplanationSectionText.Document.Blocks.FirstBlock);
 
             //for formatting the text 
             parts = Resources.PresIntroductionPart1Text.Split(new[] { "<Bold>", "</Bold>" }, StringSplitOptions.None);
+            p = new Paragraph();
             isBold = false;
             foreach (var part in parts)
             {
                 if (isBold)
                 {
-                    pres.txtIntroductionText.Inlines.Add(new Bold(new Run(part)));
+                    //pres.txtIntroductionText.Inlines.Add(new Bold(new Run(part)));
+                    p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    pres.txtIntroductionText.Inlines.Add(new Run(part));
+                    //pres.txtIntroductionText.Inlines.Add(new Run(part));
+                    p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
             }
+            pres.txtIntroductionText.Document.Blocks.Add(p);
+            pres.txtIntroductionText.Document.Blocks.Remove(pres.txtIntroductionText.Document.Blocks.FirstBlock);
 
-            
+
         }
 
         /// <summary>
