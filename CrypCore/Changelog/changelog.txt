@@ -13,7 +13,8 @@ The CrypTool 2 Developer Team, April 2018
 
 Changelog:
 
-Hint: We updated CrypTool 2.1 to .NET Framework 4.7.1. So please download it before applying the update.
+We updated CrypTool 2.1 to .NET Framework 4.7.1. So please download the current .NET Framework before starting 
+the update (if you haven't got this Framework already with an update of Windows)
 Download Link: https://www.microsoft.com/net/download/dotnet-framework-runtime
 
 New components:
@@ -42,9 +43,8 @@ Other Components:
 - Audio input & output components
 - Huffman compression algorithm
 - Levenshtein distance
-
-We updated the monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
-Additionally, we integrated the CrypTool 2 book (English & German).
+- Monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
+- CrypTool 2 book (English & German).
 
 And:
 Many bugs fixed...
