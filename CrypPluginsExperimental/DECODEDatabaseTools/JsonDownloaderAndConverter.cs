@@ -25,13 +25,24 @@ using System.Threading.Tasks;
 
 namespace Cryptool.Plugins.DECODEDatabaseTools
 {
-    public class JsonDownloaderAndConverter
+    public class JsonDownloaderAndConverter : IDisposable
     {
         public const string DOWNLOAD_RECORDS_URL = "https://stp.lingfil.uu.se/decodedev/records";
         public const string DOWNLOAD_RECORD_URL = "https://stp.lingfil.uu.se/decodedev/records/";
 
+        public const string GETRECORDLIST = "GetRecordsList";
+        public const string GETRECORDSTRING = "GetRecordString";
+        public const string GETDATA = "GetData";        
+
+        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
+        public event DownloadStringCompletedEventHandler DownloadStringCompleted;
+        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
+
+        private MyWebClient WebClient = new MyWebClient();
+        private bool isDownloading = false;
+
         /// <summary>
-        /// Hack to override timeout
+        /// Inherited WebClient to change timeout
         /// </summary>
         private class MyWebClient : WebClient
         {
@@ -46,45 +57,88 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         }
 
         /// <summary>
+        /// Creates a new JsonDownloaderAndConverter
+        /// </summary>
+        public JsonDownloaderAndConverter()
+        {
+            WebClient.DownloadDataCompleted += WebClient_DownloadDataCompleted;
+            WebClient.DownloadStringCompleted += WebClient_DownloadStringCompleted;
+            WebClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+        }
+
+        /// <summary>
+        /// Called when the download progress of the webclient changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (DownloadProgressChanged != null)
+            {
+                DownloadProgressChanged.Invoke(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Called when the download of the webclient is completed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WebClient_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            lock (this)
+            {              
+                isDownloading = false;
+            }
+            if (DownloadStringCompleted != null)
+            {
+                DownloadStringCompleted.Invoke(this, e);
+            }
+        }
+
+        /// <summary>
+        /// Called when the download of the webclient is completed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WebClient_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs e)
+        {
+            lock (this)
+            {
+                isDownloading = false;
+            }
+            if (DownloadDataCompleted != null)
+            {
+                DownloadDataCompleted.Invoke(this, e);
+            }
+        }
+
+        /// <summary>
         /// Get the list of records of the DECODE database using the json protocol
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static List<RecordsRecord> GetRecordsList(string url)
+        public void GetRecordsList(string url)
         {
-            using (MyWebClient client = new MyWebClient())
+            lock (this)
             {
-                client.Headers.Add("Accept", "application/json");
-                client.Headers.Add("Accept", "text/plain");
-                
-                byte[] data;
-                try
+                if (isDownloading)
                 {
-                    data = client.DownloadData(url);
+                    return;
                 }
-                catch (Exception ex)
-                {
-                    throw new Exception(String.Format("Could not download records data from DECODE database: {0}", ex.Message), ex);
-                }
-                //dirty hack
-                string json = "{\"records\":{" + UTF8Encoding.UTF8.GetString(data) + "}";
-                data = UTF8Encoding.UTF8.GetBytes(json);
-                //end of dirty hack
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
-                using (MemoryStream stream = new MemoryStream(data))
-                {
-                    stream.Position = 0;
-                    try
-                    {
-                        Records records = (Records)serializer.ReadObject(stream);
-                        return records.records;
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(String.Format("Could not deserialize json data received from DECODE database: {0}", ex.Message), ex);
-                    }
-                }
+                isDownloading = true;
             }
+            try
+            {
+                WebClient.Headers.Add("Accept", "application/json");
+                WebClient.Headers.Add("Accept", "text/plain");
+                WebClient.DownloadDataAsync(new Uri(url), GETRECORDLIST);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("Error while downloading records data from DECODE database: {0}", ex.Message), ex);
+            }                
+            
         }
 
         /// <summary>
@@ -92,22 +146,26 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         /// <param name="record"></param>
         /// <returns></returns>
-        public static string GetRecordString(RecordsRecord record)
+        public void GetRecordString(RecordsRecord record)
         {
+            lock (this)
+            {
+                if (isDownloading)
+                {
+                    return;
+                }
+                isDownloading = true;
+            }
             try
             {
-                using (MyWebClient client = new MyWebClient())
-                {
-                    client.Headers.Add("Accept", "application/json");
-                    client.Headers.Add("Accept", "text/plain");
-                    string url = DOWNLOAD_RECORD_URL + "/" + record.id;
-                    byte[] data = client.DownloadData(url);
-                    return UTF8Encoding.UTF8.GetString(data);
-                }
+                WebClient.Headers.Add("Accept", "application/json");
+                WebClient.Headers.Add("Accept", "text/plain");
+                string url = DOWNLOAD_RECORD_URL + "/" + record.id;
+                WebClient.DownloadStringAsync(new Uri(url), "GetRecordString");
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Could not download record data from DECODE database: {0}", ex.Message), ex);
+                throw new Exception(String.Format("Error while downloading record data from DECODE database: {0}", ex.Message), ex);
             }
         }
 
@@ -116,7 +174,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static Record GetRecordFromString(string data)
+        public Record GetRecordFromString(string data)
         {
             try
             {
@@ -139,19 +197,32 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static byte[] GetData(string url)
+        public void GetData(string url)
         {
+            lock (this)
+            {
+                if (isDownloading)
+                {
+                    return;
+                }
+                isDownloading = true;
+            }
             try
             {
-                using (MyWebClient client = new MyWebClient())
-                {
-                    return client.DownloadData(url);
-                }
+                WebClient.DownloadDataAsync(new Uri(url), GETDATA);
             }
             catch (Exception ex)
             {
-                throw new Exception(String.Format("Could not download data from {0}: {1}", url, ex.Message), ex);
+                throw new Exception(String.Format("Error while downloading data from {0}: {1}", url, ex.Message), ex);
             }
+        }
+
+        /// <summary>
+        /// Disposes the internal webclient
+        /// </summary>
+        public void Dispose()
+        {
+            WebClient.Dispose();
         }
     }
 }

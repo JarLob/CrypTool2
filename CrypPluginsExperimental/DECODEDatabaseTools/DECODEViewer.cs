@@ -38,13 +38,22 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         #region Private Variables
         private DECODEViewerSettings settings;
         private DECODEViewerPresentation presentation;
+        private JsonDownloaderAndConverter documentDownloader;
+        private JsonDownloaderAndConverter imageDownloader;
         private bool running = false;
+        private bool isDocumentDownloading = false;
+        private bool isImageDownloading = false;
         #endregion
 
+        /// <summary>
+        /// Creats a new DECODE Viewer
+        /// </summary>
         public DECODEViewer()
         {
             settings = new DECODEViewerSettings();
             presentation = new DECODEViewerPresentation(this);
+            documentDownloader = new JsonDownloaderAndConverter();
+            imageDownloader = new JsonDownloaderAndConverter();
         }
 
         #region Data Properties
@@ -125,11 +134,12 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void Execute()
         {
+            running = true;
             ProgressChanged(0, 1);
             Record record;
             try
             {
-                record = JsonDownloaderAndConverter.GetRecordFromString(DECODERecord);
+                record = documentDownloader.GetRecordFromString(DECODERecord);
             }
             catch (Exception ex)
             {
@@ -191,6 +201,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// </summary>
         public void Dispose()
         {
+            documentDownloader.Dispose();
+            imageDownloader.Dispose();
         }
 
         #endregion
@@ -228,24 +240,69 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <param name="image"></param>
         internal void DownloadImage(DataObjects.Image image)
         {
+            if (!running)
+            {
+                return;
+            }
+            lock (this)
+            {
+                if (isImageDownloading || isDocumentDownloading)
+                {
+                    return;
+                }
+                isImageDownloading = true;
+            }
             try
             {
-                JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-                encoder.QualityLevel = 100;
-                using (MemoryStream stream = new MemoryStream())
+                OnPluginProgressChanged(this, new PluginProgressEventArgs(0, 1));
+                image.DownloadDataCompleted += image_DownloadDataCompleted;
+                image.DownloadProgressChanged += image_DownloadProgressChanged;
+                image.DownloadImage();
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Exception occured during downloading of image: {0}", ex.Message), NotificationLevel.Error);
+            }     
+        }
+
+        /// <summary>
+        /// Called, when image download progress changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void image_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
+        {
+            OnPluginProgressChanged(this, new PluginProgressEventArgs(args.BytesReceived, args.TotalBytesToReceive));
+        }
+
+        /// <summary>
+        /// Called when image is completely download
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void image_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
+        {
+            try
+            {
+                if (args.Error == null)
                 {
-                    encoder.Frames.Add(BitmapFrame.Create(image.GetFullImage));
-                    encoder.Save(stream);
-                    byte[] data = stream.ToArray();
-                    stream.Close();
-                    OutputImage = new CStreamWriter(data);
+                    OutputImage = new CStreamWriter(args.Result);
                     OnPropertyChanged("OutputImage");
+                    OnPluginProgressChanged(this, new PluginProgressEventArgs(1, 1));
+                }
+                else
+                {
+                    GuiLogMessage(String.Format("Exception occured during downloading of image: {0}", args.Error.Message), NotificationLevel.Error);
+                }
+                lock (this)
+                {
+                    isImageDownloading = false;
                 }
             }
             catch (Exception ex)
             {
-                GuiLogMessage(String.Format("Exception downloading and converting image: {0}", ex.Message), NotificationLevel.Error);
-            }       
+                //wtf?
+            }
         }
 
         /// <summary>
@@ -254,16 +311,69 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
         /// <param name="document"></param>
         internal void DownloadDocument(Document document)
         {
+            if (!running)
+            {
+                return;
+            }
+            lock (this)
+            {
+                if (isDocumentDownloading || isImageDownloading)
+                {
+                    return;
+                }
+                isDocumentDownloading = true;
+            }
             try
             {
-                byte[] documentData = document.GetDocument;
-                OutputDocument = documentData;
-                OnPropertyChanged("OutputDocument");
+                OnPluginProgressChanged(this, new PluginProgressEventArgs(0,1));
+                document.DownloadDataCompleted += document_DownloadDataCompleted;
+                document.DownloadProgressChanged += document_DownloadProgressChanged;
+                document.DownloadDocument();                          
             }
             catch (Exception ex)
             {
-                GuiLogMessage(String.Format("Exception downloading document: {0}", ex.Message), NotificationLevel.Error);
+                GuiLogMessage(String.Format("Exception during downloading of document: {0}", ex.Message), NotificationLevel.Error);
             }     
+        }
+
+        /// <summary>
+        /// Called when the progress of the downloader changed; changes the progress of the plugin accordingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void document_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
+        {
+            OnPluginProgressChanged(this, new PluginProgressEventArgs(args.BytesReceived, args.TotalBytesToReceive));
+        }
+
+        /// <summary>
+        /// Called when the download of the document is completed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void document_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
+        {
+            try
+            {
+                if (args.Error == null)
+                {
+                    OutputDocument = args.Result;
+                    OnPropertyChanged("OutputDocument");
+                    OnPluginProgressChanged(this, new PluginProgressEventArgs(1, 1));
+                }
+                else
+                {
+                    GuiLogMessage(String.Format("Exception occured during downloading of data: {0}", args.Error.Message), NotificationLevel.Error);
+                }
+                lock (this)
+                {
+                    isDocumentDownloading = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                //wtf?
+            }
         }
     }
 }

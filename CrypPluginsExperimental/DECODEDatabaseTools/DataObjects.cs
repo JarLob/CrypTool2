@@ -1,4 +1,5 @@
-﻿/*
+﻿using Cryptool.PluginBase.Miscellaneous;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<at>CrypTool.org
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,8 +16,10 @@
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -121,8 +124,16 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     }
 
     [DataContract]
-    public class Image
+    public class Image : INotifyPropertyChanged
     {
+        private JsonDownloaderAndConverter fullImageDownloader;
+        private JsonDownloaderAndConverter thumbnailDownloader;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
+        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
+
+
         [DataMember]
         public int image_id { get; set; }
         [DataMember]
@@ -130,11 +141,14 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         [DataMember]
         public string thumbnail_url { get; set; }
 
+        private byte[] thumbnail_data;
+
+
         public BitmapFrame GetFullImage
         {
             get
             {
-                return DownloadImage(full_url);
+                return null;
             }
         }
 
@@ -142,33 +156,99 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         {
             get
             {
-                return DownloadImage(thumbnail_url);
-            }
-        }
-
-        /// <summary>
-        /// Tries to download an image; if it fails, it returns null
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        private BitmapFrame DownloadImage(string url)
-        {
-            try
-            {
-                byte[] data = JsonDownloaderAndConverter.GetData(url);
-                var decoder = BitmapDecoder.Create(new MemoryStream(data),
+                if (thumbnailDownloader == null)
+                {
+                    thumbnailDownloader = new JsonDownloaderAndConverter();
+                    thumbnailDownloader.DownloadDataCompleted += thumbnailDownloader_DownloadDataCompleted;
+                    thumbnailDownloader.GetData(thumbnail_url);
+                    return null;
+                }
+                if (thumbnail_data == null)
+                {
+                    return null;
+                }
+                var decoder = BitmapDecoder.Create(new MemoryStream(thumbnail_data),
                               BitmapCreateOptions.PreservePixelFormat,
                               BitmapCacheOption.None);
                 if (decoder.Frames.Count > 0)
                 {
                     return decoder.Frames[0];
                 }
-                return null;
+                else
+                {
+                    return null;
+                }
             }
-            catch (Exception)
+        }
+
+        /// <summary>
+        /// Invoked when thumbnail download finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void thumbnailDownloader_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
+        {
+            if (args.Error == null)
+            {
+                thumbnail_data = args.Result;
+            }
+            OnPropertyChanged("GetThumbnail");
+        }
+
+      
+        private void OnPropertyChanged(string propertyName)
+        {
+            EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
+        }
+
+        /// <summary>
+        /// download the full image
+        /// </summary>
+        internal void DownloadImage()
+        {
+            if (fullImageDownloader == null)
+            {
+                fullImageDownloader = new JsonDownloaderAndConverter();
+                fullImageDownloader.DownloadDataCompleted += fullImageDownloader_DownloadDataCompleted;
+                fullImageDownloader.DownloadProgressChanged += fullImageDownloader_DownloadProgressChanged;
+                fullImageDownloader.GetData(full_url);
+            }          
+        }
+
+        /// <summary>
+        /// Called, when the download progress changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void fullImageDownloader_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
+        {
+            if (DownloadProgressChanged != null)
+            {
+                DownloadProgressChanged.Invoke(this, args);
+            }
+        }
+
+        /// <summary>
+        /// called when download is finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void fullImageDownloader_DownloadDataCompleted(object sender, DownloadDataCompletedEventArgs args)
+        {
+            try
+            {
+                if (DownloadDataCompleted != null)
+                {
+                    DownloadDataCompleted.Invoke(this, args);
+                }
+                fullImageDownloader.DownloadDataCompleted -= fullImageDownloader_DownloadDataCompleted;
+                fullImageDownloader.DownloadProgressChanged -= fullImageDownloader_DownloadProgressChanged;
+                fullImageDownloader.Dispose();
+                fullImageDownloader = null;
+            }
+            catch (Exception ex)
             {
                 //wtf?
-                return null;
             }
         }
     }
@@ -176,6 +256,11 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     [DataContract]
     public class Document
     {
+        private JsonDownloaderAndConverter jsonDownloaderAndConverter;
+
+        public event DownloadDataCompletedEventHandler DownloadDataCompleted;
+        public event DownloadProgressChangedEventHandler DownloadProgressChanged;
+
         [DataMember]
         public int document_id { get; set; }
         [DataMember]
@@ -189,22 +274,55 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         [DataMember]
         public string download_url { get; set; }
 
+
         /// <summary>
         /// Tries to download the document; if it fails, it returns null
         /// </summary>
-        public byte[] GetDocument
-        {
-            get
+        public void DownloadDocument()
+        {                   
+            if (jsonDownloaderAndConverter == null)
             {
-                try
+                jsonDownloaderAndConverter = new JsonDownloaderAndConverter();
+                jsonDownloaderAndConverter.DownloadDataCompleted += jsonDownloaderAndConverter_DownloadDataCompleted;
+                jsonDownloaderAndConverter.DownloadProgressChanged += jsonDownloaderAndConverter_DownloadProgressChanged;
+                jsonDownloaderAndConverter.GetData(download_url);
+            }          
+        }
+
+        /// <summary>
+        /// Called when download progress changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void jsonDownloaderAndConverter_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs args)
+        {
+            if (DownloadProgressChanged != null)
+            {
+                DownloadProgressChanged.Invoke(this, args);
+            }
+        }
+
+        /// <summary>
+        /// Called, when download is finished
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void jsonDownloaderAndConverter_DownloadDataCompleted(object sender, System.Net.DownloadDataCompletedEventArgs args)
+        {
+            try
+            {
+                if (DownloadDataCompleted != null)
                 {
-                    return JsonDownloaderAndConverter.GetData(download_url);
+                    DownloadDataCompleted.Invoke(this, args);
                 }
-                catch (Exception)
-                {
-                    //wtf?
-                    return null;
-                }
+                jsonDownloaderAndConverter.DownloadDataCompleted -= jsonDownloaderAndConverter_DownloadDataCompleted;
+                jsonDownloaderAndConverter.DownloadProgressChanged -= jsonDownloaderAndConverter_DownloadProgressChanged;
+                jsonDownloaderAndConverter.Dispose();
+                jsonDownloaderAndConverter = null;
+            }
+            catch (Exception ex)
+            {
+                //wtf?
             }
         }
     }
@@ -219,8 +337,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public List<Document> cleartext { get; set; }
         [DataMember]
         public List<Document> cryptanalysis_statistics { get; set; }
-        //[DataMember]
-        //public List<Document> miscellaneous { get; set; }
         [DataMember]
         public List<Document> publication { get; set; }
         [DataMember]
@@ -228,6 +344,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         [DataMember]
         public List<Document> translation { get; set; }
 
+        /// <summary>
+        /// All documents merged in one list
+        /// </summary>
         public List<Document> AllDocuments
         {
             get
@@ -236,7 +355,6 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
                 documents.AddRange(deciphered_text);
                 documents.AddRange(cleartext);
                 documents.AddRange(cryptanalysis_statistics);
-                //documents.AddRange(miscellaneous);
                 documents.AddRange(publication);
                 documents.AddRange(transcription);
                 documents.AddRange(transcription);
