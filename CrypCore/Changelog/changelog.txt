@@ -43,6 +43,8 @@ Other Components:
 - Audio input & output components
 - Huffman compression algorithm
 - Levenshtein distance
+
+Updates:
 - Monoalphabetic substitution analyzer (additional languages; arbitrary input alphabets).
 - CrypTool 2 book (English & German).
 
