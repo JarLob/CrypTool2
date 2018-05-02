@@ -90,7 +90,6 @@
     <Compile Include="Converter\BigIntegerToHexStringConverter.cs" />
     <Compile Include="Converter\ByteArrayToUtf8StringConverter.cs" />
     <Compile Include="Converter\ListToStringConverter.cs" />
-    <Compile Include="CrypCloud\calculation\ACalculationTemplate.cs" />
     <Compile Include="CrypCloud\CloudKeySearcher.cs" />
     <Compile Include="Converter\TimeSpanToStringConverter.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
