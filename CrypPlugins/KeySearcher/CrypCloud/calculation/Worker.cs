@@ -13,7 +13,7 @@ using Cryptool.PluginBase.IO;
 using KeySearcher.CrypCloud;
 using KeySearcher.KeyPattern;
 using OpenCLNet;
-using voluntLib.common.interfaces;
+using VoluntLib2.ComputationLayer;
 
 namespace KeySearcher
 {

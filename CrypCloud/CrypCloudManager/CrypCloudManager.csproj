@@ -174,9 +174,9 @@
       <Project>{0946e1a6-5488-4711-ad10-d54d6a5d2f32}</Project>
       <Name>OpenCLNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
-      <Project>{00382C7A-8812-483F-8984-5A3612DE5285}</Project>
-      <Name>voluntLib</Name>
+    <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
+      <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
+      <Name>VoluntLib2</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\WorkspaceManagerModel\WorkspaceManagerModel.csproj">
       <Project>{C35A6E71-D6FE-478B-A12D-FAD54FC4EDC9}</Project>

@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 using System.Threading;
-using voluntLib.common.interfaces;
+using VoluntLib2.ComputationLayer;
 
 namespace CrypCloud.Core.CloudComponent
 {

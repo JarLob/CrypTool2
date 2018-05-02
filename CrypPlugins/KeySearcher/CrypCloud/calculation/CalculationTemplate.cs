@@ -6,7 +6,8 @@ using System.Threading;
 using Cryptool.PluginBase.Control;
 using KeySearcher.CrypCloud;
 using KeySearcher.KeyPattern;
-using voluntLib.common.interfaces;
+using VoluntLib2;
+using VoluntLib2.ComputationLayer;
 
 namespace KeySearcher
 {

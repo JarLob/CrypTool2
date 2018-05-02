@@ -90,6 +90,7 @@
     <Compile Include="Converter\BigIntegerToHexStringConverter.cs" />
     <Compile Include="Converter\ByteArrayToUtf8StringConverter.cs" />
     <Compile Include="Converter\ListToStringConverter.cs" />
+    <Compile Include="CrypCloud\calculation\ACalculationTemplate.cs" />
     <Compile Include="CrypCloud\CloudKeySearcher.cs" />
     <Compile Include="Converter\TimeSpanToStringConverter.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
@@ -165,9 +166,9 @@
       <Name>KeyTextBox</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\LibSource\voluntLib\voluntLib.csproj">
-      <Project>{00382c7a-8812-483f-8984-5a3612de5285}</Project>
-      <Name>voluntLib</Name>
+    <ProjectReference Include="..\..\LibSource\VoluntLib2\VoluntLib2.csproj">
+      <Project>{1b68fdaa-c5a7-4f8a-bd5b-5876e8ac1879}</Project>
+      <Name>VoluntLib2</Name>
     </ProjectReference>
     <ProjectReference Include="..\CostFunction\CostFunction.csproj">
       <Project>{3C72FF93-48C2-4929-B3B2-83F165AAE636}</Project>

@@ -11,17 +11,10 @@ using CrypCloud.Core.Properties;
 using CrypCloud.Core.utils;
 using Cryptool.PluginBase;
 using NLog;
-using voluntLib;
-using voluntLib.common;
-using voluntLib.common.eventArgs;
-using voluntLib.common.interfaces;
-using voluntLib.communicationLayer;
-using voluntLib.communicationLayer.messages.commonStructs;
-using voluntLib.logging;
-using voluntLib.managementLayer.localStateManagement.states;
-using voluntLib.managementLayer.localStateManagement.states.config;
+using VoluntLib2;
 using WorkspaceManager.Model;
-using voluntLib.communicationLayer.protrocolExtensions;
+using VoluntLib2.ManagementLayer;
+using VoluntLib2.ComputationLayer;
 
 namespace CrypCloud.Core
 { 
@@ -76,35 +69,14 @@ namespace CrypCloud.Core
             state.FinalizeValues();
 
             var vlib = new VoluntLib
-            {
-                DefaultStateConfig = state,
-                LogMode = LogMode.EventBased,
-                EnablePersistence = true,
-                LoadDataFromLocalStorage = true,
+            {                               
                 AdminCertificateList = adminList,
                 BannedCertificateList = bannedList,
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
             };
-            vlib.EnableQuietMode();
-            vlib.AddExtension(new SendDateExtension());
-
-            var networkBridges = Resources.networkBridges.Replace("\r","");
-            var networkBridgesList = networkBridges
-                .Split('\n')
-                .Where(it => it.Contains(':'))
-                .ToList();
-
-            var randomIndex = new Random().Next(networkBridgesList.Count);
-            var selectedBridge = networkBridgesList[randomIndex];
-
-            var tmp = selectedBridge.Split(':');
-            var ip = tmp[0];
-            var port = int.Parse(tmp[1]);
-            vlib.AddNetworkBridge(ip, port);
 
             try
             {
-                vlib.ApplicationLog -= ConvertVoluntLibToCtLogs;
                 vlib.JobFinished -= OnJobFinished;
                 vlib.TaskProgress -= OnTaskProgress;
                 vlib.TaskStopped -= OnTaskHasStopped;
@@ -120,7 +92,6 @@ namespace CrypCloud.Core
                 vlib.TaskStopped += OnTaskHasStopped;
                 vlib.TaskProgress += OnTaskProgress;
                 vlib.JobFinished += OnJobFinished;
-                vlib.ApplicationLog += ConvertVoluntLibToCtLogs;
             }
 
             return vlib;
@@ -136,7 +107,7 @@ namespace CrypCloud.Core
             }
 
             var rootCertificate = new X509Certificate2(Resources.rootCA);
-            voluntLib.InitAndStart(rootCertificate, ownCertificate);
+            voluntLib.Start(rootCertificate, ownCertificate);
             OnConnectionStateChanged(true);
             return true;
         }
@@ -156,7 +127,6 @@ namespace CrypCloud.Core
                 voluntLib.TaskStopped -= OnTaskHasStopped;
                 voluntLib.TaskProgress -= OnTaskProgress;
                 voluntLib.JobFinished -= OnJobFinished;
-                voluntLib.ApplicationLog -= ConvertVoluntLibToCtLogs;
             }
             catch (Exception e) { }
 
@@ -326,17 +296,10 @@ namespace CrypCloud.Core
   
         public bool IsBannedCertificate(X509Certificate2 certificate)
         {
-
             var rootCertificate = new X509Certificate2(Resources.rootCA);
             var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
             var bannedList = bannedCertificates.Split('\n').ToList();
-
-            var certificateService = new CertificateService(rootCertificate, certificate)
-            {
-                BannedCertificateList = bannedList
-            };
-
-            return certificateService.IsBannedCertificate(certificate);
+            return false;// certificateService.IsBannedCertificate(certificate);
         }
 
         public void RefreshJobList()
@@ -453,40 +416,6 @@ namespace CrypCloud.Core
         {
             var handler = JobStateChanged;
             if (handler != null) handler(sender, jobProgressEventArgs);
-        }
-
-        protected virtual void OnApplicationLog(object sender, GuiLogEventArgs arg)
-        {
-            var handler = ApplicationLog;
-            if (handler != null) handler(this, arg);
-        }
-
-
-        private void ConvertVoluntLibToCtLogs(object sender, LogEventInfoArg logEvent)
-        {
-            var notificationLevel = GetNotificationLevel(logEvent);
-
-        /*    if (notificationLevel == NotificationLevel.Debug || notificationLevel == NotificationLevel.Info)
-            {
-                return;
-            }*/
-
-            var message = "(" + logEvent.Location + "): " + logEvent.Message;
-            OnApplicationLog(sender, new GuiLogEventArgs(message, null, notificationLevel));
-        }
-
-
-        private static NotificationLevel GetNotificationLevel(LogEventInfoArg logEvent)
-        {
-            var notificationLevel = NotificationLevel.Info;
-
-            if (logEvent.Level >= LogLevel.Error)
-                notificationLevel = NotificationLevel.Error;
-            if (logEvent.Level == LogLevel.Warn)
-                notificationLevel = NotificationLevel.Warning;
-            if (logEvent.Level < LogLevel.Info)
-                notificationLevel = NotificationLevel.Debug;
-            return notificationLevel;
         }
 
         #endregion

@@ -8,8 +8,9 @@ using System.Numerics;
 using System.Threading.Tasks; 
 using CrypCloud.Core; 
 using KeySearcher.CrypCloud.statistics;
-using KeySearcher.KeyPattern; 
-using voluntLib.common.eventArgs; 
+using KeySearcher.KeyPattern;
+using VoluntLib2;
+using VoluntLib2.ComputationLayer; 
 
 namespace KeySearcher.CrypCloud
 {

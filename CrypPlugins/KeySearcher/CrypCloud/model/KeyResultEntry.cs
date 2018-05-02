@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using voluntLib.common.interfaces;
+using VoluntLib2.Tools;
 
 namespace KeySearcher.CrypCloud
 {
-    public class KeyResultEntry : ISerializable, IComparable
+    public class KeyResultEntry : IVoluntLibSerializable, IComparable
     {
         public KeyResultEntry()
         {

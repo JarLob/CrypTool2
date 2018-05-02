@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using CrypCloud.Manager.Services;
 using System.Windows;
-using voluntLib.common.utils;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -37,12 +36,6 @@ namespace CrypCloud.Manager.ViewModels
             { 
                 errorMessage = value;
                 RaisePropertyChanged("ErrorMessage");
-                TaskHelper.Delay(10000).ContinueWith(_ =>
-                {
-                    errorMessage = "";
-                    RaisePropertyChanged("ErrorMessage");
-
-                });
             }
         } 
 

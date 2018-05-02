@@ -15,9 +15,10 @@ using CrypCloud.Manager.Properties;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypCloud.Manager.ViewModels.Pocos;
 using KeySearcher.CrypCloud.statistics;
-using voluntLib.common;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
+using VoluntLib2;
+using VoluntLib2.ManagementLayer;
 
 namespace CrypCloud.Manager.ViewModels
 {

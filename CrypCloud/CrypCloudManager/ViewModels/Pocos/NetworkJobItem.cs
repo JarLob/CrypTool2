@@ -6,7 +6,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Windows.Media.Imaging;
-using voluntLib.common;
 
 namespace CrypCloud.Manager.ViewModels.Pocos
 {
