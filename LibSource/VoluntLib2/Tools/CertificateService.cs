@@ -223,17 +223,38 @@ namespace VoluntLib2.Tools
         }
 
         /// <summary>
-        ///  Determines whether the certificate is issued by the given CA.
+        ///  Determines whether the certificate is issued by our CA or not
         /// </summary>
         /// <param name="certificate">The certificate.</param>
         /// <returns></returns> 
         private bool IsValidCertificate(X509Certificate2 certificate)
-        {            
-            var chain = new X509Chain(false);
-            chain.ChainPolicy.ExtraStore.Add(CaCertificate);
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;            
-            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-            return chain.Build(certificate) && certificate.SubjectName.Name != null;
+        {
+            try
+            {
+                var chain = new X509Chain(false);
+                chain.ChainPolicy.ExtraStore.Add(CaCertificate);
+                chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
+                if (chain.Build(certificate) == false)
+                {
+                    return false;
+                }
+                if (string.IsNullOrEmpty(certificate.SubjectName.Name))
+                {
+                    //We dont accept certificates with no subject name
+                    return false;
+                }
+                if (!chain.ChainPolicy.ExtraStore.Contains(chain.ChainElements[chain.ChainElements.Count - 1].Certificate))
+                {
+                    //The certificate has to be signed by our CA certificate
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }       
     }
 }
