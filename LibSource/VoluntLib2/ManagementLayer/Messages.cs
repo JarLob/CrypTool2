@@ -110,7 +110,7 @@ namespace VoluntLib2.ManagementLayer.Messages
         public byte[] CertificateData = new byte[0];   // CertificateLength bytes
         //public ushort SignatureLength;               // 2 bytes
         public byte[] SignatureData = new byte[0];     // SignatureLength bytes
-
+        
         public byte[] Serialize()
         {
             //World Name
@@ -222,7 +222,7 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// </summary>
     public class Message
     {
-        public const string VLIB2MNGMT = "VLib2Mngmt";  //Magic Number to identify protocol
+        public const string VLIB2MNGMT = "VLib2Mngmt";  //Magic Number to identify VoluntLib2 management protocol
         public const byte VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
 
         public MessageHeader MessageHeader;
@@ -236,6 +236,14 @@ namespace VoluntLib2.ManagementLayer.Messages
             MessageHeader.MessageId = Guid.NewGuid().ToByteArray();
         }
 
+        /// <summary>
+        /// Serializes the message to a byte array.
+        /// if signMessage == false, the MessageHeader.SignatureData is byte[0] after calling this method.
+        /// if signMessage == true, the MessageHeader.SignatureData is the signature of the method after calling this method.
+        /// Uses the cert given to the CertificateService
+        /// </summary>
+        /// <param name="signMessage"></param>
+        /// <returns></returns>
         public virtual byte[] Serialize(bool signMessage = true)
         {
             if (Payload != null && Payload.Length != 0)
@@ -245,7 +253,9 @@ namespace VoluntLib2.ManagementLayer.Messages
             else
             {
                 MessageHeader.PayloadLength = 0;
-            }            
+            }
+            
+            MessageHeader.SignatureData = new byte[0];
 
             byte[] magicNumber = Encoding.ASCII.GetBytes(VLIB2MNGMT);       //10 bytes
             // 1 byte protocol version
