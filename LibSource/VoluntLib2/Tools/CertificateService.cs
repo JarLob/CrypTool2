@@ -35,7 +35,7 @@ namespace VoluntLib2.Tools
     [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Assertion)]
     public class CertificateService
     {
-        private const string NameOfHashAlgorithm = "SHA256";
+        private const string NameOfHashAlgorithm = "SHA512";
         private X509Certificate2 CaCertificate;
         private RSACryptoServiceProvider CryptoServiceProvider;
         public X509Certificate2 OwnCertificate { get; private set; }
@@ -123,7 +123,7 @@ namespace VoluntLib2.Tools
             //extract signature and replace with empty signature
             var originalSignature = message.MessageHeader.SignatureData;
             message.MessageHeader.SignatureData = new byte[0];
-            var data = message.Serialize();
+            var data = message.Serialize(false);
 
             // Verify the signature with the hash
             var provider = (RSACryptoServiceProvider)senderCertificate.PublicKey.Key;

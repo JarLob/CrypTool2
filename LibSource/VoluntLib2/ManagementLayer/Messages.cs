@@ -107,9 +107,9 @@ namespace VoluntLib2.ManagementLayer.Messages
         //public ushort SenderNameLength;              // 2 bytes
         public string SenderName;                      // SenderNameLength bytes
         //public ushort CertificateLength;             // 2 bytes
-        public byte[] CertificateData;                 // CertificateLength bytes
+        public byte[] CertificateData = new byte[0];   // CertificateLength bytes
         //public ushort SignatureLength;               // 2 bytes
-        public byte[] SignatureData;                   // SignatureLength bytes
+        public byte[] SignatureData = new byte[0];     // SignatureLength bytes
 
         public byte[] Serialize()
         {
@@ -238,7 +238,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             MessageHeader.MessageId = Guid.NewGuid().ToByteArray();
         }
 
-        public virtual byte[] Serialize()
+        public virtual byte[] Serialize(bool signMessage = true)
         {
             if (Payload != null && Payload.Length != 0)
             {
@@ -262,6 +262,12 @@ namespace VoluntLib2.ManagementLayer.Messages
             if (Payload != null && Payload.Length > 0)
             {
                 Array.Copy(Payload, 0, messagebytes, 11 + headerbytes.Length, Payload.Length);
+            }
+
+            //If we don't sign the message, we are finished here
+            if (!signMessage) 
+            {
+                return messagebytes;
             }
 
             byte[] signature = CertificateService.GetCertificateService().SignData(messagebytes);
