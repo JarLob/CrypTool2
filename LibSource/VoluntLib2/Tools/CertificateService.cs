@@ -1,4 +1,5 @@
-﻿/*
+﻿using System;
+/*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +25,7 @@ using VoluntLib2.ManagementLayer.Messages;
 
 namespace VoluntLib2.Tools
 {
-    internal enum CertificateValidationState
+    public enum CertificateValidationState
     {
         Valid,
         Unknown,
@@ -32,7 +33,7 @@ namespace VoluntLib2.Tools
     }
 
     [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Assertion)]
-    internal class CertificateService
+    public class CertificateService
     {
         private const string NameOfHashAlgorithm = "SHA256";
         private X509Certificate2 CaCertificate;
@@ -95,6 +96,9 @@ namespace VoluntLib2.Tools
                 }) { PersistKeyInCsp = true };
             }
             OwnName = GetSubjectNameFromCertificate(ownCertificate);
+
+            AdminCertificateList = new List<string>();
+            BannedCertificateList = new List<string>();
         }
 
         private string GetSubjectNameFromCertificate(X509Certificate2 cert)
@@ -118,7 +122,6 @@ namespace VoluntLib2.Tools
 
             //extract signature and replace with empty signature
             var originalSignature = message.MessageHeader.SignatureData;
-
             message.MessageHeader.SignatureData = new byte[0];
             var data = message.Serialize();
 
@@ -139,21 +142,9 @@ namespace VoluntLib2.Tools
         /// </summary>
         /// <param name="message">The message</param>
         /// <returns></returns>
-        public Message SignAndAddInformation(Message message)
+        public byte[] SignData(byte[] data)
         {
-            message.MessageHeader.SenderName = OwnName;
-            message.MessageHeader.CertificateData = ExportOwnCertificate();
-
-            //remove old signature
-            message.MessageHeader.SignatureData = new byte[0];
-
-            // sign data
-            var data = message.Serialize();
-            lock (this)
-            {
-                message.MessageHeader.SignatureData = CryptoServiceProvider.SignData(data, NameOfHashAlgorithm);
-            }
-            return message;
+            return CryptoServiceProvider.SignData(data, NameOfHashAlgorithm);
         }
 
         /// <summary>
@@ -237,21 +228,12 @@ namespace VoluntLib2.Tools
         /// <param name="certificate">The certificate.</param>
         /// <returns></returns> 
         private bool IsValidCertificate(X509Certificate2 certificate)
-        {
-            var chain = new X509Chain();
+        {            
+            var chain = new X509Chain(false);
             chain.ChainPolicy.ExtraStore.Add(CaCertificate);
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+            chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;            
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
             return chain.Build(certificate) && certificate.SubjectName.Name != null;
-        }
-
-        /// <summary>
-        ///   Exports the own certificate
-        /// </summary>
-        /// <returns></returns>
-        private byte[] ExportOwnCertificate()
-        {
-            return OwnCertificate.Export(X509ContentType.Cert);
-        }
+        }       
     }
 }

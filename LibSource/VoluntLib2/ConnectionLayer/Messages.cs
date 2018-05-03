@@ -218,7 +218,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             byte[] messagebytes = new byte[10 + 1 + 63 + payloadLengthBytes];
 
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
-            messagebytes[11] = VOLUNTLIB2_VERSION;
+            messagebytes[10] = VOLUNTLIB2_VERSION;
             Array.Copy(headerbytes, 0, messagebytes, 11, 62);
             if (Payload != null && Payload.Length > 0)
             {
@@ -231,7 +231,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
         {
             if (data.Length < 74)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 74 byte. Got {0} bytes!", data.Length));
+                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 74 bytes. Got {0} bytes!", data.Length));
             }            
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VOLUNTLIB2))
@@ -245,7 +245,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
 
             MessageHeader = new MessageHeader();
             byte[] messageheaderbytes = new byte[63];
-            VoluntLibVersion = data[0];
+            VoluntLibVersion = data[10];
             Array.Copy(data, 11, messageheaderbytes, 0, 63);
             MessageHeader.Deserialize(messageheaderbytes);
             Payload = new byte[MessageHeader.PayloadLength];

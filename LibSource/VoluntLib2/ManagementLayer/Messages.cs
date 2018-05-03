@@ -26,7 +26,7 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// <summary>
     /// Each message has a unique type number defined by this enum
     /// </summary>
-    internal enum MessageType
+    public enum MessageType
     {
         Undefined = 0,
         CreateNetworkJobMessage = 10,
@@ -95,8 +95,10 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// <summary>
     /// The header of all messages of VoluntLib2 JobManagementLayer
     /// </summary>
-    internal class MessageHeader
+    public class MessageHeader
     {        
+        private const int STRING_MAX_LENGTH = 255;
+
         public byte[] MessageId = new byte[16];        // 16 bytes
         public MessageType MessageType;                // 1 byte
         public ushort PayloadLength;                   // 2 bytes
@@ -104,8 +106,6 @@ namespace VoluntLib2.ManagementLayer.Messages
         public string WorldName;                       // WorldNameLength bytes
         //public ushort SenderNameLength;              // 2 bytes
         public string SenderName;                      // SenderNameLength bytes
-        //public ushort HostNameLength;                // 2 bytes
-        public string HostName;                        // HostNameLength bytes
         //public ushort CertificateLength;             // 2 bytes
         public byte[] CertificateData;                 // CertificateLength bytes
         //public ushort SignatureLength;               // 2 bytes
@@ -113,18 +113,108 @@ namespace VoluntLib2.ManagementLayer.Messages
 
         public byte[] Serialize()
         {
-            byte[] data = new byte[16 + 1 + 2 + 2 + WorldName.Length + 2 + SenderName.Length + 2 + HostName.Length + 2 + CertificateData.Length + 2 + SignatureData.Length];
+            //convert World Name to byte array and get its length
+            byte[] worldNameBytes = UTF8Encoding.UTF8.GetBytes(WorldName);
+            int worldNameLength = worldNameBytes.Length;
+
+            //convert Sender Name to byte array and get its length
+            byte[] senderNameBytes = UTF8Encoding.UTF8.GetBytes(SenderName);
+            int senderNameLength = senderNameBytes.Length;
+
+            byte[] data = new byte[16 + 1 + 2 + 2 + worldNameBytes.Length + 2 + senderNameBytes.Length + 2 + CertificateData.Length + 2 + SignatureData.Length];
             
+            Array.Copy(MessageId, 0, data, 0, 16);
+            
+            data[16] = (byte)MessageType;
+            
+            byte[] payloadLengthBytes = BitConverter.GetBytes(PayloadLength);            
+            data[17] = payloadLengthBytes[0];
+            data[18] = payloadLengthBytes[1];
+            
+            //World Name
+            if (WorldName.Length > STRING_MAX_LENGTH)
+            {
+                WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
+            }
+           
+            byte[] worldNameLengthBytes = BitConverter.GetBytes(worldNameLength);
+            data[19] = worldNameLengthBytes[0];
+            data[20] = worldNameLengthBytes[1];
+            Array.Copy(worldNameBytes, 0, data, 21, worldNameBytes.Length);
+
+            //Sender Name
+            if (SenderName.Length > STRING_MAX_LENGTH)
+            {
+                SenderName = SenderName.Substring(0, STRING_MAX_LENGTH);
+            }
+           
+            byte[] senderNameLengthBytes = BitConverter.GetBytes(senderNameLength);
+            data[21 + worldNameBytes.Length] = senderNameLengthBytes[0];
+            data[21 + worldNameBytes.Length + 1] = senderNameLengthBytes[1];
+            Array.Copy(senderNameBytes, 0, data, 21 + worldNameBytes.Length + 2, senderNameBytes.Length);
+
+            //Certificate Data
+            int certificateDataLength = CertificateData.Length;
+            byte[] certificateDataLengthBytes = BitConverter.GetBytes(certificateDataLength);
+            data[23 + worldNameBytes.Length + senderNameBytes.Length] = certificateDataLengthBytes[0];
+            data[23 + worldNameBytes.Length + senderNameBytes.Length + 1] = certificateDataLengthBytes[1];
+            Array.Copy(CertificateData, 0, data, 23 + worldNameBytes.Length + senderNameBytes.Length + 2, CertificateData.Length);
+
+            //Signature Data
+            int signatureDataLength = SignatureData.Length;
+            byte[] signatureDataLengthBytes = BitConverter.GetBytes(signatureDataLength);
+            data[25 + worldNameBytes.Length + senderNameBytes.Length + CertificateData.Length] = signatureDataLengthBytes[0];
+            data[25 + worldNameBytes.Length + senderNameBytes.Length + CertificateData.Length + 1] = signatureDataLengthBytes[1];
+            Array.Copy(SignatureData, 0, data, 25 + worldNameBytes.Length + senderNameBytes.Length + CertificateData.Length + 2, SignatureData.Length);
+
             return data;
         }
         public void Deserialize(byte[] data)
         {
-           
+            MessageId = new byte[16];
+            Array.Copy(data, 0, MessageId, 0, 16);
+
+            MessageType = (MessageType)data[16];
+
+            PayloadLength = BitConverter.ToUInt16(data, 17);
+
+            int worldNameLength = BitConverter.ToUInt16(data, 19);
+            WorldName = UTF8Encoding.UTF8.GetString(data, 21, worldNameLength);
+
+            int senderNameLength = BitConverter.ToUInt16(data, 21 + worldNameLength);
+            SenderName = UTF8Encoding.UTF8.GetString(data, 23 + worldNameLength, senderNameLength);
+
+            int certificateDataLength = BitConverter.ToUInt16(data, 23 + worldNameLength + senderNameLength);
+            CertificateData = new byte[certificateDataLength];
+            Array.Copy(data, 25 + worldNameLength + senderNameLength, CertificateData, 0, certificateDataLength);
+
+            int signatureDataLength = BitConverter.ToUInt16(data, 25 + worldNameLength + senderNameLength + certificateDataLength);
+            SignatureData = new byte[signatureDataLength];
+            Array.Copy(data, 27 + worldNameLength + senderNameLength + certificateDataLength, SignatureData, 0, signatureDataLength);
         }
 
         public override string ToString()
         {
-            return "";
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("MessageHeader");
+            builder.AppendLine("{");
+            builder.Append("  MessageID: ");
+            builder.AppendLine(BitConverter.ToString(MessageId) + ",");
+            builder.Append("  MessageType: ");
+            builder.AppendLine(MessageType.ToString() + ",");
+            builder.Append("  PayloadLength: ");
+            builder.AppendLine("" + PayloadLength + ",");
+            builder.Append("  WorldName: ");
+            builder.AppendLine("" + WorldName + ",");
+            builder.Append("  SenderName: ");
+            builder.AppendLine("" + SenderName + ",");
+            builder.Append("  CertificateData: ");
+            builder.AppendLine("" + BitConverter.ToString(CertificateData) + ",");
+            builder.Append("  SignatureData: ");
+            builder.AppendLine("" + BitConverter.ToString(SignatureData));
+            builder.AppendLine("}");
+
+            return builder.ToString();
         }
     }
 
@@ -132,7 +222,7 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// Super class of all messages
     /// containing a MessageHeader and the Payload
     /// </summary>
-    internal class Message
+    public class Message
     {
         public const string VLIB2MNGMT = "VLib2Mngmt";  //Magic Number to identify protocol
         public const byte VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
@@ -157,30 +247,43 @@ namespace VoluntLib2.ManagementLayer.Messages
             else
             {
                 MessageHeader.PayloadLength = 0;
-            }
+            }            
 
             byte[] magicNumber = Encoding.ASCII.GetBytes(VLIB2MNGMT);       //10 bytes
-            // 1 byte protocol versin
-            byte[] headerbytes = MessageHeader.Serialize();                 //63 bytes
+            // 1 byte protocol version
+            byte[] headerbytes = MessageHeader.Serialize();             
 
             ushort payloadLengthBytes = (ushort)(Payload != null ? Payload.Length : 0);
-            byte[] messagebytes = new byte[10 + 1 + 63 + payloadLengthBytes];
+            byte[] messagebytes = new byte[10 + 1 + headerbytes.Length + payloadLengthBytes];
 
             Array.Copy(magicNumber, 0, messagebytes, 0, 10);
-            messagebytes[11] = VOLUNTLIB2_VERSION;
-            Array.Copy(headerbytes, 0, messagebytes, 11, 62);
+            messagebytes[10] = VOLUNTLIB2_VERSION;
+            Array.Copy(headerbytes, 0, messagebytes, 11, headerbytes.Length);
             if (Payload != null && Payload.Length > 0)
             {
-                Array.Copy(Payload, 0, messagebytes, 73, Payload.Length);
+                Array.Copy(Payload, 0, messagebytes, 11 + headerbytes.Length, Payload.Length);
+            }
+
+            byte[] signature = CertificateService.GetCertificateService().SignData(messagebytes);
+            MessageHeader.SignatureData = signature;
+
+            headerbytes = MessageHeader.Serialize();
+            messagebytes = new byte[10 + 1 + headerbytes.Length + payloadLengthBytes];
+            Array.Copy(magicNumber, 0, messagebytes, 0, 10);
+            messagebytes[10] = VOLUNTLIB2_VERSION;
+            Array.Copy(headerbytes, 0, messagebytes, 11, headerbytes.Length);
+            if (Payload != null && Payload.Length > 0)
+            {
+                Array.Copy(Payload, 0, messagebytes, 11 + headerbytes.Length, Payload.Length);
             }
 
             return messagebytes;
         }
         public virtual void Deserialize(byte[] data)
         {
-            if (data.Length < 74)
+            if (data.Length < 27)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 74 byte. Got {0} bytes!", data.Length));
+                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 27 bytes. Got {0} bytes!", data.Length));
             }
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VLIB2MNGMT))
@@ -193,12 +296,12 @@ namespace VoluntLib2.ManagementLayer.Messages
             }
 
             MessageHeader = new MessageHeader();
-            byte[] messageheaderbytes = new byte[63];
-            VoluntLibVersion = data[0];
-            Array.Copy(data, 11, messageheaderbytes, 0, 63);
+            byte[] messageheaderbytes = new byte[data.Length - 11];
+            VoluntLibVersion = data[10];
+            Array.Copy(data, 11, messageheaderbytes, 0, messageheaderbytes.Length);
             MessageHeader.Deserialize(messageheaderbytes);
             Payload = new byte[MessageHeader.PayloadLength];
-            Array.Copy(data, 73, Payload, 0, Payload.Length);
+            Array.Copy(data, data.Length - Payload.Length, Payload, 0, Payload.Length);
         }
     }
 
