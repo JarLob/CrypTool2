@@ -113,13 +113,23 @@ namespace VoluntLib2.ManagementLayer.Messages
 
         public byte[] Serialize()
         {
+            //World Name
+            if (WorldName.Length > STRING_MAX_LENGTH)
+            {
+                WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
+            }
             //convert World Name to byte array and get its length
             byte[] worldNameBytes = UTF8Encoding.UTF8.GetBytes(WorldName);
             int worldNameLength = worldNameBytes.Length;
 
+            //Sender Name
+            if (SenderName.Length > STRING_MAX_LENGTH)
+            {
+                SenderName = SenderName.Substring(0, STRING_MAX_LENGTH);
+            }
             //convert Sender Name to byte array and get its length
             byte[] senderNameBytes = UTF8Encoding.UTF8.GetBytes(SenderName);
-            int senderNameLength = senderNameBytes.Length;
+            int senderNameLength = senderNameBytes.Length;         
 
             byte[] data = new byte[16 + 1 + 2 + 2 + worldNameBytes.Length + 2 + senderNameBytes.Length + 2 + CertificateData.Length + 2 + SignatureData.Length];
             
@@ -129,24 +139,12 @@ namespace VoluntLib2.ManagementLayer.Messages
             
             byte[] payloadLengthBytes = BitConverter.GetBytes(PayloadLength);            
             data[17] = payloadLengthBytes[0];
-            data[18] = payloadLengthBytes[1];
-            
-            //World Name
-            if (WorldName.Length > STRING_MAX_LENGTH)
-            {
-                WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
-            }
+            data[18] = payloadLengthBytes[1];                        
            
             byte[] worldNameLengthBytes = BitConverter.GetBytes(worldNameLength);
             data[19] = worldNameLengthBytes[0];
             data[20] = worldNameLengthBytes[1];
-            Array.Copy(worldNameBytes, 0, data, 21, worldNameBytes.Length);
-
-            //Sender Name
-            if (SenderName.Length > STRING_MAX_LENGTH)
-            {
-                SenderName = SenderName.Substring(0, STRING_MAX_LENGTH);
-            }
+            Array.Copy(worldNameBytes, 0, data, 21, worldNameBytes.Length);           
            
             byte[] senderNameLengthBytes = BitConverter.GetBytes(senderNameLength);
             data[21 + worldNameBytes.Length] = senderNameLengthBytes[0];
