@@ -175,7 +175,16 @@ namespace Cryptool.Plugins.Numbers
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         public void Initialize()
         {
-            
+            if (manualFontSettings)
+            {
+                ShowSettingsElement("Font");
+                ShowSettingsElement("FontSize");
+            }
+            else
+            {
+                CollapseSettingsElement("Font");
+                CollapseSettingsElement("FontSize");
+            }
         }
 
         private void ShowSettingsElement(string element)
