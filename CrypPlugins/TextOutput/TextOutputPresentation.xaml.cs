@@ -40,6 +40,7 @@ namespace TextOutput
     public partial class TextOutputPresentation : UserControl, INotifyPropertyChanged
     {
         public TextOutput _textOutput = null;
+        public event KeyEventHandler UserKeyDown;
 
         public TextOutputPresentation()
         {
@@ -93,5 +94,16 @@ namespace TextOutput
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void TextOutput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Add || e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (UserKeyDown != null)
+                {
+                    UserKeyDown.Invoke(sender, e);
+                }
+            }
+        }
     }
 }

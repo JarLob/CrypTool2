@@ -49,6 +49,29 @@ namespace Cryptool.Plugins.Numbers
             _presentation.TextBox.TextChanged +=new TextChangedEventHandler(TextBox_TextChanged);
             DataObject.AddPastingHandler(_presentation.TextBox, OnCancelCommand);
             settings.PropertyChanged += settings_OnPropertyChanged;
+            _presentation.UserKeyDown += _presentation_UserKeyDown;
+        }
+
+        void _presentation_UserKeyDown(object sender, KeyEventArgs e)
+        {
+            if (settings.ManualFontSettings == false)
+            {
+                return;
+            }
+            if ((e.Key == Key.Add) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize < 72)
+                {
+                    settings.FontSize++;
+                }
+            }
+            else if ((e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize > 8)
+                {
+                    settings.FontSize--;
+                }
+            }
         }
 
         private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)

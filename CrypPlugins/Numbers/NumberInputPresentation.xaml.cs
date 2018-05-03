@@ -40,6 +40,8 @@ namespace Cryptool.Plugins.Numbers
     /// </summary>
     public partial class NumberInputPresentation : UserControl, INotifyPropertyChanged
     {
+        public event System.Windows.Input.KeyEventHandler UserKeyDown;
+
         public NumberInputPresentation()
         {
             InitializeComponent();
@@ -93,5 +95,16 @@ namespace Cryptool.Plugins.Numbers
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NumberInput_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if ((e.Key == Key.Add || e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (UserKeyDown != null)
+                {
+                    UserKeyDown.Invoke(sender, e);
+                }
+            }
+        }
     }
 }

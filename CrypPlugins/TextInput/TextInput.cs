@@ -34,6 +34,7 @@ using System.Runtime.CompilerServices;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Runtime.Remoting.Contexts;
 using System.Drawing;
+using System.Windows.Input;
 
 namespace Cryptool.TextInput
 {
@@ -52,7 +53,30 @@ namespace Cryptool.TextInput
       settings.PropertyChanged += settings_OnPropertyChanged;
       textInputPresentation = new TextInputPresentation();
       Presentation = textInputPresentation;
+      textInputPresentation.UserKeyDown += textInputPresentation_UserKeyDown;
       setStatusBar();
+    }
+
+    void textInputPresentation_UserKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (settings.ManualFontSettings == false)
+        {
+            return;
+        }
+        if ((e.Key == Key.Add) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+        {            
+            if (settings.FontSize < 72)
+            {
+                settings.FontSize++;
+            }
+        }
+        else if ((e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+        {            
+            if (settings.FontSize > 8)
+            {
+                settings.FontSize--;
+            }
+        }
     }
       
     private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -183,7 +207,9 @@ namespace Cryptool.TextInput
       }, textInputPresentation);
 
       if (string.IsNullOrEmpty(value))
-        GuiLogMessage("No input value returning null.", NotificationLevel.Debug);
+      {
+          GuiLogMessage("No input value returning null.", NotificationLevel.Debug);
+      }
     }
 
     public void Stop()

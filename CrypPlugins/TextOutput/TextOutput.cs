@@ -34,6 +34,7 @@ using System.Numerics;
 using System.Windows.Documents;
 using DiffMatchPatch;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace TextOutput
 {
@@ -145,7 +146,30 @@ namespace TextOutput
 
             textOutputPresentation = new TextOutputPresentation();
             textOutputPresentation._textOutput = this;
+            textOutputPresentation.UserKeyDown += textOutputPresentation_UserKeyDown;
             setStatusBar();
+        }
+
+        private void textOutputPresentation_UserKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (settings.ManualFontSettings == false)
+            {
+                return;
+            }
+            if ((e.Key == Key.Add) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize < 72)
+                {
+                    settings.FontSize++;
+                }
+            }
+            else if ((e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (settings.FontSize > 8)
+                {
+                    settings.FontSize--;
+                }
+            }
         }
 
         private void settings_OnPropertyChanged(object sender, PropertyChangedEventArgs e)

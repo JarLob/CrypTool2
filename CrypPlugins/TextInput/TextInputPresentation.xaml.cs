@@ -40,6 +40,8 @@ namespace Cryptool.TextInput
     [TabColor("red")]
     public partial class TextInputPresentation : UserControl, INotifyPropertyChanged
     {
+        public event KeyEventHandler UserKeyDown;
+
         public TextInputPresentation()
         {
             InitializeComponent();
@@ -85,5 +87,15 @@ namespace Cryptool.TextInput
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private void TextInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Add || e.Key == Key.Subtract) && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                if (UserKeyDown != null)
+                {
+                    UserKeyDown.Invoke(sender, e);
+                }
+            }
+        }
     }
 }
