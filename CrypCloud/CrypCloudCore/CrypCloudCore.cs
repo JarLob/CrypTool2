@@ -15,6 +15,7 @@ using VoluntLib2;
 using WorkspaceManager.Model;
 using VoluntLib2.ManagementLayer;
 using VoluntLib2.ComputationLayer;
+using VoluntLib2.Tools;
 
 namespace CrypCloud.Core
 { 
@@ -63,10 +64,7 @@ namespace CrypCloud.Core
             var adminList = adminCertificates.Split('\n').ToList();
             
             var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
-            var bannedList = bannedCertificates.Split('\n').ToList();
-
-            var state = new EpochStateConfig() { BitMaskWidth = 1024 * 16 };
-            state.FinalizeValues();
+            var bannedList = bannedCertificates.Split('\n').ToList();          
 
             var vlib = new VoluntLib
             {                               
@@ -105,10 +103,16 @@ namespace CrypCloud.Core
             {
                 return false;
             }
-
-            var rootCertificate = new X509Certificate2(Resources.rootCA);
-            voluntLib.Start(rootCertificate, ownCertificate);
-            OnConnectionStateChanged(true);
+            try
+            {
+                var rootCertificate = new X509Certificate2(Resources.rootCA);
+                voluntLib.Start(rootCertificate, ownCertificate);
+                OnConnectionStateChanged(true);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             return true;
         }
 
@@ -296,10 +300,7 @@ namespace CrypCloud.Core
   
         public bool IsBannedCertificate(X509Certificate2 certificate)
         {
-            var rootCertificate = new X509Certificate2(Resources.rootCA);
-            var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
-            var bannedList = bannedCertificates.Split('\n').ToList();
-            return false;// certificateService.IsBannedCertificate(certificate);
+            return CertificateService.GetCertificateService().IsBannedCertificate(certificate);
         }
 
         public void RefreshJobList()
@@ -423,9 +424,7 @@ namespace CrypCloud.Core
         public BigInteger GetEpochOfJob(NetworkJob job)
         {
             var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
-            return (stateOfJob != null) 
-                ? stateOfJob.EpochNumber 
-                : 0;
+            return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
         }
 
 

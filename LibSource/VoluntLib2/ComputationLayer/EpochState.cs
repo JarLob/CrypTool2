@@ -24,7 +24,6 @@ namespace VoluntLib2.ComputationLayer
     public class EpochState
     {
         public BigInteger EpochNumber { get; set; }
-
         public IEnumerable<byte[]> ResultList { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 /*
    Copyright 2018 Nils Kopal <Nils.Kopal<AT>Uni-Kassel.de>
 
@@ -14,11 +14,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Permissions;
 using System.Security.Permissions;
 using VoluntLib2.ManagementLayer;
 using VoluntLib2.ManagementLayer.Messages;
@@ -61,7 +63,8 @@ namespace VoluntLib2.Tools
         /// </summary>
         private CertificateService()
         {
-
+            BannedCertificateList = new List<string>();
+            AdminCertificateList = new List<string>();
         }
 
         /// <summary>
@@ -152,7 +155,7 @@ namespace VoluntLib2.Tools
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
-        internal bool IsAdmin(Message message)
+        public bool IsAdmin(Message message)
         {
             var senderCertificate = ExtractValidCertificate(message);
             if (senderCertificate == null)
@@ -162,7 +165,7 @@ namespace VoluntLib2.Tools
             return IsAdminCertificate(senderCertificate);
         }
 
-        internal bool IsAdminCertificate(X509Certificate2 senderCertificate)
+        public bool IsAdminCertificate(X509Certificate2 senderCertificate)
         {
             //by name
             var senderName = GetSubjectNameFromCertificate(senderCertificate);
@@ -179,7 +182,7 @@ namespace VoluntLib2.Tools
             return false;
         }
 
-        internal bool IsBannedCertificate(X509Certificate2 senderCertificate)
+        public bool IsBannedCertificate(X509Certificate2 senderCertificate)
         {
             //by name
             var senderName = GetSubjectNameFromCertificate(senderCertificate);
@@ -227,7 +230,7 @@ namespace VoluntLib2.Tools
         /// </summary>
         /// <param name="certificate">The certificate.</param>
         /// <returns></returns> 
-        private bool IsValidCertificate(X509Certificate2 certificate)
+        public bool IsValidCertificate(X509Certificate2 certificate)
         {
             try
             {

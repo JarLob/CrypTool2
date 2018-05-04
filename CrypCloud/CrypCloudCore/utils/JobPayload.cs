@@ -9,7 +9,7 @@ namespace CrypCloud.Core.utils
 {
     public class JobPayload
     {
-        private static readonly int BUFFER_SIZE = 64*1024; //64kB
+        private const int BUFFER_SIZE = 64*1024; //64kB
 
         public WorkspaceModel WorkspaceModel;
         public DateTime CreationTime;

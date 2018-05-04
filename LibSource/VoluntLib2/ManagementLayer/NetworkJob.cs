@@ -23,25 +23,25 @@ using VoluntLib2.ComputationLayer;
 namespace VoluntLib2.ManagementLayer
 {
     public class NetworkJob : IEquatable<NetworkJob>
-    {
-        
+    {        
         public NetworkJob(BigInteger jobID)
         {
+            JobID = jobID;
         }
 
         public BigInteger JobID { get; set; }
-        public string World { get; set; }
         public string JobName { get; set; }
+        public string WorldName { get; set; }        
         public string Creator { get; set; }
         public string JobType { get; set; }
-        public byte[] JobDescription { get; set; }
+        public string JobDescription { get; set; }
         public byte[] JobPayload { get; set; }
-        public EpochStateConfig StateConfig { get; set; }
+        //public EpochStateConfig StateConfig { get; set; }
         public bool IsDeleted { get; set; }
 
         public bool Equals(NetworkJob other)
         {
-            return false;
+            return other.JobID.Equals(JobID);
         }
 
         public bool HasPayload()
@@ -52,6 +52,20 @@ namespace VoluntLib2.ManagementLayer
         public override int GetHashCode()
         {
             return JobID.GetHashCode();
+        }
+
+        public byte[] Serialize()
+        {
+            byte[] data = new byte[0];
+
+
+
+            return data;
+        }
+
+        public void Deserialize()
+        {
+
         }
     }
 }

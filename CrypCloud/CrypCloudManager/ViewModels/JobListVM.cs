@@ -203,23 +203,23 @@ namespace CrypCloud.Manager.ViewModels
         private NetworkJobItem ConvertToListItem(NetworkJob job)
         {
             var epochProgress = 0;
-            if (job.StateConfig.MaximumEpoch != 0)
+            /*if (job.StateConfig.MaximumEpoch != 0)
             {
                 epochProgress = (int) (100 * crypCloudCore.GetEpochOfJob(job).DivideAndReturnDouble(job.StateConfig.MaximumEpoch));
-            } 
+            } */
 
             var item = new NetworkJobItem
             {
                 Name = job.JobName,
-                Description = Encoding.UTF8.GetString(job.JobDescription),
+                Description = job.JobDescription,
                 Creator = job.Creator,
-                TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
+                //TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
                 FinishedNumberOfBlocks = crypCloudCore.GetCalculatedBlocksOfJob(job.JobID),
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),
                 CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID),
-                MaxEpoch = job.StateConfig.MaximumEpoch,
+                //MaxEpoch = job.StateConfig.MaximumEpoch,
                 Epoch = crypCloudCore.GetEpochOfJob(job),
                 EpochProgress = epochProgress
             };

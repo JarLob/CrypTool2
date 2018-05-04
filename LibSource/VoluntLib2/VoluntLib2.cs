@@ -68,11 +68,13 @@ namespace VoluntLib2
         public void Start(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
         {
             CertificateService.Init(caCertificate, ownCertificate);
+            CertificateName = CertificateService.OwnName;
+
             ConnectionManager = new ConnectionManager(ListenPort);
             //Well known peer for testing - my amazon server; will be replaced by official CT2 servers
             ConnectionManager.AddWellknownPeer(IPAddress.Parse("34.218.183.126"), 10000);
             ConnectionManager.Start();
-            CertificateName = CertificateService.OwnName;
+            
             IsStarted = true;            
         }               
 
@@ -83,7 +85,7 @@ namespace VoluntLib2
 
         public void RefreshJobList(string world)
         {
-
+            JobListChanged.Invoke(this, new PropertyChangedEventArgs("JobList"));
         }
 
         public void RequestJobDetails(NetworkJob job)
@@ -101,7 +103,7 @@ namespace VoluntLib2
 
         }
 
-        public BigInteger CreateNetworkJob(string world, string jobType, string jobName, string description, byte[] payload, BigInteger numberOfBlocks)
+        public BigInteger CreateNetworkJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
             return BigInteger.Zero;
         }
@@ -118,7 +120,19 @@ namespace VoluntLib2
 
         public List<NetworkJob> GetJobsOfWorld(string world)
         {
-            return new List<NetworkJob>();
+            var list = new List<NetworkJob>();
+            for (int i = 0; i < 10; i++)
+            {
+                NetworkJob job = new NetworkJob(i);
+                job.JobName = "Fubar" + i;
+                job.JobType = "Bla";
+                job.JobDescription = "Blubb";
+                //job.StateConfig = new EpochStateConfig();
+                //job.StateConfig.BitMaskWidth = 1000;
+                //job.StateConfig.NumberOfBlocks = 10000;
+                list.Add(job);
+            }
+            return list;
         }
 
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
