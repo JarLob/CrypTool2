@@ -36,6 +36,9 @@ namespace VoluntLib2.ManagementLayer
         public string JobType { get; set; }
         public string JobDescription { get; set; }
         public byte[] JobPayload { get; set; }
+
+        public BigInteger NumberOfBlocks { get; set; }
+
         //public EpochStateConfig StateConfig { get; set; }
         public bool IsDeleted { get; set; }
 

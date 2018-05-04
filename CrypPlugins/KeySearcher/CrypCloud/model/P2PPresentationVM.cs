@@ -68,10 +68,10 @@ namespace KeySearcher.CrypCloud
 
             JobName = job.JobName;
 
-            if (job.StateConfig.NumberOfBlocks != 0)
+            if (job.NumberOfBlocks != 0)
             {
                 FinishedNumberOfBlocks = CrypCloudCore.Instance.GetCalculatedBlocksOfJob(jobId);
-                var progress = 100 * finishedNumberOfBlocks.DivideAndReturnDouble(job.StateConfig.NumberOfBlocks);
+                var progress = 100 * finishedNumberOfBlocks.DivideAndReturnDouble(job.NumberOfBlocks);
                 GlobalProgress = progress;
                 OnPropertyChanged("GlobalProgressString"); 
             }

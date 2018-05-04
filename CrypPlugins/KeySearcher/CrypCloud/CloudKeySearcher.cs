@@ -52,7 +52,7 @@ namespace KeySearcher
                 var jobData = CrypCloudCore.Instance.GetJobDataById(jobId);
                 var jobProgressEventArgs = new JobProgressEventArgs(jobId,
                     jobData.GetCurrentTopList(),
-                    jobData.Job.StateConfig.NumberOfBlocks,
+                    jobData.Job.NumberOfBlocks,
                     jobData.CalculatedBlocks()
                 );
 

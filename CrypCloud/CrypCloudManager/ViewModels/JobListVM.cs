@@ -203,7 +203,10 @@ namespace CrypCloud.Manager.ViewModels
         private NetworkJobItem ConvertToListItem(NetworkJob job)
         {
             var epochProgress = 0;
-            /*if (job.StateConfig.MaximumEpoch != 0)
+
+            /* ToDo: update with VoluntLib2
+             * 
+             * if (job.StateConfig.MaximumEpoch != 0)
             {
                 epochProgress = (int) (100 * crypCloudCore.GetEpochOfJob(job).DivideAndReturnDouble(job.StateConfig.MaximumEpoch));
             } */

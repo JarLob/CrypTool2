@@ -59,7 +59,6 @@
     <Compile Include="ComputationLayer\AWorker.cs" />
     <Compile Include="ComputationLayer\CalculationResult.cs" />
     <Compile Include="ComputationLayer\EpochState.cs" />
-    <Compile Include="ComputationLayer\EpochStateConfig.cs" />
     <Compile Include="Tools\ISerializable.cs" />
     <Compile Include="ComputationLayer\JobProgressEventArgs.cs" />
     <Compile Include="ManagementLayer\NetworkJob.cs" />
