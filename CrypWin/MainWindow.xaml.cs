@@ -575,17 +575,25 @@ namespace Cryptool.CrypWin
             //Install validation callback
             try
             {
-                // 18.12.12, AW: Not needed anymore.
-                //serverTlsCertificate1 = new System.Security.Cryptography.X509Certificates.X509Certificate(global::Cryptool.CrypWin.Properties.Resources.www_cryptool_org);
-                //serverTlsCertificate2 = new System.Security.Cryptography.X509Certificates.X509Certificate(global::Cryptool.CrypWin.Properties.Resources.old_www_cryptool_org);
-
                 ServicePointManager.ServerCertificateValidationCallback = UpdateServerCertificateValidationCallback;
-      
             }
             catch (Exception ex)
             {
-                //GuiLogMessage(string.Format("Error occured while loading certificates: {0}", ex), NotificationLevel.Error);
                 GuiLogMessage(string.Format("Error while initializing the certificate callback: {0}", ex), NotificationLevel.Error);
+            }
+
+            //Enforce usage of TLS 1.2
+            try
+            {
+                //Enable TLS 1.2
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+
+                //Disable old SSL and TLS versions
+                ServicePointManager.SecurityProtocol &= ~(SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11);
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(string.Format("Error while enabling TLS 1.2 and disabling old protocols: {0}", ex), NotificationLevel.Error);
             }
 
             InitCould();
@@ -789,19 +797,7 @@ namespace Cryptool.CrypWin
             {
                 GuiLogMessage("CrypWin: General SSL/TLS policy error: " + sslPolicyErrors.ToString() + " Aborting connection.", NotificationLevel.Error);
                 return false;
-            }
-
-            // 18.12.2012, AW: Decided to skip the following check. It is not required, as we use official certifcates with valid chains, hence wrong 
-            // certificates should be detected with the checks above.
-
-            // Why do we check this?
-            // Check equality of remote and local certificate
-            // check for current and new certificate, in case server-certificate is changed
-            //if (!(certificate.Equals(this.serverTlsCertificate1) | certificate.Equals(this.serverTlsCertificate2)))
-            //{
-            //    GuiLogMessage("CrypWin: Received TLS certificate is not the expected certificate: Equality check failed!", NotificationLevel.Error);
-            //    return false;
-            //}
+            }           
 
             GuiLogMessage("CrypWin: The webserver serving the URL " + ((HttpWebRequest)sender).Address.ToString() + " provided a valid SSL/TLS certificate. We trust it." + Environment.NewLine + 
                 "Certificate:  " + certificate.Subject + Environment.NewLine +
