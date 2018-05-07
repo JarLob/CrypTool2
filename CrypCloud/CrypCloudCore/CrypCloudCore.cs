@@ -159,21 +159,21 @@ namespace CrypCloud.Core
 
         #region job information
 
-        public List<NetworkJob> GetJobs()
+        public List<Job> GetJobs()
         {
             if (!voluntLib.IsStarted)
             {
-                return new List<NetworkJob>();
+                return new List<Job>();
             }
 
             return voluntLib.GetJobsOfWorld(DefaultWorld);
         }
 
-        public NetworkJob GetJobsById(BigInteger jobid)
+        public Job GetJobsById(BigInteger jobid)
         {
             if (!voluntLib.IsStarted)
             {
-                return new NetworkJob(jobid);
+                return new Job(jobid);
             }
 
             return voluntLib.GetJobByID(jobid);
@@ -286,7 +286,7 @@ namespace CrypCloud.Core
             return voluntLib.GetVisualizationOfJobState(jobId);
         }
 
-        public bool UserCanDeleteJob(NetworkJob job)
+        public bool UserCanDeleteJob(Job job)
         {
             return voluntLib.CanUserDeleteJob(job);
         }
@@ -421,7 +421,7 @@ namespace CrypCloud.Core
 
         #endregion
 
-        public BigInteger GetEpochOfJob(NetworkJob job)
+        public BigInteger GetEpochOfJob(Job job)
         {
             var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
             return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
@@ -436,7 +436,7 @@ namespace CrypCloud.Core
 
     public class NetworkJobData
     {
-        public NetworkJob Job { get; set; }
+        public Job Job { get; set; }
         public Func<BigInteger> CalculatedBlocks { get; set; }
         public Func<bool> HasWorkspace { get; set; }
         public Func<WorkspaceModel> Workspace { get; set; }

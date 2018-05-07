@@ -88,7 +88,7 @@ namespace VoluntLib2
             JobListChanged.Invoke(this, new PropertyChangedEventArgs("JobList"));
         }
 
-        public void RequestJobDetails(NetworkJob job)
+        public void RequestJobDetails(Job job)
         {
 
         }
@@ -108,9 +108,9 @@ namespace VoluntLib2
             return BigInteger.Zero;
         }
 
-        public NetworkJob GetJobByID(BigInteger jobID)
+        public Job GetJobByID(BigInteger jobID)
         {
-            return new NetworkJob(jobID);
+            return new Job(jobID);
         }
 
         public List<string> GetWorldNames()
@@ -118,12 +118,12 @@ namespace VoluntLib2
             return new List<string>();
         }
 
-        public List<NetworkJob> GetJobsOfWorld(string world)
+        public List<Job> GetJobsOfWorld(string world)
         {
-            var list = new List<NetworkJob>();
+            var list = new List<Job>();
             for (int i = 0; i < 10; i++)
             {
-                NetworkJob job = new NetworkJob(i);
+                Job job = new Job(i);
                 job.JobName = "Fubar" + i;
                 job.JobType = "Bla";
                 job.JobDescription = "Blubb";
@@ -155,7 +155,7 @@ namespace VoluntLib2
             return new Bitmap(255, 255);
         }
 
-        public bool CanUserDeleteJob(NetworkJob job)
+        public bool CanUserDeleteJob(Job job)
         {
             return false;
         }

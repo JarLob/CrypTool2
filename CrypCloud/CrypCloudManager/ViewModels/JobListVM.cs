@@ -200,7 +200,7 @@ namespace CrypCloud.Manager.ViewModels
 
         #region helper
 
-        private NetworkJobItem ConvertToListItem(NetworkJob job)
+        private NetworkJobItem ConvertToListItem(Job job)
         {
             var epochProgress = 0;
 

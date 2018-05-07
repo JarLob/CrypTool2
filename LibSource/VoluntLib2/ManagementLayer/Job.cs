@@ -22,12 +22,12 @@ using VoluntLib2.ComputationLayer;
 
 namespace VoluntLib2.ManagementLayer
 {
-    public class NetworkJob : IEquatable<NetworkJob>
+    public class Job : IEquatable<Job>
     {
         private const int STRING_MAX_LENGTH = 255;
         private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb
 
-        public NetworkJob(BigInteger jobID)
+        public Job(BigInteger jobID)
         {
             JobID = jobID;
             JobName = string.Empty;
@@ -51,14 +51,14 @@ namespace VoluntLib2.ManagementLayer
         public bool IsDeleted { get; set; }
         public byte[] JobPayload { get; set; }
 
-        public bool Equals(NetworkJob other)
+        public bool Equals(Job other)
         {
             return other.JobID.Equals(JobID);
         }
 
         public bool HasPayload()
         {
-            return JobPayload != null;
+            return JobPayload != null && JobPayload.Length > 0;
         }
 
         public override int GetHashCode()
@@ -248,8 +248,10 @@ namespace VoluntLib2.ManagementLayer
             builder.AppendLine("" + NumberOfBlocks + ",");
             builder.Append("  IsDeleted: ");
             builder.AppendLine("" + IsDeleted + ",");
+            builder.Append("  HasPayload: ");
+            builder.AppendLine("" + HasPayload() + ",");
             builder.Append("  JobPayload: ");
-            builder.AppendLine("" + BitConverter.ToString(JobPayload) + ",");
+            builder.AppendLine("" + BitConverter.ToString(JobPayload));
             builder.AppendLine("}");
 
             return builder.ToString();
