@@ -21,7 +21,7 @@ using System.Text;
 using VoluntLib2.ComputationLayer;
 
 namespace VoluntLib2.ManagementLayer
-{
+{    
     public class Job : IEquatable<Job>
     {
         private const int STRING_MAX_LENGTH = 255;
@@ -38,7 +38,6 @@ namespace VoluntLib2.ManagementLayer
             NumberOfBlocks = BigInteger.Zero;
             IsDeleted = false;
             JobPayload = new byte[0];
-
         }
 
         public BigInteger JobID { get; set; }
@@ -230,7 +229,7 @@ namespace VoluntLib2.ManagementLayer
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("NetworkJob");
+            builder.AppendLine("Job");
             builder.AppendLine("{");
             builder.Append("  JobID: ");
             builder.AppendLine(JobID + ",");

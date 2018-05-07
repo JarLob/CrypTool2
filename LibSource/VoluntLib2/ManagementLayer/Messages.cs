@@ -57,11 +57,11 @@ namespace VoluntLib2.ManagementLayer.Messages
                 case MessageType.Undefined:
                     throw new VoluntLib2MessageDeserializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));
                 case MessageType.CreateJobMessage:
-                    message = new CreateNetworkJobMessage();
+                    message = new CreateJobMessage();
                     message.Deserialize(data);
                     return message;
                 case MessageType.DeleteJobMessage:
-                    message = new DeleteNetworkJobMessage();
+                    message = new DeleteJobMessage();
                     message.Deserialize(data);
                     return message;
                 case MessageType.RequestJobListMessage:
@@ -73,15 +73,15 @@ namespace VoluntLib2.ManagementLayer.Messages
                     message.Deserialize(data);
                     return message;
                 case MessageType.RequestJobMessage:
-                    message = new RequestJobDetailsMessage();
+                    message = new RequestJobMessage();
                     message.Deserialize(data);
                     return message;
                 case MessageType.ResponseJobMessage:
-                    message = new ResponseJobDetailsMessage();
+                    message = new ResponseJobMessage();
                     message.Deserialize(data);
                     return message;
                 case MessageType.JobStateMessage:
-                    message = new PropagateJobStateMessage();
+                    message = new JobStateMessage();
                     message.Deserialize(data);
                     return message;
                 //add new message types here
@@ -119,6 +119,10 @@ namespace VoluntLib2.ManagementLayer.Messages
             SenderName = string.Empty;
         }
 
+        /// <summary>
+        /// Creates a serialization of this message and returns it in a byte array
+        /// </summary>
+        /// <returns></returns>
         public byte[] Serialize()
         {
             //World Name
@@ -175,6 +179,11 @@ namespace VoluntLib2.ManagementLayer.Messages
 
             return data;
         }
+
+        /// <summary>
+        /// Deserialize a message using the given byte array
+        /// </summary>
+        /// <param name="data"></param>
         public void Deserialize(byte[] data)
         {
             MessageId = new byte[16];
@@ -199,6 +208,10 @@ namespace VoluntLib2.ManagementLayer.Messages
             Array.Copy(data, 27 + worldNameLength + senderNameLength + certificateDataLength, SignatureData, 0, signatureDataLength);
         }
 
+        /// <summary>
+        /// Returns a string representation of this message
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -233,8 +246,9 @@ namespace VoluntLib2.ManagementLayer.Messages
         public const string VLIB2MNGMT = "VLib2Mngmt";  //Magic Number to identify VoluntLib2 management protocol
         public const byte VOLUNTLIB2_VERSION = 0x01;    //Protocol version number
 
+        public byte[] PeerId;                           //set by receiving thread; will not be serialized
         public MessageHeader MessageHeader;
-        public byte[] Payload;                              //length defined by header.PayloadLength
+        public byte[] Payload;                          //length defined by header.PayloadLength
         public byte VoluntLibVersion = VOLUNTLIB2_VERSION;
 
         public Message()
@@ -301,6 +315,11 @@ namespace VoluntLib2.ManagementLayer.Messages
 
             return messagebytes;
         }
+
+        /// <summary>
+        /// Deserialize a message using the given byte array
+        /// </summary>
+        /// <param name="data"></param>
         public virtual void Deserialize(byte[] data)
         {
             if (data.Length < 27)
@@ -310,7 +329,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VLIB2MNGMT))
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected {0}. Received {1}", VLIB2MNGMT, magicnumber));
+                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VLIB2MNGMT, magicnumber));
             }
             if (data[10] > VOLUNTLIB2_VERSION)
             {
@@ -327,11 +346,14 @@ namespace VoluntLib2.ManagementLayer.Messages
         }
     }
 
-    internal class CreateNetworkJobMessage : Message
+    /// <summary>
+    /// Message for job creation
+    /// </summary>
+    internal class CreateJobMessage : Message
     {
-        public Job NetworkJob { get; set; }
+        public Job Job { get; set; }
 
-        public CreateNetworkJobMessage()
+        public CreateJobMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.CreateJobMessage;
@@ -339,23 +361,27 @@ namespace VoluntLib2.ManagementLayer.Messages
 
         public override byte[] Serialize(bool signMessage = true)
         {
-            Payload = NetworkJob.Serialize();            
+            Payload = Job.Serialize();            
             return base.Serialize(signMessage);
         }
 
         public override void Deserialize(byte[] data)
         {
             base.Deserialize(data);
-            NetworkJob = new Job(0);
-            NetworkJob.Deserialize(Payload);
+            Job = new Job(0);
+            Job.Deserialize(Payload);
         }
 
     }
-    internal class DeleteNetworkJobMessage : Message
-    {
-        public Job NetworkJob { get; set; }
 
-        public DeleteNetworkJobMessage()
+    /// <summary>
+    /// Message for job deletion
+    /// </summary>
+    internal class DeleteJobMessage : Message
+    {
+        public Job Job { get; set; }
+
+        public DeleteJobMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.DeleteJobMessage;
@@ -363,18 +389,21 @@ namespace VoluntLib2.ManagementLayer.Messages
 
         public override byte[] Serialize(bool signMessage = true)
         {
-            Payload = NetworkJob.Serialize();
+            Payload = Job.Serialize();
             return base.Serialize(signMessage);
         }
 
         public override void Deserialize(byte[] data)
         {
             base.Deserialize(data);
-            NetworkJob = new Job(0);
-            NetworkJob.Deserialize(Payload);
+            Job = new Job(0);
+            Job.Deserialize(Payload);
         }
     }
 
+    /// <summary>
+    /// Message to request the job lists of a neighbor
+    /// </summary>
     internal class RequestJobListMessage : Message
     {
         public RequestJobListMessage()
@@ -383,17 +412,22 @@ namespace VoluntLib2.ManagementLayer.Messages
             MessageHeader.MessageType = MessageType.RequestJobListMessage;
         }
     }
-    public class ResponseJobListMessage : Message
+
+    /// <summary>
+    /// Message to answer the job request of a neighbor
+    /// </summary>
+    internal class ResponseJobListMessage : Message
     {
-        public List<Job> NetworkJobs = new List<Job>();
+        public List<Job> Jobs = new List<Job>();
         public ResponseJobListMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.ResponseJobListMessage;
         }
+
         public override byte[] Serialize(bool signMessage = true)
         {
-            Payload = SerializeNetworkJobsList();
+            Payload = SerializeJobList();
             return base.Serialize(signMessage);
         }
 
@@ -401,19 +435,19 @@ namespace VoluntLib2.ManagementLayer.Messages
         {
             base.Deserialize(data);
 
-            NetworkJobs = DeserializeNetworkJobsList(Payload);
+            Jobs = DeserializeJobList(Payload);
         }
 
-        private byte[] SerializeNetworkJobsList()
+        private byte[] SerializeJobList()
         {
             int size = 0;            
-            ushort numberOfJobs = (ushort)NetworkJobs.Count;
+            ushort numberOfJobs = (ushort)Jobs.Count;
             byte[] numberOfJobsBytes = BitConverter.GetBytes(numberOfJobs);
             size += 2;
 
             List<byte[]> serializedJobs = new List<byte[]>();
 
-            foreach(Job job in NetworkJobs)
+            foreach(Job job in Jobs)
             {
                 byte[] serializedJob = job.Serialize();
                 serializedJobs.Add(serializedJob);
@@ -437,7 +471,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             return data;
         }
 
-        private List<Job> DeserializeNetworkJobsList(byte[] Payload)
+        private List<Job> DeserializeJobList(byte[] Payload)
         {
             List<Job> jobList = new List<Job>();
             int offset = 0;
@@ -457,26 +491,53 @@ namespace VoluntLib2.ManagementLayer.Messages
             return jobList;
         }
     }
-    internal class RequestJobDetailsMessage : Message
+
+    /// <summary>
+    /// Message to request details of a job
+    /// </summary>
+    internal class RequestJobMessage : Message
     {
-        public RequestJobDetailsMessage()
+        public RequestJobMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.RequestJobMessage;
         }
     }
-    internal class ResponseJobDetailsMessage : Message
+
+    /// <summary>
+    /// Message to response the details, i.e. Payload, of a job
+    /// </summary>
+    internal class ResponseJobMessage : Message
     {
-        public ResponseJobDetailsMessage()
+        public Job Job { get; set; }
+
+        public ResponseJobMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.ResponseJobMessage;
         }
+
+        public override byte[] Serialize(bool signMessage = true)
+        {
+            Payload = Job.Serialize();
+            return base.Serialize(signMessage);
+        }
+
+        public override void Deserialize(byte[] data)
+        {
+            base.Deserialize(data);
+            Job = new Job(0);
+            Job.Deserialize(Payload);
+        }
+
     }
 
-    internal class PropagateJobStateMessage : Message
+    /// <summary>
+    /// Message to send state of a job
+    /// </summary>
+    internal class JobStateMessage : Message
     {
-        public PropagateJobStateMessage()
+        public JobStateMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.JobStateMessage;

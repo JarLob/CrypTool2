@@ -41,7 +41,7 @@ namespace VoluntLib2.ConnectionLayer
 
         private const int RECEIVE_TIMEOUT = 100; //ms
         private const int SEND_TIMEOUT = 100; //ms
-        private const int MAX_TERMINATION_WAIT_TIME = 5000; //s
+        private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
         private const int MAX_UDP_MESSAGE_PAYLOAD_SIZE = 65507; //maximum size of UDP payload
         private const int WORKER_THREAD_SLEEPTIME = 1; // ms
 
@@ -69,7 +69,7 @@ namespace VoluntLib2.ConnectionLayer
         private bool Running = false;
         private UdpClient Client;                   // udp client for sending/receiving
         private Thread ReceivingThread;             // responsible thread for receiving UDP packets
-        private Thread WorkerThread;  // responsible thread for execution of operations
+        private Thread WorkerThread;                // responsible thread for execution of operations
 
         //a list containing our bootstrap peers
         private List<Contact> WellKnownPeers = new List<Contact>();
@@ -180,7 +180,6 @@ namespace VoluntLib2.ConnectionLayer
                     try
                     {                        
                         message = MessageHelper.Deserialize(data);                      
-                        //override data to seen external data
                         message.MessageHeader.SenderIPAddress = remoteEndpoint.Address.GetAddressBytes();
                         message.MessageHeader.SenderExternalPort = (ushort)remoteEndpoint.Port;
                         Logger.LogText(String.Format("Received a {0} from {1}.", message.MessageHeader.MessageType.ToString(), remoteEndpoint.Address + ":" + remoteEndpoint.Port), this, Logtype.Debug);
@@ -238,7 +237,7 @@ namespace VoluntLib2.ConnectionLayer
 
                 }
                 catch (SocketException)
-                {
+                {            
                     //do nothing
                 }
                 catch (Exception ex)
@@ -481,11 +480,15 @@ namespace VoluntLib2.ConnectionLayer
         /// Stops the ConnectionManager by setting the Running flag to false
         /// </summary>
         public void Stop()
-        {            
+        {
+            if (!Running)
+            {
+                return;
+            }
             Logger.LogText("Stop method was called...", this, Logtype.Info);
             Running = false;
             DateTime start = DateTime.Now;
-            while (ReceivingThread.IsAlive && WorkerThread.IsAlive && DateTime.Now < start.AddMilliseconds(MAX_TERMINATION_WAIT_TIME))
+            while ((ReceivingThread.IsAlive || WorkerThread.IsAlive) && DateTime.Now < start.AddMilliseconds(MAX_TERMINATION_WAIT_TIME))
             {
                 Thread.Sleep(100);
             }
@@ -554,7 +557,6 @@ namespace VoluntLib2.ConnectionLayer
                 Logger.LogText(String.Format("Could not dispose UDP client: {0}", ex.Message), this, Logtype.Error);
                 Logger.LogException(ex, this, Logtype.Error);
             }
-
             Logger.LogText("Terminated", this, Logtype.Info);
         }
 

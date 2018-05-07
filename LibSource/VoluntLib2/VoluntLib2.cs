@@ -36,6 +36,7 @@ namespace VoluntLib2
     {
         private CertificateService CertificateService = CertificateService.GetCertificateService();
         private ConnectionManager ConnectionManager;
+        private JobManager JobManager;
         private Logger Logger = Logger.GetLogger();
 
         private ushort ListenPort = 0;        
@@ -50,7 +51,7 @@ namespace VoluntLib2
 
         public VoluntLib()
         {
-            Logger.SetLogLevel(Logtype.Info);
+            Logger.SetLogLevel(Logtype.Debug);
         }
     
         public string LocalStoragePath { get; set; }
@@ -61,7 +62,10 @@ namespace VoluntLib2
 
         public void Stop()
         {
+            //we have to first stop the connection manager; otherwise the JobManager remains 
+            //blocked in its receiving thread and can not be stopped
             ConnectionManager.Stop();
+            JobManager.Stop();                        
             IsStarted = false;
         }
 
@@ -74,7 +78,10 @@ namespace VoluntLib2
             //Well known peer for testing - my amazon server; will be replaced by official CT2 servers
             ConnectionManager.AddWellknownPeer(IPAddress.Parse("34.218.183.126"), 10000);
             ConnectionManager.Start();
-            
+
+            JobManager = new JobManager(ConnectionManager);
+            JobManager.Start();
+
             IsStarted = true;            
         }               
 
@@ -120,19 +127,7 @@ namespace VoluntLib2
 
         public List<Job> GetJobsOfWorld(string world)
         {
-            var list = new List<Job>();
-            for (int i = 0; i < 10; i++)
-            {
-                Job job = new Job(i);
-                job.JobName = "Fubar" + i;
-                job.JobType = "Bla";
-                job.JobDescription = "Blubb";
-                //job.StateConfig = new EpochStateConfig();
-                //job.StateConfig.BitMaskWidth = 1000;
-                //job.StateConfig.NumberOfBlocks = 10000;
-                list.Add(job);
-            }
-            return list;
+            return new List<Job>();            
         }
 
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)

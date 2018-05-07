@@ -236,7 +236,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VOLUNTLIB2))
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected {0}. Received {1}", VOLUNTLIB2, magicnumber));
+                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VOLUNTLIB2, magicnumber));
             }
             if (data[10] > VOLUNTLIB2_VERSION)
             {

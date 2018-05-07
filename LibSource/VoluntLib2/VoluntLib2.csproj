@@ -49,6 +49,7 @@
     <Compile Include="ConnectionLayer\Contact.cs" />
     <Compile Include="ManagementLayer\JobManager.cs" />
     <Compile Include="ManagementLayer\Messages.cs" />
+    <Compile Include="ManagementLayer\Operations.cs" />
     <Compile Include="Tools\CertificateService.cs" />
     <Compile Include="Tools\Logger.cs" />
     <Compile Include="ConnectionLayer\Messages.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="ComputationLayer\EpochState.cs" />
     <Compile Include="Tools\ISerializable.cs" />
     <Compile Include="ComputationLayer\JobProgressEventArgs.cs" />
-    <Compile Include="ManagementLayer\NetworkJob.cs" />
+    <Compile Include="ManagementLayer\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComputationLayer\TaskEventArgs.cs" />
     <Compile Include="Tools\VoluntLib2MessageDeserializationException.cs" />
