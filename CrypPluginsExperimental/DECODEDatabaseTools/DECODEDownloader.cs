@@ -109,7 +109,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             ProgressChanged(0, 1);
             try
             {
-               jsonDownloaderAndConverter.GetRecordsList(JsonDownloaderAndConverter.DOWNLOAD_RECORDS_URL);
+               jsonDownloaderAndConverter.GetRecordsList(JsonDownloaderAndConverter.DOWNLOAD_URL);
             }
             catch (Exception ex)
             {
@@ -173,12 +173,9 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             try
             {
                 Records records;
-                //dirty hack
-                string json = "{\"records\":{" + UTF8Encoding.UTF8.GetString(args.Result) + "}";
-                byte[] data = UTF8Encoding.UTF8.GetBytes(json);
                 //end of dirty hack
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(Records));
-                using (MemoryStream stream = new MemoryStream(data))
+                using (MemoryStream stream = new MemoryStream(args.Result))
                 {
                     stream.Position = 0;
                     try

@@ -27,8 +27,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
 {
     public class JsonDownloaderAndConverter : IDisposable
     {
-        public const string DOWNLOAD_RECORDS_URL = "https://stp.lingfil.uu.se/decodedev/records";
-        public const string DOWNLOAD_RECORD_URL = "https://stp.lingfil.uu.se/decodedev/records/";
+        public const string DOWNLOAD_URL = "https://stp.lingfil.uu.se/decodedev/records";
 
         public const string GETRECORDLIST = "GetRecordsList";
         public const string GETRECORDSTRING = "GetRecordString";
@@ -160,7 +159,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools
             {
                 WebClient.Headers.Add("Accept", "application/json");
                 WebClient.Headers.Add("Accept", "text/plain");
-                string url = DOWNLOAD_RECORD_URL + "/" + record.id;
+                string url = DOWNLOAD_URL + "/" + record.record_id;
                 WebClient.DownloadStringAsync(new Uri(url), "GetRecordString");
             }
             catch (Exception ex)

@@ -44,7 +44,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
     public class RecordsRecord
     {
         [DataMember]
-        public int id { get; set; }
+        public int record_id { get; set; }
 
         [DataMember]
         public string name { get; set; }
@@ -343,6 +343,8 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
         public List<Document> transcription { get; set; }
         [DataMember]
         public List<Document> translation { get; set; }
+        [DataMember]
+        public List<Document> miscellaneous { get; set; }
 
         /// <summary>
         /// All documents merged in one list
@@ -359,6 +361,7 @@ namespace Cryptool.Plugins.DECODEDatabaseTools.DataObjects
                 documents.AddRange(transcription);
                 documents.AddRange(transcription);
                 documents.AddRange(translation);
+                documents.AddRange(miscellaneous);
                 return documents;
             }
         }
