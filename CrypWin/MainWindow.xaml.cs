@@ -799,10 +799,14 @@ namespace Cryptool.CrypWin
                 return false;
             }           
 
-            GuiLogMessage("CrypWin: The webserver serving the URL " + ((HttpWebRequest)sender).Address.ToString() + " provided a valid SSL/TLS certificate. We trust it." + Environment.NewLine + 
+            /* Removed by Nils Kopal 07th May 2018. We also use TLS for communication with DECODE database. Every time we talk to it, this message appeared.
+               We only want to see messages when something BAD happens... not always in the good case...
+              
+              GuiLogMessage("CrypWin: The webserver serving the URL " + ((HttpWebRequest)sender).Address.ToString() + " provided a valid SSL/TLS certificate. We trust it." + Environment.NewLine + 
                 "Certificate:  " + certificate.Subject + Environment.NewLine +
                 "Issuer: " + certificate.Issuer, 
                 NotificationLevel.Debug);
+             */
             
             return true;
         }
