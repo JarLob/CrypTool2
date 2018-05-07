@@ -4,13 +4,12 @@ using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
-using CertificateLibrary.Network;
 using CrypCloud.Core; 
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
-using PeersAtPlay.CertificateLibrary.Network;
-using PeersAtPlay.CertificateLibrary.Util;
 using WorkspaceManager.Model;
+using CrypTool.CertificateLibrary.Util;
+using CrypTool.CertificateLibrary.Network;
 
 namespace CrypCloud.Manager.ViewModels
 {

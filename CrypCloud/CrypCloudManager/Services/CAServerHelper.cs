@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CertificateLibrary.Network;
 using Cryptool.PluginBase.Miscellaneous;
-using PeersAtPlay.CertificateLibrary.Network;
+using CrypTool.CertificateLibrary.Network;
 
 namespace CrypCloud.Manager.Services
 {

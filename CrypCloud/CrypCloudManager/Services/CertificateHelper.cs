@@ -1,17 +1,17 @@
-﻿using System;
+﻿using CrypTool.CertificateLibrary.Certificates;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
-using PeersAtPlay.CertificateLibrary.Certificates;
 
 namespace CrypCloud.Manager
 {
     public class CertificateHelper
     {
-        
-        public static readonly string DefaultUserCertificateDir = PeerCertificate.DefaultUserCertificateDirectory;
+
+        public static readonly string DefaultUserCertificateDir = PeerCertificate.DEFAULT_USER_CERTIFICATE_DIRECTORY;
         private const string CertFileExtention = ".p12";
 
         public static List<string> GetNamesOfKnownCertificates()

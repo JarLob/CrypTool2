@@ -2,8 +2,8 @@
 using System.Security;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
-using PeersAtPlay.CertificateLibrary.Network;
-using PeersAtPlay.CertificateLibrary.Util;
+using CrypTool.CertificateLibrary.Network;
+using CrypTool.CertificateLibrary.Util;
 
 namespace CrypCloud.Manager.ViewModels
 {
