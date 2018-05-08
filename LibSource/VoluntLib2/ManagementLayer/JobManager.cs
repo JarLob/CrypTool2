@@ -308,7 +308,6 @@ namespace VoluntLib2.ManagementLayer
             job.JobName = jobName;
             job.JobDescription = jobDescription;
             job.JobPayload = payloadCopy;
-            job.JobPayload = new byte[0];
             job.NumberOfBlocks = numberOfBlocks;
             job.Creator = CertificateService.GetCertificateService().OwnName;
             job.CreationDate = DateTime.UtcNow;
