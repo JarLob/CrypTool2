@@ -670,14 +670,14 @@ namespace VoluntLib2.ConnectionLayer
         /// Otherwise sends data only to specific peer if known; but to all known ip/ports of this peer
         /// </summary>
         /// <param name="data"></param>
-        public void SendData(Data data, byte[] PeerId = null)
+        public void SendData(byte[] data, byte[] PeerId = null)
         {            
             if (PeerId != null && PeerId.Length != 16)
             {
                 throw new Exception(String.Format("Invalid PeerID length. Expected 16 but obtained {0}", PeerId.Length));
             }            
             DataMessage dataMessage = new DataMessage();
-            dataMessage.Payload = data.Payload;
+            dataMessage.Payload = data;
             if (PeerId != null)
             {
                 dataMessage.MessageHeader.ReceiverPeerId = PeerId;

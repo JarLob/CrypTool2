@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using VoluntLib2.ManagementLayer.Messages;
+using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {
@@ -52,22 +53,179 @@ namespace VoluntLib2.ManagementLayer
         public abstract void HandleMessage(Message message);
     }
 
-    internal class TestOperation : Operation
+    /// <summary>
+    /// Operation for sharing JobLists every 5 minutes
+    /// </summary>
+    internal class ShareJobListOperation : Operation
     {
+        private Logger Logger = Logger.GetLogger();
+        private const int SHARE_INTERVAL = 300000; //5min
+        private DateTime LastExecutionTime = DateTime.Now;
 
+        /// <summary>
+        /// The ShareJobListOperation never finishes
+        /// </summary>
         public override bool IsFinished
         {
             get { return false; }
         }
 
+        /// <summary>
+        /// Execute this operation
+        /// </summary>
         public override void Execute()
         {
-            
+            if (DateTime.Now > LastExecutionTime.AddMilliseconds(SHARE_INTERVAL))
+            {
+                Logger.LogText("Sending ResponseJobListMessages to all neighbors", this, Logtype.Debug);
+                //Send a ResponseJobListMessage to every neighbor
+                JobManager.SendResponseJobListMessage(null);
+                LastExecutionTime = DateTime.Now;
+            }
         }
 
+        /// <summary>
+        /// Handles an incoming Message
+        /// </summary>
+        /// <param name="message"></param>
         public override void HandleMessage(Message message)
         {
-            
+            //this operation does nothing with messages
+        }
+    }
+
+    /// <summary>
+    /// Operation for requesting JobLists every 5 minutes
+    /// </summary>
+    internal class RequestJobListOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        private const int REQUEST_INTERVAL = 300000; //5min
+        private DateTime LastExecutionTime = DateTime.Now.Subtract(new TimeSpan(REQUEST_INTERVAL));
+
+        /// <summary>
+        /// The RequestJobListOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Execute this operation
+        /// </summary>
+        public override void Execute()
+        {
+            if (DateTime.Now > LastExecutionTime.AddMilliseconds(REQUEST_INTERVAL))
+            {
+                Logger.LogText("Sending RequestJobListMessages to all neighbors", this, Logtype.Debug);
+                //Send a ResponseJobListMessage to every neighbor
+                JobManager.SendRequestJobListMessage(null);
+                LastExecutionTime = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Handles an incoming Message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {
+            //this operation does nothing with messages
+        }
+
+        /// <summary>
+        /// Sets the last execution time to min value forcing it to be executed
+        /// </summary>
+        public void ForceExecution()
+        {
+            LastExecutionTime = DateTime.MinValue;
+        }
+    }
+
+    /// <summary>
+    /// Operation for answering RequestJobListMessages
+    /// </summary>
+    internal class ResponseJobListOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        
+        /// <summary>
+        /// The ResponseJobListOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Execute this operation
+        /// </summary>
+        public override void Execute()
+        {            
+        }
+
+        /// <summary>
+        /// Handles an incoming Message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {
+            if (message is RequestJobListMessage)
+            {
+                Logger.LogText(String.Format("Received a RequestJobListMessage from peer {0}. Answering now.", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
+                JobManager.SendResponseJobListMessage(message.PeerId);
+            }
+        }       
+    }
+
+    /// <summary>
+    /// Operation for handling ResponseJobListMessage
+    /// </summary>
+    internal class HandleJobListResponseOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+
+        /// <summary>
+        /// The HandleJobListResponseOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Execute this operation
+        /// </summary>
+        public override void Execute()
+        {
+        }
+
+        /// <summary>
+        /// Handles an incoming Message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {
+            if (message is ResponseJobListMessage)
+            {
+                Logger.LogText(String.Format("Received a ResponseJobListMessage from peer {0}. Updating my jobs", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
+                ResponseJobListMessage responseJobListMessage = (ResponseJobListMessage)message;
+                bool newJobReceived = false;
+                foreach (var job in responseJobListMessage.Jobs)
+                {
+                    if(!JobManager.Jobs.ContainsKey(job.JobID))
+                    {
+                        JobManager.Jobs.TryAdd(job.JobID, job);
+                        newJobReceived = true;
+                    }
+                }
+                //we received at least one new job. Thus, we inform that the job list changed
+                if (newJobReceived)
+                {
+                    JobManager.OnJobListChanged();
+                }
+            }
         }
     }
 }

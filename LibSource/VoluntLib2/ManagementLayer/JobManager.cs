@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -48,6 +49,8 @@ namespace VoluntLib2.ManagementLayer
         //a dictionary containing all the jobs
         internal ConcurrentDictionary<BigInteger, Job> Jobs = new ConcurrentDictionary<BigInteger, Job>();
 
+        public event PropertyChangedEventHandler JobListChanged;
+
         public JobManager(ConnectionManager connectionManager)
         {
             ConnectionManager = connectionManager;
@@ -71,9 +74,15 @@ namespace VoluntLib2.ManagementLayer
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
 
-            //This operation is responsible for answering HelloMessages:
-            Operations.Enqueue(new TestOperation() { JobManager = this });
-
+            //This operation sends every 5 minutes a ResponseJobListMessage to every neighbor
+            Operations.Enqueue(new ShareJobListOperation() { JobManager = this });
+            //This operation sends every 5 minutes a RequestJobListMessage to every neighbor
+            Operations.Enqueue(new RequestJobListOperation() { JobManager = this });
+            //This operation answers to RequestJobListMessages
+            Operations.Enqueue(new ResponseJobListOperation() { JobManager = this });
+            //This operation handles to JobListResponseMessages
+            Operations.Enqueue(new HandleJobListResponseOperation() { JobManager = this });
+            
             Logger.LogText("JobManager started", this, Logtype.Info);
         }
 
@@ -279,6 +288,140 @@ namespace VoluntLib2.ManagementLayer
                 }
             }            
             Logger.LogText("Terminated", this, Logtype.Info);
+        }
+
+        internal BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
+        {
+            byte[] payloadCopy = new byte[payload.Length];
+            if (payload.Length > 0)
+            {
+                Array.Copy(payload, 0, payloadCopy, 0, payloadCopy.Length);
+            }
+            BigInteger jobId = new BigInteger(Guid.NewGuid().ToByteArray());
+            if (jobId < 0)
+            {
+                jobId = jobId * -1;
+            }
+            Job job = new Job(jobId);
+            job.WorldName = worldName;
+            job.JobType = jobType;
+            job.JobName = jobName;
+            job.JobDescription = jobDescription;
+            job.JobPayload = payloadCopy;
+            job.JobPayload = new byte[0];
+            job.NumberOfBlocks = numberOfBlocks;
+            job.Creator = CertificateService.GetCertificateService().OwnName;
+            job.CreationDate = DateTime.UtcNow;
+            if (Jobs.TryAdd(jobId, job))
+            {
+                //Send the job to everyone else
+                SendResponseJobListMessage(null);
+                OnJobListChanged();
+                return jobId;
+            }
+            else
+            {
+                return BigInteger.MinusOne;
+            }            
+        }
+
+        internal void OnJobListChanged()
+        {
+            if (JobListChanged != null)
+            {
+                JobListChanged.BeginInvoke(this, new PropertyChangedEventArgs("JobList"), null, null);
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of all jobs with the defined world name
+        /// </summary>
+        /// <param name="world"></param>
+        /// <returns></returns>
+        internal List<Job> GetJobsOfWorld(string world)
+        {            
+            List<Job> jobs = new List<Job>();
+            foreach (Job job in Jobs.Values)
+            {
+                if (job.WorldName.Equals(world))
+                {
+                    jobs.Add(job);
+                }
+            }
+            return jobs;
+        }
+
+        /// <summary>
+        /// Returns the job with the given jobID or null if it does not exist
+        /// </summary>
+        /// <param name="jobID"></param>
+        /// <returns></returns>
+        internal Job GetJobById(BigInteger jobID)
+        {
+            if (Jobs.ContainsKey(jobID))
+            {
+                return Jobs[jobID];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Sends a RequstJobListMessage to peer with peerID
+        /// if peerID == null it sends the message to every neighbor
+        /// </summary>
+        /// <param name="peerID"></param>
+        internal void SendRequestJobListMessage(byte[] peerID)
+        {
+            RequestJobListMessage requestJobList = new RequestJobListMessage();
+            requestJobList.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+            requestJobList.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+            requestJobList.MessageHeader.WorldName = String.Empty;
+            byte[] data = requestJobList.Serialize(true);
+            ConnectionManager.SendData(data, peerID);
+        }
+
+        /// <summary>
+        /// Sends a ResponseJobListMessage to peer with peerID
+        /// if peerID == null it sends the message to every neighbor
+        /// </summary>
+        /// <param name="peerID"></param>
+        internal void SendResponseJobListMessage(byte[] peerID)
+        {
+            ResponseJobListMessage responseJobList = new ResponseJobListMessage();
+            //we clone the JobList without Payloads to minimize the size of the message
+            List<Job> clonedList = new List<Job>();
+            foreach (Job job in Jobs.Values)
+            {
+                byte[] jobdata = job.Serialize();
+                Job clone = new Job(BigInteger.Zero);
+                clone.Deserialize(jobdata);
+                clone.JobPayload = new byte[0]; //Remove payload
+                clonedList.Add(clone);
+            }
+            responseJobList.Jobs = clonedList;
+            responseJobList.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+            responseJobList.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+            responseJobList.MessageHeader.WorldName = String.Empty;
+            byte[] data = responseJobList.Serialize(true);
+            ConnectionManager.SendData(data, peerID);
+        }
+
+        /// <summary>
+        /// Sets the last execution time of all RequestJobListOperations to min value forcing them to be executed
+        /// </summary>
+        internal void RefreshJobList()
+        {
+            foreach (Operation operation in Operations)
+            {
+                if (operation is RequestJobListOperation)
+                {
+                    RequestJobListOperation requestJobListOperation = (RequestJobListOperation)operation;
+                    requestJobListOperation.ForceExecution();
+                }
+            }
         }
     }
 }

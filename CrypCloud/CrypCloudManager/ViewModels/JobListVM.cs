@@ -221,7 +221,7 @@ namespace CrypCloud.Manager.ViewModels
                 Id = job.JobID,
                 UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
                 HasWorkspace = job.HasPayload(),
-                CreationDate = crypCloudCore.GetCreationDateOfJob(job.JobID),
+                CreationDate = job.CreationDate.ToLocalTime(),
                 //MaxEpoch = job.StateConfig.MaximumEpoch,
                 Epoch = crypCloudCore.GetEpochOfJob(job),
                 EpochProgress = epochProgress

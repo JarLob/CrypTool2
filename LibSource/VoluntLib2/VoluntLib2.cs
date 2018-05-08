@@ -80,6 +80,7 @@ namespace VoluntLib2
             ConnectionManager.Start();
 
             JobManager = new JobManager(ConnectionManager);
+            JobManager.JobListChanged += JobListChanged;
             JobManager.Start();
 
             IsStarted = true;            
@@ -90,9 +91,9 @@ namespace VoluntLib2
 
         }
 
-        public void RefreshJobList(string world)
+        public void RefreshJobList()
         {
-            JobListChanged.Invoke(this, new PropertyChangedEventArgs("JobList"));
+            JobManager.RefreshJobList();
         }
 
         public void RequestJobDetails(Job job)
@@ -100,24 +101,24 @@ namespace VoluntLib2
 
         }
 
-        public bool JoinNetworkJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
+        public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
         {
             return false;
         }
 
-        public void DeleteNetworkJob(BigInteger jobID)
+        public void DeleteJob(BigInteger jobID)
         {
 
         }
 
-        public BigInteger CreateNetworkJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
+        public BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
-            return BigInteger.Zero;
+            return JobManager.CreateJob(worldName, jobType, jobName, jobDescription, payload, numberOfBlocks);
         }
 
         public Job GetJobByID(BigInteger jobID)
         {
-            return new Job(jobID);
+            return JobManager.GetJobById(jobID);
         }
 
         public List<string> GetWorldNames()
@@ -127,7 +128,7 @@ namespace VoluntLib2
 
         public List<Job> GetJobsOfWorld(string world)
         {
-            return new List<Job>();            
+            return JobManager.GetJobsOfWorld(world);
         }
 
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)

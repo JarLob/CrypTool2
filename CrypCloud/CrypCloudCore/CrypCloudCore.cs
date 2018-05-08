@@ -147,7 +147,7 @@ namespace CrypCloud.Core
         }
         public void StartLocalCalculation(BigInteger jobId, ACalculationTemplate template)
         {
-            voluntLib.JoinNetworkJob(jobId, template, AmountOfWorker);
+            voluntLib.JoinJob(jobId, template, AmountOfWorker);
         }
 
         public void StopLocalCalculation(BigInteger jobId)
@@ -305,7 +305,7 @@ namespace CrypCloud.Core
 
         public void RefreshJobList()
         {
-            voluntLib.RefreshJobList(DefaultWorld);
+            voluntLib.RefreshJobList();
         }
 
      
@@ -328,7 +328,7 @@ namespace CrypCloud.Core
         {
             if (UserCanDeleteJob(voluntLib.GetJobByID(jobId)))
             {
-                voluntLib.DeleteNetworkJob(jobId);
+                voluntLib.DeleteJob(jobId);
             }
         }
 
@@ -346,7 +346,7 @@ namespace CrypCloud.Core
 
             var serialize = jobPayload.Serialize();
 
-            var jobID = voluntLib.CreateNetworkJob(DefaultWorld, jobType, jobName, jobDescription, serialize,
+            var jobID = voluntLib.CreateJob(DefaultWorld, jobType, jobName, jobDescription, serialize,
                 numberOfBlocks);
             return jobID != -1;
         }

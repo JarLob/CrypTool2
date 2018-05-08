@@ -277,11 +277,11 @@ namespace CrypCloud.Manager
         public UserControl Presentation { get; private set; }
 
         public void Execute()
-        {
+        {            
         }
 
         public void Stop()
-        {
+        {         
         }
 
         public void Initialize()
@@ -289,7 +289,7 @@ namespace CrypCloud.Manager
         }
 
         public void Dispose()
-        {
+        {            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

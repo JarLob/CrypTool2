@@ -2253,6 +2253,17 @@ namespace Cryptool.CrypWin
 
                     if (restart)
                         OnUpdate();
+                    try
+                    {
+                        //Log out of the CrypCloud. Thus, a GoingOfflineMessage is sent to all connected peers
+                        //telling them, that we are offline
+                        //If the CrypCloud is not "logged in" the method just returns
+                        CrypCloudCore.Instance.Logout();
+                    }
+                    catch (Exception ex)
+                    {
+                        //do nothing
+                    }
 
                     Application.Current.Shutdown();
                 }

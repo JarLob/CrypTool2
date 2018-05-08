@@ -48,7 +48,8 @@ namespace VoluntLib2.ManagementLayer
         public string Creator { get; set; }
         public BigInteger NumberOfBlocks { get; set; }
         public bool IsDeleted { get; set; }
-        public byte[] JobPayload { get; set; }
+        public DateTime CreationDate { get; set; }
+        public byte[] JobPayload { get; set; }       
 
         public bool Equals(Job other)
         {
@@ -122,6 +123,9 @@ namespace VoluntLib2.ManagementLayer
             byte isDeleted = (byte)(IsDeleted == true ? 0 : 1);
             length += 1;
 
+            byte[] creationDateBytes = BitConverter.GetBytes(CreationDate.ToBinary());            
+            length += 8;
+
             byte[] jobPayloadLength = BitConverter.GetBytes((ushort)JobPayload.Length);
             length += (jobPayloadLength.Length + JobPayload.Length);
 
@@ -166,6 +170,9 @@ namespace VoluntLib2.ManagementLayer
 
             data[offset] = isDeleted;
             offset += 1;
+
+            Array.Copy(creationDateBytes, 0, data, offset, creationDateBytes.Length);
+            offset += 8;
 
             Array.Copy(jobPayloadLength, 0, data, offset, 2);            
             offset += 2;
@@ -220,6 +227,9 @@ namespace VoluntLib2.ManagementLayer
             IsDeleted = data[offset] == 0;
             offset += 1;
 
+            CreationDate = DateTime.FromBinary(BitConverter.ToInt64(data, offset));
+            offset += 8;
+
             ushort jobPayloadLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
             JobPayload = new byte[jobPayloadLength];
@@ -254,6 +264,6 @@ namespace VoluntLib2.ManagementLayer
             builder.AppendLine("}");
 
             return builder.ToString();
-        }
+        }        
     }
 }
