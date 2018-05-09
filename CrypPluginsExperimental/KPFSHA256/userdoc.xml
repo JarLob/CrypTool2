@@ -6,7 +6,7 @@
   <language culture="de-DE"/>
 
   <introduction lang="en"> 
-		The function KPF SHA-256 is a key derivation function (KDF). This implementation uses the SHA-256 hash function with the counter-mode. The process is based on the so called HMAC-based Key Derivation Function (HKDF). The HKDF-KDF uses an 8-bit counter. Because of that, the maximum amount of output is limited (256 * length of the used hash function). In the configuration of the plugin you can choose between an implementation with 8-bit counter and one with a 32-bit counter. With the 32-bit counter you can create much longer outputs. <newline /><newline /><b>Attention:</b><newline /> The SHA-2 should not used with a key as prefix, because of a problem with the construction of the hash function (find details on <b>length extension attack</b>). This implementation is only for demonstration purpose.
+		The function KPF SHA-256 is a key derivation function (KDF). This implementation uses the SHA-256 hash function with the counter-mode. The process is based on the so called HMAC-based Key Derivation Function (HKDF) [1][2]. The HKDF-KDF uses an 8-bit counter. Because of that, the maximum amount of output is limited (256 * length of the used hash function). In the configuration of the plugin you can choose between an implementation with 8-bit counter and one with a 32-bit counter. With the 32-bit counter you can create much longer outputs. <newline /><newline /><b>Attention:</b><newline /> The SHA-2 should not used with a key as prefix, because of a problem with the construction of the hash function (find details on length extension attack [5][6]). This implementation is only for demonstration purpose.
 	  <section headline="Inputs and Outputs">
 		<list>
 			<item><b>Source Key Material:</b> Specifies the source key material (SKM). It is used to calculate the key material.</item>
@@ -20,12 +20,12 @@
 		Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a KDF, you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
 	  </section>
 	  <section headline="Traditional approach of a PRF" >
-		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
+		It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack [5][6]. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach. </section>
 	  <section headline="Modern approach of a PRF">
-	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The HKDF function is HMAC based KDF. This approach is recommended by the american National Institute of Standards and Technology (NIST)<newline /><newline />
+	  A more modern and secure approach is to use the Keyed-Hash Message Authentication Code (HMAC), if the used hash function is based on the Merkle-Damgård construction. The HMAC is not vulnerable to the extension attack. The HKDF function is HMAC based KDF. This approach is recommended by the american National Institute of Standards and Technology (NIST) [3].<newline /><newline />
 	  </section>
 	  <section headline="Extension of the output">
-	  The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs.
+	  The length of the output is limited to a fixed size. To extend the length, the used PRF must be called multiple times and its ouputs combined into one single output. There exist multiple modes of operation for such a setting. Two possible and often used are the counter-mode and the feedback-mode. These two modes of operation are recommended by the NIST to construct kdfs [3].
 	  </section>
 	  <section headline="SHA-3">
 	  In the context of the SHA-3 competition many interesting submissions were made. Some of the candidates such as Blake, Skein and Keccak are no longer based on the Merkle- Damgård construction. In addition, some hash functions also provide an integrated arbitrary choice of the output length of the hash value. Therefore, these hash functions can be used with the key prefix (traditional PRF approach) and do not require any auxiliary operation modes to achieve any output length. 
@@ -33,32 +33,32 @@
   </introduction>
 
   <introduction lang="de-DE">
-    Die Funktion KPF SHA-256 ist eine Schlüsselgenerierungsfunktion (Key Derivation Function, KDF). Diese Implementierung verwendet den SHA-256 im Counter-Mode. Das Verfahren orientiert sich am so genannten HMAC-based Key Derivation Function (HKDF). Das HKDF-Verfahren verwendet einen 8-Bit Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (256 * Hashlänge). In der Konfiguration des PlugIn kann zwischen der Variante mit der Orientierung am HKDF-Verfahren (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit Variante lassen sich wesentlich längere Ausgaben erzeugen. <newline /><newline /><b>Achtung:</b><newline /> Der SHA-2 sollte aus Konstruktionsgründen der Hashfunktion nicht mit einem Schlüssel (als Präfix) verwendet werden (siehe <b>Erweiterungsangriff</b>). <b>Diese Implementierung dient ausschließlich nur zu Demonstrationszwecken</b>.
+    Die Funktion KPF SHA-256 ist eine Schlüsselgenerierungs-Funktion (Key Derivation Function, KDF). Diese Implementierung verwendet den SHA-256 im Counter-Mode. Das Verfahren orientiert sich an der so genannten HMAC-based Key Derivation Function (HKDF) [1][2]. Das HKDF-Verfahren verwendet einen 8-Bit-Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (256 * Hashlänge). In der Konfiguration des Plugin kann zwischen der Variante mit der Orientierung am HKDF-Verfahren (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit-Variante lassen sich wesentlich längere Ausgaben erzeugen. <newline /><newline /><b>Achtung:</b><newline /> Der SHA-2 sollte aus Konstruktionsgründen der Hashfunktion nicht mit einem Schlüssel (als Präfix) verwendet werden (siehe Erweiterungsangriff [5][6]). <b>Diese Implementierung dient deshalb ausschließlich zu Demonstrationszwecken</b>.
     <section headline="Eingaben und Ausgaben">
 	<list>
-		<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur generierung des Schlüsselmaterials verwendet.</item>
-		<item><b>Schlüssel:</b> Der Schlüssel wird zu generierung des Schlüsselmaterials verwendet. Dieser muss geheim sein.</item>
-		<item><b>Länge des zu generierenden Schlüssel (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterial.</item>
+		<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur Generierung des Schlüsselmaterials verwendet.</item>
+		<item><b>Schlüssel:</b> Der Schlüssel wird zur Generierung des Schlüsselmaterials verwendet. Dieser muss geheim sein.</item>
+		<item><b>Länge des zu generierenden Schlüsselmaterial (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterial.</item>
 		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item>
 		<item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item>
 	</list>	
 	</section>
 	<section headline="Grundlagen und Hintergrund">
-      Für kryptographische Verfahren und Anwendungen eignen sich keine durch Anwender spezifizierte Schlüssel, da diese in der Regel nicht den Anforderungen genügen. Mit KDFs können Schlüssel mit pseudozufälligen Zeichen generiert werden. Ein wesentlicher Bestandteil einer KDF ist eine Pseudozufallsfunktion (Pseudorandom Function, PRF). PRFs basieren häufig auf Hashfunktionen oder Stream Ciphers.
+      Für kryptographische Verfahren und Anwendungen eignen sich keine durch Anwender spezifizierte Schlüssel, da diese in der Regel nicht den Anforderungen genügen. Mit KDFs können Schlüssel mit pseudozufälligen Zeichen generiert werden. Ein wesentlicher Bestandteil einer KDF ist eine Pseudozufallsfunktion (Pseudorandom Function, PRF). PRFs basieren häufig auf Hashfunktionen oder Stromchiffren.
       <newline />
-      Eine PRF generiert Zeichenketten mit pseudozufälligen Zeichen. Häufig wurden Hashfunktionen als PRF verwendet. Das Ziel einer Hashfunktion ist allerdings nicht die Generierung von pseudozufälligen Zeichenketten. Essentiell für eine PRF ist ein geheimer Schlüssel.
+      Eine PRF generiert Zeichenketten mit pseudozufälligen Zeichen. Häufig wurden Hashfunktionen als PRF verwendet. Das Ziel einer Hashfunktion ist allerdings nicht die Generierung von pseudozufälligen Zeichenketten (Bemerkung: Das ist nicht das SKM oder eine Saat). Essentiell für eine PRF ist ein geheimer Schlüssel.
     </section>
     <section headline="Traditioneller Ansatz einer PRF" >
-      Intuitiv und naheliegender Weise kann eine Hashfunktion um einen Schlüssel erweitert werden. Dazu kann der Schlüssel als Präfix vor die Eingabe der Hashfunktion gehangen werden. In der Literatur wird diese Konstruktion als traditioneller Ansatz bezeichnet. Dieser Ansatz ist allerdings problematisch, wenn die verwendete Hashfunktion auf der Merkle-Damgård Konstruktion basiert. Die meisten praxisrelevanten Hashfunktionen aus der Vergangenheit basieren auf dem Merkle-Damgård Konstruktionsschema. Aufgrund einer Schwäche in der Konstruktion lässt sich eine so konstruierte PRF mit einem Erweiterungsangriff schwächen. Daher dürfen in der Praxis keine Merkle-Damgård basierten Hashfunktionen mit den traditionellen Ansatz verwendet werden.
+      Intuitiv und naheliegenderweise kann eine Hashfunktion um einen Schlüssel erweitert werden. Dazu kann der Schlüssel als Präfix vor die Eingabe der Hashfunktion gehangen werden. In der Literatur wird diese Konstruktion als traditioneller Ansatz bezeichnet. Dieser Ansatz ist allerdings problematisch, wenn die verwendete Hashfunktion auf der Merkle-Damgård-Konstruktion basiert. Die meisten praxisrelevanten Hashfunktionen aus der Vergangenheit (incl. dem bei KPF SHA-256 und HKDF SHA-256 verwendeten SHA2-Verfahren) basieren auf dem Merkle-Damgård-Konstruktionsschema. Aufgrund einer Schwäche in der Konstruktion lässt sich eine so konstruierte PRF mit einem Erweiterungsangriff (Length Extension Attack, [5,6]) schwächen. Daher dürfen in der Praxis keine Merkle-Damgård basierten Hashfunktionen mit dem traditionellen Ansatz verwendet werden.
       </section>
     <section headline="Moderner Ansatz einer PRF">
-      Ein modernerer und sicherer Ansatz ist die Verwendung des Keyed-Hash Message Authentication Codes (HMAC) als PRF, wenn die verwendete Hashfunktion auf der Merkle-Damgård Konstruktion basiert. Der HMAC ist sicher gegenüber einem Erweiterungsangriff. Eine auf dem HMAC basierende KDF ist das HKDF-Verfahren. Dieses wird beispielsweise vom amerikanischen Nationalen Institut für Standards und Technologie (kurz: NIST) empfohlen.<newline /><newline />
+      Moderner und sicherer ist der Ansatz, den Keyed-Hash Message Authentication Code (HMAC) als PRF zu verwenden, wenn die verwendete Hashfunktion auf der Merkle-Damgård-Konstruktion basiert. Der HMAC ist sicher gegenüber einem Erweiterungsangriff. Eine auf dem HMAC basierende KDF ist das HKDF-Verfahren. Dieses wird beispielsweise vom amerikanischen Nationalen Institut für Standards und Technologie (kurz: NIST) empfohlen [3].<newline /><newline />
     </section>
     <section headline="Verlängerung der Ausgabe">
-      Um mit KDFs beliebig lange Ausgaben zu erzeugen, muss eine zu Grunde liegende PRF mehrfach aufgerufen und deren Ausgaben zu einem Schlüssel zusammengefügt werden. Dazu gibt es verschiedene Betriebsmodi (Mode of Operation). Zwei mögliche und häufig verwendete Betriebsmodi sind der Zähler-basierende Counter-Mode sowie der Feedback-Mode, der eine Rückkopplung des zuvor berechneten Teilschlüssels verwendet. Diese beiden Betriebsmodi werden zur Konstruktion von KDFs vom NIST empfohlen.
+      Um mit KDFs beliebig lange Ausgaben zu erzeugen, muss eine zu Grunde liegende PRF mehrfach aufgerufen und deren Ausgaben zu einem Schlüssel zusammengefügt werden. Dazu gibt es verschiedene Betriebsmodi (Mode of Operation). Zwei mögliche und häufig verwendete Betriebsmodi sind der Zähler-basierende Counter-Mode sowie der Feedback-Mode, der eine Rückkopplung des zuvor berechneten Teilschlüssels verwendet. Diese beiden Betriebsmodi werden zur Konstruktion von KDFs vom NIST empfohlen [3][4].
    </section>
    <section headline="SHA-3">
-     Im Rahmen der SHA-3 Competition wurden viele interessante Einreichungen gemacht. Einige der Kandidaten wie der Blake, Skein und Keccak basieren nicht mehr auf der Merkle-Damgård konstruktion. Darüber hinaus bringen manche Hashfunktionen auch eine "integrierte" beliebige Wahl der Ausgabelänge des Hashwertes mit. Daher können diese Hashfunktionen mit Key-Präfix (traditioneller PRF Ansatz) verwendet werden und benötigen keinen Betriebsmodi mit Hilfskonstruktion zur Erreichung einer beliebigen Ausgabelänge. 
+     Im Rahmen der SHA-3-Competition wurden viele interessante Hashfunktionen eingereicht. Einige der Kandidaten wie der Blake, Skein und Keccak basieren nicht mehr auf der Merkle-Damgård-Konstruktion. Darüber hinaus bringen manche Hashfunktionen auch eine "integrierte" beliebige Wahl der Ausgabelänge des Hashwertes mit. Daher können diese Hashfunktionen mit Key-Präfix (traditioneller PRF Ansatz) verwendet werden und benötigen keinen Betriebsmodus mit Hilfskonstruktion zur Erreichung einer beliebigen Ausgabelänge. 
    </section>
   </introduction>
 
@@ -67,7 +67,7 @@
   </usage>
 
   <usage lang="de-DE">
-	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentationsansicht der Komponente erklärt.
+	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentations-Ansicht der Komponente erklärt.
   </usage>
   
   <presentation lang="en">
@@ -75,7 +75,7 @@
   </presentation>
   
   <presentation lang="de-DE">
-	Durch Doppelklick auf die KPF SHA-256 Komponente in der Arbeitsfläche können Sie die Visualisierung der Berechnung aktivieren. Dabei wird die Konstruktion und die Arbeitsweise der Funktion Schritt für Schritt erklärt.
+	Durch Doppelklick auf die KPF SHA-256 Komponente in der Arbeitsfläche können Sie die Visualisierung der Berechnung aktivieren. Dabei wird die ikonifizierte Komponente zu einem Fenster vergrößert, in dem die Konstruktion und die Arbeitsweise der Funktion Schritt für Schritt erklärt werden.
   </presentation>
   
   <references>

@@ -563,6 +563,15 @@ namespace HKDFSHA256.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Saving-Parameters ähnelt.
+        /// </summary>
+        internal static string PrintToFileGroup {
+            get {
+                return ResourceManager.GetString("PrintToFileGroup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Output of PRK:
         ///
         ///Byte 1 - 8:   {1}

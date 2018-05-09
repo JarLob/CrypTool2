@@ -335,4 +335,7 @@ Either stop the execution and start it again, change one of the inputs or click 
   <data name="PresStepText" xml:space="preserve">
     <value>{0}/{1}</value>
   </data>
+  <data name="PrintToFileGroup" xml:space="preserve">
+    <value>Saving-Parameters</value>
+  </data>
 </root>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Random number generators</title>
+  <summary lang="en">Shows 3 differenz random number generators. X^2 mod N, linear congruence generator (LCG) and inverse congruence generator (ICG).</summary>
+  <description lang="en">Shows 3 differenz random number generators. X^2 mod N, linear congruence generator (LCG) and inverse congruence generator (ICG).</description>
+  <keywords>random number generator, random numbers</keywords>
+
+  <title lang="de">Zufallszahlengeneratoren</title>
+  <summary lang="de">Zeigt 3 verschiedene Zufallszahlengeneratoren: X^2 mod N, Linearer Kongruenz Generator (LCG) und Inverser Kongruenz Generator (ICG).</summary>
+  <description lang="de">Zeigt 3 verschiedene Zufallszahlengeneratoren: X^2 mod N, Linearer Kongruenz Generator (LCG) und Inverser Kongruenz Generator (ICG).</description>
+  <keywords lang="de">Zufallszahlengenerator, Zufallszahlen</keywords>
+
+  <icon file="ZufallszahlenGeneratoren.png" />
+  <relevantPlugins>
+    <plugin name="RandNumGen" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+	<replacement key="$SeetDesc$" value="Saat"/>
+	<replacement key="$SeetInput$" value="5"/>
+	<replacement key="$ModulusDesc$" value="Modulus"/>
+	<replacement key="$ModulusInput$" value="7"/>
+	<replacement key="$ADesc$" value="Parameter a"/>
+	<replacement key="$AInput$" value="2"/>
+	<replacement key="$BDesc$" value="Parameter b"/>
+	<replacement key="$BInput$" value="21"/>
+	<replacement key="$OutputDesc$" value="Ausgabelänge (Byte)"/>
+	<replacement key="$OutputInput$" value="10"/>	
+	<replacement key="$OutputResDesc$" value="Zufallsbytes"/>	
+</replacements>
+  <replacements lang="en">
+	<replacement key="$SeetDesc$" value="Seed"/>
+	<replacement key="$SeetInput$" value="5"/>
+	<replacement key="$ModulusDesc$" value="Modul"/>
+	<replacement key="$ModulusInput$" value="7"/>
+	<replacement key="$ADesc$" value="Parameter a"/>
+	<replacement key="$AInput$" value="2"/>
+	<replacement key="$BDesc$" value="Parameter b"/>
+	<replacement key="$BInput$" value="21"/>
+	<replacement key="$OutputDesc$" value="Outputlength (byte)"/>
+	<replacement key="$OutputInput$" value="10"/>	
+	<replacement key="$OutputResDesc$" value="Random bytes"/>
+   </replacements>
+</sample>

@@ -775,7 +775,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                 OnPropertyChanged("OutputBytes");
             }
 
-            //12 stepts takes the presentation
+            //14 stepts takes the presentation
             double steps = (Math.Ceiling(Convert.ToDouble((int)OutputBytes) / (new Sha256Digest()).GetDigestSize())) + 14;
             stepsToGo = (int)steps;
             double prgress_step = ((double)1) / steps;
@@ -785,84 +785,87 @@ namespace Cryptool.Plugins.HKDFSHA256
 
             //Event for start
             AutoResetEvent buttonStartClickedEvent = pres.buttonStartClickedEvent;
-            buttonStartClickedEvent = pres.buttonStartClickedEvent;
             buttonStartClickedEvent.Reset();
-            
-            //clean up for starting
-            pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
-            {
-                pres.spStartRestartButtons.Visibility = Visibility.Visible;
-                pres.buttonStart.IsEnabled = true;
-                pres.buttonRestart.IsEnabled = false;
-
-                //Remarks to the inputs and outputs
-                pres.lblExplanationSectionHeading.Visibility = Visibility.Visible;
-                pres.txtExplanationSectionText.Visibility = Visibility.Visible;
-
-                //Last
-                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtFinished.Visibility = Visibility.Hidden;
-
-                //progress counter
-                pres.txtStep.Visibility = Visibility.Visible;
-
-                //Title of Presentation
-                pres.lblTitleHeading.Visibility = Visibility.Hidden;
-
-                //Introduction
-                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                pres.txtIntroductionText.Visibility = Visibility.Hidden;
-
-                //Construction
-                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                pres.imgConstructionStep1.Visibility = Visibility.Hidden;
-                pres.imgConstructionStep2.Visibility = Visibility.Hidden;
-
-                //Iterationphase
-                pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtIterationRounds.Visibility = Visibility.Hidden;
-                pres.lblIterationHeading.Visibility = Visibility.Hidden;
-                pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
-                pres.imgIterationPRK.Visibility = Visibility.Hidden;
-                pres.imgIterationKM1.Visibility = Visibility.Hidden;
-                pres.imgIterationKM2.Visibility = Visibility.Hidden;
-
-                //Calculation finished
-                pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
-
-                //Last
-                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtFinished.Visibility = Visibility.Hidden;
-
-                //Error
-                pres.txtError.Visibility = Visibility.Hidden;
-
-                //Buttons
-                pres.spButtons.Visibility = Visibility.Hidden;
-                pres.buttonSkipIntro.IsEnabled = false;
-                pres.buttonSkipCalc.IsEnabled = false;
-                pres.buttonNext.IsEnabled = false;
-                pres.SkipChapter = false;
-
-            }, null);
-
-            buttonStartClickedEvent = pres.buttonStartClickedEvent;
-            buttonStartClickedEvent.WaitOne();
 
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
-            buttonNextClickedEvent = pres.buttonNextClickedEvent;
             buttonNextClickedEvent.Reset();
 
             //Check if presentation shall be displayed
             if (settings.DisplayPres)
             {
+
+                //clean up for starting
+                pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                {
+                    pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                    pres.buttonStart.IsEnabled = true;
+                    pres.buttonRestart.IsEnabled = false;
+
+                    //Remarks to the inputs and outputs
+                    pres.lblExplanationSectionHeading.Visibility = Visibility.Visible;
+                    pres.txtExplanationSectionText.Visibility = Visibility.Visible;
+
+                    //Last
+                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtFinished.Visibility = Visibility.Hidden;
+
+                    //progress counter
+                    pres.txtStep.Visibility = Visibility.Visible;
+
+                    //Title of Presentation
+                    pres.lblTitleHeading.Visibility = Visibility.Hidden;
+
+                    //Introduction
+                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                    //Construction
+                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                    pres.imgConstructionStep1.Visibility = Visibility.Hidden;
+                    pres.imgConstructionStep2.Visibility = Visibility.Hidden;
+
+                    //Iterationphase
+                    pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                    pres.lblIterationHeading.Visibility = Visibility.Hidden;
+                    pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+                    pres.imgIterationPRK.Visibility = Visibility.Hidden;
+                    pres.imgIterationKM1.Visibility = Visibility.Hidden;
+                    pres.imgIterationKM2.Visibility = Visibility.Hidden;
+
+                    //Calculation finished
+                    pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
+
+                    //Last
+                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtFinished.Visibility = Visibility.Hidden;
+
+                    //Error
+                    pres.txtError.Visibility = Visibility.Hidden;
+
+                    //Buttons
+                    pres.spButtons.Visibility = Visibility.Hidden;
+                    pres.buttonSkipIntro.IsEnabled = false;
+                    pres.buttonNext.IsEnabled = false;
+                    pres.SkipChapter = false;
+
+                }, null);
+
+                buttonStartClickedEvent = pres.buttonStartClickedEvent;
+                buttonStartClickedEvent.WaitOne();
+
+                val += prgress_step;
+                ProgressChanged(val, 1);
+                curStep++;
+                refreshStepState();
+
                 //clean up last round
                 pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                 {
@@ -914,7 +917,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                     pres.buttonRestart.IsEnabled = false;
                     pres.spButtons.Visibility = Visibility.Visible;
                     pres.buttonSkipIntro.IsEnabled = false;
-                    pres.buttonSkipCalc.IsEnabled = false;
                     pres.buttonNext.IsEnabled = false;
                     pres.SkipChapter = false;
 
@@ -925,7 +927,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         pres.buttonNext.IsEnabled = true;
-                        pres.buttonSkipIntro.IsEnabled = true;
+                        pres.buttonSkipIntro.IsEnabled = false;
 
                     }, null);
 
@@ -948,6 +950,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                     {
                         pres.lblTitleHeading.Visibility = Visibility.Hidden;
                         pres.lblIntroductionSectionHeading.Visibility = Visibility.Visible;
+                        pres.buttonSkipIntro.IsEnabled = true;
 
                     }, null);
 
@@ -1140,8 +1143,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                     pres.imgConstructionStep2.Visibility = Visibility.Hidden;
 
                     //Buttons
-                    pres.buttonSkipIntro.IsEnabled = false;
-                    pres.buttonSkipCalc.IsEnabled = true;
+                    pres.buttonSkipIntro.IsEnabled = true;
                     pres.lblIterationSectionHeading.Visibility = Visibility.Visible;
 
                 }, null);
@@ -1276,59 +1278,63 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
             */
 
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if (settings.DisplayPres)
             {
 
-                //Remarks to the inputs and outputs
-                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
 
-                //Title of Presentation
-                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+                    //Remarks to the inputs and outputs
+                    pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
 
-                //Introduction
-                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+                    //Title of Presentation
+                    pres.lblTitleHeading.Visibility = Visibility.Hidden;
 
-                //Construction
-                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                pres.imgConstructionStep1.Visibility = Visibility.Hidden;
-                pres.imgConstructionStep2.Visibility = Visibility.Hidden;
+                    //Introduction
+                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
 
-                //Iterationphase
-                pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
-                pres.txtIterationRounds.Visibility = Visibility.Hidden;
-                pres.lblIterationHeading.Visibility = Visibility.Hidden;
-                pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
-                pres.imgIterationPRK.Visibility = Visibility.Hidden;
-                pres.imgIterationKM1.Visibility = Visibility.Hidden;
-                pres.imgIterationKM2.Visibility = Visibility.Hidden;
+                    //Construction
+                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                    pres.imgConstructionStep1.Visibility = Visibility.Hidden;
+                    pres.imgConstructionStep2.Visibility = Visibility.Hidden;
 
-                //Last
-                pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
-                pres.txtFinished.Visibility = Visibility.Visible;
+                    //Iterationphase
+                    pres.lblIterationSectionHeading.Visibility = Visibility.Hidden;
+                    pres.txtIterationRounds.Visibility = Visibility.Hidden;
+                    pres.lblIterationHeading.Visibility = Visibility.Hidden;
+                    pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
+                    pres.imgIterationPRK.Visibility = Visibility.Hidden;
+                    pres.imgIterationKM1.Visibility = Visibility.Hidden;
+                    pres.imgIterationKM2.Visibility = Visibility.Hidden;
 
-                //Error
-                pres.txtError.Visibility = Visibility.Hidden;
+                    //Last
+                    pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
+                    pres.txtFinished.Visibility = Visibility.Visible;
 
-                //Buttons
-                pres.spStartRestartButtons.Visibility = Visibility.Hidden;
-                pres.buttonStart.IsEnabled = false;
-                pres.buttonRestart.IsEnabled = false;
-                pres.spButtons.Visibility = Visibility.Visible;
-                pres.buttonSkipIntro.IsEnabled = false;
-                pres.buttonSkipCalc.IsEnabled = false;
-                pres.buttonNext.IsEnabled = false;
-                pres.SkipChapter = false;
+                    //Error
+                    pres.txtError.Visibility = Visibility.Hidden;
 
-            }, null);
+                    //Buttons
+                    pres.spStartRestartButtons.Visibility = Visibility.Hidden;
+                    pres.buttonStart.IsEnabled = false;
+                    pres.buttonRestart.IsEnabled = false;
+                    pres.spButtons.Visibility = Visibility.Visible;
+                    pres.buttonSkipIntro.IsEnabled = false;
+                    pres.buttonNext.IsEnabled = false;
+                    pres.SkipChapter = false;
+
+                }, null);
+
+            }
 
             //Progessbar adjusting
             //ProgressChanged(1, 1);
@@ -1337,28 +1343,30 @@ namespace Cryptool.Plugins.HKDFSHA256
             curStep++;
             refreshStepState();
 
-            //show elements for restart the system
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if (settings.DisplayPres)
             {
-                pres.spStartRestartButtons.Visibility = Visibility.Visible;
-                pres.buttonStart.IsEnabled = false;
-                pres.buttonRestart.IsEnabled = true;
 
-                pres.spButtons.Visibility = Visibility.Hidden;
-            }, null);
+                //show elements for restart the system
+                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                { 
+                    pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                    pres.buttonStart.IsEnabled = false;
+                    pres.buttonRestart.IsEnabled = true;
 
-            AutoResetEvent buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-            buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-            buttonRestartClickedEvent.Reset();
+                    pres.spButtons.Visibility = Visibility.Hidden;
+                }, null);
 
-            buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-            buttonRestartClickedEvent.WaitOne();
+                AutoResetEvent buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+                buttonRestartClickedEvent.Reset();
 
-            if (pres.Restart)
-            {
-                goto Restart;
+                buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+                buttonRestartClickedEvent.WaitOne();
+
+                if (pres.Restart)
+                {
+                    goto Restart;
+                }
             }
-
         }
 
         #endregion
@@ -1589,10 +1597,9 @@ namespace Cryptool.Plugins.HKDFSHA256
                 //Buttons
                 pres.spButtons.Visibility = Visibility.Hidden;
                 pres.buttonSkipIntro.IsEnabled = false;
-                pres.buttonSkipCalc.IsEnabled = false;
                 pres.buttonNext.IsEnabled = false;
                 pres.SkipChapter = false;
-                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.spStartRestartButtons.Visibility = Visibility.Hidden;
                 pres.buttonStart.IsEnabled = false;
                 pres.buttonRestart.IsEnabled = false;
 
