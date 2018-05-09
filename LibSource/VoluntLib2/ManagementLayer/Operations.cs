@@ -216,14 +216,14 @@ namespace VoluntLib2.ManagementLayer
                 {
                     if(!job.HasValidCreationSignature())
                     {
-                        Logger.LogText(String.Format("Received Job {0} has an invalid CreationSignature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        Logger.LogText(String.Format("Received job {0} has an invalid CreationSignature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         continue;
                     }
 
                     //1. case: we dont know the job, then just add it
                     if(!JobManager.Jobs.ContainsKey(job.JobID))
                     {
-                        Logger.LogText(String.Format("Added new Job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         JobManager.Jobs.TryAdd(job.JobID, job);
                         jobListChanged = true;
                     }

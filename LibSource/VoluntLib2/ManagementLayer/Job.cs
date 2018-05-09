@@ -405,7 +405,6 @@ namespace VoluntLib2.ManagementLayer
             {
                 return false;
             }
-            return false;
         }
     }
 }
