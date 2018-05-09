@@ -36,7 +36,9 @@ namespace VoluntLib2.Tools
     [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.Assertion)]
     public class CertificateService
     {
-        private const string NameOfHashAlgorithm = "SHA512";
+        private const string NameOfHashAlgorithm = "SHA256";
+        private SHA256 HashAlgorithm = SHA256Managed.Create();
+
         private X509Certificate2 CaCertificate;
         private RSACryptoServiceProvider CryptoServiceProvider;
         public X509Certificate2 OwnCertificate { get; private set; }
@@ -108,6 +110,12 @@ namespace VoluntLib2.Tools
             return cert.SubjectName.Name != null ? cert.SubjectName.Name.Split('=').Last() : "";
         }
 
+        /// <summary>
+        /// Verifies the signature of the given message.
+        /// Also checks, if the certificate is banned
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public CertificateValidationState VerifySignature(Message message)
         {
             //extract certificate 
@@ -140,6 +148,36 @@ namespace VoluntLib2.Tools
         }
 
         /// <summary>
+        /// Verifies if the given signature of the given data is valid.
+        /// Also checks, if the certificate is banned or invalid
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public CertificateValidationState VerifySignature(byte[] data, byte[] signature, X509Certificate2 certificate)
+        {          
+            if (IsBannedCertificate(certificate))
+            {
+                return CertificateValidationState.Invalid;
+            }
+            if (!IsValidCertificate(certificate))
+            {
+                return CertificateValidationState.Invalid;
+            }
+
+            // Verify the signature with the hash
+            var provider = (RSACryptoServiceProvider)certificate.PublicKey.Key;
+            bool valid = provider.VerifyData(data, NameOfHashAlgorithm, signature);
+            
+            if (valid)
+            {
+                return CertificateValidationState.Valid;
+            }
+            return CertificateValidationState.Invalid;
+        }
+
+
+        /// <summary>
         ///  Signs the message, adds the sendername and the certificate
         /// </summary>
         /// <param name="message">The message</param>
@@ -164,34 +202,44 @@ namespace VoluntLib2.Tools
             return IsAdminCertificate(senderCertificate);
         }
 
-        public bool IsAdminCertificate(X509Certificate2 senderCertificate)
+        /// <summary>
+        /// Checks, if the given certificate is an admin certificate
+        /// </summary>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public bool IsAdminCertificate(X509Certificate2 certificate)
         {
             //by name
-            var senderName = GetSubjectNameFromCertificate(senderCertificate);
+            var senderName = GetSubjectNameFromCertificate(certificate);
             if (AdminCertificateList.Contains("N:" + senderName))
             {
                 return true;
             }
 
             //by serial number
-            if (AdminCertificateList.Contains("SN:" + senderCertificate.SerialNumber))
+            if (AdminCertificateList.Contains("SN:" + certificate.SerialNumber))
             {
                 return true;
             }
             return false;
         }
 
-        public bool IsBannedCertificate(X509Certificate2 senderCertificate)
+        /// <summary>
+        /// Checks, if the given certificate is banned
+        /// </summary>
+        /// <param name="certificate"></param>
+        /// <returns></returns>
+        public bool IsBannedCertificate(X509Certificate2 certificate)
         {
             //by name
-            var senderName = GetSubjectNameFromCertificate(senderCertificate);
+            var senderName = GetSubjectNameFromCertificate(certificate);
             if (BannedCertificateList.Contains("N:" + senderName))
             {
                 return true;
             }
 
             //by serial number
-            if (BannedCertificateList.Contains("SN:" + senderCertificate.SerialNumber))
+            if (BannedCertificateList.Contains("SN:" + certificate.SerialNumber))
             {
                 return true;
             }
@@ -200,7 +248,7 @@ namespace VoluntLib2.Tools
 
 
         /// <summary>
-        ///   returns a valid certificate or null
+        /// Returns a valid certificate or null
         /// </summary>
         /// <param name="message">The message.</param>
         /// <returns></returns>
@@ -257,6 +305,16 @@ namespace VoluntLib2.Tools
             {
                 return false;
             }
-        }       
+        }
+
+        /// <summary>
+        /// Computes the SHA256 hash of the given byte array
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public byte[] ComputeHash(byte[] data)
+        {
+            return HashAlgorithm.ComputeHash(data);
+        }
     }
 }

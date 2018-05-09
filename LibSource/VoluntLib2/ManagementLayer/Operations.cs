@@ -79,7 +79,7 @@ namespace VoluntLib2.ManagementLayer
             {
                 Logger.LogText("Sending ResponseJobListMessages to all neighbors", this, Logtype.Debug);
                 //Send a ResponseJobListMessage to every neighbor
-                JobManager.SendResponseJobListMessage(null);
+                JobManager.SendResponseJobListMessages(null);
                 LastExecutionTime = DateTime.Now;
             }
         }
@@ -174,7 +174,7 @@ namespace VoluntLib2.ManagementLayer
             if (message is RequestJobListMessage)
             {
                 Logger.LogText(String.Format("Received a RequestJobListMessage from peer {0}. Answering now.", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
-                JobManager.SendResponseJobListMessage(message.PeerId);
+                JobManager.SendResponseJobListMessages(message.PeerId);
             }
         }       
     }
@@ -211,17 +211,28 @@ namespace VoluntLib2.ManagementLayer
             {
                 Logger.LogText(String.Format("Received a ResponseJobListMessage from peer {0}. Updating my jobs", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
                 ResponseJobListMessage responseJobListMessage = (ResponseJobListMessage)message;
-                bool newJobReceived = false;
+                bool jobListChanged = false;
                 foreach (var job in responseJobListMessage.Jobs)
                 {
+                    if(!job.HasValidCreationSignature())
+                    {
+                        Logger.LogText(String.Format("Received Job {0} has an invalid CreationSignature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        continue;
+                    }
+
+                    //1. case: we dont know the job, then just add it
                     if(!JobManager.Jobs.ContainsKey(job.JobID))
                     {
+                        Logger.LogText(String.Format("Added new Job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         JobManager.Jobs.TryAdd(job.JobID, job);
-                        newJobReceived = true;
+                        jobListChanged = true;
                     }
+
+                    //2. case: We know the job but the received has a valid DeletionSignature
+                    //todo: create code
                 }
                 //we received at least one new job. Thus, we inform that the job list changed
-                if (newJobReceived)
+                if (jobListChanged)
                 {
                     JobManager.OnJobListChanged();
                 }

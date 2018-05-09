@@ -215,7 +215,7 @@ namespace CrypCloud.Manager.ViewModels
             {
                 Name = job.JobName,
                 Description = job.JobDescription,
-                Creator = job.Creator,
+                Creator = job.CreatorName,
                 //TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
                 FinishedNumberOfBlocks = crypCloudCore.GetCalculatedBlocksOfJob(job.JobID),
                 Id = job.JobID,

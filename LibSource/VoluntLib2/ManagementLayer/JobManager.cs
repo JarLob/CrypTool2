@@ -297,30 +297,39 @@ namespace VoluntLib2.ManagementLayer
             {
                 throw new JobPayloadTooBigException(String.Format("Job size too big. Maximum size is {0}, given size was {1}.", MAX_JOB_PAYLOAD_SIZE, payload.Length));
             }
-
+            //copy the payload
             byte[] payloadCopy = new byte[payload.Length];
             if (payload.Length > 0)
             {
                 Array.Copy(payload, 0, payloadCopy, 0, payloadCopy.Length);
             }
+            //generate positive job id
             BigInteger jobId = new BigInteger(Guid.NewGuid().ToByteArray());
             if (jobId < 0)
             {
                 jobId = jobId * -1;
             }
+            //create job object
             Job job = new Job(jobId);
             job.WorldName = worldName;
             job.JobType = jobType;
             job.JobName = jobName;
-            job.JobDescription = jobDescription;
-            job.JobPayload = payloadCopy;
+            job.JobDescription = jobDescription;            
             job.NumberOfBlocks = numberOfBlocks;
-            job.Creator = CertificateService.GetCertificateService().OwnName;
+            job.CreatorName = CertificateService.GetCertificateService().OwnName;
             job.CreationDate = DateTime.UtcNow;
+            job.CreatorCertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+            //create job payload hash
+            job.JobPayloadHash = CertificateService.GetCertificateService().ComputeHash(payloadCopy);
+            //create job signature (without payload)
+            job.JobCreationSignatureData = GenerateCreationSignatureData(job);
+            //finally, add payload
+            job.JobPayload = payloadCopy;
+
             if (Jobs.TryAdd(jobId, job))
             {
                 //Send the job to everyone else
-                SendResponseJobListMessage(null);
+                SendResponseJobListMessages(null);
                 OnJobListChanged();
                 return jobId;
             }
@@ -328,6 +337,17 @@ namespace VoluntLib2.ManagementLayer
             {
                 return BigInteger.MinusOne;
             }            
+        }
+
+        /// <summary>
+        /// Creates a creation signature of the given job
+        /// </summary>
+        /// <param name="job"></param>
+        /// <returns></returns>
+        private byte[] GenerateCreationSignatureData(Job job)
+        {
+            byte[] data = job.Serialize();
+            return CertificateService.GetCertificateService().SignData(data);
         }
 
         internal void OnJobListChanged()
@@ -389,13 +409,12 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Sends a ResponseJobListMessage to peer with peerID
+        /// Sends several ResponseJobListMessages to peer with peerID, each message containing 5 jobs
         /// if peerID == null it sends the message to every neighbor
         /// </summary>
         /// <param name="peerID"></param>
-        internal void SendResponseJobListMessage(byte[] peerID)
-        {
-            ResponseJobListMessage responseJobList = new ResponseJobListMessage();
+        internal void SendResponseJobListMessages(byte[] peerID)
+        {            
             //we clone the JobList without Payloads to minimize the size of the message
             List<Job> clonedList = new List<Job>();
             foreach (Job job in Jobs.Values)
@@ -406,12 +425,33 @@ namespace VoluntLib2.ManagementLayer
                 clone.JobPayload = new byte[0]; //Remove payload
                 clonedList.Add(clone);
             }
-            responseJobList.Jobs = clonedList;
-            responseJobList.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
-            responseJobList.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
-            responseJobList.MessageHeader.WorldName = String.Empty;
-            byte[] data = responseJobList.Serialize(true);
-            ConnectionManager.SendData(data, peerID);
+
+            //compute, how many messages we have to send; each message contains a maximum of 5 jobs without its payload
+            int messageCount = clonedList.Count / 5;
+            if (clonedList.Count % 5 > 0)
+            {
+                messageCount++;
+            }
+
+            //create and send messages
+            for (int i = 0; i < messageCount; i++)
+            {                
+                ResponseJobListMessage responseJobList = new ResponseJobListMessage();
+                if (clonedList.Count > 5)
+                {
+                    responseJobList.Jobs = clonedList.Take(5).ToList();
+                    clonedList.RemoveRange(0, 5);
+                }
+                else
+                {
+                    responseJobList.Jobs = clonedList;
+                }                                
+                responseJobList.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+                responseJobList.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+                responseJobList.MessageHeader.WorldName = String.Empty;
+                byte[] data = responseJobList.Serialize(true);
+                ConnectionManager.SendData(data, peerID);
+            }
         }
 
         /// <summary>

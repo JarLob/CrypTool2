@@ -17,15 +17,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using VoluntLib2.ComputationLayer;
+using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {    
     public class Job : IEquatable<Job>
     {
         private const int STRING_MAX_LENGTH = 255;
-        private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb
+        private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb        
 
         public Job(BigInteger jobID)
         {
@@ -34,9 +36,12 @@ namespace VoluntLib2.ManagementLayer
             JobType = string.Empty;
             JobDescription = string.Empty;
             WorldName = string.Empty;
-            Creator = string.Empty;
-            NumberOfBlocks = BigInteger.Zero;
-            IsDeleted = false;
+            CreatorName = string.Empty;
+            NumberOfBlocks = BigInteger.Zero;                        
+            CreatorCertificateData = new byte[0];
+            JobPayloadHash = new byte[0];
+            JobCreationSignatureData = new byte[0];
+            JobDeletionSignatureData = new byte[0];
             JobPayload = new byte[0];
         }
 
@@ -45,12 +50,16 @@ namespace VoluntLib2.ManagementLayer
         public string JobType { get; set; }
         public string JobDescription { get; set; }
         public string WorldName { get; set; }
-        public string Creator { get; set; }
+        public string CreatorName { get; set; }
         public BigInteger NumberOfBlocks { get; set; }
-        public bool IsDeleted { get; set; }
         public DateTime CreationDate { get; set; }
+        
+        public byte[] CreatorCertificateData { get; set; }
+        public byte[] JobPayloadHash { get; set; }
+        public byte[] JobCreationSignatureData { get; set; }
+        public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
-
+        
         public long JobSize
         {
             get
@@ -61,13 +70,22 @@ namespace VoluntLib2.ManagementLayer
                 size += UTF8Encoding.UTF8.GetBytes(JobType).Length;
                 size += UTF8Encoding.UTF8.GetBytes(JobDescription).Length;
                 size += UTF8Encoding.UTF8.GetBytes(WorldName).Length;
-                size += UTF8Encoding.UTF8.GetBytes(Creator).Length;
+                size += UTF8Encoding.UTF8.GetBytes(CreatorName).Length;
                 size += NumberOfBlocks.ToByteArray().Length;
-                size += 1; // IsDeleted
-                size += 8; // CreationDate
+                size += 8; //CreationDate
+                size += CreatorCertificateData != null ? CreatorCertificateData.Length : 0;
+                size += JobPayloadHash != null ? JobPayloadHash.Length : 0;
+                size += JobCreationSignatureData != null ? JobCreationSignatureData.Length : 0;
+                size += JobDeletionSignatureData != null ? JobDeletionSignatureData.Length : 0;
                 size += JobPayload != null ? JobPayload.Length : 0;
                 return size;
             }
+        }
+
+        public bool IsDeleted {
+
+            get { return false; }
+        
         }
 
         public bool Equals(Job other)
@@ -85,6 +103,10 @@ namespace VoluntLib2.ManagementLayer
             return JobID.GetHashCode();
         }
 
+        /// <summary>
+        /// Serializes the job to a byte array
+        /// </summary>
+        /// <returns></returns>
         public byte[] Serialize()
         {
             //0. Trim string length to max lengths
@@ -104,9 +126,9 @@ namespace VoluntLib2.ManagementLayer
             {
                 WorldName = WorldName.Substring(0, STRING_MAX_LENGTH);
             }
-            if (Creator.Length > STRING_MAX_LENGTH)
+            if (CreatorName.Length > STRING_MAX_LENGTH)
             {
-                Creator = Creator.Substring(0, STRING_MAX_LENGTH);
+                CreatorName = CreatorName.Substring(0, STRING_MAX_LENGTH);
             }
 
             //1. Convert all to byte arrays + "length of fields"-byte arrays; also calculate total size of data array
@@ -131,7 +153,7 @@ namespace VoluntLib2.ManagementLayer
             byte[] worldNameLength = BitConverter.GetBytes((ushort)worldNameBytes.Length);
             length += (worldNameBytes.Length + worldNameLength.Length);
 
-            byte[] creatorBytes = UTF8Encoding.UTF8.GetBytes(Creator);
+            byte[] creatorBytes = UTF8Encoding.UTF8.GetBytes(CreatorName);
             byte[] creatorLength = BitConverter.GetBytes((ushort)creatorBytes.Length);
             length += (creatorBytes.Length + creatorLength.Length);
 
@@ -139,12 +161,21 @@ namespace VoluntLib2.ManagementLayer
             byte[] numberOfBlocksLength = BitConverter.GetBytes((ushort)numberOfBlocksBytes.Length);
             length += (numberOfBlocksBytes.Length + numberOfBlocksLength.Length);
 
-            byte isDeleted = (byte)(IsDeleted == true ? 0 : 1);
-            length += 1;
-
             byte[] creationDateBytes = BitConverter.GetBytes(CreationDate.ToBinary());            
             length += 8;
 
+            byte[] creatorCertificateDataLength = BitConverter.GetBytes((ushort)CreatorCertificateData.Length);
+            length += (creatorCertificateDataLength.Length + CreatorCertificateData.Length);
+
+            byte[] jobPayloadHashLength = BitConverter.GetBytes((ushort)JobPayloadHash.Length);
+            length += (jobPayloadHashLength.Length + JobPayloadHash.Length);
+
+            byte[] jobCreationSignatureDataLength = BitConverter.GetBytes((ushort)JobCreationSignatureData.Length);
+            length += (jobCreationSignatureDataLength.Length + JobCreationSignatureData.Length);
+
+            byte[] jobDeletionSignatureDataLength = BitConverter.GetBytes((ushort)JobDeletionSignatureData.Length);
+            length += (jobDeletionSignatureDataLength.Length + JobDeletionSignatureData.Length);
+        
             byte[] jobPayloadLength = BitConverter.GetBytes((ushort)JobPayload.Length);
             length += (jobPayloadLength.Length + JobPayload.Length);
 
@@ -187,11 +218,28 @@ namespace VoluntLib2.ManagementLayer
             Array.Copy(numberOfBlocksBytes, 0, data, offset, numberOfBlocksBytes.Length);
             offset += numberOfBlocksBytes.Length;
 
-            data[offset] = isDeleted;
-            offset += 1;
-
             Array.Copy(creationDateBytes, 0, data, offset, creationDateBytes.Length);
             offset += 8;
+
+            Array.Copy(creatorCertificateDataLength, 0, data, offset, 2);
+            offset += 2;
+            Array.Copy(CreatorCertificateData, 0, data, offset, CreatorCertificateData.Length);
+            offset += CreatorCertificateData.Length;
+
+            Array.Copy(jobPayloadHashLength, 0, data, offset, 2);
+            offset += 2;
+            Array.Copy(JobPayloadHash, 0, data, offset, JobPayloadHash.Length);
+            offset += JobPayloadHash.Length;
+
+            Array.Copy(jobCreationSignatureDataLength, 0, data, offset, 2);
+            offset += 2;
+            Array.Copy(JobCreationSignatureData, 0, data, offset, JobCreationSignatureData.Length);
+            offset += JobCreationSignatureData.Length;
+
+            Array.Copy(jobDeletionSignatureDataLength, 0, data, offset, 2);
+            offset += 2;
+            Array.Copy(JobDeletionSignatureData, 0, data, offset, JobDeletionSignatureData.Length);
+            offset += JobDeletionSignatureData.Length;
 
             Array.Copy(jobPayloadLength, 0, data, offset, 2);            
             offset += 2;
@@ -200,6 +248,10 @@ namespace VoluntLib2.ManagementLayer
             return data;
         }
 
+        /// <summary>
+        /// Deserializes the job from a byte array
+        /// </summary>
+        /// <param name="data"></param>
         public void Deserialize(byte[] data)
         {
             int offset = 0;
@@ -233,7 +285,7 @@ namespace VoluntLib2.ManagementLayer
 
             ushort creatorLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
-            Creator = UTF8Encoding.UTF8.GetString(data, offset, creatorLength);
+            CreatorName = UTF8Encoding.UTF8.GetString(data, offset, creatorLength);
             offset += creatorLength;
 
             ushort numberOfBlocksLength = BitConverter.ToUInt16(data, offset);
@@ -243,11 +295,32 @@ namespace VoluntLib2.ManagementLayer
             NumberOfBlocks = new BigInteger(numberOfBlocks);
             offset += numberOfBlocksLength;
 
-            IsDeleted = data[offset] == 0;
-            offset += 1;
-
             CreationDate = DateTime.FromBinary(BitConverter.ToInt64(data, offset));
             offset += 8;
+
+            ushort creatorCertificateDataLength = BitConverter.ToUInt16(data, offset);
+            offset += 2;
+            CreatorCertificateData = new byte[creatorCertificateDataLength];
+            Array.Copy(data, offset, CreatorCertificateData, 0, creatorCertificateDataLength);
+            offset += creatorCertificateDataLength;
+
+            ushort jobPayloadHashLength = BitConverter.ToUInt16(data, offset);
+            offset += 2;
+            JobPayloadHash = new byte[jobPayloadHashLength];
+            Array.Copy(data, offset, JobPayloadHash, 0, jobPayloadHashLength);
+            offset += jobPayloadHashLength;
+
+            ushort jobCreationSignatureDataLength = BitConverter.ToUInt16(data, offset);
+            offset += 2;
+            JobCreationSignatureData = new byte[jobCreationSignatureDataLength];
+            Array.Copy(data, offset, JobCreationSignatureData, 0, jobCreationSignatureDataLength);
+            offset += jobCreationSignatureDataLength;
+
+            ushort jobDeleteionSignatureDataLength = BitConverter.ToUInt16(data, offset);
+            offset += 2;
+            JobDeletionSignatureData = new byte[jobDeleteionSignatureDataLength];
+            Array.Copy(data, offset, JobDeletionSignatureData, 0, jobDeleteionSignatureDataLength);
+            offset += jobDeleteionSignatureDataLength;
 
             ushort jobPayloadLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
@@ -271,7 +344,7 @@ namespace VoluntLib2.ManagementLayer
             builder.Append("  WorldName: ");
             builder.AppendLine("" + WorldName + ",");
             builder.Append("  Creator: ");
-            builder.AppendLine("" + Creator + ",");
+            builder.AppendLine("" + CreatorName + ",");
             builder.Append("  NumberOfBlocks: ");
             builder.AppendLine("" + NumberOfBlocks + ",");
             builder.Append("  IsDeleted: ");
@@ -283,6 +356,56 @@ namespace VoluntLib2.ManagementLayer
             builder.AppendLine("}");
 
             return builder.ToString();
-        }        
+        }
+
+        /// <summary>
+        /// Checks the creation signature
+        /// </summary>
+        /// <returns></returns>
+        public bool HasValidCreationSignature()
+        {
+            try
+            {
+                X509Certificate2 creatorCertificate = new X509Certificate2(CreatorCertificateData);
+
+                //some checks on the certificate
+                if (!CertificateService.GetCertificateService().IsValidCertificate(creatorCertificate))
+                {
+                    return false;
+                }
+                if (CertificateService.GetCertificateService().IsBannedCertificate(creatorCertificate))
+                {
+                    return false;
+                }     
+
+                //1. Backup some fields and remove them, since they are not used in signature
+                byte[] jobCreationSignatureDataBackup = JobCreationSignatureData;
+                JobCreationSignatureData = new byte[0];
+                byte[] jobDeletionSignatureDataBackup = JobDeletionSignatureData;
+                JobDeletionSignatureData = new byte[0];
+                byte[] payloadBackup = JobPayload;
+                JobPayload = new byte[0];
+
+                //2. Serialize for signature check
+                byte[] data = Serialize();
+                
+                //3. Copy backups back
+                JobCreationSignatureData = jobCreationSignatureDataBackup;
+                JobDeletionSignatureData = jobDeletionSignatureDataBackup;
+                JobPayload = payloadBackup;
+
+                //5. Check signature; return false if not valid
+                if (!CertificateService.GetCertificateService().VerifySignature(data,JobCreationSignatureData,creatorCertificate).Equals(CertificateValidationState.Valid))
+                {
+                    return false;
+                }
+                return true;                
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return false;
+        }
     }
 }

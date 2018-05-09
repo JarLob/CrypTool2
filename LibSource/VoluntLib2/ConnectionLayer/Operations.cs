@@ -984,7 +984,6 @@ namespace VoluntLib2.ConnectionLayer.Operations
                                 }
                             }
                         }
-                        Logger.GetLogger().LogText(String.Format("Sending a data message to {0}:{1} now", keyvalue.Value.IPAddress, keyvalue.Value.Port), this, Logtype.Debug);
                         ConnectionManager.SendDataMessage(keyvalue.Value.IPAddress, keyvalue.Value.Port, dataMessage);
                     }
                 }
