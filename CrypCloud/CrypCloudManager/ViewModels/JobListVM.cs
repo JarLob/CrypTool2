@@ -223,8 +223,9 @@ namespace CrypCloud.Manager.ViewModels
                 HasWorkspace = job.HasPayload(),
                 CreationDate = job.CreationDate.ToLocalTime(),
                 //MaxEpoch = job.StateConfig.MaximumEpoch,
+                JobSize = CalculateSizeString(job.JobSize),
                 Epoch = crypCloudCore.GetEpochOfJob(job),
-                EpochProgress = epochProgress
+                EpochProgress = epochProgress                
             };
 
             if (item.HasWorkspace)
@@ -239,6 +240,28 @@ namespace CrypCloud.Manager.ViewModels
             }
 
             return item;
+        }
+
+        /// <summary>
+        /// Converts the given siza as long to a string with
+        /// bytes, KiB, or MiB
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        private string CalculateSizeString(long size)
+        {
+            if (size < 1024)
+            {
+                return size + " bytes";
+            }
+            else if (size < 1024 * 1024)
+            {
+                return Math.Round(size / 1024.0, 2) + " KiB";
+            }
+            else
+            {
+                return Math.Round(size / 1024.0 * 1024.0, 2) + " MiB";
+            }            
         }
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]

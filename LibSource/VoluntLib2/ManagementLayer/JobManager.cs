@@ -34,6 +34,7 @@ namespace VoluntLib2.ManagementLayer
 
         private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
         private const int WORKER_THREAD_SLEEPTIME = 1; // ms
+        private const int MAX_JOB_PAYLOAD_SIZE = 50 * 1024; // 50kb
 
         private bool Running = false;
         private Thread ReceivingThread;
@@ -110,7 +111,7 @@ namespace VoluntLib2.ManagementLayer
                         Logger.LogText(String.Format("Received a {0} from {1}.", message.MessageHeader.MessageType.ToString(), BitConverter.ToString(data.PeerId)), this, Logtype.Debug);
                        
                     }
-                    catch (VoluntLib2MessageDeserializationException vl2mdex)
+                    catch (VoluntLibSerializationException vl2mdex)
                     {
                         Logger.LogText(String.Format("Message could not be deserialized: {0}", vl2mdex.Message), this, Logtype.Warning);
                         Logger.LogException(vl2mdex, this, Logtype.Warning);
@@ -292,6 +293,11 @@ namespace VoluntLib2.ManagementLayer
 
         internal BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
+            if (payload.Length > MAX_JOB_PAYLOAD_SIZE)
+            {
+                throw new JobPayloadTooBigException(String.Format("Job size too big. Maximum size is {0}, given size was {1}.", MAX_JOB_PAYLOAD_SIZE, payload.Length));
+            }
+
             byte[] payloadCopy = new byte[payload.Length];
             if (payload.Length > 0)
             {
@@ -422,5 +428,5 @@ namespace VoluntLib2.ManagementLayer
                 }
             }
         }
-    }
+    }    
 }

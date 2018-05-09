@@ -21,7 +21,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Permissions;
-using System.Security.Permissions;
 using VoluntLib2.ManagementLayer;
 using VoluntLib2.ManagementLayer.Messages;
 

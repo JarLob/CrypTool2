@@ -29,16 +29,12 @@ namespace VoluntLib2.ManagementLayer.Messages
     public enum MessageType
     {
         Undefined = 0,
-        CreateJobMessage = 10,
-        DeleteJobMessage = 20,
 
-        RequestJobListMessage = 30,
-        ResponseJobListMessage = 31,
+        RequestJobListMessage = 10,
+        ResponseJobListMessage = 11,
 
-        RequestJobMessage = 40,
-        ResponseJobMessage = 41,
-
-        JobStateMessage = 50
+        RequestJobMessage = 20,
+        ResponseJobMessage = 21,        
     }
 
     /// <summary>
@@ -55,15 +51,7 @@ namespace VoluntLib2.ManagementLayer.Messages
             switch (message.MessageHeader.MessageType)
             {
                 case MessageType.Undefined:
-                    throw new VoluntLib2MessageDeserializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));
-                case MessageType.CreateJobMessage:
-                    message = new CreateJobMessage();
-                    message.Deserialize(data);
-                    return message;
-                case MessageType.DeleteJobMessage:
-                    message = new DeleteJobMessage();
-                    message.Deserialize(data);
-                    return message;
+                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));               
                 case MessageType.RequestJobListMessage:
                     message = new RequestJobListMessage();
                     message.Deserialize(data);
@@ -79,15 +67,11 @@ namespace VoluntLib2.ManagementLayer.Messages
                 case MessageType.ResponseJobMessage:
                     message = new ResponseJobMessage();
                     message.Deserialize(data);
-                    return message;
-                case MessageType.JobStateMessage:
-                    message = new JobStateMessage();
-                    message.Deserialize(data);
-                    return message;
+                    return message;               
                 //add new message types here
 
                 default:
-                    throw new VoluntLib2MessageDeserializationException(string.Format("Received a message of an unknown MessageType: {0}", message.MessageHeader.MessageType));
+                    throw new VoluntLibSerializationException(string.Format("Received a message of an unknown MessageType: {0}", message.MessageHeader.MessageType));
             }
         }
     }
@@ -324,16 +308,16 @@ namespace VoluntLib2.ManagementLayer.Messages
         {
             if (data.Length < 27)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 27 bytes. Got {0} bytes!", data.Length));
+                throw new VoluntLibSerializationException(String.Format("Invalid message received. Expected minimum 27 bytes. Got {0} bytes!", data.Length));
             }
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VLIB2MNGMT))
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VLIB2MNGMT, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VLIB2MNGMT, magicnumber));
             }
             if (data[10] > VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VLIB2MNGMT, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VLIB2MNGMT, magicnumber));
             }
 
             MessageHeader = new MessageHeader();
@@ -346,60 +330,7 @@ namespace VoluntLib2.ManagementLayer.Messages
         }
     }
 
-    /// <summary>
-    /// Message for job creation
-    /// </summary>
-    internal class CreateJobMessage : Message
-    {
-        public Job Job { get; set; }
-
-        public CreateJobMessage()
-            : base()
-        {
-            MessageHeader.MessageType = MessageType.CreateJobMessage;
-        }
-
-        public override byte[] Serialize(bool signMessage = true)
-        {
-            Payload = Job.Serialize();            
-            return base.Serialize(signMessage);
-        }
-
-        public override void Deserialize(byte[] data)
-        {
-            base.Deserialize(data);
-            Job = new Job(0);
-            Job.Deserialize(Payload);
-        }
-
-    }
-
-    /// <summary>
-    /// Message for job deletion
-    /// </summary>
-    internal class DeleteJobMessage : Message
-    {
-        public Job Job { get; set; }
-
-        public DeleteJobMessage()
-            : base()
-        {
-            MessageHeader.MessageType = MessageType.DeleteJobMessage;
-        }
-
-        public override byte[] Serialize(bool signMessage = true)
-        {
-            Payload = Job.Serialize();
-            return base.Serialize(signMessage);
-        }
-
-        public override void Deserialize(byte[] data)
-        {
-            base.Deserialize(data);
-            Job = new Job(0);
-            Job.Deserialize(Payload);
-        }
-    }
+   
 
     /// <summary>
     /// Message to request the job lists of a neighbor
@@ -530,17 +461,5 @@ namespace VoluntLib2.ManagementLayer.Messages
             Job.Deserialize(Payload);
         }
 
-    }
-
-    /// <summary>
-    /// Message to send state of a job
-    /// </summary>
-    internal class JobStateMessage : Message
-    {
-        public JobStateMessage()
-            : base()
-        {
-            MessageHeader.MessageType = MessageType.JobStateMessage;
-        }
     }
 }

@@ -26,6 +26,8 @@ namespace CrypCloud.Manager.ViewModels.Pocos
         public bool HasWorkspace { get; set; }
         public bool DownloadingWorkspace { get; set; }
 
+        public string JobSize { get; set; }
+
         public string PrintableID
         {
             get

@@ -328,4 +328,7 @@
   <data name="WritePerformanceLog" xml:space="preserve">
     <value>Write Performance Log</value>
   </data>
+  <data name="_JobList_col_JobSize" xml:space="preserve">
+    <value>Size</value>
+  </data>
 </root>

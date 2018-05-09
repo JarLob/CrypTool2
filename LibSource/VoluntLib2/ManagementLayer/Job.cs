@@ -49,7 +49,26 @@ namespace VoluntLib2.ManagementLayer
         public BigInteger NumberOfBlocks { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime CreationDate { get; set; }
-        public byte[] JobPayload { get; set; }       
+        public byte[] JobPayload { get; set; }
+
+        public long JobSize
+        {
+            get
+            {
+                long size = 0;
+                size += JobID.ToByteArray().Length;
+                size += UTF8Encoding.UTF8.GetBytes(JobName).Length;
+                size += UTF8Encoding.UTF8.GetBytes(JobType).Length;
+                size += UTF8Encoding.UTF8.GetBytes(JobDescription).Length;
+                size += UTF8Encoding.UTF8.GetBytes(WorldName).Length;
+                size += UTF8Encoding.UTF8.GetBytes(Creator).Length;
+                size += NumberOfBlocks.ToByteArray().Length;
+                size += 1; // IsDeleted
+                size += 8; // CreationDate
+                size += JobPayload != null ? JobPayload.Length : 0;
+                return size;
+            }
+        }
 
         public bool Equals(Job other)
         {

@@ -955,14 +955,17 @@ namespace VoluntLib2.ConnectionLayer.Operations
             DataMessage dataMessage;
             while (ConnectionManager.DataMessagesOutgoing.TryDequeue(out dataMessage))
             {
-                //check, if ReceiverPeerId == 0; then sendToAll is true
+                //check, if ReceiverPeerId == null || ReceiverPeerId == 0; then sendToAll is true
                 bool sendToAll = true;
-                for (int i = 0; i < 16; i++)
+                if (dataMessage.MessageHeader.ReceiverPeerId != null)
                 {
-                    if (dataMessage.MessageHeader.ReceiverPeerId[i] != 0)
+                    for (int i = 0; i < 16; i++)
                     {
-                        sendToAll = false;
-                        break;
+                        if (dataMessage.MessageHeader.ReceiverPeerId[i] != 0)
+                        {
+                            sendToAll = false;
+                            break;
+                        }
                     }
                 }
 
@@ -980,7 +983,8 @@ namespace VoluntLib2.ConnectionLayer.Operations
                                     continue;
                                 }
                             }
-                        }                        
+                        }
+                        Logger.GetLogger().LogText(String.Format("Sending a data message to {0}:{1} now", keyvalue.Value.IPAddress, keyvalue.Value.Port), this, Logtype.Debug);
                         ConnectionManager.SendDataMessage(keyvalue.Value.IPAddress, keyvalue.Value.Port, dataMessage);
                     }
                 }
@@ -1039,7 +1043,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
     internal class BootstrapOperation : Operation
     {
         private const int CHECK_INTERVAL = 120000; //2 min
-        private DateTime LastCheckedTime = DateTime.Now.Subtract(new TimeSpan(0, 0, 0, 0, CHECK_INTERVAL));
+        private DateTime LastCheckedTime = DateTime.MinValue;
         private Logger Logger = Logger.GetLogger();
         
         private List<Contact> WellKnownPeers;

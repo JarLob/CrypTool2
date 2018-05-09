@@ -47,14 +47,11 @@ namespace VoluntLib2.Tools
 
 
     public class Logger
-    {   
-        private const int REMOVE_ENTRIES_COUNT = 500;
-        private const int REMOVE_ENTRIES_AMOUNT = 1;
+    {
+        public event EventHandler<LogEventArgs> Logged;
 
         private static Logger Instance = new Logger();
         private static Logtype Loglevel = Logtype.Info;
-
-        public static ArrayList LogEntries =  ArrayList.Synchronized(new ArrayList());
 
         /// <summary>
         /// Singleton, thus private constructor
@@ -99,33 +96,35 @@ namespace VoluntLib2.Tools
                 switch (logtype)
                 {
                     case Logtype.Debug:                        
-                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Debug", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = message });
+                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
                         break;
                     case Logtype.Info:
-                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Info", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = message });
+                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
                         break;
                     case Logtype.Warning:
-                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Warning", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = message });
+                        Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
                         break;
                     case Logtype.Error:
-                        Console.Error.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Error", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = message });
+                        Console.Error.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);                        
                         break;
                     default:
                         Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Unknown", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = message });
                         break;
                 }
-                if (LogEntries.Count >= REMOVE_ENTRIES_COUNT)
-                {
-                    for (int i = 0; i < REMOVE_ENTRIES_AMOUNT; i++)
-                    {
-                        LogEntries.RemoveAt(0);
-                    }
-                }
+                LoggOccured(String.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
+            }
+        }
+
+        /// <summary>
+        /// Fires the Logged event
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="logtype"></param>
+        private void LoggOccured(string message, Logtype logtype)
+        {
+            if (Logged != null)
+            {
+                Logged.BeginInvoke(this, new LogEventArgs(logtype, message), null, null);
             }
         }
 
@@ -149,39 +148,39 @@ namespace VoluntLib2.Tools
                 {
                     case Logtype.Debug:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Debug", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
-                        Console.WriteLine(ex.StackTrace);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Debug", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = "Stacktrace:" + ex.StackTrace });                        
+                        Console.WriteLine(ex.StackTrace);                        
                         break;
                     case Logtype.Info:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Info", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
-                        Console.WriteLine(ex.StackTrace);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Info", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = "Stacktrace:" + ex.StackTrace });
+                        Console.WriteLine(ex.StackTrace);                        
                         break;
                     case Logtype.Warning:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Warning", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
                         Console.WriteLine(ex.StackTrace);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Warning", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = "Stacktrace:" + ex.StackTrace });
                         break;
                     case Logtype.Error:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Error", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
                         Console.Error.WriteLine(ex.StackTrace);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Error", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = "Stacktrace:" + ex.StackTrace });                        
                         break;
                     default:
                         Console.WriteLine("{0} {1} {2}: Stacktrace:", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null");
                         Console.WriteLine(ex.StackTrace);
-                        LogEntries.Add(new LogEntry() { LogTime = DateTime.Now.ToString(), LogType = "Unknown", Class = (whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null"), Message = "Stacktrace:" + ex.StackTrace });
                         break;
                 }
-                if (LogEntries.Count >= REMOVE_ENTRIES_COUNT)
-                {
-                    for (int i = 0; i < REMOVE_ENTRIES_AMOUNT; i++)
-                    {
-                        LogEntries.RemoveAt(0);
-                    }
-                }
-
+                LoggOccured(String.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
             }
+        }
+    }
+
+    public class LogEventArgs : EventArgs
+    {
+        public Logtype Logtype { private set; get; }
+        public string Message { private set; get; }
+
+        public LogEventArgs(Logtype logtype, string message)
+        {
+            Logtype = logtype;
+            Message = message;
         }
     }
 }

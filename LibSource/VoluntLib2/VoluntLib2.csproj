@@ -65,7 +65,7 @@
     <Compile Include="ManagementLayer\Job.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComputationLayer\TaskEventArgs.cs" />
-    <Compile Include="Tools\VoluntLib2MessageDeserializationException.cs" />
+    <Compile Include="Tools\Exceptions.cs" />
     <Compile Include="VoluntLib2.cs" />
   </ItemGroup>
   <ItemGroup />

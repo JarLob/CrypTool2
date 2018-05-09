@@ -104,11 +104,13 @@
                                         DisplayMemberBinding="{Binding CreationDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}"
                                         Width="150" />
                         <GridViewColumn x:Name="ShortID" Header="{Loc _JobList_col_Id}"
-                                        DisplayMemberBinding="{Binding ShortID}" Width="50" />
+                                        DisplayMemberBinding="{Binding ShortID}" Width="125" />
                         <GridViewColumn x:Name="Name" Header="{Loc  _JobList_col_Name}"
-                                        DisplayMemberBinding="{Binding Name}" Width="350" />
+                                        DisplayMemberBinding="{Binding Name}" Width="225" />
+                        <GridViewColumn x:Name="Jobsize" Header="{Loc  _JobList_col_JobSize}"
+                                        DisplayMemberBinding="{Binding JobSize}" Width="100" />
                         <GridViewColumn x:Name="Creator" Header="{Loc  _JobList_col_Creator}"
-                                        DisplayMemberBinding="{Binding Creator}" Width="100" />
+                                        DisplayMemberBinding="{Binding Creator}" Width="125" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
                                         Width="{Binding ElementName=helperField, Path=ActualWidth}">
                             <GridViewColumn.CellTemplate>

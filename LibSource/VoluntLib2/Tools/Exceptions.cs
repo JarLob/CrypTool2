@@ -24,12 +24,22 @@ namespace VoluntLib2.Tools
     /// <summary>
     /// Thrown, when a message can not be serialized due to wrong message format, magic number, etc
     /// </summary>
-    internal class VoluntLib2MessageDeserializationException : Exception
+    internal class VoluntLibSerializationException : Exception
     {
-        public VoluntLib2MessageDeserializationException(string message)
+        public VoluntLibSerializationException(string message)
             : base(message)
         {
 
         }
     }
+
+    public class JobPayloadTooBigException: Exception
+    {
+        public JobPayloadTooBigException(string message)
+            : base(message)
+        {
+
+        }
+    }
+
 }

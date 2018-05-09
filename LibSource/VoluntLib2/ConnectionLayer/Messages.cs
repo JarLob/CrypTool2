@@ -63,7 +63,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
             switch (message.MessageHeader.MessageType)
             {
                 case MessageType.Undefined:
-                    throw new VoluntLib2MessageDeserializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));
+                    throw new VoluntLibSerializationException(string.Format("Received a message of MessageType {0} - can not do anything with that!", message.MessageHeader.MessageType));
                 case MessageType.HelloMessage:
                     message = new HelloMessage();
                     message.Deserialize(data);
@@ -99,7 +99,7 @@ namespace VoluntLib2.ConnectionLayer.Messages
                 //add new message types here
 
                 default:
-                    throw new VoluntLib2MessageDeserializationException(string.Format("Received a message of an unknown MessageType: {0}", message.MessageHeader.MessageType));
+                    throw new VoluntLibSerializationException(string.Format("Received a message of an unknown MessageType: {0}", message.MessageHeader.MessageType));
             }            
         }
     }
@@ -231,16 +231,16 @@ namespace VoluntLib2.ConnectionLayer.Messages
         {
             if (data.Length < 74)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid message received. Expected minimum 74 bytes. Got {0} bytes!", data.Length));
+                throw new VoluntLibSerializationException(String.Format("Invalid message received. Expected minimum 74 bytes. Got {0} bytes!", data.Length));
             }            
             string magicnumber = Encoding.ASCII.GetString(data, 0, 10);
             if (!magicnumber.Equals(VOLUNTLIB2))
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VOLUNTLIB2, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Invalid magic number. Expected '{0}'. Received '{1}'", VOLUNTLIB2, magicnumber));
             }
             if (data[10] > VOLUNTLIB2_VERSION)
             {
-                throw new VoluntLib2MessageDeserializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VOLUNTLIB2, magicnumber));
+                throw new VoluntLibSerializationException(String.Format("Expected a VoluntLib2 version <= {0}. Received a version {1}. Please update!", VOLUNTLIB2, magicnumber));
             }
 
             MessageHeader = new MessageHeader();

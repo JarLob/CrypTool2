@@ -196,7 +196,7 @@ namespace VoluntLib2.ConnectionLayer
                         }
 
                     }
-                    catch (VoluntLib2MessageDeserializationException vl2mdex)
+                    catch (VoluntLibSerializationException vl2mdex)
                     {
                         Logger.LogText(String.Format("Message could not be deserialized: {0}", vl2mdex.Message), this, Logtype.Warning);
                         Logger.LogException(vl2mdex, this, Logtype.Warning);

@@ -28,6 +28,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using Cryptool.PluginBase.Editor;
 using WorkspaceManager.Model;
+using VoluntLib2.Tools;
 
 namespace CrypCloud.Manager
 {
@@ -50,6 +51,28 @@ namespace CrypCloud.Manager
 
             var jobListVM = (JobListVM) crypCloudPresentation.JobList.DataContext;
             jobListVM.Manager = this;
+            Logger.SetLogLevel(Logtype.Debug);
+            Logger logger = Logger.GetLogger();
+            logger.Logged += logger_Logged;
+        }
+
+        private void logger_Logged(object sender, LogEventArgs logEventArgs)
+        {
+            switch (logEventArgs.Logtype)
+            {
+                case Logtype.Debug:
+                    GuiLogMessage(logEventArgs.Message, NotificationLevel.Debug);
+                    break;
+                case Logtype.Info:
+                    GuiLogMessage(logEventArgs.Message, NotificationLevel.Info);
+                    break;
+                case Logtype.Warning:
+                    GuiLogMessage(logEventArgs.Message, NotificationLevel.Warning);
+                    break;
+                case Logtype.Error:
+                    GuiLogMessage(logEventArgs.Message, NotificationLevel.Error);
+                    break;
+            }
         }
 
         private void AddScreensToNavigator(CrypCloudPresentation crypCloudPresentation)
@@ -289,7 +312,9 @@ namespace CrypCloud.Manager
         }
 
         public void Dispose()
-        {            
+        {
+            Logger logger = Logger.GetLogger();
+            logger.Logged -= logger_Logged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

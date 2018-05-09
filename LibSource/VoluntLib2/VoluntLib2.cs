@@ -39,7 +39,7 @@ namespace VoluntLib2
         private JobManager JobManager;
         private Logger Logger = Logger.GetLogger();
 
-        private ushort ListenPort = 0;        
+        private ushort ListenPort = 10000;        
 
         public event EventHandler<JobProgressEventArgs> JobProgress;
         public event EventHandler<JobProgressEventArgs> JobFinished;
@@ -50,8 +50,7 @@ namespace VoluntLib2
         public event EventHandler<TaskEventArgs> TaskStopped;
 
         public VoluntLib()
-        {
-            Logger.SetLogLevel(Logtype.Debug);
+        {            
         }
     
         public string LocalStoragePath { get; set; }

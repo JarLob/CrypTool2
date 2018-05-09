@@ -5,6 +5,7 @@ using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
 using WorkspaceManager.Model;
+using VoluntLib2.Tools;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -50,15 +51,22 @@ namespace CrypCloud.Manager.ViewModels
                 return;
             }
 
-            var jobHasBeenCreated = crypCloudCore.CreateJob("CryptoolJob", Name, Description, workspaceModel);
-            if (jobHasBeenCreated)
+            try
             {
-                Navigator.ShowScreenWithPath(ScreenPaths.JobList); 
+                var jobHasBeenCreated = crypCloudCore.CreateJob("CryptoolJob", Name, Description, workspaceModel);
+                if (jobHasBeenCreated)
+                {
+                    Navigator.ShowScreenWithPath(ScreenPaths.JobList);
+                }
+                else
+                {
+                    ErrorMessage = "Workspace does not contain a cloud component";
+                }
             }
-            else
+            catch (JobPayloadTooBigException)
             {
-                ErrorMessage = "Workspace didnt contain a cloud component";
-            }
+                ErrorMessage = "Selected cwm-file is too big. Only 50KiB allowed!";
+            }            
         }
 
         private WorkspaceModel TryDeserializeWorkspace(string filePath)

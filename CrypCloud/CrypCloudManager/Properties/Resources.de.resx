@@ -326,4 +326,7 @@ Berechnungen.</value>
   <data name="String1" xml:space="preserve">
     <value />
   </data>
+  <data name="_JobList_col_JobSize" xml:space="preserve">
+    <value>Größe</value>
+  </data>
 </root>
