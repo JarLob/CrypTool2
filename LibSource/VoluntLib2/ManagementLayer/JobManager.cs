@@ -82,7 +82,7 @@ namespace VoluntLib2.ManagementLayer
             //This operation answers to RequestJobListMessages
             Operations.Enqueue(new ResponseJobListOperation() { JobManager = this });
             //This operation handles to JobListResponseMessages
-            Operations.Enqueue(new HandleJobListResponseOperation() { JobManager = this });
+            Operations.Enqueue(new HandleResponseJobListOperation() { JobManager = this });
             
             Logger.LogText("JobManager started", this, Logtype.Info);
         }

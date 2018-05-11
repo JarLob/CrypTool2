@@ -149,7 +149,7 @@ namespace VoluntLib2.ManagementLayer
     internal class ResponseJobListOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
-        
+
         /// <summary>
         /// The ResponseJobListOperation never finishes
         /// </summary>
@@ -162,7 +162,7 @@ namespace VoluntLib2.ManagementLayer
         /// Execute this operation
         /// </summary>
         public override void Execute()
-        {            
+        {
         }
 
         /// <summary>
@@ -176,13 +176,13 @@ namespace VoluntLib2.ManagementLayer
                 Logger.LogText(String.Format("Received a RequestJobListMessage from peer {0}. Answering now.", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
                 JobManager.SendResponseJobListMessages(message.PeerId);
             }
-        }       
+        }
     }
 
     /// <summary>
     /// Operation for handling ResponseJobListMessage
     /// </summary>
-    internal class HandleJobListResponseOperation : Operation
+    internal class HandleResponseJobListOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
 
@@ -214,27 +214,150 @@ namespace VoluntLib2.ManagementLayer
                 bool jobListChanged = false;
                 foreach (var job in responseJobListMessage.Jobs)
                 {
-                    if(!job.HasValidCreationSignature())
+                    if (!job.HasValidCreationSignature())
                     {
                         Logger.LogText(String.Format("Received job {0} has an invalid CreationSignature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         continue;
                     }
 
                     //1. case: we dont know the job, then just add it
-                    if(!JobManager.Jobs.ContainsKey(job.JobID))
+                    if (!JobManager.Jobs.ContainsKey(job.JobID))
                     {
+                        if (!job.HasValidCreationSignature())
+                        {
+                            Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                            continue;
+                        }
+
                         Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         JobManager.Jobs.TryAdd(job.JobID, job);
                         jobListChanged = true;
+                        continue;
                     }
 
-                    //2. case: We know the job but the received has a valid DeletionSignature
-                    //todo: create code
+                    //2. case: we already know the job, but we dont have a Deletion Signature and the job contains one, we add it
+                    if (!JobManager.Jobs[job.JobID].HasValidDeletionSignature() && job.HasValidDeletionSignature())
+                    {
+                        JobManager.Jobs[job.JobID].JobDeletionSignatureData = job.JobDeletionSignatureData;
+                        jobListChanged = true;
+                        continue;
+                    }
                 }
                 //we received at least one new job. Thus, we inform that the job list changed
                 if (jobListChanged)
                 {
                     JobManager.OnJobListChanged();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// This message handles ResponseJobMessages. It adds received payloads and delete messages to our jobs
+    /// </summary>
+    internal class HandleResponseJobMessageOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+
+        /// <summary>
+        /// HandleResponseJobMessageOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Does nothing
+        /// </summary>
+        public override void Execute()
+        {
+        }
+
+        /// <summary>
+        /// Handles the receving of a ResponseJobMessage
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {
+            if (message is ResponseJobMessage)
+            {
+                Job job = ((ResponseJobMessage)message).Job;
+
+                //We don't know the job. Thus, we add it
+                if (!JobManager.Jobs.ContainsKey(job.JobID))
+                {
+                    if (!job.HasValidCreationSignature())
+                    {
+                        Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        return;
+                    }
+                    if (job.HasPayload())
+                    {
+                        //check, if the hash of the payload is ok
+                        var jobPayloadHash = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
+                        bool validPayload = true;
+                        for (int i = 0; i < jobPayloadHash.Length; i++)
+                        {
+                            if (jobPayloadHash[i] != job.JobPayloadHash[i])
+                            {
+                                validPayload = false;
+                                break;
+                            }
+                        }
+                        if (validPayload)
+                        {
+                            //when we receive a valid payload, we add it to the appropriate job
+                            Logger.LogText(String.Format("Added new job {0} and received valid payload", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                            JobManager.Jobs.TryAdd(job.JobID, job);
+                            JobManager.Jobs[job.JobID].JobPayload = job.JobPayload;
+                            return;
+                        }
+                        else
+                        {
+                            //when we receive an invalid payload, we ignore it and give a warning
+                            Logger.LogText(String.Format("Received payload of the received job {0} is invalid. The computed hash is not equal to the JobPayloadHash!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                            return;
+                        }
+                    }
+                    JobManager.Jobs.TryAdd(job.JobID, job);
+                    Logger.LogText(String.Format("Added new job {0} without payload to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);                    
+                    return;
+                }
+
+                //We know the job but have no Payload and the job has payload
+                if (!JobManager.Jobs[job.JobID].HasPayload() && job.HasPayload())
+                {
+                    //check, if the creation signature is valid
+                    if (!job.HasValidCreationSignature())
+                    {
+                        Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        return;
+                    }
+                    //check, if the hash of the payload is ok
+                    var jobPayloadHash = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
+                    bool validPayload = true;
+                    for (int i = 0; i < jobPayloadHash.Length; i++)
+                    {
+                        if (jobPayloadHash[i] != JobManager.Jobs[job.JobID].JobPayloadHash[i])
+                        {
+                            validPayload = false;
+                            break;
+                        }
+                    }
+                    if (validPayload)
+                    {
+                        //when we receive a valid payload, we add it to the appropriate job
+                        Logger.LogText(String.Format("Added received payload to job {0}", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        JobManager.Jobs[job.JobID].JobPayload = job.JobPayload;
+                        return;
+                    }
+                    else
+                    {
+                        //when we receive an invalid payload, we ignore it and give a warning
+                        Logger.LogText(String.Format("Received payload of job {0} is invalid. The computed hash is not equal to the JobPayloadHash we already know!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        return;
+                    }
                 }
             }
         }

@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -428,10 +429,24 @@ namespace VoluntLib2.ManagementLayer.Messages
     /// </summary>
     internal class RequestJobMessage : Message
     {
+        public BigInteger JobId;
+
         public RequestJobMessage()
             : base()
         {
             MessageHeader.MessageType = MessageType.RequestJobMessage;
+        }
+
+        public override byte[] Serialize(bool signMessage = true)
+        {
+            Payload = JobId.ToByteArray();
+            return base.Serialize(signMessage);
+        }
+
+        public override void Deserialize(byte[] data)
+        {
+            base.Deserialize(data);
+            JobId = new BigInteger(Payload);
         }
     }
 
@@ -460,6 +475,5 @@ namespace VoluntLib2.ManagementLayer.Messages
             Job = new Job(0);
             Job.Deserialize(Payload);
         }
-
     }
 }

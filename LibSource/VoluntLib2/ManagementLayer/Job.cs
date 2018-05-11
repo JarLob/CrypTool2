@@ -406,5 +406,11 @@ namespace VoluntLib2.ManagementLayer
                 return false;
             }
         }
+
+        public bool HasValidDeletionSignature()
+        {
+            //todo: add code to check here...            
+            return false;
+        }
     }
 }
