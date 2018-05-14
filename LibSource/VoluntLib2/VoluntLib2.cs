@@ -80,7 +80,7 @@ namespace VoluntLib2
             ConnectionManager.AddWellknownPeer(IPAddress.Parse("141.51.125.18"), 10000);
             ConnectionManager.Start();
 
-            JobManager = new JobManager(ConnectionManager);
+            JobManager = new JobManager(ConnectionManager, LocalStoragePath);
             JobManager.JobListChanged += JobListChanged;
             JobManager.Start();
 

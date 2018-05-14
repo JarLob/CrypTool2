@@ -39,6 +39,9 @@ namespace VoluntLib2.ManagementLayer
         private bool Running = false;
         private Thread ReceivingThread;
         private Thread WorkerThread;
+        
+        //Path, where jobs will be serialized to and loaded from
+        internal string LocalStoragePath;
 
         //ConnectionManager is responsible for the core network communication and p2p overlay
         //The JobManager uses it to send and receive messages
@@ -52,9 +55,10 @@ namespace VoluntLib2.ManagementLayer
 
         public event PropertyChangedEventHandler JobListChanged;
 
-        public JobManager(ConnectionManager connectionManager)
+        public JobManager(ConnectionManager connectionManager, string localStoragePath)
         {
             ConnectionManager = connectionManager;
+            LocalStoragePath = localStoragePath;
         }
 
         public void Start()
@@ -74,7 +78,8 @@ namespace VoluntLib2.ManagementLayer
             WorkerThread = new Thread(JobManagerWork);
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
-
+            //This operation deserializes all serialized jobs; then it terminates
+            Operations.Enqueue(new JobDeserializationOperation() { JobManager = this });
             //This operation sends every 5 minutes a ResponseJobListMessage to every neighbor
             Operations.Enqueue(new ShareJobListOperation() { JobManager = this });
             //This operation sends every 5 minutes a RequestJobListMessage to every neighbor
@@ -89,6 +94,8 @@ namespace VoluntLib2.ManagementLayer
             Operations.Enqueue(new HandleRequestJobMessage() { JobManager = this });
             //This operation handles ResponseJobMessages
             Operations.Enqueue(new HandleResponseJobMessageOperation() { JobManager = this });
+            //This operation serializes the jobs every 5 minutes to file
+            Operations.Enqueue(new JobSerializationOperation() { JobManager = this });
             
 
             Logger.LogText("JobManager started", this, Logtype.Info);

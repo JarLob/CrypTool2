@@ -62,7 +62,7 @@ namespace CrypCloud.Core
         {        
             var vlib = new VoluntLib
             {                                          
-                LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
+                LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "Jobs"),                
             };
 
             try

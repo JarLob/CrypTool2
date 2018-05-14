@@ -15,7 +15,9 @@
 */
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -438,6 +440,119 @@ namespace VoluntLib2.ManagementLayer
                 Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
                 JobManager.SendResponseJobMessage(message.PeerId, JobManager.Jobs[requestJobMessage.JobId]);
             }
+        }
+    }
+
+    /// <summary>
+    /// Serializes all messages every 5 minutes to file
+    /// </summary>
+    internal class JobSerializationOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        private const int SERIALIZATION_INTERVAL = 300000; //5min        
+        private DateTime LastSerializationTime = DateTime.Now;
+
+        /// <summary>
+        /// JobSerializationOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Serializes all messages every 5 minutes to file
+        /// </summary>
+        public override void Execute()
+        {
+            if (DateTime.Now > LastSerializationTime.AddMilliseconds(SERIALIZATION_INTERVAL))
+            {
+                if (!Directory.Exists(JobManager.LocalStoragePath))
+                {
+                    Directory.CreateDirectory(JobManager.LocalStoragePath);
+                    Logger.LogText(String.Format("Created folder for serializing jobs: {0}", JobManager.LocalStoragePath), this, Logtype.Debug);
+                }
+                Logger.LogText("Serializing Jobs now...", this, Logtype.Debug);
+
+                foreach (Job job in JobManager.Jobs.Values)
+                {
+                    try
+                    {
+                        FileStream stream = new FileStream(JobManager.LocalStoragePath + Path.DirectorySeparatorChar + BitConverter.ToString(job.JobID.ToByteArray()) + ".job", FileMode.Create, FileAccess.Write);
+                        byte[] data = job.Serialize();
+                        stream.Write(data,0,data.Length);
+                        stream.Flush();
+                        stream.Close();
+                        Logger.LogText(String.Format("Job {0} serialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogText(String.Format("Job {0} could not be serialized!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Error);
+                        Logger.LogException(ex, this, Logtype.Error);
+                    }
+                }
+                LastSerializationTime = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Does nothing with a message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {            
+        }
+    }
+
+    internal class JobDeserializationOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        private bool executed = false;
+
+        public override bool IsFinished
+        {
+            get { return executed; }
+        }
+
+        public override void Execute()
+        {
+            if (!Directory.Exists(JobManager.LocalStoragePath))
+            {
+                Directory.CreateDirectory(JobManager.LocalStoragePath);
+                Logger.LogText(String.Format("Created folder for serializing jobs: {0}", JobManager.LocalStoragePath), this, Logtype.Debug);
+                return;
+            }
+            foreach (string file in Directory.GetFiles(JobManager.LocalStoragePath))
+            {
+                try
+                {
+                    Job job = new Job(BigInteger.MinusOne);
+                    byte[] data = File.ReadAllBytes(file);
+                    job.Deserialize(data);
+                    JobManager.Jobs.TryAdd(job.JobID, job);
+                    Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogText(String.Format("Job from file {0} could not be serialized! Delete it now...", file), this, Logtype.Error);
+                    Logger.LogException(ex, this, Logtype.Error);
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (Exception ex2)
+                    {
+                        Logger.LogText(String.Format("File {0} could not be deleted!", file), this, Logtype.Error);
+                        Logger.LogException(ex2, this, Logtype.Error);
+                    }
+                }
+            }
+            executed = true;
+            JobManager.OnJobListChanged();
+        }
+
+        public override void HandleMessage(Message message)
+        {            
         }
     }
 }
