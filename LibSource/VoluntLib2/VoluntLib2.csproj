@@ -51,6 +51,7 @@
     <Compile Include="ManagementLayer\Messages.cs" />
     <Compile Include="ManagementLayer\Operations.cs" />
     <Compile Include="Tools\CertificateService.cs" />
+    <Compile Include="Tools\EventArgs.cs" />
     <Compile Include="Tools\Logger.cs" />
     <Compile Include="ConnectionLayer\Messages.cs" />
     <Compile Include="ConnectionLayer\ConnectionManager.cs" />

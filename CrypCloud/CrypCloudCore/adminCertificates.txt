@@ -1,2 +1,1 @@
-﻿N:ckonze
-N:kopal
+﻿N:kopal

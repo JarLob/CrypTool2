@@ -24,7 +24,7 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {    
-    public class Job : IEquatable<Job>
+    public class Job : IEquatable<Job>, IComparable<Job>
     {
         private const int STRING_MAX_LENGTH = 255;
         private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb        
@@ -43,6 +43,7 @@ namespace VoluntLib2.ManagementLayer
             JobCreationSignatureData = new byte[0];
             JobDeletionSignatureData = new byte[0];
             JobPayload = new byte[0];
+            LastPayloadRequestTime = DateTime.MinValue;
         }
 
         public BigInteger JobID { get; set; }
@@ -53,7 +54,9 @@ namespace VoluntLib2.ManagementLayer
         public string CreatorName { get; set; }
         public BigInteger NumberOfBlocks { get; set; }
         public DateTime CreationDate { get; set; }
-        
+
+        public DateTime LastPayloadRequestTime { get; set; }
+
         public byte[] CreatorCertificateData { get; set; }
         public byte[] JobPayloadHash { get; set; }
         public byte[] JobCreationSignatureData { get; set; }
@@ -411,6 +414,11 @@ namespace VoluntLib2.ManagementLayer
         {
             //todo: add code to check here...            
             return false;
+        }
+
+        public int CompareTo(Job other)
+        {
+            return -1 * CreationDate.CompareTo(other.CreationDate);
         }
     }
 }

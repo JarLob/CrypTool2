@@ -102,7 +102,7 @@ namespace VoluntLib2.Tools
             OwnName = GetSubjectNameFromCertificate(ownCertificate);
 
             AdminCertificateList = new List<string>();
-            BannedCertificateList = new List<string>();
+            BannedCertificateList = new List<string>();           
         }
 
         private string GetSubjectNameFromCertificate(X509Certificate2 cert)

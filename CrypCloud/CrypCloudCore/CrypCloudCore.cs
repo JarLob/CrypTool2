@@ -59,17 +59,9 @@ namespace CrypCloud.Core
         }
 
         private VoluntLib InitVoluntLib()
-        {
-            var adminCertificates = Resources.adminCertificates.Replace("\r","") ;
-            var adminList = adminCertificates.Split('\n').ToList();
-            
-            var bannedCertificates = Resources.bannedCertificates.Replace("\r","") ;
-            var bannedList = bannedCertificates.Split('\n').ToList();          
-
+        {        
             var vlib = new VoluntLib
-            {                               
-                AdminCertificateList = adminList,
-                BannedCertificateList = bannedList,
+            {                                          
                 LocalStoragePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "CrypCloud" + Path.DirectorySeparatorChar + "VoluntLibStore.xml"),                
             };
 
@@ -90,7 +82,7 @@ namespace CrypCloud.Core
                 vlib.TaskStopped += OnTaskHasStopped;
                 vlib.TaskProgress += OnTaskProgress;
                 vlib.JobFinished += OnJobFinished;
-            }
+            }         
 
             return vlib;
         }
@@ -107,6 +99,16 @@ namespace CrypCloud.Core
             {
                 var rootCertificate = new X509Certificate2(Resources.rootCA);
                 voluntLib.Start(rootCertificate, ownCertificate);
+
+                //When VoluntLib is started, the admin and banned lists are cleared
+                //Thus, we here add the admin and banned certificates
+                var adminCertificates = Resources.adminCertificates.Replace("\r", "");
+                var adminList = adminCertificates.Split('\n').ToList();
+                var bannedCertificates = Resources.bannedCertificates.Replace("\r", "");
+                var bannedList = bannedCertificates.Split('\n').ToList();
+                CertificateService.GetCertificateService().AdminCertificateList.AddRange(adminList);
+                CertificateService.GetCertificateService().BannedCertificateList.AddRange(bannedList);
+
                 OnConnectionStateChanged(true);
             }
             catch (Exception)

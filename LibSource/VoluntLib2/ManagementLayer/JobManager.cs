@@ -83,7 +83,14 @@ namespace VoluntLib2.ManagementLayer
             Operations.Enqueue(new ResponseJobListOperation() { JobManager = this });
             //This operation handles to JobListResponseMessages
             Operations.Enqueue(new HandleResponseJobListOperation() { JobManager = this });
+            //This operation checks JobPayloads of jobs; it requests these from the neighbors
+            Operations.Enqueue(new CheckJobsPayloadOperation() { JobManager = this });
+            //This operation answers RequestJobMessage by sending an answer containing the requestet job. Only when we HAVE it and it HAS PAYLOAD
+            Operations.Enqueue(new HandleRequestJobMessage() { JobManager = this });
+            //This operation handles ResponseJobMessages
+            Operations.Enqueue(new HandleResponseJobMessageOperation() { JobManager = this });
             
+
             Logger.LogText("JobManager started", this, Logtype.Info);
         }
 
@@ -373,8 +380,12 @@ namespace VoluntLib2.ManagementLayer
                     jobs.Add(job);
                 }
             }
+
+            jobs.Sort();
+
             return jobs;
         }
+
 
         /// <summary>
         /// Returns the job with the given jobID or null if it does not exist
@@ -455,7 +466,39 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Sets the last execution time of all RequestJobListOperations to min value forcing them to be executed
+        /// Sends a RequestJobMessage to peer with peerID requesting a job with the given JobId
+        /// if peerID == null it sends the message to every neighbor
+        /// </summary>
+        /// <param name="peerID"></param>
+        internal void SendRequestJobMessage(byte[] peerID, BigInteger jobId)
+        {
+            RequestJobMessage requestJobMessage = new RequestJobMessage();
+            requestJobMessage.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+            requestJobMessage.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+            requestJobMessage.MessageHeader.WorldName = String.Empty;
+            requestJobMessage.JobId = jobId;
+            byte[] data = requestJobMessage.Serialize(true);
+            ConnectionManager.SendData(data, peerID);
+        }
+
+        /// <summary>
+        /// Sends a ResponseJobMessage to peer with peerID containing the job with the given JobId
+        /// if peerID == null it sends the message to every neighbor
+        /// </summary>
+        /// <param name="peerID"></param>
+        internal void SendResponseJobMessage(byte[] peerID, Job job)
+        {
+            ResponseJobMessage responseJobMessage = new ResponseJobMessage();
+            responseJobMessage.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+            responseJobMessage.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+            responseJobMessage.MessageHeader.WorldName = String.Empty;
+            responseJobMessage.Job = job;
+            byte[] data = responseJobMessage.Serialize(true);
+            ConnectionManager.SendData(data, peerID);
+        }
+
+        /// <summary>
+        /// Sets the last execution time of all RequestJobListOperations to the minimum value forcing them to be executed
         /// </summary>
         internal void RefreshJobList()
         {
@@ -467,6 +510,15 @@ namespace VoluntLib2.ManagementLayer
                     requestJobListOperation.ForceExecution();
                 }
             }
+        }
+
+        /// <summary>
+        /// Request the given job from any of the other peers
+        /// </summary>
+        /// <param name="jobId"></param>
+        internal void RequestJob(BigInteger jobId)
+        {
+            SendRequestJobMessage(null, jobId);
         }
     }    
 }

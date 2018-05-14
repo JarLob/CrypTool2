@@ -48,6 +48,8 @@ namespace VoluntLib2
         public event EventHandler<TaskEventArgs> TaskStarted;
         public event EventHandler<TaskEventArgs> TaskProgress;
         public event EventHandler<TaskEventArgs> TaskStopped;
+        public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
+
 
         public VoluntLib()
         {            
@@ -75,7 +77,7 @@ namespace VoluntLib2
 
             ConnectionManager = new ConnectionManager(ListenPort);
             //Well known peer for testing - my amazon server; will be replaced by official CT2 servers
-            ConnectionManager.AddWellknownPeer(IPAddress.Parse("34.218.183.126"), 10000);
+            ConnectionManager.AddWellknownPeer(IPAddress.Parse("141.51.125.18"), 10000);
             ConnectionManager.Start();
 
             JobManager = new JobManager(ConnectionManager);
@@ -97,7 +99,7 @@ namespace VoluntLib2
 
         public void RequestJobDetails(Job job)
         {
-
+            JobManager.RequestJob(job.JobID);
         }
 
         public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
@@ -152,7 +154,8 @@ namespace VoluntLib2
 
         public bool CanUserDeleteJob(Job job)
         {
-            return false;
+            return (job.CreatorName.Equals(CertificateName)) || 
+                CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
         }
     }
 }

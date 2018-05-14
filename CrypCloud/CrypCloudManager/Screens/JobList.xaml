@@ -91,7 +91,7 @@
                       SelectedItem="{Binding SelectedJob, Mode=TwoWay}"
                       x:Name="JobListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      MouseDoubleClick="JobListView_OnMouseDoubleClick" Grid.ColumnSpan="2">
+                      Grid.ColumnSpan="2">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>

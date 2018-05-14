@@ -321,7 +321,8 @@ namespace VoluntLib2.ManagementLayer
                         }
                     }
                     JobManager.Jobs.TryAdd(job.JobID, job);
-                    Logger.LogText(String.Format("Added new job {0} without payload to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);                    
+                    Logger.LogText(String.Format("Added new job {0} without payload to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                    JobManager.OnJobListChanged();
                     return;
                 }
 
@@ -350,6 +351,7 @@ namespace VoluntLib2.ManagementLayer
                         //when we receive a valid payload, we add it to the appropriate job
                         Logger.LogText(String.Format("Added received payload to job {0}", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         JobManager.Jobs[job.JobID].JobPayload = job.JobPayload;
+                        JobManager.OnJobListChanged();
                         return;
                     }
                     else
@@ -359,6 +361,82 @@ namespace VoluntLib2.ManagementLayer
                         return;
                     }
                 }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Operation for checking JobPayloads and getting them from the other peers
+    /// </summary>
+    internal class CheckJobsPayloadOperation : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        private const int REQUEST_INTERVAL = 300000; //5min
+
+        /// <summary>
+        /// CheckJobsPayloadOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Sends for every job that has no payload a RequestJobMessage
+        /// Does this every 2 minutes for each job
+        /// </summary>
+        public override void Execute()
+        {
+            foreach (Job job in JobManager.Jobs.Values)
+            {
+                if (!job.HasPayload() && job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL) < DateTime.Now)
+                {                    
+                    RequestJobMessage requestJobMessage = new RequestJobMessage();
+                    requestJobMessage.JobId = job.JobID;
+                    JobManager.SendRequestJobMessage(null, job.JobID);
+                    job.LastPayloadRequestTime = DateTime.Now;
+                }
+            }
+        }
+
+        /// <summary>
+        /// CheckJobsPayloadOperation does not handle any message
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {            
+        }
+    }
+
+    /// <summary>
+    /// Operation for answering RequestJobMessages
+    /// Sends the job if we have it WITH payload
+    /// </summary>
+    internal class HandleRequestJobMessage : Operation
+    {
+        private Logger Logger = Logger.GetLogger();
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        public override void Execute()
+        {
+        }
+
+        public override void HandleMessage(Message message)
+        {
+            if (message is RequestJobMessage)
+            {
+                //1. check, if we have the job AND its payload
+                RequestJobMessage requestJobMessage = (RequestJobMessage)message;
+                if (!JobManager.Jobs.ContainsKey(requestJobMessage.JobId) || !JobManager.Jobs[requestJobMessage.JobId].HasPayload())
+                {
+                    return;
+                }
+                //2. we have the job AND the payload; thus, we send an answer
+                Logger.LogText(String.Format("Peer {0} request job payload for job with jobId = {1}. Send it now!", BitConverter.ToString(message.PeerId), BitConverter.ToString(requestJobMessage.JobId.ToByteArray())), this, Logtype.Debug);
+                JobManager.SendResponseJobMessage(message.PeerId, JobManager.Jobs[requestJobMessage.JobId]);
             }
         }
     }
