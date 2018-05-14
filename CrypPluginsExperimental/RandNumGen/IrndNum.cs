@@ -101,7 +101,17 @@ namespace Cryptool.Plugins.RandNumGen
         /// <summary>
         /// getter, setter for OutputLength
         /// </summary>
-        public BigInteger OutputLength { get => _outputLength; set => _outputLength = value; }
+        public BigInteger OutputLength
+        {
+            get 
+            { 
+                return _outputLength; 
+            }
+            set 
+            {
+                _outputLength = value; 
+            }
+        }
 
         /// <summary>
         /// must be implemented in inherting class
