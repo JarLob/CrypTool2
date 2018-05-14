@@ -1076,12 +1076,12 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     //we only start a new bootstrapping attempt if we have no connections
                     return;
                 }
-                Logger.LogText("We have no connection. Start bootstrapping by sending HelloMessages to well known peers",this,Logtype.Info);
+                Logger.LogText("We have no connection. Start bootstrapping by sending HelloMessages to well known peers",this,Logtype.Debug);
                 foreach (Contact contact in WellKnownPeers)
                 {
                     HelloOperation helloOperation = new HelloOperation(contact.IPAddress, contact.Port) { ConnectionManager = ConnectionManager };
                     ConnectionManager.Operations.Enqueue(helloOperation);
-                    Logger.LogText(String.Format("Created HelloOperation for {0}:{1}", contact.IPAddress, contact.Port), this, Logtype.Info);
+                    Logger.LogText(String.Format("Created HelloOperation for {0}:{1}", contact.IPAddress, contact.Port), this, Logtype.Debug);
                 }
                 LastCheckedTime = DateTime.Now;
             }

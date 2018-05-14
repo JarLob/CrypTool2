@@ -650,6 +650,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die LogLevel ähnelt.
+        /// </summary>
+        public static string LogLevel {
+            get {
+                return ResourceManager.GetString("LogLevel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die OpenCL device: ähnelt.
         /// </summary>
         public static string OpenCLDevice {

@@ -329,4 +329,7 @@ Berechnungen.</value>
   <data name="_JobList_col_JobSize" xml:space="preserve">
     <value>Größe</value>
   </data>
+  <data name="LogLevel" xml:space="preserve">
+    <value>Log-Level</value>
+  </data>
 </root>

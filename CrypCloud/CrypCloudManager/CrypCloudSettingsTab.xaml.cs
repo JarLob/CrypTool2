@@ -22,10 +22,21 @@ namespace CrypCloud.Manager
         private readonly int startvalue;
         public CrypCloudSettingsTab(Style settingsStyle)
         {
+            InitializeComponent();         
             startvalue = Settings.Default.amountOfWorker;
-            CrypCloudCore.Instance.AmountOfWorker = startvalue; 
-            Resources.Add("settingsStyle", settingsStyle);
-            InitializeComponent();            
+            CrypCloudCore.Instance.AmountOfWorker = startvalue;
+            CrypCloudCore.Instance.LogLevel = Settings.Default.LogLevel;
+            if (CrypCloudCore.Instance.LogLevel != null)
+            {
+                for (int i = 0; i < LogLevelComboBox.Items.Count;i++)
+                {
+                    if (((ComboBoxItem)LogLevelComboBox.Items[i]).Content.ToString().Equals(CrypCloudCore.Instance.LogLevel))
+                    {
+                        LogLevelComboBox.SelectedIndex = i;
+                    }
+                }
+            }
+            Resources.Add("settingsStyle", settingsStyle);               
             NUDTextBox.Text = startvalue.ToString();
             EnableOpenCL.IsChecked = Settings.Default.enableOpenCL;
             CrypCloudCore.Instance.EnableOpenCL = Settings.Default.enableOpenCL;
@@ -160,6 +171,17 @@ namespace CrypCloud.Manager
             Settings.Default.writePerformanceLog = WritePerformanceLog.IsChecked.Value;
             Settings.Default.Save();
             CrypCloudCore.Instance.WritePerformanceLog = WritePerformanceLog.IsChecked.Value;
+        }
+
+        private void LogLevelComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (LogLevelComboBox.SelectedItem == null)
+            {
+                return;
+            }
+            Settings.Default.LogLevel = ((ComboBoxItem)LogLevelComboBox.SelectedItem).Content.ToString();
+            Settings.Default.Save();
+            CrypCloudCore.Instance.LogLevel = Settings.Default.LogLevel;
         }
     }
 }

@@ -331,4 +331,7 @@
   <data name="_JobList_col_JobSize" xml:space="preserve">
     <value>Size</value>
   </data>
+  <data name="LogLevel" xml:space="preserve">
+    <value>LogLevel</value>
+  </data>
 </root>

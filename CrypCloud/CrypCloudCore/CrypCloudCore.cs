@@ -109,6 +109,30 @@ namespace CrypCloud.Core
                 CertificateService.GetCertificateService().AdminCertificateList.AddRange(adminList);
                 CertificateService.GetCertificateService().BannedCertificateList.AddRange(bannedList);
 
+                if (LogLevel != null)
+                {
+                    if (LogLevel.Equals("Debug"))
+                    {
+                        VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Debug);
+                    }
+                    else if (LogLevel.Equals("Info"))
+                    {
+                        VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Info);
+                    }
+                    else if (LogLevel.Equals("Warning"))
+                    {
+                        VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Warning);
+                    }
+                    else if (LogLevel.Equals("Error"))
+                    {
+                        VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Error);
+                    }
+                }
+                else
+                {
+                    VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Warning);
+                }
+
                 OnConnectionStateChanged(true);
             }
             catch (Exception)
@@ -434,6 +458,8 @@ namespace CrypCloud.Core
         {
             return voluntLib.CertificateName;
         }
+
+        public string LogLevel { get; set; }
     }
 
     public class NetworkJobData

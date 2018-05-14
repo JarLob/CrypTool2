@@ -522,13 +522,26 @@ namespace VoluntLib2.ManagementLayer
                 Logger.LogText(String.Format("Created folder for serializing jobs: {0}", JobManager.LocalStoragePath), this, Logtype.Debug);
                 return;
             }
-            foreach (string file in Directory.GetFiles(JobManager.LocalStoragePath))
+            foreach (string file in Directory.GetFiles(JobManager.LocalStoragePath,"*.job"))
             {
                 try
                 {
                     Job job = new Job(BigInteger.MinusOne);
                     byte[] data = File.ReadAllBytes(file);
                     job.Deserialize(data);
+                    if (!job.HasValidCreationSignature())
+                    {
+                        Logger.LogText(String.Format("Job {0} has no valid creation signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        try
+                        {
+                            File.Delete(file);
+                        }
+                        catch (Exception ex2)
+                        {
+                            Logger.LogText(String.Format("File {0} could not be deleted!", file), this, Logtype.Error);
+                            Logger.LogException(ex2, this, Logtype.Error);
+                        }
+                    }
                     JobManager.Jobs.TryAdd(job.JobID, job);
                     Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                 }

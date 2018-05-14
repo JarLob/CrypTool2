@@ -21,6 +21,7 @@
                         <RowDefinition Height="30" />
                         <RowDefinition Height="25" />
                         <RowDefinition Height="25" />
+                        <RowDefinition Height="25" />
                     </Grid.RowDefinitions>
                     <Label Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Content="{Loc AmountOfWorker_Settings}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30" Margin="2,-1,2,23.8" />
                     <TextBox Name="NUDTextBox"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" TextAlignment="Right" PreviewKeyDown="NUDTextBox_PreviewKeyDown" PreviewKeyUp="NUDTextBox_PreviewKeyUp" TextChanged="NUDTextBox_TextChanged" Margin="0,0,0,0.2" HorizontalAlignment="Left" Width="47"/>
@@ -35,7 +36,14 @@
 
                     <Label Grid.Column="0" Grid.Row="4" Content="{Loc WritePerformanceLog}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"/>
                     <CheckBox Grid.Column="1" Grid.Row="4" Name="WritePerformanceLog"  VerticalAlignment="Center" HorizontalAlignment="Left" Height="15" Width="15" Click="WritePerformanceLog_Click"/>
-
+                    
+                    <Label Grid.Column="0" Grid.Row="5" Content="{Loc LogLevel}" HorizontalAlignment="Stretch" VerticalAlignment="Center" FontSize="12" Height="30"/>
+                    <ComboBox Grid.Column="1" Grid.Row="5" Name="LogLevelComboBox" Grid.ColumnSpan="2" SelectionChanged="LogLevelComboBox_SelectionChanged">
+                        <ComboBoxItem>Debug</ComboBoxItem>
+                        <ComboBoxItem>Info</ComboBoxItem>
+                        <ComboBoxItem>Warning</ComboBoxItem>
+                        <ComboBoxItem>Error</ComboBoxItem>
+                    </ComboBox>
                 </Grid>
             </StackPanel>
         </Grid>

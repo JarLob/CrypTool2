@@ -20,5 +20,8 @@
     <Setting Name="writePerformanceLog" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="LogLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Warning</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
