@@ -538,7 +538,7 @@ namespace VoluntLib2.ManagementLayer
             }                       
             Job job = Jobs[jobId];
             // GenerateCreatorDeletionSignature returns false if job was not created by user and user is not admin
-            if (job.GenerateCreatorDeletionSignature()) 
+            if (job.GenerateDeletionSignature()) 
             {
                 foreach (Operation operation in Operations)
                 {

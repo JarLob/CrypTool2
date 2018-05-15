@@ -418,7 +418,7 @@ namespace VoluntLib2.ManagementLayer
         /// if the user did not AND is admint, it will be the admin signature
         /// </summary>
         /// <returns></returns>
-        internal bool GenerateCreatorDeletionSignature()
+        internal bool GenerateDeletionSignature()
         {
             bool userCreatedJob = CreatorName.Equals(CertificateService.GetCertificateService().OwnName);
             bool userIsAdmin = CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
