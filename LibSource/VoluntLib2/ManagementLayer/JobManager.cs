@@ -342,8 +342,8 @@ namespace VoluntLib2.ManagementLayer
 
             if (Jobs.TryAdd(jobId, job))
             {
-                //Send the job to everyone else
-                SendResponseJobListMessages(null);
+                //Send the job to everyone else                
+                SendResponseJobMessage(null, job);
                 OnJobListChanged();
                 return jobId;
             }

@@ -488,7 +488,7 @@ namespace VoluntLib2.ManagementLayer
             try
             {
                 //1. Check if we have a DeletionSignature
-                if (JobDeletionSignatureData == null)
+                if (JobDeletionSignatureData == null || JobDeletionSignatureData.Length == 1)
                 {
                     return false;
                 }
