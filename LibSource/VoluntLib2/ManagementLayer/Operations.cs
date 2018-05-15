@@ -411,10 +411,9 @@ namespace VoluntLib2.ManagementLayer
         {
             foreach (Job job in JobManager.Jobs.Values)
             {
-                if (!job.HasPayload() && job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL) < DateTime.Now)
-                {                    
-                    RequestJobMessage requestJobMessage = new RequestJobMessage();
-                    requestJobMessage.JobId = job.JobID;
+                if (!job.HasPayload() && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL))
+                {
+                    Logger.LogText(String.Format("Do not have payload for job {0}. Asking my neighbors now", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                     JobManager.SendRequestJobMessage(null, job.JobID);
                     job.LastPayloadRequestTime = DateTime.Now;
                 }
@@ -466,7 +465,7 @@ namespace VoluntLib2.ManagementLayer
     /// <summary>
     /// Serializes all messages every 5 minutes to file
     /// </summary>
-    internal class JobSerializationOperation : Operation
+    internal class JobsSerializationOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
         private const int SERIALIZATION_INTERVAL = 300000; //5min        
@@ -535,7 +534,7 @@ namespace VoluntLib2.ManagementLayer
     /// <summary>
     /// Deserializes all stored jobs from APP DATA folder
     /// </summary>
-    internal class JobDeserializationOperation : Operation
+    internal class JobsDeserializationOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
         private bool executed = false;

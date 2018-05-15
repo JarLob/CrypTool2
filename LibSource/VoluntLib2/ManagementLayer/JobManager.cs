@@ -79,7 +79,7 @@ namespace VoluntLib2.ManagementLayer
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
             //This operation deserializes all serialized jobs; then it terminates
-            Operations.Enqueue(new JobDeserializationOperation() { JobManager = this });
+            Operations.Enqueue(new JobsDeserializationOperation() { JobManager = this });
             //This operation sends every 5 minutes a ResponseJobListMessage to every neighbor
             Operations.Enqueue(new ShareJobListOperation() { JobManager = this });
             //This operation sends every 5 minutes a RequestJobListMessage to every neighbor
@@ -95,7 +95,7 @@ namespace VoluntLib2.ManagementLayer
             //This operation handles ResponseJobMessages
             Operations.Enqueue(new HandleResponseJobMessageOperation() { JobManager = this });
             //This operation serializes the jobs every 5 minutes to file
-            Operations.Enqueue(new JobSerializationOperation() { JobManager = this });
+            Operations.Enqueue(new JobsSerializationOperation() { JobManager = this });
             
 
             Logger.LogText("JobManager started", this, Logtype.Info);
@@ -542,10 +542,10 @@ namespace VoluntLib2.ManagementLayer
             {
                 foreach (Operation operation in Operations)
                 {
-                    if (operation is JobSerializationOperation)
+                    if (operation is JobsSerializationOperation)
                     {
                         //we deleted the job, thus, we force to serialize that immediately
-                        ((JobSerializationOperation)operation).ForceSerialization();
+                        ((JobsSerializationOperation)operation).ForceSerialization();
                     }
                 }
                 //Send the job to everyone; telling them that it is deleted
