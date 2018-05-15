@@ -43,13 +43,11 @@ namespace VoluntLib2
 
         public event EventHandler<JobProgressEventArgs> JobProgress;
         public event EventHandler<JobProgressEventArgs> JobFinished;
-        public event PropertyChangedEventHandler JobListChanged;
-        public event PropertyChangedEventHandler WorldsChanged;
+        public event PropertyChangedEventHandler JobListChanged;        
         public event EventHandler<TaskEventArgs> TaskStarted;
         public event EventHandler<TaskEventArgs> TaskProgress;
         public event EventHandler<TaskEventArgs> TaskStopped;
         public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
-
 
         public VoluntLib()
         {            
@@ -109,7 +107,7 @@ namespace VoluntLib2
 
         public void DeleteJob(BigInteger jobID)
         {
-
+            JobManager.DeleteJob(jobID);
         }
 
         public BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)

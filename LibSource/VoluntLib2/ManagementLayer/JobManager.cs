@@ -336,7 +336,7 @@ namespace VoluntLib2.ManagementLayer
             //create job payload hash
             job.JobPayloadHash = CertificateService.GetCertificateService().ComputeHash(payloadCopy);
             //create job signature (without payload)
-            job.JobCreationSignatureData = GenerateCreationSignatureData(job);
+            job.JobCreatorSignatureData = GenerateCreatorSignatureData(job);
             //finally, add payload
             job.JobPayload = payloadCopy;
 
@@ -354,11 +354,11 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Creates a creation signature of the given job
+        /// Creates a creator signature of the given job
         /// </summary>
         /// <param name="job"></param>
         /// <returns></returns>
-        private byte[] GenerateCreationSignatureData(Job job)
+        private byte[] GenerateCreatorSignatureData(Job job)
         {
             byte[] data = job.Serialize();
             return CertificateService.GetCertificateService().SignData(data);
@@ -382,17 +382,14 @@ namespace VoluntLib2.ManagementLayer
             List<Job> jobs = new List<Job>();
             foreach (Job job in Jobs.Values)
             {
-                if (job.WorldName.Equals(world))
+                if (job.WorldName.Equals(world) && !job.IsDeleted)
                 {
                     jobs.Add(job);
                 }
             }
-
             jobs.Sort();
-
             return jobs;
         }
-
 
         /// <summary>
         /// Returns the job with the given jobID or null if it does not exist
@@ -526,6 +523,35 @@ namespace VoluntLib2.ManagementLayer
         internal void RequestJob(BigInteger jobId)
         {
             SendRequestJobMessage(null, jobId);
+        }
+
+        /// <summary>
+        /// Deletes the job, only if the job exsits and the user is admin or the job was created by the user
+        /// </summary>
+        /// <param name="jobID"></param>
+        internal void DeleteJob(BigInteger jobId)
+        {
+            if (Jobs[jobId] == null)
+            {
+                //Job does not exist
+                return;
+            }                       
+            Job job = Jobs[jobId];
+            // GenerateCreatorDeletionSignature returns false if job was not created by user and user is not admin
+            if (job.GenerateCreatorDeletionSignature()) 
+            {
+                foreach (Operation operation in Operations)
+                {
+                    if (operation is JobSerializationOperation)
+                    {
+                        //we deleted the job, thus, we force to serialize that immediately
+                        ((JobSerializationOperation)operation).ForceSerialization();
+                    }
+                }
+                //Send the job to everyone; telling them that it is deleted
+                SendResponseJobMessage(null, job);
+                OnJobListChanged();
+            }            
         }
     }    
 }

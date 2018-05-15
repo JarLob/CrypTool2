@@ -216,18 +216,18 @@ namespace VoluntLib2.ManagementLayer
                 bool jobListChanged = false;
                 foreach (var job in responseJobListMessage.Jobs)
                 {
-                    if (!job.HasValidCreationSignature())
+                    if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} has an invalid CreationSignature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        Logger.LogText(String.Format("Received job {0} has an invalid Creator Signature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                         continue;
                     }
 
                     //1. case: we dont know the job, then just add it
                     if (!JobManager.Jobs.ContainsKey(job.JobID))
                     {
-                        if (!job.HasValidCreationSignature())
+                        if (!job.HasValidCreatorSignature())
                         {
-                            Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                            Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
                             continue;
                         }
 
@@ -289,11 +289,21 @@ namespace VoluntLib2.ManagementLayer
                 //We don't know the job. Thus, we add it
                 if (!JobManager.Jobs.ContainsKey(job.JobID))
                 {
-                    if (!job.HasValidCreationSignature())
+                    if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
                     }
+                    if (job.HasValidDeletionSignature())
+                    {
+                        job.JobDeletionSignatureData = new byte[0];
+                        job.IsDeleted = false;
+                    }
+                    else
+                    {     
+                        job.IsDeleted = true;
+                    }
+
                     if (job.HasPayload())
                     {
                         //check, if the hash of the payload is ok
@@ -328,15 +338,25 @@ namespace VoluntLib2.ManagementLayer
                     return;
                 }
 
-                //We know the job but have no Payload and the job has payload
+                //here, we check, if the local job is not deleted AND the receivd job has a valid deletion signature
+                if (JobManager.Jobs[job.JobID].IsDeleted == false && job.HasValidDeletionSignature())
+                {
+                    JobManager.Jobs[job.JobID].JobDeletionSignatureData = job.JobDeletionSignatureData;
+                    JobManager.Jobs[job.JobID].IsDeleted = true;
+                    JobManager.OnJobListChanged();
+                    return;
+                }
+
+                //We know the job but have no payload but the job has payload
                 if (!JobManager.Jobs[job.JobID].HasPayload() && job.HasPayload())
                 {
-                    //check, if the creation signature is valid
-                    if (!job.HasValidCreationSignature())
+                    //check, if the creator signature is valid
+                    if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid CreationSignature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
-                    }
+                    }                   
+
                     //check, if the hash of the payload is ok
                     var jobPayloadHash = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
                     bool validPayload = true;
@@ -502,18 +522,35 @@ namespace VoluntLib2.ManagementLayer
         public override void HandleMessage(Message message)
         {            
         }
+
+        /// <summary>
+        /// Forces serialization by setting LastSerializationTime to min value
+        /// </summary>
+        public void ForceSerialization()
+        {
+            LastSerializationTime = DateTime.MinValue;
+        }
     }
 
+    /// <summary>
+    /// Deserializes all stored jobs from APP DATA folder
+    /// </summary>
     internal class JobDeserializationOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
         private bool executed = false;
 
+        /// <summary>
+        /// JobDeserializationOperation never finishes
+        /// </summary>
         public override bool IsFinished
         {
             get { return executed; }
         }
 
+        /// <summary>
+        /// Deserializes all jobs, also checks for valid creator and deletion signatures
+        /// </summary>
         public override void Execute()
         {
             if (!Directory.Exists(JobManager.LocalStoragePath))
@@ -529,9 +566,9 @@ namespace VoluntLib2.ManagementLayer
                     Job job = new Job(BigInteger.MinusOne);
                     byte[] data = File.ReadAllBytes(file);
                     job.Deserialize(data);
-                    if (!job.HasValidCreationSignature())
+                    if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Job {0} has no valid creation signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Job {0} has no valid Creator Signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
                         try
                         {
                             File.Delete(file);
@@ -541,6 +578,15 @@ namespace VoluntLib2.ManagementLayer
                             Logger.LogText(String.Format("File {0} could not be deleted!", file), this, Logtype.Error);
                             Logger.LogException(ex2, this, Logtype.Error);
                         }
+                    }
+                    if (job.HasValidDeletionSignature())
+                    {
+                        job.IsDeleted = true;
+                    }
+                    else
+                    {
+                        job.IsDeleted = false;
+                        job.JobDeletionSignatureData = new byte[0];
                     }
                     JobManager.Jobs.TryAdd(job.JobID, job);
                     Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
@@ -564,6 +610,10 @@ namespace VoluntLib2.ManagementLayer
             JobManager.OnJobListChanged();
         }
 
+        /// <summary>
+        /// Does nothing with messages
+        /// </summary>
+        /// <param name="message"></param>
         public override void HandleMessage(Message message)
         {            
         }
