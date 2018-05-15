@@ -39,8 +39,6 @@ namespace VoluntLib2
         private JobManager JobManager;
         private Logger Logger = Logger.GetLogger();
 
-        private ushort ListenPort = 10000;        
-
         public event EventHandler<JobProgressEventArgs> JobProgress;
         public event EventHandler<JobProgressEventArgs> JobFinished;
         public event PropertyChangedEventHandler JobListChanged;        
@@ -51,13 +49,12 @@ namespace VoluntLib2
 
         public VoluntLib()
         {            
-        }
-    
-        public string LocalStoragePath { get; set; }
-        public List<string> AdminCertificateList { get; set; }
-        public List<string> BannedCertificateList { get; set; }
-        public string CertificateName { get; set; }
-        public bool IsStarted { get; set; }
+        }    
+        public string LocalStoragePath { get; set; }      
+        public string CertificateName { get; internal set; }
+        public bool IsStarted { get; internal set; }
+
+        public List<string> WellKnownPeers = new List<string>();
 
         public void Stop()
         {
@@ -68,22 +65,61 @@ namespace VoluntLib2
             IsStarted = false;
         }
 
-        public void Start(X509Certificate2 caCertificate, X509Certificate2 ownCertificate)
+        public void Start(X509Certificate2 caCertificate, X509Certificate2 ownCertificate, ushort listenport = 10000)
         {
+            //1) Init Certificate ervice
             CertificateService.Init(caCertificate, ownCertificate);
             CertificateName = CertificateService.OwnName;
 
-            ConnectionManager = new ConnectionManager(ListenPort);
-            //Well known peer for testing - my amazon server; will be replaced by official CT2 servers
-            ConnectionManager.AddWellknownPeer(IPAddress.Parse("141.51.125.18"), 10000);
+            //2) Create, initialize, and start ConnectionManager
+            ConnectionManager = new ConnectionManager(listenport);
+            foreach (string wellknownpeer in WellKnownPeers)
+            {
+                try
+                {
+                    string[] ipport = wellknownpeer.Split(new char[] { ':' });
+                    if (ipport.Length != 2)
+                    {
+                        Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (wrong parameter count): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                        continue;
+                    }
+                    IPAddress ip;
+                    ushort port;
+                    try
+                    {
+                        ip = IPAddress.Parse(ipport[0]);
+                    }
+                    catch (Exception)
+                    {
+                        Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (invalid ip): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                        continue;
+                    }
+                    try
+                    {
+                        port = ushort.Parse(ipport[1]);
+                    }
+                    catch (Exception)
+                    {
+                        Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (invalid port): {0}. Ignore it", wellknownpeer), this, Logtype.Warning);
+                        continue;
+                    }
+                    ConnectionManager.AddWellknownPeer(ip, port);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogText(String.Format("List of WellKnownPeers contained invalid entry (Exception: {0}): {0}. Ignore it", ex.Message, wellknownpeer), this, Logtype.Warning);
+                    continue;
+                }
+            }
             ConnectionManager.Start();
 
+            //3) Create, initialize, and start JobManager
             JobManager = new JobManager(ConnectionManager, LocalStoragePath);
             JobManager.JobListChanged += JobListChanged;
             JobManager.Start();
 
-            IsStarted = true;            
-        }               
+            IsStarted = true;
+        }
 
         public void StopCalculation(BigInteger jobID)
         {

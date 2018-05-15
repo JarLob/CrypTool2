@@ -61,8 +61,7 @@ namespace CrypCloud.Core.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die N:ckonze
-        ///N:kopal ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die N:kopal ähnelt.
         /// </summary>
         public static string adminCertificates {
             get {
@@ -71,7 +70,7 @@ namespace CrypCloud.Core.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die N:asdasd8
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
         /// ähnelt.
         /// </summary>
         public static string bannedCertificates {
@@ -96,6 +95,15 @@ namespace CrypCloud.Core.Properties {
         public static string String1 {
             get {
                 return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 141.51.125.18:10000 ähnelt.
+        /// </summary>
+        public static string wellKnownPeers {
+            get {
+                return ResourceManager.GetString("wellKnownPeers", resourceCulture);
             }
         }
     }

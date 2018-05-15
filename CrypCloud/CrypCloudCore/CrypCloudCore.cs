@@ -97,18 +97,6 @@ namespace CrypCloud.Core
             }
             try
             {
-                var rootCertificate = new X509Certificate2(Resources.rootCA);
-                voluntLib.Start(rootCertificate, ownCertificate);
-
-                //When VoluntLib is started, the admin and banned lists are cleared
-                //Thus, we here add the admin and banned certificates
-                var adminCertificates = Resources.adminCertificates.Replace("\r", "");
-                var adminList = adminCertificates.Split('\n').ToList();
-                var bannedCertificates = Resources.bannedCertificates.Replace("\r", "");
-                var bannedList = bannedCertificates.Split('\n').ToList();
-                CertificateService.GetCertificateService().AdminCertificateList.AddRange(adminList);
-                CertificateService.GetCertificateService().BannedCertificateList.AddRange(bannedList);
-
                 if (LogLevel != null)
                 {
                     if (LogLevel.Equals("Debug"))
@@ -133,6 +121,24 @@ namespace CrypCloud.Core
                     VoluntLib2.Tools.Logger.SetLogLevel(Logtype.Warning);
                 }
 
+                //root certificate for checking signatures
+                var rootCertificate = new X509Certificate2(Resources.rootCA);                
+                //well known peers for boostrapping p2p network
+                var wellKnownPeers = Resources.wellKnownPeers.Replace("\r", "");
+                var wellKnownPeersList = wellKnownPeers.Split('\n').ToList();
+                voluntLib.WellKnownPeers.Clear();
+                voluntLib.WellKnownPeers.AddRange(wellKnownPeersList);
+                //start voluntlib now:
+                voluntLib.Start(rootCertificate, ownCertificate);
+                //When VoluntLib is started, the admin and banned lists are cleared
+                //Thus, we here add the admin and banned certificates
+                var adminCertificates = Resources.adminCertificates.Replace("\r", "");
+                var adminList = adminCertificates.Split('\n').ToList();                
+                var bannedCertificates = Resources.bannedCertificates.Replace("\r", "");
+                var bannedList = bannedCertificates.Split('\n').ToList();
+                CertificateService.GetCertificateService().AdminCertificateList.AddRange(adminList);
+                CertificateService.GetCertificateService().BannedCertificateList.AddRange(bannedList);
+               
                 OnConnectionStateChanged(true);
             }
             catch (Exception)

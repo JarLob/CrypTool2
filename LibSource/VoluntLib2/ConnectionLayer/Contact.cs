@@ -28,7 +28,7 @@ namespace VoluntLib2.ConnectionLayer
     /// It also knows the Peer's PeerID (unique random identification number)
     /// Additionally, it knows when the peer was last seen and the last hello was sent to him
     /// </summary>
-    public class Contact
+    internal class Contact
     {
         /// <summary>
         /// Randomly generated 16 byte PeerId
