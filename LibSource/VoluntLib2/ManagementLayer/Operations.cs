@@ -295,12 +295,12 @@ namespace VoluntLib2.ManagementLayer
                         return;
                     }
                     if (job.HasValidDeletionSignature())
-                    {
-                        job.JobDeletionSignatureData = new byte[0];
-                        job.IsDeleted = false;
+                    {                        
+                        job.IsDeleted = true;
                     }
                     else
-                    {     
+                    {
+                        job.JobDeletionSignatureData = new byte[0];
                         job.IsDeleted = true;
                     }
 
