@@ -97,13 +97,13 @@ namespace VoluntLib2.ManagementLayer
     }
 
     /// <summary>
-    /// Operation for requesting JobLists every 5 minutes
+    /// Operation for requesting JobLists every minute
     /// </summary>
     internal class RequestJobListOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
-        private const int REQUEST_INTERVAL = 300000; //5min
-        private DateTime LastExecutionTime = DateTime.Now.Subtract(new TimeSpan(REQUEST_INTERVAL));
+        private const int REQUEST_INTERVAL = 60000; //1min
+        private DateTime LastExecutionTime = DateTime.MinValue;
 
         /// <summary>
         /// The RequestJobListOperation never finishes
@@ -223,8 +223,7 @@ namespace VoluntLib2.ManagementLayer
                     }
 
                     if (job.HasValidDeletionSignature())
-                    {
-                        Logger.LogText(String.Format("Received job {0} has valid deletion signature ", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                    {                        
                         job.IsDeleted = true;
                     }
                     else
@@ -246,6 +245,7 @@ namespace VoluntLib2.ManagementLayer
                         //Check, if the job is deleted and our local not. if yes, delete our local, too
                         if (JobManager.Jobs[job.JobID].IsDeleted == false && job.IsDeleted == true)
                         {
+                            Logger.LogText(String.Format("Received job {0} has a valid deletion signature. Mark it as deleted now", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                             JobManager.Jobs[job.JobID].IsDeleted = true;
                             JobManager.Jobs[job.JobID].JobDeletionSignatureData = job.JobDeletionSignatureData;
                             jobListChanged = true;
@@ -399,7 +399,7 @@ namespace VoluntLib2.ManagementLayer
     internal class CheckJobsPayloadOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
-        private const int REQUEST_INTERVAL = 300000; //5min
+        private const int REQUEST_INTERVAL = 60000; //1 min
 
         /// <summary>
         /// CheckJobsPayloadOperation never finishes
@@ -584,6 +584,36 @@ namespace VoluntLib2.ManagementLayer
                             Logger.LogException(ex2, this, Logtype.Error);
                         }
                     }
+
+                    //Check payload signature when job has a payload
+                    if (job.HasPayload())
+                    {                        
+                        byte[] signature = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
+                        bool validPayloadSignature = true;
+                        for (int i = 0; i < signature.Length; i++)
+                        {
+                            if (signature[i] != job.JobPayloadHash[i])
+                            {
+                                validPayloadSignature = false;
+                                Logger.LogText(String.Format("Job {0} has no valid JobPayloadHash. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                                try
+                                {
+                                    File.Delete(file);
+                                }
+                                catch (Exception ex2)
+                                {
+                                    Logger.LogText(String.Format("File {0} could not be deleted!", file), this, Logtype.Error);
+                                    Logger.LogException(ex2, this, Logtype.Error);
+                                }                                
+                                break;
+                            }
+                        }
+                        if (!validPayloadSignature)
+                        {
+                            continue;
+                        }
+                    }
+                    
                     if (job.HasValidDeletionSignature())
                     {
                         job.IsDeleted = true;
@@ -592,7 +622,8 @@ namespace VoluntLib2.ManagementLayer
                     {
                         job.IsDeleted = false;
                         job.JobDeletionSignatureData = new byte[0];
-                    }
+                    }                    
+
                     JobManager.Jobs.TryAdd(job.JobID, job);
                     Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
                 }

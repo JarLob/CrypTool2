@@ -86,18 +86,12 @@ namespace CrypCloud.Manager.ViewModels
             {
                 selectedID = selectedJob.Id;
             }
-
-            var jobItems = crypCloudCore.GetJobs()
-                .Select(ConvertToListItem)
-                .Distinct(NetworkJobItem.IdComparer)
-                .ToList();
-
+            var jobItems = crypCloudCore.GetJobs().Select(ConvertToListItem);
             RunningJobs.Clear();
             foreach (var networkJobItem in jobItems)
             {
                 RunningJobs.Add(networkJobItem);
-            }  
-
+            }           
             SetSelectionByJobId(selectedID);
         }
 
@@ -227,17 +221,12 @@ namespace CrypCloud.Manager.ViewModels
                 Epoch = crypCloudCore.GetEpochOfJob(job),
                 EpochProgress = epochProgress                
             };
-
-            if (item.HasWorkspace)
-            {
-               
-            }
-            
+           
             var jobStateVisualization = crypCloudCore.GetJobStateVisualization(job.JobID);
-            if (jobStateVisualization != null)
+            /*if (jobStateVisualization != null)
             {
                 item.Visualization = Bitmap2BitmapImage(jobStateVisualization);
-            }
+            }*/
 
             return item;
         }

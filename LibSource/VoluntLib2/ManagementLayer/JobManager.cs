@@ -342,6 +342,14 @@ namespace VoluntLib2.ManagementLayer
 
             if (Jobs.TryAdd(jobId, job))
             {
+                foreach (Operation operation in Operations)
+                {
+                    if (operation is JobsSerializationOperation)
+                    {
+                        //we created a new job, thus, we force to serialize that immediately
+                        ((JobsSerializationOperation)operation).ForceSerialization();
+                    }
+                }
                 //Send the job to everyone else                
                 SendResponseJobMessage(null, job);
                 OnJobListChanged();
