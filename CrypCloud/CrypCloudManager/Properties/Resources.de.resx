@@ -311,7 +311,7 @@ Berechnungen.</value>
   <data name="_JobList_helpText" xml:space="preserve">
     <value>Klicken Sie auf einen der "Öffnen"-Buttons, um an einem Job teilzunehmen.</value>
   </data>
-  <data name="_JobList_jobID" xml:space="preserve">
+  <data name="_JobList_JobId" xml:space="preserve">
     <value>Job-ID:</value>
   </data>
   <data name="EnableOpenCL" xml:space="preserve">

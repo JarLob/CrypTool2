@@ -97,7 +97,7 @@ namespace Cryptool.PluginBase
     /// P2PWorker-Control delegate: will be thrown, when the actual job is successfully processed
     /// </summary>
     /// <param name="result"></param>
-  public delegate void ProcessingSuccessfullyEnded(BigInteger jobId, byte[] result);
+  public delegate void ProcessingSuccessfullyEnded(BigInteger JobId, byte[] result);
     /// <summary>
     /// P2PWorker-Control delegate: will be thrown, when processing was canceled by the user or due to an error
     /// </summary>

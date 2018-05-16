@@ -78,7 +78,7 @@
             <Grid Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding ElementName=CreationDate, Path=ActualWidth}" />
-                    <ColumnDefinition Width="{Binding ElementName=JobID, Path=ActualWidth}" />
+                    <ColumnDefinition Width="{Binding ElementName=JobId, Path=ActualWidth}" />
                     <ColumnDefinition Width="{Binding ElementName=JobName, Path=ActualWidth}" />
                     <ColumnDefinition Width="{Binding ElementName=CreatorName, Path=ActualWidth}" />
                     <ColumnDefinition Width="*" />
@@ -105,8 +105,8 @@
                         <GridViewColumn x:Name="CreationDate" Header="{Loc _JobList_col_Date}"
                                         DisplayMemberBinding="{Binding CreationDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}"
                                         Width="150" />
-                        <GridViewColumn x:Name="JobID" Header="{Loc _JobList_col_Id}"
-                                        DisplayMemberBinding="{Binding JobID, Converter={StaticResource JobIdConverter}}" Width="125" />
+                        <GridViewColumn x:Name="JobId" Header="{Loc _JobList_col_Id}"
+                                        DisplayMemberBinding="{Binding JobId, Converter={StaticResource JobIdConverter}}" Width="125" />
                         <GridViewColumn x:Name="JobName" Header="{Loc  _JobList_col_Name}"
                                         DisplayMemberBinding="{Binding JobName}" Width="225" />
                         <GridViewColumn x:Name="JobSize" Header="{Loc  _JobList_col_JobSize}" 
@@ -138,7 +138,7 @@
                                     <StackPanel Orientation="Horizontal">
                                         <Button Command="{Binding DataContext.OpenJobCommand, ElementName=JobListView}"
                                                 CommandParameter="{Binding}" DataContext="{Binding}"
-                                                Visibility="{Binding HasWorkspace, Converter={StaticResource show}}"
+                                                Visibility="{Binding HasPayload, Converter={StaticResource show}}"
                                                 Width="90" Margin="10, 5">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="../Images/ButtonIcons/external-link.png" Width="16" />
@@ -150,7 +150,7 @@
                                         <Button
                                             Command="{Binding DataContext.DownloadWorkspaceCommand, ElementName=JobListView}"
                                             CommandParameter="{Binding}" DataContext="{Binding}"
-                                            Visibility="{Binding HasWorkspace, Converter={StaticResource hide}}"
+                                            Visibility="{Binding HasPayload, Converter={StaticResource hide}}"
                                             Width="90" Margin="10, 5">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="../Images/ButtonIcons/download.png" Width="16" />
@@ -209,7 +209,7 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobID}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobID, Converter={StaticResource JobIdConverter}}"  Margin="0,5,5,0"  />
+                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobId, Converter={StaticResource JobIdConverter}}"  Margin="0,5,5,0"  />
 
                     <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
                     <TextBlock Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobName}"  Margin="0,5,5,0"  />

@@ -316,7 +316,7 @@
   <data name="_JobList_helpText" xml:space="preserve">
     <value>Click on one of the open buttons to participate in a job.</value>
   </data>
-  <data name="_JobList_jobID" xml:space="preserve">
+  <data name="_JobList_JobId" xml:space="preserve">
     <value>Job ID:</value>
   </data>
   <data name="EnableOpenCL" xml:space="preserve">

@@ -23,19 +23,19 @@ namespace VoluntLib2.ComputationLayer
 {
     public class TaskEventArgs : EventArgs
     {
-        public TaskEventArgs(BigInteger jobID, BigInteger blockID, TaskEventArgType type) : this(jobID.ToByteArray(), blockID, type) { }
+        public TaskEventArgs(BigInteger JobId, BigInteger blockID, TaskEventArgType type) : this(JobId.ToByteArray(), blockID, type) { }
 
-        public TaskEventArgs(byte[] jobID, BigInteger blockID, TaskEventArgType type)
+        public TaskEventArgs(byte[] JobId, BigInteger blockID, TaskEventArgType type)
         {
             Type = type;
-            JobID = jobID;
+            JobId = JobId;
             BlockID = blockID;
         }
 
         public int TaskProgress { get; set; }
         public BigInteger BlockID { get; private set; }
         public TaskEventArgType Type { get; private set; }
-        public byte[] JobID { get; private set; }
+        public byte[] JobId { get; private set; }
     }
 
     public enum TaskEventArgType

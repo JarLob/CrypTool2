@@ -15,23 +15,25 @@
 */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Windows;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {
-    public class Job : IEquatable<Job>, IComparable<Job>
+    public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged
     {
         private const int STRING_MAX_LENGTH = 255;
         private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb        
 
         public Job(BigInteger jobID)
         {
-            JobID = jobID;
+            JobId = jobID;
             JobName = string.Empty;
             JobType = string.Empty;
             JobDescription = string.Empty;
@@ -47,7 +49,7 @@ namespace VoluntLib2.ManagementLayer
             IsDeleted = false;
         }
 
-        public BigInteger JobID { get; set; }
+        public BigInteger JobId { get; set; }
         public string JobName { get; set; }
         public string JobType { get; set; }
         public string JobDescription { get; set; }
@@ -69,7 +71,7 @@ namespace VoluntLib2.ManagementLayer
             get
             {
                 long size = 0;
-                size += JobID.ToByteArray().Length;
+                size += JobId.ToByteArray().Length;
                 size += UTF8Encoding.UTF8.GetBytes(JobName).Length;
                 size += UTF8Encoding.UTF8.GetBytes(JobType).Length;
                 size += UTF8Encoding.UTF8.GetBytes(JobDescription).Length;
@@ -90,17 +92,17 @@ namespace VoluntLib2.ManagementLayer
 
         public bool Equals(Job other)
         {
-            return other.JobID.Equals(JobID);
+            return other.JobId.Equals(JobId);
         }
 
-        public bool HasPayload()
+        public bool HasPayload        
         {
-            return JobPayload != null && JobPayload.Length > 0;
+            get { return JobPayload != null && JobPayload.Length > 0; }
         }
 
         public override int GetHashCode()
         {
-            return JobID.GetHashCode();
+            return JobId.GetHashCode();
         }
 
         /// <summary>
@@ -133,7 +135,7 @@ namespace VoluntLib2.ManagementLayer
 
             //1. Convert all to byte arrays + "length of fields"-byte arrays; also calculate total size of data array
             int length = 0;
-            byte[] jobIdBytes = JobID.ToByteArray();
+            byte[] jobIdBytes = JobId.ToByteArray();
             byte[] jobIdLength = BitConverter.GetBytes((ushort)jobIdBytes.Length);
             length += (jobIdBytes.Length + jobIdLength.Length);
 
@@ -260,7 +262,7 @@ namespace VoluntLib2.ManagementLayer
             offset += 2;
             byte[] jobId = new byte[jobIdLength];
             Array.Copy(data, offset, jobId, 0, jobIdLength);
-            JobID = new BigInteger(jobId);
+            JobId = new BigInteger(jobId);
             offset += jobIdLength;
 
             ushort jobNameLength = BitConverter.ToUInt16(data, offset);
@@ -333,8 +335,8 @@ namespace VoluntLib2.ManagementLayer
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("Job");
             builder.AppendLine("{");
-            builder.Append("  JobID: ");
-            builder.AppendLine(JobID + ",");
+            builder.Append("  JobId: ");
+            builder.AppendLine(JobId + ",");
             builder.Append("  JobName: ");
             builder.AppendLine(JobName + ",");
             builder.Append("  JobType: ");
@@ -350,7 +352,7 @@ namespace VoluntLib2.ManagementLayer
             builder.Append("  IsDeleted: ");
             builder.AppendLine("" + IsDeleted + ",");
             builder.Append("  HasPayload: ");
-            builder.AppendLine("" + HasPayload() + ",");
+            builder.AppendLine("" + HasPayload + ",");
             builder.Append("  JobPayload: ");
             builder.AppendLine("" + BitConverter.ToString(JobPayload));
             builder.AppendLine("}");
@@ -430,7 +432,7 @@ namespace VoluntLib2.ManagementLayer
                 //n  bytes    jobid
                 //8  bytes    deletion time
                 //m  bytes    signature                
-                byte[] jobIdBytes = JobID.ToByteArray();
+                byte[] jobIdBytes = JobId.ToByteArray();
                 byte[] jobIdLengthBytes = BitConverter.GetBytes((UInt32)jobIdBytes.Length);
                 byte[] text = new byte[4 + jobIdLengthBytes.Length + jobIdBytes.Length + 8];
                 text[0] = (byte)'U';
@@ -462,7 +464,7 @@ namespace VoluntLib2.ManagementLayer
                 //4  bytes    certificate length
                 //n  bytes    certificate data
                 //m  bytes    signature                
-                byte[] jobIdBytes = JobID.ToByteArray();
+                byte[] jobIdBytes = JobId.ToByteArray();
                 byte[] jobIdLengthBytes = BitConverter.GetBytes(jobIdBytes.Length);
                 byte[] certificateDataBytes = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
                 byte[] certificateDataLengthBytes = BitConverter.GetBytes(certificateDataBytes.Length);
@@ -517,7 +519,7 @@ namespace VoluntLib2.ManagementLayer
                     byte[] jobIdData = new byte[jobIdLength];
                     Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
                     BigInteger jobid = new BigInteger(jobIdData);
-                    if (jobid != JobID)
+                    if (jobid != JobId)
                     {
                         //invalid JobId in deletion signature
                         return false;
@@ -545,7 +547,7 @@ namespace VoluntLib2.ManagementLayer
                     byte[] jobIdData = new byte[jobIdLength];
                     Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
                     BigInteger jobid = new BigInteger(jobIdData);
-                    if (jobid != JobID)
+                    if (jobid != JobId)
                     {
                         //invalid JobId in deletion signature
                         return false;
@@ -580,7 +582,25 @@ namespace VoluntLib2.ManagementLayer
             return false;
         }
 
-
-
+        /// <summary>
+        /// Notify that a property changed
+        /// </summary>
+        /// <param name="propertyName"></param>
+        internal void OnPropertyChanged(string propertyName)
+        {
+            //if we are in a WPF application, we use the UI thread
+            if (Application.Current != null && PropertyChanged != null)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                }));
+            }
+            else
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

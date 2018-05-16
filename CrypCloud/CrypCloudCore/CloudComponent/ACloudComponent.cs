@@ -26,7 +26,7 @@ namespace CrypCloud.Core.CloudComponent
         public override void Stop()
         {
             if (IsOnline()) 
-                cryptCloudCore.StopLocalCalculation(JobID);
+                cryptCloudCore.StopLocalCalculation(JobId);
             else 
                 offlineCancellation.Cancel(false);
 
@@ -45,7 +45,7 @@ namespace CrypCloud.Core.CloudComponent
             }
 
             if (IsOnline()) 
-                cryptCloudCore.StartLocalCalculation(JobID, calculationTemplate);
+                cryptCloudCore.StartLocalCalculation(JobId, calculationTemplate);
             else 
                 StartOfflineCalculation();
         }

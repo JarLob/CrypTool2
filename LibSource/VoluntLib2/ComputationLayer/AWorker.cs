@@ -25,7 +25,7 @@ namespace VoluntLib2.ComputationLayer
 {
     public abstract class AWorker
     {
-        public byte[] JobID { get; set; }
+        public byte[] JobId { get; set; }
         public abstract CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken);
 
         public event EventHandler<TaskEventArgs> ProgressChanged;
@@ -39,7 +39,7 @@ namespace VoluntLib2.ComputationLayer
                     var handler = ProgressChanged;
                     if (handler != null)
                     {
-                        handler(this, new TaskEventArgs(JobID, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
+                        handler(this, new TaskEventArgs(JobId, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
                     }
                 }
                 catch (Exception e)

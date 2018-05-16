@@ -73,11 +73,9 @@ namespace CrypCloud.Core
                 vlib.TaskStopped -= OnTaskHasStopped;
                 vlib.TaskStarted -= OnTaskHasStarted;
                 vlib.JobProgress -= OnJobStateChanged;
-                vlib.JobListChanged -= OnJobListChanged;
             }
             finally
             {
-                vlib.JobListChanged += OnJobListChanged;
                 vlib.JobProgress += OnJobStateChanged;
                 vlib.TaskStarted += OnTaskHasStarted;
                 vlib.TaskStopped += OnTaskHasStopped;
@@ -157,8 +155,7 @@ namespace CrypCloud.Core
             }
 
             try
-            {
-                voluntLib.JobListChanged -= OnJobListChanged;
+            {                
                 voluntLib.JobProgress -= OnJobStateChanged;
                 voluntLib.TaskStarted -= OnTaskHasStarted;
                 voluntLib.TaskStopped -= OnTaskHasStopped;
@@ -219,7 +216,6 @@ namespace CrypCloud.Core
             return new NetworkJobData
             {
                 Job = voluntLib.GetJobByID(jobId),
-                HasWorkspace = () => JobHasWorkspace(jobId),
                 CalculatedBlocks = () => GetCalculatedBlocksOfJob(jobId),
                 Workspace = () => GetWorkspaceOfJob(jobId),
                 CreationDate = () => GetCreationDateOfJob(jobId),
@@ -251,12 +247,6 @@ namespace CrypCloud.Core
             return voluntLib.GetCalculatedBlocksOfJob(jobID);
         }
 
-        public bool JobHasWorkspace(BigInteger jobId)
-        {
-            var job = voluntLib.GetJobByID(jobId);
-            return job != null && job.HasPayload();
-        }
-
         public WorkspaceModel GetWorkspaceOfJob(BigInteger jobId)
         {
             var payloadOfJob = GetPayloadOfJob(jobId);
@@ -271,7 +261,7 @@ namespace CrypCloud.Core
                 .Where(pluginModel => pluginModel.Plugin is ACloudCompatible);
             foreach (var cloudComponent in cloudComponents)
             {
-                ((ACloudCompatible)cloudComponent.Plugin).JobID = jobId;
+                ((ACloudCompatible)cloudComponent.Plugin).JobId = jobId;
                 ((ACloudCompatible)cloudComponent.Plugin).ComputeWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash;
                 ((ACloudCompatible)cloudComponent.Plugin).ValidWorkspaceHash = workspaceOfJob.ComputeWorkspaceHash();
             }
@@ -294,7 +284,7 @@ namespace CrypCloud.Core
         public JobPayload GetPayloadOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
-            if (job == null || !job.HasPayload() || job.IsDeleted)
+            if (job == null || !job.HasPayload || job.IsDeleted)
             {
                 return null;
             }
@@ -348,9 +338,8 @@ namespace CrypCloud.Core
             if (job == null)
                 return;
 
-            if (job.HasPayload())
+            if (job.HasPayload)
             {
-                OnJobListChanged(this, null);
                 return;
             }
 
@@ -440,12 +429,6 @@ namespace CrypCloud.Core
             if (handler != null) handler(connected);
         }
 
-        protected virtual void OnJobListChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            var handler = JobListChanged;
-            if (handler != null) handler(sender, propertyChangedEventArgs);
-        }
-
         protected virtual void OnJobStateChanged(object sender, JobProgressEventArgs jobProgressEventArgs)
         {
             var handler = JobStateChanged;
@@ -456,7 +439,7 @@ namespace CrypCloud.Core
 
         public BigInteger GetEpochOfJob(Job job)
         {
-            var stateOfJob = voluntLib.GetStateOfJob(job.JobID);
+            var stateOfJob = voluntLib.GetStateOfJob(job.JobId);
             return (stateOfJob != null) ? stateOfJob.EpochNumber : 0;
         }
 

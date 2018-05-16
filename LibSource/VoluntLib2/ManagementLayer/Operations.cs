@@ -218,7 +218,7 @@ namespace VoluntLib2.ManagementLayer
                 {
                     if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1} ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1} ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         continue;
                     }
 
@@ -233,21 +233,21 @@ namespace VoluntLib2.ManagementLayer
                     }
 
                     //we dont know the job, then just add it
-                    if (!JobManager.Jobs.ContainsKey(job.JobID))
+                    if (!JobManager.Jobs.ContainsKey(job.JobId))
                     {
-                        Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
-                        JobManager.Jobs.TryAdd(job.JobID, job);
+                        Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                        JobManager.Jobs.TryAdd(job.JobId, job);
                         jobListChanged = true;
                         continue;
                     }
                     else
                     {
                         //Check, if the job is deleted and our local not. if yes, delete our local, too
-                        if (JobManager.Jobs[job.JobID].IsDeleted == false && job.IsDeleted == true)
+                        if (JobManager.Jobs[job.JobId].IsDeleted == false && job.IsDeleted == true)
                         {
-                            Logger.LogText(String.Format("Received job {0} has a valid deletion signature. Mark it as deleted now", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
-                            JobManager.Jobs[job.JobID].IsDeleted = true;
-                            JobManager.Jobs[job.JobID].JobDeletionSignatureData = job.JobDeletionSignatureData;
+                            Logger.LogText(String.Format("Received job {0} has a valid deletion signature. Mark it as deleted now", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                            JobManager.Jobs[job.JobId].IsDeleted = true;
+                            JobManager.Jobs[job.JobId].JobDeletionSignatureData = job.JobDeletionSignatureData;
                             jobListChanged = true;
                         }
                     }                   
@@ -294,26 +294,26 @@ namespace VoluntLib2.ManagementLayer
                 Job job = ((ResponseJobMessage)message).Job;
 
                 //We don't know the job. Thus, we add it
-                if (!JobManager.Jobs.ContainsKey(job.JobID))
+                if (!JobManager.Jobs.ContainsKey(job.JobId))
                 {
                     if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. Ignore it", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid Creator Signature from {1}. Ignore it", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
                     }
                     if (job.HasValidDeletionSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} has a valid deletion signature", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} has a valid deletion signature", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         job.IsDeleted = true;
                     }
                     else
                     {
-                        Logger.LogText(String.Format("Received job {0} has an invalid deletion signature. Remove it", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} has an invalid deletion signature. Remove it", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         job.JobDeletionSignatureData = new byte[0];
                         job.IsDeleted = false;
                     }
 
-                    if (job.HasPayload())
+                    if (job.HasPayload)
                     {
                         //check, if the hash of the payload is ok
                         var jobPayloadHash = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
@@ -329,37 +329,37 @@ namespace VoluntLib2.ManagementLayer
                         if (validPayload)
                         {
                             //when we receive a valid payload, we add it to the appropriate job
-                            Logger.LogText(String.Format("Received job {0} has a valid payload", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);                          
+                            Logger.LogText(String.Format("Received job {0} has a valid payload", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);                          
                         }
                         else
                         {
                             //when we receive an invalid payload, we ignore it and give a warning
-                            Logger.LogText(String.Format("Received job {0} has an invalid payload. Remove it now", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                            Logger.LogText(String.Format("Received job {0} has an invalid payload. Remove it now", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                             job.JobPayload = new byte[0];
                         }
                     }
-                    JobManager.Jobs.TryAdd(job.JobID, job);
-                    Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                    JobManager.Jobs.TryAdd(job.JobId, job);
+                    Logger.LogText(String.Format("Added new job {0} to our job list", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                     JobManager.OnJobListChanged();
                     return;
                 }
 
                 //here, we check, if the local job is not deleted AND the receivd job has a valid deletion signature
-                if (JobManager.Jobs[job.JobID].IsDeleted == false && job.HasValidDeletionSignature())
+                if (JobManager.Jobs[job.JobId].IsDeleted == false && job.HasValidDeletionSignature())
                 {
-                    Logger.LogText(String.Format("Received valid deletion signature for job {0}", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
-                    JobManager.Jobs[job.JobID].JobDeletionSignatureData = job.JobDeletionSignatureData;
-                    JobManager.Jobs[job.JobID].IsDeleted = true;
+                    Logger.LogText(String.Format("Received valid deletion signature for job {0}", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                    JobManager.Jobs[job.JobId].JobDeletionSignatureData = job.JobDeletionSignatureData;
+                    JobManager.Jobs[job.JobId].IsDeleted = true;
                     JobManager.OnJobListChanged();                    
                 }
 
                 //We know the job but have no payload but the job has payload
-                if (!JobManager.Jobs[job.JobID].HasPayload() && job.HasPayload())
+                if (!JobManager.Jobs[job.JobId].HasPayload && job.HasPayload)
                 {
                     //check, if the creator signature is valid
                     if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1}. ", BitConverter.ToString(job.JobID.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1}. ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
                         return;
                     }                   
 
@@ -368,7 +368,7 @@ namespace VoluntLib2.ManagementLayer
                     bool validPayload = true;
                     for (int i = 0; i < jobPayloadHash.Length; i++)
                     {
-                        if (jobPayloadHash[i] != JobManager.Jobs[job.JobID].JobPayloadHash[i])
+                        if (jobPayloadHash[i] != JobManager.Jobs[job.JobId].JobPayloadHash[i])
                         {
                             validPayload = false;
                             break;
@@ -377,15 +377,16 @@ namespace VoluntLib2.ManagementLayer
                     if (validPayload)
                     {
                         //when we receive a valid payload, we add it to the appropriate job
-                        Logger.LogText(String.Format("Added received payload to job {0}", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
-                        JobManager.Jobs[job.JobID].JobPayload = job.JobPayload;
-                        JobManager.OnJobListChanged();
+                        Logger.LogText(String.Format("Added received payload to job {0}", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                        JobManager.Jobs[job.JobId].JobPayload = job.JobPayload;
+                        JobManager.Jobs[job.JobId].OnPropertyChanged("HasPayload");
+                        JobManager.Jobs[job.JobId].OnPropertyChanged("JobSize");
                         return;
                     }
                     else
                     {
                         //when we receive an invalid payload, we ignore it and give a warning
-                        Logger.LogText(String.Format("Received payload of job {0} is invalid. The computed hash is not equal to the JobPayloadHash we already know!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received payload of job {0} is invalid. The computed hash is not equal to the JobPayloadHash we already know!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         return;
                     }
                 }
@@ -417,10 +418,10 @@ namespace VoluntLib2.ManagementLayer
         {
             foreach (Job job in JobManager.Jobs.Values)
             {
-                if (!job.HasPayload() && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL))
+                if (!job.HasPayload && DateTime.Now > job.LastPayloadRequestTime.AddMilliseconds(REQUEST_INTERVAL))
                 {
-                    Logger.LogText(String.Format("Do not have payload for job {0}. Asking my neighbors now", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
-                    JobManager.SendRequestJobMessage(null, job.JobID);
+                    Logger.LogText(String.Format("Do not have payload for job {0}. Asking my neighbors now", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                    JobManager.SendRequestJobMessage(null, job.JobId);
                     job.LastPayloadRequestTime = DateTime.Now;
                 }
             }
@@ -457,7 +458,7 @@ namespace VoluntLib2.ManagementLayer
             {
                 //1. check, if we have the job AND its payload
                 RequestJobMessage requestJobMessage = (RequestJobMessage)message;
-                if (!JobManager.Jobs.ContainsKey(requestJobMessage.JobId) || !JobManager.Jobs[requestJobMessage.JobId].HasPayload())
+                if (!JobManager.Jobs.ContainsKey(requestJobMessage.JobId) || !JobManager.Jobs[requestJobMessage.JobId].HasPayload)
                 {
                     return;
                 }
@@ -503,16 +504,16 @@ namespace VoluntLib2.ManagementLayer
                 {
                     try
                     {
-                        FileStream stream = new FileStream(JobManager.LocalStoragePath + Path.DirectorySeparatorChar + BitConverter.ToString(job.JobID.ToByteArray()) + ".job", FileMode.Create, FileAccess.Write);
+                        FileStream stream = new FileStream(JobManager.LocalStoragePath + Path.DirectorySeparatorChar + BitConverter.ToString(job.JobId.ToByteArray()) + ".job", FileMode.Create, FileAccess.Write);
                         byte[] data = job.Serialize();
                         stream.Write(data,0,data.Length);
                         stream.Flush();
                         stream.Close();
-                        Logger.LogText(String.Format("Job {0} serialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                        Logger.LogText(String.Format("Job {0} serialized", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogText(String.Format("Job {0} could not be serialized!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Error);
+                        Logger.LogText(String.Format("Job {0} could not be serialized!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Error);
                         Logger.LogException(ex, this, Logtype.Error);
                     }
                 }
@@ -573,7 +574,7 @@ namespace VoluntLib2.ManagementLayer
                     job.Deserialize(data);
                     if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Job {0} has no valid Creator Signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Job {0} has no valid Creator Signature. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                         try
                         {
                             File.Delete(file);
@@ -586,7 +587,7 @@ namespace VoluntLib2.ManagementLayer
                     }
 
                     //Check payload signature when job has a payload
-                    if (job.HasPayload())
+                    if (job.HasPayload)
                     {                        
                         byte[] signature = CertificateService.GetCertificateService().ComputeHash(job.JobPayload);
                         bool validPayloadSignature = true;
@@ -595,7 +596,7 @@ namespace VoluntLib2.ManagementLayer
                             if (signature[i] != job.JobPayloadHash[i])
                             {
                                 validPayloadSignature = false;
-                                Logger.LogText(String.Format("Job {0} has no valid JobPayloadHash. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Warning);
+                                Logger.LogText(String.Format("Job {0} has no valid JobPayloadHash. File may be corrupted. Delete it now!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
                                 try
                                 {
                                     File.Delete(file);
@@ -624,8 +625,8 @@ namespace VoluntLib2.ManagementLayer
                         job.JobDeletionSignatureData = new byte[0];
                     }                    
 
-                    JobManager.Jobs.TryAdd(job.JobID, job);
-                    Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobID.ToByteArray())), this, Logtype.Debug);
+                    JobManager.Jobs.TryAdd(job.JobId, job);
+                    Logger.LogText(String.Format("Job {0} deserialized", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                 }
                 catch (Exception ex)
                 {

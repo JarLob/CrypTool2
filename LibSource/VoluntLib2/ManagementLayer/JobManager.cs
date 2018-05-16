@@ -57,9 +57,7 @@ namespace VoluntLib2.ManagementLayer
         internal ConcurrentDictionary<BigInteger, Job> Jobs = new ConcurrentDictionary<BigInteger, Job>();
 
         //a list that can be observerd from the outside, i.e. the UI
-        internal ObservableCollection<Job> JobList;
-
-        public event PropertyChangedEventHandler JobListChanged;
+        internal ObservableCollection<Job> JobList;        
 
         internal VoluntLib VoluntLib { get; set; }
 
@@ -70,13 +68,17 @@ namespace VoluntLib2.ManagementLayer
             LocalStoragePath = localStoragePath;
             connectionManager.ConnectionsNumberChanged += connectionManager_ConnectionsNumberChanged;
 
-            //if we are in a WPF application, we also provide the ObservableCollection
+            //if we are in a WPF application, we create the ObservableCollection in UI thread
             if (Application.Current != null)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    JobList = new ObservableCollection<Job>();
+                    JobList = new ObservableItemsCollection<Job>();
                 }));
+            }
+            else
+            {
+                JobList = new ObservableItemsCollection<Job>();
             }
         }
 
@@ -408,77 +410,67 @@ namespace VoluntLib2.ManagementLayer
             return CertificateService.GetCertificateService().SignData(data);
         }    
 
+        /// <summary>
+        /// Calls UpdateObservableCollection either from ui or current thread
+        /// </summary>
         internal void OnJobListChanged()
-        {
-            if (JobListChanged != null)
-            {
-                JobListChanged.BeginInvoke(this, new PropertyChangedEventArgs("JobList"), null, null);
-            }
-
-            //If we are in a WPF application, we also update the observable collection
+        {          
+            //If we are in a WPF application, we update the observable collection in UI thread
             if (Application.Current != null)
             {
                 Application.Current.Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    foreach (Job job in Jobs.Values)
-                    {
-                        if (!JobList.Contains(job) && !job.IsDeleted)
-                        {                            
-                            bool added = false;
-                            for (int i = 0; i < JobList.Count; i++)
-                            {
-                                if (JobList[i].CreationDate <= job.CreationDate)
-                                {
-                                    JobList.Insert(i, job);
-                                    added = true;
-                                    break;
-                                }
-                            }
-                            if(!added)
-                            {
-                                JobList.Insert(JobList.Count, job);
-                            }
-                        }
-                    }
-                    List<Job> removeList = new List<Job>();
-                    foreach (Job job in JobList)
-                    {
-                        if (job.IsDeleted)
-                        {
-                            removeList.Add(job);
-                        }
-                    }
-                    foreach (Job job in removeList)
-                    {
-                        JobList.Remove(job);
-                    }
+                    UpdateObservableCollection();
                 }));
-                
+            }
+            else
+            {
+                UpdateObservableCollection();
+            }
+        }
+
+        /// <summary>
+        /// Update observable collection
+        /// </summary>
+        private void UpdateObservableCollection()
+        {
+            foreach (Job job in Jobs.Values)
+            {
+                if (!JobList.Contains(job) && !job.IsDeleted)
+                {
+                    bool added = false;
+                    for (int i = 0; i < JobList.Count; i++)
+                    {
+                        if (JobList[i].CreationDate <= job.CreationDate)
+                        {
+                            JobList.Insert(i, job);
+                            added = true;
+                            break;
+                        }
+                    }
+                    if (!added)
+                    {
+                        JobList.Insert(JobList.Count, job);
+                    }
+                }
+            }
+            List<Job> removeList = new List<Job>();
+            foreach (Job job in JobList)
+            {
+                if (job.IsDeleted)
+                {
+                    removeList.Add(job);
+                }
+            }
+            foreach (Job job in removeList)
+            {
+                JobList.Remove(job);
             }
         }
         
         public ObservableCollection<Job> GetJoblist()
         {
             return JobList;
-        }
-
-        /// <summary>
-        /// Returns a list of all jobs with the defined world name
-        /// </summary>
-        /// <param name="world"></param>
-        /// <returns></returns>
-        internal List<Job> GetJobsOfWorld(string world)
-        {            
-            List<Job> jobs = new List<Job>();
-            foreach (Job job in Jobs.Values)
-            {
-                if (job.WorldName.Equals(world) && !job.IsDeleted)
-                {
-                    jobs.Add(job);
-                }
-            }
-            jobs.Sort();
-            return jobs;
         }
 
         /// <summary>

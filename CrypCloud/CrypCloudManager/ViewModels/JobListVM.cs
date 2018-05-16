@@ -103,7 +103,7 @@ namespace CrypCloud.Manager.ViewModels
             var job = obj as Job;
             if (job == null) return;
 
-            crypCloudCore.DownloadWorkspaceOfJob(job.JobID);
+            crypCloudCore.DownloadWorkspaceOfJob(job.JobId);
         }
 
         private void OpenJob(object it)
@@ -111,17 +111,17 @@ namespace CrypCloud.Manager.ViewModels
             var job = it as Job;
             if (job == null) return; // shoudnt happen anyways
 
-            if ( ! job.HasPayload())
+            if (!job.HasPayload)
             {
                 ErrorMessage = "Cannot open job, without downloding it first";
                 return;
             }
 
-            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(job.JobID);
+            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(job.JobId);
             var workspaceEditor = workspaceModel.MyEditor;
             if (workspaceEditor == null || workspaceEditor.HasBeenClosed)
             {
-                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel, job.JobID));
+                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel, job.JobId));
             }
             else
             {
@@ -139,7 +139,7 @@ namespace CrypCloud.Manager.ViewModels
             var confirmResult = MessageBox.Show(Resources._Confirm_Job_Deletion_Text, Resources._Confirm_Job_Deletion_Title, MessageBoxButton.YesNo);
             if (confirmResult == MessageBoxResult.Yes)
             {
-                crypCloudCore.DeleteJob(job.JobID);
+                crypCloudCore.DeleteJob(job.JobId);
             }
         }
 

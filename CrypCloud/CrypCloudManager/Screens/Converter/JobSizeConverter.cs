@@ -13,7 +13,6 @@ namespace CrypCloud.Manager.Screens.Converter
         {
             long size = (long)value;
             return CalculateSizeString(size);
-
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

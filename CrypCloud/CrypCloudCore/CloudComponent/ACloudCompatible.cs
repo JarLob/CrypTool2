@@ -12,7 +12,7 @@ namespace CrypCloud.Core.CloudComponent
     { 
         protected ACloudCompatible()
         {
-            JobID = -1; 
+            JobId = -1; 
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace CrypCloud.Core.CloudComponent
         /// JobId of bound networkjob.
         /// If its -1 its not bound to any networkjob
         /// </summary>
-        public BigInteger JobID { get; set; }
+        public BigInteger JobId { get; set; }
 
         /// <summary>
         /// Determine if this component is linked to a Networkjob
@@ -33,7 +33,7 @@ namespace CrypCloud.Core.CloudComponent
         /// <returns></returns>
         public bool IsOnline()
         {
-            return JobID != -1;
+            return JobId != -1;
         }
 
         public Func<byte[]> ComputeWorkspaceHash { get; set; }

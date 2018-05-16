@@ -41,8 +41,7 @@ namespace VoluntLib2
         private Logger Logger = Logger.GetLogger();
 
         public event EventHandler<JobProgressEventArgs> JobProgress;
-        public event EventHandler<JobProgressEventArgs> JobFinished;
-        public event PropertyChangedEventHandler JobListChanged;        
+        public event EventHandler<JobProgressEventArgs> JobFinished;     
         public event EventHandler<TaskEventArgs> TaskStarted;
         public event EventHandler<TaskEventArgs> TaskProgress;
         public event EventHandler<TaskEventArgs> TaskStopped;
@@ -50,7 +49,7 @@ namespace VoluntLib2
 
         public VoluntLib()
         {            
-        }    
+        }
         public string LocalStoragePath { get; set; }      
         public string CertificateName { get; internal set; }
         public bool IsStarted { get; internal set; }
@@ -117,7 +116,6 @@ namespace VoluntLib2
 
             //3) Create, initialize, and start JobManager
             JobManager = new JobManager(this, ConnectionManager, LocalStoragePath);
-            JobManager.JobListChanged += JobListChanged;
             JobManager.Start();
 
             IsStarted = true;
@@ -135,7 +133,7 @@ namespace VoluntLib2
 
         public void RequestJobDetails(Job job)
         {
-            JobManager.RequestJob(job.JobID);
+            JobManager.RequestJob(job.JobId);
         }
 
         public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
@@ -156,16 +154,6 @@ namespace VoluntLib2
         public Job GetJobByID(BigInteger jobID)
         {
             return JobManager.GetJobById(jobID);
-        }
-
-        public List<string> GetWorldNames()
-        {
-            return new List<string>();
-        }
-
-        public List<Job> GetJobsOfWorld(string world)
-        {
-            return JobManager.GetJobsOfWorld(world);
         }
 
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
