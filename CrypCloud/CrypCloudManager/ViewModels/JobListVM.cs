@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using CrypCloud.Core;
 using CrypCloud.Manager.Properties;
 using CrypCloud.Manager.ViewModels.Helper;
-using CrypCloud.Manager.ViewModels.Pocos;
 using KeySearcher.CrypCloud.statistics;
 using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
@@ -27,9 +26,10 @@ namespace CrypCloud.Manager.ViewModels
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
         public CrypCloudManager Manager { get; set; } 
 
-        public ObservableCollection<NetworkJobItem> RunningJobs { get; set; } 
-        private NetworkJobItem selectedJob;
-        public NetworkJobItem SelectedJob
+        public ObservableCollection<Job> RunningJobs { get; set; } 
+
+        private Job selectedJob;
+        public Job SelectedJob
         {
             get { return selectedJob; }
             set
@@ -45,8 +45,7 @@ namespace CrypCloud.Manager.ViewModels
         public RelayCommand OpenJobCommand { get; set; }
         public RelayCommand DeleteJobCommand { get; set; }
         public RelayCommand DownloadWorkspaceCommand { get; set; }
-        public RelayCommand LogOutCommand { get; set; }
-        public RelayCommand DoubleClickOnEntryCommand { get; set; }
+        public RelayCommand LogOutCommand { get; set; }        
         public string Username { get; set; }
 
         public JobListVM()
@@ -56,19 +55,14 @@ namespace CrypCloud.Manager.ViewModels
             LogOutCommand = new RelayCommand(it => Logout());
             OpenJobCommand = new RelayCommand(OpenJob);
             DeleteJobCommand = new RelayCommand(DeleteJob);
-            DownloadWorkspaceCommand = new RelayCommand(DownloadJob);
-            DoubleClickOnEntryCommand = new RelayCommand(DoubleClickOnEntry);
-
-            RunningJobs = new ObservableCollection<NetworkJobItem>();
-            crypCloudCore.JobListChanged += (s, e) => RunInUiContext(UpdateJobList);
-            crypCloudCore.JobStateChanged +=  (s, e) => RunInUiContext(UpdateJobList);
-           
+            DownloadWorkspaceCommand = new RelayCommand(DownloadJob);            
         }
 
         protected override void HasBeenActivated()
         {
-            base.HasBeenActivated(); 
-            UpdateJobList();
+            base.HasBeenActivated();
+            RunningJobs = crypCloudCore.GetJoblist();
+            RaisePropertyChanged("RunningJobs");
             if (RunningJobs.Count > 0)
             {
                 selectedJob = RunningJobs.First();
@@ -76,35 +70,7 @@ namespace CrypCloud.Manager.ViewModels
             }
 
             Username = CrypCloudCore.Instance.GetUsername();
-            RaisePropertyChanged("Username");
-        }
-
-        private void UpdateJobList()
-        {
-            BigInteger selectedID = new BigInteger(0);
-            if (SelectedJob != null)
-            {
-                selectedID = selectedJob.Id;
-            }
-            var jobItems = crypCloudCore.GetJobs().Select(ConvertToListItem);
-            RunningJobs.Clear();
-            foreach (var networkJobItem in jobItems)
-            {
-                RunningJobs.Add(networkJobItem);
-            }           
-            SetSelectionByJobId(selectedID);
-        }
-
-        private void SetSelectionByJobId(BigInteger selectedID)
-        {
-            if (selectedID == 0) return;
-
-            var newSelectedJob = RunningJobs.FirstOrDefault(networkJobItem => networkJobItem.Id == selectedID);
-            if (newSelectedJob != null)
-            {
-                selectedJob = newSelectedJob;
-                RaisePropertyChanged("SelectedJob");
-            }
+            RaisePropertyChanged("Username");            
         }
 
         private void OpenJobCreation()
@@ -113,8 +79,7 @@ namespace CrypCloud.Manager.ViewModels
         } 
 
         private void RefreshJobs()
-        {
-            UpdateJobList();
+        {            
             crypCloudCore.RefreshJobList(); 
         }
 
@@ -131,46 +96,32 @@ namespace CrypCloud.Manager.ViewModels
             Navigator.ShowScreenWithPath(ScreenPaths.Login);
         }
 
-        #region open job
-        private void DoubleClickOnEntry(object job)
+        #region open job       
+
+        private void DownloadJob(object obj)
         {
-            if (selectedJob == null) return; // shoudnt happen anyways
+            var job = obj as Job;
+            if (job == null) return;
 
-            if (selectedJob.HasWorkspace)
-            {
-                OpenJob(selectedJob);
-            }
-            else
-            {
-                DownloadJob(selectedJob);
-            }
+            crypCloudCore.DownloadWorkspaceOfJob(job.JobID);
         }
-
-        private void DownloadJob(object it)
-        {
-            var jobItem = it as NetworkJobItem;
-            if (jobItem == null) return; // shoudnt happen anyways
-
-            crypCloudCore.DownloadWorkspaceOfJob(jobItem.Id);
-        }
-
 
         private void OpenJob(object it)
         {
-            var jobItem = it as NetworkJobItem;
-            if (jobItem == null) return; // shoudnt happen anyways
+            var job = it as Job;
+            if (job == null) return; // shoudnt happen anyways
 
-            if ( ! jobItem.HasWorkspace)
+            if ( ! job.HasPayload())
             {
                 ErrorMessage = "Cannot open job, without downloding it first";
                 return;
             }
 
-            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(jobItem.Id);
+            var workspaceModel = crypCloudCore.GetWorkspaceOfJob(job.JobID);
             var workspaceEditor = workspaceModel.MyEditor;
             if (workspaceEditor == null || workspaceEditor.HasBeenClosed)
             {
-                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel, jobItem.Id));
+                UiContext.StartNew(() => Manager.OpenWorkspaceInNewTab(workspaceModel, job.JobID));
             }
             else
             {
@@ -182,76 +133,17 @@ namespace CrypCloud.Manager.ViewModels
 
         private void DeleteJob(object it)
         {
-            var jobItem = it as NetworkJobItem;
-            if (jobItem == null) return; // shoudnt happen anyways
+            var job = it as Job;
+            if (job == null) return; // shoudnt happen anyways
 
             var confirmResult = MessageBox.Show(Resources._Confirm_Job_Deletion_Text, Resources._Confirm_Job_Deletion_Title, MessageBoxButton.YesNo);
             if (confirmResult == MessageBoxResult.Yes)
             {
-                crypCloudCore.DeleteJob(jobItem.Id);
+                crypCloudCore.DeleteJob(job.JobID);
             }
         }
 
-        #region helper
-
-        private NetworkJobItem ConvertToListItem(Job job)
-        {
-            var epochProgress = 0;
-
-            /* ToDo: update with VoluntLib2
-             * 
-             * if (job.StateConfig.MaximumEpoch != 0)
-            {
-                epochProgress = (int) (100 * crypCloudCore.GetEpochOfJob(job).DivideAndReturnDouble(job.StateConfig.MaximumEpoch));
-            } */
-
-            var item = new NetworkJobItem
-            {
-                Name = job.JobName,
-                Description = job.JobDescription,
-                Creator = job.CreatorName,
-                //TotalNumberOfBlocks = job.StateConfig.NumberOfBlocks,
-                FinishedNumberOfBlocks = crypCloudCore.GetCalculatedBlocksOfJob(job.JobID),
-                Id = job.JobID,
-                UserCanDeleteJob = crypCloudCore.UserCanDeleteJob(job),
-                HasWorkspace = job.HasPayload(),
-                CreationDate = job.CreationDate.ToLocalTime(),
-                //MaxEpoch = job.StateConfig.MaximumEpoch,
-                JobSize = CalculateSizeString(job.JobSize),
-                Epoch = crypCloudCore.GetEpochOfJob(job),
-                EpochProgress = epochProgress                
-            };
-           
-            var jobStateVisualization = crypCloudCore.GetJobStateVisualization(job.JobID);
-            /*if (jobStateVisualization != null)
-            {
-                item.Visualization = Bitmap2BitmapImage(jobStateVisualization);
-            }*/
-
-            return item;
-        }
-
-        /// <summary>
-        /// Converts the given siza as long to a string with
-        /// bytes, KiB, or MiB
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        private string CalculateSizeString(long size)
-        {
-            if (size < 1024)
-            {
-                return size + " bytes";
-            }
-            else if (size < 1024 * 1024)
-            {
-                return Math.Round(size / 1024.0, 2) + " KiB";
-            }
-            else
-            {
-                return Math.Round(size / 1024.0 * 1024.0, 2) + " MiB";
-            }            
-        }
+        #region helper       
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);

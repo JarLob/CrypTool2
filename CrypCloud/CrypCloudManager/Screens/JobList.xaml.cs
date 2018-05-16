@@ -11,11 +11,6 @@ namespace CrypCloud.Manager.Screens
         public JobList()
         {
             InitializeComponent();
-        }
-
-        private void JobListView_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ((JobListVM) DataContext).DoubleClickOnEntryCommand.Execute(sender);
-        }
+        }      
     }
 }

@@ -21,7 +21,7 @@ namespace CrypCloud.Manager.Screens.Converter
                 return "~";
             }
 
-            return dateTime.ToString("g");
+            return dateTime.ToLocalTime().ToString("g");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

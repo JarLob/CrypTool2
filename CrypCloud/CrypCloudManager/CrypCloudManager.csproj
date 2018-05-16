@@ -107,6 +107,8 @@
     <Compile Include="Screens\Converter\AddMarginForProgressBarConverter.cs" />
     <Compile Include="Screens\Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Screens\Converter\HideWhenStringIsEmptyConverter.cs" />
+    <Compile Include="Screens\Converter\JobIdConverter.cs" />
+    <Compile Include="Screens\Converter\JobSizeConverter.cs" />
     <Compile Include="Screens\Converter\ShowWhenStringIsEmptyConverter .cs" />
     <Compile Include="Screens\CreateAccount.xaml.cs">
       <DependentUpon>CreateAccount.xaml</DependentUpon>
@@ -141,7 +143,6 @@
     <Compile Include="ViewModels\CreateAccountVM.cs" />
     <Compile Include="ViewModels\ResetPasswordVM.cs" />
     <Compile Include="ViewModels\LoginVM.cs" />
-    <Compile Include="ViewModels\Pocos\NetworkJobItem.cs" />
     <Compile Include="ViewModels\Helper\SecureStringExtensions.cs" />
     <Compile Include="CrypCloudSettingsTab.xaml.cs">
       <DependentUpon>CrypCloudSettingsTab.xaml</DependentUpon>

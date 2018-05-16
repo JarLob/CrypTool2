@@ -16,6 +16,7 @@ using WorkspaceManager.Model;
 using VoluntLib2.ManagementLayer;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.Tools;
+using System.Collections.ObjectModel;
 
 namespace CrypCloud.Core
 { 
@@ -191,14 +192,14 @@ namespace CrypCloud.Core
 
         #region job information
 
-        public List<Job> GetJobs()
+        public ObservableCollection<Job> GetJoblist()
         {
             if (!voluntLib.IsStarted)
             {
-                return new List<Job>();
+                return new ObservableCollection<Job>();
             }
 
-            return voluntLib.GetJobsOfWorld(DefaultWorld);
+            return voluntLib.GetJoblist();
         }
 
         public Job GetJobsById(BigInteger jobid)

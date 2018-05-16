@@ -16,12 +16,15 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 using VoluntLib2.ConnectionLayer;
 using VoluntLib2.ManagementLayer.Messages;
 using VoluntLib2.Tools;
@@ -53,6 +56,9 @@ namespace VoluntLib2.ManagementLayer
         //a dictionary containing all the jobs
         internal ConcurrentDictionary<BigInteger, Job> Jobs = new ConcurrentDictionary<BigInteger, Job>();
 
+        //a list that can be observerd from the outside, i.e. the UI
+        internal ObservableCollection<Job> JobList;
+
         public event PropertyChangedEventHandler JobListChanged;
 
         internal VoluntLib VoluntLib { get; set; }
@@ -63,6 +69,15 @@ namespace VoluntLib2.ManagementLayer
             ConnectionManager = connectionManager;
             LocalStoragePath = localStoragePath;
             connectionManager.ConnectionsNumberChanged += connectionManager_ConnectionsNumberChanged;
+
+            //if we are in a WPF application, we also provide the ObservableCollection
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    JobList = new ObservableCollection<Job>();
+                }));
+            }
         }
 
         /// <summary>
@@ -391,7 +406,7 @@ namespace VoluntLib2.ManagementLayer
         {
             byte[] data = job.Serialize();
             return CertificateService.GetCertificateService().SignData(data);
-        }
+        }    
 
         internal void OnJobListChanged()
         {
@@ -399,6 +414,52 @@ namespace VoluntLib2.ManagementLayer
             {
                 JobListChanged.BeginInvoke(this, new PropertyChangedEventArgs("JobList"), null, null);
             }
+
+            //If we are in a WPF application, we also update the observable collection
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    foreach (Job job in Jobs.Values)
+                    {
+                        if (!JobList.Contains(job) && !job.IsDeleted)
+                        {                            
+                            bool added = false;
+                            for (int i = 0; i < JobList.Count; i++)
+                            {
+                                if (JobList[i].CreationDate <= job.CreationDate)
+                                {
+                                    JobList.Insert(i, job);
+                                    added = true;
+                                    break;
+                                }
+                            }
+                            if(!added)
+                            {
+                                JobList.Insert(JobList.Count, job);
+                            }
+                        }
+                    }
+                    List<Job> removeList = new List<Job>();
+                    foreach (Job job in JobList)
+                    {
+                        if (job.IsDeleted)
+                        {
+                            removeList.Add(job);
+                        }
+                    }
+                    foreach (Job job in removeList)
+                    {
+                        JobList.Remove(job);
+                    }
+                }));
+                
+            }
+        }
+        
+        public ObservableCollection<Job> GetJoblist()
+        {
+            return JobList;
         }
 
         /// <summary>

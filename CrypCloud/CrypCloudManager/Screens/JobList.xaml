@@ -12,6 +12,8 @@
             <converter:BoolToVisibilityConverter FalseValue="Collapsed" x:Key="show" />
             <converter:BoolToVisibilityConverter TrueValue="Collapsed" FalseValue="Visible" x:Key="hide" />
             <converter:DateTimeConverter x:Key="DateTimeConverter" />
+            <converter:JobIdConverter x:Key="JobIdConverter" />
+            <converter:JobSizeConverter x:Key="JobSizeConverter" />            
             <converter:InvertBoolConverter x:Key="not" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Button.xaml" />
@@ -76,9 +78,9 @@
             <Grid Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="{Binding ElementName=CreationDate, Path=ActualWidth}" />
-                    <ColumnDefinition Width="{Binding ElementName=ShortID, Path=ActualWidth}" />
-                    <ColumnDefinition Width="{Binding ElementName=Name, Path=ActualWidth}" />
-                    <ColumnDefinition Width="{Binding ElementName=Creator, Path=ActualWidth}" />
+                    <ColumnDefinition Width="{Binding ElementName=JobID, Path=ActualWidth}" />
+                    <ColumnDefinition Width="{Binding ElementName=JobName, Path=ActualWidth}" />
+                    <ColumnDefinition Width="{Binding ElementName=CreatorName, Path=ActualWidth}" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="10" />
                     <ColumnDefinition Width="{Binding ElementName=OpenJobCommand, Path=ActualWidth}" />
@@ -100,17 +102,17 @@
                             </Style>
                         </GridView.ColumnHeaderContainerStyle>
 
-                        <GridViewColumn x:Name="CreationDate" Header="{Loc  _JobList_col_Date}"
+                        <GridViewColumn x:Name="CreationDate" Header="{Loc _JobList_col_Date}"
                                         DisplayMemberBinding="{Binding CreationDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}"
                                         Width="150" />
-                        <GridViewColumn x:Name="ShortID" Header="{Loc _JobList_col_Id}"
-                                        DisplayMemberBinding="{Binding ShortID}" Width="125" />
-                        <GridViewColumn x:Name="Name" Header="{Loc  _JobList_col_Name}"
-                                        DisplayMemberBinding="{Binding Name}" Width="225" />
-                        <GridViewColumn x:Name="Jobsize" Header="{Loc  _JobList_col_JobSize}"
-                                        DisplayMemberBinding="{Binding JobSize}" Width="100" />
-                        <GridViewColumn x:Name="Creator" Header="{Loc  _JobList_col_Creator}"
-                                        DisplayMemberBinding="{Binding Creator}" Width="125" />
+                        <GridViewColumn x:Name="JobID" Header="{Loc _JobList_col_Id}"
+                                        DisplayMemberBinding="{Binding JobID, Converter={StaticResource JobIdConverter}}" Width="125" />
+                        <GridViewColumn x:Name="JobName" Header="{Loc  _JobList_col_Name}"
+                                        DisplayMemberBinding="{Binding JobName}" Width="225" />
+                        <GridViewColumn x:Name="JobSize" Header="{Loc  _JobList_col_JobSize}" 
+                                        DisplayMemberBinding="{Binding JobSize, Converter={StaticResource JobSizeConverter}}" Width="100" />
+                        <GridViewColumn x:Name="CreatorName" Header="{Loc  _JobList_col_Creator}"
+                                        DisplayMemberBinding="{Binding CreatorName}" Width="125" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
                                         Width="{Binding ElementName=helperField, Path=ActualWidth}">
                             <GridViewColumn.CellTemplate>
@@ -207,10 +209,10 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobID}" />
-                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.PrintableID}"  Margin="0,5,5,0"  />
+                    <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobID, Converter={StaticResource JobIdConverter}}"  Margin="0,5,5,0"  />
 
                     <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
-                    <TextBlock Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.Name}"  Margin="0,5,5,0"  />
+                    <TextBlock Grid.Column="1" Grid.Row="2"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobName}"  Margin="0,5,5,0"  />
 
                     <Label Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
                     <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Minimum="0" 

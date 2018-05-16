@@ -29,6 +29,7 @@ using VoluntLib2.Tools;
 using VoluntLib2.ConnectionLayer;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.ManagementLayer;
+using System.Collections.ObjectModel;
 
 namespace VoluntLib2
 {
@@ -191,6 +192,11 @@ namespace VoluntLib2
         {
             return (job.CreatorName.Equals(CertificateName)) || 
                 CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
-        }        
+        }
+
+        public ObservableCollection<Job> GetJoblist()
+        {
+            return JobManager.GetJoblist();
+        }
     }
 }

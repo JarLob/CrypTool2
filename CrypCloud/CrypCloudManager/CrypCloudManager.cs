@@ -50,7 +50,7 @@ namespace CrypCloud.Manager
             AddScreensToNavigator(crypCloudPresentation);
 
             var jobListVM = (JobListVM) crypCloudPresentation.JobList.DataContext;
-            jobListVM.Manager = this;
+            jobListVM.Manager = this;            
             Logger.SetLogLevel(Logtype.Debug);
             Logger logger = Logger.GetLogger();
             logger.Logged += logger_Logged;
