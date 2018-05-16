@@ -347,6 +347,13 @@ namespace VoluntLib2.ManagementLayer
                 //here, we check, if the local job is not deleted AND the receivd job has a valid deletion signature
                 if (JobManager.Jobs[job.JobId].IsDeleted == false && job.HasValidDeletionSignature())
                 {
+                    //check, if the creator signature is valid
+                    if (!job.HasValidCreatorSignature())
+                    {
+                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1}. ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        return;
+                    }           
+
                     Logger.LogText(String.Format("Received valid deletion signature for job {0}", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
                     JobManager.Jobs[job.JobId].JobDeletionSignatureData = job.JobDeletionSignatureData;
                     JobManager.Jobs[job.JobId].IsDeleted = true;

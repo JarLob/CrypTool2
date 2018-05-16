@@ -608,7 +608,7 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Deletes the job, only if the job exsits and the user is admin or the job was created by the user
+        /// Deletes the job, only if the job exists and the user is admin or the job was created by the user
         /// </summary>
         /// <param name="jobID"></param>
         internal void DeleteJob(BigInteger jobId)

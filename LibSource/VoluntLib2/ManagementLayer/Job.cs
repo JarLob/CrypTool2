@@ -26,7 +26,7 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ManagementLayer
 {
-    public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged
+    public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
     {
         private const int STRING_MAX_LENGTH = 255;
         private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb        
@@ -49,6 +49,7 @@ namespace VoluntLib2.ManagementLayer
             IsDeleted = false;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
         public BigInteger JobId { get; set; }
         public string JobName { get; set; }
         public string JobType { get; set; }
@@ -57,15 +58,12 @@ namespace VoluntLib2.ManagementLayer
         public string CreatorName { get; set; }
         public BigInteger NumberOfBlocks { get; set; }
         public DateTime CreationDate { get; set; }
-
         public DateTime LastPayloadRequestTime { get; set; }
-
         public byte[] CreatorCertificateData { get; set; }
         public byte[] JobPayloadHash { get; set; }
         public byte[] JobCreatorSignatureData { get; set; }
         public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
-
         public long JobSize
         {
             get
@@ -87,19 +85,15 @@ namespace VoluntLib2.ManagementLayer
                 return size;
             }
         }
-
         public bool IsDeleted { get; set; }
-
         public bool Equals(Job other)
         {
             return other.JobId.Equals(JobId);
         }
-
         public bool HasPayload        
         {
             get { return JobPayload != null && JobPayload.Length > 0; }
         }
-
         public override int GetHashCode()
         {
             return JobId.GetHashCode();
@@ -495,6 +489,10 @@ namespace VoluntLib2.ManagementLayer
             return false;
         }
 
+        /// <summary>
+        /// Checks if job has a valid deletion signature
+        /// </summary>
+        /// <returns></returns>
         public bool HasValidDeletionSignature()
         {
             try
@@ -588,8 +586,12 @@ namespace VoluntLib2.ManagementLayer
         /// <param name="propertyName"></param>
         internal void OnPropertyChanged(string propertyName)
         {
+            if (PropertyChanged == null)
+            {
+                return;
+            }
             //if we are in a WPF application, we use the UI thread
-            if (Application.Current != null && PropertyChanged != null)
+            if (Application.Current != null)
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
@@ -600,7 +602,6 @@ namespace VoluntLib2.ManagementLayer
             {
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
+        }        
     }
 }
