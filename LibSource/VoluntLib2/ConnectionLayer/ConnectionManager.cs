@@ -74,12 +74,17 @@ namespace VoluntLib2.ConnectionLayer
         //a list containing our bootstrap peers
         private List<Contact> WellKnownPeers = new List<Contact>();
 
+        internal VoluntLib VoluntLib { get; set; }
+
+        public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
+
         /// <summary>
         /// Creates a new ConnectionManager listening on the given UDP port
         /// </summary>
         /// <param name="listenport"></param>
-        public ConnectionManager(ushort listenport)
+        public ConnectionManager(VoluntLib voluntLib, ushort listenport)
         {
+            VoluntLib = voluntLib;
             Port = listenport;
         }
 
@@ -692,6 +697,14 @@ namespace VoluntLib2.ConnectionLayer
         public bool IsRunning()
         {
             return Running;
+        }
+
+        internal void OnConnectionsNumberChanged(List<Contact> contacts)
+        {
+            if (ConnectionsNumberChanged != null)
+            {
+                ConnectionsNumberChanged.BeginInvoke(this, new ConnectionsNumberChangedEventArgs() { Contacts = contacts }, null, null);
+            }
         }
     }
 

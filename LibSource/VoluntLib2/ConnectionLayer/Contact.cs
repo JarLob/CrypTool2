@@ -28,7 +28,7 @@ namespace VoluntLib2.ConnectionLayer
     /// It also knows the Peer's PeerID (unique random identification number)
     /// Additionally, it knows when the peer was last seen and the last hello was sent to him
     /// </summary>
-    internal class Contact
+    public class Contact
     {
         /// <summary>
         /// Randomly generated 16 byte PeerId
@@ -75,7 +75,7 @@ namespace VoluntLib2.ConnectionLayer
         /// <summary>
         /// List of Peers that know this Peer
         /// </summary>
-        public ConcurrentDictionary<IPEndPoint, Contact> KnownBy = new ConcurrentDictionary<IPEndPoint, Contact>();
+        internal ConcurrentDictionary<IPEndPoint, Contact> KnownBy = new ConcurrentDictionary<IPEndPoint, Contact>();
 
         public override string ToString()
         {
@@ -120,6 +120,22 @@ namespace VoluntLib2.ConnectionLayer
             Array.Copy(data, PeerId, 16);
             IPAddress = new IPAddress(new byte[] { data[16], data[17], data[18], data[19] });
             Port = BitConverter.ToUInt16(data, 20);
+        }
+
+        /// <summary>
+        /// Clones this contact object
+        /// </summary>
+        /// <returns></returns>
+        public Contact Clone()
+        {
+            Contact contact = new Contact();
+            contact.PeerId = PeerId;
+            contact.IPAddress = IPAddress;
+            contact.Port = Port;
+            contact.IsOffline = IsOffline;
+            contact.LastHelloSent = LastHelloSent;
+            contact.LastSeen = LastSeen;
+            return contact;
         }
     }
 }

@@ -586,6 +586,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
             {
                 LastStatusShownTime = DateTime.Now;
                 ushort connectionCount = ConnectionManager.GetConnectionCount();
+                List<Contact> contacts = new List<Contact>();
                 if (connectionCount != LastConnectionCount)
                 {
                     LastConnectionCount = connectionCount;
@@ -595,8 +596,10 @@ namespace VoluntLib2.ConnectionLayer.Operations
                         if (keyvalue.Value.IsOffline == false)
                         {
                             Logger.LogText(String.Format("Connected to {0}:{1}", keyvalue.Value.IPAddress, keyvalue.Value.Port), this, Logtype.Info);
+                            contacts.Add(keyvalue.Value.Clone());
                         }
                     }
+                    ConnectionManager.OnConnectionsNumberChanged(contacts);
                 }
             }
         }
@@ -834,12 +837,12 @@ namespace VoluntLib2.ConnectionLayer.Operations
     /// </summary>
     internal class CheckMyConnectionsNumberOperation : Operation
     {
-        private const int CHECK_CONNECTIONS_INTERVAL = 30000; //30 sec 
+        private const int CHECK_CONNECTIONS_INTERVAL = 10000; //10 sec 
         private const int MIN_CONNECTIONS_NUMBER = 10;
         private const int MAX_CONNECTIONS_NUMBER = 20;
 
         private Logger Logger = Logger.GetLogger();
-        private DateTime LastCheckedTime = DateTime.Now;
+        private DateTime LastCheckedTime = DateTime.MinValue;
         private Random Random = new Random(BitConverter.ToInt32(Guid.NewGuid().ToByteArray(), 0));
 
         /// <summary>
@@ -854,6 +857,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
         {
             if (DateTime.Now > LastCheckedTime.AddMilliseconds(CHECK_CONNECTIONS_INTERVAL))
             {
+                LastCheckedTime = DateTime.Now;
                 ushort connectionCount = ConnectionManager.GetConnectionCount();
                 if (connectionCount == 0)
                 {
@@ -921,8 +925,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                             }
                         }
                     }
-                }
-                LastCheckedTime = DateTime.Now;
+                }                
             }
         }
 

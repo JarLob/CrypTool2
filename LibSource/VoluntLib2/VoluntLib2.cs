@@ -72,7 +72,7 @@ namespace VoluntLib2
             CertificateName = CertificateService.OwnName;
 
             //2) Create, initialize, and start ConnectionManager
-            ConnectionManager = new ConnectionManager(listenport);
+            ConnectionManager = new ConnectionManager(this, listenport);
             foreach (string wellknownpeer in WellKnownPeers)
             {
                 try
@@ -111,10 +111,11 @@ namespace VoluntLib2
                     continue;
                 }
             }
+            ConnectionManager.ConnectionsNumberChanged += ConnectionsNumberChanged;
             ConnectionManager.Start();
 
             //3) Create, initialize, and start JobManager
-            JobManager = new JobManager(ConnectionManager, LocalStoragePath);
+            JobManager = new JobManager(this, ConnectionManager, LocalStoragePath);
             JobManager.JobListChanged += JobListChanged;
             JobManager.Start();
 
@@ -190,6 +191,6 @@ namespace VoluntLib2
         {
             return (job.CreatorName.Equals(CertificateName)) || 
                 CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
-        }
+        }        
     }
 }

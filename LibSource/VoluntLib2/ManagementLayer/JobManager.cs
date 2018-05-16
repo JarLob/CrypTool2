@@ -55,10 +55,31 @@ namespace VoluntLib2.ManagementLayer
 
         public event PropertyChangedEventHandler JobListChanged;
 
-        public JobManager(ConnectionManager connectionManager, string localStoragePath)
+        internal VoluntLib VoluntLib { get; set; }
+
+        public JobManager(VoluntLib voluntLib, ConnectionManager connectionManager, string localStoragePath)
         {
+            VoluntLib = voluntLib;
             ConnectionManager = connectionManager;
             LocalStoragePath = localStoragePath;
+            connectionManager.ConnectionsNumberChanged += connectionManager_ConnectionsNumberChanged;
+        }
+
+        /// <summary>
+        /// When the connections number changes, we ask everyone for a joblist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void connectionManager_ConnectionsNumberChanged(object sender, ConnectionsNumberChangedEventArgs e)
+        {
+            foreach (Operation operation in Operations)
+            {
+                if (operation is RequestJobListOperation)
+                {
+                    RequestJobListOperation requestJobListOperation = (RequestJobListOperation)operation;
+                    requestJobListOperation.ForceExecution();
+                }
+            }
         }
 
         public void Start()

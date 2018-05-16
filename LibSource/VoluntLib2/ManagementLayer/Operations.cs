@@ -102,8 +102,8 @@ namespace VoluntLib2.ManagementLayer
     internal class RequestJobListOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
-        private const int REQUEST_INTERVAL = 60000; //1min
-        private DateTime LastExecutionTime = DateTime.MinValue;
+        private const int REQUEST_INTERVAL = 60000; //1min        
+        private DateTime LastExecutionTime = DateTime.Now;
 
         /// <summary>
         /// The RequestJobListOperation never finishes
@@ -121,7 +121,7 @@ namespace VoluntLib2.ManagementLayer
             if (DateTime.Now > LastExecutionTime.AddMilliseconds(REQUEST_INTERVAL))
             {
                 Logger.LogText("Sending RequestJobListMessages to all neighbors", this, Logtype.Debug);
-                //Send a ResponseJobListMessage to every neighbor
+                //Send a RequestJobListMessage to every neighbor
                 JobManager.SendRequestJobListMessage(null);
                 LastExecutionTime = DateTime.Now;
             }

@@ -431,7 +431,7 @@ namespace VoluntLib2.ManagementLayer
                 //8  bytes    deletion time
                 //m  bytes    signature                
                 byte[] jobIdBytes = JobID.ToByteArray();
-                byte[] jobIdLengthBytes = BitConverter.GetBytes(jobIdBytes.Length);
+                byte[] jobIdLengthBytes = BitConverter.GetBytes((UInt32)jobIdBytes.Length);
                 byte[] text = new byte[4 + jobIdLengthBytes.Length + jobIdBytes.Length + 8];
                 text[0] = (byte)'U';
                 text[1] = (byte)'S';
@@ -455,30 +455,40 @@ namespace VoluntLib2.ManagementLayer
             //case 2) When the user is admin, we can add the admin deletion signature
             else if (userIsAdmin)
             {
-              /*  //4  bytes    ADMN magic number
+                //4  bytes    ADMN magic number
                 //4  bytes    jobid length
                 //n  bytes    jobid
-                //8  bytes    deletion time                
-                //4  bytes    admin certificate length
-                //n  bytes    admin certificate data
-                //m  bytes    signature
-                byte[] adminCertData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
-                byte[] text = new byte[32 + adminCertData.Length];
+                //8  bytes    deletion time
+                //4  bytes    certificate length
+                //n  bytes    certificate data
+                //m  bytes    signature                
+                byte[] jobIdBytes = JobID.ToByteArray();
+                byte[] jobIdLengthBytes = BitConverter.GetBytes(jobIdBytes.Length);
+                byte[] certificateDataBytes = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+                byte[] certificateDataLengthBytes = BitConverter.GetBytes(certificateDataBytes.Length);
+                byte[] text = new byte[4 + jobIdLengthBytes.Length + jobIdBytes.Length + 8 + certificateDataBytes.Length + certificateDataLengthBytes.Length];                
                 text[0] = (byte)'A';
                 text[1] = (byte)'D';
                 text[2] = (byte)'M';
                 text[3] = (byte)'N';
-                Array.Copy(BitConverter.GetBytes(DateTime.UtcNow.ToBinary()), 0, text, 4, 8);
-                byte[] certDataLength = BitConverter.GetBytes(adminCertData.Length);
-
-
-
+                int offset = 4;
+                Array.Copy(jobIdLengthBytes, 0, text, offset, jobIdLengthBytes.Length);
+                offset += jobIdLengthBytes.Length;
+                Array.Copy(jobIdBytes, 0, text, offset, jobIdBytes.Length);
+                offset += jobIdBytes.Length;
+                Array.Copy(BitConverter.GetBytes(DateTime.UtcNow.ToBinary()), 0, text, offset, 8);
+                offset += 8;
+                Array.Copy(certificateDataLengthBytes, 0, text, offset, certificateDataLengthBytes.Length);
+                offset += certificateDataLengthBytes.Length;
+                Array.Copy(certificateDataBytes, 0, text, offset, certificateDataBytes.Length);
+                offset += certificateDataBytes.Length;
                 byte[] signature = CertificateService.GetCertificateService().SignData(text);
                 byte[] data = new byte[text.Length + signature.Length];
                 Array.Copy(text, 0, data, 0, text.Length);
                 Array.Copy(signature, 0, data, text.Length, signature.Length);
                 JobDeletionSignatureData = data;
-                return true;*/
+                IsDeleted = true;
+                return true;
             }
             return false;
         }
@@ -516,7 +526,7 @@ namespace VoluntLib2.ManagementLayer
                     offset += 8; //+8 for deletion time in structure
 
                     byte[] data = new byte[offset];
-                    Array.Copy(JobDeletionSignatureData,0,data,0,data.Length);
+                    Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
                     byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
                     Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
                     
@@ -527,11 +537,40 @@ namespace VoluntLib2.ManagementLayer
                 // admin deleted
                 else if (magicNumber.Equals("ADMN"))
                 {
+                    int offset = 4;
+                    byte[] jobIdLengthBytes = new byte[4];
+                    Array.Copy(JobDeletionSignatureData, offset, jobIdLengthBytes, 0, 4);
+                    uint jobIdLength = BitConverter.ToUInt32(jobIdLengthBytes, 0);
+                    offset += 4;
+                    byte[] jobIdData = new byte[jobIdLength];
+                    Array.Copy(JobDeletionSignatureData, offset, jobIdData, 0, jobIdData.Length);
+                    BigInteger jobid = new BigInteger(jobIdData);
+                    if (jobid != JobID)
+                    {
+                        //invalid JobId in deletion signature
+                        return false;
+                    }
+                    offset += jobIdData.Length;
+                    offset += 8; //+8 for deletion time in structure
+                    uint certificateDataLength = BitConverter.ToUInt32(JobDeletionSignatureData, offset);
+                    offset += 4;
+                    byte[] certificateData = new byte[certificateDataLength];
+                    Array.Copy(JobDeletionSignatureData, offset, certificateData, 0, certificateDataLength);
+                    offset += certificateData.Length;
+                    byte[] data = new byte[offset];
+                    Array.Copy(JobDeletionSignatureData, 0, data, 0, data.Length);
+                    byte[] signature = new byte[JobDeletionSignatureData.Length - offset];
+                    Array.Copy(JobDeletionSignatureData, offset, signature, 0, signature.Length);
 
+                    X509Certificate2 adminCertificate = new X509Certificate2(certificateData);
+                    //check, if the certificate is an admin certificate
+                    if(!CertificateService.GetCertificateService().IsAdminCertificate(adminCertificate))
+                    {
+                        return false;
+                    }
 
-
-
-
+                    //finally check signature
+                    return (CertificateService.GetCertificateService().VerifySignature(data, signature, adminCertificate).Equals(CertificateValidationState.Valid));
                 }                          
             }
             catch (Exception)
