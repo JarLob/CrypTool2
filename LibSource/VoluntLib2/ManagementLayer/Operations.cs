@@ -184,7 +184,7 @@ namespace VoluntLib2.ManagementLayer
     /// <summary>
     /// Operation for handling ResponseJobListMessage
     /// </summary>
-    internal class HandleResponseJobListOperation : Operation
+    internal class HandleResponseJobListMessageOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
 

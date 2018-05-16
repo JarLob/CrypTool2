@@ -108,7 +108,7 @@ namespace VoluntLib2.ManagementLayer
             //This operation answers to RequestJobListMessages
             Operations.Enqueue(new ResponseJobListOperation() { JobManager = this });
             //This operation handles to JobListResponseMessages
-            Operations.Enqueue(new HandleResponseJobListOperation() { JobManager = this });
+            Operations.Enqueue(new HandleResponseJobListMessageOperation() { JobManager = this });
             //This operation checks JobPayloads of jobs; it requests these from the neighbors
             Operations.Enqueue(new CheckJobsPayloadOperation() { JobManager = this });
             //This operation answers RequestJobMessage by sending an answer containing the requestet job. Only when we HAVE it and it HAS PAYLOAD
