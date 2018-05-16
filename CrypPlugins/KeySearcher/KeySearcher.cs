@@ -312,9 +312,9 @@ namespace KeySearcher
                 settings.PropertyChanged += SettingsPropertyChanged;
                 ((QuickWatch)Presentation).IsOpenCLEnabled = (settings.DeviceSettings.Count(x => x.UseDevice) > 0);
                 localBruteForceStopwatch = new Stopwatch();
-                if (JobID != 0)
+                if (JobId != 0)
                 {
-                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
                 } 
 
             }
@@ -361,9 +361,9 @@ namespace KeySearcher
         {
             update = false; 
             
-            if (JobID != 0)
+            if (JobId != 0)
             {
-                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+                p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
             } 
         }
 
@@ -413,9 +413,9 @@ namespace KeySearcher
             if (p2PQuickWatchPresentation != null)
             {
                 p2PQuickWatchPresentation.UpdateSettings(this, settings);
-                if (JobID != 0)
+                if (JobId != 0)
                 {
-                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobID, this, settings);
+                    p2PQuickWatchPresentation.ViewModel.UpdateStaticView(JobId, this, settings);
                 } 
             }                          
         }
@@ -1660,7 +1660,7 @@ namespace KeySearcher
 
             var jobDataContainer = new JobDataContainer
             {
-                JobId = JobID,
+                JobId = JobId,
                 BytesToUse = bytesToUse,
                 InitVector = optimizedInitVector,
                 Cryp = optimizedCryp,

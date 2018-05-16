@@ -97,7 +97,7 @@ namespace KeySearcher.CrypCloud
 
             TotalAmountOfChunks = keyPatternPool.Length;
             KeysPerBlock = keysPerChunk;
-            JobID = keySearcher.JobID;
+            JobID = keySearcher.JobId;
             
         }
         

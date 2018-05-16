@@ -64,6 +64,19 @@ namespace VoluntLib2.ManagementLayer
         public byte[] JobCreatorSignatureData { get; set; }
         public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
+
+        /// <summary>
+        /// User can delete job, if (A) its his job or (B) he is an admin
+        /// </summary>
+        public bool UserCanDeleteJob
+        {
+            get
+            {
+                return CertificateService.GetCertificateService().OwnName.Equals(CreatorName) ||
+                    CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
+            }
+        }
+
         public long JobSize
         {
             get

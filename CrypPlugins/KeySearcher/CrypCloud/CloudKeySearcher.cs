@@ -101,7 +101,7 @@ namespace KeySearcher
 
         private void TaskProgress(object sender, TaskEventArgs e)
         {
-           if (new BigInteger(e.JobID) != jobId) return;
+           if (new BigInteger(e.JobId) != jobId) return;
 
            localSpeedStatistics.AddEntry(e.TaskProgress);
            var localApproximateKeysPerSecond = localSpeedStatistics.ApproximateKeysPerSecond();
@@ -113,7 +113,7 @@ namespace KeySearcher
 
         private void NewTaskStarted(object sender, TaskEventArgs taskArgs)
         {
-            if (new BigInteger(taskArgs.JobID) != jobId) return;
+            if (new BigInteger(taskArgs.JobId) != jobId) return;
 
             if (keySearcher.WorkspaceHasBeenModified())
             {
@@ -129,7 +129,7 @@ namespace KeySearcher
 
         private void TaskEnded(object sender, TaskEventArgs taskArgs)
         {
-            if (new BigInteger(taskArgs.JobID) != jobId) return;
+            if (new BigInteger(taskArgs.JobId) != jobId) return;
 
             RunInUiContext(
                 () => viewModel.EndedLocalCalculation(taskArgs) 
