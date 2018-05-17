@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2000
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypWin", "CrypWin\CrypWin.csproj", "{5D7200CF-515F-4660-A13F-16918EF348A1}"
 EndProject
@@ -225,9 +225,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Numbers", "CrypPlugins\Numbers\Numbers.csproj", "{40252D29-01C9-4F1A-9735-072B349AD165}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrypPluginsExperimental", "CrypPluginsExperimental", "{97840ABA-BC56-482F-8EAA-11B7A6744EC1}"
-	ProjectSection(SolutionItems) = preProject
-		CrypCloud\CrypCloudCore\rootCA.crt = CrypCloud\CrypCloudCore\rootCA.crt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputeAnnihilators", "CrypPluginsExperimental\ComputeAnnihilators\ComputeAnnihilators.csproj", "{1B3B9C31-AC2D-4721-9A0E-8687A43D244F}"
 EndProject
