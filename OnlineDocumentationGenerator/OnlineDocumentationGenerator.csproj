@@ -116,6 +116,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="StaticDocs\PseudoRandomFunctions.xml" />
     <Resource Include="StaticDocs\CrypToolBook.xml">
       <SubType>Designer</SubType>
     </Resource>

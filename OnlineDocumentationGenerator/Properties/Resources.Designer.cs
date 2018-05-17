@@ -19,7 +19,7 @@ namespace OnlineDocumentationGenerator.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -429,18 +429,8 @@ namespace OnlineDocumentationGenerator.Properties {
         ///  &lt;name lang=&quot;en&quot;&gt;CrypTool Book&lt;/name&gt;
         ///
         ///  &lt;description lang=&quot;en&quot;&gt;
-        ///   
-        ///  &lt;/description&gt;
-        ///  
-        ///  &lt;description lang=&quot;de-DE&quot;&gt;
-        ///    
-        ///  &lt;/description&gt;
-        ///  
-        ///  &lt;references&gt;
-        ///    &lt;bookReference id=&quot;Paillier&quot;&gt;
-        ///      &lt;author&gt;Pascal Paillier&lt;/author&gt;
-        ///      &lt;publisher lang=&quot;en&quot;&gt;EUROCRYPT ’99. In Advances in Cryptology — EUROCRYPT ’99, 1999&lt;/publisher&gt;
-        ///  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///    In this free, 500+ pages book &lt;ref id=&quot;BOOK&quot;/&gt; delivered with the CrypTool applications you will find predominantly mathematically oriented information on learning, using and experimenting cryptographic procedures. The 12th edition is a major update of the book.&lt;newline/&gt;
+        ///   [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string CrypToolBook {
             get {
@@ -783,6 +773,16 @@ namespace OnlineDocumentationGenerator.Properties {
         public static string Output_data {
             get {
                 return ResourceManager.GetString("Output_data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
+        /// ähnelt.
+        /// </summary>
+        public static string PseudoRandomFunctions {
+            get {
+                return ResourceManager.GetString("PseudoRandomFunctions", resourceCulture);
             }
         }
         

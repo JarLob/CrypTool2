@@ -170,6 +170,7 @@ namespace OnlineDocumentationGenerator
             {
                 generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.HomomorphicChiffres)));
                 generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.CrypToolBook)));
+                generator.AddDocumentationPage(new CommonDocumentationPage(XElement.Parse(Properties.Resources.PseudoRandomFunctions)));
             }
             catch (Exception ex)
             {
