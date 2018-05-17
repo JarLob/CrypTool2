@@ -18,10 +18,10 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.RandNumGen
+namespace Cryptool.Plugins.RandomNumberGenerator
 {
     // HOWTO: rename class (click name, press F2)
-    public class RandomNumSettings : ISettings
+    public class RandomNumberGeneratorSettings : ISettings
     {
         #region Private Variables
 

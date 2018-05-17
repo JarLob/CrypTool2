@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrypWin", "CrypWin\CrypWin.csproj", "{5D7200CF-515F-4660-A13F-16918EF348A1}"
 EndProject
@@ -474,7 +474,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoluntLib2", "LibSource\Vol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertificateLibrary", "LibSource\Certificate\CertificateLibrary\CertificateLibrary.csproj", "{ABA78840-2321-4DD3-91C6-84CC722D794B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandNumGen", "CrypPluginsExperimental\RandNumGen\RandNumGen.csproj", "{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomNumberGenerator", "CrypPluginsExperimental\RandomNumberGenerator\RandomNumberGenerator.csproj", "{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1867,6 +1867,7 @@ Global
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Release|x86.ActiveCfg = Release|x86
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Release|x86.Build.0 = Release|x86
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Test|x86.ActiveCfg = Debug|x86
+		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Test|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

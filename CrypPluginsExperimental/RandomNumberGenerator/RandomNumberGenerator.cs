@@ -19,18 +19,18 @@ using System.Threading;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using RandNumGen.Properties;
+using RandomNumberGenerator.Properties;
 
-namespace Cryptool.Plugins.RandNumGen
+namespace Cryptool.Plugins.RandomNumberGenerator
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("RandNumGen.Properties.Resources", "RandNumGenPluginCaption", "RandNumGenTooltip", "RandNumGen/userdoc.xml", new[] { "RandNumGen/images/icon.png" })]
+    [PluginInfo("RandomNumberGenerator.Properties.Resources", "RandNumGenPluginCaption", "RandNumGenTooltip", "RandomNumberGenerator/userdoc.xml", new[] { "RandomNumberGenerator/images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
-    public class RandNumGen : ICrypComponent
+    public class RandomNumberGenerator : ICrypComponent
     {
         #region Private Variables
 
-        private readonly RandomNumSettings settings = new RandomNumSettings();
+        private readonly RandomNumberGeneratorSettings settings = new RandomNumberGeneratorSettings();
         private BigInteger _outputlength;
         private BigInteger _seed;
         private BigInteger _modulus;

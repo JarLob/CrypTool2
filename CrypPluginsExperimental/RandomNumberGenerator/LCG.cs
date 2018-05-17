@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptool.Plugins.RandNumGen
+namespace Cryptool.Plugins.RandomNumberGenerator
 {
     class LCG : IrndNum
     {
