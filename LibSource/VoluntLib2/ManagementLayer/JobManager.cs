@@ -196,7 +196,7 @@ namespace VoluntLib2.ManagementLayer
 
                     try
                     {
-                        Thread handleMessageThread = new Thread(() =>
+                        Task.Factory.StartNew(() =>
                         {
                             try
                             {
@@ -209,9 +209,6 @@ namespace VoluntLib2.ManagementLayer
                             }
                         }
                         );
-                        handleMessageThread.IsBackground = true;
-                        handleMessageThread.Start();
-
                     }
                     catch (Exception ex)
                     {

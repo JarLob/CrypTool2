@@ -216,7 +216,7 @@ namespace VoluntLib2.ConnectionLayer
                  
                     try
                     {
-                        Thread handleMessageThread = new Thread(() =>
+                        Task.Factory.StartNew(() =>
                         {
                             try
                             {
@@ -228,9 +228,7 @@ namespace VoluntLib2.ConnectionLayer
                                 Logger.LogException(ex, this, Logtype.Error);
                             }
                         }
-                        );
-                        handleMessageThread.IsBackground = true;
-                        handleMessageThread.Start();
+                        );                        
 
                     }
                     catch (Exception ex)

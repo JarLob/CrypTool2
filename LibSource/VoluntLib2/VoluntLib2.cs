@@ -38,6 +38,7 @@ namespace VoluntLib2
         private CertificateService CertificateService = CertificateService.GetCertificateService();
         private ConnectionManager ConnectionManager;
         private JobManager JobManager;
+        private ComputationManager ComputationManager;
         private Logger Logger = Logger.GetLogger();
 
         public event EventHandler<JobProgressEventArgs> JobProgress;
@@ -47,24 +48,40 @@ namespace VoluntLib2
         public event EventHandler<TaskEventArgs> TaskStopped;
         public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
 
+        /// <summary>
+        /// Creates a new instance of VoluntLib
+        /// </summary>
         public VoluntLib()
         {            
         }
+
+        /// <summary>
+        /// Path where all jobs will be serialized to and deserialized from
+        /// </summary>
         public string LocalStoragePath { get; set; }      
+
+        /// <summary>
+        /// Returns the name of the user currently logged into VoluntLib
+        /// </summary>
         public string CertificateName { get; internal set; }
+
+        /// <summary>
+        /// Returns true if VoluntLib is started
+        /// </summary>
         public bool IsStarted { get; internal set; }
 
+        /// <summary>
+        /// This list should contain at least one bootstrap server to connect to at startup
+        /// </summary>
         public List<string> WellKnownPeers = new List<string>();
 
-        public void Stop()
-        {
-            //we have to first stop the connection manager; otherwise the JobManager remains 
-            //blocked in its receiving thread and can not be stopped
-            ConnectionManager.Stop();
-            JobManager.Stop();                        
-            IsStarted = false;
-        }
-
+        /// <summary>
+        /// Starts VoluntLib2.
+        /// Creates a JobManager, a ConnectionManager, and a ComputationManager
+        /// </summary>
+        /// <param name="caCertificate"></param>
+        /// <param name="ownCertificate"></param>
+        /// <param name="listenport"></param>
         public void Start(X509Certificate2 caCertificate, X509Certificate2 ownCertificate, ushort listenport = 10000)
         {
             //1) Init Certificate ervice
@@ -118,70 +135,156 @@ namespace VoluntLib2
             JobManager = new JobManager(this, ConnectionManager, LocalStoragePath);
             JobManager.Start();
 
+            //4) Create, initialize, and start ComputationManager
+            ComputationManager = new ComputationManager(this, JobManager);
+            ComputationManager.Start();
+
             IsStarted = true;
         }
 
-        public void StopCalculation(BigInteger jobID)
+        /// <summary>
+        /// Stops VoluntLib 2, stops all managers, blocks until all are stopped
+        /// </summary>
+        public void Stop()
         {
-
+            //we have to first stop the connection manager; otherwise the JobManager remains 
+            //blocked in its receiving thread and can not be stopped
+            ConnectionManager.Stop();
+            JobManager.Stop();
+            ComputationManager.Stop();
+            IsStarted = false;
         }
 
+        /// <summary>
+        /// Joins the given job, using the joibd, template, and amount of workers
+        /// </summary>
+        /// <param name="jobID"></param>
+        /// <param name="template"></param>
+        /// <param name="amountOfWorker"></param>
+        /// <returns></returns>
+        public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
+        {
+            return ComputationManager.JoinJob(jobID, template, amountOfWorker);
+        }
+
+        /// <summary>
+        /// Stops the job with the given jobid
+        /// </summary>
+        /// <param name="jobID"></param>
+        public void StopJob(BigInteger jobID)
+        {
+            ComputationManager.StopJob(jobID);
+        }
+
+        /// <summary>
+        /// Refreshes the internal job list by asking all neighbors for their job lists
+        /// </summary>
         public void RefreshJobList()
         {
             JobManager.RefreshJobList();
         }
 
-        public void RequestJobDetails(Job job)
+        /// <summary>
+        /// Requests data of the given job by asking all neighbors
+        /// </summary>
+        /// <param name="job"></param>
+        public void RequestJob(Job job)
         {
             JobManager.RequestJob(job.JobId);
         }
 
-        public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
-        {
-            return false;
-        }
-
+        /// <summary>
+        /// Deletes the job with the given jobid; only works if
+        /// A) the job is owned by this user or
+        /// B) this user is an admin
+        /// </summary>
+        /// <param name="jobID"></param>
         public void DeleteJob(BigInteger jobID)
         {
             JobManager.DeleteJob(jobID);
         }
 
+        /// <summary>
+        /// Creates a new job signed by this user
+        /// </summary>
+        /// <param name="worldName"></param>
+        /// <param name="jobType"></param>
+        /// <param name="jobName"></param>
+        /// <param name="jobDescription"></param>
+        /// <param name="payload"></param>
+        /// <param name="numberOfBlocks"></param>
+        /// <returns></returns>
         public BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
             return JobManager.CreateJob(worldName, jobType, jobName, jobDescription, payload, numberOfBlocks);
         }
 
+        /// <summary>
+        /// Returns the job with the specific jobid.
+        /// returns null, if the job does not exist
+        /// </summary>
+        /// <param name="jobID"></param>
+        /// <returns></returns>
         public Job GetJobByID(BigInteger jobID)
         {
             return JobManager.GetJobById(jobID);
         }
 
+        /// <summary>
+        /// Get the number of calculated jobs of this job
+        /// </summary>
+        /// <param name="jobID"></param>
+        /// <returns></returns>
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
         {
             return BigInteger.Zero;
         }
 
+        /// <summary>
+        /// Returns the number of workers of each job
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<BigInteger, int> GetCurrentRunningWorkersPerJob()
         {
             return new Dictionary<BigInteger,int>();
         }
 
+        /// <summary>
+        /// Returns the epoch state of the job with the given jobid
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
         public EpochState GetStateOfJob(BigInteger jobId)
         {
             return new EpochState();
         }
 
+        /// <summary>
+        /// Returns a graphical visualization of the job state of the job with the given jobid
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
         public Bitmap GetVisualizationOfJobState(BigInteger jobId)
         {
             return new Bitmap(255, 255);
         }
 
+        /// <summary>
+        /// Returns true if the user is allowed to delete the given job
+        /// </summary>
+        /// <param name="job"></param>
+        /// <returns></returns>
         public bool CanUserDeleteJob(Job job)
         {
             return (job.CreatorName.Equals(CertificateName)) || 
                 CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
         }
 
+        /// <summary>
+        /// Returns a reference to an observable list of jobs
+        /// WARNING: Do not modify this list from the outside of VoluntLib2
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<Job> GetJoblist()
         {
             return JobManager.GetJoblist();

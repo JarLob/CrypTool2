@@ -182,7 +182,7 @@ namespace CrypCloud.Core
 
         public void StopLocalCalculation(BigInteger jobId)
         {
-            voluntLib.StopCalculation(jobId);
+            voluntLib.StopJob(jobId);
         }
         #endregion
         
@@ -343,7 +343,7 @@ namespace CrypCloud.Core
                 return;
             }
 
-            voluntLib.RequestJobDetails(job);
+            voluntLib.RequestJob(job);
         }
 
         public void DeleteJob(BigInteger jobId)
