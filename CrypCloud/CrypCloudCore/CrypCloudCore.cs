@@ -35,8 +35,7 @@ namespace CrypCloud.Core
 
         #endregion
 
-        private VoluntLib voluntLib;
-        private readonly Dictionary<BigInteger, JobPayload> jobPayloadCache = new Dictionary<BigInteger, JobPayload>();
+        private VoluntLib voluntLib;        
       
         #region properties
 
@@ -280,7 +279,6 @@ namespace CrypCloud.Core
             return payloadOfJob.CreationTime;
         }
 
-
         public JobPayload GetPayloadOfJob(BigInteger jobId)
         {
             var job = voluntLib.GetJobByID(jobId);
@@ -288,22 +286,17 @@ namespace CrypCloud.Core
             {
                 return null;
             }
-
-            if (!jobPayloadCache.ContainsKey(jobId))
+            try
             {
-                try
-                {
-                    var jobPayload = new JobPayload().Deserialize(job.JobPayload);
-                    jobPayloadCache.Add(jobId, jobPayload);
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
+                return new JobPayload().Deserialize(job.JobPayload);
             }
-
-            return jobPayloadCache[jobId];
+            catch (Exception)
+            {
+                return null;
+            }
         }
+    
+        
         public Bitmap GetJobStateVisualization(BigInteger jobId)
         {
             return voluntLib.GetVisualizationOfJobState(jobId);

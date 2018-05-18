@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComputationLayer\ComputationManager.cs" />
+    <Compile Include="ComputationLayer\Operations.cs" />
     <Compile Include="ConnectionLayer\Contact.cs" />
     <Compile Include="ManagementLayer\JobManager.cs" />
     <Compile Include="ManagementLayer\Messages.cs" />

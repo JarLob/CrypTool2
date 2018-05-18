@@ -289,5 +289,13 @@ namespace VoluntLib2
         {
             return JobManager.GetJoblist();
         }
+
+        internal void OnTaskProgessChanged(object sender, TaskEventArgs e)
+        {
+            if (TaskProgress != null)
+            {
+                TaskProgress.Invoke(sender, e);
+            }
+        }
     }
 }

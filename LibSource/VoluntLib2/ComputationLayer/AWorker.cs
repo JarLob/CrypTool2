@@ -36,10 +36,9 @@ namespace VoluntLib2.ComputationLayer
             {
                 try
                 {
-                    var handler = ProgressChanged;
-                    if (handler != null)
+                    if (ProgressChanged != null)
                     {
-                        handler(this, new TaskEventArgs(JobId, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
+                        ProgressChanged.Invoke(this, new TaskEventArgs(JobId, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
                     }
                 }
                 catch (Exception e)

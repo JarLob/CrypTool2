@@ -46,10 +46,7 @@ namespace VoluntLib2.ManagementLayer
         //Path, where jobs will be serialized to and loaded from
         internal string LocalStoragePath;
 
-        //ConnectionManager is responsible for the core network communication and p2p overlay
-        //The JobManager uses it to send and receive messages
-        private ConnectionManager ConnectionManager;
-
+        
         //a queue containing all operations
         internal ConcurrentQueue<Operation> Operations = new ConcurrentQueue<Operation>();        
 
@@ -60,6 +57,7 @@ namespace VoluntLib2.ManagementLayer
         internal ObservableCollection<Job> JobList;        
 
         internal VoluntLib VoluntLib { get; set; }
+        internal ConnectionManager ConnectionManager { get; set; }
 
         public JobManager(VoluntLib voluntLib, ConnectionManager connectionManager, string localStoragePath)
         {
@@ -135,7 +133,6 @@ namespace VoluntLib2.ManagementLayer
             //This operation serializes the jobs every 5 minutes to file
             Operations.Enqueue(new JobsSerializationOperation() { JobManager = this });
             
-
             Logger.LogText("JobManager started", this, Logtype.Info);
         }
 
