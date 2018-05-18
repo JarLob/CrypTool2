@@ -117,7 +117,7 @@ namespace VoluntLib2.ComputationLayer
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("Exception during handling of operation: {2}", ex.Message), this, Logtype.Error);
+                    Logger.LogText(String.Format("Exception during handling of operation: {0}", ex.Message), this, Logtype.Error);
                     Logger.LogException(ex, this, Logtype.Error);
                 }
                 try
@@ -166,7 +166,7 @@ namespace VoluntLib2.ComputationLayer
         }
 
         /// <summary>
-        /// Join the job with the given jobID, calculation template, and amount of workers
+        /// Joins the job with the given jobId, calculation template, and amount of workers
         /// If VoluntLib is stopped, it does nothing
         /// </summary>
         /// <param name="jobId"></param>
@@ -213,7 +213,7 @@ namespace VoluntLib2.ComputationLayer
         }
 
         /// <summary>
-        /// Sops the given job if it exists
+        /// Sops the job with the given jobId if it exists
         /// </summary>
         /// <param name="jobId"></param>
         internal void StopJob(BigInteger jobId)
@@ -275,18 +275,18 @@ namespace VoluntLib2.ComputationLayer
             ACalculationTemplate = template;
             VoluntLib = voluntLib;
             AWorker = ACalculationTemplate.WorkerLogic;
-            AWorker.JobId = Job.JobId.ToByteArray();
+            AWorker.JobId = Job.JobId;
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken = CancellationTokenSource.Token;
-            AWorker.ProgressChanged+=ProgressChanged;
+            AWorker.ProgressChanged += ProgressChanged;
         }
 
         private void ProgressChanged(object sender, TaskEventArgs taskEventArgs)
         {
-            if (!taskEventArgs.Handled)
+            //we are only responsible for progress changes of our own block id
+            if (taskEventArgs.BlockID.Equals(BlockId))
             {
                 VoluntLib.OnTaskProgessChanged(sender, taskEventArgs);
-                taskEventArgs.Handled = true;                
             }
         }
 
@@ -295,31 +295,34 @@ namespace VoluntLib2.ComputationLayer
         public BigInteger BlockId { get; set; }
 
         internal void DoWork()
-        {            
+        {
             try
             {
-                BlockId = BigInteger.Zero; //TODO: add code to get actual blockId                
+
                 CalculationResult result = AWorker.DoWork(Job.JobPayload, BlockId, CancellationToken);
-                Logger.LogText(String.Format("Worker-{0} who worked on block {1} terminated after complete computation", this.GetHashCode(), BlockId), this, Logtype.Info);
+                Logger.LogText(String.Format("Worker-{0} who worked on block {1} of job {2} terminated after complete computation", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray())), this, Logtype.Info);
+                VoluntLib.OnTaskStopped(this, new TaskEventArgs(Job.JobId, BlockId, TaskEventArgType.Finished));
             }
             catch (OperationCanceledException)
             {
-                Logger.LogText(String.Format("Worker-{0} who worked on block {1} was stopped by CancellationToken", this.GetHashCode(), BlockId), this, Logtype.Info);
+                Logger.LogText(String.Format("Worker-{0} who worked on block {1} job {2} was stopped by CancellationToken", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray())), this, Logtype.Info);
+                VoluntLib.OnTaskStopped(this, new TaskEventArgs(Job.JobId, BlockId, TaskEventArgType.Canceled));
             }
             catch (Exception ex)
             {
-                Logger.LogText(String.Format("Exception during execution of Worker-{0} who worked on block {1}: {2}", this.GetHashCode(), BlockId, ex.Message), this, Logtype.Error);
+                Logger.LogText(String.Format("Exception during execution of Worker-{0} who worked on block {1} job {2} : {3}", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray()), ex.Message), this, Logtype.Error);
                 Logger.LogException(ex, this, Logtype.Error);
             }
             AWorker.ProgressChanged -= ProgressChanged;
         }
 
-        internal void Start()
+        internal void Start(BigInteger blockId)
         {
+            BlockId = blockId;
             WorkerThread = new Thread(DoWork);
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
-            Logger.LogText(String.Format("Started Worker-{0} on block {1}", this.GetHashCode(), BlockId), this, Logtype.Info);
+            Logger.LogText(String.Format("Started Worker-{0} on block {1} of job {2}", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray())), this, Logtype.Info);
         }
     }
 }

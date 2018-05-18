@@ -297,5 +297,21 @@ namespace VoluntLib2
                 TaskProgress.Invoke(sender, e);
             }
         }
+
+        internal void OnTaskStarted(object sender, TaskEventArgs e)
+        {
+            if (TaskStarted != null)
+            {
+                TaskStarted.Invoke(sender, e);
+            }
+        }
+
+        internal void OnTaskStopped(object sender, TaskEventArgs e)
+        {
+            if (TaskStopped != null)
+            {
+                TaskStopped.Invoke(sender, e);
+            }
+        }
     }
 }

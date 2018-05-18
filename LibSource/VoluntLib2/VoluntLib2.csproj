@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComputationLayer\Bitmask.cs" />
     <Compile Include="ComputationLayer\ComputationManager.cs" />
     <Compile Include="ComputationLayer\Operations.cs" />
     <Compile Include="ConnectionLayer\Contact.cs" />

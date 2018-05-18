@@ -29,7 +29,7 @@ namespace VoluntLib2.ManagementLayer
     public class Job : IEquatable<Job>, IComparable<Job>, INotifyPropertyChanged, IVoluntLibSerializable
     {
         private const int STRING_MAX_LENGTH = 255;
-        private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb        
+        private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb                
 
         public Job(BigInteger jobID)
         {
@@ -615,6 +615,25 @@ namespace VoluntLib2.ManagementLayer
             {
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
-        }        
+        }
+
+        /// <summary>
+        /// Returns a free block id; returns -1 if there is none
+        /// </summary>
+        /// <returns></returns>
+        internal BigInteger GetFreeBlockId()
+        {
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            return random.Next(1024);
+        }
+
+        /// <summary>
+        /// Returns the amount of free blocks in the current epoch
+        /// </summary>
+        /// <returns></returns>
+        internal BigInteger FreeBlocksInEpoch()
+        {
+            return 1024;
+        }
     }
 }

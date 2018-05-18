@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VoluntLib2.ManagementLayer;
 using VoluntLib2.Tools;
 
 namespace VoluntLib2.ComputationLayer
@@ -70,10 +73,17 @@ namespace VoluntLib2.ComputationLayer
                 try
                 {
                     while (runningWorkers < neededWorkers)
-                    {
+                    {                        
+                        BigInteger blockId = GetFreeBlockId(assignment);
+                        if (blockId.Equals(BigInteger.MinusOne))
+                        {
+                            //no free blockId available; thus, we return
+                            return;
+                        }
                         Worker worker = new Worker(assignment.Job, assignment.CalculationTemplate, ComputationManager.VoluntLib);
                         assignment.Workers.Add(worker);
-                        worker.Start();                        
+                        worker.Start(blockId);
+                        ComputationManager.VoluntLib.OnTaskStarted(this, new TaskEventArgs(assignment.Job.JobId, blockId, TaskEventArgType.Started));
                         runningWorkers++;
                     }
                 }
@@ -83,6 +93,34 @@ namespace VoluntLib2.ComputationLayer
                     Logger.LogException(ex, this, Logtype.Error);
                 }
             }
+        }
+
+        private BigInteger GetFreeBlockId(JobAssignment assignment)
+        {
+            Job job = assignment.Job;
+            ArrayList workers = assignment.Workers;
+            while (job.FreeBlocksInEpoch() - assignment.Workers.Count > 0)
+            {
+                BigInteger blockid = job.GetFreeBlockId();
+                if (blockid.Equals(BigInteger.MinusOne))
+                {
+                    return BigInteger.MinusOne;
+                }
+                bool different = true;
+                foreach (Worker worker in workers)
+                {
+                    if (worker.BlockId.Equals(blockid))
+                    {
+                        different = false;
+                        break;
+                    }
+                }
+                if (different)
+                {
+                    return blockid;
+                }
+            }
+            return BigInteger.MinusOne;
         }
     }
 }

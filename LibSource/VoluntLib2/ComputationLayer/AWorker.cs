@@ -25,27 +25,17 @@ namespace VoluntLib2.ComputationLayer
 {
     public abstract class AWorker
     {
-        public byte[] JobId { get; set; }
+        public BigInteger JobId { get; set; }
         public abstract CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken);
 
         public event EventHandler<TaskEventArgs> ProgressChanged;
 
         protected virtual void OnProgressChanged(BigInteger blockID, int progress)
-        {
-            Task.Factory.StartNew(() =>
+        {                       
+            if (ProgressChanged != null)
             {
-                try
-                {
-                    if (ProgressChanged != null)
-                    {
-                        ProgressChanged.Invoke(this, new TaskEventArgs(JobId, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            });
+                ProgressChanged.Invoke(this, new TaskEventArgs(JobId, blockID, TaskEventArgType.Progress) { TaskProgress = progress });
+            }           
         }
     }
 }
