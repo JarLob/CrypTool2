@@ -11,9 +11,9 @@
   <description lang="de">Zeigt 3 verschiedene Zufallszahlengeneratoren: X^2 mod N, Linearer Kongruenz Generator (LCG) und Inverser Kongruenz Generator (ICG).</description>
   <keywords lang="de">Zufallszahlengenerator, Zufallszahlen</keywords>
 
-  <icon file="ZufallszahlenGeneratoren.png" />
+  <icon file="RandomNumberGenerators.png" />
   <relevantPlugins>
-    <plugin name="RandNumGen" />
+    <plugin name="RandomNumberGenerator" />
   </relevantPlugins>
 
   <replacements lang="de">

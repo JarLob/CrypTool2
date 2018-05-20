@@ -151,7 +151,7 @@ namespace RandomNumberGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Caption ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm: ähnelt.
         /// </summary>
         internal static string presRadioCaption {
             get {

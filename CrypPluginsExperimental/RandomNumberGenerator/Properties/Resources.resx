@@ -148,7 +148,7 @@
     <value>Length of the output</value>
   </data>
   <data name="presRadioCaption" xml:space="preserve">
-    <value>Caption</value>
+    <value>Algorithm:</value>
   </data>
   <data name="presRadioToolTip" xml:space="preserve">
     <value>Choice of the used algorithmen to create pseudorandom numbers</value>

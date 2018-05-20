@@ -5,24 +5,105 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+    The concept of randomness is playing an increasingly important role not only in computer science, but also in modern cryptography. Random data is used in cryptography for various purposes. Among other things, they play an important role in the generation of keys for asymmetric encryption procedures.
+    Random data is generated using a so-called pseudo-random generator. A pseudo-random generator may have statistically useful behavior, but cryptographically it may have unreasonable security deficiencies. In order to be usable for cryptographic purposes, it is not sufficient that the produced sequences pass all possible statistical tests, but a certain form of unpredictability must exist for the next random number produced.
+    In summary, that means:
+    <list>
+      <item>
+        The numbers must look "random". This means that they must pass all statistical randomness tests (e.g. the number of ones and zeros generated should be almost equal).
+      </item>
+      <item>
+        They must be <b>unpredictable</b>. It must not be possible to predict the next <b>random bit</b>, even if one knows the algorithm used, the hardware used and all previous random bits.
+      </item>
+      <item>
+        They cannot be reproduced. If you start the random number generator a second time with the same input data, it must generate a completely different series of random numbers.
+      </item>
+    </list>
+    A pseudo-random generator (also known as a pseudo-random number generator) is an algorithm that generates a cyclic sequence (Z[n]) of p numbers (period length) based on a secret start value Z[0] - the "seed".
+    For someone who does not know the seed Z[0], the sequence Z[i], Z[i+1], ..., Z[i+p] appears as a sequence of random numbers.
+	<section headline="X^2 modulo N Generator">
+      The X square modulo N (X^2 mod N) generator is an algorithm for generating a sequence of seemingly random integers (X[i]) according to the recursive calculation rule:<newline/><newline/>
+      X[0] := Secret seed value, with X[0]*X[0] > N<newline/>
+      X[i+1] := X[i]*X[i] (mod N) for i = 0, 1, 2, 3, ... <newline/><newline/>
+      where X[i] are integers from the value range 0,1,2, ..., N-1.<newline/><newline/>
+      In CrypTool we only look at "coin tosses" (the coin toss "head" is shown on 0 and the coin toss "number" is shown on 1). In the X^2 mod N generator we therefore map the coin toss 0 by the event[X[i] = 0 (mod 2)] and the coin toss 1 by the event[X[i] = 1 (mod 2)]. A sequence of 8 coin tosses results in a random ASCII character. The only parameter of the X^2 mod N generator is the module N.
+      Note that the quality of the X^2 mod N generator depends decisively on the selection of the parameter N. If one knows the prime factorization of the module N, then it is possible to calculate the square root modulo N of X[i+1] and one can crack the random generator. Therefore, large RSA modules are often used for the N module, in which the prime factorization N = p * q cannot be determined in practice only with knowledge of N. The default parameter is an RSA module N = p*q with the property that p and q are flower numbers. Such X^2 mod N generators are called "Blum-Blum-Shub" generators.
+    </section>
+    <section headline="Linear congruence Generator">
+	The linear congruence generator (LCG) is an algorithm for generating a sequence of apparently random integers (X_[i]) according to the recursive calculation rule:<newline/><newline/>
+	X_[0] := Secret seed value<newline/>
+	X_[i+1] := a*X_[i] +b (mod N) for i = 0, 1, 2, 3, ... <newline/><newline/>
+	where X_[i] are integers from the value range 0,1,2, ..., N-1. It is common to normalize the random numbers into the rational value range [0.1[, therefore the output is as rational numbers Z[i]. := X_[i]/N. <newline/><newline/>
+	In CrypTool we only look at "coin tosses" (the coin toss "head" is shown on 0 and the coin toss "number" is shown on 1). In the LCG we therefore form coin toss 0 with the event[Z_[i] &lt; 0,5] and the coin toss 1 by the event[0,5 &lt;= Z_[i] 1]. The sequence of coin tosses is saved as a binary file (a sequence of 8 coin tosses results in a random ASCII character).<newline/><newline/>
+	Parameters for LCG are the numbers N, a, b of the straight line equation y = a*x+b (mod N): The module N, the multiplier a: 0&lt;a&lt; N and the additive increment b: 1&lt;b&lt;N. Furthermore, the LCG is initialized by the secret initial value or seed X_0.<newline/><newline/>
+	Note that the quality of the LCG depends decisively on the choice of parameters. An important measure here is the period length of the random sequence, which is defined by the parameters. The LCGs enjoy a high degree of popularity, as their simple design favours implementability and enables high performance. Most of the pseudo-random functions in operating systems (e.g. UNIX) and programming languages (such as ANSI C, Fortran, etc.) are implemented with LCG. Due to their popularity, LCG are among the best and most analyzed pseudo-random generators.
+    </section>
+    <section headline="Inverse congruence Generator">
+	The Inverse Congruence Generator (ICG) is an algorithm for generating a sequence of seemingly random integers (X_[i]) according to the recursive calculation rule:<newline/><newline/>
+	X_[0] := Secret seed value<newline/>
+	X_[i+1] := inverse[a*(X_[0]+i) + c] (mod P) for i = 0, 1, 2, 3, ... <newline/><newline/>
+	where X_[i] are integers from the value range 0,1,2, ..., P-1. It is common to normalize the random numbers into the rational value range[0.1[, therefore the output is as rational numbers Z[i]. := X_[i]/P. <newline/><newline/>
+	In CrypTool we only look at "coin tosses" (the coin toss "head" is shown on 0 and the coin toss "number" is shown on 1). In ICG we therefore form coin toss 0 with the event[Z_[i] &lt; 0,5] and the coin toss 1 by the event[0,5 &lt;= Z_[i] 1]. The sequence of coin tosses is saved as a binary file (a sequence of 8 coin tosses results in a random ASCII character).<newline/><newline/>
+	Parameters for ICG are the numbers P, a, c of modulo P Inversion of the linear equation y = ax+c: The module P is a prime number, the multiplier a: 0&lt;a&lt;N and the additive increment b: 1&lt;b&lt;N. Furthermore, the ICG is initialized by the secret initial value or seed X_0.<newline/><newline/>
+	Note that the quality of the ICG depends decisively on the choice of parameters. An important measure here is the period length of the random sequence, which is defined by the parameters. 
+    </section>
   </introduction>
 
-  <introduction lang="de-DE">    
+  <introduction lang="de-DE">
+    Der Begriff der Zufälligkeit spielt in wachsendem Maße nicht nur in der Informatik eine Rolle, sondern auch in der modernen Kryptographie. Zufallsdaten werden in der Kryptographie für verschiedene Zwecke benötigt. Unter anderem spielen sie eine wichtige Rolle bei der Schlüsselgenerierung asymmetrischer Verschlüsselungsverfahren.
+    Zufallsdaten werden mit Hilfe eines sogenannten Pseudozufallsgenerators erzeugt. Ein Pseudozufallsgenerator mag ein statistisch durchaus brauchbares Verhalten besitzen, kryptographisch jedoch unzumutbare Sicherheitsmängel aufweisen. Um für kryptographische Zwecke einsetzbar zu sein, reicht es nicht, dass die produzierten Folgen alle möglichen statistischen Tests bestehen, sondern es muss jeweils für die als nächstes produzierte Zufallszahl eine gewisse Form der Unvorhersagbarkeit vorliegen.
+    Zusammengefasst heißt das:
+    <list>
+      <item>
+        Die Zahlen müssen "zufällig" aussehen. Das bedeutet, sie müssen alle statistischen Tests bezüglich Zufälligkeit bestehen (z.B. soll die Anzahl von erzeugten Einsen und Nullen fast gleich groß sein).
+      </item>
+      <item>
+        Sie müssen <b>unvorhersehbar</b> sein. Es darf nicht möglich sein, das nächste <b>Zufallsbit</b> vorherzusagen, auch wenn man den verwendeten Algorithmus, die verwendete Hardware und alle bisherigen Zufallsbits kennt.
+      </item>
+      <item>
+        Sie können nicht reproduziert werden. Wenn man den Zufallszahlengenerator ein zweites Mal mit den gleichen Eingabedaten startet, so muss er eine komplett andere Reihe von Zufallszahlen erzeugen.
+      </item>
+    </list>
+    Ein Pseudozufallsgenerator (auch Pseudozufallszahlengenerator genannt) ist ein Algorithmus, der ausgehend von einem geheimen Startwert Z[0] - der "Saat" - eine zyklische Folge (Z[n]) von p Zahlen (Periodenlänge) erzeugt.
+    Für jemanden, der nicht die Saat Z[0] kennt, erscheint die Sequenz Z[i], Z[i+1], ..., Z[i+p] wie eine Folge von zufälligen Zahlen.
+    <section headline="X^2 modulo N Generator">
+      Der X-Quadrat modulo N (X^2 mod N)-Generator ist ein Algorithmus zur Erzeugung einer Folge von scheinbar zufälligen ganzen Zahlen (X[i]) gemäß der rekursiven Rechenvorschrift:<newline/><newline/>
+      X[0] := Geheimer Saatwert, mit X[0]*X[0] > N<newline/>
+      X[i+1] := X[i]*X[i] (mod N) für i = 0, 1, 2, 3, ... <newline/><newline/>
+      wobei X[i] ganze Zahlen aus dem Wertebereich 0,1,2, ..., N-1 sind.<newline/><newline/>
+      Wir betrachten in CrypTool nur "Münzwürfe" (der Münzwurf "Kopf" wird auf die 0 und der Münzwurf "Zahl" wird auf die 1 abgebildet). Beim X^2 mod N-Generator bilden wir deshalb den Münzwurf 0 durch das Ereignis [X[i] = 0 (mod 2)] und der Münzwurf 1 durch das Ereignis [X[i] = 1 (mod 2)] ab. Eeine Folge von 8 Münzwürfen ergibt ein zufälliges ASCII-Zeichen. Einziger Parameter beim X^2 mod N-Generator ist der Modul N.
+      Beachten Sie, dass die Qualität des X^2 mod N-Generators entscheidend von der Wahl des Parameters N abhängt. Kennt man die Primfaktorzerlegung des Moduls N, dann ist es möglich die Quadratwurzel modulo N von X[i+1] berechnen und man kann den Zufallsgenerator knacken. Deshalb benutzt man oft für den Modul N große RSA-Module, bei denen die Primfaktorzerlegung N = p * q nur mit Kenntnis von N praktisch nicht bestimmbar ist. Voreingestellter Parameter ist ein RSA-Modul N = p*q mit der Eigenschaft, dass p und q Blum-Zahlen sind. Solche X^2 mod N-Generatoren heißen "Blum-Blum-Shub"-Generatoren.
+    </section>
+    <section headline="Linearer Kongruenz Generator">
+	Der lineare Kongruenzgenerator (LCG) ist ein Algorithmus zur Erzeugung einer Folge von scheinbar zufälligen ganzen Zahlen (X_[i]) gemäß der rekursiven Rechenvorschrift:<newline/><newline/>
+	X_[0] := Geheimer Saatwert<newline/>
+	X_[i+1] := a*X_[i] +b (mod N) für i = 0, 1, 2, 3, ... <newline/><newline/>
+	wobei X_[i] ganze Zahlen aus dem Wertebereich 0,1,2, ..., N-1 sind. Es ist üblich, die Zufallszahlen in den rationalen Wertebereich [0,1[ zu normieren, deshalb erfolgt die Ausgabe als rationale Zahlen Z[i] := X_[i]/N. <newline/><newline/>
+	Wir betrachten in CrypTool nur "Münzwürfe" (der Münzwurf "Kopf" wird auf die 0 und der Münzwurf "Zahl" wird auf die 1 abgebildet). Beim LCG bilden wir deshalb den Münzwurf 0 durch das Ereignis [Z_[i] &lt;  0,5] und den Münzwurf 1 durch das Ereignis [0,5 &lt;= Z_[i] &lt; 1] ab. Die Folge der Münzwürfe wird als Binärdatei (eine Folge von 8 Münzwürfen ergibt ein zufälliges ASCII-Zeichen) abgespeichert.<newline/><newline/>
+	Parameter beim LCG sind die Zahlen N, a, b der Geraden-Gleichung y = a*x+b (mod N): Der Modul N, der Multiplikator a: 0&lt;a&lt; N und das additive Inkrement b: 1&lt;b&lt;N. Des weiteren wird der LCG durch den geheimen Initialwert oder Saat X_0 initialisiert.<newline/><newline/>
+	Beachten Sie, dass die Qualität des LCG entscheidend von der Wahl der Parameter abhängt. Ein wichtiges Maß ist hierbei die Periodenlänge der Zufallsfolge, die durch die Parameter festgelegt wird. Die LCG erfreuen sich eines hohen Bekanntheitsgrades, da ihre einfache Bauweise die Implementierbarkeit begünstigt und eine hohe Performance ermöglicht. Ein Großteil der Pseudozufallsfunktionen in Betriebssystemen (z.B. UNIX) und Programmiersprachen (wie ANSI C, Fortran, usw.) werden mit LCG realisiert. Aufgrund ihrer Popularität zählen LCG zu den best- und meist-analysierten Pseudozufallsgeneratoren.
+    </section>
+    <section headline="Inverser Kongruenz Generator">
+	Der Inverse Kongruenzgenerator (ICG) ist ein Algorithmus zur Erzeugung einer Folge von scheinbar zufälligen ganzen Zahlen (X_[i]) gemäß der rekursiven Rechenvorschrift:<newline/><newline/>
+	X_[0] := Geheimer Saatwert<newline/>
+	X_[i+1] := inverse[a*(X_[0]+i) + c] (mod P) für i = 0, 1, 2, 3, ... <newline/><newline/>
+	wobei X_[i] ganze Zahlen aus dem Wertebereich 0,1,2, ..., P-1 sind. Es ist üblich, die Zufallszahlen in den rationalen Wertebereich [0,1[ zu normieren, deshalb erfolgt die Ausgabe als rationale Zahlen Z[i] := X_[i]/P. <newline/><newline/>
+	Wir betrachten in CrypTool nur "Münzwürfe" (der Münzwurf "Kopf" wird auf die 0 und der Münzwurf "Zahl" wird auf die 1 abgebildet). Beim ICG bilden wir deshalb den Münzwurf 0 durch das Ereignis [Z_[i] &lt; 0,5] und der Münzwurf 1 durch das Ereignis [0,5 &lt;= Z_[i] &lt; 1] ab. Die Folge der Münzwürfe wird als Binärdatei (eine Folge von 8 Münzwürfen ergibt ein zufälliges ASCII-Zeichen) abgespeichert.<newline/><newline/>
+	Parameter beim ICG sind die Zahlen P, a, c der modulo P Invertierung der Geraden-Gleichung y = ax+c: Der Modul P ist eine Primzahl, der Multiplikator a: 0&lt;a&lt;N und das additive Inkrement b: 1&lt;b&lt;N. Des weiteren wird der ICG durch den geheimen Initialwert oder Saat X_0 initialisiert.<newline/><newline/>
+	Beachten Sie, dass die Qualität des ICG entscheidend von der Wahl der Parameter abhängt. Ein wichtiges Maß ist hierbei die Periodenlänge der Zufallsfolge, die durch die Parameter festgelegt wird. 
+    </section>
   </introduction>
 
   <usage lang="en">
+  The algorithm is selected via the configuration. Depending on the pseudorandom generator used, different parameters are used. These are assigned values via the entries.
   </usage>
 
   <usage lang="de-DE">
+  Der Algorithmus wird über die Konfiguration gewählt. In Abhängigkeit des verwendeten Pseudozufallgenerators werden unterschiedliche Parameter verwendet. Diese werden über die Eingaben mit Werten belegt.
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
   
   <references>
   </references>
+  
 </documentation>

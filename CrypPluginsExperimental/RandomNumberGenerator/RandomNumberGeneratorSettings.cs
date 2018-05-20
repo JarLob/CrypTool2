@@ -1,5 +1,6 @@
 ﻿/*
    Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Author: Christian Bender, Universität Siegen
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,6 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
 using System;
 using System.ComponentModel;
 using Cryptool.PluginBase;
@@ -20,7 +22,6 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.RandomNumberGenerator
 {
-    // HOWTO: rename class (click name, press F2)
     public class RandomNumberGeneratorSettings : ISettings
     {
         #region Private Variables

@@ -148,7 +148,7 @@
     <value>Länge der Ausgabe</value>
   </data>
   <data name="presRadioCaption" xml:space="preserve">
-    <value>Caption</value>
+    <value>Algorithmus:</value>
   </data>
   <data name="presRadioToolTip" xml:space="preserve">
     <value>Wahl des verwendeten Algorithmus zur Erstellung der Zufallszahlen</value>
