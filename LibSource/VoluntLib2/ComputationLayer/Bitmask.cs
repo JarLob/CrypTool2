@@ -24,13 +24,16 @@ namespace VoluntLib2.ComputationLayer
 {
     public class Bitmask : IVoluntLibSerializable
     {
-        private const int MASK_SIZE = 30720; //30 kiB
+        //public const int MASK_SIZE = 30720; //30 kiB
+        public const int MASK_SIZE = 10;
+        private Random random;
+
         private byte[] mask;
 
         /// <summary>
-        /// Lookup table for counting set bits in a byte
+        /// Lookup table for fast counting set bits in a byte array
         /// </summary>
-        private int[] BIT_COUNT_MAP = new int[]{
+        private uint[] BIT_COUNT_MAP = new uint[]{
             0x0, 0x1, 0x1, 0x2, 0x1, 0x2, 0x2, 0x3,
             0x1, 0x2, 0x2, 0x3, 0x2, 0x3, 0x3, 0x4,
             0x1, 0x2, 0x2, 0x3, 0x2, 0x3, 0x3, 0x4,
@@ -65,11 +68,19 @@ namespace VoluntLib2.ComputationLayer
             0x5, 0x6, 0x6, 0x7, 0x6, 0x7, 0x7, 0x8
         };
 
+        /// <summary>
+        /// Create a new empty bitmask
+        /// </summary>
         public Bitmask()
         {
             mask = new byte[MASK_SIZE];
+            random = new Random(Guid.NewGuid().GetHashCode());
         }
 
+        /// <summary>
+        /// Returns a copy of the internal byte array
+        /// </summary>
+        /// <returns></returns>
         public byte[] Serialize()
         {
             byte[] bytes = new byte[MASK_SIZE];
@@ -77,12 +88,22 @@ namespace VoluntLib2.ComputationLayer
             return bytes;
         }
 
+        /// <summary>
+        /// Copys the values of the given byte array to this bitmask
+        /// </summary>
+        /// <param name="bytes"></param>
         public void Deserialize(byte[] bytes)
         {
             Array.Copy(bytes, mask, MASK_SIZE);
         }
 
-        public static Bitmask operator |(Bitmask bitmaskA, Bitmask bitmaskB)
+        /// <summary>
+        /// Returns the or: returnBitmask = bitmaskA | bitmaskB
+        /// </summary>
+        /// <param name="bitmaskA"></param>
+        /// <param name="bitmaskB"></param>
+        /// <returns></returns>
+        public static Bitmask operator | (Bitmask bitmaskA, Bitmask bitmaskB)
         {
             Bitmask newMask = new Bitmask();
             newMask.Deserialize(bitmaskA.Serialize());
@@ -93,9 +114,23 @@ namespace VoluntLib2.ComputationLayer
             return newMask;
         }        
 
-        public int GetFreeBits()
+        /// <summary>
+        /// Returns the number of free bits in the bitmask
+        /// </summary>
+        /// <returns></returns>
+        public uint GetFreeBits()
         {
-            int count = 0;
+
+            return MASK_SIZE * 8 - GetSetBitsCount();
+        }
+
+        /// <summary>
+        /// Returns the number of set bits in bitmask
+        /// </summary>
+        /// <returns></returns>
+        public uint GetSetBitsCount()
+        {
+            uint count = 0;
             foreach (byte b in mask)
             {
                 count += BIT_COUNT_MAP[b];
@@ -103,11 +138,16 @@ namespace VoluntLib2.ComputationLayer
             return count;
         }
 
+        /// <summary>
+        /// Sets the bit defined by the given offset to the given bit value
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="bit"></param>
         public void SetBit(uint offset, bool bit)
         {
             if (offset > MASK_SIZE * 8)
             {
-                throw new Exception(String.Format("Selected offset {0} to set bit in Bitmask was greater than the Bitmask's size {1}!", offset, MASK_SIZE));
+                throw new ArgumentException(String.Format("Selected offset {0} to set bit in bitmask was greater than the bitmask's size {1}!", offset, MASK_SIZE));
             }
             uint bytevalue = offset / 8;
             uint bitvalue = (uint)Math.Pow(2, offset % 8);
@@ -119,9 +159,60 @@ namespace VoluntLib2.ComputationLayer
             mask[bytevalue] = value;
         }
 
-        public bool GetBit(int offset)
+        /// <summary>
+        /// Returns true, if the bit at the offset is 1; otherwise returns false
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public bool GetBit(uint offset)
         {
-            return false;
+            if (offset > MASK_SIZE * 8)
+            {
+                throw new ArgumentException(String.Format("Selected offset {0} to get bit in bitmask was greater than the bitmask's size {1}!", offset, MASK_SIZE));
+            }
+            uint bytevalue = offset / 8;
+            uint bitvalue = (uint)Math.Pow(2, offset % 8);
+            byte value = (byte)(mask[bytevalue] & bitvalue);
+            return value != 0;
+        }
+
+        /// <summary>
+        /// Returns the offset of a random unset bit of this bitmask
+        /// </summary>
+        /// <returns></returns>
+        public int GetRandomFreeBit()
+        {
+            uint freebits = MASK_SIZE * 8 - GetSetBitsCount();
+            if (freebits == 0)
+            {
+                return -1;
+            }
+            uint randomnumber = (uint)random.Next(1, (int)freebits);
+            uint counter = 0;
+            uint position = 0;
+            for (uint i = 0; i < MASK_SIZE; i++)
+            {
+                counter += (8 - BIT_COUNT_MAP[mask[i]]);
+                position += 8;
+                if (counter >= randomnumber)
+                {
+                    counter -= (8 - BIT_COUNT_MAP[mask[i]]);
+                    position -= 8;
+                    for (uint j = 1; j <= 128; j *= 2)
+                    {
+                        if ((mask[i] & j) != j)
+                        {
+                            counter++;
+                            if (counter == randomnumber)
+                            {
+                                return (int)position;
+                            }
+                        }
+                        position++;
+                    }
+                }
+            }
+            return -1;
         }
     }
 }
