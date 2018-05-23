@@ -25,7 +25,7 @@ namespace VoluntLib2.ComputationLayer
     public class Bitmask : IVoluntLibSerializable
     {
         //public const int MASK_SIZE = 30720; //30 kiB
-        public const int MASK_SIZE = 10;
+        public const int MASK_SIZE = 100;
         private Random random;
 
         private byte[] mask;
