@@ -133,5 +133,20 @@ namespace VoluntLib2.ComputationLayer
             mask.Deserialize(data);
             return mask;
         }
+
+        /// <summary>
+        /// Returns length of the data of this epoch state
+        /// </summary>
+        /// <returns></returns>
+        public int GetSize()
+        {
+            int size = (int)(Bitmask.MaskSize + EpochNumber.ToByteArray().Length + 4);
+            foreach (byte[] entry in ResultList)
+            {
+                size += entry.Length;
+                size += 2;
+            }
+            return size;
+        }
     }      
 }

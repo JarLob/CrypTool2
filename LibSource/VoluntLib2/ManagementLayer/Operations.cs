@@ -218,7 +218,7 @@ namespace VoluntLib2.ManagementLayer
                 {
                     if (!job.HasValidCreatorSignature())
                     {
-                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1} ", BitConverter.ToString(job.JobId.ToByteArray()), message.PeerId), this, Logtype.Warning);
+                        Logger.LogText(String.Format("Received job {0} with invalid creator signature from {1} ", BitConverter.ToString(job.JobId.ToByteArray()), BitConverter.ToString(message.PeerId)), this, Logtype.Warning);
                         continue;
                     }
 

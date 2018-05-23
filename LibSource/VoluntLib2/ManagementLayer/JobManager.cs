@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using VoluntLib2.ComputationLayer;
 using VoluntLib2.ConnectionLayer;
 using VoluntLib2.ManagementLayer.Messages;
 using VoluntLib2.Tools;
@@ -180,7 +181,7 @@ namespace VoluntLib2.ManagementLayer
                         if (!certificateValidationState.Equals(CertificateValidationState.Valid))
                         {
                             //we dont accept invalid signatures; thus, we do not handle the message and discard it here
-                            Logger.LogText(String.Format("Received a message from {0} and the signature check was: {1}", message.PeerId, certificateValidationState), this, Logtype.Warning);
+                            Logger.LogText(String.Format("Received a message from {0} and the signature check was: {1}", BitConverter.ToString(message.PeerId), certificateValidationState), this, Logtype.Warning);
                             continue;
                         }
                     }
@@ -400,7 +401,11 @@ namespace VoluntLib2.ManagementLayer
         /// <returns></returns>
         private byte[] GenerateCreatorSignatureData(Job job)
         {
+            //job creation signature does not contain epoch state
+            EpochState state = job.JobEpochState;
+            job.JobEpochState = null;
             byte[] data = job.Serialize();
+            job.JobEpochState = state;
             return CertificateService.GetCertificateService().SignData(data);
         }    
 
@@ -514,6 +519,7 @@ namespace VoluntLib2.ManagementLayer
                 Job clone = new Job(BigInteger.Zero);
                 clone.Deserialize(jobdata);
                 clone.JobPayload = new byte[0]; //Remove payload
+                clone.JobEpochState = null; //Remove epoch state
                 clonedList.Add(clone);
             }
 
@@ -527,20 +533,20 @@ namespace VoluntLib2.ManagementLayer
             //create and send messages
             for (int i = 0; i < messageCount; i++)
             {                
-                ResponseJobListMessage responseJobList = new ResponseJobListMessage();
+                ResponseJobListMessage responseJobListMessage = new ResponseJobListMessage();
                 if (clonedList.Count > 5)
                 {
-                    responseJobList.Jobs = clonedList.Take(5).ToList();
+                    responseJobListMessage.Jobs = clonedList.Take(5).ToList();
                     clonedList.RemoveRange(0, 5);
                 }
                 else
                 {
-                    responseJobList.Jobs = clonedList;
+                    responseJobListMessage.Jobs = clonedList;
                 }                                
-                responseJobList.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
-                responseJobList.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
-                responseJobList.MessageHeader.WorldName = String.Empty;
-                byte[] data = responseJobList.Serialize(true);
+                responseJobListMessage.MessageHeader.CertificateData = CertificateService.GetCertificateService().OwnCertificate.GetRawCertData();
+                responseJobListMessage.MessageHeader.SenderName = CertificateService.GetCertificateService().OwnName;
+                responseJobListMessage.MessageHeader.WorldName = String.Empty;
+                byte[] data = responseJobListMessage.Serialize(true);
                 ConnectionManager.SendData(data, peerID);
             }
         }

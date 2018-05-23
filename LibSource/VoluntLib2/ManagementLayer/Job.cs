@@ -47,6 +47,7 @@ namespace VoluntLib2.ManagementLayer
             JobPayload = new byte[0];
             LastPayloadRequestTime = DateTime.MinValue;
             IsDeleted = false;
+            JobEpochState = new EpochState();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,6 +65,7 @@ namespace VoluntLib2.ManagementLayer
         public byte[] JobCreatorSignatureData { get; set; }
         public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
+        public EpochState JobEpochState { get; set; }
 
         /// <summary>
         /// User can delete job, if (A) its his job or (B) he is an admin
@@ -95,6 +97,7 @@ namespace VoluntLib2.ManagementLayer
                 size += JobCreatorSignatureData != null ? JobCreatorSignatureData.Length : 0;
                 size += JobDeletionSignatureData != null ? JobDeletionSignatureData.Length : 0;
                 size += JobPayload != null ? JobPayload.Length : 0;
+                size += JobEpochState != null ? JobEpochState.GetSize() : 0;
                 return size;
             }
         }
@@ -188,6 +191,10 @@ namespace VoluntLib2.ManagementLayer
             byte[] jobPayloadLength = BitConverter.GetBytes((ushort)JobPayload.Length);
             length += (jobPayloadLength.Length + JobPayload.Length);
 
+            byte[] jobEpochState = JobEpochState == null ? new byte[0] : JobEpochState.Serialize();
+            byte[] jobEpochStateLength = BitConverter.GetBytes((ushort)jobEpochState.Length);
+            length += (jobEpochStateLength.Length + jobEpochState.Length);
+
             //2. Generate final array using length; copy everyhting into array
             byte[] data = new byte[length];
 
@@ -253,6 +260,11 @@ namespace VoluntLib2.ManagementLayer
             Array.Copy(jobPayloadLength, 0, data, offset, 2);
             offset += 2;
             Array.Copy(JobPayload, 0, data, offset, JobPayload.Length);
+            offset += JobPayload.Length;
+
+            Array.Copy(jobEpochStateLength, 0, data, offset, 2);
+            offset += 2;
+            Array.Copy(jobEpochState, 0, data, offset, jobEpochState.Length);
 
             return data;
         }
@@ -264,7 +276,6 @@ namespace VoluntLib2.ManagementLayer
         public void Deserialize(byte[] data)
         {
             int offset = 0;
-
             ushort jobIdLength = BitConverter.ToUInt16(data, offset);
             offset += 2;
             byte[] jobId = new byte[jobIdLength];
@@ -335,6 +346,21 @@ namespace VoluntLib2.ManagementLayer
             offset += 2;
             JobPayload = new byte[jobPayloadLength];
             Array.Copy(data, offset, JobPayload, 0, jobPayloadLength);
+            offset += jobPayloadLength;
+
+            ushort jobEpochStateLength = BitConverter.ToUInt16(data, offset);
+            offset += 2;
+            if (jobEpochStateLength != 0)
+            {
+                byte[] jobEpochState = new byte[jobEpochStateLength];
+                Array.Copy(data, offset, jobEpochState, 0, jobEpochStateLength);
+                JobEpochState = new EpochState();
+                JobEpochState.Deserialize(jobEpochState);
+            }
+            else
+            {
+                JobEpochState = null;
+            }
         }
 
         public override string ToString()
@@ -394,6 +420,8 @@ namespace VoluntLib2.ManagementLayer
                 JobDeletionSignatureData = new byte[0];
                 byte[] payloadBackup = JobPayload;
                 JobPayload = new byte[0];
+                EpochState epochState = JobEpochState;
+                JobEpochState = null;
 
                 //2. Serialize for signature check
                 byte[] data = Serialize();
@@ -402,6 +430,7 @@ namespace VoluntLib2.ManagementLayer
                 JobCreatorSignatureData = jobCreatorSignatureDataBackup;
                 JobDeletionSignatureData = jobDeletionSignatureDataBackup;
                 JobPayload = payloadBackup;
+                JobEpochState = epochState;
 
                 //5. Check signature; return false if not valid
                 if (!CertificateService.GetCertificateService().VerifySignature(data, JobCreatorSignatureData, creatorCertificate).Equals(CertificateValidationState.Valid))
