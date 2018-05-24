@@ -163,6 +163,7 @@ namespace VoluntLib2.ComputationLayer
                     Logger.LogException(ex, this, Logtype.Error);
                 }
             }
+            Logger.LogText("Terminated", this, Logtype.Info);
         }
 
         /// <summary>
