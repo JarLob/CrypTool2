@@ -664,5 +664,9 @@ namespace VoluntLib2.ManagementLayer
         {
             return 1024;
         }
+
+        public BigInteger NumberOfCalculatedBlocks {
+            get { return JobEpochState.EpochNumber * JobEpochState.Bitmask.MaskSize + JobEpochState.Bitmask.GetSetBitsCount(); }        
+        }
     }
 }

@@ -263,11 +263,10 @@ namespace VoluntLib2.ComputationLayer
     internal class Worker
     {
         private Logger Logger = Logger.GetLogger();
-        private ACalculationTemplate ACalculationTemplate { get; set; }
-        private Job Job { get; set; }
-        private AWorker AWorker { get; set; }
-        private VoluntLib VoluntLib { get; set; }
-
+        internal ACalculationTemplate ACalculationTemplate { get; set; }
+        internal Job Job { get; set; }
+        internal AWorker AWorker { get; set; }
+        internal VoluntLib VoluntLib { get; set; }
         public Thread WorkerThread { get; private set; }
 
         public Worker(Job job, ACalculationTemplate template, VoluntLib voluntLib)
@@ -295,12 +294,13 @@ namespace VoluntLib2.ComputationLayer
         public CancellationTokenSource CancellationTokenSource { get; private set; }        
         public BigInteger BlockId { get; set; }
 
+        public CalculationResult CalculationResult { get; set; }
+
         internal void DoWork()
         {
             try
             {
-
-                CalculationResult result = AWorker.DoWork(Job.JobPayload, BlockId, CancellationToken);
+                CalculationResult = AWorker.DoWork(Job.JobPayload, BlockId, CancellationToken);
                 Logger.LogText(String.Format("Worker-{0} who worked on block {1} of job {2} terminated after complete computation", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray())), this, Logtype.Info);
                 VoluntLib.OnTaskStopped(this, new TaskEventArgs(Job.JobId, BlockId, TaskEventArgType.Finished));
             }

@@ -21,6 +21,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using VoluntLib2.ComputationLayer;
 using VoluntLib2.ManagementLayer.Messages;
 using VoluntLib2.Tools;
 
@@ -388,14 +389,25 @@ namespace VoluntLib2.ManagementLayer
                         JobManager.Jobs[job.JobId].JobPayload = job.JobPayload;
                         JobManager.Jobs[job.JobId].OnPropertyChanged("HasPayload");
                         JobManager.Jobs[job.JobId].OnPropertyChanged("JobSize");
-                        return;
                     }
                     else
                     {
                         //when we receive an invalid payload, we ignore it and give a warning
                         Logger.LogText(String.Format("Received payload of job {0} is invalid. The computed hash is not equal to the JobPayloadHash we already know!", BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Warning);
-                        return;
                     }
+                }
+
+                //case 1: we have no epoch state but received one
+                if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState == null)
+                {
+                    JobManager.Jobs[job.JobId].JobEpochState = (EpochState)job.JobEpochState.Clone();
+                }
+                //case 2: we have an epoch state and received one
+                else   if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState != null)
+                {
+                    //to don't get into trouble with race conditions, we created an operation for ComputationManager...
+                    MergeResultsOperation mergeResultsOperation = new MergeResultsOperation(JobManager.Jobs[job.JobId], job) { ComputationManager = JobManager.VoluntLib.ComputationManager };
+                    JobManager.VoluntLib.ComputationManager.Operations.Enqueue(mergeResultsOperation);
                 }
             }
         }

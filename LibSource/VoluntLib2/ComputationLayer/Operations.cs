@@ -34,6 +34,9 @@ namespace VoluntLib2.ComputationLayer
         public abstract void Execute();
     }
 
+    /// <summary>
+    /// This operation is responsible for starting new workers for our jobs
+    /// </summary>
     internal class CheckRunningWorkersOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
@@ -58,6 +61,17 @@ namespace VoluntLib2.ComputationLayer
                     Worker worker = (Worker)assignment.Workers[i];
                     if (!worker.WorkerThread.IsAlive)
                     {
+                        //check, if the worker returned a result, if yes add it to our local results
+                        if (worker.CalculationResult != null)
+                        {
+                            var list = worker.CalculationResult.LocalResults;
+                            var blockid = worker.CalculationResult.BlockID;
+                            worker.Job.JobEpochState.ResultList = worker.ACalculationTemplate.MergeResults(worker.Job.JobEpochState.ResultList, list);                            
+                            uint bitid = (uint)(blockid % worker.Job.JobEpochState.Bitmask.MaskSize);
+                            worker.Job.JobEpochState.Bitmask.SetBit(bitid, true);                            
+                            Logger.LogText(String.Format("Set in job {0} a bit to true of block id {1} which is the bit {2} in bitmask", BitConverter.ToString(worker.Job.JobId.ToByteArray()), blockid, bitid), this, Logtype.Debug);
+                            ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(worker.Job.JobId, worker.Job.JobEpochState.ResultList.ToList(), worker.Job.NumberOfBlocks, worker.Job.NumberOfCalculatedBlocks));
+                        }
                         removeList.Add(worker);
                     }
                     else
@@ -95,6 +109,11 @@ namespace VoluntLib2.ComputationLayer
             }
         }
 
+        /// <summary>
+        /// Returns a free block id
+        /// </summary>
+        /// <param name="assignment"></param>
+        /// <returns></returns>
         private BigInteger GetFreeBlockId(JobAssignment assignment)
         {
             Job job = assignment.Job;
@@ -121,6 +140,75 @@ namespace VoluntLib2.ComputationLayer
                 }
             }
             return BigInteger.MinusOne;
+        }
+    }
+
+    /// <summary>
+    /// This operation merges two EpochStates (bitmask and epoch id)
+    /// </summary>
+    internal class MergeResultsOperation : Operation
+    {
+        private bool executed = false;
+        private Job LocalJob { get; set; }
+        private Job RemoteJob { get; set; }
+
+        private Logger Logger = Logger.GetLogger();
+
+        public MergeResultsOperation(Job localJob, Job remoteJob)
+        {
+            LocalJob = localJob;
+            RemoteJob = remoteJob;
+        }
+
+
+        public override bool IsFinished
+        {
+            get { return executed; }
+        }
+
+        public override void Execute()
+        {            
+            if (RemoteJob.JobEpochState.EpochNumber < LocalJob.JobEpochState.EpochNumber)
+            {
+                //remote epoch is smaller than ours; we ignore it
+                Logger.LogText(String.Format("Ignored received epoch state of job {0} since it is in epoch {1}; we are already in {2}", BitConverter.ToString(LocalJob.JobId.ToByteArray()), RemoteJob.JobEpochState.EpochNumber, LocalJob.JobEpochState.EpochNumber), this, Logtype.Debug);
+            }
+            else if (RemoteJob.JobEpochState.EpochNumber > LocalJob.JobEpochState.EpochNumber)
+            {
+                //remote epoch index is greater than ours; we take it
+                LocalJob.JobEpochState = (EpochState)RemoteJob.JobEpochState.Clone();
+                Logger.LogText(String.Format("Took epoch state of job {0} since it is in epoch {1}; we were in {2}", BitConverter.ToString(LocalJob.JobId.ToByteArray()), RemoteJob.JobEpochState.EpochNumber, LocalJob.JobEpochState.EpochNumber), this, Logtype.Debug);
+            }
+            else
+            {
+                //remote epoch index is equal to ours
+                //case A: we have an job assignment; thus, we have access to a merge function
+                JobAssignment assignment = ComputationManager.JobAssignments[LocalJob.JobId];
+                if (assignment != null)
+                {
+                    var mergedResultLists = assignment.CalculationTemplate.MergeResults(RemoteJob.JobEpochState.ResultList, LocalJob.JobEpochState.ResultList);
+                    LocalJob.JobEpochState.ResultList = mergedResultLists;
+                    LocalJob.JobEpochState.Bitmask = LocalJob.JobEpochState.Bitmask | RemoteJob.JobEpochState.Bitmask;
+                    ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(LocalJob.JobId, LocalJob.JobEpochState.ResultList.ToList(), LocalJob.NumberOfBlocks, LocalJob.NumberOfCalculatedBlocks));
+                    Logger.LogText(String.Format("Merged two EpochStates using MergeResultsMethod of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
+                }
+                //case B: we have no job assignment; thus, we can not merge and keep the one with more computed jobs
+                else
+                {
+                    uint finishedLocalJobs = LocalJob.JobEpochState.Bitmask.GetSetBitsCount();
+                    uint finishedRemoteJobs = RemoteJob.JobEpochState.Bitmask.GetSetBitsCount();
+                    if (finishedRemoteJobs > finishedLocalJobs)
+                    {
+                        LocalJob.JobEpochState = (EpochState)RemoteJob.JobEpochState.Clone();
+                        Logger.LogText(String.Format("Kept remote epoch state of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
+                    }
+                    else
+                    {
+                        Logger.LogText(String.Format("Kept local epoch state of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
+                    }
+                }
+            }
+            executed = true;
         }
     }
 }

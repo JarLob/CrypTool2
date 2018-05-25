@@ -36,9 +36,9 @@ namespace VoluntLib2
     public class VoluntLib
     {
         private CertificateService CertificateService = CertificateService.GetCertificateService();
-        private ConnectionManager ConnectionManager;
-        private JobManager JobManager;
-        private ComputationManager ComputationManager;
+        internal ConnectionManager ConnectionManager;
+        internal JobManager JobManager;
+        internal ComputationManager ComputationManager;
         private Logger Logger = Logger.GetLogger();
 
         public event EventHandler<JobProgressEventArgs> JobProgress;
@@ -311,6 +311,14 @@ namespace VoluntLib2
             if (TaskStopped != null)
             {
                 TaskStopped.Invoke(sender, e);
+            }
+        }
+
+        internal void OnJobProgress(object sender, JobProgressEventArgs e)
+        {
+            if (JobProgress != null)
+            {
+                JobProgress.Invoke(sender, e);
             }
         }
     }

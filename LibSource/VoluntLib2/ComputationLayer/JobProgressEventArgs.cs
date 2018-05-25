@@ -30,7 +30,7 @@ namespace VoluntLib2.ComputationLayer
 
         public JobProgressEventArgs(BigInteger jobId, List<byte[]> resultList, BigInteger numberOfBlocks, BigInteger numberOfCalculatedBlocks)
         {
-            this.jobId = JobId;
+            this.jobId = jobId;
             this.resultList = resultList;
             this.numberOfBlocks = numberOfBlocks;
             this.numberOfCalculatedBlocks = numberOfCalculatedBlocks;

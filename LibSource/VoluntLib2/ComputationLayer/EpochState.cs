@@ -128,10 +128,10 @@ namespace VoluntLib2.ComputationLayer
         /// <returns></returns>
         public object Clone()
         {
-            Bitmask mask = new Bitmask();
+            EpochState epochState = new EpochState();
             var data = Serialize();
-            mask.Deserialize(data);
-            return mask;
+            epochState.Deserialize(data);
+            return epochState;
         }
 
         /// <summary>

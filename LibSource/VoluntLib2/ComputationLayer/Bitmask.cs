@@ -24,7 +24,7 @@ namespace VoluntLib2.ComputationLayer
 {
     public class Bitmask : IVoluntLibSerializable
     {
-        public const int DEFAULT_MASKSIZE = 30720; //30 kiB
+        public const int DEFAULT_MASKSIZE = 35840; //35 kiB
         //public const int DEFAULT_MASKSIZE = 10;
         private Random random;
         public uint MaskSize { get; private set; }
@@ -34,7 +34,8 @@ namespace VoluntLib2.ComputationLayer
         /// <summary>
         /// Lookup table for fast counting set bits in a byte array
         /// </summary>
-        private uint[] BIT_COUNT_MAP = new uint[]{
+        private uint[] BIT_COUNT_MAP = new uint[]
+        {
             0x0, 0x1, 0x1, 0x2, 0x1, 0x2, 0x2, 0x3,
             0x1, 0x2, 0x2, 0x3, 0x2, 0x3, 0x3, 0x4,
             0x1, 0x2, 0x2, 0x3, 0x2, 0x3, 0x3, 0x4,
