@@ -652,8 +652,7 @@ namespace VoluntLib2.ManagementLayer
         /// <returns></returns>
         internal BigInteger GetFreeBlockId()
         {
-            Random random = new Random(Guid.NewGuid().GetHashCode());
-            return random.Next(1024);
+            return JobEpochState.Bitmask.GetRandomFreeBit();
         }
 
         /// <summary>
@@ -662,7 +661,7 @@ namespace VoluntLib2.ManagementLayer
         /// <returns></returns>
         internal BigInteger FreeBlocksInEpoch()
         {
-            return 1024;
+            return 8191 - JobEpochState.Bitmask.GetSetBitsCount();
         }
 
         public BigInteger NumberOfCalculatedBlocks {

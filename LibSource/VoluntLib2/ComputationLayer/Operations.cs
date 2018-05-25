@@ -71,6 +71,8 @@ namespace VoluntLib2.ComputationLayer
                             worker.Job.JobEpochState.Bitmask.SetBit(bitid, true);                            
                             Logger.LogText(String.Format("Set in job {0} a bit to true of block id {1} which is the bit {2} in bitmask", BitConverter.ToString(worker.Job.JobId.ToByteArray()), blockid, bitid), this, Logtype.Debug);
                             ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(worker.Job.JobId, worker.Job.JobEpochState.ResultList.ToList(), worker.Job.NumberOfBlocks, worker.Job.NumberOfCalculatedBlocks));
+                            //finally, send our result to everyone
+                            ComputationManager.VoluntLib.JobManager.SendResponseJobMessage(null, worker.Job);
                         }
                         removeList.Add(worker);
                     }
@@ -190,7 +192,7 @@ namespace VoluntLib2.ComputationLayer
                     LocalJob.JobEpochState.ResultList = mergedResultLists;
                     LocalJob.JobEpochState.Bitmask = LocalJob.JobEpochState.Bitmask | RemoteJob.JobEpochState.Bitmask;
                     ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(LocalJob.JobId, LocalJob.JobEpochState.ResultList.ToList(), LocalJob.NumberOfBlocks, LocalJob.NumberOfCalculatedBlocks));
-                    Logger.LogText(String.Format("Merged two EpochStates using MergeResultsMethod of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Merged two EpochStates using MergeResultsMethod of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);                    
                 }
                 //case B: we have no job assignment; thus, we can not merge and keep the one with more computed jobs
                 else

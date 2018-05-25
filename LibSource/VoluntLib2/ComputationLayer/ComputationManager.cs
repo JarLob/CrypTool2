@@ -202,6 +202,11 @@ namespace VoluntLib2.ComputationLayer
                         Logger.LogText(String.Format("Could not add job with jobid {0} to internal JobAssignments dictionary", BitConverter.ToString(jobId.ToByteArray())), this, Logtype.Warning);
                         return false;
                     }
+                    if (job.JobEpochState != null)
+                    {
+                        VoluntLib.OnJobProgress(this, new JobProgressEventArgs(job.JobId, job.JobEpochState.ResultList.ToList(), job.NumberOfBlocks, job.NumberOfCalculatedBlocks));
+                    }
+
                     return true;
                 }
                 catch (Exception ex)

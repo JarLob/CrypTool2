@@ -198,7 +198,7 @@ namespace VoluntLib2.ComputationLayer
             {
                 return -1;
             }
-            uint randomnumber = (uint)random.Next(1, (int)freebits);
+            uint randomnumber = (uint)random.Next(0, (int)freebits-1);
             uint counter = 0;
             uint position = 0;
             for (uint i = 0; i < MaskSize; i++)
