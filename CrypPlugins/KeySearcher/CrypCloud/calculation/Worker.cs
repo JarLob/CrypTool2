@@ -78,7 +78,7 @@ namespace KeySearcher
                     }
                 }                
 
-                keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Cryp, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
+                keySearcherOpenCLCode = new KeySearcherOpenCLCode(keysearcher, jobData.Ciphertext, jobData.InitVector, jobData.CryptoAlgorithm, jobData.CostAlgorithm, 256 * 256 * 256 * 16);
                 keySearcherOpenCLSubbatchOptimizer = new KeySearcherOpenCLSubbatchOptimizer(opencl_mode,
                 oclManager.CQ[opencl_deviceIndex].Device.MaxWorkItemSizes.Aggregate(1, (x, y) => (x * (int)y)) / 8);
                 opencl_initialized = true;
@@ -123,7 +123,7 @@ namespace KeySearcher
         {
             var controlEncryption = jobData.CryptoAlgorithm;
             var costAlgorithm = jobData.CostAlgorithm;
-            var ciphertext = jobData.Cryp;
+            var ciphertext = jobData.Ciphertext;
             var initVector = jobData.InitVector;
             var bytesToUse = jobData.BytesToUse;
              
@@ -247,7 +247,7 @@ namespace KeySearcher
                     var key = keyTranslator.GetKeyFromRepresentation(keyTranslator.GetKeyRepresentation(i + add));
                     var entry = new KeyResultEntry { Costs = cost,
                                                      KeyBytes = key,
-                                                     Decryption = sender.Decrypt(jobData.Cryp, key, jobData.InitVector, jobData.BytesToUse)
+                                                     Decryption = sender.Decrypt(jobData.Ciphertext, key, jobData.InitVector, jobData.BytesToUse)
                     };                                        
                     bestkeys.Add(entry);
                     bestkeys.Sort();

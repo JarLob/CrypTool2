@@ -47,12 +47,35 @@ namespace KeySearcher.CrypCloud
             var entry = (KeyResultEntry)obj;
             if (Costs == entry.Costs)
             {
-                return KeyBytes[0] - entry.KeyBytes[0];
+                if (KeyBytes[0] > entry.KeyBytes[0])
+                {
+                    return 1;
+                }
+                else if (KeyBytes[0] == entry.KeyBytes[0])
+                {
+                    return 0;
+                }
+                else
+                {
+                    return -1;
+                }
             }
                      
             var epsilon = .000001; 
-            var compare = Costs - entry.Costs;    
-            return (compare > epsilon) ? 1 : -1;           
+            var compare = Math.Abs(Costs - entry.Costs);
+
+            if (compare > epsilon)
+            {
+                if (Costs > entry.Costs)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return -1;
+                }
+            }            
+            return 0;
         }
 
         #endregion IComparable

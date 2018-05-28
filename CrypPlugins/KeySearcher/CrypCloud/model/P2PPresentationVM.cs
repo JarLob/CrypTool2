@@ -211,7 +211,7 @@ namespace KeySearcher.CrypCloud
         private void FillTopList(List<KeyResultEntry> keyResultEntries)
         {
             TopList.Clear();
-            keyResultEntries.Sort();            
+            //keyResultEntries.Sort();            
             foreach(var key in keyResultEntries)
             {
                 TopList.Add(key);

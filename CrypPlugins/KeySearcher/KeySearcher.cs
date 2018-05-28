@@ -1663,7 +1663,7 @@ namespace KeySearcher
                 JobId = JobId,
                 BytesToUse = bytesToUse,
                 InitVector = optimizedInitVector,
-                Cryp = optimizedCryp,
+                Ciphertext = optimizedCryp,
                 CryptoAlgorithm = ControlMaster,
                 CostAlgorithm = CostMaster,
                 NumberOfBlocks = BigInteger.Pow(2, settings.NumberOfBlocks)

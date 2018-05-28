@@ -35,9 +35,9 @@ namespace VoluntLib2.ComputationLayer
     }
 
     /// <summary>
-    /// This operation is responsible for starting new workers for our jobs
+    /// This operation is responsible for starting new workers for our jobs; also responsible for updating bitmasks epoch/last epoch etc
     /// </summary>
-    internal class CheckRunningWorkersOperation : Operation
+    internal class CheckRunningWorkersAndJobsOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
 
@@ -50,7 +50,6 @@ namespace VoluntLib2.ComputationLayer
         {
             foreach (JobAssignment assignment in ComputationManager.JobAssignments.Values)
             {
-
                 //0) update epoch and bitmask
                 assignment.Job.CheckAndUpdateEpochAndBitmask();
 
@@ -73,10 +72,20 @@ namespace VoluntLib2.ComputationLayer
                             worker.Job.JobEpochState.ResultList = worker.ACalculationTemplate.MergeResults(worker.Job.JobEpochState.ResultList, list);                            
                             uint bitid = (uint)(blockid % (worker.Job.JobEpochState.Bitmask.MaskSize * 8));
                             worker.Job.JobEpochState.Bitmask.SetBit(bitid, true);
-                            Logger.LogText(String.Format("Set one bit to true in block id {1} of job {0} which is bit {2} in bitmask", blockid, BitConverter.ToString(worker.Job.JobId.ToByteArray()), bitid), this, Logtype.Debug);
+                            Logger.LogText(String.Format("Set bit to true of block id {1} of job {0} which is bit {2} in bitmask", blockid, BitConverter.ToString(worker.Job.JobId.ToByteArray()), bitid), this, Logtype.Debug);
                             ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(worker.Job.JobId, worker.Job.JobEpochState.ResultList.ToList(), worker.Job.NumberOfBlocks, worker.Job.NumberOfCalculatedBlocks));
                             //finally, send our result to everyone
                             ComputationManager.VoluntLib.JobManager.SendResponseJobMessage(null, worker.Job);
+                            GC.Collect();
+                        }
+                        removeList.Add(worker);
+                    }
+                    else if (worker.Job.JobEpochState.Bitmask.GetBit((uint)worker.BlockId % (worker.Job.JobEpochState.Bitmask.MaskSize * 8)) == true)
+                    {
+                        Logger.LogText(String.Format("Bit is true of block id {1} of job {0} which is bit {2} in bitmask. Stop worker now", worker.BlockId, BitConverter.ToString(worker.Job.JobId.ToByteArray()), worker.BlockId % (worker.Job.JobEpochState.Bitmask.MaskSize * 8)), this, Logtype.Debug);
+                        if (worker.CancellationToken.CanBeCanceled)
+                        {
+                            worker.CancellationTokenSource.Cancel();
                         }
                         removeList.Add(worker);
                     }
@@ -185,19 +194,46 @@ namespace VoluntLib2.ComputationLayer
                 //remote epoch index is greater than ours; we take it
                 LocalJob.JobEpochState = (EpochState)RemoteJob.JobEpochState.Clone();
                 Logger.LogText(String.Format("Took epoch state of job {0} since it is in epoch {1}; we were in {2}", BitConverter.ToString(LocalJob.JobId.ToByteArray()), RemoteJob.JobEpochState.EpochNumber, LocalJob.JobEpochState.EpochNumber), this, Logtype.Debug);
+
+                //stop all workerss
+                if (ComputationManager.JobAssignments.ContainsKey(LocalJob.JobId))
+                {
+                    JobAssignment assignment = ComputationManager.JobAssignments[LocalJob.JobId];
+                    if (assignment != null)
+                    {
+                        List<Worker> removeList = new List<Worker>();
+                        foreach (Worker worker in assignment.Workers)
+                        {
+                            Logger.LogText(String.Format("Bit is true of block id {1} of job {0} which is bit {2} in bitmask. Stop worker now", worker.BlockId, BitConverter.ToString(worker.Job.JobId.ToByteArray()), worker.BlockId % (worker.Job.JobEpochState.Bitmask.MaskSize * 8)), this, Logtype.Debug);
+                            if (worker.CancellationToken.CanBeCanceled)
+                            {
+                                worker.CancellationTokenSource.Cancel();
+                            }
+                            removeList.Add(worker);
+                        }
+                        foreach (Worker worker in removeList)
+                        {
+                            assignment.Workers.Remove(worker);
+                        }
+                    }
+                }
             }
             else
             {
                 //remote epoch index is equal to ours
                 //case A: we have an job assignment; thus, we have access to a merge function
-                JobAssignment assignment = ComputationManager.JobAssignments[LocalJob.JobId];
-                if (assignment != null)
-                {
-                    var mergedResultLists = assignment.CalculationTemplate.MergeResults(RemoteJob.JobEpochState.ResultList, LocalJob.JobEpochState.ResultList);
-                    LocalJob.JobEpochState.ResultList = mergedResultLists;
-                    LocalJob.JobEpochState.Bitmask = LocalJob.JobEpochState.Bitmask | RemoteJob.JobEpochState.Bitmask;
-                    ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(LocalJob.JobId, LocalJob.JobEpochState.ResultList.ToList(), LocalJob.NumberOfBlocks, LocalJob.NumberOfCalculatedBlocks));
-                    Logger.LogText(String.Format("Merged two EpochStates using MergeResultsMethod of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);                    
+                if (ComputationManager.JobAssignments.ContainsKey(LocalJob.JobId))
+                {                    
+                    JobAssignment assignment = ComputationManager.JobAssignments[LocalJob.JobId];
+                    if (assignment != null)
+                    {
+                        var mergedResultLists = assignment.CalculationTemplate.MergeResults(RemoteJob.JobEpochState.ResultList, LocalJob.JobEpochState.ResultList);
+                        LocalJob.JobEpochState.ResultList = mergedResultLists;
+                        LocalJob.JobEpochState.Bitmask = LocalJob.JobEpochState.Bitmask | RemoteJob.JobEpochState.Bitmask;
+                        ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(LocalJob.JobId, LocalJob.JobEpochState.ResultList.ToList(), LocalJob.NumberOfBlocks, LocalJob.NumberOfCalculatedBlocks));
+                        Logger.LogText(String.Format("Merged two EpochStates using MergeResultsMethod of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
+                    }
+                   
                 }
                 //case B: we have no job assignment; thus, we can not merge and keep the one with more computed jobs
                 else

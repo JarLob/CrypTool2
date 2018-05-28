@@ -75,7 +75,7 @@ namespace VoluntLib2.ComputationLayer
             WorkerThread.IsBackground = true;
             WorkerThread.Start();            
             //This operation deserializes all serialized jobs; then it terminates
-            Operations.Enqueue(new CheckRunningWorkersOperation() { ComputationManager = this });
+            Operations.Enqueue(new CheckRunningWorkersAndJobsOperation() { ComputationManager = this });
 
             Logger.LogText("ComputationManager started", this, Logtype.Info);
         }
@@ -207,7 +207,6 @@ namespace VoluntLib2.ComputationLayer
                     {
                         VoluntLib.OnJobProgress(this, new JobProgressEventArgs(job.JobId, job.JobEpochState.ResultList.ToList(), job.NumberOfBlocks, job.NumberOfCalculatedBlocks));
                     }
-
                     return true;
                 }
                 catch (Exception ex)
@@ -240,6 +239,7 @@ namespace VoluntLib2.ComputationLayer
                         {
                             worker.CancellationTokenSource.Cancel();
                         }
+                        VoluntLib.OnTaskStopped(this, new TaskEventArgs(worker.Job.JobId, worker.BlockId, TaskEventArgType.Finished));
                     }
                 }
                 catch (Exception ex)

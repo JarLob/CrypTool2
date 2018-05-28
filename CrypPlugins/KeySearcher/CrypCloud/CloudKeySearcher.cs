@@ -50,23 +50,14 @@ namespace KeySearcher
             try
             {
                 var jobData = CrypCloudCore.Instance.GetJobDataById(jobId);
-                var jobProgressEventArgs = new JobProgressEventArgs(jobId,
-                    jobData.GetCurrentTopList(),
-                    jobData.Job.NumberOfBlocks,
-                    jobData.CalculatedBlocks()
-                );
-
                 RunInUiContext(() =>
                 {
                     viewModel.JobID = jobId;
                     UpdatePresentation(presentation, keySearcher);
-                    keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
-                    JobStateChanged(null, jobProgressEventArgs);
+                    keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);                    
                 });
             }
             catch (Exception e) { }
-
-       
         }
         
         private void UpdateKeyPerSecond(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -87,7 +78,6 @@ namespace KeySearcher
 
             if (CrypCloudCore.Instance.WritePerformanceLog)
             {
-                //Logfile.WriteLine("timestamp;localspeed;globalspeed;finishedlocalchunks;abortedlocalchunks;finishedglobalchunks;globalprocess")
                 Logfile.WriteLine("{0};{1};{2};{3};{4};{5}",DateTime.Now.ToString("dd.MM.yyyy hh:mm:ss:ffff"),
                     localApproximateKeysPerSecond,
                     globalApproximateKeysPerSecond,
@@ -131,9 +121,11 @@ namespace KeySearcher
         {
             if (taskArgs.JobId != jobId) return;
 
-            RunInUiContext(
-                () => viewModel.EndedLocalCalculation(taskArgs) 
-            );
+            RunInUiContext(() =>
+            {
+                viewModel.EndedLocalCalculation(taskArgs);
+                keySearcher.ProgressChanged(Math.Floor(viewModel.GlobalProgress), 100);
+            });
         }
 
         private void JobStateChanged(object sender, JobProgressEventArgs progress)
@@ -197,14 +189,6 @@ namespace KeySearcher
                 Logfile.WriteLine("timestamp;localspeed;globalspeed;finishedlocalchunks;abortedlocalchunks;finishedglobalchunks;globalprocess");
             }
 
-            CrypCloudCore.Instance.StartLocalCalculation(jobId, calculationTemplate);
-
-            updateTimer = new Timer(UpdateInterval);
-            updateTimer.Elapsed += UpdateKeyPerSecond;
-            updateTimer.Interval = UpdateInterval;
-            updateTimer.Enabled = true;
-
-
             try
             {
                 CrypCloudCore.Instance.TaskProgress -= TaskProgress;
@@ -219,6 +203,13 @@ namespace KeySearcher
                 CrypCloudCore.Instance.TaskHasStopped += TaskEnded;
                 CrypCloudCore.Instance.TaskProgress += TaskProgress;
             }
+
+            CrypCloudCore.Instance.StartLocalCalculation(jobId, calculationTemplate);
+
+            updateTimer = new Timer(UpdateInterval);
+            updateTimer.Elapsed += UpdateKeyPerSecond;
+            updateTimer.Interval = UpdateInterval;
+            updateTimer.Enabled = true;           
         }
 
         public void Stop()

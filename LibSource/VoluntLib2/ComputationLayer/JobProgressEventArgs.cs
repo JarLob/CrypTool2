@@ -33,7 +33,7 @@ namespace VoluntLib2.ComputationLayer
             this.jobId = jobId;
             this.resultList = resultList;
             this.numberOfBlocks = numberOfBlocks;
-            this.numberOfCalculatedBlocks = numberOfCalculatedBlocks;
+            this.numberOfCalculatedBlocks = numberOfCalculatedBlocks > numberOfBlocks ? numberOfBlocks : numberOfCalculatedBlocks;
         }
 
         public BigInteger NumberOfBlocks
