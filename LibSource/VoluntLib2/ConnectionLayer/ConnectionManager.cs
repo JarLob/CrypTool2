@@ -116,11 +116,13 @@ namespace VoluntLib2.ConnectionLayer
             //Set Running to true; thus, threads know we are alive
             Running = true;
             //Create a thread for receving data
-            ReceivingThread = new Thread(HandleIncomingPackets);                        
+            ReceivingThread = new Thread(HandleIncomingPackets);
+            ReceivingThread.Name = "ConnectionManagerReceivingThread";
             ReceivingThread.IsBackground = true;
             ReceivingThread.Start();
             //Create a thread for the operations
             WorkerThread = new Thread(ConnectionManagerWork);
+            WorkerThread.Name = "ConnectionManagerWorkerThread";
             WorkerThread.IsBackground = true;
             WorkerThread.Start();       
         

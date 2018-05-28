@@ -24,12 +24,12 @@ namespace VoluntLib2.ComputationLayer
 {
     public class Bitmask : IVoluntLibSerializable
     {
-        public const int DEFAULT_MASKSIZE = 35840; //35 kiB
-        //public const int DEFAULT_MASKSIZE = 10;
+        //public const int DEFAULT_MASKSIZE = 35840; //35 kiB
+        public const int DEFAULT_MASKSIZE = 10;
         private Random random;
         public uint MaskSize { get; private set; }
 
-        private byte[] mask;
+        public byte[] mask;
 
         /// <summary>
         /// Lookup table for fast counting set bits in a byte array
@@ -198,7 +198,7 @@ namespace VoluntLib2.ComputationLayer
             {
                 return -1;
             }
-            uint randomnumber = (uint)random.Next(0, (int)freebits-1);
+            uint randomnumber = (uint)random.Next(0, (int)freebits + 1);
             uint counter = 0;
             uint position = 0;
             for (uint i = 0; i < MaskSize; i++)
@@ -224,6 +224,19 @@ namespace VoluntLib2.ComputationLayer
                 }
             }
             return -1;
+        }
+
+        public void Clear()
+        {
+            for (uint i = 0; i < MaskSize; i++)
+            {
+                mask[i] = 0;
+            }
+        }
+
+        public void SetMaskByte(uint offset, byte value)
+        {
+            mask[offset] = value;
         }
     }
 }

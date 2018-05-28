@@ -71,8 +71,9 @@ namespace VoluntLib2.ComputationLayer
 
             Running = true;
             WorkerThread = new Thread(ComputationManagerWork);
+            WorkerThread.Name = "ComputationManagerWorkerThread";
             WorkerThread.IsBackground = true;
-            WorkerThread.Start();
+            WorkerThread.Start();            
             //This operation deserializes all serialized jobs; then it terminates
             Operations.Enqueue(new CheckRunningWorkersOperation() { ComputationManager = this });
 
@@ -326,6 +327,7 @@ namespace VoluntLib2.ComputationLayer
         {
             BlockId = blockId;
             WorkerThread = new Thread(DoWork);
+            WorkerThread.Name = "JobWorkerThread-" + blockId;
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
             Logger.LogText(String.Format("Started Worker-{0} on block {1} of job {2}", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray())), this, Logtype.Info);

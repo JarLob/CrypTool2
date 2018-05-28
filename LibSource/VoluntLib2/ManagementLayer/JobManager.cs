@@ -109,10 +109,12 @@ namespace VoluntLib2.ManagementLayer
             Running = true;
             //Create a thread for receving data
             ReceivingThread = new Thread(HandleIncomingMessages);
+            ReceivingThread.Name = "JobManagerReceivingThread";
             ReceivingThread.IsBackground = true;
             ReceivingThread.Start();
             //Create a thread for the operations
             WorkerThread = new Thread(JobManagerWork);
+            WorkerThread.Name = "JobManagerWorkerThread";
             WorkerThread.IsBackground = true;
             WorkerThread.Start();
             //This operation deserializes all serialized jobs; then it terminates

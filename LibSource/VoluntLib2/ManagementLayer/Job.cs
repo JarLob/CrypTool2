@@ -31,6 +31,8 @@ namespace VoluntLib2.ManagementLayer
         private const int STRING_MAX_LENGTH = 255;
         private const int STRING_MAX_JOB_DESCRIPTION_LENGTH = 1024; //1kb                
 
+        private Logger Logger = Logger.GetLogger();
+
         public Job(BigInteger jobID)
         {
             JobId = jobID;
@@ -66,7 +68,7 @@ namespace VoluntLib2.ManagementLayer
         public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
         public EpochState JobEpochState { get; set; }
-
+        
         /// <summary>
         /// User can delete job, if (A) its his job or (B) he is an admin
         /// </summary>
@@ -540,7 +542,7 @@ namespace VoluntLib2.ManagementLayer
             try
             {
                 //1. Check if we have a DeletionSignature
-                if (JobDeletionSignatureData == null || JobDeletionSignatureData.Length == 1)
+                if (JobDeletionSignatureData == null || JobDeletionSignatureData.Length == 0)
                 {
                     return false;
                 }
@@ -652,20 +654,100 @@ namespace VoluntLib2.ManagementLayer
         /// <returns></returns>
         internal BigInteger GetFreeBlockId()
         {
-            return JobEpochState.Bitmask.GetRandomFreeBit();
-        }
+            int freebit = JobEpochState.Bitmask.GetRandomFreeBit();
+            if (freebit == -1)
+            {
+                return -1;
+            }
+            return JobEpochState.Bitmask.MaskSize * JobEpochState.EpochNumber * 8 + freebit;
+        }        
 
         /// <summary>
         /// Returns the amount of free blocks in the current epoch
         /// </summary>
         /// <returns></returns>
         internal BigInteger FreeBlocksInEpoch()
+        {            
+            return JobEpochState.Bitmask.GetFreeBits();
+        }
+
+        public void CheckAndUpdateEpochAndBitmask()
         {
-            return 8191 - JobEpochState.Bitmask.GetSetBitsCount();
+            if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
+            {
+                //we are in the last epoch; thus, we do not need to do anything
+                return;
+            }
+
+            if (FreeBlocksInEpoch() == 0)
+            {
+                Logger.LogText("Epoch is complete. Going to next epoch now", this, Logtype.Debug);
+                JobEpochState.Bitmask.Clear();
+                JobEpochState.EpochNumber++;
+                if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
+                {
+                    Logger.LogText("We are in the last epoch now", this, Logtype.Debug);
+                    BigInteger bitsToFill = ((JobEpochState.Bitmask.MaskSize * 8) - NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8));
+                    uint offset = JobEpochState.Bitmask.MaskSize - 1;
+                    while (bitsToFill >= 8)
+                    {
+                        JobEpochState.Bitmask.SetMaskByte(offset, 0xFF);
+                        bitsToFill -= 8;
+                        offset -= 1;
+                    }
+                    //Set last byte which may not be completely filled
+                    switch ((uint)bitsToFill)
+                    {
+                        case 1:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128);
+                            break;
+                        case 2:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64);
+                            break;
+                        case 3:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32);
+                            break;
+                        case 4:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16);
+                            break;
+                        case 5:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8);
+                            break;
+                        case 6:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4);
+                            break;
+                        case 7:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2);
+                            break;
+                        case 8:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1);
+                            break;
+                    }
+                }
+            }
         }
 
         public BigInteger NumberOfCalculatedBlocks {
-            get { return JobEpochState.EpochNumber * JobEpochState.Bitmask.MaskSize + JobEpochState.Bitmask.GetSetBitsCount(); }        
+            get { return JobEpochState.EpochNumber * JobEpochState.Bitmask.MaskSize * 8 + JobEpochState.Bitmask.GetSetBitsCount(); }        
         }
+
+        public BigInteger NumberOfEpochs
+        {
+            get 
+            {                
+                if (JobEpochState == null)
+                {
+                    return BigInteger.Zero;
+                }
+                BigInteger numberOfEpochs = NumberOfBlocks / (JobEpochState.Bitmask.MaskSize * 8);
+                if (NumberOfBlocks % JobEpochState.Bitmask.MaskSize > 0)
+                {
+                    numberOfEpochs++;
+                }
+                return numberOfEpochs;            
+            }
+        }
+
+
     }
 }

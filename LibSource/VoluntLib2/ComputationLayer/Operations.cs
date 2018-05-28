@@ -50,6 +50,10 @@ namespace VoluntLib2.ComputationLayer
         {
             foreach (JobAssignment assignment in ComputationManager.JobAssignments.Values)
             {
+
+                //0) update epoch and bitmask
+                assignment.Job.CheckAndUpdateEpochAndBitmask();
+
                 //1) get the amount of needed workers
                 int neededWorkers = assignment.AmountOfWorkers;
 
@@ -67,9 +71,9 @@ namespace VoluntLib2.ComputationLayer
                             var list = worker.CalculationResult.LocalResults;
                             var blockid = worker.CalculationResult.BlockID;
                             worker.Job.JobEpochState.ResultList = worker.ACalculationTemplate.MergeResults(worker.Job.JobEpochState.ResultList, list);                            
-                            uint bitid = (uint)(blockid % worker.Job.JobEpochState.Bitmask.MaskSize);
-                            worker.Job.JobEpochState.Bitmask.SetBit(bitid, true);                            
-                            Logger.LogText(String.Format("Set in job {0} a bit to true of block id {1} which is the bit {2} in bitmask", BitConverter.ToString(worker.Job.JobId.ToByteArray()), blockid, bitid), this, Logtype.Debug);
+                            uint bitid = (uint)(blockid % (worker.Job.JobEpochState.Bitmask.MaskSize * 8));
+                            worker.Job.JobEpochState.Bitmask.SetBit(bitid, true);
+                            Logger.LogText(String.Format("Set one bit to true in block id {1} of job {0} which is bit {2} in bitmask", blockid, BitConverter.ToString(worker.Job.JobId.ToByteArray()), bitid), this, Logtype.Debug);
                             ComputationManager.VoluntLib.OnJobProgress(this, new JobProgressEventArgs(worker.Job.JobId, worker.Job.JobEpochState.ResultList.ToList(), worker.Job.NumberOfBlocks, worker.Job.NumberOfCalculatedBlocks));
                             //finally, send our result to everyone
                             ComputationManager.VoluntLib.JobManager.SendResponseJobMessage(null, worker.Job);
@@ -84,7 +88,8 @@ namespace VoluntLib2.ComputationLayer
                 foreach (Worker worker in removeList)
                 {
                     assignment.Workers.Remove(worker);
-                }
+                }                
+
                 //3) start workers until we have as much as we need
                 try
                 {
@@ -119,7 +124,7 @@ namespace VoluntLib2.ComputationLayer
         private BigInteger GetFreeBlockId(JobAssignment assignment)
         {
             Job job = assignment.Job;
-            ArrayList workers = assignment.Workers;
+            ArrayList workers = assignment.Workers;            
             while (job.FreeBlocksInEpoch() - assignment.Workers.Count > 0)
             {
                 BigInteger blockid = job.GetFreeBlockId();
