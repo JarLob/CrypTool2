@@ -129,7 +129,7 @@ namespace CrypCloud.Manager.ViewModels
 
                 if (!job.HasPayload)
                 {
-                    ErrorMessage = "Cannot open job without downloding it before";
+                    ErrorMessage = "Cannot open job without downloading it before";
                     return;
                 }
 
