@@ -38,7 +38,7 @@ namespace VoluntLib2.ManagementLayer
 
         private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
         private const int WORKER_THREAD_SLEEPTIME = 1; // ms
-        private const int MAX_JOB_PAYLOAD_SIZE = 50 * 1024; // 50kb
+        private const int MAX_JOB_PAYLOAD_SIZE = 20 * 1024; // 20KiB
 
         private bool Running = false;
         private Thread ReceivingThread;

@@ -65,7 +65,7 @@ namespace CrypCloud.Manager.ViewModels
             }
             catch (JobPayloadTooBigException)
             {
-                ErrorMessage = "Selected cwm-file is too big. Only 50KiB allowed!";
+                ErrorMessage = "Selected cwm file is too big. Only 20KiB allowed!";
             }
             catch (Exception ex)
             {

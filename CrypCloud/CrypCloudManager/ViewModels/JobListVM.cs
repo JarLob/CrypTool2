@@ -129,7 +129,7 @@ namespace CrypCloud.Manager.ViewModels
 
                 if (!job.HasPayload)
                 {
-                    ErrorMessage = "Cannot open job, without downloding it first";
+                    ErrorMessage = "Cannot open job without downloding it before";
                     return;
                 }
 
@@ -141,7 +141,7 @@ namespace CrypCloud.Manager.ViewModels
                     {
                         try
                         {
-                            Manager.OpenWorkspaceInNewTab(workspaceModel, job.JobId);
+                            Manager.OpenWorkspaceInNewTab(workspaceModel, job.JobId, job.JobName);
                         }
                         catch (Exception ex)
                         {

@@ -158,10 +158,6 @@ namespace WorkspaceManager
         /// </summary>
         public void New()
         {
-            //foreach (PluginModel pluginModel in new List<PluginModel>(WorkspaceModel.GetAllPluginModels()))
-            //{
-            //    WorkspaceModel.deletePluginModel(pluginModel);
-            //}
             CurrentFile = null; 
             if (this.OnProjectTitleChanged != null)
             {
@@ -181,7 +177,6 @@ namespace WorkspaceManager
         {
             try
             {
-                New();
                 WorkspaceModel = model;
                 WorkspaceModel.OnGuiLogNotificationOccured += this.GuiLogNotificationOccured;
                 var dispatcherOp = WorkspaceSpaceEditorView.Load(WorkspaceModel);

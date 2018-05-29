@@ -41,7 +41,7 @@ namespace CrypCloud.Manager
     public class CrypCloudManager : IEditor
     {
         private readonly ScreenNavigator screenNavigator = new ScreenNavigator();
-        public static string DefaultTabName = "CrypCloud Project";
+        public const string DefaultTabName = "CrypCloud Project";
 
         public CrypCloudManager()
         {
@@ -94,13 +94,13 @@ namespace CrypCloud.Manager
             screenNavigator.AddScreenWithPath(resetPasswordVm, ScreenPaths.ResetPassword);
         }
 
-        public void OpenWorkspaceInNewTab(WorkspaceModel model, BigInteger jobId)
+        public void OpenWorkspaceInNewTab(WorkspaceModel model, BigInteger jobId, string tabTitle = null)
         {
             if (OnOpenEditor == null) return; // cant open tab 
 
             var tabInfo = new TabInfo()
             {
-                Title = DefaultTabName
+                Title = tabTitle != null ? tabTitle : DefaultTabName
             };
 
             var currentManager = OnOpenEditor(typeof(WorkspaceManager.WorkspaceManagerClass), tabInfo);
