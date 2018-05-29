@@ -21,6 +21,9 @@ using System.Text;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// Event args for job progress events
+    /// </summary>
     public class JobProgressEventArgs : EventArgs
     {
         private readonly BigInteger jobId;
@@ -28,6 +31,13 @@ namespace VoluntLib2.ComputationLayer
         private readonly BigInteger numberOfCalculatedBlocks;
         private readonly List<byte[]> resultList;
 
+        /// <summary>
+        /// Creates a new JobProgressEventArgs
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="resultList"></param>
+        /// <param name="numberOfBlocks"></param>
+        /// <param name="numberOfCalculatedBlocks"></param>
         public JobProgressEventArgs(BigInteger jobId, List<byte[]> resultList, BigInteger numberOfBlocks, BigInteger numberOfCalculatedBlocks)
         {
             this.jobId = jobId;
@@ -36,21 +46,33 @@ namespace VoluntLib2.ComputationLayer
             this.numberOfCalculatedBlocks = numberOfCalculatedBlocks > numberOfBlocks ? numberOfBlocks : numberOfCalculatedBlocks;
         }
 
+        /// <summary>
+        /// Number of blocks of the referenced job
+        /// </summary>
         public BigInteger NumberOfBlocks
         {
             get { return numberOfBlocks; }
         }
 
+        /// <summary>
+        /// JobId of the referenced job
+        /// </summary>
         public BigInteger JobId
         {
             get { return jobId; }
         }
 
+        /// <summary>
+        /// Current best list of the referenced job
+        /// </summary>
         public List<byte[]> ResultList
         {
             get { return resultList; }
         }
 
+        /// <summary>
+        /// Number of calculated blocks of the referenced job
+        /// </summary>
         public BigInteger NumberOfCalculatedBlocks
         {
             get { return numberOfCalculatedBlocks; }

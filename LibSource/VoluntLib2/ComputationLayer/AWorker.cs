@@ -23,13 +23,35 @@ using System.Threading.Tasks;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// Worker class containing the "work logic"
+    /// </summary>
     public abstract class AWorker
     {
+        /// <summary>
+        /// JobId; is set by VoluntLib
+        /// </summary>
         public BigInteger JobId { get; set; }
+
+        /// <summary>
+        /// DoWork method; Has to be overwritten by user code
+        /// </summary>
+        /// <param name="jobPayload"></param>
+        /// <param name="blockId"></param>
+        /// <param name="cancelToken"></param>
+        /// <returns></returns>
         public abstract CalculationResult DoWork(byte[] jobPayload, BigInteger blockId, CancellationToken cancelToken);
 
+        /// <summary>
+        /// ProgessChanged event
+        /// </summary>
         public event EventHandler<TaskEventArgs> ProgressChanged;
 
+        /// <summary>
+        /// Helper method to invoke ProgessChanged event
+        /// </summary>
+        /// <param name="blockID"></param>
+        /// <param name="progress"></param>
         protected virtual void OnProgressChanged(BigInteger blockID, int progress)
         {                       
             if (ProgressChanged != null)

@@ -21,8 +21,17 @@ using System.Text;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// Event args for task events
+    /// </summary>
     public class TaskEventArgs : EventArgs
     {
+        /// <summary>
+        /// Creates a new TaskEventArgs
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="blockID"></param>
+        /// <param name="type"></param>
         public TaskEventArgs(BigInteger jobId, BigInteger blockID, TaskEventArgType type)
         {
             Type = type;
@@ -30,12 +39,30 @@ namespace VoluntLib2.ComputationLayer
             BlockID = blockID;
         }
 
+        /// <summary>
+        /// Progress of the referenced task
+        /// </summary>
         public int TaskProgress { get; set; }
+
+        /// <summary>
+        /// BlockId of the referenced task
+        /// </summary>
         public BigInteger BlockID { get; private set; }
+
+        /// <summary>
+        /// Type of the event
+        /// </summary>
         public TaskEventArgType Type { get; private set; }
+
+        /// <summary>
+        /// JobId of the referenced task
+        /// </summary>
         public BigInteger JobId { get; private set; }
     }
 
+    /// <summary>
+    /// Type of the TaskEventArgs
+    /// </summary>
     public enum TaskEventArgType
     {
         Started,

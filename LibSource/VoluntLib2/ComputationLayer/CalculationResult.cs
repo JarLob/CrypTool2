@@ -22,9 +22,19 @@ using System.Threading.Tasks;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// Result of an calculation
+    /// </summary>
     public class CalculationResult
     {
+        /// <summary>
+        /// BlockId of the result
+        /// </summary>
         public BigInteger BlockID { get; set; }
+
+        /// <summary>
+        /// Best list of the block
+        /// </summary>
         public List<byte[]> LocalResults { get; set; }
     }
 }

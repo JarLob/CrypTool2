@@ -22,6 +22,11 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// Bitmask; needed by "epoch algorithm";
+    /// See http://www.upress.uni-kassel.de/katalog/abstract.php?978-3-7376-0426-0
+    /// PhD thesis of Nils Kopal
+    /// </summary>
     public class Bitmask : IVoluntLibSerializable
     {
         public const int DEFAULT_MASKSIZE = 35840; //35 kiB
@@ -29,7 +34,10 @@ namespace VoluntLib2.ComputationLayer
         private Random random;
         public uint MaskSize { get; private set; }
 
-        public byte[] mask;
+        /// <summary>
+        /// Array containing the "actual" data of this bitmask
+        /// </summary>
+        internal byte[] mask;
 
         /// <summary>
         /// Lookup table for fast counting set bits in a byte array
@@ -226,6 +234,9 @@ namespace VoluntLib2.ComputationLayer
             return -1;
         }
 
+        /// <summary>
+        /// Empties the bitmask; sets everything to 0
+        /// </summary>
         public void Clear()
         {
             for (uint i = 0; i < MaskSize; i++)
@@ -234,6 +245,11 @@ namespace VoluntLib2.ComputationLayer
             }
         }
 
+        /// <summary>
+        /// Sets the byte at the given offset to the given value
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <param name="value"></param>
         public void SetMaskByte(uint offset, byte value)
         {
             mask[offset] = value;

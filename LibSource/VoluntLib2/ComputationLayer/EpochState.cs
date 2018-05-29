@@ -22,10 +22,24 @@ using VoluntLib2.Tools;
 
 namespace VoluntLib2.ComputationLayer
 {
+    /// <summary>
+    /// "Epoch state" of a job; i.e. bitmask and best list
+    /// </summary>
     public class EpochState : IVoluntLibSerializable, ICloneable
     {
+        /// <summary>
+        /// Current epoch of the job
+        /// </summary>
         public BigInteger EpochNumber { get; set; }
+
+        /// <summary>
+        /// Current best list of the job
+        /// </summary>
         public IEnumerable<byte[]> ResultList { get; set; }
+
+        /// <summary>
+        /// Current bitmask of the job
+        /// </summary>
         public Bitmask Bitmask { get; set; }
 
         /// <summary>

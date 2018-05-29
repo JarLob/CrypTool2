@@ -33,6 +33,9 @@ using System.Collections.ObjectModel;
 
 namespace VoluntLib2
 {
+    /// <summary>
+    /// Main class of VoluntLib
+    /// </summary>
     public class VoluntLib
     {
         private CertificateService CertificateService = CertificateService.GetCertificateService();
@@ -77,7 +80,8 @@ namespace VoluntLib2
 
         /// <summary>
         /// Starts VoluntLib2.
-        /// Creates a JobManager, a ConnectionManager, and a ComputationManager
+        /// Creates a JobManager, a ConnectionManager, and a ComputationManager and starts everything.
+        /// Needs certificates and a defined listen port to listen on
         /// </summary>
         /// <param name="caCertificate"></param>
         /// <param name="ownCertificate"></param>
@@ -147,6 +151,11 @@ namespace VoluntLib2
         /// </summary>
         public void Stop()
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return;
+            }
             //we have to first stop the connection manager; otherwise the JobManager remains 
             //blocked in its receiving thread and can not be stopped
             ConnectionManager.Stop();
@@ -164,6 +173,11 @@ namespace VoluntLib2
         /// <returns></returns>
         public bool JoinJob(BigInteger jobID, ACalculationTemplate template, int amountOfWorker)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return false;
+            }
             return ComputationManager.JoinJob(jobID, template, amountOfWorker);
         }
 
@@ -173,6 +187,11 @@ namespace VoluntLib2
         /// <param name="jobID"></param>
         public void StopJob(BigInteger jobID)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return;
+            }
             ComputationManager.StopJob(jobID);
         }
 
@@ -181,6 +200,11 @@ namespace VoluntLib2
         /// </summary>
         public void RefreshJobList()
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return;
+            }
             JobManager.RefreshJobList();
         }
 
@@ -190,6 +214,11 @@ namespace VoluntLib2
         /// <param name="job"></param>
         public void RequestJob(Job job)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return;
+            }
             JobManager.RequestJob(job.JobId);
         }
 
@@ -201,11 +230,16 @@ namespace VoluntLib2
         /// <param name="jobID"></param>
         public void DeleteJob(BigInteger jobID)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return;
+            }
             JobManager.DeleteJob(jobID);
         }
 
         /// <summary>
-        /// Creates a new job signed by this user
+        /// Creates a new job signed by this user; Returns -1 if it fails
         /// </summary>
         /// <param name="worldName"></param>
         /// <param name="jobType"></param>
@@ -216,6 +250,11 @@ namespace VoluntLib2
         /// <returns></returns>
         public BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return BigInteger.MinusOne;
+            }
             return JobManager.CreateJob(worldName, jobType, jobName, jobDescription, payload, numberOfBlocks);
         }
 
@@ -227,6 +266,11 @@ namespace VoluntLib2
         /// <returns></returns>
         public Job GetJobByID(BigInteger jobID)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return null;
+            }
             return JobManager.GetJobById(jobID);
         }
 
@@ -237,6 +281,12 @@ namespace VoluntLib2
         /// <returns></returns>
         public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return BigInteger.Zero;
+            }
+            //TODO: IMPLEMENT
             return BigInteger.Zero;
         }
 
@@ -246,6 +296,12 @@ namespace VoluntLib2
         /// <returns></returns>
         public Dictionary<BigInteger, int> GetCurrentRunningWorkersPerJob()
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return null;
+            }
+            //TODO: IMPLEMENT
             return new Dictionary<BigInteger,int>();
         }
 
@@ -256,6 +312,12 @@ namespace VoluntLib2
         /// <returns></returns>
         public EpochState GetStateOfJob(BigInteger jobId)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return null;
+            }
+            //TODO: IMPLEMENT
             return new EpochState();
         }
 
@@ -266,6 +328,12 @@ namespace VoluntLib2
         /// <returns></returns>
         public Bitmap GetVisualizationOfJobState(BigInteger jobId)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return null;
+            }
+            //TODO: IMPLEMENT
             return new Bitmap(255, 255);
         }
 
@@ -276,6 +344,12 @@ namespace VoluntLib2
         /// <returns></returns>
         public bool CanUserDeleteJob(Job job)
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return false;
+            }
+            //TODO: IMPLEMENT
             return (job.CreatorName.Equals(CertificateName)) || 
                 CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
         }
@@ -287,9 +361,20 @@ namespace VoluntLib2
         /// <returns></returns>
         public ObservableCollection<Job> GetJoblist()
         {
+            //do nothing if not running
+            if (!IsStarted)
+            {
+                return null;
+            }
+            //TODO: IMPLEMENT
             return JobManager.GetJoblist();
         }
 
+        /// <summary>
+        /// Helper method to invoke TaskProgessChanged events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         internal void OnTaskProgessChanged(object sender, TaskEventArgs e)
         {
             if (TaskProgress != null)
@@ -298,6 +383,11 @@ namespace VoluntLib2
             }
         }
 
+        /// <summary>
+        /// Helper method to invoke TaskStarted events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         internal void OnTaskStarted(object sender, TaskEventArgs e)
         {
             if (TaskStarted != null)
@@ -306,6 +396,11 @@ namespace VoluntLib2
             }
         }
 
+        /// <summary>
+        /// Helper method to invoke TaskStopped events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         internal void OnTaskStopped(object sender, TaskEventArgs e)
         {
             if (TaskStopped != null)
@@ -314,6 +409,11 @@ namespace VoluntLib2
             }
         }
 
+        /// <summary>
+        /// Helper method to invoke JobProgress events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         internal void OnJobProgress(object sender, JobProgressEventArgs e)
         {
             if (JobProgress != null)

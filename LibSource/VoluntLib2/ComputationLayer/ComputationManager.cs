@@ -275,6 +275,12 @@ namespace VoluntLib2.ComputationLayer
         internal VoluntLib VoluntLib { get; set; }
         public Thread WorkerThread { get; private set; }
 
+        /// <summary>
+        /// Creates a new worker object
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="template"></param>
+        /// <param name="voluntLib"></param>
         public Worker(Job job, ACalculationTemplate template, VoluntLib voluntLib)
         {
             Job = job;
@@ -284,10 +290,15 @@ namespace VoluntLib2.ComputationLayer
             AWorker.JobId = Job.JobId;
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken = CancellationTokenSource.Token;
-            AWorker.ProgressChanged += ProgressChanged;
+            AWorker.ProgressChanged += OnProgressChanged;
         }
 
-        private void ProgressChanged(object sender, TaskEventArgs taskEventArgs)
+        /// <summary>
+        /// Helper method to invoke ProgressChanged event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="taskEventArgs"></param>
+        private void OnProgressChanged(object sender, TaskEventArgs taskEventArgs)
         {
             //we are only responsible for progress changes of our own block id
             if (taskEventArgs.BlockID.Equals(BlockId))
@@ -296,12 +307,29 @@ namespace VoluntLib2.ComputationLayer
             }
         }
 
+        /// <summary>
+        /// Token to cancel the worker thread
+        /// </summary>
         public CancellationToken CancellationToken{ get; private set; }
-        public CancellationTokenSource CancellationTokenSource { get; private set; }        
+
+        /// <summary>
+        /// TokenSource to cancel the worker thread
+        /// </summary>
+        public CancellationTokenSource CancellationTokenSource { get; private set; }     
+   
+        /// <summary>
+        /// BlockId this worker is working on
+        /// </summary>
         public BigInteger BlockId { get; set; }
 
+        /// <summary>
+        /// CalculationResult is filled after termination of worker; it is null if the worker was killed
+        /// </summary>
         public CalculationResult CalculationResult { get; set; }
 
+        /// <summary>
+        /// Internal work method of thread of this worker
+        /// </summary>
         internal void DoWork()
         {
             try
@@ -320,9 +348,13 @@ namespace VoluntLib2.ComputationLayer
                 Logger.LogText(String.Format("Exception during execution of Worker-{0} who worked on block {1} job {2} : {3}", this.GetHashCode(), BlockId, BitConverter.ToString(Job.JobId.ToByteArray()), ex.Message), this, Logtype.Error);
                 Logger.LogException(ex, this, Logtype.Error);
             }
-            AWorker.ProgressChanged -= ProgressChanged;
+            AWorker.ProgressChanged -= OnProgressChanged;
         }
 
+        /// <summary>
+        /// Start the worker on the block defined by given blockid
+        /// </summary>
+        /// <param name="blockId"></param>
         internal void Start(BigInteger blockId)
         {
             BlockId = blockId;

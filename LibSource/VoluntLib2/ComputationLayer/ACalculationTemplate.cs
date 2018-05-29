@@ -22,14 +22,38 @@ using VoluntLib2.Tools;
 namespace VoluntLib2.ComputationLayer
 {
 
+    /// <summary>
+    /// Abstract super class for calculations.
+    /// Contains a worker logic and a merge function
+    /// </summary>
     public abstract class ACalculationTemplate
     {
+        /// <summary>
+        /// Worker logic
+        /// </summary>
         public AWorker WorkerLogic { get; protected set; }
+
+        /// <summary>
+        /// Merge method
+        /// </summary>
+        /// <param name="oldResultList"></param>
+        /// <param name="newResultList"></param>
+        /// <returns></returns>
         public abstract List<byte[]> MergeResults(IEnumerable<byte[]> oldResultList, IEnumerable<byte[]> newResultList);
     }
 
+    /// <summary>
+    /// Abstract generic super class for calculations.
+    /// Contains a worker logic and a merge function
+    /// </summary>
     public abstract class ACalculationTemplate<T> : ACalculationTemplate where T : IVoluntLibSerializable, new()
     {
+        /// <summary>
+        /// Merge method
+        /// </summary>
+        /// <param name="oldResultList"></param>
+        /// <param name="newResultList"></param>
+        /// <returns></returns>
         public override List<byte[]> MergeResults(IEnumerable<byte[]> oldResultList, IEnumerable<byte[]> newResultList)
         {
             Func<byte[], T> byteToT = entry =>
@@ -48,6 +72,12 @@ namespace VoluntLib2.ComputationLayer
             return mergeResults;
         }
 
+        /// <summary>
+        /// Generic merge method
+        /// </summary>
+        /// <param name="oldResultList"></param>
+        /// <param name="newResultList"></param>
+        /// <returns></returns>
         public abstract List<T> MergeResults(IEnumerable<T> oldResultList, IEnumerable<T> newResultList);
 
     }

@@ -170,18 +170,28 @@ namespace VoluntLib2.ComputationLayer
 
         private Logger Logger = Logger.GetLogger();
 
+        /// <summary>
+        /// Creates a new MergeResultsOperation
+        /// </summary>
+        /// <param name="localJob"></param>
+        /// <param name="remoteJob"></param>
         public MergeResultsOperation(Job localJob, Job remoteJob)
         {
             LocalJob = localJob;
             RemoteJob = remoteJob;
         }
 
-
+        /// <summary>
+        /// Returns true after one execution
+        /// </summary>
         public override bool IsFinished
         {
             get { return executed; }
         }
 
+        /// <summary>
+        /// Execution method of MergeResultsOperation
+        /// </summary>
         public override void Execute()
         {            
             if (RemoteJob.JobEpochState.EpochNumber < LocalJob.JobEpochState.EpochNumber)
