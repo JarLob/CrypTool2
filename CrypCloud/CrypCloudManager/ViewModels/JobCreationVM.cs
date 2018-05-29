@@ -66,7 +66,11 @@ namespace CrypCloud.Manager.ViewModels
             catch (JobPayloadTooBigException)
             {
                 ErrorMessage = "Selected cwm-file is too big. Only 50KiB allowed!";
-            }            
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = String.Format("Exception while creating job: {0}", ex.Message);
+            }
         }
 
         private WorkspaceModel TryDeserializeWorkspace(string filePath)
