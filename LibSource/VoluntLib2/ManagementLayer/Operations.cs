@@ -57,13 +57,13 @@ namespace VoluntLib2.ManagementLayer
     }
 
     /// <summary>
-    /// Operation for sharing JobLists every 5 minutes
+    /// Operation for sharing JobLists and Jobs every 5 minutes
     /// </summary>
-    internal class ShareJobListOperation : Operation
+    internal class ShareJobListAndJobsOperation : Operation
     {
         private Logger Logger = Logger.GetLogger();
         private const int SHARE_INTERVAL = 300000; //5min
-        private DateTime LastExecutionTime = DateTime.Now;
+        private DateTime LastExecutionTime = DateTime.MinValue;
 
         /// <summary>
         /// The ShareJobListOperation never finishes
@@ -83,8 +83,15 @@ namespace VoluntLib2.ManagementLayer
                 Logger.LogText("Sending ResponseJobListMessages to all neighbors", this, Logtype.Debug);
                 //Send a ResponseJobListMessage to every neighbor
                 JobManager.SendResponseJobListMessages(null);
+                //Send every job to every neighbor
+                foreach (Job job in JobManager.JobList)
+                {
+                    JobManager.SendResponseJobMessage(null, job);
+                    Logger.LogText(String.Format("Sending job with id {0} to all neighbors",BitConverter.ToString(job.JobId.ToByteArray())), this, Logtype.Debug);
+                }                
                 LastExecutionTime = DateTime.Now;
             }
+            
         }
 
         /// <summary>

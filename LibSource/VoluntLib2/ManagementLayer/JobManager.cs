@@ -120,7 +120,7 @@ namespace VoluntLib2.ManagementLayer
             //This operation deserializes all serialized jobs; then it terminates
             Operations.Enqueue(new JobsDeserializationOperation() { JobManager = this });
             //This operation sends every 5 minutes a ResponseJobListMessage to every neighbor
-            Operations.Enqueue(new ShareJobListOperation() { JobManager = this });
+            Operations.Enqueue(new ShareJobListAndJobsOperation() { JobManager = this });
             //This operation sends every 5 minutes a RequestJobListMessage to every neighbor
             Operations.Enqueue(new RequestJobListOperation() { JobManager = this });
             //This operation answers to RequestJobListMessages
