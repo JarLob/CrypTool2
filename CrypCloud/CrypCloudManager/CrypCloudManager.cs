@@ -53,7 +53,7 @@ namespace CrypCloud.Manager
             jobListVM.Manager = this;            
             Logger.SetLogLevel(Logtype.Debug);
             Logger logger = Logger.GetLogger();
-            logger.Logged += logger_Logged;
+            logger.LoggOccured += logger_Logged;
         }
 
         private void logger_Logged(object sender, LogEventArgs logEventArgs)
@@ -314,7 +314,7 @@ namespace CrypCloud.Manager
         public void Dispose()
         {
             Logger logger = Logger.GetLogger();
-            logger.Logged -= logger_Logged;
+            logger.LoggOccured -= logger_Logged;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

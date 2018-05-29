@@ -23,6 +23,13 @@ using System.Threading.Tasks;
 
 namespace VoluntLib2.Tools
 {
+    /// <summary>
+    /// Log types (debug, info, warning, and error).
+    /// debug: log for developer.
+    /// info: general info log.
+    /// warning: something went "wrong"; but still in a state we can handle.
+    /// error: something "really bad" happened... an error
+    /// </summary>
     public enum Logtype
     {
         Debug = 0,
@@ -31,24 +38,9 @@ namespace VoluntLib2.Tools
         Error = 3
     }
 
-      /// <summary>
-    /// Data Class of a log entry
-    /// </summary>
-    public class LogEntry
-    {
-        public string LogTime { get; set; }
-
-        public string LogType { get; set; }
-        
-        public string Class { get; set; }
-
-        public string Message { get; set; }
-    }
-
-
     public class Logger
     {
-        public event EventHandler<LogEventArgs> Logged;
+        public event EventHandler<LogEventArgs> LoggOccured;
 
         private static Logger Instance = new Logger();
         private static Logtype Loglevel = Logtype.Info;
@@ -72,9 +64,11 @@ namespace VoluntLib2.Tools
 
         /// <summary>
         /// Set minimum loglevel (default = info)
+        /// means, that only messages with level info or higher will be logged
         /// </summary>
         /// <param name="loglevel"></param>
-        public static void SetLogLevel(Logtype loglevel){
+        public static void SetLogLevel(Logtype loglevel)
+        {
             Loglevel = loglevel;
         }
     
@@ -88,7 +82,8 @@ namespace VoluntLib2.Tools
         /// <param name="logtype"></param>
         public void LogText(string message, object whoLoggs, Logtype logtype)
         {
-            if(logtype < Loglevel){
+            if(logtype < Loglevel)
+            {
                 return;
             }         
             lock (this)
@@ -111,20 +106,20 @@ namespace VoluntLib2.Tools
                         Console.WriteLine("{0} {1} {2}: {3}", DateTime.Now, "Unknown", whoLoggs != null ? whoLoggs.GetType().FullName + "-" + whoLoggs.GetHashCode() : "null", message);
                         break;
                 }
-                LoggOccured(String.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
+                OnLoggOccured(String.Format("{0} {1}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), message), logtype);
             }
         }
 
         /// <summary>
-        /// Fires the Logged event
+        /// Helper method to invoke LoggOccured event
         /// </summary>
         /// <param name="message"></param>
         /// <param name="logtype"></param>
-        private void LoggOccured(string message, Logtype logtype)
+        private void OnLoggOccured(string message, Logtype logtype)
         {
-            if (Logged != null)
+            if (LoggOccured != null)
             {
-                Logged.BeginInvoke(this, new LogEventArgs(logtype, message), null, null);
+                LoggOccured.BeginInvoke(this, new LogEventArgs(logtype, message), null, null);
             }
         }
 
@@ -138,7 +133,8 @@ namespace VoluntLib2.Tools
         /// <param name="logtype"></param>
         public void LogException(Exception ex, object whoLoggs, Logtype logtype)
         {
-            if(logtype < Loglevel){
+            if(logtype < Loglevel)
+            {
                 return;
             }
                         
@@ -167,16 +163,31 @@ namespace VoluntLib2.Tools
                         Console.WriteLine(ex.StackTrace);
                         break;
                 }
-                LoggOccured(String.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
+                OnLoggOccured(String.Format("{0} {1}: Stacktrace: {2}", (whoLoggs != null ? whoLoggs.GetType().FullName : "null"), ex.Message, ex.StackTrace), logtype);
             }
         }
     }
 
+    /// <summary>
+    /// EventArgs for a logging event
+    /// </summary>
     public class LogEventArgs : EventArgs
     {
+        /// <summary>
+        /// Type of this log event
+        /// </summary>
         public Logtype Logtype { private set; get; }
+
+        /// <summary>
+        /// Message of this log event
+        /// </summary>
         public string Message { private set; get; }
 
+        /// <summary>
+        /// Creates a new LogEventArgs
+        /// </summary>
+        /// <param name="logtype"></param>
+        /// <param name="message"></param>
         public LogEventArgs(Logtype logtype, string message)
         {
             Logtype = logtype;
