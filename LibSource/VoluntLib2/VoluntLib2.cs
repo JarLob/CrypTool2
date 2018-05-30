@@ -322,22 +322,6 @@ namespace VoluntLib2
         }
 
         /// <summary>
-        /// Returns a graphical visualization of the job state of the job with the given jobid
-        /// </summary>
-        /// <param name="jobId"></param>
-        /// <returns></returns>
-        public Bitmap GetVisualizationOfJobState(BigInteger jobId)
-        {
-            //do nothing if not running
-            if (!IsStarted)
-            {
-                return null;
-            }
-            //TODO: IMPLEMENT
-            return new Bitmap(255, 255);
-        }
-
-        /// <summary>
         /// Returns true if the user is allowed to delete the given job
         /// </summary>
         /// <param name="job"></param>

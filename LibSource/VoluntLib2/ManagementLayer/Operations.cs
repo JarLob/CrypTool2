@@ -707,7 +707,8 @@ namespace VoluntLib2.ManagementLayer
             {
                 foreach (Job job in JobManager.JobList)
                 {
-                    job.UpdateProgess();
+                    job.UpdateProgessAndEpochProgress();
+                    job.UpdateEpochVisualization();
                 }
                 LastUpdateTime = DateTime.Now;
             }

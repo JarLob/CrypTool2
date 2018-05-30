@@ -216,14 +216,14 @@
                     <Label Grid.Column="0"  Grid.Row="3" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_EpochProgress}" />
                     <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Minimum="0" 
                              Value="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgress}" Margin="50,12" />
-                    <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressAsString}" 
+                    <TextBlock Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding ElementName=JobListView, Path=SelectedItem.EpochProgressText}" 
                                HorizontalAlignment="Center" VerticalAlignment="Center" Height="16"/>
 
                     <Label Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2" FontWeight="Bold" Content="{Loc _JobList_bitmask}" />
                     <Border Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6"  BorderThickness="1" Margin="50,10,50,0" Height="199" BorderBrush="#FF000000"
                         VerticalAlignment="Top">
-                        <Image Width="200" Height="200"
-                           Source="{Binding ElementName=JobListView, Path=SelectedItem.Visualization}" />
+                        <Image Width="200" Height="200" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Source="{Binding ElementName=JobListView, Path=SelectedItem.EpochVisualization, UpdateSourceTrigger=PropertyChanged}" />
                     </Border>
 
                     <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" FontWeight="Bold" Content="{Loc _JobList_jobDescription}" />

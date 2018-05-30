@@ -295,12 +295,6 @@ namespace CrypCloud.Core
                 return null;
             }
         }
-    
-        
-        public Bitmap GetJobStateVisualization(BigInteger jobId)
-        {
-            return voluntLib.GetVisualizationOfJobState(jobId);
-        }
 
         public bool UserCanDeleteJob(Job job)
         {

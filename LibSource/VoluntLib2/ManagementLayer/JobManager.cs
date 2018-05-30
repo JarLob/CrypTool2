@@ -282,7 +282,7 @@ namespace VoluntLib2.ManagementLayer
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogText(String.Format("Exception during handling of operation: {2}", ex.Message), this, Logtype.Error);
+                    Logger.LogText(String.Format("Exception during handling of operation: {0}", ex.Message), this, Logtype.Error);
                     Logger.LogException(ex, this, Logtype.Error);
                 }
                 try

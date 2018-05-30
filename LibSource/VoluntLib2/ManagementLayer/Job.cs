@@ -16,11 +16,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.Tools;
 
@@ -71,6 +75,8 @@ namespace VoluntLib2.ManagementLayer
         public EpochState JobEpochState { get; set; }
         public double Progress { get; set; }
         public string ProgressText { get; set; }
+        public double EpochProgress { get; set; }
+        public string EpochProgressText { get; set; }
 
         /// <summary>
         /// User can delete job, if (A) its his job or (B) he is an admin
@@ -782,19 +788,136 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Computes and sets the current progress of this job.
+        /// Computes and sets the current progress and epoch progress of this job.
         /// Also calls the property change event for the progress if it changed
         /// </summary>
-        internal void UpdateProgess()
+        internal void UpdateProgessAndEpochProgress()
         {
             double oldProgress = Progress;
-            Progress = (double)((NumberOfCalculatedBlocks * 1000000) / (NumberOfBlocks)) / 10000;
-            ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
-
+            Progress = (double)((NumberOfCalculatedBlocks * 1000000) / (NumberOfBlocks)) / 10000;            
+            
             if (oldProgress != Progress)
             {
+                ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
                 OnPropertyChanged("Progress");
                 OnPropertyChanged("ProgressText");
+            }
+
+            if (JobEpochState != null)
+            {
+                double oldEpochProgress = EpochProgress;
+                EpochProgress = (((double)JobEpochState.Bitmask.GetSetBitsCount()) / (JobEpochState.Bitmask.mask.Length * 8.0) * 100.0);
+                if (oldEpochProgress != EpochProgress)
+                {
+                    EpochProgressText = JobEpochState.Bitmask.GetSetBitsCount() + " / " + JobEpochState.Bitmask.mask.Length * 8;
+                    OnPropertyChanged("EpochProgress");
+                    OnPropertyChanged("EpochProgressText");
+                }
+            }
+        }
+
+        // help variable to check if we need to update the bitmap
+        private BigInteger LastNumberOfCalculatedBlocks = 0;
+            
+        /// <summary>
+        /// Updates visualization of current epoch 
+        /// </summary>
+        internal void UpdateEpochVisualization()
+        {
+            if (JobEpochState == null)
+            {
+                return;
+            }
+            try
+            {
+                //we use the singleton pattern to save memory
+                //and always update the same bitmap
+                if (VisualizationBitmap == null)
+                {
+                    int width = (int)Math.Ceiling(Math.Sqrt(JobEpochState.Bitmask.MaskSize * 8));
+                    VisualizationBitmap = new Bitmap(width, width);
+                }
+                if (NumberOfCalculatedBlocks != LastNumberOfCalculatedBlocks)
+                {
+                    int divisor = (int)Math.Ceiling(Math.Sqrt(JobEpochState.Bitmask.MaskSize * 8));
+                    int offset = 0;
+                    for (int byteNo = 0; byteNo < JobEpochState.Bitmask.mask.Length; byteNo++)
+                    {
+                        int bitNo = 0;
+                        for (int bitValue = 1; bitValue <= 128; bitValue *= 2)
+                        {
+                            offset = byteNo * 8 + bitNo;
+                            bitNo++;
+                            if ((JobEpochState.Bitmask.mask[byteNo] & bitValue) > 0)
+                            {
+                                VisualizationBitmap.SetPixel((int)(offset % divisor), (int)(offset / divisor), Color.Black);
+                            }
+                            else
+                            {
+                                VisualizationBitmap.SetPixel((int)(offset % divisor), (int)(offset / divisor), Color.White);
+                            }
+                        }
+                    }
+                    //color the rest of the bitmap in black
+                    while (offset < JobEpochState.Bitmask.mask.Length * 8)
+                    {
+                        offset++;
+                        VisualizationBitmap.SetPixel((int)(offset / divisor), (int)(offset % divisor), Color.Black);
+                    }
+                    LastNumberOfCalculatedBlocks = NumberOfCalculatedBlocks;
+                    OnPropertyChanged("EpochVisualization");
+                }
+            }
+            catch (Exception)
+            {
+                //if an exception occurs here, we ignore it.
+                //visualization is not so important. And a new one will be generated later.
+            }
+        }
+
+        private Bitmap VisualizationBitmap;
+        /// <summary>
+        /// Returns a graphical visualization of the job state of the job with the given jobid
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        public BitmapImage EpochVisualization
+        {
+            get
+            {
+                if (JobEpochState == null || VisualizationBitmap == null)
+                {
+                    return new BitmapImage();
+                }
+                try
+                {
+                    return BitmapToBitmapImage(VisualizationBitmap);
+                }
+                catch (Exception)
+                {
+                    return new BitmapImage();
+                }                
+            }
+        }
+
+        /// <summary>
+        /// Converts a bitmap to a bitmap image
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
+        private BitmapImage BitmapToBitmapImage(Bitmap bitmap)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                bitmap.Save(memoryStream, ImageFormat.Png);
+                memoryStream.Position = 0;
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.StreamSource = memoryStream;
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.EndInit();
+                bitmapImage.Freeze();
+                return bitmapImage;
             }
         }
     }
