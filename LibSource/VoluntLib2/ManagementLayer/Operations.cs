@@ -407,7 +407,7 @@ namespace VoluntLib2.ManagementLayer
                 //case 1: we have no epoch state but received one
                 if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState == null)
                 {
-                    JobManager.Jobs[job.JobId].JobEpochState = (EpochState)job.JobEpochState.Clone();
+                    JobManager.Jobs[job.JobId].JobEpochState = (EpochState)job.JobEpochState.Clone();                    
                 }
                 //case 2: we have an epoch state and received one
                 else   if (job.JobEpochState != null && JobManager.Jobs[job.JobId].JobEpochState != null)
@@ -675,6 +675,46 @@ namespace VoluntLib2.ManagementLayer
 
         /// <summary>
         /// Does nothing with messages
+        /// </summary>
+        /// <param name="message"></param>
+        public override void HandleMessage(Message message)
+        {            
+        }
+    }
+
+    /// <summary>
+    /// This operation updates the progress for the UI of each job
+    /// </summary>
+    internal class UpdateJobsProgressOperation : Operation
+    {
+        private const int UPDATE_TIME_INTERVAL = 1000; //1 sec        
+        private DateTime LastUpdateTime = DateTime.MinValue;
+
+        /// <summary>
+        /// UpdateJobsProgressOperation never finishes
+        /// </summary>
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Updates each job's progress
+        /// </summary>
+        public override void Execute()
+        {
+            if(DateTime.Now > LastUpdateTime.AddMilliseconds(UPDATE_TIME_INTERVAL))
+            {
+                foreach (Job job in JobManager.JobList)
+                {
+                    job.UpdateProgess();
+                }
+                LastUpdateTime = DateTime.Now;
+            }
+        }
+
+        /// <summary>
+        /// Does nothing
         /// </summary>
         /// <param name="message"></param>
         public override void HandleMessage(Message message)

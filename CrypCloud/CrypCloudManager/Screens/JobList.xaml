@@ -27,7 +27,6 @@
         <viewModels:JobListVM  IsActive="True" />
     </UserControl.DataContext>
 
-    <!-- Visibility="{Binding IsActive, Converter={converter:BoolToVisibilityConverter}, FallbackValue=Visible, TargetNullValue=Visible}"-->
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="25" 
          Visibility="{Binding IsActive, Converter={converter:BoolToVisibilityConverter}, FallbackValue=Visible, TargetNullValue=Visible}" >
 
@@ -119,12 +118,12 @@
                                 <DataTemplate>
                                     <Grid>
                                         <ProgressBar Name="progress" DataContext="{Binding}" Minimum="0" Maximum="100"
-                                                     Value="{Binding ProgressPercentage}"
+                                                     Value="{Binding Progress}"
                                                      Width="{Binding ElementName=helperField, Path=ActualWidth, 
-                                            Converter={converter:AddMarginForProgressBarConverter}}"
+                                                     Converter={converter:AddMarginForProgressBarConverter}}"
                                                      Height="25" />
 
-                                        <TextBlock DataContext="{Binding}" Text="{Binding ProgressTotal}"
+                                        <TextBlock DataContext="{Binding}" Text="{Binding ProgressText}"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center" />
                                     </Grid>

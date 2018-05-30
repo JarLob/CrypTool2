@@ -50,6 +50,7 @@ namespace VoluntLib2.ManagementLayer
             LastPayloadRequestTime = DateTime.MinValue;
             IsDeleted = false;
             JobEpochState = new EpochState();
+            Progress = 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -68,7 +69,9 @@ namespace VoluntLib2.ManagementLayer
         public byte[] JobDeletionSignatureData { get; set; }
         public byte[] JobPayload { get; set; }
         public EpochState JobEpochState { get; set; }
-        
+        public double Progress { get; set; }
+        public string ProgressText { get; set; }
+
         /// <summary>
         /// User can delete job, if (A) its his job or (B) he is an admin
         /// </summary>
@@ -671,6 +674,9 @@ namespace VoluntLib2.ManagementLayer
             return JobEpochState.Bitmask.GetFreeBits();
         }
 
+        /// <summary>
+        /// Checks and updates the epoch and bitmask of this job.
+        /// </summary>
         public void CheckAndUpdateEpochAndBitmask()
         {
             if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
@@ -721,7 +727,11 @@ namespace VoluntLib2.ManagementLayer
             }
         }
 
-        public BigInteger NumberOfCalculatedBlocks {
+        /// <summary>
+        /// Number of calculated blocks of this job
+        /// </summary>
+        public BigInteger NumberOfCalculatedBlocks 
+        {
             get 
             {
                 if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
@@ -743,6 +753,9 @@ namespace VoluntLib2.ManagementLayer
             }        
         }
 
+        /// <summary>
+        /// Number of epochs of this job
+        /// </summary>
         public BigInteger NumberOfEpochs
         {
             get 
@@ -760,6 +773,21 @@ namespace VoluntLib2.ManagementLayer
             }
         }
 
+        /// <summary>
+        /// Computes and sets the current progress of this job.
+        /// Also calls the property change event for the progress if it changed
+        /// </summary>
+        internal void UpdateProgess()
+        {
+            double oldProgress = Progress;
+            Progress = (double)((NumberOfCalculatedBlocks * 1000000) / (NumberOfBlocks)) / 10000;
+            ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
 
+            if (oldProgress != Progress)
+            {
+                OnPropertyChanged("Progress");
+                OnPropertyChanged("ProgressText");
+            }
+        }
     }
 }

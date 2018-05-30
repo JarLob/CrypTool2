@@ -135,7 +135,9 @@ namespace VoluntLib2.ManagementLayer
             Operations.Enqueue(new HandleResponseJobMessageOperation() { JobManager = this });
             //This operation serializes the jobs every 5 minutes to file
             Operations.Enqueue(new JobsSerializationOperation() { JobManager = this });
-            
+            //This operation updates all job's progress every second
+            Operations.Enqueue(new UpdateJobsProgressOperation() { JobManager = this });
+
             Logger.LogText("JobManager started", this, Logtype.Info);
         }
 

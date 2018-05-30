@@ -121,7 +121,7 @@ namespace VoluntLib2.ComputationLayer
                 {
                     Logger.LogText(String.Format("Could not start workers: {0}", ex.Message), this, Logtype.Error);
                     Logger.LogException(ex, this, Logtype.Error);
-                }
+                }                
             }
         }
 
@@ -252,7 +252,7 @@ namespace VoluntLib2.ComputationLayer
                     uint finishedRemoteJobs = RemoteJob.JobEpochState.Bitmask.GetSetBitsCount();
                     if (finishedRemoteJobs > finishedLocalJobs)
                     {
-                        LocalJob.JobEpochState = (EpochState)RemoteJob.JobEpochState.Clone();
+                        LocalJob.JobEpochState = (EpochState)RemoteJob.JobEpochState.Clone();                        
                         Logger.LogText(String.Format("Kept remote epoch state of job {0}", BitConverter.ToString(LocalJob.JobId.ToByteArray())), this, Logtype.Debug);
                     }
                     else
