@@ -679,6 +679,10 @@ namespace VoluntLib2.ManagementLayer
         /// </summary>
         public void CheckAndUpdateEpochAndBitmask()
         {
+            if (JobEpochState == null)
+            {
+                return;
+            }
             if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
             {                
                 //we are in the last epoch, thus, we fill the rest of the bitmask with ones
@@ -734,6 +738,10 @@ namespace VoluntLib2.ManagementLayer
         {
             get 
             {
+                if (JobEpochState == null)
+                {
+                    return BigInteger.Zero;
+                }
                 if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
                 {
                     //special case: last epoch
