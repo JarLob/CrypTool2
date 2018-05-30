@@ -705,7 +705,7 @@ namespace VoluntLib2.ManagementLayer
         {
             if(DateTime.Now > LastUpdateTime.AddMilliseconds(UPDATE_TIME_INTERVAL))
             {
-                foreach (Job job in JobManager.JobList)
+                foreach (Job job in new List<Job>(JobManager.JobList))
                 {
                     job.UpdateProgessAndEpochProgress();
                     job.UpdateEpochVisualization();
