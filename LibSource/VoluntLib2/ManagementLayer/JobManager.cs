@@ -374,9 +374,13 @@ namespace VoluntLib2.ManagementLayer
             job.JobPayloadHash = CertificateService.GetCertificateService().ComputeHash(payloadCopy);
             //create job signature (without payload)
             job.JobCreatorSignatureData = GenerateCreatorSignatureData(job);
+            //dynamically create bitmask with appropriate masksize
+            BigInteger masksize = numberOfBlocks / 8;
+            job.JobEpochState.Bitmask = new Bitmask(masksize > Bitmask.MAX_MASKSIZE ? Bitmask.MAX_MASKSIZE : (uint)masksize);
+            job.CheckAndUpdateEpochAndBitmask();
             //finally, add payload
             job.JobPayload = payloadCopy;
-
+            
             if (Jobs.TryAdd(jobId, job))
             {
                 foreach (Operation operation in Operations)
@@ -389,6 +393,7 @@ namespace VoluntLib2.ManagementLayer
                 }
                 //Send the job to everyone else                
                 SendResponseJobMessage(null, job);
+                //notify change of joblist
                 OnJobListChanged();
                 return jobId;
             }

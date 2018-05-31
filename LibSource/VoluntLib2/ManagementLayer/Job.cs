@@ -23,6 +23,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using VoluntLib2.ComputationLayer;
@@ -54,7 +55,11 @@ namespace VoluntLib2.ManagementLayer
             LastPayloadRequestTime = DateTime.MinValue;
             IsDeleted = false;
             JobEpochState = new EpochState();
-            Progress = 0;
+            //we set progress and old progress to -1; thus it will be updated
+            //by UpdateJobsProgressOperation one time and the progress will
+            //be displayed in ui of crypcloud
+            Progress = -1;
+            EpochProgress = -1;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -692,42 +697,45 @@ namespace VoluntLib2.ManagementLayer
             if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
             {                
                 //we are in the last epoch, thus, we fill the rest of the bitmask with ones
-                BigInteger bitsToFill = ((JobEpochState.Bitmask.MaskSize * 8) - NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8));
-                uint offset = JobEpochState.Bitmask.MaskSize - 1;
-                while (bitsToFill >= 8)
+                BigInteger bitsToFill = NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8);
+                if (bitsToFill > 0)
                 {
-                    JobEpochState.Bitmask.SetMaskByte(offset, 0xFF);
-                    bitsToFill -= 8;
-                    offset -= 1;
+                    uint offset = JobEpochState.Bitmask.MaskSize - 1;
+                    while (bitsToFill >= 8)
+                    {
+                        JobEpochState.Bitmask.SetMaskByte(offset, 0xFF);
+                        bitsToFill -= 8;
+                        offset -= 1;
+                    }
+                    //Set last byte which may not be completely filled
+                    switch ((uint)bitsToFill)
+                    {
+                        case 1:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128);
+                            break;
+                        case 2:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64);
+                            break;
+                        case 3:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32);
+                            break;
+                        case 4:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16);
+                            break;
+                        case 5:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8);
+                            break;
+                        case 6:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4);
+                            break;
+                        case 7:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2);
+                            break;
+                        case 8:
+                            JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1);
+                            break;
+                    }
                 }
-                //Set last byte which may not be completely filled
-                switch ((uint)bitsToFill)
-                {
-                    case 1:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128);
-                        break;
-                    case 2:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64);
-                        break;
-                    case 3:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32);
-                        break;
-                    case 4:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16);
-                        break;
-                    case 5:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8);
-                        break;
-                    case 6:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4);
-                        break;
-                    case 7:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2);
-                        break;
-                    case 8:
-                        JobEpochState.Bitmask.SetMaskByte(offset, 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1);
-                        break;
-                }                
             }
             else if (FreeBlocksInEpoch() == 0)
             {
@@ -748,16 +756,10 @@ namespace VoluntLib2.ManagementLayer
                 {
                     return BigInteger.Zero;
                 }
-                if (JobEpochState.EpochNumber == NumberOfEpochs - 1)
+                //special case: last epoch size != all other epoch's size
+                if (JobEpochState.EpochNumber == NumberOfEpochs - 1 && NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8) > 0)
                 {
-                    //special case: last epoch
-                    BigInteger value = JobEpochState.EpochNumber * JobEpochState.Bitmask.MaskSize * 8 + JobEpochState.Bitmask.GetSetBitsCount() - (((JobEpochState.Bitmask.MaskSize * 8) - NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8)));
-                    if(value < 0)
-                    {
-                        //can happen, when mask was not 
-                        return 0;
-                    }
-                    return value;
+                    return JobEpochState.EpochNumber * JobEpochState.Bitmask.MaskSize * 8 + JobEpochState.Bitmask.GetSetBitsCount() - (((JobEpochState.Bitmask.MaskSize * 8) - NumberOfBlocks % (JobEpochState.Bitmask.MaskSize * 8)));
                 }
                 else
                 {
@@ -818,7 +820,8 @@ namespace VoluntLib2.ManagementLayer
 
         // help variable to check if we need to update the bitmap
         private BigInteger LastNumberOfCalculatedBlocks = 0;
-            
+        private Mutex UpdateEpochVisualizationMutex = new Mutex();
+
         /// <summary>
         /// Updates visualization of current epoch 
         /// </summary>
@@ -827,9 +830,10 @@ namespace VoluntLib2.ManagementLayer
             if (JobEpochState == null)
             {
                 return;
-            }
+            }            
             try
             {
+                UpdateEpochVisualizationMutex.WaitOne();   
                 //we use the singleton pattern to save memory
                 //and always update the same bitmap
                 if (VisualizationBitmap == null)
@@ -858,11 +862,12 @@ namespace VoluntLib2.ManagementLayer
                             }
                         }
                     }
+                    offset++;
                     //color the rest of the bitmap in black
-                    while (offset < JobEpochState.Bitmask.mask.Length * 8)
-                    {
+                    while (offset < VisualizationBitmap.Width * VisualizationBitmap.Height)
+                    {                        
+                        VisualizationBitmap.SetPixel((int)(offset % divisor), (int)(offset / divisor), Color.Black);
                         offset++;
-                        VisualizationBitmap.SetPixel((int)(offset / divisor), (int)(offset % divisor), Color.Black);
                     }
                     LastNumberOfCalculatedBlocks = NumberOfCalculatedBlocks;
                     OnPropertyChanged("EpochVisualization");
@@ -872,6 +877,10 @@ namespace VoluntLib2.ManagementLayer
             {
                 //if an exception occurs here, we ignore it.
                 //visualization is not so important. And a new one will be generated later.
+            }
+            finally
+            {
+                UpdateEpochVisualizationMutex.ReleaseMutex();
             }
         }
 
