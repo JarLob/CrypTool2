@@ -142,7 +142,7 @@
     <value>Calculation complete.</value>
   </data>
   <data name="Chunks_" xml:space="preserve">
-    <value>Chunks:</value>
+    <value>Blocks:</value>
   </data>
   <data name="Client_disconnected_" xml:space="preserve">
     <value>Client disconnected!</value>
@@ -181,7 +181,7 @@
     <value>CS Encrypted Data</value>
   </data>
   <data name="Current_Chunk_" xml:space="preserve">
-    <value>Current chunk:</value>
+    <value>Current blocks:</value>
   </data>
   <data name="Devices_" xml:space="preserve">
     <value>Devices:</value>
@@ -250,7 +250,7 @@
     <value>Aggregate Statistics</value>
   </data>
   <data name="Current__Information_" xml:space="preserve">
-    <value>Current Information</value>
+    <value>Current information</value>
   </data>
   <data name="_Information_" xml:space="preserve">
     <value>Information</value>
@@ -298,7 +298,7 @@
     <value>Finding next chunk to calculate</value>
   </data>
   <data name="Finished_Chunks_" xml:space="preserve">
-    <value>Finished chunks:</value>
+    <value>Finished blocks:</value>
   </data>
   <data name="GroupEvaluation" xml:space="preserve">
     <value>Evaluation</value>
@@ -559,7 +559,7 @@
     <value>Total amount of chunks: {0}, each containing {1} keys.</value>
   </data>
   <data name="Total_Chunks_" xml:space="preserve">
-    <value>Total chunks:</value>
+    <value>Total blocks:</value>
   </data>
   <data name="Total_Link_" xml:space="preserve">
     <value>Total (link):</value>
@@ -652,13 +652,13 @@
     <value>Current Stats</value>
   </data>
   <data name="Current__Machines_" xml:space="preserve">
-    <value>Current Machines</value>
+    <value>Current machines</value>
   </data>
   <data name="Current__rate_" xml:space="preserve">
-    <value>Current Rate</value>
+    <value>Current rate</value>
   </data>
   <data name="Current__Users_" xml:space="preserve">
-    <value>Current Users</value>
+    <value>Current users</value>
   </data>
   <data name="Last__Update__Time" xml:space="preserve">
     <value>Last Update Time: </value>
@@ -694,7 +694,7 @@
     <value>Bytes offset not valid: </value>
   </data>
   <data name="Finished_Chunks_Tooltip" xml:space="preserve">
-    <value>Total locally finished chunks (locally finished chunks in this session)</value>
+    <value>Total locally finished blocks (locally finished blocks in this session)</value>
   </data>
   <data name="Anonymize_machine_name" xml:space="preserve">
     <value>Anonymize machine name</value>
@@ -778,7 +778,7 @@
     <value>Copy value</value>
   </data>
   <data name="Abort_Chunks_" xml:space="preserve">
-    <value>Aborted chunks:</value>
+    <value>Aborted blocks:</value>
   </data>
   <data name="Avg_Time_Per_Chunk" xml:space="preserve">
     <value>Avg. time per chunk:</value>
@@ -796,7 +796,7 @@
     <value>Throughput / sec:</value>
   </data>
   <data name="settings__caption_numberOfChunks" xml:space="preserve">
-    <value>Number of chunks (log)</value>
+    <value>Number of blocks (log)</value>
   </data>
   <data name="settings__caption_useNetwork" xml:space="preserve">
     <value>Enable CrypCloud</value>
@@ -808,7 +808,7 @@
     <value>Use internal network 'CrypCloud' for distribution of this workspace.</value>
   </data>
   <data name="ChunkSizeCaption" xml:space="preserve">
-    <value>Chunk Size</value>
+    <value>Block size</value>
   </data>
   <data name="ChunkSizeTooltip" xml:space="preserve">
     <value>Number of keys, that are calculated by one peer per time. This value is the exponent of the square of the chunk size.</value>
@@ -818,5 +818,8 @@
   </data>
   <data name="settings__tooltip_numberOfBlocks" xml:space="preserve">
     <value>Enter the number of blocks into which the calculation should be split.</value>
+  </data>
+  <data name="Dataspace" xml:space="preserve">
+    <value>Dataspace Size:</value>
   </data>
 </root>

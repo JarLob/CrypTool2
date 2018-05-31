@@ -164,10 +164,10 @@
                                   ScrollViewer.VerticalScrollBarVisibility="Auto" 
                                   Height="200" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="0,2,0,1">
                             <ListView.View> 
-                                <GridView> 
-                                    <GridViewColumn Header="Value" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>
-                                    <GridViewColumn Header="Text" Width="300" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}"/>
-                                    <GridViewColumn Header="Key" Width="250" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}"/>
+                                <GridView>
+                                    <GridViewColumn Header="{Loc Value}" Width="73" DisplayMemberBinding="{Binding Path=Costs}"/>
+                                    <GridViewColumn Header="{Loc Text}" Width="300" DisplayMemberBinding="{Binding Path=Decryption, Converter={StaticResource ByteArrayToUtf8StringConverter}}"/>
+                                    <GridViewColumn Header="{Loc Key}" Width="250" DisplayMemberBinding="{Binding Path=KeyBytes, Converter={StaticResource ByteArrayToHexStringConverter}}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

@@ -19,7 +19,7 @@ namespace KeySearcher.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -142,7 +142,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Aborted chunks: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Aborted blocks: ähnelt.
         /// </summary>
         public static string Abort_Chunks_ {
             get {
@@ -286,7 +286,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chunks: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Blocks: ähnelt.
         /// </summary>
         public static string Chunks_ {
             get {
@@ -295,7 +295,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chunk Size ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Block size ähnelt.
         /// </summary>
         public static string ChunkSizeCaption {
             get {
@@ -529,7 +529,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current information ähnelt.
         /// </summary>
         public static string Current__Information_ {
             get {
@@ -538,7 +538,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Machines ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current machines ähnelt.
         /// </summary>
         public static string Current__Machines_ {
             get {
@@ -547,7 +547,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Rate ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current rate ähnelt.
         /// </summary>
         public static string Current__rate_ {
             get {
@@ -556,7 +556,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Users ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current users ähnelt.
         /// </summary>
         public static string Current__Users_ {
             get {
@@ -565,7 +565,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current chunk: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current blocks: ähnelt.
         /// </summary>
         public static string Current_Chunk_ {
             get {
@@ -579,6 +579,15 @@ namespace KeySearcher.Properties {
         public static string Current_Stats_ {
             get {
                 return ResourceManager.GetString("Current_Stats_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dataspace Size: ähnelt.
+        /// </summary>
+        public static string Dataspace {
+            get {
+                return ResourceManager.GetString("Dataspace", resourceCulture);
             }
         }
         
@@ -817,7 +826,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Finished chunks: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Finished blocks: ähnelt.
         /// </summary>
         public static string Finished_Chunks_ {
             get {
@@ -826,7 +835,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Total locally finished chunks (locally finished chunks in this session) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Total locally finished blocks (locally finished blocks in this session) ähnelt.
         /// </summary>
         public static string Finished_Chunks_Tooltip {
             get {
@@ -1665,7 +1674,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of chunks (log) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of blocks (log) ähnelt.
         /// </summary>
         public static string settings__caption_numberOfChunks {
             get {
@@ -1953,7 +1962,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Total chunks: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Total blocks: ähnelt.
         /// </summary>
         public static string Total_Chunks_ {
             get {

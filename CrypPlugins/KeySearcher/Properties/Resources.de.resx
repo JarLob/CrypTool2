@@ -181,7 +181,7 @@
     <value>CS Verschlüsselte Daten</value>
   </data>
   <data name="Current_Chunk_" xml:space="preserve">
-    <value>Derzeitiger Block:</value>
+    <value>Derzeitige Blöcke:</value>
   </data>
   <data name="Devices_" xml:space="preserve">
     <value>Geräte:</value>
@@ -797,7 +797,7 @@
     <value>Zeit pro Block:</value>
   </data>
   <data name="global_throughput_sec" xml:space="preserve">
-    <value>Durchsatz / sek:</value>
+    <value>Durchsatz / sec:</value>
   </data>
   <data name="JobID_" xml:space="preserve">
     <value>ID:</value>
@@ -806,7 +806,7 @@
     <value>Job:</value>
   </data>
   <data name="local_throughput_sec" xml:space="preserve">
-    <value>Durchsatz / sek:</value>
+    <value>Durchsatz / sec:</value>
   </data>
   <data name="Client__0__tried_to_auth_with_invalid_password1" xml:space="preserve">
     <value>Client '{0}' versuchte Authentifizierung mit ungültigem Passwort</value>
@@ -825,5 +825,8 @@
   </data>
   <data name="settings__tooltip_useNetwork" xml:space="preserve">
     <value>Verwende internes Netzwerk 'CrypCloud', um diesen Arbeitsbereich zu verteilen.</value>
+  </data>
+  <data name="Dataspace" xml:space="preserve">
+    <value>Datenraumgröße:</value>
   </data>
 </root>
