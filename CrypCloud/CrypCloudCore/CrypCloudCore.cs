@@ -305,7 +305,17 @@ namespace CrypCloud.Core
 
         public bool IsPartizipationOnJob()
         {
-            return voluntLib.GetCurrentRunningWorkersPerJob().Count > 0;
+            if (voluntLib.GetCurrentRunningWorkersPerJob().Count > 0)
+            {
+                foreach (int workerNo in voluntLib.GetCurrentRunningWorkersPerJob().Values)
+                {
+                    if (workerNo > 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
   
         public bool IsBannedCertificate(X509Certificate2 certificate)

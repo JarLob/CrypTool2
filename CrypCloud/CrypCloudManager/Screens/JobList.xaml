@@ -36,7 +36,6 @@
             <RowDefinition Height="500*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-
         <!-- top controls -->
         <Grid Grid.Row="0">
             <Label Content="{Loc _JobList_Header}" FontSize="14" HorizontalAlignment="Center" Margin="10" />
@@ -57,10 +56,10 @@
 
         </Grid>
 
-        <Label Grid.Row="1" Visibility="{Binding Path=ErrorMessage, Converter={converter:ShowWhenStringIsEmptyConverter}}" Content="{Loc  _JobList_helpText}"/>
+        <!--<Label Grid.Row="1" Visibility="{Binding Path=ErrorMessage, Converter={converter:ShowWhenStringIsEmptyConverter}}" Content="{Loc  _JobList_helpText}"/>-->
         <!-- errorBox    -->
         <Border Grid.Row="1"  Visibility="{Binding Path=ErrorMessage, Converter={converter:HideWhenStringIsEmptyConverter}}" BorderThickness="1" BorderBrush="PaleVioletRed" Background="White" HorizontalAlignment="Center">
-            <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding Path=ErrorMessage}" Margin="5,2,5,0" Foreground="Red" TextWrapping="NoWrap" />
         </Border>
 
         <Grid Grid.Row="2"  Margin="5" VerticalAlignment="Stretch">

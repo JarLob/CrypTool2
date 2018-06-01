@@ -298,7 +298,7 @@ namespace VoluntLib2
             //do nothing if not running
             if (!IsStarted)
             {
-                return null;
+                return new Dictionary<BigInteger, int>();
             }
             return ComputationManager.GetCurrentRunningWorkersPerJob();
         }
