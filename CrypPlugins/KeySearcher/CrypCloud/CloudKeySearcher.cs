@@ -15,6 +15,7 @@ using KeySearcherPresentation.Controls;
 using Timer = System.Timers.Timer;
 using VoluntLib2;
 using VoluntLib2.ComputationLayer;
+using VoluntLib2.Tools;
 
 namespace KeySearcher
 {

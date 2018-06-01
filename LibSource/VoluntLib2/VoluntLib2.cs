@@ -264,14 +264,14 @@ namespace VoluntLib2
         /// </summary>
         /// <param name="jobID"></param>
         /// <returns></returns>
-        public Job GetJobByID(BigInteger jobID)
+        public Job GetJobByID(BigInteger jobId)
         {
             //do nothing if not running
             if (!IsStarted)
             {
                 return null;
             }
-            return JobManager.GetJobById(jobID);
+            return JobManager.GetJobById(jobId);
         }
 
         /// <summary>
@@ -279,15 +279,14 @@ namespace VoluntLib2
         /// </summary>
         /// <param name="jobID"></param>
         /// <returns></returns>
-        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobID)
+        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobId)
         {
             //do nothing if not running
             if (!IsStarted)
             {
                 return BigInteger.Zero;
             }
-            //TODO: IMPLEMENT
-            return BigInteger.Zero;
+            return JobManager.GetCalculatedBlocksOfJob(jobId);
         }
 
         /// <summary>
@@ -301,8 +300,7 @@ namespace VoluntLib2
             {
                 return null;
             }
-            //TODO: IMPLEMENT
-            return new Dictionary<BigInteger,int>();
+            return ComputationManager.GetCurrentRunningWorkersPerJob();
         }
 
         /// <summary>
@@ -317,8 +315,7 @@ namespace VoluntLib2
             {
                 return null;
             }
-            //TODO: IMPLEMENT
-            return new EpochState();
+            return JobManager.GetStateOfJob(jobId);
         }
 
         /// <summary>
@@ -333,7 +330,6 @@ namespace VoluntLib2
             {
                 return false;
             }
-            //TODO: IMPLEMENT
             return (job.CreatorName.Equals(CertificateName)) || 
                 CertificateService.GetCertificateService().IsAdminCertificate(CertificateService.GetCertificateService().OwnCertificate);
         }
@@ -350,7 +346,6 @@ namespace VoluntLib2
             {
                 return null;
             }
-            //TODO: IMPLEMENT
             return JobManager.GetJoblist();
         }
 

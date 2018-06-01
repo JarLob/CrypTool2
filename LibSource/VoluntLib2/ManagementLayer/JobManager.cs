@@ -98,6 +98,9 @@ namespace VoluntLib2.ManagementLayer
             }
         }
 
+        /// <summary>
+        /// Starts the JobManager
+        /// </summary>
         public void Start()
         {
             if (Running)
@@ -141,6 +144,9 @@ namespace VoluntLib2.ManagementLayer
             Logger.LogText("JobManager started", this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Handles incoming messages from connection layer
+        /// </summary>
         private void HandleIncomingMessages()
         {
             Logger.LogText("ReceivingThread started", this, Logtype.Info);
@@ -230,6 +236,10 @@ namespace VoluntLib2.ManagementLayer
             Logger.LogText("ReceivingThread terminated", this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Handles a given message by calling each operation's HandleMessage method
+        /// </summary>
+        /// <param name="message"></param>
         private void HandleMessage(Message message)
         {
             foreach (Operation operation in Operations)
@@ -246,6 +256,10 @@ namespace VoluntLib2.ManagementLayer
             }
         }
 
+        /// <summary>
+        /// Work method of JobManager
+        /// calling all operations in a loop
+        /// </summary>
         private void JobManagerWork()
         {
             Logger.LogText("WorkerThread started", this, Logtype.Info);
@@ -298,6 +312,9 @@ namespace VoluntLib2.ManagementLayer
             Logger.LogText("WorkerThread terminated", this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Stops the JobManager
+        /// </summary>
         public void Stop()
         {
             if (!Running)
@@ -342,6 +359,16 @@ namespace VoluntLib2.ManagementLayer
             Logger.LogText("Terminated", this, Logtype.Info);
         }
 
+        /// <summary>
+        /// Create a new job using the given data
+        /// </summary>
+        /// <param name="worldName"></param>
+        /// <param name="jobType"></param>
+        /// <param name="jobName"></param>
+        /// <param name="jobDescription"></param>
+        /// <param name="payload"></param>
+        /// <param name="numberOfBlocks"></param>
+        /// <returns></returns>
         internal BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
             if (payload.Length > MAX_JOB_PAYLOAD_SIZE)
@@ -476,6 +503,10 @@ namespace VoluntLib2.ManagementLayer
             }
         }
         
+        /// <summary>
+        /// Returns the internal job list
+        /// </summary>
+        /// <returns></returns>
         public ObservableCollection<Job> GetJoblist()
         {
             return JobList;
@@ -643,6 +674,54 @@ namespace VoluntLib2.ManagementLayer
                 SendResponseJobMessage(null, job);
                 OnJobListChanged();
             }            
+        }
+
+        /// <summary>
+        /// Returns number of calculated blocks of the job defined by given JobId
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        public BigInteger GetCalculatedBlocksOfJob(BigInteger jobId)
+        {
+            try
+            {
+                if (Jobs.ContainsKey(jobId))
+                {
+                    Job job = Jobs[jobId];
+                    return job.NumberOfCalculatedBlocks;
+                }
+                else
+                {
+                    return BigInteger.Zero;
+                }
+            }
+            catch (Exception)
+            {
+                //not so important; if exception occurs we just return 0
+                return BigInteger.Zero;
+            }
+        }
+
+        /// <summary>
+        /// Returns epoch state of calculated blocks of the job defined by given JobId
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        public EpochState GetStateOfJob(BigInteger jobId)
+        {
+            try
+            {
+                if (Jobs.ContainsKey(jobId))
+                {
+                    Job job = Jobs[jobId];
+                    return job.JobEpochState;
+                }                
+            }
+            catch (Exception)
+            {
+                //not so important; if exception occurs we just return null
+            }
+            return null;
         }
     }    
 }

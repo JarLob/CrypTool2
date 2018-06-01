@@ -248,7 +248,36 @@ namespace VoluntLib2.ComputationLayer
                     Logger.LogException(ex, this, Logtype.Error);
                 }
             }
-        }        
+        }
+
+        /// <summary>
+        /// Returns a dictionary containing the nummber of current running workers per job
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<BigInteger, int> GetCurrentRunningWorkersPerJob()
+        {
+            Dictionary<BigInteger, int> dict = new Dictionary<BigInteger, int>();
+            try
+            {                
+                foreach (Job job in new List<Job>(JobManager.JobList))
+                {
+                    if (this.JobAssignments.ContainsKey(job.JobId))
+                    {
+                        dict.Add(job.JobId, JobAssignments[job.JobId].Workers.Count);
+                    }
+                    else
+                    {
+                        dict.Add(job.JobId, 0);
+                    }
+                }                
+            }
+            catch (Exception)
+            {    
+                //not so important;
+                //if an exception occurs, we only deliver the so-far created dictionary
+            }
+            return dict;
+        }
     }
 
     /// <summary>

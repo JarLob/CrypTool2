@@ -10,7 +10,8 @@ using CrypCloud.Core;
 using KeySearcher.CrypCloud.statistics;
 using KeySearcher.KeyPattern;
 using VoluntLib2;
-using VoluntLib2.ComputationLayer; 
+using VoluntLib2.ComputationLayer;
+using VoluntLib2.Tools; 
 
 namespace KeySearcher.CrypCloud
 {

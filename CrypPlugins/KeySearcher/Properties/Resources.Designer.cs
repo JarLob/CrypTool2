@@ -304,7 +304,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys, that are calculated by one peer per time. This value is the exponent of the square of the chunk size. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Number of keys calculated by one peer per time. This value is the exponent of the square of the block size. ähnelt.
         /// </summary>
         public static string ChunkSizeTooltip {
             get {
@@ -1710,7 +1710,7 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Use internal network &apos;CrypCloud&apos; for distribution of this workspace. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use internal network &apos;CrypCloud&apos; to distribute this workspace. ähnelt.
         /// </summary>
         public static string settings__tooltip_useNetwork {
             get {
