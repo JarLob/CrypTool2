@@ -16,14 +16,126 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using VoluntLib2.ConnectionLayer;
 
 namespace VoluntLib2.Tools
 {
+    /// <summary>
+    /// Event args for ConnectionsNumberChanged event
+    /// </summary>
     public class ConnectionsNumberChangedEventArgs : EventArgs
     {
         public List<Contact> Contacts { get; set; }
+    }
+
+    /// <summary>
+    /// Event args for job progress events
+    /// </summary>
+    public class JobProgressEventArgs : EventArgs
+    {
+        private readonly BigInteger jobId;
+        private readonly BigInteger numberOfBlocks;
+        private readonly BigInteger numberOfCalculatedBlocks;
+        private readonly List<byte[]> resultList;
+
+        /// <summary>
+        /// Creates a new JobProgressEventArgs
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="resultList"></param>
+        /// <param name="numberOfBlocks"></param>
+        /// <param name="numberOfCalculatedBlocks"></param>
+        public JobProgressEventArgs(BigInteger jobId, List<byte[]> resultList, BigInteger numberOfBlocks, BigInteger numberOfCalculatedBlocks)
+        {
+            this.jobId = jobId;
+            this.resultList = resultList;
+            this.numberOfBlocks = numberOfBlocks;
+            this.numberOfCalculatedBlocks = numberOfCalculatedBlocks > numberOfBlocks ? numberOfBlocks : numberOfCalculatedBlocks;
+        }
+
+        /// <summary>
+        /// Number of blocks of the referenced job
+        /// </summary>
+        public BigInteger NumberOfBlocks
+        {
+            get { return numberOfBlocks; }
+        }
+
+        /// <summary>
+        /// JobId of the referenced job
+        /// </summary>
+        public BigInteger JobId
+        {
+            get { return jobId; }
+        }
+
+        /// <summary>
+        /// Current best list of the referenced job
+        /// </summary>
+        public List<byte[]> ResultList
+        {
+            get { return resultList; }
+        }
+
+        /// <summary>
+        /// Number of calculated blocks of the referenced job
+        /// </summary>
+        public BigInteger NumberOfCalculatedBlocks
+        {
+            get { return numberOfCalculatedBlocks; }
+        }
+    }
+
+    /// <summary>
+    /// Event args for task events
+    /// </summary>
+    public class TaskEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Creates a new TaskEventArgs
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="blockID"></param>
+        /// <param name="type"></param>
+        public TaskEventArgs(BigInteger jobId, BigInteger blockID, TaskEventArgType type)
+        {
+            Type = type;
+            JobId = jobId;
+            BlockID = blockID;
+        }
+
+        /// <summary>
+        /// Progress of the referenced task
+        /// </summary>
+        public int TaskProgress { get; set; }
+
+        /// <summary>
+        /// BlockId of the referenced task
+        /// </summary>
+        public BigInteger BlockID { get; private set; }
+
+        /// <summary>
+        /// Type of the event
+        /// </summary>
+        public TaskEventArgType Type { get; private set; }
+
+        /// <summary>
+        /// JobId of the referenced task
+        /// </summary>
+        public BigInteger JobId { get; private set; }
+    }
+
+    /// <summary>
+    /// Type of the TaskEventArgs
+    /// </summary>
+    public enum TaskEventArgType
+    {
+        Started,
+        Finished,
+        Canceled,
+        Progress
     }
 }
