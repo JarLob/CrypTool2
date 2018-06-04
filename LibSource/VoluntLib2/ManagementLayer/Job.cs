@@ -794,28 +794,23 @@ namespace VoluntLib2.ManagementLayer
         /// Also calls the property change event for the progress if it changed
         /// </summary>
         internal void UpdateProgessAndEpochProgress()
-        {
-            double oldProgress = Progress;
-            Progress = (double)((NumberOfCalculatedBlocks * 1000000) / (NumberOfBlocks)) / 10000;            
-            
-            if (oldProgress != Progress)
-            {
-                ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
-                OnPropertyChanged("Progress");
-                OnPropertyChanged("ProgressText");
-            }
-
+        {           
             if (JobEpochState != null)
             {
                 double oldEpochProgress = EpochProgress;
                 EpochProgress = (((double)JobEpochState.Bitmask.GetSetBitsCount()) / (JobEpochState.Bitmask.mask.Length * 8.0) * 100.0);
                 if (oldEpochProgress != EpochProgress)
                 {
+                    Progress = (double)((NumberOfCalculatedBlocks * 10000000000) / (NumberOfBlocks)) / 100000000;
+                    ProgressText = NumberOfCalculatedBlocks + " / " + NumberOfBlocks;
+                    OnPropertyChanged("Progress");
+                    OnPropertyChanged("ProgressText");
+
                     EpochProgressText = JobEpochState.Bitmask.GetSetBitsCount() + " / " + JobEpochState.Bitmask.mask.Length * 8;
                     OnPropertyChanged("EpochProgress");
                     OnPropertyChanged("EpochProgressText");
                 }
-            }
+            }            
         }
 
         // help variable to check if we need to update the bitmap
