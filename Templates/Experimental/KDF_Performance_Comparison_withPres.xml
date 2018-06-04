@@ -24,7 +24,7 @@
 	<replacement key="$SaltDesc$" value="Salt" />
 	<replacement key="$CTXInfoDesc$" value="CTXInfo" />
 	<replacement key="$OutputLength$" value="Ausgabelänge (in Byte)" />
-	<replacement key="$skm$" value="Quellschlüessel-Material" />
+	<replacement key="$skm$" value="Quellschlüssel-Material" />
 	<replacement key="$key$" value="geheim" />
 	<replacement key="$salt$" value="salt" />
 	<replacement key="$ctxinfo$" value="Anwendungsspezifische Konstante" />
