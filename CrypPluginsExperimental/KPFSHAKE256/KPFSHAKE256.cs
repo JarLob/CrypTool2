@@ -1,5 +1,6 @@
 ﻿/*
-   Copyright 2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
+   Author: Christian Bender, Universität Siegen
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,6 +14,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
 using System;
 using System.ComponentModel;
 using System.Text;
@@ -100,8 +102,11 @@ namespace Cryptool.Plugins.KPFSHAKE256
                 p.TextAlignment = TextAlignment.Right;
                 pres.txtStep.Document.Blocks.Add(p);
                 pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
+
             }, null);
         }
+
+
 
         /// <summary>
         ///  the method to be called in the workerthread
@@ -129,11 +134,10 @@ namespace Cryptool.Plugins.KPFSHAKE256
                 OnPropertyChanged("OutputBytes");
             }
 
-            //eleven stepts takes the presentation
-            double steps = 11;
+            //twelve stepts takes the presentation
+            double steps = 12;
             stepsToGo = (int)steps;
             double prgress_step = ((double)1) / steps;
-            double val = 0;
 
             refreshStepState();
 
@@ -141,525 +145,959 @@ namespace Cryptool.Plugins.KPFSHAKE256
             AutoResetEvent buttonStartClickedEvent = pres.buttonStartClickedEvent;
             buttonStartClickedEvent.Reset();
 
+            //Event for restart
+            AutoResetEvent buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
+            buttonRestartClickedEvent.Reset();
+
+            //Event for next
             AutoResetEvent buttonNextClickedEvent = pres.buttonNextClickedEvent;
             buttonNextClickedEvent.Reset();
 
+            //Event for prev
+            AutoResetEvent buttonPrevClickedEvent = pres.buttonPrevClickedEvent;
+            buttonPrevClickedEvent.Reset();
 
-            //Check if presentation shall be displayed
+            
+
+            int i = 0;
+
             if (settings.DisplayPres)
             {
-                //clean up for starting
-                pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+                while (i < stepsToGo + 1)
                 {
-                    pres.spStartRestartButtons.Visibility = Visibility.Visible;
-                    pres.buttonStart.IsEnabled = true;
-                    pres.buttonRestart.IsEnabled = false;
+                    renderBlankView();
+                    pres.Next = false;
+                    pres.Prev = false;
+                    //buttonPrevClickedEvent.Reset();
+                    //buttonNextClickedEvent.Reset();
 
-                    //Remarks to the inputs and outputs
-                    pres.lblExplanationSectionHeading.Visibility = Visibility.Visible;
-                    pres.txtExplanationSectionText.Visibility = Visibility.Visible;
-
-                    //Last
-                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                    pres.txtFinished.Visibility = Visibility.Hidden;
-
-                    //progress counter
-                    pres.txtStep.Visibility = Visibility.Visible;
-
-                    //Title of Presentation
-                    pres.lblTitleHeading.Visibility = Visibility.Hidden;
-                
-                    //Introduction
-                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
-
-                    //Construction
-                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                    pres.imgConstructionSponge.Visibility = Visibility.Hidden;
-
-                    //Calculation
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.imgCalculation.Visibility = Visibility.Hidden;
-                    pres.txtCalculationRounds.Visibility = Visibility.Hidden;
-                    pres.lblCalculationHeading.Visibility = Visibility.Hidden;
-                
-                    //Calculation finished
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-
-                    //Last
-                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                    pres.txtFinished.Visibility = Visibility.Hidden;
-
-                    //Error
-                    pres.txtError.Visibility = Visibility.Hidden;
-
-                    //Buttons
-                    pres.spStartRestartButtons.Visibility = Visibility.Visible;
-                    pres.spButtons.Visibility = Visibility.Hidden;
-                    pres.buttonSkipIntro.IsEnabled = false;
-                    pres.buttonNext.IsEnabled = false;
-                    pres.SkipChapter = false;
-
-                }, null);
-
-                buttonStartClickedEvent = pres.buttonStartClickedEvent;
-                buttonStartClickedEvent.WaitOne();
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                //clean up last round
-                pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
-                {
-                    //Remarks to the inputs and outputs
-                    pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
-
-                    //Title of Presentation
-                    pres.lblTitleHeading.Visibility = Visibility.Visible;
-
-                    //Introduction
-                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
-
-                    //Construction
-                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                    pres.imgConstructionSponge.Visibility = Visibility.Hidden;
-
-                    //Calculation
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.imgCalculation.Visibility = Visibility.Hidden;
-                    pres.txtCalculationRounds.Visibility = Visibility.Hidden;
-                    pres.lblCalculationHeading.Visibility = Visibility.Hidden;
-
-                    //Last
-                    pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
-                    pres.txtFinished.Visibility = Visibility.Hidden;
-
-                    //Error
-                    pres.txtError.Visibility = Visibility.Hidden;
-
-                    //Buttons
-                    pres.spStartRestartButtons.Visibility = Visibility.Hidden;
-                    pres.buttonStart.IsEnabled = false;
-                    pres.buttonRestart.IsEnabled = false;
-                    pres.spButtons.Visibility = Visibility.Visible;
-                    pres.buttonSkipIntro.IsEnabled = false;
-                    pres.buttonNext.IsEnabled = false;
-                    pres.SkipChapter = false;
-
-                }, null);
-
-                //Enable buttons
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.buttonNext.IsEnabled = true;
-                    pres.buttonSkipIntro.IsEnabled = false;
-                }, null);
-
-                buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                buttonNextClickedEvent.WaitOne();
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                pres.SkipChapter = false;
-
-                //Block: Introduction section heading  
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    WaitHandle[] waitHandles = new WaitHandle[]
                     {
-                        pres.lblTitleHeading.Visibility = Visibility.Hidden;
-                        pres.lblIntroductionSectionHeading.Visibility = Visibility.Visible;
-                        pres.buttonSkipIntro.IsEnabled = true;
+                        buttonNextClickedEvent,
+                        buttonPrevClickedEvent
+                    };
 
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-                
-                //Block: Introduction section
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    Console.WriteLine("Current i: " + i + " pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " pres.SkipChapter: " + pres.SkipChapter);
+                    switch (i)
                     {
-                        pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.lblIntroductionHeading.Visibility = Visibility.Visible;
-                        pres.txtIntroductionText.Visibility = Visibility.Visible;
+                        case 0:
+                            {
+                                renderState0(prgress_step, i);
+                                Console.WriteLine("Waiting in State: " + i);
+                                buttonStartClickedEvent.WaitOne();
+                                i++;
+                                break;
+                            }
+                        case 1:
+                            {
+                                renderState1(prgress_step, i);
+                                Console.WriteLine("Waiting in State: " + i);
+                                var j = WaitHandle.WaitAny(waitHandles);
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " j: " + j);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
 
-                    }, null);
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                renderState2(prgress_step, i);
+                                Console.WriteLine("Waiting in State: " + i);
+                                WaitHandle.WaitAny(waitHandles);
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
 
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 3:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState3(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 4:
+                            {
+                                pres.SkipChapter = false;
+                                renderState4(prgress_step, i);
+                                Console.WriteLine("Waiting in State: " + i);
+                                WaitHandle.WaitAny(waitHandles);
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 5:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState5(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 6:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState6(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 7:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState7(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 8:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState8(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                    
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 9:
+                            {
+                                pres.SkipChapter = false;
+                                renderState9(prgress_step, i);
+                                Console.WriteLine("Waiting in State: " + i);
+                                WaitHandle.WaitAny(waitHandles);
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+
+                        case 10:
+                            {
+                                if (!pres.SkipChapter)
+                                {
+                                    renderState10(prgress_step, i);
+                                    Console.WriteLine("Waiting in State: " + i);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+                                break;
+                            }
+                        case 11:
+                            {
+                                try
+                                {
+                                    byte[] result = computeKPFSHA256XOF(_skm, _key, (int)_outputBytes);
+
+                                    if (result == null)
+                                    {
+                                        return;
+                                    }
+
+                                    //Save to file if configured
+                                    if (settings.SaveToFile && !string.IsNullOrEmpty(settings.FilePath))
+                                    {
+                                        System.IO.StreamWriter file = new System.IO.StreamWriter(settings.FilePath);
+                                        int j = 0;
+                                        foreach (byte b in result)
+                                        {
+                                            if (j % 31 == 0)
+                                            {
+                                                file.Write("\n");
+                                            }
+                                            file.Write(b.ToString("X2"));
+                                            j++;
+                                        }
+                                        file.Close();
+                                    }
+
+                                    _keyMaterial = result;
+                                    OnPropertyChanged("KeyMaterial");
+
+                                }
+                                catch (System.OutOfMemoryException ex)
+                                {
+                                    GuiLogMessage(ex.Message + " " + Resources.ExSystemOutOfMemory, NotificationLevel.Error);
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
+                                        pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                                        pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+                                        pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                                        pres.imgCalculation.Visibility = Visibility.Hidden;
+                                        pres.txtError.Visibility = Visibility.Visible;
+
+                                    }, null);
+                                    return;
+                                }
+
+                                if (!pres.SkipChapter)
+                                {
+                                    double val = prgress_step * i;
+                                    ProgressChanged(val, 1);
+                                    curStep = i;
+                                    refreshStepState();
+
+                                    //Block: Iteration section 
+                                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                                    {
+                                        pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                                        pres.lblCalculationHeading.Visibility = Visibility.Visible;
+                                        pres.txtCalculationRounds.Visibility = Visibility.Visible;
+                                        pres.imgCalculation.Visibility = Visibility.Visible;
+
+                                        Paragraph p = new Paragraph();
+                                        p.Inlines.Add(new Run(Resources.PresCalculationText.Replace("{1}", System.Text.Encoding.UTF8.GetString(_skm)).Replace("{2}", System.Text.Encoding.UTF8.GetString(_key))));
+                                        p.TextAlignment = TextAlignment.Left;
+                                        pres.txtCalculationRounds.Document.Blocks.Clear();
+                                        pres.txtCalculationRounds.Document.Blocks.Add(p);
+
+                                        //Buttons
+                                        pres.spButtons.Visibility = Visibility.Visible;
+
+                                        //progress counter
+                                        pres.txtStep.Visibility = Visibility.Visible;
+
+                                    }, null);
+                                    WaitHandle.WaitAny(waitHandles);
+                                }
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                if (pres.Prev)
+                                {
+                                    pres.Prev = false;
+                                    i--;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+
+                                }
+                                else
+                                {
+                                    pres.Next = false;
+                                    i++;
+                                    //buttonPrevClickedEvent.Reset();
+                                    //buttonNextClickedEvent.Reset();
+                                }
+
+                                break;
+                            }
+
+                        case 12:
+                            {
+                                pres.SkipChapter = false;
+                                renderState12(prgress_step, i);
+                                buttonRestartClickedEvent.WaitOne();
+
+                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+
+                                if (pres.Restart)
+                                {
+                                    goto Restart;
+                                }
+                                
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                            }
+                    }
                 }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                pres.SkipChapter = false;
-
-                //Block: Construction section heading
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.lblTitleHeading.Visibility = Visibility.Hidden;
-                        pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                        pres.txtIntroductionText.Visibility = Visibility.Hidden;
-                        pres.lblConstructionSectionHeading.Visibility = Visibility.Visible;
-
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                //Block: Construction section part 1
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.lblConstructionHeading.Visibility = Visibility.Visible;
-                        pres.txtConstructionText1.Visibility = Visibility.Visible;
-                        pres.txtConstructionScheme.Visibility = Visibility.Visible;
-
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                //Block: Construction section part 2
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.lblConstructionHeading.Visibility = Visibility.Visible;
-                        pres.txtConstructionText1.Visibility = Visibility.Visible;
-                        pres.txtConstructionText2.Visibility = Visibility.Visible;
-                        pres.txtConstructionScheme.Visibility = Visibility.Visible;
-
-
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                //Block: Construction section part 3
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                        pres.lblConstructionHeading.Visibility = Visibility.Visible;
-                        pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                        pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                        pres.txtConstructionText3.Visibility = Visibility.Visible;
-                        pres.imgConstructionSponge.Visibility = Visibility.Visible;
-
-
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                //Block: Construction section part 4
-                if (!pres.SkipChapter)
-                {
-                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                    {
-                        pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                        pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                        pres.lblConstructionHeading.Visibility = Visibility.Visible;
-                        pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                        pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                        pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                        pres.txtConstructionText4.Visibility = Visibility.Visible;
-                        pres.imgConstructionSponge.Visibility = Visibility.Visible;
-
-
-                    }, null);
-
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
-
-                pres.SkipChapter = false;
-
-                //Block: Calculation section heading  
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-
-                    pres.SkipChapter = false;
-
-                    //Title of Presentation
-                    pres.lblTitleHeading.Visibility = Visibility.Hidden;
-                    //Introduction
-                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
-
-                    //Construction
-                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                    pres.imgConstructionSponge.Visibility = Visibility.Hidden;
-
-                    //Calculation
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Visible;
-
-                    //Buttons
-                    pres.buttonSkipIntro.IsEnabled = true;
-                    
-                }, null);
-
-                buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                buttonNextClickedEvent.WaitOne();
-
-                //Block: Iteration section 
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblCalculationHeading.Visibility = Visibility.Visible;
-                    pres.txtCalculationRounds.Visibility = Visibility.Visible;
-                    pres.imgCalculation.Visibility = Visibility.Visible;
-
-                    Paragraph p = new Paragraph();
-                    p.Inlines.Add(new Run(Resources.PresCalculationText.Replace("{1}", System.Text.Encoding.UTF8.GetString(_skm)).Replace("{2}", System.Text.Encoding.UTF8.GetString(_key))));
-                    p.TextAlignment = TextAlignment.Left;
-                    pres.txtCalculationRounds.Document.Blocks.Clear();
-                    pres.txtCalculationRounds.Document.Blocks.Add(p);
-
-                }, null);
-
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
             }
             else
             {
-                val += prgress_step * 10;
-                ProgressChanged(val, 1);
-                curStep = 10;
-                refreshStepState();
-            }
-
-            try
-            {
-
-                byte[] result = computeKPFSHA256XOF(_skm, _key, (int)_outputBytes);
-
-                if (result == null)
+                try
                 {
+                    byte[] result = computeKPFSHA256XOF(_skm, _key, (int)_outputBytes);
+
+                    if (result == null)
+                    {
+                        return;
+                    }
+
+                    //Save to file if configured
+                    if (settings.SaveToFile && !string.IsNullOrEmpty(settings.FilePath))
+                    {
+                        System.IO.StreamWriter file = new System.IO.StreamWriter(settings.FilePath);
+                        int j = 0;
+                        foreach (byte b in result)
+                        {
+                            if (j % 31 == 0)
+                            {
+                                file.Write("\n");
+                            }
+                            file.Write(b.ToString("X2"));
+                            j++;
+                        }
+                        file.Close();
+                    }
+
+                    _keyMaterial = result;
+                    OnPropertyChanged("KeyMaterial");
+
+                }
+                catch (System.OutOfMemoryException ex)
+                {
+                    GuiLogMessage(ex.Message + " " + Resources.ExSystemOutOfMemory, NotificationLevel.Error);
+                    pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                        pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+                        pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                        pres.imgCalculation.Visibility = Visibility.Hidden;
+                        pres.txtError.Visibility = Visibility.Visible;
+
+                    }, null);
                     return;
                 }
 
-                //Save to file if configured
-                if (settings.SaveToFile && !string.IsNullOrEmpty(settings.FilePath))
-                {
-                    System.IO.StreamWriter file = new System.IO.StreamWriter(settings.FilePath);
-                    int i = 0;
-                    foreach (byte b in result)
-                    {
-                        if (i % 31 == 0)
-                        {
-                            file.Write("\n");
-                        }
-                        file.Write(b.ToString("X2"));
-                        i++;
-                    }
-                    file.Close();
-                }
-
-                if (!pres.SkipChapter && settings.DisplayPres)
-                {
-                    buttonNextClickedEvent = pres.buttonNextClickedEvent;
-                    buttonNextClickedEvent.WaitOne();
-                }
-
-                _keyMaterial = result;
-                OnPropertyChanged("KeyMaterial");
-
+                ProgressChanged(1, 1);
             }
-            catch (System.OutOfMemoryException ex)
-            {
-                GuiLogMessage(ex.Message + " " + Resources.ExSystemOutOfMemory, NotificationLevel.Error);
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblCalculationHeading.Visibility = Visibility.Hidden;
-                    pres.txtCalculationRounds.Visibility = Visibility.Hidden;
-                    pres.imgCalculation.Visibility = Visibility.Hidden;
-                    pres.txtError.Visibility = Visibility.Visible;
+        }
 
-                }, null);
-                return;
-            }
+        private void renderState12(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
 
-            /*
-            if (settings.DisplayPres)
-            {
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
-                    pres.txtFinished.Visibility = Visibility.Visible;
-
-                    pres.buttonNext.IsEnabled = false;
-                    pres.buttonSkipCalc.IsEnabled = false;
-                    pres.lblCalculationHeading.Visibility = Visibility.Hidden;
-                    pres.txtCalculationRounds.Visibility = Visibility.Hidden;
-
-                    pres.imgCalculation.Visibility = Visibility.Hidden;
-                }, null);
-            }
-            */
-
-            if (settings.DisplayPres)
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
 
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
+                //Remarks to the inputs and outputs
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
 
-                    //Remarks to the inputs and outputs
-                    pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
 
-                    //Title of Presentation
-                    pres.lblTitleHeading.Visibility = Visibility.Hidden;
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
 
-                    //Introduction
-                    pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
-                    pres.txtIntroductionText.Visibility = Visibility.Hidden;
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                pres.imgConstructionSponge.Visibility = Visibility.Hidden;
 
-                    //Construction
-                    pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
-                    pres.lblConstructionHeading.Visibility = Visibility.Hidden;
-                    pres.txtConstructionScheme.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText1.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText2.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText3.Visibility = Visibility.Hidden;
-                    pres.txtConstructionText4.Visibility = Visibility.Hidden;
-                    pres.imgConstructionSponge.Visibility = Visibility.Hidden;
+                //Calculation
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                pres.imgCalculation.Visibility = Visibility.Hidden;
+                pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                pres.lblCalculationHeading.Visibility = Visibility.Hidden;
 
-                    //Calculation
-                    pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
-                    pres.imgCalculation.Visibility = Visibility.Hidden;
-                    pres.txtCalculationRounds.Visibility = Visibility.Hidden;
-                    pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
+                pres.txtFinished.Visibility = Visibility.Visible;
 
-                    //Last
-                    pres.lblFinishedSectionHeading.Visibility = Visibility.Visible;
-                    pres.txtFinished.Visibility = Visibility.Visible;
+                //Error
+                pres.txtError.Visibility = Visibility.Hidden;
 
-                    //Error
-                    pres.txtError.Visibility = Visibility.Hidden;
+                //Buttons
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.buttonStart.IsEnabled = false;
+                pres.buttonRestart.IsEnabled = true;
+                pres.spButtons.Visibility = Visibility.Hidden;
+                pres.buttonSkipIntro.IsEnabled = false;
+                pres.buttonNext.IsEnabled = false;
+                pres.SkipChapter = false;
 
-                    //Buttons
-                    pres.spStartRestartButtons.Visibility = Visibility.Hidden;
-                    pres.buttonStart.IsEnabled = false;
-                    pres.buttonRestart.IsEnabled = false;
-                    pres.spButtons.Visibility = Visibility.Visible;
-                    pres.buttonSkipIntro.IsEnabled = false;
-                    pres.buttonNext.IsEnabled = false;
-                    pres.SkipChapter = false;
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
 
-                }, null);
-            }
-                //Progessbar adjusting
-                val += prgress_step;
-                ProgressChanged(val, 1);
-                curStep++;
-                refreshStepState();
+            }, null);
+        }
 
-            if (settings.DisplayPres)
+        private void renderState10(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Iteration section 
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                //show elements for restart the system
-                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-                {
-                    pres.spStartRestartButtons.Visibility = Visibility.Visible;
-                    pres.buttonStart.IsEnabled = false;
-                    pres.buttonRestart.IsEnabled = true;
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblCalculationHeading.Visibility = Visibility.Visible;
+                pres.txtCalculationRounds.Visibility = Visibility.Visible;
+                pres.imgCalculation.Visibility = Visibility.Visible;
 
-                    pres.spButtons.Visibility = Visibility.Hidden;
-                }, null);
+                Paragraph p = new Paragraph();
+                p.Inlines.Add(new Run(Resources.PresCalculationText.Replace("{1}", System.Text.Encoding.UTF8.GetString(_skm)).Replace("{2}", System.Text.Encoding.UTF8.GetString(_key))));
+                p.TextAlignment = TextAlignment.Left;
+                pres.txtCalculationRounds.Document.Blocks.Clear();
+                pres.txtCalculationRounds.Document.Blocks.Add(p);
 
-                AutoResetEvent buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-                buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-                buttonRestartClickedEvent.Reset();
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
 
-                buttonRestartClickedEvent = pres.buttonRestartClickedEvent;
-                buttonRestartClickedEvent.WaitOne();
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
 
-                if (pres.Restart)
-                {
-                    goto Restart;
-                }
-            }
+            }, null);
+        }
+
+        private void renderState9(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Calculation section heading  
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                pres.imgConstructionSponge.Visibility = Visibility.Hidden;
+
+                //Calculation
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState8(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Construction section part 4
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Visible;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Visible;
+                pres.imgConstructionSponge.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState7(double inkrement, int stepNum)
+        {
+
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Construction section part 3
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Visible;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Visible;
+                pres.imgConstructionSponge.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState6(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Construction section part 2
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Visible;
+                pres.txtConstructionText1.Visibility = Visibility.Visible;
+                pres.txtConstructionText2.Visibility = Visibility.Visible;
+                pres.txtConstructionScheme.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState5(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Construction section part 1
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Visible;
+                pres.txtConstructionText1.Visibility = Visibility.Visible;
+                pres.txtConstructionScheme.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState4(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //Block: Construction section heading
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Visible;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState3(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Visible;
+                pres.txtIntroductionText.Visibility = Visibility.Visible;
+                
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+                
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState2(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            pres.SkipChapter = false;
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Visible;
+                pres.buttonSkipIntro.IsEnabled = true;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Visible;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+        }
+
+        private void renderState1(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                //Remarks to the inputs and outputs
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Visible;
+
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                pres.imgConstructionSponge.Visibility = Visibility.Hidden;
+
+                //Calculation
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                pres.imgCalculation.Visibility = Visibility.Hidden;
+                pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtFinished.Visibility = Visibility.Hidden;
+
+                //Error
+                pres.txtError.Visibility = Visibility.Hidden;
+
+                //Buttons
+                pres.spStartRestartButtons.Visibility = Visibility.Hidden;
+                pres.buttonStart.IsEnabled = false;
+                pres.buttonRestart.IsEnabled = false;
+                pres.spButtons.Visibility = Visibility.Visible;
+                pres.buttonSkipIntro.IsEnabled = false;
+                pres.buttonNext.IsEnabled = false;
+                pres.SkipChapter = false;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+            }, null);
+
+            //Enable buttons
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.buttonNext.IsEnabled = true;
+                pres.buttonPrev.IsEnabled = true;
+                pres.buttonSkipIntro.IsEnabled = false;
+            }, null);
+        }
+
+        private void renderState0(double inkrement, int stepNum)
+        {
+            double val = stepNum * inkrement;
+            ProgressChanged(val, 1);
+            curStep = stepNum;
+            refreshStepState();
+
+            //clean up for starting
+            pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
+            {
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.buttonStart.IsEnabled = true;
+                pres.buttonRestart.IsEnabled = false;
+
+                //Remarks to the inputs and outputs
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Visible;
+                pres.txtExplanationSectionText.Visibility = Visibility.Visible;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtFinished.Visibility = Visibility.Hidden;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Visible;
+
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                pres.imgConstructionSponge.Visibility = Visibility.Hidden;
+
+                //Calculation
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                pres.imgCalculation.Visibility = Visibility.Hidden;
+                pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+
+                //Calculation finished
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtFinished.Visibility = Visibility.Hidden;
+
+                //Error
+                pres.txtError.Visibility = Visibility.Hidden;
+
+                //Buttons
+                pres.spStartRestartButtons.Visibility = Visibility.Visible;
+                pres.spButtons.Visibility = Visibility.Hidden;
+                pres.buttonSkipIntro.IsEnabled = false;
+                pres.buttonNext.IsEnabled = false;
+                pres.SkipChapter = false;
+
+            }, null);
+        }
+
+        private void renderBlankView()
+        {
+            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                pres.lblExplanationSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtExplanationSectionText.Visibility = Visibility.Hidden;
+
+                //Title of Presentation
+                pres.lblTitleHeading.Visibility = Visibility.Hidden;
+
+                //Introduction
+                pres.lblIntroductionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblIntroductionHeading.Visibility = Visibility.Hidden;
+                pres.txtIntroductionText.Visibility = Visibility.Hidden;
+
+                //Construction
+                pres.lblConstructionSectionHeading.Visibility = Visibility.Hidden;
+                pres.lblConstructionHeading.Visibility = Visibility.Hidden;
+                pres.txtConstructionScheme.Visibility = Visibility.Hidden;
+                pres.txtConstructionText1.Visibility = Visibility.Hidden;
+                pres.txtConstructionText2.Visibility = Visibility.Hidden;
+                pres.txtConstructionText3.Visibility = Visibility.Hidden;
+                pres.txtConstructionText4.Visibility = Visibility.Hidden;
+                pres.imgConstructionSponge.Visibility = Visibility.Hidden;
+
+                //Calculation
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+                pres.imgCalculation.Visibility = Visibility.Hidden;
+                pres.txtCalculationRounds.Visibility = Visibility.Hidden;
+                pres.lblCalculationHeading.Visibility = Visibility.Hidden;
+
+
+                //Calculation finished
+                pres.lblCalculationSectionHeading.Visibility = Visibility.Hidden;
+
+                //Last
+                pres.lblFinishedSectionHeading.Visibility = Visibility.Hidden;
+                pres.txtFinished.Visibility = Visibility.Hidden;
+
+                //Error
+                pres.txtError.Visibility = Visibility.Hidden;
+
+                //Buttons
+                pres.spButtons.Visibility = Visibility.Hidden;
+                pres.spStartRestartButtons.Visibility = Visibility.Hidden;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Hidden;
+            }, null);
         }
 
         #endregion

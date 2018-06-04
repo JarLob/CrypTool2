@@ -233,8 +233,19 @@
             <Button Content="{Loc PresRestart}" Height="30" Name="buttonRestart" Click="buttonRestart_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False" />
         </StackPanel>
         <StackPanel Name="spButtons" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" Visibility="Hidden">
+            <Button Height="30" Name="buttonPrev" Click="buttonPrev_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False">
+                <Image Source="/HKDFSHA256;component/images/prev-button.png"/>
+            </Button>
+            <Button Height="30" Name="buttonNext" Click="buttonNext_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False" >
+                <Image Source="/HKDFSHA256;component/images/next-button.png"/>
+            </Button>
+            <Button Content="{Loc PresIntro}" Height="30" Name="buttonSkipIntro" Click="buttonSkip_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False" />
+        </StackPanel>
+        <!-- 
+        <StackPanel Name="spButtons" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" Visibility="Hidden">
             <Button Content="{Loc PresIntro}" Height="30" Name="buttonSkipIntro" Click="buttonSkip_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False" />
             <Button Content="{Loc PresNext}" Height="30" Name="buttonNext" Click="buttonNext_Click" Margin="10,5" Padding="10,0" HorizontalAlignment="Center" IsEnabled="False" />
         </StackPanel>
+        -->
     </Grid>
 </UserControl>

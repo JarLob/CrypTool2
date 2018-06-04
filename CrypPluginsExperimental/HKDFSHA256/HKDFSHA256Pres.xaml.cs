@@ -23,10 +23,13 @@ namespace Cryptool.Plugins.HKDFSHA256
     public partial class HKDFSHA256Pres : UserControl
     {
         public AutoResetEvent buttonNextClickedEvent;
+        public AutoResetEvent buttonPrevClickedEvent;
         public AutoResetEvent buttonStartClickedEvent;
         public AutoResetEvent buttonRestartClickedEvent;
         private bool _skipChapter;
         private bool _restart;
+        private bool _next;
+        private bool _prev;
 
         public bool Restart
         {
@@ -52,36 +55,78 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
         }
 
+        public bool Next
+        {
+            get
+            {
+                return _next;
+            }
+            set
+            {
+                _next = value;
+            }
+        }
+
+        public bool Prev
+        {
+            get
+            {
+                return _prev;
+            }
+            set
+            {
+                _prev = value;
+            }
+        }
+
         public HKDFSHA256Pres()
         {
             InitializeComponent();
             buttonNextClickedEvent = new AutoResetEvent(false);
+            buttonPrevClickedEvent = new AutoResetEvent(false);
             buttonStartClickedEvent = new AutoResetEvent(false);
             buttonRestartClickedEvent = new AutoResetEvent(false);
             _skipChapter = false;
+            _next = false;
+            _prev = false;
         }
 
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
-            buttonRestartClickedEvent.Set();
             _restart = true;
+            buttonRestartClickedEvent.Set();
         }
 
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            buttonStartClickedEvent.Set();
             _restart = false;
+            buttonStartClickedEvent.Set();
         }
         
         private void buttonSkip_Click(object sender, RoutedEventArgs e)
         {
-            buttonNextClickedEvent.Set();
             _skipChapter = true;
+            _next = true;
+            buttonNextClickedEvent.Set();
+
+            Console.WriteLine("ButtonSkip fired");
+        }
+
+        private void buttonPrev_Click(object sender, RoutedEventArgs e)
+        {
+            _prev = true;
+            buttonPrevClickedEvent.Set();
+
+            Console.WriteLine("ButtonPrev fired");
         }
 
         private void buttonNext_Click(object sender, RoutedEventArgs e)
         {
+            _next = true;
             buttonNextClickedEvent.Set();
+
+
+            Console.WriteLine("ButtonNext fired");
         }
     }
 }
