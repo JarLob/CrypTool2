@@ -422,7 +422,7 @@
     <value>Management functions for CrypTool 2</value>
   </data>
   <data name="Manages_the_integrated_network_connection_" xml:space="preserve">
-    <value>Participate in distributed cryptanalysis usign CrypCloud</value>
+    <value>Participate in distributed cryptanalysis using CrypCloud</value>
   </data>
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Configure CrypTool 2</value>
