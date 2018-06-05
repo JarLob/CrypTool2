@@ -194,7 +194,7 @@
     <value>Please enter the verification code.</value>
   </data>
   <data name="_JobList_btn_createNew" xml:space="preserve">
-    <value>Add</value>
+    <value>Create new job</value>
   </data>
   <data name="_JobList_btn_delete" xml:space="preserve">
     <value>Delete</value>
@@ -215,7 +215,7 @@
     <value>Progress</value>
   </data>
   <data name="_JobList_Header" xml:space="preserve">
-    <value>Current Jobs</value>
+    <value>Joblist</value>
   </data>
   <data name="_Login_btn_connect" xml:space="preserve">
     <value>Connect</value>
@@ -336,5 +336,23 @@
   </data>
   <data name="_Remember_me_tooltip" xml:space="preserve">
     <value>Username and password will be saved encrypted and restored at the next startup of CrypCloud.</value>
+  </data>
+  <data name="JobList_btn_delete_tooltip" xml:space="preserve">
+    <value>Delete the job from CrypCloud</value>
+  </data>
+  <data name="_JobList_btn_createNew_tooltip" xml:space="preserve">
+    <value>Create a new job and upload it to CrypCloud</value>
+  </data>
+  <data name="_JobList_btn_refresh_tooltip" xml:space="preserve">
+    <value>Refresh the joblist by requesting joblists of neighbor peers</value>
+  </data>
+  <data name="JobList_btn_download_tooltip" xml:space="preserve">
+    <value>Download the job from CrypCloud</value>
+  </data>
+  <data name="JobList_btn_logout_tooltip" xml:space="preserve">
+    <value>Closes the connection to CrypCloud</value>
+  </data>
+  <data name="JobList_btn_open_tooltip" xml:space="preserve">
+    <value>Open the job to participate. To start the computation start the newly opened workspace using the play-button</value>
   </data>
 </root>

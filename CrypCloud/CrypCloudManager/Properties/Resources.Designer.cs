@@ -232,11 +232,20 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Add ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create new job ähnelt.
         /// </summary>
         public static string _JobList_btn_createNew {
             get {
                 return ResourceManager.GetString("_JobList_btn_createNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create a new job and upload it to CrypCloud ähnelt.
+        /// </summary>
+        public static string _JobList_btn_createNew_tooltip {
+            get {
+                return ResourceManager.GetString("_JobList_btn_createNew_tooltip", resourceCulture);
             }
         }
         
@@ -282,6 +291,15 @@ namespace CrypCloud.Manager.Properties {
         public static string _JobList_btn_refresh {
             get {
                 return ResourceManager.GetString("_JobList_btn_refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Refresh the joblist by requesting joblists of neighbor peers ähnelt.
+        /// </summary>
+        public static string _JobList_btn_refresh_tooltip {
+            get {
+                return ResourceManager.GetString("_JobList_btn_refresh_tooltip", resourceCulture);
             }
         }
         
@@ -349,7 +367,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Current Jobs ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Joblist ähnelt.
         /// </summary>
         public static string _JobList_Header {
             get {
@@ -655,6 +673,42 @@ namespace CrypCloud.Manager.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Delete the job from CrypCloud ähnelt.
+        /// </summary>
+        public static string JobList_btn_delete_tooltip {
+            get {
+                return ResourceManager.GetString("JobList_btn_delete_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Download the job from CrypCloud ähnelt.
+        /// </summary>
+        public static string JobList_btn_download_tooltip {
+            get {
+                return ResourceManager.GetString("JobList_btn_download_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Closes the connection to CrypCloud ähnelt.
+        /// </summary>
+        public static string JobList_btn_logout_tooltip {
+            get {
+                return ResourceManager.GetString("JobList_btn_logout_tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open the job to participate. To start the computation start the newly opened workspace using the play-button ähnelt.
+        /// </summary>
+        public static string JobList_btn_open_tooltip {
+            get {
+                return ResourceManager.GetString("JobList_btn_open_tooltip", resourceCulture);
             }
         }
         

@@ -47,7 +47,7 @@
                    Margin="0,10,109,10" Width="108" />
 
             <Button Command="{Binding Path=LogOutCommand}" HorizontalAlignment="Right" Margin="10" Width="100"
-                    Height="30">
+                    Height="30" ToolTip="{Loc JobList_btn_logout_tooltip}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/sign-out.png" Width="16" />
                     <Label Content="{Loc _JobList_btn_logout}" />
@@ -137,7 +137,8 @@
                                         <Button Command="{Binding DataContext.OpenJobCommand, ElementName=JobListView}"
                                                 CommandParameter="{Binding}" DataContext="{Binding}"
                                                 Visibility="{Binding HasPayload, Converter={StaticResource show}}"
-                                                Width="90" Margin="10, 5">
+                                                Width="90" Margin="10, 5"
+                                                ToolTip="{Loc JobList_btn_open_tooltip}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="../Images/ButtonIcons/external-link.png" Width="16" />
                                                 <Label Content="{Loc _JobList_btn_open}" />
@@ -149,7 +150,7 @@
                                             Command="{Binding DataContext.DownloadWorkspaceCommand, ElementName=JobListView}"
                                             CommandParameter="{Binding}" DataContext="{Binding}"
                                             Visibility="{Binding HasPayload, Converter={StaticResource hide}}"
-                                            Width="90" Margin="10, 5">
+                                            Width="90" Margin="10, 5" ToolTip="{Loc _JobList_btn_download_tooltip}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="../Images/ButtonIcons/download.png" Width="16" />
                                                 <Label Content="{Loc _JobList_btn_download}" />
@@ -168,7 +169,8 @@
                                             Visibility="{Binding Path=UserCanDeleteJob, Converter={StaticResource show}}"
                                             Command="{Binding DataContext.DeleteJobCommand, ElementName=JobListView}"
                                             CommandParameter="{Binding}" DataContext="{Binding}"
-                                            Width="90" Margin="10, 5">
+                                            Width="90" Margin="10, 5"
+                                            ToolTip="{Loc JobList_btn_delete_tooltip}">
                                             <StackPanel Orientation="Horizontal">
                                                 <Image Source="../Images/ButtonIcons/trash-o.png" Width="16" />
                                                 <Label Content="{Loc _JobList_btn_delete}" />
@@ -237,18 +239,18 @@
         <!-- bottom controls -->
         <Grid Grid.Row="3" VerticalAlignment="Bottom">
             <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="110"
-                    Height="30">
+                    Height="30" ToolTip="{Loc _JobList_btn_refresh_tooltip}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/refresh.png" Width="16" />
-                    <Label Content="{Loc _JobList_btn_refresh}" />
+                    <Label Content="{Loc _JobList_btn_refresh}"/>
                 </StackPanel>
             </Button>
 
             <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="110"
-                    Height="30">
+                    Height="30" ToolTip="{Loc _JobList_btn_createNew_tooltip}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/plus.png" Width="16" />
-                    <Label Content="{Loc _JobList_btn_createNew}" />
+                    <Label Content="{Loc _JobList_btn_createNew}"/>
                 </StackPanel>
             </Button>
 
