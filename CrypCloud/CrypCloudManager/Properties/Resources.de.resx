@@ -341,7 +341,7 @@
     <value>Beended die Verbindung mit der CrypCloud</value>
   </data>
   <data name="JobList_btn_open_tooltip" xml:space="preserve">
-    <value>Öffnet den Job um teilzunehmen. Um die Berechnung zu starten muss nach dem Öffnen mit dem Play-Button gestartet werden</value>
+    <value>Öffnet den Job um teilzunehmen. Um die Berechnung zu starten muss nach dem Öffnen mit dem Starten-Button gestartet werden</value>
   </data>
   <data name="_JobList_btn_createNew_tooltip" xml:space="preserve">
     <value>Einen neuen Job erstellen und in die CrypCloud hochladen</value>
