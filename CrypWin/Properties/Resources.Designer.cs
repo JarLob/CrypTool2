@@ -1184,7 +1184,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Participate in distributed cryptanalysis usign the CrypCloud. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Participate in distributed cryptanalysis usign CrypCloud ähnelt.
         /// </summary>
         internal static string Manages_the_integrated_network_connection_ {
             get {
