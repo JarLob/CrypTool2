@@ -854,7 +854,7 @@ namespace VoluntLib2.ManagementLayer
                             else
                             {
                                 VisualizationBitmap.SetPixel((int)(offset % divisor), (int)(offset / divisor), Color.White);
-                            }
+                            }                            
                         }
                     }
                     offset++;

@@ -699,18 +699,38 @@ namespace VoluntLib2.ManagementLayer
         }
 
         /// <summary>
-        /// Updates each job's progress
+        /// Updates each job's progress and epoch progress and visualization
         /// </summary>
         public override void Execute()
         {
             if(DateTime.Now > LastUpdateTime.AddMilliseconds(UPDATE_TIME_INTERVAL))
-            {
+            {               
                 foreach (Job job in new List<Job>(JobManager.JobList))
                 {
-                    job.UpdateProgessAndEpochProgress();
-                    job.UpdateEpochVisualization();
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            job.UpdateProgessAndEpochProgress();
+                        }
+                        catch (Exception)
+                        {
+                            //if something wents wrong it is not so important
+                        }
+                    });
+                    Task.Factory.StartNew(() =>
+                    {
+                        try
+                        {
+                            job.UpdateEpochVisualization();
+                        }
+                        catch (Exception)
+                        {
+                            //if something wents wrong it is not so important
+                        }
+                    });
                 }
-                LastUpdateTime = DateTime.Now;
+                LastUpdateTime = DateTime.Now;              
             }
         }
 

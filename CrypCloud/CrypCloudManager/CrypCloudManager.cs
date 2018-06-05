@@ -51,7 +51,6 @@ namespace CrypCloud.Manager
 
             var jobListVM = (JobListVM) crypCloudPresentation.JobList.DataContext;
             jobListVM.Manager = this;            
-            Logger.SetLogLevel(Logtype.Debug);
             Logger logger = Logger.GetLogger();
             logger.LoggOccured += logger_Logged;
         }

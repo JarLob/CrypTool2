@@ -1619,27 +1619,31 @@ namespace Cryptool.CrypWin
             if (lastOpenedTab.Info.Title.Contains(CrypCloudManager.DefaultTabName))
             {
                 return;
-            }
-
-            var editorType = ((EditorTypeStoredTab)lastOpenedTab).EditorType;
-            var editor = AddEditorDispatched(editorType);
-
-            TabInfo info = new TabInfo();
+            }                      
             try
             {
+                var editorType = ((EditorTypeStoredTab)lastOpenedTab).EditorType;
+                TabInfo info = new TabInfo();
                 if (editorType == typeof(CrypCloud.Manager.CrypCloudManager))
+                {
                     info.Title = CrypCloud.Manager.Properties.Resources.Tab_Caption;
+                }
                 else if (editorType == typeof(WorkspaceManager.WorkspaceManagerClass))
-                    info.Title = WorkspaceManager.Properties.Resources.unnamed_project;
+                {
+                    //we dont open empty WorkspaceManagers
+                    return;
+                }
                 else
+                {
                     info.Title = editorType.GetPluginInfoAttribute().Caption;
+                }                
+                var editor = AddEditorDispatched(editorType);
+                OpenTab(editor, info, null); //rename
             }
             catch (Exception ex)
             {
-                info = lastOpenedTab.Info;
-            }
-
-            OpenTab(editor, info, null); //rename
+                GuiLogMessage(String.Format("Exception occured during restoring of editor tab: {0}", ex.Message), NotificationLevel.Error);
+            }            
         }
 
         private void OpenLastCommonTypeStoredTab(StoredTab lastOpenedTab)
