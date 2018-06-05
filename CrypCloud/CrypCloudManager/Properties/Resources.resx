@@ -215,7 +215,7 @@
     <value>Progress</value>
   </data>
   <data name="_JobList_Header" xml:space="preserve">
-    <value>Joblist</value>
+    <value>Job list</value>
   </data>
   <data name="_Login_btn_connect" xml:space="preserve">
     <value>Connect</value>
@@ -353,6 +353,6 @@
     <value>Closes the connection to CrypCloud</value>
   </data>
   <data name="JobList_btn_open_tooltip" xml:space="preserve">
-    <value>Open the job to participate. To start the computation start the newly opened workspace using the play-button</value>
+    <value>Open the job to participate in calculations. To start the computation in the newly opened workspace press the Play button.</value>
   </data>
 </root>

@@ -332,21 +332,21 @@
     <value>Benutzername und Passwort werden verschlüsselt gespeichert und beim nächsten Starten von CrypCloud automatisch wiederhergestellt.</value>
   </data>
   <data name="JobList_btn_delete_tooltip" xml:space="preserve">
-    <value>Lösche den Job aus der CrypCloud</value>
+    <value>Löscht den Job aus der CrypCloud</value>
   </data>
   <data name="JobList_btn_download_tooltip" xml:space="preserve">
-    <value>Läd den Job aus der CrypCloud herunter</value>
+    <value>Lädt den Job aus der CrypCloud herunter</value>
   </data>
   <data name="JobList_btn_logout_tooltip" xml:space="preserve">
-    <value>Beended die Verbindung mit der CrypCloud</value>
+    <value>Beendet die Verbindung mit der CrypCloud</value>
   </data>
   <data name="JobList_btn_open_tooltip" xml:space="preserve">
-    <value>Öffnet den Job um teilzunehmen. Um die Berechnung zu starten muss nach dem Öffnen mit dem Starten-Button gestartet werden</value>
+    <value>Öffnet den Job, um an der Berechnung teilzunehmen. Zum Starten der Berechnung muss in dem neu geöffneten Workspace der Starten-Button gedrückt werden.</value>
   </data>
   <data name="_JobList_btn_createNew_tooltip" xml:space="preserve">
-    <value>Einen neuen Job erstellen und in die CrypCloud hochladen</value>
+    <value>Erstellt einen neuen Job und lädt ihn in die CrypCloud hoch</value>
   </data>
   <data name="_JobList_btn_refresh_tooltip" xml:space="preserve">
-    <value>Aktualisiert die Jobliste indem Joblisten von Nachbarpeers angefordert werden</value>
+    <value>Aktualisiert die Jobliste, indem Joblisten von Nachbar-Peers angefordert werden</value>
   </data>
 </root>

@@ -367,7 +367,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Joblist ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job list ähnelt.
         /// </summary>
         public static string _JobList_Header {
             get {
@@ -704,7 +704,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open the job to participate. To start the computation start the newly opened workspace using the play-button ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open the job to participate in calculations. To start the computation in the newly opened workspace press the Play button. ähnelt.
         /// </summary>
         public static string JobList_btn_open_tooltip {
             get {
