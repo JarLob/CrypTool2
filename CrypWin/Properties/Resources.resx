@@ -284,7 +284,7 @@
     <value>Fullscreen</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Connect</value>
+    <value>CrypCloud</value>
   </data>
   <data name="AutoUpdater" xml:space="preserve">
     <value>Updates</value>
@@ -422,7 +422,7 @@
     <value>Management functions for CrypTool 2</value>
   </data>
   <data name="Manages_the_integrated_network_connection_" xml:space="preserve">
-    <value>Manages the integrated network connection</value>
+    <value>Participate in distributed cryptanalysis usign the CrypCloud.</value>
   </data>
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Configure CrypTool 2</value>

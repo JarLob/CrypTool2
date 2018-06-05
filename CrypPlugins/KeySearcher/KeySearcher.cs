@@ -391,6 +391,15 @@ namespace KeySearcher
             {
                 IsKeySearcherFinished = true;
             }
+            //the following code avoids to let KeySearcher terminate while CrypCloud is running
+            //this termination caused a "too early" 100% progress
+            if (settings.UsePeerToPeer)
+            {
+                while (IsKeySearcherRunning)
+                {
+                    Thread.Sleep(150);
+                }
+            }
         }
 
         public override void PostExecution()
@@ -1573,9 +1582,8 @@ namespace KeySearcher
         public void ProgressChanged(double value, double max)
         {
             if (OnPluginProgressChanged != null)
-            {
+            {               
                 OnPluginProgressChanged(this, new PluginProgressEventArgs(value, max));
-
             }
         }
 

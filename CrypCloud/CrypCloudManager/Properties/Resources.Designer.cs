@@ -378,9 +378,9 @@ namespace CrypCloud.Manager.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Job ID: ähnelt.
         /// </summary>
-        public static string _JobList_jobID {
+        public static string _JobList_JobId {
             get {
-                return ResourceManager.GetString("_JobList_jobID", resourceCulture);
+                return ResourceManager.GetString("_JobList_JobId", resourceCulture);
             }
         }
         
@@ -475,11 +475,20 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Remember me ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save login data ähnelt.
         /// </summary>
         public static string _Remember_me {
             get {
                 return ResourceManager.GetString("_Remember_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Username and password will be saved encrypted and restored at the next startup of CrypCloud. ähnelt.
+        /// </summary>
+        public static string _Remember_me_tooltip {
+            get {
+                return ResourceManager.GetString("_Remember_me_tooltip", resourceCulture);
             }
         }
         

@@ -40,7 +40,6 @@ namespace VoluntLib2.ConnectionLayer
         private Logger Logger = Logger.GetLogger();
 
         private const int RECEIVE_TIMEOUT = 100; //ms
-        private const int SEND_TIMEOUT = 100; //ms
         private const int MAX_TERMINATION_WAIT_TIME = 5000; //5 s
         private const int MAX_UDP_MESSAGE_PAYLOAD_SIZE = 65507; //maximum size of UDP payload
         private const int WORKER_THREAD_SLEEPTIME = 1; // ms
@@ -110,7 +109,6 @@ namespace VoluntLib2.ConnectionLayer
             //Create a new udp client for sending and receiving data            
             Client = new UdpClient(new IPEndPoint(IPAddress.Any, Port));
             Client.Client.ReceiveTimeout = RECEIVE_TIMEOUT;
-            Client.Client.SendTimeout = SEND_TIMEOUT;
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             Client.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.IpTimeToLive, 255);
             //Set Running to true; thus, threads know we are alive

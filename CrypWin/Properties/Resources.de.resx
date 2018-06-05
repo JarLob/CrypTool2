@@ -287,7 +287,7 @@
     <value>Lade neue Plugins</value>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Verbinden</value>
+    <value>CrypCloud</value>
   </data>
   <data name="AutoUpdater" xml:space="preserve">
     <value>Updates</value>
@@ -425,7 +425,7 @@
     <value>Verwaltungsfunktionen für CrypTool 2</value>
   </data>
   <data name="Manages_the_integrated_network_connection_" xml:space="preserve">
-    <value>Verwaltet die integrierte Netzwerkverbindung</value>
+    <value>An Verteilter Kryptoanalyse mithilfe der CrypCloud teilnehmen.</value>
   </data>
   <data name="SettingsTooltip" xml:space="preserve">
     <value>Konfiguration von CrypTool 2</value>

@@ -299,7 +299,7 @@
     <value>Bitte geben Sie den Code und ihr neues Passwort ein.</value>
   </data>
   <data name="_Remember_me" xml:space="preserve">
-    <value>Login speichern</value>
+    <value>Zugangsdaten speichern</value>
   </data>
   <data name="_JobList_LoggedInAs" xml:space="preserve">
     <value>eingeloggt als:</value>
@@ -330,5 +330,8 @@
   </data>
   <data name="LogLevel" xml:space="preserve">
     <value>Log-Level</value>
+  </data>
+  <data name="_Remember_me_tooltip" xml:space="preserve">
+    <value>Benutzername und Passwort werden verschlüsselt gespeichert und beim nächsten Starten von CrypCloud automatisch wiederhergestellt.</value>
   </data>
 </root>

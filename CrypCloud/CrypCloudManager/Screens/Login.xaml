@@ -63,7 +63,7 @@
                     </Grid.ColumnDefinitions>
                     <CheckBox IsChecked="{Binding RememberPassword}" Width="190" 
                               Height="15" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,5" RenderTransformOrigin="1,0.933" Grid.ColumnSpan="2" />
-                    <Label Content="{Loc _Remember_me}" Margin="12,3,-10,0" Width="200" Grid.ColumnSpan="2"/>
+                    <Label Content="{Loc _Remember_me}" ToolTip="{Loc _Remember_me_tooltip}" Margin="12,3,-10,0" Width="200" Grid.ColumnSpan="2"/>
                 </Grid>
 
                 <Label/>

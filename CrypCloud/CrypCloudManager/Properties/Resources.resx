@@ -305,7 +305,7 @@
     <value>Confirm job deletion.</value>
   </data>
   <data name="_Remember_me" xml:space="preserve">
-    <value>Remember me</value>
+    <value>Save login data</value>
   </data>
   <data name="_JobList_LoggedInAs" xml:space="preserve">
     <value>Logged in as:</value>
@@ -333,5 +333,8 @@
   </data>
   <data name="LogLevel" xml:space="preserve">
     <value>LogLevel</value>
+  </data>
+  <data name="_Remember_me_tooltip" xml:space="preserve">
+    <value>Username and password will be saved encrypted and restored at the next startup of CrypCloud.</value>
   </data>
 </root>
