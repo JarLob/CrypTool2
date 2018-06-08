@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     class Permutations
     {

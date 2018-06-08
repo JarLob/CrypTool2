@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     class Utils
     {

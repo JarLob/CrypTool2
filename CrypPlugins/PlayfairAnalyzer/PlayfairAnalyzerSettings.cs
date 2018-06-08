@@ -18,10 +18,10 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     // HOWTO: rename class (click name, press F2)
-    public class ExamplePluginCT2Settings : ISettings
+    public class PlayfairAnalyzerSettings : ISettings
     {
         #region Private Variables
 
@@ -32,7 +32,7 @@ namespace Cryptool.Plugins.PlayfairSolver
 
         #region TaskPane Settings
 
-        [TaskPane("MaxLength", "Maximum length of ciphertext", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("MaxLengthCaption", "MaxLengthTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int MaxLength
         {
             get
@@ -49,7 +49,7 @@ namespace Cryptool.Plugins.PlayfairSolver
             }
         }
 
-        [TaskPane("MaxCycles", "Maximum number of cycles", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
+        [TaskPane("MaxCyclesCaption", "MaxCyclesTooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
         public int MaxCycles
         {
             get

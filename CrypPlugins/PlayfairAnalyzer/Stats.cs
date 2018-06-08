@@ -6,7 +6,7 @@ using Cryptool.PluginBase.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO.Compression;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     class Stats
     {

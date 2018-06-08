@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     class Analysis
     {
-        private PlayfairSolver solver;
+        private PlayfairAnalyzer solver;
 
-        public Analysis(PlayfairSolver solver)
+        public Analysis(PlayfairAnalyzer solver)
         {
             this.solver = solver;
         }

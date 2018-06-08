@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     class SimulatedAnnealing
     {
@@ -64,7 +64,7 @@ namespace Cryptool.Plugins.PlayfairSolver
             //return Stats.evalPlaintextHexagram(plainText, plainTextLength);
         }
 
-        public static void solveSA(PlayfairSolver solver, int taskNumber, int maxCycles, bool removeXZ, byte[] cipherText, int cipherTextLength, String crib)
+        public static void solveSA(PlayfairAnalyzer solver, int taskNumber, int maxCycles, bool removeXZ, byte[] cipherText, int cipherTextLength, String crib)
         {
             byte[] plainText = new byte[1000];
             byte[] plainTextFull = new byte[1000];
@@ -130,6 +130,8 @@ namespace Cryptool.Plugins.PlayfairSolver
 
                                 solver.GuiLogMessage(msg, PluginBase.NotificationLevel.Debug);
                                 solver.Plaintext = Utils.getString(plainTextFull, plainTextLength);
+                                //solver.Key = String.Format("{0}", newKey);
+                                solver.Key = newKey.ToString();
                             }
 
                             //lock.unlock();

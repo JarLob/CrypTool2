@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     public class Transform
     {
-        PlayfairSolver solver;
+        PlayfairAnalyzer solver;
 
         private bool T_SWAP_2_POSITIONS = true;
         private bool T_SWAP_3_POSITIONS = false; // Not effective, and too many!.
@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.PlayfairSolver
 
         private int[] REMAPPING;
 
-        public Transform(PlayfairSolver solver)
+        public Transform(PlayfairAnalyzer solver)
         {
             this.solver = solver;
 

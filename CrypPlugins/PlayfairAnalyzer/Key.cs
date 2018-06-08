@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     public class Key
     {
         public byte[] key;
-        PlayfairSolver solver;
+        PlayfairAnalyzer solver;
 
-        public Key(PlayfairSolver solver)
+        public Key(PlayfairAnalyzer solver)
         {
             this.solver = solver;
             key = new byte[solver.SQUARE];
@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.PlayfairSolver
             for (int i = 0; i < solver.SQUARE; i += solver.DIM)
             {
                 ps.Append(s.Substring(i, solver.DIM));
-                ps.Append("\n");
+                ps.Append(Environment.NewLine);
             }
 
             return ps.ToString();

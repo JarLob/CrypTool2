@@ -21,42 +21,42 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Cryptool.Plugins.PlayfairSolver
+namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     [Author("George Lasry, Armin Krauß", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("PlayfairSolver", "Attack on Playfair cipher", "PlayfairSolver/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("Cryptool.Plugins.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/doc.xml", new[] { "PlayfairAnalyzer/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
-    public class PlayfairSolver : ICrypComponent
+    public class PlayfairAnalyzer : ICrypComponent
     {
         #region Private Variables
-
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
-        private readonly ExamplePluginCT2Settings settings = new ExamplePluginCT2Settings();
+        
+        private readonly PlayfairAnalyzerSettings settings = new PlayfairAnalyzerSettings();
         public bool stopped = false;
 
         private string plaintext;
+        private string key;
         public Transform transform;
         public int[][] permutations;
-        
-    #endregion
 
-    #region Data Properties
-        
-    [PropertyInfo(Direction.InputData, "Ciphertext", "Input ciphertext")]
+        #endregion
+
+        #region Data Properties
+
+        [PropertyInfo(Direction.InputData, "CiphertextCaption", "CiphertextTooltip")]
         public string Ciphertext
         {
             get;
             set;
         }
 
-        [PropertyInfo(Direction.InputData, "Crib", "Input crib")]
+        //[PropertyInfo(Direction.InputData, "CribCaption", "CribTooltip")]
         public string Crib
         {
             get;
             set;
         }
-        
-        [PropertyInfo(Direction.OutputData, "Plaintext", "Output plaintext")]
+
+        [PropertyInfo(Direction.OutputData, "PlaintextCaption", "PlaintextTooltip")]
         public string Plaintext
         {
             get { return plaintext; }
@@ -64,6 +64,17 @@ namespace Cryptool.Plugins.PlayfairSolver
             {
                 plaintext = value;
                 OnPropertyChanged("Plaintext");
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "KeyCaption", "KeyTooltip")]
+        public string Key
+        {
+            get { return key; }
+            set
+            {
+                key = value;
+                OnPropertyChanged("Key");
             }
         }
 
@@ -101,8 +112,9 @@ namespace Cryptool.Plugins.PlayfairSolver
         public void Execute()
         {
             ProgressChanged(0, 1);
-            
+
             bool removeXZ = String.IsNullOrEmpty(Crib);
+            removeXZ = false;
             int task = 1;
 
             byte[] ciphertext = Utils.getText(Ciphertext);
@@ -181,7 +193,7 @@ namespace Cryptool.Plugins.PlayfairSolver
         private byte[,] POSITIONS_OF_PLAINTEXT_SYMBOL_1;
         private byte[,] POSITIONS_OF_PLAINTEXT_SYMBOL_2;
 
-        public PlayfairSolver()
+        public PlayfairAnalyzer()
         {
             ALPHABET_SIZE = DIM == 5 ? 26 : 36;
             SQUARE = DIM * DIM;
