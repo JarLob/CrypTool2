@@ -13,10 +13,10 @@
   </introduction>
 
   <usage lang="en">
-    The <b>Playfair Analyzer</b> component expects a ciphertext that was encrypted with the Playfair cipher on its input <b>Ciphertext</b>. The component analyzes the ciphertext with a hill climbing algorithm
+    The <b>Playfair Analyzer</b> component expects a ciphertext that was encrypted with the Playfair cipher on its input <b>Ciphertext</b>. The component analyzes the ciphertext with a Hill Climbing algorithm
     and sends the plaintext with the highest score to its output <b>Plaintext</b> and the corresponding key to its output <b>Key</b>.
     <newline/>
-    In the component settings you can change the maximum number of iterations (restarts) for the hill climbing algorithm. If you set the number to 0, the component will run indefinitely.
+    In the component settings you can change the maximum number of iterations (restarts) for the Hill Climbing algorithm. If you set the number to 0, the component will run indefinitely.
     You can also adjust the maximum length of the ciphertext that should be used for analysis. If the ciphertext is very long, it is often sufficient to use only a fraction of it for analysis.
     This speeds up the algorithm considerably.
   </usage>

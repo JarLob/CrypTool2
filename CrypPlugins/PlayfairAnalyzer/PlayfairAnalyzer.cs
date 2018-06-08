@@ -24,7 +24,7 @@ using System.Text.RegularExpressions;
 namespace Cryptool.Plugins.PlayfairAnalyzer
 {
     [Author("George Lasry, Armin Krauß", "coredevs@cryptool.org", "CrypTool 2 Team", "http://cryptool2.vs.uni-due.de")]
-    [PluginInfo("Cryptool.Plugins.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/doc.xml", new[] { "PlayfairAnalyzer/Images/icon.png" })]
+    [PluginInfo("Cryptool.Plugins.PlayfairAnalyzer.Properties.Resources", "PluginCaption", "PluginTooltip", "PlayfairAnalyzer/DetailedDescription/doc.xml", new[] { "PlayfairAnalyzer/Images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class PlayfairAnalyzer : ICrypComponent
     {
