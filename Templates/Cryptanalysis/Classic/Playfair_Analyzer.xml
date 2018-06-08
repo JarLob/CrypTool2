@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Playfair Analysis</title>
+  <summary lang="en">Cryptanalysis of the <i>Playfair</i> cipher</summary>
+  <description lang="en">This template shows the cryptanalysis of the <i>Playfair</i> cipher with the <i>Playfair Analyzer</i> component. It is a ciphertext-only attack, as no part of the plaintext is known in advance.</description>
+  <keywords>Playfair, Attack, Analysis</keywords>
+
+  <title lang="de">Playfair-Analyse</title>
+  <summary lang="de">Kryptoanalyse der <i>Playfair</i>-Chiffre</summary>
+  <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>Playfair</i>-Chiffre mit der Komponente <i>Playfair-Analyse</i>. Es handelt sich hierbei um eine Ciphertext-only-Analyse, da keine Informationen über den Klartext bekannt sind.</description>
+  <keywords lang="de">Angriff, Analyse</keywords>
+
+  <icon file="Playfair.png" />
+  <relevantPlugins>
+    <plugin name="Playfair" />
+    <plugin name="PlayfairAnalyzer" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+    <replacement key="$Ciphertext$" value="Geheimtext"/>
+    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
+    <replacement key="$Revealed Key$" value="Entschlüsselter Klartext"/>
+    <replacement key="$Encrypt$" value="Verschlüsselung"/>
+    <replacement key="$PlayfairAnalyzer$" value="Playfair-Analyse"/>
+    <replacement key="$memo$" value="Diese Vorlage demonstriert einen Ciphertext-Only-Angriff auf die Playfair-Chiffre. Der oben angegebene Klartext wird mit der Playfair-Komponente verschlüsselt und der resultierende Geheimtext wird an die Playfair-Analyse-Komponente geschickt.\line\line Bitte beachten Sie, dass bei Playfair für jeden Schlüssel mehrere äquivalente Schlüssel existieren. Wenn also der in diesem Beispiel verwendete Schlüssel (&quot;HISTORY&quot;) nicht in der gefundenen Schlüsselmatrix erscheint, so muss die Matrix horizontal oder vertikal rotiert werden, um das Schlüsselwort sehen zu können."/>
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext"/>
+    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
+    <replacement key="$Revealed Key$" value="Revealed Key"/>
+    <replacement key="$Encrypt$" value="Encrypt"/>
+    <replacement key="$PlayfairAnalyzer$" value="Playfair Analyzer"/>
+    <replacement key="$memo$" value="This template demonstrates a ciphertext-only attack on the Playfair cipher. The plaintext above is encrypted with the Playfair component and the resulting ciphertext is sent to the Playfair Analyzer.\line\line Please note that in Playfair for every key there exist several equivalent keys that generate the same ciphertext. So if the keyword used in this example (&quot;HISTORY&quot;) does not seem to appear in the found key matrix, you may have to shift the matrix horizontally or vertically to see the keyword."/>
+  </replacements>
+
+</sample>
