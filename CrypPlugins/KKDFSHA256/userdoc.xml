@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en"> 
+		The function KKDF SHA-256 is a key derivation function (KDF). This implementation uses the SHA-256 hash function with the counter-mode. The process is based on the so called HMAC-based Key Derivation Function (HKDF) [1][2]. The HKDF-KDF uses an 8-bit counter. Because of that, the maximum amount of output is limited (256 * length of the used hash function). In the configuration of the plugin you can choose between an implementation with 8-bit counter and one with a 32-bit counter. With the 32-bit counter you can create much longer outputs. <newline /><newline /><b>Attention:</b><newline /> The SHA-2 should not used with a key as prefix, because of a problem with the construction of the hash function (find details on length extension attack [3][4]). This implementation is only for demonstration purpose. The name KKDF is based on the official name of the HMAC-based key derivation functions HKDF. This expresses that the key is used as a key prefix in the pseudo-random function.
+	  <section headline="Inputs and Outputs">
+		<list>
+			<item><b>Source Key Material:</b> Specifies the source key material (SKM). It is used to calculate the key material.</item>
+			<item><b>Key:</b> The key for calculation of the key material. It must be secret.</item>
+			<item><b>Length of the output key material (in Byte):</b> Specifies the length of the output key material.</item>
+			<item><b>Key Material:</b> After the calculation, the generated key material (KM) is visible in this textfield.</item>
+			<item><b>Calculationsteps:</b> The intermediate steps of the calculation are displayed in this textfield.</item>
+		</list>	
+      </section>
+	  <section headline="Pseudorandom functions and theoretical background">
+	  The basics of pseudorandom functions can be found in this <internal ref="../Common/Key derivation functions based on pseudorandom functions_en.html">article</internal>.
+	  </section>
+  </introduction>
+
+  <introduction lang="de-DE">
+    Die Funktion KKDF SHA-256 ist eine Schlüsselgenerierungs-Funktion (Key Derivation Function, KDF). Diese Implementierung verwendet den SHA-256 im Counter-Mode. Das Verfahren orientiert sich an der so genannten HMAC-based Key Derivation Function (HKDF) [1][2]. Das HKDF-Verfahren verwendet einen 8-Bit-Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (256 * Hashlänge). In der Konfiguration des Plugins kann zwischen der Variante mit der Orientierung am HKDF-Verfahren (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit-Variante lassen sich wesentlich längere Ausgaben erzeugen. <newline /><newline /><b>Achtung:</b><newline /> Der SHA-2 sollte aus Konstruktionsgründen der Hashfunktion nicht mit einem Schlüssel (als Präfix) verwendet werden (siehe Erweiterungsangriff [3][4]). <b>Diese Implementierung dient deshalb ausschließlich zu Demonstrationszwecken</b>. Die Bezeichnung KKDF ist an die offizielle Bezeichnung der HMAC-basierenden Schlüsselgenerierungs-Funktionen HKDF angelehnt. Diese bringt zum Ausdruck, dass der Schlüssel als Key-Prefix in der Pseudozufallsfunktion verwendet wird.
+    <section headline="Eingaben und Ausgaben">
+	<list>
+		<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur Generierung des Schlüsselmaterials verwendet.</item>
+		<item><b>Schlüssel:</b> Der Schlüssel wird zur Generierung des Schlüsselmaterials verwendet. Dieser muss geheim sein.</item>
+		<item><b>Länge des Schlüsselmaterials (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterials.</item>
+		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item>
+		<item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item>
+	</list>	
+	<section headline="	Pseudozufallsfunktionen und theoretischer Hintergrund">
+	  Die Grundlagen zu Pseudozufallsfunktionen können in diesem <internal ref="../Common/Key derivation functions based on pseudorandom functions_de.html">Artikel</internal> gefunden werden.
+	</section>
+	</section>
+	
+  </introduction>
+
+  <usage lang="en">
+	The usable in- and outputs will be explained in the presentationview of the component.
+  </usage>
+
+  <usage lang="de-DE">
+	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentations-Ansicht der Komponente erklärt.
+  </usage>
+  
+  <presentation lang="en">
+	By double-clicking on the component "KKDF SHA-256" in the workspace, you can activate the visualization of the calculation. The design and operation of the function will be explained step by step.
+  </presentation>
+  
+  <presentation lang="de-DE">
+	Durch Doppelklick auf die Komponente "KKDF SHA-256" in der Arbeitsfläche können Sie die Visualisierung der Berechnung aktivieren. Dabei wird die ikonifizierte Komponente zu einem Fenster vergrößert, in dem die Konstruktion und die Arbeitsweise der Funktion Schritt für Schritt erklärt werden.
+  </presentation>
+  
+  <references>
+    <linkReference>
+      <link url="https://tools.ietf.org/html/rfc5869" lang="en" />
+      <caption lang="en">RFC 5869: Extract-and-Expand HKDF. Accessed 01-04-2018</caption>
+      <link url="https://tools.ietf.org/html/rfc5869" lang="de-DE" />
+      <caption lang="de-DE">RFC 5869: Extract-and-Expand HKDF. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+    <linkReference>
+      <link url="https://eprint.iacr.org/2010/264.pdf" lang="en" />
+      <caption lang="en">Cryptographic Extraction and Key Derivation: The HKDF Scheme. Accessed 01-04-2018</caption>
+      <link url="https://eprint.iacr.org/2010/264.pdf" lang="de-DE" />
+      <caption lang="de-DE">Cryptographic Extraction and Key Derivation: The HKDF Scheme. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+	<linkReference>
+      <link url="https://en.wikipedia.org/wiki/Length_extension_attack" lang="en" />
+      <caption lang="en">Length extension attack. Accessed 01-04-2018</caption>
+      <link url="https://en.wikipedia.org/wiki/Length_extension_attack" lang="de-DE" />
+      <caption lang="de-DE">Length extension attack. Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+	<linkReference>
+      <link url="https://www.cryptologie.net/article/417/how-did-length-extension-attacks-made-it-into-sha-2/" lang="en" />
+      <caption lang="en">How did length extension attacks made it into SHA-2? Accessed 01-04-2018</caption>
+      <link url="https://www.cryptologie.net/article/417/how-did-length-extension-attacks-made-it-into-sha-2/" lang="de-DE" />
+      <caption lang="de-DE">How did length extension attacks made it into SHA-2? Aufgerufen am 01-04-2018</caption>
+    </linkReference>
+  </references>
+</documentation>

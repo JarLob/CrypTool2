@@ -777,12 +777,21 @@ namespace OnlineDocumentationGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
-        /// ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;documentation&gt;
+        ///  &lt;language culture=&quot;en&quot; /&gt;
+        ///  &lt;language culture=&quot;de-DE&quot; /&gt;
+        ///
+        ///  &lt;name lang=&quot;de-DE&quot;&gt;Schlüsselgenerierungs-Funktionen auf Basis von Pseudozufallsfunktionen&lt;/name&gt;
+        ///  &lt;name lang=&quot;en&quot;&gt;Key derivation functions based on pseudorandom functions&lt;/name&gt;
+        ///
+        ///  &lt;description lang=&quot;en&quot;&gt;
+        ///    &lt;section headline=&quot;Basics and background&quot;&gt;
+        ///      Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cr [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        public static string PseudoRandomFunctions {
+        public static string PseudoRandomFunction_based_KeyDerivationFunctions {
             get {
-                return ResourceManager.GetString("PseudoRandomFunctions", resourceCulture);
+                return ResourceManager.GetString("PseudoRandomFunction_based_KeyDerivationFunctions", resourceCulture);
             }
         }
         
