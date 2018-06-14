@@ -3,12 +3,12 @@
   <language culture="en" />
   <language culture="de-DE" />
 
-  <name lang="de-DE">Pseudozufallsfunktionen</name>
-  <name lang="en">Pseudorandomfunctions</name>
+  <name lang="de-DE">Schlüsselgenerierungs-Funktionen auf Basis von Pseudozufallsfunktionen</name>
+  <name lang="en">Key derivation functions based on pseudorandom functions</name>
 
   <description lang="en">
     <section headline="Basics and background">
-      Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a KDF, you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
+      Cryptographic methods and application should not use user-specified keys, because these keys do not match the conditions of cryptographic keys. With a key derivation function (KDF), you can generate keys with pseudorandom characters. An integral part of a KDF is a pseudorandom function (PRF). These functions are often based on hashfunctions or stream ciphers. <newline /> A PRF generates strings with pseudorandom chars. Frequently, hashfunctions were used as PRF. But the objective of a hash function is not the generation of pseudorandom strings. A secret key is essential for a PRF.
     </section>
     <section headline="Traditional approach of a PRF" >
       It is possible to extend a hash function with a secret key. A intuitive way is to use the key as prefix to the input of the hash function. In the literature, this construction is called a traditional approach. However, this approach is problematic if the used hash function is based on the Merkle-Damgård construction. Due to a weakness in the design, such a constructed PRF can be weakened with an extension attack [3][4]. Therefore, in practice no Merkle-Damgård based hash function should be used with the traditional approach.
@@ -26,12 +26,12 @@
 
   <description lang="de-DE">
     <section headline="Grundlagen und Hintergrund">
-      Für kryptographische Verfahren und Anwendungen eignen sich keine durch Anwender spezifizierte Schlüssel, da diese in der Regel nicht den Anforderungen genügen. Mit KDFs können Schlüssel mit pseudozufälligen Zeichen generiert werden. Ein wesentlicher Bestandteil einer KDF ist eine Pseudozufallsfunktion (Pseudorandom Function, PRF). PRFs basieren häufig auf Hashfunktionen oder Stromchiffren.
+      Für kryptographische Verfahren und Anwendungen eignen sich keine durch Anwender spezifizierte Schlüssel, da diese in der Regel nicht den Anforderungen genügen. Mit Schlüsselgenerierungs-Funktionen (Key Derivation Function, KDF) können Schlüssel mit pseudozufälligen Zeichen generiert werden. Ein wesentlicher Bestandteil einer KDF ist eine Pseudozufallsfunktion (Pseudorandom Function, PRF). PRFs basieren häufig auf Hashfunktionen oder Stromchiffren.
       <newline />
-      Eine PRF generiert Zeichenketten mit pseudozufälligen Zeichen. Häufig wurden Hashfunktionen als PRF verwendet. Das Ziel einer Hashfunktion ist allerdings nicht die Generierung von pseudozufälligen Zeichenketten (Bemerkung: Das ist nicht das SKM oder eine Saat). Essentiell für eine PRF ist ein geheimer Schlüssel.
+      Eine PRF generiert Zeichenketten mit pseudozufälligen Zeichen. Das Ziel einer Hashfunktion ist allerdings nicht die Generierung von pseudozufälligen Zeichenketten. Essentiell für eine PRF ist ein geheimer Schlüssel (Bemerkung: Der geheime Schlüssel ist nicht das SKM oder eine Saat).
     </section>
     <section headline="Traditioneller Ansatz einer PRF" >
-      Intuitiv und naheliegenderweise kann eine Hashfunktion um einen Schlüssel erweitert werden. Dazu kann der Schlüssel als Präfix vor die Eingabe der Hashfunktion gehangen werden. In der Literatur wird diese Konstruktion als traditioneller Ansatz bezeichnet. Dieser Ansatz ist allerdings problematisch, wenn die verwendete Hashfunktion auf der Merkle-Damgård-Konstruktion basiert. Die meisten praxisrelevanten Hashfunktionen aus der Vergangenheit (incl. dem bei KPF SHA-256 und HKDF SHA-256 verwendeten SHA2-Verfahren) basieren auf dem Merkle-Damgård-Konstruktionsschema. Aufgrund einer Schwäche in der Konstruktion lässt sich eine so konstruierte PRF mit einem Erweiterungsangriff (Length Extension Attack, [3,4]) schwächen. Daher dürfen in der Praxis keine Merkle-Damgård basierten Hashfunktionen mit dem traditionellen Ansatz verwendet werden.
+      Intuitiv und naheliegenderweise kann eine Hashfunktion um einen Schlüssel erweitert werden. Dazu kann der Schlüssel als Präfix vor die Eingabe der Hashfunktion gehangen werden. In der Literatur wird diese Konstruktion als traditioneller Ansatz bezeichnet. Dieser Ansatz ist allerdings problematisch, wenn die verwendete Hashfunktion auf der Merkle-Damgård-Konstruktion basiert. Die meisten praxisrelevanten Hashfunktionen aus der Vergangenheit (incl. dem bei KKDF SHA-256 und HKDF SHA-256 verwendeten SHA2-Verfahren) basieren auf dem Merkle-Damgård-Konstruktionsschema. Aufgrund einer Schwäche in der Konstruktion lässt sich eine so konstruierte PRF mit einem Erweiterungsangriff (Length Extension Attack, [3,4]) schwächen. Daher dürfen in der Praxis keine Merkle-Damgård basierten Hashfunktionen mit dem traditionellen Ansatz verwendet werden.
     </section>
     <section headline="Moderner Ansatz einer PRF">
       Moderner und sicherer ist der Ansatz, den Keyed-Hash Message Authentication Code (HMAC) als PRF zu verwenden, wenn die verwendete Hashfunktion auf der Merkle-Damgård-Konstruktion basiert. Der HMAC ist sicher gegenüber einem Erweiterungsangriff. Eine auf dem HMAC basierende KDF ist das HKDF-Verfahren. Dieses wird beispielsweise vom amerikanischen Nationalen Institut für Standards und Technologie (NIST) empfohlen [1].<newline /><newline />
