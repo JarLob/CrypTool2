@@ -67,7 +67,7 @@ namespace Cryptool.Plugins.PlayfairAnalyzer
 
             BinaryFormatter bf = new BinaryFormatter();
 
-            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open))
+            using (FileStream fs = new FileStream(Path.Combine(DirectoryHelper.DirectoryCrypPlugins, filename), FileMode.Open, FileAccess.Read))
             {
                 using (var gz = new GZipStream(fs, CompressionMode.Decompress))
                 {
