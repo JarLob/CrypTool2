@@ -38,7 +38,7 @@
 	<replacement key="$AInput$" value="2"/>
 	<replacement key="$BDesc$" value="Parameter b"/>
 	<replacement key="$BInput$" value="21"/>
-	<replacement key="$OutputDesc$" value="Outputlength (byte)"/>
+	<replacement key="$OutputDesc$" value="Output length (byte)"/>
 	<replacement key="$OutputInput$" value="10"/>	
 	<replacement key="$OutputResDesc$" value="Random bytes"/>
    </replacements>

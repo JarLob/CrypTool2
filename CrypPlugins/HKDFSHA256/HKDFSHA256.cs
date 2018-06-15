@@ -754,11 +754,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             ProgressChanged(0, 1);
 
             //Clean up outputs
-            _keyMaterial = Encoding.UTF8.GetBytes("");
-            OnPropertyChanged("KeyMaterial");
+            //_keyMaterial = Encoding.UTF8.GetBytes("");
+            //OnPropertyChanged("KeyMaterial");
 
-            _keyMaterialDebug = Encoding.UTF8.GetBytes("");
-            OnPropertyChanged("KeyMaterialDebug");
+            //_keyMaterialDebug = Encoding.UTF8.GetBytes("");
+            //OnPropertyChanged("KeyMaterialDebug");
 
             //clean steps
             curStep = 0;

@@ -92,6 +92,7 @@
     <Compile Include="ADFGVXTest.cs" />
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
+    <Compile Include="HKDFSHA256Test.cs" />
     <Compile Include="CaesarTest.cs" />
     <Compile Include="FialkaTest.cs" />
     <Compile Include="GroestlTest.cs" />
@@ -154,9 +155,8 @@
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
-      <Project>{25DB2B47-A457-4EC2-960B-395CE07AE093}</Project>
+      <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
-      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginsExperimental\Sigaba\Sigaba.csproj">
       <Project>{29520D81-911D-4FCD-9A6B-670625D6E0A1}</Project>
@@ -322,6 +322,10 @@
     <ProjectReference Include="..\CrypPlugins\HC128\HC128.csproj">
       <Project>{93268220-78CA-4979-9168-19E8D3CE7274}</Project>
       <Name>HC128</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\HKDFSHA256\HKDFSHA256.csproj">
+      <Project>{103b3660-fcd0-486a-9712-7fd50f7e0593}</Project>
+      <Name>HKDFSHA256</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\HMAC\HMAC.csproj">
       <Project>{9DC8FE92-6839-4837-8AAA-D7456F2B288F}</Project>
