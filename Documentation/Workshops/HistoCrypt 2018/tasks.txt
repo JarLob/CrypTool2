@@ -1,0 +1,211 @@
+Task 1: Decrypt the following text using the Caesar cipher built in CT2:
+------------------------------------------------------------------------------------------------------------------------
+Va pelcgbtencul, n Pnrfne pvcure, nyfb xabja nf Pnrfne'f pvcure, gur fuvsg pvcure, Pnrfne'f pbqr be Pnrfne fuvsg, vf bar bs gur fvzcyrfg naq zbfg jvqryl xabja rapelcgvba grpuavdhrf. Vg vf n glcr bs fhofgvghgvba pvcure va juvpu rnpu yrggre va gur cynvagrkg vf ercynprq ol n yrggre fbzr svkrq ahzore bs cbfvgvbaf qbja gur nycunorg. Sbe rknzcyr, jvgu n yrsg fuvsg bs 3, Q jbhyq or ercynprq ol N, R jbhyq orpbzr O, naq fb ba. Gur zrgubq vf anzrq nsgre Whyvhf Pnrfne, jub hfrq vg va uvf cevingr pbeerfcbaqrapr.
+
+Key: 13
+
+Hint: Open the template “Caesar Cipher” or use the Wizard.
+
+
+
+Task 2: Encrypt the following text using the Caesar cipher built in CT2:
+------------------------------------------------------------------------------------------------------------------------
+Gaius Julius Caesar known by his cognomen Julius Caesar, was a Roman politician and military general who played a critical role in the events that led to the demise of the Roman Republic and the rise of the Roman Empire. He is also known as an author of Latin prose.
+
+Key: 10
+
+
+
+Task 3: Break the following text using the template “Caesar Analysis using character frequencies”:
+------------------------------------------------------------------------------------------------------------------------
+Pu jyfwavnyhwof, h jpwoly pz hu hsnvypaot mvy wlymvytpun lujyfwapvu vy kljyfwapvu - h zlyplz vm dlss-klmpulk zalwz aoha jhu il mvssvdlk hz h wyvjlkbyl. Hu hsalyuhapcl, slzz jvttvu alyt pz lujpwolytlua. Av lujpwoly vy lujvkl pz av jvuclya pumvythapvu puav jpwoly vy jvkl. Pu jvttvu whyshujl, "jpwoly" pz zfuvuftvbz dpao "jvkl," hz aolf hyl ivao h zla vm zalwz aoha lujyfwa h tlzzhnl; ovdlcly, aol jvujlwaz hyl kpzapuja pu jyfwavnyhwof, lzwljphssf jshzzpjhs jyfwavnyhwof.
+
+
+Task 4: Decrypt the following text using the template “Substitution Cipher using a password”:
+------------------------------------------------------------------------------------------------------------------------
+jFYHGRGFGRLM LU HRMTOV OVGGVIH HVKZIZGVOB - HRNKOV HFYHGRGFGRLM - XZM YV WVNLMHGIZGVW YB DIRGRMT LFG GSV ZOKSZYVG RM HLNV LIWVI GL IVKIVHVMG GSV HFYHGRGFGRLM. hSRH RH GVINVW Z HFYHGRGFGRLM ZOKSZYVG. hSV XRKSVI ZOKSZYVG NZB YV HSRUGVW LI IVEVIHVW (XIVZGRMT GSV rZVHZI ZMW wGYZHS XRKSVIH, IVHKVXGREVOB) LI HXIZNYOVW RM Z NLIV XLNKOVC UZHSRLM, RM DSRXS XZHV RG RH XZOOVW Z NRCVW ZOKSZYVG LI WVIZMTVW ZOKSZYVG. hIZWRGRLMZOOB, NRCVW ZOKSZYVGH NZB YV XIVZGVW YB URIHG DIRGRMT LFG Z PVBDLIW, IVNLERMT IVKVZGVW OVGGVIH RM RG, GSVM DIRGRMT ZOO GSV IVNZRMRMT OVGGVIH RM GSV ZOKSZYVG RM GSV FHFZO LIWVI.
+
+Key: password = substitution, offset = 7
+
+Hint: You have to change the setting “Action” of the “Encrypt” substitution component from “Encrypt” to “Decrypt”. We change the given template, as this template was written to do encryption first. So just ignore the component with the subtitle Decrypt.
+
+
+
+Task 5: Encrypt the following text using the template “Substitution Cipher using a password”:
+------------------------------------------------------------------------------------------------------------------------
+Cryptography or cryptology is the practice and study of techniques for secure communication in the presence of third parties called adversaries.
+
+Key: password = key123, offset = 5
+
+
+
+Task 6: Break the following text using the template “Monoalphabetic Substitution Analyzer”:
+------------------------------------------------------------------------------------------------------------------------
+MLZZLYR EHQVQHLWT EHLQVRYG MYO Y PO YHRC WHCSFAJHYSIQH MIA HYG FIQ HQOQYHWI VLNLOLAG AE FIQ YHRCO OLJGYZ LGFQZZLJQGWQ OQHNLWQ LG FIQ FILHFLQO
+
+
+Task 7: Decrypt the following text using the “Vigenère Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+LVRLXSF CLZIES KRRBXGU SXU RWX OTCVLRX CX VZEWM ZAOJ RWX BMKEAT HT AVCSHBCF
+
+Key: KRYPTOS
+
+Hint: You have to change the setting “Action” of the upper Vigenère component from “Encrypt” to “Decrypt”.
+
+
+Task 8: Encrypt the following text using the “Vigenère Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+BLAISE DE VIGENERE WAS A FRENCH DIPLOMAT, CRYPTOGRAPHER, TRANSLATOR AND ALCHEMIST
+
+Key: POLYALPHABETIC
+
+
+
+Task 9: Break the following text using the “Vigenère Analysis” template:
+------------------------------------------------------------------------------------------------------------------------
+AX YRW MYXYDPA ZROSWGTPG YSPC XFSX RFWLSFJW XJVC NCIB LLG VEKDLQ EEIEIMSG DAINU
+
+
+Task 10: Decrypt the following text using the “Scytale Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+IMRHPINAWIAPCTISRHRRTWTEYAHRARPNAINTTSSTSOOPTTICGORENORSINPMAIPAAMPTOMRUHIFETNYOPSIIANASCCSCRAUACICGLTYPHEAETHMTRDAEEHAULRNERRECTAEIIOWNSNSNOCAGASUIIMTINEDIOSDNTLOTATOILIRGHTUNORAASGUEVREONEEYDFDKUCTAISSAOCTAEMPYONDPELNDTARIWTHIFNHHIGODIESNRECSCS
+Key: 6
+
+Hint: You have to change the setting “Action” of the Scytale component from “Encrypt” to “Decrypt”.
+
+
+
+Task 11: Encrypt the following text using the “Scytale Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+THEANCIENTGREEKSANDTHESPARTANSINPARTICULARARESAIDTOHAVEUSEDTHISCIPHERTOCOMMUNICATEDURINGMILITARYCAMPAIGNS
+
+Key: 11
+
+
+
+Task 12: Break the following text using the “Scytale Brute-Force Analysis” template:
+------------------------------------------------------------------------------------------------------------------------
+Fweemnsa ratnat taos tnun  m Ah roac fr wit riiccre cynrheisulpdsint netitlteataor ourlirgemcrssl rcehy o iatnu d Anp tsBumpdhei Creoiivow.inlccinh ntla deoOgiotded t onien lhtniovcbieheunieyvreds c  e    oettdGfiof hh rotf aeeiel  ip  nelbRtpsG kouhsecrt wto ayehai durteennieseak dgtsedl s     _epeRcwta_ ovoeahs_
+
+Hint: Take care that you analyze the text without any line breaks. If there are line breaks after copying the text remove them!
+
+
+
+Task 13: Decrypt the following text using the “Transposition Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+ctconsueaeortoegoiccsfsishoreaiayteligscsulrridbinxcgttenxhieteditoepiaitseehosrrattptptmphlafttittapnhfwitaolaxafnanhooytdrseuityapoytitcuhesotoprninoedrtcehIyotipbneamhttnrssrhhphnyenmp
+
+Key: transposition
+
+Hint: You have to change the setting “Action” of the upper transposition component from “Encrypt” to “Decrypt”.
+
+
+
+Task 14: Encrypt the following text using the “Transposition Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+inacolumnartranspositionthemessageiswrittenoutinrowsofafixedlengthandthenreadoutagaincolumnbycolumnandthecolumnsarechoseninsomescrambledorder
+
+Key: uppsala
+
+
+
+Task 15: Break the following text using the template “Transposition Hill Climbing Analysis”:
+------------------------------------------------------------------------------------------------------------------------
+AENNTUTDSOENHIMEIUDOFSNSSCASILTBSSCLSNEOTMTOOIAGURSCEKUGBUGIHAIOANNOEANLTONBCGNILNRTSTCSEIPLRLMAIOAEEPLMTTEGNLNLGSAMIORPODAYISOEWGSUSNHKRBG
+
+Hint: You have to change the setting “Keysize” of the transposition analyzer component to 6. Additionally, you have to change the setting “Read Out” of the “Transposition” parameter of the transposition analyzer to “by column”.
+
+
+
+Task 16: Decrypt the following text using the “ADFGVX Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+AAFDDAADGVAVAVDVAFDAAFAGVGAFAGFAAGFDAVDGAVAAAAGVDGAVAXAGAGDDXFVAGDGDXFFAGAAFFGAAFAGAAAFGFDVDDDVDGADGGFGAFADFDADAXDDFFDFVAXDGVGDFAXAGDFAXADAADDFDFAGDADFADFAAAGDXGGAGGFDGAFFFDGADDAGGVAAXAFDGDGGDDDDGGFVGAFAFFGAAFDAFFVFVDAGVDDAGAGFVFGDDFFADADFDAFFAAAGXDDGDFXDDAVDFFGFVDVADAGGVGDGDDFGDDXFXFVFGADAVAXFADX
+
+Keys: For substitution: TREE, for transposition: HOUSE
+
+Hint: You have to change the setting “Action” of the left “ADFGVX Encrypt” component from “Encrypt” to “Decrypt”. The keys can be also applied as settings.
+
+
+
+Task 17: Encrypt the following text using the “ADFGVX Cipher” template:
+------------------------------------------------------------------------------------------------------------------------
+GEORGESJEANPAINVINWASAFRENCHCRYPTANALYSTDURINGTHEFIRSTWORLDWARXHISMOSTNOTABLEACHIEVEMENTWASTHEBREAKINGOFTHEADFGVXCIPHERINJUNE1918
+
+Hint: Breaking ADFGVX automatically is still on the to-do list of the CT2 team. We plan to implement an ADFGVX analyzer in CT2 within 2018.
+
+
+
+Task 18: Decrypt the following text using the “Enigma Cipher Machine” template:
+------------------------------------------------------------------------------------------------------------------------
+SFCLFTRHHSMOGDEWODWBWPMRHVYJIMCPOJQOBNFZJLCPFHAACMHOLJSQBBRWWXNFONMHCIBWLNTPGLYQNQRREBMBXWWNDRYWVLOLEEZUBCRDSKAKTTJSCLXQBADONWKKKLNPCZEAQATCHCHMIZPGWXIXNOIEZRRDZHYSREO
+
+Key settings: see pdf
+
+
+
+Task 19: Encrypt the following text using the “Enigma Cipher Machine” template:
+------------------------------------------------------------------------------------------------------------------------
+ENIGMAWASINVENTEDBYTHEGERMANENGINEERARTHURSCHERBIUSATTHEENDOFWORLDWARI
+
+Key settings: see pdf
+
+
+
+Task 20: Break the following ciphertext using the “Enigma Analyzer” template:
+------------------------------------------------------------------------------------------------------------------------
+WYCLKWEDNUZRBERPNUHSVOGIBNUREFSCKHSTWCBKBJVSEYRPOVBANIKKLBKGVAOYCWZQZBFUTXSLJAHKQLJVSTHSDBKJNAOHWMTTMAJKPZWPBYMUMNHRUHKIRBKVIDKKMUDHGJVPVMCVTOHRKFEGZDNZNELAHTAXFMSATNKBRVLMJTBNKVVQETMZUGQHHFRTAIPTSLRQAWWJNWKEDWACHWEVYFGNLCFKAAWDHCFYPKWZAISLOUJMJDBKNINROEXCZIEUEQYBJBJGUYFLTYDPROGMQBZWSBWOFWROTYUJOHEDGYJNXSBQXYPKHTDIGUYDNLUVEWJIXCPTNTKGPONLABSRZMQOQKQAUNAJYVCMNDZZYSWRYYFRZLBTAVHFTBWSDINHSRARTEJTQTVHCUCYURQSUABESRSXNDJYGUVJKZPFOVYVPAXRHQPFXRJTIRMEKWABVXNDZXCGONWWQLGXKSSHUBTGXMJPRCHPSOQFKNFMDPFTGRNLSSRSXMXBEARHFPXVKHNHLDRIUHLMHAWVOZPFREVCNM
+
+
+Task 21: Analyze the following plaintext using the “Statistic Tests for Classical Ciphers”.
+------------------------------------------------------------------------------------------------------------------------
+INCOMPUTINGPLAINTEXTISTHEDATAEGFILECONTENTSTHATREPRESENTONLYCHARACTERSOFREADABLEMATERIALBUTNOTITSGRAPHICALREPRESENTATIONNOROTHEROBJECTSIMAGESETCITMAYALSOINCLUDEALIMITEDNUMBEROFCHARACTERSTHATCONTROLSIMPLEARRANGEMENTOFTEXTSUCHASLINEBREAKSORTABULATIONCHARACTERSPLAINTEXTISDIFFERENTFROMFORMATTEDTEXTWHERESTYLEINFORMATIONISINCLUDEDANDFROMBINARYFILESINWHICHSOMEPORTIONSMUSTBEINTERPRETEDASBINARYOBJECTSENCODEDINTEGERSREALNUMBERSIMAGESETCTHEENCODINGHASTRADITIONALLYBEENEITHERASCIISOMETIMESEBCDICUNICODEBASEDENCODINGSSUCHASUTF8ANDUTF16AREGRADUALLYREPLACINGTHEOLDERASCIIDERIVATIVESLIMITEDTOSEVENOREIGHTBITCODESFILESTHATCONTAINMARKUPOROTHERMETADATAAREGENERALLYCONSIDEREDPLAINTEXTASLONGASTHEENTIRETYREMAINSINDIRECTLYHUMANREADABLEFORMASINHTMLXMLANDSOONASCOOMBSRENEARANDDEROSEARGUEPUNCTUATIONISITSELFMARKUPTHEUSEOFPLAINTEXTRATHERTHANBITSTREAMSTOEXPRESSMARKUPENABLESFILESTOSURVIVEMUCHBETTERINTHEWILDINPARTBYMAKINGTHEMLARGELYIMMUNETOCOMPUTERARCHITECTUREINCOMPATIBILITIES
+
+Hint: The template has to be modified. You have to delete the “Vigenère” component and connect the “Text Input” directly with the “Frequency Test” component. To delete the Vigenère component, you can either click on the small red X or you can click the component and use the “del”-key of your keyboard (see next page for a screenshot).
+
+
+
+Task 22: Analyze the following transposed text using the “Statistic Tests for Classical Ciphers”.
+------------------------------------------------------------------------------------------------------------------------
+PNDCATCDITLAHITCTFSORFSSIEXEMWINDNNPSRAEEUECRLEEIANT6LNAATOCTNTTAEESTNULHSBDUIFUTTEENSMINIGTARIIGIGNRCOMTPENJSLAMACPMSBBAAIODSMCRIHONAJERSTGINISCNCDRPODSSHFOUEGOLLNACEMMSESCIUPAIORSREWBEMPTOTNPSFTEHFANHSOEESLBCOLEURURIFMTTALOLSNTSEDEIHHOEIEOCHUALLELETINPTENAOTITAALCAETTPLTTEKFVTIYMMUEMIMIEEHNAARIATTSINIORRROAKTTERRTEOEIIEUPNSTNGNTLHMDBIU1AIRVINTSIOARDTAEIHBNDMNGTLENRRREEERIKRERUTIXATELRLBRPOOGYDNAAIGXNTCPSFTROIDYITEEOORETIIESMNDSAERHIVTIETRRRYDAEERNOLNERUIROTNSMLSHHRTYOHNLUTAOTOTAASRTEMMLECTLATLOORTNAHNIAAWOTERNGMSOAYRTCSGFALGSTEROHMHALRXTYDMETOSDEOMSEHASATUNPNEOREBCLTISSARTOIERCTOIETNENCELANFFEYTUMEOSEBCIAMEANISBDOATDADRIVBLTOANSININLDSAORAUSTAHSXUIITLMLUTCPEOAHLTEREETCNOTCIMRETATHAACTEOXLIDBSMMRITNLAESATOCEDSFUCEIMEIEARDEINGRSYAINOARAEHIETPPLVEDAANETASNTEEPYSEUARNBEAEURTMETEAHLDREERNFFCIIDBDSRCNTECEIEUNGEEIEOGSCKMECPSEMERRXANONSKFRBTAEUBETHIMICITETNRNEBLGEIRAAUDHHSNEIRNSITTEFSNRHRBTYCEBEDDBAIUES8RYTCIDEDAAEALETHRIAFMOREPNAEXAMSBOCTAGLCCII
+
+
+
+Task 23: Analyze the following substituted text using the “Statistic Tests for Classical Ciphers”.
+------------------------------------------------------------------------------------------------------------------------
+CUWQVNGJCUTNPZCUJIDJCKJOIHZJZITSCPIWQUJIUJKJOZJLINLIKIUJQUPBWOZLZWJILKQSLIZHZXPIVZJILCZPXGJUQJCJKTLZNOCWZPLINLIKIUJZJCQUUQLQJOILQXRIWJKCVZTIKIJWCJVZBZPKQCUWPGHIZPCVCJIHUGVXILQSWOZLZWJILKJOZJWQUJLQPKCVNPIZLLZUTIVIUJQSJIDJKGWOZKPCUIXLIZYKQLJZXGPZJCQUWOZLZWJILKNPZCUJIDJCKHCSSILIUJSLQVSQLVZJJIHJIDJEOILIKJBPICUSQLVZJCQUCKCUWPGHIHZUHSLQVXCUZLBSCPIKCUEOCWOKQVINQLJCQUKVGKJXICUJILNLIJIHZKXCUZLBQXRIWJKIUWQHIHCUJITILKLIZPUGVXILKCVZTIKIJWJOIIUWQHCUTOZKJLZHCJCQUZPPBXIIUICJOILZKWCCKQVIJCVIKIXWHCWGUCWQHIXZKIHIUWQHCUTKKGWOZKGJS8ZUHGJS16ZLITLZHGZPPBLINPZWCUTJOIQPHILZKWCCHILCFZJCFIKPCVCJIHJQKIFIUQLICTOJXCJWQHIKSCPIKJOZJWQUJZCUVZLYGNQLQJOILVIJZHZJZZLITIUILZPPBWQUKCHILIHNPZCUJIDJZKPQUTZKJOIIUJCLIJBLIVZCUKCUHCLIWJPBOGVZULIZHZXPISQLVZKCUOJVPDVPZUHKQQUZKWQQVXKLIUIZLZUHHILQKIZLTGINGUWJGZJCQUCKCJKIPSVZLYGNJOIGKIQSNPZCUJIDJLZJOILJOZUXCJKJLIZVKJQIDNLIKKVZLYGNIUZXPIKSCPIKJQKGLFCFIVGWOXIJJILCUJOIECPHCUNZLJXBVZYCUTJOIVPZLTIPBCVVGUIJQWQVNGJILZLWOCJIWJGLICUWQVNZJCXCPCJCIK
+
+
+
+Task 24: Analyze the following substituted text using the “Statistic Tests for Classical Ciphers”.
+------------------------------------------------------------------------------------------------------------------------
+PV UHARLRXGC, DCKAU HTEB AL HJV BPMW (S.X. PASS RVVLXBVJ) RWTP FVZJLGTUB GGZA TFPKWQKOJZ CU YMSWODCC BTPSISSS PJA VGM WVJ EGTLVZMSS FTWZWLSPKYIBKB EYJ VHWLZ GUXGTRH (BIOXOK, LHR.). PB ETM CCQD BJQCEVL O APUAMSF ESBUAF FP UOOGHKLXFU KFPM YCEDJVZ HPUHES CIPPGCSDOFA CU AMPM, GWTF PL HWEO TYSPRA GK HCSSATPWFX UOOGHKLXFU. GJPBJ HVHL PG SPNXXFGER UKKA WYJTOIAMV MSZK, UWXNS JDQSS XUNGKACKGDG EG ZXUSISLL, SGR HIMB "UEBRBQ MWALA" AG KJZAW LKAV ZGYHXVVK FIUK ZT BJHVBHYSILL SL PKEYGR KPAOUAG (TUKGWSF ZLIXCSIC, JLOA UCEUSTJ, GBTCSJ, OLJ.). HWL MFVCFZLV AWG KBSKWIPWFTZNP ZTXJ SZDZLF PZKAB, GQDCIBISJ OTJRXJ. CFBQQUC-QTOSU OFJCSPVYL GWTF PL QHW-8 KFK IIM-16 IJX UTRBJTHZP BWWZPJQFZ HJV MAWAF RCUPW SLZAOOVZTTL HWDSLLR IV AWOSP FP TBCVK LAA QDKMK. YWNVQ IAWH TYFAOXU USKYWG MG HPVVB ELHP-KILT OTV ETGAFRVDF QDUAAWSTVB EEWWE-DWEH, PZ TGGU CJ RWX ABKSJLHN YMETWPJ GC WEFVMLSM WBUSG-FGRBPUHS WYJT (OH PV ZMAN, OKA, TJR JY GU (OH JWGFPU, ICCXWF, RXV KSGVAW TFILC, ENJQKESAWDU QK BHUVJU FWFBEH). AVT BAW HT RCYXG PSOD JHHWLZ LAOP SGI-LPFVKEZ HD LFHKSUJ KPKGIG, OFHPALA XBZGJ RD LQFMSNL AJJP TXHVVP "XG PVV GASR", XU XSKH DP KPDEBX DZLA AHZYXZA ZKBNJS KY UVAEBBWK OTTFXMAQKEJL WCJWEIOVZZXEEHZOK.
+
+
+
+Task 25: Analyze the type of the following ciphertext and break it!
+------------------------------------------------------------------------------------------------------------------------
+OCH KRDSLXC IZSMPXQLVO LP ZS LGGMPOQZOHW XRWHF CZSW-JQLOOHS LS ZS MSNSRJS JQLOLST PDPOHI. OCH KHGGMI RS JCLXC LO LP JQLOOHS CZP YHHS XZQYRS-WZOHW OR OCH HZQGD 15OC XHSOMQD (1404–1438), ZSW LO IZD CZKH YHHS XRIVRPHW LS SRQOCHQS LOZGD WMQLST OCH LOZGLZS QHSZLPPZSXH. OCH IZSMPXQLVO LP SZIHW ZAOHQ JLGAQLW KRDSLXC, Z VRGLPC YRRN WHZGHQ JCR VMQXCZPHW LO LS 1912.
+
+
+
+Task 26: Analyze the type of the following ciphertext and break it!
+------------------------------------------------------------------------------------------------------------------------
+SCLNTLHEENOEWHEYAMLSIOVPSFRIROALDONDEUPSSRVOSNTHESMENLEVU1TRTRSELERCICMSFRGTSSIOEENUTOLNAOATHEEREDNLNENFSEADLNEICIUTEANAIUSTSLEQEEEALENOCAPTAUTRNHYCNCUCNSDNTSTMSHIARCRPAAREULILLIUELHWASWATCBHOOIADEEGITSETTNNIOERRRSAAEMATOSNISERPFDITRNOIOAAFLINNNARGENAYEETCERQARMSIERTIBAUOEP8UERNLLEOATEIENEILIVLDRNATASR
+
+
+
+Task 27: Analyze the type of the following ciphertext and break it!
+------------------------------------------------------------------------------------------------------------------------
+PGUVORKMOGGRRCWUWEHWHUIBZMXTABOZQCVJGCBPEZPZDHOJERBISMPCMEKGDKLTVRZTBTSCFSYUIZAGGRTSWJNTGVVAKAQSUJWDMRBKNHJJRMQFSENJIPVOCGQBOAQOOVUGKSVQCFKWSSGGMRHFVZJLDANJPJENAOMJRARYAPEHRPYBYPHSZVTMMYGYTRPPNBZAFGIKRQVKCKLQFLKWNBARRUBJGTAIJVAMYEQBPBCHWNVUNCKQPOXOMJPUXXNJNIPOLVSDCDDXQGHZCKQXFRJVEUTOALMGGZGXBOEJNRYUDJJPYFMRYQIDJFWAQKFCLZPDZZYXGSLUSOOWZFQHHUAQMQOIMR
+
+
+
+Task 28: Analyze the type of the following ciphertext and break it!
+------------------------------------------------------------------------------------------------------------------------
+WABWJPZSEVZAMPGIDPWVUUAKQKUQGAKIYOZWAFQFPIXTJGGPNSCWZUBGZTGOJKXREJIFNIBCZMGVWQIKBCKASSCQOKALOJVAXAMHDWURIEKAVYNWWOXXJEACISQFYVOEAOZDASXLPJOMUAKQKUQZUTTACPODSVAXMDYXQNOXKGWJGYSYNUZQZBYGJIHRGNIWOWRMSMKKZBQPTWVMXLNIWLWMPSFXZABSENKB
+
+
+
+Task 29: Analyze the type of the following ciphertext and break it!
+------------------------------------------------------------------------------------------------------------------------
+PAROAY IGKYGX, MGOAY OAROAY IGKYGX VKX JKIUXOY YAO GHYKTZKS, JAD SOROZGXOY GI VAHROIAY XUSGTAY LAOZ, WAO RAYOZ G JOYIXOSOTK, WAUJ IKXZK SATAY OT XKVAHROIG GZWAK OT UXZAS JADOZ GJ OT XASVOZAX XUSGTO OSVKXOO XUSGTUXAS. KZ OY GRYU QTUCT GY GT GAZNUX UXGZOUTOY RGZOTGK.
