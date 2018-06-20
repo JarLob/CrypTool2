@@ -29,21 +29,15 @@ using Cryptool.PluginBase.Miscellaneous;
 using KKDFSHAKE256.Properties;
 using Org.BouncyCastle.Crypto.Digests;
 
-
 namespace Cryptool.Plugins.KKDFSHAKE256
 {
-    // HOWTO: Change author name, email address, organization and URL.
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("KKDFSHAKE256.Properties.Resources", "PluginCaption", "KKDFSHAKE256Tooltip", "KKDFSHAKE256/userdoc.xml", new[] { "KKDFSHAKE256/images/icon.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.HashFunctions)]
     public class KKDFSHAKE256 : ICrypComponent
     {
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
         private readonly KKDFSHAKE256Settings settings = new KKDFSHAKE256Settings();
         private KKDFSHAKE256Pres pres = new KKDFSHAKE256Pres();
         private byte[] _skm;
@@ -97,7 +91,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             {
                 Paragraph p = new Paragraph();
 
-                //headline of lblExplanationSectionHeading
                 p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
                 p.TextAlignment = TextAlignment.Right;
                 pres.txtStep.Document.Blocks.Add(p);
@@ -105,8 +98,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
 
             }, null);
         }
-
-
 
         /// <summary>
         ///  the method to be called in the workerthread
@@ -168,8 +159,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                     renderBlankView();
                     pres.Next = false;
                     pres.Prev = false;
-                    //buttonPrevClickedEvent.Reset();
-                    //buttonNextClickedEvent.Reset();
 
                     WaitHandle[] waitHandles = new WaitHandle[]
                     {
@@ -177,13 +166,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                         buttonPrevClickedEvent
                     };
 
-                    Console.WriteLine("Current i: " + i + " pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " pres.SkipChapter: " + pres.SkipChapter);
                     switch (i)
                     {
                         case 0:
                             {
                                 renderState0(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 buttonStartClickedEvent.WaitOne();
                                 i++;
                                 break;
@@ -191,46 +178,32 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                         case 1:
                             {
                                 renderState1(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 var j = WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " j: " + j);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
                         case 2:
                             {
                                 renderState2(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -239,7 +212,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState3(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
                                 Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
@@ -247,16 +219,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -264,23 +231,16 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                             {
                                 pres.SkipChapter = false;
                                 renderState4(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -289,24 +249,17 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState5(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -315,24 +268,17 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState6(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -341,24 +287,17 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState7(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -367,25 +306,18 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState8(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
-                                    
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
 
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -393,22 +325,16 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                             {
                                 pres.SkipChapter = false;
                                 renderState9(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -418,24 +344,17 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState10(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
-
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
                                 break;
                             }
@@ -516,21 +435,17 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                     }, null);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
                                     i--;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
 
                                 }
                                 else
                                 {
                                     pres.Next = false;
                                     i++;
-                                    //buttonPrevClickedEvent.Reset();
-                                    //buttonNextClickedEvent.Reset();
                                 }
 
                                 break;
@@ -541,8 +456,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
                                 pres.SkipChapter = false;
                                 renderState12(prgress_step, i);
                                 buttonRestartClickedEvent.WaitOne();
-
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
 
                                 if (pres.Restart)
                                 {
@@ -669,6 +582,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState10(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -699,6 +617,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState9(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -738,6 +661,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState8(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -766,6 +694,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState7(double inkrement, int stepNum)
         {
 
@@ -794,6 +727,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState6(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -819,6 +757,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState5(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -843,6 +786,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState4(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -868,6 +816,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState3(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -890,6 +843,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState2(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -913,6 +871,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState1(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -980,6 +943,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState0(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1049,6 +1017,11 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             }, null);
         }
 
+        /// <summary>
+        /// renders the blank state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderBlankView()
         {
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
@@ -1415,20 +1388,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             pres.txtFinished.Document.Blocks.Add(p);
             pres.txtFinished.Document.Blocks.Remove(pres.txtFinished.Document.Blocks.FirstBlock);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             //for formatting the text 
             var parts = Resources.PresSectionIntroductionText.Split(new[] { "<Bold>", "</Bold>" }, StringSplitOptions.None);
             p = new Paragraph();
@@ -1437,12 +1396,10 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             {
                 if (isBold)
                 {
-                    //pres.txtExplanationSectionText.Inlines.Add(new Bold(new Run(part)));
                     p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    //pres.txtExplanationSectionText.Inlines.Add(new Run(part));
                     p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
@@ -1458,7 +1415,6 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             {
                 if (isBold)
                 {
-                    //pres.txtConstructionText3.Inlines.Add(new Bold(new Run(part)));
                     p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
@@ -1479,12 +1435,10 @@ namespace Cryptool.Plugins.KKDFSHAKE256
             {
                 if (isBold)
                 {
-                    //pres.txtConstructionText4.Inlines.Add(new Bold(new Run(part)));
                     p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    //pres.txtConstructionText4.Inlines.Add(new Run(part));
                     p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;

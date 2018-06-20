@@ -1660,12 +1660,10 @@ namespace Cryptool.Plugins.KKDFSHA256
             {
                 if (isBold)
                 {
-                    //pres.txtExplanationSectionText.Inlines.Add(new Bold(new Run(part)));
                     p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    //pres.txtExplanationSectionText.Inlines.Add(new Run(part));
                     p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
@@ -1681,19 +1679,16 @@ namespace Cryptool.Plugins.KKDFSHA256
             {
                 if (isBold)
                 {
-                    //pres.txtIntroductionText.Inlines.Add(new Bold(new Run(part)));
                     p.Inlines.Add(new Bold(new Run(part)));
                 }
                 else
                 {
-                    //pres.txtIntroductionText.Inlines.Add(new Run(part));
                     p.Inlines.Add(new Run(part));
                 }
                 isBold = !isBold;
             }
             pres.txtIntroductionText.Document.Blocks.Add(p);
             pres.txtIntroductionText.Document.Blocks.Remove(pres.txtIntroductionText.Document.Blocks.FirstBlock);
-
 
         }
 

@@ -219,7 +219,7 @@ namespace HKDFSHA256.Properties {
         ///Byte 1 - 8:     {1}
         ///Byte 9 - 16:   {2}
         ///Byte 17 - 24: {3}
-        ///Byte 24 - 32: {4} ähnelt.
+        ///Byte 25 - 32: {4} ähnelt.
         /// </summary>
         internal static string KeyMaterialDebugTextTemplate {
             get {
@@ -475,7 +475,7 @@ namespace HKDFSHA256.Properties {
         ///Byte 1 - 8: {1}
         ///Byte 9 - 16: {2}
         ///Byte 17 - 24: {3}
-        ///Byte 24 - 32: {4} ähnelt.
+        ///Byte 25 - 32: {4} ähnelt.
         /// </summary>
         internal static string PresKeyMaterialDebugTextTemplate {
             get {
@@ -498,7 +498,7 @@ namespace HKDFSHA256.Properties {
         ///Byte 1 - 8: {1}
         ///Byte 9 - 16: {2}
         ///Byte 17 - 24: {3}
-        ///Byte 24 - 32: {4} ähnelt.
+        ///Byte 25 - 32: {4} ähnelt.
         /// </summary>
         internal static string PresPRKDebugTextTemplate {
             get {
@@ -577,7 +577,7 @@ namespace HKDFSHA256.Properties {
         ///Byte 1 - 8:   {1}
         ///Byte 9 - 16:  {2}
         ///Byte 17 - 24: {3}
-        ///Byte 24 - 32: {4} ähnelt.
+        ///Byte 25 - 32: {4} ähnelt.
         /// </summary>
         internal static string PRKDebugTextTemplate {
             get {

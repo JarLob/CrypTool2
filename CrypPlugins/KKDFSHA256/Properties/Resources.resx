@@ -153,7 +153,7 @@
 Byte 1 - 8:     {1}
 Byte 9 - 16:   {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="OutputKeyMaterialCaption" xml:space="preserve">
     <value>Key Material</value>
@@ -279,7 +279,7 @@ Either stop the execution and start it again, change one of the inputs or click 
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="PresTitleHeading" xml:space="preserve">
     <value>KKDF SHA-256

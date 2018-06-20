@@ -238,7 +238,7 @@ a Key Derivation Function with extendable output length</value>
 Byte 1 - 8:     {1}
 Byte 9 - 16:   {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="PresConstructionPart1Text" xml:space="preserve">
     <value>The calculation of the key material can be described as following:</value>
@@ -283,7 +283,7 @@ Counter: {5}</value>
 Byte 1 - 8: {1}
 Byte 9 - 16: {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="PresPRKDebugTextTemplate" xml:space="preserve">
     <value>Output of PRK:
@@ -291,7 +291,7 @@ Byte 24 - 32: {4}</value>
 Byte 1 - 8: {1}
 Byte 9 - 16: {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="PRKDebugTextTemplate" xml:space="preserve">
     <value>Output of PRK:
@@ -299,7 +299,7 @@ Byte 24 - 32: {4}</value>
 Byte 1 - 8:   {1}
 Byte 9 - 16:  {2}
 Byte 17 - 24: {3}
-Byte 24 - 32: {4}</value>
+Byte 25 - 32: {4}</value>
   </data>
   <data name="ExSystemOutOfMemory" xml:space="preserve">
     <value>While requesting memory from your system, there was an exception. Please try a smaller value for the output bytes.</value>

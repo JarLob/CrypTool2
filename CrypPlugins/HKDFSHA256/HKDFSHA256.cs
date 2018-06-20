@@ -341,12 +341,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                     {
                         pres.imgIterationKM1.Visibility = Visibility.Hidden;
                         pres.imgIterationKM2.Visibility = Visibility.Visible;
-                        /*
-                        pres.txtIterationRounds.Text = "";
-                        pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
-                            .Replace("{3}", System.Text.Encoding.UTF8.GetString(skm)).Replace("{4}", System.Text.Encoding.UTF8.GetString(ctxInfo)).Replace("{5}", CTR.ToString())));
-                        pres.txtIterationDebugOutput.Text = strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString());
-                        */
 
                         Paragraph p = new Paragraph();
                         p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
@@ -457,10 +451,6 @@ namespace Cryptool.Plugins.HKDFSHA256
             {
                 pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                 {
-                    /*
-                    pres.txtIterationRounds.Text = "";
-                    pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationPRKCalc.Replace("{0}", System.Text.Encoding.UTF8.GetString(skm)).Replace("{1}", System.Text.Encoding.UTF8.GetString(salt))));
-                    */
                     pres.imgIterationPRK.Visibility = Visibility.Visible;
 
                     Paragraph p = new Paragraph();
@@ -494,8 +484,6 @@ namespace Cryptool.Plugins.HKDFSHA256
             {
                 pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                 {
-                    //pres.txtIterationDebugOutput.Text = strBuilderPresDebug.ToString();
-
                     Paragraph p = new Paragraph();
                     p.Inlines.Add(new Run(strBuilderPresDebug.ToString()));
                     p.TextAlignment = TextAlignment.Left;
@@ -565,12 +553,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                 {
                     pres.imgIterationPRK.Visibility = Visibility.Hidden;
                     pres.imgIterationKM1.Visibility = Visibility.Visible;
-                    /*
-                    pres.txtIterationRounds.Text = "";
-                    pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", "1").Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
-                        .Replace("{3}", System.Text.Encoding.UTF8.GetString(skm)).Replace("{4}", System.Text.Encoding.UTF8.GetString(ctxInfo)).Replace("{5}", CTR.ToString())));
-                    pres.txtIterationDebugOutput.Text = strBuilderPresDebug.ToString().Replace("{0}", "1");
-                    */
 
                     Paragraph p = new Paragraph();
                     p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", "1").Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
@@ -612,7 +594,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                 buttonEvent = pres.buttonNextClickedEvent;
                 buttonEvent.WaitOne();
             }
-
             
             CTR++;
             //DEBUG
@@ -668,12 +649,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                     {
                         pres.imgIterationKM1.Visibility = Visibility.Hidden;
                         pres.imgIterationKM2.Visibility = Visibility.Visible;
-                        /*
-                        pres.txtIterationRounds.Text = "";
-                        pres.txtIterationRounds.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
-                            .Replace("{3}", System.Text.Encoding.UTF8.GetString(skm)).Replace("{4}", System.Text.Encoding.UTF8.GetString(ctxInfo)).Replace("{5}", CTR.ToString())));
-                        pres.txtIterationDebugOutput.Text = strBuilderPresDebug.ToString().Replace("{0}", (i + 1).ToString());
-                        */
 
                         Paragraph p = new Paragraph();
                         p.Inlines.Add(new Run(Resources.PresIterationRounds.Replace("{0}", (i + 1).ToString()).Replace("{1}", N.ToString()).Replace("{2}", BitConverter.ToString(prk).Replace("-", ""))
@@ -816,13 +791,11 @@ namespace Cryptool.Plugins.HKDFSHA256
                         buttonPrevClickedEvent
                     };
 
-                    Console.WriteLine("Current i: " + i + " pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " pres.SkipChapter: " + pres.SkipChapter);
                     switch (i)
                     {
                         case 0:
                             {
                                 renderState0(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 buttonStartClickedEvent.WaitOne();
                                 i++;
                                 break;
@@ -830,9 +803,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                         case 1:
                             {
                                 renderState1(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 var j = WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next + " j: " + j);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -848,9 +819,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                         case 2:
                             {
                                 renderState2(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -868,10 +837,8 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState3(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -888,9 +855,7 @@ namespace Cryptool.Plugins.HKDFSHA256
                             {
                                 pres.SkipChapter = false;
                                 renderState4(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -908,7 +873,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState5(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
                                 Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
@@ -929,10 +893,8 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState6(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -950,10 +912,8 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState7(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -971,11 +931,9 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState8(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
 
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -993,11 +951,9 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 if (!pres.SkipChapter)
                                 {
                                     renderState9(prgress_step, i);
-                                    Console.WriteLine("Waiting in State: " + i);
                                     WaitHandle.WaitAny(waitHandles);
 
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -1014,10 +970,8 @@ namespace Cryptool.Plugins.HKDFSHA256
                             {
                                 pres.SkipChapter = false;
                                 renderState10(prgress_step, i);
-                                Console.WriteLine("Waiting in State: " + i);
                                 WaitHandle.WaitAny(waitHandles);
 
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -1127,7 +1081,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                                     return;
                                 }
 
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -1145,8 +1098,6 @@ namespace Cryptool.Plugins.HKDFSHA256
                                 pres.SkipChapter = false;
                                 renderState12(prgress_step, (int)steps);
                                 buttonRestartClickedEvent.WaitOne();
-
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
 
                                 if (pres.Restart)
                                 {
@@ -1219,15 +1170,13 @@ namespace Cryptool.Plugins.HKDFSHA256
                 }
                 ProgressChanged(1, 1);
             }
-
-
-
-
-
         }
 
-
-
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState12(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1253,6 +1202,11 @@ namespace Cryptool.Plugins.HKDFSHA256
 
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState10(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1262,9 +1216,6 @@ namespace Cryptool.Plugins.HKDFSHA256
 
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-
-
-
                 //Title of Presentation
                 pres.lblTitleHeading.Visibility = Visibility.Hidden;
                 //Introduction
@@ -1296,6 +1247,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState9(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1321,6 +1277,11 @@ namespace Cryptool.Plugins.HKDFSHA256
 
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState8(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1347,6 +1308,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState7(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1372,6 +1338,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState6(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1399,6 +1370,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState5(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1425,6 +1401,11 @@ namespace Cryptool.Plugins.HKDFSHA256
 
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState4(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1451,6 +1432,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState3(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1475,6 +1461,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState2(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1498,6 +1489,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState1(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1565,6 +1561,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders a state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderState0(double inkrement, int stepNum)
         {
             double val = stepNum * inkrement;
@@ -1636,6 +1637,11 @@ namespace Cryptool.Plugins.HKDFSHA256
             }, null);
         }
 
+        /// <summary>
+        /// renders the blank state
+        /// </summary>
+        /// <param name="inkrement"></param>
+        /// <param name="stepNum"></param>
         private void renderBlankView()
         {
             pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate

@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.HKDFSHA256
 {
@@ -31,6 +19,9 @@ namespace Cryptool.Plugins.HKDFSHA256
         private bool _next;
         private bool _prev;
 
+        /// <summary>
+        /// getter, setter for Restart
+        /// </summary>
         public bool Restart
         {
             get
@@ -43,6 +34,9 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
         }
 
+        /// <summary>
+        /// getter, setter for SkipChapter
+        /// </summary>
         public bool SkipChapter
         {
             get
@@ -55,6 +49,9 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
         }
 
+        /// <summary>
+        /// getter, setter for Next
+        /// </summary>
         public bool Next
         {
             get
@@ -67,6 +64,9 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
         }
 
+        /// <summary>
+        /// getter, setter for Prev
+        /// </summary>
         public bool Prev
         {
             get
@@ -79,6 +79,10 @@ namespace Cryptool.Plugins.HKDFSHA256
             }
         }
 
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public HKDFSHA256Pres()
         {
             InitializeComponent();
@@ -91,42 +95,60 @@ namespace Cryptool.Plugins.HKDFSHA256
             _prev = false;
         }
 
+        /// <summary>
+        /// handles button clickevent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonRestart_Click(object sender, RoutedEventArgs e)
         {
             _restart = true;
             buttonRestartClickedEvent.Set();
         }
 
+        /// <summary>
+        /// handles button clickevent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
             _restart = false;
             buttonStartClickedEvent.Set();
         }
-        
+
+        /// <summary>
+        /// handles button clickevent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSkip_Click(object sender, RoutedEventArgs e)
         {
             _skipChapter = true;
             _next = true;
             buttonNextClickedEvent.Set();
-
-            Console.WriteLine("ButtonSkip fired");
         }
 
+        /// <summary>
+        /// handles button clickevent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonPrev_Click(object sender, RoutedEventArgs e)
         {
             _prev = true;
             buttonPrevClickedEvent.Set();
-
-            Console.WriteLine("ButtonPrev fired");
         }
 
+        /// <summary>
+        /// handles button clickevent
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonNext_Click(object sender, RoutedEventArgs e)
         {
             _next = true;
             buttonNextClickedEvent.Set();
-
-
-            Console.WriteLine("ButtonNext fired");
         }
     }
 }
