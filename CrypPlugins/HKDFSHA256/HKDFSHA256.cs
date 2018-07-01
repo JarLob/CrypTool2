@@ -368,7 +368,7 @@ namespace Cryptool.Plugins.HKDFSHA256
 
                 }
 
-                if (pres.SkipChapter || !show)
+                if (pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
@@ -680,10 +680,11 @@ namespace Cryptool.Plugins.HKDFSHA256
                 //DEBUG
                 //Console.WriteLine("CTR: " + CTR + "\nHash: " + BitConverter.ToString(km, i * hmac.GetMacSize(), hmac.GetMacSize()).Replace("-", ""));
 
-                if (pres.SkipChapter || !show)
+                if (pres.SkipChapter)
                 {
                     pres.Dispatcher.Invoke(DispatcherPriority.Send, (SendOrPostCallback)delegate
                     {
+                        
                         pres.imgIterationKM2.Visibility = Visibility.Hidden;
                         pres.txtIterationRounds.Visibility = Visibility.Hidden;
                         pres.txtIterationDebugOutput.Visibility = Visibility.Hidden;
@@ -705,16 +706,19 @@ namespace Cryptool.Plugins.HKDFSHA256
         /// </summary>
         private void refreshStepState()
         {
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if (settings.DisplayPres)
             {
-                Paragraph p = new Paragraph();
+                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    Paragraph p = new Paragraph();
 
-                //headline of lblExplanationSectionHeading
-                p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
-                p.TextAlignment = TextAlignment.Right;
-                pres.txtStep.Document.Blocks.Add(p);
-                pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
-            }, null);
+                    //headline of lblExplanationSectionHeading
+                    p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
+                    p.TextAlignment = TextAlignment.Right;
+                    pres.txtStep.Document.Blocks.Add(p);
+                    pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
+                }, null);
+            }
         }
 
         /// <summary>
@@ -1836,6 +1840,8 @@ namespace Cryptool.Plugins.HKDFSHA256
         public void Execute()
         {
 
+            Console.WriteLine("Display Pres:" + settings.DisplayPres);
+
             //Implementation with threads: this approach handles an inputchange in a better way
             if (workerThread == null)
             {
@@ -1935,6 +1941,9 @@ namespace Cryptool.Plugins.HKDFSHA256
                 pres.spStartRestartButtons.Visibility = Visibility.Hidden;
                 pres.buttonStart.IsEnabled = false;
                 pres.buttonRestart.IsEnabled = false;
+
+                //progress counter
+                pres.txtStep.Visibility = Visibility.Hidden;
 
             }, null);
         }

@@ -92,6 +92,8 @@
     <Compile Include="ADFGVXTest.cs" />
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
+    <Compile Include="KKDFSHA256Test.cs" />
+    <Compile Include="KKDFSHAKE256Test.cs" />
     <Compile Include="HKDFSHA256Test.cs" />
     <Compile Include="CaesarTest.cs" />
     <Compile Include="FialkaTest.cs" />
@@ -342,6 +344,14 @@
     <ProjectReference Include="..\CrypPlugins\KeySearcher\KeySearcher.csproj">
       <Project>{0579E099-66B2-43C3-B8A0-43CAE4895E68}</Project>
       <Name>KeySearcher</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\KKDFSHA256\KKDFSHA256.csproj">
+      <Project>{bcd9636f-c0dc-411b-8dd2-ce6933fcc9ec}</Project>
+      <Name>KKDFSHA256</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\KKDFSHAKE256\KKDFSHAKE256.csproj">
+      <Project>{5c8fa726-5867-42ab-ab6d-801340967dcb}</Project>
+      <Name>KKDFSHAKE256</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\LatticeCrypto\LatticeCrypto.csproj">
       <Project>{3F92F927-E6FA-4048-AB98-04D98B82B69E}</Project>

@@ -325,16 +325,19 @@ namespace Cryptool.Plugins.KKDFSHA256
         /// </summary>
         private void refreshStepState()
         {
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if (settings.DisplayPres)
             {
-                Paragraph p = new Paragraph();
+                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    Paragraph p = new Paragraph();
 
-                //headline of lblExplanationSectionHeading
-                p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
-                p.TextAlignment = TextAlignment.Right;
-                pres.txtStep.Document.Blocks.Add(p);
-                pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
-            }, null);
+                    //headline of lblExplanationSectionHeading
+                    p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
+                    p.TextAlignment = TextAlignment.Right;
+                    pres.txtStep.Document.Blocks.Add(p);
+                    pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
+                }, null);
+            }
         }
         
         /// <summary>
@@ -350,7 +353,7 @@ namespace Cryptool.Plugins.KKDFSHA256
 
             //Clean up outputs
             _keyMaterial = Encoding.UTF8.GetBytes("");
-            OnPropertyChanged("KeyMaterial");
+            //OnPropertyChanged("KeyMaterial");
 
             _keyMaterialDebug = Encoding.UTF8.GetBytes("");
             OnPropertyChanged("KeyMaterialDebug");

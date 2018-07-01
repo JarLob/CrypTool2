@@ -201,7 +201,9 @@ Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
     <value>Spezifiziert die Datei, in der das Schlüsselmaterial gespeichert werden kann</value>
   </data>
   <data name="ExSystemOutOfMemory" xml:space="preserve">
-    <value>Bei der Anforderung des Speichers ist ein Fehler auf Ihrem System aufgetreten. Bitte kleineren Wert für die Ausgabelänge spezifizieren.</value>
+    <value>Bei der Anforderung des Speichers ist auf Ihrem System ein Fehler
+aufgetreten. Bitte spezifizieren Sie einen kleineren Wert für die
+Ausgabelänge.</value>
   </data>
   <data name="PresCalculationSectionHeading" xml:space="preserve">
     <value> Berechnungsphase</value>

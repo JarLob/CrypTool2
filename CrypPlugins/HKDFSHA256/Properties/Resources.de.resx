@@ -230,7 +230,7 @@ Eine Schlüsselgenerierungs-Funktion mit erweiterbarer Ausgabelänge
 </value>
   </data>
   <data name="ExToMuchOutputRequested" xml:space="preserve">
-    <value>Bitte kleineren Wert für die Länge der Ausgabebytes eingeben. Es wurde angegeben: {0}. Erlaubt sind maximal:  {1}</value>
+    <value>Bitte geben Sie einen kleineren Wert für die Länge der Ausgabebytes ein. Es wurde angegeben: {0}. Erlaubt sind maximal:  {1}</value>
   </data>
   <data name="InputCtxInfoCaption" xml:space="preserve">
     <value>CTXInfo</value>
@@ -314,7 +314,9 @@ Byte 17 - 24: {3}
 Byte 25 - 32: {4}</value>
   </data>
   <data name="ExSystemOutOfMemory" xml:space="preserve">
-    <value>Bei der Anforderung des Speichers ist ein Fehler auf Ihrem System aufgetreten. Bitte kleineren Wert für die Ausgabelänge spezifizieren.</value>
+    <value>Bei der Anforderung des Speichers ist auf Ihrem System ein Fehler
+aufgetreten. Bitte spezifizieren Sie einen kleineren Wert für die
+Ausgabelänge.</value>
   </data>
   <data name="PresErrorText" xml:space="preserve">
     <value>Es ist ein Fehler aufgetreten. Weitere Informationen sind im Protokoll des CrypTool2 zu finden.</value>

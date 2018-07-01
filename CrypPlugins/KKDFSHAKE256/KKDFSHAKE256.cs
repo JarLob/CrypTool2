@@ -87,16 +87,19 @@ namespace Cryptool.Plugins.KKDFSHAKE256
         /// </summary>
         private void refreshStepState()
         {
-            pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            if (settings.DisplayPres)
             {
-                Paragraph p = new Paragraph();
+                pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    Paragraph p = new Paragraph();
 
-                p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
-                p.TextAlignment = TextAlignment.Right;
-                pres.txtStep.Document.Blocks.Add(p);
-                pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
+                    p.Inlines.Add(new Run(Resources.PresStepText.Replace("{0}", curStep.ToString()).Replace("{1}", stepsToGo.ToString())));
+                    p.TextAlignment = TextAlignment.Right;
+                    pres.txtStep.Document.Blocks.Add(p);
+                    pres.txtStep.Document.Blocks.Remove(pres.txtStep.Document.Blocks.FirstBlock);
 
-            }, null);
+                }, null);
+            }
         }
 
         /// <summary>
@@ -112,7 +115,7 @@ namespace Cryptool.Plugins.KKDFSHAKE256
 
             //Clean up outputs
             _keyMaterial = Encoding.UTF8.GetBytes("");
-            OnPropertyChanged("KeyMaterial");
+            //OnPropertyChanged("KeyMaterial");
 
             //clean steps
             curStep = 0;
