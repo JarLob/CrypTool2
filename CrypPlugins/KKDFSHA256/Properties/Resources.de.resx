@@ -195,7 +195,7 @@ Byte 25 - 32: {4}</value>
     <value>Spezifiziert die Datei, in der das Schlüsselmaterial gespeichert werden kann.</value>
   </data>
   <data name="ExToMuchOutputRequested" xml:space="preserve">
-    <value>Bitte geben Sie einen kleineren Wert für die Länge der Ausgabebytes ein. Es wurde angegeben: {0}. Erlaubt sind maximal:  {1}</value>
+    <value>Bitte geben Sie einen kleineren Wert für die Länge der Ausgabebytes ein. Es wurde angegeben: {0}. Erlaubt sind maximal: {1}</value>
   </data>
   <data name="PresCalc" xml:space="preserve">
     <value>Berechnungschritte überspringen</value>
@@ -289,7 +289,7 @@ Byte 17 - 24: {3}
 Byte 25 - 32: {4}</value>
   </data>
   <data name="ExSystemOutOfMemory" xml:space="preserve">
-    <value>Bei der Anforderung des Speichers ist auf Ihrem System ein Fehler
+    <value>Bei der Anforderung des Speichers ist ein Fehler
 aufgetreten. Bitte spezifizieren Sie einen kleineren Wert für die
 Ausgabelänge.</value>
   </data>
