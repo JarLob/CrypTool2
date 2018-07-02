@@ -1,37 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Avalanche (modern ciphers)</title>
+  <title lang="ru">Лавина (современные шифры)</title>
   <summary lang="en">This template demonstrates the Avalanche effect in modern ciphers.</summary>
+  <summary lang="ru">Этот шаблон демонстрирует эффект лавины в современных шифрах.</summary>
   <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the Avalanche effect in modern ciphers.</description>
+  <description lang="ru">Этот шаблон показывает, как компонент визуализации лавины можно использовать для демонстрации эффекта лавины в современных шифрах.</description>
   <keywords>Avalanche, Analysis, modern</keywords>
-
+  <keywords lang="ru">Лавина, анализ, современный</keywords>
   <title lang="de">Avalanche (moderne Verschlüsselungsverfahren)</title>
   <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.</summary>
   <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt bei modernen Verschlüsselungsverfahren demonstrieren kann.</description>
   <keywords lang="de">Avalanche, Analyse, moderne</keywords>
-
   <icon file="Avalanche.PNG" />
-
   <relevantPlugins>
     <plugin name="AvalancheVisualization" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
-    <replacement key="$Sender Key$" value="Sender-Schlüssel"/>
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$String Decoder$" value="String-Dekodierer"/>
-    <replacement key="$Generated Data$" value="Generierte Daten"/>
-        <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.\line\line Nach &quot;Starten&quot; wird der aus den Eingaben resultierende Geheimtext angezeigt. Verändern Sie nun die Eingabe, erhalten Sie einen entsprechenden neuen Geheimtext (Die Eingabe besteht in diesem Fall aus dem Klartext und dem Sender-Schlüssel. Bei anderen Verfahren wird noch eine zusätzliche Eingabe benötigt, z.B. ein IV bei der Achterbahn-Chiffre). Anschließend werden beide Geheimtexte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung" />
+    <replacement key="$Sender Key$" value="Sender-Schlüssel" />
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$String Decoder$" value="String-Dekodierer" />
+    <replacement key="$Generated Data$" value="Generierte Daten" />
+    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei modernen Verschlüsselungsverfahren.\line\line Nach &quot;Starten&quot; wird der aus den Eingaben resultierende Geheimtext angezeigt. Verändern Sie nun die Eingabe, erhalten Sie einen entsprechenden neuen Geheimtext (Die Eingabe besteht in diesem Fall aus dem Klartext und dem Sender-Schlüssel. Bei anderen Verfahren wird noch eine zusätzliche Eingabe benötigt, z.B. ein IV bei der Achterbahn-Chiffre). Anschließend werden beide Geheimtexte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Avalanche Visualization$" value="Avalanche визуализация" />
+    <replacement key="$Sender Key$" value="Передатчик-ключ" />
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$String Decoder$" value="Строка декодера" />
+    <replacement key="$Generated Data$" value="Сгенерированные данные" />
+    <replacement key="$Memo$" value="Этот шаблон иллюстрирует эффект лавины в современных методах шифрования. \Line \line После «Пуск» отображается зашифрованный текст, полученный из записей. Если вы измените ввод, вы получите соответствующий новый шифротекст (в этом случае вход состоит из открытого текста и ключа отправителя.) Другие методы требуют дополнительного ввода, например, IV на шифре американских горках). Впоследствии оба зашифрованных текста сравниваются с лавинным эффектом. В дополнение к значению лавинного эффекта на презентации можно найти другие соответствующие статистические данные." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
-    <replacement key="$Sender Key$" value="Sender Key"/>
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$String Decoder$" value="String Decoder"/>
-    <replacement key="$Generated Data$" value="Generated Data"/>
-    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on modern ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the input feed is shown (In this case the input feed consists of plaintext and key. Other ciphers might require a third entry such as an IV. For instance in the Achterbahn cipher). If you modify any of the input entries you will get a new corresponding ciphertext. Subsequently, the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization" />
+    <replacement key="$Sender Key$" value="Sender Key" />
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$String Decoder$" value="String Decoder" />
+    <replacement key="$Generated Data$" value="Generated Data" />
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on modern ciphers.\line\line After pressing &quot;Play&quot; the initial ciphertext resulting from the input feed is shown (In this case the input feed consists of plaintext and key. Other ciphers might require a third entry such as an IV. For instance in the Achterbahn cipher). If you modify any of the input entries you will get a new corresponding ciphertext. Subsequently, the two ciphertexts obtained are compared and their avalanche effect values are shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed." />
   </replacements>
-
 </sample>

@@ -1,60 +1,45 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     CypherMatrix is a system to encrypt and to hash data. It was patented 1998 by E.E. Schnoor. He explicitely approved the unlimited usage within the CrypTool project.
-    <newline/>
+    <newline />
     The name CypherMatrix refers to the fact that the result of the cryptographic operation has a matrix structure. The author wrote CypherMatrix with "y" to recall the passed centuries of cryptography, because this method - regardless of modern engineering - still uses bytes as symbols.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     It is implemented in CrypTool 2 as experimental method for training purposes.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The CypherMatrix cipher is a symmetric block cipher. It's block size can range from 35 to 96 bytes. A separate key derivation function creates two encryption parameters from the passphrase. The ciphertext is computed in one iteration from the plaintext using XOR and a substitution table. Additionally, the cipher has it's own operation mode to change the encryption parameters for each block.
   </introduction>
-
+  <introduction lang="ru">CypherMatrix - это система для шифрования и хэш-данных. Он был запатентован в 1998 году Э.Э. Шноуром. Он явно одобрил неограниченное использование в проекте CrypTool. Имя CypherMatrix ссылается на то, что результат криптографической операции имеет матричную структуру. Автор написал CypherMatrix с «y», чтобы вспомнить прошедшие века криптографии, потому что этот метод - независимо от современной инженерии - по-прежнему использует байты в качестве символов. Он реализован в CrypTool 2 как экспериментальный метод обучения. Шифр CypherMatrix является симметричным блочным шифром. Размер блока может составлять от 35 до 96 байт. Отдельная функция деривации ключей создает из шифровальной фразы два параметра шифрования. Зашифрованный текст вычисляется на одной итерации из открытого текста с использованием XOR и таблицы замещения. Кроме того, шифр имеет собственный режим работы для изменения параметров шифрования для каждого блока.</introduction>
   <introduction lang="de-DE">
     CypherMatrix ist ein Verfahren zum Verschlüsseln und Hashen von Daten. Es wurde 1998 von E.E. Schnoor patentiert. Er hat explizit die uneingeschränkte Nutzung im CrypTool-Projekt erlaubt.
-    <newline/>
+    <newline />
     Der Name CypherMatrix beruht darauf, dass das Verfahren eine Matrix als Ergebnis erzeugt. Der Urheber schrieb CypherMatrix mit "y", weil das hier vorgestellte Verfahren als Zeichen - ungeachtet moderner Techniken - nur Bytes verwendet und so an die Kryptographie vergangener Jahrhunderte erinnern soll.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     In CrypTool 2 ist es zu Lernzwecken als experimentelles Verfahren implementiert.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Die CypherMatrix-Chiffre ist eine symmetrische Blockchiffre, deren Blocklänge variabel zwischen 35 und 96 Bytes einstellbar ist. Für die Berechnung der beiden für die Verschlüsselung benötigten Parameter, gibt es eine separate Schlüsselableitungsfunktion, die diese aus der Passphrase ableitet. Der Chiffretext wird dann mittels XOR und Substitutionstabelle in einer Iteration aus dem Klartext gewonnen. Zusätzlich besitzt diese Chiffre einen eigenen Betriebsmodus für die Blockverschlüsselung, welcher dafür sorgt, dass sich die Parameter der Verschlüsselungsfunktion mit jedem Block ändern.
   </introduction>
-
   <usage lang="en">
     After dragging the CypherMatrix hash component onto the workspace you need to specify a data source that provides the data to be hashed.
-    <newline/>
-	  <newline/>
+    <newline /><newline />
     In the component settings you can choose the operation mode and change parameters.
-	  <newline/>
-	  <newline/>
+	  <newline /><newline />
 	  The component expects binary inputs. In case of text a UTF-8 decoding is recommended.
   </usage>
-
+  <usage lang="ru">После перетаскивания хэш-компонента CypherMatrix в рабочую область вам нужно указать источник данных, который предоставляет хэшированные данные. В настройках компонента вы можете выбрать режим работы и изменить параметры. Компонент ожидает двоичные входы. В случае текста рекомендуется декодировать UTF-8.</usage>
   <usage lang="de-DE">
     Nachdem Sie die CypherMatrix-Hash-Komponente auf den Arbeitsbereich gezogen haben, müssen Sie eine Datenquelle definieren, die die Daten zum Hashen liefert.
-    <newline/>
-	  <newline/>
+    <newline /><newline />
     In den Einstellungen für die Komponente können Sie den Betriebsmodus einstellen, sowie verschiedene Parameter anpassen.
-	  <newline/>
-	  <newline/>
+	  <newline /><newline />
 	  Die Komponente erwartet binäre Eingabedaten, eine Dekodierung mittels UTF-8 wird daher bei Text angeraten.
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://www.telecypher.net/INDENG.HTM" lang="en" />

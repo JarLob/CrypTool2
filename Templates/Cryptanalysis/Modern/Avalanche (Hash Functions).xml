@@ -1,33 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Avalanche (hash functions)</title>
+  <title lang="ru">Лавина (хеш-функции)</title>
   <summary lang="en">This template demonstrates the avalanche effect in general hash functions.</summary>
+  <summary lang="ru">Этот шаблон демонстрирует эффект лавины в общих хэш-функциях.</summary>
   <description lang="en">This template shows how the Avalanche Visualization component can be used to demonstrate the avalanche effect in general hash functions.</description>
+  <description lang="ru">Этот шаблон показывает, как компонент визуализации лавины можно использовать для демонстрации эффекта лавины в общих хеш-функциях.</description>
   <keywords lang="en">Avalanche, Analysis, hash functions</keywords>
-
+  <keywords lang="ru">Лавина, анализ, хэш-функции</keywords>
   <title lang="de">Avalanche (Hashverfahren)</title>
   <summary lang="de">Diese Vorlage demonstriert den Avalanche-Effekt bei Hashverfahren.</summary>
   <description lang="de">Diese Vorlage zeigt, wie man mit der Komponente 'Avalanche-Visualisierung' den Avalanche-Effekt bei Hashverfahren demonstrieren kann.</description>
   <keywords lang="de">Avalanche, Analyse, Hashverfahren</keywords>
-
   <icon file="Avalanche.PNG" />
-
   <relevantPlugins>
     <plugin name="AvalancheVisualization" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung"/>
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Generated Data$" value="Generierte Daten"/>
-    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei Hashverfahren.\line\line Nach &quot;Starten&quot; wird der aus dem Klartext resultierende initiale Hashwert angezeigt. Verändern Sie nun den Klartext, erhalten Sie einen entsprechenden neuen Hashwert. Anschließend werden beide Hashwerte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden."/>
+    <replacement key="$Avalanche Visualization$" value="Avalanche-Visualisierung" />
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Generated Data$" value="Generierte Daten" />
+    <replacement key="$Memo$" value="Diese Vorlage veranschaulicht den Avalanche-Effekt bei Hashverfahren.\line\line Nach &quot;Starten&quot; wird der aus dem Klartext resultierende initiale Hashwert angezeigt. Verändern Sie nun den Klartext, erhalten Sie einen entsprechenden neuen Hashwert. Anschließend werden beide Hashwerte hinsichtlich des Avalanche-Effekts verglichen. Auf der Präsentation sind neben dem Wert des Avalanche-Effekts auch andere relevante statistische Daten zu finden." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Avalanche Visualization$" value="Avalanche визуализация" />
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Generated Data$" value="Сгенерированные данные" />
+    <replacement key="$Memo$" value="Этот шаблон иллюстрирует эффект лавины в хэшировании. \Line \line После «Пуск» отображается начальное хеш-значение, полученное из обычного текста. Если вы измените открытый текст, вы получите новое значение хэш-функции. Впоследствии оба значения хэша сравниваются с лавинным эффектом. В дополнение к значению лавинного эффекта на презентации можно найти другие соответствующие статистические данные." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization"/>
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Generated Data$" value="Generated Data"/>
-    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on hash functions.\line\line After pressing &quot;Play&quot; the initial hash value resulting from the plaintext is shown. If you modify the plaintext you will get a new hash value. Subsequently, the two hash values obtained are compared and the corresponding avalanche effect is shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed."/>
+    <replacement key="$Avalanche Visualization$" value="Avalanche Visualization" />
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Generated Data$" value="Generated Data" />
+    <replacement key="$Memo$" value="This template helps visualize the avalanche effect on hash functions.\line\line After pressing &quot;Play&quot; the initial hash value resulting from the plaintext is shown. If you modify the plaintext you will get a new hash value. Subsequently, the two hash values obtained are compared and the corresponding avalanche effect is shown. Besides the value of the avalanche effect itself other relevant statistical data is displayed." />
   </replacements>
-
 </sample>

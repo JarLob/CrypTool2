@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <directory order="6">
   <name lang="en">Protocols</name>
-  <name lang="de">Protokolle</name>  
+  <name lang="ru">протоколы</name>
+  <name lang="de">Protokolle</name>
   <summary lang="en">The folder "Protocols" contains templates that demonstrate cryptographical protocols.</summary>
+  <summary lang="ru">Папка «Протоколы» содержит шаблоны, демонстрирующие криптографические протоколы.</summary>
   <summary lang="de">Das Verzeichnis "Protokolle" enthält Vorlagen, die kryptographische Protokolle demonstrieren.</summary>
   <icon file="dir.png" />
 </directory>

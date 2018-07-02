@@ -1,0 +1,480 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PerKeyLen" xml:space="preserve">
+    <value>perkeyl</value>
+  </data>
+  <data name="AverageAxisCaption" xml:space="preserve">
+    <value>Среднее значение второй оси Y</value>
+  </data>
+  <data name="AverageAxisTooltipCaption" xml:space="preserve">
+    <value>Покажите среднее значение второй оси Y</value>
+  </data>
+  <data name="BestKeyInputCaption" xml:space="preserve">
+    <value>Лучший ключ</value>
+  </data>
+  <data name="BestKeyInputTooltipCaption" xml:space="preserve">
+    <value>Самый лучший инструмент, который предлагает используемый CipherAnalyzer</value>
+  </data>
+  <data name="BestPlaintextInputCaption" xml:space="preserve">
+    <value>Лучший открытый текст</value>
+  </data>
+  <data name="BestPlaintextInputTooltipCaption" xml:space="preserve">
+    <value>Лучший открытый текст, найденный используемым CipherAnalyzer</value>
+  </data>
+  <data name="CAAcaption" xml:space="preserve">
+    <value>CryptAnalysisEvaluator</value>
+  </data>
+  <data name="CAAtooltip" xml:space="preserve">
+    <value>Оценивает криптоаналитические методы</value>
+  </data>
+  <data name="CalculateRuntimeCaption" xml:space="preserve">
+    <value>Вычислить время выполнения</value>
+  </data>
+  <data name="CalculateRuntimeTooltipCaption" xml:space="preserve">
+    <value>Вычислить время выполнения алгоритма</value>
+  </data>
+  <data name="CiphertextInputCaption" xml:space="preserve">
+    <value>зашифрованный</value>
+  </data>
+  <data name="CiphertextInputTooltipCaption" xml:space="preserve">
+    <value>Открытый текст, зашифрованный используемым шифром</value>
+  </data>
+  <data name="CiphertextLengthCaption" xml:space="preserve">
+    <value>Длина зашифрованного текста</value>
+  </data>
+  <data name="DecryptionsCaption" xml:space="preserve">
+    <value>расшифровок</value>
+  </data>
+  <data name="EvaluationInputCaption" xml:space="preserve">
+    <value>EvaluationContainer</value>
+  </data>
+  <data name="EvaluationInputTooltipCaption" xml:space="preserve">
+    <value>EvaluationContainer с данными оценки текущего теста от используемого CipherAnalyzer</value>
+  </data>
+  <data name="EvaluationOutputCaption" xml:space="preserve">
+    <value>Результат оценки</value>
+  </data>
+  <data name="EvaluationOutputTooltipCaption" xml:space="preserve">
+    <value>Вывод оценки со всеми средними значениями</value>
+  </data>
+  <data name="GnuPlotDataOutputCaption" xml:space="preserve">
+    <value>Данные GnuPlot</value>
+  </data>
+  <data name="GnuPlotDataOutputTooltipCaption" xml:space="preserve">
+    <value>Вывод данных GnuPlot для сохранения в файле .dat и использования в GnuPlot с помощью файла сценария GnuPlot</value>
+  </data>
+  <data name="GnuPlotGroupCaption" xml:space="preserve">
+    <value>Настройки GnuPlot</value>
+  </data>
+  <data name="GnuPlotScriptOutputCaption" xml:space="preserve">
+    <value>Скрипт GnuPlot</value>
+  </data>
+  <data name="GnuPlotScriptOutputTooltipCaption" xml:space="preserve">
+    <value>Вывод сценария GnuPlot для сохранения в файле .p и загрузки из командной строки GnuPlot</value>
+  </data>
+  <data name="KeyInputCaption" xml:space="preserve">
+    <value>ключ</value>
+  </data>
+  <data name="KeyInputTooltipCaption" xml:space="preserve">
+    <value>Ключ, созданный TestVectorGenerator</value>
+  </data>
+  <data name="KeyLengthCaption" xml:space="preserve">
+    <value>Длина ключа</value>
+  </data>
+  <data name="KeyOutputCaption" xml:space="preserve">
+    <value>ключ</value>
+  </data>
+  <data name="KeyOutputTooltipCaption" xml:space="preserve">
+    <value>Ключевой тестовый вектор текущего тестового прогона (обычно предоставляемый как компонентам Cipher, так и CipherAnalyzer)</value>
+  </data>
+  <data name="MinimalCorrectPercentageCaption" xml:space="preserve">
+    <value>Минимальный правильный процент</value>
+  </data>
+  <data name="MinimalCorrectPercentageTooltipCaption" xml:space="preserve">
+    <value>Минимальный процент правильно дешифрованных символов зашифрованного текста, которые будут оцениваться как успех</value>
+  </data>
+  <data name="MinimumPercentageCaption" xml:space="preserve">
+    <value>Минимальный правильный процент</value>
+  </data>
+  <data name="MinimumPercentageTooltipCaption" xml:space="preserve">
+    <value>Минимальный процент расшифрованного зашифрованного текста должен соответствовать правильному открытому тексту, чтобы считать успешное дешифрование</value>
+  </data>
+  <data name="NoneCaption" xml:space="preserve">
+    <value>Никто</value>
+  </data>
+  <data name="NormalizingFactorCaption" xml:space="preserve">
+    <value>Нормализовать коэффициент осевых коэффициентов</value>
+  </data>
+  <data name="NormalizingFactorTooltipCaption" xml:space="preserve">
+    <value>Коэффициент, по которому выдающиеся высокие (или низкие) значения должны отличаться от смежных значений, которые должны игнорироваться в стандартном диапазоне фокусировки GnuPlot</value>
+  </data>
+  <data name="PercentDecryptedCaption" xml:space="preserve">
+    <value>Процент дешифрован</value>
+  </data>
+  <data name="Percent_Decrypted" xml:space="preserve">
+    <value>Процент дешифрован</value>
+  </data>
+  <data name="PlaintextInputCaption" xml:space="preserve">
+    <value>Простой текст</value>
+  </data>
+  <data name="PlaintextInputTooltipCaption" xml:space="preserve">
+    <value>Открытый текст, созданный TestVectorGenerator</value>
+  </data>
+  <data name="PlaintextOutputCaption" xml:space="preserve">
+    <value>Простой текст</value>
+  </data>
+  <data name="PlaintextOutputTooltipCaption" xml:space="preserve">
+    <value>Вектор теста открытого текста текущего тестового прогона (обычно предоставляется как компонентам Cipher, так и CipherAnalyzer)</value>
+  </data>
+  <data name="PopulationCaption" xml:space="preserve">
+    <value>Численность населения</value>
+  </data>
+  <data name="RestartsCaption" xml:space="preserve">
+    <value>Перезапуск</value>
+  </data>
+  <data name="RuntimeCaption" xml:space="preserve">
+    <value>время выполнения</value>
+  </data>
+  <data name="SecondYAxisCaption" xml:space="preserve">
+    <value>Вторая ось Y</value>
+  </data>
+  <data name="SecondYAxisTooltipCaption" xml:space="preserve">
+    <value>Значения, отображаемые на второй оси Y</value>
+  </data>
+  <data name="SeedInputCaption" xml:space="preserve">
+    <value>семя</value>
+  </data>
+  <data name="SeedInputTooltipCaption" xml:space="preserve">
+    <value>Семя для генератора псевдослучайных чисел, делая тестовые векторы воспроизводимыми</value>
+  </data>
+  <data name="SuccessCaption" xml:space="preserve">
+    <value>успех</value>
+  </data>
+  <data name="SuccessPercentCaption" xml:space="preserve">
+    <value>Успех и% расшифровки</value>
+  </data>
+  <data name="TabuCaption" xml:space="preserve">
+    <value>Размеры табу</value>
+  </data>
+  <data name="TextInputCaption" xml:space="preserve">
+    <value>Текст ввода</value>
+  </data>
+  <data name="TextInputTooltipCaption" xml:space="preserve">
+    <value>Текст ввода, из которого выводятся текстовые и естественные ключи из</value>
+  </data>
+  <data name="TotalKeysInputCaption" xml:space="preserve">
+    <value>Общее количество ключей</value>
+  </data>
+  <data name="TotalKeysInputTooltipCaption" xml:space="preserve">
+    <value>Количество ключей, указанных в TestVectorGenerator</value>
+  </data>
+  <data name="TriggerNextKeyCaption" xml:space="preserve">
+    <value>Запустить следующую клавишу</value>
+  </data>
+  <data name="TriggerNextKeyTooltipCaption" xml:space="preserve">
+    <value>Семя для следующего поколения тестового вектора в текущей серии тестов (обычно устанавливается на текущий ключ)</value>
+  </data>
+  <data name="XAxisCaption" xml:space="preserve">
+    <value>Ось абсцисс</value>
+  </data>
+  <data name="XAxisTooltipCaption" xml:space="preserve">
+    <value>Значения для отображения по оси X</value>
+  </data>
+  <data name="YAxisCaption" xml:space="preserve">
+    <value>Ось ординат</value>
+  </data>
+  <data name="YAxisTooltipCaption" xml:space="preserve">
+    <value>Значения для отображения по оси Y</value>
+  </data>
+  <data name="Runtime" xml:space="preserve">
+    <value>время выполнения</value>
+  </data>
+  <data name="Time_" xml:space="preserve">
+    <value>Время_</value>
+  </data>
+  <data name="Succ_PercDecr_" xml:space="preserve">
+    <value>Succ_PercDecr_</value>
+  </data>
+  <data name="Succ_" xml:space="preserve">
+    <value>Succ_</value>
+  </data>
+  <data name="PercDecr_" xml:space="preserve">
+    <value>PercDecr_</value>
+  </data>
+  <data name="Decryptions" xml:space="preserve">
+    <value>расшифровок</value>
+  </data>
+  <data name="NoDecr_" xml:space="preserve">
+    <value>NoDecr_</value>
+  </data>
+  <data name="Restarts" xml:space="preserve">
+    <value>Перезапуск</value>
+  </data>
+  <data name="Tabu_Set_Sizes" xml:space="preserve">
+    <value>Размеры табу</value>
+  </data>
+  <data name="Tabu_" xml:space="preserve">
+    <value>Табу_</value>
+  </data>
+  <data name="Population_Sizes" xml:space="preserve">
+    <value>Численность населения</value>
+  </data>
+  <data name="Popu_" xml:space="preserve">
+    <value>Popu_</value>
+  </data>
+  <data name="Rest_" xml:space="preserve">
+    <value>Отдых_</value>
+  </data>
+  <data name="PerCiphLen" xml:space="preserve">
+    <value>PerCiphLen</value>
+  </data>
+  <data name="Ciphertext_Length" xml:space="preserve">
+    <value>Длина зашифрованного текста</value>
+  </data>
+  <data name="Key_Length" xml:space="preserve">
+    <value>Длина ключа</value>
+  </data>
+  <data name="PerTime" xml:space="preserve">
+    <value>PerTime</value>
+  </data>
+  <data name="Test_Series_Seed" xml:space="preserve">
+    <value>Семена пробной серии:</value>
+  </data>
+  <data name="Average_runtime" xml:space="preserve">
+    <value>Среднее время выполнения:</value>
+  </data>
+  <data name="Ciphertext_lengths" xml:space="preserve">
+    <value>Длины зашифрованного текста:</value>
+  </data>
+  <data name="Key_lengths__" xml:space="preserve">
+    <value>Длина ключа:</value>
+  </data>
+  <data name="Average_decryptions_necessary__" xml:space="preserve">
+    <value>Требуется среднее дешифрование:</value>
+  </data>
+  <data name="Average_restarts__" xml:space="preserve">
+    <value>Средние перезагрузки:</value>
+  </data>
+  <data name="Average_population_size__" xml:space="preserve">
+    <value>Средний размер популяции:</value>
+  </data>
+  <data name="Average_tabu_set_size__" xml:space="preserve">
+    <value>Средний размер табу:</value>
+  </data>
+  <data name="Averagely_decrypted__" xml:space="preserve">
+    <value>Averagely расшифровано:</value>
+  </data>
+  <data name="Averagely_decrypted_of_min" xml:space="preserve">
+    <value>Averagely decrypted: {0}% мин. {1}</value>
+  </data>
+  <data name="Average_success__" xml:space="preserve">
+    <value>Средний успех:</value>
+  </data>
+  <data name="Gnuplot_script_for_plotting_data_from_output_GnuPlotData" xml:space="preserve">
+    <value>Скрипт Gnuplot для вывода данных из вывода GnuPlotData</value>
+  </data>
+  <data name="Save_the_GnuPlotScript_output_into_a_file_named_" xml:space="preserve">
+    <value>Сохраните вывод GnuPlotScript в файл с именем</value>
+  </data>
+  <data name="Use__load__0__p__to_plot" xml:space="preserve">
+    <value>Используйте &amp;#39;load {0} .p&amp;#39; для построения</value>
+  </data>
+  <data name="Data_for__" xml:space="preserve">
+    <value>Данные для:</value>
+  </data>
+  <data name="TryGetValue_from__0__failed__ciphertextLength___1____2" xml:space="preserve">
+    <value>TryGetValue () из {0} не удалось! ciphertextLength: {1}, {2}:</value>
+  </data>
+  <data name="Save_the_GnuPlotData_output_in_a_file_named_" xml:space="preserve">
+    <value>Сохраните вывод GnuPlotData в файле с именем</value>
+  </data>
+  <data name="General_settings" xml:space="preserve">
+    <value>Общие настройки</value>
+  </data>
+  <data name="Style_settings" xml:space="preserve">
+    <value>Настройки стиля</value>
+  </data>
+  <data name="Plot_settings" xml:space="preserve">
+    <value>Настройки графика</value>
+  </data>
+  <data name="x_Axis_settings" xml:space="preserve">
+    <value>Настройки X-Axis</value>
+  </data>
+  <data name="y_Axis_settings" xml:space="preserve">
+    <value>Настройки оси Y</value>
+  </data>
+  <data name="second_y_Axis_settings" xml:space="preserve">
+    <value>Настройки второго Y-Axis</value>
+  </data>
+  <data name="plotting" xml:space="preserve">
+    <value>Заговор</value>
+  </data>
+  <data name="The_key_input_is_empty_" xml:space="preserve">
+    <value>Ввод ключа пуст!</value>
+  </data>
+  <data name="The_plaintext_input_is_empty_" xml:space="preserve">
+    <value>Ввод открытого текста пуст!</value>
+  </data>
+  <data name="The_seed_input_is_empty__It_is_required_for_logging_purposes_" xml:space="preserve">
+    <value>Вход семени пуст! Он необходим для ведения журнала.</value>
+  </data>
+  <data name="Current_key_number__" xml:space="preserve">
+    <value>Текущий номер ключа:</value>
+  </data>
+  <data name="key_number__" xml:space="preserve">
+    <value>номер ключа:</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Готово</value>
+  </data>
+  <data name="ID" xml:space="preserve">
+    <value>Я БЫ</value>
+  </data>
+  <data name="Last_runtime" xml:space="preserve">
+    <value>Последнее время выполнения</value>
+  </data>
+  <data name="Last_number_of_restarts" xml:space="preserve">
+    <value>Последнее количество перезапуска</value>
+  </data>
+  <data name="Last_number_of_decryptions" xml:space="preserve">
+    <value>Последний номер дешифрования</value>
+  </data>
+  <data name="Started_evaluating" xml:space="preserve">
+    <value>Начал оценку</value>
+  </data>
+  <data name="FullEvaluationCaption" xml:space="preserve">
+    <value>Полная оценка</value>
+  </data>
+  <data name="FullEvaluationTooltipCaption" xml:space="preserve">
+    <value>Аквире полная оценка. Для этого требуется оценочный коннектор анализируемого компонента СА.</value>
+  </data>
+  <data name="GnuPlot_data_for_plotting_data_using_the_GnuPlot_script_output" xml:space="preserve">
+    <value>Вывод данных GnuPlot, который может быть нарисован скриптом GnuPlot</value>
+  </data>
+  <data name="Correct_last_key" xml:space="preserve">
+    <value>Исправить последний ключ</value>
+  </data>
+  <data name="Best_last_key" xml:space="preserve">
+    <value>Лучший последний ключ</value>
+  </data>
+  <data name="Correctly_decrypted" xml:space="preserve">
+    <value>Правильно расшифровано</value>
+  </data>
+</root>

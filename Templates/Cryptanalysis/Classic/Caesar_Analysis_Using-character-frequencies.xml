@@ -1,40 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Caesar Analysis using character frequencies</title>
+  <title lang="ru">Анализ Цезаря с использованием частот символов</title>
   <summary lang="en">Cryptanalysis of the <i>Caesar</i> cipher using character frequencies</summary>
+  <summary lang="ru">Криптоанализ цезарного шифра с использованием частот символов</summary>
   <description lang="en">This sample performs a statistical analysis attack on the Caesar cipher. The character frequencies are analyzed and -- based on the result -- the substitution done by the Caesar cipher is reverted.</description>
+  <description lang="ru">Этот образец выполняет атаку статистического анализа на шифр Цезаря. Частоты символов анализируются и, основываясь на результате, заменяются шифром Цезаря.</description>
   <keywords>Caesar, Julius, Substitution, monoalphabetic, frequencies, Attack, Analysis</keywords>
-
+  <keywords lang="ru">Цезарь, Юлий, Замена, моноалфавитный, частоты, Атака, Анализ</keywords>
   <title lang="de">Caesar Analyse mittels Buchstabenhäufigkeiten</title>
   <summary lang="de">Kryptoanalyse der <i>Caesar</i>-Verschlüsselung mittels Buchstabenhäufigkeiten</summary>
   <description lang="de">Diese Vorlage führt einen statistischen Angriff auf die Caesar-Chiffre durch. Zunächst werden die Buchstabenhäufigkeiten analysiert um dann, auf Grundlage des Ergebnisses der Analyse, die Substitution der Caesar-Chiffre umzukehren.</description>
   <keywords lang="de">Cäsar, Caesar, monoalphabetisch, Häufigkeiten, Angriff</keywords>
-
   <icon file="Caesar_Analysis_Using-character-frequencies.png" />
   <relevantPlugins>
     <plugin name="Caesar" />
     <plugin name="CaesarAnalysisHelper" />
     <plugin name="FrequencyTest" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$FrequencyTest$" value="Frequenztest"/>
-    <replacement key="$Caesar Decryption$" value="Caesar-Entschlüsselung"/>
-    <replacement key="$CaesarAnalysisHelper$" value="Caesar-Analyse"/>
-	 <replacement key="$memo$" value="\fs18{\fs21\b Caesar \emdash Statistische Analyse}\line Diese Vorlage führt einen Angriff durch statistische Analyse auf die Caesar-Chiffre durch. Die Buchstabenhäufigkeiten werden analysiert und die Verschlüsselung wird mit dem berechneten Schlüssel rückgängig gemacht.\line\line {\fs20\ul\b Funktionsweise}\line Der verschlüsselte Text wird an die Frequenztest-Komponente weitergeleitet. Diese berechnet die Buchstabenhäufigkeiten des verschlüsselten Textes, zeigt sie als Balkendiagramm an und leitet sie an die Caesar-Analyse-Komponente weiter. Diese Komponente verwendet die Buchstabenhäufigkeit zur Kryptoanalyse der Caesar-Chiffre. Der berechnete Schlüssel wird schliesslich an eine Caesar-Komponente weitergegeben, die damit den Geheimtext entschlüsselt. Der gefundene Schlüssel wird auch in der Komponente &quot;Schlüssel&quot; angezeigt.\line Die Analysekomponenten können nicht nur mit Unigrammen umgehen, sondern funktionieren auch mit N-Grammen (Bigrammnen, Trigrammen, ...)."/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$FrequencyTest$" value="Frequenztest" />
+    <replacement key="$Caesar Decryption$" value="Caesar-Entschlüsselung" />
+    <replacement key="$CaesarAnalysisHelper$" value="Caesar-Analyse" />
+    <replacement key="$memo$" value="\fs18{\fs21\b Caesar \emdash Statistische Analyse}\line Diese Vorlage führt einen Angriff durch statistische Analyse auf die Caesar-Chiffre durch. Die Buchstabenhäufigkeiten werden analysiert und die Verschlüsselung wird mit dem berechneten Schlüssel rückgängig gemacht.\line\line {\fs20\ul\b Funktionsweise}\line Der verschlüsselte Text wird an die Frequenztest-Komponente weitergeleitet. Diese berechnet die Buchstabenhäufigkeiten des verschlüsselten Textes, zeigt sie als Balkendiagramm an und leitet sie an die Caesar-Analyse-Komponente weiter. Diese Komponente verwendet die Buchstabenhäufigkeit zur Kryptoanalyse der Caesar-Chiffre. Der berechnete Schlüssel wird schliesslich an eine Caesar-Komponente weitergegeben, die damit den Geheimtext entschlüsselt. Der gefundene Schlüssel wird auch in der Komponente &quot;Schlüssel&quot; angezeigt.\line Die Analysekomponenten können nicht nur mit Unigrammen umgehen, sondern funktionieren auch mit N-Grammen (Bigrammnen, Trigrammen, ...)." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$FrequencyTest$" value="Frequenztest" />
+    <replacement key="$Caesar Decryption$" value="Цезарь дешифрования" />
+    <replacement key="$CaesarAnalysisHelper$" value="Цезарь-анализ" />
+    <replacement key="$memo$" value="\fs18 {\fs21 \b Цезарь \emdash Статистический анализ} \line Этот шаблон выполняет атаку статического анализа на шифр Цезаря. Частоты букв анализируются, и шифрование обращается с вычисленным ключом. \Line \line {\fs20 \ul \b Как это работает} \line Зашифрованный текст передается компоненту Frequency Test. Это вычисляет частоту букв зашифрованного текста, отображает его как гистограмму и пересылает ее в компонент анализа Цезаря. Этот компонент использует частоту букв для криптоанализа цезарного шифра. Вычисленный ключ, наконец, передается на компонент Цезарь, который расшифровывает зашифрованный текст. Найденный ключ также отображается в компоненте «Key». \Line Компоненты анализа могут обрабатывать не только униграммы, но также работать с N-граммами (bigram, trigram, ...)." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$FrequencyTest$" value="FrequencyTest"/>
-    <replacement key="$Caesar Decryption$" value="Caesar Decryption"/>
-    <replacement key="$CaesarAnalysisHelper$" value="CaesarAnalysisHelper"/>
-	 <replacement key="$memo$" value="\fs18{\fs21\b Caesar \emdash statistical analysis}\line This sample performs a statistical analysis attack on the Caesar cipher. The character frequencies are analyzed and \emdash based on the result \emdash the substitution done by the Caesar cipher is reverted.\line\line {\fs20\ul\b How it works}\line The encrypted text is forwarded to the FrequencyTest component. This component generates a bar chart of the character frequencies of the encrypted text and sends it to the CaesarAnalysisHelper component. This component performs the cryptanalysis of a Caesar cipher using the frequency of 1-grams in the encrypted text. The calculated shift key is finally given to a Caesar component to decrypt the encrypted text. The key can also seen in the TextOutput &quot;Key&quot;.\line The components would be able not only to handle 1-grams (unigrams), but also n-grams (bigrams, trigrams, ...)."/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$FrequencyTest$" value="FrequencyTest" />
+    <replacement key="$Caesar Decryption$" value="Caesar Decryption" />
+    <replacement key="$CaesarAnalysisHelper$" value="CaesarAnalysisHelper" />
+    <replacement key="$memo$" value="\fs18{\fs21\b Caesar \emdash statistical analysis}\line This sample performs a statistical analysis attack on the Caesar cipher. The character frequencies are analyzed and \emdash based on the result \emdash the substitution done by the Caesar cipher is reverted.\line\line {\fs20\ul\b How it works}\line The encrypted text is forwarded to the FrequencyTest component. This component generates a bar chart of the character frequencies of the encrypted text and sends it to the CaesarAnalysisHelper component. This component performs the cryptanalysis of a Caesar cipher using the frequency of 1-grams in the encrypted text. The calculated shift key is finally given to a Caesar component to decrypt the encrypted text. The key can also seen in the TextOutput &quot;Key&quot;.\line The components would be able not only to handle 1-grams (unigrams), but also n-grams (bigrams, trigrams, ...)." />
   </replacements>
-
 </sample>

@@ -1,39 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Substitution Cipher</title>
+  <title lang="ru">Замена Cipher</title>
   <summary lang="en">Usage of the <i>Substitution</i> cipher</summary>
+  <summary lang="ru">Использование шифрования замещения</summary>
   <description lang="en">In cryptography, a substitution cipher is a method of encryption by which units of plaintext are replaced with ciphertext according to a regular system; the "units" may be single letters (the most common), pairs of letters, triplets of letters, mixtures of the above, and so forth. The receiver deciphers the text by performing an inverse substitution. Substitution ciphers can be compared with transposition ciphers. In a transposition cipher, the units of the plaintext are rearranged in a different and usually quite complex order, but the units themselves are left unchanged. By contrast, in a substitution cipher, the units of the plaintext are retained in the same sequence in the ciphertext, but the units themselves are altered.<newline /><newline />
 Source: <external ref="http://en.wikipedia.org/wiki/Substitution_cipher" /></description>
+  <description lang="ru">В криптографии шифр замещения является методом шифрования, посредством которого единицы открытого текста заменяются зашифрованным текстом в соответствии с обычной системой; «единицами» могут быть одиночные буквы (наиболее распространенные), пары букв, триплеты букв, смеси выше и т. д. Приемник расшифровывает текст, выполняя обратную замену. Цифры замещения можно сравнить с шифрами транспонирования. В шифре транспонирования единицы открытого текста перегруппированы в другом и обычно довольно сложном порядке, но сами единицы остаются неизменными. Напротив, в замещающем шифре единицы открытого текста сохраняются в одной и той же последовательности в зашифрованном тексте, но сами единицы изменяются. Источник:</description>
   <keywords>Substitution</keywords>
-
+  <keywords lang="ru">подмена</keywords>
   <title lang="de">Substitutions-Chiffre</title>
   <summary lang="de">Benutzung der <i>Substitutions</i>-Chiffre</summary>
   <description lang="de">Als monoalphabetische Substitution [von griechisch: μόνο (mono) = „einzig“ und αλφάβητο (alphabeto) = „Alphabet“ sowie von lateinisch: substituere = „ersetzen“] bezeichnet man in der Kryptographie Verschlüsselungsverfahren, bei denen nur ein einziges (festes) Alphabet zur Verschlüsselung, also zur Umwandlung des Klartextes in den Geheimtext, verwendet wird.<newline /><newline />
 Quelle: <external ref="http://de.wikipedia.org/wiki/Monoalphabetische_Substitution" /></description>
   <keywords lang="de">Substitution</keywords>
-
   <icon file="Substitution.png" />
   <relevantPlugins>
     <plugin name="Substitution" />
   </relevantPlugins>
-
- <replacements lang="de">
-	<replacement key="$Plaintext$" value="Klartext"/>
-	<replacement key="$Ciphertext$" value="Geheimtext"/>
-	<replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-	<replacement key="$Source Alphabet$" value="Quellalphabet"/>
-	<replacement key="$Destination Alphabet$" value="Zielalphabet"/>
-	<replacement key="$text$" value="Als monoalphabetische Substitution (von griechisch: μόνο (mono) = „einzig“ und αλφάβητο (alphabeto) = „Alphabet“ sowie von lateinisch: substituere = „ersetzen“) bezeichnet man in der Kryptographie, also in dem Wissenschaftszweig der Kryptologie, der sich mit den Geheimschriften befasst, Verschlüsselungsverfahren, bei der nur ein einziges (festes) Alphabet zur Verschlüsselung, also zur Umwandlung des Klartextes in den Geheimtext, verwendet wird.&#13;&#10;&#13;&#10;Source: http://de.wikipedia.org/wiki/Monoalphabetische_Substitution"/>
- </replacements>
-
- <replacements lang="en">
-	<replacement key="$Plaintext$" value="Plaintext"/>
-	<replacement key="$Ciphertext$" value="Ciphertext"/>
-	<replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-	<replacement key="$Source Alphabet$" value="Source Alphabet"/>
-	<replacement key="$Destination Alphabet$" value="Destination Alphabet"/>
-	<replacement key="$text$" value="In cryptography, a substitution cipher is a method of encryption by which units of plaintext are replaced with ciphertext, according to a regular system; the &quot;units&quot; may be single letters (the most common), pairs of letters, triplets of letters, mixtures of the above, and so forth. The receiver deciphers the text by performing an inverse substitution.&#13;&#10;&#13;&#10;Source: http://en.wikipedia.org/wiki/Substitution_cipher"/>
- </replacements>
-
+  <replacements lang="de">
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Source Alphabet$" value="Quellalphabet" />
+    <replacement key="$Destination Alphabet$" value="Zielalphabet" />
+    <replacement key="$text$" value="Als monoalphabetische Substitution (von griechisch: μόνο (mono) = „einzig“ und αλφάβητο (alphabeto) = „Alphabet“ sowie von lateinisch: substituere = „ersetzen“) bezeichnet man in der Kryptographie, also in dem Wissenschaftszweig der Kryptologie, der sich mit den Geheimschriften befasst, Verschlüsselungsverfahren, bei der nur ein einziges (festes) Alphabet zur Verschlüsselung, also zur Umwandlung des Klartextes in den Geheimtext, verwendet wird.&#xD;&#xA;&#xD;&#xA;Source: http://de.wikipedia.org/wiki/Monoalphabetische_Substitution" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Source Alphabet$" value="Quellalphabet" />
+    <replacement key="$Destination Alphabet$" value="Целевой алфавит" />
+    <replacement key="$text$" value="Как моноалфавитная замена (от греческого: μόνο (моно) = «только» и αλφάβητο (alphabeto) = «алфавит», а также от латинского: substitere = «replace») называется криптографией, то есть в области науки криптологии, которая имеет дело с шифры, метод шифрования, в котором для шифрования используется только один (фиксированный) алфавит, поэтому преобразование обычного текста используется в зашифрованном тексте. Источник: http://en.wikipedia.org/wiki/Monoalphabetische_Substitution" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Source Alphabet$" value="Source Alphabet" />
+    <replacement key="$Destination Alphabet$" value="Destination Alphabet" />
+    <replacement key="$text$" value="In cryptography, a substitution cipher is a method of encryption by which units of plaintext are replaced with ciphertext, according to a regular system; the &quot;units&quot; may be single letters (the most common), pairs of letters, triplets of letters, mixtures of the above, and so forth. The receiver deciphers the text by performing an inverse substitution.&#xD;&#xA;&#xD;&#xA;Source: http://en.wikipedia.org/wiki/Substitution_cipher" />
+  </replacements>
 </sample>

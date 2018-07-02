@@ -1,66 +1,53 @@
-<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     The Paillier cryptosystem, named after and invented by Pascal Paillier in 1999, is a probabilistic asymmetric algorithm for
     public-key cryptography. The problem of computing n-th residue classes is believed to be computationally difficult.
     The decisional composite residuosity assumption is the intractability hypothesis upon which this cryptosystem is based.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     A special attribute of the Paillier cryptosystems are its <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_en.html">homomorphic</internal> properties:
     Two encrypted messages can be added without having to decrypt them first.
     It can also multiply an encrypted number with an unencrypted number, so that the result is the encrypted product.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     This component generates the public and the private key of the Paillier cryptosystem,
     that can be used by the <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef> component.
   </introduction>
-
+  <introduction lang="ru">Криптосистема Пайлера, названная в честь Паскаля Пайлера в 1999 году, была вероятностным асимметричным алгоритмом криптографии с открытым ключом. Считается, что проблема вычисления n-го класса вычетов является сложной вычислительной задачей. Предполагаемое предположение о композиционной остаточности решения - гипотеза о неразрешимости, на которой основана эта криптосистема. Особым атрибутом криптосистемы Пайлера являются его гомоморфные свойства: два зашифрованных сообщения могут быть добавлены без необходимости их дешифрования в первую очередь. Он также может умножать зашифрованное число с незашифрованным номером, так что результатом будет зашифрованный продукт. Этот компонент генерирует открытый и закрытый ключ криптосистемы Paillier, который может использоваться компонентом Paillier.</introduction>
   <introduction lang="de-DE">
     Das Paillier-Kryptosystem wurde benannt nach seinem Erfinder Pascal Paillier, der es 1999 vorgestellt hat.
     Es handelt sich dabei um ein probabilistisches asymmetrisches Kryptosystem, dessen Sicherheit auf der Annahme beruht,
     dass für einen zusammengesetzten Modul $n$ nicht effizient geprüft werden kann,
     ob ein Element in $(Z/n^2Z)$ eine $n$-te Wurzel modulo $n^2$ besitzt oder nicht.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Eine Besonderheit des Paillier-Kryptosystems sind seine <internal ref="../Common/Homomorphic Ciphers and their Importance in Cryptography_de.html">homomorphen</internal> Eigenschaften:
     Zwei verschlüsselte Nachrichten können addiert werden, ohne die Nachrichten vorher zu entschlüsseln.
     Außerdem kann eine verschlüsselte Zahl mit einer unverschlüsselten Zahl multipliziert werden, so dass das Ergebnis das verschlüsselte Produkt ist.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Diese Komponente generiert den öffentlichen und den privaten Schlüssel des Paillier-Kryptosystems,
     die als Eingaben für die <docRef item="Cryptool.Plugins.Paillier.Paillier">Paillier</docRef>-Komponente verwendet werden können.
   </introduction>
-
   <usage lang="en">
     For the generation of the key, the component needs only two prime numbers.
     In the settings of the component you can choose whether you want to enter the primes manually, or whether the component should
     generate a pair of random primes. If you choose the second method, you can also enter the bit length that the generated primes should have.
   </usage>
-
+  <usage lang="ru">Для генерации ключа компонент нуждается только в двух простых числах. В настройках компонента вы можете выбрать, хотите ли вы вводить простые числа вручную или должен ли компонент генерировать пару случайных простых чисел. Если вы выберете второй метод, вы также можете ввести длину бит, которую должны иметь генерируемые простые числа.</usage>
   <usage lang="de-DE">
     Zur Erzeugung der Schlüssel ist lediglich die Angabe zweier Primzahlen notwendig.
     Sie können in den Einstellungen angeben, ob Sie die Primzahlen eingeben oder von der Komponente automatisch generieren lassen wollen.
     Wird die automatische Erzeugung gewählt, so können Sie noch die Bitlänge der zu erzeugenden Primzahlen einstellen.
   </usage>
-
-  <presentation lang="en">
-  </presentation>
-
-  <presentation lang="de-DE">
-  </presentation>
-
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference id="autokey">
-      <link lang="en" url="http://en.wikipedia.org/wiki/Paillier_cryptosystem"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Paillier_cryptosystem" />
       <caption lang="en">Paillier cryptosystem</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Paillier-Kryptosystem"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Paillier-Kryptosystem" />
       <caption lang="de-DE">Paillier-Kryptosystem</caption>
     </linkReference>
   </references>
-
 </documentation>

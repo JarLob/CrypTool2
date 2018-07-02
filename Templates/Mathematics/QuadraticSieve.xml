@@ -1,34 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Factorization with Quadratic Sieve (QS)</title>
+  <title lang="ru">Факторизация с квадратичным ситом (QS)</title>
   <summary lang="en">Usage of the <i>Quadratic Sieve</i></summary>
+  <summary lang="ru">Использование квадратного сита</summary>
   <description lang="en">The quadratic sieve algorithm (QS) is a modern integer factorization algorithm and, in practice, the fastest method known for numbers with up to ca. 100 decimal digits. For bigger numbers, the general number field sieve (GNFS) is faster, but also considerably more complex than the quadratic sieve. It is a general-purpose factorization algorithm, meaning that its running time depends solely on the size of the integer to be factored, and not on special structure or properties. It was invented by Carl Pomerance in 1981 as an improvement to Schroeppel's linear sieve.<newline /><newline />
 Source: <external ref="http://en.wikipedia.org/wiki/Quadratic_sieve" /></description>
+  <description lang="ru">Алгоритм квадратичного сита (QS) представляет собой современный алгоритм целочисленной факторизации и, на практике, самый быстрый метод, известный для чисел с точностью до ок. 100 десятичных цифр. Для больших чисел общее полевое сито (GNFS) выполняется быстрее, но также значительно сложнее, чем квадратичное сито. Это универсальный алгоритм факторизации, означающий, что его время работы зависит только от размера целочисленного числа, которое нужно учитывать, а не от специальной структуры или свойств. Он был изобретен Карлом Померансом в 1981 году как улучшение линейного сита Schroeppel. Источник:</description>
   <keywords>Prime, sieve, Factorization</keywords>
-
+  <keywords lang="ru">Прайм, сито, факторизация</keywords>
   <title lang="de">Faktorisierung mit Quadratischem Sieb (QS)</title>
   <summary lang="de">Benutzung des <i>Quadratischen Siebs</i></summary>
   <description lang="de">Das Quadratische Sieb ist ein Begriff aus dem Bereich Zahlentheorie der Mathematik und bezeichnet einen der schnellsten bekannten Algorithmen zur Faktorisierung großer natürlicher Zahlen. Es ist ein allgemeines Faktorisierungsverfahren, d.h. die Laufzeit hängt nur von der Größe der zu faktorisierenden Zahl ab und nicht von speziellen Eigenschaften der Zahl (bzw. ihrer Teiler). Für Zahlen mit bis ca. 100 Dezimalstellen ist es das schnellste (allgemeine) Faktorisierungsverfahren. Für größere Zahlen ist das Zahlkörpersieb (GNFS) schneller. Die Laufzeit zum Faktorisieren einer Zahl n ist (unter einigen als wahrscheinlich geltenden Annahmen) in der Größenordnung von exp( sqrt ( ln n * ln ln n ) ).<newline /><newline />
 Quelle: <external ref="http://de.wikipedia.org/wiki/Quadratisches_Sieb" /></description>
   <keywords lang="de">Primzahl, Faktorisierung, Zerlegung, quadratisch, Sieb</keywords>
-
   <icon file="QuadraticSieve.png" />
   <relevantPlugins>
     <plugin name="QuadraticSieve" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Number Input$" value="Zahleneingabe"/>
-    <replacement key="$QuadraticSieve$" value="Quadratisches Sieb"/>
-    <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile"/>
-	 <replacement key="$memo$" value="Geben Sie oben die Zahl ein, die nach Start des Arbeitsbereiches faktorisiert werden soll. Das Ergebnis wird am Ausgang der Komponente &quot;Quadratisches Sieb&quot; ausgegeben und in der Textausgabe-Komponente angezeigt.\line\line Zahlen können auch als mathematischer Ausdruck eingegeben werden, z.B. 2^20+13.\line Wenn der Wert des mathematischen Ausdruckes ein Bruch ist, wird nur der ganzzahlige Anteil verwendet, z.B. (2^3-1)/2 = 7 / 2 = 3."/>
+    <replacement key="$Number Input$" value="Zahleneingabe" />
+    <replacement key="$QuadraticSieve$" value="Quadratisches Sieb" />
+    <replacement key="$Output$" value="Ausgabe: Alle Faktoren, einer pro Zeile" />
+    <replacement key="$memo$" value="Geben Sie oben die Zahl ein, die nach Start des Arbeitsbereiches faktorisiert werden soll. Das Ergebnis wird am Ausgang der Komponente &quot;Quadratisches Sieb&quot; ausgegeben und in der Textausgabe-Komponente angezeigt.\line\line Zahlen können auch als mathematischer Ausdruck eingegeben werden, z.B. 2^20+13.\line Wenn der Wert des mathematischen Ausdruckes ein Bruch ist, wird nur der ganzzahlige Anteil verwendet, z.B. (2^3-1)/2 = 7 / 2 = 3." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Number Input$" value="ввод номера" />
+    <replacement key="$QuadraticSieve$" value="Квадратное сито" />
+    <replacement key="$Output$" value="Выход: все факторы, по одному на линию" />
+    <replacement key="$memo$" value="Введите число, указанное выше, после того, как вы запустили рабочую область. Результат выводится на выходе компонента «Квадратный экран» и отображается в компоненте вывода текста. \Line \line Номера также могут быть введены в виде математического выражения, например, 2 ^ 20 + 13. \Line Если значение математического выражения представляет собой долю , используется только целочисленная часть, например (2 ^ 3-1) / 2 = 7/2 = 3." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Number Input$" value="Number Input"/>
-    <replacement key="$QuadraticSieve$" value="Quadratic Sieve"/>
-    <replacement key="$Output$" value="Output: All factors, one per line"/>
-	 <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3."/>
+    <replacement key="$Number Input$" value="Number Input" />
+    <replacement key="$QuadraticSieve$" value="Quadratic Sieve" />
+    <replacement key="$Output$" value="Output: All factors, one per line" />
+    <replacement key="$memo$" value="Above, you can enter any number, which will be factorized upon executing this workspace. The result will be shown in the output of the quadratic sieve component.\line\line Numbers can also be entered as a mathematical expression, e.g. 2^20+13.\line If the result of the mathematical expression is a fraction, only the integer part is used, e.g. (2^3-1)/2 = 7 / 2 = 3." />
   </replacements>
-
 </sample>

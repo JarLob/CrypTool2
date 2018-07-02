@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <directory>
   <name lang="en">Classical</name>
-  <name lang="de">Klassisch</name>  
+  <name lang="ru">классическая</name>
+  <name lang="de">Klassisch</name>
   <summary lang="en">This folder contains templates that demonstrate cryptanalytical attacks against classical cryptographical algorithms.</summary>
+  <summary lang="ru">Эта папка содержит шаблоны, демонстрирующие криптоаналитические атаки против классических криптографических алгоритмов.</summary>
   <summary lang="de">Dieses Verzeichnis enthält Vorlagen, die kryptoanalytische Angriffe gegen klassische Verfahren demonstrieren.</summary>
   <icon file="dir.png" />
 </directory>

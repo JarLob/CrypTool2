@@ -1,60 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">ADFGVX Cipher dictionary attack</title>
+  <title lang="ru">Атака словаря ADFGVX Cipher</title>
   <summary lang="en">Usage of the <i>ADFGVX</i> cipher</summary>
+  <summary lang="ru">Использование шифрования ADFGVX</summary>
   <description lang="en">This template shows how a dictionary attack can be implemented and carried out in CrypTool 2 using a dictionary and the ADFGVX cipher.<newline /><newline />The result of this template is the ciphertext that was encrypted with the ADFGVX cipher, but with the transposition undone. In order to get the actual plaintext from this text, it has to be decrypted with another ADFGVX component, that uses the same substitution password and as transposition the identical permutation. The identical transposition is achieved by using "A" as transposition password.</description>
+  <description lang="ru">Этот шаблон показывает, как атака словаря может быть реализована и реализована в CrypTool 2 с использованием словаря и шифрования ADFGVX. Результатом этого шаблона является зашифрованный текст, который был зашифрован с помощью шифрования ADFGVX, но с отменой переноса. Чтобы получить фактический текст из этого текста, он должен быть расшифрован другим компонентом ADFGVX, который использует один и тот же пароль подстановки и как транспонирование идентичную перестановку. Точная транспозиция достигается с помощью «А» в качестве пароля перестановки.</description>
   <keywords>ADFGX, World War, Telegraphy, Polybius, Square, Column, Row, Polybios, Dictionary, Attack, Analysis</keywords>
-
+  <keywords lang="ru">ADFGX, мировая война, телеграфия, полибий, площадь, колонка, ряд, полибиос, словарь, атака, анализ</keywords>
   <title lang="de">Wörterbuchangriff auf die ADFGVX-Chiffre</title>
   <summary lang="de">Benutzung der <i>ADFGVX</i>-Chiffre</summary>
   <description lang="de">Diese Vorlage zeigt, wie in CrypTool 2 ein Wörterbuchangriff mit Hilfe eines Wörterbuchs und der ADFGVX-Chiffre implementiert und durchgeführt werden kann.<newline /><newline />Das Resultat dieser Vorlage ist der mit der ADFGVX-Chiffre verschlüsselte Geheimtext, bei dem die Transposition rückgängig gemacht wurde. Um daraus den tatsächlichen Klartext zu rekonstruieren, muss er noch mit einer ADFGVX-Komponente entschlüsselt werden, die dasselbe Substitutionspasswort verwendet, aber die identische Transposition benutzt. Dies kann dadurch erreicht werden, daß als Transpositionspasswort "A" eingestellt wird.</description>
   <keywords lang="de">Weltkrieg, Reihe, Spalte, Quadrat, Wörterbuch, Analyse</keywords>
-
   <icon file="ADFGX_dictionary_attack.png" />
   <relevantPlugins>
     <plugin name="ADFGVX" />
     <plugin name="Dictionary" />
     <plugin name="Costfunction" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Output (Bestlist)$" value="Ausgabe (Bestenliste)"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
-    <replacement key="$Dictionary$" value="Wörterbuch"/>
-    <replacement key="$Concat$" value="Konkatenierer"/>
-    <replacement key="$Cost function$" value="Kostenfunktion"/>
-    <replacement key="$Actual value$" value="Aktueller Wert"/>
-    <replacement key="$Threshold$" value="Schwellenwert"/>
-    <replacement key="$CoincidenceGate$" value="Koinzidenz-Gatter"/>
-    <replacement key="$KeyGate$" value="Schlüssel-Gatter"/>
-    <replacement key="$TextGate$" value="Text-Gatter"/>
-    <replacement key="$Gate$" value="Gatter"/>
-    <replacement key="$infinity$" value="unendlich"/>
-    <replacement key="$Iterate Dictionary$" value="Durchlaufe Wörterbuch"/>
-    <replacement key="$Generate Output$" value="Generiere Ausgabe"/>
-    <replacement key="$Check transposition$" value="Teste Transposition\line\line Diese Vorlage zeigt, wie eine ADFGVX-Chiffre mit einem Wörterbuchangriff attackiert werden kann. Der gegebene Text wird mit ADFGVX verschlüsselt. Eingestellt ist als Substitutionspasswort &quot;ABC&quot; und somit die identische Substitution, und als Transpositionspasswort &quot;accordingly&quot;. Für jeden Eintrag des Wörterbuches wird dann mit einer normalen Spaltentransposition die Transposition rückgängig gemacht, und die Kostenfunktion berechnet für das Resultat den auf Buchstabenpaaren basierenden Koinzidenzindex. Dies ist möglich, da der &quot;verschlüsselte&quot; Text eine monoalphabetische Substitution ist, die denselben Koinzidenzindex wie der Klartext hat. Der Text ist immer noch verschlüsselt und kann nicht gelesen werden, aber die Transposition wurde entfernt.\line\line In der Bestenliste werden alle Schlüssel aufgelistet, für die der Koinzidenzindex über dem Schwellenwert 0,05 liegt. Der Schwellenwert ist so gewählt, da der Koinzidenzindex für zufällige Zeichenfolgen 1/26 (also etwa 0,038) beträgt. Ein Wert über 0,05 deutet dagegen auf einen sinnvollen Text hin."/>
-    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#13;&#10;&#13;&#10;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#13;&#10;&#13;&#10;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#13;&#10;&#13;&#10;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#13;&#10;&#13;&#10;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher"/>
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Output (Bestlist)$" value="Ausgabe (Bestenliste)" />
+    <replacement key="$Converter$" value="Konvertierer" />
+    <replacement key="$Dictionary$" value="Wörterbuch" />
+    <replacement key="$Concat$" value="Konkatenierer" />
+    <replacement key="$Cost function$" value="Kostenfunktion" />
+    <replacement key="$Actual value$" value="Aktueller Wert" />
+    <replacement key="$Threshold$" value="Schwellenwert" />
+    <replacement key="$CoincidenceGate$" value="Koinzidenz-Gatter" />
+    <replacement key="$KeyGate$" value="Schlüssel-Gatter" />
+    <replacement key="$TextGate$" value="Text-Gatter" />
+    <replacement key="$Gate$" value="Gatter" />
+    <replacement key="$infinity$" value="unendlich" />
+    <replacement key="$Iterate Dictionary$" value="Durchlaufe Wörterbuch" />
+    <replacement key="$Generate Output$" value="Generiere Ausgabe" />
+    <replacement key="$Check transposition$" value="Teste Transposition\line\line Diese Vorlage zeigt, wie eine ADFGVX-Chiffre mit einem Wörterbuchangriff attackiert werden kann. Der gegebene Text wird mit ADFGVX verschlüsselt. Eingestellt ist als Substitutionspasswort &quot;ABC&quot; und somit die identische Substitution, und als Transpositionspasswort &quot;accordingly&quot;. Für jeden Eintrag des Wörterbuches wird dann mit einer normalen Spaltentransposition die Transposition rückgängig gemacht, und die Kostenfunktion berechnet für das Resultat den auf Buchstabenpaaren basierenden Koinzidenzindex. Dies ist möglich, da der &quot;verschlüsselte&quot; Text eine monoalphabetische Substitution ist, die denselben Koinzidenzindex wie der Klartext hat. Der Text ist immer noch verschlüsselt und kann nicht gelesen werden, aber die Transposition wurde entfernt.\line\line In der Bestenliste werden alle Schlüssel aufgelistet, für die der Koinzidenzindex über dem Schwellenwert 0,05 liegt. Der Schwellenwert ist so gewählt, da der Koinzidenzindex für zufällige Zeichenfolgen 1/26 (also etwa 0,038) beträgt. Ein Wert über 0,05 deutet dagegen auf einen sinnvollen Text hin." />
+    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#xD;&#xA;&#xD;&#xA;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#xD;&#xA;&#xD;&#xA;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#xD;&#xA;&#xD;&#xA;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#xD;&#xA;&#xD;&#xA;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Output (Bestlist)$" value="Проблема (Leaderboard)" />
+    <replacement key="$Converter$" value="преобразование" />
+    <replacement key="$Dictionary$" value="словарь" />
+    <replacement key="$Concat$" value="Konkatenierer" />
+    <replacement key="$Cost function$" value="функция издержек" />
+    <replacement key="$Actual value$" value="Текущее значение" />
+    <replacement key="$Threshold$" value="порог" />
+    <replacement key="$CoincidenceGate$" value="Совпадение ворота" />
+    <replacement key="$KeyGate$" value="Основные ворота" />
+    <replacement key="$TextGate$" value="Текст ворот" />
+    <replacement key="$Gate$" value="ворота" />
+    <replacement key="$infinity$" value="бесконечно" />
+    <replacement key="$Iterate Dictionary$" value="Запустить словарь" />
+    <replacement key="$Generate Output$" value="Создать выход" />
+    <replacement key="$Check transposition$" value="Test Transposition \line \line Этот шаблон показывает, как шифр ADFGVX можно атаковать со штурмовой атакой. Данный текст зашифрован с помощью ADFGVX. Установлен как пароль замещения «ABC» и, таким образом, идентичная замена, а также как пароль транспонирования «соответственно». Для каждой записи словаря транспонирование затем отменяется с нормальным переносом столбца, а функция стоимости вычисляет индекс совпадения на основе пар букв для результата. Это возможно, потому что «зашифрованный» текст является моноалфавитной заменой, которая имеет тот же индекс совпадений, что и открытый текст. Текст по-прежнему зашифрован и не может быть прочитан, но транспонирование удалено. \Line \line В таблице лидеров перечислены все ключи, для которых индекс совпадений выше порога 0,05. Порог выбирается потому, что индекс совпадений для случайных строк равен 1/26 (т. Е. Около 0,038). Значение выше 0,05 указывает на содержательный текст." />
+    <replacement key="$message$" value="В криптографии шифр ADFGVX был полевым шифром, используемым немецкой армией на Западном фронте во время Первой мировой войны. ADFGVX был фактически расширением более раннего шифрования ADFGX. Изобретенный полковником Фрицем Небелем и введенный в марте 1918 года, шифр был фракционирующим транспозиционным шифром, который сочетал модифицированный квадрат Полибия с одной столбчатой ​​транспозицией. Шифр назван в честь шести возможных букв, используемых в зашифрованном тексте: A, D, F, G, V и X. Эти буквы были выбраны намеренно, потому что они звучат очень сильно друг от друга, когда они передаются через код Морзе. Цель заключалась в том, чтобы уменьшить вероятность ошибки оператора. Небел разработал шифр, чтобы обеспечить армию в движении с шифрованием, более удобным, чем траншеи, но все же безопасным. Фактически, немцы считали, что шифр ADFGVX не поддается разрушению. Источник: http://en.wikipedia.org/wiki/ADFGVX_cipher" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Output (Bestlist)$" value="Output (Bestlist)"/>
-    <replacement key="$Converter$" value="Converter"/>
-    <replacement key="$Dictionary$" value="Dictionary"/>
-    <replacement key="$Concat$" value="Concat"/>
-    <replacement key="$Cost function$" value="Cost function"/>
-    <replacement key="$Actual value$" value="Actual value"/>
-    <replacement key="$Threshold$" value="Threshold"/>
-    <replacement key="$CoincidenceGate$" value="CoincidenceGate"/>
-    <replacement key="$KeyGate$" value="KeyGate"/>
-    <replacement key="$TextGate$" value="TextGate"/>
-    <replacement key="$Gate$" value="Gate"/>
-    <replacement key="$infinity$" value="infinity"/>
-    <replacement key="$Iterate Dictionary$" value="Iterate Dictionary"/>
-    <replacement key="$Generate Output$" value="Generate Output"/>
-    <replacement key="$Check transposition$" value="Check transposition\line\line This template shows how the ADFGVX cipher can be attacked using a dictionary attack. The given text is encrypted with ADFGVX using &quot;ABC&quot; as substitution key (and thus the identical substitution) and &quot;accordingly&quot; as transposition key. Then for each entry of the dictionary the transposition is reversed using the standard columnar transposition and the cost function calculates the index of coincidence value based on tuples (2 letters) for the resulting text. This is possible because the &quot;encrypted&quot; text is a monoalphabetic substitution that has the same index of coincidence as the plaintext. The text is still encrypted and can not be read, but the transposition is removed.\line\line The best list may contain more than one output because it collects all keys that generate an index of coincidence that exceeds the given threshold of 0.05. For a random text, the expected index of coincidence is 1/26 (about 0.038). A value bigger than 0.05 thus indicates that it is probably a meaningful text."/>
-    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#13;&#10;&#13;&#10;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#13;&#10;&#13;&#10;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#13;&#10;&#13;&#10;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#13;&#10;&#13;&#10;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher"/>
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Output (Bestlist)$" value="Output (Bestlist)" />
+    <replacement key="$Converter$" value="Converter" />
+    <replacement key="$Dictionary$" value="Dictionary" />
+    <replacement key="$Concat$" value="Concat" />
+    <replacement key="$Cost function$" value="Cost function" />
+    <replacement key="$Actual value$" value="Actual value" />
+    <replacement key="$Threshold$" value="Threshold" />
+    <replacement key="$CoincidenceGate$" value="CoincidenceGate" />
+    <replacement key="$KeyGate$" value="KeyGate" />
+    <replacement key="$TextGate$" value="TextGate" />
+    <replacement key="$Gate$" value="Gate" />
+    <replacement key="$infinity$" value="infinity" />
+    <replacement key="$Iterate Dictionary$" value="Iterate Dictionary" />
+    <replacement key="$Generate Output$" value="Generate Output" />
+    <replacement key="$Check transposition$" value="Check transposition\line\line This template shows how the ADFGVX cipher can be attacked using a dictionary attack. The given text is encrypted with ADFGVX using &quot;ABC&quot; as substitution key (and thus the identical substitution) and &quot;accordingly&quot; as transposition key. Then for each entry of the dictionary the transposition is reversed using the standard columnar transposition and the cost function calculates the index of coincidence value based on tuples (2 letters) for the resulting text. This is possible because the &quot;encrypted&quot; text is a monoalphabetic substitution that has the same index of coincidence as the plaintext. The text is still encrypted and can not be read, but the transposition is removed.\line\line The best list may contain more than one output because it collects all keys that generate an index of coincidence that exceeds the given threshold of 0.05. For a random text, the expected index of coincidence is 1/26 (about 0.038). A value bigger than 0.05 thus indicates that it is probably a meaningful text." />
+    <replacement key="$message$" value="In cryptography, the ADFGVX cipher was a field cipher used by the German Army on the Western Front during World War I. ADFGVX was in fact an extension of an earlier cipher called ADFGX.&#xD;&#xA;&#xD;&#xA;Invented by Colonel Fritz Nebel and introduced in March 1918, the cipher was a fractionating transposition cipher which combined a modified Polybius square with a single columnar transposition.&#xD;&#xA;&#xD;&#xA;The cipher is named after the six possible letters used in the ciphertext: A, D, F, G, V and X. These letters were chosen deliberately because they sound very different from each other when transmitted via Morse code. The intention was to reduce the possibility of operator error.&#xD;&#xA;&#xD;&#xA;Nebel designed the cipher to provide an army on the move with encryption more convenient than trench codes but still secure. In fact, the Germans believed the ADFGVX cipher was unbreakable.&#xD;&#xA;&#xD;&#xA;Source: http://en.wikipedia.org/wiki/ADFGVX_cipher" />
   </replacements>
-
 </sample>

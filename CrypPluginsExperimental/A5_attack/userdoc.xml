@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-
+  <language culture="en" />
+  <language culture="ru" />
   <introduction lang="en">
     A5/1 is a modern stream cipher that provides privacy for the GSM mobile phone system.
     It consists of three linear shift registers (LFSR) that are mixed with the secret key and the IV (initialization vector),
@@ -19,7 +18,7 @@
     plaintext. This trial plaintext is compared with the original plaintext to see if they match. If so, we decrypt the entire plaintext with the known IV and the 
     trial secret key (which happens to be the found key).
   </introduction>
-
+  <introduction lang="ru">A5 / 1 - это современный потоковый шифр, который обеспечивает конфиденциальность мобильной системы GSM. Он состоит из трех регистров линейного сдвига (LFSR), которые смешиваются с секретным ключом и IV (вектором инициализации), чтобы обеспечить ключевой поток, который позже будет XORed с открытым текстом, чтобы дать зашифрованный текст. Атака на этот шифр учитывает все случаи, когда 2 или 3 регистра сдвига с обратной связью содержат все нулевые значения после процесса инициализации. В таких случаях генерируемый поток ключей будет постоянным, состоящим целиком из нулей (случай, когда отправленное сообщение является открытым текстом) или полностью одно (случай, когда отправленное сообщение является дополнением к открытому тексту). Это не является желательным результатом, что означает, что такой сценарий доказывает, что мы имеем дело со слабо загруженным состоянием. Когда 3 регистра все равны нулю, только один IV определяет бит секретного ключа. В случаях, когда 2/3 LFSR все равны нулю, регистр в ненулевом состоянии вместе с IV определяет бит секретного ключа. Согласно нашей атаке, мы должны разделить зашифрованный текст на фреймы, каждый кадр соответствует одному IV. Используя этот IV и угадывая секретные ключи (для всех случаев, когда 2 или 3 LFSR все равны нулю), мы пытаемся расшифровать зашифрованный текст и получить пробный открытый текст. Этот пробный открытый текст сравнивается с исходным открытым текстом, чтобы увидеть, соответствуют ли они. Если это так, мы расшифровываем весь открытый текст с помощью известного IV и пробного секретного ключа (который, оказывается, является найденным ключом).</introduction>
   <usage lang="en">
     First, you have to drag the A5/1 component into the workspace and attach the three text input components (secret key, IV, and plaintext) to data sources.
     Then you have to connect a text output component to the "output" connector, which represents the ciphertext. After that, set the frame count
@@ -31,17 +30,12 @@
     different results.
     There are two text output components that represent the trial key that is guessed and the corresponding case. 
   </usage>
-
-  <presentation lang="en">
-  </presentation>
-
+  <usage lang="ru">Во-первых, вы должны перетащить компонент A5 / 1 в рабочую область и прикрепить к ним три компонента ввода текста (секретный ключ, IV и открытый текст). Затем вам нужно подключить текстовый выходной компонент к «выходному» разъему, который представляет зашифрованный текст. После этого установите количество кадров в настройках шифрования A5 / 1. После перетаскивания компонента шифрования A5 / 1 в рабочее пространство и присоединения входных и выходных разъемов с соответствующими компонентами, пользователь должен также перетащить компонент атаки A5 / 1 в рабочую область. IV, открытый текст, зашифрованный текст (созданный с помощью A5 / 1) и компонент ввода текста, который представляет количество кадров, используемых для атаки, используются в качестве входных компонентов для компонента атаки A5 / 1. Здесь мы должны упомянуть, что открытый текст делится на фреймы, и каждый кадр соответствует одному известному IV. IV увеличиваются на 1 в каждом предстоящем кадре. Вот почему различное количество отсчетов кадров дает разные результаты. Есть два текстовых выходных компонента, которые представляют собой пробный ключ, который догадается, и соответствующий случай.</usage>
+  <presentation lang="en"></presentation>
   <references>
-
     <linkReference>
       <link url="http://eprints.qut.edu.au/64105/1/AISC2014􀀀P aper3􀀀f inal:pdf" lang="en" />
       <caption lang="en"> Alhamdan, A., Bartlett H., Dawson E., Simpson L., Wong K. K. H. (2014), Weak key-IV Pairs in the A5/1 Stream Cipher </caption>
-
     </linkReference>
   </references>
-
 </documentation>

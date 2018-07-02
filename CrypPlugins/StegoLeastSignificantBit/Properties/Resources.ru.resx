@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionCaption" xml:space="preserve">
+    <value>действие</value>
+  </data>
+  <data name="ActionList1" xml:space="preserve">
+    <value>шифровать</value>
+  </data>
+  <data name="ActionList2" xml:space="preserve">
+    <value>расшифровывать</value>
+  </data>
+  <data name="ActionTooltip" xml:space="preserve">
+    <value>Выберите действие «Алгоритм»</value>
+  </data>
+  <data name="BitCountCaption" xml:space="preserve">
+    <value>Количество бит</value>
+  </data>
+  <data name="BitCountSettingsCaption" xml:space="preserve">
+    <value>Количество бит</value>
+  </data>
+  <data name="BitCountSettingsTooltip" xml:space="preserve">
+    <value>Количество бит на пиксель / образец, которые считаются наименее значимыми</value>
+  </data>
+  <data name="BitCountTooltip" xml:space="preserve">
+    <value>Количество бит на пиксель / образец, которые считаются наименее значимыми. Это та же настройка, что и значение сдвига на панели настроек, но как динамический вход.</value>
+  </data>
+  <data name="CustomizeRegionsCaption" xml:space="preserve">
+    <value>Настройка регионов</value>
+  </data>
+  <data name="CustomizeRegionsTooltip" xml:space="preserve">
+    <value>Открывает диалог, который позволяет пользователю определить, где на картинке данные будут скрыты.</value>
+  </data>
+  <data name="InputCarrierCaption" xml:space="preserve">
+    <value>Вход изображения несущей</value>
+  </data>
+  <data name="InputCarrierTooltip" xml:space="preserve">
+    <value>Ввод изображения носителя, в котором можно скрыть данные (Шифрование) или из которых извлечь скрытые данные (Расшифровка)</value>
+  </data>
+  <data name="InputDataCaption" xml:space="preserve">
+    <value>Сообщение</value>
+  </data>
+  <data name="InputDataTooltip" xml:space="preserve">
+    <value>Ввод данных, которые должны быть скрыты в изображении носителя</value>
+  </data>
+  <data name="InputPasswordCaption" xml:space="preserve">
+    <value>пароль</value>
+  </data>
+  <data name="InputPasswordTooltip" xml:space="preserve">
+    <value>Пароль как поток</value>
+  </data>
+  <data name="OutputCarrierCaption" xml:space="preserve">
+    <value>Выход изображения несущей</value>
+  </data>
+  <data name="OutputCarrierTooltip" xml:space="preserve">
+    <value>Вывод изображения носителя со скрытыми данными.</value>
+  </data>
+  <data name="OutputDataCaption" xml:space="preserve">
+    <value>Выход данных</value>
+  </data>
+  <data name="OutputDataTooltip" xml:space="preserve">
+    <value>Вывод секретных данных, которые были извлечены из изображения носителя.</value>
+  </data>
+  <data name="OutputFileFormatCaption" xml:space="preserve">
+    <value>Формат выходного файла</value>
+  </data>
+  <data name="OutputFileFormatList1" xml:space="preserve">
+    <value>.bmp</value>
+  </data>
+  <data name="OutputFileFormatList2" xml:space="preserve">
+    <value>.png</value>
+  </data>
+  <data name="OutputFileFormatList3" xml:space="preserve">
+    <value>.tif</value>
+  </data>
+  <data name="OutputFileFormatTooltip" xml:space="preserve">
+    <value>Только для шифрования: формат файла выходного изображения.</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Стеганография LSB</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Скрывает сообщение в наименее значимых битах изображения</value>
+  </data>
+  <data name="RegionCancel" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="RegionDelete" xml:space="preserve">
+    <value>Удалить</value>
+  </data>
+  <data name="RegionErrorCapacity" xml:space="preserve">
+    <value>Общая емкость должна быть равна или больше длины сообщения.</value>
+  </data>
+  <data name="RegionErrorHidden" xml:space="preserve">
+    <value>Количество скрытых байтов должно быть равно или больше длины сообщения.</value>
+  </data>
+  <data name="RegionExtractClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="RegionExtractMessage" xml:space="preserve">
+    <value>Скрытое сообщение:</value>
+  </data>
+  <data name="RegionExtractRegions" xml:space="preserve">
+    <value>Регионы:</value>
+  </data>
+  <data name="RegionExtractTitle" xml:space="preserve">
+    <value>Содержимое изображения носителя</value>
+  </data>
+  <data name="RegionHeaderSize" xml:space="preserve">
+    <value>Длина заголовка:</value>
+  </data>
+  <data name="RegionHeaderSpace" xml:space="preserve">
+    <value>Пробел для заголовка:</value>
+  </data>
+  <data name="RegionHideTitle" xml:space="preserve">
+    <value>Определение областей изображения</value>
+  </data>
+  <data name="RegionLabel2" xml:space="preserve">
+    <value>Растровое изображение и регионы. Нажмите, чтобы нарисовать регион, дважды щелкните его, чтобы закончить.</value>
+  </data>
+  <data name="RegionLabel3" xml:space="preserve">
+    <value>Только регионы, только для вашей информации:</value>
+  </data>
+  <data name="RegionLabel4" xml:space="preserve">
+    <value>Пожалуйста, настройте регионы и убедитесь, что сумма скрытых байтов соответствует длине сообщения:</value>
+  </data>
+  <data name="RegionListLabel1" xml:space="preserve">
+    <value>Процент изображения</value>
+  </data>
+  <data name="RegionListLabel2" xml:space="preserve">
+    <value>пиксель</value>
+  </data>
+  <data name="RegionListLabel3" xml:space="preserve">
+    <value>Область</value>
+  </data>
+  <data name="RegionListLabel4" xml:space="preserve">
+    <value>Скрытые байты</value>
+  </data>
+  <data name="RegionListLabel5" xml:space="preserve">
+    <value>Вместимость</value>
+  </data>
+  <data name="RegionMaxRegion" xml:space="preserve">
+    <value>Максимальная область</value>
+  </data>
+  <data name="RegionMessageSize" xml:space="preserve">
+    <value>Длина сообщения:</value>
+  </data>
+  <data name="RegionOneRegion" xml:space="preserve">
+    <value>Укажите один или несколько регионов.</value>
+  </data>
+  <data name="RegionPixel" xml:space="preserve">
+    <value>пиксель</value>
+  </data>
+  <data name="RegionPixels" xml:space="preserve">
+    <value>Пиксели</value>
+  </data>
+  <data name="RegionRemoveTopmost" xml:space="preserve">
+    <value>Удалите верхний регион.</value>
+  </data>
+  <data name="RegionSummary" xml:space="preserve">
+    <value>Резюме:</value>
+  </data>
+  <data name="ShowRegionsCaption" xml:space="preserve">
+    <value>Показать регионы</value>
+  </data>
+  <data name="ShowRegionsTooltip" xml:space="preserve">
+    <value>Открывает диалоговое окно, отображающее, где на картинке скрыты данные.</value>
+  </data>
+</root>

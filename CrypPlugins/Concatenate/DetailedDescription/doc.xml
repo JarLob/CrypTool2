@@ -1,49 +1,40 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     This component combines two given data streams to a single data stream by concatenation.
   </introduction>
-
+  <introduction lang="ru">Этот компонент объединяет два заданных потока данных в один поток данных путем конкатенации.</introduction>
   <introduction lang="de-DE">
     Diese Komponente verbindet zwei gegebene Datenströme durch Konkatenation zu einem einzelnen Datenstrom.
   </introduction>
-
   <usage lang="en">
     Connect the two inputs of the component with the data streams you want to concatenate.
     The data stream that is connected to the second input will be appended at the end of the data stream of the first input.
-    The resulting data stream is sent to the output of the component.<newline/>
-    You can also use this component to join two byte arrays. To do this, first convert the byte arrays to data streams with the <docRef item="Cryptool.Plugins.Converter.Converter"/> component
+    The resulting data stream is sent to the output of the component.<newline />
+    You can also use this component to join two byte arrays. To do this, first convert the byte arrays to data streams with the <docRef item="Cryptool.Plugins.Converter.Converter" /> component
     and concatenate them with this component.
 
   </usage>
-
+  <usage lang="ru">Соедините два входа компонента с потоками данных, которые вы хотите объединить. Поток данных, подключенный ко второму входу, будет добавлен в конец потока данных первого входа. Результирующий поток данных отправляется на выход компонента. Вы также можете использовать этот компонент для объединения двух байтовых массивов. Для этого сначала преобразуйте массивы байтов в потоки данных с компонентом и соедините их с этим компонентом.</usage>
   <usage lang="de-DE">
     Verbinden Sie die beiden Eingänge der Komponente mit den Datenströmen, die Sie konkatenieren möchten.
     Der Datenstrom, der am zweiten Eingang anliegt, wird an das Ende des Datenstroms, der am ersten Eingang anliegt, angehängt.
-    Der neu entstandene Datenstrom wird am Ausgang der Komponente ausgegeben.<newline/>
+    Der neu entstandene Datenstrom wird am Ausgang der Komponente ausgegeben.<newline />
     Die Komponente kann auch dazu verwendet werden, Byte-Arrays miteinander zu verbinden.
-    Hierfür müssen die beiden Byte-Arrays mit der <docRef item="Cryptool.Plugins.Converter.Converter"/>-Komponente in Datenströme umgewandelt werden und
+    Hierfür müssen die beiden Byte-Arrays mit der <docRef item="Cryptool.Plugins.Converter.Converter" />-Komponente in Datenströme umgewandelt werden und
     können dann mit dieser Komponente konkateniert werden.
   </usage>
-
-  <presentation lang="en">
-  </presentation>
-
-  <presentation lang="de-DE">
-  </presentation>
-
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/Concatenation"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Concatenation" />
       <caption lang="en">Concatenation</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Konkatenation_(Wort)#Konkatenation"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Konkatenation_(Wort)#Konkatenation" />
       <caption lang="de-DE">Konkatenation</caption>
     </linkReference>
   </references>
-
 </documentation>

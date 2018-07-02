@@ -1,39 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE category SYSTEM "wizard.dtd">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE category SYSTEM "wizard.dtd"[]>
 <!-- This is the entry XML file defining the first categories a user can select from (the first step). -->
-
 <category image="Wizard">
-
   <name lang="en">Start</name>
+  <name lang="ru">Начало</name>
   <description lang="en">Main page</description>
+  <description lang="ru">Главная страница</description>
   <description lang="de">Hauptseite</description>
-  
   <!-- This is the step's headline. It should be short, but precise. -->
   <headline lang="en">Task Selection</headline>
+  <headline lang="ru">Выбор задачи</headline>
   <headline lang="de">Aufgabenauswahl</headline>
-
   <!-- This is the step's description. -->
-  <task lang="en" >Please select the kind of task you want to fulfill and click "Next" to proceed.</task>
-  <task lang="de" >Bitte wählen Sie die Art der Aufgabe, die Sie ausführen wollen, und klicken Sie dann auf 'Weiter'.</task>
-  
-  <!-- Encryption/Decryption Category -->  
+  <task lang="en">Please select the kind of task you want to fulfill and click "Next" to proceed.</task>
+  <task lang="ru">Выберите вид задачи, которую вы хотите выполнить, и нажмите «Далее», чтобы продолжить.</task>
+  <task lang="de">Bitte wählen Sie die Art der Aufgabe, die Sie ausführen wollen, und klicken Sie dann auf 'Weiter'.</task>
+  <!-- Encryption/Decryption Category -->
   <file resource="Wizard.Config.EnDeCrypt.wizard.config.enDe.xml" />
-
   <!-- Cryptanalysis Category -->
   <file resource="Wizard.Config.Analysis.wizard.config.analysis.xml" />
-
   <!-- Hashfunctions Category -->
   <file resource="Wizard.Config.Hash.wizard.config.hash.xml" />
-
   <!-- Mathematical Category -->
   <file resource="Wizard.Config.Math.wizard.config.math.xml" />
-
   <!-- Codes Category -->
   <file resource="Wizard.Config.Codes.wizard.config.codes.xml" />
-
   <!-- Individual Procedures/Tools Category -->
   <file resource="Wizard.Config.Indiv.wizard.config.indiv.xml" />
-
 </category>
-

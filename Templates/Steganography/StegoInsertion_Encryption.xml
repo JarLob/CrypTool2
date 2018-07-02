@@ -1,33 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Steganography Insertion Encryption</title>
+  <title lang="ru">Стеганографическое шифрование ввода</title>
   <summary lang="en">Encryption with the steganography component <i>StegoInsertion</i></summary>
+  <summary lang="ru">Шифрование со стеганографическим компонентом StegoInsertion</summary>
   <description lang="en">This template shows the usage of the steganography component <i>StegoInsertion</i> for encryption.</description>
+  <description lang="ru">Этот шаблон показывает использование стеганографического компонента StegoInsertion для шифрования.</description>
   <keywords>Steganography, Insertion, hidden</keywords>
-
+  <keywords lang="ru">Стеганография, Вставка, скрытая</keywords>
   <title lang="de">Steganographie Einsetzung Verschlüsselung</title>
   <summary lang="de">Verschlüsselung mit der Steganographie-Komponente <i>StegoInsertion</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Steganographie-Komponente <i>StegoInsertion</i> zur Verschlüsselung.</description>
   <keywords lang="de">Steganographie, verstecken</keywords>
-
   <icon file="Steganography.png" />
-
   <relevantPlugins>
     <plugin name="FileInputClass" />
     <plugin name="FileOutputClass" />
     <plugin name="StegoInsertion" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Message Input$" value="Nachrichteneingabe"/>
-    <replacement key="$MIDI File Input$" value="Dateieingabe MIDI-Datei"/>
-    <replacement key="$MIDI Carrier File Output$" value="Dateiausgabe MIDI-Trägerdatei"/>
+    <replacement key="$Message Input$" value="Nachrichteneingabe" />
+    <replacement key="$MIDI File Input$" value="Dateieingabe MIDI-Datei" />
+    <replacement key="$MIDI Carrier File Output$" value="Dateiausgabe MIDI-Trägerdatei" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Message Input$" value="ввод сообщений" />
+    <replacement key="$MIDI File Input$" value="Файл ввода MIDI-файлов" />
+    <replacement key="$MIDI Carrier File Output$" value="Выходной файл MIDI-файла" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Message Input$" value="Message Input"/>
-    <replacement key="$MIDI File Input$" value="MIDI File Input"/>
-    <replacement key="$MIDI Carrier File Output$" value="MIDI Carrier File Output"/>
+    <replacement key="$Message Input$" value="Message Input" />
+    <replacement key="$MIDI File Input$" value="MIDI File Input" />
+    <replacement key="$MIDI Carrier File Output$" value="MIDI Carrier File Output" />
   </replacements>
-
 </sample>

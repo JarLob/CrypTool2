@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-
   <language culture="en" />
-
+  <language culture="ru" />
   <introduction lang="en">
     The <i>Variable</i> component can store and load variables to and from memory. This makes it possible to transfer data between components on the workspace without having to directly connect them.
   </introduction>
-
+  <introduction lang="ru">Компонент Variable может хранить и загружать переменные в память и из нее. Это позволяет передавать данные между компонентами в рабочей области, не связывая их напрямую.</introduction>
   <usage lang="en">
     For using variables, pull a <i>Variable Store</i> component onto the workspace and enter the name you want to give to the variable in its settings (for example X).
     Connect the input of the <i>Variable</i> component with the output connector of the component, that delivers the value you want to save in the variable.
@@ -15,16 +14,12 @@
     To use the stored variable on another place of the workspace, pull a <i>Variable Load</i> component onto the workspace and enter the name you want to give to the variable in the settings of the component.
     If a variable is stored or updated under the name "X" in one place of the worksapce by the <i>Variable Store</i> component, the new value of "X" is automatically available at the <i>Variable Load</i> components that reference "X".
   </usage>
-
-  <presentation lang="en">
-  </presentation>
-
+  <usage lang="ru">Для использования переменных вытащите компонент Variable Store в рабочую область и введите имя, которое вы хотите передать переменной в ее настройках (например, X). Подключите вход компонента Variable к выходному разъему компонента, который поставляет значение, которое вы хотите сохранить в переменной. В качестве входных данных принимается любой тип данных. Чтобы использовать сохраненную переменную в другом месте рабочей области, потяните компонент Variable Load в рабочую область и введите имя, которое вы хотите передать переменной в настройках компонента. Если переменная хранится или обновляется под именем «X» в одном месте рабочего компонента компонентом «Переменный магазин», новое значение «X» автоматически доступно в компонентах переменной Load, которые ссылаются на «X».</usage>
+  <presentation lang="en"></presentation>
   <language culture="de-DE" />
-
   <introduction lang="de-DE">
     Mittels der Variablenkomponenten können Variablen im Speicher geschrieben und gelesen werden. So können auch Teile der Arbeitsfläche miteinander kommunizieren, die über keine direkte Verbindung miteinander verfügen.
   </introduction>
-
   <usage lang="de-DE">
     Um mit Variablen zu arbeiten, wird eine "Variable speichern"-Komponente auf den Arbeitsplatz gezogen. Über eine Einstellung kann der Variablenname eingegeben werden, über den eine "Variable lesen"-Komponente auf diesen Wert
     zugreifen kann.
@@ -34,10 +29,7 @@
     Über eine Einstellung kann der Variablenname, unter dem die Variable zuvor gespeichert wurde, eingegeben werden (z.B. X). Sobald X nun an anderer Stelle im Arbeitsplatz gespeichert wird, gibt die "Variable lesen"-Komponente den
     Wert von X automatisch weiter.
   </usage>
-
-  <presentation lang="de-DE">
-  </presentation>
-
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://en.wikipedia.org/wiki/Variable_(computer_science)" lang="en" />
@@ -46,5 +38,4 @@
       <caption lang="de-DE">Variable (Wikipedia)</caption>
     </linkReference>
   </references>
-
 </documentation>

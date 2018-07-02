@@ -1,38 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Triple DES Brute-force Analysis</title>
+  <title lang="ru">Тройной анализ сложной стратегии DES</title>
   <summary lang="en">Cryptanalysis of the <i>Triple DES</i> algorithm using the <i>KeySearcher</i> component</summary>
+  <summary lang="ru">Криптоанализ алгоритма Triple DES с использованием компонента KeySearcher</summary>
   <description lang="en">This template shows the cryptanalysis of the <i>Triple DES</i> algorithm using the <i>KeySearcher</i> component.</description>
+  <description lang="ru">Этот шаблон показывает криптоанализ алгоритма Triple DES с использованием компонента KeySearcher.</description>
   <keywords>standard, advanced, DES, AES, symmetric, keysearcher, Attack, Analysis</keywords>
-
+  <keywords lang="ru">стандартный, расширенный, DES, AES, симметричный, keyearcher, Attack, Analysis</keywords>
   <title lang="de">Triple-DES Brute-Force-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Triple-DES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>Triple-DES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente.</description>
   <keywords lang="de">Standard, DES, AES, symmetrisch, Keysearcher, Angriff</keywords>
-
   <icon file="DES.png" />
   <relevantPlugins>
     <plugin name="CostFunction" />
     <plugin name="DES" />
     <plugin name="KeySearcher" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
-    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
-    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$KeySearcher$" value="Schlüsselsuche" />
+    <replacement key="$StringDecoder$" value="String-Dekodierer" />
+    <replacement key="$StringEncoder$" value="String-Kodierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$KeySearcher$" value="ключ поиска" />
+    <replacement key="$StringDecoder$" value="Строка декодера" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$KeySearcher$" value="KeySearcher"/>
-    <replacement key="$StringDecoder$" value="String Decoder"/>
-    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$KeySearcher$" value="KeySearcher" />
+    <replacement key="$StringDecoder$" value="String Decoder" />
+    <replacement key="$StringEncoder$" value="String Encoder" />
   </replacements>
-
 </sample>

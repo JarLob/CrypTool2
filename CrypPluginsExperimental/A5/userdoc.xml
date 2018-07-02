@@ -1,16 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-
+  <language culture="en" />
+  <language culture="ru" />
   <introduction lang="en">    
     A5/1 is a modern stream cipher that provides privacy for the GSM mobile phone system. 
     It consists of three linear shift registers (LFSR) that are mixed with the secret key and the IV (initialization vector),
     in order to provide the keystream, which is later being XORed with the plaintext to give the ciphertext.
   
   </introduction>
-
+  <introduction lang="ru">A5 / 1 - это современный потоковый шифр, который обеспечивает конфиденциальность мобильной системы GSM. Он состоит из трех регистров линейного сдвига (LFSR), которые смешиваются с секретным ключом и IV (вектором инициализации), чтобы обеспечить ключевой поток, который позже будет XORed с открытым текстом, чтобы дать зашифрованный текст.</introduction>
   <usage lang="en">
 
     After dragging the A5/1 component into the workspace, you need to attach the three text input components that correspond to
@@ -23,21 +22,12 @@
     in the text we want to substitute. We enter here FF). In "XOR" we enter as inputs the plaintext and the result of substituting the plaintext with all 1s.
     In this "XOR" output we receive the inverted plaintext. Again, with "String Comparator" component we compare the inverted plaintext with the received ciphertext.
   </usage>
-
-  
-  
-  <presentation lang="en">
-  </presentation>
-  
- 
-  
- <references>
-
+  <usage lang="ru">После перетаскивания компонента A5 / 1 в рабочую область вам необходимо прикрепить три компонента ввода текста, которые соответствуют секретным ключам IV и открытым текстам для источников данных. В настройках плагина пользователь вводит количество кадров, в которых он хочет разделить открытый текст. Каждый кадр соответствует одному известному IV, который увеличивается на 1 в каждом предстоящем кадре. Затем вам нужно подключить 2 текстовых выходных компонента к «выходному» разъему: один для зашифрованного текста и один для ключевого потока. Длина обычного текста произвольная; секретный ключ имеет длину 16 символов в шестнадцатеричном формате, а IV имеет длину 6 символов в шестнадцатеричном формате. Если пользователь хочет узнать, идентичны или дополнены незашифрованный текст и зашифрованный текст, он может ввести в рабочее пространство «String Comparator» (чтобы прямо проверить, являются ли зашифрованный текст и открытый текст одинаковыми) и «Substitutionition», «Alphabet», , «XOR», еще один «Текстовый ввод» (указывает алфавит, используемый в тексте, который мы хотим заменить). Мы вводим здесь FF). В «XOR» мы вводим в качестве входных данных открытый текст и результат подстановки открытого текста всеми 1s. В этом выводе «XOR» мы получаем инвертированный открытый текст. Опять же, с компонентом «String Comparator» мы сравниваем инвертированный открытый текст с полученным зашифрованным текстом.</usage>
+  <presentation lang="en"></presentation>
+  <references>
     <linkReference>
       <link url="http://eprints.qut.edu.au/64105/1/AISC2014􀀀P aper3􀀀f inal:pdf" lang="en" />
       <caption lang="en"> Alhamdan, A., Bartlett H., Dawson E., Simpson L., Wong K. K. H. (2014), Weak key-IV Pairs in the A5/1 Stream Cipher </caption>
-
     </linkReference>
   </references>
-
 </documentation>

@@ -1,29 +1,24 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     PRESENT is an example of an SP-network (substitution permutation network) and consists of 31 rounds. 
     The block length is 64 bits and two key lengths of 80 and 128 bits are supported. 
     PRESENT is an ultra-lightweight block cipher, designed to work in extremely constrained environments such as RFID tags and 
     sensor networks with both security and hardware efficiency in mind.
   </introduction>
-
+  <introduction lang="ru">PRESENT является примером сети SP (сети перестановки подстановок) и состоит из 31 раунда. Длина блока составляет 64 бита, и поддерживаются две длины ключа 80 и 128 бит. PRESENT - это ультралегкий блочный шифр, предназначенный для работы в экстремально ограниченных средах, таких как RFID-теги и сенсорные сети с учетом соображений безопасности и аппаратного обеспечения.</introduction>
   <introduction lang="de-DE">
     PRESENT ist ein Beispiel für ein SP-Netzwerk (Substitutions-Permutations-Netzwerk) und besteht aus 31 Runden.
     Die Blocklänge beträgt 64 Bits, es werden zwei Schlüssellängen von 80 und 128 Bits unterstützt.
     PRESENT ist eine ultra-leichtgewichtige Blockchiffre, die darauf ausgelegt ist, in extrem Ressourcen-beschränkten Umgebungen, wie
     beispielsweise RFID-Tags und Sensornetzwerken, zu arbeiten. PRESENT berücksichtigt damit sowohl Aspekte der Sicherheit als auch der Hardwareeffizienz.
   </introduction>
-
   <usage lang="en">
     The PRESENT component has the two operation modes "Encryption" and "Decryption". You can switch between the modes in the settings of the component.
-    <newline />
-    <newline />
-
-    <section headline="Encryption">
+    <newline /><newline /><section headline="Encryption">
       In "Encryption" mode, the component expects the plaintext as a data stream on the input labeled "Input".
       If the size of the input is not a multiple of the block size, as many bytes as are necessary to achieve
       a multiple of the block size are padded. You can choose between several padding methods in the settings of the component.
@@ -32,20 +27,12 @@
       The key is expected as a byte array on the input labeled "Key".
       If the selected key size does not correspond to the size of the entered key, an error message will be issued and the execution stops.
       The encrypted data block is sent to the output of the component as a data stream.
-      <newline />
-      <newline />
-    </section>
-
-    <section headline="Decryption">
+      <newline /><newline /></section><section headline="Decryption">
       In "Decryption" mode, the component expects the ciphertext that is to be decrypted on the input labeled "Input".
       The size of the input must be a multiple of the block size. Otherwise, the component stops with an error message.
       The key is entered in the same way as in "Encryption" mode.
       Finally, the plaintext will be sent to the output of the component as a data stream.
-      <newline />
-      <newline />
-    </section>
-
-    <section headline="Cryptographic Mode">
+      <newline /><newline /></section><section headline="Cryptographic Mode">
       Block ciphers divide their input data into blocks of a fixed size and apply the encryption or decryption function on the blocks of the input.
       The chaining mode determines the way in which consecutive blocks, after being encrypted or decryted, are combined in order to achieve better security or error tolerance.
       The PRESENT component offers the following block chaining modes: ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) and OFB (Output Feedback).
@@ -55,14 +42,11 @@
       As there is no previous block for the first block, we must provide one for these modes. This extra block is given by the initialization vector (IV), which must be provided as a byte array
       on the input of the component. Thus the size of the IV must correspond to the block size. If the provided IV is too short, it is filled with null bytes. If it is too long, it is truncated.
       If no IV is given, the component will assume an IV consisting of null bytes.
-    </section>
-  </usage>
-
+    </section></usage>
+  <usage lang="ru">Компонент PRESENT имеет два режима работы: «Шифрование» и «Расшифровка». Вы можете переключаться между режимами в настройках компонента. В режиме «Шифрование» компонент ожидает открытый текст как поток данных на входе с надписью «Вход». Если размер ввода не кратен размеру блока, столько байтов, сколько необходимо для достижения кратного размера блока, дополняются. В настройках компонента вы можете выбирать между несколькими способами заполнения. При расшифровке зашифрованного текста важно выбрать тот же метод заполнения, который использовался для шифрования. В противном случае последний блок будет дешифрован неправильно или вообще отсутствует. Ключ ожидается как массив байтов на входе с надписью «Ключ». Если выбранный размер ключа не соответствует размеру введенного ключа, будет выдано сообщение об ошибке, и выполнение прекратится. Зашифрованный блок данных отправляется на выход компонента в виде потока данных. В режиме «Расшифровка» компонент ожидает, что зашифрованный текст будет дешифрован на входе с надписью «Вход». Размер ввода должен быть кратным размеру блока. В противном случае компонент останавливается с сообщением об ошибке. Ключ вводится так же, как в режиме «Шифрование». Наконец, открытый текст будет отправлен на выход компонента в виде потока данных. Блочные шифры делят свои входные данные на блоки фиксированного размера и применяют функцию шифрования или дешифрования на блоках ввода. Режим цепочки определяет способ объединения последовательных блоков после их зашифрования или декомпозиции для обеспечения большей безопасности или допуска допуска ошибок. Компонент PRESENT предлагает следующие режимы цепочки блоков: ECB (электронная кодовая книга), CBC (цепочка блоков шифрования), CFB (обратная связь с шифрованием) и OFB (выходная обратная связь). Выберите подходящий режим цепочки в настройках компонента. В режиме ECB каждый блок зашифровывается отдельно. Однако в других режимах блок открытого текста объединяется с предыдущим блоком зашифрованного текста. Поскольку для первого блока нет предыдущего блока, мы должны предоставить один для этих режимов. Этот дополнительный блок задается вектором инициализации (IV), который должен быть представлен как байтовый массив на входе компонента. Таким образом, размер IV должен соответствовать размеру блока. Если предоставленный IV слишком короткий, он заполняется нулевыми байтами. Если он слишком длинный, он усечен. Если нет IV, компонент будет принимать IV, состоящий из нулевых байтов.</usage>
   <usage lang="de-DE">
     Die Komponente hat die zwei Betriebsarten "Verschlüsselung" und "Entschlüsselung", zwischen denen in den Einstellungen der Komponente umgeschaltet werden kann.
-    <newline />
-    <newline />
-    <section headline="Verschlüsselung">
+    <newline /><newline /><section headline="Verschlüsselung">
       In der Betriebsart "Verschlüsselung" erwartet die Komponente als Eingabe den zu verschlüsselnden Klartext als Datenstrom am Eingang "Eingabedatenstrom".
       Ist die Länge der Eingabe kein Vielfaches der Blockgröße, so müssen vor der Verschlüsselung so viele Bytes angehängt werden, bis sie ohne Rest in Blöcke der Blockgröße zerlegt werden kann.
       Diesen Vorgang nennt man 'Padding'. In den Einstellungen kann man zwischen verschiedenen Padding-Methoden wählen.
@@ -71,17 +55,11 @@
       Der Schlüssel wird als Byte-Array am Eingang "Schlüssel" erwartet.
       Stimmt die Größe des eingegebenen Schlüssels nicht mit der erwarteten Schlüsselgröße überein, so wird eine Fehlermeldung ausgegeben und die Ausführung wird beendet.
       Der verschlüsselte Datenblock wird am Ausgang der Komponente als Datenstrom zur Verfügung gestellt.
-      <newline />
-      <newline />
-    </section>
-    <section headline="Entschlüsselung">
+      <newline /><newline /></section><section headline="Entschlüsselung">
       In der Betriebsart "Entschlüsselung" erwartet die Komponente den zu entschlüsselnden Geheimtext als Datenstrom am Eingang "Eingabedatestrom".
       Die Länge der Eingabe muss hierbei ein Vielfaches der Blockgröße sein, andernfalls wird die Berechnung mit einer Fehlermeldung abgebrochen.
       Der Schlüssel wird wie bei der Entschlüsselung eingegeben. Der entschlüsselte Klartext wird dann schließlich am Ausgang der Komponente als Datenstrom bereitgestellt.
-      <newline />
-      <newline />
-    </section>
-    <section headline="Kryptographischer Modus">
+      <newline /><newline /></section><section headline="Kryptographischer Modus">
       Blockverschlüsselungsverfahren unterteilen die Eingabedaten in Blöcke festgelegter Größen und
       wenden die Ver-/Entschlüsselungsfunktion dann fortlaufend auf diese Blöcke an. Der "kryptographische Modus", in dem
       eine Blockchiffre betrieben wird, gibt an, wie die Ergebnisse der Ver- bzw. Entschlüsselung aufeinanderfolgender Blöcke
@@ -95,15 +73,9 @@
       Dieser muss die verwendete Blockgröße haben und wird am zugehörigen Eingang der Komponente
       als Byte-Array eingegeben. Ein zu kurzer Initialisierungsvektor wird mit Nullbytes aufgefüllt, ein zu langer auf die Blockgröße
       beschnitten. Wird der Eingang nicht verbunden, so wird ein Initialisierungsvektor bestehend aus Nullbytes verwendet.
-    </section>
-  </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+    </section></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://en.wikipedia.org/wiki/PRESENT_(cipher)" lang="en" />

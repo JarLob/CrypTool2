@@ -1,28 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en"> 
 	The BB84 Error Detector is part of the BB84 protocol implemented in CrypTool 2. After the key exchange is performed it checks the common keys
 	for errors by comparing a part of them. Using a given error threshold the Error Detector determines if it is likely that an attack has been performed or not. 
   </introduction>
-
+  <introduction lang="ru">Детектор ошибок BB84 является частью протокола BB84, реализованного в CrypTool 2. После выполнения обмена ключами он проверяет общие ключи для ошибок, сравнивая их часть. Используя заданный порог ошибки, детектор ошибок определяет, возможно ли, что атака выполнена или нет.</introduction>
   <introduction lang="de-DE">    
 	Der BB84-Fehlerdetektor ist Teil des in CrypTool 2 implementierten BB84-Protokolls. Er simuliert, wie nach vollzogenem Schlüsselaustausch der gemeinsame
 	Schlüssel beider Parteien auf Fehler geprüft wird, indem ein Teil der Schlüssel verglichen wird. Anhand eines eingestellten Grenzwertes wird berechnet, ob 
 	ein ausgeführter Angriff auf den Schlüsselaustausch wahrscheinlich ist.
   </introduction>
-
   <usage lang="en">
 	The calculated common keys of both parties are needed as input for this plugin. The user can now set a start and an end index for the substring that will be
 	compared. This represents the fact that in reality the full key will never be exchanged via a public channel. Just a part of it is transmitted and will be
 	deleted from the key after the check. The plugin now calculates the error ratio by comparing both key parts. Then, it checks if the error ratio is greater  
 	than the threshold that can be entered in the settings. If so, it puts out a warning as a string. If not, a security confirmation is shown, instead. 
   </usage>
-
+  <usage lang="ru">Рассчитанные общие ключи обеих сторон необходимы для ввода этого плагина. Теперь пользователь может установить начальный и конечный индексы для подстроки, которая будет сравниваться. Это свидетельствует о том, что на самом деле полный ключ никогда не будет обменяться через публичный канал. Просто часть его передается и будет удалена из ключа после проверки. Теперь плагин вычисляет коэффициент ошибок, сравнивая обе ключевые части. Затем он проверяет, превышает ли коэффициент ошибок порог, который может быть введен в настройках. Если это так, оно выводит предупреждение в виде строки. Если нет, вместо этого отображается подтверждение безопасности.</usage>
   <usage lang="de-DE">
 	Als Eingabe benötigt dieses Plugin die errechneten gemeinsamen Schlüssel beider Seiten als String. Innerhalb der Plugin-Einstellungen kann nun der Start- 
 	und Endindex des zu vergleichenden Teilstrings eingestellt werden. Dies beschreibt, dass in Wirklichkeit niemals die vollständigen Schlüssel über eine öffentliche
@@ -30,28 +28,25 @@
 	errechnet und mit dem ebenfalls in den Einstellungen festgelegtem Grenzwert verglichen. Überschreitet er diesen, wird eine Warnung ausgegeben, anderenfalls 
 	eine Sicherheitsbestätigung.
   </usage>
-  
   <presentation lang="en">
 	No presentation is implemented for this plugin.
   </presentation>
-  
+  <presentation lang="ru">Для этого плагина не выполняется презентация.</presentation>
   <presentation lang="de-DE">
 	Für dieses Plugin ist keine Präsentation implementiert.
   </presentation>
-
   <references>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/BB84"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/BB84" />
       <caption lang="en">BB84 (Wikipedia)</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Quantenschlüsselaustausch#BB84-Protokoll"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Quantenschlüsselaustausch#BB84-Protokoll" />
       <caption lang="de-DE">BB84 (Wikipedia)</caption>
     </linkReference>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/Quantum_key_distribution"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Quantum_key_distribution" />
       <caption lang="en">Quantum key distribution (Wikipedia)</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Quantenschlüsselaustausch"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Quantenschlüsselaustausch" />
       <caption lang="de-DE">Quantenschlüsselaustausch (Wikipedia)</caption>
     </linkReference>
   </references>
-  
 </documentation>

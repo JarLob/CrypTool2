@@ -1,30 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE category SYSTEM "..\wizard.dtd">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE category SYSTEM "..\wizard.dtd"[]>
 <!-- This is the XML file defining the prime number operations a user can select from. -->
-
 <category image="Math">
-  <name lang="en" >Mathematical Functions</name>
-  <name lang="de" >Mathematische Funktionen</name>  
-  <description lang="en" >
+  <name lang="en">Mathematical Functions</name>
+  <name lang="ru">Математические функции</name>
+  <name lang="de">Mathematische Funktionen</name>
+  <description lang="en">
   Here you can run several mathematical operations, e.g. prime factorization based on the quadratic sieve or some prime tests.
-   </description>  
-  <description lang="de-DE" >
+   </description>
+  <description lang="ru">Здесь вы можете запускать несколько математических операций, например, простую факторизацию, основанную на квадратичном сите или некоторых простых тестах.</description>
+  <description lang="de-DE">
   Hier können Sie verschiedene mathematische Operationen ausführen, z.B. Primfaktorisierung oder Primzahlentests.
   </description>
-
   <!-- This is the step's headline. It should be short, but precise. -->
-  <headline lang="en" >Mathematical Function Selection</headline>
-  <headline lang="de" >Auswahl der mathematischen Funktion</headline>
-
+  <headline lang="en">Mathematical Function Selection</headline>
+  <headline lang="ru">Выбор математических функций</headline>
+  <headline lang="de">Auswahl der mathematischen Funktion</headline>
   <!-- This is the step's description. -->
-  <task lang="en" >Select a mathematical function.</task>
-  <task lang="de" >Wählen Sie eine mathematische Funktion.</task>
-
+  <task lang="en">Select a mathematical function.</task>
+  <task lang="ru">Выберите математическую функцию.</task>
+  <task lang="de">Wählen Sie eine mathematische Funktion.</task>
   <!-- Factorization input -->
-  <file resource="Wizard.Config.Math.wizard.config.factorization.xml"/>
-
+  <file resource="Wizard.Config.Math.wizard.config.factorization.xml" />
   <!-- Primes input -->
-  <file resource="Wizard.Config.Math.wizard.config.prime.xml"/>
-
+  <file resource="Wizard.Config.Math.wizard.config.prime.xml" />
 </category>

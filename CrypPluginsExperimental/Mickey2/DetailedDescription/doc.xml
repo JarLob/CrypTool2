@@ -1,33 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     Mickey 2.0 is a hardware-efficient , synchronous stream cipher. Mickey 2.0 is a part of the eSTREAM portfolio from the ECRYPT Stream Cipher Project.
     The cipher has a  key length of 80 bits, and takes an initial value (IV) ranging from 0 to 80 bits in length.
   </introduction>
-
+  <introduction lang="ru">Mickey 2.0 - это аппаратно-эффективный синхронный потоковый шифр. Mickey 2.0 является частью портфеля eSTREAM из проекта ECRYPT Stream Cipher. Шифр имеет длину ключа 80 бит и принимает начальное значение (IV) в диапазоне от 0 до 80 бит в длину.</introduction>
   <introduction lang="de-DE">
     Mickey 2.0  ist eine hardwareeffiziente, synchrone Stromchiffre. Mickey 2.0  ist ein Teil des eSTREAM Portfolio des ECRYPT Stream Cipher Projektes.
     Die Chiffre hat eine Schlüssellänge von 80 Bits und benötigt einen Initialsierungsvektor (IV), welche zwischen 0 und 80 Bits lang sein muss.
   </introduction>
-
   <usage lang="en">
     After dragging the Mickey 2.0 component onto your workspace, you will
     have to attach the three input connectors 'Input', 'Key' and 'IV' to data sources.
 
     Additionally you have to connect a text output component to the 'Output' connector.
   </usage>
-
+  <usage lang="ru">После перетаскивания компонента Mickey 2.0 в рабочее пространство вам необходимо будет подключить три входных разъема «Вход», «Ключ» и «IV» к источникам данных. Кроме того, вам необходимо подключить компонент вывода текста к разъему «Выход».</usage>
   <usage lang="de-DE">
     Nachdem Sie die Mickey 2.0-Komponente auf den Arbeitsbereich gezogen
     haben, müssen Sie die Eingänge 'Eingabe', 'Schlüssel' und 'IV' mit Datenquellen verbinden.
 
     Außerdem muss der Ausgang mit einer Textausgabe-Komponente verbunden werden.
   </usage>
-
   <references>
     <linkReference>
       <link url="http://www.ecrypt.eu.org/stream/mickeypf.html" lang="en" />
@@ -42,5 +39,4 @@
       <caption lang="de-DE">Mickey 2.0 bei Wikipedia (englisch)</caption>
     </linkReference>
   </references>
-  
 </documentation>

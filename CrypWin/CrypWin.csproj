@@ -450,6 +450,9 @@
       <LastGenOutput>res.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\redo.png" />

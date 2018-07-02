@@ -1,25 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Fialka ED Mixed Mode Check</title>
+  <title lang="ru">Fialka ED Проверка смешанного режима</title>
   <summary lang="en">Usage of the <i>Fialka M-125</i> in the mixed mode</summary>
+  <summary lang="ru">Использование Fialka M-125 в смешанном режиме</summary>
   <description lang="en">This template shows the usage of the Fialka cipher machine.</description>
+  <description lang="ru">Этот шаблон показывает использование шифровальной машины Fialka.</description>
   <keywords>Fialka, Proton</keywords>
-
+  <keywords lang="ru">Fialka, Proton</keywords>
   <title lang="de">Fialka ED Mixed Mode Check</title>
   <summary lang="de">Benutzung der <i>Fialka M-125</i> im gemischten Modus</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Chiffriermaschine Fialka.</description>
   <keywords lang="de">Fialka, Proton</keywords>
-
   <relevantPlugins>
     <plugin name="Fialka" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
+    <replacement key="$Plaintext$" value="Klartext" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
+    <replacement key="$Plaintext$" value="Plaintext" />
   </replacements>
-
 </sample>

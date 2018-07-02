@@ -1,52 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE category SYSTEM "..\wizard.dtd">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE category SYSTEM "..\wizard.dtd"[]>
 <!-- This is the XML file defining the individual procedures categories a user can select from. -->
-
 <category image="Indiv">
-  <name lang="en" >Tools</name>
-  <name lang="de" >Werkzeuge</name>
-  <description lang="en" >Here you can quickly perform specific tasks, e.g. encryption of a message with a password or encoding text to base64.</description>
-  <description lang="de" >Hier können Sie schnell spezifische Aufgaben ausführen (z.B. Verschlüsseln eines Textes mit einem Passwort oder Base64-Codierungen).</description>
-
+  <name lang="en">Tools</name>
+  <name lang="ru">инструменты</name>
+  <name lang="de">Werkzeuge</name>
+  <description lang="en">Here you can quickly perform specific tasks, e.g. encryption of a message with a password or encoding text to base64.</description>
+  <description lang="ru">Здесь вы можете быстро выполнить определенные задачи, например, шифрование сообщения с паролем или текстом кодировки на base64.</description>
+  <description lang="de">Hier können Sie schnell spezifische Aufgaben ausführen (z.B. Verschlüsseln eines Textes mit einem Passwort oder Base64-Codierungen).</description>
   <!-- This is the step's headline. It should be short, but precise. -->
-  <headline lang="en" >Tools Selection</headline>
-  <headline lang="de" >Werkzeuge: Auswahl</headline>
-
+  <headline lang="en">Tools Selection</headline>
+  <headline lang="ru">Выбор инструментов</headline>
+  <headline lang="de">Werkzeuge: Auswahl</headline>
   <!-- This is the step's description. -->
-  <task lang="en" >Select a tool.</task>
-  <task lang="de" >Wählen Sie eine Aufgabe.</task>
-
-
-
+  <task lang="en">Select a tool.</task>
+  <task lang="ru">Выберите инструмент.</task>
+  <task lang="de">Wählen Sie eine Aufgabe.</task>
   <!-- AES-PKS5 input -->
-  <input image="EnDeCrypt" >
-    <name lang="en" >Encrypt with password</name>
-    <name lang="de" >Verschlüsseln mit Passwort</name>
-    <description lang="en" >Select this to quickly encrypt or decrypt some plaintext with AES by using a simple password. The encrypted result is base64-encoded text (e.g. for easy copy and paste to an email).</description>
-    <description lang="de" >Hier können Sie einen Text mit Hilfe eines Passwortes verschlüsseln (AES). Das verschlüsselte Ergebnis wird als Base-64-codierter Text ausgegeben &#8211; dadurch kann die Ausgabe sehr einfach z.B. in eine E-Mail kopiert werden.</description>
-    <headline lang="en" >Message Input</headline>
-    <headline lang="de" >Nachrichteneingabe</headline>
+  <input image="EnDeCrypt">
+    <name lang="en">Encrypt with password</name>
+    <name lang="ru">Шифрование паролем</name>
+    <name lang="de">Verschlüsseln mit Passwort</name>
+    <description lang="en">Select this to quickly encrypt or decrypt some plaintext with AES by using a simple password. The encrypted result is base64-encoded text (e.g. for easy copy and paste to an email).</description>
+    <description lang="ru">Выберите это, чтобы быстро зашифровать или расшифровать некоторый открытый текст с помощью AES с помощью простого пароля. Зашифрованный результат - текст с кодировкой base64 (например, для удобства копирования и вставки в электронную почту).</description>
+    <description lang="de">Hier können Sie einen Text mit Hilfe eines Passwortes verschlüsseln (AES). Das verschlüsselte Ergebnis wird als Base-64-codierter Text ausgegeben – dadurch kann die Ausgabe sehr einfach z.B. in eine E-Mail kopiert werden.</description>
+    <headline lang="en">Message Input</headline>
+    <headline lang="ru">Ввод сообщений</headline>
+    <headline lang="de">Nachrichteneingabe</headline>
     <task lang="en">Here, you can enter your message and the password to use. The password is converted to a 256-bit AES key by using PKCS5. The entered message is then encrypted or decrypted using AES-256.</task>
+    <task lang="ru">Здесь вы можете ввести свое сообщение и пароль для использования. Пароль преобразуется в 256-битный ключ AES с помощью PKCS5. Введенное сообщение затем зашифровывается или дешифруется с использованием AES-256.</task>
     <task lang="de">Hier können Sie Ihre Nachricht und das Passwort eingeben. Das Passwort wird mittels PKCS5 zu einem 256-Bit AES-Schlüssel umgewandelt. Ihre Nachricht wird danach mit AES-256 ver- oder entschlüsselt.</task>
-
     <comboBox plugin="AES;$Switch$" property="Action" alignment="Left" width="20%" group="1">
       <description lang="en">Encrypt or Decrypt:</description>
+      <description lang="ru">Шифрование или расшифровка:</description>
       <description lang="de">Verschlüsseln oder Entschlüsseln:</description>
-      <item lang="en" content="Encrypt"/>
-      <item lang="de" content="Verschlüsseln"/>
-      <item lang="en" content="Decrypt"/>
-      <item lang="de" content="Entschlüsseln"/>
+      <item lang="en" content="Encrypt" />
+      <item lang="ru" content="шифровать" />
+      <item lang="de" content="Verschlüsseln" />
+      <item lang="en" content="Decrypt" />
+      <item lang="ru" content="расшифровывать" />
+      <item lang="de" content="Entschlüsseln" />
     </comboBox>
-
     <inputBox plugin="$Password$" property="Text" alignment="Right" width="78%" visibleLines="1" group="1">
       <storage key="password" showLoadAddButtons="true" />
       <description lang="en">Password:</description>
+      <description lang="ru">Пароль:</description>
       <description lang="de">Passwort:</description>
       <defaultvalue>Your secret password or passphrase</defaultvalue>
     </inputBox>
-
-
     <inputBox plugin="$Input$" property="Text" alignment="Stretch" width="100%" visibleLines="15">
       <description lang="en">
         <condition plugin="AES;$Switch$" property="Action" value="0">
@@ -56,6 +57,7 @@
           Message to decrypt:
         </condition>
       </description>
+      <description lang="ru">Сообщение для шифрования: сообщение для расшифровки:</description>
       <description lang="de">
         <condition plugin="AES;$Switch$" property="Action" value="0">
           Zu verschlüsselnde Nachricht:
@@ -66,16 +68,16 @@
       </description>
       <defaultvalue>The quick brown fox jumps over the lazy dog.</defaultvalue>
     </inputBox>
-
-
     <sampleViewer image="AES" file="Cryptography\Modern\Symmetric\AES-CBC-IV-PKCS5-Base64.cwm">
-      <name lang="en" >Result</name>
-      <name lang="de" >Ergebnis</name>
-      <description lang="en" >-</description>
-      <description lang="de" >-</description>
-
-      <headline lang="en" >Your message</headline>
-      <headline lang="de" >Ihre Nachricht</headline>
+      <name lang="en">Result</name>
+      <name lang="ru">результат</name>
+      <name lang="de">Ergebnis</name>
+      <description lang="en">-</description>
+      <description lang="ru">-</description>
+      <description lang="de">-</description>
+      <headline lang="en">Your message</headline>
+      <headline lang="ru">Ваше сообщение</headline>
+      <headline lang="de">Ihre Nachricht</headline>
       <task lang="en">
         <condition plugin="AES;$Switch$" property="Action" value="0">
           Your encrypted message. The encrypted result is base-64-encoded, which is convenient when copied e.g. to an email. The receiver can then use the same procedure (and clearly the same password) to get back the original message.
@@ -84,6 +86,7 @@
           Your decrypted message.
         </condition>
       </task>
+      <task lang="ru">Ваше зашифрованное сообщение. Зашифрованный результат кодируется base-64, что удобно при копировании, например, в электронную почту. Затем получатель может использовать ту же процедуру (и, очевидно, тот же пароль), чтобы вернуть исходное сообщение. Ваше расшифрованное сообщение.</task>
       <task lang="de">
         <condition plugin="AES;$Switch$" property="Action" value="0">
           Hier sehen Sie Ihre verschlüsselte Nachricht. Die verschlüsselte Nachricht ist zusätzlich in Base64 codiert, wodurch ein einfaches Kopieren in z.B. eine E-Mail möglich ist. Der Empfänger kann mit der gleichen Auswahl (und natürlich dem gleichen Passwort) die empfangene Nachricht entschlüsseln.
@@ -92,185 +95,202 @@
           Hier sehen Sie Ihre entschlüsselte Nachricht.
         </condition>
       </task>
-
       <presentation plugin="$Output$" height="150">
         <description lang="en">Message:</description>
+        <description lang="ru">Сообщение:</description>
         <description lang="de">Nachricht:</description>
       </presentation>
-    </sampleViewer>   
-  </input>  
-
+    </sampleViewer>
+  </input>
   <!-- Password Strength input -->
-  <input image="PasswordStrength" >
-    
-    <name lang="en" >Password Strength</name>
-    <name lang="de" >Passwort-Stärke</name>
-    <description lang="en" >Select this to test the strength of your password.</description>
-    <description lang="de" >Hier können Sie die Stärke Ihres Passwortes testen.</description>
-
-    <headline lang="en" >Password Input</headline>
-    <headline lang="de" >Passwort-Eingabe</headline>
+  <input image="PasswordStrength">
+    <name lang="en">Password Strength</name>
+    <name lang="ru">Надежность Пароля</name>
+    <name lang="de">Passwort-Stärke</name>
+    <description lang="en">Select this to test the strength of your password.</description>
+    <description lang="ru">Выберите это, чтобы проверить силу вашего пароля.</description>
+    <description lang="de">Hier können Sie die Stärke Ihres Passwortes testen.</description>
+    <headline lang="en">Password Input</headline>
+    <headline lang="ru">Ввод пароля</headline>
+    <headline lang="de">Passwort-Eingabe</headline>
     <task lang="en">Here, you can enter your password to test its strength. Warning! Password is visible on the screen.</task>
+    <task lang="ru">Здесь вы можете ввести свой пароль, чтобы проверить его прочность. Предупреждение! На экране отображается пароль.</task>
     <task lang="de">Hier können Sie Ihr Passwort eingeben, um dessen Stärke zu ermitteln. Warnung! Das Passwort ist auf dem Bildschirm lesbar.</task>
-
     <inputBox plugin="$Password$" property="Text" alignment="Right" width="78%" visibleLines="1" group="1">
       <storage key="password" showLoadAddButtons="true" />
       <description lang="en">Password (cleartext!) :</description>
+      <description lang="ru">Пароль (очистить!):</description>
       <description lang="de">Passwort (Klartext!) :</description>
       <defaultvalue>test105!A</defaultvalue>
     </inputBox>
-
     <sampleViewer image="PasswordStrength" file="Tools\PasswordStrength.cwm">
-      <name lang="en" >Result</name>
-      <name lang="de" >Ergebnis</name>
-      <description lang="en" >-</description>
-      <description lang="de" >-</description>
-
-      <headline lang="en" >Password Strength</headline>
-      <headline lang="de" >Passwort-Stärke</headline>
+      <name lang="en">Result</name>
+      <name lang="ru">результат</name>
+      <name lang="de">Ergebnis</name>
+      <description lang="en">-</description>
+      <description lang="ru">-</description>
+      <description lang="de">-</description>
+      <headline lang="en">Password Strength</headline>
+      <headline lang="ru">Надежность Пароля</headline>
+      <headline lang="de">Passwort-Stärke</headline>
       <task lang="en">The detailed result of your passwords strength analysis.</task>
+      <task lang="ru">Подробный результат анализа прочности паролей.</task>
       <task lang="de">Das detaillierte Ergebnis Ihrer Passwort-Stärke-Analyse.</task>
-
       <inputBox plugin="$Password$" property="Text" alignment="Right" width="50%" visibleLines="1" group="1">
         <storage key="password" showLoadAddButtons="true" />
         <description lang="en">Password (cleartext!) :</description>
+        <description lang="ru">Пароль (очистить!):</description>
         <description lang="de">Passwort (Klartext!) :</description>
         <defaultvalue>test105!A</defaultvalue>
       </inputBox>
-
       <presentation plugin="$PasswordStrength$" width="50%" alignment="Center" group="2">
         <description lang="en">Password Strength:</description>
+        <description lang="ru">Надежность Пароля:</description>
         <description lang="de">Passwort-Stärke:</description>
       </presentation>
-
     </sampleViewer>
   </input>
-
   <!-- Heartbeat input -->
-  <input image="HeartbleedTest" >    
-    <name lang="en" >Heartbleed analysis</name>
-    <name lang="de" >Heartbleed-Analyse</name>
-    <description lang="en" >Here, you can test whether a server is vulnerable to the heartbleed-bug.</description>
-    <description lang="de" >Hier können Sie überprüfen, ob ein Server mittels des Heartbleed-Bug angreifbar ist.</description>
-
-    <headline lang="en" >Server IP Input</headline>
-    <headline lang="de" >Server-IP-Eingabe</headline>
+  <input image="HeartbleedTest">
+    <name lang="en">Heartbleed analysis</name>
+    <name lang="ru">Анализ сердечного ритма</name>
+    <name lang="de">Heartbleed-Analyse</name>
+    <description lang="en">Here, you can test whether a server is vulnerable to the heartbleed-bug.</description>
+    <description lang="ru">Здесь вы можете проверить, уязвим ли сервер к ошибке в сердце.</description>
+    <description lang="de">Hier können Sie überprüfen, ob ein Server mittels des Heartbleed-Bug angreifbar ist.</description>
+    <headline lang="en">Server IP Input</headline>
+    <headline lang="ru">IP-адрес сервера</headline>
+    <headline lang="de">Server-IP-Eingabe</headline>
     <task lang="en">Here, you can test whether a server is vulnerable to the heartbleed-bug.</task>
+    <task lang="ru">Здесь вы можете проверить, уязвим ли сервер к ошибке в сердце.</task>
     <task lang="de">Hier können Sie überprüfen, ob ein Server mittels des Heartbleed-Bug angreifbar ist.</task>
-	
-   	<inputBox plugin="$ServerIP$" property="Text" alignment="Left" width="30%" visibleLines="1"> 
-        <description lang="en">Server address:</description>
-        <description lang="de">Server Adresse:</description>
-        <defaultvalue>heartbleed.ais.uni-kassel.de</defaultvalue>
+    <inputBox plugin="$ServerIP$" property="Text" alignment="Left" width="30%" visibleLines="1">
+      <description lang="en">Server address:</description>
+      <description lang="ru">Адрес сервера:</description>
+      <description lang="de">Server Adresse:</description>
+      <defaultvalue>heartbleed.ais.uni-kassel.de</defaultvalue>
     </inputBox>
-
     <sampleViewer image="HeartbleedTest" file="Protocols\HeartbleedTest.cwm">
-      <name lang="en" >Result</name>
-      <name lang="de" >Ergebnis</name>
-      <description lang="en" >-</description>
-      <description lang="de" >-</description>
-
-      <headline lang="en" >Heartbleed analysis</headline>
-      <headline lang="de" >Heartbleed-Analyse</headline>
+      <name lang="en">Result</name>
+      <name lang="ru">результат</name>
+      <name lang="de">Ergebnis</name>
+      <description lang="en">-</description>
+      <description lang="ru">-</description>
+      <description lang="de">-</description>
+      <headline lang="en">Heartbleed analysis</headline>
+      <headline lang="ru">Анализ сердечного ритма</headline>
+      <headline lang="de">Heartbleed-Analyse</headline>
       <task lang="en">Here you can see if a server is vulnerable to the heartbleed bug.</task>
+      <task lang="ru">Здесь вы можете увидеть, уязвим ли сервер к ошибке в сердце.</task>
       <task lang="de">Hier können Sie sehen, ob der Server mittels des Heartbleed-Bug angreifbar ist.</task>
-
-      <inputBox plugin="$ServerIP$" property="Text" alignment="left" width="30%" visibleLines="1" group="1"> 
+      <inputBox plugin="$ServerIP$" property="Text" alignment="left" width="30%" visibleLines="1" group="1">
         <description lang="en">Server address:</description>
+        <description lang="ru">Адрес сервера:</description>
         <description lang="de">Server Adresse:</description>
         <defaultvalue>heartbleed.ais.uni-kassel.de</defaultvalue>
       </inputBox>
-
       <presentation plugin="$HeartbeatState$" width="25%" alignment="Center" group="2">
         <description lang="en">The server accepts malicious heartbeat messages: </description>
+        <description lang="ru">Сервер принимает сообщения о вредоносном сердцебиении:</description>
         <description lang="de">Der Server akzeptiert bösartige Heartbeat-Nachrichten: </description>
       </presentation>
-	  
-	    <presentation plugin="$HeartbleedState$" width="25%" alignment="Center" group="2">
+      <presentation plugin="$HeartbleedState$" width="25%" alignment="Center" group="2">
         <description lang="en">The server is vulnerable to the heartbleed-bug: </description>
+        <description lang="ru">Сервер уязвим для исправления ошибок:</description>
         <description lang="de">Der Server ist über den Heartbleed-Bug angreifbar: </description>
       </presentation>
-	  	  
-	  <presentation plugin="$HeartbeatAnswer$" width="70%" alignment="Right" group="3">
+      <presentation plugin="$HeartbeatAnswer$" width="70%" alignment="Right" group="3">
         <description lang="en">Heartbeat Answer: </description>
+        <description lang="ru">Heartbeat Ответ:</description>
         <description lang="de">Heartbeat Antwort: </description>
       </presentation>
     </sampleViewer>
   </input>
-
-  
-  
   <!-- Random decimal number -->
-  <input image="RND" >
-    <name lang="en" >Random numbers</name>
-    <name lang="de" >Zufallszahlen</name>
-    <description lang="en" >Select this to generate a random decimal number.</description>
-    <description lang="de" >Hier können Sie eine dezimale Zufallszahl erzeugen.</description>
-    <headline lang="en" >Specify Parameters</headline>
-    <headline lang="de" >Paramtereingabe</headline>
+  <input image="RND">
+    <name lang="en">Random numbers</name>
+    <name lang="ru">Случайные числа</name>
+    <name lang="de">Zufallszahlen</name>
+    <description lang="en">Select this to generate a random decimal number.</description>
+    <description lang="ru">Выберите это, чтобы создать случайное десятичное число.</description>
+    <description lang="de">Hier können Sie eine dezimale Zufallszahl erzeugen.</description>
+    <headline lang="en">Specify Parameters</headline>
+    <headline lang="ru">Укажите параметры</headline>
+    <headline lang="de">Paramtereingabe</headline>
     <task lang="en">
       Please enter the desired parameters for your random number.
     </task>
+    <task lang="ru">Введите необходимые параметры для вашего случайного числа.</task>
     <task lang="de">
       Bitte spezifizieren Sie hier die Parameter für die gewünschte Zufallszahl.
     </task>
-
     <!-- simple paramters -->
     <inputBox plugin="$Decimalisation$" property="Quant" alignment="Stretch" visibleLines="1">
       <description lang="en">Digits:</description>
+      <description lang="ru">Цифры:</description>
       <description lang="de">Dezimalstellen:</description>
       <defaultvalue>100</defaultvalue>
     </inputBox>
-    
     <!-- advanced paramters follow -->
     <label>
       <description lang="en">
-        <newline/><newline/><u>Advanced Settings:</u><newline/>In most cases, no changes are needed for the following parameters.<newline/>
-      </description>
-      <description lang="de">        
-        <newline/><newline/><u>Erweiterte Einstellungen:</u><newline/><i>In den meisten Fällen müssen die folgenden Einstellungen nicht verändert werden.</i><newline/>
+        <newline />
+        <newline />
+        <u>Advanced Settings:</u>
+        <newline />In most cases, no changes are needed for the following parameters.<newline /></description>
+      <description lang="ru">Расширенные настройки. В большинстве случаев изменений для следующих параметров не требуется.</description>
+      <description lang="de">
+        <newline />
+        <newline />
+        <u>Erweiterte Einstellungen:</u>
+        <newline />
+        <i>In den meisten Fällen müssen die folgenden Einstellungen nicht verändert werden.</i>
+        <newline />
       </description>
     </label>
-
     <inputBox plugin="$Random input$" property="Bytes" alignment="Stretch" visibleLines="1">
       <description lang="en">Number of generated random bytes used as the foundation for generating the random decimal number:</description>
+      <description lang="ru">Число генерируемых случайных байтов, используемых в качестве основы для генерации случайного десятичного числа:</description>
       <description lang="de">Anzahl erzeugter Zufallsbytes als Basis für die Berechnung der dezimalen Zufallszahl:</description>
       <defaultvalue>1000</defaultvalue>
     </inputBox>
-
     <comboBox plugin="$Decimalisation$" property="Mode" alignment="Stretch" defaultValue="1">
       <description lang="en">Method to convert binary random numbers to decimal numbers:</description>
+      <description lang="ru">Метод преобразования двоичных случайных чисел в десятичные числа:</description>
       <description lang="de">Die angewandte Methode zur Konvertierung von binären Zufallswerten in Dezimalzahlen:</description>
-      <item lang="en" content="Visa"/>
-      <item lang="de" content="Visa"/>
-      <item lang="en" content="Modulo"/>
-      <item lang="de" content="Modulo"/>
-      <item lang="en" content="Multiplication"/>
-      <item lang="de" content="Multiplikation"/>
-      <item lang="en" content="IBM"/>
-      <item lang="de" content="IBM"/>
+      <item lang="en" content="Visa" />
+      <item lang="ru" content="шоу" />
+      <item lang="de" content="Visa" />
+      <item lang="en" content="Modulo" />
+      <item lang="ru" content="форма" />
+      <item lang="de" content="Modulo" />
+      <item lang="en" content="Multiplication" />
+      <item lang="ru" content="умножение" />
+      <item lang="de" content="Multiplikation" />
+      <item lang="en" content="IBM" />
+      <item lang="ru" content="IBM" />
+      <item lang="de" content="IBM" />
     </comboBox>
-    
     <sampleViewer image="RND" file="Tools\RandomDecimalNumber.cwm">
-      <name lang="en" >Result</name>
-      <name lang="de" >Ergebnis</name>
-      <description lang="en" >-</description>
-      <description lang="de" >-</description>
-
-      <headline lang="en" >Result</headline>
-      <headline lang="de" >Ergebnis</headline>
+      <name lang="en">Result</name>
+      <name lang="ru">результат</name>
+      <name lang="de">Ergebnis</name>
+      <description lang="en">-</description>
+      <description lang="ru">-</description>
+      <description lang="de">-</description>
+      <headline lang="en">Result</headline>
+      <headline lang="ru">результат</headline>
+      <headline lang="de">Ergebnis</headline>
       <task lang="en">Your generated decimal number</task>
+      <task lang="ru">Полученное десятичное число</task>
       <task lang="de">Ihre erzeugte Dezimalzahl</task>
-
       <presentation plugin="$Random decimal number$" height="150" alignment="Stretch">
         <description lang="en">Random decimal number:</description>
+        <description lang="ru">Случайное десятичное число:</description>
         <description lang="de">Dezimale Zufallszahl:</description>
       </presentation>
-
     </sampleViewer>
-    
   </input>
-  
   <!-- Key Exchange Category -->
   <!--<category image="Key">
     <name lang="en" >Key Exchange</name>
@@ -278,13 +298,19 @@
       Select a key exchange algorithm to work with.
     </description>
 
-    --><!-- This is the step's headline. It should be short, but precise. --><!--
+    -->
+  <!-- This is the step's headline. It should be short, but precise. -->
+  <!--
     <headline lang="en" >Key Exchange Algorithm Selection</headline>
 
-    --><!-- This is the step's description. --><!--
+    -->
+  <!-- This is the step's description. -->
+  <!--
     <task lang="en" >Select a key exchange algorithm.</task>
 
-    --><!-- Diffie Hellman input --><!--
+    -->
+  <!-- Diffie Hellman input -->
+  <!--
     <input image="Key" >
       <name lang="en" >Diffie Hellman</name>
       <description lang="en" >
@@ -292,5 +318,4 @@
       </description>      
     </input>
   </category>-->
-
 </category>

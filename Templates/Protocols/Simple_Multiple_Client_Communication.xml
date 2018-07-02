@@ -1,32 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Simple Multi Client Communication</title>
+  <title lang="ru">Простое взаимодействие с несколькими клиентами</title>
   <summary lang="en">Usage of the <i>Simple Multi Client Communication</i></summary>
+  <summary lang="ru">Использование Simple Multi Client Communication</summary>
   <description lang="en">The data packets will be transmitted asynchronously via the TCP/IP protocol.</description>
+  <description lang="ru">Пакеты данных будут передаваться асинхронно через протокол TCP / IP.</description>
   <keywords>protocol, asynchronous, tcp, tcp/ip</keywords>
-
+  <keywords lang="ru">протокол, асинхронный, tcp, tcp / ip</keywords>
   <title lang="de">Einfache Multi-Client-Kommunikation</title>
   <summary lang="de">Anwenden der <i>einfachen Multi-Client-Kommunikation</i></summary>
   <description lang="de">Die Datenpakete werden asynchron mit dem TCP/IP-Protokoll übermittelt.</description>
   <keywords lang="de">protokoll, asynchron, tcp, tcp/ip</keywords>
-
   <icon file="Simple_Multiple_Client_Communication.png" />
-
   <relevantPlugins>
     <plugin name="NetworkInput" />
     <plugin name="NetworkReceiver" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Network Sender$" value="Netzwerk-Sender"/>
-    <replacement key="$Network Receiver$" value="Netzwerk-Empfänger"/>
-    <replacement key="$Text Input$" value="Texteingabe"/>
+    <replacement key="$Network Sender$" value="Netzwerk-Sender" />
+    <replacement key="$Network Receiver$" value="Netzwerk-Empfänger" />
+    <replacement key="$Text Input$" value="Texteingabe" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Network Sender$" value="Сетевой передатчик" />
+    <replacement key="$Network Receiver$" value="Сетевой приемник" />
+    <replacement key="$Text Input$" value="ввод текста" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Network Sender$" value="Network Sender"/>
-    <replacement key="$Network Receiver$" value="Network Receiver"/>
-    <replacement key="$Text Input$" value="Text Input"/>
+    <replacement key="$Network Sender$" value="Network Sender" />
+    <replacement key="$Network Receiver$" value="Network Receiver" />
+    <replacement key="$Text Input$" value="Text Input" />
   </replacements>
-
 </sample>

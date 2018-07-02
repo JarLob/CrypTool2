@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     <i>Purple</i> is an electromechanical cipher machine which was used by Japanese diplomats during World War II.
     <newline /><newline />
@@ -32,9 +31,9 @@
     of <i>Purple</i> only from intercepted ciphertexts without any prior knowledge of its inner workings, and built a replication of the machine. The name <i>Purple</i> was the codename assigned to it by the American cryptologists. The Japanese
     inventors called the machine "<i>97-shiki O-bun In-ji-ki</i>" (Alphabetical Typewriter '97).
   </introduction>
-
-  <introduction lang="de-DE">    
-	  <i>Purple</i> ist eine elektromechanische Verschlüsselungsmaschine, die von japanischen Diplomaten vor und während des zweiten Weltkriegs eingesetzt wurde.
+  <introduction lang="ru">Фиолетовый - электромеханическая шифровальная машина, которая использовалась японскими дипломатами во время Второй мировой войны. Он работает по принципу, аналогичному принципу Enigma: открытый текст вводится на клавиатуре. Каждая нажатая кнопка закрывает электрическую цепь, которая ведет от клавиатуры через несколько блоков перестановки к выходному блоку. После каждой зашифрованной буквы внутренние блоки перестановки продвигаются в соответствии с определенными правилами. В отличие от Enigma, перестановки не реализуются с роторами, а с шаговыми переключателями, которые также использовались в телефонных системах в то время. Фиолетовый использовал четыре ступенчатых переключателя. Каждый коммутатор имел 25 позиций и определенное количество входов и выходов. Каждое из 25 положений коммутатора реализовало перестановку входных сигналов, подключив их к выходам по-разному. Три шаговых переключателя имеют 20 входов и выходов, один имеет 6. Когда буква вводится на клавиатуре, она сначала переходит через входную перестановку. Если он сопоставляется с одной из букв «AEIOUY», он будет передан на следующем шаге на 6-ступенчатый переключатель, а затем на выходную перестановку, которая является обратной перестановкой входной перестановки. Если входная перестановка сопоставляет букву с буквой, отличной от «AEIOUY», она передается через три 20-ступенчатых переключателя, всегда в том же порядке: первый переключатель №1, затем № 2 и № 3. Выход переключателя № 3 затем переходит к перестановке выходных данных. После каждой нажатой клавиши шаговые переключатели продвигаются в соответствии с определенными правилами. Когда переключатель продвинут, он переходит из положения n в положение n + 1, тем самым реализуя новую перестановку. Когда переключатель находится в положении 25, он возвращается в положение 1 на следующем шаге. Пошаговые переключатели продвигаются с разной скоростью: 6-переключатель продвигается после каждой нажатой клавиши. В то время как один из 20 переключателей продвигается быстро (после каждой клавиши), один продвигается со средней скоростью (только после того, как быстрый достигает 25), а один продвигается с низкой скоростью (только после того, как переключатель средней скорости достигнет положения 25). Пользователь может решить, какой из трех 20-переключателей является медленным, средним и быстрым. Ключ состоит из начальных положений четырех переключателей, назначений скорости и конфигурации плагина, который реализует перестановку ввода и вывода. Американский криптолог Уильям Фридман и его команда сломали фиолетовый, который обычно рассматривается как одно из величайших достижений в истории криптологии. Им удалось восстановить принцип шифрования Purple только из перехваченных зашифрованных текстов без каких-либо предварительных знаний о его внутренних работах и ​​построить репликацию машины. Название Purple было кодовым именем, присвоенным ему американскими криптологами. Японские изобретатели назвали машину «97-шики О-бун Ин-джи-ки» (Алфавитная пишущая машинка «97»).</introduction>
+  <introduction lang="de-DE">
+    <i>Purple</i> ist eine elektromechanische Verschlüsselungsmaschine, die von japanischen Diplomaten vor und während des zweiten Weltkriegs eingesetzt wurde.
 	  <newline /><newline />
 	  Das Funktionsprinzip ist ähnlich wie das der Enigma: Der zu verschlüsselnde Klartext wird über eine Tastatur eingegeben. Jeder Tastendruck schließt einen Stromkreis, der von der Tastatur durch mehrere Permutationseinheiten
     und schließlich zur Ausgabeeinheit verläuft.
@@ -57,12 +56,10 @@
 	  Die Vermittlungsschalter werden in unterschiedlichen Geschwindigkeiten weitergeschaltet: Der 6er-Schalter wird nach jedem Tastendruck weitergeschaltet, während von den drei 20er-Schaltern einer schnell (nach jedem Tastendruck),
     einer mit mittlerer Geschwindigkeit (nach jedem Überlauf des schnellen) und einer langsam (nach jedem Überlauf des mittleren) weiterschaltet. Da der Benutzer selbst bestimmen kann, wie die drei Geschwindigkeiten den drei 20er-Schaltern
     zugeordnet werden sollen, ist dies ebenso Teil des Schlüssels wie die Startpositionen aller vier Schalter sowie die durch ein Steckerbrett realisierte Eingangs- und Ausgangspermutation.
-	  <newline /><newline />
-    <i>Purple</i> wurde von dem amerikanischen Kryptologen William Friedman und seinen Mitarbeitern gebrochen, was als eine der größten Leistungen in der Kryptologie gilt, da es ihnen gelang, das Verschlüsselungsprinzip
+	  <newline /><newline /><i>Purple</i> wurde von dem amerikanischen Kryptologen William Friedman und seinen Mitarbeitern gebrochen, was als eine der größten Leistungen in der Kryptologie gilt, da es ihnen gelang, das Verschlüsselungsprinzip
     alleine aus den abgefangenen Geheimtexten und ohne Kenntnis des inneren Aufbaus der <i>Purple</i> zu rekonstruieren und die Maschine nachzubauen. Der Name <i>Purple</i> ist hierbei nur der von den amerikanischen Kryptologen verwendete
     Codename. Die japanischen Konstrukteure nannten die Maschine "<i>97-shiki O-bun In-ji-ki</i>" (Alphabetische Schreibmaschine 97). 
   </introduction>
-
   <usage lang="en">
     The <i>Purple</i> component has the two operation modes <i>Encryption</i> and <i>Decryption</i>, which can be selected in the settings of the component.
     In <i>Encryption</i> mode, the component expects the plaintext as a string on its input, in <i>Decryption</i> mode, it expects the ciphertext.
@@ -85,7 +82,7 @@
     <newline /><newline />
     Finally, you can determine the case sensitivity of the component. You can either convert the output to uppercase or lowercase, or keep the spelling of the input text.
   </usage>
-
+  <usage lang="ru">Компонент Purple имеет два режима работы: «Шифрование и дешифрование», которые могут быть выбраны в настройках компонента. В режиме шифрования компонент ожидает открытый текст как строку на своем входе, в режиме дешифрования он ожидает шифрованный текст. В настройках вы также можете ввести ключ для шифрования или дешифрования. В текстовом поле «Азбука» вы должны ввести строку, которая является перестановкой из 26 букв. Эта перестановка определяет входную и выходную перестановку, которые реализует плагин Purple. Первые 6 букв этой строки будут сопоставлены буквам «AEIOUY» и будут проходить через 6-переключатель во время шифрования. Остальные буквы будут зашифрованы тремя 20-переключателями. В разделе «Положение» вы можете указать начальные позиции четырех ступенчатых переключателей. Каждый переключатель имеет 25 возможных позиций, которые пронумерованы от 1 до 25. В разделе «Скорость» вы можете определить скорости трех 20-переключателей. Вы должны ввести перестановку чисел 1, 2 и 3, где «1» означает медленную скорость, «2» означает среднюю скорость, а «3» означает быструю скорость. Таким образом, «231» означает, что переключатель №1 будет продвигаться со средней скоростью («2»), переключателем №2 с быстрой скоростью («3») и переключателем № 3 с низкой скоростью («1»). В разделе «Параметры текста» вы можете определить, как компонент должен обрабатывать символы на входе, которые не являются частью стандартного алфавита AZ, используемого фиолетовым. Их можно игнорировать, и в этом случае шаговые переключатели не будут продвинуты. Если вы выберете «Копировать», неизвестный символ будет передан без изменений на выход, а переключатели будут расширены регулярно. Эта опция полезна, когда зашифрованный текст содержит неразборчивые символы. Затем они могут быть представлены как «?». Просто игнорирование их испортило бы дешифрование от неразборчивого персонажа. Наконец, вы можете заменить неизвестный символ символом-заполнителем. В разделе «Форматирование вывода» вы можете определить способ форматирования вывода компонента. Вы можете сохранить форматирование входного текста, удалить все пробелы или сгруппировать его в блоках из 5 символов. Наконец, вы можете определить чувствительность к регистру компонента. Вы можете преобразовать вывод в верхний или нижний регистр или сохранить написание текста ввода.</usage>
   <usage lang="de-DE">
     Die <i>Purple</i>-Komponente hat zwei Betriebsarten, <i>Verschlüsselung</i> und <i>Entschlüsselung</i>, zwischen denen in den Einstellungen des Plugins gewählt werden kann.
     In der Betriebsart <i>Verschlüsselung</i> wird der zu verschlüsselnde Klartext als Zeichenfolge am Eingang der Komponente angelegt, in der Betriebsart <i>Entschlüsselung</i> der Geheimtext.
@@ -110,18 +107,13 @@
     <newline /><newline />
     Schließlich kann noch die Behandlung der Groß-/Kleinschreibung gewählt werden. Man kann die Ausgabe komplett in Groß- oder Kleinbuchstaben konvertieren oder die Schreibweise des Eingangstextes beibehalten.
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
-	 <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/Purple_(cipher_machine)"/>
+    <linkReference>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Purple_(cipher_machine)" />
       <caption lang="en">Purple (Wikipedia)</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/PURPLE"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/PURPLE" />
       <caption lang="de-DE">Purple (Wikipedia)</caption>
     </linkReference>
   </references>

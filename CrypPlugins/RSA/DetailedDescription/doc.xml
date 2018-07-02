@@ -1,16 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     RSA is an asymmetric algorithm devoloped 1977 by Ronald L. Rivest, Adi Shamir und Leonard Adleman at the Massachusetts Institute of
     Technology. It is known as the first published asymmetric algorithm. The security of RSA is based on the factorization
     problem and the assumption that there is no suitable algorithm to factorize a big number in suitable time
     (this means that a factorization is finished not in centuries but in realistic time like hours or days).
   </introduction>
-
+  <introduction lang="ru">RSA - асимметричный алгоритм, разработанный 1977 годом Рональдом Л. Ривестом, Ади Шамиром и Леонардом Адлеманом в Массачусетском технологическом институте. Он известен как первый опубликованный асимметричный алгоритм. Безопасность RSA основана на проблеме факторизации и предположении, что нет подходящего алгоритма для факторизации большого числа в подходящее время (это означает, что факторизация завершается не в столетия, а в реалистичное время, например, часы или дни).</introduction>
   <introduction lang="de-DE"> 
     RSA ist ein asymmetrischer Algorithmus, der 1977 von Ronald L. Rivest, Adi Shamir und Leonard Adleman am Massachusetts Institute
     of Technology entwickelt wurde. Er ist als der erste asymmetrische Algorithmus bekannt. Die Sicherheit von RSA basiert auf dem
@@ -18,7 +17,6 @@
     faktorisieren (also dass die Faktorisierung nicht in Jahrhunderten, sondern in einer 
     "realistischen" Zeit wie etwa Tagen oder Stunden durchgeführt werden kann).
   </introduction>
-
   <usage lang="en">
     The RSA plugin has two ways to be used (you can use only one or both simultaneously): The user can use RSA to encrypt 
     and decrypt numbers on the one hand or texts on the other hand.
@@ -30,7 +28,7 @@
     He has also to add a Number Input <b>N</b> representing the <b>N</b> of the RSA algorithm. And the last input he has to add is
     a Number Input <b>e</b>/<b>d</b> which represents the public exponent or the private key depending on encryption or decryption.
   </usage>
-
+  <usage lang="ru">Плагин RSA имеет два способа использования (вы можете использовать только один или оба одновременно): пользователь может использовать RSA для шифрования и расшифровки номеров, с одной стороны, или текстов с другой стороны. Чтобы зашифровать / дешифровать номера, пользователь должен указать номер на входе ввода m / c плагина, представляющего сообщение m или зашифрованный текст c. Полученное число затем предоставляется на выходном разъеме m / c плагина. Он также должен добавить числовой вход N, представляющий модуль N алгоритма RSA. И последний вход, который он должен добавить, - это номер ввода e / d, который представляет публичный экспонент или закрытый ключ в зависимости от шифрования или дешифрования. Чтобы шифровать / дешифровать тексты, пользователь должен добавить входной байтовый массив и выходной массив байтов. Также в настройках плагинов должно быть указано направление (шифрование или дешифрование). Он также должен добавить числовой вход N, представляющий N алгоритма RSA. И последний вход, который он должен добавить, - это номер ввода e / d, который представляет публичный экспонент или закрытый ключ в зависимости от шифрования или дешифрования.</usage>
   <usage lang="de-DE">
     Das RSA Plugin beinhaltet zwei Nutzungsarten (welche auch parallel genutzt werden können): Der Benutzer kann sowohl
     Zahlen als auch Texte ver- und entschlüsseln. Um eine Zahl zu ver- oder entschlüsseln
@@ -40,12 +38,11 @@
     und <b>d</b> der für eine Entschlüsselung benötigte private Schlüssel. Um einen ganzen Text zu ver- oder entschlüsseln, kann der Benutzer den Text an den Texteingang <b>m</b>/<b>c</b>
     anschließen und das Resultat am Textausgang <b>m</b>/<b>c</b> abgreifen. In den Einstellungen des Plugins muss zuletzt noch eingestellt werden, ob ver- oder entschlüsselt werden soll.
   </usage>
-  
   <references>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/RSA"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/RSA" />
       <caption lang="en">RSA in the English wikipedia</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/RSA-Kryptosystem"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/RSA-Kryptosystem" />
       <caption lang="de-DE">RSA-Kryptosystem in der deutschen Wikipedia</caption>
     </linkReference>
   </references>

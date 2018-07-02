@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <directory order="2">
   <name lang="en">Hash Functions</name>
-  <name lang="de">Hash-Funktionen</name>  
+  <name lang="ru">Хэш-функции</name>
+  <name lang="de">Hash-Funktionen</name>
   <summary lang="en">The folder "Hash Functions" contains templates that demonstrate the use of hash functions.</summary>
+  <summary lang="ru">В папке «Hash Functions» содержатся шаблоны, демонстрирующие использование хеш-функций.</summary>
   <summary lang="de">Das Verzeichnis "Hash-Funktionen" enthält Vorlagen, die die Verwendung von Hash-Funktionen demonstrieren.</summary>
   <icon file="dir.png" />
 </directory>

@@ -1,38 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">SDES Known-Plaintext Analysis</title>
+  <title lang="ru">SDES Известный анализ</title>
   <summary lang="en">Cryptanalysis of the <i>SDES</i> algorithm using the <i>KeySearcher</i> component and a known plaintext</summary>
+  <summary lang="ru">Криптоанализ алгоритма SDES с использованием компонента KeySearcher и известного открытого текста</summary>
   <description lang="en">This template shows the cryptanalysis of the <i>SDES</i> algorithm using the <i>KeySearcher</i> component and a known plaintext.</description>
+  <description lang="ru">Этот шаблон показывает криптоанализ алгоритма SDES с использованием компонента KeySearcher и известного открытого текста.</description>
   <keywords>advanced, standard, NIST, Rijndael, Daemen, Rijmen, symmetric, keysearcher, Attack, Analysis</keywords>
-
+  <keywords lang="ru">продвинутый, стандартный, NIST, Rijndael, Daemen, Rijmen, симметричный, keyearcher, Attack, Analysis</keywords>
   <title lang="de">SDES Known-Plaintext-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>SDES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente und eines bekannten Klartextes</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>SDES</i>-Verschlüsselung mittels der <i>KeySearcher</i>-Komponente und eines bekannten Klartextes.</description>
   <keywords lang="de">symmetrisch, NIST, Rijndael, Daemen, Rijmen, Standard, regex, regulärer Ausdruck, Keysearcher, bekannter Klartext, Angriff</keywords>
-
   <icon file="SDES.png" />
   <relevantPlugins>
     <plugin name="CostFunction" />
     <plugin name="KeySearcher" />
     <plugin name="SDES" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$KeySearcher$" value="Schlüsselsuche"/>
-    <replacement key="$StringDecoder$" value="String-Dekodierer"/>
-    <replacement key="$StringEncoder$" value="String-Kodierer"/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$KeySearcher$" value="Schlüsselsuche" />
+    <replacement key="$StringDecoder$" value="String-Dekodierer" />
+    <replacement key="$StringEncoder$" value="String-Kodierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$KeySearcher$" value="ключ поиска" />
+    <replacement key="$StringDecoder$" value="Строка декодера" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$KeySearcher$" value="KeySearcher"/>
-    <replacement key="$StringDecoder$" value="String Decoder"/>
-    <replacement key="$StringEncoder$" value="String Encoder"/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$KeySearcher$" value="KeySearcher" />
+    <replacement key="$StringDecoder$" value="String Decoder" />
+    <replacement key="$StringEncoder$" value="String Encoder" />
   </replacements>
-
 </sample>

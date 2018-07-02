@@ -90,15 +90,6 @@ namespace CrypCloud.Core.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die s ähnelt.
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 141.51.125.18:10000 ähnelt.
         /// </summary>
         public static string wellKnownPeers {

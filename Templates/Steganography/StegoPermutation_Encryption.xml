@@ -1,37 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Steganography Permutation Encryption</title>
+  <title lang="ru">Шифрование шифрования стеганографии</title>
   <summary lang="en">Encryption with the steganography component <i>StegoPermutation</i></summary>
+  <summary lang="ru">Шифрование со стеганографическим компонентом StegoPermutation</summary>
   <description lang="en">This template shows the usage of the steganography component <i>StegoPermutation</i> for encryption.</description>
+  <description lang="ru">Этот шаблон показывает использование стеганографического компонента StegoPermutation для шифрования.</description>
   <keywords>Steganography, hidden, Permutation</keywords>
-
+  <keywords lang="ru">Стеганография, скрытая, Перестановка</keywords>
   <title lang="de">Steganographie Permutation Verschlüsselung</title>
   <summary lang="de">Verschlüsselung mit der Steganographie-Komponente <i>StegoPermutation</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Steganographie-Komponente <i>StegoPermutation</i> zur Verschlüsselung.</description>
   <keywords lang="de">Steganographie, verstecken</keywords>
-
   <icon file="Steganography.png" />
-
   <relevantPlugins>
     <plugin name="FileInputClass" />
     <plugin name="FileOutputClass" />
     <plugin name="StegoInsertion" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Message$" value="Nachricht"/>
-    <replacement key="$Carrier list$" value="Trägerliste"/>
-    <replacement key="$Split$" value="Trenne"/>
-    <replacement key="$Permutation Steganography$" value="Permutations-Steganographie"/>
-    <replacement key="$Carrier with hidden message$" value="Träger mit versteckter Nachricht"/>
+    <replacement key="$Message$" value="Nachricht" />
+    <replacement key="$Carrier list$" value="Trägerliste" />
+    <replacement key="$Split$" value="Trenne" />
+    <replacement key="$Permutation Steganography$" value="Permutations-Steganographie" />
+    <replacement key="$Carrier with hidden message$" value="Träger mit versteckter Nachricht" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Message$" value="сообщение" />
+    <replacement key="$Carrier list$" value="список транспортных средств" />
+    <replacement key="$Split$" value="отдельный" />
+    <replacement key="$Permutation Steganography$" value="Перестановки-Steganographie" />
+    <replacement key="$Carrier with hidden message$" value="Перевозчик со скрытым сообщением" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Message$" value="Message"/>
-    <replacement key="$Carrier list$" value="Carrier List"/>
-    <replacement key="$Split$" value="Split"/>
-    <replacement key="$Permutation Steganography$" value="Permutation Steganography"/>
-    <replacement key="$Carrier with hidden message$" value="Carrier with hidden message"/>
+    <replacement key="$Message$" value="Message" />
+    <replacement key="$Carrier list$" value="Carrier List" />
+    <replacement key="$Split$" value="Split" />
+    <replacement key="$Permutation Steganography$" value="Permutation Steganography" />
+    <replacement key="$Carrier with hidden message$" value="Carrier with hidden message" />
   </replacements>
-
 </sample>

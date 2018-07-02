@@ -177,6 +177,9 @@
     <EmbeddedResource Include="RegionInfoListItem.resx">
       <DependentUpon>RegionInfoListItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="DetailedDescription\doc.xml" />

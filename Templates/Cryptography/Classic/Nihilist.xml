@@ -1,32 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Nihilist Cipher</title>
+  <title lang="ru">Nihilist Cipher</title>
   <summary lang="en">Usage of the <i>Nihilist</i> cipher</summary>
+  <summary lang="ru">Использование шифра Нигилиста</summary>
   <description lang="en">This template shows the usage of the <i>Nihilist</i> cipher.</description>
+  <description lang="ru">Этот шаблон показывает использование шифра Нигилиста.</description>
   <keywords>symmetric</keywords>
-
+  <keywords lang="ru">симметричный</keywords>
   <title lang="de">Nihilist-Chiffre</title>
   <summary lang="de">Benutzung der <i>Nihilist</i>-Chiffre</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Nihilist</i>-Chiffre.</description>
   <keywords lang="de">symmetrisch</keywords>
-
   <icon file="Nihilist.png" />
   <relevantPlugins>
     <plugin name="Nihilist" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-	 <replacement key="$StringEncoder$" value="String-Codierer"/>
- </replacements>
- <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-	 <replacement key="$StringEncoder$" value="StringEncoder"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
- </replacements>
-
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$StringEncoder$" value="String-Codierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$StringEncoder$" value="StringEncoder" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+  </replacements>
 </sample>

@@ -1,38 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">VCard</title>
+  <title lang="ru">VCard</title>
   <summary lang="en">Creating a VCard</summary>
+  <summary lang="ru">Создание VCard</summary>
   <description lang="en">This template shows the creating of a VCard.</description>
+  <description lang="ru">Этот шаблон показывает создание VCard.</description>
   <keywords>vcard qrcode</keywords>
-
+  <keywords lang="ru">vcard qrcode</keywords>
   <title lang="de">VCard</title>
   <summary lang="de">Erstellung einer VCard</summary>
   <description lang="de">Diese Vorlage zeigt die Erstellung einer VCard.</description>
   <keywords lang="de">vcard qrcode</keywords>
-
   <icon file="vcard.png" />
   <relevantPlugins>
     <plugin name="VisualEncoder" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Visual Encoder$" value="Visueller Kodierer"/>
-    <replacement key="$Template$" value="Vorlage"/>
-    <replacement key="$forename$" value="Vorname"/>
-    <replacement key="$surname$" value="Nachname"/>
-    <replacement key="$home phone$" value="Telefon (privat)"/>
-    <replacement key="$working phone$" value="Telefon (geschäftlich)"/>
-    <replacement key="$email$" value="E-Mail"/>
+    <replacement key="$Visual Encoder$" value="Visueller Kodierer" />
+    <replacement key="$Template$" value="Vorlage" />
+    <replacement key="$forename$" value="Vorname" />
+    <replacement key="$surname$" value="Nachname" />
+    <replacement key="$home phone$" value="Telefon (privat)" />
+    <replacement key="$working phone$" value="Telefon (geschäftlich)" />
+    <replacement key="$email$" value="E-Mail" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Visual Encoder$" value="Визуальный кодировщик" />
+    <replacement key="$Template$" value="представление" />
+    <replacement key="$forename$" value="имя" />
+    <replacement key="$surname$" value="фамилия" />
+    <replacement key="$home phone$" value="Телефон (частный)" />
+    <replacement key="$working phone$" value="Телефон (бизнес)" />
+    <replacement key="$email$" value="E-Mail" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Visual Encoder$" value="Visual Encoder"/>
-    <replacement key="$Template$" value="Template"/>
-    <replacement key="$forename$" value="Forename"/>
-    <replacement key="$surname$" value="Surname"/>
-    <replacement key="$home phone$" value="Home phone"/>
-    <replacement key="$working phone$" value="Working phone"/>
-    <replacement key="$email$" value="Email"/>
+    <replacement key="$Visual Encoder$" value="Visual Encoder" />
+    <replacement key="$Template$" value="Template" />
+    <replacement key="$forename$" value="Forename" />
+    <replacement key="$surname$" value="Surname" />
+    <replacement key="$home phone$" value="Home phone" />
+    <replacement key="$working phone$" value="Working phone" />
+    <replacement key="$email$" value="Email" />
   </replacements>
-
 </sample>

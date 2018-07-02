@@ -1,43 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     This crypto tutorial presents some attacks on PKCS#1 signatures.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     You can open the tutorial by selecting "Crypto Tutorials" in the menu bar and clicking on the corresponding icon.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The methods offered in the tutorial are accompanied by explaining texts.
     Clicking on the question mark icons displayed in many places of the tutorial offers further explanations.
   </introduction>
-
+  <introduction lang="ru">В этом криптографическом учебнике представлены некоторые атаки на подписи PKCS # 1. Вы можете открыть учебник, выбрав «Crypto Tutorials» в строке меню и щелкнув соответствующий значок. Методы, предлагаемые в учебнике, сопровождаются объяснением текстов. Нажав на значки вопросительных значков, отображаемые во многих местах учебника, предлагаются дополнительные пояснения.</introduction>
   <introduction lang="de-DE">
     Dieses Kryptotutorial stellt einige Angriffe auf PKCS#1-Signaturen vor.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Sie können es aufrufen, indem Sie in der Menüleiste den Punkt "Kryptotutorien" auswählen und dann auf das entsprechende Symbol in der angezeigten Symbolleiste klicken.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Im Kryptotutorial werden die angebotenen Funktionen auch erklärt.
     An vielen Stellen werden zudem Fragezeichen-Symbole angezeigt, auf die Sie klicken können, um weitere Informationen zu erhalten.
   </introduction>
-
-  <usage lang="en">
-  </usage>
-
-  <usage lang="de-DE">
-  </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <usage lang="en"></usage>
+  <usage lang="de-DE"></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference id="wikipedia">
       <link url="http://en.wikipedia.org/wiki/PKCS_♯1" lang="en" />
@@ -52,5 +38,4 @@
       <caption lang="de-DE">RFC3447: Public-Key Cryptography Standards (PKCS) #1 (englisch)</caption>
     </linkReference>
   </references>
-  
 </documentation>

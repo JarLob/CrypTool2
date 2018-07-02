@@ -39,7 +39,7 @@ namespace Cryptool.CrypWin.SettingsTabs
     public partial class MainSettingsTab : UserControl
     {
         private bool initialized = false;
-        private static string[] supportedCultures = new string[] {"de", "en-US"};
+        private static string[] supportedCultures = new string[] {"de", "en-US", "ru"};
 
         public MainSettingsTab(Style settingsStyle)
         {

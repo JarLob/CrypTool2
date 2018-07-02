@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <directory>
   <name lang="en">Modern</name>
-  <name lang="de">Modern</name>  
+  <name lang="ru">Современное</name>
+  <name lang="de">Modern</name>
   <summary lang="en">This folder contains templates that demonstrate cryptanalytical attacks against modern cryptographical algorithms.</summary>
+  <summary lang="ru">Эта папка содержит шаблоны, демонстрирующие криптоаналитические атаки против современных криптографических алгоритмов.</summary>
   <summary lang="de">Dieses Verzeichnis enthält Vorlagen, die kryptoanalytische Angriffe gegen moderne Verfahren demonstrieren.</summary>
   <icon file="dir.png" />
 </directory>

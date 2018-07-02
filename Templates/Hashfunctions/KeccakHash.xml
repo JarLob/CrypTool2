@@ -1,32 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Keccak Hash (SHA-3)</title>
+  <title lang="ru">Keccak Hash (SHA-3)</title>
   <summary lang="en">Usage of <i>Keccak</i> as a hash function (SHA-3)</summary>
+  <summary lang="ru">Использование Keccak как хэш-функции (SHA-3)</summary>
   <description lang="en">This template shows how the <i>Keccak</i> component can be used as a hash function.</description>
+  <description lang="ru">Этот шаблон показывает, как компонент Keccak может использоваться как хэш-функция.</description>
   <keywords>keccak, hash, sha, sha-3, hash algorithm, hash function</keywords>
-
+  <keywords lang="ru">keccak, hash, sha, sha-3, хэш-алгоритм, хэш-функция</keywords>
   <title lang="de">Keccak-Hash (SHA-3)</title>
   <summary lang="de">Benutzung von <i>Keccak</i> als Hash-Funktion (SHA-3)</summary>
   <description lang="de">Diese Vorlage zeigt, wie die <i>Keccak</i>-Komponente als Hash-Funktion eingesetzt werden kann.</description>
   <keywords lang="de">keccak, hash, sha, sha-3, hashfunktion</keywords>
-
   <icon file="Keccak.png" />
   <relevantPlugins>
     <plugin name="Keccak" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Converter$" value="Konvertierer"/>
-    <replacement key="$Debug Information$" value="Debug-Informationen"/>
-    <replacement key="$Input$" value="Eingabe"/>
-    <replacement key="$Hash Value$" value="Hashwert"/>
+    <replacement key="$Converter$" value="Konvertierer" />
+    <replacement key="$Debug Information$" value="Debug-Informationen" />
+    <replacement key="$Input$" value="Eingabe" />
+    <replacement key="$Hash Value$" value="Hashwert" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Converter$" value="преобразование" />
+    <replacement key="$Debug Information$" value="Отладочная информация" />
+    <replacement key="$Input$" value="вход" />
+    <replacement key="$Hash Value$" value="Hashwert" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Converter$" value="Converter"/>
-    <replacement key="$Debug Information$" value="Debug Information"/>
-    <replacement key="$Input$" value="Input"/>
-    <replacement key="$Hash Value$" value="Hash value"/>
+    <replacement key="$Converter$" value="Converter" />
+    <replacement key="$Debug Information$" value="Debug Information" />
+    <replacement key="$Input$" value="Input" />
+    <replacement key="$Hash Value$" value="Hash value" />
   </replacements>
-
 </sample>

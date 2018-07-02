@@ -1,35 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Wordpattern Analysis</title>
+  <title lang="ru">Анализ Wordpattern</title>
   <summary lang="en">Usage of the <i>Wordpattern Analysis</i></summary>
+  <summary lang="ru">Использование анализа Wordpattern</summary>
   <description lang="en">This template shows the usage of the <i>Wordpattern Analysis</i>.</description>
+  <description lang="ru">Этот шаблон показывает использование анализа Wordpattern.</description>
   <keywords>WordPatterns, Attack, Analysis</keywords>
-
+  <keywords lang="ru">WordPatterns, Attack, Analysis</keywords>
   <title lang="de">Wortmusteranalyse</title>
   <summary lang="de">Benutzung der <i>Wortmusteranalyse</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Wortmusteranalyse</i>.</description>
   <keywords lang="de">Wortmuster, Angriff</keywords>
-
   <icon file="WordPatterns.png" />
   <relevantPlugins>
     <plugin name="CryptoolDictionary" />
     <plugin name="WordPatterns" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Search pattern$" value="Suchmuster"/>
-    <replacement key="$WordPatterns$" value="Wortmuster"/>
-    <replacement key="$Dictionary$" value="Wörterbuch"/>
-    <replacement key="$Found patterns$" value="Gefundene Muster"/>
-	 <replacement key="$memo$" value="Diese Vorlage demonstriert, wie mit der Wortmuster-Komponente Wörter gefunden werden können, die dasselbe Muster wie ein Eingabewort (Suchmuster) haben. In diesem Beispiel hat das Eingabewort TREE das Muster 1233, genauso wie die Worte ball, bass, bell etc.\line Wenn die Vorlage ausgeführt wird, wird die Wortliste von der Komponente geladen. Danach kann das Eingabewort interaktiv geändert werden, um neue Muster zu suchen, ohne dass die Wortliste neu geladen wird."/>
+    <replacement key="$Search pattern$" value="Suchmuster" />
+    <replacement key="$WordPatterns$" value="Wortmuster" />
+    <replacement key="$Dictionary$" value="Wörterbuch" />
+    <replacement key="$Found patterns$" value="Gefundene Muster" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert, wie mit der Wortmuster-Komponente Wörter gefunden werden können, die dasselbe Muster wie ein Eingabewort (Suchmuster) haben. In diesem Beispiel hat das Eingabewort TREE das Muster 1233, genauso wie die Worte ball, bass, bell etc.\line Wenn die Vorlage ausgeführt wird, wird die Wortliste von der Komponente geladen. Danach kann das Eingabewort interaktiv geändert werden, um neue Muster zu suchen, ohne dass die Wortliste neu geladen wird." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Search pattern$" value="Suchmuster" />
+    <replacement key="$WordPatterns$" value="Wortmuster" />
+    <replacement key="$Dictionary$" value="словарь" />
+    <replacement key="$Found patterns$" value="Найдено шаблоны" />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует, как использовать компонент Word Pattern для поиска слов, которые имеют тот же шаблон, что и входное слово (шаблон поиска). В этом примере входное слово TREE имеет шаблон 1233, а также слова ball, bass, bell и т. Д. \Line. Когда шаблон выполняется, список слов загружается компонентом. После этого входное слово может быть интерактивно изменено для поиска новых шаблонов без перезагрузки списка слов." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Search pattern$" value="Search pattern"/>
-    <replacement key="$WordPatterns$" value="WordPatterns"/>
-    <replacement key="$Dictionary$" value="Dictionary"/>
-    <replacement key="$Found patterns$" value="Found patterns"/>
-	 <replacement key="$memo$" value="This sample demonstrates the use of the WordPatterns component to find words which have the same pattern as an input word (search pattern). In this example, TREE has the pattern 1233 which is the same as the words ball, bass, bell etc.\line When starting the play mode, the wordlist will be processed once. After that, you can change the input word to obtain new results interactively without having to re-process the entire wordlist."/>
+    <replacement key="$Search pattern$" value="Search pattern" />
+    <replacement key="$WordPatterns$" value="WordPatterns" />
+    <replacement key="$Dictionary$" value="Dictionary" />
+    <replacement key="$Found patterns$" value="Found patterns" />
+    <replacement key="$memo$" value="This sample demonstrates the use of the WordPatterns component to find words which have the same pattern as an input word (search pattern). In this example, TREE has the pattern 1233 which is the same as the words ball, bass, bell etc.\line When starting the play mode, the wordlist will be processed once. After that, you can change the input word to obtain new results interactively without having to re-process the entire wordlist." />
   </replacements>
-
 </sample>

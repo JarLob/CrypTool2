@@ -1,30 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Steganography Insertion Decryption</title>
+  <title lang="ru">Стеганографическое вложение</title>
   <summary lang="en">Decryption with the steganography component <i>StegoInsertion</i></summary>
+  <summary lang="ru">Расшифровка с помощью стеганографического компонента StegoInsertion</summary>
   <description lang="en">This template shows the usage of the steganography component <i>StegoInsertion</i> for decryption.</description>
+  <description lang="ru">Этот шаблон показывает использование стеганографического компонента StegoInsertion для дешифрования.</description>
   <keywords>Steganography, Insertion, hidden</keywords>
-
+  <keywords lang="ru">Стеганография, Вставка, скрытая</keywords>
   <title lang="de">Steganographie Einsetzung Entschlüsselung</title>
   <summary lang="de">Entschlüsselung mit der Steganographie-Komponente <i>StegoInsertion</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Steganographie-Komponente <i>StegoInsertion</i> zur Entschlüsselung.</description>
   <keywords lang="de">Steganographie, verstecken</keywords>
-
   <icon file="Steganography.png" />
-
   <relevantPlugins>
     <plugin name="FileInputClass" />
     <plugin name="StegoInsertion" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Hidden message$" value="Versteckte Nachricht"/>
-    <replacement key="$Carrier MIDI File$" value="MIDI-Trägerdatei"/>
+    <replacement key="$Hidden message$" value="Versteckte Nachricht" />
+    <replacement key="$Carrier MIDI File$" value="MIDI-Trägerdatei" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Hidden message$" value="Скрытое сообщение" />
+    <replacement key="$Carrier MIDI File$" value="поддержка файлов MIDI" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Hidden message$" value="Hidden message"/>
-    <replacement key="$Carrier MIDI File$" value="Carrier MIDI File"/>
+    <replacement key="$Hidden message$" value="Hidden message" />
+    <replacement key="$Carrier MIDI File$" value="Carrier MIDI File" />
   </replacements>
-
 </sample>

@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Simple Video and Audio Chat using AES encryption</title>
+  <title lang="ru">Простой видео и аудио-чат с использованием AES-шифрования</title>
   <title lang="de">Einfacher Video-Audio-Chat mit AES-Verschlüsselung</title>
-
   <summary lang="en">Simple <i>Video and Audio Chat</i> using <i>AES</i> encryption</summary>
+  <summary lang="ru">Простой видео и аудио-чат с использованием AES-шифрования</summary>
   <summary lang="de">Einfacher <i>Video-Audio-Chat</i> mit <i>AES</i>-Verschlüsselung</summary>
   <description lang="en">This template shows a simple AES encrypted video and audio chat with preshared encryption key.</description>
+  <description lang="ru">Этот шаблон показывает простой AES-шифрованный видео и аудио-чат с предварительным ключом шифрования.</description>
   <description lang="de">Diese Vorlage zeigt einen einfachen AES-verschlüsselten Video-Audio-Chat.</description>
-
   <keywords> AES, Videochat, Audio, Camera, Network</keywords>
+  <keywords lang="ru">AES, видеочат, аудио, камера, сеть</keywords>
   <keywords lang="de">Kamera, Netzwerk</keywords>
-
   <icon file="AES_Video_Audio_chat.png" />
-
   <relevantPlugins>
     <plugin name="AES" />
     <plugin name="NetworkInput" />
@@ -23,34 +22,46 @@
     <plugin name="VariableStore" />
     <plugin name="Webcam" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Converter$" value="Konvertierer"/>
-    <replacement key="$store IP$" value="speichere IP"/>
-    <replacement key="$send webcam$" value="sende Webcam"/>
-    <replacement key="$send chat$" value="sende Chat"/>
-    <replacement key="$Camera$" value="Kamera"/>
-    <replacement key="$PictureOutput$" value="Bildausgabe"/>
-    <replacement key="$incoming chat$" value="eingehender Chat"/>
-    <replacement key="$outgoing chat$" value="ausgehender Chat"/>
-    <replacement key="$receive chat$" value="empfange Chat"/>
-    <replacement key="$receive webcam$" value="empfange Webcam"/>
-    <replacement key="$TextInput$" value="Texteingabe"/>
-    <replacement key="$memo$" value="Diese Vorlage demonstriert einen AES-verschlüsselten Video- und Audiochat über ein IP-basiertes Netzwerk mit einem vorher vereinbarten Schlüssel (Pre-shared Key).\line\line Geben Sie unten die IP-Adresse Ihres Gesprächspartners ein, um die Verbindung aufzubauen. Die voreingestellte IP-Adresse stellt die Verbindung zu Ihrem eigenen Rechner her."/>
+    <replacement key="$Converter$" value="Konvertierer" />
+    <replacement key="$store IP$" value="speichere IP" />
+    <replacement key="$send webcam$" value="sende Webcam" />
+    <replacement key="$send chat$" value="sende Chat" />
+    <replacement key="$Camera$" value="Kamera" />
+    <replacement key="$PictureOutput$" value="Bildausgabe" />
+    <replacement key="$incoming chat$" value="eingehender Chat" />
+    <replacement key="$outgoing chat$" value="ausgehender Chat" />
+    <replacement key="$receive chat$" value="empfange Chat" />
+    <replacement key="$receive webcam$" value="empfange Webcam" />
+    <replacement key="$TextInput$" value="Texteingabe" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert einen AES-verschlüsselten Video- und Audiochat über ein IP-basiertes Netzwerk mit einem vorher vereinbarten Schlüssel (Pre-shared Key).\line\line Geben Sie unten die IP-Adresse Ihres Gesprächspartners ein, um die Verbindung aufzubauen. Die voreingestellte IP-Adresse stellt die Verbindung zu Ihrem eigenen Rechner her." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Converter$" value="преобразование" />
+    <replacement key="$store IP$" value="сохранить IP-адрес" />
+    <replacement key="$send webcam$" value="отправить веб-камеру" />
+    <replacement key="$send chat$" value="отправить чат" />
+    <replacement key="$Camera$" value="камера" />
+    <replacement key="$PictureOutput$" value="вывода изображения" />
+    <replacement key="$incoming chat$" value="входящий чат" />
+    <replacement key="$outgoing chat$" value="исходящий чат" />
+    <replacement key="$receive chat$" value="получать чат" />
+    <replacement key="$receive webcam$" value="получать веб-камеру" />
+    <replacement key="$TextInput$" value="ввод текста" />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует видео и аудио-чаты AES в сети с IP-сетью с предварительно разделяемым ключом. \Line \line Введите IP-адрес вашего корреспондента ниже, чтобы установить соединение. IP-адрес по умолчанию устанавливает соединение с вашим собственным компьютером." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Converter$" value="Converter"/>
-    <replacement key="$store IP$" value="store IP"/>
-    <replacement key="$send webcam$" value="send webcam"/>
-    <replacement key="$send chat$" value="send chat"/>
-    <replacement key="$Camera$" value="Camera"/>
-    <replacement key="$PictureOutput$" value="Picture Output"/>
-    <replacement key="$incoming chat$" value="incoming chat"/>
-    <replacement key="$outgoing chat$" value="outgoing chat"/>
-    <replacement key="$receive chat$" value="receive chat"/>
-    <replacement key="$receive webcam$" value="receive webcam"/>
-    <replacement key="$TextInput$" value="Text Input"/>
-    <replacement key="$memo$" value="This template shows an AES encrypted video and audio chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself."/>
+    <replacement key="$Converter$" value="Converter" />
+    <replacement key="$store IP$" value="store IP" />
+    <replacement key="$send webcam$" value="send webcam" />
+    <replacement key="$send chat$" value="send chat" />
+    <replacement key="$Camera$" value="Camera" />
+    <replacement key="$PictureOutput$" value="Picture Output" />
+    <replacement key="$incoming chat$" value="incoming chat" />
+    <replacement key="$outgoing chat$" value="outgoing chat" />
+    <replacement key="$receive chat$" value="receive chat" />
+    <replacement key="$receive webcam$" value="receive webcam" />
+    <replacement key="$TextInput$" value="Text Input" />
+    <replacement key="$memo$" value="This template shows an AES encrypted video and audio chat over an IP-based network with any preshared key.\line\line You have to set the IP of your chat partner below in order to connect to him. By default, you will connect to yourself." />
   </replacements>
-
 </sample>

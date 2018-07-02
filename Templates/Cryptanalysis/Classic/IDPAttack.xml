@@ -1,50 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Dictionary attack on the Double Columnar Transposition Cipher</title>
+  <title lang="ru">Атака словаря на двойном столбце Transposition Cipher</title>
   <summary lang="en">Usage of the <i>IDP Analyzer</i></summary>
+  <summary lang="ru">Использование анализатора IDP</summary>
   <description lang="en">This template shows a dictionary attack on the double columnar transposition cipher using the <i>IDP Analysis</i> component.</description>
+  <description lang="ru">Этот шаблон показывает атаку словаря на двойной столбчатый транспозиционный шифр с использованием компонента анализа IDP.</description>
   <keywords>IDP,double,columnar,transposition,dct,index,digraphic,potential,dictionary,keyphrase,keyword</keywords>
-
+  <keywords lang="ru">IDP, двойной, столбчатый, транспозиция, DCT, индекс, digraphic, потенциал, словарь, ключевая фраза, ключевое слово</keywords>
   <title lang="de">Wörterbuchangriff auf die doppelte Spaltentransposition</title>
   <summary lang="de">Benutzung der <i>IDP-Analyse</i></summary>
   <description lang="de">Diese Vorlage zeigt einen Wörterbuchangriff auf die doppelte Spaltentransposition unter Verwendung der Komponente <i>IDP-Analyse</i>.</description>
   <keywords lang="de">IDP,doppelte,spaltentransposition,digraphisch,potential,Wörterbuch,schlüsselwort,phrase</keywords>
-
   <icon file="IDPAttack.png" />
-
   <relevantPlugins>
     <plugin name="IDPAnalyser" />
     <plugin name="TranspositionAnalyser" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$String Encoder$" value="Stringkodierer"/>
-    <replacement key="$Dictionary$" value="Wörterbuch"/>
-    <replacement key="$Replace$" value="Ersetzen"/>
-    <replacement key="$Split$" value="Trennen"/>
-    <replacement key="$Split Chars$" value="Trennzeichen"/>
-    <replacement key="$Step 1$" value="Schritt 1: IDP-Analyse"/>
-    <replacement key="$Step 2$" value="Schritt 2: Single-Columnar Transposition-Analyse"/>
-    <replacement key="$Intermediate Ciphertext$" value="Zwischen-Geheimtext"/>
-	 <replacement key="$memo1$" value="Diese Vorlage demonstriert einen neuen Angriff auf einen Geheimtext, der mit der {\b doppelten Spaltentransposition (engl. double columnar transposition (DCT)} verschlüsselt wurde. Der Angriff verwendet den {\b IDP (Index of digraphic potential)} und wurde 2013 von {\b George Lasry} entwickelt, als er erfolgreich die bekannte DCT-Challenge von {\b Klaus Schmeh} löste.\line\line Eine DCT besteht aus zwei {\b einfachen Spaltentranspositionen (engl. single-columnar transpositions (SCT)}, wobei jede einen eigenen Schlüssel verwendet. Der Erfolg der IDP-Methode beruht darauf, dass sie einschätzen kann, wie gut der zweite Schlüssel ist, ohne den ersten Schlüssel zu kennen. Durch Berechnung der IDP-Werte für alle Schlüsselphrasen eines Wörterbuches kann die IDP-Analyse-Komponente vielversprechende Kandidaten erkennen. Sie macht dann die zweite SCT mit diesem Schlüsselkandidaten rückgängig und generiert einen Zwischen-Geheimtext, der folglich nur noch einen SCT-verschlüsselten Geheimtext darstellt und in einem zweiten Schritt mit einem klassischen Hill-Climbing-Algorithmus gelöst werden kann."/>
-	 <replacement key="$memo2$" value="Wenn Sie eigene Geheimtexte analysieren wollen und die IDP-Analyse-Komponente nicht die korrekte Schlüsselphrase in den mitgelieferten Wörterbüchern findet, sollten Sie andere Wörterbücher testen. Unter dem folgenden Link finden Sie weitere Wörterbücher: {\b http://www.ngrams.info/download_coca.asp}"/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$String Encoder$" value="Stringkodierer" />
+    <replacement key="$Dictionary$" value="Wörterbuch" />
+    <replacement key="$Replace$" value="Ersetzen" />
+    <replacement key="$Split$" value="Trennen" />
+    <replacement key="$Split Chars$" value="Trennzeichen" />
+    <replacement key="$Step 1$" value="Schritt 1: IDP-Analyse" />
+    <replacement key="$Step 2$" value="Schritt 2: Single-Columnar Transposition-Analyse" />
+    <replacement key="$Intermediate Ciphertext$" value="Zwischen-Geheimtext" />
+    <replacement key="$memo1$" value="Diese Vorlage demonstriert einen neuen Angriff auf einen Geheimtext, der mit der {\b doppelten Spaltentransposition (engl. double columnar transposition (DCT)} verschlüsselt wurde. Der Angriff verwendet den {\b IDP (Index of digraphic potential)} und wurde 2013 von {\b George Lasry} entwickelt, als er erfolgreich die bekannte DCT-Challenge von {\b Klaus Schmeh} löste.\line\line Eine DCT besteht aus zwei {\b einfachen Spaltentranspositionen (engl. single-columnar transpositions (SCT)}, wobei jede einen eigenen Schlüssel verwendet. Der Erfolg der IDP-Methode beruht darauf, dass sie einschätzen kann, wie gut der zweite Schlüssel ist, ohne den ersten Schlüssel zu kennen. Durch Berechnung der IDP-Werte für alle Schlüsselphrasen eines Wörterbuches kann die IDP-Analyse-Komponente vielversprechende Kandidaten erkennen. Sie macht dann die zweite SCT mit diesem Schlüsselkandidaten rückgängig und generiert einen Zwischen-Geheimtext, der folglich nur noch einen SCT-verschlüsselten Geheimtext darstellt und in einem zweiten Schritt mit einem klassischen Hill-Climbing-Algorithmus gelöst werden kann." />
+    <replacement key="$memo2$" value="Wenn Sie eigene Geheimtexte analysieren wollen und die IDP-Analyse-Komponente nicht die korrekte Schlüsselphrase in den mitgelieferten Wörterbüchern findet, sollten Sie andere Wörterbücher testen. Unter dem folgenden Link finden Sie weitere Wörterbücher: {\b http://www.ngrams.info/download_coca.asp}" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$String Encoder$" value="Stringkodierer" />
+    <replacement key="$Dictionary$" value="словарь" />
+    <replacement key="$Replace$" value="замещать" />
+    <replacement key="$Split$" value="отдельный" />
+    <replacement key="$Split Chars$" value="сепаратор" />
+    <replacement key="$Step 1$" value="Шаг 1: Анализ IDP" />
+    <replacement key="$Step 2$" value="Шаг 2: анализ одноколоночного переноса" />
+    <replacement key="$Intermediate Ciphertext$" value="Промежуточное шифротекста" />
+    <replacement key="$memo1$" value="Этот шаблон демонстрирует новую атаку на шифрованный текст, зашифрованный с помощью {\b двойной столбчатой ​​транспозиции (DCT)}, используя {\b IDP (индекс орграфического потенциала)}, введенный в 2013 году {\b Джордж Ласри} развился, когда он успешно разрешил известную задачу DCT {\b Клаус Шмех}. \line \line DCT состоит из двух {\b одностолбцовых транспозиций (SCT)} Успех метода IDP связан с тем, что он может оценить, насколько хорош второй ключ, не зная первого ключа, путем вычисления значений IDP для всех ключевых фраз словаря Проанализируйте перспективных кандидатов, а затем отмените второй SCT с этим ключевым кандидатом и создайте промежуточный зашифрованный текст, оставив при этом только один зашифрованный SCT eimtext и может быть решен на втором этапе с классическим алгоритмом альпинизма." />
+    <replacement key="$memo2$" value="Если вы хотите проанализировать свой собственный зашифрованный текст, а компонент анализа IDP не найдет правильную ключевую фразу в прилагаемых словарях, вы должны протестировать другие словари. Вы можете найти больше словарей по следующей ссылке: {\b http://www.ngrams.info/download_coca.asp}" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$String Encoder$" value="String Encoder"/>
-    <replacement key="$Dictionary$" value="Dictionary"/>
-    <replacement key="$Replace$" value="Replace"/>
-    <replacement key="$Split$" value="Split"/>
-    <replacement key="$Split Chars$" value="Split Chars"/>
-    <replacement key="$Step 1$" value="Step 1: IDP Analysis"/>
-    <replacement key="$Step 2$" value="Step 2: Single-Columnar Transposition Analysis"/>
-    <replacement key="$Intermediate Ciphertext$" value="Intermediate Ciphertext"/>
-	 <replacement key="$memo1$" value="This template demonstrates a new attack on a ciphertext encrypted with the {\b double columnar transposition (DCT)}. It makes use of the {\b IDP (Index of digraphic potential)} method developed by {\b George Lasry} in 2013, when he successfully solved the famous DCT challenge from {\b Klaus Schmeh}.\line\line A DCT consists of two {\b single-columnar transpositions (SCT)}, each having its own key. The success of the IDP method relies on the fact that it can provide a measurement of the quality of the second key without knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the IDP Analysis component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase and produces an intermediate ciphertext, which is basically just a SCT and can easily be solved in a second step with a classic hill climbing attack."/>
-	 <replacement key="$memo2$" value="If you want to analyze your own ciphertexts and the IDP analysis component does not find the correct key phrase in the provided dictionary, you should try using a different dictionary. The following link is a good source for dictionaries: {\b http://www.ngrams.info/download_coca.asp}"/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$String Encoder$" value="String Encoder" />
+    <replacement key="$Dictionary$" value="Dictionary" />
+    <replacement key="$Replace$" value="Replace" />
+    <replacement key="$Split$" value="Split" />
+    <replacement key="$Split Chars$" value="Split Chars" />
+    <replacement key="$Step 1$" value="Step 1: IDP Analysis" />
+    <replacement key="$Step 2$" value="Step 2: Single-Columnar Transposition Analysis" />
+    <replacement key="$Intermediate Ciphertext$" value="Intermediate Ciphertext" />
+    <replacement key="$memo1$" value="This template demonstrates a new attack on a ciphertext encrypted with the {\b double columnar transposition (DCT)}. It makes use of the {\b IDP (Index of digraphic potential)} method developed by {\b George Lasry} in 2013, when he successfully solved the famous DCT challenge from {\b Klaus Schmeh}.\line\line A DCT consists of two {\b single-columnar transpositions (SCT)}, each having its own key. The success of the IDP method relies on the fact that it can provide a measurement of the quality of the second key without knowing the first key. By calculating the IDP score for each potential keyphrase in a dictionary, the IDP Analysis component is able to determine a promising candidate. It then undoes the second SCT that results from this keyphrase and produces an intermediate ciphertext, which is basically just a SCT and can easily be solved in a second step with a classic hill climbing attack." />
+    <replacement key="$memo2$" value="If you want to analyze your own ciphertexts and the IDP analysis component does not find the correct key phrase in the provided dictionary, you should try using a different dictionary. The following link is a good source for dictionaries: {\b http://www.ngrams.info/download_coca.asp}" />
   </replacements>
-
 </sample>

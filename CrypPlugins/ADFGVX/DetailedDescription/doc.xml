@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
   <language culture="en" />
+  <language culture="ru" />
   <language culture="de-DE" />
   <introduction lang="en">The ADFGVX encryption algorithm was developed by Fritz Nebel, and it was first employed in spring 1918 by the German army. It is an effective cascading cipher, consisting of a substitution followed by a column transposition.
     <newline />
@@ -11,6 +12,7 @@
     During the second encryption stage (transposition) the ciphertext generated in the first stage is further encoded by means of a column transposition.
     The security of this cipher is based on the fact that the two ciphertext letters substituting every plaintext letter are separated by the transposition, making a frequency analysis of the bigrams useless.
 </introduction>
+  <introduction lang="ru">Алгоритм шифрования ADFGVX был разработан Фрицем Небелем, и он был впервые применен весной 1918 года немецкой армией. Это эффективный каскадный шифр, состоящий из замены, за которым следует перенос столбцов. ADFGVX использует ключ, состоящий из двух частей: пароля подстановки и пароля транспонирования. На основе этих паролей создается матрица замещения и матрица транспонирования. Первый этап шифрования (подстановка) определяет положение каждой буквы открытого текста внутри матрицы и заменяет его индикатором строки и столбца, поэтому каждая буква открытого текста заменяется двумя зашифрованными буквами. Во время второго этапа шифрования (транспонирования) шифротекст, сгенерированный на первом этапе, далее кодируется посредством транспонирования столбцов. Безопасность этого шифра основана на том факте, что две буквы шифрованного текста, заменяющие каждую букву открытого текста, разделены транспозицией, что делает частотный анализ биграмм бесполезным.</introduction>
   <introduction lang="de-DE">
     Das ADFGVX-Verschlüsselungsverfahren wurde von Fritz Nebel entwickelt und ab Frühjahr 1918 von der Deutschen Reichswehr eingesetzt. Das Verfahren ist eine effektive zweistufige Kaskade aus einer Substitution gefolgt von einer Spaltentransposition.
     <newline />
@@ -27,16 +29,14 @@ Instead of ADFGVX you can decide to use the predecessor variant ADFGX which is t
 
 
 </usage>
+  <usage lang="ru">Перетащите компонент ADFGVX в рабочую область и укажите источник данных, который представляет текст, который должен быть зашифрован или дешифрован. Этот ввод является обязательным. В настройках компонента вы можете решить, хотите ли вы шифровать или дешифровать, и вы можете ввести пароли подстановки и транспонирования. Вместо ADFGVX вы можете решить использовать предшествующую версию ADFGX, которая является тем же самым алгоритмом, но с 25-буквенным алфавитом открытого текста и буквенным алфавитом с 5 буквами.</usage>
   <usage lang="de-DE">
     Ziehen Sie die ADFGVX-Komponente auf den Arbeitsbereich und geben Sie eine Datenquelle an, die die zu verschlüsselnden oder entschlüsselnden Daten repräsentiert. Die Angabe dieser Datenquelle ist erforderlich.
     <newline />
     In den Einstellungen für die Komponente stellen Sie ein, ob verschlüsselt oder entschlüsselt werden soll, und Sie können das Substitutions- sowie Transpositions-Passwort angeben. Anstatt ADFGVX kann auch die Vorgängervariante ADFGX eingestellt werden, die denselben Algorithmus verwendet, allerdings basierend auf einem Klartextalphabet aus 25 Buchstaben (statt 36) und einem Geheimtextalphabet aus 5 Buchstaben (statt 6).
   </usage>
-  <presentation lang="en">
-</presentation>
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://en.wikipedia.org/wiki/ADFGVX_cipher" lang="en" />
@@ -45,5 +45,4 @@ Instead of ADFGVX you can decide to use the predecessor variant ADFGX which is t
       <caption lang="de-DE">ADFGVX in der Wikipedia</caption>
     </linkReference>
   </references>
-  
 </documentation>

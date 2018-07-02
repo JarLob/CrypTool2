@@ -97,6 +97,9 @@
     </Compile>
     <Compile Include="UserCode.cs" />
     <Compile Include="UserCodeSettings.cs" />
+    <EmbeddedResource Include="Properties\Resources.ru.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CrypPluginBase\CrypPluginBase.csproj">

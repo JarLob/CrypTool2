@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Factorization with NFSFactorizer</title>
+  <title lang="ru">Факторизация с помощью NFSFactorizer</title>
   <summary lang="en">Usage of the <i>NFSFactorizer</i></summary>
+  <summary lang="ru">Использование NFSFactorizer</summary>
   <description lang="en">This template shows the usage of the <i>NFSFactorizer</i> (GNFS).</description>
+  <description lang="ru">Этот шаблон показывает использование NFSFactorizer (GNFS).</description>
   <keywords>Prime, sieve, Factorization, ggnfs, yafu</keywords>
-
+  <keywords lang="ru">Prime, сито, факторизация, ggnfs, yafu</keywords>
   <title lang="de">Faktorisierung mit dem NFSFactorizer</title>
   <summary lang="de">Benutzung des <i>NFSFactorizer</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung des <i>NFSFactorizer</i>.</description>
   <keywords lang="de">Primzahl, Faktorisierung, Zerlegung, Sieb</keywords>
-
   <icon file="NFSFactorizer.png" />
   <relevantPlugins>
     <plugin name="NFSFactorizer" />
   </relevantPlugins>
-
 </sample>

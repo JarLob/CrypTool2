@@ -1,88 +1,53 @@
-<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-
+  <language culture="en" />
+  <language culture="ru" />
   <introduction lang="en">
     Huffman's algorithm is a lossless data compression algorithm. It produces an optimal prefix-free code of variable length, based on the
     frequencies of characters in the input data (more frequent characters will be represented with less bits and vice versa). It was developed
     by David A. Huffman while he was a Ph.D. student at MIT. Today it is used in other compression algorithms such as DEFLATE and PKZIP, as well as
     some multimedia codecs like JPEG and MP3.
-    <newline/>  
-    <newline/>
-    <section headline="Significance of compression in cryptography">
-    <newline/>
+    <newline /><newline /><section headline="Significance of compression in cryptography"><newline />
       The only absolutely secure cipher is the one-time pad, assuming the following conditions are fulfilled:      
-      <enum>
-        <item>The key is truly random</item>
-        <item>It is as long as the plaintext</item>
-        <item>It is used only once</item>
-        <item>It is kept secret</item>
-      </enum>      
+      <enum><item>The key is truly random</item><item>It is as long as the plaintext</item><item>It is used only once</item><item>It is kept secret</item></enum>      
       Given the difficulty of implementing such a system, certain compromises had to be made. With modern ciphers, where we traded absolute secrecy for
       practicality, the key is pseudorandom and is shorter than the plaintext. Such cipher is computationaly secure, but theoretically it is possible
       to break it. Unicity distance is a theoretical measure of the amount of ciphertext needed to unambiguously determine the correct key and is
       inversely proportional to plaintext redundancy. By compressing data prior to encryption, we increase unicity distance, as well as reduce the
       amount of data to be encrypted. Unicity distance of one-time pad is infinite.
-    </section>        
-  </introduction>
-
+    </section></introduction>
+  <introduction lang="ru">Алгоритм Хаффмана - алгоритм сжатия данных без потерь. Он создает оптимальный без префикса код переменной длины, основанный на частотах символов во входных данных (более частые символы будут представлены с меньшим количеством бит и наоборот). Он был разработан Дэвидом А. Хаффманом, когда он был доктором философии. студент Массачусетского технологического института. Сегодня он используется в других алгоритмах сжатия, таких как DEFLATE и PKZIP, а также некоторые мультимедийные кодеки, такие как JPEG и MP3. Единственный абсолютно безопасный шифр - это одноразовый пэд, предполагающий выполнение следующих условий: ключ действительно случайный. До тех пор, пока plaintextIt используется только один раз. Он хранится в тайне. Учитывая сложность реализации такой системы, некоторые компромиссы должны были сделайте. С современными шифрами, где мы торгуем абсолютной секретностью для практичности, ключ псевдослучайный и короче, чем открытый текст. Такой шифр является безопасным, но теоретически его можно сломать. Расстояние единства - это теоретическая мера объема шифрованного текста, необходимого для однозначного определения правильного ключа и обратно пропорциональна избыточности открытого текста. Сжав данные до шифрования, мы увеличиваем расстояние однозначности, а также уменьшаем количество данных, подлежащих шифрованию. Расстояние единства одноразового прохода бесконечно.</introduction>
   <usage lang="en">
     You can compress anything using 'Binary' presentation format (it uses code page 437, an eight-bit character set), but you may get worse results
     than compressing data in its original form (for e.g. decoding UTF-32 encoded text to code page 437 will result in 4 times longer text).
-    <newline/>
-    <newline/>
-    <section headline="Compression">
-    <newline/>
+    <newline /><newline /><section headline="Compression"><newline />
       Huffman compression involves the following steps:      
-      <enum>
-        <item>Calculate character frequencies</item>
-        <item>Create a node for each characacter-frequency pair and add it to a priority queue</item>
-        <item>Combine two nodes with smallest frequencies until there is only one node left - the Huffman tree</item>
-        <item>Create a code table by traversing the tree to each character and note down the paths taken (0 for left turn, 1 for rigth turn)</item>
-        <item>Represent characters using their newly created codewords</item>
-      </enum>      
+      <enum><item>Calculate character frequencies</item><item>Create a node for each characacter-frequency pair and add it to a priority queue</item><item>Combine two nodes with smallest frequencies until there is only one node left - the Huffman tree</item><item>Create a code table by traversing the tree to each character and note down the paths taken (0 for left turn, 1 for rigth turn)</item><item>Represent characters using their newly created codewords</item></enum>      
       Below is an example tree generated from the sentence "this is an example of a huffman tree":
-      <newline/>
-      <img src="Huffman/DetailedDescription/example_tree.png"></img>
-      <newline/>
-      <newline/>
+      <newline /><img src="Huffman/DetailedDescription/example_tree.png"></img><newline /><newline />
       Note that compressing small amounts of data and/or high entropy data will result in a bigger compressed size. That is because we need to have
       the tree in order to be able to decompress, so it is prepended to the compressed data. Also, lossless data compression relies on redundancy
       in order to be effective. That fact is the reason why we do compression before encryption (since good encryption should produce seemingly random
       ciphertext).
-      <newline/>
-	 <newline/>
-    </section>    
-    <section headline="Decompression">
-	<newline/>
+      <newline /><newline /></section><section headline="Decompression"><newline />
       Process of decompression is simply a matter of reading compressed data like a "road map" to the appropriate characters in the tree. It involves
       the following steps:
-      <enum>
-        <item>Start from the root node</item>
-        <item>Read next bit from the compressed data and go left if its 0 - otherwise go right</item>        
-        <item>Repeat step 2 until you hit a leaf node and output the character contained in it</item>
-        <item>Repeat steps 1-3 until you've read all compressed data</item>
-      </enum>      
-    </section>    
-  </usage>
-
+      <enum><item>Start from the root node</item><item>Read next bit from the compressed data and go left if its 0 - otherwise go right</item><item>Repeat step 2 until you hit a leaf node and output the character contained in it</item><item>Repeat steps 1-3 until you've read all compressed data</item></enum></section></usage>
+  <usage lang="ru">Вы можете сжимать все, используя формат представления «Двоичный» (он использует кодовую страницу 437, восьмибитовый набор символов), но вы можете получить худшие результаты, чем сжатие данных в исходной форме (например, для декодирования кодированного текста UTF-32 на кодовую страницу 437 приведет к увеличению текста в 4 раза). Сжатие Хаффмана включает в себя следующие шаги: Вычисление символьных частот. Создайте узел для каждой пары пара характеристик и добавьте его в очередь приоритетов. Соедините два узла с наименьшими частотами, пока не останется только один узел. Дерево Хаффмана. Создайте таблицу кодов, пройдя дерево до каждого символ и запишите пройденные пути (0 для левого поворота, 1 для поворота) Представьте символы, используя их вновь созданные кодовые слова Ниже приведен пример дерева, сгенерированного из предложения «это пример дерева хаффмана»: обратите внимание, что сжатие небольших количеств данных и / или данных с высокой энтропией приведет к большему сжатому размеру. Это связано с тем, что нам нужно иметь дерево, чтобы иметь возможность распаковывать, поэтому оно добавляется к сжатым данным. Кроме того, сжатие данных без потерь основано на избыточности, чтобы быть эффективным. Этот факт является причиной того, что мы делаем сжатие перед шифрованием (поскольку хорошее шифрование должно создавать, по-видимому, случайный зашифрованный текст). Процесс декомпрессии - это просто вопрос чтения сжатых данных, таких как «дорожная карта», с соответствующими символами в дереве. Он включает в себя следующие шаги: Начните с корневого узла. Прочтите следующий бит из сжатых данных и идите влево, если его 0 - в противном случае перейдите вправо. Повторите шаг 2, пока вы не нажмете на листовой узел и не выпустите символ, содержащийся в нем. Повторите шаги 1-3, пока вы не читать все сжатые данные</usage>
   <presentation lang="en">
     In the presentation view, you can see general information about the effectiveness of compression, as well as code table used in the process.
   </presentation>
-
+  <presentation lang="ru">В представлении презентации вы можете увидеть общую информацию об эффективности сжатия, а также таблицу кодов, используемую в этом процессе.</presentation>
   <references>
     <linkReference>
-      <link lang="en" url="https://en.wikipedia.org/wiki/Huffman_coding"/>
+      <link lang="en" url="https://en.wikipedia.org/wiki/Huffman_coding" />
       <caption lang="en">Huffman coding (Wikipedia)</caption>
-      <link lang="de-DE" url="https://de.wikipedia.org/wiki/Huffman-Kodierung"/>
-      <caption lang="de-DE">Huffman-Kodierung (Wikipedia)</caption>      
+      <link lang="de-DE" url="https://de.wikipedia.org/wiki/Huffman-Kodierung" />
+      <caption lang="de-DE">Huffman-Kodierung (Wikipedia)</caption>
     </linkReference>
-    
-    <linkReference>      
-      <link lang="en" url="https://en.wikipedia.org/wiki/Unicity_distance"/>
+    <linkReference>
+      <link lang="en" url="https://en.wikipedia.org/wiki/Unicity_distance" />
       <caption lang="en">Unicity distance (Wikipedia)</caption>
     </linkReference>
   </references>
-
 </documentation>

@@ -1,18 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-
   <language culture="en" />
+  <language culture="ru" />
   <language culture="de-DE" />
-
   <introduction lang="en">
     This component checks a random number generator on its randomness according to the <i>Dieharder</i> tests.
   </introduction>
-
+  <introduction lang="ru">Этот компонент проверяет генератор случайных чисел на его случайность в соответствии с тестами Dieharder.</introduction>
   <introduction lang="de-DE">
     Diese Komponente testet den Output eines Zufallszahlengenerators auf seine Zufälligkeit mittels der <i>Dieharder</i>-Testbatterie.
   </introduction>
-
   <usage lang="en">
     <list>
       <item>Put a random number generator on the workspace and connect its output with the input of this component.</item>
@@ -20,7 +18,6 @@
       <item>Connect the output of this component with a TextOutput component.</item>
       <item>Start the workspace and you will get information about whether or not the generator was random according to the selected test.</item>
     </list>
-    
     <section headline="Minimum amount of data needed for each test:">
       <table border="1">
         <tr>
@@ -107,14 +104,14 @@
         <tr>
           <td>RGB Bit Distribution Test</td>
           <td>
-            Depends on the value of n-tuple: <newline/> 20,000,000 * n-tuple + 100
+            Depends on the value of n-tuple: <newline /> 20,000,000 * n-tuple + 100
           </td>
           <td>Yes</td>
         </tr>
         <tr>
           <td>RGB Generalized Minimum Distance Test</td>
           <td>
-            Depends on the value of n-tuple: <newline/> 10,000,000 * n-tuple
+            Depends on the value of n-tuple: <newline /> 10,000,000 * n-tuple
           </td>
           <td>Yes</td>
         </tr>
@@ -157,7 +154,7 @@
       </table>
     </section>
   </usage>
-
+  <usage lang="ru">Поместите генератор случайных чисел в рабочую область и соедините его вывод с входом этого компонента. Выберите один из тестов случайности, перечисленных в настройках этого компонента. Подключите выход этого компонента к компоненту TextOutput. Запустите рабочую область, и вы будет получать информацию о том, был ли генератор случайным в соответствии с выбранным тестом. Имя теста Количество нужных номеров (каждый 4 байта) Требуется дополнительная информация о n-кортеже? Динардные дни рождения Test3,840,006Diehard OPERM5 Test100,000,500Diehard 32x32 Binary Rank Test128, 000,000Diehard 6x8 Двоичный тест ранга 60 000 000 Тест на битверт-тест26,214,600 Тест на ДНК-диверсия65,537,100 (может занять много времени) Diehard Count 1s (stream) Test6,400,100Diehard Count 1s Test (byte) 128,000,000 Diehard Parking Lot Test2,400,000 Diehard Minimum Distance (2d Circle) Test1,600,000 Испытательная 3D-сфера (минимальное расстояние) Test1,200,000 Испытание на сдавливание плотной оболочки230,640,860 Испытание на сухие испытания19,900 Тесты на прохождение Diehard10,000,000 Diehard Craps Test135, 012,382Marsaglia и Tsang GCD Test2,000,000,000 (может занять много времени) STS Monobit Test10,000,000STS Пробег Test10,000,000STS Последовательный тест (обобщенный) 10 000 000 (может занять много времени) RGB Bit Distribution Test Зависит от значения n- кортеж: 20 000 000 * n-кортеж + 100 YesRGB Обобщенный минимальный дистанционный тест Зависит от значения n-кортежа: 10 000 000 * n-кортежей YesRGB Перестановки Test50,000,000RGB Тест с отложенной суммой 100,000,000RGB Колмогоров-Смирнов Test10,000,000Byte Distribution153,600,000 DAB DCT12,800,000DAB Испытание на заполнение дерева112,989,058DAB Заливка дерева 2 Тест29,216,429DAB Монобит 2 Тест65 000 000 Дни рождения Детеарда Test3,400,000</usage>
   <usage lang="de-DE">
     <list>
       <item>Erstelle einen Zufallszahlengenerator und verbinde dessen Ausgabe mit dem Eingang dieser Komponente.</item>
@@ -165,7 +162,6 @@
       <item>Verbinde den Ausgang dieser Komponente mit einer Textausgabe.</item>
       <item>Starte das Programm und erhalte die Information über das Bestehen des Generators entsprechend des ausgewählten Tests.</item>
     </list>
-
     <section headline="Benötigte Anzahl an Zahlen pro Test:">
       <table border="1">
         <tr>
@@ -252,14 +248,14 @@
         <tr>
           <td>RGB Bit Distribution Test</td>
           <td>
-            Abhängig vom eingestellten n-Tupel-Wert:<newline/> 20.000.000 * n-Tupel + 100
+            Abhängig vom eingestellten n-Tupel-Wert:<newline /> 20.000.000 * n-Tupel + 100
           </td>
           <td>Yes</td>
         </tr>
         <tr>
           <td>RGB Generalized Minimum Distance Test</td>
           <td>
-            Abhängig vom eingestellten n-Tupel-Wert:<newline/> 10.000.000 * n-Tupel
+            Abhängig vom eingestellten n-Tupel-Wert:<newline /> 10.000.000 * n-Tupel
           </td>
           <td>Yes</td>
         </tr>
@@ -302,13 +298,8 @@
       </table>
     </section>
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://www.phy.duke.edu/~rgb/General/dieharder.php" lang="en" />
@@ -317,5 +308,4 @@
       <caption lang="de-DE">DieHarder-Homepage von Robert G. Brown (englisch)</caption>
     </linkReference>
   </references>
-  
 </documentation>

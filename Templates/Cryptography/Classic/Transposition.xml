@@ -1,40 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Transposition Cipher</title>
+  <title lang="ru">Шифрование транспонирования</title>
   <summary lang="en">Usage of the <i>Transposition</i> cipher</summary>
+  <summary lang="ru">Использование шифрования Transposition</summary>
   <description lang="en">In cryptography, a transposition cipher is a method of encryption by which the positions held by units of plaintext (which are commonly characters or groups of characters) are shifted according to a regular system, so that the ciphertext constitutes a permutation of the plaintext. That is, the order of the units is changed. Mathematically a bijective function is used on the characters' positions to encrypt and an inverse function to decrypt.<newline /><newline />
 Source: <external ref="http://en.wikipedia.org/wiki/Transposition_cipher" /></description>
+  <description lang="ru">В криптографии шифр транспонирования является методом шифрования, посредством которого позиции, занимаемые единицами открытого текста (которые обычно являются символами или группами символов), смещаются в соответствии с обычной системой, так что зашифрованный текст представляет собой перестановку открытого текста. То есть порядок единиц изменяется. Математически биективная функция используется на позиции символов для шифрования и обратная функция для дешифрования. Источник:</description>
   <keywords>Transposition</keywords>
-
+  <keywords lang="ru">перестановка</keywords>
   <title lang="de">Transpositions-Chiffre</title>
   <summary lang="de">Benutzung der <i>Transpositions</i>-Chiffre</summary>
   <description lang="de">In der Kryptographie ist die Transposition eine der beiden grundlegenden Verschlüsselungsklassen. Dabei werden die Zeichen einer Botschaft (des Klartextes) umsortiert. Jedes Zeichen bleibt zwar unverändert erhalten, jedoch wird die Stelle, an der es steht, geändert. Dies steht im Gegensatz zu der Klasse der (monoalphabetischen oder polyalphabetischen) Substitution, bei der jedes Zeichen des Klartextes zwar seinen Platz behält, jedoch durch ein anderes Zeichen ersetzt („substituiert“) wird.<newline /><newline />
 Quelle: <external ref="http://de.wikipedia.org/wiki/Transposition_(Kryptographie)" /></description>
   <keywords lang="de">Transposition</keywords>
-
   <icon file="Transposition.png" />
   <relevantPlugins>
     <plugin name="Transposition" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$Transposition (Encryption)$" value="Transposition (Verschlüsselung)"/>
-    <replacement key="$Transposition (Decryption)$" value="Transposition (Entschlüsselung)"/>
- </replacements>
- <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$Converter$" value="Converter"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$Transposition (Encryption)$" value="Transposition (Encryption)"/>
-    <replacement key="$Transposition (Decryption)$" value="Transposition (Decryption)"/>
- </replacements>
-
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$Converter$" value="Konvertierer" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Transposition (Encryption)$" value="Transposition (Verschlüsselung)" />
+    <replacement key="$Transposition (Decryption)$" value="Transposition (Entschlüsselung)" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$Converter$" value="преобразование" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Transposition (Encryption)$" value="Транспонирование (шифрование)" />
+    <replacement key="$Transposition (Decryption)$" value="Транспонирование (дешифрование)" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$Converter$" value="Converter" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Transposition (Encryption)$" value="Transposition (Encryption)" />
+    <replacement key="$Transposition (Decryption)$" value="Transposition (Decryption)" />
+  </replacements>
 </sample>

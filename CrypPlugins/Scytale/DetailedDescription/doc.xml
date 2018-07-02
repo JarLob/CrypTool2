@@ -1,45 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     The Scytale is a classic transposition cipher. It was the first military encryption algorithm, and it was used by the Spartans as early as the fifth century.
-    <newline/>
+    <newline />
     The Scytale is a wooden stick wrapped by a strip of leather or parchment. The sender writes his message along the wooden stick and then unwraps the strip. After that the strip seems to contain only a pointless series of letters. In order to recover the message, the receiver simply wraps the strip around a Scytale of the same diameter as the Scytale of the sender.
     Therefore, the key is a Scytale with the correct diameter or the correct number of edges, respectively.
   </introduction>
-
+  <introduction lang="ru">Scytale - классический транспозиционный шифр. Это был первый военный алгоритм шифрования, и он использовался спартанцами уже в пятом веке. Scytale - деревянная палочка, обернутая полосой из кожи или пергамента. Отправитель пишет свое сообщение вдоль деревянной палочки, а затем разворачивает полосу. После этого полоса, кажется, содержит только бессмысленную последовательность букв. Чтобы восстановить сообщение, приемник просто обертывает полосу вокруг Scytale того же диаметра, что и Scytale отправителя. Поэтому ключ - это Scytale с правильным диаметром или правильным количеством ребер соответственно.</introduction>
   <introduction lang="de-DE">
     Die Skytale ist eine klassische Transpositions-Verschlüsselung. Sie war das erste militärische Kryptographie-Verfahren. Es wurde von den Spartanern schon im 5. Jahrhundert gebraucht.
-    <newline/>
+    <newline />
     Die Skytale ist ein Holzstab, um den ein Streifen Leder oder Pergament gewickelt wird. Der Sender schreibt die Nachricht der Länge des Stabes nach auf den Streifen und wickelt ihn dann ab. Danach scheint er nur eine sinnlose Aneinanderreihung von Buchstaben zu enthalten. Um die Nachricht wiederherzustellen, wickelt der Empfänger den Lederstreifen einfach um eine Skytale mit demselben Durchmesser, den der Sender benutzt hatte.
     Der Schlüssel ist also eine Skytale mit dem richtigen Durchmesser bzw. der richtigen Anzahl von Kanten.
   </introduction>
-
   <usage lang="en">
     Drag the Scytale component onto the workspace and specify a data source that represents the text to be encrypted or decrypted. This input is mandatory.
-    <newline/>
+    <newline />
     In the component settings you can decide whether you want to encrypt or decrypt, and you can enter the key (the number of edges).
-    <newline/>
+    <newline />
     If you set the optional key input, the key in the default component settings will be overridden.
   </usage>
-
+  <usage lang="ru">Перетащите компонент Scytale в рабочую область и укажите источник данных, который представляет текст, который должен быть зашифрован или дешифрован. Этот ввод является обязательным. В настройках компонента вы можете решить, хотите ли вы шифровать или дешифровать, и вы можете ввести ключ (количество ребер). Если вы установите дополнительный ввод ключа, ключ в настройках компонента по умолчанию будет переопределен.</usage>
   <usage lang="de-DE">
     Ziehen Sie die Skytale-Komponente auf den Arbeitsbereich und geben Sie eine Datenquelle an, die die zu verschlüsselnden oder entschlüsselnden Daten repräsentiert. Die Angabe dieser Datenquelle ist erforderlich.
-    <newline/>
+    <newline />
     In den Einstellungen für die Komponente stellen Sie ein, ob verschlüsselt oder entschlüsselt werden soll, und Sie können den Schlüssel angeben (die Kantenanzahl).
-    <newline/>
+    <newline />
     Falls Sie den optionalen Schlüssel-Eingang setzen, wird der Schlüssel in den Standardeinstellungen der Komponente ignoriert.
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
       <link url="http://en.wikipedia.org/wiki/Skytale" lang="en" />
@@ -48,5 +41,4 @@
       <caption lang="de-DE">Skytale in Wikipedia</caption>
     </linkReference>
   </references>
-  
 </documentation>

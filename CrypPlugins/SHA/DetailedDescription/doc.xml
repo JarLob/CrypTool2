@@ -1,47 +1,38 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     SHA (secure hash algorithm) is a group of cryptographic hash functions that were published by the National Institute of Standards and Technology (NIST).
     This component implements the variants SHA-1, SHA-256, SHA-384 and SHA-512.
     SHA-1 calculates a hash value of 160 bits (20 bytes), SHA-256 of 256 bits (32 bytes), SHA-384 of 384 bits (48 bytes) and SHA-512 of 512 bits (64 bytes).
     For SHA-1 and SHA-256, the input may be up to 2^64 bits long, for SHA-384 and SHA-512 it may be up to 2^128 bits long.
   </introduction>
-
+  <introduction lang="ru">SHA (безопасный алгоритм хеширования) - это группа криптографических хэш-функций, опубликованных Национальным институтом стандартов и технологий (NIST). Этот компонент реализует варианты SHA-1, SHA-256, SHA-384 и SHA-512. SHA-1 вычисляет хэш-значение 160 бит (20 байтов), SHA-256 из 256 бит (32 байта), SHA-384 из 384 бит (48 байт) и SHA-512 из 512 бит (64 байта). Для SHA-1 и SHA-256 вход может составлять до 2 ^ 64 бит, для SHA-384 и SHA-512 он может быть длиной до 2 × 128 бит.</introduction>
   <introduction lang="de-DE">
     SHA ("secure hash algorithm", englisch für "sicherer Hash-Algorithmus") bezeichnet eine Gruppe kryptologischer Hashfunktionen, die vom National Institute of Standards and Technology (NIST) veröffentlicht wurden.
     Diese Komponente implementiert die Varianten SHA-1, SHA-256, SHA-384 und SHA-512.
     SHA-1 erzeugt einen Hashwert von 160 Bits (20 Bytes) Länge, SHA-256 von 256 Bits (32 Bytes), SHA-384 von 384 Bits (48 Bytes), und SHA-512 von 512 Bits (64 Bytes).
     Für SHA-1 und SHA-256 beträgt die maximale Länge der Eingabe 2^64 Bits, und für SHA-384 und SHA-512 beträgt sie 2^128 Bits.
   </introduction>
-
   <usage lang="en">
     In the settings of the component you can select the SHA version you want to use.
     The component provides the variants SHA-1, SHA-256, SHA-384 und SHA-512.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The component expects the data of which to calculate the hash value as a data stream on the input labeled "Input stream".
     The resulting hash value is provided at the outputs of the component as a byte array and as a data stream.
   </usage>
-
+  <usage lang="ru">В настройках компонента вы можете выбрать версию SHA, которую хотите использовать. Компонент предоставляет варианты SHA-1, SHA-256, SHA-384 и SHA-512. Компонент ожидает, что данные для вычисления хеш-значения в качестве потока данных на входе с надписью «Входной поток». Полученное хеш-значение предоставляется на выходах компонента в виде байтового массива и в виде потока данных.</usage>
   <usage lang="de-DE">
     Wählen Sie in den Einstellungen der Komponente die SHA-Version, die Sie verwenden möchten.
     Es stehen die Varianten SHA-1, SHA-256, SHA-384 und SHA-512 zur Verfügung.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Die Komponente erwartet die Daten, deren Hashwert berechnet werden soll, als Datenstrom am Eingang "Eingabedatenstrom".
     Der resultierende Hashwert wird an den Ausgängen der Komponente als Datenstrom und als Byte-Array bereitgestellt.
   </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference id="wikipedia">
       <link url="http://de.wikipedia.org/wiki/Secure_Hash_Algorithm" lang="en" />
@@ -56,5 +47,4 @@
       <caption lang="de-DE">FIPS: Secure Hash Standard (PDF, englisch)</caption>
     </linkReference>
   </references>
-  
 </documentation>

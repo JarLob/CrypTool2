@@ -1,37 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Solitaire Brute-force Analysis</title>
+  <title lang="ru">Анализ грубой силы пасьянса</title>
   <summary lang="en">Cryptanalysis of the <i>Solitaire</i> cipher using brute-force</summary>
+  <summary lang="ru">Криптоанализ шифрования Solitaire с использованием грубой силы</summary>
   <description lang="en">This template shows how to analyse a ciphertext encrypted with the <i>Solitaire</i> cipher using a dictionary attack. Any dictionary can be used for both the keywords to try as well as for the word recognition.</description>
+  <description lang="ru">Этот шаблон показывает, как анализировать шифрованный текст, зашифрованный с помощью шифрования Solitaire, используя атаку словаря. Любой словарь может использоваться как для ключевых слов, так и для распознавания слов.</description>
   <keywords>Dictionary, Analysis, Attack</keywords>
-
+  <keywords lang="ru">Словарь, анализ, атака</keywords>
   <title lang="de">Solitaire Brute-Force-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Solitaire</i>-Verschlüsselung mit Brute-Force</summary>
   <description lang="de">Diese Vorlage zeigt, wie ein mit der <i>Solitaire</i>-Verschlüsselung verschlüsselter Text mit einem Wörterbuch-Angriff analysiert werden kann. Die Wörterbücher für die zu testenden Schlüsselwörter und für die Texterkennung können frei gewählt werden.</description>
   <keywords lang="de">Wörterbuch, Angriff</keywords>
-
   <icon file="solitaireanalyzer.jpg" />
   <relevantPlugins>
     <plugin name="CryptoolDictionary" />
     <plugin name="SolitaireAnalyser" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
-    <replacement key="$Keyword$" value="Schlüsselwort"/>
-    <replacement key="$Word dictionary$" value="Nachrichten-Wörterbuch"/>
-    <replacement key="$Key dictionary$" value="Schlüssel-Wörterbuch"/>
-    <replacement key="$SolitaireAnalyser$" value="Solitaire-Analysierer"/>
- </replacements>
- <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
-    <replacement key="$Keyword$" value="Keyword"/>
-    <replacement key="$Word dictionary$" value="Word dictionary"/>
-    <replacement key="$Key dictionary$" value="Key dictionary"/>
-    <replacement key="$SolitaireAnalyser$" value="SolitaireAnalyzer"/>
- </replacements>
-
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
+    <replacement key="$Keyword$" value="Schlüsselwort" />
+    <replacement key="$Word dictionary$" value="Nachrichten-Wörterbuch" />
+    <replacement key="$Key dictionary$" value="Schlüssel-Wörterbuch" />
+    <replacement key="$SolitaireAnalyser$" value="Solitaire-Analysierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
+    <replacement key="$Keyword$" value="ключевое слово" />
+    <replacement key="$Word dictionary$" value="Новости Словарь" />
+    <replacement key="$Key dictionary$" value="Ключевой словарь" />
+    <replacement key="$SolitaireAnalyser$" value="Пасьянс-Analysierer" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
+    <replacement key="$Keyword$" value="Keyword" />
+    <replacement key="$Word dictionary$" value="Word dictionary" />
+    <replacement key="$Key dictionary$" value="Key dictionary" />
+    <replacement key="$SolitaireAnalyser$" value="SolitaireAnalyzer" />
+  </replacements>
 </sample>

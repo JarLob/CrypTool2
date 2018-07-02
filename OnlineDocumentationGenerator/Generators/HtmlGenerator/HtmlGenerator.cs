@@ -19,13 +19,13 @@ namespace OnlineDocumentationGenerator.Generators.HtmlGenerator
 {
     public class HtmlGenerator : Generator
     {
-        private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }/*, { "ru", "Русский" }*/ };
-        private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }/*, { "ru", "ru.png" } */};
+        private static readonly Dictionary<string, string> _languagePresentationString = new Dictionary<string, string>() { { "en", "English" }, { "de", "Deutsch" }, { "ru", "Русский" } };
+        private static readonly Dictionary<string, string> _languagePresentationIcon = new Dictionary<string, string>() { { "en", "en.png" }, { "de", "de.png" }, { "ru", "ru.png" } };
 
         private static readonly Dictionary<string, Dictionary<string, string>> _languagePresentation = new Dictionary<string, Dictionary<string, string>> {
             { "en", new Dictionary<string, string> { { "Name", "English" }, { "Icon", "en.png" } } },
-            { "de", new Dictionary<string, string> { { "Name", "Deutsch" }, { "Icon", "de.png" } } }/*,
-            { "ru", new Dictionary<string, string> { { "Name", "Русский" }, { "Icon", "ru.png" } } }*/
+            { "de", new Dictionary<string, string> { { "Name", "Deutsch" }, { "Icon", "de.png" } } },
+            { "ru", new Dictionary<string, string> { { "Name", "Русский" }, { "Icon", "ru.png" } } }
         };
         
         private ObjectConverter _objectConverter;

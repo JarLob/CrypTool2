@@ -1,51 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Keccak PRNG</title>
+  <title lang="ru">Случайность PRNG</title>
   <summary lang="en">Usage of <i>Keccak</i> as a PRNG</summary>
+  <summary lang="ru">Использование выстрела в качестве PRNG</summary>
   <description lang="en">This template shows how the <i>Keccak</i> component can be used as a pseudorandom number generator.</description>
+  <description lang="ru">Этот шаблон показывает, как компонент Keccak может использоваться как генератор псевдослучайных чисел.</description>
   <keywords>keccak, prng, random</keywords>
-
+  <keywords lang="ru">случайный, случайный, случайный</keywords>
   <title lang="de">Keccak-PRNG</title>
   <summary lang="de">Benutzung von <i>Keccak</i> als PRNG</summary>
   <description lang="de">Diese Vorlage zeigt, wie die <i>Keccak</i>-Komponente als Pseudozufallszahlengenerator eingesetzt werden kann.</description>
   <keywords lang="de">keccak, prng, random</keywords>
-
   <icon file="Keccak.png" />
   <relevantPlugins>
     <plugin name="Keccak" />
     <plugin name="PRESENT" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
-    <replacement key="$Present Encrypt$" value="Present-Verschlüsselung"/>
-    <replacement key="$Present Decrypt$" value="Present-Entschlüsselung"/>
-    <replacement key="$Random Key$" value="Zufalls-Schlüssel"/>
-    <replacement key="$Random IV$" value="Zufalls-IV"/>
-    <replacement key="$StringEncoder$" value="String-Kodierer"/>
-    <replacement key="$Seed for the random key$" value="Seed für den Zufalls-Schlüssel"/>
-    <replacement key="$Seed for the random IV$" value="Seed für den Zufalls-IV"/>
-    <replacement key="$Keccak used as PRNG$" value="Verwendung von Keccak als PRNG"/>
-	 <replacement key="$text$" value="Keccak kann als Pseudozufallszahlen-Generator (PRNG) verwendet werden. In diesem Beispiel werden zwei Instanzen von Keccak zur Erzeugung von Zufallsdaten benutzt: einen Schlüssel und einen Initialisierungsvektor für die Present-Chiffre."/>
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Converter$" value="Konvertierer" />
+    <replacement key="$Present Encrypt$" value="Present-Verschlüsselung" />
+    <replacement key="$Present Decrypt$" value="Present-Entschlüsselung" />
+    <replacement key="$Random Key$" value="Zufalls-Schlüssel" />
+    <replacement key="$Random IV$" value="Zufalls-IV" />
+    <replacement key="$StringEncoder$" value="String-Kodierer" />
+    <replacement key="$Seed for the random key$" value="Seed für den Zufalls-Schlüssel" />
+    <replacement key="$Seed for the random IV$" value="Seed für den Zufalls-IV" />
+    <replacement key="$Keccak used as PRNG$" value="Verwendung von Keccak als PRNG" />
+    <replacement key="$text$" value="Keccak kann als Pseudozufallszahlen-Generator (PRNG) verwendet werden. In diesem Beispiel werden zwei Instanzen von Keccak zur Erzeugung von Zufallsdaten benutzt: einen Schlüssel und einen Initialisierungsvektor für die Present-Chiffre." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Converter$" value="преобразование" />
+    <replacement key="$Present Encrypt$" value="Присутствует шифрование" />
+    <replacement key="$Present Decrypt$" value="настоящее дешифрования" />
+    <replacement key="$Random Key$" value="Произвольный ключ" />
+    <replacement key="$Random IV$" value="Случайная IV" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
+    <replacement key="$Seed for the random key$" value="Семя для случайного ключа" />
+    <replacement key="$Seed for the random IV$" value="Семя для шанса IV" />
+    <replacement key="$Keccak used as PRNG$" value="Использование Keccak как PRNG" />
+    <replacement key="$text$" value="Keccak может использоваться как генератор псевдослучайных чисел (PRNG). В этом примере два экземпляра Keccak используются для генерации случайных данных: ключ и вектор инициализации для настоящего шифра." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$Converter$" value="Converter"/>
-    <replacement key="$Present Encrypt$" value="Present Encrypt"/>
-    <replacement key="$Present Decrypt$" value="Present Decrypt"/>
-    <replacement key="$Random Key$" value="Random Key"/>
-    <replacement key="$Random IV$" value="Random IV"/>
-    <replacement key="$StringEncoder$" value="String Encoder"/>
-    <replacement key="$Seed for the random key$" value="Seed for the random key"/>
-    <replacement key="$Seed for the random IV$" value="Seed for the random IV"/>
-    <replacement key="$Keccak used as PRNG$" value="Keccak used as PRNG"/>
-	 <replacement key="$text$" value="Keccak can be used as a pseudorandom number generator. In this example, two instances of Keccak are used to generate pseudorandom data, a key and an initialization vector for the PRESENT cipher."/>
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$Converter$" value="Converter" />
+    <replacement key="$Present Encrypt$" value="Present Encrypt" />
+    <replacement key="$Present Decrypt$" value="Present Decrypt" />
+    <replacement key="$Random Key$" value="Random Key" />
+    <replacement key="$Random IV$" value="Random IV" />
+    <replacement key="$StringEncoder$" value="String Encoder" />
+    <replacement key="$Seed for the random key$" value="Seed for the random key" />
+    <replacement key="$Seed for the random IV$" value="Seed for the random IV" />
+    <replacement key="$Keccak used as PRNG$" value="Keccak used as PRNG" />
+    <replacement key="$text$" value="Keccak can be used as a pseudorandom number generator. In this example, two instances of Keccak are used to generate pseudorandom data, a key and an initialization vector for the PRESENT cipher." />
   </replacements>
-
 </sample>

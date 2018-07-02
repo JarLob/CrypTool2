@@ -1,39 +1,29 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     Due to the simplicity of its key schedule, using the same 8 key bytes in each round, Treyfer was one of the first ciphers shown to be susceptible to a slide attack.
     This cryptanalysis, which is independent of the number of rounds and the choice of the S-box, requires 2^32 known plaintexts and the time complexity of 2^44 Treyfer encryptions.
   </introduction>
-  
-  <introduction lang="de-DE">    
-  </introduction>
-
+  <introduction lang="ru">Из-за простоты своего ключевого расписания, используя те же 8 ключевых байтов в каждом раунде, Treyfer был одним из первых шифров, которые были восприимчивы к слайд-атаке. Этот криптоанализ, который не зависит от количества раундов и выбора S-бокса, требует 2 ^ 32 известных открытого текста и временной сложности 2 ^ 44 Treyfer encryptions.</introduction>
+  <introduction lang="de-DE"></introduction>
   <usage lang="en">
     The slide attack on Treyfer in CrypTool 2 takes two character inputs of length 8 each.
     These inputs represent a slid pair. Searching for slid pairs is not included as part of the attack as this
     involves a huge number of inputs to be examined.
     Once the slid pair is provided, the attack performs its operations and retrieves the key in the output field.
   </usage>
-  
-  <usage lang="de-DE">
-  </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+  <usage lang="ru">Атака слайдов на Treyfer в CrypTool 2 принимает два символьных ввода длиной 8 каждый. Эти входы представляют собой скользкую пару. Поиск скользких пар не входит в состав атаки, так как это связано с огромным количеством вводимых данных. После того, как установлена ​​скользкая пара, атака выполняет свои операции и извлекает ключ в поле вывода.</usage>
+  <usage lang="de-DE"></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <bookReference>
       <author lang="en">David Wagner, Alex Biryukov</author>
       <name lang="en">Slide Attacks (1999)</name>
     </bookReference>
   </references>
-  
 </documentation>

@@ -1,36 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Achterbahn Cipher</title>
+  <title lang="ru">Роллер</title>
   <summary lang="en">Usage of the <i>Achterbahn</i> cipher</summary>
-  <description lang="en">This template shows the usage of the <i>Achterbahn</i> cipher.<newline /><newline />
-  <external ref="http://www.matpack.de/achterbahn/index.html" /><newline />
-  <external ref="http://en.wikipedia.org/wiki/Achterbahn" /></description>
+  <summary lang="ru">Использование шифрования Achterbahn</summary>
+  <description lang="en">This template shows the usage of the <i>Achterbahn</i> cipher.<newline /><newline /><external ref="http://www.matpack.de/achterbahn/index.html" /><newline /><external ref="http://en.wikipedia.org/wiki/Achterbahn" /></description>
+  <description lang="ru">Этот шаблон показывает использование шифрования Achterbahn.</description>
   <keywords>estream, stream, symmetric</keywords>
-
+  <keywords lang="ru">эстерим, поток, симметричный</keywords>
   <title lang="de">Achterbahn-Chiffre</title>
   <summary lang="de">Benutzung der <i>Achterbahn</i>-Chiffre</summary>
-  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Achterbahn</i>-Chiffre.<newline /><newline />
-  <external ref="http://www.matpack.de/achterbahn/index.html" /><newline />
-  <external ref="http://en.wikipedia.org/wiki/Achterbahn" /></description>
+  <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Achterbahn</i>-Chiffre.<newline /><newline /><external ref="http://www.matpack.de/achterbahn/index.html" /><newline /><external ref="http://en.wikipedia.org/wiki/Achterbahn" /></description>
   <keywords lang="de">estream, stromchiffre, symmetrisch</keywords>
-
   <icon file="Achterbahn.jpg" />
   <relevantPlugins>
     <plugin name="Achterbahn" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$StringDecoder$" value="String-Decodierer"/>
- </replacements>
- <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$StringDecoder$" value="StringDecoder"/>
- </replacements>
-
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$StringDecoder$" value="String-Decodierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$StringDecoder$" value="Строка декодера" />
+  </replacements>
+  <replacements lang="en">
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$StringDecoder$" value="StringDecoder" />
+  </replacements>
 </sample>

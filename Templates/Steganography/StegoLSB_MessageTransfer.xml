@@ -1,44 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Steganography Least Significant Bit Data Transfer</title>
+  <title lang="ru">Стеганография Передача данных с наименьшим значащим битом</title>
   <summary lang="en">Data transfer with the steganography component <i>StegoLSB</i></summary>
+  <summary lang="ru">Передача данных со стеганографическим компонентом StegoLSB</summary>
   <description lang="en">This template shows the usage of the steganography component <i>StegoLSB</i> for transfering a secret message with an image.</description>
+  <description lang="ru">Этот шаблон показывает использование стеганографического компонента StegoLSB для передачи секретного сообщения с изображением.</description>
   <keywords>Steganography, LSB, hidden</keywords>
-
+  <keywords lang="ru">Стеганография, LSB, скрытая</keywords>
   <title lang="de">Steganographie Niedrigstwertiges Bit Datenübertragung</title>
   <summary lang="de">Datenübertragung mit der Steganographie-Komponente <i>StegoLSB</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Steganographie-Komponente <i>StegoLSB</i> zur Übertragung einer geheimen Nachricht in einer Bilddatei.</description>
   <keywords lang="de">Steganographie, verstecken</keywords>
-
   <icon file="Steganography.png" />
-
   <relevantPlugins>
     <plugin name="FileInputClass" />
     <plugin name="StegoLeastSignificantBit" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Key$" value="Schlüssel"/>
-    <replacement key="$Image file$" value="Bilddatei"/>
-    <replacement key="$Carrier image$" value="Trägerbild"/>
-    <replacement key="$Hide message$" value="Verstecke Nachricht"/>
-    <replacement key="$Message$" value="Nachricht"/>
-    <replacement key="$Extract message$" value="Extrahiere Nachricht"/>
-    <replacement key="$String Encoder$" value="String-Kodierer"/>
-    <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht"/>
-    <replacement key="$Extracted message$" value="Extrahierte Nachricht"/>
+    <replacement key="$Key$" value="Schlüssel" />
+    <replacement key="$Image file$" value="Bilddatei" />
+    <replacement key="$Carrier image$" value="Trägerbild" />
+    <replacement key="$Hide message$" value="Verstecke Nachricht" />
+    <replacement key="$Message$" value="Nachricht" />
+    <replacement key="$Extract message$" value="Extrahiere Nachricht" />
+    <replacement key="$String Encoder$" value="String-Kodierer" />
+    <replacement key="$Image with hidden message$" value="Bild mit versteckter Nachricht" />
+    <replacement key="$Extracted message$" value="Extrahierte Nachricht" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Key$" value="ключ" />
+    <replacement key="$Image file$" value="файл изображения" />
+    <replacement key="$Carrier image$" value="изображение несущей" />
+    <replacement key="$Hide message$" value="Скрыть сообщение" />
+    <replacement key="$Message$" value="сообщение" />
+    <replacement key="$Extract message$" value="Извлечь сообщение" />
+    <replacement key="$String Encoder$" value="Строка кодировщик" />
+    <replacement key="$Image with hidden message$" value="Изображение со скрытым сообщением" />
+    <replacement key="$Extracted message$" value="Извлеченное сообщение" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Key$" value="Key"/>
-    <replacement key="$Image file$" value="Image file"/>
-    <replacement key="$Carrier image$" value="Carrier Image"/>
-    <replacement key="$Hide message$" value="Hide message"/>
-    <replacement key="$Message$" value="Message"/>
-    <replacement key="$Extract message$" value="Extract message"/>
-    <replacement key="$String Encoder$" value="String Encoder"/>
-    <replacement key="$Image with hidden message$" value="Image with hidden message"/>
-    <replacement key="$Extracted message$" value="Extracted message"/>
+    <replacement key="$Key$" value="Key" />
+    <replacement key="$Image file$" value="Image file" />
+    <replacement key="$Carrier image$" value="Carrier Image" />
+    <replacement key="$Hide message$" value="Hide message" />
+    <replacement key="$Message$" value="Message" />
+    <replacement key="$Extract message$" value="Extract message" />
+    <replacement key="$String Encoder$" value="String Encoder" />
+    <replacement key="$Image with hidden message$" value="Image with hidden message" />
+    <replacement key="$Extracted message$" value="Extracted message" />
   </replacements>
-
 </sample>

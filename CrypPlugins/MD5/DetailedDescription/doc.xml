@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     MD5 (Message-Digest Algorithm 5) is a widely used cryptographic hash function that produces a 128-bit hash value.
     MD5 was designed in 1991 by Ron L. Rivest.
@@ -16,9 +15,7 @@
       While this did not compromise the full MD5 hash function, cryptographers recommended switching to a more secure algorithm, such as SHA-256 or RIPEMD-160.
       In August 2004, chinese researchers found collisions for the full MD5 function.
       These attacks only affect collision attacks on MD5. They have no impact on preimage attacks. No method for computing a preimage in a reasonable timespan is presently known.
-    </section>
-
-    <section headline="Algorithm">
+    </section><section headline="Algorithm">
       MD5 takes a message of arbitrary length as input and generates a hash value of fixed length (128 bits).
       First, the message is padded so that its length is 64 bits less than a multiple of 512 bits, by appending a '1'-bit and then as many '0'-bits as necessary to reach the desired length.
       Then a 64-bit number, that represents the length of the input message, is appended so that the message length is now a multiple of 512.
@@ -26,11 +23,8 @@
       The encryption function (also known as compression function) is now applied to this buffer, where the first 512-bit block is used as a key parameter.
       The processing of a message block consists of four similar stages, termed rounds. Each round is composed of 16 operations based on a non-linear function "F", modular addition, and left rotation.
       There are four possible "F"-functions. A different one is used in each round:
-      <newline/>
-      <img src="MD5/DetailedDescription/Images/MD5.png"/>
-    </section>
-  </introduction>
-
+      <newline /><img src="MD5/DetailedDescription/Images/MD5.png" /></section></introduction>
+  <introduction lang="ru">MD5 (Message-Digest Algorithm 5) - широко используемая криптографическая хеш-функция, которая генерирует 128-битное хэш-значение. MD5 был разработан в 1991 году Рон Л. Ривест. Типичное использование хэш-значений MD5 - это проверка целостности данных. MD5 является одним из ряда криптографических хэш-функций, разработанных Рональдом Л. Ривестом из Массачусетского технологического института. Когда аналитическая работа указала, что ее предшественник MD4, вероятно, будет небезопасным, MD5 был разработан в 1991 году как надежная замена. Ганс Доббертин позже обнаружил недостатки в MD4. В 1996 году Добберт нашел столкновение в функции сжатия MD5. Хотя это не скомпрометировало полную хэш-функцию MD5, криптографы рекомендовали переключиться на более безопасный алгоритм, такой как SHA-256 или RIPEMD-160. В августе 2004 года китайские исследователи обнаружили столкновения для полной функции MD5. Эти атаки влияют только на атаки на столкновение на MD5. Они не влияют на атаки на прообраз. В настоящее время не известен способ вычисления прообраза в разумный промежуток времени. MD5 принимает сообщение произвольной длины в качестве входных данных и генерирует хэш-значение фиксированной длины (128 бит). Во-первых, сообщение заполняется так, что его длина составляет 64 бита меньше, чем кратное 512 бит, путем добавления «1» -битного и затем количества «0» -битов, если необходимо, чтобы достичь желаемой длины. Затем добавляется 64-разрядное число, представляющее длину входного сообщения, так что длина сообщения теперь кратна 512. Основной алгоритм MD5 работает с 128-битным буфером, который разделен на четыре 32-битных слова A, B, C и D. Они инициализируются некоторыми фиксированными значениями. Функция шифрования (также известная как функция сжатия) теперь применяется к этому буферу, где первый 512-битный блок используется в качестве ключевого параметра. Обработка блока сообщений состоит из четырех аналогичных этапов, называемых раундами. Каждый раунд состоит из 16 операций, основанных на нелинейной функции «F», модульной сложения и левого вращения. Существует четыре возможных «F» -функции. В каждом раунде используется другой:</introduction>
   <introduction lang="de-DE">
     MD5 (Message-Digest Algorithm 5) ist eine weit verbreitete kryptographische Hash-Funktion, die einen 128-Bit-Hashwert erzeugt. MD5 wurde 1991 von Ronald L. Rivest entwickelt.
     Die errechneten MD5-Summen (kurz md5sum) werden zum Beispiel zur Integritätsprüfung von Dateien eingesetzt.
@@ -40,9 +34,7 @@
       1996 meldete Dobbertin eine Kollision in der Kompressionsfunktion von MD5. Dies war zwar kein Angriff auf die vollständige MD5-Funktion, dennoch empfahlen Kryptographen bereits damals, wenn möglich,
       auf sicherere Algorithmen wie SHA-256 oder RIPEMD-160 umzusteigen. Im August 2004 fanden chinesische Forscher Kollisionen für die vollständige MD5-Funktion.
       Diese Attacken wirken sich allerdings nur auf Kollisionsangriffe aus, Preimage-Angriffe können auch mit diesen Methoden nicht in sinnvoller Zeit durchgeführt werden.
-    </section>
-
-    <section headline="Algorithmus">
+    </section><section headline="Algorithmus">
       MD5 erzeugt aus einer Nachricht variabler Länge eine Ausgabe fester Länge (128 Bit). Die Ausgangsnachricht wird zunächst so aufgefüllt, dass ihre Länge 64 Bits davon entfernt ist, durch 512 teilbar zu sein.
       Als erstes wird eine Eins angehängt, dann so viele Nullen wie nötig. Bei dem unwahrscheinlichen Fall, dass die Ausgangsnachricht schon die gewünschte Länge besitzt, wird trotzdem eine Eins angehängt.
       Nun wird eine 64-Bit-Zahl, die die Länge der Ausgangsnachricht repräsentiert, angehängt. Die Nachrichtenlänge ist jetzt durch 512 teilbar.
@@ -50,31 +42,25 @@
       Auf diesen Puffer wird nun die Verschlüsselungsfunktion (häufig auch Komprimierungsfunktion genannt) mit dem ersten 512-Bit-Block als Schlüsselparameter aufgerufen.
       Die Behandlung eines Nachrichtenblocks geschieht in vier einander ähnlichen Stufen, von Kryptographen „Runden“ genannt. Jede Runde besteht aus 16 Operationen, basierend auf einer nichtlinearen Funktion „F“,
       modularer Addition und Linksrotation. Es gibt vier mögliche „F“-Funktionen, in jeder Runde wird davon eine andere verwendet:
-      <newline/>
-      <img src="MD5/DetailedDescription/Images/MD5.png"/>
-    </section>
-  </introduction>
-
+      <newline /><img src="MD5/DetailedDescription/Images/MD5.png" /></section></introduction>
   <usage lang="en">
     The MD5 component has only one input connector, where it expects a data stream as input. It calculates the MD5 hash value of the input data stream and presents it on the
     outputs of the component, both as a data stream and as a byte array.
   </usage>
-
+  <usage lang="ru">Компонент MD5 имеет только один входной разъем, где он ожидает ввода потока данных. Он вычисляет хеш-значение MD5 входного потока данных и представляет его на выходах компонента, как в потоке данных, так и в виде массива байтов.</usage>
   <usage lang="de-DE">
     Die MD5-Komponente benötigt lediglich einen Datenstrom als Eingabe. Aus den Daten dieses Stroms wird anschließend der MD5-Wert gebildet und sowohl in Form eines
     Datenstroms, als auch in Form eines Byte-Felds ausgegeben.
   </usage>
-
   <presentation lang="en">
     When the presentation view of the component is activated, you can follow the partial steps of the hash value calculation.
     By clicking the appropriate buttons, you can step forward or backward through the MD5 rounds or jump at the end of a round or a block.
   </presentation>
-
+  <presentation lang="ru">Когда представление представления компонента активировано, вы можете следить за частичными шагами вычисления значения хэш-функции. Нажимая соответствующие кнопки, вы можете делать шаг вперед или назад по раундам MD5 или прыгать в конце раунда или блока.</presentation>
   <presentation lang="de-DE">
     In der Präsentationsansicht der MD5-Komponente kann man die Teilschritte der Hash-Erzeugung nachvollziehen.
     Zu diesem Zwecke muss der Benutzer die Berechnung manuell weiterschalten.
   </presentation>
-
   <references>
     <linkReference id="wikipedia">
       <link url="https://en.wikipedia.org/wiki/MD5" lang="en" />
@@ -89,5 +75,4 @@
       <caption lang="de-DE">RFC1321: The MD5 Message-Digest Algorithm (englisch)</caption>
     </linkReference>
   </references>
-
 </documentation>

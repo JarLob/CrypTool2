@@ -1,41 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Factorization with Trial Division (brute-force)</title>
+  <title lang="ru">Факторизация с пробным подразделением (грубая сила)</title>
   <summary lang="en">Usage of the <i>Factorization with Trial Division (brute-force)</i></summary>
+  <summary lang="ru">Использование факторизации с пробным подразделением (грубая сила)</summary>
   <description lang="en">This template shows the usage of the <i>Factorization with Trial Division (brute-force)</i>.</description>
+  <description lang="ru">Этот шаблон показывает использование факторизации с пробным подразделением (грубая сила).</description>
   <keywords>factorization, factorisation, factor</keywords>
-
+  <keywords lang="ru">факторизация, факторизация, фактор</keywords>
   <title lang="de">Faktorisierung mit Probedivision (Brute-Force)</title>
   <summary lang="de">Benutzung der <i>Faktorisierung mit Probedivision</i> (Brute-Force)</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Faktorisierung mit Probedivision</i> (Brute-Force).</description>
   <keywords lang="de">faktorisierung, faktor</keywords>
-
   <icon file="Factorization.png" />
   <relevantPlugins>
     <plugin name="Factorizer" />
     <plugin name="Gate" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Number Input$" value="Zahleneingabe"/>
-    <replacement key="$Gate$" value="Gatter"/>
-    <replacement key="$Factorizer$" value="Faktorisierer"/>
-    <replacement key="$Prime factors$" value="Primfaktoren"/>
-    <replacement key="$Remainders$" value="Reste"/>
-	 <replacement key="$memo1$" value="Diese Vorlage demonstriert die beiden Betriebsarten der Komponente Brute-Force-Faktorisierung:\line\line {\b Modus 1: Bestimme kleinsten Primfaktor}\line In dieser Betriebsart sucht die Komponente nur den kleinsten Primfaktor der eingegebenen Zahl. Sie stellt den gefundenen Faktor und den zugehörigen (möglicherweise noch zusammengesetzten) Rest an seinen Ausgängen zur Verfügung. In diesem Beispiel wird der Rest über das Gatter an den Eingang des Faktorisierers zurückgeführt und in dieser Schleife wird die Zahl schliesslich komplett in Primfaktoren zerlegt.\line\line {\b Modus 2: Bestimme alle Primfaktoren}\line In dieser Betriebsart versucht die Komponente die Zahl in einem Durchgang komplett zu faktorisieren. Wenn sie fertig ist (oder das Brute-Force-Limit erreicht wurde), gibt sie die gefundenen Faktoren als Array von Zahlen aus."/>
-	 <replacement key="$memo2$" value="Bestimme kleinsten Primfaktor"/>
-	 <replacement key="$memo3$" value="Bestimme alle Primfaktoren"/>
+    <replacement key="$Number Input$" value="Zahleneingabe" />
+    <replacement key="$Gate$" value="Gatter" />
+    <replacement key="$Factorizer$" value="Faktorisierer" />
+    <replacement key="$Prime factors$" value="Primfaktoren" />
+    <replacement key="$Remainders$" value="Reste" />
+    <replacement key="$memo1$" value="Diese Vorlage demonstriert die beiden Betriebsarten der Komponente Brute-Force-Faktorisierung:\line\line {\b Modus 1: Bestimme kleinsten Primfaktor}\line In dieser Betriebsart sucht die Komponente nur den kleinsten Primfaktor der eingegebenen Zahl. Sie stellt den gefundenen Faktor und den zugehörigen (möglicherweise noch zusammengesetzten) Rest an seinen Ausgängen zur Verfügung. In diesem Beispiel wird der Rest über das Gatter an den Eingang des Faktorisierers zurückgeführt und in dieser Schleife wird die Zahl schliesslich komplett in Primfaktoren zerlegt.\line\line {\b Modus 2: Bestimme alle Primfaktoren}\line In dieser Betriebsart versucht die Komponente die Zahl in einem Durchgang komplett zu faktorisieren. Wenn sie fertig ist (oder das Brute-Force-Limit erreicht wurde), gibt sie die gefundenen Faktoren als Array von Zahlen aus." />
+    <replacement key="$memo2$" value="Bestimme kleinsten Primfaktor" />
+    <replacement key="$memo3$" value="Bestimme alle Primfaktoren" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Number Input$" value="ввод номера" />
+    <replacement key="$Gate$" value="ворота" />
+    <replacement key="$Factorizer$" value="Faktorisierer" />
+    <replacement key="$Prime factors$" value="Primfaktoren" />
+    <replacement key="$Remainders$" value="отдых" />
+    <replacement key="$memo1$" value="В этом шаблоне демонстрируются два режима компонента «Компоновка грубой силы»: \line \line {\b mode 1: set smallest prime factor} \line В этом режиме компонент ищет только наименьший простой коэффициент введенного числа. Он обеспечивает найденный множитель и связанный (возможно, все еще составной) остаток на своих выходах. В этом примере остаток возвращается на вход факторизатора через затвор, и в этом цикле число окончательно полностью разлагается на простые множители. \Line \line {\b mode 2: Определение всех простых факторов} \line В этом режиме компонент пытается полностью разбить число за один раз. Когда это будет сделано (или достигнут предел грубой силы), он выводит найденные факторы в виде массива чисел." />
+    <replacement key="$memo2$" value="Определите наименьший простой коэффициент" />
+    <replacement key="$memo3$" value="Определить все основные факторы" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Number Input$" value="Number Input"/>
-    <replacement key="$Gate$" value="Gate"/>
-    <replacement key="$Factorizer$" value="Factorizer"/>
-    <replacement key="$Prime factors$" value="Prime factors"/>
-    <replacement key="$Remainders$" value="Remainders"/>
-	 <replacement key="$memo1$" value="This template demonstrates the two operation modes of the brute-force factorizer component:\line\line {\b Mode 1: Determine smallest prime factor}\line In this mode, the component only looks for the smallest prime factor of the input number. It provides the found factor and the composite remainder on its outputs. In this example, the composite remainder is fed back to the input of the factorizer via a gate and the resulting loop thus completely factorizes the input number.\line\line {\b Mode 2: Determine all prime factors}\line In this mode, the component tries to completely factor the input in one go. When it is done (or the brute-force limit is reached), it outputs the factors it has found as a single array of numbers."/>
-	 <replacement key="$memo2$" value="Determine smallest prime factor"/>
-	 <replacement key="$memo3$" value="Determine all prime factors"/>
+    <replacement key="$Number Input$" value="Number Input" />
+    <replacement key="$Gate$" value="Gate" />
+    <replacement key="$Factorizer$" value="Factorizer" />
+    <replacement key="$Prime factors$" value="Prime factors" />
+    <replacement key="$Remainders$" value="Remainders" />
+    <replacement key="$memo1$" value="This template demonstrates the two operation modes of the brute-force factorizer component:\line\line {\b Mode 1: Determine smallest prime factor}\line In this mode, the component only looks for the smallest prime factor of the input number. It provides the found factor and the composite remainder on its outputs. In this example, the composite remainder is fed back to the input of the factorizer via a gate and the resulting loop thus completely factorizes the input number.\line\line {\b Mode 2: Determine all prime factors}\line In this mode, the component tries to completely factor the input in one go. When it is done (or the brute-force limit is reached), it outputs the factors it has found as a single array of numbers." />
+    <replacement key="$memo2$" value="Determine smallest prime factor" />
+    <replacement key="$memo3$" value="Determine all prime factors" />
   </replacements>
-
 </sample>

@@ -1,35 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Huffman's algorithm (UTF-8)</title>
+  <title lang="ru">Алгоритм Хаффмана (UTF-8)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress a UTF-8 encoded text</summary>
+  <summary lang="ru">Использование Huffman для сжатия кодированного UTF-8 текста</summary>
   <description lang="en">This template shows how the <i>Huffman</i> component can be used to compress a UTF-8 encoded text.</description>
+  <description lang="ru">Этот шаблон показывает, как компонент Huffman можно использовать для сжатия кодированного текста UTF-8.</description>
   <keywords>Huffman, utf8, compression</keywords>
-
+  <keywords lang="ru">Хаффман, utf8, сжатие</keywords>
   <icon file="Huffman.png" />
   <relevantPlugins>
     <plugin name="Huffman" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Uncompressed text$" value="Unkomprimierter Text"/>
-    <replacement key="$UTF-8 bytes$" value="UTF-8-Bytes"/>
-    <replacement key="$Compress$" value="Komprimiere"/>
-    <replacement key="$Decompress$" value="Dekomprimiere"/>
-    <replacement key="$UTF-8 string$" value="UTF-8-String"/>
-    <replacement key="$Decompressed text$" value="Dekomprimierter Text"/>
-    <replacement key="$memo1$" value="In diesem Beispiel wird ein UTF-8-kodierter Text von 4.137 Bytes auf eine Größe von 2.953 Bytes mit einer Kompressionsrate von 29% komprimiert."/>
-	 <replacement key="$memo2$" value="Die Code-Tabelle zeigt, dass häufiger vorkommende Zeichen kürzere Codeworte erhalten."/>
+    <replacement key="$Uncompressed text$" value="Unkomprimierter Text" />
+    <replacement key="$UTF-8 bytes$" value="UTF-8-Bytes" />
+    <replacement key="$Compress$" value="Komprimiere" />
+    <replacement key="$Decompress$" value="Dekomprimiere" />
+    <replacement key="$UTF-8 string$" value="UTF-8-String" />
+    <replacement key="$Decompressed text$" value="Dekomprimierter Text" />
+    <replacement key="$memo1$" value="In diesem Beispiel wird ein UTF-8-kodierter Text von 4.137 Bytes auf eine Größe von 2.953 Bytes mit einer Kompressionsrate von 29% komprimiert." />
+    <replacement key="$memo2$" value="Die Code-Tabelle zeigt, dass häufiger vorkommende Zeichen kürzere Codeworte erhalten." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Uncompressed text$" value="Несжатый текст" />
+    <replacement key="$UTF-8 bytes$" value="UTF-8 байт" />
+    <replacement key="$Compress$" value="сжимать" />
+    <replacement key="$Decompress$" value="Dekomprimiere" />
+    <replacement key="$UTF-8 string$" value="UTF-8-струнной" />
+    <replacement key="$Decompressed text$" value="Декомпрессированный текст" />
+    <replacement key="$memo1$" value="В этом примере текст с кодировкой UTF-8 размером 4,137 байт сжимается до 2,953 байта при степени сжатия 29%." />
+    <replacement key="$memo2$" value="В таблице кодов показано, что более распространенные символы получают более короткие кодовые слова." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Uncompressed text$" value="Uncompressed text"/>
-    <replacement key="$UTF-8 bytes$" value="UTF-8 bytes"/>
-    <replacement key="$Compress$" value="Compress"/>
-    <replacement key="$Decompress$" value="Decompress"/>
-    <replacement key="$UTF-8 string$" value="UTF-8 string"/>
-    <replacement key="$Decompressed text$" value="Decompressed text"/>
-    <replacement key="$memo1$" value="Here, we are compressing UTF-8 encoded text from 4,137 bytes to 2,953 bytes with a 29% compression rate."/>
-    <replacement key="$memo2$" value="As we can see from the code table, more frequent characters have shorter codewords."/>
+    <replacement key="$Uncompressed text$" value="Uncompressed text" />
+    <replacement key="$UTF-8 bytes$" value="UTF-8 bytes" />
+    <replacement key="$Compress$" value="Compress" />
+    <replacement key="$Decompress$" value="Decompress" />
+    <replacement key="$UTF-8 string$" value="UTF-8 string" />
+    <replacement key="$Decompressed text$" value="Decompressed text" />
+    <replacement key="$memo1$" value="Here, we are compressing UTF-8 encoded text from 4,137 bytes to 2,953 bytes with a 29% compression rate." />
+    <replacement key="$memo2$" value="As we can see from the code table, more frequent characters have shorter codewords." />
   </replacements>
-
 </sample>

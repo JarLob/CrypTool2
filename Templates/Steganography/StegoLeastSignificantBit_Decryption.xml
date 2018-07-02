@@ -1,34 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Steganography Least Significant Bit Decryption</title>
+  <title lang="ru">Стеганография Наименее значимое битовое шифрование</title>
   <summary lang="en">Decryption with the steganography component <i>StegoLSB</i></summary>
+  <summary lang="ru">Расшифровка с помощью стеганографического компонента StegoLSB</summary>
   <description lang="en">This template shows the usage of the steganography component <i>StegoLSB</i> for decryption using the least significant bit.</description>
+  <description lang="ru">Этот шаблон показывает использование стеганографического компонента StegoLSB для дешифрования с использованием младшего значащего бита.</description>
   <keywords>Steganography, LSB, hidden</keywords>
-
+  <keywords lang="ru">Стеганография, LSB, скрытая</keywords>
   <title lang="de">Steganographie Niedrigstwertiges Bit Entschlüsselung</title>
   <summary lang="de">Entschlüsselung mit der Steganographie-Komponente <i>StegoLSB</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der Steganographie-Komponente <i>StegoLSB</i> zur Entschlüsselung mit niedrigstwertigem Bit.</description>
   <keywords lang="de">Steganographie, verstecken</keywords>
-
   <icon file="Steganography.png" />
-
   <relevantPlugins>
     <plugin name="FileInputClass" />
     <plugin name="StegoLeastSignificantBit" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Carrier Picture$" value="Trägerbild"/>
-    <replacement key="$Password$" value="Passwort"/>
-    <replacement key="$String Encoder$" value="String-Kodierer"/>
-    <replacement key="$Message$" value="Nachricht"/>
+    <replacement key="$Carrier Picture$" value="Trägerbild" />
+    <replacement key="$Password$" value="Passwort" />
+    <replacement key="$String Encoder$" value="String-Kodierer" />
+    <replacement key="$Message$" value="Nachricht" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Carrier Picture$" value="изображение несущей" />
+    <replacement key="$Password$" value="пароль" />
+    <replacement key="$String Encoder$" value="Строка кодировщик" />
+    <replacement key="$Message$" value="сообщение" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Carrier Picture$" value="Carrier Picture"/>
-    <replacement key="$Password$" value="Password"/>
-    <replacement key="$String Encoder$" value="String Encoder"/>
-    <replacement key="$Message$" value="Message"/>
+    <replacement key="$Carrier Picture$" value="Carrier Picture" />
+    <replacement key="$Password$" value="Password" />
+    <replacement key="$String Encoder$" value="String Encoder" />
+    <replacement key="$Message$" value="Message" />
   </replacements>
-
 </sample>

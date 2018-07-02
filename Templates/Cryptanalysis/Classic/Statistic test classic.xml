@@ -1,34 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Statistic Tests for Classical Ciphers</title>
+  <title lang="ru">Статистические тесты для классических шифров</title>
   <summary lang="en">Usage of the <i>Statistic Test</i> for classical ciphers</summary>
+  <summary lang="ru">Использование статистического теста для классических шифров</summary>
   <description lang="en">This template shows the usage of the <i>Statistic Test</i> for classical ciphers.</description>
+  <description lang="ru">Этот шаблон показывает использование статистического теста для классических шифров.</description>
   <keywords>FrequencyTest, FriedmanTest, Attack, Analysis</keywords>
-
+  <keywords lang="ru">FrequencyTest, FriedmanTest, Attack, Analysis</keywords>
   <title lang="de">Statistiktests für klassische Chiffren</title>
   <summary lang="de">Benutzung von <i>statistischen Tests</i> für klassische Chiffren</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung von <i>statistischen Tests</i> für klassische Chiffren.</description>
   <keywords lang="de">Analyse, Frequenztest, Friedmantest, Angriff</keywords>
-
   <icon file="Statistic test classic.png" />
   <relevantPlugins>
     <plugin name="FrequencyTest" />
     <plugin name="FriedmanTest" />
     <plugin name="Vigenere" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$FrequencyTest$" value="Frequenz-Test"/>
-    <replacement key="$FriedmanTest$" value="Friedman-Test"/>
-    <replacement key="$Test Results$" value="Testergebnisse"/>
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$FrequencyTest$" value="Frequenz-Test" />
+    <replacement key="$FriedmanTest$" value="Friedman-Test" />
+    <replacement key="$Test Results$" value="Testergebnisse" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$FrequencyTest$" value="тест частоты" />
+    <replacement key="$FriedmanTest$" value="Фридман испытаний" />
+    <replacement key="$Test Results$" value="результаты испытаний" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$FrequencyTest$" value="Frequency Test"/>
-    <replacement key="$FriedmanTest$" value="Friedman Test"/>
-    <replacement key="$Test Results$" value="Test Results"/>
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$FrequencyTest$" value="Frequency Test" />
+    <replacement key="$FriedmanTest$" value="Friedman Test" />
+    <replacement key="$Test Results$" value="Test Results" />
   </replacements>
-
 </sample>

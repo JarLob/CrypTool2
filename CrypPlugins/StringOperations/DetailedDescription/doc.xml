@@ -1,9 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     The StringOperations offer the possibility to manipulate strings.
     By using the StringOperations a string may be converted to a lower-case or to an upper-case one. The user can separate substrings from
@@ -12,7 +11,7 @@
     The input string can be split into substrings using a separator string.
     The user can check if two strings are equal and reverse the string.
   </introduction>
-
+  <introduction lang="ru">StringOperations предлагает возможность манипулировать строками. Используя StringOperations, строка может быть преобразована в нижний регистр или в верхний регистр. Пользователь может отделить подстроки от строки или объединить (объединить) разные строки. StringOperations также может использоваться для вычисления длины данной строки. Позиция подстроки может быть рассчитана. Части строки могут быть заменены другой строкой (поддерживается регулярное выражение). Входную строку можно разбить на подстроки с использованием строки разделителя. Пользователь может проверить, равны ли две строки и изменить строку.</introduction>
   <introduction lang="de-DE">
     Die Zeichenketten-Operationen ermöglichen das Manipulieren von Zeichenketten (Strings).
     So können mit Hilfe der Operationen Zeichenketten in ihrer Groß- oder Kleinschreibung verändert werden. Es können
@@ -22,76 +21,29 @@
     Zeichenkette ersetzt werden (auch mittels eines regulären Ausdrucks). Zeichenketten können mittels eines Trennstrings in Teilstrings zerlegt werden.
     Außerdem kann man überprüfen, ob zwei übergebene Zeichenketten identisch sind, und die Zeichenkette umkehren.
   </introduction>
-
   <usage lang="en">
     The StringOperations has two text inputs and two number inputs. Depending on the used function these inputs have different usage.
     It has also a text output, a text array output and a number output.
-    <enum>
-		<item><b>Concatenate:</b> Needs only the text inputs. Merges the given textes to one new</item>
-		<item><b>Substring:</b> Needs the first text inputs and both number inputs (X,Y). Returns the substring from X with length Y at the text output</item>
-		<item><b>To-Lowercase:</b> Converts the given text of the first text input to a text with only lowercase characters</item>
-		<item><b>To-Uppercase:</b> Converts the given text of the first text input to a text with only uppercase characters</item>
-		<item><b>LengthOf:</b> Returns the length of the text of the first text input at the number output</item>
-		<item><b>CompareTo:</b> Compares both given texts and returns 0 if they are equal, -1 if text one is 'smaller' than text two, and 1 if text one is 'bigger' than text two</item>
-		<item><b>Trim:</b> Removes whitespaces from beginning and end (tab, Leerzeichen) of the text of text input one and returns this text in the text output</item>
-		<item><b>IndexOf:</b> Gives the first index of the occurance of the text of text input two in the text of text input one in the number output</item>
-		<item><b>Equals:</b> Returns 1 at the number output if the texts are equal, otherwise 0</item>
-		<item><b>Replace:</b> Replaces all substrings of the first input string which are equal to the second input string by the third input string and returns the new string</item>
-		<item><b>RegexReplace:</b> Replaces all substrings of the first input string which match to the regular expression provided by the second input string by the third input string and returns the new string</item>
-		<item><b>Split:</b> Splits the text of the first input at the string given at the second text input (or on newlines, if input is empty) and returns the resulting substrings at the output array</item>
-		<item><b>Block:</b> Formats the given string into blocks (using the setting "Block size") after removing all whitespace characters</item>
-		<item><b>Reverse:</b> Reverses the given text of the first text input</item>
-    <item><b>Password Replace:</b> Adds a password in front or tail of the string and removes all occuring characters of this password in the rest of the string</item>
-    <item><b>Distinct:</b> Removes all double occurences of same symbols from the string</item>
-    <item><b>Levenshtein Distance:</b> Calculates the Levenshtein Distance of two given strings</item>
-    </enum>
-  </usage>
-
+    <enum><item><b>Concatenate:</b> Needs only the text inputs. Merges the given textes to one new</item><item><b>Substring:</b> Needs the first text inputs and both number inputs (X,Y). Returns the substring from X with length Y at the text output</item><item><b>To-Lowercase:</b> Converts the given text of the first text input to a text with only lowercase characters</item><item><b>To-Uppercase:</b> Converts the given text of the first text input to a text with only uppercase characters</item><item><b>LengthOf:</b> Returns the length of the text of the first text input at the number output</item><item><b>CompareTo:</b> Compares both given texts and returns 0 if they are equal, -1 if text one is 'smaller' than text two, and 1 if text one is 'bigger' than text two</item><item><b>Trim:</b> Removes whitespaces from beginning and end (tab, Leerzeichen) of the text of text input one and returns this text in the text output</item><item><b>IndexOf:</b> Gives the first index of the occurance of the text of text input two in the text of text input one in the number output</item><item><b>Equals:</b> Returns 1 at the number output if the texts are equal, otherwise 0</item><item><b>Replace:</b> Replaces all substrings of the first input string which are equal to the second input string by the third input string and returns the new string</item><item><b>RegexReplace:</b> Replaces all substrings of the first input string which match to the regular expression provided by the second input string by the third input string and returns the new string</item><item><b>Split:</b> Splits the text of the first input at the string given at the second text input (or on newlines, if input is empty) and returns the resulting substrings at the output array</item><item><b>Block:</b> Formats the given string into blocks (using the setting "Block size") after removing all whitespace characters</item><item><b>Reverse:</b> Reverses the given text of the first text input</item><item><b>Password Replace:</b> Adds a password in front or tail of the string and removes all occuring characters of this password in the rest of the string</item><item><b>Distinct:</b> Removes all double occurences of same symbols from the string</item><item><b>Levenshtein Distance:</b> Calculates the Levenshtein Distance of two given strings</item></enum></usage>
+  <usage lang="ru">У StringOperations есть два текстовых ввода и два ввода номера. В зависимости от используемой функции эти входы имеют различное использование. Он также имеет текстовый вывод, вывод текстового массива и вывод номера. Конкатенация: требуется только текстовые входы. Объединение заданных текстов в одну новую строку. Требуется первые текстовые входы и оба ввода номера (X, Y). Возвращает подстроку из X с длиной Y в тексте outputTo-Lowercase: преобразует заданный текст первого текстового ввода в текст только с строчными буквами. To-Uppercase: преобразует заданный текст первого текстового ввода в текст только с прописными буквамиLengthOf : Возвращает длину текста первого ввода текста на номере outputCompareTo: сравнивает оба заданных текста и возвращает 0, если они равны, -1, если текст один «меньше», чем текст 2, и 1, если текст один больше &amp;#39;than text twoTrim: удаляет пробелы с начала и конца (вкладка Leerzeichen) текста ввода текста один и возвращает этот текст в текст outputIndexOf: дает первый индекс заполнения текста текстового ввода два в тексте ввод текста один в число outputEquals: возвращает 1 на выходе номера, если тексты равны, в противном случае 0Replace: заменяет все подстроки первой входной строки, которые равны второй входной строке третьей входной строкой и возвращает новую строку RegexReplace: Заменяет все подстроки первой входной строки, которые соответствуют регулярному выражению, предоставленному второй входной строкой, третьей входной строкой и возвращает новую строкуSplit: разделяет текст первого ввода на строку, указанную во втором текстовом вводе ( или в новых строках, если ввод пуст) и возвращает полученные подстроки в выходном массивеBlock: Форматирует заданную строку в блоки (используя параметр «Размер блока») после удаления всех символов пробелов. Обороты: Обрабатывает заданный текст первого ввода текста. Заменяет пароль. : Добавляет пароль спереди или хвосту строки и удаляет все возникающие символы этого пароля в остальной части stringDistinct: удаляет все двойные вхождения одних и тех же символов из строкиLevenshtein Distance: вычисляет расстояние Levenshtein двух заданных строк</usage>
   <usage lang="de-DE">
     Die Zeichenketten-Operationen verfügen über zwei Texteingänge und zwei Zahleneingänge. Je nach gewählter Funktion werden diese Eingänge
     unterschiedlich verwendet. Außerdem besitzt die Komponente einen Textausgang, einen Text-Array-Ausgang und einen Zahlenausgang.
-    <enum>
-		<item><b>Konkatenieren:</b> Benötigt nur die beiden Texteingänge. Verbindet die beiden Zeichenketten zu einer und gibt diese beim Textausgang aus</item>
-		<item><b>Teilstring:</b> Benötigt den ersten Texteingang sowie beide Zahleneingänge (X,Y). Gibt die Zeichenkette von X der Länge Y beim Textausgang aus</item>
-		<item><b>Kleinbuchstaben:</b> Wandelt den übergebenen Text des ersten Texteingangs in einen Text um, der nur aus Kleinbuchstaben besteht</item>
-		<item><b>Großbuchstaben:</b> Wandelt den übergebenen Text des ersten Texteingangs in einen Text um, der nur aus Großbuchstaben besteht</item>
-		<item><b>Länge:</b> Gibt die Textlänge (Anzahl der Zeichen) des Textes des ersten Textingangs beim Zahlenausgang aus</item>
-		<item><b>Vergleichen:</b> Vergleicht die in beiden Texteingängen eingegebenen Texte und gibt 0 aus, falls diese identisch sind, -1, wenn der erste Text "kleiner" als der zweite ist, und 1, wenn der erste Text "größer" als der zweite ist</item>
-		<item><b>Trimmen:</b> Entfernt sogenannte Whitespaces (tab, Leerzeichen) vom Anfang und Ende des Textes, der am ersten Texteingang übergeben wurde und gibt diesen beim Textausgang aus</item>
-		<item><b>IndexVon:</b> Gibt den ersten Index des Vorkommens vom Text des Texteingangs zwei des Texteingangs eins am Zahlenausgang aus</item>
-		<item><b>Gleichheit:</b> Gibt 1 aus, wenn beide Texte identisch sind, andernfalls 0</item>
-		<item><b>Ersetzen:</b> Ersetzt alle Teiltexte des ersten Texteingangs mit dem Text des dritten Texteingangs, falls diese Teile gleich dem Text des Textes des zweiten Texteingangs sind</item>
-		<item><b>RegexErsetzen:</b> Ersetzt alle Teiltexte des ersten Texteingangs mit dem Text des dritten Texteingangs, falls diese den regulären Ausdruck des zweiten Texteingangs erfüllen</item>
-		<item><b>Trennen:</b> Trennt den Text am ersten Texteingang an der Zeichenkette, die am zweiten Texteingang anliegt (oder Zeilenumbruch, falls nichts anliegt), und gibt die resultierenden Teilstrings am Zeichenketten-Array-Ausgang aus</item>
-		<item><b>Block:</b> Formatiert den eingegangenen Text in Blöcke (unter Nutzung der Einstellung "Blockgröße"), nachdem alle Leerzeichen (Whitespaces) entfernt wurden</item>
-		<item><b>Umkehren:</b> Kehrt die Zeichenkette des ersten Texteingangs um</item>
-    <item><b>Passwortersetzung:</b>Fügt einem Text ein Passwort am Anfang oder Ende hinzu und entfernt alle Zeichen des Passwortes aus dem restlichen Text</item>
-    <item><b>Eindeutig:</b> Entfernt alle doppelten Vorkommen von gleichen Symbolen aus dem Text</item>
-    <item><b>Levenshtein-Distanz:</b> Berechnet die Levenshtein-Distanz von zwei gegebenen Texten</item>
-    </enum>    
-  </usage>
-  
-  <presentation lang="en">    
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-  
+    <enum><item><b>Konkatenieren:</b> Benötigt nur die beiden Texteingänge. Verbindet die beiden Zeichenketten zu einer und gibt diese beim Textausgang aus</item><item><b>Teilstring:</b> Benötigt den ersten Texteingang sowie beide Zahleneingänge (X,Y). Gibt die Zeichenkette von X der Länge Y beim Textausgang aus</item><item><b>Kleinbuchstaben:</b> Wandelt den übergebenen Text des ersten Texteingangs in einen Text um, der nur aus Kleinbuchstaben besteht</item><item><b>Großbuchstaben:</b> Wandelt den übergebenen Text des ersten Texteingangs in einen Text um, der nur aus Großbuchstaben besteht</item><item><b>Länge:</b> Gibt die Textlänge (Anzahl der Zeichen) des Textes des ersten Textingangs beim Zahlenausgang aus</item><item><b>Vergleichen:</b> Vergleicht die in beiden Texteingängen eingegebenen Texte und gibt 0 aus, falls diese identisch sind, -1, wenn der erste Text "kleiner" als der zweite ist, und 1, wenn der erste Text "größer" als der zweite ist</item><item><b>Trimmen:</b> Entfernt sogenannte Whitespaces (tab, Leerzeichen) vom Anfang und Ende des Textes, der am ersten Texteingang übergeben wurde und gibt diesen beim Textausgang aus</item><item><b>IndexVon:</b> Gibt den ersten Index des Vorkommens vom Text des Texteingangs zwei des Texteingangs eins am Zahlenausgang aus</item><item><b>Gleichheit:</b> Gibt 1 aus, wenn beide Texte identisch sind, andernfalls 0</item><item><b>Ersetzen:</b> Ersetzt alle Teiltexte des ersten Texteingangs mit dem Text des dritten Texteingangs, falls diese Teile gleich dem Text des Textes des zweiten Texteingangs sind</item><item><b>RegexErsetzen:</b> Ersetzt alle Teiltexte des ersten Texteingangs mit dem Text des dritten Texteingangs, falls diese den regulären Ausdruck des zweiten Texteingangs erfüllen</item><item><b>Trennen:</b> Trennt den Text am ersten Texteingang an der Zeichenkette, die am zweiten Texteingang anliegt (oder Zeilenumbruch, falls nichts anliegt), und gibt die resultierenden Teilstrings am Zeichenketten-Array-Ausgang aus</item><item><b>Block:</b> Formatiert den eingegangenen Text in Blöcke (unter Nutzung der Einstellung "Blockgröße"), nachdem alle Leerzeichen (Whitespaces) entfernt wurden</item><item><b>Umkehren:</b> Kehrt die Zeichenkette des ersten Texteingangs um</item><item><b>Passwortersetzung:</b>Fügt einem Text ein Passwort am Anfang oder Ende hinzu und entfernt alle Zeichen des Passwortes aus dem restlichen Text</item><item><b>Eindeutig:</b> Entfernt alle doppelten Vorkommen von gleichen Symbolen aus dem Text</item><item><b>Levenshtein-Distanz:</b> Berechnet die Levenshtein-Distanz von zwei gegebenen Texten</item></enum></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/String_%28computer_science%29"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/String_%28computer_science%29" />
       <caption lang="en">String</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Zeichenkette"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Zeichenkette" />
       <caption lang="de-DE">Zeichenkette</caption>
     </linkReference>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/Levenshtein_distance"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Levenshtein_distance" />
       <caption lang="de-DE">Levenshtein Distance</caption>
-      <link lang="en" url="http://de.wikipedia.org/wiki/Levenshtein-Distanz"/>
+      <link lang="en" url="http://de.wikipedia.org/wiki/Levenshtein-Distanz" />
       <caption lang="de-DE">Levenshtein-Distanz</caption>
     </linkReference>
-
-
   </references>
-  
 </documentation>

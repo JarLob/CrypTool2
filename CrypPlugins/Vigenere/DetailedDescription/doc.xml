@@ -1,96 +1,79 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     The Vigenère cipher is a polyalphabetic substitution cipher.
     In contrast to the monoalphabetic substitution, where all characters of the plaintext are replaced using a single substitution alphabet,
     the polyalphabetic substitution uses several different substitution alphabets.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The Vigenère cipher was invented by Blaise de Vigenère in the 16th century and was deemed undecipherable for a long time. The cipher is consequently also known as "Le Chiffre indéchiffrable".
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The Vigenère cipher uses a keyword to decide, which of several substitution alphabets will be used to encrypt a letter from the plaintext.
     The subsitution alphabets that are used by Vigenère are the 26 shifts of the standard alphabet:
-    <newline/>
-    <newline/>
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ<newline/>
-    BCDEFGHIJKLMNOPQRSTUVWXYZA<newline/>
-    CDEFGHIJKLMNOPQRSTUVWXYZAB<newline/>
-    ...<newline/>
-    ZABCDEFGHIJKLMNOPQRSTUVWXY<newline/>
-    <newline/>
+    <newline /><newline />
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ<newline />
+    BCDEFGHIJKLMNOPQRSTUVWXYZA<newline />
+    CDEFGHIJKLMNOPQRSTUVWXYZAB<newline />
+    ...<newline />
+    ZABCDEFGHIJKLMNOPQRSTUVWXY<newline /><newline />
     The 26 alphabets are identified by their first character.
     When a text is encrypted, the first letter is encrypted with a substitution, that uses the substitution alphabet that is specified by the first letter of the keyword.
     The second letter is encrypted with the alphabet specified by the second letter of the keyword, and so on.
     The keyword is used periodically: If the end of the keyword is reached, its first letter will be used again in the next step.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     A variation of the Vigenère cipher is the Vigenère Autokey cipher. It avoids the periodicity of the keyword by appending the plaintext to the keyword
     and using the resulting string as the new keyword.
   </introduction>
-
+  <introduction lang="ru">Шифр Виженера - это полиалфавитный шифр замещения. В отличие от моноалфавитной подстановки, где все символы открытого текста заменяются с помощью одного алфавита замещения, полиальфабетическая замена использует несколько различных алфавитов замещения. Шиф Vigenère был изобретен Блейзом де Вигнером в 16 веке и долгое время считался неразборчивым. Шифр, следовательно, также известен как «Le Chiffre indéchiffrable». Шифр Vigenère использует ключевое слово для решения, какой из нескольких алфавитов подстановки будет использоваться для шифрования буквы из открытого текста. Алфавитами подписи, которые используются Vigenère, являются 26 сдвигов стандартного алфавита: ABCDEFGHIJKLMNOPQRSTUVWXYZ BCDEFGHIJKLMNOPQRSTUVWXYZA CDEFGHIJKLMNOPQRSTUVWXYZAB ... ZABCDEFGHIJKLMNOPQRSTUVWXY 26 алфавитов идентифицируются по их первому символу. Когда текст зашифрован, первая буква зашифровывается подстановкой, которая использует алфавит подстановки, который указан первой буквой ключевого слова. Вторая буква зашифровывается алфавитом, указанным второй буквой ключевого слова, и так далее. Ключевое слово используется периодически: если конец ключевого слова достигнут, его первая буква будет использоваться снова на следующем шаге. Вариант шифрования Vigenère - это шифр Vigenère Autokey. Это позволяет избежать периодичности ключевого слова путем добавления открытого текста к ключевому слову и использования результирующей строки в качестве нового ключевого слова.</introduction>
   <introduction lang="de-DE">
     Die Vigenère-Chiffre gehört zur Klasse der polyalphabetischen Substitutionen.
     Im Gegensatz zur monoalphabetischen Substitution, bei der alle Buchstaben eines Klartextes mittels desselben Substitutions-Alphabets ersetzt werden,
     werden im polyalphabetischen Fall die Klartextbuchstaben mit unterschiedlichen Substitutions-Alphabeten ersetzt.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Die Vigenère-Verschlüsselung wurde von Blaise de Vigenère im 16. Jahrhundert erfunden und galt lange als unentschlüsselbar. Sie ist daher auch unter dem Namen "Le Chiffre indéchiffrable" bekannt.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Bei der Vigenère-Chiffre wird durch ein Schlüsselwort festgelegt, welche Substitutions-Alphabete zum Einsatz kommen.
     Grundsätzlich verwendet sie die 26 verschiedenen Alphabete, die durch die Verschiebung des normalen Alphabets entstehen, also:
-    <newline/>
-    <newline/>
-    ABCDEFGHIJKLMNOPQRSTUVWXYZ<newline/>
-    BCDEFGHIJKLMNOPQRSTUVWXYZA<newline/>
-    CDEFGHIJKLMNOPQRSTUVWXYZAB<newline/>
-    ...<newline/>
-    ZABCDEFGHIJKLMNOPQRSTUVWXY<newline/>
-    <newline/>
+    <newline /><newline />
+    ABCDEFGHIJKLMNOPQRSTUVWXYZ<newline />
+    BCDEFGHIJKLMNOPQRSTUVWXYZA<newline />
+    CDEFGHIJKLMNOPQRSTUVWXYZAB<newline />
+    ...<newline />
+    ZABCDEFGHIJKLMNOPQRSTUVWXY<newline /><newline />
     Diese 26 Alphabete werden jeweils durch ihren ersten Buchstaben benannt.
     Bei der Verschlüsselung wird nun der erste Buchstabe des Klartextes mittels desjenigen Substitutions-Alphabets ersetzt, das durch den ersten Buchstaben des Schlüsselwortes benannt wird.
     Der zweite Buchstabe des Klartextes wird durch das Substitutions-Alphabet des zweiten Schlüsselbuchstabens ersetzt, und so weiter.
     Das Schlüsselwort wird periodisch verwendet: Ist man am Ende angelangt, so wird im nächsten Schritt wieder der erste Buchstabe genommen.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Eine Variante des Vigenère-Verfahrens ist das Vigenère-Selbstschlüssel-Verfahren (auch Autokey-Verfahren genannt), bei dem der Schlüssel nicht wie beim klassischen Vigenère-Verfahren periodisch wiederholt wird.
     Stattdessen wird an den Schlüssel der Klartext angehängt und diese neue Zeichenkette als Schlüssel verwendet.
   </introduction>
-
   <usage lang="en">
     You can select in the settings whether you want to use the classic Vigenère cipher or the Vigenère Autokey cipher.
     You must also specify if the component should encrypt or decrypt a text.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The text, that is to be processed, has to be entered at the "Text input" as a string.
     The key can be provided at the according input or, alternatively, in the settings of the component.
     If you want to use an alphabet that differs from the standard (for example ZYXWVUTSRQPONMLKJIHGFEDCBA), you can enter it at the "External alphabet input" or in the settings.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     You can also specify how the component should handle characters that are not part of the alphabet. They can be passed through unchanged, removed, or replaced by a question mark.
     If you select case sensitive handling, the characters of the input text, that are not part of the given alphabet, will be treated like unknown characters.
   </usage>
-
+  <usage lang="ru">Вы можете выбрать в настройках, хотите ли вы использовать классический шифр Vigenère или шифр Vigenère Autokey. Вы также должны указать, должен ли компонент шифровать или расшифровывать текст. Текст, который должен быть обработан, должен быть введен в «Текстовый ввод» в виде строки. Ключ может быть предоставлен на соответствующем входе или, альтернативно, в настройках компонента. Если вы хотите использовать алфавит, который отличается от стандартного (например, ZYXWVUTSRQPONMLKJIHGFEDCBA), вы можете ввести его на вкладке «Внешний алфавитный ввод» или в настройках. Вы также можете указать, как компонент должен обрабатывать символы, которые не являются частью алфавита. Они могут быть переданы без изменений, удалены или заменены вопросительным знаком. Если вы выберете обработку, чувствительную к регистру, символы входного текста, которые не являются частью данного алфавита, будут обрабатываться как неизвестные символы.</usage>
   <usage lang="de-DE">
     Wählen Sie in den Einstellungen der Komponente aus, ob Sie das klassische Vigenère-Verfahren oder das Selbstschlüssel-Verfahren ausführen wollen.
     Wählen Sie weiterhin aus, ob die Komponente entschlüsseln oder verschlüsseln soll.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Geben Sie den zu verschlüsselnden oder entschlüsselnden Text am Eingang "Texteingabe" an.
     Der Schlüssel kann am entsprechenden Eingang oder in den Einstellungen der Komponente angegeben werden.
     Wollen Sie ein vom Standardalphabet abweichendes Grundalphabet verwenden (z.B. ZYXWVUTSRQPONMLKJIHGFEDCBA), so können Sie dieses am Eingang "Eingabe-Alphabet" oder in den Einstellungen angeben.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Außerdem kann noch angegeben werden, wie die Komponente mit Buchstaben des Eingabetextes umgehen soll, die nicht im Eingabe-Alphabet enthalten sind.
     Unbekannte Zeichen können unverändert weitergegeben, entfernt, oder durch ein Fragezeichen ersetzt werden.
     Wenn die Groß-/Kleinschreibung beachtet werden soll, so werden Buchstaben des Eingabetextes, die in ihrer Schreibweise nicht im Eingabe-Alphabet enthalten sind, wie unbekannte Symbole behandelt.
   </usage>
-
   <references>
     <linkReference>
       <link url="http://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher" lang="en" />
@@ -99,5 +82,4 @@
       <caption lang="de-DE">Vigenère in Wikipedia</caption>
     </linkReference>
   </references>
-  
 </documentation>

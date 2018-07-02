@@ -1,54 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">BB84 Key Exchange with eavesdropping attack</title>
+  <title lang="ru">BB84 Key Exchange с подслушивающей атакой</title>
   <summary lang="en">Usage of the <i>BB84 Key Exchange and its attack</i></summary>
+  <summary lang="ru">Использование BB84 Key Exchange и его атаки</summary>
   <description lang="en">BB84 Key Exchange is a photon-based method of exchanging cryptographic keys.
   It is one of the earliest practical examples of key exchange implemented within the field of cryptography.
   The BB84-Protocol is one of the most recent cryptographic procedures on the base of quantum physics. A key is sent through unsecure channel via polarized photons. A man in the middle tries catch these transmitted photons. After
   checking if the key is secure, it can then be used to encrypt subsequent communications using a symmetric key cipher.<newline /><newline />
   Source: <external ref="http://en.wikipedia.org/wiki/BB84" /></description>
+  <description lang="ru">BB84 Key Exchange - основанный на фотоне метод обмена криптографическими ключами. Это один из самых ранних практических примеров обмена ключами, реализованных в области криптографии. Протокол BB84 является одной из самых последних криптографических процедур на основе квантовой физики. Ключ отправляется через незащищенный канал через поляризованные фотоны. Человек в середине пытается поймать эти переданные фотоны. После проверки того, защищен ли ключ, он может затем использоваться для шифрования последующих сообщений с использованием симметричного ключевого шифрования. Источник:</description>
   <keywords>protocol, bennet, brassard, 1984, photon, photons, polarization, light, quantum, physics, alice, bob, eve</keywords>
-
+  <keywords lang="ru">протокол, bennet, brassard, 1984, фотон, фотоны, поляризация, свет, квант, физика, alice, bob, eve</keywords>
   <title lang="de">BB84-Schlüsselaustausch mit Lauschangriff</title>
   <summary lang="de">Anwenden des <i>B84-Schlüsselaustauschs und eines Angriffsversuchs</i></summary>
   <description lang="de">Das BB84-Protokoll stellt eines der modernsten kryptographischen Verfahren auf Basis der Quantenphysik dar. Mit Hilfe von polarisierten Photonen wird ein Schlüssel über einen öffentlichen, 
   unsicheren Kanal ausgetauscht. Ein Mittelsmann versucht, diese Photonen abzufangen. Nachdem der Schlüssel empfangen wird, wird er auf seine Sicherheit geprüft und kann im Anschluss für die Anwendung einer symmetrischen Chiffre verwendet werden. <newline /><newline />
   Quelle: <external ref="http://de.wikipedia.org/wiki/Quantenschl%C3%BCsselaustausch" /></description>
   <keywords lang="de">protokoll, schlüssel, photonen, polarisation, licht, quanten, physik, alice, bob, eve</keywords>
-
   <icon file="BB84-Key-Exchange + Attack.png" />
-
   <relevantPlugins>
     <plugin name="BB84ErrorDetector" />
     <plugin name="BB84KeyGenerator" />
     <plugin name="BB84ManInTheMiddle" />
     <plugin name="BB84PhotonDecoder" />
-	<plugin name="BB84PhotonEncoder" />
-	<plugin name="BB84PhotonbaseGenerator" />
+    <plugin name="BB84PhotonEncoder" />
+    <plugin name="BB84PhotonbaseGenerator" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Initial key$" value="Initialschlüssel"/>
-    <replacement key="$Shared key$" value="Gemeinsamer Schlüssel"/>
-    <replacement key="$Received key$" value="Empfangener Schlüssel"/>
-    <replacement key="$BB84ManInTheMiddle$" value="BB84-Mittelsmann"/>
-    <replacement key="$BB84PhotonEncoder$" value="BB84-Photonenkodierer"/>
-    <replacement key="$BB84PhotonDecoder$" value="BB84-Photonendekodierer"/>
-    <replacement key="$BB84ErrorDetector$" value="BB84-Fehlerdetektor"/>
-    <replacement key="$BB84KeyGenerator$" value="BB84-Schlüsselgenerator"/>
-    <replacement key="$SecurityMessage$" value="Sicherheitsbenachrichtigung"/>
+    <replacement key="$Initial key$" value="Initialschlüssel" />
+    <replacement key="$Shared key$" value="Gemeinsamer Schlüssel" />
+    <replacement key="$Received key$" value="Empfangener Schlüssel" />
+    <replacement key="$BB84ManInTheMiddle$" value="BB84-Mittelsmann" />
+    <replacement key="$BB84PhotonEncoder$" value="BB84-Photonenkodierer" />
+    <replacement key="$BB84PhotonDecoder$" value="BB84-Photonendekodierer" />
+    <replacement key="$BB84ErrorDetector$" value="BB84-Fehlerdetektor" />
+    <replacement key="$BB84KeyGenerator$" value="BB84-Schlüsselgenerator" />
+    <replacement key="$SecurityMessage$" value="Sicherheitsbenachrichtigung" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Initial key$" value="Initialschlüssel" />
+    <replacement key="$Shared key$" value="Общий ключ" />
+    <replacement key="$Received key$" value="Полученный ключ" />
+    <replacement key="$BB84ManInTheMiddle$" value="BB84 посредник" />
+    <replacement key="$BB84PhotonEncoder$" value="BB84-Photonenkodierer" />
+    <replacement key="$BB84PhotonDecoder$" value="BB84-Photonendekodierer" />
+    <replacement key="$BB84ErrorDetector$" value="BB84 детектор ошибок" />
+    <replacement key="$BB84KeyGenerator$" value="генератор BB84 ключ" />
+    <replacement key="$SecurityMessage$" value="охранного оповещения" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Initial key$" value="Initial key"/>
-    <replacement key="$Shared key$" value="Shared key"/>
-    <replacement key="$Received key$" value="Received key"/>
-    <replacement key="$BB84ManInTheMiddle$" value="BB84 Man In The Middle"/>
-    <replacement key="$BB84PhotonEncoder$" value="BB84 Photon Encoder"/>
-    <replacement key="$BB84PhotonDecoder$" value="BB84 Photon Decoder"/>
-    <replacement key="$BB84ErrorDetector$" value="BB84 Error Detector"/>
-    <replacement key="$BB84KeyGenerator$" value="BB84 Key Generator"/>
-    <replacement key="$SecurityMessage$" value="Security Message"/>
+    <replacement key="$Initial key$" value="Initial key" />
+    <replacement key="$Shared key$" value="Shared key" />
+    <replacement key="$Received key$" value="Received key" />
+    <replacement key="$BB84ManInTheMiddle$" value="BB84 Man In The Middle" />
+    <replacement key="$BB84PhotonEncoder$" value="BB84 Photon Encoder" />
+    <replacement key="$BB84PhotonDecoder$" value="BB84 Photon Decoder" />
+    <replacement key="$BB84ErrorDetector$" value="BB84 Error Detector" />
+    <replacement key="$BB84KeyGenerator$" value="BB84 Key Generator" />
+    <replacement key="$SecurityMessage$" value="Security Message" />
   </replacements>
-
 </sample>

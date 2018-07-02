@@ -1,32 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">CRC</title>
+  <title lang="ru">CRC</title>
   <summary lang="en">Usage of the <i>CRC</i> hash function</summary>
+  <summary lang="ru">Использование хэш-функции CRC</summary>
   <description lang="en">This template shows the usage of the <i>CRC</i> hash function.</description>
+  <description lang="ru">Этот шаблон показывает использование хэш-функции CRC.</description>
   <keywords>hash</keywords>
-
+  <keywords lang="ru">гашиш</keywords>
   <title lang="de">CRC</title>
   <summary lang="de">Benutzung des <i>CRC</i>, mit dem der Empfänger die Nachricht auf Integrität überprüfen kann</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung des <i>CRC</i>, mit dem der Empfänger die Nachricht auf Integrität überprüfen kann.</description>
   <keywords lang="de">hash</keywords>
-
   <icon file="CRC.png" />
   <relevantPlugins>
     <plugin name="CRC" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Text Input$" value="Texteingabe"/>
-    <replacement key="$CRC value (hexadecimal)$" value="CRC-Wert (hexadezimal)"/>
-    <replacement key="$CRC value (binary)$" value="CRC-Wert (binär)"/>
-    <replacement key="$String Encoder$" value="String-Dekodierer"/>
+    <replacement key="$Text Input$" value="Texteingabe" />
+    <replacement key="$CRC value (hexadecimal)$" value="CRC-Wert (hexadezimal)" />
+    <replacement key="$CRC value (binary)$" value="CRC-Wert (binär)" />
+    <replacement key="$String Encoder$" value="String-Dekodierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Text Input$" value="ввод текста" />
+    <replacement key="$CRC value (hexadecimal)$" value="Значение CRC (шестнадцатеричное)" />
+    <replacement key="$CRC value (binary)$" value="Значение CRC (двоичное)" />
+    <replacement key="$String Encoder$" value="Строка декодера" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Text Input$" value="Text Input"/>
-    <replacement key="$CRC value (hexadecimal)$" value="CRC value (hexadecimal)"/>
-    <replacement key="$CRC value (binary)$" value="CRC value (binary)"/>
-    <replacement key="$String Encoder$" value="String Encoder"/>
+    <replacement key="$Text Input$" value="Text Input" />
+    <replacement key="$CRC value (hexadecimal)$" value="CRC value (hexadecimal)" />
+    <replacement key="$CRC value (binary)$" value="CRC value (binary)" />
+    <replacement key="$String Encoder$" value="String Encoder" />
   </replacements>
-
 </sample>

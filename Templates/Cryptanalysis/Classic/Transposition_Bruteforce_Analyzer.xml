@@ -1,34 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Transposition Brute-force Analysis</title>
+  <title lang="ru">Анализ переноса грубой силы</title>
   <summary lang="en">Cryptanalysis of the <i>Transposition</i> cipher using brute-force</summary>
+  <summary lang="ru">Криптоанализ шифрования Transposition с использованием грубой силы</summary>
   <description lang="en">This template shows the cryptanalysis of the single <i>Transposition</i> cipher with the <i>Transposition Analyzer</i> using brute-force. It is a ciphertext-only attack, as no part of the plaintext is known in advance.</description>
+  <description lang="ru">Этот шаблон показывает криптоанализ одиночного Transposition cipher с Transposition Analyzer с использованием грубой силы. Это атака только с зашифрованным текстом, поскольку никакая часть открытого текста не известна заранее.</description>
   <keywords>Transposition, Permutation, Bruteforce, Brute-force, Attack, Analysis</keywords>
-
+  <keywords lang="ru">Транспонирование, Перестановка, Bruteforce, Грубая сила, Атака, Анализ</keywords>
   <title lang="de">Transposition Brute-Force-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Transpositionsverschlüsselung</i> mit Brute-Force</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der einstufigen <i>Transpositionsverschlüsselung</i> mit der Komponente <i>Transpositions-Analyse</i> mittels Brute-Force. Es handelt sich hierbei um eine Ciphertext-only-Analyse, da keine Informationen über den Klartext bekannt sind.</description>
   <keywords lang="de">Angriff</keywords>
-
   <icon file="Transposition.png" />
   <relevantPlugins>
     <plugin name="CostFunction" />
     <plugin name="Transposition" />
     <plugin name="TranspositionAnalyser" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
-    <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
+    <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse" />
+    <replacement key="$Converter$" value="Konvertierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
+    <replacement key="$TranspositionAnalyser$" value="Транспозиций-анализ" />
+    <replacement key="$Converter$" value="преобразование" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
-    <replacement key="$TranspositionAnalyser$" value="TranspositionAnalyzer"/>
-    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
+    <replacement key="$TranspositionAnalyser$" value="TranspositionAnalyzer" />
+    <replacement key="$Converter$" value="Converter" />
   </replacements>
-
 </sample>

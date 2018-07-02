@@ -1,106 +1,74 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
-    Data Encryption Standard (DES) is a symmetric cryptosystem that was announced by the US government in 1976 as official standard (FIPS 46) <ref id="NIST"/>.
-    <newline />
-    <newline />
+    Data Encryption Standard (DES) is a symmetric cryptosystem that was announced by the US government in 1976 as official standard (FIPS 46) <ref id="NIST" />.
+    <newline /><newline />
     DES operates on plaintext blocks of length 64 bits (= 8 bytes) and generates blocks with encrypted text of length 64 bits.
     Once again, formally the key is 64 bits long, but in fact only 56 bits are actually used as 8 bits serve as parity bits. So cryptographers say, that the (effective) key length is 56 bits.
-    However, it is possible today to crack a message encrypted with DES in less than 25 hours (Source: <ref id="DESCracker"/>), albeit with considerable effort, by searching through the entire key space.
+    However, it is possible today to crack a message encrypted with DES in less than 25 hours (Source: <ref id="DESCracker" />), albeit with considerable effort, by searching through the entire key space.
     Today, due to the short key length, the security of DES is no longer considered sufficient.
     The involvement of the NSA in the design of the algorithm also nourished suspicions about a backdoor.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     A sequence of three DES encryptions using two or three different DES keys is called Triple DES (two or three key Triple DES). By this trick, the effective key length is 112 resp. 168 bit.
     Today, Triple DES is wide-spread for symmetric encryption. Due to its worse performance Triple DES is replaced by the modern <docRef item="Cryptool.Plugins.Cryptography.Encryption.AES">AES</docRef> algorithm.
-    <newline/>
-    <newline/>
-
-    <section headline="A remark about the parity bits:">
+    <newline /><newline /><section headline="A remark about the parity bits:">
       With encryption using the DES algorithm, the lowest order bit in each key byte is not used for encryption or decryption as it is used as a parity bit.
       As a result it is possible to to find a key via brute-force analysis that is not identical to the key which was used to encrypt the document.
       However, the two keys are equivalent if the only difference between them is the lowest order bit of each byte. Hence, bytes 00 and 01, 02 and 03,..., 0C and 0D, 0E and 0F are all equivalent to each other.
       The same applies also if instead of the leading 0 there is a different hexadecimal character 1, 2, 3,..., 9, A, B,..., F (see below).
-      <newline/>
-      <newline/>
-      <b>Example:</b> The two following DES keys
-      <newline/>
-      <newline/>
+      <newline /><newline /><b>Example:</b> The two following DES keys
+      <newline /><newline />
       00 22 44 66 88 AA CC EE (hex) =
-      <newline/>
-      <newline/>
+      <newline /><newline />
       00000000 00100010 01000100 01100110 10001000 10101010 11001100 11101110 (binary) and
-      <newline/>
-      <newline/>
+      <newline /><newline />
       01 23 45 67 89 AB CD EF (hex) =
-      <newline/>
-      <newline/>
+      <newline /><newline />
       00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111 (binary)
-      <newline/>
-      <newline/>
+      <newline /><newline />
       are equivalent.
-    </section>
-  </introduction>
-  
+    </section></introduction>
+  <introduction lang="ru">Стандарт шифрования данных (DES) представляет собой симметричную криптосистему, которая была объявлена ​​правительством США в 1976 году в качестве официального стандарта (FIPS 46). DES работает на блоках открытого текста длиной 64 бит (= 8 байт) и генерирует блоки с зашифрованным текстом длиной 64 бит. Опять же, формально ключ имеет длину 64 бита, но на самом деле только 56 бит фактически используются, поскольку 8 бит служат в качестве бит четности. Поэтому криптографы говорят, что (эффективная) длина ключа составляет 56 бит. Однако сегодня можно взломать сообщение, зашифрованное DES, менее чем за 25 часов (Источник:), хотя и со значительными усилиями, путем поиска по всему ключевому пространству. Сегодня из-за короткой длины ключа безопасность DES больше не считается достаточной. Участие NSA в разработке алгоритма также вызвало подозрения в отношении бэкдора. Последовательность из трех DES-шифров с использованием двух или трех разных ключей DES называется Triple DES (два или три ключа Triple DES). Посредством этого трюка эффективная длина ключа равна 112 соответственно. 168 бит. Сегодня Triple DES широко распространен для симметричного шифрования. Из-за худшей производительности Triple DES заменяется современным алгоритмом AES. При шифровании с использованием алгоритма DES бит младшего порядка в каждом ключевом байте не используется для шифрования или дешифрования, поскольку он используется как бит четности. В результате можно найти ключ посредством анализа грубой силы, который не идентичен ключу, который использовался для шифрования документа. Однако эти два ключа эквивалентны, если единственная разница между ними - бит младшего порядка каждого байта. Следовательно, байты 00 и 01, 02 и 03, ..., 0C и 0D, 0E и 0F все эквивалентны друг другу. То же самое относится также, если вместо ведущего 0 существует другой шестнадцатеричный символ 1, 2, 3, ..., 9, A, B, ..., F (см. Ниже). Пример: два следующих ключа DES 00 22 44 66 88 AA CC EE (hex) = 00000000 00100010 01000100 01100110 10001000 10101010 11001100 11101110 (двоичный) и 01 23 45 67 89 AB CD EF (hex) = 00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111 (двоичные) эквивалентны.</introduction>
   <introduction lang="de-DE">
-    Der Data Encryption Standard (DES) ist ein symmetrisches Verschlüsselungsverfahren, das von der US-Regierung 1976 als offizieller Standard (FIPS 46) <ref id="NIST"/> bekanntgegeben wurde.
-    <newline />
-    <newline />
+    Der Data Encryption Standard (DES) ist ein symmetrisches Verschlüsselungsverfahren, das von der US-Regierung 1976 als offizieller Standard (FIPS 46) <ref id="NIST" /> bekanntgegeben wurde.
+    <newline /><newline />
     DES operiert auf Klartextblöcken der Länge 64 Bits (= 8 Bytes) und erzeugt Blöcke mit verschlüsseltem Text der Länge 64 Bits.
     Die formale Länge des Schlüssels beträgt ebenfalls 64 Bits; effektiv jedoch werden nur 56 Bits benutzt, da 8 Bits als Paritätsbits verwendet werden. Deshalb spricht man von einer (effektiven) Schlüssellänge von 56 Bit.
-    Allerdings kann man heutzutage mittels einer vollständigen Schlüsselraumsuche mit einigem Aufwand eine mit DES verschlüsselte Nachricht in weniger als 25 Stunden knacken (Quelle: <ref id="DESCracker"/>).
+    Allerdings kann man heutzutage mittels einer vollständigen Schlüsselraumsuche mit einigem Aufwand eine mit DES verschlüsselte Nachricht in weniger als 25 Stunden knacken (Quelle: <ref id="DESCracker" />).
     Heute wird DES schon aufgrund der kurzen Schlüssellänge von nur 56 Bits nicht mehr als ausreichend sicher erachtet.
     Auch wegen der Beteiligung der NSA am Design des Algorithmus gab es immer wieder Spekulationen über seine Sicherheit.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Durch das Hintereinanderausführen von drei DES-Verschlüsselungen unter Verwendung von zwei oder drei verschiedenen 56 Bit DES-Schlüsseln erhält man das sogenannte Triple-DES-Verfahren (zwei oder drei Schlüssel Triple-DES).
     Durch diesen Trick erhält man eine effektive Schlüssellänge von 112 oder 168 Bit. Triple-DES ist heute weit verbreitet für die symmetrische Verschlüsselung.
     Aufgrund seiner schlechten Performance wird Triple-DES durch das modernere <docRef item="Cryptool.Plugins.Cryptography.Encryption.AES">AES</docRef>-Verfahren ersetzt.
-    <newline/>
-    <newline/>
-
-    <section headline="Bemerkung zu den Paritätsbits:">
+    <newline /><newline /><section headline="Bemerkung zu den Paritätsbits:">
       Beim Verschlüsseln mit dem DES-Verschlüsselungsverfahren wird für die Ver-/Entschlüsselung von jedem Schlüssel-Byte das niederwertigste Bit nicht verwendet, da es als Paritätsbit genutzt wird.
       Dadurch kann es bei der Brute-Force-Analyse passieren, dass ein Schlüssel gefunden wird, der nicht mit dem Schlüssel, mit dem das Dokument verschlüsselt ist, identisch ist.
       Dennoch sind die beiden Schlüssel äquivalent, falls sie sich immer nur im niederwertigsten Bit jedes Bytes unterscheiden. Also sind die Bytes 00 und 01, 02 und 03, ..., 0C und 0D, 0E und 0F jeweils zueinander äquivalent.
       Dasselbe gilt auch, wenn statt der führenden 0 ein anderes hexadezimales Zeichen 1, 2, 3, ..., 9, A, B, ..., F vorhanden ist.
-      <newline/>
-      <newline/>
-      <b>Beispiel:</b> Die beiden folgenden DES-Schlüssel
-      <newline/>
-      <newline/>
+      <newline /><newline /><b>Beispiel:</b> Die beiden folgenden DES-Schlüssel
+      <newline /><newline />
       00 22 44 66 88 AA CC EE (hex) =
-      <newline/>
-      <newline/>
+      <newline /><newline />
       00000000 00100010 01000100 01100110 10001000 10101010 11001100 11101110 (binär) und
-      <newline/>
-      <newline/>
+      <newline /><newline />
       01 23 45 67 89 AB CD EF (hex) =
-      <newline/>
-      <newline/>
+      <newline /><newline />
       00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111 (binär)
-      <newline/>
-      <newline/>
+      <newline /><newline />
       sind äquivalent.
-    </section>
-  </introduction>
-
+    </section></introduction>
   <usage lang="en">
     In the settings of the component, you can select whether the component should be operated in DES mode or in Triple DES mode. Both algorithms work with a block size of 64 bits (8 bytes).
     DES expects a key consisting of 64 bits (8 bytes). 
     Triple DES can be used with two or three different DES keys, so that the expected key consists of 128 bits (16 bytes) or 192 bits (24 bytes).
     The size of the provided key determines, which Triple DES variant the component will execute.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     The DES component has the two operation modes "Encryption" and "Decryption". You can switch between the modes in the settings of the component.
-    <newline />
-    <newline />
-
-    <section headline="Encryption">
+    <newline /><newline /><section headline="Encryption">
       In "Encryption" mode, the component expects the plaintext as a data stream on the input labeled "Input".
       If the size of the input is not a multiple of the block size, as many bytes as are necessary to achieve
       a multiple of the block size are padded. You can choose between several padding methods in the settings of the component.
@@ -109,20 +77,12 @@
       The key is expected as a byte array on the input labeled "Key".
       If the selected key size does not correspond to the size of the entered key, an error message will be issued and the execution stops.
       The encrypted data block is sent to the output of the component as a data stream.
-      <newline />
-      <newline />
-    </section>
-
-    <section headline="Decryption">
+      <newline /><newline /></section><section headline="Decryption">
       In "Decryption" mode, the component expects the ciphertext that is to be decrypted on the input labeled "Input".
       The size of the input must be a multiple of the block size. Otherwise, the component stops with an error message.
       The key is entered in the same way as in "Encryption" mode.
       Finally, the plaintext will be sent to the output of the component as a data stream.
-      <newline />
-      <newline />
-    </section>
-
-    <section headline="Cryptographic Mode">
+      <newline /><newline /></section><section headline="Cryptographic Mode">
       Block ciphers divide their input data into blocks of a fixed size and apply the encryption or decryption function on the blocks of the input.
       The chaining mode determines the way in which consecutive blocks, after being encrypted or decryted, are combined in order to achieve better security or error tolerance.
       The DES component offers the following block chaining modes: ECB (Electronic Code Book), CBC (Cipher Block Chaining), CFB (Cipher Feedback) and OFB (Output Feedback).
@@ -132,20 +92,16 @@
       As there is no previous block for the first block, we must provide one for these modes. This extra block is given by the initialization vector (IV), which must be provided as a byte array
       on the input of the component. Thus the size of the IV must correspond to the block size. If the provided IV is too short, it is filled with null bytes. If it is too long, it is truncated.
       If no IV is given, the component will assume an IV consisting of null bytes.
-    </section>
-  </usage>
-
+    </section></usage>
+  <usage lang="ru">В настройках компонента вы можете выбрать, должен ли компонент работать в режиме DES или в режиме Triple DES. Оба алгоритма работают с размером блока в 64 бита (8 байтов). DES ожидает ключ, состоящий из 64 бит (8 байтов). Triple DES может использоваться с двумя или тремя различными ключами DES, так что ожидаемый ключ состоит из 128 бит (16 байт) или 192 бит (24 байта). Размер предоставленного ключа определяет, какой вариант Triple DES будет выполнять компонент. Компонент DES имеет два режима работы: «Шифрование» и «Расшифровка». Вы можете переключаться между режимами в настройках компонента. В режиме «Шифрование» компонент ожидает открытый текст как поток данных на входе с надписью «Вход». Если размер ввода не кратен размеру блока, столько байтов, сколько необходимо для достижения кратного размера блока, дополняются. В настройках компонента вы можете выбирать между несколькими способами заполнения. При расшифровке зашифрованного текста важно выбрать тот же метод заполнения, который использовался для шифрования. В противном случае последний блок будет дешифрован неправильно или вообще отсутствует. Ключ ожидается как массив байтов на входе с надписью «Ключ». Если выбранный размер ключа не соответствует размеру введенного ключа, будет выдано сообщение об ошибке, и выполнение прекратится. Зашифрованный блок данных отправляется на выход компонента в виде потока данных. В режиме «Расшифровка» компонент ожидает, что зашифрованный текст будет дешифрован на входе с надписью «Вход». Размер ввода должен быть кратным размеру блока. В противном случае компонент останавливается с сообщением об ошибке. Ключ вводится так же, как в режиме «Шифрование». Наконец, открытый текст будет отправлен на выход компонента в виде потока данных. Блочные шифры делят свои входные данные на блоки фиксированного размера и применяют функцию шифрования или дешифрования на блоках ввода. Режим цепочки определяет способ объединения последовательных блоков после их зашифрования или декомпозиции для обеспечения большей безопасности или допуска допуска ошибок. Компонент DES предлагает следующие режимы цепочки блоков: ECB (электронная кодовая книга), CBC (цепочка блоков шифрования), CFB (обратная связь с шифрованием) и OFB (выходная обратная связь). Выберите подходящий режим цепочки в настройках компонента. В режиме ECB каждый блок зашифровывается отдельно. Однако в других режимах блок открытого текста объединяется с предыдущим блоком зашифрованного текста. Поскольку для первого блока нет предыдущего блока, мы должны предоставить один для этих режимов. Этот дополнительный блок задается вектором инициализации (IV), который должен быть представлен как байтовый массив на входе компонента. Таким образом, размер IV должен соответствовать размеру блока. Если предоставленный IV слишком короткий, он заполняется нулевыми байтами. Если он слишком длинный, он усечен. Если нет IV, компонент будет принимать IV, состоящий из нулевых байтов.</usage>
   <usage lang="de-DE">
     Wählen Sie in den Einstellungen der DES-Komponente, ob die Komponente im DES-Modus oder im Triple-DES-Modus betrieben werden soll. Beide Algorithmen arbeiten mit einer Blockgröße von 64 Bits (8 Bytes).
     DES erwartet einen Schlüssel bestehend aus 64 Bits (8 Bytes). 
     Das Triple-DES-Verfahren kann mit zwei oder drei verschiedenen DES-Schlüsseln ausgeführt werden, so dass der erwartete Schlüssel aus 128 Bits (16 Bytes) oder 192 Bits (24 Bytes) bestehen muss.
     Die Komponente erkennt an der Größe des eingegebenen Schlüssels, welche Triple-DES-Variante ausgeführt werden soll.
-    <newline/>
-    <newline/>
+    <newline /><newline />
     Die Komponente hat die zwei Betriebsarten "Verschlüsselung" und "Entschlüsselung", zwischen denen in den Einstellungen der Komponente umgeschaltet werden kann.
-    <newline />
-    <newline />
-    <section headline="Verschlüsselung">
+    <newline /><newline /><section headline="Verschlüsselung">
       In der Betriebsart "Verschlüsselung" erwartet die Komponente als Eingabe den zu verschlüsselnden Klartext als Datenstrom am Eingang "Eingabe".
       Ist die Länge der Eingabe kein Vielfaches der Blockgröße, so müssen vor der Verschlüsselung so viele Bytes angehängt werden, bis sie ohne Rest in Blöcke der Blockgröße zerlegt werden kann.
       Diesen Vorgang nennt man 'Padding'. In den Einstellungen kann man zwischen verschiedenen Padding-Methoden wählen.
@@ -154,17 +110,11 @@
       Der Schlüssel wird als Byte-Array am Eingang "Schlüssel" erwartet.
       Stimmt die Größe des eingegebenen Schlüssels nicht mit der erwarteten Schlüsselgröße überein, so wird eine Fehlermeldung ausgegeben und die Ausführung wird beendet.
       Der verschlüsselte Datenblock wird am Ausgang der Komponente als Datenstrom zur Verfügung gestellt.
-      <newline />
-      <newline />
-    </section>
-    <section headline="Entschlüsselung">
+      <newline /><newline /></section><section headline="Entschlüsselung">
       In der Betriebsart "Entschlüsselung" erwartet die Komponente den zu entschlüsselnden Geheimtext als Datenstrom am Eingang "Eingabe".
       Die Länge der Eingabe muss hierbei ein Vielfaches der Blockgröße sein, andernfalls wird die Berechnung mit einer Fehlermeldung abgebrochen.
       Der Schlüssel wird wie bei der Entschlüsselung eingegeben. Der entschlüsselte Klartext wird dann schließlich am Ausgang der Komponente als Datenstrom bereitgestellt.
-      <newline />
-      <newline />
-    </section>
-    <section headline="Kryptographischer Modus">
+      <newline /><newline /></section><section headline="Kryptographischer Modus">
       Blockverschlüsselungsverfahren unterteilen die Eingabedaten in Blöcke festgelegter Größen und
       wenden die Ver-/Entschlüsselungsfunktion dann fortlaufend auf diese Blöcke an. Der "kryptographische Modus", in dem
       eine Blockchiffre betrieben wird, gibt an, wie die Ergebnisse der Ver- bzw. Entschlüsselung aufeinanderfolgender Blöcke
@@ -178,15 +128,9 @@
       Dieser muss die verwendete Blockgröße haben und wird am zugehörigen Eingang der Komponente
       als Byte-Array eingegeben. Ein zu kurzer Initialisierungsvektor wird mit Nullbytes aufgefüllt, ein zu langer auf die Blockgröße
       beschnitten. Wird der Eingang nicht verbunden, so wird ein Initialisierungsvektor bestehend aus Nullbytes verwendet.
-    </section>
-  </usage>
-
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-
+    </section></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
     <linkReference id="wikipedia">
       <link url="http://en.wikipedia.org/wiki/Data_Encryption_Standard" lang="en" />
@@ -207,5 +151,4 @@
       <caption lang="de-DE">DES Cracker von der Electronic Frontier Foundation (englisch)</caption>
     </linkReference>
   </references>
-  
 </documentation>

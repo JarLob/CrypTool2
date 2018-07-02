@@ -1,41 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE category SYSTEM "..\wizard.dtd">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE category SYSTEM "..\wizard.dtd"[]>
 <!-- This is the XML file defining the classic encryption categories a user can select from. -->
-
 <category image="Classic">
-  <name lang="en" >Classic Encryption</name>
-  <name lang="de" >Klassische Verschlüsselung</name>
-  <description lang="en" >Selecting this allows you to analyze a ciphertext that was encrypted by a classic algorithm. You can choose which algorithm you want to use for doing this.</description>
-  <description lang="de-DE" >Wählen Sie diesen Punkt, um einen Geheimtext, der mit einem klassischen Algorithmus verschlüsselt wurde, zu analysieren. Das zu verwendende Verschlüsselungsverfahren kann von Ihnen ausgewählt werden.</description>
-
+  <name lang="en">Classic Encryption</name>
+  <name lang="ru">Классическое шифрование</name>
+  <name lang="de">Klassische Verschlüsselung</name>
+  <description lang="en">Selecting this allows you to analyze a ciphertext that was encrypted by a classic algorithm. You can choose which algorithm you want to use for doing this.</description>
+  <description lang="ru">Выбор этого позволяет проанализировать зашифрованный текст, который был зашифрован классическим алгоритмом. Вы можете выбрать, какой алгоритм вы хотите использовать для этого.</description>
+  <description lang="de-DE">Wählen Sie diesen Punkt, um einen Geheimtext, der mit einem klassischen Algorithmus verschlüsselt wurde, zu analysieren. Das zu verwendende Verschlüsselungsverfahren kann von Ihnen ausgewählt werden.</description>
   <!-- This is the step's headline. It should be short, but precise. -->
-  <headline lang="en" >Algorithm Selection</headline>
+  <headline lang="en">Algorithm Selection</headline>
+  <headline lang="ru">Выбор алгоритма</headline>
   <headline lang="de">Algorithmenauswahl</headline>
-
   <!-- This is the step's description. -->
-  <task lang="en" >Select a classic encryption algorithm.</task>
-  <task lang="de" >Wählen Sie ein klassisches Verschlüsselungsverfahren.</task>
-
+  <task lang="en">Select a classic encryption algorithm.</task>
+  <task lang="ru">Выберите классический алгоритм шифрования.</task>
+  <task lang="de">Wählen Sie ein klassisches Verschlüsselungsverfahren.</task>
   <!-- Caesar input -->
   <input image="Caesar">
-    <name lang="en" >Caesar</name>
-    <description lang="en" >
+    <name lang="en">Caesar</name>
+    <name lang="ru">Цезарь</name>
+    <description lang="en">
 Caesar is a classic algorithm to encrypt plaintext or to decrypt ciphertext. 
 By selecting this, you can analyze some ciphertext that was encrypted with the Caesar algorithm.
     </description>
-    <description lang="de" >
+    <description lang="ru">Цезарь - классический алгоритм шифрования открытого текста или дешифрования зашифрованного текста. Выбрав это, вы можете проанализировать некоторый зашифрованный текст, который был зашифрован алгоритмом Цезаря.</description>
+    <description lang="de">
 Caesar ist ein klassisches Verschlüsselungsverfahren.
 Wählen Sie diesen Punkt, um einen mit dem Caesar-Verfahren verschlüsselten Text zu analysieren.
     </description>
-
     <headline lang="en">Caesar Analysis</headline>
+    <headline lang="ru">Анализ Цезаря</headline>
     <headline lang="de">Caesar-Analyse</headline>
     <task lang="en">Please input the ciphertext and text language.</task>
+    <task lang="ru">Пожалуйста, введите зашифрованный текст и текстовый язык.</task>
     <task lang="de">Bitte geben Sie den Geheimtext ein und wählen die Textsprache aus.</task>
-
     <inputBox plugin="$Ciphertext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Ciphertext:</description>
+      <description lang="ru">зашифрованный:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue>Lfnzx Nzqnzx Hfjxfw (ijzyxhm: Ozqnzx Häxfw; * 13. Ozqn[1] 100 a. Hmw. ns Wtr; † 15. Räwe 44 a. Hmw. ns Wtr) bfw jns wörnxhmjw Xyffyxrfss, Kjqimjww zsi Fzytw, ijw rfßljgqnhm fs ijw Ejwxyöwzsl ijw Wörnxhmjs Wjuzgqnp zsi fs nmwjw xuäyjwjs Zrbfsiqzsl ns jns Pfnxjwwjnhm gjyjnqnly bfw.
 
@@ -43,69 +45,76 @@ Ijw ufywnenxhmjs Kfrnqnj ijw Ozqnjw jsyxyfrrjsi, fgxtqanjwyj jw inj Äryjwqfzkgf
 
 Hfjxfwx Sfrj bzwij ezr Gjxyfsiyjnq ijx Ynyjqx fqqjw sfhmktqljsijs Mjwwxhmjw ijx wörnxhmjs Pfnxjwwjnhmx. Ns ijw wörnxhmjs Xuäyfsynpj zsi nr Gdefsynsnxhmjs Wjnhm gjejnhmsjyj ijw Ynyjq „Hfjxfw“ jnsjs Rnymjwwxhmjw tijw Ymwtsktqljw. Ns ijs jsyqjmsyjs Ktwrjs Pfnxjw zsi Efw bzwij ijw Sfrj xuäyjw fzhm ezr Ynyjq ijw Mjwwxhmjw ijx Mjnqnljs Wörnxhmjs, ijx Öxyjwwjnhmnxhmjs, ijx Ijzyxhmjs, ijx Gzqlfwnxhmjs zsi ijx Wzxxnxhmjs Wjnhmjx.</defaultvalue>
     </inputBox>
-
     <comboBox plugin="$CaesarAnalysisHelper$" property="TextLanguage" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Language of the cleartext message:</description>
+      <description lang="ru">Язык открытого текста:</description>
       <description lang="de">Sprache der Klartext-Nachricht:</description>
-      <item content="German" lang="en"/>
-      <item content="English" lang="en"/>
-      <item content="French" lang="en"/>
-      <item content="Spanish" lang="en"/>
+      <item content="German" lang="en" />
+      <item lang="ru" content="Немецкий" />
+      <item content="English" lang="en" />
+      <item lang="ru" content="английский" />
+      <item content="French" lang="en" />
+      <item lang="ru" content="Французский" />
+      <item content="Spanish" lang="en" />
+      <item lang="ru" content="испанский" />
     </comboBox>
-
     <sampleViewer image="Caesar" file="Cryptanalysis\Classic\Caesar_Analysis_Using-character-frequencies.cwm">
       <name lang="en">Caesar Analysis Output</name>
+      <name lang="ru">Результат анализа Цезаря</name>
       <name lang="de">Caesar-Analyse: Ausgabe</name>
       <description lang="en">Caesar Analysis Output</description>
+      <description lang="ru">Результат анализа Цезаря</description>
       <description lang="de">Caesar-Analyse: Ausgabe</description>
-      
       <headline lang="en">Caesar Analysis Output</headline>
+      <headline lang="ru">Результат анализа Цезаря</headline>
       <headline lang="de">Caesar-Analyse: Ausgabe</headline>
       <task lang="en">Here, you can change the message and view the results.</task>
+      <task lang="ru">Здесь вы можете изменить сообщение и просмотреть результаты.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
-
       <inputBox plugin="$Ciphertext$" property="Text" alignment="Stretch" visibleLines="5">
         <description lang="en">Ciphertext:</description>
+        <description lang="ru">зашифрованный:</description>
         <description lang="de">Geheimtext:</description>
       </inputBox>
-
       <presentation plugin="$Decrypted Ciphertext$" alignment="Left" height="20%" width="50%" group="OutputGroup">
         <description lang="en">Deciphered Ciphertext:</description>
+        <description lang="ru">Расшифрованный шифрованный текст:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
       </presentation>
-
       <presentation plugin="$Key$" height="20%" alignment="Right" width="50%" group="OutputGroup">
         <description lang="en">Key (amount of shift):</description>
+        <description lang="ru">Ключ (сумма смены):</description>
         <description lang="de">Schlüssel (Verschiebungsanzahl):</description>
       </presentation>
-
       <presentation plugin="$FrequencyTest$" alignment="Stretch" width="100%" group="PresentationGroup" height="350">
         <description lang="en">Frequency Analysis:</description>
+        <description lang="ru">Частотный анализ:</description>
         <description lang="de">Frequenzanalyse:</description>
-      </presentation>     
+      </presentation>
     </sampleViewer>
-    
   </input>
-
   <!-- Vigenère input -->
   <input image="Vigenere">
-    <name lang="en" >Vigenère</name>
-    <description lang="en" >
+    <name lang="en">Vigenère</name>
+    <name lang="ru">Vigenere</name>
+    <description lang="en">
 Vigenère is a classic algorithm to encrypt plaintext or to decrypt ciphertext.
 By selecting this, you can analyze some ciphertext that was encrypted with the Vigenère algorithm.
     </description>
-    <description lang="de" >
+    <description lang="ru">Vigenère - классический алгоритм шифрования открытого текста или дешифрования зашифрованного текста. Выбрав это, вы можете проанализировать некоторый зашифрованный текст, который был зашифрован алгоритмом Vigenère.</description>
+    <description lang="de">
 Vigenère ist ein klassisches Verschlüsselungsverfahren.
 Wählen Sie diesen Punkt, um einen mit dem Vigenère-Verfahren verschlüsselten Text zu analysieren.
     </description>
-
     <headline lang="en">Vigenère Analysis</headline>
+    <headline lang="ru">Анализ Vigenère</headline>
     <headline lang="de">Vigenère-Analyse</headline>
     <task lang="en">Please input the ciphertext and text language.</task>
+    <task lang="ru">Пожалуйста, введите зашифрованный текст и текстовый язык.</task>
     <task lang="de">Bitte geben Sie den Geheimtext ein und wählen die Textsprache aus.</task>
-
     <inputBox plugin="$Ciphertext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Ciphertext:</description>
+      <description lang="ru">зашифрованный:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue lang="en">Mom 16lp Uezxmjr zio bze pinwevxemft aj lzx Cqymfèrq ifukfxlqgn yilzhk (vsuwd mjlwk Itsqke pi Nazlvèjm). Lhuw osl swfo uozwavxymv if uzfjwtrittw ezgjqiaqgv slssjamou ("Dm Uhujxjx pvvékzirjjsusm", [Wvyluwz: "Lal qflwcutzwkhjdm uiblwj.")]
 
@@ -119,345 +128,395 @@ Bzm Truxaka tilpwmmxaubhv Upsrxik Ttijsow sgguwxkmv jq 1854 iz wgdopvy i Nisifè
 Flw Nbnmfèzw dqgjqiaqgv eeflgv pvzca an m qsfglz kqeixej lh apsb msqh af tabskcizk s ehuwsthhmfwlbj amjktuxmlbvv, oqlh flw etqwj pagtpq kbnvanacmrl vbmnwzwnoi lzta mskz pxeafmlfl kzadeulxy ksv te  qruaiomjmv bk efq hm 26 lanxedifl laiflsrp edhahjwbk dqtwfwlvl choz azavo twbled sx lal swgoodh sdbnvk eatt azavo idxzanil.  Laba, fwl ozpq utu bzm kayi uaiomj twtfij jxwzwawnf haxylzwvl pxeafmlfl twtfijk, ubb lpw smqw hehqfbwx xillxy ksv te qruaiomjmv iz qmdmpxdm oakw.
 
 Yaolv lpw kqcogkk wj swybljsll, ql qk rqpslbcmdg kiytdw mv lwkjybx lzx jqhpwr. Mrsdrzqk wx a Hmywgèym uqhhqv af mom sjkezgw gy rvgedepkw gy apw swy, tsowolz, aa kisraxbjifbdy ysjw vvuhtwx, nyl utu jw iucaqhdbzpwl fozilzxsmka.</defaultvalue>
+      <defaultvalue lang="ru">Мама 16lp Uezxmjr ЗИО BZE pinwevxemft живой LZX Cqymfèrq ifukfxlqgn yilzhk (vsuwd mjlwk Itsqke Nazlvèjm вес). Lhuw ОСЛ swfo uozwavxymv вл uzfjwtrittw ezgjqiaqgv slssjamou ( &amp;quot;Дм Uhujxjx pvvékzirjjsusm&amp;quot;, [Wvyluwz &amp;quot;Лал qflwcutzwkhjdm uiblwj.&amp;quot;)] Мама wvurktlahu uwbzop ylaephwa euxxahel idxzanilk, xhkz aamupsj мв я Uiwsmv sdioitml, сахар xzsm пб аа gfrwwl е aguw ngqtwk уп upsrmglwkz , alijtury khtmopwrq jjgf Н bzzm Z, МСВ uhubavmizk uqvsqutq uzxad основа zwiuhqw Р. Xkvu последнего lpwn, в laijbk из sytpv Е ш eawi GFX уп 26 vqxfqvwfm Jiwasr mphztimla. Ohugz гы apwaw axtzsulbk БК ufmdasll defxwj гм ш wnovqhm liup BZM hlmmflxeb vmhezhk mivv swyisjv, poqup, ​​как beajxk, twbled FQ dxabwz, oifl uztyiubwre Лал xdianfipl SX. Мама cmqwavv kavcdl ик тэ мвт dggn BC fqekausm, kqfcq xzal dwmtv UEI-х yklilmj ngqtwk уп sthhmfwll, dpakz carljbiclmk из xzw llkmzatk. ППВ Azwg MFD живой LZX rmqegrp кв.м jxhkzmv, вл gquela SVV rqtwsmz. BZM Truxaka tilpwmmxaubhv Upsrxik Ttijsow sgguwxkmv 1854 JQ я из- wgdopvy Nisifèjx lvuzqpfmgf yvz LPW fuvkl mpuw. BZE Reul кирка-х eeflgv yvz vmurktlahu WX шары gahalz Зив bqif vbzkgdwrqh OSL УПВ xmbxmudr rvgef uzxad 9 rlija dafij. Oalbzmj спосо RGL moqk zwsgplww mzgu Tanfsyx&amp;#39;z sfwon fifvxukq Б.Г. pdsujtzbavstq, BC xzwkl IDSA xzw ivakqtixmlq мучение Mfgxefv, xuosowd MX LZX aqem ВПТ Ukpuwif WMV, ZSW hlgxlep (ЭТС vsikaafuiv Ehzb Kmurqx) LZX miub lhmx Nazlvèjm wnovqhmpwf доступа ZS dggnmj awcgvw. Лал Xjcksuef gymqumj Fdmwvkpkz Sssuwca ibjdqkhqh žal VEF aglgxagg ру +1863 SVV dqwujbimv BZE yilzhka mawd. ВПТ Nbnmfèzw dqgjqiaqgv eeflgv pvzca М qsfglz kqeixej ч APSB msqh из tabskcizk ehuwsthhmfwlbj amjktuxmlbvv, oqlh ФНЧ etqwj pagtpq kbnvanacmrl vbmnwzwnoi ЛЗТА mskz pxeafmlfl kzadeulxy KSV чай qruaiomjmv Б.К. efq гм 26 lanxedifl laiflsrp edhahjwbk dqtwfwlvl Choz azavo twbled SX Лал swgoodh sdbnvk точно azavo idxzanil. Лаба, FWL ozpq братья BZM Kayi uaiomj twtfij jxwzwawnf haxylzwvl pxeafmlfl twtfijk, б и б LPW smqw hehqfbwx xillxy KSV чай qruaiomjmv сахар qmdmpxdm oakw. Yaolv LPW kqcogkk WJ swybljsll, QL BC rqpslbcmdg kiytdw мв lwkjybx LZX jqhpwr. Mrsdrzqk WX Hmywgèym uqhhqv из мамы sjkezgw гы гы rvgedepkw ППВ КПТ, tsowolz, аа kisraxbjifbdy ysjw vvuhtwx, ныл братья извлекающий iucaqhdbzpwl fozilzxsmka.</defaultvalue>
       <defaultvalue lang="de">Giw eu 16. Adlzuarzyjx pqtkpiegivr Bmcyfèvp-Yejokyoüwarryja (fenk Bdwqjh hm Iokahèji) rdll hieji iyy wewzichr Udqwivqrxehagvtwheqa („Ch Gpvljny aroéfhabnidftr“, jiqnkgs: „Giw qvvqxhvljaltech Vwnatkpüafkpqhy“).[1] Itq Sudtüjvitjuvp vwwelmep, ezh zqrri qhv apocza Icsliokxa awrfwzl smigiv. Qoi Wfhlleela tvlxma ymyb syd gej Yivvez-Fafonaxfwigj is.
 
 Giu oxmpckgshn Ewbyhqigooal Ullulwo Jrefitk kafsrr xm vwa Adlz 1854 rxwpgspd giw Avkcmnskvqhy itqej Rqxhrèzr-Ilezxvp. Giwom Vqxlrioqhy afudw fmurgp qgqwfk rtfhl öbnvqxtvil xyceyqt yaurflb. Qkv llwyßtvcza Wwimhvkv Blaiouiud Srvmaxo zalöxjpqtdekywi qz Pedl 1863 kitqe Döocej yvq mmja vexlt aj lzh Kmfilewzxp hif.
 
 Zij Vgpyüywafoscw swe „IBHC“, lrx Xarl „kpkeaivzv“. Zqrx Gwykec-Vutobzwybvurah nicvczhüajhpv qkr Pypx. Ole wnakh Wcoyxenmxtrn aob vlrm Pgiouj-Zpusudtüjvithtk icl hpp Sudtüjvit „N“. „G“ mon vic hrkpm Sxgpfzexy aq Lopzwjvw. Iz ikvowzmpet vav vuwbrt Fqwzwedbwj lvv dc ikvowzpüdvedjlvq Xmkzio, xsw „r“, xm 0 Kpmcoiv, ry fhyafe „J“. Dwn hnhmbr Hyybkxlee vaa Jfltüfyihm, ved „N“, ikp lvu itszi Xouldwata qd Dpxugfan, wv ghrkypzhfb qgw vqwmeh Zwekyhr lry Xarlid, gak „a“, cd cipa Fiewziy. Duk „a“ ezuh mvt „S“ (ocwlp Watatch). Hif jvenli Khiudme gia Filhümkiwv („E“) nazjflqrhx qg 4, „Q“ yx 24 Vtwhtvq. Hqr Binmulthbmjo uhw väpnwpyf Fffhkpishra qkw Pypxpv bwcqeqx evkhal tit „D“, dwi mivxma Hyybkxleef zmj Vgpyüywafk:</defaultvalue>
     </inputBox>
-
     <comboBox plugin="$Vigenere Analyzer$" property="Language" defaultValue="1" width="20%" alignment="Left">
       <description lang="en">Language of the cleartext message:</description>
+      <description lang="ru">Язык открытого текста:</description>
       <description lang="de">Sprache der Klartext-Nachricht:</description>
-      <item content="English" lang="en"/>
-      <item content="German" lang="en"/>
-      <item content="Englisch" lang="de"/>
-      <item content="Deutsch" lang="de"/>
+      <item content="English" lang="en" />
+      <item lang="ru" content="английский" />
+      <item content="German" lang="en" />
+      <item lang="ru" content="Немецкий" />
+      <item content="Englisch" lang="de" />
+      <item content="Deutsch" lang="de" />
     </comboBox>
-
     <comboBox plugin="$Vigenere Analyzer$;Vigenère" property="Mode" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Vigenère mode:</description>
+      <description lang="ru">Режим Vigenère:</description>
       <description lang="de">Vigenère Modus:</description>
-      <item content="Classic Vigenère" lang="en"/>
-      <item content="Vigenère-Autokey" lang="en"/>
-      <item content="Klassischer Vigenère" lang="de"/>
-      <item content="Vigenère-Selbstschlüssel-Verfahren" lang="de"/>
+      <item content="Classic Vigenère" lang="en" />
+      <item lang="ru" content="Классический Vigenère" />
+      <item content="Vigenère-Autokey" lang="en" />
+      <item lang="ru" content="Vigenere-Autokey" />
+      <item content="Klassischer Vigenère" lang="de" />
+      <item content="Vigenère-Selbstschlüssel-Verfahren" lang="de" />
     </comboBox>
-    
     <sampleViewer image="Vigenere" file="Cryptanalysis\Classic\Vigenere_Analyzer.cwm">
       <name lang="en">Vigenère Analysis Output</name>
+      <name lang="ru">Результат анализа Vigenère</name>
       <name lang="de">Vigenère-Analyse: Ausgabe</name>
       <description lang="en">Vigenère Analysis Output</description>
+      <description lang="ru">Результат анализа Vigenère</description>
       <description lang="de">Vigenère-Analyse: Ausgabe</description>
-
       <headline lang="en">Vigenère Analysis Output</headline>
+      <headline lang="ru">Результат анализа Vigenère</headline>
       <headline lang="de">Vigenère-Analyse: Ausgabe</headline>
       <task lang="en">Here, you can change the message and view the results.</task>
+      <task lang="ru">Здесь вы можете изменить сообщение и просмотреть результаты.</task>
       <task lang="de">Hier können Sie die Nachricht verändern und die Ergebnisse sehen.</task>
-
       <inputBox plugin="$Ciphertext$" property="Text" alignment="Stretch" visibleLines="7">
         <description lang="en">Ciphertext:</description>
+        <description lang="ru">зашифрованный:</description>
         <description lang="de">Geheimtext:</description>
       </inputBox>
-      
       <presentation plugin="$Vigenere Analyzer$" alignment="Stretch" width="30%" group="OutputGroup">
         <description lang="en">Analysis:</description>
+        <description lang="ru">Анализ:</description>
         <description lang="de">Analyse:</description>
       </presentation>
-
       <presentation plugin="$Revealed Plaintext$" alignment="Right" width="65%" height="150" group="OutputGroup">
         <description lang="en">Deciphered Ciphertext:</description>
+        <description lang="ru">Расшифрованный шифрованный текст:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
       </presentation>
-      
     </sampleViewer>
   </input>
-
   <!-- Substitution input -->
   <!--<input image="Substitution">
     <name lang="en" >Substitution</name>
     <description lang="en" >Substitution is a classic algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).</description>
   </input>-->
-
   <!-- Enigma input -->
   <input image="Enigma">
-    <name lang="en" >Enigma</name>
-    <description lang="en" >
+    <name lang="en">Enigma</name>
+    <name lang="ru">загадка</name>
+    <description lang="en">
 Enigma is a classic algorithm to encrypt plaintext or to decrypt ciphertext.
 By selecting this, you can analyze some ciphertext that was encrypted with the Enigma algorithm.
     </description>
-    <description lang="de" >
+    <description lang="ru">Enigma - это классический алгоритм шифрования открытого текста или дешифрования зашифрованного текста. Выбрав это, вы можете проанализировать некоторый зашифрованный текст, который был зашифрован алгоритмом Enigma.</description>
+    <description lang="de">
 Die Enigma ist eine klassische Chiffriermaschine.
 Wählen Sie diesen Punkt, um einen mit der Enigma verschlüsselten Text zu analysieren.
     </description>
-
     <headline lang="en">Enigma Analysis</headline>
+    <headline lang="ru">Энигматический анализ</headline>
     <headline lang="de">Enigma-Analyse</headline>
     <task lang="en">Enter the ciphertext here.</task>
+    <task lang="ru">Введите зашифрованный текст здесь.</task>
     <task lang="de">Geben Sie den Geheimtext hier ein.</task>
-
     <inputBox plugin="$Ciphertext$" property="Text" visibleLines="10">
       <description lang="en">Ciphertext:</description>
+      <description lang="ru">зашифрованный:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue lang="en">KSBWQUMKVUXBMDWTXAYBBIKVHVFGAJROQUWPWXFBYSREIFGKNWDVTUDNBHAGGOONSZERHJAQOQFDDCLPWCXCNJHHNGIHLYXNJCVAQHMJJPDMJQRCMEYHQDKMJOMDUQNGKQCHSXMQWSSCHDMJVDUHSWFUZVSLVHJHHLLFGNYBSJFJFNDGQXYBCLYBODQKDJGIILQUPZJCJUTNZTADMZUPOVUTAYYIRMJTGBOCPGYUZSCYXJTTQZIFQYFNJPAVVAPVMZSDOFAMPCSMFDULBUKPRVRJAUEEHOTGIWOKAYVMOJENPTTNUICXB</defaultvalue>
+      <defaultvalue lang="ru">KSBWQUMKVUXBMDWTXAYBBIKVHVFGAJROQUWPWXFBYSREIFGKNWDVTUDNBHAGGOONSZERHJAQOQFDDCLPWCXCNJHHNGIHLYXNJCVAQHMJJPDMJQRCMEYHQDKMJOMDUQNGKQCHSXMQWSSCHDMJVDUHSWFUZVSLVHJHHLLFGNYBSJFJFNDGQXYBCLYBODQKDJGIILQUPZJCJUTNZTADMZUPOVUTAYYIRMJTGBOCPGYUZSCYXJTTQZIFQYFNJPAVVAPVMZSDOFAMPCSMFDULBUKPRVRJAUEEHOTGIWOKAYVMOJENPTTNUICXB</defaultvalue>
     </inputBox>
-
-    <loadSample title="Enigma Analyzer" file="Cryptanalysis\Classic\Enigma_Analyzer.cwm"/>
+    <loadSample title="Enigma Analyzer" file="Cryptanalysis\Classic\Enigma_Analyzer.cwm" />
   </input>
-
-  <!-- Playfair input --><!--
+  <!-- Playfair input -->
+  <!--
   <input image="Playfair">
     <name lang="en" >Playfair</name>
     <description lang="en">Playfair is a classic algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).</description>
   </input>-->
-
-  <!-- ADFGVX input --><!--
+  <!-- ADFGVX input -->
+  <!--
   <input image="ADFGVX">
     <name lang="en" >ADFGVX</name>
     <description lang="en">ADFGVX is a classic algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).</description>
   </input>-->
-
-  <!-- XOR input --><!--
+  <!-- XOR input -->
+  <!--
   <input image="XOR">
     <name lang="en" >XOR</name>
     <description lang="en" >XOR is a classic algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).</description>
   </input>-->
-
-  <!-- Vernam input --><!--
+  <!-- Vernam input -->
+  <!--
   <input image="Vernam">
     <name lang="en" >Vernam</name>
     <description lang="en" >Vernam is a classic algorithm to encrypt plaintext or to decrypt ciphertext... (add instead some really helpful text).</description>
   </input>-->
-
   <!-- Transposition input -->
-  <file resource="Wizard.Config.Analysis.wizard.config.transposition.xml"/>
-
+  <file resource="Wizard.Config.Analysis.wizard.config.transposition.xml" />
   <!-- Monoalphabetic Substitution input -->
   <input image="Substitution">
-    <name lang="en" >Monoalphabetic Substitution</name>
-    <name lang="de" >Monoalphabetische Substitution</name>
-    <description lang="en" >
+    <name lang="en">Monoalphabetic Substitution</name>
+    <name lang="ru">Моноалфавитная замена</name>
+    <name lang="de">Monoalphabetische Substitution</name>
+    <description lang="en">
       Monoalphabetic Substitution is a classic algorithm to encrypt plaintext or to decrypt ciphertext.
       Selecting this allows to analyze ciphertext which was encrypted with monoalphabetic Substitution.
     </description>
-    <description lang="de" >
+    <description lang="ru">Моноалфавитная подстановка - классический алгоритм шифрования открытого текста или дешифрования зашифрованного текста. Выбор этого позволяет анализировать зашифрованный текст, который был зашифрован с помощью моноалфавитной замены.</description>
+    <description lang="de">
       Die Monoalphabetische Substitution ist ein klassisches Verschlüsselungsverfahren.
       Wählen Sie diesen Punkt, um einen mit dem Substitutions-Verfahren verschlüsselten Text zu analysieren.
     </description>
-
     <headline lang="en">Monoalphabetic Substitution Analysis</headline>
+    <headline lang="ru">Моноалфавитный анализ замещения</headline>
     <headline lang="de">Monoalphabetische Substitution-Analyse</headline>
     <task lang="en">Please input the ciphertext and text language.</task>
+    <task lang="ru">Пожалуйста, введите зашифрованный текст и текстовый язык.</task>
     <task lang="de">Bitte geben Sie den Geheimtext ein und wählen die Textsprache aus.</task>
-
     <inputBox plugin="$Ciphertext$" property="Text" alignment="Stretch" visibleLines="5">
       <description lang="en">Ciphertext:</description>
+      <description lang="ru">зашифрованный:</description>
       <description lang="de">Geheimtext:</description>
       <defaultvalue>Mc gsaqxpisbqva b twftxmxwxmpc gmqvhs mt b ohxvpj pl hcgsaqxmpc fa dvmgv wcmxt pl qnbmcxhzx bsh shqnbghj dmxv gmqvhsxhzx bggpsjmci xp b shiwnbs tatxho xvh wcmxt oba fh tmcinh nhxxhst xvh optx gpoopc qbmst pl nhxxhst xsmqnhxt pl nhxxhst omzxwsht pl xvh bfpuh bcj tp lpsxv Xvh shghmuhs jhgmqvhst xvh xhzx fa qhslpsomci bc mcuhsth twftxmxwxmpc</defaultvalue>
     </inputBox>
-
     <comboBox plugin="$Cryptanalysis$" property="Alphabet" defaultValue="0" width="20%" alignment="Left">
       <description lang="en">Language of the cleartext message:</description>
+      <description lang="ru">Язык открытого текста:</description>
       <description lang="de">Sprache der Klartext-Nachricht:</description>
-      <item content="English" lang="en"/>
-      <item content="German" lang="en"/>
-      <item content="Englisch" lang="de"/>
-      <item content="Deutsch" lang="de"/>
+      <item content="English" lang="en" />
+      <item lang="ru" content="английский" />
+      <item content="German" lang="en" />
+      <item lang="ru" content="Немецкий" />
+      <item content="Englisch" lang="de" />
+      <item content="Deutsch" lang="de" />
     </comboBox>
-
     <sampleViewer image="Substitution" file="Cryptanalysis\Classic\AnalysisMonoalphabeticSubstitution.cwm">
       <name lang="en">Monoalphabetic Substitution Analysis Output</name>
+      <name lang="ru">Результаты анализа моноалфавитного замещения</name>
       <name lang="de">Monoalphabetische Substitution-Analyse: Ausgabe</name>
       <description lang="en">Monoalphabetic Substitution Analysis Output</description>
+      <description lang="ru">Результаты анализа моноалфавитного замещения</description>
       <description lang="de">Monoalphabetische Substitutions-Analyse: Ausgabe</description>
-
       <headline lang="en">Monoalphabetic Substitution Analysis Output</headline>
+      <headline lang="ru">Результаты анализа моноалфавитного замещения</headline>
       <headline lang="de">Monoalphabetische Substitution-Analyse: Ausgabe</headline>
       <task lang="en">Here, you can view the results.</task>
+      <task lang="ru">Здесь вы можете просмотреть результаты.</task>
       <task lang="de">Hier können Sie die Ergebnisse sehen.</task>
-
       <presentation plugin="$Cryptanalysis$" alignment="Stretch" width="100%" group="PresentationGroup" height="350">
         <description lang="en">Analysis:</description>
+        <description lang="ru">Анализ:</description>
         <description lang="de">Analyse:</description>
       </presentation>
-
-      <progressBar plugin="$Cryptanalysis$" >
+      <progressBar plugin="$Cryptanalysis$">
         <description lang="en">Progress:</description>
+        <description lang="ru">Прогресс:</description>
         <description lang="de">Fortschritt:</description>
       </progressBar>
-
       <presentation plugin="$Plaintext$" alignment="Left" width="50%" height="150" group="OutputGroup">
         <description lang="en">Deciphered Ciphertext:</description>
+        <description lang="ru">Расшифрованный шифрованный текст:</description>
         <description lang="de">Entschlüsselter Geheimtext:</description>
       </presentation>
-
       <presentation plugin="$Key$" alignment="Right" width="50%" height="150" group="OutputGroup">
         <description lang="en">Key (permutated alphabet):</description>
+        <description lang="ru">Ключ (перестановочный алфавит):</description>
         <description lang="de">Schlüssel (Permutiertes Alphabet):</description>
-      </presentation>     
+      </presentation>
     </sampleViewer>
-
   </input>
-  
   <!-- Scytale input -->
   <input image="Scytale">
-    <name lang="en" >Scytale</name>
-    <name lang="de" >Skytale</name>
-    <description lang="en" >
+    <name lang="en">Scytale</name>
+    <name lang="ru">скитала</name>
+    <name lang="de">Skytale</name>
+    <description lang="en">
 The Scytale is a classic transposition cipher. It was used by the Spartans as early as the fifth century B.C. and it is the first cryptographic algorithm used for military communications.
 The Scytale is a wooden stick wrapped by a strip of leather or parchment. The sender writes his message along the wooden stick and then unwraps the strip. After that the strip seems to contain only a pointless series of letters. In order to recover the message, the receiver simply wraps the strip around a Scytale of the same diameter as the Scytale of the sender. Therefore, the key is a Scytale with the correct diameter or the correct number of edges, respectively.
 
 By selecting this, you can analyze a ciphertext that was encrypted with the Scytale (i.e. find the used diameter and decrypt the encrypted text).
     </description>
-    <description lang="de" >
+    <description lang="ru">Scytale - классический транспозиционный шифр. Он использовался спартанцами еще в пятом веке до нашей эры и является первым криптографическим алгоритмом, используемым для военных коммуникаций. Scytale - деревянная палочка, обернутая полосой из кожи или пергамента. Отправитель пишет свое сообщение вдоль деревянной палочки, а затем разворачивает полосу. После этого полоса, кажется, содержит только бессмысленную последовательность букв. Чтобы восстановить сообщение, приемник просто обертывает полосу вокруг Scytale того же диаметра, что и Scytale отправителя. Поэтому ключ - это Scytale с правильным диаметром или правильным количеством ребер соответственно. Выбрав это, вы можете проанализировать зашифрованный текст, который был зашифрован Scytale (т. Е. Найти использованный диаметр и расшифровать зашифрованный текст).</description>
+    <description lang="de">
 Die Skytale ist eine klassische Transpositions-Verschlüsselung. Sie wurde von den Spartanern bereits im 5. Jahrhundert v. Chr. verwendet und war das erste kryptographische Verfahren, das militärisch genutzt wurde.
 Die Skytale ist ein Holzstab, um den ein Streifen Leder oder Pergament gewickelt wird. Der Sender schreibt die Nachricht der Länge des Stabes nach auf den Streifen und wickelt ihn dann ab. Danach scheint der Streifen nur eine sinnlose Aneinanderreihung von Buchstaben zu enthalten. Um die Nachricht wiederherzustellen, wickelt der Empfänger den Lederstreifen einfach um eine Skytale mit demselben Durchmesser, den der Sender benutzt hatte. Der Schlüssel ist also eine Skytale mit dem richtigen Durchmesser bzw. der richtigen Anzahl von Kanten.
 
 Wählen Sie diesen Punkt, um einen mit der Skytale verschlüsselten Text zu analysieren (d.h. die verwendete Stabdicke finden und den verschlüsselten Text entschlüsseln).
     </description>
-
     <headline lang="en">Scytale Analysis</headline>
+    <headline lang="ru">Анализ Scytale</headline>
     <headline lang="de">Skytale-Analyse</headline>
     <task lang="en">
 Here you can perform a brute-force ciphertext-only attack on the Scytale cipher. The basic principle is that for each sticksize from one to the below given "maximum sticksize" a trial decryption is done, and all the decryptions are shown on the next screen.
 
 In order to also automatically detect the correct decryption, a dictionary of a natural language is used to check if a certain number of words can be found within this dictionary. Hence, to successfully detect the correct decryption you also need to set below the correct (assumed) language. Additionally you can also fine tune the detection algorithm by giving the minimal amount of words which need to be found in the dictionary. Note that, giving a value which is too high will result in not detecting the text at all, and giving a too small value might lead to false positives, i.e. that some text is detected as a "correct" decryption even though it is not correct.
     </task>
+    <task lang="ru">Здесь вы можете выполнить грубую силу зашифрованного текста только для шифрования Scytale. Основной принцип заключается в том, что для каждой маркировки от одного до нижеследующего «максимальная наклейка» выполняется пробное дешифрование, и все дешифровки отображаются на следующем экране. Чтобы автоматически определить правильное дешифрование, словарь естественного языка используется для проверки того, можно ли найти определенное число слов в этом словаре. Следовательно, чтобы успешно определить правильное дешифрование, вам также необходимо установить правильный (предполагаемый) язык. Кроме того, вы можете точно настроить алгоритм обнаружения, указав минимальное количество слов, которые нужно найти в словаре. Обратите внимание, что при слишком высоком значении результат не будет обнаруживать текст вообще, а слишком маленькое значение может привести к ложным срабатываниям, т. Е. Что некоторый текст обнаружен как «правильное» дешифрование, хотя это неверно ,</task>
     <task lang="de">
 Hier können Sie einen Brute-force Ciphertext-only-Angriff auf die Skytale-Chiffre durchführen. Das grundlegende Prinzip ist, dass für jeden Stabdurchmesser (von Eins bis zu der unten angegebenen "maximalen Stabdicke") eine Probeentschlüsselung durchgeführt wird und alle Ergebnisse davon auf der nächsten Seite angezeigt werden.
 
 Um zusätzlich automatisch unter allen "entschlüsselten" Text den richtigen zu finden, wird ein Wörterbuch einer natürlichen Sprache verwendet. Dabei wird für jede Probeentschlüsselung überprüft, ob eine bestimmte Mindestanzahl von Worten aus dem angegebenen Wörterbuch gefunden werden kann. Dazu müssen Sie für eine erfolgreiche Erkennung des Textes unten die verwendete (angenommene) Sprache angeben. Die Erkennung kann noch weiter verbessert werden, wenn Sie die Mindestanzahl der Wörter angeben, welche in dem Wörterbuch gefunden werden müssen. Bedenken Sie, dass die Angabe eines zu großen Wertes zu keiner Erkennung führt, und die Angabe eines zu kleinen Wertes die Wahrscheinlichkeit für sogenannte "false positives" (d.h. Texte, die als "korrekt" erkannt werden, aber es nicht wirklich sind) erhöht.
     </task>
-
     <inputBox plugin="$Ciphertext$" property="Text" visibleLines="12">
       <description lang="en">Ciphertext:</description>
+      <description lang="ru">зашифрованный:</description>
       <description lang="de">Verschlüsselter Text:</description>
       <defaultvalue lang="en">Fc,lt ehh nrt e bkiotto t my l humehwe poler veantoci yii sthehv7 nds ietuetBdecfo  sdhCinyinGA,  .rctrerr ic eeasdecwne </defaultvalue>
+      <defaultvalue lang="ru">Fc, lt ehh nrt e bkiotto t my l humehwe poler veantoci yii sthehv7 nds ietuetBdecfo sdhCinyinGA, .rctrerr ic eeasdecwne</defaultvalue>
     </inputBox>
-
-
     <inputBox plugin="to i = $Max sticksize$" property="Number" visibleLines="1" width="32,75%" group="parameters" regex="[0-9]+">
       <description lang="en">Maximum sticksize:</description>
+      <description lang="ru">Максимальный размер:</description>
       <description lang="de">Maximale Stabdicke:</description>
       <defaultvalue lang="en">20</defaultvalue>
+      <defaultvalue lang="ru">20</defaultvalue>
     </inputBox>
-    
     <comboBox plugin="$Dictionary$" property="Dictionary" defaultValue="5" width="32,75%" group="parameters">
       <description lang="en">Assumed language:</description>
+      <description lang="ru">Предполагаемый язык:</description>
       <description lang="de">Angenommene Sprache:</description>
       <item content="Arabic" lang="en" />
-      <item content="Bulgarian" lang="en"/>
-      <item content="Cracklib" lang="en"/>
-      <item content="Czech" lang="en"/>
-      <item content="Danish" lang="en"/>
-      <item content="English" lang="en"/>
-      <item content="German" lang="en"/>
-      <item content="Greek" lang="en"/>
-      <item content="Spanish" lang="en"/>
-      <item content="Estonian" lang="en"/>
-      <item content="Farsi" lang="en"/>
-      <item content="Finnish" lang="en"/>
-      <item content="French" lang="en"/>
-      <item content="Hebrew" lang="en"/>
-      <item content="Croatian" lang="en"/>
-      <item content="Hungarian" lang="en"/>
-      <item content="Indonesian" lang="en"/>
-      <item content="Icelandic" lang="en"/>
-      <item content="Italian" lang="en"/>
-      <item content="Lithuanian" lang="en"/>
-      <item content="Latvian" lang="en"/>
-      <item content="Macedonian" lang="en"/>
-      <item content="Dutch" lang="en"/>
-      <item content="Norwegian" lang="en"/>
-      <item content="Polish" lang="en"/>
-      <item content="Portuguese" lang="en"/>
-      <item content="Romanian" lang="en"/>
-      <item content="Russian" lang="en"/>
-      <item content="Slovak" lang="en"/>
-      <item content="Slovenian" lang="en"/>
-      <item content="Albanian" lang="en"/>
-      <item content="Serbian Cyrillic" lang="en"/>
-      <item content="Serbian Latin" lang="en"/>
-      <item content="Swedish" lang="en"/>
-      <item content="Turkish" lang="en"/>
-      <item content="Ukrainian" lang="en"/>            
-      <item content="Simplified Chinese" lang="en"/>
-
-      <item content="Arabisch" lang="de"/>
-      <item content="Bulgarisch" lang="de"/>
-      <item content="Cracklib" lang="de"/>
-      <item content="Tschechisch" lang="de"/>
-      <item content="Dänisch" lang="de"/>
-      <item content="Englisch" lang="de"/>
-      <item content="Deutsch" lang="de"/>
-      <item content="Griechisch" lang="de"/>
-      <item content="Spanisch" lang="de"/>
-      <item content="Estnisch" lang="de"/>
-      <item content="Farsi" lang="de"/>
-      <item content="Finnisch" lang="de"/>
-      <item content="Französisch" lang="de"/>
-      <item content="Hebräisch" lang="de"/>
-      <item content="Kroatisch" lang="de"/>
-      <item content="Ungarisch" lang="de"/>
-      <item content="Indonesisch" lang="de"/>
-      <item content="Isländisch" lang="de"/>
-      <item content="Italienisch" lang="de"/>
-      <item content="Litauisch" lang="de"/>
-      <item content="Lettisch" lang="de"/>
-      <item content="Mazedonisch" lang="de"/>
-      <item content="Niederländisch" lang="de"/>
-      <item content="Norwegisch" lang="de"/>
-      <item content="Polnisch" lang="de"/>
-      <item content="Portugisisch" lang="de"/>
-      <item content="Rumänisch" lang="de"/>
-      <item content="Russisch" lang="de"/>
-      <item content="Slowakisch" lang="de"/>
-      <item content="Slowenisch" lang="de"/>
-      <item content="Albanisch" lang="de"/>
-      <item content="Serbisch Kyrillisch" lang="de"/>
-      <item content="Serbisch Lateinisch" lang="de"/>      
-      <item content="Swedisch" lang="de"/>
-      <item content="Türkisch" lang="de"/>
-      <item content="Ukrainisch" lang="de"/>
-      <item content="Vereinfachtes Chinesisch" lang="de"/>
-
+      <item lang="ru" content="арабский" />
+      <item content="Bulgarian" lang="en" />
+      <item lang="ru" content="болгарский" />
+      <item content="Cracklib" lang="en" />
+      <item lang="ru" content="Cracklib" />
+      <item content="Czech" lang="en" />
+      <item lang="ru" content="Чешский" />
+      <item content="Danish" lang="en" />
+      <item lang="ru" content="датский" />
+      <item content="English" lang="en" />
+      <item lang="ru" content="английский" />
+      <item content="German" lang="en" />
+      <item lang="ru" content="Немецкий" />
+      <item content="Greek" lang="en" />
+      <item lang="ru" content="греческий" />
+      <item content="Spanish" lang="en" />
+      <item lang="ru" content="испанский" />
+      <item content="Estonian" lang="en" />
+      <item lang="ru" content="эстонский" />
+      <item content="Farsi" lang="en" />
+      <item lang="ru" content="фарси" />
+      <item content="Finnish" lang="en" />
+      <item lang="ru" content="финский" />
+      <item content="French" lang="en" />
+      <item lang="ru" content="Французский" />
+      <item content="Hebrew" lang="en" />
+      <item lang="ru" content="иврит" />
+      <item content="Croatian" lang="en" />
+      <item lang="ru" content="хорватский" />
+      <item content="Hungarian" lang="en" />
+      <item lang="ru" content="Венгерский" />
+      <item content="Indonesian" lang="en" />
+      <item lang="ru" content="индонезийский" />
+      <item content="Icelandic" lang="en" />
+      <item lang="ru" content="исландский" />
+      <item content="Italian" lang="en" />
+      <item lang="ru" content="итальянский" />
+      <item content="Lithuanian" lang="en" />
+      <item lang="ru" content="Литовский" />
+      <item content="Latvian" lang="en" />
+      <item lang="ru" content="Латышский" />
+      <item content="Macedonian" lang="en" />
+      <item lang="ru" content="македонский" />
+      <item content="Dutch" lang="en" />
+      <item lang="ru" content="Голландский" />
+      <item content="Norwegian" lang="en" />
+      <item lang="ru" content="Норвежский" />
+      <item content="Polish" lang="en" />
+      <item lang="ru" content="полировать" />
+      <item content="Portuguese" lang="en" />
+      <item lang="ru" content="португальский" />
+      <item content="Romanian" lang="en" />
+      <item lang="ru" content="румынский" />
+      <item content="Russian" lang="en" />
+      <item lang="ru" content="русский" />
+      <item content="Slovak" lang="en" />
+      <item lang="ru" content="словацкий" />
+      <item content="Slovenian" lang="en" />
+      <item lang="ru" content="словенский" />
+      <item content="Albanian" lang="en" />
+      <item lang="ru" content="албанский" />
+      <item content="Serbian Cyrillic" lang="en" />
+      <item lang="ru" content="Сербская кириллица" />
+      <item content="Serbian Latin" lang="en" />
+      <item lang="ru" content="Сербская латынь" />
+      <item content="Swedish" lang="en" />
+      <item lang="ru" content="шведский" />
+      <item content="Turkish" lang="en" />
+      <item lang="ru" content="турецкий" />
+      <item content="Ukrainian" lang="en" />
+      <item lang="ru" content="украинец" />
+      <item content="Simplified Chinese" lang="en" />
+      <item lang="ru" content="Упрощенный китайский" />
+      <item content="Arabisch" lang="de" />
+      <item content="Bulgarisch" lang="de" />
+      <item content="Cracklib" lang="de" />
+      <item content="Tschechisch" lang="de" />
+      <item content="Dänisch" lang="de" />
+      <item content="Englisch" lang="de" />
+      <item content="Deutsch" lang="de" />
+      <item content="Griechisch" lang="de" />
+      <item content="Spanisch" lang="de" />
+      <item content="Estnisch" lang="de" />
+      <item content="Farsi" lang="de" />
+      <item content="Finnisch" lang="de" />
+      <item content="Französisch" lang="de" />
+      <item content="Hebräisch" lang="de" />
+      <item content="Kroatisch" lang="de" />
+      <item content="Ungarisch" lang="de" />
+      <item content="Indonesisch" lang="de" />
+      <item content="Isländisch" lang="de" />
+      <item content="Italienisch" lang="de" />
+      <item content="Litauisch" lang="de" />
+      <item content="Lettisch" lang="de" />
+      <item content="Mazedonisch" lang="de" />
+      <item content="Niederländisch" lang="de" />
+      <item content="Norwegisch" lang="de" />
+      <item content="Polnisch" lang="de" />
+      <item content="Portugisisch" lang="de" />
+      <item content="Rumänisch" lang="de" />
+      <item content="Russisch" lang="de" />
+      <item content="Slowakisch" lang="de" />
+      <item content="Slowenisch" lang="de" />
+      <item content="Albanisch" lang="de" />
+      <item content="Serbisch Kyrillisch" lang="de" />
+      <item content="Serbisch Lateinisch" lang="de" />
+      <item content="Swedisch" lang="de" />
+      <item content="Türkisch" lang="de" />
+      <item content="Ukrainisch" lang="de" />
+      <item content="Vereinfachtes Chinesisch" lang="de" />
     </comboBox>
-
     <inputBox plugin="$Contains$" property="Hits" visibleLines="1" width="32,75%" group="parameters" regex="[0-9]+">
       <description lang="en">Number of words in dictionary:</description>
+      <description lang="ru">Количество слов в словаре:</description>
       <description lang="de">Anzahl Wörter in Wörterbuch:</description>
       <defaultvalue lang="en">5</defaultvalue>
+      <defaultvalue lang="ru">5</defaultvalue>
     </inputBox>
-
-    
     <sampleViewer image="Scytale" file="Cryptanalysis\Classic\Scytale_ExhaustiveKeySearch.cwm">
-      <name lang="en" >Results</name>
-      <name lang="de" >Ergebnisse</name>
-      <description lang="en" >Results from the Scytale Analysis</description>
-      <description lang="de" >Ergebnisse der Skytale-Analyse</description>
-
+      <name lang="en">Results</name>
+      <name lang="ru">Результаты</name>
+      <name lang="de">Ergebnisse</name>
+      <description lang="en">Results from the Scytale Analysis</description>
+      <description lang="ru">Результаты анализа Scytale</description>
+      <description lang="de">Ergebnisse der Skytale-Analyse</description>
       <headline lang="en">Results from the Scytale Analysis</headline>
+      <headline lang="ru">Результаты анализа Scytale</headline>
       <headline lang="de">Ergebnisse der Skytale-Analyse</headline>
       <task lang="en">On this page you can see the results of the Scytale cryptanalysis. In the upper textblock the probable plaintext is displayed and in the textblock below you can see all possible results from all trial decryptions with the different sticksizes used. In case that the correct decryption was not detected go back to the previous page and try to adjust the used language and the number of words needed in order to obtain a better result. If no correct decryption can be found within all decrypted texts, you should try to increase the maximum sticksize.
       </task>
+      <task lang="ru">На этой странице вы можете увидеть результаты криптоанализа Scytale. В верхнем текстовом блоке отображается вероятный открытый текст, а в текстовом блоке ниже вы можете увидеть все возможные результаты всех пробных расшифров с использованием разных используемых палочек. В случае, если правильное дешифрование не было обнаружено, вернитесь к предыдущей странице и попробуйте отрегулировать используемый язык и количество слов, необходимых для получения лучшего результата. Если правильное дешифрование не может быть найдено во всех расшифрованных текстах, вы должны попытаться увеличить максимальный размер.</task>
       <task lang="de">Auf dieser Seite sehen Sie das Ergebnis der Skytale-Kryptoanalyse. Im oberen Feld wird der erkannte Text, und im darunterliegenden Feld werden alle möglichen Ergebnisse der Probeentschlüsselung mit den verschiedenen Stabdicken angezeigt. Sollte der korrekte Text nicht erkannt werden, dann gehen Sie zurück auf die vorherige Seite und versuchen, durch Veränderung der Sprache bzw. der Anzahl der gesuchten Wörter ein besseres Ergebnis zu erhalten. Insofern auch in dem Feld aller möglichen Entschlüsselungen kein korrekter Text erkannt werden kann, können Sie versuchen, die maximale Stabdicke hochzusetzen.
       </task>
-
       <presentation plugin="$Decrypted Ciphertext$" height="120" alignment="Left" width="80%" group="result">
         <description lang="en">Probable Plaintext:</description>
+        <description lang="ru">Вероятный Plaintext:</description>
         <description lang="de">Wahrscheinlicher Klartext:</description>
       </presentation>
-
       <presentation plugin="$Found sticksize$" height="120" alignment="Right" width="175" group="result">
         <description lang="en">Probable sticksize:</description>
+        <description lang="ru">Вероятная прилипание:</description>
         <description lang="de">Wahrscheinliche Stabdicke:</description>
       </presentation>
-      
       <presentation plugin="$All possible plaintexts$" height="350">
         <description lang="en">All possible decryptions:</description>
+        <description lang="ru">Все возможные расшифровки:</description>
         <description lang="de">Alle möglichen Entschlüsselungen:</description>
       </presentation>
     </sampleViewer>
   </input>
-
 </category>

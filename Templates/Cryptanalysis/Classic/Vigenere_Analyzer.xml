@@ -1,33 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Vigenère Analysis</title>
+  <title lang="ru">Анализ Vigenère</title>
   <summary lang="en">Usage of the <i>Vigenère</i> Analysis</summary>
+  <summary lang="ru">Использование анализа Vigenère</summary>
   <description lang="en">This template shows the usage of the <i>Vigenère Analysis</i>. It is a ciphertext-only attack, as no part of the plaintext is known in advance.</description>
+  <description lang="ru">Этот шаблон показывает использование анализа Vigenère. Это атака только с зашифрованным текстом, поскольку никакая часть открытого текста не известна заранее.</description>
   <keywords>Vigenère, Vigenere, Polyalphabetic, substitution, attack, analysis</keywords>
-
+  <keywords lang="ru">Vigenère, Vigenere, Polyalphabetic, замена, атака, анализ</keywords>
   <title lang="de">Vigenère Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Vigenère</i>-Verschlüsselung</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der <i>Vigenère</i>-Verschlüsselung. Es handelt sich hierbei um eine Ciphertext-only-Analyse, da keine Informationen über den Klartext bekannt sind.</description>
   <keywords lang="de">Vigenère, Vigenere, Polyalphabetisch, Substitution, Angriff, Analyse</keywords>
-
   <icon file="Vigenere_Analyzer.png" />
   <relevantPlugins>
     <plugin name="Vigenere" />
     <plugin name="VigenereAutokeyAnalyser" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
-    <replacement key="$Vigenere Analyzer$" value="Vigenère-Analyse"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
+    <replacement key="$Vigenere Analyzer$" value="Vigenère-Analyse" />
+    <replacement key="$Converter$" value="Konvertierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
+    <replacement key="$Vigenere Analyzer$" value="Vigenere-анализ" />
+    <replacement key="$Converter$" value="преобразование" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
-    <replacement key="$Vigenere Analyzer$" value="Vigenère Analyzer"/>
-    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
+    <replacement key="$Vigenere Analyzer$" value="Vigenère Analyzer" />
+    <replacement key="$Converter$" value="Converter" />
   </replacements>
-
 </sample>

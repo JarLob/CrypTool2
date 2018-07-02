@@ -1,10 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     The CryptCloudManager is a special editor for CrypTool 2 which enables Peer-to-peer features for your CrypTool 2 installation. It provides an interface to plugins which can use it for Peer-to-peer related functions.
     The editor itself allows you to download workspaces shared by other users and provides an interface to upload new workspaces.
@@ -13,40 +12,31 @@
       CrypTool 2 includes a version of the peers@play project, a Peer-to-peer framework developed by the Universities of Mannheim, Duisburg-Essen and Hannover. 
       It offers a rich feature set, including bootstrapping, a link manager, different architectures (Chord, FullMesh, ...) and a distributed hash table (DHT). 
       You can find further information in the link section.
-    </section>
-  </introduction>
-
-  <introduction lang="de-DE">
-  </introduction>
-
+    </section></introduction>
+  <introduction lang="ru">CryptCloudManager - специальный редактор для CrypTool 2, который позволяет использовать функции Peer-to-peer для вашей установки CrypTool 2. Он предоставляет интерфейс для плагинов, который может использовать его для связанных друг с другом функций. Сам редактор позволяет загружать рабочие области, совместно используемые другими пользователями, и предоставляет интерфейс для загрузки новых рабочих областей. CrypTool 2 включает версию проекта peers @ play, одноранговую структуру, разработанную университетами Мангейма, Дуйсбурга-Эссена и Ганновера. Он предлагает богатый набор функций, включая загрузку, диспетчер связей, различные архитектуры (Chord, FullMesh, ...) и распределенную хеш-таблицу (DHT). Дополнительную информацию вы можете найти в разделе ссылок.</introduction>
+  <introduction lang="de-DE"></introduction>
   <usage lang="en">
     <section headline="Getting started">
       Your CrypTool 2 installation is pre-configured and allows you to join the network almost instantly. If you are unfamiliar with Peer-to-peer networks, just click the connect button, otherwise change the settings as needed.
       Once you are connected (this may take a few seconds), a list will display currently shared workspaces.
     </section>
-
     <section headline="Active jobs">
       When you are connected, the "Active jobs" tab will contain a list of all shared workspaces. If you find a job which you would like to open on your computer, perform a doubleclick on it in the list or select it and press the "Participate" button.
       The workspace will be downloaded and the workspace will be opened using the proper editor.
-      <newline/>
-      <newline/>
+      <newline /><newline />
       The list will also display the status of jobs which are currently running or have been completed and are able to share the status.
       The status colors have the following meaning: White - no data available; Blue - job has been started, but no status data available; Orange - Some results are available, but the job is still being calculated; Green - job is complete.
       If you open a green job and start the workspace, you should be able to immediately retrieve the results.
     </section>
-
     <section headline="New job">
       If you would like to share a workspace with others users, you can upload one using the "New job" tab.
       Enter all required fields and select a workspace file. Once you click "Share", your workspace will be uploaded into the distributed hashtable and made available for all other users.
-      <newline/>
-      <newline/>
+      <newline /><newline />
       You can also remove your workspaces from the list. To do this, select your job and click the "Delete" button.
     </section>
   </usage>
-
-  <usage lang="de-DE">
-  </usage>
-
+  <usage lang="ru">Ваша установка CrypTool 2 предварительно настроена и позволяет вам присоединиться к сети почти мгновенно. Если вы не знакомы с одноранговыми сетями, просто нажмите кнопку подключения, иначе измените настройки по мере необходимости. Когда вы подключитесь (это может занять несколько секунд), список отобразит текущие общие рабочие области. Когда вы подключены, вкладка «Активные задания» будет содержать список всех общих рабочих пространств. Если вы найдете задание, которое вы хотите открыть на своем компьютере, выполните двойной щелчок на нем в списке или выберите его и нажмите кнопку «Участвовать». Рабочая область будет загружена, и рабочая область будет открыта с использованием соответствующего редактора. В этом списке также будет отображаться состояние заданий, которые в настоящее время выполняются или были завершены, и они могут делиться статусом. Цвета состояния имеют следующее значение: Белый - данные отсутствуют; Синяя работа была запущена, но данные о состоянии отсутствуют; Оранжевый - некоторые результаты доступны, но работа все еще рассчитывается; Зеленый - работа завершена. Если вы откроете зеленое задание и запустите рабочее пространство, вы сможете сразу получить результаты. Если вы хотите поделиться рабочим пространством с другими пользователями, вы можете загрузить его с помощью вкладки «Новая работа». Введите все обязательные поля и выберите файл рабочей области. Когда вы нажмете «Поделиться», ваше рабочее пространство будет загружено в распределенную хэш-таблицу и будет доступно для всех других пользователей. Вы также можете удалить свои рабочие области из списка. Для этого выберите свое задание и нажмите кнопку «Удалить».</usage>
+  <usage lang="de-DE"></usage>
   <references>
     <linkReference>
       <link url="http://www.pap.vs.uni-due.de/index.php" lang="en" />

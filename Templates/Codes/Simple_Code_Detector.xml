@@ -1,32 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Simple detection of optical codes</title>
+  <title lang="ru">Простое обнаружение оптических кодов</title>
   <summary lang="en">Usage of the <i>Optical Code Detector</i></summary>
+  <summary lang="ru">Использование оптического кодового детектора</summary>
   <description lang="en">This template shows the usage of the <i>Simple Code Detector</i>.</description>
+  <description lang="ru">Этот шаблон показывает использование простого кодового детектора.</description>
   <keywords>Simple Code Detector, qr code</keywords>
-
+  <keywords lang="ru">Простой кодовый детектор, код qr</keywords>
   <title lang="de">Einfache Erkennung optischer Codes</title>
   <summary lang="de">Benutzung der einfachen <i>Code-Erkennung</i></summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Code-Erkennung</i> für optische Codes.</description>
   <keywords lang="de">Einfache Code Erkennung, QR Code, Code</keywords>
-
   <icon file="Simple_Code_Detector.png" />
-
   <relevantPlugins>
     <plugin name="VisualDecoder" />
     <plugin name="Webcam" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Visual Decoder$" value="Visueller Dekodierer"/>
-    <replacement key="$Camera$" value="Kamera"/>
-    <replacement key="$TextOutput$" value="Textausgabe"/>
+    <replacement key="$Visual Decoder$" value="Visueller Dekodierer" />
+    <replacement key="$Camera$" value="Kamera" />
+    <replacement key="$TextOutput$" value="Textausgabe" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Visual Decoder$" value="Визуальный декодер" />
+    <replacement key="$Camera$" value="камера" />
+    <replacement key="$TextOutput$" value="вывод текста" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Visual Decoder$" value="Visual Decoder"/>
-    <replacement key="$Camera$" value="Camera"/>
-    <replacement key="$TextOutput$" value="Text Output"/>
+    <replacement key="$Visual Decoder$" value="Visual Decoder" />
+    <replacement key="$Camera$" value="Camera" />
+    <replacement key="$TextOutput$" value="Text Output" />
   </replacements>
-
 </sample>

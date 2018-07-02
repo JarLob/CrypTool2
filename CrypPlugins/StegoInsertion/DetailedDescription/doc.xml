@@ -1,13 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">
     <b>Steganography</b> is the science of transmitting secret data in such a way, that an unsuspecting observer and possible attacker
     does not realize, that besides the harmless looking carrier message, there is an additional secret message being transmitted.
-    <newline/><newline/>
+    <newline /><newline />
     The basic steganographical principle of this component is to hide the secret message, that is to be transmitted, inside a MIDI file.
     The MIDI protocol saves control commands for electronic musical instruments.
     One of the possible commands is the "Program Change" command, that changes the current instrument.
@@ -15,12 +14,12 @@
     MIDI file is played. Inside each of the added control blocks for an instrument change, several bits can be hidden. 
     In this way, the entire message can be secretly spread over the MIDI file.
   </introduction>
-
+  <introduction lang="ru">Стеганография - это наука о передаче секретных данных таким образом, что ничего не подозревающий наблюдатель и возможный злоумышленник не понимают, что помимо безобидного поискового сообщения, передается дополнительное секретное сообщение. Основным стеганографическим принципом этого компонента является скрытие секретного сообщения, которое должно быть передано, внутри файла MIDI. MIDI-протокол сохраняет управляющие команды для электронных музыкальных инструментов. Одной из возможных команд является команда «Program Change», которая изменяет текущий инструмент. Если вы добавляете одну или несколько изменений инструмента непосредственно перед обычным сменой инструмента, они не будут иметь никакого эффекта и остаются незамеченными при воспроизведении MIDI-файла. Внутри каждого из добавленных блоков управления для смены инструмента несколько бит могут быть скрыты. Таким образом, все сообщение может быть тайно распространено по MIDI-файлу.</introduction>
   <introduction lang="de-DE">
     Unter <i>Steganographie</i> versteht man die Übermittlung von geheimzuhaltenden Informationen in einer Form, die dem
     uneingeweihten Betrachter und möglichen Angreifer verschleiert, dass neben einer unverfänglichen Trägernachricht auch
     noch eine zusätzliche, versteckte Nachricht übermittelt wird.
-    <newline/><newline/>
+    <newline /><newline />
     Das Grundprinzip der steganographischen Technik dieser Komponente ist, die zu übertragende Nachricht in einer
     MIDI-Datei zu verstecken. Das MIDI-Protokoll speichert Steuerinformationen zur Kontrolle elekronischer Musikinstrumente.
     Unter anderem kann durch einen "Program Change"-Befehl das aktuelle Instrument geändert werden.
@@ -28,10 +27,9 @@
     so haben diese keine Auswirkung und bleiben beim Abspielen unbemerkt. Man kann in jedem hinzugefügten Kontrollblock für
     den Instrumentenwechsel einige Bits verstecken und so die zu versteckende Nachricht auf die MIDI-Datei verteilen.
   </introduction>
-
   <usage lang="en">
     This component has the two operating modes <b>Encryption</b> and <b>Decryption</b>, which can be chosen in the settings of the component.
-    <newline/><newline/>
+    <newline /><newline />
     In <b>Encryption</b> mode, the component expects the secret message, that is to be hidden, on the input labeled <b>Message</b>,
     and the MIDI file, inside which to hide the secret message, on the input labeled <b>Carrier file</b>.
     (The MIDI file can be provided using the FileInput component.)
@@ -40,16 +38,16 @@
     The component can hide 4 bits inside each inserted "Program Change" command.
     In the settings of the component you can determine, how many additional "Program Change" commands per regular "Program Change" command should be inserted.
     In order to be able to hide the entire message in the carrier file, it can be necessary to increase this number and thus increase the capacity of the carrier file.
-    <newline/><newline/>
+    <newline /><newline />
     In <b>Decryption</b> mode, the component expects a MIDI file prepared with a secret message on the input labeled <b>Carrier file</b>.
     The component extracts the message and sends it to the output labeled <b>Message</b>.
     The additional "Program Change" commands are deleted from the MIDI file and the "clean" MIDI file is sent to the output labeled <b>Carrier file</b>.
   </usage>
-
+  <usage lang="ru">Этот компонент имеет два режима работы Шифрование и дешифрование, которые можно выбрать в настройках компонента. В режиме шифрования компонент ожидает секретное сообщение, которое должно быть скрыто, на входе с надписью «Сообщение» и файле MIDI, внутри которого скрывается секретное сообщение, на входе с надписью Carrier file. (Файл MIDI может быть предоставлен с использованием компонента FileInput.) Модифицированный файл MIDI, содержащий секретное сообщение, отправляется на выходной файл с надписью Carrier. Компонент может скрыть 4 бита внутри каждой введенной команды «Program Change». В настройках компонента вы можете определить, сколько дополнительных команд «Program Change» для каждой команды «Program Change» должно быть вставлено. Чтобы иметь возможность скрывать все сообщение в файле несущей, может потребоваться увеличить это число и тем самым увеличить емкость файла-носителя. В режиме дешифрования компонент ожидает MIDI-файл, подготовленный с секретным сообщением на входе с надписью Carrier. Компонент извлекает сообщение и отправляет его на выход с помеченным сообщением. Дополнительные команды «Program Change» удаляются из файла MIDI, а «чистый» MIDI-файл отправляется на выходной файл с надписью Carrier.</usage>
   <usage lang="de-DE">
     Die Komponente hat zwei Betriebsarten, <i>Verschlüsselung</i> und <i>Entschlüsselung</i>, zwischen denen in den Einstellungen der Komponente
     gewählt werden kann.
-    <newline/><newline/>
+    <newline /><newline />
     Bei der <i>Verschlüsselung</i> erwartet die Komponente am Eingang <i>"Nachricht"</i> die zu versteckende Textnachricht und am
     Eingang <i>"Trägerdatei"</i> eine MIDI-Datei als Datenstrom, in welcher die Nachricht versteckt werden soll.
     (Die MIDI-Datei kann zum Beispiel über die Dateieingabe-Komponente eingelesen werden.)
@@ -58,37 +56,35 @@
     Die Komponente kann in jedem zusätzlich eingefügten "Program Change"-Befehl 4 Bits codieren.
     In den Einstellungen der Komponente kann man angeben, wie viele zusätzliche "Program Change"-Befehle pro regulärem "Program Change" eingefügt
     werden sollen. Um die gesamte Nachricht zu codieren kann es notwendig sein, diese Anzahl zu erhöhen und somit die Kapazität der Trägerdatei zu erhöhen.
-    <newline/><newline/>
+    <newline /><newline />
     Bei der <i>Entschlüsselung</i> erwartet die Komponente am Eingang <i>"Trägerdatei"</i> eine mit einer versteckten Nachricht präparierte
     MIDI-Datei. Die Komponente extrahiert die Nachricht und gibt diese am Ausgang <i>"Nachricht"</i> aus. Am Ausgang <i>"Trägerdatei"</i> wird
     die von den überflüssigen "Program Change"-Befehlen bereinigte MIDI-Datei zur Verfügung gestellt.
   </usage>
-  
   <references>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/Steganography"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/Steganography" />
       <caption lang="en">Steganography (Wikipedia)</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Steganographie"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Steganographie" />
       <caption lang="de-DE">Steganographie (Wikipedia)</caption>
     </linkReference>
     <linkReference>
-      <link lang="en" url="http://www.steganografie.eu"/>
+      <link lang="en" url="http://www.steganografie.eu" />
       <caption lang="en">http://www.steganografie.eu</caption>
-      <link lang="de-DE" url="http://www.steganografie.eu"/>
+      <link lang="de-DE" url="http://www.steganografie.eu" />
       <caption lang="de-DE">http://www.steganografie.eu</caption>
     </linkReference>
     <linkReference>
-      <link lang="en" url="http://www.steganografie.eu/index.php?article=5"/>
+      <link lang="en" url="http://www.steganografie.eu/index.php?article=5" />
       <caption lang="en">Steganography with MIDI files</caption>
-      <link lang="de-DE" url="http://www.steganografie.eu/index.php?article=5"/>
+      <link lang="de-DE" url="http://www.steganografie.eu/index.php?article=5" />
       <caption lang="de-DE">Steganographie mit MIDI-Dateien</caption>
     </linkReference>
     <linkReference>
-      <link lang="en" url="http://en.wikipedia.org/wiki/MIDI"/>
+      <link lang="en" url="http://en.wikipedia.org/wiki/MIDI" />
       <caption lang="en">MIDI (Wikipedia)</caption>
-      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Musical_Instrument_Digital_Interface"/>
+      <link lang="de-DE" url="http://de.wikipedia.org/wiki/Musical_Instrument_Digital_Interface" />
       <caption lang="de-DE">MIDI (Wikipedia)</caption>
     </linkReference>
   </references>
-  
 </documentation>

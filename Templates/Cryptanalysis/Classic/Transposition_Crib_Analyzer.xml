@@ -1,36 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Transposition Crib Analysis</title>
+  <title lang="ru">Анализ кросс-позиции</title>
   <summary lang="en">Cryptanalysis of the <i>Transposition</i> cipher using a crib</summary>
+  <summary lang="ru">Криптоанализ шифрования транспонирования с помощью кроватки</summary>
   <description lang="en">This template shows the cryptanalysis of the single <i>Transposition</i> cipher with the <i>Transposition Analyzer</i> using a crib. It is a known-plaintext attack, as a part of the plaintext is known in advance.</description>
+  <description lang="ru">Этот шаблон показывает криптоанализ одиночного Transposition cipher с Transposition Analyzer с помощью кроватки. Это атака известного текста, поскольку часть открытого текста известна заранее.</description>
   <keywords>Transposition, Crib, Permutation, Attack, Analysis</keywords>
-
+  <keywords lang="ru">Транспонирование, Кроватка, Перестановка, Атака, Анализ</keywords>
   <title lang="de">Transposition Crib-Analyse</title>
   <summary lang="de">Kryptoanalyse der <i>Transpositionsverschlüsselung</i> mit einem Crib</summary>
   <description lang="de">Diese Vorlage zeigt die Kryptoanalyse der einstufigen <i>Transpositionsverschlüsselung</i> mit der Komponente <i>Transpositions-Analyse</i> unter Verwendung einer Crib, also eine Form der Known-Plaintext-Analyse.</description>
   <keywords lang="de">Transposition, Crib, Permutation, Angriff</keywords>
-
   <icon file="Transposition.png" />
   <relevantPlugins>
     <plugin name="CostFunction" />
     <plugin name="Transposition" />
     <plugin name="TranspositionAnalyser" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext"/>
-    <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse"/>
-    <replacement key="$Crib$" value="Crib"/>
-    <replacement key="$Converter$" value="Konvertierer"/>
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Revealed Plaintext$" value="Entschlüsselter Klartext" />
+    <replacement key="$TranspositionAnalyser$" value="Transpositions-Analyse" />
+    <replacement key="$Crib$" value="Crib" />
+    <replacement key="$Converter$" value="Konvertierer" />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Revealed Plaintext$" value="Расшифрованный открытый текст" />
+    <replacement key="$TranspositionAnalyser$" value="Транспозиций-анализ" />
+    <replacement key="$Crib$" value="детская кроватка" />
+    <replacement key="$Converter$" value="преобразование" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext"/>
-    <replacement key="$TranspositionAnalyser$" value="TranspositionAnalyzer"/>
-    <replacement key="$Crib$" value="Crib"/>
-    <replacement key="$Converter$" value="Converter"/>
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Revealed Plaintext$" value="Revealed Plaintext" />
+    <replacement key="$TranspositionAnalyser$" value="TranspositionAnalyzer" />
+    <replacement key="$Crib$" value="Crib" />
+    <replacement key="$Converter$" value="Converter" />
   </replacements>
-
 </sample>

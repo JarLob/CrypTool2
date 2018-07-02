@@ -1,47 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">Cramer-Shoup with AES</title>
+  <title lang="ru">Cramer-Shoup с AES</title>
   <summary lang="en">Usage of the <i>Cramer-Shoup</i> cipher with AES</summary>
+  <summary lang="ru">Использование шифра Cramer-Shoup с AES</summary>
   <description lang="en">This template shows the usage of the <i>Cramer-Shoup</i> cipher with AES.</description>
+  <description lang="ru">Этот шаблон показывает использование шифра Cramer-Shoup с AES.</description>
   <keywords>asymmetric</keywords>
-
+  <keywords lang="ru">асимметричный</keywords>
   <title lang="de">Cramer-Shoup mit AES</title>
   <summary lang="de">Benutzung der <i>Cramer-Shoup</i>-Chiffre mit AES</summary>
   <description lang="de">Diese Vorlage zeigt die Benutzung der <i>Cramer-Shoup</i>-Chiffre mit AES.</description>
   <keywords lang="de">asymmetrisch</keywords>
-
   <icon file="CS.png" />
-
   <relevantPlugins>
     <plugin name="CramerShoupKeyGenerator" />
     <plugin name="CramerShoup" />
     <plugin name="AES" />
   </relevantPlugins>
-
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$StringEncoder$" value="String-Codierer"/>
-    <replacement key="$StringDecoder$" value="String-Decodierer"/>
-    <replacement key="$Decrypt$" value="Entschlüsselung"/>
-    <replacement key="$Encrypt$" value="Verschlüsselung"/>
-    <replacement key="$CS KeyGen$" value="CS-Schlüsselgenerator"/>
-    <replacement key="$CS Encaps$" value="CS-Encaps"/>
-    <replacement key="$CS Decaps$" value="CS-Decaps"/>
-	 <replacement key="$memo$" value="Cramer-Shoup ist ein asymmetrisches Kryptosystem, das auf dem ElGamal-Verschlüsselungsverfahren basiert.\line\line Diese Vorlage zeigt eine Anwendung von Cramer-Shoup mit EAX-AES."/>
+    <replacement key="$Plaintext$" value="Klartext" />
+    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$StringEncoder$" value="String-Codierer" />
+    <replacement key="$StringDecoder$" value="String-Decodierer" />
+    <replacement key="$Decrypt$" value="Entschlüsselung" />
+    <replacement key="$Encrypt$" value="Verschlüsselung" />
+    <replacement key="$CS KeyGen$" value="CS-Schlüsselgenerator" />
+    <replacement key="$CS Encaps$" value="CS-Encaps" />
+    <replacement key="$CS Decaps$" value="CS-Decaps" />
+    <replacement key="$memo$" value="Cramer-Shoup ist ein asymmetrisches Kryptosystem, das auf dem ElGamal-Verschlüsselungsverfahren basiert.\line\line Diese Vorlage zeigt eine Anwendung von Cramer-Shoup mit EAX-AES." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Plaintext$" value="обычный текст" />
+    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$StringEncoder$" value="Строка кодировщик" />
+    <replacement key="$StringDecoder$" value="Строка декодера" />
+    <replacement key="$Decrypt$" value="дешифрование" />
+    <replacement key="$Encrypt$" value="кодирование" />
+    <replacement key="$CS KeyGen$" value="CS-генератор ключей" />
+    <replacement key="$CS Encaps$" value="CS-Encaps" />
+    <replacement key="$CS Decaps$" value="CS-Decaps" />
+    <replacement key="$memo$" value="Cramer-Shoup - это асимметричная криптосистема, основанная на методе шифрования ElGamal. \Line \line Этот шаблон показывает приложение Cramer-Shoup с использованием EAX-AES." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext"/>
-    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext"/>
-    <replacement key="$StringEncoder$" value="StringEncoder"/>
-    <replacement key="$StringDecoder$" value="StringDecoder"/>
-    <replacement key="$Decrypt$" value="Decrypt"/>
-    <replacement key="$Encrypt$" value="Encrypt"/>
-    <replacement key="$CS KeyGen$" value="CS Key Generator"/>
-    <replacement key="$CS Encaps$" value="CS Encaps"/>
-    <replacement key="$CS Decaps$" value="CS Decaps"/>
-	 <replacement key="$memo$" value="Cramer-Shoup is an asymmetric key encryption algorithm based on ElGamal.\line\line This example shows a possible scheme for Cramer Shoup with EAX-AES."/>
+    <replacement key="$Plaintext$" value="Plaintext" />
+    <replacement key="$Decrypted Ciphertext$" value="Decrypted Ciphertext" />
+    <replacement key="$StringEncoder$" value="StringEncoder" />
+    <replacement key="$StringDecoder$" value="StringDecoder" />
+    <replacement key="$Decrypt$" value="Decrypt" />
+    <replacement key="$Encrypt$" value="Encrypt" />
+    <replacement key="$CS KeyGen$" value="CS Key Generator" />
+    <replacement key="$CS Encaps$" value="CS Encaps" />
+    <replacement key="$CS Decaps$" value="CS Decaps" />
+    <replacement key="$memo$" value="Cramer-Shoup is an asymmetric key encryption algorithm based on ElGamal.\line\line This example shows a possible scheme for Cramer Shoup with EAX-AES." />
   </replacements>
-
 </sample>

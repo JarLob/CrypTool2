@@ -1,115 +1,93 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">   
-    The Advanced Encryption Standard (AES), also known as Rijndael, is a symmetric blockcipher established by the U.S. National Institute of Standards and Technology (NIST) in 2000. <ref id="Wikipedia" />
-    <newline/>
-    <newline/>
-    AES is the successor of the Data Encryption Standard (DES). When DES was no longer considered safe (effective keylength of only 56 bit), the NIST started a competition to find a better alternative. <newline/>
-    Rijndael was considered to be the best among 15 different designs. <newline/>
+    The Advanced Encryption Standard (AES), also known as Rijndael, is a symmetric blockcipher established by the U.S. National Institute of Standards and Technology (NIST) in 2000. <ref id="Wikipedia" /><newline /><newline />
+    AES is the successor of the Data Encryption Standard (DES). When DES was no longer considered safe (effective keylength of only 56 bit), the NIST started a competition to find a better alternative. <newline />
+    Rijndael was considered to be the best among 15 different designs. <newline />
     The algorithm works with a blocksize of 128 bits and has three possible key lengths. 
-    The most commonly used keylength is 128 bit, but 192 bit and 256 bit are also possible. <newline/>
-    
-  </introduction>
-  
+    The most commonly used keylength is 128 bit, but 192 bit and 256 bit are also possible. <newline /></introduction>
+  <introduction lang="ru">Стандарт расширенного шифрования (AES), также известный как Rijndael, представляет собой симметричный блок-шифр, созданный Национальным институтом стандартов и технологий США (NIST) в 2000 году. AES является преемником стандарта шифрования данных (DES). Когда DES больше не считался безопасным (эффективная длина ключа всего 56 бит), NIST начал конкурс, чтобы найти лучшую альтернативу. Rijndael считался лучшим среди 15 различных дизайнов. Алгоритм работает с блочным размером 128 бит и имеет три возможных длины ключа. Наиболее часто используемая длина ключа - 128 бит, но также возможны 192 бит и 256 бит.</introduction>
   <introduction lang="de-DE">
-    Der Advanced Encryption Standard (AES), auch bekannt als Rijndael, ist eine symmetrische Blockchiffre, die 2000 vom National Institute of Standards and Technology (NIST) als Standard bekanntgegeben wurde. <ref id="Wikipedia"/>
-    <newline/>
-    <newline/>
-    AES ist der Nachfolger des Data Encryption Standard (DES). Nachdem DES aufgrund des effektiv nur 56 bit langen Schlüssels für zu unsicher befunden wurde, schrieb das amerikanische Handelsministerium die Suche nach einem Nachfolger aus. <newline/>
-    Rijndael wurde als bestes von 15 verschiedenen Design ausgewählt.<newline/>
+    Der Advanced Encryption Standard (AES), auch bekannt als Rijndael, ist eine symmetrische Blockchiffre, die 2000 vom National Institute of Standards and Technology (NIST) als Standard bekanntgegeben wurde. <ref id="Wikipedia" /><newline /><newline />
+    AES ist der Nachfolger des Data Encryption Standard (DES). Nachdem DES aufgrund des effektiv nur 56 bit langen Schlüssels für zu unsicher befunden wurde, schrieb das amerikanische Handelsministerium die Suche nach einem Nachfolger aus. <newline />
+    Rijndael wurde als bestes von 15 verschiedenen Design ausgewählt.<newline />
     AES hat eine Blockgröße von 128 bit und drei mögliche Schlüssellängen (128 bit, 192 bit und 256 bit).
     Die am meisten verwendete Schlüssellänge ist 128 bit.
   </introduction>
-
   <usage lang="en">
     <section headline="Input and Output">
-      The AES plugin has two inputs and one output.  One input is for the plaintext and one for the key. Both input should have the form of a hexadecimal string. <newline/>
-      For the plaintext you need a 16 bytes (128 bits). Each byte is represented by two hexadecimal characters. <newline/>
-      The length of the key depends on your selecetion. <newline/>
+      The AES plugin has two inputs and one output.  One input is for the plaintext and one for the key. Both input should have the form of a hexadecimal string. <newline />
+      For the plaintext you need a 16 bytes (128 bits). Each byte is represented by two hexadecimal characters. <newline />
+      The length of the key depends on your selecetion. <newline />
       If an input is too long it will be cut off at the correct length. If it is too short it will be padded with 0s.
-      The output will display the 128 bit ciphertext once the presentation is completed. <newline/>
-    </section>
-    
+      The output will display the 128 bit ciphertext once the presentation is completed. <newline /></section>
     <section headline="Parameters">
       You can choose between three keylength (128 bit, 192 bit, and 256 bit) in the parameter panel.
     </section>
-    
   </usage>
-
+  <usage lang="ru">Плагин AES имеет два входа и один выход. Один вход для открытого текста и один для ключа. Оба входа должны иметь форму шестнадцатеричной строки. Для открытого текста вам понадобится 16 байт (128 бит). Каждый байт представлен двумя шестнадцатеричными символами. Длина ключа зависит от вашего выбора. Если вход слишком длинный, он будет отрезан на правильной длине. Если он слишком короткий, он будет дополнен 0s. На выходе будет отображаться 128-битный зашифрованный текст после завершения презентации. На панели параметров вы можете выбрать между тремя ключевыми (128 бит, 192 бит и 256 бит).</usage>
   <usage lang="de-DE">
     <section headline="Eingabe und Ausgabe">
-      Das Plugin hat zwei Eingaben und eine Ausgabe. Eine Eingabe ist für den Text, der verschlüsselt werden soll, und die andere für den Schlüssel. <newline/>
-      Beide Eingaben müssen die Form einer Zeichenkette im Hexadezimalformat haben. <newline/>
-      Für den Text benötigt man 16 bytes (128 bits), wobei jedes Byte durch zwei Zeichen dargestellt wird. <newline/>
-      Die Länge des Schlüssels hängt von der vorher getroffenen Auswahl ab. <newline/>
-      Wenn eine Eingabe zu lang ist, wird sie bei der korrekten Länge abgeschnitten. Ist die Eingabe zu kurz, wird sie mit "0" aufgefüllt. <newline/>
+      Das Plugin hat zwei Eingaben und eine Ausgabe. Eine Eingabe ist für den Text, der verschlüsselt werden soll, und die andere für den Schlüssel. <newline />
+      Beide Eingaben müssen die Form einer Zeichenkette im Hexadezimalformat haben. <newline />
+      Für den Text benötigt man 16 bytes (128 bits), wobei jedes Byte durch zwei Zeichen dargestellt wird. <newline />
+      Die Länge des Schlüssels hängt von der vorher getroffenen Auswahl ab. <newline />
+      Wenn eine Eingabe zu lang ist, wird sie bei der korrekten Länge abgeschnitten. Ist die Eingabe zu kurz, wird sie mit "0" aufgefüllt. <newline />
       Am Ende der Präsentation zeigt die Ausgabe den 128 bit langen Geheimtext an.
     </section>
-
     <section headline="Parameter">
       Man kann zwischen drei möglichen Schlüssellängen (128 bit, 192 bit und 256 bit) wählen. Die Auswahl findet im Parameterfenster statt.
     </section>
   </usage>
-  
   <presentation lang="en">
-    The goal of the plugin is to visualize how AES works.<newline/>
-    The presentation is mainly separated into two parts.<newline/>
-    After a brief introduction the first part begins.<newline/>
-    
-    <section headline="Key Expansion">
-      The first part of the presentation is the key expansion.<newline/>
-      It is separated into several rounds depending on the keylength. (128 bit = 10 rounds, 192 bit = 8 rounds, and 256 bits = 7 rounds).<newline/>
+    The goal of the plugin is to visualize how AES works.<newline />
+    The presentation is mainly separated into two parts.<newline />
+    After a brief introduction the first part begins.<newline /><section headline="Key Expansion">
+      The first part of the presentation is the key expansion.<newline />
+      It is separated into several rounds depending on the keylength. (128 bit = 10 rounds, 192 bit = 8 rounds, and 256 bits = 7 rounds).<newline />
       There are two rows of buttons on the bottom of the screen. In the bottom row you have several "Round buttons" which enable you to choose between the different rounds.
-      To the left of the "Round Buttons" there is a button left which lets you skip the expansion and go straight to the encryption.<newline/>
+      To the left of the "Round Buttons" there is a button left which lets you skip the expansion and go straight to the encryption.<newline />
       The leftmost button will advance the presentation to the next step. If you don't want to press this button for every step you can press on "Auto" which causes the presentation to proceed through the steps of the current round without pausing.
-      The speed can be adjusted with the slider.<newline/>
-      The buttons between "Auto" and the slider let you skip the current round or return to the previous one.<newline/>
+      The speed can be adjusted with the slider.<newline />
+      The buttons between "Auto" and the slider let you skip the current round or return to the previous one.<newline />
       On the right there are two more buttons. One will bring you back to the beginning of the plugin and the other will bring you to the end and output the ciphertext.
-    </section>
-    
-    <section headline="Encryption">
-      During the encryption process (after the initial round) four more buttons appear on the top left. These four let you jump between the different operations of a round ("SubBytes", "ShiftRow", "MixCol", and "AddKey").<newline/>
-      If you choose 192 or 256 bit there will also be two more buttons which let you "shift" through the "Round Buttons".<newline/>
+    </section><section headline="Encryption">
+      During the encryption process (after the initial round) four more buttons appear on the top left. These four let you jump between the different operations of a round ("SubBytes", "ShiftRow", "MixCol", and "AddKey").<newline />
+      If you choose 192 or 256 bit there will also be two more buttons which let you "shift" through the "Round Buttons".<newline />
       The button on the bottom left now lets you go back to the expansion instead of skipping it.
     </section>
     
-    In addition to the navigational purpose of the "Round Buttons" and "Operation Buttons" they also indicate which round and operation is currently shown by highlighting the corresponding button <newline/>
+    In addition to the navigational purpose of the "Round Buttons" and "Operation Buttons" they also indicate which round and operation is currently shown by highlighting the corresponding button <newline />
     You can always stop the plugin if you press the "Stop" icon on the top of the CrypTool window. Once you have done so you can change the input or keep the previous one before restarting the plugin via the "Play" icon  on the top of the CrypTool window.
   </presentation>
-  
+  <presentation lang="ru">Цель плагина - визуализировать работу AES. Презентация в основном разделена на две части. После краткого введения начинается первая часть. Первая часть презентации - это ключевое расширение. Он разделяется на несколько раундов в зависимости от длины ключа. (128 бит = 10 раундов, 192 бит = 8 раундов и 256 бит = 7 раундов). В нижней части экрана есть два ряда кнопок. В нижнем ряду у вас есть несколько кнопок «Круглые», которые позволяют вам выбирать между различными раундами. Слева от «Круглых кнопок» находится кнопка, которая позволяет пропустить расширение и перейти прямо к шифрованию. Крайняя левая кнопка продвигает презентацию к следующему шагу. Если вы не хотите нажимать эту кнопку для каждого шага, вы можете нажать «Авто», что заставляет презентацию проходить через шаги текущего раунда без паузы. Скорость можно регулировать с помощью ползунка. Кнопки между «Авто» и слайдером позволяют пропустить текущий раунд или вернуться к предыдущему. Справа есть еще две кнопки. Один вернет вас к началу плагина, а другой приведет вас к концу и выйдет зашифрованный текст. Во время процесса шифрования (после первого раунда) в левом верхнем углу появляются четыре кнопки. Эти четыре позволяют вам прыгать между различными операциями раунда («SubBytes», «ShiftRow», «MixCol» и «AddKey»). Если вы выберете 192 или 256 бит, будет еще две кнопки, которые позволят вам «сдвинуться» через «круглые кнопки». Кнопка внизу слева теперь позволяет вернуться к расширению, а не пропускать его. В дополнение к навигационной цели «Круглые кнопки» и «Кнопки управления» они также указывают, какой раунд и операция в настоящее время показаны, выделив соответствующую кнопку. Вы всегда можете остановить плагин, если вы нажмете значок «Стоп» в верхней части окно CrypTool. Как только вы это сделаете, вы можете изменить ввод или сохранить предыдущий, прежде чем перезапустить плагин с помощью значка «Play» в верхней части окна CrypTool.</presentation>
   <presentation lang="de-DE">
-    Die Präsentation des AES ist der Hauptbestandteil des Plugins. Ihr Ziel ist es, zu visualisieren wie AES arbeitet und dadurch das Verständnis für dieses Verfahren zu unterstützen.<newline/>
-    Die Präsentation ist in zwei Bestandteile aufgeteilt.<newline/>
-    Nach einer kurzen Einleitung beginnt der erste Teil.<newline/>
-    
-    <section headline="Schlüsselerweiterung">
-      Der erste Teil ist die Schlüsselerweiterung.<newline/>
-      Sie ist in mehrere Runden unterteilt -- abhängig von der gewählten Schlüssellänge (128 bit = 10 Runden, 192 bit = 8 Runden und 256 bit = 7 Runden).<newline/>
-      Es gibt zwei Reihen mit Buttons am unteren Rand des Plugins. In der unteren Reihe befinden sich die Runden-Buttons, mit denen man auswählen kann, welche Runde visualisiert wird.<newline/>
-      Links von den Runden-Buttons befindet sich ein Button, mit dem man die Schlüsselerweiterung überspringen und direkt zur Verschlüsselung gehen kann.<newline/>
+    Die Präsentation des AES ist der Hauptbestandteil des Plugins. Ihr Ziel ist es, zu visualisieren wie AES arbeitet und dadurch das Verständnis für dieses Verfahren zu unterstützen.<newline />
+    Die Präsentation ist in zwei Bestandteile aufgeteilt.<newline />
+    Nach einer kurzen Einleitung beginnt der erste Teil.<newline /><section headline="Schlüsselerweiterung">
+      Der erste Teil ist die Schlüsselerweiterung.<newline />
+      Sie ist in mehrere Runden unterteilt -- abhängig von der gewählten Schlüssellänge (128 bit = 10 Runden, 192 bit = 8 Runden und 256 bit = 7 Runden).<newline />
+      Es gibt zwei Reihen mit Buttons am unteren Rand des Plugins. In der unteren Reihe befinden sich die Runden-Buttons, mit denen man auswählen kann, welche Runde visualisiert wird.<newline />
+      Links von den Runden-Buttons befindet sich ein Button, mit dem man die Schlüsselerweiterung überspringen und direkt zur Verschlüsselung gehen kann.<newline />
       In der Reihe darüber befindet sich ganz links der Button, mit dem man durch die einzelnen Schritte schalten kann. Der Button rechts davon lässt alle Schritte der aktuellen Runde automatisch mit kurzen Pausen dazwischen ablaufen.
-      Die Pausenzeit kann man mit dem Schieberegler in derselben Reihe einstellen.<newline/>
-      Direkt daneben sind außerdem zwei Buttons, mit denen man die aktuelle Runde überspringen oder zur vorheringen zurückkehren kann.<newline/>
+      Die Pausenzeit kann man mit dem Schieberegler in derselben Reihe einstellen.<newline />
+      Direkt daneben sind außerdem zwei Buttons, mit denen man die aktuelle Runde überspringen oder zur vorheringen zurückkehren kann.<newline />
       Die letzten beiden Button bringen einen entweder zurück zu Anfang des Plugins oder ganz ans Ende.
-    </section>
-    
-    <section headline="Verschlüsselung">
-      Der zweite Teil ist die eigentliche Verschlüsselung.<newline/>
-      Während der Verschlüsselung erscheinen (nach der Initialrunde) vier weitere Buttons am oberen Rand des Plugins.<newline/>
-      Mit ihnen kann der User durch die verschiedenen Operationen einer Runde springen.<newline/>
-      Werden als Schlüssellänge 192 oder 256 bits gewählt, erscheinen außerdem noch zwei weitere Buttons, mit deren Hilfe man durch die Runden-Buttons schalten kann.<newline/>
+    </section><section headline="Verschlüsselung">
+      Der zweite Teil ist die eigentliche Verschlüsselung.<newline />
+      Während der Verschlüsselung erscheinen (nach der Initialrunde) vier weitere Buttons am oberen Rand des Plugins.<newline />
+      Mit ihnen kann der User durch die verschiedenen Operationen einer Runde springen.<newline />
+      Werden als Schlüssellänge 192 oder 256 bits gewählt, erscheinen außerdem noch zwei weitere Buttons, mit deren Hilfe man durch die Runden-Buttons schalten kann.<newline />
       Der Button unten links bringt einen nun zurück zur Schlüsselerweiterung.
     </section>
     
-    Abgesehen von der Navigation dienen die Runden- und Operations-Button auch der Orientierung. Abhängig von der aktuellen Runde und Operation werden die entsprechenden Buttons farblich hervorgehoben.<newline/>
+    Abgesehen von der Navigation dienen die Runden- und Operations-Button auch der Orientierung. Abhängig von der aktuellen Runde und Operation werden die entsprechenden Buttons farblich hervorgehoben.<newline />
     Das Plugin kann immer durch die Stop-Ikone oben im CrypTool-Fenster beendet werden. Danach kann man es mithilfe der Play-Ikone mit neuen oder den bisherigen Werten wieder starten.
   </presentation>
-  
   <references>
     <linkReference id="Wikipedia">
       <link url="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard" lang="en" />

@@ -1,61 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
 <documentation>
-  <language culture="en"/>
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">   
 		The function HKDF SHA-256 [1][2] is a key generation function (KDF). The method uses the keyed hash message authentication codes (HMAC) as a pseudorandom function (PRF). The key to be generated is generated in 2 steps. Step 1 generates a pseudorandom key (prk). Step 2 successively generates the key by repeating the HMAC. The hkdf method uses an 8-bit counter, which limits the key length to be generated (255 * hash length, the counter in step 2 starts at 1). In the configuration of the plug-in, you can choose between the standardized variant (with 8-bit counter) and a variant with 32-bit counter. The 32-bit variant can generate much longer outputs.  
-  	  	<section headline="Inputs and outputs">
-	  	<list>
-			<item><b>Source Key Material:</b> Specifies the source key material. It is used for the calculation of the prk.</item>
-			<item><b>Salt:</b> The salt is used for the calculation of the prk as key in the HMAC. It can be an empty string.</item>
-			<item><b>Context Information:</b> It is a application specific constant (CTXInfo). It can be an empty string.</item>
-			<item><b>Length of the key material (in Byte):</b> Specifies the length of the output key material.</item>
-			<item><b>Key Material</b>: After the calculation, the generated key material is visible in this textfield.</item>
-			<item><b>Calculationsteps:</b> The intermediate steps of the calculation are displayed in this textfield.</item>
-		</list>	
-	  </section>
-	  <section headline="Pseudorandom functions and theoretical background">
+  	  	<section headline="Inputs and outputs"><list><item><b>Source Key Material:</b> Specifies the source key material. It is used for the calculation of the prk.</item><item><b>Salt:</b> The salt is used for the calculation of the prk as key in the HMAC. It can be an empty string.</item><item><b>Context Information:</b> It is a application specific constant (CTXInfo). It can be an empty string.</item><item><b>Length of the key material (in Byte):</b> Specifies the length of the output key material.</item><item><b>Key Material</b>: After the calculation, the generated key material is visible in this textfield.</item><item><b>Calculationsteps:</b> The intermediate steps of the calculation are displayed in this textfield.</item></list></section><section headline="Pseudorandom functions and theoretical background">
 	  The basics of pseudorandom functions can be found in this <internal ref="../Common/Key derivation functions based on pseudorandom functions_en.html">article</internal>.
-	  </section>
-  </introduction>
-
+	  </section></introduction>
+  <introduction lang="ru">Функция HKDF SHA-256 [1] [2] является функцией генерации ключей (KDF). Метод использует коды аутентификации хэш-кода с ключами (HMAC) в качестве псевдослучайной функции (PRF). Генерируемый ключ генерируется в 2 этапа. Шаг 1 генерирует псевдослучайный ключ (prk). Шаг 2 последовательно генерирует ключ, повторяя HMAC. Метод hkdf использует 8-битный счетчик, который ограничивает длину ключа, который должен быть сгенерирован (длина хэш-байта 255 *, счетчик на шаге 2 начинается с 1). В конфигурации плагина вы можете выбрать стандартизованный вариант (с 8-битным счетчиком) и вариант с 32-разрядным счетчиком. 32-битный вариант может генерировать гораздо более длинные выходы. Исходный ключевой материал: указывает исходный ключевой материал. Он используется для расчета prk.Salt: соль используется для вычисления prk как ключа в HMAC. Это может быть пустая строка. Контекстная информация. Это константа приложения (CTXInfo). Это может быть пустая строка. Длина ключевого материала (в байте): определяет длину выходного ключевого материала. Материал: после вычисления в этом текстовом поле видны сгенерированный материал ключа. Происхождения: промежуточные этапы вычисление отображается в этом текстовом поле. Основы псевдослучайных функций можно найти в этой статье.</introduction>
   <introduction lang="de-DE">
      Die Funktion HKDF SHA-256 [1][2] ist eine Schlüsselgenerierungs-Funktion (Key Derivation Function, KDF). Das Verfahren verwendet als Pseudozufallsfunktion (Pseudorandom Function, PRF) den Keyed-Hash Message Authentication Codes (HMAC). Der zu generierende Schlüssel wird in 2 Schritten generiert. Schritt 1 generiert einen Pseudozufallsschlüssel (PRK). Schritt 2 erzeugt sukzessive den Schlüssel durch wiederholte Ausführung des HMAC. Das HKDF-Verfahren verwendet einen 8 Bit Zähler, wodurch die zu generierende Schlüssellänge begrenzt ist (255 * Hashlänge, der Zähler in Schritt 2 beginnt bei 1 zu zählen). In der Konfiguration des Plugins kann zwischen der standardisierten Variante (mit 8-Bit Zähler) und einer Variante mit 32-Bit Zähler gewählt werden. Mit der 32-Bit-Variante lassen sich wesentlich längere Ausgaben erzeugen.
-        <section headline="Eingaben und Ausgaben">
-	<list>
-		<item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur Generierung des Pseudo-Zufallsschlüssel (Pseudorandom Key, PRK) verwendet.</item>
-		<item><b>Salt:</b> Salt wird bei der generierung des PRK als Schlüssel verwendet. Kann leer sein.</item>
-		<item><b>Kontext-Information:</b> Ist eine anwendungsspezifische Konstante CTXInfo (Context Information, CTXInfo). Kann leer sein.</item>
-		<item><b>Länge des Schlüsselmaterials (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterials.</item>
-		<item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item>
-		<item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item>
-	</list>	
-	</section>	
-	<section headline="	Pseudozufallsfunktionen und theoretischer Hintergrund">
+        <section headline="Eingaben und Ausgaben"><list><item><b>Quellschlüssel-Material:</b> Spezifiziert das Quellschlüssel-Material (Source Key Material, SKM). Dieses wird zur Generierung des Pseudo-Zufallsschlüssel (Pseudorandom Key, PRK) verwendet.</item><item><b>Salt:</b> Salt wird bei der generierung des PRK als Schlüssel verwendet. Kann leer sein.</item><item><b>Kontext-Information:</b> Ist eine anwendungsspezifische Konstante CTXInfo (Context Information, CTXInfo). Kann leer sein.</item><item><b>Länge des Schlüsselmaterials (in Byte):</b> Spezifiziert die Länge des zu generierenden Schlüsselmaterials.</item><item><b>Schlüsselmaterial:</b> Nach der Berechnung ist das generierte Schlüsselmaterial (Key Material, KM) in diesem Textfeld zu sehen.</item><item><b>Zwischenschritte der Berechnung:</b> Die Zwischenschritte der Berechnung werden in diesem Textfeld angezeigt.</item></list></section><section headline=" Pseudozufallsfunktionen und theoretischer Hintergrund">
 	  Die Grundlagen zu Pseudozufallsfunktionen können in diesem <internal ref="../Common/Key derivation functions based on pseudorandom functions_de.html">Artikel</internal> gefunden werden.
-	</section>
-  </introduction>
-  
+	</section></introduction>
   <usage lang="en">
 	The usable in- and outputs will be explained in the presentationview of the component.
 r  </usage>
-
+  <usage lang="ru">Полезные входы и выходы будут объяснены в представлении о компоненте. р</usage>
   <usage lang="de-DE">
 	Die verwendeten Ein- und Ausgaben werden zu Beginn in der Präsentations-Ansicht der Komponente erklärt.
   </usage>
-  
   <presentation lang="en">
 	By double-clicking on the component "HKDF SHA-256" in the workspace, you can activate the visualization of the calculation. The design and operation of the function will be explained step by step.
   </presentation>
-  
+  <presentation lang="ru">Дважды щелкнув по компоненту «HKDF SHA-256» в рабочей области, вы можете активировать визуализацию вычисления. Конструкция и функционирование функции будут объясняться шаг за шагом.</presentation>
   <presentation lang="de-DE">
 	Durch Doppelklick auf die Komponente "HKDF SHA-256" in der Arbeitsfläche können Sie die Visualisierung der Berechnung aktivieren. Dabei wird die ikonifizierte Komponente zu einem Fenster vergrößert, in dem die Konstruktion und die Arbeitsweise der Funktion Schritt für Schritt erklärt werden.
   </presentation>
-  
-<references>
+  <references>
     <linkReference>
       <link url="https://tools.ietf.org/html/rfc5869" lang="en" />
       <caption lang="en">RFC 5869: Extract-and-Expand HKDF. Accessed 01-04-2018</caption>

@@ -1,41 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-
   <title lang="en">RSA with big numbers (Decryption)</title>
+  <title lang="ru">RSA с большими номерами (расшифровка)</title>
   <summary lang="en">Implementation of <i>RSA</i> using mathematical components</summary>
+  <summary lang="ru">Реализация RSA с использованием математических компонентов</summary>
   <description lang="en">This template shows the implementation of <i>RSA</i> using mathematical components.</description>
+  <description lang="ru">Этот шаблон показывает реализацию RSA с использованием математических компонентов.</description>
   <keywords>precision, arbitrary, bignumber</keywords>
-
+  <keywords lang="ru">точность, произвольный, bignumber</keywords>
   <title lang="de">RSA mit großen Zahlen (Entschlüsselung)</title>
   <summary lang="de">Implementierung von <i>RSA</i> mit mathematischen Komponenten</summary>
   <description lang="de">Diese Vorlage zeigt die Implementierung von <i>RSA</i> mit mathematischen Komponenten.</description>
   <keywords lang="de">beliebige, Präzision, Stellen</keywords>
-
   <icon file="RSA.png" />
-
   <replacements lang="de">
-    <replacement key="$Message$" value="Nachricht"/>
-    <replacement key="$Public exponent$" value="Öffentlicher Exponent"/>
-    <replacement key="$Prime number$" value="Primzahl"/>
-    <replacement key="$Private key$" value="Privater Schlüssel"/>
-    <replacement key="$Ciphertext$" value="Geheimtext"/>
-    <replacement key="$Decrypted ciphertext$" value="Entschlüsselter Geheimtext"/>
-    <replacement key="$Decoded ciphertext$" value="Decodierter Geheimtext"/>
-	 <replacement key="$to bytes$" value="-> Bytes"/>
-	 <replacement key="$to string$" value="-> String"/>
-	 <replacement key="$memo$" value="Diese Vorlage demonstriert die Entschlüsselung mit den RSA-Algorithmus -- aufgebaut mit einfachen mathematischen Komponenten.\line\line RSA verwendet einen öffentlichen Exponenten {\b e} und einen privaten Exponenten {\b d}. Der Exponent {\b e} ist Teil des öffentlichen Schlüssels {\b (e, N)}, den jeder wissen darf. Nachrichten, die mit dem öffentlichen Schlüssel {\b e} verschlüsselt wurden, können nur mit dem privaten Schlüssel {\b d} wieder entschlüsselt werden.\line\line - Um eine Nachricht {\b m} zu verschlüsseln, wird die Zahl {\b c} berechnet durch {\b c = m^e mod N}, wobei {\b N} das Produkt zweier zufällig gewählten Primzahlen ist: {\b N = p * q}.\line - Um einen Geheimtext {\b c} zu entschlüsseln, wird die Nachricht {\b m} berechnet durch {\b m = c^d mod N}.\line - {\b d} ist die multiplikative Inverse von {\b e mod \u966?(N)}, wobei {\b \u966?(N) = (p-1)(q-1)}.\line\line Diese Vorlage zeigt in dem oberen Rechteck, wie ein berechtigter Empfänger, der {\b d} und {\b N} kennt, den empfangenen Geheimtext {\b c} entschlüsseln kann.\line\line Ein Angreifer, der nur {\b c}, {\b N} und {\b e} kennt, nicht aber {\b p}, {\b q} oder {\b \u966?(N)}, muss {\b N} faktorisieren, um den Schlüssel berechnen zu können.\line Daher sind die Operationen für die Schlüsselgenerierung auf der linken Seite für den berechtigten Anwender nicht nötig, da er die Werte von {\b d}, {\b N} und {\b c} bereits kennt."/>
+    <replacement key="$Message$" value="Nachricht" />
+    <replacement key="$Public exponent$" value="Öffentlicher Exponent" />
+    <replacement key="$Prime number$" value="Primzahl" />
+    <replacement key="$Private key$" value="Privater Schlüssel" />
+    <replacement key="$Ciphertext$" value="Geheimtext" />
+    <replacement key="$Decrypted ciphertext$" value="Entschlüsselter Geheimtext" />
+    <replacement key="$Decoded ciphertext$" value="Decodierter Geheimtext" />
+    <replacement key="$to bytes$" value="-&gt; Bytes" />
+    <replacement key="$to string$" value="-&gt; String" />
+    <replacement key="$memo$" value="Diese Vorlage demonstriert die Entschlüsselung mit den RSA-Algorithmus -- aufgebaut mit einfachen mathematischen Komponenten.\line\line RSA verwendet einen öffentlichen Exponenten {\b e} und einen privaten Exponenten {\b d}. Der Exponent {\b e} ist Teil des öffentlichen Schlüssels {\b (e, N)}, den jeder wissen darf. Nachrichten, die mit dem öffentlichen Schlüssel {\b e} verschlüsselt wurden, können nur mit dem privaten Schlüssel {\b d} wieder entschlüsselt werden.\line\line - Um eine Nachricht {\b m} zu verschlüsseln, wird die Zahl {\b c} berechnet durch {\b c = m^e mod N}, wobei {\b N} das Produkt zweier zufällig gewählten Primzahlen ist: {\b N = p * q}.\line - Um einen Geheimtext {\b c} zu entschlüsseln, wird die Nachricht {\b m} berechnet durch {\b m = c^d mod N}.\line - {\b d} ist die multiplikative Inverse von {\b e mod \u966?(N)}, wobei {\b \u966?(N) = (p-1)(q-1)}.\line\line Diese Vorlage zeigt in dem oberen Rechteck, wie ein berechtigter Empfänger, der {\b d} und {\b N} kennt, den empfangenen Geheimtext {\b c} entschlüsseln kann.\line\line Ein Angreifer, der nur {\b c}, {\b N} und {\b e} kennt, nicht aber {\b p}, {\b q} oder {\b \u966?(N)}, muss {\b N} faktorisieren, um den Schlüssel berechnen zu können.\line Daher sind die Operationen für die Schlüsselgenerierung auf der linken Seite für den berechtigten Anwender nicht nötig, da er die Werte von {\b d}, {\b N} und {\b c} bereits kennt." />
+  </replacements>
+  <replacements lang="ru">
+    <replacement key="$Message$" value="сообщение" />
+    <replacement key="$Public exponent$" value="Общественный представитель" />
+    <replacement key="$Prime number$" value="простое число" />
+    <replacement key="$Private key$" value="Частный ключ" />
+    <replacement key="$Ciphertext$" value="шифротекста" />
+    <replacement key="$Decrypted ciphertext$" value="Расшифрованный зашифрованный текст" />
+    <replacement key="$Decoded ciphertext$" value="Декодированный зашифрованный текст" />
+    <replacement key="$to bytes$" value="-&amp;gt; Байты" />
+    <replacement key="$to string$" value="-&amp;gt; Строка" />
+    <replacement key="$memo$" value="Этот шаблон демонстрирует дешифрование с помощью алгоритма RSA, построенного на простых математических компонентах. \Line \line RSA использует открытый экспонент {\be} и частный экспонент {\bd}. Показатель {\be} является частью открытого ключа {\b (e, N)}, который всем разрешено знать. Сообщения, зашифрованные открытым ключом {\be}, могут быть дешифрованы только с помощью закрытого ключа {\bd}. \Line \line - для шифрования сообщения {\bm} число {\bc} вычисляется по {\bc = m ^ e mod N}, где {\b N} - произведение двух случайных простых чисел: {\b N = p * q}. \line - для декодирования зашифрованного текста {\bc} сообщение {\bm} вычисляется с помощью {\bm = c ^ d mod N}. \line - {\bd} является мультипликативным обратным к {\mod \u966? (N)}, где {\b \u966 ? (N) = (p-1) (q-1)}. \Line \line Этот шаблон показывает в верхнем прямоугольнике, как авторизованный получатель, который знает {\bd} и {\b N}, полученный зашифрованный текст {\bc} можно расшифровать. \line \line Злоумышленник, который знает {\bc}, {\b N} и {\be}, но не {\bp}, {\bq} или {\b \u966 ? (N)}, необходимо вычислить {\b N} для вычисления ключа. \Line Следовательно, операции генерации ключа слева для Законный пользователь не нужен, потому что он уже знает значения {\bd}, {\b N} и {\bc}." />
   </replacements>
   <replacements lang="en">
-    <replacement key="$Message$" value="Message"/>
-    <replacement key="$Public exponent$" value="Public exponent"/>
-    <replacement key="$Prime number$" value="Prime number"/>
-    <replacement key="$Private key$" value="Private key"/>
-    <replacement key="$Ciphertext$" value="Ciphertext"/>
-    <replacement key="$Decrypted ciphertext$" value="Decrypted ciphertext"/>
-    <replacement key="$Decoded ciphertext$" value="Decoded ciphertext"/>
-	 <replacement key="$to bytes$" value="to bytes"/>
-	 <replacement key="$to string$" value="to string"/>
-	 <replacement key="$memo$" value="This sample demonstrates decryption with the RSA algorithm -- built up with simple mathematical components (operators).\line\line RSA uses a public exponent {\b e} and a private exponent {\b d}. The exponent {\b e} is part of the public key {\b (e, N)} which can be known to everyone. Messages encrypted with the public key {\b e} can only be decrypted using the private key {\b d}.\line\line - To encrypt a message {\b m}, the ciphertext {\b c} is calculated by {\b c = m^e mod N} where {\b N} is the product of 2 randomly chosen prime numbers: {\b N = p * q}.\line - To decrypt a ciphertext, the message {\b m} is re-calculated by {\b m = c^d mod N}.\line - {\b d} is the multiplicative inverse of {\b e mod \u966?(N)} where {\b \u966?(N) = (p-1)(q-1)}.\line\line This template shows in the upper rectangle, how a legitimate user who knows {\b d} and {\b N} can decrypt the received {\b c}.\line\line (If an attacker knows only {\b c}, {\b N}, and {\b e}, but not {\b p}, {\b q} or {\b \u966?(N)}, he has to factorize {\b N} and do the key generation again.\line So the operations for key generation on the left are not necessary for the legitimate user, who directly can start with {\b d}, {\b N}, and {\b c}.)"/>
+    <replacement key="$Message$" value="Message" />
+    <replacement key="$Public exponent$" value="Public exponent" />
+    <replacement key="$Prime number$" value="Prime number" />
+    <replacement key="$Private key$" value="Private key" />
+    <replacement key="$Ciphertext$" value="Ciphertext" />
+    <replacement key="$Decrypted ciphertext$" value="Decrypted ciphertext" />
+    <replacement key="$Decoded ciphertext$" value="Decoded ciphertext" />
+    <replacement key="$to bytes$" value="to bytes" />
+    <replacement key="$to string$" value="to string" />
+    <replacement key="$memo$" value="This sample demonstrates decryption with the RSA algorithm -- built up with simple mathematical components (operators).\line\line RSA uses a public exponent {\b e} and a private exponent {\b d}. The exponent {\b e} is part of the public key {\b (e, N)} which can be known to everyone. Messages encrypted with the public key {\b e} can only be decrypted using the private key {\b d}.\line\line - To encrypt a message {\b m}, the ciphertext {\b c} is calculated by {\b c = m^e mod N} where {\b N} is the product of 2 randomly chosen prime numbers: {\b N = p * q}.\line - To decrypt a ciphertext, the message {\b m} is re-calculated by {\b m = c^d mod N}.\line - {\b d} is the multiplicative inverse of {\b e mod \u966?(N)} where {\b \u966?(N) = (p-1)(q-1)}.\line\line This template shows in the upper rectangle, how a legitimate user who knows {\b d} and {\b N} can decrypt the received {\b c}.\line\line (If an attacker knows only {\b c}, {\b N}, and {\b e}, but not {\b p}, {\b q} or {\b \u966?(N)}, he has to factorize {\b N} and do the key generation again.\line So the operations for key generation on the left are not necessary for the legitimate user, who directly can start with {\b d}, {\b N}, and {\b c}.)" />
   </replacements>
-
 </sample>

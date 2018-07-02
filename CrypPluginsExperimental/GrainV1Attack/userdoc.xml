@@ -1,11 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
-
+﻿<?xml version="1.0" encoding="utf-8"?>
 <documentation>
-  <language culture="en"/>
-  
-  <language culture="de-DE"/>
-
+  <language culture="en" />
+  <language culture="ru" />
+  <language culture="de-DE" />
   <introduction lang="en">    
   
     Grain v1 is a symmetric stream cipher which is based on two shift registers and a non-linear output function. 
@@ -17,10 +14,8 @@
     in equations that define the NFSR and the filter function (the function that defines the LFSR is the same for both of the ciphers).
   
   </introduction>
-
-  <introduction lang="de-DE">    
-  </introduction>
-
+  <introduction lang="ru">Grain v1 - симметричный потоковый шифр, основанный на двух регистрах сдвига и нелинейной выходной функции. Размер ключа - 80 бит, а размер вектора инициализации - 64 бита. Согласно атаке, нам нужно установить внутреннее состояние LFSR в последние часы на нулевое состояние, а затем выбрать NFSR случайным образом. Затем в обратном порядке мы вычисляем ключевой поток, LFSR, NFSR. Атака прекращается, если бит LFSR в положениях с 64 по 79 равен 1. Тот же алгоритм атаки применяется к шифру Grain v0; разница между этими двумя шифрами заключается в терминах переменных в уравнениях, которые определяют NFSR и функцию фильтра (функция, которая определяет LFSR, одинакова для обоих шифров).</introduction>
+  <introduction lang="de-DE"></introduction>
   <usage lang="en">
     After dragging the GrainV1Attack component onto your workspace, you will have to attach a "Random Generator" to data sources, which is used to
     generate the NFSR in the final clocking randomly. 
@@ -31,22 +26,14 @@
     LFSR bits from positions 0 to 63 in the output component indicate the IV.
 
   </usage>
-
-  <usage lang="de-DE">
-  </usage>
-  
-  <presentation lang="en">
-  </presentation>
-  
-  <presentation lang="de-DE">
-  </presentation>
-
+  <usage lang="ru">После перетаскивания компонента GrainV1Attack на ваше рабочее пространство вам нужно будет подключить «Random Generator» к источникам данных, который используется для генерации NFSR в конечном такте в случайном порядке. Затем вам нужно подключить три текстовых выходных компонента к разъемам «Выход», которые соответствуют: LFSR в начальном состоянии, NFSR в исходном состоянии и NFSR в 160-м такте. Биты NFSR в выходном компоненте указывают секретный ключ. Биты LFSR от позиций 0 до 63 в выходном компоненте указывают на IV.</usage>
+  <usage lang="de-DE"></usage>
+  <presentation lang="en"></presentation>
+  <presentation lang="de-DE"></presentation>
   <references>
-
     <linkReference>
       <link url="https://eprint.iacr.org/2009/109.pdf" lang="en" />
       <caption lang="en">Cryptanalysis of Stream Cipher Grain Family</caption>
-
     </linkReference>
   </references>
 </documentation>
