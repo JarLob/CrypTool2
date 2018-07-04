@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using Cryptool.PluginBase.Attributes;
 using System.IO.Pipes;
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace Cryptool.ProcessExecutor
 {
@@ -66,28 +67,28 @@ namespace Cryptool.ProcessExecutor
         private string _Output2 = null;
         private string _Output3 = null;
 
+        private ConcurrentQueue<string> _SendingQueue;
+
         [PropertyInfo(Direction.InputData, "Input1Caption", "Input1Tooltip", false)]
         public string Input1
         {
-            get { return _Input1; }
             set
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _Input1 = value;
+                    _SendingQueue.Enqueue(value);
                 }
             }
         }
 
         [PropertyInfo(Direction.InputData, "Input2Caption", "Input2Tooltip", false)]
         public string Input2
-        {
-            get { return _Input2; }
+        {           
             set
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _Input2 = value;
+                    _SendingQueue.Enqueue(value);
                 }
             }
         }
@@ -95,12 +96,11 @@ namespace Cryptool.ProcessExecutor
         [PropertyInfo(Direction.InputData, "Input3Caption", "Input3Tooltip", false)]
         public string Input3
         {
-            get { return _Input3; }
             set
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _Input3 = value;
+                    _SendingQueue.Enqueue(value);
                 }
             }
         }
@@ -145,8 +145,15 @@ namespace Cryptool.ProcessExecutor
         }
 
         public void PreExecution()
-        {
-            
+        {          
+            //reset inputs, outputs, and sending queue
+            _SendingQueue = new ConcurrentQueue<string>();
+            _Input1 = String.Empty;
+            _Input2 = String.Empty;
+            _Input3 = String.Empty;
+            _Output1 = String.Empty;
+            _Output2 = String.Empty;
+            _Output3 = String.Empty;
         }
 
         public void PostExecution()
@@ -168,57 +175,63 @@ namespace Cryptool.ProcessExecutor
         {            
             try
             {
+                GuiLogMessage("Starting", NotificationLevel.Info);
                 //Step 0: Set running true :-)
                 _Running = true;
 
-                //Step 1: Create process and get processID
+                //Step 1: Create process
                 _Process = new Process();
-                _Process.StartInfo.FileName = "cmd.exe";
+                _Process.StartInfo.FileName = @"java";
+                _Process.StartInfo.Arguments = @"-jar C:\Users\nilsk\Desktop\ct2ipc_test.jar";
                 _Process.StartInfo.CreateNoWindow = true;
-                _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;                                
+                _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                //_Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                 _Process.Start();
 
+                //Step 2: Create named pipes with processID of process
                 string serverPipeName = "clientToServer" + _Process.Id;
                 string clientPipeName = "serverToClient" + _Process.Id;
+                _PipeServer = new NamedPipeServerStream(serverPipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
+                _PipeClient = new NamedPipeServerStream(clientPipeName, PipeDirection.InOut, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
 
-                //Step 2: Create named pipes with processID
-                _PipeServer = new NamedPipeServerStream(serverPipeName, PipeDirection.In, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-                _PipeClient = new NamedPipeServerStream(clientPipeName, PipeDirection.Out, 1, PipeTransmissionMode.Byte, PipeOptions.Asynchronous);
-
-                //Step 3: Wait for external process to connect            
+                //Step 3: Busy wait for external process to connect         
                 _PipeServer.BeginWaitForConnection(connectionServerCallback, _PipeServer);
-                _PipeClient.BeginWaitForConnection(connectionServerCallback, _PipeClient);
+                _PipeClient.BeginWaitForConnection(connectionClientCallback, _PipeClient);
 
                 int time = 0;
-                while (!_PipeServer.IsConnected && !_PipeClient.IsConnected)
+                while (!_PipeServer.IsConnected || !_PipeClient.IsConnected)
                 {
                     Thread.Sleep(100);
                     time++;
                     if (time == 50)
                     {
-                        GuiLogMessage("Process did not connect to pipes. Stop now.", NotificationLevel.Warning);                        
+                        GuiLogMessage("Process did not connect to both pipes. Stop now.", NotificationLevel.Error);                    
                         return;
-                    }
-                    
-                    if (!_Running)
-                    {
-                        return;
-                    }
-                }                
-                //Step 4: Send inputs
-
-
-                //Step 5: Receive outputs
-                while (_PipeServer.IsConnected && _PipeClient.IsConnected)
-                {
-                    Thread.Sleep(100);
+                    }                    
                     if (!_Running)
                     {
                         return;
                     }
                 }
 
-                //Step 6: Send stop message                 
+                //Step 5:
+                //create and start sending and receiving thread
+                Thread sendingThread = new Thread(SendingMethod);
+                Thread receivingThread = new Thread(ReceivingMethod);
+                sendingThread.IsBackground = true;
+                receivingThread.IsBackground = true;
+                sendingThread.Start();
+                receivingThread.Start();
+
+                //Step 6: while both pipes are connected, we busy wait
+                while (_PipeServer.IsConnected && _PipeClient.IsConnected)
+                {
+                    Thread.Sleep(100);
+                    if (!_Running)
+                    {
+                        return;
+                    }                                     
+                }
             }
             finally
             {
@@ -235,7 +248,6 @@ namespace Cryptool.ProcessExecutor
                     {
                         GuiLogMessage("Could not close pipe reader for server: " + ex.Message, NotificationLevel.Error);
                     }
-                    _PipeReader = null;
                 }
                 if (_PipeWriter != null)
                 {
@@ -247,7 +259,6 @@ namespace Cryptool.ProcessExecutor
                     {
                         GuiLogMessage("Could not close pipe writer for client: " + ex.Message, NotificationLevel.Error);
                     }
-                    _PipeWriter = null;
                 }
                 if (_PipeServer != null && _PipeServer.IsConnected)
                 {
@@ -259,7 +270,6 @@ namespace Cryptool.ProcessExecutor
                     {
                         GuiLogMessage("Could not close named pipe for server: " + ex.Message, NotificationLevel.Error);
                     }
-                    _PipeServer = null;
                 }
                 if (_PipeClient != null && _PipeClient.IsConnected)
                 {
@@ -271,7 +281,6 @@ namespace Cryptool.ProcessExecutor
                     {
                         GuiLogMessage("Could not close named pipe for client: " + ex.Message, NotificationLevel.Error);
                     }
-                    _PipeServer = null;
                 }
                 //Step 8: wait for process to terminate
                 //        If process does not terminate in time, we kill it                
@@ -280,7 +289,7 @@ namespace Cryptool.ProcessExecutor
                 {
                     Thread.Sleep(100);
                     time++;
-                    if (time == 50)
+                    if (time == 100)
                     {
                         try
                         {
@@ -294,17 +303,56 @@ namespace Cryptool.ProcessExecutor
                         }
                     }                    
                 }
-                _Process = null;
             }            
         }
 
+        /// <summary>
+        /// Method for receiving messages from server pipe
+        /// </summary>
+        /// <param name="obj"></param>
+        private void ReceivingMethod(object obj)
+        {
+            while (_PipeServer.IsConnected && _Running)
+            {
+                var line = _PipeReader.Read().ToString();
+                Output1 += line + " ";
+                OnPropertyChanged("Output1");
+                Thread.Sleep(1);
+            }
+        }
+
+        /// <summary>
+        /// Method for sending messages to client pipe
+        /// </summary>
+        /// <param name="obj"></param>
+        private void SendingMethod(object obj)
+        {
+            while (_PipeClient.IsConnected && _Running)
+            {
+                if (_SendingQueue.Count > 0)
+                {
+                    string message = String.Empty;
+                    _SendingQueue.TryDequeue(out message);
+                    if (!message.Equals(String.Empty))
+                    {
+                        _PipeWriter.WriteLine(message);
+                    }
+                }
+                Thread.Sleep(1);
+            }
+        }
+
+        /// <summary>
+        /// Called when client connects to server pipe
+        /// </summary>
+        /// <param name="asyncResult"></param>
         private void connectionServerCallback(IAsyncResult asyncResult)
         {
             try
             {
                 NamedPipeServerStream pipeServer = (NamedPipeServerStream)asyncResult.AsyncState;
                 pipeServer.EndWaitForConnection(asyncResult);
-                _PipeReader = new StreamReader(pipeServer);
+                _PipeReader = new StreamReader(pipeServer);                
             }
             catch (Exception ex)
             {
@@ -313,6 +361,10 @@ namespace Cryptool.ProcessExecutor
             }
         }
 
+        /// <summary>
+        /// Called when client connects to client pipe
+        /// </summary>
+        /// <param name="asyncResult"></param>
         private void connectionClientCallback(IAsyncResult asyncResult)
         {
             try
@@ -330,7 +382,7 @@ namespace Cryptool.ProcessExecutor
 
         public void Stop()
         {
-            //send stop message                        
+            //send stop message
             _Running = false;
         }
 
