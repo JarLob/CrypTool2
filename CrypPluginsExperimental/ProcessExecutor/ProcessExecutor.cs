@@ -31,6 +31,8 @@ using Cryptool.PluginBase.Attributes;
 using System.IO.Pipes;
 using System.Diagnostics;
 using System.Collections.Concurrent;
+using Cryptool.Plugins.Ipc.Messages;
+using Google.Protobuf;
 
 namespace Cryptool.ProcessExecutor
 {
@@ -54,8 +56,6 @@ namespace Cryptool.ProcessExecutor
         private NamedPipeServerStream _PipeServer = null;
         private NamedPipeServerStream _PipeClient = null;
 
-        private StreamReader _PipeReader = null;
-        private StreamWriter _PipeWriter = null;
         private Process _Process = null;
         private int _ProcessID = -1;
 
@@ -67,7 +67,7 @@ namespace Cryptool.ProcessExecutor
         private string _Output2 = null;
         private string _Output3 = null;
 
-        private ConcurrentQueue<string> _SendingQueue;
+        private ConcurrentQueue<OutgoingData> _SendingQueue;
 
         [PropertyInfo(Direction.InputData, "Input1Caption", "Input1Tooltip", false)]
         public string Input1
@@ -76,7 +76,7 @@ namespace Cryptool.ProcessExecutor
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _SendingQueue.Enqueue(value);
+                    _SendingQueue.Enqueue(new OutgoingData() { outputId = 1, value = value });
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace Cryptool.ProcessExecutor
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _SendingQueue.Enqueue(value);
+                    _SendingQueue.Enqueue(new OutgoingData() { outputId = 2, value = value });
                 }
             }
         }
@@ -100,7 +100,7 @@ namespace Cryptool.ProcessExecutor
             {
                 if (!String.IsNullOrEmpty(value))
                 {
-                    _SendingQueue.Enqueue(value);
+                    _SendingQueue.Enqueue(new OutgoingData() { outputId = 3, value = value });
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace Cryptool.ProcessExecutor
         public void PreExecution()
         {          
             //reset inputs, outputs, and sending queue
-            _SendingQueue = new ConcurrentQueue<string>();
+            _SendingQueue = new ConcurrentQueue<OutgoingData>();
             _Input1 = String.Empty;
             _Input2 = String.Empty;
             _Input3 = String.Empty;
@@ -184,8 +184,8 @@ namespace Cryptool.ProcessExecutor
                 _Process.StartInfo.FileName = @"java";
                 _Process.StartInfo.Arguments = @"-jar C:\Users\nilsk\Desktop\ct2ipc_test.jar";
                 _Process.StartInfo.CreateNoWindow = true;
-                _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                //_Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                //_Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
                 _Process.Start();
 
                 //Step 2: Create named pipes with processID of process
@@ -215,13 +215,16 @@ namespace Cryptool.ProcessExecutor
                 }
 
                 //Step 5:
-                //create and start sending and receiving thread
-                Thread sendingThread = new Thread(SendingMethod);
+                //create and start sending and receiving thread                
                 Thread receivingThread = new Thread(ReceivingMethod);
-                sendingThread.IsBackground = true;
                 receivingThread.IsBackground = true;
-                sendingThread.Start();
                 receivingThread.Start();
+
+                Thread sendingThread = new Thread(SendingMethod);
+                sendingThread.IsBackground = true;
+                sendingThread.Start();
+
+                SendCt2HelloMessage();
 
                 //Step 6: while both pipes are connected, we busy wait
                 while (_PipeServer.IsConnected && _PipeClient.IsConnected)
@@ -235,31 +238,9 @@ namespace Cryptool.ProcessExecutor
             }
             finally
             {
+                SendCt2ShutdownMessage();
                 _Running = false;
-
                 //Step 7: Close pipe and input/output streams
-                if (_PipeReader != null)
-                {
-                    try
-                    {
-                        _PipeReader.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage("Could not close pipe reader for server: " + ex.Message, NotificationLevel.Error);
-                    }
-                }
-                if (_PipeWriter != null)
-                {
-                    try
-                    {
-                        _PipeWriter.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        GuiLogMessage("Could not close pipe writer for client: " + ex.Message, NotificationLevel.Error);
-                    }
-                }
                 if (_PipeServer != null && _PipeServer.IsConnected)
                 {
                     try
@@ -287,9 +268,9 @@ namespace Cryptool.ProcessExecutor
                 int time = 0;
                 while (!_Process.HasExited)
                 {
-                    Thread.Sleep(100);
+                    Thread.Sleep(10);
                     time++;
-                    if (time == 100)
+                    if (time == 200)
                     {
                         try
                         {
@@ -306,6 +287,80 @@ namespace Cryptool.ProcessExecutor
             }            
         }
 
+
+        private void SendCt2HelloMessage()
+        {
+            if (_PipeClient.IsConnected)
+            {
+                try
+                {
+                    Ct2Hello ct2Hello = new Ct2Hello();
+                    ct2Hello.ProgramName = "CrypTool 2";
+                    ct2Hello.ProgramVersion = "2.1.";
+                    Ct2IpcMessage message = new Ct2IpcMessage();
+                    message.Body = ct2Hello.ToByteString();
+                    message.MessageType = 1;
+                    message.WriteDelimitedTo(_PipeClient);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Can not send Ct2Hello message: {0}", ex.Message), NotificationLevel.Error);
+                }
+            }
+        }
+
+        private void SendCt2ShutdownMessage()
+        {
+            if (_PipeClient.IsConnected)
+            {
+                try
+                {
+                    Ct2Shutdown ct2Shutdown = new Ct2Shutdown();
+                    ct2Shutdown.Reason = "Execute method of ProcessExecutor is terminating";                    
+                    Ct2IpcMessage message = new Ct2IpcMessage();
+                    message.Body = ct2Shutdown.ToByteString();
+                    message.MessageType = 2;
+                    message.WriteDelimitedTo(_PipeClient);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage(String.Format("Can not send Ct2Shutdown message: {0}", ex.Message), NotificationLevel.Error);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method that sends input data from the queue to the application
+        /// </summary>
+        private void SendingMethod()
+        {
+            while (_PipeClient.IsConnected && _Running)
+            {
+                if (_SendingQueue.Count > 0)
+                {
+                    try
+                    {
+                        OutgoingData outgoingData = null;
+                        _SendingQueue.TryDequeue(out outgoingData);
+                        if (outgoingData != null)
+                        {
+                            Ct2Values ct2Values = new Ct2Values();
+                            ct2Values.PinId.Add(outgoingData.outputId);
+                            ct2Values.Value.Add(outgoingData.value);
+                            Ct2IpcMessage message = new Ct2IpcMessage();
+                            message.Body = ct2Values.ToByteString();
+                            message.MessageType = 3;
+                            message.WriteDelimitedTo(_PipeClient);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(String.Format("Exception while sending data: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }                        
+            }
+        }
+
         /// <summary>
         /// Method for receiving messages from server pipe
         /// </summary>
@@ -314,33 +369,112 @@ namespace Cryptool.ProcessExecutor
         {
             while (_PipeServer.IsConnected && _Running)
             {
-                var line = _PipeReader.Read().ToString();
-                Output1 += line + " ";
-                OnPropertyChanged("Output1");
-                Thread.Sleep(1);
+                try
+                {
+                    Ct2IpcMessage message = Ct2IpcMessage.Parser.ParseDelimitedFrom(_PipeServer);
+                    switch (message.MessageType)
+                    {
+                        case 1: // Ct2Hello
+                            var ct2Hello = Ct2Hello.Parser.ParseFrom(message.Body.ToByteArray());
+                            //HandleCt2HelloMessage(ct2Hello);
+                            break;
+
+                        case 2: //Ct2Shutdown
+                            var ct2Shutdown = Ct2Shutdown.Parser.ParseFrom(message.Body.ToByteArray());
+                            //HandleCt2ShutdownMessage(ct2Shutdown);
+                            break;
+
+                        case 3: //Ct2Values
+                            var ct2Values = Ct2Values.Parser.ParseFrom(message.Body.ToByteArray());
+                            HandleCt2ValuesMessage(ct2Values);
+                            break;
+
+                        case 4: //Ct2LogEntry
+                            var ct2LogEntry = Ct2LogEntry.Parser.ParseFrom(message.Body.ToByteArray());
+                            HandleCt2LogEntryMessage(ct2LogEntry);
+                            break;
+
+                        case 5: //Ct2Progress
+                            var ct2Progress = Ct2Progress.Parser.ParseFrom(message.Body.ToByteArray());
+                            HandleCt2ProgressMessage(ct2Progress);
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (_Running)
+                    {
+                        GuiLogMessage(String.Format("Exception occured during receving and handling of message: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }
+            }
+        }       
+
+        /// <summary>
+        /// Handles incoming messages by calling appropriate methods
+        /// </summary>
+        /// <param name="ct2Values"></param>
+        private void HandleCt2ValuesMessage(Ct2Values ct2Values)
+        {
+            for (int i = 0; i < ct2Values.PinId.Count; i++)
+            {
+                int id = ct2Values.PinId[i];
+                string value = ct2Values.Value[i];
+                switch (id)
+                {
+                    case 1:
+                        Output1 = value;
+                        OnPropertyChanged("Output1");
+                        break;
+                    case 2:
+                        Output2 = value;
+                        OnPropertyChanged("Output2");
+                        break;
+                    case 3:
+                        Output3 = value;
+                        OnPropertyChanged("Output3");
+                        break;
+                    default:
+                        GuiLogMessage(String.Format("Received a value for an output that does not exist: {0}", id), NotificationLevel.Warning);
+                        break;
+                }
             }
         }
 
         /// <summary>
-        /// Method for sending messages to client pipe
+        /// Handles a Ct2LogEntry message by showing the appropriate log entry
         /// </summary>
-        /// <param name="obj"></param>
-        private void SendingMethod(object obj)
+        /// <param name="ct2LogEntry"></param>
+        private void HandleCt2LogEntryMessage(Ct2LogEntry ct2LogEntry)
         {
-            while (_PipeClient.IsConnected && _Running)
+            switch (ct2LogEntry.LogLevel)
             {
-                if (_SendingQueue.Count > 0)
-                {
-                    string message = String.Empty;
-                    _SendingQueue.TryDequeue(out message);
-                    if (!message.Equals(String.Empty))
-                    {
-                        _PipeWriter.WriteLine(message);
-                    }
-                }
-                Thread.Sleep(1);
+                case Ct2LogEntry.Types.LogLevel.Ct2Debug:
+                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Debug);
+                    break;
+                case Ct2LogEntry.Types.LogLevel.Ct2Info:
+                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Info);
+                    break;
+                case Ct2LogEntry.Types.LogLevel.Ct2Warning:
+                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Warning);
+                    break;
+                case Ct2LogEntry.Types.LogLevel.Ct2Error:
+                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Error);
+                    break;
+                case Ct2LogEntry.Types.LogLevel.Ct2Balloon:
+                    GuiLogMessage(ct2LogEntry.Entry, NotificationLevel.Balloon);
+                    break;
             }
         }
+
+        /// <summary>
+        /// Handles a Ct2Progress by showing its progress to the user
+        /// </summary>
+        /// <param name="ct2Progress"></param>
+        private void HandleCt2ProgressMessage(Ct2Progress ct2Progress)
+        {
+            OnProgressChanged(ct2Progress.CurrentValue, ct2Progress.MaxValue);
+        }        
 
         /// <summary>
         /// Called when client connects to server pipe
@@ -351,8 +485,7 @@ namespace Cryptool.ProcessExecutor
             try
             {
                 NamedPipeServerStream pipeServer = (NamedPipeServerStream)asyncResult.AsyncState;
-                pipeServer.EndWaitForConnection(asyncResult);
-                _PipeReader = new StreamReader(pipeServer);                
+                pipeServer.EndWaitForConnection(asyncResult);        
             }
             catch (Exception ex)
             {
@@ -371,7 +504,6 @@ namespace Cryptool.ProcessExecutor
             {
                 NamedPipeServerStream pipeClient = (NamedPipeServerStream)asyncResult.AsyncState;
                 pipeClient.EndWaitForConnection(asyncResult);
-                _PipeWriter = new StreamWriter(pipeClient);
             }
             catch (Exception ex)
             {
@@ -382,7 +514,6 @@ namespace Cryptool.ProcessExecutor
 
         public void Stop()
         {
-            //send stop message
             _Running = false;
         }
 
@@ -406,5 +537,19 @@ namespace Cryptool.ProcessExecutor
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
 
+        private void OnProgressChanged(double value, double max)
+        {
+            EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
+        }
+
+    }
+
+    /// <summary>
+    /// Wrapper class for wrapping output data and output connector id
+    /// </summary>
+    class OutgoingData
+    {
+        public int outputId;
+        public string value;
     }
 }
