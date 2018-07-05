@@ -69,6 +69,8 @@ namespace Cryptool.ProcessExecutor
 
         private ConcurrentQueue<OutgoingData> _SendingQueue;
 
+        private ProcessExecutorSettings _settings = new ProcessExecutorSettings();
+
         [PropertyInfo(Direction.InputData, "Input1Caption", "Input1Tooltip", false)]
         public string Input1
         {
@@ -163,7 +165,7 @@ namespace Cryptool.ProcessExecutor
 
         public ISettings Settings
         {
-            get { return null; }
+            get { return _settings; }
         }
 
         public UserControl Presentation
@@ -172,22 +174,33 @@ namespace Cryptool.ProcessExecutor
         }
 
         public void Execute()
-        {            
+        {       
+            // some checks:
+            if (String.IsNullOrEmpty(_settings.Filename))
+            {
+                GuiLogMessage("No filename of program to start given!", NotificationLevel.Error);
+                return;
+            }
+
             try
             {
-                GuiLogMessage("Starting", NotificationLevel.Info);
                 //Step 0: Set running true :-)
                 _Running = true;
 
-                //Step 1: Create process
+                //Step 1: Create process                
                 _Process = new Process();
-                _Process.StartInfo.FileName = @"java";
-                _Process.StartInfo.Arguments = @"-jar C:\Users\nilsk\Desktop\ct2ipc_test.jar";
+                _Process.StartInfo.FileName = _settings.Filename;
+                _Process.StartInfo.Arguments = _settings.Arguments;
                 _Process.StartInfo.CreateNoWindow = true;
-                //_Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                if (_settings.ShowWindow)
+                {
+                    _Process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                }
+                else
+                {
+                    _Process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                }                                
                 _Process.Start();
-
                 //Step 2: Create named pipes with processID of process
                 string serverPipeName = "clientToServer" + _Process.Id;
                 string clientPipeName = "serverToClient" + _Process.Id;
@@ -311,7 +324,7 @@ namespace Cryptool.ProcessExecutor
 
         private void SendCt2ShutdownMessage()
         {
-            if (_PipeClient.IsConnected)
+            if (_PipeClient != null && _PipeClient.IsConnected)
             {
                 try
                 {

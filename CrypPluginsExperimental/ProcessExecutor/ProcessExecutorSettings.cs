@@ -27,11 +27,52 @@ namespace Cryptool.ProcessExecutor
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private string _filename;
+        private string _arguments;
+        private bool _showWindow;
+
         public void Initialize()
         {
             
         }
 
+        [TaskPane("FilenameCaption", "FilenameTooltip", null, 0, false, ControlType.TextBox)]
+        public string Filename
+        {
+            get { return _filename; }
+            set
+            {
+                if (value != _filename)
+                {
+                    _filename = value;
+                }
+            }
+        }
         
+        [TaskPane("ArgumentsCaption", "ArgumentsTooltip", null, 1, false, ControlType.TextBox)]
+        public string Arguments
+        {
+            get { return _arguments; }
+            set
+            {
+                if (value != _arguments)
+                {
+                    _arguments = value;
+                }
+            }
+        }
+
+        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 2, false, ControlType.CheckBox)]
+        public bool ShowWindow
+        {
+            get { return _showWindow; }
+            set
+            {
+                if (value != _showWindow)
+                {
+                    _showWindow = value;
+                }
+            }
+        }
     }
 }

@@ -117,10 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArgumentsCaption" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="ArgumentsTooltip" xml:space="preserve">
+    <value>Arguments which should be given to the program.</value>
+  </data>
+  <data name="FilenameCaption" xml:space="preserve">
+    <value>Filename</value>
+  </data>
+  <data name="FilenameTooltip" xml:space="preserve">
+    <value>Filename of program to start.</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Process Executor</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Component to start an external process and communicate with it.</value>
+  </data>
+  <data name="ShowWindowCaption" xml:space="preserve">
+    <value>Show window</value>
+  </data>
+  <data name="ShowWindowTooltip" xml:space="preserve">
+    <value>Should the program's window be shown or not?</value>
   </data>
 </root>

@@ -19,7 +19,7 @@ namespace Cryptool.ProcessExecutor.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,6 +61,42 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Arguments ähnelt.
+        /// </summary>
+        public static string ArgumentsCaption {
+            get {
+                return ResourceManager.GetString("ArgumentsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Arguments which should be given to the program. ähnelt.
+        /// </summary>
+        public static string ArgumentsTooltip {
+            get {
+                return ResourceManager.GetString("ArgumentsTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filename ähnelt.
+        /// </summary>
+        public static string FilenameCaption {
+            get {
+                return ResourceManager.GetString("FilenameCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filename of program to start. ähnelt.
+        /// </summary>
+        public static string FilenameTooltip {
+            get {
+                return ResourceManager.GetString("FilenameTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Process Executor ähnelt.
         /// </summary>
         public static string PluginCaption {
@@ -75,6 +111,24 @@ namespace Cryptool.ProcessExecutor.Properties {
         public static string PluginTooltip {
             get {
                 return ResourceManager.GetString("PluginTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show window ähnelt.
+        /// </summary>
+        public static string ShowWindowCaption {
+            get {
+                return ResourceManager.GetString("ShowWindowCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Should the program&apos;s window be shown or not? ähnelt.
+        /// </summary>
+        public static string ShowWindowTooltip {
+            get {
+                return ResourceManager.GetString("ShowWindowTooltip", resourceCulture);
             }
         }
     }
