@@ -129,6 +129,42 @@
   <data name="FilenameTooltip" xml:space="preserve">
     <value>Filename of program to start.</value>
   </data>
+  <data name="Input1Caption" xml:space="preserve">
+    <value>Input 1</value>
+  </data>
+  <data name="Input1Tooltip" xml:space="preserve">
+    <value>First input given to the process.</value>
+  </data>
+  <data name="Input2Caption" xml:space="preserve">
+    <value>Input 2</value>
+  </data>
+  <data name="Input2Tooltip" xml:space="preserve">
+    <value>Second input given to the process.</value>
+  </data>
+  <data name="Input3Caption" xml:space="preserve">
+    <value>Input 3</value>
+  </data>
+  <data name="Input3Tooltip" xml:space="preserve">
+    <value>Third input given to the process.</value>
+  </data>
+  <data name="Output1Caption" xml:space="preserve">
+    <value>Output 1</value>
+  </data>
+  <data name="Output1Tooltip" xml:space="preserve">
+    <value>First output of the process.</value>
+  </data>
+  <data name="Output2Caption" xml:space="preserve">
+    <value>Output 2</value>
+  </data>
+  <data name="Output2Tooltip" xml:space="preserve">
+    <value>Second output of the process.</value>
+  </data>
+  <data name="Output3Caption" xml:space="preserve">
+    <value>Output 3</value>
+  </data>
+  <data name="Output3Tooltip" xml:space="preserve">
+    <value>Third output of the process.</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Process Executor</value>
   </data>

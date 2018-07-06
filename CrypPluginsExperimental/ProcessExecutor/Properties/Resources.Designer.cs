@@ -97,6 +97,114 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input 1 ähnelt.
+        /// </summary>
+        public static string Input1Caption {
+            get {
+                return ResourceManager.GetString("Input1Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First input given to the process. ähnelt.
+        /// </summary>
+        public static string Input1Tooltip {
+            get {
+                return ResourceManager.GetString("Input1Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input 2 ähnelt.
+        /// </summary>
+        public static string Input2Caption {
+            get {
+                return ResourceManager.GetString("Input2Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Second input given to the process. ähnelt.
+        /// </summary>
+        public static string Input2Tooltip {
+            get {
+                return ResourceManager.GetString("Input2Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Input 3 ähnelt.
+        /// </summary>
+        public static string Input3Caption {
+            get {
+                return ResourceManager.GetString("Input3Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Third input given to the process. ähnelt.
+        /// </summary>
+        public static string Input3Tooltip {
+            get {
+                return ResourceManager.GetString("Input3Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output 1 ähnelt.
+        /// </summary>
+        public static string Output1Caption {
+            get {
+                return ResourceManager.GetString("Output1Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First output of the process. ähnelt.
+        /// </summary>
+        public static string Output1Tooltip {
+            get {
+                return ResourceManager.GetString("Output1Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output 2 ähnelt.
+        /// </summary>
+        public static string Output2Caption {
+            get {
+                return ResourceManager.GetString("Output2Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Second output of the process. ähnelt.
+        /// </summary>
+        public static string Output2Tooltip {
+            get {
+                return ResourceManager.GetString("Output2Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output 3 ähnelt.
+        /// </summary>
+        public static string Output3Caption {
+            get {
+                return ResourceManager.GetString("Output3Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Third output of the process. ähnelt.
+        /// </summary>
+        public static string Output3Tooltip {
+            get {
+                return ResourceManager.GetString("Output3Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Process Executor ähnelt.
         /// </summary>
         public static string PluginCaption {

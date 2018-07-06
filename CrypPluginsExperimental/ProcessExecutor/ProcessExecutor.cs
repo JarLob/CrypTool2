@@ -415,6 +415,11 @@ namespace Cryptool.ProcessExecutor
                             var ct2Progress = Ct2Progress.Parser.ParseFrom(message.Body.ToByteArray());
                             HandleCt2ProgressMessage(ct2Progress);
                             break;
+
+                        case 6: //Ct2Goodbye
+                            var ct2Goodbye = Ct2Goodbye.Parser.ParseFrom(message.Body.ToByteArray());
+                            HandleCt2GoodbyeMessage(ct2Goodbye);
+                            break;
                     }
                 }
                 catch (Exception ex)
@@ -425,10 +430,23 @@ namespace Cryptool.ProcessExecutor
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Handles an incoming Ct2Goodbye message
+        /// </summary>
+        /// <param name="ct2Goodbye"></param>
+        private void HandleCt2GoodbyeMessage(Ct2Goodbye ct2Goodbye)
+        {
+            if (ct2Goodbye.ExitCode != 0)
+            {
+                GuiLogMessage(string.Format("Process terminates now with return code {0}. Reason: {1}", ct2Goodbye.ExitCode, ct2Goodbye.ExitMessage), NotificationLevel.Error);
+            }                        
+            _Running = false;
         }       
 
         /// <summary>
-        /// Handles incoming messages by calling appropriate methods
+        /// Handles an incoming Ct2Values message
         /// </summary>
         /// <param name="ct2Values"></param>
         private void HandleCt2ValuesMessage(Ct2Values ct2Values)
