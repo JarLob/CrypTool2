@@ -121,7 +121,7 @@
     <value>Argumente</value>
   </data>
   <data name="ArgumentsTooltip" xml:space="preserve">
-    <value>Argumente die dem Programm übergeben werdens sollen.</value>
+    <value>Argumente, die dem Programm übergeben werden sollen.</value>
   </data>
   <data name="FilenameCaption" xml:space="preserve">
     <value>Dateiname</value>
