@@ -57,7 +57,6 @@ namespace Cryptool.ProcessExecutor
         private NamedPipeServerStream _PipeClient = null;
 
         private Process _Process = null;
-        private int _ProcessID = -1;
 
         private string _Input1 = null;
         private string _Input2 = null;
@@ -300,7 +299,9 @@ namespace Cryptool.ProcessExecutor
             }            
         }
 
-
+        /// <summary>
+        /// Sends a Ct2HelloMessage
+        /// </summary>
         private void SendCt2HelloMessage()
         {
             if (_PipeClient.IsConnected)
@@ -322,6 +323,9 @@ namespace Cryptool.ProcessExecutor
             }
         }
 
+        /// <summary>
+        /// Sends a Ct2ShutdownMessage
+        /// </summary>
         private void SendCt2ShutdownMessage()
         {
             if (_PipeClient != null && _PipeClient.IsConnected)
