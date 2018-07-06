@@ -121,7 +121,7 @@
     <value>Argumente</value>
   </data>
   <data name="ArgumentsTooltip" xml:space="preserve">
-    <value>Argumente die dem Programm übergeben werdens ollen.</value>
+    <value>Argumente die dem Programm übergeben werdens sollen.</value>
   </data>
   <data name="FilenameCaption" xml:space="preserve">
     <value>Dateiname</value>
@@ -130,10 +130,10 @@
     <value>Dateiname des zu startenden Programms</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Prozess Ausführung</value>
+    <value>Prozess-Ausführung</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente um einen externen Prozess zu starten und mit diesem zu kommunizieren.</value>
+    <value>Komponente, um einen externen Prozess zu starten und mit diesem zu kommunizieren.</value>
   </data>
   <data name="ShowWindowCaption" xml:space="preserve">
     <value>Zeige Fenster</value>
