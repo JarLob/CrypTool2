@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2017 Nils Kopal, Applied Information Security, Uni Kassel
+   Copyright 2018 Nils Kopal, Henner Heck, Applied Information Security, Uni Kassel
    https://www.uni-kassel.de/eecs/fachgebiete/ais/mitarbeiter/nils-kopal-m-sc.html
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,19 +15,11 @@
    limitations under the License.
 */
 using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Text;
 using Cryptool.PluginBase;
 using System.ComponentModel;
-using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using System.Threading;
-using System.Collections.Generic;
-using Cryptool.PluginBase.Attributes;
 using System.IO.Pipes;
 using System.Diagnostics;
 using System.Collections.Concurrent;
@@ -45,7 +37,6 @@ namespace Cryptool.ProcessExecutor
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ProcessExecutor : ICrypComponent
     {
-
         public event StatusChangedEventHandler OnPluginStatusChanged;
         public event PluginProgressChangedEventHandler OnPluginProgressChanged;
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2017 Nils Kopal, Applied Information Security, Uni Kassel
+   Copyright 2018 Nils Kopal, Henner Heck Applied Information Security, Uni Kassel
    http://www.uni-kassel.de/eecs/fachgebiete/ais/mitarbeiter/nils-kopal-m-sc.html
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
 using System.ComponentModel;
-
 
 namespace Cryptool.ProcessExecutor
 {
