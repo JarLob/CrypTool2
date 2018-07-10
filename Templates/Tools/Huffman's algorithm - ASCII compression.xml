@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Huffman's algorithm (ASCII)</title>
+  <title lang="de">Huffman-Algorithmus (ASCII)</title>
   <title lang="ru">Алгоритм Хаффмана (ASCII)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress an ASCII encoded text</summary>
+  <summary lang="de">Benutzung des <i>Huffman-Algorithmus</i> um ASCII-encodierten Text zu komprimieren.</summary>
   <summary lang="ru">Использование Хаффмана для сжатия ASCII-кодированного текста</summary>
   <description lang="en">This template shows how the <i>Huffman</i> component can be used to compress an ASCII encoded text.</description>
+  <description lang="de">Diese Vorlage zeigt, wie man die <i>Huffman</i>-Komponente benutzen kann, um ASCII-encodierten Text zu komprimieren.</description>
   <description lang="ru">Этот шаблон показывает, как компонент Huffman можно использовать для сжатия ASCII-кодированного текста.</description>
-  <keywords>Huffman, ascii, compression</keywords>
+  <keywords lang="en">Huffman, ascii, compression</keywords>
+  <keywords lang="de">packen, komprimieren, zip, Kompression</keywords>
   <keywords lang="ru">Хаффман, ascii, сжатие</keywords>
   <icon file="Huffman.png" />
   <relevantPlugins>

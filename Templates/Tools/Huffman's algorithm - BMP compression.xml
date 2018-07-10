@@ -1,12 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
   <title lang="en">Huffman's algorithm (BMG, JPG)</title>
+  <title lang="de">Huffman-Algorithmus (BMG, JPG)</title>
   <title lang="ru">Алгоритм Хаффмана (BMG, JPG)</title>
   <summary lang="en">Usage of <i>Huffman</i> to compress a BMP and a JPG image</summary>
+  <summary lang="de">Benutzung der <i>Huffman</i>-Komponente um ein BMP- und ein JPG-Bild zu komprieren</summary>
   <summary lang="ru">Использование Хаффмана для сжатия BMP и JPG-изображения</summary>
   <description lang="en">This template uses Huffman's algorithm to compress a BMP image and a JPG image. It demonstrates the dependence of the achievable compression rate on the input data's entropy.</description>
+  <description lang="de">Diese Vorlage nutzt den Huffman-Algorithmus um eine BMP- und eine JPG-Grafik zu komprimieren. Es zeigt die Abhängigkeit der erreichbaren Kompressionsrate von der Entropie der Eingabedaten.</description>
   <description lang="ru">Этот шаблон использует алгоритм Хаффмана для сжатия изображения BMP и изображения в формате JPG. Он демонстрирует зависимость достижимой степени сжатия от энтропии входных данных.</description>
-  <keywords>Huffman, bmp, jpg, image, entropy, compression</keywords>
+  <keywords lang="en">Huffman, bmp, jpg, image, entropy, compression</keywords>
+  <keywords lang="de">packen, komprimieren, zip, Kompression, Entropie, Bilder</keywords>
   <keywords lang="ru">Huffman, bmp, jpg, изображение, энтропия, сжатие</keywords>
   <icon file="Huffman.png" />
   <relevantPlugins>

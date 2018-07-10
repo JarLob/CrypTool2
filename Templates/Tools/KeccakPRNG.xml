@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sample>
-  <title lang="en">Keccak PRNG</title>
-  <title lang="ru">Случайность PRNG</title>
-  <summary lang="en">Usage of <i>Keccak</i> as a PRNG</summary>
-  <summary lang="ru">Использование выстрела в качестве PRNG</summary>
-  <description lang="en">This template shows how the <i>Keccak</i> component can be used as a pseudorandom number generator.</description>
+  <title lang="en">Keccak pseudorandom number generator (PRNG)</title>
+  <title lang="ru">Случайность (PRNG)</title>
+  <summary lang="en">Usage of <i>Keccak</i> as a pseudorandom number generator (PRNG)</summary>
+  <summary lang="ru">Использование выстрела в качестве (PRNG)</summary>
+  <description lang="en">This template shows how the <i>Keccak</i> component can be used as a pseudorandom number generator (PRNG).</description>
   <description lang="ru">Этот шаблон показывает, как компонент Keccak может использоваться как генератор псевдослучайных чисел.</description>
   <keywords>keccak, prng, random</keywords>
   <keywords lang="ru">случайный, случайный, случайный</keywords>
-  <title lang="de">Keccak-PRNG</title>
-  <summary lang="de">Benutzung von <i>Keccak</i> als PRNG</summary>
-  <description lang="de">Diese Vorlage zeigt, wie die <i>Keccak</i>-Komponente als Pseudozufallszahlengenerator eingesetzt werden kann.</description>
+  <title lang="de">Keccak-Pseudozufallszahlengenerator (PRNG)</title>
+  <summary lang="de">Benutzung von <i>Keccak</i> als Pseudozufallszahlengenerator (PRNG)</summary>
+  <description lang="de">Diese Vorlage zeigt, wie die <i>Keccak</i>-Komponente als Pseudozufallszahlengenerator (PRNG) eingesetzt werden kann.</description>
   <keywords lang="de">keccak, prng, random</keywords>
   <icon file="Keccak.png" />
   <relevantPlugins>
@@ -30,7 +30,7 @@
     <replacement key="$Seed for the random key$" value="Seed für den Zufalls-Schlüssel" />
     <replacement key="$Seed for the random IV$" value="Seed für den Zufalls-IV" />
     <replacement key="$Keccak used as PRNG$" value="Verwendung von Keccak als PRNG" />
-    <replacement key="$text$" value="Keccak kann als Pseudozufallszahlen-Generator (PRNG) verwendet werden. In diesem Beispiel werden zwei Instanzen von Keccak zur Erzeugung von Zufallsdaten benutzt: einen Schlüssel und einen Initialisierungsvektor für die Present-Chiffre." />
+    <replacement key="$text$" value="Keccak kann als Pseudozufallszahlengenerator (PRNG) verwendet werden. In diesem Beispiel werden zwei Instanzen von Keccak zur Erzeugung von Zufallsdaten benutzt: einen Schlüssel und einen Initialisierungsvektor für die Present-Chiffre." />
   </replacements>
   <replacements lang="ru">
     <replacement key="$Plaintext$" value="обычный текст" />
