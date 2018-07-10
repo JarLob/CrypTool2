@@ -1121,7 +1121,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start java.exe. Probably no Java installed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start java.exe. Probably no Java installed. ähnelt.
         /// </summary>
         internal static string Java_could_not {
             get {

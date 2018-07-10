@@ -968,7 +968,7 @@
     <value>Command Line</value>
   </data>
   <data name="Java_could_not" xml:space="preserve">
-    <value>Could not start java.exe. Probably no Java installed</value>
+    <value>Could not start java.exe. Probably no Java installed.</value>
   </data>
   <data name="Java_Version" xml:space="preserve">
     <value>Java Version</value>

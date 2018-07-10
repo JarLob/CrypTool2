@@ -947,7 +947,7 @@
     <value>Kommandozeile</value>
   </data>
   <data name="Java_could_not" xml:space="preserve">
-    <value>Konnte java.exe nicht starten. Wahrscheinlich keine Java installiert.</value>
+    <value>Konnte java.exe nicht starten. Wahrscheinlich kein Java installiert.</value>
   </data>
   <data name="Java_Version" xml:space="preserve">
     <value>Java-Version</value>
