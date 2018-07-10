@@ -1121,6 +1121,24 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Could not start java.exe. Probably no Java installed ähnelt.
+        /// </summary>
+        internal static string Java_could_not {
+            get {
+                return ResourceManager.GetString("Java_could_not", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Java Version ähnelt.
+        /// </summary>
+        internal static string Java_Version {
+            get {
+                return ResourceManager.GetString("Java_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Licenses ähnelt.
         /// </summary>
         internal static string Licenses {

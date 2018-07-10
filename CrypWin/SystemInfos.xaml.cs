@@ -76,6 +76,7 @@ namespace Cryptool.CrypWin
             informations.Add(new Info() { Description = Properties.Resources.SI_Common_Language_Runtime_Version, Value = Environment.Version.ToString() });
             informations.Add(new Info() { Description = Properties.Resources.SI_Runtime_Path, Value = AppDomain.CurrentDomain.BaseDirectory });
             informations.Add(new Info() { Description = Properties.Resources.SI_CommandLine, Value = Environment.CommandLine });
+            informations.Add(new Info() { Description = Properties.Resources.Java_Version, Value = GetJavaVersion() });
 
             // system time row with hacky workaround to update time when tab becomes visible
             timeIndex = informations.Count;
@@ -124,6 +125,30 @@ namespace Cryptool.CrypWin
             catch (Exception ex)
             {
                 //wtf?
+            }
+        }
+
+        /// <summary>
+        /// Returns the text output of java.exe -version
+        /// </summary>
+        /// <returns></returns>
+        private string GetJavaVersion()
+        {
+            try
+            {
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
+                processStartInfo.FileName = "java.exe";
+                processStartInfo.Arguments = " -version";
+                processStartInfo.RedirectStandardError = true;
+                processStartInfo.UseShellExecute = false;
+                processStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                processStartInfo.CreateNoWindow = true;
+                Process process = Process.Start(processStartInfo);
+                return process.StandardError.ReadLine().Split(' ')[2].Replace("\"", "");
+            }
+            catch (Exception)
+            {
+                return Properties.Resources.Java_could_not;
             }
         }
 
