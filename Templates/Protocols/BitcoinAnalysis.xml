@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sample>
+
+  <title lang="en">Bitcoin Blockchain Analysis</title>
+  <summary lang="en">Consideration of <i>Bitcoin</i> blockchain</summary>
+  <description lang="en">Bitcoin literally means "digital coin" and is a digital currency and also the name of the decentralized booking system. Transfers are handled anonymously using computing power over the Internet in a peer-to-peer application. Thus, no central clearing house is necessary. The Bitcoin network is based on a decentralized database, the Blockchain, in which all transactions are stored. With this template, the blocks and transactions from the block chain can be viewed clearly.</description>
+  <keywords>Bitcoin, blockchain, block, transaction</keywords>
+
+  <title lang="de">Bitcoin Blockchain Analyse</title>
+  <summary lang="de">Betrachtung der <i>Bitcoin</i> Blockchain</summary>
+  <description lang="de">Bitcoin bedeutet Sinngemäß "digitale Münze" und ist eine digitale Währung und auch gleichzeitig der Name des dezentralen Buchungssystems. Überweisungen werden anonym mithilfe von Rechenleistung über das Internet in einer Peer-to-Peer Anwendung abgewickelt. Somit ist keine zentrale Abwicklungsstelle notwendig. Das Bitcoin-Netzwerk basiert auf einer dezentralen Datenbank, der Blockchain, in dieser sind alle Transaktionen gespeichert. Mit diesem Template können sich die Blöcke und Transaktionen aus der Blockchain übersichtlich angeschaut werden.</description>
+  <keywords lang="de">Bitcoin, Blockchain, Block, Transaktion</keywords>
+
+  <icon file="Bitcoinlogo.png" />
+  <relevantPlugins>
+    <plugin name="BitcoinBlockDownloader" />
+    <plugin name="BitcoinBlockViewer" />
+    <plugin name="BitcoinTransactionDownloader" />
+    <plugin name="BitcoinTransactionViewer" />
+  </relevantPlugins>
+
+  <replacements lang="de">
+	<replacement key="$text1$" value="Geben Sie eine Blocknummer oder einen Blockhash ein. Der Downloader verbindet sich mit dem Server und läd die Informationen herunter.\line\line Durch einen Doppelklick auf einen der beiden Hashwerte von previousblockhash oder nextblockhash können Sie einen Block vor oder zurück springen.\line\line Durch einen Doppelklick auf eine der Transaktionen in der Liste werden die Transaktionsinformationen vom Transaktions-Downloader heruntergeladen und im Transaktions-Betrachter  angezeigt.\line\line Für detailiertere Informationen der einzelnen Angaben: https://en.bitcoin.it/wiki/Block"/>
+	<replacement key="$text2$" value="Der Transaktions-Betrachter zeigt die wichtigsten Informationen der Transaktion an.\line\line Die Gebühr errechnet sich aus der Differenz zwischen der Summe aller Eingänge und der Summe aller Ausgänge."/>
+	<replacement key="$blocknumber$" value="Blocknummer"/>
+  <replacement key="$blockdownloader$" value="Block-Downloader"/>
+  <replacement key="$blockviewer$" value="Block-Betrachter"/>
+  <replacement key="$transactiondownloader$" value="Transaktions-Downloader"/>
+  <replacement key="$transactionviewer$" value="Transaktions-Betrachter"/>
+
+ </replacements>
+ <replacements lang="en">
+	<replacement key="$text1$" value="Enter a block number or a block hash. The Downloader connects to the server and downloads the information.\line\line To double-click one of the two hash values of previousblockhash or nextblockhash you can jump back and forth one block.\line\line To double-click on one of the transactions in the list the transaction information is downloaded from the transaction downloader and displayed in the transaction viewer.\line\line For more detailed information of the individual details: https://en.bitcoin.it/wiki/Block"/>
+	<replacement key="$text2$" value="The transaction viewer displays the most important information of the transaction.\line\line The fee is calculated as the difference between the sum of all inputs and the sum of all the outputs."/>
+	<replacement key="$blocknumber$" value="Blocknumber"/>
+  <replacement key="$blockdownloader$" value="Block Downloader"/>
+  <replacement key="$blockviewer$" value="Block Viewer"/>
+  <replacement key="$transactiondownloader$" value="Transaction Downloader"/>
+  <replacement key="$transactionviewer$" value="Transaction Viewer"/>
+ </replacements>
+
+</sample>
