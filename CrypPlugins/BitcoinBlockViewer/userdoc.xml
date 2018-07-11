@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">
+    The Bitcoin-Block-Viewer displays the most important information from a block.
+    <newline/>
+    Information about the block is in the upper half of the viewer. For example, 
+    the hash values of the displayed block, its predecessor and its successor. 
+    The names are taken directly from the Json strings of Blockchain. The lower 
+    half lists all transactions processed in this block.
+  </introduction>
+
+  <introduction lang="de-DE">
+    Der Bitcoin-Block-Betrachters zeigt die wichtigsten Informationen von einem Block an.
+    <newline/>
+    In der oberen Hälfte des Viewers stehen Informationen zum Block. Zum Beispiel die Hashwerte des angezeigten Blocks, des Vorgängers und des Nachfolgers.
+    Die Bezeichnungen sind direkt aus den Json Strings der Blockchain übernommen. In der unteren Hälfte werden alle Transaktionen aufgelistet die in diesem
+    Block verarbeitet wurden.
+  </introduction>
+
+  <usage lang="en">
+    The Bitcoin Viewer expects a data source that provides a block in json format. 
+    In addition, it has two exits to forward a hash of a transaction and that of the predecessor or successor block.
+  </usage>
+
+  <usage lang="de-DE">
+    Der Bitcoin Viewer erwartet eine Datenquelle die einen Block im Json Format bereit stellt. Darüber hinaus hat er zwei Ausgänge, um einen Hash einer Transaktion
+    und den des Vorgänger oder Nachfolge Blocks weiter zu leiten.
+  </usage>
+  
+  <presentation lang="en">
+    There are two interactive options in the presentation, the first one is a double-click on one of the transaction hashes.
+    In the upper half of the viewer you can double-click on the predecessor or successor of the block hash.
+    The double-clicks pass the hash values to other components via the corresponding outputs.
+  </presentation>
+  
+  <presentation lang="de-DE">
+    In der Präsentation gibt es zwei interaktive Möglichkeiten, die erste ist ein Doppelklick auf eine der Transaktionshashes. 
+    In der oberen Hälfte des Viewers kann per Doppelklick auf den Vorgänger oder Nachfolger Blockhash geklickt werden. 
+    Durch die Doppelklicks werden die Hashwerte über die entsprechenden Ausgänge an weitere Komponenten weitergereicht. 
+  </presentation>
+  
+  <references>
+    <linkReference>
+    <link url="http://chainquery.com/bitcoin-api/getblock" lang="en" />
+    <caption lang="en">Here the used Bitcoin API is made available on a website</caption>
+    <link url="http://chainquery.com/bitcoin-api/getblock" lang="de-DE" />
+    <caption lang="de-DE">Hier wird die verwendete Bitcoin API auf einer Website bereitgestellt</caption>
+    </linkReference>
+  </references>
+</documentation>

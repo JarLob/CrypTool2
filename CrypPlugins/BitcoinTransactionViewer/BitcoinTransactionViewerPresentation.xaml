@@ -1,0 +1,115 @@
+﻿<UserControl x:Class="BitcoinTransactionViewer.BitcoinTransactionViewerPresentation"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+    <Viewbox>
+        <StackPanel Width="550">
+            <Border BorderBrush="Silver" BorderThickness="2,2,2,2">
+                <Grid Height="92" Background="#FFFFFF">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150*" />
+                        <ColumnDefinition Width="150*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="23" />
+                        <RowDefinition Height="23" />
+
+                    </Grid.RowDefinitions>
+                    <Border BorderThickness="1" BorderBrush="Black" Background="#FF9900" Grid.RowSpan="1" Grid.ColumnSpan="2">
+                        <Label Content="txid:" Name="TXID" Grid.Column="0" FontSize="11" VerticalAlignment="Center" Foreground="White" Margin="0,-2,0,-1"/>
+                    </Border>
+                    <Label Content="blockhash:" Grid.Row="1" Grid.Column="0" FontSize="10"/>
+                    <Label Name="Blockhash" Grid.Row="1" Grid.Column="0" Margin="95,0,0,0" FontSize="10" Grid.ColumnSpan="2" RenderTransformOrigin="0.5,0.435"/>
+                    
+                    <Label Content="confirmations:" Grid.Column="0" Grid.Row="2" FontSize="10"/>
+                    <Label Name="Confirmations" Margin="95,0,0,0" Grid.Column="0" Grid.Row="2" FontSize="10"/>
+                    <Label Content="size:" Grid.Column="1" Grid.Row="2" FontSize="10"/>
+                    <Label Name="Size" Margin="95,0,0,0" Grid.Column="1" Grid.Row="2" FontSize="10"/>
+                    
+                    <Label Content="fee:" Grid.Column="0" Grid.Row="3" FontSize="10"/>
+                    <Label Name="Fee" Margin="95,0,0,0" Grid.Column="0" Grid.Row="3" FontSize="10"/>
+                    <Label Content="time:" Grid.Column="1" Grid.Row="3" FontSize="10"/>
+                    <Label Name="Time" Margin="95,0,0,0" Grid.Column="1" Grid.Row="3" FontSize="10" />
+                </Grid>
+            </Border>
+            <Border BorderBrush="Silver" BorderThickness="2,0,2,2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="125" />
+                        <RowDefinition Height="125" />
+
+
+                    </Grid.RowDefinitions>
+
+                    <ListView Name="VIN" Background="#FFFFFF" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="10" Height="125" Grid.ColumnSpan="2">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="copy_address" Tag="copy_address" CommandParameter="{Binding}" Click="VinContextMenuHandler" />
+                                <MenuItem Header="copy_value" Tag="copy_value" CommandParameter="{Binding}" Click="VinContextMenuHandler" />
+                                <MenuItem Header="copy_all" Tag="copy_all" CommandParameter="{Binding}" Click="VinContextMenuHandler" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="VIN" DisplayMemberBinding="{Binding Path=Address}" Width="300">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Path=Value}" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                        
+                    </ListView>
+
+                    <ListView Name="VOUT" Background="#FFFFFF" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="10" Height="125" Grid.Row="1" Grid.ColumnSpan="2">
+
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="copy_address" Tag="copy_address" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="copy_value" Tag="copy_value" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                                <MenuItem Header="copy_all" Tag="copy_all" CommandParameter="{Binding}" Click="ContextMenuHandler" />
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="VOUT" DisplayMemberBinding="{Binding Path=Address}" Width="300">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Value" DisplayMemberBinding="{Binding Path=Value}" Width="200">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Viewbox>
+</UserControl>

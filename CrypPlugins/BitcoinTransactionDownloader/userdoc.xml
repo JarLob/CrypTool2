@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- You can edit this file manually or with the Util/CrypDocumentationEditor -->
+<documentation>
+  <language culture="en"/>
+  <language culture="de-DE"/>
+
+  <introduction lang="en">
+    The Bitcoin-Transaction-Downloader downloads a transaction from the Bitcoin Blockchain.
+    <newline />
+         To use this downloader you need access to a server / client that has the complete blockchain stored.
+    It is important that this server is started with certain parameters.
+         <newline />
+         -server<newline />
+         -rpcuser=%USERNAME<newline />
+         -rpcpassword=%PASSWORD<newline />
+         -rpcport=%PORTNUMBER<newline />
+         -txindex<newline />
+         <newline />
+         With the access data you can then query the blockchain using API.
+    Particularly important is the -txindex, otherwise not all transactions will be downloaded,
+    which can lead to errors.
+  </introduction>
+
+  <introduction lang="de-DE">
+    Der Bitcoin-Transaktions-Downlader läd eine Transaction von der Bitcoin Blockchain herunter.
+    <newline/>
+    Um diesen Downloader zu benutzen benötigt man Zugriff auf einen Server/Client der die komplette Blockchain
+    gespeichert hat. Dabei ist wichtig das dieser Server mit bestimmten Parametern gestartet wird.
+    <newline/>
+    -server<newline/>
+    -rpcuser=%USERNAME<newline/>
+    -rpcpassword=%PASSWORD<newline/>
+    -rpcport=%PORTNUMMER<newline/>
+    -txindex<newline/>
+    <newline/>
+    Mit dem Zugangsdaten kann man dann die Blockchain mittels API abfragen. Besonders wichtig ist der -txindex,
+    sonst werden nicht alle Transaktionen heruntergeladen, was zu Fehlern führen kann.
+  </introduction>
+
+  <usage lang="en">
+    The Bitcoin Transaction Downloader needs a transaction hash to download the information. 
+    Then the information about the transaction and the relevant information about the related transaction exits are provided.
+  </usage>
+
+  <usage lang="de-DE">
+    Der Bitcoin-Transaktions-Downloader benötigt einen Transaktionshash um die Informationen herunterladen zu können.
+    Bereit gestellt werden dann die Informationen zur Transaktion und die relevanten Informationen zu den dazugehörigen
+    Transaktionsausgängen.
+  </usage>
+  
+  <presentation lang="en">
+  </presentation>
+  
+  <presentation lang="de-DE">
+  </presentation>
+  
+  <references>
+    <linkReference>
+      <link url="http://chainquery.com/bitcoin-api/gettxout" lang="en" />
+      <caption lang="en">Here the used Bitcoin API is made available on a website (gettxout)</caption>
+      <link url="http://chainquery.com/bitcoin-api/gettxout" lang="de-DE" />
+      <caption lang="de-DE">Hier wird die verwendete Bitcoin API auf einer Website bereitgestellt (gettxout)</caption>
+    </linkReference>
+    <linkReference>
+      <link url="http://chainquery.com/bitcoin-api/getrawtransaction" lang="en" />
+      <caption lang="en">Here the used Bitcoin API is made available on a website (getrawtransaction)</caption>
+      <link url="http://chainquery.com/bitcoin-api/getrawtransaction" lang="de-DE" />
+      <caption lang="de-DE">Hier wird die verwendete Bitcoin API auf einer Website bereitgestellt (getrawtransaction)</caption>
+    </linkReference>
+  </references>
+</documentation>
