@@ -264,4 +264,38 @@ namespace VoluntLib2.ComputationLayer
             executed = true;
         }
     }
+
+    /// <summary>
+    /// This operation checks if a job has been finished. If yes, it will invoke the JobFinished event of VoluntLib for this job
+    /// </summary>
+    internal class CheckJobsCompletionState : Operation
+    {
+        private const int CHECK_INTERVAL = 5000; //5sec
+        private DateTime LastExecutionTime = DateTime.MinValue;
+
+        public override bool IsFinished
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Execution method of CheckJobsCompletionState
+        /// </summary>
+        public override void Execute()
+        {
+            if(DateTime.Now > LastExecutionTime.AddMilliseconds(CHECK_INTERVAL))
+            {
+                LastExecutionTime = DateTime.Now;
+                foreach (Job job in ComputationManager.JobManager.Jobs.Values)
+                {
+                    if (!job.NotifiedJobCompletion && job.HasPayload && job.IsFinished())
+                    {
+                        job.NotifiedJobCompletion = true;
+                        JobProgressEventArgs jobProgressEventArgs = new JobProgressEventArgs(job.JobId, job.JobEpochState.ResultList.ToList(), job.NumberOfBlocks, job.NumberOfCalculatedBlocks);
+                        ComputationManager.VoluntLib.OnJobFinished(this, jobProgressEventArgs);
+                    }
+                }
+            }
+        }
+    }
 }

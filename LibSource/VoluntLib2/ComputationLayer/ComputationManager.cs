@@ -76,7 +76,9 @@ namespace VoluntLib2.ComputationLayer
             WorkerThread.Start();            
             //This operation deserializes all serialized jobs; then it terminates
             Operations.Enqueue(new CheckRunningWorkersAndJobsOperation() { ComputationManager = this });
-
+            //This operation checks, which jobs are completed. If it finds one, it fires the JobFinished event of VoluntLib2
+            Operations.Enqueue(new CheckJobsCompletionState() { ComputationManager = this });
+            
             Logger.LogText("ComputationManager started", this, Logtype.Info);
         }
 

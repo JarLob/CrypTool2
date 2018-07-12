@@ -83,6 +83,8 @@ namespace VoluntLib2.ManagementLayer
         public double EpochProgress { get; set; }
         public string EpochProgressText { get; set; }
 
+        internal bool NotifiedJobCompletion = false;
+
         /// <summary>
         /// User can delete job, if (A) its his job or (B) he is an admin
         /// </summary>
@@ -787,6 +789,15 @@ namespace VoluntLib2.ManagementLayer
                 }
                 return numberOfEpochs;            
             }
+        }
+
+        /// <summary>
+        /// Returns true, if all blocks have been calculated
+        /// </summary>
+        /// <returns></returns>
+        public bool IsFinished()
+        {
+            return NumberOfCalculatedBlocks == NumberOfBlocks;
         }
 
         /// <summary>

@@ -400,5 +400,18 @@ namespace VoluntLib2
                 JobProgress.Invoke(sender, e);
             }
         }
+
+        /// <summary>
+        /// Helper method to invoke JobFinished events
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        internal void OnJobFinished(object sender, JobProgressEventArgs e)
+        {
+            if (JobFinished != null)
+            {
+                JobFinished.Invoke(sender, e);
+            }
+        }
     }
 }
