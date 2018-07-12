@@ -61,7 +61,10 @@ namespace WorkspaceManager.Model
         private string PluginTypeAssemblyName = null;
         [NonSerialized] 
         internal bool SettingesHaveChanges = false;
-        
+        [NonSerialized]
+        internal Type _pluginType = null;
+
+
         internal void OnConnectorPlugstateChanged(ConnectorModel connector, PlugState state)
         {
             if(ConnectorPlugstateChanged != null)
@@ -144,11 +147,23 @@ namespace WorkspaceManager.Model
         {
             get
             {
+                if (_pluginType != null)
+                {
+                    return _pluginType;
+                }
                 if (this.PluginTypeName != null)
                 {
-                    Assembly assembly = Assembly.Load(PluginTypeAssemblyName);
-                    Type t = assembly.GetType(PluginTypeName);
-                    return t;
+                    var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                    foreach (Assembly assembly in assemblies)
+                    {
+                        Type type = assembly.GetType(PluginTypeName);
+                        if (type != null)
+                        {
+                            _pluginType = type;
+                            return type;
+                        }
+                    }
+                    return null;
                 }
                 else
                 {
@@ -159,6 +174,7 @@ namespace WorkspaceManager.Model
             {
                 this.PluginTypeName = value.FullName;
                 this.PluginTypeAssemblyName = value.Assembly.GetName().Name;
+                this._pluginType = null;
             }
         }
 

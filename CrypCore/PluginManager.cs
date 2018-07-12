@@ -1,5 +1,5 @@
 /*
-   Copyright 2008 Martin Saternus, University of Duisburg-Essen
+   Copyright 2018 CrypTool team
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -36,9 +36,14 @@ namespace Cryptool.Core
         private int availablePluginsApproximation = 0;
 
         /// <summary>
-        /// Subdirectory to store plugins
+        /// Subdirectory of all crypplugins
         /// </summary>
         private const string PluginDirectory = "CrypPlugins";
+
+        /// <summary>
+        /// Subdirectory in which plugins of CrypStore are stored and loaded from
+        /// </summary>
+        private const string CrypStorePluginDirectory = @"CrypTool2\CrypStorePlugins";
 
         /// <summary>
         /// Fires if an exception occurs
@@ -54,16 +59,16 @@ namespace Cryptool.Core
         /// Occurs when a plugin was loaded
         /// </summary>
         public event CrypCorePluginLoadedHandler OnPluginLoaded;
-        
-        /// <summary>
-        /// Custom Plugin Store Directory
-        /// </summary>
-        private readonly string customPluginStore;
 
         /// <summary>
-        /// Global Plugin Store Directory
+        /// Folder for plugins that are delivered with CrypTool 2
         /// </summary>
-        private readonly string globalPluginStore;
+        private readonly string crypPluginsFolder;
+
+        /// <summary>
+        /// Folder for plugins of CrypToolStore
+        /// </summary>
+        private readonly string crypToolStorePluginFolder;
 
         /// <summary>
         /// Loaded Assemblies
@@ -75,21 +80,26 @@ namespace Cryptool.Core
         /// </summary>
         private readonly Dictionary<string, Type> loadedTypes;
 
-        public Dictionary<string, Type> LoadedTypes { get { return loadedTypes; } }
-
+        /// <summary>
+        /// Found Assemblies
+        /// </summary>
         private Dictionary<string, Assembly> foundAssemblies = new Dictionary<string, Assembly>();
-        
+
         /// <summary>
         /// cTor
         /// </summary>
         public PluginManager(HashSet<string> disabledAssemblies)
         {
             this.disabledAssemblies = disabledAssemblies;
-            
-            this.customPluginStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), PluginDirectory);
-            this.globalPluginStore = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), PluginDirectory);
+            this.crypPluginsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), PluginDirectory);
+            this.crypToolStorePluginFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), CrypStorePluginDirectory);
+            //create folder for CrypToolStore if it does not exsit
+            if (!Directory.Exists(crypToolStorePluginFolder))
+            {
+                Directory.CreateDirectory(crypToolStorePluginFolder);
+            }
             this.loadedAssemblies = new Dictionary<string, Assembly>();
-            this.loadedTypes = new Dictionary<string, Type>();          
+            this.loadedTypes = new Dictionary<string, Type>();
         }
 
         /// <summary>
@@ -101,7 +111,9 @@ namespace Cryptool.Core
         public Type LoadType(string assemblyName, string typeName)
         {
             if (this.loadedAssemblies.ContainsKey(assemblyName))
+            {
                 return this.loadedAssemblies[assemblyName].GetType(typeName, false);
+            }
             return null;
         }
 
@@ -112,30 +124,27 @@ namespace Cryptool.Core
         /// <returns></returns>
         public Dictionary<string, Type> LoadTypes(AssemblySigningRequirement state)
         {
-            if (Directory.Exists(globalPluginStore))
-            {
-              availablePluginsApproximation = AvailablePluginsApproximation(new DirectoryInfo(globalPluginStore));
-              FindAssemblies(new DirectoryInfo(globalPluginStore), state, foundAssemblies);
-            }
-
-            // custom plugin store is not supported yet
-            //if (!Directory.Exists(customPluginStore))
-            //    Directory.CreateDirectory(customPluginStore);
-            //FindAssemblies(new DirectoryInfo(customPluginStore), state, foundAssemblies);
+            availablePluginsApproximation = AvailablePluginsApproximation(new DirectoryInfo(crypPluginsFolder));
+            availablePluginsApproximation += AvailablePluginsApproximation(new DirectoryInfo(crypToolStorePluginFolder));
+            int currentPosition = FindAssemblies(new DirectoryInfo(crypPluginsFolder), state, foundAssemblies, 0);
+            FindAssemblies(new DirectoryInfo(crypToolStorePluginFolder), state, foundAssemblies, currentPosition);
             LoadTypes(foundAssemblies);
             return this.loadedTypes;
         }
 
-        // wander: this comment has been there for ages. How to replace?
-        [Obsolete("will be removed soon")]
+        /// <summary>
+        /// Find all CrypPlugins
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <returns></returns>
         private int AvailablePluginsApproximation(DirectoryInfo directory)
         {
-          int count = 0;
-          foreach (DirectoryInfo subDirectory in directory.GetDirectories())
-          {
-            count = AvailablePluginsApproximation(subDirectory);
-          }
-          return directory.GetFiles("*.dll").Length;
+            int count = 0;
+            foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+            {
+                count = AvailablePluginsApproximation(subDirectory);
+            }
+            return directory.GetFiles("*.dll").Length;
         }
 
         /// <summary>
@@ -144,33 +153,31 @@ namespace Cryptool.Core
         /// <param name="directory">directory</param>
         /// <param name="state">Search for all or only for signed assemblies</param>
         /// <param name="foundAssemblies">list of found assemblies</param>
-        private void FindAssemblies(DirectoryInfo directory, AssemblySigningRequirement state, Dictionary<string, Assembly> foundAssemblies)
+        private int FindAssemblies(DirectoryInfo directory, AssemblySigningRequirement state, Dictionary<string, Assembly> foundAssemblies, int currentPosition = 0)
         {
-            //foreach (DirectoryInfo subDirectory in directory.GetDirectories())
-            //{
-            //    FindAssemblies(subDirectory, state, foundAssemblies);
-            //}
-
-            int currentPosition = 0;
             foreach (FileInfo fileInfo in directory.GetFiles("*.dll"))
             {
                 if (disabledAssemblies != null && disabledAssemblies.Contains(fileInfo.Name))
+                {
                     continue;
+                }
 
                 currentPosition++;
                 try
                 {
                     Assembly asm = Assembly.Load(AssemblyName.GetAssemblyName(fileInfo.FullName));
-                    
+
                     string key = GetAssemblyKey(asm.FullName, state);
                     if (key == null)
+                    {
                         throw new UnknownFileFormatException(fileInfo.FullName);
+                    }
 
                     bool sendMessage = false;
                     if (!foundAssemblies.ContainsKey(key))
                     {
-                      foundAssemblies.Add(key, asm);
-                      sendMessage = true;
+                        foundAssemblies.Add(key, asm);
+                        sendMessage = true;
                     }
                     else if (GetVersion(asm) > GetVersion(foundAssemblies[key]))
                     {
@@ -184,25 +191,33 @@ namespace Cryptool.Core
                         if (OnPluginLoaded != null)
                         {
                             OnPluginLoaded(this, new PluginLoadedEventArgs(currentPosition, this.availablePluginsApproximation, string.Format("{0} Version={1}", asm.GetName().Name, GetVersion(asm))));
-                        }                          
+                        }
                     }
                 }
                 catch (BadImageFormatException)
                 {
-                  SendExceptionMessage(string.Format(Resources.Exceptions.non_plugin_file, fileInfo.FullName));
+                    SendExceptionMessage(string.Format(Resources.Exceptions.non_plugin_file, fileInfo.FullName));
                 }
                 catch (Exception ex)
                 {
                     SendExceptionMessage(ex);
                 }
             }
+            return currentPosition;
         }
 
-        private static Version GetVersion(Assembly asm)
+        /// <summary>
+        /// Returns version of the given assembly
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        private static Version GetVersion(Assembly assembly)
         {
-            var fileVersion = FileVersionInfo.GetVersionInfo(asm.Location).FileVersion;
+            var fileVersion = FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion;
             if (fileVersion == null)
-                return asm.GetName().Version;
+            {
+                return assembly.GetName().Version;
+            }
 
             return new Version(fileVersion);
         }
@@ -220,41 +235,41 @@ namespace Cryptool.Core
                 AssemblyName assemblyName = new AssemblyName(asm.FullName);
                 try
                 {
-                  foreach (Type type in asm.GetTypes())
-                  {
-                    if (type.GetInterface(interfaceName) != null && !this.loadedTypes.ContainsKey(type.FullName))
+                    foreach (Type type in asm.GetTypes())
                     {
-                      this.loadedTypes.Add(type.FullName, type);
-                      if (!this.loadedAssemblies.ContainsKey(assemblyName.Name))
-                      {
-                        this.loadedAssemblies.Add(assemblyName.Name, asm);
-                      }
+                        if (type.GetInterface(interfaceName) != null && !this.loadedTypes.ContainsKey(type.FullName))
+                        {
+                            this.loadedTypes.Add(type.FullName, type);
+                            if (!this.loadedAssemblies.ContainsKey(assemblyName.Name))
+                            {
+                                this.loadedAssemblies.Add(assemblyName.Name, asm);
+                            }
+                        }
                     }
-                  }
                 }
                 catch (ReflectionTypeLoadException tle)
                 {
-                  if (OnExceptionOccured != null)
-                  {
-                    OnExceptionOccured(this, new PluginManagerEventArgs(new TypeLoadException(asm.FullName + "\n" + tle.LoaderExceptions[0].Message)));
-                  }
+                    if (OnExceptionOccured != null)
+                    {
+                        OnExceptionOccured(this, new PluginManagerEventArgs(new TypeLoadException(asm.FullName + "\n" + tle.LoaderExceptions[0].Message)));
+                    }
                 }
                 catch (Exception exception)
                 {
-                  if (OnExceptionOccured != null)
-                  {
-                    OnExceptionOccured(this, new PluginManagerEventArgs(new TypeLoadException(asm.FullName + "\n" + exception.Message)));
-                  }
+                    if (OnExceptionOccured != null)
+                    {
+                        OnExceptionOccured(this, new PluginManagerEventArgs(new TypeLoadException(asm.FullName + "\n" + exception.Message)));
+                    }
                 }
             }
         }
 
         /// <summary>
-       /// Create a unique key for each assembly
-       /// </summary>
-       /// <param name="assemblyFullName">Full name of the assembly</param>
-       /// <param name="state">Signed or unsigned</param>
-       /// <returns>Returns the key or null if public key is null and signing is required</returns>
+        /// Create a unique key for each assembly
+        /// </summary>
+        /// <param name="assemblyFullName">Full name of the assembly</param>
+        /// <param name="state">Signed or unsigned</param>
+        /// <returns>Returns the key or null if public key is null and signing is required</returns>
         private string GetAssemblyKey(string assemblyFullName, AssemblySigningRequirement state)
         {
             AssemblyName asmName = new AssemblyName(assemblyFullName);
@@ -266,122 +281,32 @@ namespace Cryptool.Core
             }
             return asmName.Name;
         }
-
-        /// <summary>
-        /// Adds an assembly to the store
-        /// </summary>
-        /// <param name="buffer">byte[] of the assembly</param>
-        /// <param name="state">Signed or unsigned</param>
-        /// <param name="pluginStore">Global or Custom Store</param>
-        public void AddPlugin(byte[] buffer, AssemblySigningRequirement state, PluginStore pluginStore)
-        {
-            try
-            {
-                Assembly asm = Assembly.ReflectionOnlyLoad(buffer);
-                AssemblyName asmName = new AssemblyName(asm.FullName);
-
-                string publicKeyToken = GetPublicToken(asm);
-                if ((state == AssemblySigningRequirement.StoreSignedAssemblies) && (publicKeyToken == string.Empty))
-                    throw new AssemblyNotSignedException();
-
-                string pluginStoreDirectory = GetPluginDirectory(asmName, publicKeyToken, pluginStore);
-                if (!Directory.Exists(pluginStoreDirectory))
-                    Directory.CreateDirectory(pluginStoreDirectory);
-
-                WriteFile(buffer, pluginStoreDirectory, asmName);
-            }
-            catch (AssemblyNotSignedException ex)
-            {
-                if (OnExceptionOccured != null)
-                    OnExceptionOccured(this, new PluginManagerEventArgs(ex));
-            }
-            catch
-            {
-                if (OnExceptionOccured != null)
-                    OnExceptionOccured(this, new PluginManagerEventArgs(new StoreAddingException()));
-            }
-        }
-
-        /// <summary>
-        /// Writes the buffer to disk
-        /// </summary>
-        /// <param name="buffer">byte[] of the assembly</param>
-        /// <param name="pluginStoreDirectory">Directory to store the assembly</param>
-        /// <param name="assemblyName">Name of the assembly</param>
-        private void WriteFile(byte[] buffer, string pluginStoreDirectory, AssemblyName assemblyName)
-        {
-            string assemblyFileName = Path.Combine(pluginStoreDirectory, assemblyName.Name + ".dll");
-            if (!File.Exists(assemblyFileName))
-            {
-                FileStream fs = File.Create(assemblyFileName);
-                BinaryWriter bw = new BinaryWriter(fs);
-                bw.Write(buffer);
-                bw.Close();
-                fs.Close();
-            }
-        }
-
-        /// <summary>
-        /// Get the directory for the assembly
-        /// </summary>
-        /// <param name="assemblyName">Name of the assembly</param>
-        /// <param name="publicKeyToken">Public token</param>
-        /// <param name="pluginStore">Global or Custom Store</param>
-        /// <returns>Returns the full directory name</returns>
-        private string GetPluginDirectory(AssemblyName assemblyName, string publicKeyToken, PluginStore pluginStore)
-        {
-            string versionName = string.Empty;
-            if (publicKeyToken == String.Empty)
-                versionName = Path.Combine(assemblyName.Name, assemblyName.Version.ToString());
-            else
-                versionName = Path.Combine(assemblyName.Name, assemblyName.Version.ToString() + "__" + publicKeyToken);
-
-            switch (pluginStore)
-            {
-                case PluginStore.GlobalPluginStore:
-                    return Path.Combine(globalPluginStore, versionName);
-                case PluginStore.CustomPluginStore:
-                    return Path.Combine(customPluginStore, versionName);
-            }
-            return String.Empty;
-        }
-
-        /// <summary>
-        /// Returns the public token
-        /// </summary>
-        /// <param name="asm"></param>
-        /// <returns></returns>
-        private string GetPublicToken(Assembly asm)
-        {
-            byte[] hexBytes = asm.GetName().GetPublicKeyToken();
-            string hexString = String.Empty;
-            for (int i = 0; i < hexBytes.Length; i++)
-            {
-                hexString += hexBytes[i].ToString("x");
-            }
-            return hexString;
-        }
-
         /// <summary>
         /// Sends a debug message.
         /// </summary>
         /// <param name="message">The message.</param>
         private void SendDebugMessage(string message)
         {
-          if (OnDebugMessageOccured != null)
-            OnDebugMessageOccured(this, new PluginManagerEventArgs(message));
+            if (OnDebugMessageOccured != null)
+            {
+                OnDebugMessageOccured(this, new PluginManagerEventArgs(message));
+            }
         }
 
         private void SendExceptionMessage(Exception ex)
         {
-          if (OnExceptionOccured != null)
-            OnExceptionOccured(this, new PluginManagerEventArgs(ex));
+            if (OnExceptionOccured != null)
+            {
+                OnExceptionOccured(this, new PluginManagerEventArgs(ex));
+            }
         }
 
         private void SendExceptionMessage(string message)
         {
-          if (OnExceptionOccured != null)
-            OnExceptionOccured(this, new PluginManagerEventArgs(message));
+            if (OnExceptionOccured != null)
+            {
+                OnExceptionOccured(this, new PluginManagerEventArgs(message));
+            }
         }
     }
 }
