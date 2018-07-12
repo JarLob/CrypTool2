@@ -878,7 +878,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                 if (connectionCount < MIN_CONNECTIONS_NUMBER)
                 {
                     //if we have too few connections, we start a tryCreateNewConnectionOperation to get an additional connection
-                    Logger.LogText(String.Format("Not enough connections. Have {0} but want {1}. Created a TryCreateNewConnectionOperation.", connectionCount, MIN_CONNECTIONS_NUMBER), this, Logtype.Debug);
+                    Logger.LogText(String.Format("Not enough connections. Have {0} but {1} are wanted. Created a TryCreateNewConnectionOperation.", connectionCount, MIN_CONNECTIONS_NUMBER), this, Logtype.Debug);
                     TryCreateNewConnectionOperation tryCreateNewConnectionOperation = new TryCreateNewConnectionOperation() { ConnectionManager = ConnectionManager };
                     ConnectionManager.Operations.Enqueue(tryCreateNewConnectionOperation);                    
                 }
@@ -1229,7 +1229,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     Contact contact;
                     if(ConnectionManager.ReceivedContacts.TryRemove(endpoint,out contact))
                     {
-                        Logger.LogText(String.Format("Removed {0}:{1} from our received contacts list since nobody is online who knows him.", contact.IPAddress, contact.Port), this, Logtype.Debug);
+                        Logger.LogText(String.Format("Removed {0}:{1} from the received contacts list as nobody is online who knows this peer.", contact.IPAddress, contact.Port), this, Logtype.Debug);
                     }
                 }
                 LastCheckedTime = DateTime.Now;
