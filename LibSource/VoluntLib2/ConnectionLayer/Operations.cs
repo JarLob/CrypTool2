@@ -65,7 +65,8 @@ namespace VoluntLib2.ConnectionLayer.Operations
     {
         private const long TIMEOUT = 30000;
         private const long RETRY_TIMESPAN = 5000;
-
+        
+        private bool HelloToWellKnownPeer = false;
         private Logger Logger = Logger.GetLogger();
 
         private enum State
@@ -88,10 +89,11 @@ namespace VoluntLib2.ConnectionLayer.Operations
         /// </summary>
         /// <param name="ip"></param>
         /// <param name="port"></param>
-        public HelloOperation(IPAddress ip, ushort port)
+        public HelloOperation(IPAddress ip, ushort port, bool helloToWellKnownPeer = false)
         {
             this.IP = ip;
             this.Port = port;
+            this.HelloToWellKnownPeer = helloToWellKnownPeer;
         }
 
         /// <summary>
@@ -176,6 +178,14 @@ namespace VoluntLib2.ConnectionLayer.Operations
                 }
                 //here, we know, that we received a HelloResponse for this operation
                 Logger.LogText("Got a HelloResponseMessage for my HelloMessage", this, Logtype.Debug);
+                if (HelloToWellKnownPeer)
+                {
+                    //set the contact of this Hello to a well known peer, thus, we do not remove it if we have too many connections
+                    IPEndPoint endpoint = new IPEndPoint(new IPAddress(message.MessageHeader.SenderIPAddress),message.MessageHeader.SenderExternalPort);
+                    Contact contact = ConnectionManager.Contacts[endpoint];
+                    contact.IsWellKnown = true;
+                    Logger.LogText(String.Format("Got a HelloResponseMessage from a well known peer: {0}:{1}", endpoint.Address, endpoint.Port), this, Logtype.Debug);
+                }
                 MyState = State.Finished;
             }
         }       
@@ -893,6 +903,13 @@ namespace VoluntLib2.ConnectionLayer.Operations
                         i++;
                     }
                     Contact contact =  ConnectionManager.Contacts[contactEndpoint];
+
+                    if (contact.IsWellKnown)
+                    {
+                        //we do not remove well known peers
+                        return;
+                    }
+
                     Logger.LogText(String.Format("Too many connections. We have {0} but want a maximum of {1}. Remove {2}:{3} now", connectionCount, MAX_CONNECTIONS_NUMBER, contact.IPAddress, contact.Port), this, Logtype.Debug);
                     
                     //1. Send GoingOfflineMessage
@@ -1079,10 +1096,10 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     //we only start a new bootstrapping attempt if we have no connections
                     return;
                 }
-                Logger.LogText("We have no connection. Start bootstrapping by sending HelloMessages to well known peers",this,Logtype.Debug);
+                Logger.LogText("We have no connection. Start bootstrapping by sending HelloMessages to well known peers", this, Logtype.Debug);
                 foreach (Contact contact in WellKnownPeers)
                 {
-                    HelloOperation helloOperation = new HelloOperation(contact.IPAddress, contact.Port) { ConnectionManager = ConnectionManager };
+                    HelloOperation helloOperation = new HelloOperation(contact.IPAddress, contact.Port, true) { ConnectionManager = ConnectionManager };
                     ConnectionManager.Operations.Enqueue(helloOperation);
                     Logger.LogText(String.Format("Created HelloOperation for {0}:{1}", contact.IPAddress, contact.Port), this, Logtype.Debug);
                 }

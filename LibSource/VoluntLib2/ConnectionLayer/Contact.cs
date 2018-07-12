@@ -61,6 +61,11 @@ namespace VoluntLib2.ConnectionLayer
         public bool IsOffline { get; set; }
 
         /// <summary>
+        /// Flag if this Peer is well known
+        /// </summary>
+        public bool IsWellKnown { get; set; }
+
+        /// <summary>
         /// Creates a new contact
         /// </summary>
         public Contact()
@@ -133,6 +138,7 @@ namespace VoluntLib2.ConnectionLayer
             contact.IPAddress = IPAddress;
             contact.Port = Port;
             contact.IsOffline = IsOffline;
+            contact.IsWellKnown = IsWellKnown;
             contact.LastHelloSent = LastHelloSent;
             contact.LastSeen = LastSeen;
             return contact;
