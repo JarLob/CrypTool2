@@ -15,7 +15,8 @@ namespace BitcoinDownloadServer
 {
     class Server
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly Logger log = new Logger();
         private static string genesisTransaction = "{\"result\":{\"txid\":\"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\"hash\":\"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\"version\":1,\"size\":285,\"vsize\":285,\"locktime\":0,\"vin\":[{\"coinbase\":\"04ffff001d0104\",\"sequence\":4294967295}],\"vout\":[{\"value\":50.00000000,\"n\":0,\"scriptPubKey\":{\"asm\":\"0496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeOP_CHECKSIG\",\"hex\":\"410496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeac\",\"reqSigs\":1,\"type\":\"pubkey\",\"addresses\":[\"1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa\"]}}],\"hex\":\"01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff0704ffff001d0104ffffffff0100f2052a0100000043410496b538e853519c726a2c91e61ec11600ae1390813a627c66fb8be7947be63c52da7589379515d4e0a604f8141781e62294721166bf621e73a82cbf2342c858eeac00000000\",\"blockhash\":\"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f\",\"confirmations\":531370,\"time\":1231006505,\"blocktime\":1231006505},\"error\":null,\"id\":null}";
 
         /*
@@ -23,11 +24,17 @@ namespace BitcoinDownloadServer
          */
         static void Main(string[] args)
         {
+            BitcoinDownloadServer.Properties.Settings.Default.Reload();
+            string ServerIp = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiServerUrl;
+            string UserName = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiUsername;            
+            
+            Console.WriteLine("Started with serverip=" + ServerIp);
+            Console.WriteLine("Started with username=" + UserName);
 
             TcpListener listener = null;
             try
             {
-                listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 8080);
+                listener = new TcpListener(IPAddress.Any, 8080);
                 listener.Start();
                 log.Info("Service was started");
 
@@ -78,7 +85,8 @@ namespace BitcoinDownloadServer
                     }
                     else if (message.Header.MessageType == MessageType.GetblockRequestMessage)
                     {
-                        if(int.TryParse(s, out int number))
+                        int number;
+                        if(int.TryParse(s, out number))
                         {
                             string hash = Getblockhash(number);
                             response = Getblock(hash);
@@ -127,6 +135,7 @@ namespace BitcoinDownloadServer
             HttpWebRequest webRequest = null;
             try
             {
+                
                 string ServerIp = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiServerUrl;
                 string UserName = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiUsername;
                 string Password = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiPassword;

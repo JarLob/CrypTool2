@@ -12,7 +12,7 @@ namespace BitcoinDownloadServer.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,19 +25,7 @@ namespace BitcoinDownloadServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost.:8332")]
-        public string bitcoinApiServerUrl {
-            get {
-                return ((string)(this["bitcoinApiServerUrl"]));
-            }
-            set {
-                this["bitcoinApiServerUrl"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("testuser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("rpcuser")]
         public string bitcoinApiUsername {
             get {
                 return ((string)(this["bitcoinApiUsername"]));
@@ -49,7 +37,19 @@ namespace BitcoinDownloadServer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("testpassword")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://rpcuser:rpcpassword@localhost:8332/")]
+        public string bitcoinApiServerUrl {
+            get {
+                return ((string)(this["bitcoinApiServerUrl"]));
+            }
+            set {
+                this["bitcoinApiServerUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("rpcpassword")]
         public string bitcoinApiPassword {
             get {
                 return ((string)(this["bitcoinApiPassword"]));

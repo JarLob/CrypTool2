@@ -2,14 +2,14 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BitcoinDownloadServer.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="bitcoinApiServerUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://localhost.:8332</Value>
-    </Setting>
     <Setting Name="bitcoinApiUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)">testuser</Value>
+      <Value Profile="(Default)">rpcuser</Value>
+    </Setting>
+    <Setting Name="bitcoinApiServerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://rpcuser:rpcpassword@localhost:8332/</Value>
     </Setting>
     <Setting Name="bitcoinApiPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">testpassword</Value>
+      <Value Profile="(Default)">rpcpassword</Value>
     </Setting>
   </Settings>
 </SettingsFile>
