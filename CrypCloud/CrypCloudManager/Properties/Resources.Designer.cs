@@ -502,7 +502,7 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Peer Id ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Peer ID ähnelt.
         /// </summary>
         public static string _PeerId {
             get {
