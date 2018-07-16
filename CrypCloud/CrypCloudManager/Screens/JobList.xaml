@@ -210,7 +210,7 @@
                         <RowDefinition Height="*" MaxHeight="200" />
                     </Grid.RowDefinitions>
 
-                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_jobID}" />
+                    <Label Grid.Column="0" Grid.Row="1" FontWeight="Bold" Content="{Loc _JobList_JobId}" />
                     <TextBlock Grid.Column="1" Grid.Row="1"  TextWrapping="Wrap" Text="{Binding ElementName=JobListView, Path=SelectedItem.JobId, Converter={StaticResource JobIdConverter}}"  Margin="0,5,5,0"  />
 
                     <Label Grid.Column="0" Grid.Row="2" FontWeight="Bold" Content="{Loc _JobList_jobName}" />
