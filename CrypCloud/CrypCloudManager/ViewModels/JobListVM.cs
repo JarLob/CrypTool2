@@ -18,6 +18,7 @@ using MessageBox = System.Windows.MessageBox;
 using UserControl = System.Windows.Controls.UserControl;
 using VoluntLib2;
 using VoluntLib2.ManagementLayer;
+using VoluntLib2.ConnectionLayer;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -26,7 +27,9 @@ namespace CrypCloud.Manager.ViewModels
         private readonly CrypCloudCore crypCloudCore = CrypCloudCore.Instance;
         public CrypCloudManager Manager { get; set; } 
 
-        public ObservableCollection<Job> RunningJobs { get; set; } 
+        public ObservableCollection<Job> RunningJobs { get; set; }
+
+        public ObservableCollection<Contact> Contacts { get; set; }
 
         private Job selectedJob;
         public Job SelectedJob
@@ -35,8 +38,9 @@ namespace CrypCloud.Manager.ViewModels
             set
             {
                 if (selectedJob == value)
+                {
                     return;
-
+                }
                 selectedJob = value;
             }
         }
@@ -61,14 +65,15 @@ namespace CrypCloud.Manager.ViewModels
         protected override void HasBeenActivated()
         {
             base.HasBeenActivated();
-            RunningJobs = crypCloudCore.GetJoblist();
+            RunningJobs = crypCloudCore.GetJoblist();            
             RaisePropertyChanged("RunningJobs");
             if (RunningJobs.Count > 0)
             {
                 selectedJob = RunningJobs.First();
                 RaisePropertyChanged("SelectedJob");
             }
-
+            Contacts = crypCloudCore.GetContacts();
+            RaisePropertyChanged("Contacts");
             Username = CrypCloudCore.Instance.GetUsername();
             RaisePropertyChanged("Username");            
         }
@@ -181,42 +186,5 @@ namespace CrypCloud.Manager.ViewModels
                 ErrorMessage = String.Format("Exception while deleting job: {0}", ex.Message);
             }
         }
-
-        #region helper       
-
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject);
-
-        private BitmapSource Bitmap2BitmapImage(Bitmap bitmap)
-        {
-            using (var resizedBitmap = ResizeBitmap(bitmap, 200, 200))
-            {
-                var hBitmap = resizedBitmap.GetHbitmap();
-                try
-                {
-                    return Imaging.CreateBitmapSourceFromHBitmap(hBitmap,
-                                IntPtr.Zero, 
-                                Int32Rect.Empty,
-                                BitmapSizeOptions.FromWidthAndHeight(200, 200));
-                }
-                finally
-                {
-                    DeleteObject(hBitmap);
-                }
-            }
-        }
-
-        private Bitmap ResizeBitmap(Bitmap sourceBMP, int width, int height)
-        {
-            var result = new Bitmap(width, height);
-            using (var g = Graphics.FromImage(result))
-            {
-                g.InterpolationMode = InterpolationMode.NearestNeighbor;
-                g.DrawImage(sourceBMP, 0, 0, width, height);
-            }
-            return result;
-        }
-
-        #endregion
     }
 }

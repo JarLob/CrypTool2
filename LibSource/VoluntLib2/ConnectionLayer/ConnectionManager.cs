@@ -17,12 +17,14 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using VoluntLib2.ConnectionLayer.Messages;
 using VoluntLib2.ConnectionLayer.Operations;
 using VoluntLib2.Tools;
@@ -57,7 +59,7 @@ namespace VoluntLib2.ConnectionLayer
         internal ConcurrentQueue<DataMessage> DataMessagesIngoing = new ConcurrentQueue<DataMessage>();
 
         //a queue containing all to be sended DataMessages
-        internal ConcurrentQueue<DataMessage> DataMessagesOutgoing = new ConcurrentQueue<DataMessage>();
+        internal ConcurrentQueue<DataMessage> DataMessagesOutgoing = new ConcurrentQueue<DataMessage>();        
 
         //Port where this ConnectionManager listens on
         private ushort Port = 0;            
@@ -75,7 +77,16 @@ namespace VoluntLib2.ConnectionLayer
 
         internal VoluntLib VoluntLib { get; set; }
 
+        /// <summary>
+        /// Number of connection changed
+        /// </summary>
         public event EventHandler<ConnectionsNumberChangedEventArgs> ConnectionsNumberChanged;
+
+
+        /// <summary>
+        /// Observable list of contacts for UI
+        /// </summary>
+        internal ObservableCollection<Contact> ObservableContactList;
 
         /// <summary>
         /// Creates a new ConnectionManager listening on the given UDP port
@@ -85,6 +96,19 @@ namespace VoluntLib2.ConnectionLayer
         {
             VoluntLib = voluntLib;
             Port = listenport;
+            //if we are in a WPF application, we create the ObservableCollection in UI thread
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    ObservableContactList = new ObservableCollection<Contact>();
+                }));
+            }
+            else
+            {
+                ObservableContactList = new ObservableCollection<Contact>();
+            }
+            
         }
 
         /// <summary>
@@ -695,7 +719,7 @@ namespace VoluntLib2.ConnectionLayer
         public bool IsRunning()
         {
             return Running;
-        }
+        }        
 
         internal void OnConnectionsNumberChanged(List<Contact> contacts)
         {
@@ -703,6 +727,60 @@ namespace VoluntLib2.ConnectionLayer
             {
                 ConnectionsNumberChanged.BeginInvoke(this, new ConnectionsNumberChangedEventArgs() { Contacts = contacts }, null, null);
             }
+        }
+
+        /// <summary>
+        /// Calls DoUpdateObservableContactList either from ui or current thread to update it
+        /// </summary>
+        internal void OnUpdateObservableContactList()
+        {
+            //If we are in a WPF application, we update the observable collection in UI thread
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    DoUpdateObservableContactList();
+                }));
+            }
+            else
+            {
+                DoUpdateObservableContactList();
+            }
+        }
+
+        /// <summary>
+        /// Adds peers that just came online and removes peers that are offline
+        /// </summary>
+        private void DoUpdateObservableContactList()
+        {
+            List<Contact> removeList = new List<Contact>();
+            foreach(Contact contact in ObservableContactList)
+            {
+                if (contact.IsOffline)
+                {
+                    removeList.Add(contact);
+                }
+            }
+            foreach (Contact contact in removeList)
+            {
+                ObservableContactList.Remove(contact);
+            }
+            foreach(Contact contact in Contacts.Values)
+            {
+                if (!contact.IsOffline && !ObservableContactList.Contains(contact))
+                {
+                    ObservableContactList.Add(contact);
+                }
+            }                
+        }
+
+        /// <summary>
+        /// Returns observable Contact list
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<Contact> GetContacts()
+        {
+            return ObservableContactList;
         }
     }
 

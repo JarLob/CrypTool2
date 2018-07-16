@@ -223,6 +223,15 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die IP Address ähnelt.
+        /// </summary>
+        public static string _IPAddress {
+            get {
+                return ResourceManager.GetString("_IPAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Bitmask: ähnelt.
         /// </summary>
         public static string _JobList_bitmask {
@@ -489,6 +498,24 @@ namespace CrypCloud.Manager.Properties {
         public static string _Password_label {
             get {
                 return ResourceManager.GetString("_Password_label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Peer Id ähnelt.
+        /// </summary>
+        public static string _PeerId {
+            get {
+                return ResourceManager.GetString("_PeerId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Port ähnelt.
+        /// </summary>
+        public static string _Port {
+            get {
+                return ResourceManager.GetString("_Port", resourceCulture);
             }
         }
         

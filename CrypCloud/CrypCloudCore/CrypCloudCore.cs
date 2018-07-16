@@ -17,6 +17,7 @@ using VoluntLib2.ManagementLayer;
 using VoluntLib2.ComputationLayer;
 using VoluntLib2.Tools;
 using System.Collections.ObjectModel;
+using VoluntLib2.ConnectionLayer;
 
 namespace CrypCloud.Core
 { 
@@ -196,6 +197,17 @@ namespace CrypCloud.Core
             }
 
             return voluntLib.GetJoblist();
+        }
+
+
+        public ObservableCollection<Contact> GetContacts()
+        {
+            if (!voluntLib.IsStarted)
+            {
+                return new ObservableCollection<Contact>();
+            }
+
+            return voluntLib.GetContactList();
         }
 
         public Job GetJobsById(BigInteger jobid)
@@ -447,6 +459,7 @@ namespace CrypCloud.Core
         }
 
         public string LogLevel { get; set; }
+
     }
 
     public class NetworkJobData

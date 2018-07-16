@@ -170,7 +170,7 @@
     <value>Аккаунт успешно запрошен</value>
   </data>
   <data name="_CreateAccount_successText" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="_CreateAccount_Title" xml:space="preserve">
     <value>Создать новый аккаунт</value>
@@ -354,5 +354,14 @@
   </data>
   <data name="JobList_btn_open_tooltip" xml:space="preserve">
     <value>Откройте работу для участия в расчетах. Чтобы начать вычисление в недавно открытом рабочем пространстве, нажмите кнопку «Воспроизвести».</value>
+  </data>
+  <data name="_IPAddress" xml:space="preserve">
+    <value>Айпи адрес</value>
+  </data>
+  <data name="_PeerId" xml:space="preserve">
+    <value>Идентификатор сверла</value>
+  </data>
+  <data name="_Port" xml:space="preserve">
+    <value>порт</value>
   </data>
 </root>

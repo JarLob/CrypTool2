@@ -15,6 +15,7 @@
             <converter:JobIdConverter x:Key="JobIdConverter" />
             <converter:JobSizeConverter x:Key="JobSizeConverter" />            
             <converter:InvertBoolConverter x:Key="not" />
+            <converter:PeerIdConverter x:Key="PeerIdConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/Button.xaml" />
                 <ResourceDictionary Source="Styles/ProgressBar.xaml" />
@@ -35,6 +36,7 @@
             <RowDefinition Height="25" />
             <RowDefinition Height="500*" />
             <RowDefinition Height="50" />
+            <RowDefinition Height="65" />
         </Grid.RowDefinitions>
         <!-- top controls -->
         <Grid Grid.Row="0">
@@ -234,8 +236,7 @@
 
                 </Grid>
             </ScrollViewer>
-        </Grid>
-
+        </Grid>                    
         <!-- bottom controls -->
         <Grid Grid.Row="3" VerticalAlignment="Bottom">
             <Button Command="{Binding Path=RefreshJobListCommand}" HorizontalAlignment="Left" Margin="5" Width="110"
@@ -254,6 +255,35 @@
                 </StackPanel>
             </Button>
 
+        </Grid>
+        <!-- Connection List-->
+        <Grid Grid.Row="4">
+            <ListView VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Contacts}"
+                      x:Name="ContactsListView" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Grid.ColumnSpan="2">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="IsEnabled" Value="False" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+
+                        <GridViewColumn x:Name="PeerId" Header="{Loc _PeerId}"
+                                        DisplayMemberBinding="{Binding PeerId, Converter={StaticResource PeerIdConverter}}" Width="300" />
+                        <GridViewColumn x:Name="IPAddress" Header="{Loc _IPAddress}"
+                                        DisplayMemberBinding="{Binding IPAddress}" Width="250" />
+                        <GridViewColumn x:Name="Port" Header="{Loc _Port}" 
+                                        DisplayMemberBinding="{Binding Port}" Width="150" />
+                    </GridView>
+                </ListView.View>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
         </Grid>
     </Grid>
 </UserControl>

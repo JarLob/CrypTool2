@@ -350,6 +350,20 @@ namespace VoluntLib2
         }
 
         /// <summary>
+        /// Returns a reference to an observable list of contacts
+        /// WARNING: Do not modify this list from the outside of VoluntLib2
+        /// </summary>
+        /// <returns></returns>
+        public ObservableCollection<Contact> GetContactList()
+        {
+            if (!IsStarted)
+            {
+                return null;
+            }
+            return ConnectionManager.GetContacts();
+        }
+
+        /// <summary>
         /// Helper method to invoke TaskProgessChanged events
         /// </summary>
         /// <param name="sender"></param>

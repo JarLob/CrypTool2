@@ -600,7 +600,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                 if (connectionCount != LastConnectionCount)
                 {
                     LastConnectionCount = connectionCount;
-                    Logger.LogText(String.Format("Number of connections changed! I am currently connected to {0} peer(s)!", connectionCount), this, Logtype.Info);
+                    Logger.LogText(String.Format("Number of connections changed! Currently connected to {0} peer(s)!", connectionCount), this, Logtype.Info);
                     foreach (var keyvalue in ConnectionManager.Contacts)
                     {
                         if (keyvalue.Value.IsOffline == false)
@@ -611,6 +611,7 @@ namespace VoluntLib2.ConnectionLayer.Operations
                     }
                     ConnectionManager.OnConnectionsNumberChanged(contacts);
                 }
+                ConnectionManager.OnUpdateObservableContactList();
             }
         }
 

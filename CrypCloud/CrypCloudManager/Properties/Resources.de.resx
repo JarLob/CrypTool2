@@ -349,4 +349,13 @@
   <data name="_JobList_btn_refresh_tooltip" xml:space="preserve">
     <value>Aktualisiert die Jobliste, indem Joblisten von Nachbar-Peers angefordert werden</value>
   </data>
+  <data name="_IPAddress" xml:space="preserve">
+    <value>IP-Adresse</value>
+  </data>
+  <data name="_PeerId" xml:space="preserve">
+    <value>Peer-Id</value>
+  </data>
+  <data name="_Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
 </root>
