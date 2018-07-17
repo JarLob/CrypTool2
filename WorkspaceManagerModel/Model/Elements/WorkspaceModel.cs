@@ -481,7 +481,11 @@ namespace WorkspaceManager.Model
 
             if (from.IControl && to.IControl)
             {
+                //Delete plugin model
                 to.WorkspaceModel.ModifyModel(new DeletePluginModelOperation(to.PluginModel));
+                //Set IControl data to null                             
+                PropertyInfo propertyInfo = from.PluginModel.Plugin.GetType().GetProperty(from.PropertyName);
+                propertyInfo.SetValue(from.PluginModel.Plugin, null, null);
             }
 
             from.OutputConnections.Remove(connectionModel);

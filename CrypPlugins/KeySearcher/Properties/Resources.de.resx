@@ -430,7 +430,7 @@
     <value>Falsches Schlüsselmuster!</value>
   </data>
   <data name="You_have_to_connect_the_KeySearcher_with_the_Decryption_Control_" xml:space="preserve">
-    <value>Sie müssen dem KeySearcher eine Entschlüsselungsfunktion hinzufügen!</value>
+    <value>Sie müssen dem Schlüsselsucher eine Entschlüsselungsfunktion hinzufügen!</value>
   </data>
   <data name="_days_" xml:space="preserve">
     <value> Tage </value>
@@ -828,5 +828,8 @@
   </data>
   <data name="Dataspace" xml:space="preserve">
     <value>Datenraumgröße:</value>
+  </data>
+  <data name="You_have_to_connect_the_KeySearcher_with_the_Cost_Control_" xml:space="preserve">
+    <value>Sie müssen dem Schlüsselsucher eine Kostenfunktion hinzufügen!</value>
   </data>
 </root>

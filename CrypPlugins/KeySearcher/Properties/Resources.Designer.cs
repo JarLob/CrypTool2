@@ -2169,7 +2169,16 @@ namespace KeySearcher.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die You have to connect the KeySearcher with the Decryption Control! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have to add a cost function to the KeySearcher! ähnelt.
+        /// </summary>
+        public static string You_have_to_connect_the_KeySearcher_with_the_Cost_Control_ {
+            get {
+                return ResourceManager.GetString("You_have_to_connect_the_KeySearcher_with_the_Cost_Control_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have to add a decryption function to the KeySearcher! ähnelt.
         /// </summary>
         public static string You_have_to_connect_the_KeySearcher_with_the_Decryption_Control_ {
             get {

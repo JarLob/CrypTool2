@@ -379,12 +379,18 @@ namespace KeySearcher
                 //either byte[] CStream input or CryptoolStream Object input
                 if (encryptedData != null || csEncryptedData != null) //to prevent execution on initialization
                 {
-                    if (ControlMaster != null)
-                        process(ControlMaster);
-                    else
+                    if (ControlMaster == null)
                     {
                         GuiLogMessage(Resources.You_have_to_connect_the_KeySearcher_with_the_Decryption_Control_, NotificationLevel.Warning);
                     }
+                    else if (CostMaster == null)
+                    {
+                        GuiLogMessage(Resources.You_have_to_connect_the_KeySearcher_with_the_Cost_Control_, NotificationLevel.Warning);
+                    }
+                    else
+                    {
+                        process(ControlMaster);
+                    }                    
                 }
             }
             finally
@@ -788,11 +794,7 @@ namespace KeySearcher
         {
             if (sender == null || costMaster == null)
                 return;
-            //if (!Pattern.testWildcardKey(settings.Key))
-            //{
-            //    GuiLogMessage("Wrong key pattern!", NotificationLevel.Error);
-            //    return;
-            //}
+
             Pattern.WildcardKey = settings.Key;
             this.sender = sender;
 

@@ -627,9 +627,6 @@
   <data name="Wrong_key_pattern_" xml:space="preserve">
     <value>Неверный шаблон ключа!</value>
   </data>
-  <data name="You_have_to_connect_the_KeySearcher_with_the_Decryption_Control_" xml:space="preserve">
-    <value>Вы должны подключить KeySearcher с помощью функции дешифрования!</value>
-  </data>
   <data name="StatisticsPresentation_SetCurrentRate" xml:space="preserve">
     <value>{0: 0,0} ключ / сек.</value>
   </data>
@@ -821,5 +818,11 @@
   </data>
   <data name="Dataspace" xml:space="preserve">
     <value>Размер Dataspace:</value>
+  </data>
+  <data name="You_have_to_connect_the_KeySearcher_with_the_Cost_Control_" xml:space="preserve">
+    <value>Вы должны добавить функцию стоимости в KeySearcher!</value>
+  </data>
+  <data name="You_have_to_connect_the_KeySearcher_with_the_Decryption_Control_" xml:space="preserve">
+    <value>Вы должны добавить функцию дешифрования в KeySearcher!</value>
   </data>
 </root>
