@@ -117,17 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlreadyExecuted" xml:space="preserve">
+    <value>"Kryptoanalyse-Prozess-Ausführung" wurde während dieser Ausführung des Arbeitsbereichs bereits ausgeführt. Bitte stoppen und starten Sie den Arbeitsbereich um die "Kryptoanalyse-Prozess-Ausführung" neu zu starten!</value>
+  </data>
   <data name="ArgumentsCaption" xml:space="preserve">
     <value>Argumente</value>
   </data>
   <data name="ArgumentsTooltip" xml:space="preserve">
     <value>Argumente, die dem Programm übergeben werden sollen.</value>
   </data>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Kopiere alle Zeilen.</value>
+  </data>
+  <data name="Copy_key" xml:space="preserve">
+    <value>Kopiere Schlüssel</value>
+  </data>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Kopiere selektierte Zeile</value>
+  </data>
+  <data name="Copy_text" xml:space="preserve">
+    <value>Kopiere Text</value>
+  </data>
+  <data name="Copy_value" xml:space="preserve">
+    <value>Kopiere Wert</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Vergangene Zeit:</value>
+  </data>
+  <data name="EndLabel" xml:space="preserve">
+    <value>Endzeit:</value>
+  </data>
   <data name="FilenameCaption" xml:space="preserve">
     <value>Dateiname</value>
   </data>
   <data name="FilenameTooltip" xml:space="preserve">
     <value>Dateiname des zu startenden Programms</value>
+  </data>
+  <data name="InfoHeader" xml:space="preserve">
+    <value>Info</value>
   </data>
   <data name="Input1Caption" xml:space="preserve">
     <value>Eingabe 1</value>
@@ -146,6 +173,15 @@
   </data>
   <data name="Input3Tooltip" xml:space="preserve">
     <value>Dritte Eingabe, welche dem Prozess übergeben wird.</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>Schlüssel</value>
+  </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Analyse</value>
+  </data>
+  <data name="NoFilenameOrProgramGiven" xml:space="preserve">
+    <value>Kein Dateiname des zu startenden Programms angegeben!</value>
   </data>
   <data name="Output1Caption" xml:space="preserve">
     <value>Ausgabe 1</value>
@@ -166,7 +202,7 @@
     <value>Dritte Ausgabe des Prozesses.</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Prozess-Ausführung</value>
+    <value>Kryptoanalyse-Prozess-Ausführung</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Komponente, um einen externen Prozess zu starten und mit diesem zu kommunizieren.</value>
@@ -176,5 +212,20 @@
   </data>
   <data name="ShowWindowTooltip" xml:space="preserve">
     <value>Soll das Programmfenster angezeigt werden oder nicht?</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Schlüssel/Sekunde:</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Startzeit:</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestenliste</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Wert</value>
   </data>
 </root>

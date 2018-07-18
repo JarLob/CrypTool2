@@ -117,10 +117,61 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlreadyExecuted" xml:space="preserve">
+    <value>«Исполнитель криптоаналитического процесса», уже выполненный во время этого запуска рабочей области. Пожалуйста, остановите и запустите рабочее пространство, чтобы перезапустить «Исполнитель криптоаналитического процесса»!</value>
+  </data>
+  <data name="Copy_all" xml:space="preserve">
+    <value>Скопировать все строки</value>
+  </data>
+  <data name="Copy_key" xml:space="preserve">
+    <value>Копировать ключ</value>
+  </data>
+  <data name="Copy_line" xml:space="preserve">
+    <value>Копировать выбранную строку</value>
+  </data>
+  <data name="Copy_text" xml:space="preserve">
+    <value>Копировать текст</value>
+  </data>
+  <data name="Copy_value" xml:space="preserve">
+    <value>Копировать значение</value>
+  </data>
+  <data name="ElapsedLabel" xml:space="preserve">
+    <value>Пройденное время:</value>
+  </data>
+  <data name="EndLabel" xml:space="preserve">
+    <value>Время окончания:</value>
+  </data>
+  <data name="InfoHeader" xml:space="preserve">
+    <value>информация</value>
+  </data>
+  <data name="KeyHeader" xml:space="preserve">
+    <value>ключ</value>
+  </data>
+  <data name="LocalLabel" xml:space="preserve">
+    <value>Анализ</value>
+  </data>
+  <data name="NoFilenameOrProgramGiven" xml:space="preserve">
+    <value>Нет Имя файла программы, чтобы начать дано!</value>
+  </data>
   <data name="PluginCaption" xml:space="preserve">
-    <value>Исполнитель процесса</value>
+    <value>Исполнитель криптоаналитического процесса</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
     <value>Компонент для запуска внешнего процесса и связи с ним.</value>
+  </data>
+  <data name="SpeedLabel" xml:space="preserve">
+    <value>Ключи / второй:</value>
+  </data>
+  <data name="StartLabel" xml:space="preserve">
+    <value>Время начала:</value>
+  </data>
+  <data name="TextHeader" xml:space="preserve">
+    <value>Текст</value>
+  </data>
+  <data name="TopTenLabel" xml:space="preserve">
+    <value>Bestlist</value>
+  </data>
+  <data name="ValueHeader" xml:space="preserve">
+    <value>Стоимость</value>
   </data>
 </root>

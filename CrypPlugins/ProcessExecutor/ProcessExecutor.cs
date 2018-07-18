@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Collections.Concurrent;
 using Cryptool.Plugins.Ipc.Messages;
 using Google.Protobuf;
+using System.Windows.Threading;
 
 namespace Cryptool.ProcessExecutor
 {
@@ -47,19 +48,17 @@ namespace Cryptool.ProcessExecutor
         private NamedPipeServerStream _PipeServer = null;
         private NamedPipeServerStream _PipeClient = null;
 
-        private Process _Process = null;
-
-        private string _Input1 = null;
-        private string _Input2 = null;
-        private string _Input3 = null;
+        private Process _Process = null;      
 
         private string _Output1 = null;
         private string _Output2 = null;
         private string _Output3 = null;
 
         private ConcurrentQueue<OutgoingData> _SendingQueue;
-
         private ProcessExecutorSettings _settings = new ProcessExecutorSettings();
+        private AssignmentPresentation _presentation = new AssignmentPresentation();
+        private DateTime _startTime;
+        private bool _alreadyExecuted = false;
 
         [PropertyInfo(Direction.InputData, "Input1Caption", "Input1Tooltip", false)]
         public string Input1
@@ -140,12 +139,10 @@ namespace Cryptool.ProcessExecutor
         {          
             //reset inputs, outputs, and sending queue
             _SendingQueue = new ConcurrentQueue<OutgoingData>();
-            _Input1 = String.Empty;
-            _Input2 = String.Empty;
-            _Input3 = String.Empty;
             _Output1 = String.Empty;
             _Output2 = String.Empty;
             _Output3 = String.Empty;
+            _alreadyExecuted = false;
         }
 
         public void PostExecution()
@@ -160,15 +157,23 @@ namespace Cryptool.ProcessExecutor
 
         public UserControl Presentation
         {
-            get { return null; }
+            get { return _presentation; }
         }
 
         public void Execute()
         {       
             // some checks:
+
+            if (_alreadyExecuted)
+            {
+                GuiLogMessage(Properties.Resources.AlreadyExecuted, NotificationLevel.Error);
+                return;
+            }
+            _alreadyExecuted = true;
+
             if (String.IsNullOrEmpty(_settings.Filename))
             {
-                GuiLogMessage("No filename of program to start given!", NotificationLevel.Error);
+                GuiLogMessage(Properties.Resources.NoFilenameOrProgramGiven, NotificationLevel.Error);
                 return;
             }
 
@@ -176,6 +181,22 @@ namespace Cryptool.ProcessExecutor
             {
                 //Step 0: Set running true :-)
                 _Running = true;
+
+                //set start time in presentation; remove elapsedTime and endTime
+                _startTime = DateTime.Now;
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        _presentation.startTime.Content = _startTime;
+                        _presentation.endTime.Content = string.Empty;
+                        _presentation.elapsedTime.Content = string.Empty;
+                    }
+                    catch (Exception)
+                    {
+                        //wtf?
+                    }
+                }, null);
 
                 //Step 1: Create process                
                 _Process = new Process();
@@ -229,6 +250,7 @@ namespace Cryptool.ProcessExecutor
 
                 SendCt2HelloMessage();
 
+                DateTime lastUpdateTime = DateTime.Now;
                 //Step 6: while both pipes are connected, we busy wait
                 while (_PipeServer.IsConnected && _PipeClient.IsConnected)
                 {
@@ -236,7 +258,24 @@ namespace Cryptool.ProcessExecutor
                     if (!_Running)
                     {
                         return;
-                    }                                     
+                    }
+                    if (DateTime.Now >= lastUpdateTime.AddSeconds(1))
+                    {
+                        lastUpdateTime = DateTime.Now;
+                        //set elapsed time in presentation
+                        _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                        {
+                            try
+                            {              
+                                var elapsedTime =  (DateTime.Now - _startTime);
+                                _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                            }
+                            catch (Exception)
+                            {
+                                //wtf?
+                            }
+                        }, null);
+                    }
                 }
             }
             finally
@@ -287,6 +326,22 @@ namespace Cryptool.ProcessExecutor
                         }
                     }                    
                 }
+
+                //set end time in presentation
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        _presentation.endTime.Content = DateTime.Now;
+                        var elapsedTime = (DateTime.Now - _startTime);
+                        _presentation.elapsedTime.Content = new TimeSpan(elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds);
+                    }
+                    catch (Exception)
+                    {
+                        //wtf?
+                    }
+                }, null);
+
             }            
         }
 
@@ -460,10 +515,61 @@ namespace Cryptool.ProcessExecutor
                         Output3 = value;
                         OnPropertyChanged("Output3");
                         break;
+                    case 1000:
+                        HandleIncomingBestList(value);
+                        break;
                     default:
                         GuiLogMessage(String.Format("Received a value for an output that does not exist: {0}", id), NotificationLevel.Warning);
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Handles incoming best list entries
+        /// </summary>
+        /// <param name="value"></param>
+        private void HandleIncomingBestList(string value)
+        {
+            try
+            {                
+                _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                {
+                    try
+                    {
+                        _presentation.BestList.Clear();
+                    }
+                    catch (Exception ex)
+                    {
+                        GuiLogMessage(String.Format("Error occured while clearing best list: {0}", ex.Message), NotificationLevel.Error);
+                    }
+                }, null);
+                string[] lines = value.Trim().Split('\n', '\r');
+                foreach (string line in lines)
+                {
+                    string[] values = line.Trim().Split(';');
+                    ResultEntry resultEntry = new ResultEntry();
+                    resultEntry.Ranking = values[0];
+                    resultEntry.Value = values[1];
+                    resultEntry.Key = values[2];
+                    resultEntry.Text = values[3];
+                    resultEntry.Info = values[4];
+                    _presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    {
+                        try
+                        {
+                            _presentation.BestList.Add(resultEntry);
+                        }
+                        catch (Exception ex)
+                        {
+                            GuiLogMessage(String.Format("Error occured while adding new entry to best list: {0}", ex.Message), NotificationLevel.Error);
+                        }
+                    }, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                GuiLogMessage(String.Format("Error occured while handling new best list: {0}", ex.Message), NotificationLevel.Error);
             }
         }
 
@@ -578,4 +684,13 @@ namespace Cryptool.ProcessExecutor
         public int outputId;
         public string value;
     }
+
+    public class ResultEntry
+    {
+        public string Ranking { get; set; }
+        public string Value { get; set; }
+        public string Key { get; set; }
+        public string Text { get; set; }
+        public string Info { get; set; }    
+    }    
 }
