@@ -129,22 +129,24 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
                     //get the actual highest blocknumber
                     string buffer = BlockChainDownloader.HighestBlockDownloader(networkStream);
                     //try to parse the actual highes blochnumber
-                    if (!(int.TryParse(buffer, out int blockCount))) 
+                    int blockCount;
+                    if (!(int.TryParse(buffer, out blockCount))) 
                     {
                         GuiLogMessage("Server has an Error with " + buffer, NotificationLevel.Warning);
                     }
                     else
                     {
-                        if (int.TryParse(InputBlock, out int blochNumber))
+                        int blockNumber;
+                        if (int.TryParse(InputBlock, out blockNumber))
                         {
                             //catch entries lower then 0 and put the genesis block
-                            if (blochNumber < 0)
+                            if (blockNumber < 0)
                             {
                                 OutputString = BlockChainDownloader.BlockDownloader(networkStream, blockCount.ToString());
                                 GuiLogMessage("The least block has the number 0!", NotificationLevel.Info);
                             }
                             //Download the requested block
-                            else if (blochNumber >= 0 & blochNumber <= blockCount)
+                            else if (blockNumber >= 0 & blockNumber <= blockCount)
                             {
                                 OutputString = BlockChainDownloader.BlockDownloader(networkStream, InputBlock.ToString());
                             }
