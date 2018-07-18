@@ -371,6 +371,12 @@ namespace VoluntLib2.ManagementLayer
         /// <returns></returns>
         internal BigInteger CreateJob(string worldName, string jobType, string jobName, string jobDescription, byte[] payload, BigInteger numberOfBlocks)
         {
+            //we don't allow creation of anonymous jobs
+            if (CertificateService.GetCertificateService().OwnName.ToLower().Equals("anonymous"))
+            {
+                return BigInteger.MinusOne;
+            }
+
             if (payload.Length > MAX_JOB_PAYLOAD_SIZE)
             {
                 throw new JobPayloadTooBigException(String.Format("Job size too big. Maximum size is {0}, given size was {1}.", MAX_JOB_PAYLOAD_SIZE, payload.Length));

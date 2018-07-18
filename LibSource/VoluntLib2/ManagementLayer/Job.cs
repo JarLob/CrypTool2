@@ -421,7 +421,12 @@ namespace VoluntLib2.ManagementLayer
             {
                 X509Certificate2 creatorCertificate = new X509Certificate2(CreatorCertificateData);
 
-                //some checks on the certificate
+                //some checks on the certificate                
+                if (creatorCertificate.SubjectName.Name.ToLower().Equals("anonymous"))
+                {
+                    //it is not allowed to create a job using the anonymous user
+                    return false;
+                }
                 if (!CertificateService.GetCertificateService().IsValidCertificate(creatorCertificate))
                 {
                     return false;

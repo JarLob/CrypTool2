@@ -75,7 +75,8 @@ namespace CrypCloud.Manager.ViewModels
             Contacts = crypCloudCore.GetContacts();
             RaisePropertyChanged("Contacts");
             Username = CrypCloudCore.Instance.GetUsername();
-            RaisePropertyChanged("Username");            
+            RaisePropertyChanged("Username");
+            RaisePropertyChanged("UserCanCreateJob");
         }
 
         private void OpenJobCreation()
@@ -163,6 +164,23 @@ namespace CrypCloud.Manager.ViewModels
             catch (Exception ex)
             {
                 ErrorMessage = String.Format("Exception while opening job: {0}", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Returns "true" for everyone except the anonymous user, who is not allowed to create jobs.
+        /// Thus, he does not need to see the CreateJob button
+        /// </summary>
+        /// <returns></returns>
+        public bool UserCanCreateJob
+        {
+            get
+            {
+                if (CrypCloudCore.Instance.GetUsername().ToLower().Equals("anonymous"))
+                {
+                    return false;
+                }
+                return true;
             }
         }
 
