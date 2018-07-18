@@ -220,7 +220,7 @@
                 </StackPanel>
             </Button>
 
-            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="110"
+            <Button Command="{Binding Path=CreateNewJobCommand}" HorizontalAlignment="Right" Margin="5" Width="150"
                     Height="30" ToolTip="{Loc _JobList_btn_createNew_tooltip}" Visibility="{Binding Path=UserCanCreateJob, Converter={converter:BoolToVisibilityConverter}}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="../Images/ButtonIcons/plus.png" Width="16" />
