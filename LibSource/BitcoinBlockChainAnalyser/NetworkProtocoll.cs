@@ -119,7 +119,6 @@ namespace BitcoinBlockChainAnalyser
             } while (totalbytes < buffer.Length);
             //Console.WriteLine("Read " + totalbytes + " bytes");
             message.Payload = buffer;
-            Console.WriteLine("Received Message");
             return message;
         }
 
@@ -133,7 +132,6 @@ namespace BitcoinBlockChainAnalyser
             stream.Write(header, 0, header.Length);
             stream.Write(message.Payload, 0, message.Payload.Length);
             stream.Flush();
-            Console.WriteLine("Message sent");
         }
     }
 }

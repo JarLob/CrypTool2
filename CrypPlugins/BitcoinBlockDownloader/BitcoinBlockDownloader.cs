@@ -45,10 +45,6 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
         int port = 0;
         NetworkStream networkStream = null;
 
-        //private variables for internal handling
-        string prevInputHash = null;
-        int prevInputBlock = -1;
-
         #endregion
 
         #region Data Properties
@@ -69,25 +65,14 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
             get { return this.settings; }
         }
 
-        private string _inputHash;
+
+        private string _inputBlock;
 
         /// <summary>
         /// The Downloaeder needs an input value like a number between zero and the highest number in blockchain
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputStringCaption", "InputStringTooltip", false)]
-        public string InputHash
-        {
-            get { return _inputHash; }
-            set { _inputHash = value; }
-        }
-
-        private int _inputBlock;
-
-        /// <summary>
-        /// The Downloaeder needs an input value like a number between zero and the highest number in blockchain
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "InputBlockCaption", "InputBlockTooltip", false)]
-        public int InputBlock
+        [PropertyInfo(Direction.InputData, "InputBlockCaption", "InputBlockTooltip", true)]
+        public string InputBlock
         {
             get { return _inputBlock; }
             set { _inputBlock = value; }
@@ -135,69 +120,55 @@ namespace Cryptool.Plugins.BitcoinBlockDownloader
                 port = settings.Port;
                 client = new TcpClient();
                 client.Connect(hostname, port);
+                client.ReceiveTimeout = 5000;
                 networkStream = client.GetStream();
-            }catch(Exception e)
-            {
-                GuiLogMessage("Connection error: " + e.Message, NotificationLevel.Error);
-            }
 
-            try
-            {
-                //only perform if the InputBlock input has changed
-                if (prevInputBlock != InputBlock)
+
+                try
                 {
-                    //look at the actual highest blocknumber
-                    int blockCount = int.Parse(BlockChainDownloader.HighestBlockDownloader(networkStream));
-                    //catch entries lower then 0 and put the genesis block
-                    if (InputBlock < 0)
+                    //get the actual highest blocknumber
+                    string buffer = BlockChainDownloader.HighestBlockDownloader(networkStream);
+                    //try to parse the actual highes blochnumber
+                    if (!(int.TryParse(buffer, out int blockCount))) 
                     {
-                        OutputString = BlockChainDownloader.BlockDownloader(networkStream, blockCount.ToString());
-                        GuiLogMessage("The least block has the number 0!", NotificationLevel.Info);
-                    }
-                    //Download the requested block
-                    else if (InputBlock >= 0 & InputBlock <= blockCount)
-                    {
-                        OutputString = BlockChainDownloader.BlockDownloader(networkStream, InputBlock.ToString());
+                        GuiLogMessage("Server has an Error with " + buffer, NotificationLevel.Warning);
                     }
                     else
                     {
-                        GuiLogMessage("We need a number between 0 and " + blockCount.ToString() + "!", NotificationLevel.Warning);
-                    }
-                    //store the actual value to check for the next run
-                    prevInputBlock = InputBlock;
-                    OnPropertyChanged("OutputString");
-                }
-
-                //only perform if the InputHash input has changed
-                if (prevInputHash!=InputHash)
-                {
-                    //do nothing if the field empty
-                    if (!InputHash.Equals(""))
-                    {
-                        try
+                        if (int.TryParse(InputBlock, out int blochNumber))
                         {
-                            //Download the requested block 
-                            JObject joe = JObject.Parse(BlockChainDownloader.BlockDownloader(networkStream, InputHash));
-                            //if the error parameter empty, then the data will be sent
-                            if (joe.GetValue("error").ToString().Equals(""))
+                            //catch entries lower then 0 and put the genesis block
+                            if (blochNumber < 0)
                             {
-                                OutputString = joe.ToString();
-                                prevInputHash = InputHash;
-                                OnPropertyChanged("OutputString");
+                                OutputString = BlockChainDownloader.BlockDownloader(networkStream, blockCount.ToString());
+                                GuiLogMessage("The least block has the number 0!", NotificationLevel.Info);
+                            }
+                            //Download the requested block
+                            else if (blochNumber >= 0 & blochNumber <= blockCount)
+                            {
+                                OutputString = BlockChainDownloader.BlockDownloader(networkStream, InputBlock.ToString());
                             }
                             else
                             {
-                                GuiLogMessage(joe.GetValue("error").ToString(), NotificationLevel.Warning);
+                                GuiLogMessage("We need a number between 0 and " + blockCount.ToString() + "!", NotificationLevel.Warning);
                             }
+                            OnPropertyChanged("OutputString");
                         }
-                        catch (Exception e)
+                        else if (InputBlock.Length != 64)
                         {
-                            GuiLogMessage("Invalid blockhash value: " + e.Message, NotificationLevel.Error);
+                            GuiLogMessage("Invalid hash length, 64 characters are expected", NotificationLevel.Info);
+                        }
+                        else
+                        {
+                            OutputString = BlockChainDownloader.BlockDownloader(networkStream, InputBlock);
+                            OnPropertyChanged("OutputString");
                         }
                     }
+               }
+                catch (Exception e)
+                {
+                    GuiLogMessage("Execute error: " + e.Message, NotificationLevel.Error);
                 }
-
-
             }
             catch (Exception e)
             {

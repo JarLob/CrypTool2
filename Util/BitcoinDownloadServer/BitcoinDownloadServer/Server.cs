@@ -24,25 +24,27 @@ namespace BitcoinDownloadServer
          */
         static void Main(string[] args)
         {
+            Logger.SetLogLevel(Logtype.Info);
+
             BitcoinDownloadServer.Properties.Settings.Default.Reload();
             string ServerIp = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiServerUrl;
-            string UserName = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiUsername;            
-            
-            Console.WriteLine("Started with serverip=" + ServerIp);
-            Console.WriteLine("Started with username=" + UserName);
+            string UserName = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiUsername;
+
+            log.LogText("Started with serverip=" + ServerIp, Logtype.Info);
+            log.LogText("Started with username=" + UserName, Logtype.Info);
 
             TcpListener listener = null;
             try
             {
                 listener = new TcpListener(IPAddress.Any, 8080);
                 listener.Start();
-                log.Info("Service was started");
+                log.LogText("Service was started", Logtype.Info);
+                log.LogText("Waiting for incoming client connections...", Logtype.Info);
 
                 while (true)
                 {
-                    log.Info("Waiting for incoming client connections...");
                     TcpClient client = listener.AcceptTcpClient();
-                    log.Info("Accepted new Client connection...");
+                    log.LogText("Accepted new Client connection...", Logtype.Info);
                     Thread thread = new Thread(ClientRequests);
                     thread.IsBackground = true;
                     thread.Start(client);
@@ -51,7 +53,7 @@ namespace BitcoinDownloadServer
             }
             catch (Exception e)
             {
-                log.Error("Error while starting the Service: "+ e.Message);
+                log.LogText("Error while starting the Service: "+ e.Message, Logtype.Error);
             }
             finally
             {
@@ -89,7 +91,11 @@ namespace BitcoinDownloadServer
                         if(int.TryParse(s, out number))
                         {
                             string hash = Getblockhash(number);
-                            response = Getblock(hash);
+                            if (!hash.Equals("see serverlog"))
+                            {
+                                response = Getblock(hash);
+                            }
+
                         }
                         else
                         {
@@ -104,19 +110,27 @@ namespace BitcoinDownloadServer
                     {
                         response = Gettxout(s);
                     }
-                    
-                    Message.SendMessage(networkStream, response);
+                    if(response != null)
+                    {
+                        Message.SendMessage(networkStream, response);
+                    }
+                    else
+                    {
+                        networkStream.Close();
+                    }
+
+
 
 
                 } while (client.Connected);
                 //close the complete client connection
                 client.Close();
-                log.Info("Closing client Connection!");
+                log.LogText("Closing client Connection!", Logtype.Info);
             }
             catch (Exception e)
             {
                 client.Close();
-                log.Info("Exiting thread: "+e.Message);
+                log.LogText("Exiting thread: "+e.Message, Logtype.Error);
             }
             finally
             {
@@ -131,11 +145,11 @@ namespace BitcoinDownloadServer
          */
         private static HttpWebRequest ConnectToServer()
         {
-            // The properties for server connection
+
             HttpWebRequest webRequest = null;
             try
             {
-                
+                // The properties for server connection
                 string ServerIp = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiServerUrl;
                 string UserName = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiUsername;
                 string Password = BitcoinDownloadServer.Properties.Settings.Default.bitcoinApiPassword;
@@ -149,7 +163,7 @@ namespace BitcoinDownloadServer
                 return webRequest;
             }catch(Exception e)
             {
-                log.Error("ConnectToServer(): "+e.Message);
+                log.LogText("ConnectToServer(): "+e.Message, Logtype.Error);
                 return webRequest;
             }
         }
@@ -224,22 +238,24 @@ namespace BitcoinDownloadServer
                 Stream dataStream = webRequest.GetRequestStream();
                 dataStream.Write(byteArray, 0, byteArray.Length);
                 dataStream.Close();
-
-                WebResponse webResponse = null;
+            }
+            catch (Exception e)
+            {
+                log.LogText("BitcoinApi not available: " + e.Message, Logtype.Error);
+                return "API connection";
+            }
+            try
+            { 
                 // deserialze the response
-                StreamReader sReader = null;
-
-                webResponse = webRequest.GetResponse();
-
-                //WebResponse webResponse = webRequest.GetResponse();
-                sReader = new StreamReader(webResponse.GetResponseStream(), true);
+                WebResponse webResponse = webRequest.GetResponse();
+                StreamReader sReader = new StreamReader(webResponse.GetResponseStream(), true);
                 string responseValue = sReader.ReadToEnd();
                 return responseValue;
             }
             catch (Exception e)
             {
-                log.Error("SendRequestAndGetResponse(): " + e.Message);
-                return "";
+                log.LogText("error while deserialze: " + e.Message, Logtype.Error);
+                return "response message";
             }
         }
 
@@ -252,24 +268,31 @@ namespace BitcoinDownloadServer
         private static Message Getblockcount()
         {
             Message message = new Message();
+            message.Header.MessageType = MessageType.GetblockcountResponseMessage;
             try
             {
                 //send a request and get a response from api
                 HttpWebRequest webRequest = ConnectToServer();
                 JObject joe = BitcoinApiCall("getblockcount");
                 string apiResponse = SendRequestAndGetResponse(joe, webRequest);
-                JObject getblockcount = JObject.Parse(apiResponse);
-                string clientResponse = (string)getblockcount.GetValue("result");
-                //create a message
+                if(!(apiResponse.Equals("API connection") || apiResponse.Equals("response message")))
+                {
+                    JObject getblockcount = JObject.Parse(apiResponse);
+                    string clientResponse = (string)getblockcount.GetValue("result");
+                    //create a message
 
-                byte[] byteArray = Encoding.ASCII.GetBytes(clientResponse);
-                message.Header.MessageType = MessageType.GetblockcountResponseMessage;
-                message.Payload = byteArray;
-                
+                    byte[] byteArray = Encoding.ASCII.GetBytes(clientResponse);
+                    message.Payload = byteArray;
+                }
+                else
+                {
+                    message = SetErrorPayload(message, apiResponse);
+                }
             }
             catch (Exception e)
             {
-                log.Error("Error while executing Getblockcount method: " + e.Message);
+                log.LogText("Error while executing Getblockcount method: " + e.Message, Logtype.Error);
+                message = SetErrorPayload(message, "see serverlog");
             }
             return message;
         }
@@ -285,16 +308,24 @@ namespace BitcoinDownloadServer
                 JObject joeHash = BitcoinApiCall("getblockhash");
                 joeHash = AddParameter(number, joeHash);
                 string hash = SendRequestAndGetResponse(joeHash, webRequest);
-                JObject getblockhash = JObject.Parse(hash);
+                if (!(hash.Equals("API connection") || hash.Equals("response message")))
+                {
+                    JObject getblockhash = JObject.Parse(hash);
 
-                //bockhash are written in the result parameter of the json string
-                return getblockhash.GetValue("result").ToString();
+                    //bockhash are written in the result parameter of the json string
+                    return getblockhash.GetValue("result").ToString();
+                }
+                else
+                {
+                    return hash;
+                }
             }
             catch (Exception e)
             {
-                log.Error("Error while executing Getblockhash method: "+e.Message);
-                return "Error";
+                log.LogText("Error while executing Getblockhash method: "+e.Message, Logtype.Error);
+                
             }
+            return "see serverlog";
 
         }
 
@@ -302,22 +333,29 @@ namespace BitcoinDownloadServer
         private static Message Getblock(string hash)
         {
             Message message = new Message();
+            message.Header.MessageType = MessageType.GetblockResponseMessage;
             try
             {
                 //we can push the block informations with the hash result
                 JObject joeBlock = BitcoinApiCall("getblock");
                 joeBlock = AddParameter(hash, joeBlock);
-                HttpWebRequest webRequest2 = ConnectToServer();
-                string getblock = SendRequestAndGetResponse(joeBlock, webRequest2);
-
-                //create a message
-                byte[] byteArray = Encoding.ASCII.GetBytes(getblock);
-                message.Header.MessageType = MessageType.GetblockResponseMessage;
-                message.Payload = byteArray;
+                HttpWebRequest webRequest = ConnectToServer();
+                string getblock = SendRequestAndGetResponse(joeBlock, webRequest);
+                if (!(getblock.Equals("API connection") || getblock.Equals("response message")))
+                {
+                    //create a message
+                    byte[] byteArray = Encoding.ASCII.GetBytes(getblock);
+                    message.Payload = byteArray;
+                }
+                else
+                {
+                    message = SetErrorPayload(message, getblock);
+                }
             }
             catch (Exception e)
             {
-                log.Error("Error while executing Getblock method: "+e.Message);
+                log.LogText("Error while executing Getblock method: "+e.Message, Logtype.Error);
+                message = SetErrorPayload(message, "see serverlog");
             }
             return message;
         }
@@ -326,6 +364,7 @@ namespace BitcoinDownloadServer
         private static Message GetTransaction(string hash)
         {
             Message message = new Message();
+            message.Header.MessageType = MessageType.GettransactionResponseMessage;
             try
             {
                 HttpWebRequest webRequest = ConnectToServer();
@@ -340,15 +379,21 @@ namespace BitcoinDownloadServer
                     joeTransaction = AddParameter(hash, true, joeTransaction);
                     getTransaction = SendRequestAndGetResponse(joeTransaction, webRequest);
                 }
-
-                //create a message
-                byte[] byteArray = Encoding.ASCII.GetBytes(getTransaction);
-                message.Header.MessageType = MessageType.GettransactionResponseMessage;
-                message.Payload = byteArray;
+                if (!(getTransaction.Equals("API connection") || getTransaction.Equals("response message")))
+                {
+                    //create a message
+                    byte[] byteArray = Encoding.ASCII.GetBytes(getTransaction);
+                    message.Payload = byteArray;
+                }
+                else
+                {
+                    message = SetErrorPayload(message, getTransaction);
+                }
             }
             catch (Exception e)
             {
-                log.Error("Error while executing GetTransaction method: " + e.Message);
+                log.LogText("Error while executing GetTransaction method: " + e.Message, Logtype.Error);
+                message = SetErrorPayload(message, "see serverlog");
             }
 
             return message;
@@ -358,6 +403,7 @@ namespace BitcoinDownloadServer
         private static Message Gettxout(string payload)
         {
             Message message = new Message();
+            message.Header.MessageType = MessageType.GettxoutResponsetMessage;
             try
             {
                 HttpWebRequest webRequest = ConnectToServer();
@@ -366,16 +412,31 @@ namespace BitcoinDownloadServer
 
                 joeTxOut = AddParameter(joePayload.GetValue("txid").ToString(), (int)joePayload.GetValue("vout"), true, joeTxOut);
                 string getTxOut = SendRequestAndGetResponse(joeTxOut, webRequest);
-
-                //create a message
-                byte[] byteArray = Encoding.ASCII.GetBytes(getTxOut);
-                message.Header.MessageType = MessageType.GettxoutResponsetMessage;
-                message.Payload = byteArray;
+                if (!(getTxOut.Equals("API connection") || getTxOut.Equals("response message")))
+                {
+                    //create a message
+                    byte[] byteArray = Encoding.ASCII.GetBytes(getTxOut);
+                    message.Payload = byteArray;
+                }
+                else
+                {
+                    message = SetErrorPayload(message, getTxOut);
+                }
             }
             catch (Exception e)
             {
-                log.Error("Error while executing Gettxout method: " + e.Message);
+                log.LogText("Error while executing Gettxout method: " + e.Message, Logtype.Error);
+                message = SetErrorPayload(message, "see serverlog");
             }
+
+            return message;
+        }
+
+
+        private static Message SetErrorPayload(Message message,string payload)
+        {
+            byte[] byteArray = Encoding.ASCII.GetBytes(payload);
+            message.Payload = byteArray;
 
             return message;
         }

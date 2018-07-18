@@ -117,28 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="InputStringCaption" xml:space="preserve">
+  <data name="InputHashCaption" xml:space="preserve">
     <value>Transaktionshash</value>
   </data>
-  <data name="InputStringTooltip" xml:space="preserve">
+  <data name="InputHashTooltip" xml:space="preserve">
     <value>Eingabe ist ein Transaktionshash</value>
-  </data>
-  <data name="OutputString2Caption" xml:space="preserve">
-    <value>Transaktionsausgänge</value>
-  </data>
-  <data name="OutputString2Tooltip" xml:space="preserve">
-    <value>Ausgabe Daten sind die Transaktionsausgänge im Json Fomrat</value>
-  </data>
-  <data name="OutputStringCaption" xml:space="preserve">
-    <value>Transaktionsdaten</value>
-  </data>
-  <data name="OutputStringTooltip" xml:space="preserve">
-    <value>Ausgabe Daten sind die Transaktionsinformationen im Json Format</value>
   </data>
   <data name="PluginCaption" xml:space="preserve">
     <value>Bitcoin-Transaktions-Downloader</value>
   </data>
   <data name="PluginToolTip" xml:space="preserve">
     <value>Diese Komponente läd die Transaktionsinformationen herunter</value>
+  </data>
+  <data name="TransactionDataCaption" xml:space="preserve">
+    <value>Transaktionsdaten</value>
+  </data>
+  <data name="TransactionDataTooltip" xml:space="preserve">
+    <value>Ausgabe Daten sind die Transaktionsinformationen im Json Format</value>
+  </data>
+  <data name="TransactionInputDataCaption" xml:space="preserve">
+    <value>Transaktionsausgänge</value>
+  </data>
+  <data name="TransactionInputDataTooltip" xml:space="preserve">
+    <value>Ausgabe Daten sind die Transaktionsausgänge im Json Fomrat</value>
   </data>
 </root>

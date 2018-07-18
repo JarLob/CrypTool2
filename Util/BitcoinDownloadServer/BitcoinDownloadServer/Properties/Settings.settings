@@ -3,13 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="bitcoinApiUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)">rpcuser</Value>
+      <Value Profile="(Default)">testuser</Value>
     </Setting>
     <Setting Name="bitcoinApiServerUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://rpcuser:rpcpassword@localhost:8332/</Value>
+      <Value Profile="(Default)">http://localhost.:8332</Value>
     </Setting>
     <Setting Name="bitcoinApiPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">rpcpassword</Value>
+      <Value Profile="(Default)">testpassword</Value>
+    </Setting>
+    <Setting Name="logfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\Dominik\testprojekt\log.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>

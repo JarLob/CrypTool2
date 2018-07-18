@@ -155,7 +155,6 @@ namespace BitcoinTransactionViewer
                     joe.Add(new JProperty("address", "No entries"));
                     joe.Add(new JProperty("value", ""));
                     vinDataView.Add(joe);
-                    GuiLogMessage("No VINS could be loaded", NotificationLevel.Info);
                 }
 
             }

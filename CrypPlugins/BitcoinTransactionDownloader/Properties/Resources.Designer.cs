@@ -63,54 +63,18 @@ namespace BitcoinTransactionDownloader.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Transactionhash ähnelt.
         /// </summary>
-        internal static string InputStringCaption {
+        internal static string InputHashCaption {
             get {
-                return ResourceManager.GetString("InputStringCaption", resourceCulture);
+                return ResourceManager.GetString("InputHashCaption", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Input data is a transactionhash as a string ähnelt.
         /// </summary>
-        internal static string InputStringTooltip {
+        internal static string InputHashTooltip {
             get {
-                return ResourceManager.GetString("InputStringTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Transaction txout data ähnelt.
-        /// </summary>
-        internal static string OutputString2Caption {
-            get {
-                return ResourceManager.GetString("OutputString2Caption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output data are the transaction txout content in Json format ähnelt.
-        /// </summary>
-        internal static string OutputString2Tooltip {
-            get {
-                return ResourceManager.GetString("OutputString2Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Transaction data ähnelt.
-        /// </summary>
-        internal static string OutputStringCaption {
-            get {
-                return ResourceManager.GetString("OutputStringCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Outout data is the transaction content in Json format ähnelt.
-        /// </summary>
-        internal static string OutputStringTooltip {
-            get {
-                return ResourceManager.GetString("OutputStringTooltip", resourceCulture);
+                return ResourceManager.GetString("InputHashTooltip", resourceCulture);
             }
         }
         
@@ -129,6 +93,42 @@ namespace BitcoinTransactionDownloader.Properties {
         internal static string PluginToolTip {
             get {
                 return ResourceManager.GetString("PluginToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Transaction data ähnelt.
+        /// </summary>
+        internal static string TransactionDataCaption {
+            get {
+                return ResourceManager.GetString("TransactionDataCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Outout data is the transaction content in Json format ähnelt.
+        /// </summary>
+        internal static string TransactionDataTooltip {
+            get {
+                return ResourceManager.GetString("TransactionDataTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Transaction txout data ähnelt.
+        /// </summary>
+        internal static string TransactionInputDataCaption {
+            get {
+                return ResourceManager.GetString("TransactionInputDataCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output data are the transaction txout content in Json format ähnelt.
+        /// </summary>
+        internal static string TransactionInputDataTooltip {
+            get {
+                return ResourceManager.GetString("TransactionInputDataTooltip", resourceCulture);
             }
         }
     }

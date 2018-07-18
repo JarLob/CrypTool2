@@ -61,23 +61,23 @@ namespace Cryptool.Plugins.BitcoinTransactionDownloader
             get { return this.settings; }
         }
 
-        private string _inputString;
+        private string _InputHash;
 
         /// <summary>
         /// The Downloaeder needs an input value like a number between zero and the highest number in blockchain
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputStringCaption", "InputStringTooltip", true)]
-        public string InputString
+        [PropertyInfo(Direction.InputData, "InputHashCaption", "InputHashTooltip", true)]
+        public string InputHash
         {
-            get { return _inputString; }
-            set { _inputString = value; }
+            get { return _InputHash; }
+            set { _InputHash = value; }
         }
 
         /// <summary>
         /// The Downloader returns the transaction information from the response transaction hash
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "OutputStringCaption", "OutputStringTooltip", true)]
-        public string OutputString
+        [PropertyInfo(Direction.OutputData, "TransactionDataCaption", "TransactionDataTooltip", true)]
+        public string TransactionData
         {
             get;
             set;
@@ -86,8 +86,8 @@ namespace Cryptool.Plugins.BitcoinTransactionDownloader
         /// <summary>
         /// The Downloader returns the transaction output information from the response transaction hash
         /// </summary>
-        [PropertyInfo(Direction.OutputData, "OutputString2Caption", "OutputString2Tooltip", true)]
-        public string OutputString2
+        [PropertyInfo(Direction.OutputData, "TransactionInputDataCaption", "TransactionInputDataTooltip", true)]
+        public string TransactionInputData
         {
             get;
             set;
@@ -125,64 +125,69 @@ namespace Cryptool.Plugins.BitcoinTransactionDownloader
                 port = settings.Port;
                 client = new TcpClient();
                 client.Connect(hostname, port);
+                client.ReceiveTimeout = 8000;
                 networkStream = client.GetStream();
+
+                ProgressChanged(0, 1);
+                try
+                {
+                    //do nothing if the transaction hash null or empty
+                    if (InputHash != null & !InputHash.Equals(""))
+                    {
+                        //Download the Transaction information
+                        String response = BlockChainDownloader.TransactionDownloader(networkStream, InputHash);
+                        try
+                        {
+                            //parsing the transaction data
+                            JObject joe = JObject.Parse(response);
+                            JObject transactionData = JObject.Parse(joe.GetValue("result").ToString());
+                            //save the transaction input data in separately JArray
+                            JArray vinData = JArray.Parse(transactionData.GetValue("vin").ToString());
+                            JArray vinOutput = new JArray();
+
+                            /*
+                             * The transaction data does not contain relevant information about the transaction 
+                             * receipts. These must be downloaded separately.
+                             */
+                            foreach (JObject vin in vinData)
+                            {
+                                if(!vin.GetValue("txid").ToString().Equals(""))
+                                {
+                                    String s = BlockChainDownloader.TxoutDownloader(networkStream, vin.GetValue("txid").ToString(), (int)vin.GetValue("vout"));
+                                    JObject buffer = JObject.Parse(s);
+                                    JObject jObject = new JObject();
+
+                                    JObject scriptPubKey = JObject.Parse(buffer.GetValue("scriptPubKey").ToString());
+
+                                    jObject.Add(new JProperty("address", scriptPubKey.GetValue("addresses").ToString()));
+                                    jObject.Add(new JProperty("value", buffer.GetValue("value").ToString()));
+                                    vinOutput.Add(jObject);
+                                }
+
+                            }
+                            TransactionInputData = vinOutput.ToString();
+
+                        }
+                        //if the input list empty
+                        catch (Exception e)
+                        {
+                            TransactionInputData = "";
+                            GuiLogMessage("No entries in transaction: " + e.Message, NotificationLevel.Warning);
+                        }
+                        TransactionData = response;
+                    }
+                }
+                catch (Exception e)
+                {
+                    GuiLogMessage(e.Message, NotificationLevel.Error);
+                }
+                OnPropertyChanged("TransactionData");
+                OnPropertyChanged("TransactionInputData");
             }
             catch (Exception e)
             {
                 GuiLogMessage("Connection error: " + e.Message, NotificationLevel.Error);
             }
-
-            ProgressChanged(0, 1);
-            try
-            {
-                //do nothing if the transaction hash null or empty
-                if(InputString != null & !InputString.Equals(""))
-                {
-                    //Download the Transaction information
-                    String response = BlockChainDownloader.TransactionDownloader(networkStream, InputString);
-                    try
-                    {
-                        //parsing the transaction data
-                        JObject joe = JObject.Parse(response);
-                        JObject transactionData = JObject.Parse(joe.GetValue("result").ToString());
-                        //save the transaction input data in separately JArray
-                        JArray vinData = JArray.Parse(transactionData.GetValue("vin").ToString());
-                        JArray vinOutput = new JArray();
-
-                        /*
-                         * The transaction data does not contain relevant information about the transaction 
-                         * receipts. These must be downloaded separately.
-                         */
-                        foreach (JObject vin in vinData)
-                        {
-                            String s = BlockChainDownloader.TxoutDownloader(networkStream, vin.GetValue("txid").ToString(), (int)vin.GetValue("vout"));
-                            JObject buffer = JObject.Parse(s);
-                            JObject jObject = new JObject();
-
-                            JObject scriptPubKey = JObject.Parse(buffer.GetValue("scriptPubKey").ToString());
-
-                            jObject.Add(new JProperty("address", scriptPubKey.GetValue("addresses").ToString()));
-                            jObject.Add(new JProperty("value", buffer.GetValue("value").ToString()));
-                            vinOutput.Add(jObject);
-                        }
-                        OutputString2 = vinOutput.ToString();
-
-                    }
-                    //if the input list empty
-                    catch (Exception e)
-                    {
-                        OutputString2 = "";
-                        GuiLogMessage("No entries in transaction: "+e.Message, NotificationLevel.Warning);
-                    }
-                    OutputString = response;
-                }
-            }
-            catch (Exception e)
-            {
-                GuiLogMessage(e.Message, NotificationLevel.Error);
-            }
-            OnPropertyChanged("OutputString");
-            OnPropertyChanged("OutputString2");
 
             ProgressChanged(1, 1);
             client.Close();
