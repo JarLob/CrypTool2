@@ -30,7 +30,7 @@ public class ConnectorTest {
 
 			for (int i = 1; i <= 100; i++) {
 
-				Ct2Connector.encodeProgress(i, 100);
+				Ct2Connector.enqueueProgress(i, 100);
 				Thread.sleep(100);
 
 				// check if ct2 wants us to shutdown
@@ -39,8 +39,8 @@ public class ConnectorTest {
 				}
 
 				// test send log
-				if (i != 0 && i % 10 == 0) {
-					Ct2Connector.encodeLogEntry("Hello :-)", LogLevel.CT2INFO);
+				if ((i != 0) && ((i % 10) == 0)) {
+					Ct2Connector.enqueueLogEntry("Hello :-)", LogLevel.CT2INFO);
 				}
 
 				// test sending values
@@ -66,14 +66,14 @@ public class ConnectorTest {
 				}
 			}
 			try {
-				Ct2Connector.encodeGoodbye(0, "everything ok!");
+				Ct2Connector.enqueueGoodbye(0, "everything ok!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			try {
-				Ct2Connector.encodeGoodbye(-1, e.getMessage());
+				Ct2Connector.enqueueGoodbye(-1, e.getMessage());
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}

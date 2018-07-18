@@ -34,6 +34,10 @@ import org.cryptool.ipc.messages.Ct2MessageType;
 import org.cryptool.ipc.messages.MessageHelper;
 import org.cryptool.ipc.messages.TypedMessage;
 
+/**
+ * @author Henner Heck
+ *
+ */
 public final class Ct2Connector {
 
 	private static final String pipeRX = "serverToClient";
@@ -51,11 +55,17 @@ public final class Ct2Connector {
 
 	}
 
+	/**
+	 * @return The state of the send loop.
+	 */
 	public static LoopState getSenderState() {
 		final ISendLoop<TypedMessage> loop = instance.sendLoop.get();
 		return (loop != null) ? loop.getState() : LoopState.SHUTDOWN;
 	}
 
+	/**
+	 * @return The state of the receive loop.
+	 */
 	public static LoopState getReceiverState() {
 		final IReceiveLoop<Ct2IpcMessage> loop = instance.receiveLoop.get();
 		return (loop != null) ? loop.getState() : LoopState.SHUTDOWN;
@@ -98,7 +108,7 @@ public final class Ct2Connector {
 			receiver.start();
 			sender.start();
 			// send initial message
-			sender.offer(hello); // TODO put initial message here
+			sender.offer(hello);
 			return true;
 		} finally {
 			this.myLock.unlock();
@@ -108,7 +118,7 @@ public final class Ct2Connector {
 	/**
 	 * 
 	 * Shuts down and clears any existing connection and tries to establish a new
-	 * connection based on named pipes.
+	 * connection.
 	 * 
 	 * @param anErr
 	 * @return
@@ -121,7 +131,10 @@ public final class Ct2Connector {
 		return instance.start_(hello, anErr);
 	}
 
-	public static void stop() throws Exception {
+	/**
+	 * Signal the send and the receive loop to stop.
+	 */
+	public static void stop() {
 		instance.shutdown_(false);
 	}
 
@@ -130,6 +143,11 @@ public final class Ct2Connector {
 		return (loop != null) ? loop.offer(m) : false;
 	}
 
+	/**
+	 * @param valuesByPin
+	 *            String values with a numerical identifier.
+	 * @return True, if the value message was successfully enqueued.
+	 */
 	public static boolean enqueueValues(final Map<Integer, String> valuesByPin) {
 		if ((valuesByPin == null) || valuesByPin.isEmpty()) {
 			return true;
@@ -137,6 +155,11 @@ public final class Ct2Connector {
 		return enqueueWithSender(MessageHelper.encodeCt2Values(valuesByPin));
 	}
 
+	/**
+	 * @param values
+	 *            String values.
+	 * @return True, if the value message was successfully enqueued.
+	 */
 	public static boolean enqueueValues(final List<String> values) {
 		if ((values == null) || values.isEmpty()) {
 			return true;
@@ -144,42 +167,100 @@ public final class Ct2Connector {
 		return enqueueWithSender(MessageHelper.encodeCt2Values(values));
 	}
 
-	public static boolean encodeProgress(final double currentValue, final double maxValue) {
+	/**
+	 * @param currentValue
+	 *            The progress.
+	 * @param maxValue
+	 *            The maximum progress.
+	 * @return True, if the progress message was successfully enqueued.
+	 */
+	public static boolean enqueueProgress(final double currentValue, final double maxValue) {
 		return enqueueWithSender(MessageHelper.encodeCt2Progress(currentValue, maxValue));
 	}
 
-	public static boolean encodeLogEntry(final String entry, final LogLevel logLevel) {
+	/**
+	 * @param entry
+	 *            The log entry.
+	 * @param logLevel
+	 *            The log level.
+	 * @return True, if the log message was successfully enqueued.
+	 */
+	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel) {
 		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
 
-	public static boolean encodeGoodbye(final int exitCode, final String exitMessage) {
+	/**
+	 * @param exitCode
+	 *            The exit code, typically 0 for successful completion.
+	 * @param exitMessage
+	 *            The exit message.
+	 * @return True, if the goodbye message was successfully enqueued.
+	 */
+	public static boolean enqueueGoodbye(final int exitCode, final String exitMessage) {
 		return enqueueWithSender(MessageHelper.encodeCt2GoodBye(exitCode, exitMessage));
 	}
 
 	// calls to the connection state
 
+	/**
+	 * @return The server name.
+	 */
 	public static String getServerCtName() {
 		Ct2ConnectionState cs = instance.connState.get();
 		return cs != null ? cs.getServerCtName() : "";
 	}
 
+	/**
+	 * @return The server version.
+	 */
 	public static String getServerCtVersion() {
 		Ct2ConnectionState cs = instance.connState.get();
 		return cs != null ? cs.getServerCtVersion() : "";
 	}
 
+	/**
+	 * @return True, if values from the server are available.
+	 */
 	public static boolean hasValues() {
 		Ct2ConnectionState cs = instance.connState.get();
 		return cs != null ? cs.hasValues() : false;
 	}
 
+	/**
+	 * @return The oldest value message received from the server, null if no message
+	 *         is present in the receive queue.
+	 */
 	public static Map<Integer, String> getValues() {
 		Ct2ConnectionState cs = instance.connState.get();
 		return cs != null ? cs.getValues() : null;
 	}
 
+	/**
+	 * @return True, if the server requested a shutdown.
+	 */
 	public static boolean getShutdownRequested() {
 		Ct2ConnectionState cs = instance.connState.get();
 		return cs != null ? cs.getShutdownRequested() : false;
+	}
+
+	public static boolean isShutdown() {
+		return (getReceiverState() == LoopState.SHUTDOWN) //
+				&& (getSenderState() == LoopState.SHUTDOWN);
+	}
+
+	public static boolean waitForShutdown(final int timeoutMillis) throws InterruptedException {
+		final boolean hasTimeout = timeoutMillis > 0;
+		final long startMillis = hasTimeout ? System.currentTimeMillis() : 0;
+		boolean shutdown = false;
+		while (true) {
+			shutdown = isShutdown();
+			if (shutdown) {
+				return true;
+			}
+			if (hasTimeout && ((System.currentTimeMillis() - startMillis) >= timeoutMillis)) {
+				return false;
+			}
+			Thread.sleep(10);
+		}
 	}
 }
