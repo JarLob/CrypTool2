@@ -61,7 +61,7 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die &quot;Cryptanalytic Process Executor&quot; already executed during this run of the workspace. Please stop and start the workspace to restart the &quot;Cryptanalytic Process Executor&quot;! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The &quot;Cryptanalytic Process Executor&quot; already started with data given in this run of the workspace. In order to change input data and to restart the component &quot;Cryptanalytic Process Executor&quot;, please stop and start the workspace. ähnelt.
         /// </summary>
         public static string AlreadyExecuted {
             get {
@@ -250,7 +250,7 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die No filename of program to start given! ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Filename of program to start is missing. ähnelt.
         /// </summary>
         public static string NoFilenameOrProgramGiven {
             get {
@@ -322,7 +322,7 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Component to start an external process and communicate with it. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component to start an external process and then to communicate with it. ähnelt.
         /// </summary>
         public static string PluginTooltip {
             get {

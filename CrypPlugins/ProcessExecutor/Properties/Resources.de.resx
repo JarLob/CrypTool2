@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AlreadyExecuted" xml:space="preserve">
-    <value>"Kryptoanalyse-Prozess-Ausführung" wurde während dieser Ausführung des Arbeitsbereichs bereits ausgeführt. Bitte stoppen und starten Sie den Arbeitsbereich um die "Kryptoanalyse-Prozess-Ausführung" neu zu starten!</value>
+    <value>Die "Kryptoanalyse-Prozess-Ausführung" wurde mit Daten in diesem Lauf des Arbeitsbereichs bereits gestartet. Bitte stoppen und starten Sie den Arbeitsbereich, um Eingabedaten zu ändern und um die Komponente "Kryptoanalyse-Prozess-Ausführung" neu zu starten.</value>
   </data>
   <data name="ArgumentsCaption" xml:space="preserve">
     <value>Argumente</value>
@@ -127,7 +127,7 @@
     <value>Argumente, die dem Programm übergeben werden sollen.</value>
   </data>
   <data name="Copy_all" xml:space="preserve">
-    <value>Kopiere alle Zeilen.</value>
+    <value>Kopiere alle Zeilen</value>
   </data>
   <data name="Copy_key" xml:space="preserve">
     <value>Kopiere Schlüssel</value>
@@ -160,19 +160,19 @@
     <value>Eingabe 1</value>
   </data>
   <data name="Input1Tooltip" xml:space="preserve">
-    <value>Erste Eingabe, welche dem Prozess übergeben wird.</value>
+    <value>Erste Eingabe, die dem Prozess übergeben wird.</value>
   </data>
   <data name="Input2Caption" xml:space="preserve">
     <value>Eingabe 2</value>
   </data>
   <data name="Input2Tooltip" xml:space="preserve">
-    <value>Zweite Eingabe, welche dem Prozess übergeben wird.</value>
+    <value>Zweite Eingabe, die dem Prozess übergeben wird.</value>
   </data>
   <data name="Input3Caption" xml:space="preserve">
     <value>Eingabe 3</value>
   </data>
   <data name="Input3Tooltip" xml:space="preserve">
-    <value>Dritte Eingabe, welche dem Prozess übergeben wird.</value>
+    <value>Dritte Eingabe, die dem Prozess übergeben wird.</value>
   </data>
   <data name="KeyHeader" xml:space="preserve">
     <value>Schlüssel</value>
@@ -181,7 +181,7 @@
     <value>Analyse</value>
   </data>
   <data name="NoFilenameOrProgramGiven" xml:space="preserve">
-    <value>Kein Dateiname des zu startenden Programms angegeben!</value>
+    <value>Dateiname des zu startenden Programms fehlt.</value>
   </data>
   <data name="Output1Caption" xml:space="preserve">
     <value>Ausgabe 1</value>
@@ -205,7 +205,7 @@
     <value>Kryptoanalyse-Prozess-Ausführung</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente, um einen externen Prozess zu starten und mit diesem zu kommunizieren.</value>
+    <value>Komponente, um einen externen Prozess zu starten und mit diesem dann zu kommunizieren.</value>
   </data>
   <data name="ShowWindowCaption" xml:space="preserve">
     <value>Zeige Fenster</value>
