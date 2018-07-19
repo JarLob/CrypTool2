@@ -202,7 +202,7 @@ public final class Ct2Connector {
 	 */
 	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel, final PrintStream localLog) {
 		if (localLog != null) {
-			localLog.println(logLevel + ":" + entry);
+			localLog.println(logLevel + ": " + entry);
 		}
 		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
