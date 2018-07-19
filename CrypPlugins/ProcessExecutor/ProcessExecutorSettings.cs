@@ -17,6 +17,8 @@
 
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Attributes;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace Cryptool.ProcessExecutor
@@ -28,7 +30,21 @@ namespace Cryptool.ProcessExecutor
 
         private string _filename;
         private string _arguments;
+        private string _resourceDirectory;
         private bool _showWindow;
+
+        private int _threads;
+        private int _cycles;
+
+        public ProcessExecutorSettings()
+        {
+            //fill the list for the dropdown menu with numbers from 1 to ProcessorCount
+            CoresAvailable.Clear();
+            for (int i = 1; i <= Environment.ProcessorCount; i++)
+            {
+                CoresAvailable.Add(i.ToString());
+            }
+        }
 
         public void Initialize()
         {
@@ -61,7 +77,20 @@ namespace Cryptool.ProcessExecutor
             }
         }
 
-        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 2, false, ControlType.CheckBox)]
+        [TaskPane("ResourceDirectoryCaption", "ResourceDirectoryTooltip", null, 2, false, ControlType.TextBox)]
+        public string ResourceDirectory
+        {
+            get { return _resourceDirectory; }
+            set
+            {
+                if (value != _resourceDirectory)
+                {
+                    _resourceDirectory = value;
+                }
+            }
+        }
+
+        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 3, false, ControlType.CheckBox)]
         public bool ShowWindow
         {
             get { return _showWindow; }
@@ -73,5 +102,57 @@ namespace Cryptool.ProcessExecutor
                 }
             }
         }
+
+        [TaskPane("ThreadsCaption", "ThreadsTooltip", null, 4, false, ControlType.DynamicComboBox, new string[] { "CoresAvailable" })]
+        public int Threads
+        {
+            get { return _threads; }
+            set
+            {
+                if (value != _threads)
+                {
+                    _threads = value;
+                    OnPropertyChanged("Threads");
+                }
+            }
+        }
+
+        [TaskPane("CyclesCaption", "CyclesTooltip", null, 5, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, 1000)]
+        public int Cycles
+        {
+            get { return _cycles; }
+            set
+            {
+                if (value != _cycles)
+                {
+                    _cycles = value;
+                    OnPropertyChanged("Cycles");
+                }
+            }
+        }
+
+        private ObservableCollection<string> coresAvailable = new ObservableCollection<string>();
+        [DontSave]
+        public ObservableCollection<string> CoresAvailable
+        {
+            get { return coresAvailable; }
+            set
+            {
+                if (value != coresAvailable)
+                {
+                    coresAvailable = value;
+                    OnPropertyChanged("CoresAvailable");
+                }
+            }
+        }
+
+        private void OnPropertyChanged(string p)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(p));
+            }
+        }
+
     }
 }

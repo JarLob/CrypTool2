@@ -133,6 +133,24 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Cycles ähnelt.
+        /// </summary>
+        public static string CyclesCaption {
+            get {
+                return ResourceManager.GetString("CyclesCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die How many cycles may the cryptanalysis perform? ähnelt.
+        /// </summary>
+        public static string CyclesTooltip {
+            get {
+                return ResourceManager.GetString("CyclesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Elapsed Time: ähnelt.
         /// </summary>
         public static string ElapsedLabel {
@@ -331,6 +349,24 @@ namespace Cryptool.ProcessExecutor.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resource directory ähnelt.
+        /// </summary>
+        public static string ResourceDirectoryCaption {
+            get {
+                return ResourceManager.GetString("ResourceDirectoryCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Directory where resource files (e.g. language statistics) are located ähnelt.
+        /// </summary>
+        public static string ResourceDirectoryTooltip {
+            get {
+                return ResourceManager.GetString("ResourceDirectoryTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Show window ähnelt.
         /// </summary>
         public static string ShowWindowCaption {
@@ -372,6 +408,24 @@ namespace Cryptool.ProcessExecutor.Properties {
         public static string TextHeader {
             get {
                 return ResourceManager.GetString("TextHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Threads ähnelt.
+        /// </summary>
+        public static string ThreadsCaption {
+            get {
+                return ResourceManager.GetString("ThreadsCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die How many threads may the process start for performing cryptanalysis? ähnelt.
+        /// </summary>
+        public static string ThreadsTooltip {
+            get {
+                return ResourceManager.GetString("ThreadsTooltip", resourceCulture);
             }
         }
         

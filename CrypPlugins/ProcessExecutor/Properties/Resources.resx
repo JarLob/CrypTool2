@@ -141,6 +141,12 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Copy value</value>
   </data>
+  <data name="CyclesCaption" xml:space="preserve">
+    <value>Cycles</value>
+  </data>
+  <data name="CyclesTooltip" xml:space="preserve">
+    <value>How many cycles may the cryptanalysis perform?</value>
+  </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Elapsed Time:</value>
   </data>
@@ -207,6 +213,12 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Component to start an external process and then to communicate with it.</value>
   </data>
+  <data name="ResourceDirectoryCaption" xml:space="preserve">
+    <value>Resource directory</value>
+  </data>
+  <data name="ResourceDirectoryTooltip" xml:space="preserve">
+    <value>Directory where resource files (e.g. language statistics) are located</value>
+  </data>
   <data name="ShowWindowCaption" xml:space="preserve">
     <value>Show window</value>
   </data>
@@ -221,6 +233,12 @@
   </data>
   <data name="TextHeader" xml:space="preserve">
     <value>Text</value>
+  </data>
+  <data name="ThreadsCaption" xml:space="preserve">
+    <value>Threads</value>
+  </data>
+  <data name="ThreadsTooltip" xml:space="preserve">
+    <value>How many threads may the process start for performing cryptanalysis?</value>
   </data>
   <data name="TopTenLabel" xml:space="preserve">
     <value>Bestlist</value>

@@ -135,6 +135,12 @@
   <data name="Copy_value" xml:space="preserve">
     <value>Копировать значение</value>
   </data>
+  <data name="CyclesCaption" xml:space="preserve">
+    <value>циклы</value>
+  </data>
+  <data name="CyclesTooltip" xml:space="preserve">
+    <value>Сколько циклов допускается криптоанализ?</value>
+  </data>
   <data name="ElapsedLabel" xml:space="preserve">
     <value>Пройденное время:</value>
   </data>
@@ -159,6 +165,12 @@
   <data name="PluginTooltip" xml:space="preserve">
     <value>Компонент для запуска внешнего процесса и связи с ним.</value>
   </data>
+  <data name="ResourceDirectoryCaption" xml:space="preserve">
+    <value>каталог ресурсов</value>
+  </data>
+  <data name="ResourceDirectoryTooltip" xml:space="preserve">
+    <value>Каталог, содержащий файлы ресурсов (например, статистика языка)</value>
+  </data>
   <data name="SpeedLabel" xml:space="preserve">
     <value>Ключи / второй:</value>
   </data>
@@ -168,8 +180,14 @@
   <data name="TextHeader" xml:space="preserve">
     <value>Текст</value>
   </data>
+  <data name="ThreadsCaption" xml:space="preserve">
+    <value>Потоки</value>
+  </data>
+  <data name="ThreadsTooltip" xml:space="preserve">
+    <value>Сколько потоков может начаться для выполнения криптоанализа?</value>
+  </data>
   <data name="TopTenLabel" xml:space="preserve">
-    <value>Bestlist</value>
+    <value>Топ список</value>
   </data>
   <data name="ValueHeader" xml:space="preserve">
     <value>Стоимость</value>
