@@ -16,6 +16,8 @@
 package org.cryptool.ipc;
 
 import java.io.PrintStream;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -186,6 +188,41 @@ public final class Ct2Connector {
 	 * @return True, if the log message was successfully enqueued.
 	 */
 	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel) {
+		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
+	}
+
+	/**
+	 * @param entry
+	 *            The log entry.
+	 * @param logLevel
+	 *            The log level.
+	 * @param localLog
+	 *            PrintStream for local log output, possibly System.
+	 * @return True, if the log message was successfully enqueued.
+	 */
+	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel, final PrintStream localLog) {
+		if (localLog != null) {
+			localLog.println(logLevel + ":" + entry);
+		}
+		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
+	}
+
+	/**
+	 * @param entry
+	 *            The log entry.
+	 * @param logLevel
+	 *            The log level.
+	 * @param logger
+	 *            An instance of System.Logger.
+	 * @return True, if the log message was successfully enqueued.
+	 */
+	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel, final Logger logger) {
+		if (logger != null) {
+			final Level level = MessageHelper.loggerLevel(logLevel);
+			if (logger.isLoggable(level)) {
+				logger.log(level, entry);
+			}
+		}
 		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
 

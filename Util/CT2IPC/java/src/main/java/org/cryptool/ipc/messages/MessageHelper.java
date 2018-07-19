@@ -15,6 +15,7 @@
 */
 package org.cryptool.ipc.messages;
 
+import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -144,6 +145,27 @@ public class MessageHelper {
 						.setExitCode(anExitCode)//
 						.setExitMessage(message)//
 						.build().toByteString());
+	}
+
+	public static Level loggerLevel(final LogLevel level) {
+		final Level defaultLevel = Level.ERROR;
+		if (level == null) {
+			return defaultLevel;
+		}
+		switch (level) {
+		case CT2INFO:
+		case CT2BALLOON:
+			return Level.INFO;
+		case CT2DEBUG:
+			return Level.DEBUG;
+		case CT2ERROR:
+			return Level.ERROR;
+		case CT2WARNING:
+			return Level.WARNING;
+		default:
+			// This should not happen.
+			return defaultLevel;
+		}
 	}
 
 }
