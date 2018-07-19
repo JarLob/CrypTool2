@@ -37,6 +37,9 @@ public final class Ct2ConnectionState {
 
 	private final AtomicBoolean shutdownRequested = new AtomicBoolean(false);
 
+	private final AtomicReference<Exception> senderException = new AtomicReference<Exception>(null);
+	private final AtomicReference<Exception> receiverException = new AtomicReference<Exception>(null);
+
 	public static boolean supportedProtocol(final int aProtocolVersion) {
 		return Ct2MessageType.myProtocolVersion >= aProtocolVersion;
 	}
@@ -65,6 +68,14 @@ public final class Ct2ConnectionState {
 		return this.shutdownRequested.getAndSet(true);
 	}
 
+	public Exception setSenderException(final Exception e) {
+		return this.senderException.getAndSet(e);
+	}
+
+	public Exception setReceiverException(final Exception e) {
+		return this.receiverException.getAndSet(e);
+	}
+
 	String getServerCtName() {
 		return this.serverCtName.get();
 	}
@@ -83,6 +94,22 @@ public final class Ct2ConnectionState {
 
 	boolean getShutdownRequested() {
 		return this.shutdownRequested.get();
+	}
+
+	Exception getSenderException() {
+		return this.senderException.get();
+	}
+
+	Exception getReceiverException() {
+		return this.receiverException.get();
+	}
+
+	Exception clearSenderException() {
+		return this.senderException.getAndSet(null);
+	}
+
+	Exception clearReceiverException() {
+		return this.receiverException.getAndSet(null);
 	}
 
 }

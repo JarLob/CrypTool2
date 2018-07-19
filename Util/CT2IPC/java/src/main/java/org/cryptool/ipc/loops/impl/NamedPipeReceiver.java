@@ -15,7 +15,6 @@
 */
 package org.cryptool.ipc.loops.impl;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
@@ -26,8 +25,6 @@ import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2IpcMessage;
 import org.cryptool.ipc.messages.Ct2MessageType;
 import org.cryptool.ipc.messages.MessageHelper;
 
-import com.google.protobuf.InvalidProtocolBufferException;
-
 public class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IReceiveLoop<Ct2IpcMessage> {
 
 	private final String pipeUrl;
@@ -36,7 +33,7 @@ public class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IR
 
 	public NamedPipeReceiver(final String aPipeUrl, final Ct2ConnectionState aConnState, final PrintStream anErr,
 			final AbstractLoop<?> aSendLoop) {
-		super(anErr);
+		super(aConnState, anErr, LoopType.RECEIVER);
 		this.pipeUrl = aPipeUrl;
 		this.connState = aConnState;
 		this.sendLoop = aSendLoop;
@@ -52,59 +49,41 @@ public class NamedPipeReceiver extends AbstractLoop<Ct2IpcMessage> implements IR
 					return;
 				}
 				if (pipe == null) {
-					this.printErr("Could not connect to named pipe \"" + this.pipeUrl
-							+ "\". Message receiver is shutting down.");
 					this.setStopped(false);
 					return;
 				}
 				InputStream is = NPHelper.getInputStream(pipe, DelayOnConnectionError, MaxConnectionErrors);
-				if (is == null) {
-					this.printErr("Could not create an input stream from pipe \"" + this.pipeUrl
-							+ "\". Message receiver is shutting down.");
-					this.setStopped(false);
-					return;
-				}
 				// possibly unnecessary optimization to avoid
-				// polling the atomic boolean on each loop
+				// polling the atomic boolean on each pass
 				int stateUpdateCounter = 0;
 				LoopState state = this.myState.get();
 				long loopSleep = 0;
-				try {
-					while (state == LoopState.RUNNING) {
-						if (is.available() > 0) {
-							// we assume, that there is always a complete message
-							final Ct2IpcMessage m = Ct2IpcMessage.parseDelimitedFrom(is);
-							try {
-								final boolean handled = MessageHelper.handleMessage(m, this.connState);
-								if (!handled) {
-									this.printErr(
-											"Could not handle a message with type id " + m.getMessageType() + ".");
-								}
-							} catch (InvalidProtocolBufferException e) {
-								this.printErr("Could not decode a message with type id " + m.getMessageType() + ".", e);
-							}
-							if (Ct2MessageType.SHUTDOWN.getId() == m.getMessageType()) {
-								this.setStopped(true);
-								return;
-							}
-							loopSleep = 0;
-						} else {
-							loopSleep = Math.min(loopSleep + AbstractLoop.LoopSleepIncrement,
-									AbstractLoop.MaxLoopSleep);
+				while (state == LoopState.RUNNING) {
+					if (is.available() > 0) {
+						// we assume, that there is always a complete message
+						final Ct2IpcMessage m = Ct2IpcMessage.parseDelimitedFrom(is);
+						final boolean handled = MessageHelper.handleMessage(m, this.connState);
+						if (!handled) {
+							throw new Exception("Unhandled message with type id " + m.getMessageType() + ".");
 						}
-						if (++stateUpdateCounter >= AbstractLoop.LoopstateUpdatePeriod) {
-							state = this.myState.get();
-							stateUpdateCounter = 0;
+						if (Ct2MessageType.SHUTDOWN.getId() == m.getMessageType()) {
+							this.setStopped(true);
+							return;
 						}
-						if ((loopSleep > 0) && (state == LoopState.RUNNING)) {
-							Thread.sleep(loopSleep);
-						}
+						loopSleep = 0;
+					} else {
+						loopSleep = Math.min(loopSleep + AbstractLoop.LoopSleepIncrement, AbstractLoop.MaxLoopSleep);
 					}
-				} catch (IOException e) {
-					this.printErr("The message receiver encountered an I/O error and is shutting down.", e);
+					if (++stateUpdateCounter >= AbstractLoop.LoopstateUpdatePeriod) {
+						state = this.myState.get();
+						stateUpdateCounter = 0;
+					}
+					if ((loopSleep > 0) && (state == LoopState.RUNNING)) {
+						Thread.sleep(loopSleep);
+					}
 				}
-			} catch (InterruptedException e) {
-				this.printErr("The message receiver was interrupted and is shutting down.", e);
+			} catch (Exception e) {
+				this.printErr("The message receiver encountered an exception and is shutting down.", e);
 			}
 			// The message receiver shuts down.
 			// The pipe must be closed by cryptool.

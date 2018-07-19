@@ -52,7 +52,7 @@ public final class Ct2Connector {
 	private final Lock myLock = new ReentrantLock();
 
 	private Ct2Connector() {
-
+		// it's a singleton
 	}
 
 	/**
@@ -91,16 +91,16 @@ public final class Ct2Connector {
 	}
 
 	private boolean start_(final TypedMessage hello, final PrintStream anErr) throws Exception {
-		final PrintStream err = anErr != null ? anErr : System.err;
 		this.myLock.lock();
 		try {
 			// shutdown and clear potential previous connection
 			this.shutdown_(true);
 			// create state and message loops
 			final Ct2ConnectionState connState = new Ct2ConnectionState();
-			final NamedPipeSender sender = new NamedPipeSender(NPHelper.pipeUrl(pipeTX + NPHelper.getPID()), err);
+			final NamedPipeSender sender = new NamedPipeSender(NPHelper.pipeUrl(pipeTX + NPHelper.getPID()), connState,
+					anErr);
 			final NamedPipeReceiver receiver = new NamedPipeReceiver(NPHelper.pipeUrl(pipeRX + NPHelper.getPID()),
-					connState, err, sender);
+					connState, anErr, sender);
 			this.connState.set(connState);
 			this.receiveLoop.set(receiver);
 			this.sendLoop.set(sender);
@@ -243,11 +243,24 @@ public final class Ct2Connector {
 		return cs != null ? cs.getShutdownRequested() : false;
 	}
 
+	/**
+	 * @return True, if both sender and receiver loop are in SHUTDOWN state or don't
+	 *         exist.
+	 */
 	public static boolean isShutdown() {
 		return (getReceiverState() == LoopState.SHUTDOWN) //
 				&& (getSenderState() == LoopState.SHUTDOWN);
 	}
 
+	/**
+	 * @param timeoutMillis
+	 *            Timeout in milliseconds. Set to 0 or negative number for no
+	 *            timeout.
+	 * @return True, as soon as both sender and receiver loop are in SHUTDOWN state
+	 *         or don't exist. <br>
+	 *         False, if timeout is reached.
+	 * @throws InterruptedException
+	 */
 	public static boolean waitForShutdown(final int timeoutMillis) throws InterruptedException {
 		final boolean hasTimeout = timeoutMillis > 0;
 		final long startMillis = hasTimeout ? System.currentTimeMillis() : 0;
@@ -262,5 +275,34 @@ public final class Ct2Connector {
 			}
 			Thread.sleep(10);
 		}
+	}
+
+	/**
+	 * @return True, if either the sender or the receiver loop has thrown an
+	 *         exception.
+	 */
+	public static boolean hasExceptions() {
+		Ct2ConnectionState cs = instance.connState.get();
+		return cs != null ? ((cs.getSenderException() != null) || (cs.getReceiverException() != null)) : false;
+	}
+
+	/**
+	 * @return Exception thrown by the sender loop, if available. Null otherwise.
+	 *         <br>
+	 *         The exception is cleared in the connection state.
+	 */
+	public static Exception clearSenderException() {
+		Ct2ConnectionState cs = instance.connState.get();
+		return cs != null ? cs.clearSenderException() : null;
+	}
+
+	/**
+	 * @return Exception thrown by the receiver loop, if available. Null otherwise.
+	 *         <br>
+	 *         The exception is cleared in the connection state.
+	 */
+	public static Exception clearReceiverException() {
+		Ct2ConnectionState cs = instance.connState.get();
+		return cs != null ? cs.clearReceiverException() : null;
 	}
 }

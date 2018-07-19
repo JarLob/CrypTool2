@@ -15,7 +15,6 @@
 */
 package org.cryptool.ipc.loops.impl;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.RandomAccessFile;
@@ -23,6 +22,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import org.cryptool.ipc.Ct2ConnectionState;
 import org.cryptool.ipc.loops.ISendLoop;
 import org.cryptool.ipc.messages.Ct2IpcMessages.Ct2IpcMessage;
 import org.cryptool.ipc.messages.TypedMessage;
@@ -32,8 +32,8 @@ public class NamedPipeSender extends AbstractLoop<TypedMessage> implements ISend
 	private final BlockingQueue<TypedMessage> queue = new LinkedBlockingQueue<>();
 	private final String pipeUrl;
 
-	public NamedPipeSender(final String aPipeUrl, final PrintStream anErr) {
-		super(anErr);
+	public NamedPipeSender(final String aPipeUrl, final Ct2ConnectionState aConnState, final PrintStream anErr) {
+		super(aConnState, anErr, LoopType.SENDER);
 		this.pipeUrl = aPipeUrl;
 	}
 
@@ -52,44 +52,28 @@ public class NamedPipeSender extends AbstractLoop<TypedMessage> implements ISend
 				if (this.myState.get() != LoopState.RUNNING) {
 					return;
 				}
-				if (pipe == null) {
-					this.printErr("Could not connect to named pipe \"" + this.pipeUrl
-							+ "\". Message sender is shutting down.");
-					this.setStopped();
-					return;
-				}
-				OutputStream os = NPHelper.getOutputStream(pipe, DelayOnConnectionError, MaxConnectionErrors);
-				if (os == null) {
-					this.printErr("Could not create an output stream from pipe \"" + this.pipeUrl
-							+ "\". Message sender is shutting down.");
-					this.setStopped();
-					return;
-				}
+				final OutputStream os = NPHelper.getOutputStream(pipe, DelayOnConnectionError, MaxConnectionErrors);
 				// possibly unnecessary optimization to avoid
 				// polling the atomic boolean on each loop
 				int stateUpdateCounter = 0;
 				LoopState state = this.myState.get();
-				try {
-					while (state == LoopState.RUNNING) {
-						final TypedMessage m = this.queue.poll(AbstractLoop.MaxLoopSleep, TimeUnit.MILLISECONDS);
-						if (m != null) {
-							Ct2IpcMessage.newBuilder()//
-									.setSequenceNumber(++sequenceNumber)//
-									.setMessageType(m.getType().getId())//
-									.setBody(m.getEncodedMessage())//
-									.build()//
-									.writeDelimitedTo(os);
-						}
-						if (++stateUpdateCounter >= AbstractLoop.LoopstateUpdatePeriod) {
-							state = this.myState.get();
-							stateUpdateCounter = 0;
-						}
+				while (state == LoopState.RUNNING) {
+					final TypedMessage m = this.queue.poll(AbstractLoop.MaxLoopSleep, TimeUnit.MILLISECONDS);
+					if (m != null) {
+						Ct2IpcMessage.newBuilder()//
+								.setSequenceNumber(++sequenceNumber)//
+								.setMessageType(m.getType().getId())//
+								.setBody(m.getEncodedMessage())//
+								.build()//
+								.writeDelimitedTo(os);
 					}
-				} catch (IOException e) {
-					this.printErr("Message sender encountered an I/O error and is shutting down.");
+					if (++stateUpdateCounter >= AbstractLoop.LoopstateUpdatePeriod) {
+						state = this.myState.get();
+						stateUpdateCounter = 0;
+					}
 				}
-			} catch (InterruptedException e) {
-				this.printErr("Message sender was interrupted and is shutting down.");
+			} catch (Exception e) {
+				this.printErr("The message sender encountered an exception and is shutting down.", e);
 			}
 			// The message receiver shuts down.
 			// The pipe must be closed by cryptool.

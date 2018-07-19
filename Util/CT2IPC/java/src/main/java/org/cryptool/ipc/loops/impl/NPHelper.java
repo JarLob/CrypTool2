@@ -42,7 +42,7 @@ public class NPHelper {
 	}
 
 	public static RandomAccessFile connectPipe(final String pipeUrl, final String rw, final long waitMillis,
-			final int tries, final AtomicReference<LoopState> state) throws InterruptedException {
+			final int tries, final AtomicReference<LoopState> state) throws Exception {
 		int tryCounter = 0;
 		while (tryCounter < Math.abs(tries)) {
 			try {
@@ -56,11 +56,11 @@ public class NPHelper {
 				Thread.sleep(waitMillis);
 			}
 		}
-		return null;
+		throw new Exception("Failed to connect with pipe \"" + pipeUrl + "\" in mode \"" + rw + "\".");
 	}
 
 	public static InputStream getInputStream(final RandomAccessFile pipe, final long waitMillis, final int tries)
-			throws InterruptedException {
+			throws Exception {
 		int tryCounter = 0;
 		while (tryCounter < Math.abs(tries)) {
 			try {
@@ -71,11 +71,11 @@ public class NPHelper {
 				Thread.sleep(waitMillis);
 			}
 		}
-		return null;
+		throw new Exception("Failed to get an input stream for the pipe.");
 	}
 
 	public static OutputStream getOutputStream(final RandomAccessFile pipe, final long waitMillis, final int tries)
-			throws InterruptedException {
+			throws Exception {
 		int tryCounter = 0;
 		while (tryCounter < Math.abs(tries)) {
 			try {
@@ -86,7 +86,7 @@ public class NPHelper {
 				Thread.sleep(waitMillis);
 			}
 		}
-		return null;
+		throw new Exception("Failed to get an output stream for the pipe.");
 	}
 
 }
