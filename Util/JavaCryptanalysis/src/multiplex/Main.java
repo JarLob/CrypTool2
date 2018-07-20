@@ -9,9 +9,9 @@ class Main {
 
     private static void createCommandLineArguments() {
 
-        CommandLineArgument.createCommonArguments();
+        CommandLine.createCommonArguments();
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.MODEL,
                 "m",
                 "Model",
@@ -19,7 +19,7 @@ class Main {
                 false,
                 "M94"));
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.OFFSET,
                 "o",
                 "Offset(s)",
@@ -27,7 +27,7 @@ class Main {
                 false,
                 0, 25));
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
@@ -35,7 +35,7 @@ class Main {
                 false,
                 0, 2, 0));
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -53,31 +53,31 @@ class Main {
         CtAPI.open("Multiplex", "1.0");
 
         String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLineArgument.parseArguments(ctArgs, false)) {
-            CommandLineArgument.printUsage();
+        if (!CommandLine.parseArguments(ctArgs, false)) {
+            CommandLine.printUsage();
             return;
         }
 
-        if (!CommandLineArgument.parseArguments(args, true)) {
-            CommandLineArgument.printUsage();
+        if (!CommandLine.parseArguments(args, true)) {
+            CommandLine.printUsage();
             return;
         }
 
-        CommandLineArgument.printArguments();
+        CommandLine.printArguments();
 
-        final String RESOURCE_PATH = CommandLineArgument.getStringValue(Flag.RESOURCE_PATH);
-        final int CYCLES = CommandLineArgument.getIntegerValue(Flag.CYCLES);
-        final int THREADS = CommandLineArgument.getIntegerValue(Flag.THREADS);
-        final String CRIB = CommandLineArgument.getStringValue(Flag.CRIB);
-        String CIPHERTEXT = CommandLineArgument.getStringValue(Flag.CIPHERTEXT);
+        final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
+        final int CYCLES = CommandLine.getIntegerValue(Flag.CYCLES);
+        final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
+        final String CRIB = CommandLine.getStringValue(Flag.CRIB);
+        String CIPHERTEXT = CommandLine.getStringValue(Flag.CIPHERTEXT);
         if (CIPHERTEXT.endsWith("txt")) {
             CIPHERTEXT = Utils.readTextFile(CIPHERTEXT);
         }
 
-        final ArrayList<Integer> OFFSET = CommandLineArgument.getIntegerValues(Flag.OFFSET);
-        final boolean IS_M138 = CommandLineArgument.getStringValue(Flag.MODEL).contains("138");
-        final int SIMULATION = CommandLineArgument.getIntegerValue(Flag.SIMULATION);
-        final int SIMULATION_TEXT_LENGTH = CommandLineArgument.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
+        final ArrayList<Integer> OFFSET = CommandLine.getIntegerValues(Flag.OFFSET);
+        final boolean IS_M138 = CommandLine.getStringValue(Flag.MODEL).contains("138");
+        final int SIMULATION = CommandLine.getIntegerValue(Flag.SIMULATION);
+        final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
         if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
             CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);

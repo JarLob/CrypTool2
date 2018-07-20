@@ -55,15 +55,15 @@ public class Main {
 
     private static void createCommandLineArguments() {
 
-        CommandLineArgument.createCommonArguments();
+        CommandLine.createCommonArguments();
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
                 "Create ciphertext from random key and plaintext from book file."));
 
-        CommandLineArgument.add(new CommandLineArgument(
+        CommandLine.add(new CommandLineArgument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -82,29 +82,29 @@ public class Main {
         CtAPI.open("Playfair", "1.0");
 
         String[] ctArgs = CtAPI.getArgs();
-        if (!CommandLineArgument.parseArguments(ctArgs, false)) {
-            CommandLineArgument.printUsage();
+        if (!CommandLine.parseArguments(ctArgs, false)) {
+            CommandLine.printUsage();
             return;
         }
 
-        if (!CommandLineArgument.parseArguments(args, true)) {
-            CommandLineArgument.printUsage();
+        if (!CommandLine.parseArguments(args, true)) {
+            CommandLine.printUsage();
             return;
         }
 
-        CommandLineArgument.printArguments();
+        CommandLine.printArguments();
 
-        final String CRIB = CommandLineArgument.getStringValue(Flag.CRIB);
-        final int THREADS = CommandLineArgument.getIntegerValue(Flag.THREADS);
-        final int CYCLES = CommandLineArgument.getIntegerValue(Flag.CYCLES);
-        final String RESOURCE_PATH = CommandLineArgument.getStringValue(Flag.RESOURCE_PATH);
-        String CIPHERTEXT = CommandLineArgument.getStringValue(Flag.CIPHERTEXT);
+        final String CRIB = CommandLine.getStringValue(Flag.CRIB);
+        final int THREADS = CommandLine.getIntegerValue(Flag.THREADS);
+        final int CYCLES = CommandLine.getIntegerValue(Flag.CYCLES);
+        final String RESOURCE_PATH = CommandLine.getStringValue(Flag.RESOURCE_PATH);
+        String CIPHERTEXT = CommandLine.getStringValue(Flag.CIPHERTEXT);
         if (CIPHERTEXT.endsWith("txt")) {
             CIPHERTEXT = Utils.readTextFile(CIPHERTEXT);
         }
 
-        final boolean SIMULATION = CommandLineArgument.getBooleanValue(Flag.SIMULATION);
-        final int SIMULATION_TEXT_LENGTH = CommandLineArgument.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
+        final boolean SIMULATION = CommandLine.getBooleanValue(Flag.SIMULATION);
+        final int SIMULATION_TEXT_LENGTH = CommandLine.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
 
         if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
             CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
