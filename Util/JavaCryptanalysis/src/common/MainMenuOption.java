@@ -3,6 +3,7 @@ package common;
 import java.util.ArrayList;
 
 public class MainMenuOption {
+
     enum Type {BOOLEAN, NUMERIC, STRING}
 
     private Flag flag;
@@ -113,6 +114,47 @@ public class MainMenuOption {
 
     }
 
+    public static void createCommonMenuOptions() {
+        add(new MainMenuOption(
+                Flag.CIPHERTEXT,
+                "i",
+                "Ciphertext or ciphertext file",
+                "Ciphertext string, or full path for the file with the cipher, ending with .txt.",
+                false,
+                ""));
+
+        add(new MainMenuOption(
+                Flag.CRIB,
+                "p",
+                "Crib (known-plaintext)",
+                "Known plaintext (crib) at the beginning of the message.",
+                false,
+                ""));
+
+        add(new MainMenuOption(
+                Flag.RESOURCE_PATH,
+                "r",
+                "Resource directory",
+                "Full path of directory for resources (e.g. stats files).",
+                false,
+                "."));
+
+        add(new MainMenuOption(
+                Flag.THREADS,
+                "t",
+                "Number of processing threads",
+                "Number of threads, for multithreading. 1 for no multithreading.",
+                false,
+                1, 15, 7));
+
+        add(new MainMenuOption(
+                Flag.CYCLES,
+                "n",
+                "Number of cycles",
+                "Number of cycles for simulated annealing. 0 for infinite.",
+                false,
+                0, 1000, 0));
+    }
 
     public static int getIntegerValue(Flag flag) {
         for (MainMenuOption option : mainMenuOptions) {

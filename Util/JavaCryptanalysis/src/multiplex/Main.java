@@ -28,7 +28,7 @@ class Main {
         encryptionKey.encrypt(p, c);
         encryptionKey.setCipher(c);
         long realMultiplexScore = encryptionKey.eval();
-        BestList.setOriginal(encryptionKey.eval(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
+        BestResults.setOriginal(encryptionKey.eval(), encryptionKey.toString(), Utils.getString(encryptionKey.decryption), "Original");
         CtAPI.printf("%s\n%s\n%s\nLength: %d\nTarget Score: %d\n", Utils.getString(p),Utils.getString(c), encryptionKey, len, encryptionKey.eval());
         long start = System.currentTimeMillis();
 
@@ -44,13 +44,10 @@ class Main {
 
     private static void challengeM94KnownOffsets(String cipherStr, String cribStr, int saCycles, ArrayList<Integer> offsets) {
 
+        int[] c = Utils.getText(cipherStr);
 
         M94 m94 = new M94(offsets.size());
-        int[] c = Utils.getText(cipherStr);
-        m94.setCipher(c);
-        if (cribStr != null && cribStr.length() > 0) {
-            m94.setCrib(cribStr);
-        }
+        m94.setCipherAndCrib(c, cribStr);
 
         int requiredOffsets = (cipherStr.length() + 24)/25;
         if (offsets.size() < requiredOffsets) {
@@ -129,6 +126,8 @@ class Main {
 
     private static void createMenuOptions() {
 
+        MainMenuOption.createCommonMenuOptions();
+
         MainMenuOption.add(new MainMenuOption(
                 Flag.MODEL,
                 "m",
@@ -136,46 +135,6 @@ class Main {
                 "Multiplex system model. M138 or M94.",
                 false,
                 "M94"));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CIPHERTEXT,
-                "i",
-                "Ciphertext or ciphertext file",
-                "Ciphertext string, or full path for the file with the cipher, ending with .txt.",
-                false,
-                ""));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CRIB,
-                "p",
-                "Crib (known-plaintext)",
-                "Known plaintext (crib) at the beginning of the message.",
-                false,
-                ""));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.RESOURCE_PATH,
-                "r",
-                "Resource directory",
-                "Full path of directory for resources (e.g. stats files).",
-                false,
-                "."));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.THREADS,
-                "t",
-                "Number of processing threads",
-                "Number of threads, for multithreading. 1 for no multithreading.",
-                false,
-                1, 15, 7));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CYCLES,
-                "n",
-                "Number of cycles",
-                "Number of cycles for simulated annealing. 0 for infinite.",
-                false,
-                0, 1000, 0));
 
         MainMenuOption.add(new MainMenuOption(
                 Flag.OFFSET,

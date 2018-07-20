@@ -1,7 +1,7 @@
 package multiplex;
 
 
-import common.BestList;
+import common.BestResults;
 import common.CtAPI;
 import common.Utils;
 
@@ -50,12 +50,9 @@ class SolveM138 {
         long realMultiplexScore = -1;
         if (realKey != null) {
             realM138 = new M138(realKey, realOffset);
-            realM138.setCipher(c);
-            if (cribStr != null && cribStr.length() > 0) {
-                realM138.setCrib(cribStr);
-            }
+            realM138.setCipherAndCrib(c, cribStr);
             realMultiplexScore = realM138.eval();
-            BestList.setOriginal(realM138.eval(), realM138.toString(), Utils.getString(realM138.decryption), "Original");
+            BestResults.setOriginal(realM138.eval(), realM138.toString(), Utils.getString(realM138.decryption), "Original");
             CtAPI.printf("%s\n", realM138);
 
         }
@@ -63,10 +60,8 @@ class SolveM138 {
             offset = realM138.offset;
         }
         M138 m138 = new M138();
-        m138.setCipher(c);
-        if (cribStr != null && cribStr.length() > 0) {
-            m138.setCrib(cribStr);
-        }
+        m138.setCipherAndCrib(c, cribStr);
+
         sa(m138, realM138, realMultiplexScore, offset, maxCycles);
     }
 }

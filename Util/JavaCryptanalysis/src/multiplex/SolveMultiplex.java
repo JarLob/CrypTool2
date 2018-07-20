@@ -1,6 +1,6 @@
 package multiplex;
 
-import common.BestList;
+import common.BestResults;
 import common.CtAPI;
 import common.SimulatedAnnealing;
 import common.Utils;
@@ -24,8 +24,8 @@ class SolveMultiplex {
                     multiplex.swapInKey(pi, pj);
                     long newVal = multiplex.eval();
                     if (SimulatedAnnealing.acceptHexaScore(newVal, bestVal, multiplier)) {
-                        if (BestList.shouldInsert(newVal)) {
-                            BestList.insert(newVal, multiplex.toString(), Utils.getString(multiplex.decryption), String.format("%,5d/%,5d", saCycle, rounds));
+                        if (BestResults.shouldPushResult(newVal)) {
+                            BestResults.pushResult(newVal, multiplex.toString(), Utils.getString(multiplex.decryption), String.format("%,5d/%,5d", saCycle, rounds));
                         }
                         bestVal = newVal;
                         if (bestVal > bestOverall) {

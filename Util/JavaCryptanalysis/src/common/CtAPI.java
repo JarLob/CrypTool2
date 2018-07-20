@@ -17,7 +17,7 @@ public class CtAPI {
     private static int OUTPUT_PLAINTEXT = 1;
     private static int OUTPUT_KEY = 2;
     private static int OUTPUT_SCORE = 3;
-    private static int OUTPUT_BEST_LIST = 1000;
+    private static int OUTPUT_BEST_RESULTS = 1000;
 
     private static Map<Integer, String> params = new HashMap<>();
 
@@ -111,21 +111,25 @@ public class CtAPI {
                 CtAPI.printf("Free memory (bytes): %,d\n\n", Runtime.getRuntime().freeMemory());
             }
         } catch (Exception e) {
-            exceptionHandling(e);
+            displayExceptionAndGoodbye(e);
         }
     }
 
-    private static void exceptionHandling(Exception e) {
+    private static void displayExceptionAndGoodbye(Exception e) {
         logError(e.getMessage());
         e.printStackTrace();
         goodbye(-1, e.getMessage());
     }
 
-    public static void updateProgress(int progress, int maxValue) {
+    public static synchronized void updateProgress(int progress, int maxValue) {
         try {
-            Ct2Connector.encodeProgress(progress, maxValue);
+            if (maxValue <= 0) {
+                updateProgress(progress % 100, 95);
+            } else {
+                Ct2Connector.encodeProgress(progress, maxValue);
+            }
         } catch (Exception e) {
-            exceptionHandling(e);
+            displayExceptionAndGoodbye(e);
         }
     }
 
@@ -137,10 +141,9 @@ public class CtAPI {
             }
             Ct2Connector.encodeLogEntry(s, level);
         } catch (Exception e) {
-            exceptionHandling(e);
+            displayExceptionAndGoodbye(e);
         }
     }
-
 
     public static void printf(String format, Object... objects) {
         String s = String.format(format, objects);
@@ -161,7 +164,7 @@ public class CtAPI {
         log(s, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2INFO);
     }
 
-    public static void logError(String message) {
+    private static void logError(String message) {
         log(message, Ct2IpcMessages.Ct2LogEntry.LogLevel.CT2ERROR);
         System.out.println("Error: " + message);
     }
@@ -173,30 +176,27 @@ public class CtAPI {
             valuemap.put(i, value);
             Ct2Connector.enqueueValues(valuemap);
         } catch (Exception e) {
-            exceptionHandling(e);
+            displayExceptionAndGoodbye(e);
         }
     }
 
-
     public static void updateBestList(String bestList) {
-        updateOutput(OUTPUT_BEST_LIST, bestList);
-        //System.out.println(bestList.replaceAll(";","\t"));
+        updateOutput(OUTPUT_BEST_RESULTS, bestList);
     }
 
-
-    public static void updateScoreKeyPlaintext(long score, String key, String plaintext, String commentString) {
-        updateOutput(OUTPUT_SCORE, String.format("%,d", score));
-        updateOutput(OUTPUT_KEY, key);
-        updateOutput(OUTPUT_PLAINTEXT, plaintext);
-        printf("Best: %,12d %s %s %s\n", score, key, plaintext, commentString);
+    public static void updateBestResult(Result result) {
+        updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
+        updateOutput(OUTPUT_KEY, result.keyString);
+        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
+        printf("Best: %,12d %s %s %s\n", result.score, result.keyString, result.plaintextString, result.commentString);
     }
 
-    public static void updateScoreKeyPlaintext(long score, long originalScore, String key, String originalKey, String plaintext, String originalPlaintext, String commentString, String originalCommentString) {
-        updateOutput(OUTPUT_KEY, key + " (Original:" + originalKey + ")");
-        updateOutput(OUTPUT_SCORE, String.format("%,d (Original:%,d)", score, originalScore));
-        updateOutput(OUTPUT_PLAINTEXT, plaintext + " (Original:" + originalPlaintext + ")");
-        printf("Best: %,12d %s %s %s\n", score, key, plaintext, commentString);
-        printf("      %,12d %s %s %s\n", originalScore, originalKey, originalPlaintext, originalCommentString);
+    public static void updateBestResult(Result result, Result original) {
+        updateOutput(OUTPUT_KEY, result.keyString + " (Original:" + original.keyString + ")");
+        updateOutput(OUTPUT_SCORE, String.format("%,d (Original:%,d)", result.score, original.score));
+        updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");
+        printf("Best: %,12d %s %s %s\n", result.score, result.keyString, result.plaintextString, result.commentString);
+        printf("      %,12d %s %s %s\n", original.score, original.keyString, original.plaintextString, original.commentString);
     }
 
 
@@ -217,7 +217,7 @@ public class CtAPI {
                     break;
                 }
             } catch (InterruptedException e) {
-                exceptionHandling(e);
+                displayExceptionAndGoodbye(e);
             }
         }
 

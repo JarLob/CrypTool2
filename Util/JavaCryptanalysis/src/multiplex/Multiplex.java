@@ -93,10 +93,17 @@ abstract class Multiplex {
         decryptionValid = false;
     }
 
-    void setCrib(String cribS) {
+    private void setCrib(String cribS) {
+        if (cribS == null || cribS.isEmpty()) {
+            return;
+        }
         this.crib = Utils.getText(cribS);
     }
 
+    void setCipherAndCrib(int[] c, String cribS) {
+        setCipher(c);
+        setCrib(cribS);
+    }
     void randomizeKey() {
         for (int i = 0; i < NUMBER_OF_STRIPS; i++) {
             this.key[i] = i;
@@ -134,12 +141,12 @@ abstract class Multiplex {
     }
 
     public String toString() {
-        String str = offsetString() + "|";
+        StringBuilder str = new StringBuilder(offsetString() + "|");
         for (int i = 0; i < NUMBER_OF_STRIPS_USED_IN_KEY; i++) {
-            str += (i == 0) ? "" : ",";
-            str += String.format("%02d", key[i]);
+            str.append((i == 0) ? "" : ",");
+            str.append(String.format("%02d", key[i]));
         }
-        return str;
+        return str.toString();
     }
 
     private void decrypt() {

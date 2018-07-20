@@ -2,8 +2,6 @@ package playfair;
 
 import common.*;
 
-import java.util.Random;
-
 public class Main {
 
         //"pp1.txt";
@@ -58,45 +56,7 @@ public class Main {
     private static void createMenuOptions() {
 
 
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CIPHERTEXT,
-                "i",
-                "Ciphertext or ciphertext file",
-                "Ciphertext string, or full path for the file with the cipher, ending with .txt.",
-                false,
-                ""));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CRIB,
-                "p",
-                "Crib (known-plaintext)",
-                "Known plaintext (crib) at the beginning of the message.",
-                false,
-                ""));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.RESOURCE_PATH,
-                "r",
-                "Resource directory",
-                "Full path of directory for resources (e.g. stats files).",
-                false,
-                "."));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.THREADS,
-                "t",
-                "Number of processing threads",
-                "Number of threads, for multithreading. 1 for no multithreading.",
-                false,
-                1, 15, 7));
-
-        MainMenuOption.add(new MainMenuOption(
-                Flag.CYCLES,
-                "n",
-                "Number of cycles",
-                "Number of cycles for simulated annealing. 0 for infinite.",
-                false,
-                0, 1000, 0));
+        MainMenuOption.createCommonMenuOptions();
 
         MainMenuOption.add(new MainMenuOption(
                 Flag.SIMULATION,
@@ -150,7 +110,7 @@ public class Main {
         if (!Stats.readHexaStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
             CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
         }
-        Transform.printTransformationsCounts();
+        Transformations.printTransformationsCounts();
 
         Key simulationKey = null;
         final boolean debug = false;
@@ -179,7 +139,7 @@ public class Main {
             simulationKey.setCipher(cipherText);
             simulationKey.eval();
             CtAPI.printf("Original score: %,d\n", simulationKey.score);
-            BestList.setOriginal(simulationKey.score, simulationKey.toString(), Utils.getString(plainText), "Original");
+            BestResults.setOriginal(simulationKey.score, simulationKey.toString(), Utils.getString(plainText), "Original");
         } else {
             if ((CIPHERTEXT == null || CIPHERTEXT.isEmpty())) {
                 CtAPI.goodbye(-1, "Ciphertext or ciphertext file required when not in simulation mode");
@@ -192,22 +152,7 @@ public class Main {
         }
 
 
-        Random r = new Random();
-        final Key simulationKey_ = simulationKey;
-        for (int t_ = 0; t_ < THREADS; t_++) {
-            final int t = t_;
-            double factor = 0.5 + r.nextDouble();
-            factor = 1.0;
-            int multiplier = (int) (factor* 150_000)/cipherText.length;
-            new Thread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            SolvePlayfair.solveSA(t, CYCLES, 200_000, multiplier, cipherText, CRIB, simulationKey_);
-                        }
-                    }
-            ).start();
-        }
+        SolvePlayfair.solveMultithreaded(cipherText, CRIB, THREADS, CYCLES, simulationKey);
     }
 
 
