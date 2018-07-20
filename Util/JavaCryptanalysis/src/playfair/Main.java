@@ -53,18 +53,17 @@ public class Main {
         //"g.txt";
 
 
-    private static void createMenuOptions() {
+    private static void createCommandLineArguments() {
 
+        CommandLineArgument.createCommonArguments();
 
-        MainMenuOption.createCommonMenuOptions();
-
-        MainMenuOption.add(new MainMenuOption(
+        CommandLineArgument.add(new CommandLineArgument(
                 Flag.SIMULATION,
                 "s",
                 "Simulation",
                 "Create ciphertext from random key and plaintext from book file."));
 
-        MainMenuOption.add(new MainMenuOption(
+        CommandLineArgument.add(new CommandLineArgument(
                 Flag.SIMULATION_TEXT_LENGTH,
                 "l",
                 "Length of text for simulation",
@@ -77,37 +76,37 @@ public class Main {
     public static void main(String[] args) {
 
 
-        createMenuOptions();
-        //MainMenuOption.printUsage();
+        createCommandLineArguments();
+        //CommandLineArgument.printUsage();
 
         CtAPI.open("Playfair", "1.0");
 
         String[] ctArgs = CtAPI.getArgs();
-        if (ctArgs != null && ctArgs.length > 0) {
-            if (!MainMenuOption.parseAllOptions(ctArgs, false)) {
-                MainMenuOption.printUsage();
-                return;
-            }
-        }
-        if (!MainMenuOption.parseAllOptions(args, true)) {
-            MainMenuOption.printUsage();
+        if (!CommandLineArgument.parseArguments(ctArgs, false)) {
+            CommandLineArgument.printUsage();
             return;
         }
 
-        MainMenuOption.printOptions();
-
-        final String CRIB = MainMenuOption.getStringValue(Flag.CRIB);
-        final int THREADS = MainMenuOption.getIntegerValue(Flag.THREADS);
-        final int CYCLES = MainMenuOption.getIntegerValue(Flag.CYCLES);
-        final String RESOURCE_PATH = MainMenuOption.getStringValue(Flag.RESOURCE_PATH);
-        final int SIMULATION_TEXT_LENGTH = MainMenuOption.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
-        String CIPHERTEXT = MainMenuOption.getStringValue(Flag.CIPHERTEXT);
-        if (CIPHERTEXT.endsWith("txt")) {
-            CIPHERTEXT = Utils.readCipherFile(CIPHERTEXT);
+        if (!CommandLineArgument.parseArguments(args, true)) {
+            CommandLineArgument.printUsage();
+            return;
         }
-        final boolean SIMULATION = MainMenuOption.getBooleanValue(Flag.SIMULATION);
 
-        if (!Stats.readHexaStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
+        CommandLineArgument.printArguments();
+
+        final String CRIB = CommandLineArgument.getStringValue(Flag.CRIB);
+        final int THREADS = CommandLineArgument.getIntegerValue(Flag.THREADS);
+        final int CYCLES = CommandLineArgument.getIntegerValue(Flag.CYCLES);
+        final String RESOURCE_PATH = CommandLineArgument.getStringValue(Flag.RESOURCE_PATH);
+        String CIPHERTEXT = CommandLineArgument.getStringValue(Flag.CIPHERTEXT);
+        if (CIPHERTEXT.endsWith("txt")) {
+            CIPHERTEXT = Utils.readTextFile(CIPHERTEXT);
+        }
+
+        final boolean SIMULATION = CommandLineArgument.getBooleanValue(Flag.SIMULATION);
+        final int SIMULATION_TEXT_LENGTH = CommandLineArgument.getIntegerValue(Flag.SIMULATION_TEXT_LENGTH);
+
+        if (!Stats.readHexagramStatsFile(RESOURCE_PATH + "/" + Utils.HEXA_FILE)) {
             CtAPI.goodbye(-1, "Could not read hexa file .... " + RESOURCE_PATH + "/" + Utils.HEXA_FILE);
         }
         Transformations.printTransformationsCounts();
@@ -117,7 +116,7 @@ public class Main {
         int[] cipherText;
         if (SIMULATION) {
             int[] plainText = new int[SIMULATION_TEXT_LENGTH];
-            Utils.readPlaintextSegmentFromFile(RESOURCE_PATH + "/" + Utils.BOOK_FILE, Utils.randomGet(50000), plainText);
+            Utils.readTextSegmentFromFile(RESOURCE_PATH + "/" + Utils.BOOK_FILE, Utils.randomNextInt(50000), plainText);
             Playfair.preparePlainText(plainText);
             simulationKey = new Key();
             simulationKey.random();
@@ -151,8 +150,8 @@ public class Main {
             CtAPI.printf("Ciphertext: %s Length: %d\n", Utils.getString(cipherText), cipherText.length);
         }
 
-
         SolvePlayfair.solveMultithreaded(cipherText, CRIB, THREADS, CYCLES, simulationKey);
+
     }
 
 

@@ -121,10 +121,10 @@ public class CtAPI {
         goodbye(-1, e.getMessage());
     }
 
-    public static synchronized void updateProgress(int progress, int maxValue) {
+    public static synchronized void displayProgress(int progress, int maxValue) {
         try {
             if (maxValue <= 0) {
-                updateProgress(progress % 100, 95);
+                displayProgress(progress % 100, 95);
             } else {
                 Ct2Connector.encodeProgress(progress, maxValue);
             }
@@ -180,18 +180,18 @@ public class CtAPI {
         }
     }
 
-    public static void updateBestList(String bestList) {
+    public static void displayBestList(String bestList) {
         updateOutput(OUTPUT_BEST_RESULTS, bestList);
     }
 
-    public static void updateBestResult(Result result) {
+    public static void displayBestResult(Result result) {
         updateOutput(OUTPUT_SCORE, String.format("%,d", result.score));
         updateOutput(OUTPUT_KEY, result.keyString);
         updateOutput(OUTPUT_PLAINTEXT, result.plaintextString);
         printf("Best: %,12d %s %s %s\n", result.score, result.keyString, result.plaintextString, result.commentString);
     }
 
-    public static void updateBestResult(Result result, Result original) {
+    public static void displayBestResult(Result result, Result original) {
         updateOutput(OUTPUT_KEY, result.keyString + " (Original:" + original.keyString + ")");
         updateOutput(OUTPUT_SCORE, String.format("%,d (Original:%,d)", result.score, original.score));
         updateOutput(OUTPUT_PLAINTEXT, result.plaintextString + " (Original:" + original.plaintextString + ")");

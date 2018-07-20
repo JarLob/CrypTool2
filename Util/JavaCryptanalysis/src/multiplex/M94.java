@@ -46,16 +46,18 @@ class M94 extends Multiplex{
         setKey(key);
     }
 
-    void randomizeOffsets() {
+    M94 randomizeOffsets() {
         for (int i = 0; i < offsets.length; i++) {
-            setOffset(i, 1 + Utils.randomGet(STRIP_LENGTH - 1));
+            setOffset(i, 1 + Utils.randomNextInt(STRIP_LENGTH - 1));
         }
         decryptionValid = false;
+        return this;
     }
 
-    void setOffset(int index, int offset) {
+    M94 setOffset(int index, int offset) {
         this.offsets[index] = offset;
         this.decryptionValid = false;
+        return this;
     }
 
     String offsetString(int o) {
@@ -64,12 +66,12 @@ class M94 extends Multiplex{
 
     @Override
     String offsetString() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int o = 0; o < offsets.length; o++) {
-            str += (o == 0) ? "" : ",";
-            str += offsetString(o);
+            str.append((o == 0) ? "" : ",");
+            str.append(offsetString(o));
         }
-        return str;
+        return str.toString();
     }
 
     @Override

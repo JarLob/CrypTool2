@@ -105,7 +105,7 @@ public class Key {
             }
         }
         for (int i = 0; i < Playfair.SQUARE - 1; i++) {
-            int j = i + Utils.randomGet(Playfair.SQUARE - i);
+            int j = i + Utils.randomNextInt(Playfair.SQUARE - i);
             swap(i, j);
         }
         computeInverse();

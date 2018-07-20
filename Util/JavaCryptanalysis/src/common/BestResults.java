@@ -74,13 +74,13 @@ public class BestResults {
         for (int i = 0; i < bestResults.size(); i++) {
             bestResults.get(i).append(s, i + 1);
         }
-        CtAPI.updateBestList(s.toString());
+        CtAPI.displayBestList(s.toString());
         if (bestChanged) {
             Result bestResult = bestResults.get(0);
             if (originalResult == null) {
-                CtAPI.updateBestResult(bestResult);
+                CtAPI.displayBestResult(bestResult);
             } else {
-                CtAPI.updateBestResult(bestResult, originalResult);
+                CtAPI.displayBestResult(bestResult, originalResult);
             }
         }
     }

@@ -1,16 +1,10 @@
 package playfair;
 
-import common.BestResults;
-import common.CtAPI;
-import common.Utils;
-import common.SimulatedAnnealing;
+import common.*;
 
 import java.util.Random;
 
 public class SolvePlayfair {
-    
-    private static long startTime = System.currentTimeMillis();
-    private static long evaluations = 0;
 
     static void solve(int taskNumber, int saCycles, int innerRounds /* 200000 */, int multiplier/*1500*/, int[] cipherText, String crib, Key simulationKey) {
 
@@ -27,7 +21,7 @@ public class SolvePlayfair {
         for (int cycle = 0; cycle < saCycles || saCycles == 0; cycle++) {
 
             if (taskNumber == 0) {
-                CtAPI.updateProgress(cycle, saCycles);
+                CtAPI.displayProgress(cycle, saCycles);
             }
 
             Transformations.randomize();
@@ -38,8 +32,6 @@ public class SolvePlayfair {
             for (int innerRound = 0; innerRound < innerRounds; innerRound++) {
                 Transformations.apply(currentKey, newKey, serialCounter++);
 
-                evaluations++;
-
                 long newScore = newKey.eval();
 
                 if (SimulatedAnnealing.acceptHexaScore(newScore, currentScore, multiplier)) {
@@ -47,12 +39,12 @@ public class SolvePlayfair {
                     currentScore = newScore;
 
                     if (BestResults.shouldPushResult(newScore)) {
-                        long elapsed = System.currentTimeMillis() - startTime + 1;
                         BestResults.pushResult(newScore,
                                 newKey.toString(),
                                 Utils.getString(newKey.fullDecryption),
-                                String.format("[%d/%d}[%,d sec.][%,dK (%,dK/sec.][Task: %2d][Mult.: %,d]",
-                                        newKey.decryptionRemoveNullsLength, cipherText.length, elapsed / 1000, evaluations / 1000, evaluations / elapsed, taskNumber, multiplier));
+                                Stats.evaluationsSummary() +
+                                    String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
+                                            newKey.decryptionRemoveNullsLength, cipherText.length, taskNumber, multiplier));
                     }
                     if (currentScore == simulationOriginalScore || newKey.matchesFullCrib()) {
                         CtAPI.goodbye(0, "Found key");

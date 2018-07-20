@@ -5,18 +5,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
-import java.nio.channels.FileChannel;
 
 
 public class Stats {
 
+    private static short[] hexagramStats = null;
+    public static long evaluations = 0;
 
-
-
-
-    private static short[] hexagramStatsShort = null;
-
-    public static boolean readHexaStatsFile(String filename) {
+    public static boolean readHexagramStatsFile(String filename) {
         long start = System.currentTimeMillis();
 
         CtAPI.printf("Loading hexagram stats file %s (%,d free bytes before loading)\n",
@@ -27,20 +23,20 @@ public class Stats {
         try {
             FileInputStream is = new FileInputStream(new File(filename));
 
-            hexagramStatsShort = new short[ 26 * 26 * 26 * 26 * 26 * 26];
+            hexagramStats = new short[26 * 26 * 26 * 26 * 26 * 26];
 
-            final int CHUNK = 65536;
+            final int CHUNK_SIZE = 65536;
 
-            short[] hexagramStatsBuffer = new short[CHUNK];
-            byte[] bytes = new byte[CHUNK * 2];
+            short[] hexagramStatsBuffer = new short[CHUNK_SIZE];
+            byte[] bytes = new byte[CHUNK_SIZE * 2];
 
             int read;
             while ((read = is.read(bytes)) > 0) {
                 ByteBuffer myByteBuffer = ByteBuffer.wrap(bytes);
                 ShortBuffer myShortBuffer = myByteBuffer.asShortBuffer();
                 myShortBuffer.get(hexagramStatsBuffer);
-                System.arraycopy(hexagramStatsBuffer, 0, hexagramStatsShort, totalShortRead, read / 2);
-                totalShortRead += read/2;
+                System.arraycopy(hexagramStatsBuffer, 0, hexagramStats, totalShortRead, read / 2);
+                totalShortRead += read / 2;
             }
             is.close();
 
@@ -56,17 +52,19 @@ public class Stats {
         return true;
     }
 
-    private final static int MOD = 26 * 26 * 26 * 26 * 26;
+    private final static int POWER_26_5 = 26 * 26 * 26 * 26 * 26;
 
     public static long evalPlaintextHexagram(int[] plaintext, int plaintextLength) {
+
+        Stats.evaluations++;
 
         int index = (((((((plaintext[0] * 26) + plaintext[1]) * 26) + plaintext[2]) * 26) + plaintext[3]) * 26 + plaintext[4]);
         long val = 0;
         for (int i = 5; i < plaintextLength; i++) {
-            index = (index % MOD) *  26 + plaintext[i];
-            val += hexagramStatsShort[index];
+            index = (index % POWER_26_5) * 26 + plaintext[i];
+            val += hexagramStats[index];
         }
-        return (val * 1000)/ (plaintextLength - 5);
+        return (val * 1000) / (plaintextLength - 5);
 
     }
 
@@ -74,6 +72,11 @@ public class Stats {
     public static long evalPlaintextHexagram(int[] plaintext) {
         CtAPI.shutdownIfNeeded();
         return evalPlaintextHexagram(plaintext, plaintext.length);
+    }
+
+    public static String evaluationsSummary(){
+        long elapsed = Utils.getElapsedMillis();
+        return String.format("[%,d sec.][%,dK (%,dK/sec.]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
     }
 }
 

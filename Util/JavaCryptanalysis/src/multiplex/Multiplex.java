@@ -56,7 +56,7 @@ abstract class Multiplex {
         }
     }
 
-    long eval() {
+    long score() {
         if (!decryptionValid) {
             decrypt();
         }
@@ -87,36 +87,37 @@ abstract class Multiplex {
         return true;
     }
 
-    void setCipher(int[] c) {
+    Multiplex setCipher(int[] c) {
         this.cipher = Arrays.copyOf(c, c.length);
         this.decryption = new int[c.length];
         decryptionValid = false;
+        return this;
     }
 
-    private void setCrib(String cribS) {
-        if (cribS == null || cribS.isEmpty()) {
-            return;
+    Multiplex setCrib(String cribS) {
+        if (cribS != null && !cribS.isEmpty()) {
+            this.crib = Utils.getText(cribS);
         }
-        this.crib = Utils.getText(cribS);
+        return this;
     }
 
-    void setCipherAndCrib(int[] c, String cribS) {
-        setCipher(c);
-        setCrib(cribS);
+    Multiplex setCipherAndCrib(int[] c, String cribS) {
+        return setCipher(c).setCrib(cribS);
     }
-    void randomizeKey() {
+    Multiplex randomizeKey() {
         for (int i = 0; i < NUMBER_OF_STRIPS; i++) {
             this.key[i] = i;
         }
         for (int i = 0; i < NUMBER_OF_STRIPS - 1 - 1; i++) {
             int next = i + 1;
-            int j = Utils.randomGet(NUMBER_OF_STRIPS - next) + next;
+            int j = Utils.randomNextInt(NUMBER_OF_STRIPS - next) + next;
             swapInKey(i, j);
         }
         decryptionValid = false;
+        return this;
     }
 
-    void swapInKey(int i, int j) {
+    Multiplex swapInKey(int i, int j) {
         int temp = key[i];
         key[i] = key[j];
         key[j] = temp;
@@ -132,6 +133,7 @@ abstract class Multiplex {
                 }
             }
         }
+        return this;
     }
 
     void encrypt(int[] plain, int[] cipher) {

@@ -55,10 +55,9 @@ public class Utils {
         return Arrays.copyOf(text, len);
     }
 
-    // read a cipher text from file. Only characters from the alphabet are read
-    public static String readCipherFile(String fileName) {
+    public static String readTextFile(String fileName) {
 
-        int[] ciphertext = new int[1000000];
+        int[] text = new int[1000000];
         String line = "";
         int len = 0;
 
@@ -71,7 +70,7 @@ public class Utils {
                 for (char c : line.toCharArray()) {
                     int index = getTextSymbol(c);
                     if (index != -1) {
-                        ciphertext[len] = index;
+                        text[len] = index;
                         len++;
                     }
                 }
@@ -79,37 +78,36 @@ public class Utils {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.goodbye(-1, "Unable to open ciphertext file '" + fileName + "'");
+            CtAPI.goodbye(-1, "Unable to open text file '" + fileName + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Error reading ciphertext file '" + fileName + "'");
+            CtAPI.goodbye(-1, "Error reading text file '" + fileName + "'");
         }
 
-        String cipherStr = getString(Arrays.copyOf(ciphertext, len));
+        String cipherStr = getString(Arrays.copyOf(text, len));
 
-
-        CtAPI.printf("Ciphertext file read: %s, length = %d \n%s\n", fileName, len, cipherStr);
+        CtAPI.printf("Text file read: %s, length = %d \n%s\n", fileName, len, cipherStr);
 
         return cipherStr;
     }
 
-    // read a plain text segment from a file at a given position and length
-    public static int readPlaintextSegmentFromFile(String fileName, int from, int[] plaintext) {
+    public static int readTextSegmentFromFile(String filename, int from, int[] text) {
 
-        String line = "";
         int length = 0;
-        int position = 0;
 
         try {
-            FileReader fileReader = new FileReader(fileName);
+            FileReader fileReader = new FileReader(filename);
 
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while (((line = bufferedReader.readLine()) != null) && (length < plaintext.length)) {
+            int position = 0;
+            String line = "";
+
+            while (((line = bufferedReader.readLine()) != null) && (length < text.length)) {
                 if (position > from) {
                     for (int i = 0; i < line.length(); i++) {
                         int index = getTextSymbol(line.charAt(i));
-                        if ((index != -1) && (length < plaintext.length)) {
-                            plaintext[length] = index;
+                        if ((index != -1) && (length < text.length)) {
+                            text[length] = index;
                             length++;
                         }
                     }
@@ -119,48 +117,39 @@ public class Utils {
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            CtAPI.println("Unable to open book file '" + fileName + "'");
-            CtAPI.goodbye(-1, "Cannot open book file " + fileName);
+            CtAPI.goodbye(-1, "Unable to open file '" + filename + "'");
         } catch (IOException ex) {
-            CtAPI.goodbye(-1, "Cannot read book file " + fileName);
+            CtAPI.goodbye(-1, "Unable to read file '" + filename + "'");
         }
-        CtAPI.printf("Generated Random Plaintext - Book: %s, Position: %d , Length: %d\n", fileName, from, length);
-        CtAPI.printf("%s\n\n", getString(plaintext));
-
+        CtAPI.printf("Read segment from file: %s, Position: %d , Length: %d\n", filename, from, length);
+        CtAPI.printf("%s\n\n", getString(text));
 
         return length;
     }
 
-
     public static String getString(int[] text) {
-
-        String m = "";
-        for (int t : text) {
-            m += getTextChar(t);
-        }
-
-        return m;
+        return getString(text, text.length);
     }
+
     public static String getString(int[] text, int length) {
-
-        String m = "";
+        StringBuilder m = new StringBuilder();
         for (int i = 0; i < Math.min(text.length, length); i++) {
-            m += getTextChar(text[i]);
+            m.append(getTextChar(text[i]));
         }
-
-        return m;
+        return m.toString();
     }
 
-    public static Random random = new Random(System.currentTimeMillis());
+    private static long startTime = System.currentTimeMillis();
+    public static long getElapsedMillis() {
+        return System.currentTimeMillis() - startTime + 1;
+    }
 
-    // generate a random number from 0 to (range-1)
-    public static int randomGet(int range) {
+    private static Random random = new Random(startTime);
+    public static int randomNextInt(int range) {
         return random.nextInt(range);
-
     }
-
-
-
-
+    public static double randomNextDouble() {
+        return random.nextDouble();
+    }
 
 }

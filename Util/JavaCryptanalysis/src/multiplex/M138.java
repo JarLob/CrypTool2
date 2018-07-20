@@ -128,8 +128,9 @@ class M138 extends Multiplex{
         decryptionValid = false;
     }
 
-    void randomizeOffset() {
-        setOffset(1 + Utils.randomGet(STRIP_LENGTH) - 1);
+    Multiplex randomizeOffset() {
+        setOffset(1 + Utils.randomNextInt(STRIP_LENGTH) - 1);
+        return this;
     }
 
     @Override

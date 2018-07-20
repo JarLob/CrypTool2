@@ -66,7 +66,7 @@ public class Transformations {
 
     static synchronized void randomize() {
         for (int i = 0; i < TOTAL_NUMBER_OF_TRANSFORMATIONS - 1; i++) {
-            int j = i + Utils.random.nextInt(TOTAL_NUMBER_OF_TRANSFORMATIONS - i);
+            int j = i + Utils.randomNextInt(TOTAL_NUMBER_OF_TRANSFORMATIONS - i);
             int keep = TRANSFORMATIONS[i];
             TRANSFORMATIONS[i] = TRANSFORMATIONS[j];
             TRANSFORMATIONS[j] = keep;

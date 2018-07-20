@@ -8,10 +8,10 @@ public class SimulatedAnnealing {
             return true;
         }
 
-        double temperature = 275.0*multiplier/20.0;
+        double temperature = 275.0 * multiplier / 20.0;
         double ratio = diffScore / temperature;
         double prob = Math.pow(Math.E, ratio);
-        double probThreshold = Utils.random.nextFloat();
+        double probThreshold = Utils.randomNextDouble();
         return prob > probThreshold && prob > 0.0085;
 
     }
