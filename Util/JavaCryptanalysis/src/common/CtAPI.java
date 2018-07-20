@@ -110,6 +110,7 @@ public class CtAPI {
                 CtAPI.println("Available processors (cores): " + Runtime.getRuntime().availableProcessors());
                 CtAPI.printf("Free memory (bytes): %,d\n\n", Runtime.getRuntime().freeMemory());
             }
+            displayBestList("-");
         } catch (Exception e) {
             displayExceptionAndGoodbye(e);
         }

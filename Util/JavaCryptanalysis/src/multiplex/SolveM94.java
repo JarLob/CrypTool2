@@ -86,7 +86,7 @@ class SolveM94 {
         if (!knownOffsets && len != 75) {
             CtAPI.goodbye(-1, "Length must be 75 when 'knownOffsets' is true");
         }
-        
+
         int[] p = new int[len];
         int[] c = new int[len];
         Utils.readTextSegmentFromFile(bookFile, Utils.randomNextInt(50000), p);

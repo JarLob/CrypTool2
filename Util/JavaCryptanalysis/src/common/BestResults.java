@@ -19,6 +19,7 @@ public class BestResults {
     }
     public static void clear() {
         bestResults.clear();
+        CtAPI.displayBestList("-");
     }
     public static void setOriginal(long score, String keyString, String plaintextString, String commentString) {
         originalResult = new Result(score, keyString, plaintextString, commentString);
