@@ -241,7 +241,7 @@ namespace Cryptool.ProcessExecutor
                 //Step 5:
                 //Send settings and
                 //create and start sending and receiving thread                
-                _SendingQueue.Enqueue(new OutgoingData() { outputId = 100, value = "" + _settings.Threads });
+                _SendingQueue.Enqueue(new OutgoingData() { outputId = 100, value = "" + (_settings.Threads + 1)}); //index starts at 0; thus +1
                 _SendingQueue.Enqueue(new OutgoingData() { outputId = 200, value = "" + _settings.Cycles });
                 _SendingQueue.Enqueue(new OutgoingData() { outputId = 300, value = "" + _settings.ResourceDirectory });
                 

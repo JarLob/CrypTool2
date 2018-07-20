@@ -81,7 +81,7 @@
 
                         <GridViewColumn x:Name="CreationDate" Header="{Loc _JobList_col_Date}"
                                         DisplayMemberBinding="{Binding CreationDate, FallbackValue=-, Converter={StaticResource DateTimeConverter}}"
-                                        Width="130" />
+                                        Width="150" />
                         <GridViewColumn x:Name="JobId" Header="{Loc _JobList_col_Id}"
                                         DisplayMemberBinding="{Binding JobId, Converter={StaticResource JobIdConverter}}" Width="275" />
                         <GridViewColumn x:Name="JobName" Header="{Loc  _JobList_col_Name}"
@@ -91,13 +91,13 @@
                         <GridViewColumn x:Name="CreatorName" Header="{Loc  _JobList_col_Creator}"
                                         DisplayMemberBinding="{Binding CreatorName}" Width="125" />
                         <GridViewColumn x:Name="Progress" Header="{Loc _JobList_col_Progress}"
-                                        Width="300">
+                                        Width="260">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <ProgressBar Name="progress" DataContext="{Binding}" Minimum="0" Maximum="100"
                                                      Value="{Binding Progress}"
-                                                     Width="280"
+                                                     Width="240"
                                                      Height="25" />
                                         <TextBlock DataContext="{Binding}" Text="{Binding ProgressText}"
                                                    HorizontalAlignment="Center"

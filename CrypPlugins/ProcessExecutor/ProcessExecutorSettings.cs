@@ -77,20 +77,9 @@ namespace Cryptool.ProcessExecutor
             }
         }
 
-        [TaskPane("ResourceDirectoryCaption", "ResourceDirectoryTooltip", null, 2, false, ControlType.TextBox)]
-        public string ResourceDirectory
-        {
-            get { return _resourceDirectory; }
-            set
-            {
-                if (value != _resourceDirectory)
-                {
-                    _resourceDirectory = value;
-                }
-            }
-        }
 
-        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 3, false, ControlType.CheckBox)]
+
+        [TaskPane("ShowWindowCaption", "ShowWindowTooltip", null, 2, false, ControlType.CheckBox)]
         public bool ShowWindow
         {
             get { return _showWindow; }
@@ -99,6 +88,19 @@ namespace Cryptool.ProcessExecutor
                 if (value != _showWindow)
                 {
                     _showWindow = value;
+                }
+            }
+        }
+
+        [TaskPane("ResourceDirectoryCaption", "ResourceDirectoryTooltip", null, 3, false, ControlType.TextBox)]
+        public string ResourceDirectory
+        {
+            get { return _resourceDirectory; }
+            set
+            {
+                if (value != _resourceDirectory)
+                {
+                    _resourceDirectory = value;
                 }
             }
         }
