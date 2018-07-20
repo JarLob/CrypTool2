@@ -364,6 +364,19 @@ namespace VoluntLib2
         }
 
         /// <summary>
+        /// Returns peer id of this peer
+        /// </summary>
+        /// <returns></returns>
+        public byte[] GetPeerId()
+        {
+            if (!IsStarted)
+            {
+                return null;
+            }
+            return ConnectionManager.GetPeerId();
+        }
+
+        /// <summary>
         /// Helper method to invoke TaskProgessChanged events
         /// </summary>
         /// <param name="sender"></param>
