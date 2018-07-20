@@ -34,9 +34,9 @@ class SolveMultiplex {
                                     Utils.getString(multiplex.decryption),
                                     Stats.evaluationsSummary() +
                                              String.format("[SA Cycle: %,5d, Round: %,5d]", saCycle, round));
-                        }
-                        if (currentScore == realMultiplexScore || multiplex.matchesFullCrib()) {
-                            CtAPI.goodbye(0, "Found key ...");
+                            if (currentScore == realMultiplexScore || multiplex.matchesFullCrib()) {
+                                CtAPI.goodbye(0, "Found key ...");
+                            }
                         }
                     } else {
                         multiplex.swapInKey(pi, pj);

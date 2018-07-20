@@ -45,9 +45,9 @@ public class SolvePlayfair {
                                 Stats.evaluationsSummary() +
                                     String.format("[%d/%d}[Task: %2d][Mult.: %,d]",
                                             newKey.decryptionRemoveNullsLength, cipherText.length, taskNumber, multiplier));
-                    }
-                    if (currentScore == simulationOriginalScore || newKey.matchesFullCrib()) {
-                        CtAPI.goodbye(0, "Found key");
+                        if (currentScore == simulationOriginalScore || newKey.matchesFullCrib()) {
+                            CtAPI.goodbye(0, "Found key ... ");
+                        }
                     }
                 }
             }

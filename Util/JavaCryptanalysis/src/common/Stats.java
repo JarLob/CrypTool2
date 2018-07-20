@@ -76,7 +76,7 @@ public class Stats {
 
     public static String evaluationsSummary(){
         long elapsed = Utils.getElapsedMillis();
-        return String.format("[%,d sec.][%,dK (%,dK/sec.]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
+        return String.format("[%,d sec.][%,dK decryptions (%,dK/sec.)]", elapsed / 1000, Stats.evaluations / 1000, Stats.evaluations / elapsed);
     }
 }
 
