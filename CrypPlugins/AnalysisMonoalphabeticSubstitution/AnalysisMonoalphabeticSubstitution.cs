@@ -157,7 +157,14 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
             // Clear presentation
             ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                ((AssignmentPresentation)Presentation).entries.Clear();
+                try
+                {
+                    ((AssignmentPresentation)Presentation).entries.Clear();
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage("Exception while clearing entries list:" + ex.Message, NotificationLevel.Error);
+                }
             }, null);
 
             // Prepare the cryptanalysis of the ciphertext
@@ -633,12 +640,19 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         private void UpdateDisplayStart()
         {
              ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate{
-                 startTime = DateTime.Now;
-                 ((AssignmentPresentation)Presentation).startTime.Content = "" + startTime;
-                 ((AssignmentPresentation)Presentation).endTime.Content = "";
-                 ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
-                 ((AssignmentPresentation)Presentation).totalKeys.Content = "";
-                 ((AssignmentPresentation)Presentation).keysPerSecond.Content = "";
+                 try
+                 {
+                     startTime = DateTime.Now;
+                     ((AssignmentPresentation)Presentation).startTime.Content = "" + startTime;
+                     ((AssignmentPresentation)Presentation).endTime.Content = "";
+                     ((AssignmentPresentation)Presentation).elapsedTime.Content = "";
+                     ((AssignmentPresentation)Presentation).totalKeys.Content = "";
+                     ((AssignmentPresentation)Presentation).keysPerSecond.Content = "";
+                 }
+                 catch (Exception ex)
+                 {
+                     GuiLogMessage("Exception during UpdateDisplayStart: " + ex.Message, NotificationLevel.Error);
+                 }
              }, null);
         }
 
@@ -646,20 +660,27 @@ namespace Cryptool.AnalysisMonoalphabeticSubstitution
         {
             ((AssignmentPresentation)Presentation).Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
+                try
+                {
+                    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
-                endTime = DateTime.Now;
-                TimeSpan elapsedtime = endTime.Subtract(startTime);
-                TimeSpan elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
-                
-                double totalSeconds = elapsedtime.TotalSeconds;
-                if (totalSeconds == 0) totalSeconds = 0.001;
-                keysPerSecond = totalKeys / totalSeconds;
+                    endTime = DateTime.Now;
+                    TimeSpan elapsedtime = endTime.Subtract(startTime);
+                    TimeSpan elapsedspan = new TimeSpan(elapsedtime.Days, elapsedtime.Hours, elapsedtime.Minutes, elapsedtime.Seconds, 0);
 
-                ((AssignmentPresentation)Presentation).endTime.Content = "" + endTime;
-                ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
-                ((AssignmentPresentation)Presentation).totalKeys.Content = String.Format(culture, "{0:##,#}", totalKeys);
-                ((AssignmentPresentation)Presentation).keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSecond);
+                    double totalSeconds = elapsedtime.TotalSeconds;
+                    if (totalSeconds == 0) totalSeconds = 0.001;
+                    keysPerSecond = totalKeys / totalSeconds;
+
+                    ((AssignmentPresentation)Presentation).endTime.Content = "" + endTime;
+                    ((AssignmentPresentation)Presentation).elapsedTime.Content = "" + elapsedspan;
+                    ((AssignmentPresentation)Presentation).totalKeys.Content = String.Format(culture, "{0:##,#}", totalKeys);
+                    ((AssignmentPresentation)Presentation).keysPerSecond.Content = String.Format(culture, "{0:##,#}", (ulong)keysPerSecond);
+                }
+                catch (Exception ex)
+                {
+                    GuiLogMessage("Exception during UpdateDisplayEnd:" + ex.Message, NotificationLevel.Error);
+                }
             }, null);
         }
 

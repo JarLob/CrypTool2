@@ -162,7 +162,6 @@
     <None Include="AnalyseMonoalphabeticSubstitution_kernel.ptx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Documentation\doc.xml">
