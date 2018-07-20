@@ -16,10 +16,12 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace VoluntLib2.ConnectionLayer
 {
@@ -28,7 +30,7 @@ namespace VoluntLib2.ConnectionLayer
     /// It also knows the Peer's PeerID (unique random identification number)
     /// Additionally, it knows when the peer was last seen and the last hello was sent to him
     /// </summary>
-    public class Contact
+    public class Contact : INotifyPropertyChanged
     {
         /// <summary>
         /// Randomly generated 16 byte PeerId
@@ -45,10 +47,22 @@ namespace VoluntLib2.ConnectionLayer
         /// </summary>
         public ushort Port { get; set; }
 
+        private DateTime _LastSeen;
         /// <summary>
         /// Receiving time of last packt from this Peer
         /// </summary>
-        public DateTime LastSeen { get; set; }
+        public DateTime LastSeen
+        {
+
+            get
+            {
+                return _LastSeen;
+            }
+            set
+            {
+                _LastSeen = value; OnPropertyChanged("LastSeen");
+            }
+        }
 
         /// <summary>
         /// Time when we sent the last HelloMessage to this Peer
@@ -142,6 +156,32 @@ namespace VoluntLib2.ConnectionLayer
             contact.LastHelloSent = LastHelloSent;
             contact.LastSeen = LastSeen;
             return contact;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Notify that a property changed
+        /// </summary>
+        /// <param name="propertyName"></param>
+        internal void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged == null)
+            {
+                return;
+            }
+            //if we are in a WPF application, we use the UI thread
+            if (Application.Current != null)
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                }));
+            }
+            else
+            {
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

@@ -101,12 +101,12 @@ namespace VoluntLib2.ConnectionLayer
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    ObservableContactList = new ObservableCollection<Contact>();
+                    ObservableContactList = new ObservableItemsCollection<Contact>();
                 }));
             }
             else
             {
-                ObservableContactList = new ObservableCollection<Contact>();
+                ObservableContactList = new ObservableItemsCollection<Contact>();
             }
             
         }
