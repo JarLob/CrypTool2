@@ -28,7 +28,7 @@ public final class Ct2ConnectionState {
 
 	private static final int unknownInt = -1;
 
-	private final AtomicInteger serverProtocolVersion = new AtomicInteger(unknownInt);
+	private final AtomicInteger serverProtocolVersion = new AtomicInteger(Ct2ConnectionState.unknownInt);
 
 	private final AtomicReference<String> serverCtName = new AtomicReference<String>("");
 	private final AtomicReference<String> serverCtVersion = new AtomicReference<String>("");

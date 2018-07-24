@@ -61,7 +61,7 @@ public final class Ct2Connector {
 	 * @return The state of the send loop.
 	 */
 	public static LoopState getSenderState() {
-		final ISendLoop<TypedMessage> loop = instance.sendLoop.get();
+		final ISendLoop<TypedMessage> loop = Ct2Connector.instance.sendLoop.get();
 		return (loop != null) ? loop.getState() : LoopState.SHUTDOWN;
 	}
 
@@ -69,7 +69,7 @@ public final class Ct2Connector {
 	 * @return The state of the receive loop.
 	 */
 	public static LoopState getReceiverState() {
-		final IReceiveLoop<Ct2IpcMessage> loop = instance.receiveLoop.get();
+		final IReceiveLoop<Ct2IpcMessage> loop = Ct2Connector.instance.receiveLoop.get();
 		return (loop != null) ? loop.getState() : LoopState.SHUTDOWN;
 	}
 
@@ -99,10 +99,10 @@ public final class Ct2Connector {
 			this.shutdown_(true);
 			// create state and message loops
 			final Ct2ConnectionState connState = new Ct2ConnectionState();
-			final NamedPipeSender sender = new NamedPipeSender(NPHelper.pipeUrl(pipeTX + NPHelper.getPID()), connState,
-					anErr);
-			final NamedPipeReceiver receiver = new NamedPipeReceiver(NPHelper.pipeUrl(pipeRX + NPHelper.getPID()),
-					connState, anErr, sender);
+			final NamedPipeSender sender = new NamedPipeSender(
+					NPHelper.pipeUrl(Ct2Connector.pipeTX + NPHelper.getPID()), connState, anErr);
+			final NamedPipeReceiver receiver = new NamedPipeReceiver(
+					NPHelper.pipeUrl(Ct2Connector.pipeRX + NPHelper.getPID()), connState, anErr, sender);
 			this.connState.set(connState);
 			this.receiveLoop.set(receiver);
 			this.sendLoop.set(sender);
@@ -118,10 +118,10 @@ public final class Ct2Connector {
 	}
 
 	/**
-	 * 
+	 *
 	 * Shuts down and clears any existing connection and tries to establish a new
 	 * connection.
-	 * 
+	 *
 	 * @param anErr
 	 * @return
 	 * @throws Exception
@@ -130,18 +130,18 @@ public final class Ct2Connector {
 			throws Exception {
 		final TypedMessage hello = //
 				MessageHelper.encodeCt2Hello(Ct2MessageType.myProtocolVersion, aProgramName, aProgramVersion);
-		return instance.start_(hello, anErr);
+		return Ct2Connector.instance.start_(hello, anErr);
 	}
 
 	/**
 	 * Signal the send and the receive loop to stop.
 	 */
 	public static void stop() {
-		instance.shutdown_(false);
+		Ct2Connector.instance.shutdown_(false);
 	}
 
 	private static boolean enqueueWithSender(final TypedMessage m) {
-		final ISendLoop<TypedMessage> loop = instance.sendLoop.get();
+		final ISendLoop<TypedMessage> loop = Ct2Connector.instance.sendLoop.get();
 		return (loop != null) ? loop.offer(m) : false;
 	}
 
@@ -154,7 +154,7 @@ public final class Ct2Connector {
 		if ((valuesByPin == null) || valuesByPin.isEmpty()) {
 			return true;
 		}
-		return enqueueWithSender(MessageHelper.encodeCt2Values(valuesByPin));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2Values(valuesByPin));
 	}
 
 	/**
@@ -166,7 +166,7 @@ public final class Ct2Connector {
 		if ((values == null) || values.isEmpty()) {
 			return true;
 		}
-		return enqueueWithSender(MessageHelper.encodeCt2Values(values));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2Values(values));
 	}
 
 	/**
@@ -177,7 +177,7 @@ public final class Ct2Connector {
 	 * @return True, if the progress message was successfully enqueued.
 	 */
 	public static boolean enqueueProgress(final double currentValue, final double maxValue) {
-		return enqueueWithSender(MessageHelper.encodeCt2Progress(currentValue, maxValue));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2Progress(currentValue, maxValue));
 	}
 
 	/**
@@ -188,7 +188,7 @@ public final class Ct2Connector {
 	 * @return True, if the log message was successfully enqueued.
 	 */
 	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel) {
-		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
 
 	/**
@@ -204,7 +204,7 @@ public final class Ct2Connector {
 		if (localLog != null) {
 			localLog.println(logLevel + ": " + entry);
 		}
-		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
 
 	/**
@@ -223,7 +223,7 @@ public final class Ct2Connector {
 				logger.log(level, entry);
 			}
 		}
-		return enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2LogEntry(entry, logLevel));
 	}
 
 	/**
@@ -234,7 +234,7 @@ public final class Ct2Connector {
 	 * @return True, if the goodbye message was successfully enqueued.
 	 */
 	public static boolean enqueueGoodbye(final int exitCode, final String exitMessage) {
-		return enqueueWithSender(MessageHelper.encodeCt2GoodBye(exitCode, exitMessage));
+		return Ct2Connector.enqueueWithSender(MessageHelper.encodeCt2GoodBye(exitCode, exitMessage));
 	}
 
 	// calls to the connection state
@@ -243,7 +243,7 @@ public final class Ct2Connector {
 	 * @return The server name.
 	 */
 	public static String getServerCtName() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.getServerCtName() : "";
 	}
 
@@ -251,7 +251,7 @@ public final class Ct2Connector {
 	 * @return The server version.
 	 */
 	public static String getServerCtVersion() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.getServerCtVersion() : "";
 	}
 
@@ -259,7 +259,7 @@ public final class Ct2Connector {
 	 * @return True, if values from the server are available.
 	 */
 	public static boolean hasValues() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.hasValues() : false;
 	}
 
@@ -268,7 +268,7 @@ public final class Ct2Connector {
 	 *         is present in the receive queue.
 	 */
 	public static Map<Integer, String> getValues() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.getValues() : null;
 	}
 
@@ -276,7 +276,7 @@ public final class Ct2Connector {
 	 * @return True, if the server requested a shutdown.
 	 */
 	public static boolean getShutdownRequested() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.getShutdownRequested() : false;
 	}
 
@@ -285,8 +285,8 @@ public final class Ct2Connector {
 	 *         exist.
 	 */
 	public static boolean isShutdown() {
-		return (getReceiverState() == LoopState.SHUTDOWN) //
-				&& (getSenderState() == LoopState.SHUTDOWN);
+		return (Ct2Connector.getReceiverState() == LoopState.SHUTDOWN) //
+				&& (Ct2Connector.getSenderState() == LoopState.SHUTDOWN);
 	}
 
 	/**
@@ -301,17 +301,15 @@ public final class Ct2Connector {
 	public static boolean waitForShutdown(final int timeoutMillis) throws InterruptedException {
 		final boolean hasTimeout = timeoutMillis > 0;
 		final long startMillis = hasTimeout ? System.currentTimeMillis() : 0;
-		boolean shutdown = false;
-		while (true) {
-			shutdown = isShutdown();
-			if (shutdown) {
-				return true;
-			}
+		boolean shutdown = Ct2Connector.isShutdown();
+		while (!shutdown) {
 			if (hasTimeout && ((System.currentTimeMillis() - startMillis) >= timeoutMillis)) {
 				return false;
 			}
-			Thread.sleep(10);
+			Thread.sleep(20);
+			shutdown = Ct2Connector.isShutdown();
 		}
+		return true;
 	}
 
 	/**
@@ -319,7 +317,7 @@ public final class Ct2Connector {
 	 *         exception.
 	 */
 	public static boolean hasExceptions() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? ((cs.getSenderException() != null) || (cs.getReceiverException() != null)) : false;
 	}
 
@@ -329,7 +327,7 @@ public final class Ct2Connector {
 	 *         The exception is cleared in the connection state.
 	 */
 	public static Exception clearSenderException() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.clearSenderException() : null;
 	}
 
@@ -339,7 +337,7 @@ public final class Ct2Connector {
 	 *         The exception is cleared in the connection state.
 	 */
 	public static Exception clearReceiverException() {
-		Ct2ConnectionState cs = instance.connState.get();
+		Ct2ConnectionState cs = Ct2Connector.instance.connState.get();
 		return cs != null ? cs.clearReceiverException() : null;
 	}
 }
