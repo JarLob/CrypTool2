@@ -197,7 +197,8 @@ public final class Ct2Connector {
 	 * @param logLevel
 	 *            The log level.
 	 * @param localLog
-	 *            PrintStream for local log output, possibly System.
+	 *            PrintStream for local log output, possibly System.out or
+	 *            System.err
 	 * @return True, if the log message was successfully enqueued.
 	 */
 	public static boolean enqueueLogEntry(final String entry, final LogLevel logLevel, final PrintStream localLog) {
