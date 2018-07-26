@@ -89,6 +89,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             {
                 _AlgorithmType = value;
                 UpdateTaskPaneVisibility();
+                OnPropertyChanged("AlgorithmType");
             }
         }
 
@@ -103,6 +104,8 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             {
                 _OutputType = value;
                 UpdateTaskPaneVisibility();
+                OnPropertyChanged("OutputType");
+
             }
         }
 
@@ -116,6 +119,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _OutputLength = value;
+                OnPropertyChanged("OutputLength");
             }
         }
 
@@ -129,11 +133,12 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _OutputAmount = value;
+                OnPropertyChanged("OutputAmount");
             }
         }
 
 
-        [TaskPane("SeedCaption", "SeedTooltip", "AlgorithmSettingsGroup,", 0, false, ControlType.TextBox)]
+        [TaskPane("SeedCaption", "SeedTooltip", "AlgorithmSettingsGroup", 0, false, ControlType.TextBox)]
         public string Seed
         {
             get
@@ -143,10 +148,11 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _Seed = value;
+                OnPropertyChanged("Seed");
             }
         }
 
-        [TaskPane("ModulusCaption", "ModulusTooltip", "AlgorithmSettingsGroup,", 1, false, ControlType.TextBox)]
+        [TaskPane("ModulusCaption", "ModulusTooltip", "AlgorithmSettingsGroup", 1, false, ControlType.TextBox)]
         public string Modulus
         {
             get
@@ -156,10 +162,11 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _Modulus = value;
+                OnPropertyChanged("Modulus");
             }
         }
 
-        [TaskPane("aCaption", "aTooltip", "AlgorithmSettingsGroup,", 2, false, ControlType.TextBox)]
+        [TaskPane("aCaption", "aTooltip", "AlgorithmSettingsGroup", 2, false, ControlType.TextBox)]
         public string a
         {
             get
@@ -169,10 +176,11 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _a = value;
+                OnPropertyChanged("a");
             }
         }
 
-        [TaskPane("bCaption", "aTooltip", "AlgorithmSettingsGroup,", 3, false, ControlType.TextBox)]
+        [TaskPane("bCaption", "aTooltip", "AlgorithmSettingsGroup", 3, false, ControlType.TextBox)]
         public string b
         {
             get
@@ -182,6 +190,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _b = value;
+                OnPropertyChanged("b");
             }
         }
 
@@ -205,9 +214,6 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             _settingsList.Add("a");
             _settingsList.Add("b");
             _settingsVisibility[AlgorithmType.RandomRandom].Add("Seed");
-            _settingsVisibility[AlgorithmType.RandomRandom].Add("Modulus");
-            _settingsVisibility[AlgorithmType.RNGCryptoServiceProvider].Add("Seed");
-            _settingsVisibility[AlgorithmType.RNGCryptoServiceProvider].Add("Modulus");
             _settingsVisibility[AlgorithmType.X2modN].Add("Seed");
             _settingsVisibility[AlgorithmType.X2modN].Add("Modulus");
             _settingsVisibility[AlgorithmType.ICG].Add("Seed");

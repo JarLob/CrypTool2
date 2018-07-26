@@ -517,7 +517,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     {
                         LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
                         byte[] output = lcgGenerator.generateRNDNums();
-                           _output = new CStreamWriter(output);
+                        _output = new CStreamWriter(output);
                         OnPropertyChanged("Output");
                     }
                     break;

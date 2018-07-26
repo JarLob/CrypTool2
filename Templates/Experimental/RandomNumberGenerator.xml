@@ -13,6 +13,15 @@
   <description lang="de">Mit dieser Vorlage können Sie Zufallszahlen mit den in der <i>DieHarder</i>-Bibliothek implementierten Zufallszahlengeneratoren erzeugen.</description>
   <keywords lang="de">Zufallszahl, generator, dieharder</keywords>
   <icon file="RandomNumberGenerator.png" />
+  <replacements lang="de">
+    <replacement key="$RandomBytes$" value="Zufällige Bytes" />
+   </replacements>
+   <replacements lang="en">
+    <replacement key="$RandomBytes$" value="Random bytes" />
+   </replacements>
+     <replacements lang="ru">
+    <replacement key="$RandomBytes$" value="Случайные байты" />
+   </replacements>
   <relevantPlugins>
     <plugin name="Zufallsgeneratoren" />
   </relevantPlugins>
