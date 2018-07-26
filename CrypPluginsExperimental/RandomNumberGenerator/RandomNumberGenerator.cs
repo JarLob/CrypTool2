@@ -23,6 +23,9 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using RandomNumberGenerator.Properties;
+using System;
+using Cryptool.PluginBase.IO;
+using System.Security.Cryptography;
 
 namespace Cryptool.Plugins.RandomNumberGenerator
 {
@@ -33,14 +36,9 @@ namespace Cryptool.Plugins.RandomNumberGenerator
     {
         #region Private Variables
 
-        private readonly RandomNumberGeneratorSettings settings = new RandomNumberGeneratorSettings();
-        private BigInteger _outputlength;
-        private BigInteger _seed;
-        private BigInteger _modulus;
-        private BigInteger _a;
-        private BigInteger _b;
-        private byte[] _result;
-        private Thread workerThread;
+        private readonly RandomNumberGeneratorSettings _Settings = new RandomNumberGeneratorSettings();
+
+        private object _output;
 
         private BigInteger stdPrime = BigInteger.Parse("3");
 
@@ -48,101 +46,14 @@ namespace Cryptool.Plugins.RandomNumberGenerator
 
         #region Data Properties
 
-        /// <summary>
-        /// Input of the outputlength
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "presOutputLength", "presOutputLengthCaption")]
-        public BigInteger OutputLength
+        [PropertyInfo(Direction.OutputData, "Output", "OutputCaption", false)]
+        public object Output
         {
             get
             {
-                return _outputlength;
+                return _output;
             }
-            set
-            {
-                _outputlength = value;
-            }
-        }
-
-        /// <summary>
-        /// Input with the seed
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "presSeed", "presSeedCaption")]
-        public BigInteger Seed
-        {
-            get
-            {
-                return _seed;
-            }
-            set
-            {
-                _seed = value;
-            }
-        }
-
-        /// <summary>
-        /// Input with the seed
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "presMod", "presModCaption")]
-        public BigInteger Modulus
-        {
-            get
-            {
-                return _modulus;
-            }
-            set
-            {
-                _modulus = value;
-            }
-        }
-
-        /// <summary>
-        /// Input of a
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "presA", "presACaption")]
-        public BigInteger A
-        {
-            get
-            {
-                return _a;
-            }
-            set
-            {
-                _a = value;
-            }
-        }
-
-        /// <summary>
-        /// Input of b
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "presB", "presBCaption")]
-        public BigInteger B
-        {
-            get
-            {
-                return _b;
-            }
-            set
-            {
-                _b = value;
-            }
-        }
-
-        /// <summary>
-        /// Output with result
-        /// </summary>
-        [PropertyInfo(Direction.OutputData, "presResult", "presResultCaption")]
-        public byte[] Result
-        {
-            get
-            {
-                return _result;
-            }
-            set
-            {
-                _result = value;
-            }
-        }
+        }    
 
         #endregion
 
@@ -153,7 +64,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// </summary>
         public ISettings Settings
         {
-            get { return settings; }
+            get { return _Settings; }
         }
 
         /// <summary>
@@ -176,29 +87,419 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// </summary>
         public void Execute()
         {
-            //Implementation with threads: this approach handles an inputchange in a better way
-            if (workerThread == null)
+            ProgressChanged(0, 1);
+
+            bool executedWithoutError = false;
+
+            switch (_Settings.AlgorithmType)
             {
-                workerThread = new Thread(new ThreadStart(tExecute));
-                workerThread.IsBackground = true;
-                workerThread.Start();
+                case AlgorithmType.RandomRandom:
+                    executedWithoutError = ExecuteRandomRandomGenerator();
+                    break;
+                case AlgorithmType.RNGCryptoServiceProvider:
+                    executedWithoutError = ExecuteRNGCryptoServiceProvider();
+                    break;
+                case AlgorithmType.X2modN:
+                    executedWithoutError = ExecuteX2modNGenerator();
+                    break;
+                case AlgorithmType.LCG:
+                    executedWithoutError = ExecuteLCG();
+                    break;
+                case AlgorithmType.ICG:
+                    executedWithoutError = ExecuteICG();
+                    break;
+                default:
+                    throw new Exception(String.Format("Not implemented algorithm type: {0}", _Settings.AlgorithmType.ToString()));
+            }
+            //We only show 100% if execution was without an error
+            if (executedWithoutError)
+            {
+                ProgressChanged(1, 1);
+            }
+        }
+
+
+        private bool ExecuteRandomRandomGenerator()
+        {
+            Random random;
+            if (String.IsNullOrEmpty(_Settings.Seed))
+            {
+                random = new Random();
             }
             else
             {
-                if (workerThread.IsAlive)
+                int seed;
+                try
                 {
-                    workerThread.Abort();
-                    workerThread = new Thread(new ThreadStart(tExecute));
-                    workerThread.IsBackground = true;
-                    workerThread.Start();
+                    seed = int.Parse(_Settings.Seed);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                    return false;
+                }
+                random = new Random(seed);
+            }
+
+            int outputlength;
+            if (String.IsNullOrEmpty(_Settings.OutputLength))
+            {
+                outputlength = 0;
+            }
+            else
+            {
+                try
+                {
+                    outputlength = int.Parse(_Settings.OutputLength);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    return false;
+                }
+            }
+            switch (_Settings.OutputType)
+            {
+                case OutputType.ByteArray:
+                    {
+                        byte[] output = new byte[outputlength];
+                        random.NextBytes(output);
+                        _output = output;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.CrypToolStream:
+                    {
+                        byte[] output = new byte[outputlength];
+                        random.NextBytes(output);
+                        _output = new CStreamWriter(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Number:
+                    {
+                        byte[] output = new byte[outputlength];
+                        random.NextBytes(output);
+                        if (output.Length > 0)
+                        {
+                            output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                        }
+                        _output = new BigInteger(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.NumberArray:
+                    {
+                        int outputamount;
+                        if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                        {
+                            outputamount = 1;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                outputamount = int.Parse(_Settings.OutputAmount);
+                            }
+                            catch (Exception)
+                            {
+                                GuiLogMessage(String.Format("Invalid output amount: {0}", _Settings.Modulus), NotificationLevel.Error);
+                                return false;
+                            }
+                        }
+                        BigInteger[] array = new BigInteger[outputamount];
+                        for (int i = 0; i < outputamount; i++)
+                        {
+                            byte[] output = new byte[outputlength];
+                            random.NextBytes(output);
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            array[i] = new BigInteger(output);
+                        }
+                        _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                default:
+                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+            }
+            return true;
+        }
+
+        private bool ExecuteRNGCryptoServiceProvider()
+        {
+            using (RNGCryptoServiceProvider random = new RNGCryptoServiceProvider())
+            {
+
+                int outputlength;
+                if (String.IsNullOrEmpty(_Settings.OutputLength))
+                {
+                    outputlength = 0;
                 }
                 else
                 {
-                    workerThread = new Thread(new ThreadStart(tExecute));
-                    workerThread.IsBackground = true;
-                    workerThread.Start();
+                    try
+                    {
+                        outputlength = int.Parse(_Settings.OutputLength);
+                    }
+                    catch (Exception)
+                    {
+                        GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                        return false;
+                    }
+                }
+                switch (_Settings.OutputType)
+                {
+                    case OutputType.ByteArray:
+                        {
+                            byte[] output = new byte[outputlength];
+                            random.GetBytes(output);
+                            _output = output;
+                            OnPropertyChanged("Output");
+                        }
+                        break;
+                    case OutputType.CrypToolStream:
+                        {
+                            byte[] output = new byte[outputlength];
+                            random.GetBytes(output);
+                            _output = new CStreamWriter(output);
+                            OnPropertyChanged("Output");
+                        }
+                        break;
+                    case OutputType.Number:
+                        {
+                            byte[] output = new byte[outputlength];
+                            random.GetBytes(output);
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            _output = new BigInteger(output);
+                            OnPropertyChanged("Output");
+                        }
+                        break;
+                    case OutputType.NumberArray:
+                        {
+                            int outputamount;
+                            if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                            {
+                                outputamount = 1;
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    outputamount = int.Parse(_Settings.OutputAmount);
+                                }
+                                catch (Exception)
+                                {
+                                    GuiLogMessage(String.Format("Invalid output amount: {0}", _Settings.Modulus), NotificationLevel.Error);
+                                    return false;
+                                }
+                            }
+                            BigInteger[] array = new BigInteger[outputamount];
+                            for (int i = 0; i < outputamount; i++)
+                            {
+                                byte[] output = new byte[outputlength];
+                                random.GetBytes(output);
+                                if (output.Length > 0)
+                                {
+                                    output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                                }
+                                array[i] = new BigInteger(output);
+                            }
+                            _output = array;
+                            OnPropertyChanged("Output");
+                        }
+                        break;
+                    default:
+                        throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                }
+                return true;
+            }
+        }
+
+        private bool ExecuteX2modNGenerator()
+        {
+            BigInteger seed;
+            BigInteger modulus;
+            int outputlength;
+            try
+            {
+                seed = BigInteger.Parse(_Settings.Seed);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                return false;
+            }
+            try
+            {
+                modulus = BigInteger.Parse(_Settings.Modulus);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            if (String.IsNullOrEmpty(_Settings.OutputLength))
+            {
+                outputlength = 0;
+            }
+            else
+            {
+                try
+                {
+                    outputlength = int.Parse(_Settings.OutputLength);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    return false;
                 }
             }
+            X2 x2Gen = new X2(seed, modulus, outputlength);
+            _output = x2Gen.generateRNDNums();
+            OnPropertyChanged("Output");
+            return true;
+        }
+
+
+        private bool ExecuteLCG()
+        {
+            BigInteger seed;
+            BigInteger modulus;
+            int outputlength;
+            BigInteger a;
+            BigInteger b;
+            try
+            {
+                seed = BigInteger.Parse(_Settings.Seed);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                return false;
+            }
+            try
+            {
+                modulus = BigInteger.Parse(_Settings.Modulus);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            if (String.IsNullOrEmpty(_Settings.OutputLength))
+            {
+                outputlength = 0;
+            }
+            else
+            {
+                try
+                {
+                    outputlength = int.Parse(_Settings.OutputLength);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    return false;
+                }
+            }
+            try
+            {
+                a = BigInteger.Parse(_Settings.a);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid a value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            try
+            {
+                b = BigInteger.Parse(_Settings.b);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid b value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            LCG lcgGen = new LCG(seed, modulus, a, b, outputlength);
+            _output = lcgGen.generateRNDNums();
+            OnPropertyChanged("Output");
+            return true;
+        }
+
+        private bool ExecuteICG()
+        {
+            BigInteger seed;
+            BigInteger modulus;
+            int outputlength;
+            BigInteger a;
+            BigInteger b;
+            try
+            {
+                seed = BigInteger.Parse(_Settings.Seed);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                return false;
+            }
+            try
+            {
+                modulus = BigInteger.Parse(_Settings.Modulus);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            if (String.IsNullOrEmpty(_Settings.OutputLength))
+            {
+                outputlength = 0;
+            }
+            else
+            {
+                try
+                {
+                    outputlength = int.Parse(_Settings.OutputLength);
+                }
+                catch (Exception)
+                {
+                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    return false;
+                }
+            }
+            try
+            {
+                a = BigInteger.Parse(_Settings.a);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid a value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            try
+            {
+                b = BigInteger.Parse(_Settings.b);
+            }
+            catch (Exception)
+            {
+                GuiLogMessage(String.Format("Invalid b value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                return false;
+            }
+            if (!isPrime(modulus))
+            {
+                GuiLogMessage(String.Format(Resources.presErrorPrime, _Settings.Modulus, stdPrime), NotificationLevel.Warning);
+                modulus = stdPrime;
+            }
+            ICG icgGen = new ICG(seed, modulus, a, b, outputlength);
+            _output = icgGen.generateRNDNums();
+            OnPropertyChanged("Output");
+            return true;
         }
 
         /// <summary>
@@ -213,11 +514,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// Shall abort long-running execution.
         /// </summary>
         public void Stop()
-        {
-            if (workerThread.IsAlive)
-            {
-                workerThread.Abort();
-            }
+        {           
         }
 
         /// <summary>
@@ -249,43 +546,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 if (num % i == 0)
                     return false;
             return true;
-        }
-
-        /// <summary>
-        ///  the method to be called in the workerthread
-        /// </summary>
-        private void tExecute()
-        {
-            ProgressChanged(0, 1);
-
-            switch (settings.RndAlg)
-            {
-                case 0:
-                    X2 x2Gen = new X2(_seed, _modulus, _outputlength);
-                    _result = x2Gen.generateRNDNums();
-                    OnPropertyChanged("Result");
-                    break;
-                case 1:
-                    LCG lcgGen = new LCG(_seed, _modulus, _a, _b, _outputlength);
-                    _result = lcgGen.generateRNDNums();
-                    OnPropertyChanged("Result");
-                    break;
-                case 2:
-                    if (!isPrime(Modulus))
-                    {
-                        GuiLogMessage(Resources.presErrorPrime.Replace("{0}", Modulus.ToString()).Replace("{1}", stdPrime.ToString()), NotificationLevel.Warning);
-                        Modulus = stdPrime;
-                    }
-                    ICG icgGen = new ICG(_seed, Modulus, _a, _b, _outputlength);
-                    _result = icgGen.generateRNDNums();
-                    OnPropertyChanged("Result");
-                    break;
-                default:
-                    break;
-            }
-
-            ProgressChanged(1, 1);
-        }
+        }      
 
         #endregion
 
