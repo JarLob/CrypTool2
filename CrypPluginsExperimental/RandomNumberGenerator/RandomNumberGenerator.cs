@@ -1,6 +1,7 @@
 ﻿/*
    Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
    Author: Christian Bender, Universität Siegen
+           Nils Kopal, CrypTool 2 Team
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,7 +15,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
 
 using System.ComponentModel;
 using System.Numerics;
@@ -30,7 +30,7 @@ using System.Security.Cryptography;
 namespace Cryptool.Plugins.RandomNumberGenerator
 {
     [Author("Christian Bender", "christian1.bender@student.uni-siegen.de", null, "http://www.uni-siegen.de")]
-    [PluginInfo("RandomNumberGenerator.Properties.Resources", "RandNumGenPluginCaption", "RandNumGenTooltip", "RandomNumberGenerator/userdoc.xml", new[] { "RandomNumberGenerator/images/icon.png" })]
+    [PluginInfo("RandomNumberGenerator.Properties.Resources", "PluginCaption", "PluginTooltip", "RandomNumberGenerator/userdoc.xml", new[] { "RandomNumberGenerator/images/icon.png" })]
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class RandomNumberGenerator : ICrypComponent
     {
@@ -46,7 +46,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
 
         #region Data Properties
 
-        [PropertyInfo(Direction.OutputData, "Output", "OutputCaption", false)]
+        [PropertyInfo(Direction.OutputData, "OutputCaption", "OutputCaption", false)]
         public object Output
         {
             get
@@ -94,9 +94,11 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             switch (_Settings.AlgorithmType)
             {
                 case AlgorithmType.RandomRandom:
+                    //Basic random number generator of .net:
                     executedWithoutError = ExecuteRandomRandomGenerator();
                     break;
                 case AlgorithmType.RNGCryptoServiceProvider:
+                    //CryptoService random number generator of .net
                     executedWithoutError = ExecuteRNGCryptoServiceProvider();
                     break;
                 case AlgorithmType.X2modN:
@@ -118,7 +120,10 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
-
+        /// <summary>
+        /// This method executes the basic random number generator of .net
+        /// </summary>
+        /// <returns></returns>
         private bool ExecuteRandomRandomGenerator()
         {
             Random random;
@@ -135,7 +140,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 }
                 catch (Exception)
                 {
-                    GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.InvalidSeedValue, _Settings.Seed), NotificationLevel.Error);
                     return false;
                 }
                 random = new Random(seed);
@@ -154,7 +159,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 }
                 catch (Exception)
                 {
-                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
                     return false;
                 }
             }
@@ -203,7 +208,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                             }
                             catch (Exception)
                             {
-                                GuiLogMessage(String.Format("Invalid output amount: {0}", _Settings.Modulus), NotificationLevel.Error);
+                                GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
                                 return false;
                             }
                         }
@@ -228,6 +233,10 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             return true;
         }
 
+        /// <summary>
+        /// This method executes the RNGCryptoServiceProvider of .net
+        /// </summary>
+        /// <returns></returns>
         private bool ExecuteRNGCryptoServiceProvider()
         {
             using (RNGCryptoServiceProvider random = new RNGCryptoServiceProvider())
@@ -246,7 +255,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     }
                     catch (Exception)
                     {
-                        GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                        GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
                         return false;
                     }
                 }
@@ -295,7 +304,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                                 }
                                 catch (Exception)
                                 {
-                                    GuiLogMessage(String.Format("Invalid output amount: {0}", _Settings.Modulus), NotificationLevel.Error);
+                                    GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
                                     return false;
                                 }
                             }
@@ -321,6 +330,10 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
+        /// <summary>
+        /// Executes the X2modN random number generator
+        /// </summary>
+        /// <returns></returns>
         private bool ExecuteX2modNGenerator()
         {
             BigInteger seed;
@@ -332,7 +345,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidSeedValue, _Settings.Seed), NotificationLevel.Error);
                 return false;
             }
             try
@@ -341,7 +354,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidModulus, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             if (String.IsNullOrEmpty(_Settings.OutputLength))
@@ -356,13 +369,78 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 }
                 catch (Exception)
                 {
-                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
                     return false;
                 }
             }
-            X2 x2Gen = new X2(seed, modulus, outputlength);
-            _output = x2Gen.generateRNDNums();
-            OnPropertyChanged("Output");
+            switch (_Settings.OutputType)
+            {
+                case OutputType.ByteArray:
+                    {
+                        X2 x2Generator = new X2(seed, modulus, outputlength);
+                        _output = x2Generator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.CrypToolStream:
+                    {
+                        X2 x2Generator = new X2(seed, modulus, outputlength);
+                        byte[] output = x2Generator.generateRNDNums();
+                        _output = new CStreamWriter(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Number:
+                    {
+                        X2 x2Generator = new X2(seed, modulus, outputlength);
+                        byte[] output = x2Generator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                        _output = new CStreamWriter(output);
+                        if (output.Length > 0)
+                        {
+                            output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                        }
+                        _output = new BigInteger(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.NumberArray:
+                    {
+                        int outputamount;
+                        if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                        {
+                            outputamount = 1;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                outputamount = int.Parse(_Settings.OutputAmount);
+                            }
+                            catch (Exception)
+                            {
+                                GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
+                                return false;
+                            }
+                        }
+                        BigInteger[] array = new BigInteger[outputamount];
+                        X2 x2Generator = new X2(seed, modulus, outputlength);
+                        for (int i = 0; i < outputamount; i++)
+                        {
+                            byte[] output = x2Generator.generateRNDNums();                            
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            array[i] = new BigInteger(output);
+                        }
+                        _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                default:
+                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+            }          
             return true;
         }
 
@@ -380,7 +458,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidSeedValue, _Settings.Seed), NotificationLevel.Error);
                 return false;
             }
             try
@@ -389,7 +467,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidModulus, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             if (String.IsNullOrEmpty(_Settings.OutputLength))
@@ -404,7 +482,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 }
                 catch (Exception)
                 {
-                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
                     return false;
                 }
             }
@@ -414,7 +492,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid a value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidaValue, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             try
@@ -423,12 +501,77 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid b value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidbValue, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
-            LCG lcgGen = new LCG(seed, modulus, a, b, outputlength);
-            _output = lcgGen.generateRNDNums();
-            OnPropertyChanged("Output");
+            switch (_Settings.OutputType)
+            {
+                case OutputType.ByteArray:
+                    {
+                        LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
+                        _output = lcgGenerator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.CrypToolStream:
+                    {
+                        LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
+                        byte[] output = lcgGenerator.generateRNDNums();
+                           _output = new CStreamWriter(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Number:
+                    {
+                        LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
+                        byte[] output = lcgGenerator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                        _output = new CStreamWriter(output);
+                        if (output.Length > 0)
+                        {
+                            output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                        }
+                        _output = new BigInteger(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.NumberArray:
+                    {
+                        int outputamount;
+                        if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                        {
+                            outputamount = 1;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                outputamount = int.Parse(_Settings.OutputAmount);
+                            }
+                            catch (Exception)
+                            {
+                                GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
+                                return false;
+                            }
+                        }
+                        BigInteger[] array = new BigInteger[outputamount];
+                        LCG lcgGenerator = new LCG(seed, modulus, a, b, outputlength);
+                        for (int i = 0; i < outputamount; i++)
+                        {
+                            byte[] output = lcgGenerator.generateRNDNums();
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            array[i] = new BigInteger(output);
+                        }
+                        _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                default:
+                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+            }
             return true;
         }
 
@@ -445,7 +588,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid seed value: {0}", _Settings.Seed), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidSeedValue, _Settings.Seed), NotificationLevel.Error);
                 return false;
             }
             try
@@ -454,7 +597,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid modulus value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidModulus, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             if (String.IsNullOrEmpty(_Settings.OutputLength))
@@ -469,7 +612,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                 }
                 catch (Exception)
                 {
-                    GuiLogMessage(String.Format("Invalid output length: {0}", _Settings.Modulus), NotificationLevel.Error);
+                    GuiLogMessage(String.Format(Resources.InvalidOutputLength, _Settings.Modulus), NotificationLevel.Error);
                     return false;
                 }
             }
@@ -479,7 +622,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid a value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidaValue, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             try
@@ -488,17 +631,82 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
             catch (Exception)
             {
-                GuiLogMessage(String.Format("Invalid b value: {0}", _Settings.Modulus), NotificationLevel.Error);
+                GuiLogMessage(String.Format(Resources.InvalidbValue, _Settings.Modulus), NotificationLevel.Error);
                 return false;
             }
             if (!isPrime(modulus))
             {
-                GuiLogMessage(String.Format(Resources.presErrorPrime, _Settings.Modulus, stdPrime), NotificationLevel.Warning);
+                GuiLogMessage(String.Format(Resources.ErrorPrime, _Settings.Modulus, stdPrime), NotificationLevel.Warning);
                 modulus = stdPrime;
             }
-            ICG icgGen = new ICG(seed, modulus, a, b, outputlength);
-            _output = icgGen.generateRNDNums();
-            OnPropertyChanged("Output");
+            switch (_Settings.OutputType)
+            {
+                case OutputType.ByteArray:
+                    {
+                        ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
+                        _output = icgGenerator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.CrypToolStream:
+                    {
+                        ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
+                        byte[] output = icgGenerator.generateRNDNums();
+                        _output = new CStreamWriter(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.Number:
+                    {
+                        ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
+                        byte[] output = icgGenerator.generateRNDNums();
+                        OnPropertyChanged("Output");
+                        _output = new CStreamWriter(output);
+                        if (output.Length > 0)
+                        {
+                            output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                        }
+                        _output = new BigInteger(output);
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                case OutputType.NumberArray:
+                    {
+                        int outputamount;
+                        if (String.IsNullOrEmpty(_Settings.OutputAmount))
+                        {
+                            outputamount = 1;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                outputamount = int.Parse(_Settings.OutputAmount);
+                            }
+                            catch (Exception)
+                            {
+                                GuiLogMessage(String.Format(Resources.InvalidOutputAmount, _Settings.Modulus), NotificationLevel.Error);
+                                return false;
+                            }
+                        }
+                        BigInteger[] array = new BigInteger[outputamount];
+                        ICG icgGenerator = new ICG(seed, modulus, a, b, outputlength);
+                        for (int i = 0; i < outputamount; i++)
+                        {
+                            byte[] output = icgGenerator.generateRNDNums();
+                            if (output.Length > 0)
+                            {
+                                output[output.Length - 1] &= (byte)0x7F; // set sign bit 0 = positive
+                            }
+                            array[i] = new BigInteger(output);
+                        }
+                        _output = array;
+                        OnPropertyChanged("Output");
+                    }
+                    break;
+                default:
+                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+            }
             return true;
         }
 

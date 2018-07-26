@@ -19,7 +19,7 @@ namespace RandomNumberGenerator.Properties {
     // -Klasse über ein Tool wie ResGen oder Visual Studio automatisch generiert.
     // Um einen Member hinzuzufügen oder zu entfernen, bearbeiten Sie die .ResX-Datei und führen dann ResGen
     // mit der /str-Option erneut aus, oder Sie erstellen Ihr VS-Projekt neu.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -63,162 +63,261 @@ namespace RandomNumberGenerator.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die a ähnelt.
         /// </summary>
-        internal static string presA {
+        internal static string aCaption {
             get {
-                return ResourceManager.GetString("presA", resourceCulture);
+                return ResourceManager.GetString("aCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die a ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm ähnelt.
         /// </summary>
-        internal static string presACaption {
+        internal static string AlgorithmSettingsGroup {
             get {
-                return ResourceManager.GetString("presACaption", resourceCulture);
+                return ResourceManager.GetString("AlgorithmSettingsGroup", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of algorithm ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm ähnelt.
         /// </summary>
-        internal static string presAlgoGroup {
+        internal static string AlgorithmTypeCaption {
             get {
-                return ResourceManager.GetString("presAlgoGroup", resourceCulture);
+                return ResourceManager.GetString("AlgorithmTypeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes the algorithm, which should be used to generate random data ähnelt.
+        /// </summary>
+        internal static string AlgorithmTypeTooltip {
+            get {
+                return ResourceManager.GetString("AlgorithmTypeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the a value of the random number generator ähnelt.
+        /// </summary>
+        internal static string aTooltip {
+            get {
+                return ResourceManager.GetString("aTooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die b ähnelt.
         /// </summary>
-        internal static string presB {
+        internal static string bCaption {
             get {
-                return ResourceManager.GetString("presB", resourceCulture);
+                return ResourceManager.GetString("bCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die b ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the b value of the random number generator ähnelt.
         /// </summary>
-        internal static string presBCaption {
+        internal static string bTooltip {
             get {
-                return ResourceManager.GetString("presBCaption", resourceCulture);
+                return ResourceManager.GetString("bTooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {0} is not a prime number. Using {1} instead. ähnelt.
         /// </summary>
-        internal static string presErrorPrime {
+        internal static string ErrorPrime {
             get {
-                return ResourceManager.GetString("presErrorPrime", resourceCulture);
+                return ResourceManager.GetString("ErrorPrime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Module ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die General ähnelt.
         /// </summary>
-        internal static string presMod {
+        internal static string GeneralSettingsGroup {
             get {
-                return ResourceManager.GetString("presMod", resourceCulture);
+                return ResourceManager.GetString("GeneralSettingsGroup", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Module ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid a value: {0} ähnelt.
         /// </summary>
-        internal static string presModCaption {
+        internal static string InvalidaValue {
             get {
-                return ResourceManager.GetString("presModCaption", resourceCulture);
+                return ResourceManager.GetString("InvalidaValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid b value: {0} ähnelt.
         /// </summary>
-        internal static string presOutputLength {
+        internal static string InvalidbValue {
             get {
-                return ResourceManager.GetString("presOutputLength", resourceCulture);
+                return ResourceManager.GetString("InvalidbValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Length of the output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid modulus value: {0} ähnelt.
         /// </summary>
-        internal static string presOutputLengthCaption {
+        internal static string InvalidModulus {
             get {
-                return ResourceManager.GetString("presOutputLengthCaption", resourceCulture);
+                return ResourceManager.GetString("InvalidModulus", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Algorithm: ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid output amount: {0} ähnelt.
         /// </summary>
-        internal static string presRadioCaption {
+        internal static string InvalidOutputAmount {
             get {
-                return ResourceManager.GetString("presRadioCaption", resourceCulture);
+                return ResourceManager.GetString("InvalidOutputAmount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Choice of the used algorithmen to create pseudorandom numbers ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid output length: {0} ähnelt.
         /// </summary>
-        internal static string presRadioToolTip {
+        internal static string InvalidOutputLength {
             get {
-                return ResourceManager.GetString("presRadioToolTip", resourceCulture);
+                return ResourceManager.GetString("InvalidOutputLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid seed value: {0} ähnelt.
+        /// </summary>
+        internal static string InvalidSeedValue {
+            get {
+                return ResourceManager.GetString("InvalidSeedValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Modulus ähnelt.
+        /// </summary>
+        internal static string ModulusCaption {
+            get {
+                return ResourceManager.GetString("ModulusCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the modulus value of the random number generator ähnelt.
+        /// </summary>
+        internal static string ModulusTooltip {
+            get {
+                return ResourceManager.GetString("ModulusTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Elements in output array ähnelt.
+        /// </summary>
+        internal static string OutputAmountCaption {
+            get {
+                return ResourceManager.GetString("OutputAmountCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes the amount of elements in output array ähnelt.
+        /// </summary>
+        internal static string OutputAmountTooltip {
+            get {
+                return ResourceManager.GetString("OutputAmountTooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Output ähnelt.
         /// </summary>
-        internal static string presResult {
+        internal static string OutputCaption {
             get {
-                return ResourceManager.GetString("presResult", resourceCulture);
+                return ResourceManager.GetString("OutputCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Output ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output length (bytes) ähnelt.
         /// </summary>
-        internal static string presResultCaption {
+        internal static string OutputLengthCaption {
             get {
-                return ResourceManager.GetString("presResultCaption", resourceCulture);
+                return ResourceManager.GetString("OutputLengthCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes the length of a single output ähnelt.
+        /// </summary>
+        internal static string OutputLengthTooltip {
+            get {
+                return ResourceManager.GetString("OutputLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output of the generated random data ähnelt.
+        /// </summary>
+        internal static string OutputTooltip {
+            get {
+                return ResourceManager.GetString("OutputTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Output type ähnelt.
+        /// </summary>
+        internal static string OutputTypeCaption {
+            get {
+                return ResourceManager.GetString("OutputTypeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Changes the data type of the output ähnelt.
+        /// </summary>
+        internal static string OutputTypeTooltip {
+            get {
+                return ResourceManager.GetString("OutputTypeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Random Number Generator ähnelt.
+        /// </summary>
+        internal static string PluginCaption {
+            get {
+                return ResourceManager.GetString("PluginCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Component offering different random number generators ähnelt.
+        /// </summary>
+        internal static string PluginTooltip {
+            get {
+                return ResourceManager.GetString("PluginTooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Seed ähnelt.
         /// </summary>
-        internal static string presSeed {
+        internal static string SeedCaption {
             get {
-                return ResourceManager.GetString("presSeed", resourceCulture);
+                return ResourceManager.GetString("SeedCaption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Seed ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sets the seed value of the random number generator ähnelt.
         /// </summary>
-        internal static string presSeedCaption {
+        internal static string SeedTooltip {
             get {
-                return ResourceManager.GetString("presSeedCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Randomnumber generator ähnelt.
-        /// </summary>
-        internal static string RandNumGenPluginCaption {
-            get {
-                return ResourceManager.GetString("RandNumGenPluginCaption", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Generates random numbers. 3 different generators are available. ähnelt.
-        /// </summary>
-        internal static string RandNumGenTooltip {
-            get {
-                return ResourceManager.GetString("RandNumGenTooltip", resourceCulture);
+                return ResourceManager.GetString("SeedTooltip", resourceCulture);
             }
         }
     }

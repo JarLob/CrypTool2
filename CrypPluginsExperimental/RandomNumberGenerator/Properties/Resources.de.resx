@@ -117,58 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="presA" xml:space="preserve">
+  <data name="aCaption" xml:space="preserve">
     <value>a</value>
   </data>
-  <data name="presACaption" xml:space="preserve">
-    <value>a</value>
+  <data name="AlgorithmTypeCaption" xml:space="preserve">
+    <value>Algorithmus</value>
   </data>
-  <data name="presAlgoGroup" xml:space="preserve">
-    <value>Wahl des Algorithmus</value>
+  <data name="AlgorithmTypeTooltip" xml:space="preserve">
+    <value>Ändert den Algorithmus, der für die Erstellung der Zufallsdaten genutzt werden soll</value>
   </data>
-  <data name="presB" xml:space="preserve">
+  <data name="aTooltip" xml:space="preserve">
+    <value>Legt den a-Wert des Zufallszahlengenerators fest</value>
+  </data>
+  <data name="bCaption" xml:space="preserve">
     <value>b</value>
   </data>
-  <data name="presBCaption" xml:space="preserve">
-    <value>b</value>
+  <data name="bTooltip" xml:space="preserve">
+    <value>Legt den b-Wert des Zufallszahlengenerators fest</value>
   </data>
-  <data name="presErrorPrime" xml:space="preserve">
+  <data name="ErrorPrime" xml:space="preserve">
     <value>{0} ist keine Primzahl. Verwende {1} als Modul.</value>
   </data>
-  <data name="presMod" xml:space="preserve">
-    <value>Modulus</value>
+  <data name="ModulusCaption" xml:space="preserve">
+    <value>Modulo</value>
   </data>
-  <data name="presModCaption" xml:space="preserve">
-    <value>Modulus</value>
+  <data name="ModulusTooltip" xml:space="preserve">
+    <value>Legt den Modulo-Wert des Zufallszahlengenerators fest</value>
   </data>
-  <data name="presOutputLength" xml:space="preserve">
-    <value>Länge der Ausgabe</value>
+  <data name="OutputAmountCaption" xml:space="preserve">
+    <value>Elemente im Ausgabe-Array</value>
   </data>
-  <data name="presOutputLengthCaption" xml:space="preserve">
-    <value>Länge der Ausgabe</value>
+  <data name="OutputAmountTooltip" xml:space="preserve">
+    <value>Ändert die Anzahl der Elemente des Ausgabe-Arrays</value>
   </data>
-  <data name="presRadioCaption" xml:space="preserve">
-    <value>Algorithmus:</value>
-  </data>
-  <data name="presRadioToolTip" xml:space="preserve">
-    <value>Wahl des verwendeten Algorithmus zur Erstellung der Zufallszahlen</value>
-  </data>
-  <data name="presResult" xml:space="preserve">
+  <data name="OutputCaption" xml:space="preserve">
     <value>Ausgabe</value>
   </data>
-  <data name="presResultCaption" xml:space="preserve">
-    <value>Ausgabe</value>
+  <data name="OutputLengthCaption" xml:space="preserve">
+    <value>Ausgabelänge (Bytes)</value>
   </data>
-  <data name="presSeed" xml:space="preserve">
-    <value>Saat</value>
+  <data name="OutputLengthTooltip" xml:space="preserve">
+    <value>Ändert die Länge eines einzelnen Ausgabedatums</value>
   </data>
-  <data name="presSeedCaption" xml:space="preserve">
-    <value>Saat</value>
+  <data name="OutputTooltip" xml:space="preserve">
+    <value>Ausgabe der generierten Zufallsdaten</value>
   </data>
-  <data name="RandNumGenPluginCaption" xml:space="preserve">
-    <value>Zufallszahlengeneratoren</value>
+  <data name="OutputTypeCaption" xml:space="preserve">
+    <value>Ausgabetyp</value>
   </data>
-  <data name="RandNumGenTooltip" xml:space="preserve">
-    <value>Generiert Zufallszahlen. Es stehen 3 verschiedene Zufallszahlengeneratoren zur Verfügung.</value>
+  <data name="OutputTypeTooltip" xml:space="preserve">
+    <value>Ändert den Typ der Ausgabedaten</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Zufallszahlengenerator</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Komponente die verschiedene Zufallszahlengeneratoren bietet</value>
+  </data>
+  <data name="SeedCaption" xml:space="preserve">
+    <value>Seed</value>
+  </data>
+  <data name="SeedTooltip" xml:space="preserve">
+    <value>Legt den Seed des Zufallszahlengenerators fest</value>
+  </data>
+  <data name="InvalidaValue" xml:space="preserve">
+    <value>Ungültiger a-Wert: {0}</value>
+  </data>
+  <data name="InvalidbValue" xml:space="preserve">
+    <value>Ungültiger b-Wert: {0}</value>
+  </data>
+  <data name="InvalidModulus" xml:space="preserve">
+    <value>Ungültiger Modulo-Wert: {0}</value>
+  </data>
+  <data name="InvalidOutputAmount" xml:space="preserve">
+    <value>Ungültige Ausgabeanzahl: {0}</value>
+  </data>
+  <data name="InvalidOutputLength" xml:space="preserve">
+    <value>Ungültige Ausgabelänge: {0}</value>
+  </data>
+  <data name="InvalidSeedValue" xml:space="preserve">
+    <value>Ungültiger Seed-Wert: {0}</value>
+  </data>
+  <data name="AlgorithmSettingsGroup" xml:space="preserve">
+    <value>Algorithmus</value>
+  </data>
+  <data name="GeneralSettingsGroup" xml:space="preserve">
+    <value>Allgemein</value>
   </data>
 </root>

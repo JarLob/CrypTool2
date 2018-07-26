@@ -117,58 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="presA" xml:space="preserve">
+  <data name="aCaption" xml:space="preserve">
     <value>a</value>
   </data>
-  <data name="presACaption" xml:space="preserve">
-    <value>a</value>
+  <data name="AlgorithmTypeCaption" xml:space="preserve">
+    <value>Algorithm</value>
   </data>
-  <data name="presAlgoGroup" xml:space="preserve">
-    <value>Choice of algorithm</value>
+  <data name="AlgorithmTypeTooltip" xml:space="preserve">
+    <value>Changes the algorithm, which should be used to generate random data</value>
   </data>
-  <data name="presB" xml:space="preserve">
+  <data name="aTooltip" xml:space="preserve">
+    <value>Sets the a value of the random number generator</value>
+  </data>
+  <data name="bCaption" xml:space="preserve">
     <value>b</value>
   </data>
-  <data name="presBCaption" xml:space="preserve">
-    <value>b</value>
+  <data name="bTooltip" xml:space="preserve">
+    <value>Sets the b value of the random number generator</value>
   </data>
-  <data name="presErrorPrime" xml:space="preserve">
+  <data name="ErrorPrime" xml:space="preserve">
     <value>{0} is not a prime number. Using {1} instead.</value>
   </data>
-  <data name="presMod" xml:space="preserve">
-    <value>Module</value>
+  <data name="InvalidaValue" xml:space="preserve">
+    <value>Invalid a value: {0}</value>
   </data>
-  <data name="presModCaption" xml:space="preserve">
-    <value>Module</value>
+  <data name="InvalidbValue" xml:space="preserve">
+    <value>Invalid b value: {0}</value>
   </data>
-  <data name="presOutputLength" xml:space="preserve">
-    <value>Length of the output</value>
+  <data name="InvalidModulus" xml:space="preserve">
+    <value>Invalid modulus value: {0}</value>
   </data>
-  <data name="presOutputLengthCaption" xml:space="preserve">
-    <value>Length of the output</value>
+  <data name="InvalidOutputAmount" xml:space="preserve">
+    <value>Invalid output amount: {0}</value>
   </data>
-  <data name="presRadioCaption" xml:space="preserve">
-    <value>Algorithm:</value>
+  <data name="InvalidOutputLength" xml:space="preserve">
+    <value>Invalid output length: {0}</value>
   </data>
-  <data name="presRadioToolTip" xml:space="preserve">
-    <value>Choice of the used algorithmen to create pseudorandom numbers</value>
+  <data name="InvalidSeedValue" xml:space="preserve">
+    <value>Invalid seed value: {0}</value>
   </data>
-  <data name="presResult" xml:space="preserve">
+  <data name="ModulusCaption" xml:space="preserve">
+    <value>Modulus</value>
+  </data>
+  <data name="ModulusTooltip" xml:space="preserve">
+    <value>Sets the modulus value of the random number generator</value>
+  </data>
+  <data name="OutputAmountCaption" xml:space="preserve">
+    <value>Elements in output array</value>
+  </data>
+  <data name="OutputAmountTooltip" xml:space="preserve">
+    <value>Changes the amount of elements in output array</value>
+  </data>
+  <data name="OutputCaption" xml:space="preserve">
     <value>Output</value>
   </data>
-  <data name="presResultCaption" xml:space="preserve">
-    <value>Output</value>
+  <data name="OutputLengthCaption" xml:space="preserve">
+    <value>Output length (bytes)</value>
   </data>
-  <data name="presSeed" xml:space="preserve">
+  <data name="OutputLengthTooltip" xml:space="preserve">
+    <value>Changes the length of a single output</value>
+  </data>
+  <data name="OutputTooltip" xml:space="preserve">
+    <value>Output of the generated random data</value>
+  </data>
+  <data name="OutputTypeCaption" xml:space="preserve">
+    <value>Output type</value>
+  </data>
+  <data name="OutputTypeTooltip" xml:space="preserve">
+    <value>Changes the data type of the output</value>
+  </data>
+  <data name="PluginCaption" xml:space="preserve">
+    <value>Random Number Generator</value>
+  </data>
+  <data name="PluginTooltip" xml:space="preserve">
+    <value>Component offering different random number generators</value>
+  </data>
+  <data name="SeedCaption" xml:space="preserve">
     <value>Seed</value>
   </data>
-  <data name="presSeedCaption" xml:space="preserve">
-    <value>Seed</value>
+  <data name="SeedTooltip" xml:space="preserve">
+    <value>Sets the seed value of the random number generator</value>
   </data>
-  <data name="RandNumGenPluginCaption" xml:space="preserve">
-    <value>Randomnumber generator</value>
+  <data name="AlgorithmSettingsGroup" xml:space="preserve">
+    <value>Algorithm</value>
   </data>
-  <data name="RandNumGenTooltip" xml:space="preserve">
-    <value>Generates random numbers. 3 different generators are available.</value>
+  <data name="GeneralSettingsGroup" xml:space="preserve">
+    <value>General</value>
   </data>
 </root>

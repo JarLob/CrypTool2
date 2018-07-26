@@ -1,6 +1,7 @@
 ﻿/*
    Copyright 2018 CrypTool 2 Team <ct2contact@cryptool.org>
    Author: Christian Bender, Universität Siegen
+           Nils Kopal, CrypTool 2 Team
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -21,13 +22,19 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.Numerics;
+using System.Collections.Generic;
+using System.Windows;
+using System.Linq;
 
 namespace Cryptool.Plugins.RandomNumberGenerator
 {
+    /// <summary>
+    /// Type of random number generator
+    /// </summary>
     public enum AlgorithmType
     {
-        RandomRandom = 0,
-        RNGCryptoServiceProvider = 1,
+        RandomRandom = 0,               //.net Random.Random
+        RNGCryptoServiceProvider = 1,   //.net RNGCryptoServiceProvider
         X2modN = 2,
         LCG = 3,
         ICG = 4
@@ -40,10 +47,14 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         Number = 2,
         NumberArray = 3
     }
+    
 
     public class RandomNumberGeneratorSettings : ISettings
     {
         #region Private Variables
+
+        private readonly Dictionary<AlgorithmType, List<string>> _settingsVisibility = new Dictionary<AlgorithmType, List<string>>();
+        private readonly List<string> _settingsList = new List<string>();
 
         private AlgorithmType _AlgorithmType = 0;
         private OutputType _OutputType = 0;
@@ -57,6 +68,14 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         
         #endregion
 
+        public RandomNumberGeneratorSettings()
+        {
+            foreach (AlgorithmType type in Enum.GetValues(typeof(AlgorithmType)))
+            {
+                _settingsVisibility[type] = new List<string>();
+            }            
+        }
+
         #region TaskPane Settings
 
         [TaskPane("AlgorithmTypeCaption", "AlgorithmTypeTooltip", "GeneralSettingsGroup", 0, false, ControlType.ComboBox, new string[] { "Random.Random", "RNGCryptoServiceProvider", "X^2 mod N", "LCG", "ICG" })]
@@ -69,6 +88,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _AlgorithmType = value;
+                UpdateTaskPaneVisibility();
             }
         }
 
@@ -82,6 +102,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             set
             {
                 _OutputType = value;
+                UpdateTaskPaneVisibility();
             }
         }
 
@@ -138,7 +159,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
-        [TaskPane("a", "aTooltip", "AlgorithmSettingsGroup,", 2, false, ControlType.TextBox)]
+        [TaskPane("aCaption", "aTooltip", "AlgorithmSettingsGroup,", 2, false, ControlType.TextBox)]
         public string a
         {
             get
@@ -151,7 +172,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
             }
         }
 
-        [TaskPane("b", "aTooltip", "AlgorithmSettingsGroup,", 3, false, ControlType.TextBox)]
+        [TaskPane("bCaption", "aTooltip", "AlgorithmSettingsGroup,", 3, false, ControlType.TextBox)]
         public string b
         {
             get
@@ -179,7 +200,51 @@ namespace Cryptool.Plugins.RandomNumberGenerator
 
         public void Initialize()
         {
-
+            _settingsList.Add("Seed");
+            _settingsList.Add("Modulus");
+            _settingsList.Add("a");
+            _settingsList.Add("b");
+            _settingsVisibility[AlgorithmType.RandomRandom].Add("Seed");
+            _settingsVisibility[AlgorithmType.RandomRandom].Add("Modulus");
+            _settingsVisibility[AlgorithmType.RNGCryptoServiceProvider].Add("Seed");
+            _settingsVisibility[AlgorithmType.RNGCryptoServiceProvider].Add("Modulus");
+            _settingsVisibility[AlgorithmType.X2modN].Add("Seed");
+            _settingsVisibility[AlgorithmType.X2modN].Add("Modulus");
+            _settingsVisibility[AlgorithmType.ICG].Add("Seed");
+            _settingsVisibility[AlgorithmType.ICG].Add("Modulus");
+            _settingsVisibility[AlgorithmType.ICG].Add("a");
+            _settingsVisibility[AlgorithmType.ICG].Add("b");
+            _settingsVisibility[AlgorithmType.LCG].Add("Seed");
+            _settingsVisibility[AlgorithmType.LCG].Add("Modulus");
+            _settingsVisibility[AlgorithmType.LCG].Add("a");
+            _settingsVisibility[AlgorithmType.LCG].Add("b");
+            UpdateTaskPaneVisibility();
         }
+
+        private void UpdateTaskPaneVisibility()
+        {
+            if (TaskPaneAttributeChanged == null)
+            {
+                return;
+            }
+
+            foreach (var tpac in _settingsList.Select(operation => new TaskPaneAttribteContainer(operation, (_settingsVisibility[AlgorithmType].Contains(operation)) ? Visibility.Visible : Visibility.Collapsed)))
+            {
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(tpac));
+            }
+
+            if (_OutputType == OutputType.NumberArray)
+            {
+                TaskPaneAttribteContainer tpac = new TaskPaneAttribteContainer("OutputAmount", Visibility.Visible);
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(tpac));
+            }
+            else
+            {
+                TaskPaneAttribteContainer tpac = new TaskPaneAttribteContainer("OutputAmount", Visibility.Collapsed);
+                TaskPaneAttributeChanged(this, new TaskPaneAttributeChangedEventArgs(tpac));
+            }
+        }
+
+        public event TaskPaneAttributeChangedHandler TaskPaneAttributeChanged;
     }
 }
