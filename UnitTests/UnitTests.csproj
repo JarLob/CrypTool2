@@ -435,10 +435,6 @@
       <Project>{7465421C-3BB2-47BB-B140-5BAC3BFC6B91}</Project>
       <Name>Rabbit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CrypPlugins\RandomInput\RandomInput.csproj">
-      <Project>{571529E4-A474-47BD-810E-0C8434A76711}</Project>
-      <Name>RandomInput</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\RC2\RC2.csproj">
       <Project>{A2A7E7E6-05E6-46AD-B8AE-862D9DA78A1E}</Project>
       <Name>RC2</Name>
