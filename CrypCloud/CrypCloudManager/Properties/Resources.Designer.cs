@@ -646,6 +646,16 @@ namespace CrypCloud.Manager.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
+        public static byte[] anonymous {
+            get {
+                object obj = ResourceManager.GetObject("anonymous", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap connected {

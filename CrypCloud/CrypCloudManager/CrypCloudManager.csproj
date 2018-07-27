@@ -295,6 +295,7 @@
     <Folder Include="Screens\UIElements\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="anonymous.p12" />
     <None Include="app.config" />
     <None Include="Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

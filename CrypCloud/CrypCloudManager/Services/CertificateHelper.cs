@@ -38,6 +38,18 @@ namespace CrypCloud.Manager
             }
         }
 
+        public static X509Certificate2 LoadAnonymousCertificate(SecureString password)
+        {
+            try
+            {
+                return new X509Certificate2(Properties.Resources.anonymous, password);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public static Boolean StoreCertificate(PeerCertificate certificate, string password, string avatar)
         {
             try

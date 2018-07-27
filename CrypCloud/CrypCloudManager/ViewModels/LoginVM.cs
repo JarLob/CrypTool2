@@ -9,6 +9,7 @@ using CrypCloud.Core;
 using CrypCloud.Manager.Services;
 using CrypCloud.Manager.ViewModels.Helper;
 using CrypTool.CertificateLibrary.Network;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CrypCloud.Manager.ViewModels
 {
@@ -92,19 +93,36 @@ namespace CrypCloud.Manager.ViewModels
         /// </summary>
         private void GetCertificateAndLogin()
         {
-            if (CertificateHelper.UserCertificateIsUnknown(Username))
+            if (Username.ToLower().Equals("anonymous"))
+            {
+                //1. case: anonymous user
+                LoadLocalCertificateAndLogin(true);
+            }
+            else if (CertificateHelper.UserCertificateIsUnknown(Username))
+            {
+                //2. case: we don't know the user, thus, we try to download a certificate
                 LoadRemoteCertificateAndLogin();
+            }
             else
+            {
+                //3. case: we know the user and open the local certificate
                 LoadLocalCertificateAndLogin();
+            }
         }
 
         #region local certificate
 
-        private void LoadLocalCertificateAndLogin()
-        {
-         
-
-            var certificate = CertificateHelper.LoadPrivateCertificate(Username, Password);
+        private void LoadLocalCertificateAndLogin(bool anonymous = false)
+        {         
+            X509Certificate2 certificate = null;
+            if (anonymous)
+            {
+                certificate = CertificateHelper.LoadAnonymousCertificate(Password);
+            }
+            else
+            {
+                certificate = CertificateHelper.LoadPrivateCertificate(Username, Password);
+            }
             if (certificate == null)
             {
                 ErrorMessage = "Unable to open certificate of " + Username;
