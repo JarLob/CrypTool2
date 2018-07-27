@@ -139,10 +139,10 @@
     <value>{0} is not a prime number. Using {1} instead.</value>
   </data>
   <data name="InvalidaValue" xml:space="preserve">
-    <value>Invalid a value: {0}</value>
+    <value>Invalid value a: {0}</value>
   </data>
   <data name="InvalidbValue" xml:space="preserve">
-    <value>Invalid b value: {0}</value>
+    <value>Invalid value b: {0}</value>
   </data>
   <data name="InvalidModulus" xml:space="preserve">
     <value>Invalid modulus value: {0}</value>

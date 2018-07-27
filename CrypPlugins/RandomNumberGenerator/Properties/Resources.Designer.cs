@@ -142,7 +142,7 @@ namespace RandomNumberGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid a value: {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid value a: {0} ähnelt.
         /// </summary>
         internal static string InvalidaValue {
             get {
@@ -151,7 +151,7 @@ namespace RandomNumberGenerator.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid b value: {0} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid value b: {0} ähnelt.
         /// </summary>
         internal static string InvalidbValue {
             get {

@@ -142,7 +142,7 @@
     <value>Modulo</value>
   </data>
   <data name="ModulusTooltip" xml:space="preserve">
-    <value>Legt den Modulo-Wert des Zufallszahlengenerators fest</value>
+    <value>Legt den Modulus-Wert des Zufallszahlengenerators fest</value>
   </data>
   <data name="OutputAmountCaption" xml:space="preserve">
     <value>Elemente im Ausgabe-Array</value>
@@ -172,7 +172,7 @@
     <value>Zufallszahlengenerator</value>
   </data>
   <data name="PluginTooltip" xml:space="preserve">
-    <value>Komponente die verschiedene Zufallszahlengeneratoren bietet</value>
+    <value>Komponente, die verschiedene Zufallszahlengeneratoren anbietet</value>
   </data>
   <data name="SeedCaption" xml:space="preserve">
     <value>Seed</value>

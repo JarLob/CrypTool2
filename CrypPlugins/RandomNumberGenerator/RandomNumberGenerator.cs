@@ -111,7 +111,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     executedWithoutError = ExecuteICG();
                     break;
                 default:
-                    throw new Exception(String.Format("Not implemented algorithm type: {0}", _Settings.AlgorithmType.ToString()));
+                    throw new Exception(String.Format("Algorithm type {0} not implemented", _Settings.AlgorithmType.ToString()));
             }
             //We only show 100% if execution was without an error
             if (executedWithoutError)
@@ -228,7 +228,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     }
                     break;
                 default:
-                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                    throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
             }
             return true;
         }
@@ -324,7 +324,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                         }
                         break;
                     default:
-                        throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                        throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
                 }
                 return true;
             }
@@ -439,7 +439,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     }
                     break;
                 default:
-                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                    throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
             }          
             return true;
         }
@@ -570,7 +570,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     }
                     break;
                 default:
-                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                    throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
             }
             return true;
         }
@@ -705,7 +705,7 @@ namespace Cryptool.Plugins.RandomNumberGenerator
                     }
                     break;
                 default:
-                    throw new Exception(String.Format("Not implemented output type: {0}", _Settings.OutputType.ToString()));
+                    throw new Exception(String.Format("Output type {0} not implemented", _Settings.OutputType.ToString()));
             }
             return true;
         }
