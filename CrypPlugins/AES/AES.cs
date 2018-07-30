@@ -496,7 +496,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
 
     public class AESControl : IControlEncryption
     {
-        public event KeyPatternChanged keyPatternChanged;
+        public event KeyPatternChanged KeyPatternChanged;
         public event IControlStatusChangedEventHandler OnStatusChanged;
 
         private AES plugin;
@@ -513,27 +513,100 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             if (e.PropertyName.Equals("Keysize"))
             {
-                if (keyPatternChanged != null)
+                if (KeyPatternChanged != null)
                 {
-                    keyPatternChanged();
+                    KeyPatternChanged();
                 }
             }
         }
 
         #region IControlEncryption Members
 
-        public byte[] Encrypt(byte[] key, int blocksize)
+        public byte[] Encrypt(byte[] plaintext, byte[] key)
         {
-            // not implemented, currently not needed
-            throw new NotImplementedException();
+            // AES or Rijndael
+            SymmetricAlgorithm alg;
+            if (settings.CryptoAlgorithm == 1)
+                alg = new RijndaelManaged();
+            else
+                alg = new AesCryptoServiceProvider();
+
+            // ECB mode
+            alg.Mode = CipherMode.ECB;
+
+            // No padding
+            alg.Padding = PaddingMode.None;
+
+            // Blocksize for Rijndael
+            if (settings.CryptoAlgorithm == 1)
+            {
+                switch (settings.Blocksize)
+                {
+                    case 1: alg.BlockSize = 192; break;
+                    case 2: alg.BlockSize = 256; break;
+                    default: alg.BlockSize = 128; break;
+                }
+            }
+
+            // Provide key
+            alg.Key = key;
+
+            // Provide the trivial IV (0x0...0)
+            alg.IV = new byte[plaintext.Length];
+
+            // Ecnryption only
+            ICryptoTransform encryptor = alg.CreateEncryptor();
+            MemoryStream input = new MemoryStream(plaintext);
+            CryptoStream p_crypto_stream = new CryptoStream(input, encryptor, CryptoStreamMode.Read);
+
+            // Read encrypted bytes from crypto stream.
+            byte[] result = new byte[plaintext.Length];
+            int offset = 0;
+            do
+            {
+                int bytesRead = p_crypto_stream.Read(result, offset, result.Length);
+                offset += bytesRead;
+            } while (offset < result.Length);
+            
+            return result;
         }
 
-        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV)
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv)
         {
-            return Decrypt(ciphertext, key, IV, ciphertext.Length);
+            throw new NotImplementedException("This encryption method is not yet implemented!");
         }
 
-        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int length)
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv, int length)
+        {
+            throw new NotImplementedException("This encryption method is not yet implemented!");
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key)
+        {
+            int bytesToUse = ciphertext.Length;
+
+            switch (settings.KeysizeAsBits)
+            {
+                case 128:
+                    if (Crypto.supportsAESNI()) return Crypto.decryptAES128_ECB_NI(ciphertext, key, bytesToUse);
+                    else return NativeCryptography.Crypto.decryptAES128_ECB(ciphertext, key, bytesToUse);
+                case 192:
+                    if (Crypto.supportsAESNI()) return Crypto.decryptAES192_ECB_NI(ciphertext, key, bytesToUse);
+                    else return NativeCryptography.Crypto.decryptAES192_ECB(ciphertext, key, bytesToUse);
+                case 256:
+                    if (Crypto.supportsAESNI()) return Crypto.decryptAES256_ECB_NI(ciphertext, key, bytesToUse);
+                    else return NativeCryptography.Crypto.decryptAES256_ECB(ciphertext, key, bytesToUse);
+                default:
+                    throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
+            }
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv)
+        {
+            return Decrypt(ciphertext, key, iv, ciphertext.Length);
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv, int length)
         {
             // Don't allow sizes greater than the length of the input
             int bytesToUse = Math.Min(length, ciphertext.Length);
@@ -581,29 +654,29 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                         case 128:
                             if (NativeCryptography.Crypto.supportsAESNI())
                             {
-                                return NativeCryptography.Crypto.decryptAES128_CBC_NI(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES128_CBC_NI(ciphertext, key, iv, bytesToUse);
                             }
                             else
                             {
-                                return NativeCryptography.Crypto.decryptAES128_CBC(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES128_CBC(ciphertext, key, iv, bytesToUse);
                             }
                         case 192:
                             if (NativeCryptography.Crypto.supportsAESNI())
                             {
-                                return NativeCryptography.Crypto.decryptAES192_CBC_NI(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES192_CBC_NI(ciphertext, key, iv, bytesToUse);
                             }
                             else
                             {
-                                return NativeCryptography.Crypto.decryptAES192_CBC(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES192_CBC(ciphertext, key, iv, bytesToUse);
                             }
                         case 256:
                             if (NativeCryptography.Crypto.supportsAESNI())
                             {
-                                return NativeCryptography.Crypto.decryptAES256_CBC_NI(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES256_CBC_NI(ciphertext, key, iv, bytesToUse);
                             }
                             else
                             {
-                                return NativeCryptography.Crypto.decryptAES256_CBC(ciphertext, key, IV, bytesToUse);
+                                return NativeCryptography.Crypto.decryptAES256_CBC(ciphertext, key, iv, bytesToUse);
                             }
                         default:
                             throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
@@ -612,11 +685,11 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     switch (settings.KeysizeAsBits)
                     {
                         case 128:
-                            return NativeCryptography.Crypto.decryptAES128_CFB(ciphertext, key, IV, bytesToUse);
+                            return NativeCryptography.Crypto.decryptAES128_CFB(ciphertext, key, iv, bytesToUse);
                         case 192:
-                            return NativeCryptography.Crypto.decryptAES192_CFB(ciphertext, key, IV, bytesToUse);
+                            return NativeCryptography.Crypto.decryptAES192_CFB(ciphertext, key, iv, bytesToUse);
                         case 256:
-                            return NativeCryptography.Crypto.decryptAES256_CFB(ciphertext, key, IV, bytesToUse);
+                            return NativeCryptography.Crypto.decryptAES256_CFB(ciphertext, key, iv, bytesToUse);
                         default:
                             throw new NotSupportedException(String.Format("Non supported bit size of AES selected: {0}", settings.KeysizeAsBits));
                     }
@@ -625,9 +698,20 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }           
         }
 
-        public int GetBlockSize()
+        public string GetCipherShortName()
+        {
+            // cryptoAlgorithm = 0; // 0=AES, 1=Rijndael
+            return settings.CryptoAlgorithm == 0 ? "AES" : "Rijndael";
+        }
+
+        public int GetBlockSizeAsBytes()
         {
             return settings.BlocksizeAsBytes;
+        }
+
+        public int GetKeySizeAsBytes()
+        {
+            return settings.KeysizeAsBytes;
         }
 
         public string GetKeyPattern()
@@ -635,13 +719,9 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", settings.KeysizeAsBytes));
         }
 
-        public IControlEncryption clone()
+        public IKeyTranslator GetKeyTranslator()
         {
-            return new AESControl(plugin);
-        }
-
-        public void Dispose()
-        {
+            return new KeySearcher.KeyTranslators.ByteArrayKeyTranslator();
         }
 
         public string GetOpenCLCode(int decryptionLength, byte[] iv)
@@ -695,6 +775,21 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return opencl;
         }
 
+        public void ChangeSettings(string setting, object value)
+        {
+            throw new NotImplementedException("Changing the settings is not yet implemented!");
+        }
+
+        public IControlEncryption Clone()
+        {
+            return new AESControl(plugin);
+        }
+
+        public void Dispose()
+        {
+
+        }
+
         private string AddOpenCLBlockDecryption(string decryptionCode, int size)
         {
             decryptionCode += "AES_decrypt(inn, block, &(key)); \n "
@@ -742,15 +837,6 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             }
             decryptionCode += "$$COSTFUNCTIONCALCULATE$$ \n } \n";
             return decryptionCode;
-        }
-
-        public void changeSettings(string setting, object value)
-        {
-        }
-
-        public IKeyTranslator GetKeyTranslator()
-        {
-            return new KeySearcher.KeyTranslators.ByteArrayKeyTranslator();
         }
 
         #endregion

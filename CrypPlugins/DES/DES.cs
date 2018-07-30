@@ -546,9 +546,8 @@ namespace Cryptool.Plugins.Cryptography.Encryption
     #region DESControl : IControlEncryption
     public class DESControl : IControlEncryption
     {
-        public event KeyPatternChanged keyPatternChanged;
+        public event KeyPatternChanged KeyPatternChanged;
         public event IControlStatusChangedEventHandler OnStatusChanged;
-
         
         private DES plugin;
 
@@ -566,26 +565,40 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             if (e.PropertyName.Equals("TripleDES"))
             {
-                if (keyPatternChanged != null)
+                if (KeyPatternChanged != null)
                 {
-                    keyPatternChanged();
+                    KeyPatternChanged();
                 }
             }
-        }       
+        }
 
-        public byte[] Encrypt(byte[] key, int blocksize)
+        public byte[] Encrypt(byte[] plaintext, byte[] key)
         {
-            // not implemented, currently not needed
             throw new NotImplementedException();
         }
 
-        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV)
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv)
         {
-            return Decrypt(ciphertext, key, IV, ciphertext.Length);
+            return Encrypt(plaintext, key, iv, plaintext.Length);
+        }
+
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv, int bytesToUse)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decrypt(byte[] plaintext, byte[] key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv)
+        {
+            return Decrypt(ciphertext, key, iv, ciphertext.Length);
         }
 
         // TODO: add override with iv, mode, blocksize
-        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int bytesToUse)
+        public byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv, int bytesToUse)
         {
             int size = bytesToUse > ciphertext.Length ? ciphertext.Length : bytesToUse;
             
@@ -597,9 +610,9 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     case 0: //ECB
                         return NativeCryptography.Crypto.decrypt3DES_ECB(ciphertext, key, size);
                     case 1: //CBC
-                        return NativeCryptography.Crypto.decrypt3DES_CBC(ciphertext, key, IV, size);
+                        return NativeCryptography.Crypto.decrypt3DES_CBC(ciphertext, key, iv, size);
                     case 2: //CFB
-                        return NativeCryptography.Crypto.decrypt3DES_CFB(ciphertext, key, IV, size);
+                        return NativeCryptography.Crypto.decrypt3DES_CFB(ciphertext, key, iv, size);
                     default:
                         throw new NotSupportedException(String.Format("Non supported mode selected: {0}", ((DESSettings)plugin.Settings).Mode));
                 }
@@ -612,18 +625,28 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                     case 0: //ECB
                         return NativeCryptography.Crypto.decryptDES_ECB(ciphertext, key, size);
                     case 1: //CBC
-                        return NativeCryptography.Crypto.decryptDES_CBC(ciphertext, key, IV, size);
+                        return NativeCryptography.Crypto.decryptDES_CBC(ciphertext, key, iv, size);
                     case 2: //CFB
-                        return NativeCryptography.Crypto.decryptDES_CFB(ciphertext, key, IV, size);
+                        return NativeCryptography.Crypto.decryptDES_CFB(ciphertext, key, iv, size);
                     default:
                         throw new NotSupportedException(String.Format("Non supported mode selected: {0}",((DESSettings)plugin.Settings).Mode));
                 }
             }
         }
 
-        public int GetBlockSize()
+        public string GetCipherShortName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetBlockSizeAsBytes()
         {
             return 8;
+        }
+
+        public int GetKeySizeAsBytes()
+        {
+            throw new NotImplementedException();
         }
 
         public string GetKeyPattern()
@@ -632,7 +655,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return String.Join("-", Enumerable.Repeat("[0-9A-F][0-9A-F]", bytes));         
         }
 
-        public IControlEncryption clone()
+        public IControlEncryption Clone()
         {
             var des = new DESControl(plugin);
             return des;
@@ -757,7 +780,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return decryptionCode;
         }
 
-        public void changeSettings(string setting, object value)
+        public void ChangeSettings(string setting, object value)
         {
             throw new NotImplementedException();
         }
@@ -765,6 +788,11 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         public IKeyTranslator GetKeyTranslator()
         {
             return new KeySearcher.KeyTranslators.ByteArrayKeyTranslator();
+        }
+
+        public void SetToDefaultSettings()
+        {
+            throw new NotImplementedException();
         }
     }
     #endregion

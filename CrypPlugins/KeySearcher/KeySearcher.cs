@@ -114,12 +114,12 @@ namespace KeySearcher
             {
                 if (controlMaster != null)
                 {
-                    controlMaster.keyPatternChanged -= keyPatternChanged;
+                    controlMaster.KeyPatternChanged -= keyPatternChanged;
                 }
                 if (value != null)
                 {
                     Pattern = new KeyPattern.KeyPattern(value.GetKeyPattern());
-                    value.keyPatternChanged += keyPatternChanged;
+                    value.KeyPatternChanged += keyPatternChanged;
                     controlMaster = value;
                     OnPropertyChanged("ControlMaster");
 
@@ -898,7 +898,7 @@ namespace KeySearcher
                 return;
             }
 
-            var blockSize = sender.GetBlockSize(); // may throw exception if sender does not support this
+            var blockSize = sender.GetBlockSizeAsBytes(); // may throw exception if sender does not support this
 
             if (bytesOffset%blockSize != 0)
             {

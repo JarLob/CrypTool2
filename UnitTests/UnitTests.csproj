@@ -92,6 +92,7 @@
     <Compile Include="ADFGVXTest.cs" />
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
+    <Compile Include="BlockmodeVisualizerTest.cs" />
     <Compile Include="KKDFSHA256Test.cs" />
     <Compile Include="KKDFSHAKE256Test.cs" />
     <Compile Include="HKDFSHA256Test.cs" />
@@ -159,6 +160,10 @@
     <ProjectReference Include="..\CrypPluginBase\CrypPluginBase.csproj">
       <Project>{25db2b47-a457-4ec2-960b-395ce07ae093}</Project>
       <Name>CrypPluginBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPluginsExperimental\BlockmodeVisualizer\BlockmodeVisualizer.csproj">
+      <Project>{27ebea0d-7459-4f9f-aa11-4f84d277b7f6}</Project>
+      <Name>BlockmodeVisualizer</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPluginsExperimental\Sigaba\Sigaba.csproj">
       <Project>{29520D81-911D-4FCD-9A6B-670625D6E0A1}</Project>

@@ -337,16 +337,31 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         {
             if (e.PropertyName.Equals("Keylength"))
             {
-                if (keyPatternChanged != null)
+                if (KeyPatternChanged != null)
                 {
-                    keyPatternChanged();
+                    KeyPatternChanged();
                 }
             }   
         }
 
         #region IControlEncryption Members
 
-        public byte[] Encrypt(byte[] key, int blocksize)
+        public byte[] Encrypt(byte[] plaintext, byte[] key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] IV)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] IV, int bytesToUse)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decrypt(byte[] plaintext, byte[] key)
         {
             throw new NotImplementedException();
         }
@@ -362,9 +377,24 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return NativeCryptography.Crypto.decryptRC4(ciphertext, key, length, ((RC4Settings)_plugin.Settings).Keylength);
         }
 
-        public int GetBlockSize()
+        public string GetCipherShortName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetBlockSizeAsBytes()
         {
             return 0;
+        }
+
+        public int GetKeySizeAsBytes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetToDefaultSettings()
+        {
+            throw new NotImplementedException();
         }
 
         public string GetKeyPattern()
@@ -382,17 +412,17 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             throw new NotImplementedException();
         }
 
-        public void changeSettings(string setting, object value)
+        public void ChangeSettings(string setting, object value)
         {
         }
 
-        public IControlEncryption clone()
+        public IControlEncryption Clone()
         {
             var control = new RC4Control(_plugin);
             return control;
         }
 
-        public event KeyPatternChanged keyPatternChanged;
+        public event KeyPatternChanged KeyPatternChanged;
 
         #endregion
 

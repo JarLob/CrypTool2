@@ -510,7 +510,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
         #endregion
 
         #region events
-        public event KeyPatternChanged keyPatternChanged; //not used, because we only have one key length
+        public event KeyPatternChanged KeyPatternChanged; //not used, because we only have one key length
         public event IControlStatusChangedEventHandler OnStatusChanged;
         #endregion
 
@@ -538,15 +538,25 @@ namespace Cryptool.Plugins.Cryptography.Encryption
                 OnStatusChanged(this, true);
         }
 
-        /// <summary>
-        /// Called by a Master to start encryption
-        /// </summary>
-        /// <param name="key">key</param>
-        /// <param name="bytesToUse">bytesToUse</param>
-        /// <returns>encrypted text</returns>
-        public byte[] Encrypt(byte[] key, int bytesToUse)
+        public byte[] Encrypt(byte[] plaintext, byte[] key)
         {
-            return execute(key, bytesToUse, 0);
+            throw new NotImplementedException();
+        }
+
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] IV)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Encrypt(byte[] plaintext, byte[] key, byte[] IV, int bytesToUse)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] Decrypt(byte[] ciphertext, byte[] key)
+        {
+            byte[] defaultIv = new byte[ciphertext.Length];
+            return Decrypt(ciphertext, key, defaultIv);
         }
 
         /// <summary>
@@ -572,7 +582,22 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return execute(ciphertext, key, bytesToUse, 1);
         }
 
-        public int GetBlockSize()
+        public string GetCipherShortName()
+        {
+            return "SDES";
+        }
+
+        public int GetBlockSizeAsBytes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetKeySizeAsBytes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetToDefaultSettings()
         {
             throw new NotImplementedException();
         }
@@ -597,7 +622,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return "[01][01][01][01][01][01][01][01][01][01]";
         }
 
-        public IControlEncryption clone()
+        public IControlEncryption Clone()
         {
             return new SDESControl(plugin);
         }
@@ -695,7 +720,7 @@ namespace Cryptool.Plugins.Cryptography.Encryption
             return null;
         }
 
-        public void changeSettings(string setting, object value)
+        public void ChangeSettings(string setting, object value)
         {
 
         }

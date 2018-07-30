@@ -149,7 +149,7 @@ namespace Cryptool.Plugins.Convertor
 
         private byte[] GetBytesForEncoding(string s, StringDecoderSettings.EncodingTypes encoding)
         {
-            if (s == null) return null;
+            if (s == null) s = "";
             
             switch (encoding)
             {
@@ -265,20 +265,13 @@ namespace Cryptool.Plugins.Convertor
 
         public void Execute()
         {
-            if (!string.IsNullOrEmpty(InputText))
+            try
             {
-                try
-                {
-                    processInput(InputText);
-                }
-                catch (Exception ex)
-                {
-                    ShowStatusBarMessage("Error converting input: " + ex.Message, NotificationLevel.Error);
-                }
+                processInput(InputText);
             }
-            else
+            catch (Exception ex)
             {
-                ShowStatusBarMessage("String input is empty. Nothing to convert.", NotificationLevel.Warning);
+                ShowStatusBarMessage("Error converting input: " + ex.Message, NotificationLevel.Error);
             }
         }
 

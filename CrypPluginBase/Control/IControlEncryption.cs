@@ -23,15 +23,32 @@ namespace Cryptool.PluginBase.Control
 {
     public interface IControlEncryption : IControl, IDisposable
     {
-        byte[] Encrypt(byte[] key, int blocksize);
-        byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV);
-        byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] IV, int bytesToUse);
+
+        byte[] Encrypt(byte[] plaintext, byte[] key);
+        byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv);
+        byte[] Encrypt(byte[] plaintext, byte[] key, byte[] iv, int bytesToUse);
+
+        byte[] Decrypt(byte[] ciphertext, byte[] key);
+        byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv);
+        byte[] Decrypt(byte[] ciphertext, byte[] key, byte[] iv, int bytesToUse);
+
+        /// <summary>
+        /// Returns the short name of the blockcipher, e.g. AES oder 3DES.
+        /// </summary>
+        /// <returns>The blockcipher's short name</returns>
+        string GetCipherShortName();
 
         /// <summary>
         /// Returns the number of bytes of a block that is fixed for the cipher or being currently configured.
         /// </summary>
-        /// <returns></returns>
-        int GetBlockSize();
+        /// <returns>The blocksize</returns>
+        int GetBlockSizeAsBytes();
+
+        /// <summary>
+        /// Returns the number of bytes of the key that is fixed for the cipher or being currently configured.
+        /// </summary>
+        /// <returns>The keysize</returns>
+        int GetKeySizeAsBytes();
 
         /// <summary>
         /// Returns the pattern that the corresponding encryption plugin expects for the abstract key.
@@ -53,8 +70,10 @@ namespace Cryptool.PluginBase.Control
         /// <returns>The OpenCL code.</returns>
         string GetOpenCLCode(int decryptionLength, byte[] iv);
 
-        void changeSettings(string setting, object value);
-        IControlEncryption clone();
-        event KeyPatternChanged keyPatternChanged;
+        void ChangeSettings(string setting, object value);
+
+        IControlEncryption Clone();
+
+        event KeyPatternChanged KeyPatternChanged;
     }
 }
