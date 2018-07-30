@@ -41,7 +41,10 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             "ecb", "cbc", "cfb", "ofb", "ctr", "xts", "ccm", "gcm")]
         public Blockmodes Blockmode
         {
-            get => blockmode;
+            get
+            {
+                return blockmode;
+            }
             set
             {
                 if (blockmode == value) return;
@@ -115,12 +118,19 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
 
         private void ShowSettingsElement(string element)
         {
-            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Visible)));
+            }
+
         }
 
         private void HideSettingsElement(string element)
         {
-            TaskPaneAttributeChanged?.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            if (TaskPaneAttributeChanged != null)
+            {
+                TaskPaneAttributeChanged.Invoke(this, new TaskPaneAttributeChangedEventArgs(new TaskPaneAttribteContainer(element, Visibility.Collapsed)));
+            }
         }
 
         #endregion

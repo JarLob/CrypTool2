@@ -484,6 +484,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BitcoinTransactionViewer", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomNumberGenerator", "CrypPlugins\RandomNumberGenerator\RandomNumberGenerator.csproj", "{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockmodeVisualizer", "CrypPluginsExperimental\BlockmodeVisualizer\BlockmodeVisualizer.csproj", "{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -1900,6 +1902,12 @@ Global
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Release|x86.Build.0 = Release|x86
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Test|x86.ActiveCfg = Debug|x86
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB}.Test|x86.Build.0 = Debug|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Debug|x86.ActiveCfg = Debug|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Debug|x86.Build.0 = Debug|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Release|x86.ActiveCfg = Release|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Release|x86.Build.0 = Release|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Test|x86.ActiveCfg = Debug|x86
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6}.Test|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2132,6 +2140,7 @@ Global
 		{474622EE-6046-4C75-BDF8-AEADC1ECAD6C} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{23348DC8-B445-4F09-A48C-C6F9249306E4} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
 		{179E9ABF-34FA-4DC5-B8CE-72B9BD090DEB} = {88B851F6-9E3D-484F-A317-ECED5B98C618}
+		{27EBEA0D-7459-4F9F-AA11-4F84D277B7F6} = {97840ABA-BC56-482F-8EAA-11B7A6744EC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92042D62-2CDA-4393-9D74-4FB5AC571A2D}

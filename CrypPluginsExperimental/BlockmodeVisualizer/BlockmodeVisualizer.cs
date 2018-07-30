@@ -26,7 +26,6 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Control;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
-using static Cryptool.PluginBase.Miscellaneous.BlockCipherHelper;
 
 namespace Cryptool.Plugins.BlockmodeVisualizer
 {
@@ -91,12 +90,16 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.
         /// </summary>
-        public ISettings Settings => settings;
+        public ISettings Settings {
+            get {return settings; }
+        }
 
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
-        public UserControl Presentation => presentation;
+        public UserControl Presentation{
+            get { return presentation; }
+        }
 
         /// <summary>
         /// Called once when plugin is loaded into editor workspace.
@@ -132,7 +135,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             if (Blockcipher == null)
             {
                 GuiLogMessage("missing_blockcipher_warning", NotificationLevel.Warning);
-                WriteOutputs(StreamToByteArray(TextInput), TagInput);
+                WriteOutputs(BlockCipherHelper.StreamToByteArray(TextInput), TagInput);
             }
             // ...otherwise run the selected mode of operation.
             else
@@ -140,28 +143,28 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                 switch (settings.Blockmode)
                 {
                     case Blockmodes.ECB:
-                        ECB(StreamToByteArray(TextInput), Key);
+                        ECB(BlockCipherHelper.StreamToByteArray(TextInput), Key);
                         break;
                     case Blockmodes.CBC:
-                        CBC(StreamToByteArray(TextInput), Key, InitializationVector);
+                        CBC(BlockCipherHelper.StreamToByteArray(TextInput), Key, InitializationVector);
                         break;
                     case Blockmodes.CFB:
-                        CFB(StreamToByteArray(TextInput), Key, InitializationVector, settings.DataSegmentLength);
+                        CFB(BlockCipherHelper.StreamToByteArray(TextInput), Key, InitializationVector, settings.DataSegmentLength);
                         break;
                     case Blockmodes.OFB:
-                        OFB(StreamToByteArray(TextInput), Key, InitializationVector);
+                        OFB(BlockCipherHelper.StreamToByteArray(TextInput), Key, InitializationVector);
                         break;
                     case Blockmodes.CTR:
-                        CTR(StreamToByteArray(TextInput), Key, InitializationVector);
+                        CTR(BlockCipherHelper.StreamToByteArray(TextInput), Key, InitializationVector);
                         break;
                     case Blockmodes.XTS:
-                        XTS(StreamToByteArray(TextInput), Key, InitializationVector);
+                        XTS(BlockCipherHelper.StreamToByteArray(TextInput), Key, InitializationVector);
                         break;
                     case Blockmodes.CCM:
-                        CCM(StreamToByteArray(TextInput), StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
+                        CCM(BlockCipherHelper.StreamToByteArray(TextInput), BlockCipherHelper.StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
                         break;
                     case Blockmodes.GCM:
-                        GCM(StreamToByteArray(TextInput), StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
+                        GCM(BlockCipherHelper.StreamToByteArray(TextInput), BlockCipherHelper.StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
                         break;
                     default:
                         throw new InvalidOperationException("should_not_happen_exception");
@@ -214,7 +217,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Append selected padding for encryption if necessary.
             if (settings.Action == Actions.ENCRYPTION)
             {
-                result = AppendPadding(result, settings.Padding, blocksize);
+                result = BlockCipherHelper.AppendPadding(result, settings.Padding, blocksize);
             }
 
             // Check key length. Shorten or pad if necessary.
@@ -247,7 +250,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Strip selected padding from result after decryption.
             if (settings.Action == Actions.DECRYPTION)
             {
-                result = StripPadding(result, settings.Padding, blocksize);
+                result = BlockCipherHelper.StripPadding(result, settings.Padding, blocksize);
             }
 
             // Pass result to output.
@@ -285,7 +288,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Append selected padding for encryption if necessary.
             if (settings.Action == Actions.ENCRYPTION && !mac)
             {
-                result = AppendPadding(result, settings.Padding, blocksize);
+                result = BlockCipherHelper.AppendPadding(result, settings.Padding, blocksize);
             }
 
             // Check key length. Shorten or pad if necessary.
@@ -328,7 +331,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Strip selected padding from result after decryption.
             if (settings.Action == Actions.DECRYPTION && !mac)
             {
-                result = StripPadding(result, settings.Padding, blocksize);
+                result = BlockCipherHelper.StripPadding(result, settings.Padding, blocksize);
             }
 
             // For CBC-MAC only the last block will be used.
@@ -361,7 +364,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Append selected padding for encryption. For CFB the length must be a multiple of s.
             if (settings.Action == Actions.ENCRYPTION)
             {
-                result = AppendPadding(result, settings.Padding, s);
+                result = BlockCipherHelper.AppendPadding(result, settings.Padding, s);
             }
 
             // Check key length. Shorten or pad if necessary.
@@ -404,7 +407,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Strip selected padding from result after decryption.
             if (settings.Action == Actions.DECRYPTION)
             {
-                result = StripPadding(result, settings.Padding, s);
+                result = BlockCipherHelper.StripPadding(result, settings.Padding, s);
             }
 
             // Pass result to output.
@@ -691,7 +694,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             {
                 // Pad with zeroes up to the next multiple of the blocksize, concat with its length and GHASH down to blocksize.
                 int ivLength = iv.Length * 8;
-                iv = AppendPadding(iv, PaddingType.Zeros, blocksize);
+                iv = BlockCipherHelper.AppendPadding(iv, BlockCipherHelper.PaddingType.Zeros, blocksize);
                 iv = iv.Concat(IntToByteArray(ivLength, blocksize)).ToArray();
                 iv = GHASH(iv, key);
             }
@@ -712,8 +715,8 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // Pad associated data and ciphertext with zeroes
             int aLength = a.Length * 8;
             int ciphertextLength = ciphertext.Length * 8;
-            a = AppendPadding(a, PaddingType.Zeros, blocksize);
-            byte[] ciphertext_padded = AppendPadding(ciphertext, PaddingType.Zeros, blocksize);
+            a = BlockCipherHelper.AppendPadding(a, BlockCipherHelper.PaddingType.Zeros, blocksize);
+            byte[] ciphertext_padded = BlockCipherHelper.AppendPadding(ciphertext, BlockCipherHelper.PaddingType.Zeros, blocksize);
 
             // Concat a, ciphertext, length of a and lengt of ciphertext
             byte[] ghashInput = a.Concat(ciphertext_padded).ToArray();
@@ -941,7 +944,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             for (int i = input.Length - 2; i >= 0; i--)
             {
                 // Check for carry in current byte and add it to following byte.
-                if ((input[i] & 0000_0001) != 0)
+                if ((input[i] & 0x01) != 0)
                 {
                     result[i + 1] += 0xE0;
                 }
@@ -972,7 +975,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                     }
 
                     // Recalculate temp
-                    if ((temp[blocksize - 1] & 0000_0001) == 0)
+                    if ((temp[blocksize - 1] & 0x1) == 0)
                     {
                         temp = ShiftRightByOneBit(temp);
                     }
