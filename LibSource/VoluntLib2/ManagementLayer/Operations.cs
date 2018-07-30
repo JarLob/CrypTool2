@@ -185,6 +185,10 @@ namespace VoluntLib2.ManagementLayer
             {
                 Logger.LogText(String.Format("Received a RequestJobListMessage from peer {0}. Answering now.", BitConverter.ToString(message.PeerId)), this, Logtype.Debug);
                 JobManager.SendResponseJobListMessages(message.PeerId);
+                foreach(Job job in JobManager.JobList)
+                {
+                    JobManager.SendResponseJobMessage(message.PeerId, job);
+                }
             }
         }
     }
