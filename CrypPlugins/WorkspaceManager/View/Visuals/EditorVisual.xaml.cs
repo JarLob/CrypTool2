@@ -543,7 +543,10 @@ namespace WorkspaceManager.View.Visuals
 
         public bool IsSettingsOpen
         {
-            get { return (bool)base.GetValue(IsSettingsOpenProperty); }
+            get
+            {
+                return (bool)base.GetValue(IsSettingsOpenProperty);
+            }
             set
             {
                 base.SetValue(IsSettingsOpenProperty, value);
@@ -748,22 +751,8 @@ namespace WorkspaceManager.View.Visuals
             MyEditor.PasteOccured += new EventHandler(PasteOccured);
             InitializeComponent();
             _usagePopup = new UsageStatisticPopup(this);
-            //_usagePopup.Closed += new EventHandler(_usagePopup_Closed);
-            //_usagePopup.Opened += new EventHandler(_usagePopup_Closed);
+            IsSettingsOpen = false; //Settings (sidebar) start in state closed
         }
-
-
-        //void _usagePopup_Closed(object sender, EventArgs e)
-        //{
-        //    if (_usagePopup.IsOpen)
-        //    {
-        //        reset();
-        //    }
-        //    else
-        //    {
-        //        reset();
-        //    }
-        //}
 
         #endregion
 

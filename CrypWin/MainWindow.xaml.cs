@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2008-2011 CrypTool 2 Team <ct2contact@cryptool.org>
+   Copyright 2008-2018 CrypTool 2 Team <ct2contact@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -313,8 +313,6 @@ namespace Cryptool.CrypWin
                     generatingDocWindow.Title = Properties.Resources.Generating_Documentation_Title;                                                              
                     generatingDocWindow.Show();
                     var docGenerator = new OnlineDocumentationGenerator.DocGenerator();
-                    //docGenerator.Generate(DirectoryHelper.BaseDirectory, new LaTeXGenerator("de", noIcons, showAuthors));
-                    //docGenerator.Generate(DirectoryHelper.BaseDirectory, new LaTeXGenerator("en", noIcons, showAuthors));
                     docGenerator.Generate(DirectoryHelper.BaseDirectory, new LaTeXGenerator(noIcons, showAuthors));
                     generatingDocWindow.Close();                    
                 }
@@ -2295,31 +2293,11 @@ namespace Cryptool.CrypWin
 
             if (lastEditor != null)
             {
-                //lastEditor.OnGuiLogNotificationOccured -= OnGuiLogNotificationOccured;
-                lastEditor.OnOpenProjectFile -= OpenProjectFileEvent;
-
-                //save tab state of the old editor.. but not maximized:
-                //var prop = editorTypePanelManager.GetEditorTypePanelProperties(lastEditor.GetType());
-                //if (prop.ShowMaximized)     //currently maximized
-                //{
-                //    prop.ShowMaximized = false;
-                //    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), prop);
-                //}
-                //else
-                //{
-                //    editorTypePanelManager.SetEditorTypePanelProperties(lastEditor.GetType(), new EditorTypePanelManager.EditorTypePanelProperties()
-                //    {
-                //        ShowComponentPanel = PluginBTN.IsChecked,
-                //        ShowLogPanel = LogBTN.IsChecked,
-                //        ShowSettingsPanel = SettingBTN.IsChecked,
-                //        ShowMaximized = false
-                //    });
-                //}
+                lastEditor.OnOpenProjectFile -= OpenProjectFileEvent;                
             }
 
             if (ActiveEditor != null && ActivePlugin == ActiveEditor)
             {
-                //ActiveEditor.OnGuiLogNotificationOccured += OnGuiLogNotificationOccured;
                 ActiveEditor.OnOpenProjectFile += OpenProjectFileEvent;
             }
             ShowEditorSpecificPanels(ActiveEditor);
@@ -2353,24 +2331,8 @@ namespace Cryptool.CrypWin
 
                 if (ActiveEditor is WorkspaceManager.WorkspaceManagerClass)
                 {
-                    var presentation = (WorkspaceManager.View.Visuals.EditorVisual)((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation;
-                    presentation.IsSettingsOpen = panelProperties.ShowSettingsPanel;
-                    //var presentation = ((WorkspaceManager.View.Visuals.EditorVisual))(((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation);
-                }
-
-                //if (!panelProperties.ShowMaximized)
-                //{
-                //    LogBTN.IsChecked = panelProperties.ShowLogPanel;
-                //    LogBTN_Checked(LogBTN, null);
-                //    PluginBTN.IsChecked = panelProperties.ShowComponentPanel;
-                //    PluginBTN_Checked(PluginBTN, null);
-                //    SettingBTN.IsChecked = panelProperties.ShowSettingsPanel;
-                //    SettingBTN_Checked(SettingBTN, null);
-                //}
-                //else
-                //{
-                //    MaximizeTab();
-                //}
+                    var presentation = (WorkspaceManager.View.Visuals.EditorVisual)((WorkspaceManager.WorkspaceManagerClass)ActiveEditor).Presentation;                    
+                }                
             }
             catch (Exception)
             {
