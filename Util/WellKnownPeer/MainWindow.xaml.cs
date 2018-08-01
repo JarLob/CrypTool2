@@ -52,6 +52,21 @@ namespace WellKnownPeer
                 {
                     _voluntLib.WellKnownPeers.AddRange(wellKnownPeers);
                 }
+
+                var administrators = Properties.Settings.Default.Administrators.Split(';');
+                if (administrators.Length != 0)
+                {
+                    CertificateService.GetCertificateService().AdminCertificateList.AddRange(administrators);
+
+                }
+
+                var bannedCertificates = Properties.Settings.Default.BannedCertificates.Split(';');
+                if (bannedCertificates.Length != 0)
+                {
+                    CertificateService.GetCertificateService().BannedCertificateList.AddRange(bannedCertificates);
+
+                }
+
                 LogListView.DataContext = _Logs;
                 _voluntLib.Start(rootCA, ownKey);
 

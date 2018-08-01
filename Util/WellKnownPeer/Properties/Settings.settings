@@ -14,5 +14,11 @@
     <Setting Name="WellKnownPeers" Type="System.String" Scope="User">
       <Value Profile="(Default)">141.51.125.18:10000</Value>
     </Setting>
+    <Setting Name="Administrators" Type="System.String" Scope="User">
+      <Value Profile="(Default)">kopal</Value>
+    </Setting>
+    <Setting Name="BannedCertificates" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

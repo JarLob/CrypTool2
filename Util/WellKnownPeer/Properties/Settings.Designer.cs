@@ -70,5 +70,29 @@ namespace WellKnownPeer.Properties {
                 this["WellKnownPeers"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("kopal")]
+        public string Administrators {
+            get {
+                return ((string)(this["Administrators"]));
+            }
+            set {
+                this["Administrators"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BannedCertificates {
+            get {
+                return ((string)(this["BannedCertificates"]));
+            }
+            set {
+                this["BannedCertificates"] = value;
+            }
+        }
     }
 }
