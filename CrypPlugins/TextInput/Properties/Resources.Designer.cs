@@ -142,7 +142,7 @@ namespace Cryptool.TextInput.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Manual Font Settings ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Manual font settings ähnelt.
         /// </summary>
         internal static string ManualFontSettingsCaption {
             get {

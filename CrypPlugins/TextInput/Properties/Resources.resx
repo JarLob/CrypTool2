@@ -166,7 +166,7 @@
     <value>Sets the font of this TextInput.</value>
   </data>
   <data name="ManualFontSettingsCaption" xml:space="preserve">
-    <value>Manual Font Settings</value>
+    <value>Manual font settings</value>
   </data>
   <data name="ManualFontSettingsTooltip" xml:space="preserve">
     <value>Set the font manually.</value>
