@@ -93,6 +93,7 @@
     <Compile Include="AESTest.cs" />
     <Compile Include="BLAKETest.cs" />
     <Compile Include="BlockmodeVisualizerTest.cs" />
+    <Compile Include="RandomNumberGenerator.cs" />
     <Compile Include="KKDFSHA256Test.cs" />
     <Compile Include="KKDFSHAKE256Test.cs" />
     <Compile Include="HKDFSHA256Test.cs" />
@@ -439,6 +440,10 @@
     <ProjectReference Include="..\CrypPlugins\Rabbit\Rabbit.csproj">
       <Project>{7465421C-3BB2-47BB-B140-5BAC3BFC6B91}</Project>
       <Name>Rabbit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrypPlugins\RandomNumberGenerator\RandomNumberGenerator.csproj">
+      <Project>{179e9abf-34fa-4dc5-b8ce-72b9bd090deb}</Project>
+      <Name>RandomNumberGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\CrypPlugins\RC2\RC2.csproj">
       <Project>{A2A7E7E6-05E6-46AD-B8AE-862D9DA78A1E}</Project>
