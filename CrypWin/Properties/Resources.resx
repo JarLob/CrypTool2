@@ -599,7 +599,7 @@
     <value>Online Help</value>
   </data>
   <data name="GeneratingWaitMessage" xml:space="preserve">
-    <value>Please wait... Generating Documentation.</value>
+    <value>Please wait... generating online help.</value>
   </data>
   <data name="OnlineHelpTab_ShowHTMLFile_Doc_page__0__not_found_" xml:space="preserve">
     <value>Doc page {0} not found!</value>
@@ -887,10 +887,10 @@
     <value>System Infos</value>
   </data>
   <data name="GeneratingLaTeXWaitMessage" xml:space="preserve">
-    <value>Please wait... Generating LaTeX-Documentation.</value>
+    <value>Please wait... generating LaTeX documentation.</value>
   </data>
   <data name="Generating_Statistics_Title" xml:space="preserve">
-    <value>Generating Component Connection Statistics</value>
+    <value>Please wait... generating connection statistics.</value>
   </data>
   <data name="StatisticsWaitMessage" xml:space="preserve">
     <value>Please wait... Generating Component Connection Statistics!</value>
@@ -953,13 +953,13 @@
     <value>64-bit Operating System</value>
   </data>
   <data name="GeneratingFunctionListWaitMessage" xml:space="preserve">
-    <value>Please wait... Generating Function List.</value>
+    <value>Please wait... generating function list.</value>
   </data>
   <data name="GeneratingTemplateInfoWaitMessage" xml:space="preserve">
-    <value>Please wait... Generating Template Information.</value>
+    <value>Please wait... generating template information.</value>
   </data>
   <data name="Generating_TemplateInfo_Title" xml:space="preserve">
-    <value>Generating Template Information</value>
+    <value>Generating Template Information.</value>
   </data>
   <data name="SI_Processor_Name" xml:space="preserve">
     <value>Processor name</value>

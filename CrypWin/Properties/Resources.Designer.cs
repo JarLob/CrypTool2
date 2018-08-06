@@ -833,7 +833,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Generating Component Connection Statistics ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... generating connection statistics. ähnelt.
         /// </summary>
         internal static string Generating_Statistics_Title {
             get {
@@ -842,7 +842,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Generating Template Information ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Generating Template Information. ähnelt.
         /// </summary>
         internal static string Generating_TemplateInfo_Title {
             get {
@@ -851,7 +851,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... Generating Function List. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... generating function list. ähnelt.
         /// </summary>
         internal static string GeneratingFunctionListWaitMessage {
             get {
@@ -860,7 +860,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... Generating LaTeX-Documentation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... generating LaTeX documentation. ähnelt.
         /// </summary>
         internal static string GeneratingLaTeXWaitMessage {
             get {
@@ -869,7 +869,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... Generating Template Information. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... generating template information. ähnelt.
         /// </summary>
         internal static string GeneratingTemplateInfoWaitMessage {
             get {
@@ -878,7 +878,7 @@ namespace Cryptool.CrypWin.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... Generating Documentation. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please wait... generating online help. ähnelt.
         /// </summary>
         internal static string GeneratingWaitMessage {
             get {

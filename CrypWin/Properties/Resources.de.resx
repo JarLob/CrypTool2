@@ -629,10 +629,10 @@
     <value>Wollen Sie Ihr neues Projekt speichern?</value>
   </data>
   <data name="GeneratingWaitMessage" xml:space="preserve">
-    <value>Bitte warten... Dokumentation wird erzeugt.</value>
+    <value>Bitte warten... Online-Hilfe wird erzeugt.</value>
   </data>
   <data name="Generating_Documentation_Title" xml:space="preserve">
-    <value>Dokumentation erzeugen</value>
+    <value>Dokumentation wird erzeugt</value>
   </data>
   <data name="Online_Help" xml:space="preserve">
     <value>Online-Hilfe</value>
@@ -863,7 +863,7 @@
     <value>Bitte warten... Konnektoren-Statistiken werden erzeugt!</value>
   </data>
   <data name="Generating_Statistics_Title" xml:space="preserve">
-    <value>Generiere Komponenten-Konnektoren-Statistiken</value>
+    <value>Bitte warten... Konnektoren-Statistik wird erzeugt.</value>
   </data>
   <data name="Copy_Title" xml:space="preserve">
     <value>Titel kopieren</value>
@@ -935,10 +935,10 @@
     <value>Bitte warten... Funktionsliste wird erzeugt.</value>
   </data>
   <data name="GeneratingTemplateInfoWaitMessage" xml:space="preserve">
-    <value>Bitte warten... Template-Informationen werden erzeugt.</value>
+    <value>Bitte warten... Vorlagen-Informationen werden erzeugt.</value>
   </data>
   <data name="Generating_TemplateInfo_Title" xml:space="preserve">
-    <value>Generiere Template-Informationen</value>
+    <value>Bitte warten... Vorlagen-Informationen werden erzeugt.</value>
   </data>
   <data name="SI_Processor_Name" xml:space="preserve">
     <value>Prozessorname</value>
