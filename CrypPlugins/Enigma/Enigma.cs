@@ -44,7 +44,6 @@ namespace Cryptool.Enigma
     [PluginInfo("Cryptool.Enigma.Properties.Resources", "PluginCaption", "PluginTooltip", "Enigma/DetailedDescription/doc.xml",
       "Enigma/Images/Enigma.png", "Enigma/Images/encrypt.png", "Enigma/Images/decrypt.png")]
     [ComponentCategory(ComponentCategory.CiphersClassic)]
-    [ComponentCategory(ComponentCategory.CryptanalysisSpecific)]
     public class Enigma : ICrypComponent
     {
         #region Constants
