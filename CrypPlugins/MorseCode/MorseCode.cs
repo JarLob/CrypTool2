@@ -24,6 +24,7 @@ using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using MorseCode;
+using System.Threading;
 
 
 namespace Cryptool.Plugins.MorseCode
@@ -190,21 +191,17 @@ namespace Cryptool.Plugins.MorseCode
         {            
             using(Stream ditStream = new MemoryStream())
             using(Stream daStream = new MemoryStream())
-            using (Stream silenceStream = new MemoryStream())
             {
                 var ditPlayer = new SoundPlayer(ditStream);
                 var daPlayer = new SoundPlayer(daStream);
-                var silencePlayer = new SoundPlayer(silenceStream);
                 var dit = new Wave();
-                dit.GenerateSound(256, 600, 50);
+                dit.GenerateSound(128, 600, 100);
                 dit.WriteToStream(ditStream);
                 var dah = new Wave();
-                dah.GenerateSound(256, 600, 100);
+                dah.GenerateSound(128, 600, 200);
                 dah.WriteToStream(daStream);
-                var silence = new Wave();
-                silence.GenerateSound(256, 0, 100);
-                silence.WriteToStream(silenceStream);
                 int charnumber = 0;
+
                 foreach (char c in InputText)
                 {
                     charnumber++;
@@ -212,29 +209,32 @@ namespace Cryptool.Plugins.MorseCode
                     {
                         ditPlayer.Stop();
                         daPlayer.Stop();
-                        silencePlayer.Stop();
                         return;
                     }
                     if (c == '.')
                     {
                         ditStream.Position = 0;
-                        ditPlayer.PlaySync();        
+                        ditPlayer.PlaySync();                                
                     }
                     else if (c == '-')
                     {
                         daStream.Position = 0;
-                        daPlayer.PlaySync();  
+                        daPlayer.PlaySync();                        
                     }
-                    else
+                    else if (c == '/')
                     {
-                        silenceStream.Position = 0;
-                        silencePlayer.PlaySync(); 
+                        //between words, there is a long break
+                        Thread.Sleep(400);
+                    }
+                    else if (c == ' ')
+                    {
+                        //between characters, there is a short break
+                        Thread.Sleep(200);
                     }
                     ProgressChanged(((double)charnumber) / InputText.Length, 1);
                 }
                 ditPlayer.Stop();
                 daPlayer.Stop(); 
-                silencePlayer.Stop();
             }            
         }
 

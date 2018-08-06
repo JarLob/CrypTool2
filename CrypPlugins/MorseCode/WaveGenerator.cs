@@ -85,7 +85,7 @@ namespace MorseCode
         /// <param name="duration"></param>
         public void GenerateSound(double amplitude, double frequency, double duration)
         {
-            int size = (int) ((duration/1000.0)*44100.0*2.0);
+            int size = (int)((duration / 1000.0) * 44100.0 * 2.0);
             if(size % 2 == 1)
             {
                 size++;
@@ -93,7 +93,7 @@ namespace MorseCode
             DataChunk.Data = new byte[size];
             for (int i = 0; i < size; i = i + 2)
             {
-                int value = (int)Math.Round(amplitude*Math.Sin(2.0*Math.PI*(((double)i)/88200.0*frequency)));
+                int value = (int)Math.Round(amplitude * Math.Sin(2.0 * Math.PI * (((double)i) / 88200.0 * frequency)));
                 DataChunk.Data[i] = (byte)(value);
                 DataChunk.Data[i + 1] = (byte)(value);
             }
