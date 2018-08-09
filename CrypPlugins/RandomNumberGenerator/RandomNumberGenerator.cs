@@ -750,9 +750,16 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// <returns></returns>
         private bool isPrime(BigInteger num)
         {
-            for (BigInteger i = 2; i < num; i++)
+            if (num == 1)
+                return false;
+            if (num == 2)
+                return true;
+            BigInteger r = (BigInteger)Math.Sqrt((double)num);
+            for (BigInteger i = 3; i <= r; i += 2)
+            {
                 if (num % i == 0)
                     return false;
+            }
             return true;
         }      
 

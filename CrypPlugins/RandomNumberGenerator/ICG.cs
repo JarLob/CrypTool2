@@ -95,9 +95,16 @@ namespace Cryptool.Plugins.RandomNumberGenerator
         /// </summary>
         public override void randomize()
         {
-            BigInteger tmp = ((Ext_EA((A * (Seed + Count) + B), Modulus)[1] + Modulus) % Modulus);
+            BigInteger tmp;
+            if (Modulus < (A * (Seed + Count) + B))
+            {
+                tmp = ((Ext_EA((A * (Seed + Count) + B), Modulus)[1] + Modulus) % Modulus);
+            }
+            else
+            {
+                tmp = ((Ext_EA(Modulus, (A * (Seed + Count) + B))[2] + Modulus) % Modulus);
+            }
             RandNo = ((tmp + Modulus) % Modulus);
-
         }
 
         /// <summary>

@@ -83,7 +83,8 @@ namespace Tests.TemplateAndPluginTests
 
             new TestVector () { n=6, t=AlgorithmType.ICG, o=OutputType.ByteArray, Seed="11", Modulo="3", A="21", B="2", OutputAmount="8", Result="FFFFFFFFFFFFFFFF" },
             new TestVector () { n=7, t=AlgorithmType.ICG, o=OutputType.ByteArray, Seed="11", Modulo="7", A="2", B="21", OutputAmount="8", Result="251554D2CAAA2925" },
-            new TestVector () { n=8, t=AlgorithmType.ICG, o=OutputType.ByteArray, Seed="12", Modulo="5", A="3", B="21", OutputAmount="8", Result="C66331988C466331" },
+            new TestVector () { n=8, t=AlgorithmType.ICG, o=OutputType.ByteArray, Seed="12", Modulo="5", A="3", B="21", OutputAmount="8", Result="C66331988C466331"},
+            new TestVector () { n=9, t=AlgorithmType.ICG, o=OutputType.ByteArray, Seed="12", Modulo="46633", A="3", B="21", OutputAmount="8", Result="0FFF30DA09FB9B17" }
         };
     }
 }
