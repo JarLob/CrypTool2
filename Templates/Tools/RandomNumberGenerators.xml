@@ -26,7 +26,7 @@
 	<replacement key="$output$" value="" />
   </replacements>
   <replacements lang="en">
-    <replacement key="$compDesc$" value="Randomnumbergenerator" />
+    <replacement key="$compDesc$" value="Random number generator" />
 	<replacement key="$output$" value="Randombytes" />
   </replacements>
 </sample>
