@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Cryptool.PluginBase.IO;
 using Cryptool.Plugins.Cryptography.Encryption;
+using Cryptool.Plugins.Keccak;
 
 namespace Tests.TemplateAndPluginTests
 {
@@ -19,38 +20,38 @@ namespace Tests.TemplateAndPluginTests
         public void KeccakTestMethod()
         {
             var pluginInstance = TestHelpers.GetPluginInstance("Keccak");
+            var keccakDefaultScenario = new PluginTestScenario(
+                pluginInstance, new[] { "InputStream", ".KECCAKFunction", ".OutputLength"}, new[] { "OutputStream" });
             var keccakSHAScenario = new PluginTestScenario(
                 pluginInstance, new[] { "InputStream", ".KECCAKFunction" }, new[] { "OutputStream" });
-            var keccakDefaultScenario = new PluginTestScenario(
-                pluginInstance, new[] { "InputStream", ".KECCAKFunction", ".OutputLength" }, new[] { "OutputStream" });
             var keccakSHAWithDomainSeparationScenario = new PluginTestScenario(
-                pluginInstance, new[] { "InputStream", ".KECCAKFunction", ".InputType", ".SuffixBits"}, new[] { "OutputStream" });
+                pluginInstance, new[] { "InputStream", ".KECCAKFunction", ".SuffixBits" }, new[] { "OutputStream" });
             object[] output;
 
             int keccakDefaultOutputLength = 4096;
             foreach (TestVector vector in keccakDefaultTestvectors)
             {
-                output = keccakDefaultScenario.GetOutputs(new object[] { vector.input.HexToStream(), vector.mode, keccakDefaultOutputLength });
+                output = keccakDefaultScenario.GetOutputs(new object[] { vector.input.HexToStream(), vector.mode, keccakDefaultOutputLength }); // 1 = hex
                 Assert.AreEqual(vector.output, output[0].ToHex(), "Unexpected value in test #" + vector.n + ".");
             }
 
-            foreach (TestVector vector in keccakSHATestvectors)
+            /*foreach (TestVector vector in keccakSHATestvectors)
             {
                 output = keccakSHAScenario.GetOutputs(new object[] { vector.input.HexToStream(), vector.mode });
                 Assert.AreEqual(vector.output, output[0].ToHex(), "Unexpected value in test #" + vector.n + ".");
-            }
+            }*/
 
-            foreach (TestVector vector in keccakSHAWithDomainSeparationTestvectors)
+            /*foreach (TestVector vector in keccakSHAWithDomainSeparationTestvectors)
             {
-                output = keccakSHAWithDomainSeparationScenario.GetOutputs(new object[] { vector.input.HexToStream(), vector.mode, vector.suffixBits, vector.inputType });
+                output = keccakSHAWithDomainSeparationScenario.GetOutputs(new object[] { vector.input.HexToStream(), vector.mode, vector.suffixBits});
                 Assert.AreEqual(vector.output, output[0].ToHex(), "Unexpected value in test #" + vector.n + ".");
-            }
+            }*/
         }
 
         struct TestVector
         {
             public string input, output, suffixBits;
-            public int n, mode, inputType;
+            public int n, mode;
         }
 
         //
@@ -67,11 +68,11 @@ namespace Tests.TemplateAndPluginTests
         TestVector[] keccakDefaultTestvectors = new TestVector[] {
             /*** Keccak[] (with parameters r = 1024, c = 576, output length variable but fixed to 256-byte [4096-bit] for test cases) ***/
             
-            /* ShortMsgKAT_0 */
-			new TestVector () { n=0, mode=0,	// 0 byte
+            /* ShortMsgKAT_0 */			
+            new TestVector () { n=0, mode=0,	// 0 byte
 			input="",
-			output="6753E3380C09E385D0339EB6B050A68F66CFD60A73476E6FD6ADEB72F5EDD7C6F04A5D017A19CBE291935855B4860F69DF04C98AA78B407A9BA9826F7266EF14BA6D3F90C4FE154D27C2858EA6DB8C117411A1BC5C499410C391B298F37BF636B0F5C31DBD6487A7D3D8CF2A97B619697E66D894299B8B4D80E0498538E18544C3A2FA33F0BFB1CFEF8DA7875C4967F332C7FC93C050E81FB404F9A91503D6010EE16F50B4ED0BC563BA8431668B003D7E2E6F226CB7FA93BB2E132C861FDC2141457589A63ECF05481126A7C2DE941A2FDEC71CB70DE81887B9014223865E79C4FFE82DAE83C1FC484B9A07A7E52B135F4AE3A0E09247EA4E2625E9349B0AC73F24CB418DF6DCB49CA37860298ADA18AA23595B5096EF789DE3EDF3826817FFF4F71102A01E1D2599F2958D5C186F5B11F5FEEDB61BB732DBB42D18B1E77258A8F211BF95C9F47F19603EC419FF879AEA41A4811344D016BBC4F9496741C469CCA425C5BE73543219AF40796C0B9FF14AEAA70C5E22E4BB1346A3DDFEDD8A559104E4704F1227D42918AE3F7404FBF3C6340A486E776AABCC34190F87DA4BD954B83386255A0E34DF05CA2E781FAF6FE66475852481FCE20798A56629ABFAC408760CE64606008A3B568C88ABA1C6DF3381E0765567EA84B2CE4B441CF1EEFAA32125D5139361A632B3008566A2E8AF1055CB06AE462B6BF87B34A9770618E6",},
-			new TestVector () { n=1, mode=0,	// 1 byte
+			output="6753E3380C09E385D0339EB6B050A68F66CFD60A73476E6FD6ADEB72F5EDD7C6F04A5D017A19CBE291935855B4860F69DF04C98AA78B407A9BA9826F7266EF14BA6D3F90C4FE154D27C2858EA6DB8C117411A1BC5C499410C391B298F37BF636B0F5C31DBD6487A7D3D8CF2A97B619697E66D894299B8B4D80E0498538E18544C3A2FA33F0BFB1CFEF8DA7875C4967F332C7FC93C050E81FB404F9A91503D6010EE16F50B4ED0BC563BA8431668B003D7E2E6F226CB7FA93BB2E132C861FDC2141457589A63ECF05481126A7C2DE941A2FDEC71CB70DE81887B9014223865E79C4FFE82DAE83C1FC484B9A07A7E52B135F4AE3A0E09247EA4E2625E9349B0AC73F24CB418DF6DCB49CA37860298ADA18AA23595B5096EF789DE3EDF3826817FFF4F71102A01E1D2599F2958D5C186F5B11F5FEEDB61BB732DBB42D18B1E77258A8F211BF95C9F47F19603EC419FF879AEA41A4811344D016BBC4F9496741C469CCA425C5BE73543219AF40796C0B9FF14AEAA70C5E22E4BB1346A3DDFEDD8A559104E4704F1227D42918AE3F7404FBF3C6340A486E776AABCC34190F87DA4BD954B83386255A0E34DF05CA2E781FAF6FE66475852481FCE20798A56629ABFAC408760CE64606008A3B568C88ABA1C6DF3381E0765567EA84B2CE4B441CF1EEFAA32125D5139361A632B3008566A2E8AF1055CB06AE462B6BF87B34A9770618E6",},			
+            new TestVector () { n=1, mode=0,	// 1 byte
 			input="CC",
 			output="56B97029B479FF5DD15F17D12983E3B835BB0531D9B8D49B103B025CA53F991741298E961D1FAD00FC365C7761BFB278AE473980D612C1629E075A3FDBAE7F82B0F0AF54DF187F358852E19EA4347CF5CEEA676A1DCE3A47447E237FD74204F9A4B7F7C9CC7CC8B865B1D554E2F5F4A8EE17DBDDE7267894558A20972C9EB6CF5F62CE9151437718ED4AFF08FA76D803806E6CE47D229AAE839369E31888B26429E27BC3756021CB51498BCF2527D4BB04838BC1CEED9985A2A66FF8CB8C2D58B7099304E7F9622C583B093024A5FCDE2BE781474C159DF24D77D328C298F5766A8A0DBF7AE790A509CCF59E0CACD0ABF21492E0095A87ECDB55990093917AAA96D7F68B7B859B8094AEC0DDB6FB352A6CC1F007FA988ED764F5D6F21F9D8ADE9CE7ACA4DE6570DA39D9ACCEB46D2582FA4C4231DE0B736FB341041D24CFAE6C0761F43A2CF7383F38742579218AFCAB53D2E6816640DE05644D877558E965B1A28406999F31CCC43AC0B02BC5448B66AD3B6F8DE04C0E25845C8671B6F0594909A057F17FD06031707C8B4599889C994A35C193DBF84A7A0919CD054F67CEB7965F420D02DA3477EFC8B55413C241ADCF71CB10FE7E3E720B8C1736837B06E4B27461B71C6CAC892437530BBFE05CF426272F80F11709B9DB964F5DEDAB9E757C2F7A972B6A4C2443B03AD787AB1E243660BCED739157A434800696841ACEA4",},
 			new TestVector () { n=2, mode=0,	// 2 byte
@@ -314,22 +315,22 @@ namespace Tests.TemplateAndPluginTests
             /*** SHA3-224 ***/
             
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_Msg0.pdf */
-            new TestVector () { n=100, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=100, mode=1, suffixBits="01",
             input="",
             output="6B 4E 03 42 36 67 DB B7 3B 6E 15 45 4F 0E B1 AB D4 59 7F 9A 1B 07 8E 3F 5B 5A 6B C7".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_Msg5.pdf */
-            new TestVector () { n=101, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=101, mode=1, suffixBits="01",
             input="1 1 0 0 1".Trim(),
             output="FF BA D5 DA 96 BA D7 17 89 33 02 06 DC 67 68 EC AE B1 B3 2D CA 6B 33 01 48 96 74 AB".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_Msg30.pdf */
-            new TestVector () { n=102, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=102, mode=1, suffixBits="01",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="D6 66 A5 14 CC 9D BA 25 AC 1B A6 9E D3 93 04 60 DE AA C9 85 1B 5F 0B AA B0 07 DF 3B".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_1600.pdf */
-            new TestVector () { n=103, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=103, mode=1, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -383,7 +384,7 @@ namespace Tests.TemplateAndPluginTests
             output="93 76 81 6A BA 50 3F 72 F9 6C E7 EB 65 AC 09 5D EE E3 BE 4B F9 BB C2 A1 CB 7E 11 E0".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_1605.pdf */
-            new TestVector () { n=104, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=104, mode=1, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -438,7 +439,7 @@ namespace Tests.TemplateAndPluginTests
             output="22 D2 F7 BB 0B 17 3F D8 C1 96 86 F9 17 31 66 E3 EE 62 73 80 47 D7 EA DD 69 EF B2 28".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-224_1630.pdf */
-            new TestVector () { n=105, mode=1, inputType=0, suffixBits="01",
+            new TestVector () { n=105, mode=1, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
 				"1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
 				"1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -496,22 +497,22 @@ namespace Tests.TemplateAndPluginTests
             /*** SHA3-256 ***/
 
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_Msg0.pdf */
-            new TestVector () { n=200, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=200, mode=2, suffixBits="01",
             input="",
             output="A7 FF C6 F8 BF 1E D7 66 51 C1 47 56 A0 61 D6 62 F5 80 FF 4D E4 3B 49 FA 82 D8 0A 4B 80 F8 43 4A".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_Msg5.pdf */
-            new TestVector () { n=201, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=201, mode=2, suffixBits="01",
             input="1 1 0 0 1".Trim(),
             output="7B 00 47 CF 5A 45 68 82 36 3C BF 0F B0 53 22 CF 65 F4 B7 05 9A 46 36 5E 83 01 32 E3 B5 D9 57 AF".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_Msg30.pdf */
-            new TestVector () { n=202, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=202, mode=2, suffixBits="01",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="C8 24 2F EF 40 9E 5A E9 D1 F1 C8 57 AE 4D C6 24 B9 2B 19 80 9F 62 AA 8C 07 41 1C 54 A0 78 B1 D0".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_1600.pdf */
-            new TestVector () { n=203, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=203, mode=2, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -565,7 +566,7 @@ namespace Tests.TemplateAndPluginTests
             output="79 F3 8A DE C5 C2 03 07 A9 8E F7 6E 83 24 AF BF D4 6C FD 81 B2 2E 39 73 C6 5F A1 BD 9D E3 17 87".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_1605.pdf */
-            new TestVector () { n=204, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=204, mode=2, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -620,7 +621,7 @@ namespace Tests.TemplateAndPluginTests
             output="81 EE 76 9B ED 09 50 86 2B 1D DD ED 2E 84 AA A6 AB 7B FD D3 CE AA 47 1B E3 11 63 D4 03 36 36 3C".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-256_1630.pdf */
-            new TestVector () { n=205, mode=2, inputType=0, suffixBits="01",
+            new TestVector () { n=205, mode=2, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -678,28 +679,28 @@ namespace Tests.TemplateAndPluginTests
             /*** SHA3-384 ***/
             
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_Msg0.pdf */
-            new TestVector () { n=300, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=300, mode=3, suffixBits="01",
             input="",
             output="0C 63 A7 5B 84 5E 4F 7D 01 10 7D 85 2E 4C 24 85" +
                 "C5 1A 50 AA AA 94 FC 61 99 5E 71 BB EE 98 3A 2A" +
                 "C3 71 38 31 26 4A DB 47 FB 6B D1 E0 58 D5 F0 04".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_Msg5.pdf */
-            new TestVector () { n=301, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=301, mode=3, suffixBits="01",
             input="1 1 0 0 1".Trim(),
             output="73 7C 9B 49 18 85 E9 BF 74 28 E7 92 74 1A 7B F8" +
                 "DC A9 65 34 71 C3 E1 48 47 3F 2C 23 6B 6A 0A 64" +
                 "55 EB 1D CE 9F 77 9B 4B 6B 23 7F EF 17 1B 1C 64".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_Msg30.pdf */
-            new TestVector () { n=302, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=302, mode=3, suffixBits="01",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="95 5B 4D D1 BE 03 26 1B D7 6F 80 7A 7E FD 43 24" +
                 "35 C4 17 36 28 11 B8 A5 0C 56 4E 7E E9 58 5E 1A" +
                 "C7 62 6D DE 2F DC 03 0F 87 61 96 EA 26 7F 08 C3".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_1600.pdf */
-            new TestVector () { n=303, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=303, mode=3, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -755,7 +756,7 @@ namespace Tests.TemplateAndPluginTests
                 "76 19 7A 31 FD 55 EE 98 9F 2D 70 50 DD 47 3E 8F".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_1605.pdf */
-            new TestVector () { n=304, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=304, mode=3, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -812,7 +813,7 @@ namespace Tests.TemplateAndPluginTests
                 "97 9F DB EA E8 B3 FE 16 CB 82 E5 87 38 1E B6 24".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-384_1630.pdf */
-            new TestVector () { n=305, mode=3, inputType=0, suffixBits="01",
+            new TestVector () { n=305, mode=3, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -872,7 +873,7 @@ namespace Tests.TemplateAndPluginTests
             /*** SHA3-512 ***/
 
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_Msg0.pdf */
-            new TestVector () { n=400, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=400, mode=4, suffixBits="01",
             input="",
             output="A6 9F 73 CC A2 3A 9A C5 C8 B5 67 DC 18 5A 75 6E" +
                 "97 C9 82 16 4F E2 58 59 E0 D1 DC C1 47 5C 80 A6" +
@@ -880,7 +881,7 @@ namespace Tests.TemplateAndPluginTests
                 "F5 00 19 9D 95 B6 D3 E3 01 75 85 86 28 1D CD 26".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_Msg0.pdf */
-            new TestVector () { n=401, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=401, mode=4, suffixBits="01",
             input="1 1 0 0 1".Trim(),
             output="A1 3E 01 49 41 14 C0 98 00 62 2A 70 28 8C 43 21" +
                 "21 CE 70 03 9D 75 3C AD D2 E0 06 E4 D9 61 CB 27" +
@@ -888,7 +889,7 @@ namespace Tests.TemplateAndPluginTests
                 "79 5E 5E 81 91 8A DD B0 58 E2 2A 9F 24 88 3F 37".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_Msg30.pdf */
-            new TestVector () { n=402, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=402, mode=4, suffixBits="01",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="98 34 C0 5A 11 E1 C5 D3 DA 9C 74 0E 1C 10 6D 9E" +
                 "59 0A 0E 53 0B 6F 6A AA 78 30 52 5D 07 5C A5 DB" +
@@ -896,7 +897,7 @@ namespace Tests.TemplateAndPluginTests
                 "D4 5F 45 E4 9B 6D 7E 69 17 F2 F1 67 78 06 7B AB".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_1600.pdf */
-            new TestVector () { n=403, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=403, mode=4, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -953,7 +954,7 @@ namespace Tests.TemplateAndPluginTests
                 "E5 89 C5 1C A1 A4 A8 41 6D F6 54 5A 1C E8 BA 00".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_1605.pdf */
-            new TestVector () { n=404, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=404, mode=4, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1011,7 +1012,7 @@ namespace Tests.TemplateAndPluginTests
                 "CF C2 02 3C 36 5B B6 0A 93 F5 28 55 06 98 78 6B".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA3-512_1630.pdf */
-            new TestVector () { n=405, mode=4, inputType=0, suffixBits="01",
+            new TestVector () { n=405, mode=4, suffixBits="01",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1072,7 +1073,7 @@ namespace Tests.TemplateAndPluginTests
             /*** SHAKE128 ***/
 
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg0.pdf */
-            new TestVector () { n=500, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=500, mode=5, suffixBits="1111",
             input="",
             output="7F 9C 2B A4 E8 8F 82 7D 61 60 45 50 76 05 85 3E" +
                 "D7 3B 80 93 F6 EF BC 88 EB 1A 6E AC FA 66 EF 26" +
@@ -1108,7 +1109,7 @@ namespace Tests.TemplateAndPluginTests
                 "DD A2 52 98 33 46 2B 71 A4 1A 45 BE 97 29 0B 6F".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg5.pdf */
-            new TestVector () { n=501, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=501, mode=5, suffixBits="1111",
             input="1 1 0 0 1".Trim(),
             output="2E 0A BF BA 83 E6 72 0B FB C2 25 FF 6B 7A B9 FF" +
                 "CE 58 BA 02 7E E3 D8 98 76 4F EF 28 7D DE CC CA" +
@@ -1144,7 +1145,7 @@ namespace Tests.TemplateAndPluginTests
                 "3D A6 D3 7C 2E 32 E1 AF 3B 8A EC 8A E3 06 9C D9".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg30.pdf */
-            new TestVector () { n=502, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=502, mode=5, suffixBits="1111",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="6D 5D 39 C5 5F 3C CA 56 7F EA F4 22 DC 64 BA 17" +
                 "40 1D 07 75 6D 78 B0 FA 3D 54 6D 66 AF C2 76 71" +
@@ -1180,7 +1181,7 @@ namespace Tests.TemplateAndPluginTests
                 "B6 56 E3 E9 03 CC 57 33 E8 6B A1 5D FE F7 06 78".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg1600.pdf */
-            new TestVector () { n=503, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=503, mode=5, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1265,7 +1266,7 @@ namespace Tests.TemplateAndPluginTests
                 "F1 7D 72 59 AB 07 52 16 C0 69 95 11 64 3B 64 39".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg1605.pdf */
-            new TestVector () { n=504, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=504, mode=5, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1351,7 +1352,7 @@ namespace Tests.TemplateAndPluginTests
                 "99 5E E6 AA E4 25 68 F3 14 93 3E 3A 21 E5 BE 40".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE128_Msg1630.pdf */
-            new TestVector () { n=505, mode=5, inputType=0, suffixBits="1111",
+            new TestVector () { n=505, mode=5, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1440,7 +1441,7 @@ namespace Tests.TemplateAndPluginTests
             /*** SHAKE256 ***/
 
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg0.pdf */
-            new TestVector () { n=600, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=600, mode=6, suffixBits="1111",
             input="",
             output="46 B9 DD 2B 0B A8 8D 13 23 3B 3F EB 74 3E EB 24" +
                 "3F CD 52 EA 62 B8 1B 82 B5 0C 27 64 6E D5 76 2F" +
@@ -1476,7 +1477,7 @@ namespace Tests.TemplateAndPluginTests
                 "1F D1 66 C7 96 B9 CC 25 8A 06 4A 8F 57 E2 7F 2A".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg5.pdf */
-            new TestVector () { n=601, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=601, mode=6, suffixBits="1111",
             input="1 1 0 0 1".Trim(),
             output="48 A5 C1 1A BA EE FF 09 2F 36 46 EF 0D 6B 3D 3F" +
                 "F7 6C 2F 55 F9 C7 32 AC 64 70 C0 37 64 00 82 12" +
@@ -1512,7 +1513,7 @@ namespace Tests.TemplateAndPluginTests
                 "A5 15 23 E6 B1 73 24 6E D4 BF A5 21 D7 4F C6 BB".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg30.pdf */
-            new TestVector () { n=602, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=602, mode=6, suffixBits="1111",
             input="1 1 0 0 1 0 1 0 0 0 0 1 1 0 1 0 1 1 0 1 1 1 1 0 1 0 0 1 1 0".Trim(),
             output="46 5D 08 1D FF 87 5E 39 62 00 E4 48 1A 3E 9D CD" +
                 "88 D0 79 AA 6D 66 22 6C B6 BA 45 41 07 CB 81 A7" +
@@ -1548,7 +1549,7 @@ namespace Tests.TemplateAndPluginTests
                 "9A 66 E9 05 1D 9A 2B 1F C9 AF E2 67 98 E9 CE C6".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg1600.pdf */
-            new TestVector () { n=603, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=603, mode=6, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1633,7 +1634,7 @@ namespace Tests.TemplateAndPluginTests
                 "CA 92 BF 0B E5 61 5E 96 95 9D 76 71 97 A0 BE EB".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg1605.pdf */
-            new TestVector () { n=604, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=604, mode=6, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
@@ -1719,7 +1720,7 @@ namespace Tests.TemplateAndPluginTests
                 "D9 6E 88 18 07 13 AC 33 D2 C2 32 E3 5E 76 4E 04".Trim(),
             },
             /* http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHAKE256_Msg1630.pdf */
-            new TestVector () { n=605, mode=6, inputType=0, suffixBits="1111",
+            new TestVector () { n=605, mode=6, suffixBits="1111",
             input="1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +
                 "1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 1 1 0 0 0 1 0 1 " +

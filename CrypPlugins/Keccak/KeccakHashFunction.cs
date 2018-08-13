@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.Keccak
 
 
             /* map each bit of the input to a byte */
-            byte[] inputInBitsWithoutSuffix = ByteArrayToBitArray(input, (KeccakSettings.InputTypeEnum) settings.InputType, plugin);
+            byte[] inputInBitsWithoutSuffix = ByteArrayToBitArray(input, plugin);
 
             /* append domain separation suffix bits */
             byte[] inputInBits = appendSuffixBits(settings.SuffixBits, inputInBitsWithoutSuffix);
@@ -76,24 +76,7 @@ namespace Cryptool.Plugins.Keccak
             {
                 byte b = suffixBitsArray[i] == '1' ? (byte)0x01 : (byte)0x00;
                 inputInBits[inputInBitsWithoutSuffix.Length + i] = b;
-            }
-
-
-            //int indexOfLastOne = inputInBitsWithoutSuffix.Contains((byte)0x01) ?
-            //    Array.LastIndexOf(inputInBitsWithoutSuffix, (byte)0x01) : -1;
-            //int size = indexOfLastOne + 1 + suffixBits.Length;
-            //byte[] inputInBits = new byte[size];
-
-            //if (size != suffixBits.Length)
-            //    Array.Copy(inputInBitsWithoutSuffix, inputInBits, inputInBitsWithoutSuffix.Length);
-
-            //char[] suffixBitsArray = suffixBits.ToCharArray();
-            //for (int i = 0; i < suffixBitsArray.Length; i++)
-            //{
-            //    byte b = suffixBitsArray[i] == '1' ? (byte)0x01 : (byte)0x00;
-            //    inputInBits[indexOfLastOne + 1 + i] = b;
-            //}          
-
+            } 
             return inputInBits;
         }
 
@@ -266,7 +249,7 @@ namespace Cryptool.Plugins.Keccak
                     }
 
                     binaryBytes.AppendFormat("{0:X2} ", Convert.ToByte(new string(bitChars), 2));
-                                       
+                    Console.WriteLine(new string(bitChars));               
                     bitString.Clear();
                 }
 
@@ -278,115 +261,28 @@ namespace Cryptool.Plugins.Keccak
          * Converts a byte array to an another byte array. The returned byte array contains the bit representation of the input byte array
          * where each byte represents a bit of the input byte array
          * */
-        public static byte[] ByteArrayToBitArray(byte[] bytes, KeccakSettings.InputTypeEnum inputType, Keccak plugin = null)
-        {
+        public static byte[] ByteArrayToBitArray(byte[] bytes, Keccak plugin = null)
+        {           
             List<byte> bitsInBytes = new List<byte>(bytes.Length * 8);
-            string bitString;
-            char[] bitChars = new char[8];
-
-            switch (inputType)
+            foreach (byte b in bytes)
             {
-                case KeccakSettings.InputTypeEnum.Binary:
-                    foreach (byte b in bytes)
+                byte byt = b;
+                for (int i = 0; i < 8; i++)
+                {
+                    if ((byt & 0x01) > 0)
                     {
-                        if (b == 48)
-                            bitsInBytes.Add(0x00);
-                        else if (b == 49)
-                            bitsInBytes.Add(0x01);
-                        else
-                        {
-                            if (plugin != null)
-                                plugin.GuiLogMessage(String.Format(Resources.InputTypeWarning, Resources.InputTypeBinary), NotificationLevel.Warning);
-                        }
-                            
+                        bitsInBytes.Add(1);
                     }
-                    break;
-                case KeccakSettings.InputTypeEnum.Hexadecimal:
-                    int i, j;
-                    for (i = j = 0; i < bytes.Length; i += 2, j = i) {
-
-                        if (i + 1 < bytes.Length)
-                            j++;
-                        
-                        for (; j >= i; j--)
-                        {
-                            switch(bytes[j])
-                            {
-                                case 48: // 0
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); break;
-                                case 49: // 1
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); break;
-                                case 50: // 2
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); break;
-                                case 51: // 3
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); break;
-                                case 52: // 4
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); break;
-                                case 53: // 5
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); break;
-                                case 54: // 6
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); break;
-                                case 55: // 7
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); break;
-                                case 56: // 8
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); break;
-                                case 57: // 9
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
-                                case 65: // A
-                                case 97: // a
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); break;
-                                case 66: // B
-                                case 98: // b
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); break;
-                                case 67: // C
-                                case 99: // c
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
-                                case 68:  // D
-                                case 100: // d
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
-                                case 69:  // E
-                                case 101: // e
-                                    bitsInBytes.Add(0x00); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
-                                case 70:  // F
-                                case 102: // f
-                                    bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); bitsInBytes.Add(0x01); break;
-                                default:
-                                    if (plugin != null)
-                                        plugin.GuiLogMessage(String.Format(Resources.InputTypeWarning, Resources.InputTypeHexadecimal), NotificationLevel.Warning); break;
-                            }
-                        }                            
-                    }
-                    break;
-                default:
-                case KeccakSettings.InputTypeEnum.Text:
-                    foreach (byte b in bytes)
+                    else
                     {
-                        /* convert each byte into a bit-string */
-                        bitString = Convert.ToString(b, 2).PadLeft(8, '0');
-
-                        /* swap every bit to get the right order of bits in memory */
-                        for (int k = 0; k < 8; k++)
-                        {
-                            bitChars[k] = bitString.ElementAt(8 - 1 - k);
-                        }
-
-                        foreach (char c in bitChars)
-                        {
-                            if (c == '0')
-                            {
-                                bitsInBytes.Add(0x00);
-                            }
-                            else if (c == '1')
-                            {
-                                bitsInBytes.Add(0x01);
-                            }
-                        }
+                        bitsInBytes.Add(0);
                     }
-                    break;
+
+                    byt = (byte)(byt >> 1);
+                }
             }
-
             return bitsInBytes.ToArray();
-        }
+        }        
 
         public static byte[] BitArrayToByteArray(byte[] bitsInBytes)
         {

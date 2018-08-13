@@ -861,16 +861,4 @@
   <data name="Bit" xml:space="preserve">
     <value>немного</value>
   </data>
-  <data name="InputTypeBinary" xml:space="preserve">
-    <value>двоичный</value>
-  </data>
-  <data name="InputTypeHexadecimal" xml:space="preserve">
-    <value>шестнадцатеричный</value>
-  </data>
-  <data name="InputTypeText" xml:space="preserve">
-    <value>Текст (UTF-8)</value>
-  </data>
-  <data name="InputTypeWarning" xml:space="preserve">
-    <value>Некоторые входные символы не находятся в выбранном формате {0}.</value>
-  </data>
 </root>

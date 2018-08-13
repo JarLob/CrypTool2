@@ -89,8 +89,7 @@ namespace Cryptool.Plugins.Keccak
 
             /* setup output stream writer */
             CStreamWriter OutputStreamwriter = new CStreamWriter();
-            OutputStream = OutputStreamwriter;
-            OnPropertyChanged("OutputStream");
+            OutputStream = OutputStreamwriter;            
 
             #if _DEBUG_
             /* setup debug stream writer */
@@ -99,8 +98,7 @@ namespace Cryptool.Plugins.Keccak
             StreamWriter debugStreamWriter = new StreamWriter(debugStream);
             debugStreamWriter.AutoFlush = true;     // flush stream every time WriteLine is called
             Console.SetOut(debugStreamWriter);
-            DebugStream = debugStream;
-            OnPropertyChanged("DebugStream");
+            DebugStream = debugStream;            
             #endif
 
             #region get input
@@ -108,23 +106,20 @@ namespace Cryptool.Plugins.Keccak
             /* read input */
             using (CStreamReader reader = InputStream.CreateReader())
             {
-                int bytesRead;
-                byte[] buffer = new byte[128];
-
-                MemoryStream stream = new MemoryStream();
-                BinaryWriter bw = new BinaryWriter(stream);
-                
-                while ((bytesRead = reader.Read(buffer)) > 0)
+                using (MemoryStream stream = new MemoryStream())
                 {
-                    bw.Write(buffer, 0, bytesRead);
+                    using (BinaryWriter bw = new BinaryWriter(stream))
+                    {
+                        int bytesRead;
+                        byte[] buffer = new byte[128];
+                        while ((bytesRead = reader.Read(buffer)) > 0)
+                        {
+                            bw.Write(buffer, 0, bytesRead);
+                        }
+                        input = stream.ToArray();
+                    }
                 }
-
-                bw.Close();
-                //stream.Close(); // TODO test if necessary
-                input = stream.ToArray();
-                OnPropertyChanged("OutputStream");
             }
-
             #endregion
 
             outputLength = settings.OutputLength;
@@ -350,6 +345,7 @@ namespace Cryptool.Plugins.Keccak
             OutputStreamwriter.Close();
 
             #if _DEBUG_
+            OnPropertyChanged("DebugStream");
             /* close debug stream and reset standard output */
             debugStreamWriter.Close();
             Console.SetOut(consoleOut);
@@ -363,9 +359,36 @@ namespace Cryptool.Plugins.Keccak
                     pres.spButtons.Visibility = Visibility.Hidden;
                 }, null);
             }
-
+            OnPropertyChanged("OutputStream");
             ProgressChanged(1, 1);
         }
+
+        /// <summary>
+        /// Copies the array and removes all occurences of
+        /// space, \t, \r, and \n
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        private static byte[] RemoveWhiteSpaces(byte[] bytes)
+        {
+            List<byte> byteList = new List<byte>();
+            foreach (byte b in bytes)
+            {
+                switch (b)
+                {
+                    case (byte)' ':
+                    case (byte)'\t':
+                    case (byte)'\r':
+                    case (byte)'\n':
+                        break;
+                    default:
+                        byteList.Add(b);
+                        break;
+                }
+            }
+            return byteList.ToArray();
+        }
+
 
         #region IPlugin Members
 
@@ -439,10 +462,6 @@ namespace Cryptool.Plugins.Keccak
                 execute = false;
             }        
         }
-
-        // public void Execute()
-        // {
-        // }
 
         /// <summary>
         /// Called once after workflow execution has stopped.

@@ -68,24 +68,7 @@ namespace Cryptool.Plugins.Keccak
         private stateSizeName selectedStateSize = stateSizeName.bits1600;
         private String suffixBits = "";
 
-        public enum InputTypeEnum { Binary, Hexadecimal, Text };
-        private InputTypeEnum inputType;
-
-        #endregion
-
-        [TaskPane("InputTypeCaption", "InputTypeTooltip", null, 0, false, ControlType.ComboBox,
-            new string[] { "InputTypeBinary", "InputTypeHexadecimal", "InputTypeText"})]
-        public int InputType
-        {
-            get
-            {
-                return (int) this.inputType;
-            }
-            set
-            {
-                this.inputType = (InputTypeEnum) value;
-            }
-        }
+        #endregion      
 
         [TaskPane("KECCAKFunctionCaption", "KECCAKFunctionTooltip", null, 1, false, ControlType.ComboBox,
             new string[] { "KeccakFunctionList1", "KeccakFunctionList2", "KeccakFunctionList3",
@@ -97,21 +80,6 @@ namespace Cryptool.Plugins.Keccak
             {
                 this.selectedKeccakFunction = KeccakFunctions[value].name;
                 OnPropertyChanged("KECCAKFunction");
-
-                //if (KeccakFunctions[value].name == keccakFunctionName.Keccak)
-                //{
-                //    if (!manualSettings)
-                //    {
-                //        ManualSettings = true;
-                //    }
-
-                //    SelectedStateSize = (int)stateSizeName.bits1600;
-                //}
-                //else
-                //{
-                //    ManualSettings = false;
-                //}
-
                 SelectedStateSize = (int)stateSizeName.bits1600;
                 OutputLength = KeccakFunctions[value].outputLength;
                 Rate = KeccakFunctions[value].rate;
@@ -120,31 +88,7 @@ namespace Cryptool.Plugins.Keccak
 
                 UpdateTaskPaneVisibility();
             }
-        }
-
-        //[TaskPane("ManualSettingsCaption", "ManualSettingsTooltip", "ParametersCaption", 0, false, ControlType.CheckBox)]
-        //public bool ManualSettings
-        //{
-        //    get { return this.manualSettings; }
-        //    set
-        //    {
-        //        if (manualSettings != value)
-        //        {
-        //            manualSettings = value;
-        //            UpdateTaskPaneVisibility();
-        //            OnPropertyChanged("ManualSettings");
-
-        //            if (manualSettings)
-        //            {
-        //                KECCAKFunction = (int)keccakFunctionName.Keccak;
-        //            }
-        //            else
-        //            {
-        //                KECCAKFunction = (int)keccakFunctionName.Keccak256;
-        //            }
-        //        }
-        //    }
-        //}        
+        }      
 
         #region variable parameters settings
 
@@ -172,19 +116,7 @@ namespace Cryptool.Plugins.Keccak
                     this.stateSize = stateSizes[value];
 
                 OnPropertyChanged("SelectedStateSize");
-                OnPropertyChanged("SelectedStateSizeReadonly");
-
-                //switch (value)
-                //{
-                //    case 0: this.stateSize = 25; /*Rate = 16; Capacity = 9;*/ break;
-                //    case 1: this.stateSize = 50; /*Rate = 32; Capacity = 18;*/ break;
-                //    case 2: this.stateSize = 100; /*Rate = 64; Capacity = 36;*/ break;
-                //    case 3: this.stateSize = 200; /*Rate = 128; Capacity = 72;*/ break;
-                //    case 4: this.stateSize = 400; /*Rate = 256; Capacity = 144;*/ break;
-                //    case 5: this.stateSize = 800; /*Rate = 512; Capacity = 288;*/ break;
-                //    case 6: this.stateSize = 1600; /*Rate = 1024; Capacity = 576;*/ break;
-                //    default: break;
-                //}
+                OnPropertyChanged("SelectedStateSizeReadonly");           
             }
         }
 
