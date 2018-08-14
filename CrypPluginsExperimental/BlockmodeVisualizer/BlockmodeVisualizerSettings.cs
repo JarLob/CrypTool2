@@ -15,7 +15,6 @@
 */
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using BlockmodeVisualizer;
 using Cryptool.PluginBase;
@@ -112,7 +111,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                     ShowSettingsElement("TagLength");
                     break;
                 default:
-                    throw new InvalidOperationException("should_not_happen_exception");
+                    throw new InvalidOperationException(Properties.Resources.ResourceManager.GetString("should_not_happen_exception".ToString()));
             }
         }
 

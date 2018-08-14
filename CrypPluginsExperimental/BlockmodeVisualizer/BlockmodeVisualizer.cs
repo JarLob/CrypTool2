@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2018 Olaf Versteeg <olaf.42.versteeg@gmail.com>
+   Copyright 2018 Olaf Versteeg <olaf.versteeg@cryptool.org>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Controls;
 using BlockmodeVisualizer;
@@ -29,7 +27,7 @@ using Cryptool.PluginBase.Miscellaneous;
 
 namespace Cryptool.Plugins.BlockmodeVisualizer
 {
-    [Author("Olaf Versteeg", "olaf.42.versteeg@gmail.com", "University of Kassel",
+    [Author("Olaf Versteeg", "olaf.versteeg@cryptool.org", "University of Kassel",
         "http://www.uni-kassel.de/eecs/en/homepage.html")]
     [PluginInfo("Cryptool.Plugins.BlockmodeVisualizer.Properties.Resources", "plugin_caption", "plugin_tooltip",
         "BlockmodeVisualizer/userdoc.xml", "BlockmodeVisualizer/Images/icon.png")]
@@ -42,9 +40,11 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         private BVPresentation presentation;
 
         // Constants
-        private const string KEY = "key";
-        private const string IV = "iv";
-        private const string FAIL = "authentication_error";
+        private readonly string INPUT = "input";
+        private readonly string ASSOCIATED_DATA = "ad";
+        private readonly string KEY = "key";
+        private readonly string INITIALIZATION_VECTOR = "iv";
+        private readonly string FAIL = Properties.Resources.ResourceManager.GetString("authentication_error".ToString());
 
         // Blockcipher attributes
         private string ciphername;
@@ -91,7 +91,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// Provide plugin-related parameters (per instance) or return null.
         /// </summary>
         public ISettings Settings {
-            get {return settings; }
+            get { return settings; }
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             // If no blockcipher has been selected, the inputs will be simply passed to the outputs...
             if (Blockcipher == null)
             {
-                GuiLogMessage("missing_blockcipher_warning", NotificationLevel.Warning);
+                GuiLogMessage(Properties.Resources.ResourceManager.GetString("missing_blockcipher_warning".ToString()), NotificationLevel.Warning);
                 WriteOutputs(BlockCipherHelper.StreamToByteArray(TextInput), TagInput);
             }
             // ...otherwise run the selected mode of operation.
@@ -167,7 +167,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                         GCM(BlockCipherHelper.StreamToByteArray(TextInput), BlockCipherHelper.StreamToByteArray(AssociatedData), TagInput, Key, InitializationVector, settings.TagLength);
                         break;
                     default:
-                        throw new InvalidOperationException("should_not_happen_exception");
+                        throw new InvalidOperationException(Properties.Resources.ResourceManager.GetString("should_not_happen_exception".ToString()));
                 }
             }
 
@@ -221,7 +221,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             }
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // Set progress bar to 10%.
             ProgressChanged(0.1, 1);
@@ -266,7 +266,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         private void CBC(byte[] input, byte[] key, byte[] iv)
         {
             // Get result for regular CBC mode.
-            byte[] result = CBC(input, key, iv, false);
+            byte[] result = CBC(input, key, iv, false, 0);
 
             // Pass result to output.
             WriteOutputs(result, null);
@@ -279,12 +279,12 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="key">Key for the selected blockcipher.</param>
         /// <param name="iv">Initialization vector for the first block.</param>
         /// <param name="mac">Indicates if CBC is used as mac algorithm.</param>
+        /// <param name="t">The length of the message authentication code.</param>
         /// <returns>The encrypted or decrypted input or the message authentication code.</returns>
-        private byte[] CBC(byte[] input, byte[] key, byte[] iv, bool mac)
+        private byte[] CBC(byte[] input, byte[] key, byte[] iv, bool mac, int t)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
-
+            byte[] result = (byte[]) input.Clone();
+            
             // Append selected padding for encryption if necessary.
             if (settings.Action == Actions.ENCRYPTION && !mac)
             {
@@ -292,10 +292,11 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             }
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // Check iv length. Shorten or pad if necessary.
-            iv = CheckLength(iv, blocksize, IV);
+            if(iv == null) iv = new byte[blocksize];
+            iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Set progress bar to 10%.
             if (!mac) ProgressChanged(0.1, 1);
@@ -334,8 +335,8 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                 result = BlockCipherHelper.StripPadding(result, settings.Padding, blocksize);
             }
 
-            // For CBC-MAC only the last block will be used.
-            if (mac) result = LSB(result, blocksize);
+            // For CBC-MAC only the first t byte of the last block will be used.
+            if (mac) result = MSB(LSB(result, blocksize), t);
 
             // Return result for further 
             return result;
@@ -350,14 +351,13 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="s">The length of the data segment to be used for feedback.</param>
         private void CFB(byte[] input, byte[] key, byte[] iv, int s)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
+            byte[] result = (byte[])input.Clone();
 
             // Ensure that s is not greater than the blocksize.
             if (s > blocksize)
             {
                 s %= blocksize;
-                string message = "data_segment_overflow_warning";
+                string message = Properties.Resources.ResourceManager.GetString("data_segment_overflow_warning".ToString());
                 GuiLogMessage(message + s, NotificationLevel.Warning);
             }
 
@@ -368,10 +368,10 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             }
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // Check iv length. Shorten or pad if necessary.
-            iv = CheckLength(iv, blocksize, IV);
+            iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Set progress bar to 10%.
             ProgressChanged(0.1, 1);
@@ -422,14 +422,13 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="iv">Initialization vector for the first block.</param>
         private void OFB(byte[] input, byte[] key, byte[] iv)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
+            byte[] result = (byte[])input.Clone();
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // Check iv length. Shorten or pad if necessary.
-            iv = CheckLength(iv, blocksize, IV);
+            iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Set progress bar to 10%.
             ProgressChanged(0.1, 1);
@@ -484,14 +483,13 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <returns>The CTR computed input</returns>
         private byte[] CTR(byte[] input, byte[] key, byte[] iv, bool ae, int counterLength)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
+            byte[] result = (byte[])input.Clone();
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // Check iv length. Shorten or pad if necessary.
-            iv = CheckLength(iv, blocksize, IV);
+            iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Set progress bar to 10%.
             ProgressChanged(0.1, 1);
@@ -531,22 +529,21 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="iv">Initialization vector for the multiplication.</param>
         private void XTS(byte[] input, byte[] key, byte[] iv)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
+            byte[] result = (byte[])input.Clone();
 
             // Encryption or Decryption is only possible, if the length of the input is at least equals the blocksize.
             if (result.Length < blocksize)
             {
-                GuiLogMessage("short_input_warning", NotificationLevel.Warning);
+                GuiLogMessage(Properties.Resources.ResourceManager.GetString("short_input_warning".ToString()), NotificationLevel.Warning);
                 WriteOutputs(null, null);
                 return;
             }
 
             // Check key length. Shorten or pad if necessary. (XTS needs a key twice the length!)
-            key = CheckLength(key, 2 * keysize, KEY);
+            key = CheckLength(key, 2 * keysize, 2 * keysize, KEY);
 
             // Check iv length. Shorten or pad if necessary.
-            iv = CheckLength(iv, blocksize, IV);
+            iv = CheckLength(iv, blocksize, blocksize, INITIALIZATION_VECTOR);
 
             // Set progress bar to 10%.
             ProgressChanged(0.1, 1);
@@ -653,8 +650,104 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="t">The length of the message tag to be calculated.</param>
         private void CCM(byte[] input, byte[] a, byte[] tag, byte[] key, byte[] iv, int t)
         {
-            byte[] result = CBC(input, key, iv, true);
-            WriteOutputs(result, null);
+            // Check iv length. Shorten or pad if necessary.
+            iv = CheckLength(iv, blocksize / 2 - 1, blocksize - 3, INITIALIZATION_VECTOR);
+
+            // CCM's parameter "q" is determined by the length of the iv.
+            int q = blocksize - (iv.Length + 1);
+
+            // Check the length of the input text. Shorten if necessary.
+            input = CheckLength(input, 0, Math.Pow(2, 8 * q), INPUT);
+            byte[] result = (byte[]) input.Clone();
+
+            // Check the length of the associated data. Shorten, if necessary.
+            a = CheckLength(a, 0, Math.Pow(2, 4 * blocksize), ASSOCIATED_DATA);
+
+            // Check the length for the tag to be calculated
+            if (t > blocksize) t %= blocksize;
+            if (t < 4) t = 4;
+
+            // Encrypt/Decrypt
+            // Create initial counter for encryption or decryption
+            byte[] initialCounter = new byte[blocksize];
+            initialCounter[0] = (byte) (q - 1);
+            Array.Copy(iv, 0, initialCounter, 1, iv.Length);
+
+            // Encrypt the initial counter for the final XOR for the message tag.
+            byte[] finalXorOperand = Blockcipher.Encrypt(initialCounter, key);
+            initialCounter = INC(initialCounter, q);
+
+            result = CTR(result, key, initialCounter, true, q);
+
+            // Calculate authentication tag
+            // Get plaintext for creating the tag
+            byte[] plaintext = settings.Action == Actions.ENCRYPTION ? input : result;
+
+            // Create input for the CBC-MAC
+            byte[] cbcmacInput = new byte[blocksize];
+            // Flag for associated data
+            if (a.Length > 0) cbcmacInput[0] = 64;
+            // Tag length
+            cbcmacInput[0] += (byte) (8 * (t / 2 - 1));
+            // CCM's parameter "q"
+            cbcmacInput[0] += (byte) (q - 1);
+            // Initialization vector
+            Array.Copy(iv, 0, cbcmacInput, 1, iv.Length);
+            // CCM's parameter "Q"
+            byte[] Q = IntToByteArray(plaintext.Length, q);
+            Array.Copy(Q, 0, cbcmacInput, blocksize - q, Q.Length);
+
+            // Append formatted associated data if existing.
+            if (a.Length > 0)
+            {
+                byte[] aFormatted;
+
+                // Create encoding of a.Length
+                if (a.Length < Math.Pow(2, blocksize) - Math.Pow(2, blocksize / 2))
+                {
+                    aFormatted = IntToByteArray(a.Length, blocksize / 8).ToArray();
+                } else if (a.Length < Math.Pow(2, 2 * blocksize))
+                {
+                    aFormatted = new byte[blocksize / 4 + 2];
+                    aFormatted[0] = 0xff;
+                    aFormatted[1] = 0xfe;
+                    Array.Copy(IntToByteArray(a.Length, blocksize / 4), 0, aFormatted, 2, blocksize / 4);
+                }
+                else
+                {
+                    aFormatted = new byte[blocksize / 2 + 2];
+                    aFormatted[0] = 0xff;
+                    aFormatted[1] = 0xff;
+                    Array.Copy(IntToByteArray(a.Length, blocksize / 2), 0, aFormatted, 2, blocksize / 2);
+                }
+
+                // Append a and pad with zeros if necessary
+                aFormatted = aFormatted.Concat(a).ToArray();
+                aFormatted = BlockCipherHelper.AppendPadding(aFormatted, BlockCipherHelper.PaddingType.Zeros, blocksize);
+
+                cbcmacInput = cbcmacInput.Concat(aFormatted).ToArray();
+            }
+
+            // Append formatted plaintext
+            plaintext = BlockCipherHelper.AppendPadding(plaintext, BlockCipherHelper.PaddingType.Zeros, blocksize);
+            cbcmacInput = cbcmacInput.Concat(plaintext).ToArray();
+
+            // Calculate message authentication tag
+            byte[] ownTag = XOR(CBC(cbcmacInput, key, null, true, t), finalXorOperand);
+            
+            // Set progress bar to 90%
+            ProgressChanged(0.9, 1);
+
+            // For encryption pass ciphertext and authentication tag to output.
+            if (settings.Action == Actions.ENCRYPTION)
+            {
+                WriteOutputs(result, ownTag);
+            }
+            // For decryption verify tag and return FAIL or the plaintext
+            else
+            {
+                WriteOutputs(Equals(tag, ownTag) ? result : Encoding.UTF8.GetBytes(FAIL), null);
+            }
         }
 
         /// <summary>
@@ -668,19 +761,18 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <param name="t">The length of the message tag to be calculated.</param>
         private void GCM(byte[] input, byte[] a, byte[] tag, byte[] key, byte[] iv, int t)
         {
-            byte[] result = new byte[input.Length];
-            Array.Copy(input, result, input.Length);
+            byte[] result = (byte[])input.Clone();
 
             // Ensure that t is not greater than the blocksize.
             if (t > blocksize)
             {
                 t %= blocksize;
-                string message = "tag_length_overflow_warning";
+                string message = Properties.Resources.ResourceManager.GetString("tag_length_overflow_warning".ToString());
                 GuiLogMessage(message + t, NotificationLevel.Warning);
             }
 
             // Check key length. Shorten or pad if necessary.
-            key = CheckLength(key, keysize, KEY);
+            key = CheckLength(key, keysize, keysize, KEY);
 
             // GCM has special treatment of the iv
             // Append with zeroes and a single 1 if length is exactly 3/4 the blocksize.
@@ -716,10 +808,10 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
             int aLength = a.Length * 8;
             int ciphertextLength = ciphertext.Length * 8;
             a = BlockCipherHelper.AppendPadding(a, BlockCipherHelper.PaddingType.Zeros, blocksize);
-            byte[] ciphertext_padded = BlockCipherHelper.AppendPadding(ciphertext, BlockCipherHelper.PaddingType.Zeros, blocksize);
+            byte[] ciphertextPadded = BlockCipherHelper.AppendPadding(ciphertext, BlockCipherHelper.PaddingType.Zeros, blocksize);
 
             // Concat a, ciphertext, length of a and lengt of ciphertext
-            byte[] ghashInput = a.Concat(ciphertext_padded).ToArray();
+            byte[] ghashInput = a.Concat(ciphertextPadded).ToArray();
             ghashInput = ghashInput.Concat(IntToByteArray(aLength, blocksize / 2)).ToArray();
             ghashInput = ghashInput.Concat(IntToByteArray(ciphertextLength, blocksize / 2)).ToArray();
 
@@ -781,33 +873,32 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// Checks if the given byte array's length is equals to the given length. Shortens or pads with zeroes if necessary.
         /// </summary>
         /// <param name="input">Typically a key or an initialization vector.</param>
-        /// <param name="length">The target length of the given byte array.</param>
-        /// <param name="inputName">The name of the byte array for generating the correct message.</param>
-        private byte[] CheckLength(byte[] input, int length, string inputName)
+        /// <param name="minLength">The minimum length of the given byte array.</param>
+        /// <param name="maxLength">The maximum length of the given byte arry.</param>
+        /// <param name="inputName">The name of the byte array for generating the correct warning.</param>
+        private byte[] CheckLength(byte[] input, double minLength, double maxLength, string inputName)
         {
             // Input is too short
-            if (input.Length < length)
+            if (input.Length < minLength)
             {
-                byte[] result = input.Concat(new byte[length - input.Length]).ToArray();
+                byte[] result = input.Concat(new byte[(int) minLength - input.Length]).ToArray();
 
                 // Print warning and actual input for user.
-                string message = null;
-                if (inputName.Equals(KEY)) message = "short_key_warning";
-                if (inputName.Equals(IV)) message = "short_iv_warning";
+                string resource = "short_" + inputName + "_warning";
+                string message = Properties.Resources.ResourceManager.GetString(resource);
                 GuiLogMessage(message + ByteArrayToHexString(result), NotificationLevel.Warning);
                 return result;
             }
 
             // Input is too long
-            if (input.Length > length)
+            if (input.Length > maxLength)
             {
-                byte[] result = new byte[length];
-                Array.Copy(input, result, length);
+                byte[] result = new byte[(int) maxLength];
+                Array.Copy(input, result, (int) maxLength);
 
                 // Print warning and actual input for user.
-                string message = null;
-                if (inputName.Equals(KEY)) message = "long_key_warning";
-                if (inputName.Equals(IV)) message = "long_iv_warning";
+                string resource = "long_" + inputName + "_warning";
+                string message = Properties.Resources.ResourceManager.GetString(resource);
                 GuiLogMessage(message + ByteArrayToHexString(result), NotificationLevel.Warning);
                 return result;
             }
@@ -946,7 +1037,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
                 // Check for carry in current byte and add it to following byte.
                 if ((input[i] & 0x01) != 0)
                 {
-                    result[i + 1] += 0xE0;
+                    result[i + 1] += 0x80;
                 }
                 result[i] = input[i] >>= 1;
             }
@@ -956,26 +1047,26 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <summary>
         /// Multiplicates two byte arrays in GF(2^blocksize).
         /// </summary>
-        /// <param name="a">The multiplicand.</param>
+        /// <param name="x">The multiplicand.</param>
         /// <param name="H">The GHASH constant.</param>
-        /// <returns>(a * H) mod 2^blocksize.</returns>
-        private byte[] GF_BYTE_MULT(byte[] a, byte[] H)
+        /// <returns>(x * H) mod 2^blocksize.</returns>
+        private byte[] GF_BYTE_MULT(byte[] x, byte[] H)
         {
             byte[] result = new byte[blocksize];
-            byte[] temp = a;
-
+            byte[] temp = (byte[]) H.Clone();
+            
             for (int i = 0; i < blocksize; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
                     // Recalculate result
-                    if ((H[i] & (1 << (7 - j))) != 0)
+                    if ((x[i] & 1 << (7 - j)) != 0)
                     {
                         result = XOR(result, temp);
                     }
 
                     // Recalculate temp
-                    if ((temp[blocksize - 1] & 0x1) == 0)
+                    if ((temp[blocksize - 1] & 0x01) == 0)
                     {
                         temp = ShiftRightByOneBit(temp);
                     }
@@ -998,8 +1089,8 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         /// <returns>The compressed input.</returns>
         private byte[] GHASH(byte[] input, byte[] key)
         {
-            byte[] temp = new byte[blocksize];
             byte[] result = new byte[blocksize];
+            byte[] temp = new byte[blocksize];
             byte[] H = Blockcipher.Encrypt(result, key);
 
             int numberOfBlocks = input.Length / blocksize;
@@ -1048,7 +1139,7 @@ namespace Cryptool.Plugins.BlockmodeVisualizer
         private bool Equals(byte[] a, byte[] b)
         {
             if (a == null && b != null || a != null && b == null) return false;
-            if (a == null && b == null) return true;
+            if (a == null) return true;
             if (a.Length != b.Length) return false;
 
             for (int i = 0; i < a.Length; i++)
