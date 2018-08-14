@@ -879,7 +879,8 @@ namespace Cryptool.Plugins.HKDFSHA256
                                     renderState5(prgress_step, i);
                                     WaitHandle.WaitAny(waitHandles);
                                 }
-                                Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
+                                //DEBUG
+                                //Console.WriteLine("Handle fired: pres.Prev: " + pres.Prev + " pres.Next: " + pres.Next);
                                 if (pres.Prev)
                                 {
                                     pres.Prev = false;
@@ -1839,8 +1840,8 @@ namespace Cryptool.Plugins.HKDFSHA256
         /// </summary>
         public void Execute()
         {
-
-            Console.WriteLine("Display Pres:" + settings.DisplayPres);
+            //DEBUG
+            //Console.WriteLine("Display Pres:" + settings.DisplayPres);
 
             //Implementation with threads: this approach handles an inputchange in a better way
             if (workerThread == null)
