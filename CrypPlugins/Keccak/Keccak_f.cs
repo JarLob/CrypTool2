@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Windows;
 using Keccak.Properties;
+using System.IO;
 
 namespace Cryptool.Plugins.Keccak
 {
@@ -31,6 +32,8 @@ namespace Cryptool.Plugins.Keccak
         private byte[][][] lanes;
 
         private Keccak plugin;
+
+        private StreamWriter DebugWriter = null;
 
         /* translation vectors for rho */
         private int[][] translationVectors = new int[][] 
@@ -84,7 +87,7 @@ namespace Cryptool.Plugins.Keccak
         
         #endregion
 
-        public Keccak_f(int stateSize, ref byte[] state, ref KeccakPres pres, Keccak plugin)
+        public Keccak_f(int stateSize, ref byte[] state, ref KeccakPres pres, Keccak plugin, StreamWriter writer)
         {
             Debug.Assert(stateSize % 25 == 0);
             z = stateSize / 25;                     // length of a lane
@@ -95,6 +98,7 @@ namespace Cryptool.Plugins.Keccak
             this.pres = pres;
             presActive = false;
             this.plugin = plugin;
+            this.DebugWriter = writer;
         }
 
         public void Permute(ref byte[] state, int progressionStepCounter, int progressionSteps)
@@ -102,17 +106,17 @@ namespace Cryptool.Plugins.Keccak
             /* the order of steps is taken from the pseudo-code description at http://keccak.noekeon.org/specs_summary.html (accessed on 2013-02-01) */
 
             #if _DEBUG_
-            Console.WriteLine("#Keccak-f: start Keccak-f[{0}] with {1} rounds", z * 25, rounds);
-            Console.WriteLine("#Keccak-f: state before permutation:");
-            KeccakHashFunction.PrintBits(state, z);
-            KeccakHashFunction.PrintBytes(state, z);
+            DebugWriter.Write("#Keccak-f: start Keccak-f[{0}] with {1} rounds", z * 25, rounds);
+            DebugWriter.Write("#Keccak-f: state before permutation:");
+            KeccakHashFunction.PrintBits(state, z, DebugWriter);
+            KeccakHashFunction.PrintBytes(state, z, DebugWriter);
             #endif
 
             for (int i = 0; i < rounds; i++)
             {
 #if _VERBOSE_
-                Console.WriteLine(Environment.NewLine + "Round {0}", i + 1);
-                Console.WriteLine("State before Keccak-f[{0}]", z * 25);
+                OutWriter.WriteLine(Environment.NewLine + "Round {0}", i + 1);
+                OutWriter.WriteLine("State before Keccak-f[{0}]", z * 25);
                 KeccakHashFunction.PrintBits(state, z);
                 KeccakHashFunction.PrintBytes(state, z);
 #endif
@@ -367,9 +371,9 @@ namespace Cryptool.Plugins.Keccak
             }
 
             #if _DEBUG_
-            Console.WriteLine(Environment.NewLine + "#Keccak-f: state after permutation");
-            KeccakHashFunction.PrintBits(state, z);
-            KeccakHashFunction.PrintBytes(state, z);
+            DebugWriter.WriteLine(Environment.NewLine + "#Keccak-f: state after permutation");
+            KeccakHashFunction.PrintBits(state, z, DebugWriter);
+            KeccakHashFunction.PrintBytes(state, z, DebugWriter);
             #endif
 
         }

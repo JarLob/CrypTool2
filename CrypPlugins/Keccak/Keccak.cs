@@ -64,15 +64,12 @@ namespace Cryptool.Plugins.Keccak
             set;
         }
 
-        #if _DEBUG_
         [PropertyInfo(Direction.OutputData, "DebugStreamCaption", "DebugDataStreamTooltip", true)]
         public ICryptoolStream DebugStream
         {
             get;
             set;
         }
-        #endif
-
 
         #endregion
 
@@ -91,15 +88,11 @@ namespace Cryptool.Plugins.Keccak
             CStreamWriter OutputStreamwriter = new CStreamWriter();
             OutputStream = OutputStreamwriter;            
 
-            #if _DEBUG_
-            /* setup debug stream writer */
-            TextWriter consoleOut = Console.Out;    // save the standard output
+
             CStreamWriter debugStream = new CStreamWriter();
             StreamWriter debugStreamWriter = new StreamWriter(debugStream);
             debugStreamWriter.AutoFlush = true;     // flush stream every time WriteLine is called
-            Console.SetOut(debugStreamWriter);
             DebugStream = debugStream;            
-            #endif
 
             #region get input
 
@@ -338,18 +331,16 @@ namespace Cryptool.Plugins.Keccak
             #endregion
 
             /* hash input */
-            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this, settings);
+            output = KeccakHashFunction.Hash(input, outputLength, rate, capacity, ref pres, this, settings, debugStreamWriter);
 
             /* write output */
             OutputStreamwriter.Write(output);
+            OnPropertyChanged("OutputStream");
             OutputStreamwriter.Close();
 
-            #if _DEBUG_
-            OnPropertyChanged("DebugStream");
-            /* close debug stream and reset standard output */
-            debugStreamWriter.Close();
-            Console.SetOut(consoleOut);
-            #endif
+            /* write debug output */
+            OnPropertyChanged("DebugStream");           
+            debugStreamWriter.Close();            
             
             /* hide button panel */
             if (pres.IsVisible)
@@ -359,7 +350,7 @@ namespace Cryptool.Plugins.Keccak
                     pres.spButtons.Visibility = Visibility.Hidden;
                 }, null);
             }
-            OnPropertyChanged("OutputStream");
+            
             ProgressChanged(1, 1);
         }
 

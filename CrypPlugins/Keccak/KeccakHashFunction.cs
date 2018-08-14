@@ -11,21 +11,22 @@ using System.Windows;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.PluginBase;
 using Keccak.Properties;
+using System.IO;
 
 namespace Cryptool.Plugins.Keccak
 {
     public static class KeccakHashFunction
     {
 
-        public static byte[] Hash(byte[] input, int outputLength, int rate, int capacity, ref KeccakPres pres, Keccak plugin, KeccakSettings settings)
+        public static byte[] Hash(byte[] input, int outputLength, int rate, int capacity, ref KeccakPres pres, Keccak plugin, KeccakSettings settings, StreamWriter debugWriter)
         {
 #if _DEBUG_
-            Console.WriteLine("#Keccak: running Keccak with the following parameters:");
-            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "output length", outputLength));
-            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "state size", rate + capacity));
-            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "bit rate", rate));
-            Console.WriteLine(String.Format("#Keccak: {0}: {1} bits", "capacity", capacity));
-            Console.WriteLine();
+            debugWriter.WriteLine("#Keccak: running Keccak with the following parameters:");
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "output length", outputLength));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "state size", rate + capacity));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "bit rate", rate));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "capacity", capacity));
+            debugWriter.WriteLine();
 #endif
 
 
@@ -39,7 +40,7 @@ namespace Cryptool.Plugins.Keccak
             int progressionSteps = (int)Math.Ceiling((double)(inputInBits.Length + 8) / rate) + ((int)Math.Ceiling((double)outputLength / rate) - 1);
 
             /* create sponge instance */
-            Sponge sponge = new Sponge(rate, capacity, ref pres, plugin, progressionSteps);
+            Sponge sponge = new Sponge(rate, capacity, ref pres, plugin, progressionSteps, debugWriter);
 
             /* absorb input */
             sponge.Absorb(inputInBits);
@@ -52,8 +53,8 @@ namespace Cryptool.Plugins.Keccak
             byte[] output = BitArrayToByteArray(outputInBits);
 
 #if _DEBUG_
-            Console.WriteLine("#Keccak: successfully hashed {0} input bits to {1} output bits!", inputInBits.Length, outputInBits.Length);
-            Console.WriteLine("#Keccak: all work is done!");
+            debugWriter.WriteLine("#Keccak: successfully hashed {0} input bits to {1} output bits!", inputInBits.Length, outputInBits.Length);
+            debugWriter.WriteLine("#Keccak: all work is done!");
 #endif
 
 
@@ -104,7 +105,7 @@ namespace Cryptool.Plugins.Keccak
             return hex.ToString();
         }
 
-        public static void PrintByteArray(byte[] bytes)
+        public static void PrintByteArray(byte[] bytes, StreamWriter debugWriter)
         {
             StringBuilder hex = new StringBuilder(bytes.Length * 2);
 
@@ -112,17 +113,17 @@ namespace Cryptool.Plugins.Keccak
             {
                 hex.AppendFormat("{0:x2} ", b);
             }
-            Console.WriteLine(hex.ToString());
-            Console.WriteLine(" - " + bytes.Length + " bytes");
+            debugWriter.WriteLine(hex.ToString());
+            debugWriter.WriteLine(" - " + bytes.Length + " bytes");
         }
 
-        public static void PrintBits(byte[] bytes)
+        public static void PrintBits(byte[] bytes, StreamWriter debugWriter)
         {
             string hexStr = ByteArrayToIntString(bytes);
-            Console.WriteLine(hexStr + " - " + hexStr.Length + " bits");
+            debugWriter.WriteLine(hexStr + " - " + hexStr.Length + " bits");
         }
 
-        public static void PrintBits(byte[] bytes, int laneSize)
+        public static void PrintBits(byte[] bytes, int laneSize, StreamWriter debugWriter)
         {
             /* only print bit state if lane size is small enough*/
             if (laneSize >= 16)
@@ -152,10 +153,10 @@ namespace Cryptool.Plugins.Keccak
 
             hexStr = hex.ToString();
             hex.Clear();
-            Console.WriteLine(hexStr); // + " - " + (hexStr.Length - (j / value)) + " bits");
+            debugWriter.WriteLine(hexStr); // + " - " + (hexStr.Length - (j / value)) + " bits");
         }
 
-        public static void PrintBytes(byte[] bytes, int laneSize)
+        public static void PrintBytes(byte[] bytes, int laneSize, StreamWriter debugWriter)
         {
             /* only print byte state if lane size is large enough*/
             if (laneSize < 16 && laneSize % 8 != 0)
@@ -187,14 +188,14 @@ namespace Cryptool.Plugins.Keccak
                 bitString.Clear();
 
             }
-            Console.WriteLine(binaryBytes.ToString());
+            debugWriter.WriteLine(binaryBytes.ToString());
         }
 
         /** 
          * returns a hex string presentation of the byte array `bytes`
          * the parameter `laneSize` determines after how many bytes a line break is inserted           
          */
-        public static string GetByteArrayAsString(byte[] bytes, int laneSize)
+        public static string GetByteArrayAsString(byte[] bytes, int laneSize, StreamWriter debugWriter)
         {          
             /* get bit state if lane size is small */
             if (laneSize < 16) // && laneSize % 8 != 0)
@@ -249,7 +250,7 @@ namespace Cryptool.Plugins.Keccak
                     }
 
                     binaryBytes.AppendFormat("{0:X2} ", Convert.ToByte(new string(bitChars), 2));
-                    Console.WriteLine(new string(bitChars));               
+                    debugWriter.WriteLine(new string(bitChars));               
                     bitString.Clear();
                 }
 

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Windows.Threading;
 using System.Windows;
 using Keccak.Properties;
+using System.IO;
 
 namespace Cryptool.Plugins.Keccak
 {
@@ -26,9 +27,11 @@ namespace Cryptool.Plugins.Keccak
 
         private int[] widthOfPermutation = { 25, 50, 100, 200, 400, 800, 1600 };
 
+        private StreamWriter DebugWriter = null;
+
         #endregion
 
-        public Sponge(int rate, int capacity, ref KeccakPres pres, Keccak plugin, int progressionSteps)
+        public Sponge(int rate, int capacity, ref KeccakPres pres, Keccak plugin, int progressionSteps, StreamWriter writer)
         {
             Debug.Assert(rate > 0);
             Debug.Assert(widthOfPermutation.Contains(rate + capacity));
@@ -37,12 +40,13 @@ namespace Cryptool.Plugins.Keccak
             this.capacity = capacity;
             laneSize = (rate + capacity) / 25;
 
-            keccak_f = new Keccak_f(capacity + rate, ref state, ref pres, plugin);
+            keccak_f = new Keccak_f(capacity + rate, ref state, ref pres, plugin, writer);
 
             state = new byte[capacity + rate];
             this.pres = pres;
             this.plugin = plugin;
             this.progressionSteps = progressionSteps;
+            this.DebugWriter = writer;
         }
 
         public void Absorb(byte[] input)
@@ -85,10 +89,10 @@ namespace Cryptool.Plugins.Keccak
             #endregion
 
             #if _DEBUG_
-            Console.WriteLine("#Sponge: the input of length {0} bits is padded to {1} bits" + Environment.NewLine +
+            DebugWriter.WriteLine("#Sponge: the input of length {0} bits is padded to {1} bits" + Environment.NewLine +
                 "#Sponge: the padded input is splitted into {2} block(s) of size {3} bit" + Environment.NewLine, 
                 input.Length, paddedInputBits.Length, inputBlocks.Length, inputBlocks[0].Length);
-            Console.WriteLine("#Sponge: begin absorbing phase");            
+            DebugWriter.WriteLine("#Sponge: begin absorbing phase");            
             #endif
             int blocksCounter = 1;
             progressionStepCounter = 0;
@@ -105,14 +109,14 @@ namespace Cryptool.Plugins.Keccak
             foreach (byte[] block in inputBlocks)
             {             
                 #if _DEBUG_
-                Console.WriteLine("#Sponge: XORing input block #{0} on state" + Environment.NewLine, blocksCounter);                
+                DebugWriter.WriteLine("#Sponge: XORing input block #{0} on state" + Environment.NewLine, blocksCounter);                
                 #endif                           
 
                 #region presentation absorbing phase
                 if (pres.IsVisible && !pres.skipPresentation)
                 {
-                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize);
-                    string blockStr = KeccakHashFunction.GetByteArrayAsString(block, laneSize);
+                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize, DebugWriter);
+                    string blockStr = KeccakHashFunction.GetByteArrayAsString(block, laneSize, DebugWriter);
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -151,7 +155,7 @@ namespace Cryptool.Plugins.Keccak
                 #region presentation absorbing phase
                 if (pres.IsVisible && !pres.skipPresentation)
                 {
-                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize);
+                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize, DebugWriter);
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {                        
@@ -189,7 +193,7 @@ namespace Cryptool.Plugins.Keccak
             }
 
             #if _DEBUG_
-            Console.WriteLine(Environment.NewLine + "#Sponge: absorbing done!");
+            DebugWriter.WriteLine(Environment.NewLine + "#Sponge: absorbing done!");
             blocksCounter++;
             #endif
         }
@@ -199,14 +203,14 @@ namespace Cryptool.Plugins.Keccak
             byte[] output = new byte[outputLength];
 
             #if _DEBUG_
-            Console.WriteLine(Environment.NewLine + "#Sponge: begin squeezing phase");
+            DebugWriter.WriteLine(Environment.NewLine + "#Sponge: begin squeezing phase");
             #endif
 
             if (outputLength <= rate)
             {
                 #if _DEBUG_
-                Console.WriteLine("#Sponge: the output length is smaller or equal to the bit rate size ({0} <= {1})", outputLength, rate);
-                Console.WriteLine("#Sponge: -> squeeze output from state");
+                DebugWriter.WriteLine("#Sponge: the output length is smaller or equal to the bit rate size ({0} <= {1})", outputLength, rate);
+                DebugWriter.WriteLine("#Sponge: -> squeeze output from state");
                 #endif
 
                 /* append `outputLength` bits of the state to the output */
@@ -225,8 +229,8 @@ namespace Cryptool.Plugins.Keccak
 
                 if (pres.IsVisible && !pres.skipPresentation)
                 {
-                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize);
-                    string outputStr = KeccakHashFunction.GetByteArrayAsString(output, laneSize);
+                    string stateStr = KeccakHashFunction.GetByteArrayAsString(state, laneSize, DebugWriter);
+                    string outputStr = KeccakHashFunction.GetByteArrayAsString(output, laneSize, DebugWriter);
 
                     pres.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
@@ -251,8 +255,8 @@ namespace Cryptool.Plugins.Keccak
 
                 #if _DEBUG_
                 int squeezingRounds = remainingOutput % rate == 0 ? (int)(remainingOutput / rate - 1) : (remainingOutput / rate);
-                Console.WriteLine("#Sponge: the output length is larger than the bit rate ({0} > {1})", outputLength, rate);
-                Console.WriteLine("#Sponge: -> squeeze output from state iteratively ({0} iteration(s) required)" + Environment.NewLine, squeezingRounds);
+                DebugWriter.WriteLine("#Sponge: the output length is larger than the bit rate ({0} > {1})", outputLength, rate);
+                DebugWriter.WriteLine("#Sponge: -> squeeze output from state iteratively ({0} iteration(s) required)" + Environment.NewLine, squeezingRounds);
                 #endif
 
                 /* append size of `rate` bits of the state to the output */
@@ -261,7 +265,7 @@ namespace Cryptool.Plugins.Keccak
                     Array.Copy(state, 0, output, i++ * rate, rate);
 
                     #if _DEBUG_
-                    Console.WriteLine("#Sponge: squeeze iteration #{0}" + Environment.NewLine, i);
+                    DebugWriter.WriteLine("#Sponge: squeeze iteration #{0}" + Environment.NewLine, i);
                     #endif
                     
                     remainingOutput -= rate;
@@ -279,7 +283,7 @@ namespace Cryptool.Plugins.Keccak
             }
 
             #if _DEBUG_
-            Console.WriteLine("#Sponge: squeezing done!" + Environment.NewLine);
+            DebugWriter.WriteLine("#Sponge: squeezing done!" + Environment.NewLine);
             #endif
 
             if (pres.IsVisible)
