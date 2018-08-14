@@ -22,10 +22,10 @@ namespace Cryptool.Plugins.Keccak
         {
 #if _DEBUG_
             debugWriter.WriteLine("#Keccak: running Keccak with the following parameters:");
-            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "output length", outputLength));
-            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "state size", rate + capacity));
-            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "bit rate", rate));
-            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bits", "capacity", capacity));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bit", "output length", outputLength));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bit", "state size", rate + capacity));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bit", "bit rate", rate));
+            debugWriter.WriteLine(String.Format("#Keccak: {0}: {1} bit", "capacity", capacity));
             debugWriter.WriteLine();
 #endif
 

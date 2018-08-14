@@ -613,7 +613,7 @@ namespace Keccak.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Every block p of the padded input is absorbed by the sponge state with an XOR operation. The input blocks affect the {0} bits of the r-bit part. The c-bit part is not affected. After the absorbtion the Keccak permutation (Keccak-f) is executed to diffuse the state bits. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Every block p of the padded input is absorbed by the sponge state with an XOR operation. The input blocks affect the {0} bit of the r-bit part. The c-bit part is not affected. After the absorbtion the Keccak permutation (Keccak-f) is executed to diffuse the state bits. ähnelt.
         /// </summary>
         internal static string PresAbsorbingPhaseText {
             get {
@@ -757,7 +757,7 @@ namespace Keccak.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die The state of the sponge construction is initialized. Each of the {0} bits of the state is initialized to 0. The state is partitioned into two parts: Capacity ({1} bits) and Bit Rate ({2} bits). You can freely adjust the parameters if you choose the Keccak version &quot;Keccak&quot; in the settings. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The state of the sponge construction is initialized. Each of the {0} bit of the state is initialized to 0. The state is partitioned into two parts: Capacity ({1} bit) and Bit Rate ({2} bit). You can freely adjust the parameters if you choose the Keccak version &quot;Keccak&quot; in the settings. ähnelt.
         /// </summary>
         internal static string PresInitializationText {
             get {
@@ -829,7 +829,7 @@ namespace Keccak.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die To facilitate the presentation of the step mappings, the state is represented as a three-dimensional cube. The row and column size is fixed to 5 bits. The lane size depends on the state size ({1} bits for the selected state size). ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To facilitate the presentation of the step mappings, the state is represented as a three-dimensional cube. The row and column size is fixed to 5 bits. The lane size depends on the state size ({1} bit for the selected state size). ähnelt.
         /// </summary>
         internal static string PresKeccakFStateMapping {
             get {

@@ -89,7 +89,7 @@ namespace Cryptool.Plugins.Keccak
             #endregion
 
             #if _DEBUG_
-            DebugWriter.WriteLine("#Sponge: the input of length {0} bits is padded to {1} bit" + Environment.NewLine +
+            DebugWriter.WriteLine("#Sponge: the input of length {0} bit is padded to {1} bit" + Environment.NewLine +
                 "#Sponge: the padded input is splitted into {2} block(s) of size {3} bit" + Environment.NewLine, 
                 input.Length, paddedInputBits.Length, inputBlocks.Length, inputBlocks[0].Length);
             DebugWriter.WriteLine("#Sponge: begin absorbing phase");            

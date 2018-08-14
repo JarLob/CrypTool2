@@ -247,7 +247,7 @@
     <value>Eingabeblock #{0} wird auf den r-Bit-Anteil des States geXORed. Bei genauerer Betrachtung des States kann man sehen, dass der Capacity-Anteil (unterer Teil des States) nicht verändert wird.</value>
   </data>
   <data name="PresAbsorbingPhaseText" xml:space="preserve">
-    <value>Jeder Block p der gepaddeten Eingabedaten wird mit einer XOR-Operation von dem Sponge-State "aufgesaugt". Die Eingabeblöcke betreffen die {0} Bits des r-bit-Anteils. Der c-bit-Anteil wird nicht beeinflusst. Nach dem Aufsaugen wird die Keccak-Permutation (Keccak-f) ausgeführt, um die State-Bits zu vermischen.</value>
+    <value>Jeder Block p der gepaddeten Eingabedaten wird mit einer XOR-Operation von dem Sponge-State "aufgesaugt". Die Eingabeblöcke betreffen die {0} bit des r-bit-Anteils. Der c-bit-Anteil wird nicht beeinflusst. Nach dem Aufsaugen wird die Keccak-Permutation (Keccak-f) ausgeführt, um die State-Bits zu vermischen.</value>
   </data>
   <data name="PresChiPhaseText" xml:space="preserve">
     <value>Chi iteriert über jede Zeile des States.</value>
@@ -277,7 +277,7 @@
     <value>Länge der gepaddeten Eingabe: {0} Bit = {1} Byte</value>
   </data>
   <data name="PresInitializationText" xml:space="preserve">
-    <value>Der Zustand (State) der Sponge-Konstruktion wird initialisiert. Jedes der {0} State-Bits wird mit dem Wert 0 initialisiert. Der State ist in zwei Teile geteilt: Capacity ({1} Bits) und Bit-Rate ({2} Bits). Sie können diese Parameter frei anpassen, wenn Sie als Keccak-Version in den Einstellungen die Option "Keccak" auswählen.</value>
+    <value>Der Zustand (State) der Sponge-Konstruktion wird initialisiert. Jedes der {0} State-Bits wird mit dem Wert 0 initialisiert. Der State ist in zwei Teile geteilt: Capacity ({1} bit) und Bit-Rate ({2} bit). Sie können diese Parameter frei anpassen, wenn Sie als Keccak-Version in den Einstellungen die Option "Keccak" auswählen.</value>
   </data>
   <data name="PresInputInformation" xml:space="preserve">
     <value>Eingabe-Information</value>
@@ -298,7 +298,7 @@
     <value>Keccak-f besteht aus 12 + 2 * l Runden. Bei der eingestellten State-Größe entspricht l dem Wert {0} und die Gesamtanzahl an Runden beträgt 24. In jeder Runde werden fünf "Step-Mappings" ausgeführt, die den State auf unterschiedliche Weise permutieren. </value>
   </data>
   <data name="PresKeccakFStateMapping" xml:space="preserve">
-    <value>Damit die Step-Mappings einfacher dargestellt werden können, wird der State durch einen dreidimensionalen Würfel repräsentiert. Die Länge der Reihen (row) und Spalten (column) ist jeweils 5 Bit. Die Länge der Lanes hängt von der State-Größe ab (bei der ausgewählten State-Größe beträgt die Länge der Lanes {1} Bits).</value>
+    <value>Damit die Step-Mappings einfacher dargestellt werden können, wird der State durch einen dreidimensionalen Würfel repräsentiert. Die Länge der Reihen (row) und Spalten (column) ist jeweils 5 Bit. Die Länge der Lanes hängt von der State-Größe ab (bei der ausgewählten State-Größe beträgt die Länge der Lanes {1} bit).</value>
     <comment>für lane fällt mir keine gute Übersetzung ein... (Linie, Spur, Weg klingt alles nicht gut)</comment>
   </data>
   <data name="PresOverview" xml:space="preserve">

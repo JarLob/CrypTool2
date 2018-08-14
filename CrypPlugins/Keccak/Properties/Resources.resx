@@ -673,7 +673,7 @@
     <value>Input block #{0} is XORed on the state. When examining the state before and after the absorbtion it can be observed that the capacity part (the lower part of the state) is unmodified.</value>
   </data>
   <data name="PresAbsorbingPhaseText" xml:space="preserve">
-    <value>Every block p of the padded input is absorbed by the sponge state with an XOR operation. The input blocks affect the {0} bits of the r-bit part. The c-bit part is not affected. After the absorbtion the Keccak permutation (Keccak-f) is executed to diffuse the state bits.</value>
+    <value>Every block p of the padded input is absorbed by the sponge state with an XOR operation. The input blocks affect the {0} bit of the r-bit part. The c-bit part is not affected. After the absorbtion the Keccak permutation (Keccak-f) is executed to diffuse the state bits.</value>
   </data>
   <data name="PresChiPhaseText" xml:space="preserve">
     <value>Chi iterates over each row of the state.</value>
@@ -703,7 +703,7 @@
     <value>Padded input length: {0} bit = {1} byte</value>
   </data>
   <data name="PresInitializationText" xml:space="preserve">
-    <value>The state of the sponge construction is initialized. Each of the {0} bits of the state is initialized to 0. The state is partitioned into two parts: Capacity ({1} bits) and Bit Rate ({2} bits). You can freely adjust the parameters if you choose the Keccak version "Keccak" in the settings.</value>
+    <value>The state of the sponge construction is initialized. Each of the {0} bit of the state is initialized to 0. The state is partitioned into two parts: Capacity ({1} bit) and Bit Rate ({2} bit). You can freely adjust the parameters if you choose the Keccak version "Keccak" in the settings.</value>
   </data>
   <data name="PresInputInformation" xml:space="preserve">
     <value>Input Information</value>
@@ -724,7 +724,7 @@
     <value>The Keccak-f permutation performs 12 + 2 * l rounds. For the selected state size l equals {0} which makes a total of {1} rounds. Each round consists of five step mappings which permute the state in different ways.</value>
   </data>
   <data name="PresKeccakFStateMapping" xml:space="preserve">
-    <value>To facilitate the presentation of the step mappings, the state is represented as a three-dimensional cube. The row and column size is fixed to 5 bits. The lane size depends on the state size ({1} bits for the selected state size).</value>
+    <value>To facilitate the presentation of the step mappings, the state is represented as a three-dimensional cube. The row and column size is fixed to 5 bits. The lane size depends on the state size ({1} bit for the selected state size).</value>
   </data>
   <data name="PresOverview" xml:space="preserve">
     <value>Overview</value>
