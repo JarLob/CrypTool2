@@ -18,36 +18,12 @@
     <plugin name="PictureOutput" />
   </relevantPlugins>
   <replacements lang="de">
-    <replacement key="$Plaintext$" value="Klartext" />
-    <replacement key="$Ciphertext$" value="Geheimtext" />
-    <replacement key="$Key$" value="Schlüssel" />
-    <replacement key="$StringEncoder$" value="String-Codierer" />
-    <replacement key="$StringDecoder$" value="String-Decodierer" />
-    <replacement key="$Decrypted Ciphertext$" value="Entschlüsselter Geheimtext" />
-    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Verschlüsselung" />
-    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Entschlüsselung" />
     <replacement key="$memo$" value="Diese Vorlage zeigt den Unterschied zwischen den Block-Modi {\b Electronic Code Book (ECB)} und {\b Cipher Block Chaining (CBC)}.\line\line Der Klartext (das Smiley-Bild) wird mit dem DES-Algorithmus verschlüsselt. Einmal wird ECB zur Verkettung der Blöcke benutzt, einmal CBC.\line\line Durch den Vergleich der beiden Resultate erkennt man leicht, dass trotz der Verschlüsselung der Bildinhalt bei der Wahl des falschen Verkettungsmodus erkennbar bleibt. Im Gegensatz zu CBC verkettet ECB die Geheimtextblöcke nicht.\line\line Bei der Verwendung von ECB werden alle gleichen Klartextblöcke (z.B. alle völlig weißen oder völlig schwarzen Blöcke) durch denselben Geheimtextblock verschlüsselt, und die Struktur des Originalbildes bleibt erkennbar.\line\line Bei der Verwendung von CBC werden gleiche Klartextblöcke durch verschiedene Geheimtextblöcke verschlüsselt, da sie mit den vorherigen Geheimtextblöcken verknüpft werden. Daher wird die Struktur des Originalbildes verborgen.\line\line Für weitere Informationen über Verkettungsmodi besuchen Sie folgende Seite: http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" />
   </replacements>
   <replacements lang="ru">
-    <replacement key="$Plaintext$" value="обычный текст" />
-    <replacement key="$Ciphertext$" value="шифротекста" />
-    <replacement key="$Key$" value="ключ" />
-    <replacement key="$StringEncoder$" value="Строка кодировщик" />
-    <replacement key="$StringDecoder$" value="Строка декодера" />
-    <replacement key="$Decrypted Ciphertext$" value="Расшифрованный зашифрованный текст" />
-    <replacement key="$ADFGVX_Encrypt$" value="Шифрование ADFGVX" />
-    <replacement key="$ADFGVX_Decrypt$" value="Расшифровка ADFGVX" />
     <replacement key="$memo$" value="Этот шаблон показывает разницу между блочными модулями {\b Электронная кодовая книга (ECB)} и {\b Cipher Block Chaining (CBC)}. \Line \line Простой текст (смайлик) поставляется с алгоритмом DES зашифрованы. Как только ECB используется для цепочки блоков, один раз CBC. \Line \line. Сравнивая два результата, легко видеть, что, несмотря на шифрование, контент изображения остается узнаваемым при выборе неправильного режима цепочки. В отличие от CBC, ECB не объединяет блоки зашифрованного текста. \Line \line Используя ECB, все одинаковые блоки открытого текста (например, все белые или черные блоки) зашифровываются одним и тем же блоком зашифрованного текста, а структура исходного изображения остается узнаваемой. \Line \line При использовании CBC одни и те же блоки открытого текста зашифровываются разными блоками зашифрованного текста, поскольку они связаны с предыдущими блоками зашифрованного текста. Поэтому структура исходного изображения скрыта. \Line \line. Дополнительную информацию о режимах цепочки см. На следующей странице: http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" />
   </replacements>
-  <replacements lang="en">
-    <replacement key="$Plaintext$" value="Plaintext" />
-    <replacement key="$Ciphertext$" value="Ciphertext" />
-    <replacement key="$Key$" value="Key" />
-    <replacement key="$StringEncoder$" value="StringEncoder" />
-    <replacement key="$StringDecoder$" value="StringDecoder" />
-    <replacement key="$Decrypted_Ciphertext$" value="Decrypted Ciphertext" />
-    <replacement key="$ADFGVX_Encrypt$" value="ADFGVX Encrypt" />
-    <replacement key="$ADFGVX_Decrypt$" value="ADFGVX Decrypt" />
+  <replacements lang="en">  
     <replacement key="$memo$" value="This template shows the difference between the chaining modes {\b Electronic Code Book (ECB)} and {\b Cipher Block Chaining (CBC)}.\line\line The plaintext (the smiley picture) is encrypted using the DES algorithm. Once ECB is used to chain the cipher blocks and once CBC is used.\line\line By comparing both results one can easily see, that even if a picture is encrypted, its content may remain recognizable due a wrong chosen chaining mode. ECB does not chain the cipher blocks while CBC does.\line\line The result using ECB is, that every plaintext block, for instance all white and all black blocks, are encrypted to the same cipher block. So the structure of the picture remains visible.\line\line The result using CBC is, that every plaintext block, even if they were the same, are encrypted to a different cipher block. This happens, because all cipher blocks were connected using the CBC mode. Thus, no structure remains and everything is hidden.\line\line For more information on chaining modes have a look at: http://en.wikipedia.org/wiki/Block_cipher_mode_of_operation" />
   </replacements>
 </sample>
